@@ -9,7 +9,9 @@ namespace App\Models\Media;
 
 use App\Models\Tenancy\Tenant;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection;
 use Spatie\MediaLibrary\MediaCollections\Models\Media as BaseMedia;
 
 /**
@@ -36,30 +38,30 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media as BaseMedia;
  * @property-read \Illuminate\Database\Eloquent\Model|\Eloquent $model
  * @property-read \Spatie\Multitenancy\TenantCollection<int, Tenant> $tenants
  * @property-read int|null $tenants_count
- * @method static \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, static> all($columns = ['*'])
- * @method static \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, static> get($columns = ['*'])
- * @method static \Illuminate\Database\Eloquent\Builder|Media newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Media newQuery()
+ * @method static MediaCollection<int, static> all($columns = ['*'])
+ * @method static MediaCollection<int, static> get($columns = ['*'])
+ * @method static Builder|Media newModelQuery()
+ * @method static Builder|Media newQuery()
  * @method static Builder|Media ordered()
- * @method static \Illuminate\Database\Eloquent\Builder|Media query()
- * @method static \Illuminate\Database\Eloquent\Builder|Media whereCollectionName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Media whereConversionsDisk($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Media whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Media whereCustomProperties($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Media whereDisk($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Media whereFileName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Media whereGeneratedConversions($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Media whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Media whereManipulations($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Media whereMimeType($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Media whereModelId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Media whereModelType($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Media whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Media whereOrderColumn($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Media whereResponsiveImages($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Media whereSize($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Media whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Media whereUuid($value)
+ * @method static Builder|Media query()
+ * @method static Builder|Media whereCollectionName($value)
+ * @method static Builder|Media whereConversionsDisk($value)
+ * @method static Builder|Media whereCreatedAt($value)
+ * @method static Builder|Media whereCustomProperties($value)
+ * @method static Builder|Media whereDisk($value)
+ * @method static Builder|Media whereFileName($value)
+ * @method static Builder|Media whereGeneratedConversions($value)
+ * @method static Builder|Media whereId($value)
+ * @method static Builder|Media whereManipulations($value)
+ * @method static Builder|Media whereMimeType($value)
+ * @method static Builder|Media whereModelId($value)
+ * @method static Builder|Media whereModelType($value)
+ * @method static Builder|Media whereName($value)
+ * @method static Builder|Media whereOrderColumn($value)
+ * @method static Builder|Media whereResponsiveImages($value)
+ * @method static Builder|Media whereSize($value)
+ * @method static Builder|Media whereUpdatedAt($value)
+ * @method static Builder|Media whereUuid($value)
  * @mixin \Eloquent
  */
 class Media extends BaseMedia

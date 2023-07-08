@@ -9,12 +9,14 @@ namespace App\Models\Tenancy;
 
 use App\Models\Assets\Currency;
 use App\Models\Media\Media;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Multitenancy\Models\Tenant as SpatieTenant;
+use Spatie\Multitenancy\TenantCollection;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
@@ -42,27 +44,27 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \Spatie\MediaLibrary\MediaCollections\Models\Media> $media
  * @property-read int|null $media_count
  * @property-read \App\Models\Tenancy\TenantStats|null $stats
- * @method static \Spatie\Multitenancy\TenantCollection<int, static> all($columns = ['*'])
- * @method static \Spatie\Multitenancy\TenantCollection<int, static> get($columns = ['*'])
- * @method static \Illuminate\Database\Eloquent\Builder|Tenant newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Tenant newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Tenant query()
- * @method static \Illuminate\Database\Eloquent\Builder|Tenant whereCode($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Tenant whereCountryId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Tenant whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Tenant whereCurrencyId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Tenant whereData($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Tenant whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Tenant whereEmail($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Tenant whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Tenant whereLanguageId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Tenant whereLogoId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Tenant whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Tenant whereSettings($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Tenant whereSlug($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Tenant whereStatus($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Tenant whereTimezoneId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Tenant whereUpdatedAt($value)
+ * @method static TenantCollection<int, static> all($columns = ['*'])
+ * @method static TenantCollection<int, static> get($columns = ['*'])
+ * @method static Builder|Tenant newModelQuery()
+ * @method static Builder|Tenant newQuery()
+ * @method static Builder|Tenant query()
+ * @method static Builder|Tenant whereCode($value)
+ * @method static Builder|Tenant whereCountryId($value)
+ * @method static Builder|Tenant whereCreatedAt($value)
+ * @method static Builder|Tenant whereCurrencyId($value)
+ * @method static Builder|Tenant whereData($value)
+ * @method static Builder|Tenant whereDeletedAt($value)
+ * @method static Builder|Tenant whereEmail($value)
+ * @method static Builder|Tenant whereId($value)
+ * @method static Builder|Tenant whereLanguageId($value)
+ * @method static Builder|Tenant whereLogoId($value)
+ * @method static Builder|Tenant whereName($value)
+ * @method static Builder|Tenant whereSettings($value)
+ * @method static Builder|Tenant whereSlug($value)
+ * @method static Builder|Tenant whereStatus($value)
+ * @method static Builder|Tenant whereTimezoneId($value)
+ * @method static Builder|Tenant whereUpdatedAt($value)
  * @mixin \Eloquent
  */
 class Tenant extends SpatieTenant implements HasMedia
