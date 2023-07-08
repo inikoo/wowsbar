@@ -1,4 +1,9 @@
 <?php
+/*
+ * Author: Raul Perusquia <raul@inikoo.com>
+ * Created: Sat, 08 Jul 2023 21:41:03 Malaysia Time, Kuala Lumpur, Malaysia
+ * Copyright (c) 2023, Raul A Perusquia Flores
+ */
 
 namespace App\Console;
 
@@ -7,9 +12,7 @@ use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
 {
-    /**
-     * Define the application's command schedule.
-     */
+
     protected function schedule(Schedule $schedule): void
     {
         $schedule->command('telescope:prune')->daily();
@@ -17,9 +20,7 @@ class Kernel extends ConsoleKernel
 
     }
 
-    /**
-     * Register the commands for the application.
-     */
+
     protected function commands(): void
     {
         $this->load(__DIR__.'/Commands');

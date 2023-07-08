@@ -1,24 +1,27 @@
 <?php
+/*
+ * Author: Raul Perusquia <raul@inikoo.com>
+ * Created: Sat, 08 Jul 2023 21:43:37 Malaysia Time, Kuala Lumpur, Malaysia
+ * Copyright (c) 2023, Raul A Perusquia Flores
+ */
 
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Lorisleiva\Actions\Facades\Actions;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     */
+
     public function register(): void
     {
         //
     }
 
-    /**
-     * Bootstrap any application services.
-     */
     public function boot(): void
     {
-        //
+        if ($this->app->runningInConsole()) {
+            Actions::registerCommands();
+        }
     }
 }

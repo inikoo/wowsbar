@@ -1,5 +1,11 @@
 <?php
+/*
+ * Author: Raul Perusquia <raul@inikoo.com>
+ * Created: Sat, 08 Jul 2023 21:48:38 Malaysia Time, Kuala Lumpur, Malaysia
+ * Copyright (c) 2023, Raul A Perusquia Flores
+ */
 
+use App\Models\Tenancy\Tenant;
 use Illuminate\Broadcasting\BroadcastEvent;
 use Illuminate\Events\CallQueuedListener;
 use Illuminate\Mail\SendQueuedMailable;
@@ -8,7 +14,6 @@ use Spatie\Multitenancy\Actions\ForgetCurrentTenantAction;
 use Spatie\Multitenancy\Actions\MakeQueueTenantAwareAction;
 use Spatie\Multitenancy\Actions\MakeTenantCurrentAction;
 use Spatie\Multitenancy\Actions\MigrateTenantAction;
-use Spatie\Multitenancy\Models\Tenant;
 
 return [
     /*
@@ -24,7 +29,7 @@ return [
      * These fields are used by tenant:artisan command to match one or more tenant
      */
     'tenant_artisan_search_fields' => [
-        'id',
+        'slug',
     ],
 
     /*

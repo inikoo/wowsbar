@@ -16,6 +16,7 @@
         "laravel/sanctum": "^3.2",
         "laravel/telescope": "^4.15",
         "laravel/tinker": "^2.8",
+        "lorisleiva/laravel-actions": "^2.6",
         "spatie/laravel-medialibrary": "^10.0.0",
         "spatie/laravel-multitenancy": "^3.0",
         "spatie/laravel-sluggable": "^3.5",
