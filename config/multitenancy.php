@@ -80,10 +80,10 @@ return [
      * Your custom action should always extend the default one.
      */
     'actions' => [
-        'make_tenant_current_action' => MakeTenantCurrentAction::class,
-        'forget_current_tenant_action' => ForgetCurrentTenantAction::class,
+        'make_tenant_current_action'     => MakeTenantCurrentAction::class,
+        'forget_current_tenant_action'   => ForgetCurrentTenantAction::class,
         'make_queue_tenant_aware_action' => MakeQueueTenantAwareAction::class,
-        'migrate_tenant' => MigrateTenantAction::class,
+        'migrate_tenant'                 => MigrateTenantAction::class,
     ],
 
     /*
@@ -93,10 +93,10 @@ return [
      * resolve JobDecorator to getAction() like so: JobDecorator::class => 'getAction'
      */
     'queueable_to_job' => [
-        SendQueuedMailable::class => 'mailable',
+        SendQueuedMailable::class      => 'mailable',
         SendQueuedNotifications::class => 'notification',
-        CallQueuedListener::class => 'class',
-        BroadcastEvent::class => 'event',
+        CallQueuedListener::class      => 'class',
+        BroadcastEvent::class          => 'event',
     ],
 
     /*
