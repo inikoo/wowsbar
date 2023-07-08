@@ -6,6 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "ext-pdo": "*",
         "commerceguys/addressing": "^2.0",
         "commerceguys/intl": "^2.0",
         "guzzlehttp/guzzle": "^7.2",
@@ -15,8 +16,10 @@
         "laravel/sanctum": "^3.2",
         "laravel/telescope": "^4.15",
         "laravel/tinker": "^2.8",
-        "tightenco/ziggy": "^1.0",
-        "ext-pdo": "*"
+        "spatie/laravel-medialibrary": "^10.0.0",
+        "spatie/laravel-multitenancy": "^3.0",
+        "spatie/laravel-sluggable": "^3.5",
+        "tightenco/ziggy": "^1.0"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.13",
