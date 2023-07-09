@@ -16,6 +16,7 @@ return new class () extends Migration {
             $table->smallIncrements('id');
             $table->unsignedSmallInteger('tenant_id');
             $table->foreign('tenant_id')->references('id')->on('tenants');
+            $table->boolean('is_root')->index()->default(false);
             $table->boolean('status')->default(true);
             $table->string('username')->unique()->collation('und_ns');
             $table->string('contact_name')->nullable()->collation('und_ns');

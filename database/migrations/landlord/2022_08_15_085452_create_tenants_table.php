@@ -17,7 +17,7 @@ return new class () extends Migration {
             $table->string('slug')->unique()->collation('und_ns');
             $table->string('code')->index();
             $table->string('name');
-            $table->string('email')->nullable();
+            $table->string('email')->index();
             $table->boolean('status')->default(true);
             $table->jsonb('data');
             $table->jsonb('settings');

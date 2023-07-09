@@ -1,0 +1,15 @@
+[
+    "sysadmin",
+    "sysadmin.view",
+    "sysadmin.create",
+    "sysadmin.edit",
+    "sysadmin.delete",
+    "sysadmin.look-and-field",
+    "websites",
+    "websites.view",
+    "websites.edit",
+    "banners",
+    "banners.view",
+    "banners.edit",
+    "banners.publish"
+]

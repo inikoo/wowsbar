@@ -1,20 +1,27 @@
 <?php
+/*
+ * Author: Raul Perusquia <raul@inikoo.com>
+ * Created: Sun, 09 Jul 2023 09:28:46 Malaysia Time, Kuala Lumpur, Malaysia
+ * Copyright (c) 2023, Raul A Perusquia Flores
+ */
 
-namespace App\Models;
+namespace App\Models\Tenancy;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 /**
- * App\Models\User
+ * App\Models\Tenancy\User
  *
  * @property int $id
  * @property int $tenant_id
+ * @property bool $is_root
  * @property bool $status
  * @property string $username
  * @property string|null $contact_name
@@ -22,8 +29,8 @@ use Laravel\Sanctum\HasApiTokens;
  * @property \Illuminate\Support\Carbon|null $email_verified_at
  * @property mixed $password
  * @property string|null $remember_token
- * @property mixed $data
- * @property mixed $settings
+ * @property array $data
+ * @property array $settings
  * @property int $language_id
  * @property int|null $avatar_id
  * @property \Illuminate\Support\Carbon|null $created_at
@@ -31,12 +38,18 @@ use Laravel\Sanctum\HasApiTokens;
  * @property string|null $deleted_at
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Permission\Models\Permission> $permissions
+ * @property-read int|null $permissions_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Permission\Models\Role> $roles
+ * @property-read int|null $roles_count
+ * @property-read \App\Models\Tenancy\UserStats|null $stats
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Laravel\Sanctum\PersonalAccessToken> $tokens
  * @property-read int|null $tokens_count
- * @method static \Database\Factories\UserFactory factory($count = null, $state = [])
  * @method static Builder|User newModelQuery()
  * @method static Builder|User newQuery()
+ * @method static Builder|User permission($permissions)
  * @method static Builder|User query()
+ * @method static Builder|User role($roles, $guard = null)
  * @method static Builder|User whereAvatarId($value)
  * @method static Builder|User whereContactName($value)
  * @method static Builder|User whereCreatedAt($value)
@@ -45,6 +58,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @method static Builder|User whereEmail($value)
  * @method static Builder|User whereEmailVerifiedAt($value)
  * @method static Builder|User whereId($value)
+ * @method static Builder|User whereIsRoot($value)
  * @method static Builder|User whereLanguageId($value)
  * @method static Builder|User wherePassword($value)
  * @method static Builder|User whereRememberToken($value)
@@ -60,35 +74,34 @@ class User extends Authenticatable
     use HasApiTokens;
     use HasFactory;
     use Notifiable;
+    use HasRoles;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
+
+
+    protected $casts = [
+        'data'              => 'array',
+        'settings'          => 'array',
+        'email_verified_at' => 'datetime',
+        'password'          => 'hashed',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
+    protected $attributes = [
+        'data'     => '{}',
+        'settings' => '{}',
+    ];
+
+    protected $guarded = [];
+
+
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-        'password'          => 'hashed',
-    ];
+
+    public function stats(): HasOne
+    {
+        return $this->hasOne(UserStats::class);
+    }
+
 }

@@ -12,6 +12,7 @@ use App\Models\Media\Media;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -27,7 +28,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property string $slug
  * @property string $code
  * @property string $name
- * @property string|null $email
+ * @property string $email
  * @property bool $status
  * @property array $data
  * @property array $settings
@@ -44,6 +45,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \Spatie\MediaLibrary\MediaCollections\Models\Media> $media
  * @property-read int|null $media_count
  * @property-read \App\Models\Tenancy\TenantStats|null $stats
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Tenancy\User> $users
+ * @property-read int|null $users_count
  * @method static TenantCollection<int, static> all($columns = ['*'])
  * @method static TenantCollection<int, static> get($columns = ['*'])
  * @method static Builder|Tenant newModelQuery()
@@ -110,6 +113,10 @@ class Tenant extends SpatieTenant implements HasMedia
         return $this->belongsTo(Currency::class);
     }
 
+    public function users(): HasMany
+    {
+        return $this->hasMany(User::class);
+    }
 
     public function logo(): HasOne
     {

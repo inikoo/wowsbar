@@ -7,6 +7,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
 use Lorisleiva\Actions\Facades\Actions;
 
@@ -23,5 +24,12 @@ class AppServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             Actions::registerCommands();
         }
+        Relation::morphMap(
+            [
+                'Tenant' => 'App\Models\Tenancy\Tenant',
+                'User'   => 'App\Models\Tenancy\User',
+
+            ]
+        );
     }
 }

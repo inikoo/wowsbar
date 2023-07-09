@@ -8,14 +8,16 @@
 namespace App\Actions\Tenancy\Tenant;
 
 
+use App\Actions\Tenancy\User\StoreUser;
 use App\Models\Assets\Country;
 use App\Models\Assets\Currency;
 use App\Models\Assets\Language;
 use App\Models\Assets\Timezone;
+use App\Models\Tenancy\Role;
 use App\Models\Tenancy\Tenant;
 use Exception;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Arr;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
 
@@ -24,15 +26,21 @@ class StoreTenant
     use AsAction;
     use WithAttributes;
 
-    public function handle(array $modelData): Tenant
+    public function handle(array $modelData, array $userData): Tenant
     {
         $tenant = Tenant::create($modelData);
         $tenant->stats()->create();
 
+        $user=StoreUser::run($tenant, $userData);
+
+        $superAdminRole=Role::where('name','super-admin')->firstOrFail();
+        $user->assignRole($superAdminRole);
+
         $tenant->execute(
             function (Tenant $tenant) {
                 SetTenantLogo::run($tenant);
-            });
+            }
+        );
 
 
         return $tenant;
@@ -41,14 +49,16 @@ class StoreTenant
     public function rules(): array
     {
         return [
-            'code'        => ['required', 'unique:tenants', 'between:2,6', 'alpha'],
+            'code'        => ['required', 'unique:tenants', 'between:1,6', 'alpha_dash'],
             'name'        => ['required', 'max:64'],
             'email'       => ['required', 'email', 'unique:tenants'],
             'currency_id' => ['required', 'exists:currencies,id'],
             'country_id'  => ['required', 'exists:countries,id'],
             'language_id' => ['required', 'exists:languages,id'],
             'timezone_id' => ['required', 'exists:timezones,id'],
-            'source'      => ['sometimes', 'array']
+            'username'    => ['sometimes', 'string'],
+            'password'    => ['sometimes', 'string'],
+
         ];
     }
 
@@ -58,12 +68,25 @@ class StoreTenant
         $this->setRawAttributes($modelData);
         $validatedData = $this->validateAttributes();
 
-        return $this->handle( $validatedData);
+        return $this->handle(
+            Arr::except($validatedData, ['username', 'password']),
+            array_merge(
+                Arr::only($validatedData, [
+                    'username',
+                    'password',
+                    'email'
+                ]),
+                [
+                    'is_root' => true
+                ]
+            )
+
+        );
     }
 
     public function getCommandSignature(): string
     {
-        return 'tenant:create {code} {email} {name} {country_code} {currency_code} {--l|language_code= : Language code} {--tz|timezone= : Timezone}';
+        return 'tenant:create {code} {email} {name}  {username} {password}  {country_code} {currency_code} {--l|language_code= : Language code} {--tz|timezone= : Timezone}';
     }
 
     public function asCommand(Command $command): int
@@ -109,13 +132,12 @@ class StoreTenant
         }
 
 
-
-
-
         $this->setRawAttributes([
             'code'        => $command->argument('code'),
             'name'        => $command->argument('name'),
             'email'       => $command->argument('email'),
+            'username'    => $command->argument('username'),
+            'password'    => $command->argument('password'),
             'country_id'  => $country->id,
             'currency_id' => $currency->id,
             'language_id' => $language->id,
@@ -130,7 +152,20 @@ class StoreTenant
             return 1;
         }
 
-        $tenant = $this->handle( $validatedData);
+        $tenant = $this->handle(
+            Arr::except($validatedData, ['username', 'password']),
+            array_merge(
+                Arr::only($validatedData, [
+                    'username',
+                    'password',
+                    'email'
+                ]),
+                [
+                    'is_root' => true
+                ]
+            )
+
+        );
 
         $command->info("Tenant $tenant->slug created successfully 🎉");
 

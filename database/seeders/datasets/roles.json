@@ -1,0 +1,8 @@
+[
+    {
+        "name":"super-admin",
+        "permissions": [
+            "sysadmin","websites","banners"
+        ]
+    }
+]
