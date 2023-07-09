@@ -7,7 +7,6 @@
 
 namespace App\Actions\Tenancy\User;
 
-
 use App\Models\Tenancy\Tenant;
 use App\Models\Tenancy\User;
 use App\Rules\AlphaDashDot;
@@ -25,14 +24,11 @@ class StoreUser
     private bool $asAction = false;
 
 
-
     public function handle(Tenant $tenant, array $objectData = []): User
     {
-
-
-            $user = $tenant->users()->create($objectData);
-            $user->stats()->create();
-
+        /** @var User $user */
+        $user = $tenant->users()->create($objectData);
+        $user->stats()->create();
 
         return $user;
     }
@@ -42,31 +38,23 @@ class StoreUser
         if ($this->asAction) {
             return true;
         }
-        return true;
-        //return $request->user()->hasPermissionTo("shops.customers.edit");
+
+        return $request->user()->hasPermissionTo("sysadmin.edit");
     }
 
     public function rules(): array
     {
-
-            return [
-                'username' => ['required', new AlphaDashDot(), 'unique:App\Models\SysAdmin\SysUser,username', Rule::notIn(['export', 'create'])],
-                'password' => ['required', app()->isLocal() || app()->environment('testing') ? null : Password::min(8)->uncompromised()],
-                'email'    => ['required', 'email', 'unique:App\Models\SysAdmin\SysUser,email']
-            ];
-
+        return [
+            'username' => ['required', new AlphaDashDot(), 'unique:App\Models\SysAdmin\SysUser,username', Rule::notIn(['export', 'create'])],
+            'password' => ['required', app()->isLocal() || app()->environment('testing') ? null : Password::min(8)->uncompromised()],
+            'email'    => ['required', 'email', 'unique:App\Models\SysAdmin\SysUser,email']
+        ];
     }
 
-
-
-
-    /**
-     * @throws \Throwable
-     */
-    public function action(Tenant $tenant, ? array $objectData = []): User
+    public function action(Tenant $tenant, ?array $objectData = []): User
     {
-        $this->asAction  = true;
-        $this->setRawAttributes( $objectData);
+        $this->asAction = true;
+        $this->setRawAttributes($objectData);
         $validatedData = $this->validateAttributes();
 
         return $this->handle($tenant, $validatedData);

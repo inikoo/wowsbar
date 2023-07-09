@@ -10,7 +10,6 @@ namespace App\Models\Tenancy;
 use Illuminate\Database\Eloquent\Builder;
 use Spatie\Permission\Models\Role as SpatieRole;
 
-
 /**
  * App\Models\Tenancy\Role
  *
@@ -36,6 +35,4 @@ use Spatie\Permission\Models\Role as SpatieRole;
  */
 class Role extends SpatieRole
 {
-
-
 }

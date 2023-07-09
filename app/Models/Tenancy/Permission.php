@@ -7,9 +7,7 @@
 
 namespace App\Models\Tenancy;
 
-
 use Spatie\Permission\Models\Permission as SpatiePermission;
-
 
 /**
  * App\Models\Tenancy\Permission

@@ -7,7 +7,6 @@
 
 namespace App\Actions\Tenancy\Tenant;
 
-
 use App\Actions\Tenancy\User\StoreUser;
 use App\Models\Assets\Country;
 use App\Models\Assets\Currency;
@@ -33,7 +32,7 @@ class StoreTenant
 
         $user=StoreUser::run($tenant, $userData);
 
-        $superAdminRole=Role::where('name','super-admin')->firstOrFail();
+        $superAdminRole=Role::where('name', 'super-admin')->firstOrFail();
         $user->assignRole($superAdminRole);
 
         $tenant->execute(
@@ -80,7 +79,6 @@ class StoreTenant
                     'is_root' => true
                 ]
             )
-
         );
     }
 
@@ -164,7 +162,6 @@ class StoreTenant
                     'is_root' => true
                 ]
             )
-
         );
 
         $command->info("Tenant $tenant->slug created successfully 🎉");
