@@ -21,7 +21,8 @@
         "spatie/laravel-multitenancy": "^3.0",
         "spatie/laravel-permission": "^5.10",
         "spatie/laravel-sluggable": "^3.5",
-        "tightenco/ziggy": "^1.0"
+        "tightenco/ziggy": "^1.0",
+        "vlucas/phpdotenv": "^5.5"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.13",
@@ -31,6 +32,7 @@
         "laravel/sail": "^1.18",
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^7.0",
+        "pestphp/pest": "^2.8",
         "phpunit/phpunit": "^10.1",
         "spatie/laravel-ignition": "^2.0"
     },
