@@ -7,6 +7,7 @@
 
 namespace App\Actions\Tenancy\User;
 
+use App\Actions\Tenancy\User\UI\SetUserAvatar;
 use App\Models\Tenancy\Tenant;
 use App\Models\Tenancy\User;
 use App\Rules\AlphaDashDot;
@@ -29,6 +30,7 @@ class StoreUser
         /** @var User $user */
         $user = $tenant->users()->create($objectData);
         $user->stats()->create();
+        SetUserAvatar::run($user);
 
         return $user;
     }

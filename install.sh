@@ -16,3 +16,8 @@ echo "🌱 Migrating and seeding database"
 php artisan migrate --path=database/migrations/landlord
 php artisan migrate --path=database/migrations/tenant
 php artisan db:seed
+pg_dump -Fc -f "devops/devel/snapshots/fresh.dump" ${DB}
+echo "🌱 create devel tenant"
+php artisan tenant:create wow devels@aw-advantage.com Devs aiku hello GB GBP
+pg_dump -Fc -f "devops/devel/snapshots/tenant.dump" ${DB}
+

@@ -84,7 +84,7 @@ class StoreTenant
 
     public function getCommandSignature(): string
     {
-        return 'tenant:create {code} {email} {name}  {username} {password}  {country_code} {currency_code} {--l|language_code= : Language code} {--tz|timezone= : Timezone}';
+        return 'tenant:create {code} {email} {name} {username} {password} {country_code} {currency_code} {--l|language_code= : Language code} {--tz|timezone= : Timezone}';
     }
 
     public function asCommand(Command $command): int

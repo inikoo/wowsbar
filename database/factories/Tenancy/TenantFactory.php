@@ -13,10 +13,8 @@ use App\Models\Assets\Language;
 use App\Models\Assets\Timezone;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-
 class TenantFactory extends Factory
 {
-
     public function definition(): array
     {
         return [

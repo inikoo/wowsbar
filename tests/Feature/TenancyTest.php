@@ -8,6 +8,7 @@
 use App\Actions\Tenancy\Tenant\StoreTenant;
 use App\Models\Tenancy\Tenant;
 use App\Models\Tenancy\User;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 beforeAll(function () {
     loadDB('test_base_database.dump');
@@ -20,7 +21,9 @@ test('create tenant', function () {
     /** @var User $user */
     $user = $tenant->users()->first();
     expect($user)->toBeInstanceOf(User::class)
-        ->and($user->is_root)->toBeTrue();
+        ->and($user->is_root)->toBeTrue()
+        ->and($user->getMedia('avatar')->first())->toBeInstanceOf(Media::class)
+        ->and($user->avatar)->toBeInstanceOf(App\Models\Media\Media::class);
 
     return $tenant;
 });

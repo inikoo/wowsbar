@@ -21,3 +21,4 @@ yarn-error.log
 /.phpstorm.meta.php
 /_ide_helper.php
 /.env.testing
+/load_my_snapshot.sh

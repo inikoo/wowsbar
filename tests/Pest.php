@@ -9,9 +9,7 @@
 use Symfony\Component\Process\Process;
 use Tests\TestCase;
 
-
-
-uses(TestCase::class,)->in('Feature');
+uses(TestCase::class, )->in('Feature');
 
 function loadDB($dumpName): void
 {
@@ -30,4 +28,3 @@ function loadDB($dumpName): void
     );
     $process->run();
 }
-
