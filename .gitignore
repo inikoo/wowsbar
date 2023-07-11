@@ -22,3 +22,4 @@ yarn-error.log
 /_ide_helper.php
 /.env.testing
 /load_my_snapshot.sh
+/resources/private/

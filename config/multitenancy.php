@@ -6,6 +6,7 @@
  */
 
 use App\Models\Tenancy\Tenant;
+use App\Resolvers\TenantResolver;
 use Illuminate\Broadcasting\BroadcastEvent;
 use Illuminate\Events\CallQueuedListener;
 use Illuminate\Mail\SendQueuedMailable;
@@ -14,6 +15,9 @@ use Spatie\Multitenancy\Actions\ForgetCurrentTenantAction;
 use Spatie\Multitenancy\Actions\MakeQueueTenantAwareAction;
 use Spatie\Multitenancy\Actions\MakeTenantCurrentAction;
 use Spatie\Multitenancy\Actions\MigrateTenantAction;
+use Spatie\Multitenancy\Tasks\PrefixCacheTask;
+use Lorisleiva\Actions\Decorators\JobDecorator;
+use Lorisleiva\Actions\Decorators\UniqueJobDecorator;
 
 return [
     /*
@@ -23,7 +27,7 @@ return [
      * This class should extend `Spatie\Multitenancy\TenantFinder\TenantFinder`
      *
      */
-    'tenant_finder' => null,
+    'tenant_finder'                      => TenantResolver::class,
 
     /*
      * These fields are used by tenant:artisan command to match one or more tenant
@@ -38,7 +42,7 @@ return [
      * A valid task is any class that implements Spatie\Multitenancy\Tasks\SwitchTenantTask
      */
     'switch_tenant_tasks' => [
-        // \Spatie\Multitenancy\Tasks\PrefixCacheTask::class,
+        PrefixCacheTask::class,
         // \Spatie\Multitenancy\Tasks\SwitchTenantDatabaseTask::class,
         // \Spatie\Multitenancy\Tasks\SwitchRouteCacheTask::class,
     ],
@@ -102,6 +106,8 @@ return [
         SendQueuedNotifications::class => 'notification',
         CallQueuedListener::class      => 'class',
         BroadcastEvent::class          => 'event',
+        JobDecorator::class            => 'getAction',
+        UniqueJobDecorator::class      => 'getAction'
     ],
 
     /*

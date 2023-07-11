@@ -60,6 +60,16 @@ class Kernel extends HttpKernel
             HandleInertiaRequests::class,
             AddLinkHeadersForPreloadedAssets::class,
         ],
+        'landlord-web' => [
+            EncryptCookies::class,
+            AddQueuedCookiesToResponse::class,
+            StartSession::class,
+            ShareErrorsFromSession::class,
+            VerifyCsrfToken::class,
+            SubstituteBindings::class,
+            HandleInertiaRequests::class,
+            AddLinkHeadersForPreloadedAssets::class,
+        ],
         'tenant' => [
             NeedsTenant::class,
             EnsureValidTenantSession::class,

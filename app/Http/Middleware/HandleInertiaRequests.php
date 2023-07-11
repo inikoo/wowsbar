@@ -1,38 +1,50 @@
 <?php
+/*
+ * Author: Raul Perusquia <raul@inikoo.com>
+ * Created: Mon, 10 Jul 2023 21:55:21 Malaysia Time, Kuala Lumpur, Malaysia
+ * Copyright (c) 2023, Raul A Perusquia Flores
+ */
 
 namespace App\Http\Middleware;
 
+use App\Actions\UI\GetFirstLoadProps;
+use App\Http\Resources\UI\LoggedUserResource;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Inertia\Middleware;
 use Tightenco\Ziggy\Ziggy;
 
 class HandleInertiaRequests extends Middleware
 {
-    /**
-     * The root template that is loaded on the first page visit.
-     *
-     * @var string
-     */
+
     protected $rootView = 'app';
 
-    /**
-     * Determine the current asset version.
-     */
-    public function version(Request $request): string|null
-    {
-        return parent::version($request);
-    }
 
-    /**
-     * Define the props that are shared by default.
-     *
-     * @return array<string, mixed>
-     */
     public function share(Request $request): array
     {
-        return array_merge(parent::share($request), [
+
+        $user = $request->user();
+
+        $firstLoadOnlyProps = [];
+
+
+        if (!$request->inertia() or Session::get('reloadLayout')) {
+            $firstLoadOnlyProps =GetFirstLoadProps::run($user);
+
+            if (Session::get('reloadLayout') == 'remove') {
+                Session::forget('reloadLayout');
+            }
+            if (Session::get('reloadLayout')) {
+                Session::put('reloadLayout', 'remove');
+            }
+        }
+
+
+        return array_merge(parent::share($request),
+            $firstLoadOnlyProps,
+            [
             'auth' => [
-                'user' => $request->user(),
+                'user' => $request->user() ? LoggedUserResource::make($request->user())->getArray() : null,
             ],
             'ziggy' => function () use ($request) {
                 return array_merge((new Ziggy())->toArray(), [

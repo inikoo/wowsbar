@@ -8,6 +8,7 @@
 namespace App\Models\Tenancy;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Assets\Language;
 use App\Models\Media\Media;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -41,6 +42,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string|null $deleted_at
  * @property-read Media|null $avatar
+ * @property-read Language $language
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \Spatie\MediaLibrary\MediaCollections\Models\Media> $media
  * @property-read int|null $media_count
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
@@ -126,6 +128,11 @@ class User extends Authenticatable implements HasMedia
     public function avatar(): HasOne
     {
         return $this->hasOne(Media::class, 'id', 'avatar_id');
+    }
+
+    public function language(): BelongsTo
+    {
+        return $this->belongsTo(Language::class);
     }
 
 
