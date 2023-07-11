@@ -7,7 +7,7 @@
   -->
 
 
-<script setup>
+<script setup lang="ts">
 import { ref, watchEffect } from "vue";
 import {
     Menu,
@@ -19,12 +19,14 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/vue"
 import Button from "@/Components/Elements/Buttons/Button.vue"
 import SearchBar from "@/Components/SearchBar.vue"
+import AppFooter from "@/Layouts/AppFooter.vue"
 import { usePage, router } from "@inertiajs/vue3"
 
 import { useLayoutStore } from "@/Stores/layout"
 import { useLocaleStore } from "@/Stores/locale"
 
 import AppLeftSideBar from "@/Layouts/AppLeftSideBar.vue"
+// import AppRightSideBar from "@/Layouts/AppRightSideBar.vue"
 import AppTopBar from "@/Layouts/TopBar/AppTopBar.vue"
 import Breadcrumbs from "@/Components/Navigation/Breadcrumbs.vue"
 
@@ -32,15 +34,21 @@ import { loadLanguageAsync, trans } from "laravel-vue-i18n"
 import { Link } from "@inertiajs/vue3"
 import { library } from "@fortawesome/fontawesome-svg-core"
 import {
-    faSearch,
-    faBell,
-} from '@/../private/pro-regular-svg-icons';
-import {
     faHome,
+    faConveyorBeltAlt,
+    faUserHardHat,
     faBars,
     faUsersCog,
     faTachometerAltFast,
+    faInventory,
+    faStoreAlt,
     faUser,
+    faIndustry,
+    faParachuteBox,
+    faDollyEmpty,
+    faShoppingCart,
+    faAbacus,
+    faChevronDown,
     faGlobe,
     faLanguage
 } from "@/../private/pro-light-svg-icons"
@@ -48,15 +56,23 @@ import {
 
 library.add(
     faHome,
+    faConveyorBeltAlt,
+    faUserHardHat,
     faBars,
     faUsersCog,
     faTachometerAltFast,
+    faInventory,
+    faStoreAlt,
     faUser,
     faUser,
+    faIndustry,
+    faParachuteBox,
+    faDollyEmpty,
+    faShoppingCart,
+    faAbacus,
+    faChevronDown,
     faGlobe,
-    faLanguage,
-    faSearch,
-    faBell,
+    faLanguage
 );
 
 const initialiseApp = () => {
@@ -237,7 +253,6 @@ const user = ref(usePage().props.auth.user);
 
                                         </div>
 
-
                                         <div class="py-1">
                                             <MenuItem v-slot="{ active }">
                                                 <Link as="ul" type="button" method="post" :href="route('logout')"
@@ -313,8 +328,15 @@ const user = ref(usePage().props.auth.user);
             <slot />
         </main>
 
+        <!-- Sidebar: Right -->
+        <!-- <AppRightSideBar class="fixed top-16 w-44 transition-all duration-200 ease-in-out"
+            :class="[Object.values(layout.rightSidebar).some(value => value === true) ? 'right-0' : '-right-44']"
+        /> -->
 
     </div>
+
+    <!-- Footer -->
+    <AppFooter />
 
 </template>
 
