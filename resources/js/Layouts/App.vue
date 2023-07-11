@@ -52,6 +52,7 @@ import {
     faGlobe,
     faLanguage
 } from "@/../private/pro-light-svg-icons"
+import { faSearch, faBell} from "@/../private/pro-regular-svg-icons"
 
 
 library.add(
@@ -72,7 +73,8 @@ library.add(
     faAbacus,
     faChevronDown,
     faGlobe,
-    faLanguage
+    faLanguage, 
+    faSearch, faBell
 );
 
 const initialiseApp = () => {
@@ -183,6 +185,7 @@ const user = ref(usePage().props.auth.user);
 </script>
 
 <template>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png"/>
     <div class="relative min-h-full mr-44 transition-all duration-200 ease-in-out"
         :class="[Object.values(layout.rightSidebar).some(value => value === true) ? 'mr-44' : 'mr-0']"
     >
