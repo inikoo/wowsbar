@@ -10,7 +10,6 @@ namespace App\Models\Tenancy;
 use App\Models\Assets\Currency;
 use App\Models\Auth\User;
 use App\Models\Media\Media;
-use Database\Factories\Tenancy\TenantFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
