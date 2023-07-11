@@ -5,8 +5,6 @@
  *  Copyright (c) 2022, Raul A Perusquia Flores
  */
 
-use App\Enums\Web\Website\WebsiteEngineEnum;
-use App\Enums\Web\Website\WebsiteStateEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;

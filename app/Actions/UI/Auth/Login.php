@@ -8,7 +8,6 @@
 namespace App\Actions\UI\Auth;
 
 use App\Http\Requests\Auth\LoginRequest;
-use App\Models\Tenancy\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Session;
 use Lorisleiva\Actions\Concerns\AsController;
@@ -27,7 +26,7 @@ class Login
         $request->session()->regenerate();
         Session::put('reloadLayout', '1');
 
-        /** @var User $user */
+        /** @var \App\Models\Auth\User $user */
         $user   = auth()->user();
 
         $language = $user->language;

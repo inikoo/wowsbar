@@ -1,17 +1,17 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Mon, 24 Apr 2023 20:15:46 Malaysia Time, Sanur, Bali, Indonesia
+ * Created: Tue, 11 Jul 2023 12:32:49 Malaysia Time, Kuala Lumpur, Malaysia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Models\Tenancy;
+namespace App\Models\Auth;
 
 use Illuminate\Database\Eloquent\Builder;
 use Spatie\Permission\Models\Role as SpatieRole;
 
 /**
- * App\Models\Tenancy\Role
+ * App\Models\Auth\Role
  *
  * @property int $id
  * @property string $name
@@ -20,7 +20,7 @@ use Spatie\Permission\Models\Role as SpatieRole;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Permission\Models\Permission> $permissions
  * @property-read int|null $permissions_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Tenancy\User> $users
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Auth\User> $users
  * @property-read int|null $users_count
  * @method static Builder|Role newModelQuery()
  * @method static Builder|Role newQuery()

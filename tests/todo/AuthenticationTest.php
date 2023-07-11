@@ -7,7 +7,7 @@
 
 namespace Tests\todo;
 
-use App\Models\Tenancy\User;
+use App\Models\Auth\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;

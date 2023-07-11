@@ -10,8 +10,6 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-
-
 Route::get('/', ShowLandlordLandingPage::class);
 
 Route::get('/dashboard', function () {

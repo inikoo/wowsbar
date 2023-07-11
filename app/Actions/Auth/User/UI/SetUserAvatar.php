@@ -1,14 +1,14 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Sun, 30 Apr 2023 20:26:08 Malaysia Time, Kuala Lumpur, Malaysia
+ * Created: Tue, 11 Jul 2023 12:31:26 Malaysia Time, Kuala Lumpur, Malaysia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Tenancy\User\UI;
+namespace App\Actions\Auth\User\UI;
 
+use App\Models\Auth\User;
 use App\Models\Media\Media;
-use App\Models\Tenancy\User;
 use Exception;
 use Illuminate\Console\Command;
 use Lorisleiva\Actions\Concerns\AsAction;

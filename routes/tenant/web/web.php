@@ -26,4 +26,3 @@ Route::get('/{website}', ShowWebsite::class)->name('websites.show');
 
 Route::get('/{website}/edit', EditWebsite::class)->name('websites.edit');
 Route::get('/{website}/delete', RemoveWebsite::class)->name('websites.remove');
-

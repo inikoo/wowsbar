@@ -7,7 +7,7 @@
 
 namespace App\Models\Web;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -18,12 +18,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Web\Website|null $website
- * @method static \Illuminate\Database\Eloquent\Builder|WebsiteStats newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|WebsiteStats newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|WebsiteStats query()
- * @method static \Illuminate\Database\Eloquent\Builder|WebsiteStats whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|WebsiteStats whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|WebsiteStats whereUpdatedAt($value)
+ * @method static Builder|WebsiteStats newModelQuery()
+ * @method static Builder|WebsiteStats newQuery()
+ * @method static Builder|WebsiteStats query()
+ * @method static Builder|WebsiteStats whereCreatedAt($value)
+ * @method static Builder|WebsiteStats whereId($value)
+ * @method static Builder|WebsiteStats whereUpdatedAt($value)
  * @mixin \Eloquent
  */
 class WebsiteStats extends Model

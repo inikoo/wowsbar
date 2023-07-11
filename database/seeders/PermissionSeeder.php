@@ -8,8 +8,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\Tenancy\Permission;
-use App\Models\Tenancy\Role;
+use App\Models\Auth\Permission;
+use App\Models\Auth\Role;
 use Exception;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Storage;

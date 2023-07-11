@@ -26,7 +26,7 @@ class AppServiceProvider extends ServiceProvider
         Relation::morphMap(
             [
                 'Tenant' => 'App\Models\Tenancy\Tenant',
-                'User'   => 'App\Models\Tenancy\User',
+                'User'   => 'App\Models\Auth\User',
 
             ]
         );

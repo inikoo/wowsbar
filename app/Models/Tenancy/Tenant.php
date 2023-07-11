@@ -8,7 +8,9 @@
 namespace App\Models\Tenancy;
 
 use App\Models\Assets\Currency;
+use App\Models\Auth\User;
 use App\Models\Media\Media;
+use Database\Factories\Tenancy\TenantFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -45,7 +47,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \Spatie\MediaLibrary\MediaCollections\Models\Media> $media
  * @property-read int|null $media_count
  * @property-read \App\Models\Tenancy\TenantStats|null $stats
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Tenancy\User> $users
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, User> $users
  * @property-read int|null $users_count
  * @method static TenantCollection<int, static> all($columns = ['*'])
  * @method static \Database\Factories\Tenancy\TenantFactory factory($count = null, $state = [])

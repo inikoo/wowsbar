@@ -7,18 +7,13 @@
 
 namespace App\Actions\Web\Website\UI;
 
-use App\Actions\Auth\WebUser\IndexWebUser;
 use App\Actions\Helpers\History\IndexHistories;
 use App\Actions\InertiaAction;
 use App\Actions\UI\Dashboard\ShowDashboard;
 use App\Actions\UI\WithInertia;
-use App\Actions\Web\WebpageVariant\IndexWebpageVariants;
 use App\Enums\UI\WebsiteTabsEnum;
-use App\Http\Resources\Auth\WebUserResource;
-use App\Http\Resources\Market\WebpageResource;
-use App\Http\Resources\Market\WebsiteResource;
-use App\Http\Resources\SysAdmin\HistoryResource;
-use App\Models\Market\Shop;
+use App\Http\Resources\History\HistoryResource;
+use App\Http\Resources\Web\WebsiteResource;
 use App\Models\Web\Website;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -45,13 +40,7 @@ class ShowWebsite extends InertiaAction
         return $website;
     }
 
-    /** @noinspection PhpUnusedParameterInspection */
-    public function inShop(Shop $shop, Website $website, ActionRequest $request): Website
-    {
-        $this->initialisation($request)->withTab(WebsiteTabsEnum::values());
 
-        return $website;
-    }
 
     public function htmlResponse(Website $website, ActionRequest $request): Response
     {
@@ -79,31 +68,21 @@ class ShowWebsite extends InertiaAction
                         $this->canEdit ? [
                             'type'  => 'button',
                             'style' => 'edit',
-                            'label' => __('settings'),
-                            'icon'  => ["fal", "fa-sliders-h"],
+                            'label' => __('edit'),
                             'route' => [
                                 'name'       => preg_replace('/show$/', 'edit', $this->routeName),
                                 'parameters' => array_values($this->originalParameters)
                             ]
                         ] : false,
-                        $this->canEdit ? [
-                            'type'  => 'button',
-                            'style' => 'edit',
-                            'label' => __('workshop'),
-                            'icon'  => ["fal", "fa-drafting-compass"],
-                            'route' => [
-                                'name'       => preg_replace('/show$/', 'workshop', $this->routeName),
-                                'parameters' => array_values($this->originalParameters)
-                            ]
-                        ] : false,
-                        /*$this->canDelete ? [
+
+                        $this->canDelete ? [
                             'type'  => 'button',
                             'style' => 'delete',
                             'route' => [
                                 'name'       => 'websites.remove',
                                 'parameters' => array_values($this->originalParameters)
                             ]
-                        ] : false */
+                        ] : false
                     ],
 
                 ],
@@ -111,50 +90,11 @@ class ShowWebsite extends InertiaAction
                     'current'    => $this->tab,
                     'navigation' => WebsiteTabsEnum::navigation()
                 ],
-                WebsiteTabsEnum::WEBPAGES->value => $this->tab == WebsiteTabsEnum::WEBPAGES->value
-                    ?
-                    fn () => WebpageResource::collection(
-                        IndexWebpageVariants::run($website)
-                    )
-                    : Inertia::lazy(fn () => WebpageResource::collection(
-                        IndexWebpageVariants::run($website)
-                    )),
 
-                WebsiteTabsEnum::USERS->value => $this->tab == WebsiteTabsEnum::USERS->value
-                    ?
-                    WebUserResource::collection(
-                        IndexWebUser::run(
-                            parent: $website,
-                            prefix: 'web_users'
-                        )
-                    )
-                    : Inertia::lazy(fn () => WebUserResource::collection(
-                        IndexWebUser::run(
-                            parent: $website,
-                            prefix: 'web_users'
-                        )
-                    )),
                 WebsiteTabsEnum::CHANGELOG->value => $this->tab == WebsiteTabsEnum::CHANGELOG->value ?
                     fn () => HistoryResource::collection(IndexHistories::run($website))
                     : Inertia::lazy(fn () => HistoryResource::collection(IndexHistories::run($website)))
             ]
-        )->table(
-            IndexWebpageVariants::make()->tableStructure(
-                $website
-            )
-        )->table(
-            IndexWebUser::make()->tableStructure(
-                modelOperations: [
-                    'createLink' => $this->canEdit ? [
-                        'route' => [
-                            'name'       => 'website.show.web-users.create',
-                            'parameters' => array_values($this->originalParameters)
-                        ],
-                        'label' => __('users')
-                    ] : false,
-                ],
-                prefix: 'web_users'
-            )
         )->table(IndexHistories::make()->tableStructure());
     }
 

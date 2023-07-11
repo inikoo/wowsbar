@@ -7,12 +7,12 @@
 
 namespace App\Actions\Tenancy\Tenant;
 
-use App\Actions\Tenancy\User\StoreUser;
+use App\Actions\Auth\User\StoreUser;
 use App\Models\Assets\Country;
 use App\Models\Assets\Currency;
 use App\Models\Assets\Language;
 use App\Models\Assets\Timezone;
-use App\Models\Tenancy\Role;
+use App\Models\Auth\Role;
 use App\Models\Tenancy\Tenant;
 use Exception;
 use Illuminate\Console\Command;

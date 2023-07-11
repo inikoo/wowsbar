@@ -7,7 +7,7 @@
 
 namespace Tests\todo;
 
-use App\Models\Tenancy\User;
+use App\Models\Auth\User;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Notification;

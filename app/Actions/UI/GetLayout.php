@@ -7,9 +7,7 @@
 
 namespace App\Actions\UI;
 
-
-use App\Models\Tenancy\Role;
-use App\Models\Tenancy\User;
+use App\Models\Auth\User;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class GetLayout

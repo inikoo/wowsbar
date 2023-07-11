@@ -1,15 +1,16 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Sun, 09 Jul 2023 09:28:46 Malaysia Time, Kuala Lumpur, Malaysia
+ * Created: Tue, 11 Jul 2023 12:32:33 Malaysia Time, Kuala Lumpur, Malaysia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Models\Tenancy;
+namespace App\Models\Auth;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\Assets\Language;
 use App\Models\Media\Media;
+use App\Models\Tenancy\Tenant;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -22,7 +23,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Permission\Traits\HasRoles;
 
 /**
- * App\Models\Tenancy\User
+ * App\Models\Auth\User
  *
  * @property int $id
  * @property int $tenant_id
@@ -34,6 +35,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property \Illuminate\Support\Carbon|null $email_verified_at
  * @property mixed $password
  * @property string|null $remember_token
+ * @property string|null $about
  * @property array $data
  * @property array $settings
  * @property int $language_id
@@ -51,16 +53,16 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read int|null $permissions_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Permission\Models\Role> $roles
  * @property-read int|null $roles_count
- * @property-read \App\Models\Tenancy\UserStats|null $stats
- * @property-read \App\Models\Tenancy\Tenant $tenant
+ * @property-read \App\Models\Auth\UserStats|null $stats
+ * @property-read Tenant $tenant
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Laravel\Sanctum\PersonalAccessToken> $tokens
  * @property-read int|null $tokens_count
- * @method static \Database\Factories\Tenancy\UserFactory factory($count = null, $state = [])
  * @method static Builder|User newModelQuery()
  * @method static Builder|User newQuery()
  * @method static Builder|User permission($permissions)
  * @method static Builder|User query()
  * @method static Builder|User role($roles, $guard = null)
+ * @method static Builder|User whereAbout($value)
  * @method static Builder|User whereAvatarId($value)
  * @method static Builder|User whereContactName($value)
  * @method static Builder|User whereCreatedAt($value)

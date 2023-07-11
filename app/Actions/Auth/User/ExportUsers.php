@@ -1,18 +1,18 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Mon, 24 Apr 2023 20:23:18 Malaysia Time, Sanur, Bali, Indonesia
+ * Created: Tue, 11 Jul 2023 12:31:26 Malaysia Time, Kuala Lumpur, Malaysia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Tenancy\User;
+namespace App\Actions\Auth\User;
 
 use App\Actions\Traits\WithExportData;
+use App\Exports\User\UsersExport;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
-use App\Exports\User\UsersExport;
 
 class ExportUsers
 {

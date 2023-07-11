@@ -1,4 +1,11 @@
 <?php
+/*
+ * Author: Raul Perusquia <raul@inikoo.com>
+ * Created: Tue, 11 Jul 2023 12:36:38 Malaysia Time, Kuala Lumpur, Malaysia
+ * Copyright (c) 2023, Raul A Perusquia Flores
+ */
+
+use App\Models\Auth\User;
 
 return [
 
@@ -62,7 +69,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model'  => \App\Models\Tenancy\User::class,
+            'model'  => User::class,
         ],
 
         // 'users' => [
@@ -77,7 +84,7 @@ return [
     |--------------------------------------------------------------------------
     |
     | You may specify multiple password reset configurations if you have more
-    | than one user table or model in the application and you want to have
+    | than one user table or model in the application, and you want to have
     | separate password reset settings based on the specific user types.
     |
     | The expiry time is the number of minutes that each reset token will be

@@ -1,18 +1,18 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Mon, 24 Apr 2023 20:23:18 Malaysia Time, Sanur, Bali, Indonesia
+ * Created: Tue, 11 Jul 2023 12:31:26 Malaysia Time, Kuala Lumpur, Malaysia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Tenancy\User\UI;
+namespace App\Actions\Auth\User\UI;
 
 use App\Actions\Auth\UserRequest\IndexUserRequestLogs;
 use App\Actions\InertiaAction;
 use App\Actions\UI\SysAdmin\SysAdminDashboard;
 use App\Enums\UI\UsersTabsEnum;
-use App\Http\Resources\SysAdmin\UserRequestLogsResource;
-use App\Http\Resources\SysAdmin\UserResource;
+use App\Http\Resources\Auth\UserRequestLogsResource;
+use App\Http\Resources\Auth\UserResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\Auth\User;
 use Closure;
@@ -56,7 +56,6 @@ class IndexUsers extends InertiaAction
     }
 
 
-    /** @noinspection PhpUndefinedMethodInspection */
     public function handle($prefix = null): LengthAwarePaginator
     {
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
@@ -147,7 +146,6 @@ class IndexUsers extends InertiaAction
             [
                 'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->getName(),
-                    $request->route()->parameters
                 ),
                 'title'       => __('users'),
 
@@ -184,7 +182,7 @@ class IndexUsers extends InertiaAction
         return $this->handle(prefix: 'users');
     }
 
-    public function getBreadcrumbs(string $routeName, array $routeParameters): array
+    public function getBreadcrumbs(string $routeName): array
     {
         $headCrumb = function (array $routeParameters = []) {
             return [

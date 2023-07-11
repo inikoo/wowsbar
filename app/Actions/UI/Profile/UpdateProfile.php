@@ -7,9 +7,7 @@
 
 namespace App\Actions\UI\Profile;
 
-use App\Actions\Auth\GroupUser\UpdateGroupUser;
 use App\Actions\WithActionUpdate;
-use App\Enums\Auth\User\SynchronisableUserFieldsEnum;
 use App\Models\Auth\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\UploadedFile;
@@ -34,25 +32,17 @@ class UpdateProfile
     {
 
 
-        UpdateGroupUser::run(
-            $user->groupUser,
-            Arr::only($modelData, SynchronisableUserFieldsEnum::values())
-        );
 
         if ($avatar) {
-            $user->groupUser->addMedia($avatar)
+            $user->addMedia($avatar)
                 ->preservingOriginal()
                 ->usingFileName(Str::orderedUuid().'.'.$avatar->extension())
-                ->toMediaCollection('profile', 'group');
+                ->toMediaCollection('profile');
         }
 
 
 
-        $user->refresh();
-
-
-
-        return $this->update($user, Arr::except($modelData, SynchronisableUserFieldsEnum::values()), ['profile', 'settings']);
+        return $this->update($user, $modelData, ['profile', 'settings']);
     }
 
 
@@ -75,6 +65,10 @@ class UpdateProfile
     }
 
 
+    /**
+     * @throws \Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist
+     * @throws \Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig
+     */
     public function asController(ActionRequest $request): User
     {
         $this->fillFromRequest($request);

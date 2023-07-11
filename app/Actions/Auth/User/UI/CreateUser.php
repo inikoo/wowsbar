@@ -1,11 +1,11 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Mon, 24 Apr 2023 20:23:18 Malaysia Time, Sanur, Bali, Indonesia
+ * Created: Tue, 11 Jul 2023 12:31:26 Malaysia Time, Kuala Lumpur, Malaysia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Tenancy\User\UI;
+namespace App\Actions\Auth\User\UI;
 
 use App\Actions\InertiaAction;
 use Inertia\Inertia;
@@ -19,10 +19,7 @@ class CreateUser extends InertiaAction
         return Inertia::render(
             'CreateModel',
             [
-                'breadcrumbs' => $this->getBreadcrumbs(
-                    $request->route()->getName(),
-                    $request->route()->parameters
-                ),
+                'breadcrumbs' => $this->getBreadcrumbs($request->route()->getName()),
                 'title'       => __('new user'),
                 'pageHead'    => [
                     'title'        => __('new user'),
@@ -85,12 +82,11 @@ class CreateUser extends InertiaAction
         return $this->handle($request);
     }
 
-    public function getBreadcrumbs(string $routeName, array $routeParameters): array
+    public function getBreadcrumbs(string $routeName): array
     {
         return array_merge(
             IndexUsers::make()->getBreadcrumbs(
                 routeName: preg_replace('/create$/', 'index', $routeName),
-                routeParameters: $routeParameters,
             ),
             [
                 [

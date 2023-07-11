@@ -17,7 +17,6 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
-use Inertia\Response;
 use Inertia\Response as InertiaResponse;
 
 class MacroServiceProvider extends ServiceProvider
