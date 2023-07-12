@@ -9,7 +9,6 @@ namespace App\Actions\Web\Website\UI;
 
 use App\Actions\InertiaAction;
 use App\Actions\UI\Dashboard\ShowDashboard;
-use App\Enums\Web\Website\WebsiteStateEnum;
 use App\Http\Resources\Web\WebsiteResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\Web\Website;
@@ -46,18 +45,7 @@ class IndexWebsites extends InertiaAction
     {
         $this->elementGroups =
             [
-                'state' => [
-                    'label'    => __('State'),
-                    'elements' => array_merge_recursive(
-                        WebsiteStateEnum::labels(),
-                        WebsiteStateEnum::count()
-                    ),
 
-                    'engine' => function ($query, $elements) {
-                        $query->whereIn('websites.state', $elements);
-                    }
-
-                ]
             ];
     }
 
