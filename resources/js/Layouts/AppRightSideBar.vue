@@ -27,12 +27,12 @@ const layout = useLayoutStore()
 </script>
 
 <template>
-    <div class="relative bg-gray-800 text-xs h-full border-l border-gray-200 space-y-4">
+    <div class="bg-gray-800 text-xs h-full border-l border-gray-200 space-y-4">
         <TransitionGroup name="list" tag="ul">
             <!-- Online Users -->
             <li class="text-white" v-if="layout.rightSidebar.activeUsers" key="1">
-                <div class="pl-2.5 pr-1.5 py-1 bg-gray-200 text-gray-800 leading-none">
-                    <div class="w-full text-right bg-red-500">Active Users</div>
+                <div class="pl-2.5 pr-1.5 py-1 bg-gray-200 text-gray-800 flex items-center leading-none">
+                    <div>Active Users</div>
                 </div>
                 <div v-for="(option, index) in activities"
                     class="pl-2.5 pr-1.5 flex justify-start items-center py-1 gap-x-2.5 cursor-default">
