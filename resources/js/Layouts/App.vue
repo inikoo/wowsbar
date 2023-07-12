@@ -26,7 +26,7 @@ import { useLayoutStore } from "@/Stores/layout"
 import { useLocaleStore } from "@/Stores/locale"
 
 import AppLeftSideBar from "@/Layouts/AppLeftSideBar.vue"
-// import AppRightSideBar from "@/Layouts/AppRightSideBar.vue"
+import AppRightSideBar from "@/Layouts/AppRightSideBar.vue"
 import AppTopBar from "@/Layouts/TopBar/AppTopBar.vue"
 import Breadcrumbs from "@/Components/Navigation/Breadcrumbs.vue"
 
@@ -186,7 +186,7 @@ const user = ref(usePage().props.auth.user);
 
 <template>
     <link rel="shortcut icon" type="image/png" href="/favicon.png"/>
-    <div class="relative min-h-full mr-44 transition-all duration-200 ease-in-out"
+    <div class="relative min-h-full transition-all duration-200 ease-in-out"
         :class="[Object.values(layout.rightSidebar).some(value => value === true) ? 'mr-44' : 'mr-0']"
     >
 
@@ -332,9 +332,9 @@ const user = ref(usePage().props.auth.user);
         </main>
 
         <!-- Sidebar: Right -->
-        <!-- <AppRightSideBar class="fixed top-16 w-44 transition-all duration-200 ease-in-out"
+        <AppRightSideBar class="fixed top-16 w-44 transition-all duration-200 ease-in-out"
             :class="[Object.values(layout.rightSidebar).some(value => value === true) ? 'right-0' : '-right-44']"
-        /> -->
+        />
 
     </div>
 

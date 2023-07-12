@@ -9,6 +9,7 @@ namespace App\Models\Web;
 
 use App\Models\Tenancy\Tenant;
 use App\Models\Traits\HasUniversalSearch;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -30,28 +31,27 @@ use Spatie\Sluggable\SlugOptions;
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read \App\Models\Web\WebsiteStats|null $stats
  * @property-read Tenant $tenant
- * @method static \Illuminate\Database\Eloquent\Builder|Website newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Website newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Website onlyTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder|Website query()
- * @method static \Illuminate\Database\Eloquent\Builder|Website whereCode($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Website whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Website whereData($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Website whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Website whereDomain($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Website whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Website whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Website whereSlug($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Website whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Website withTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder|Website withoutTrashed()
+ * @method static Builder|Website newModelQuery()
+ * @method static Builder|Website newQuery()
+ * @method static Builder|Website onlyTrashed()
+ * @method static Builder|Website query()
+ * @method static Builder|Website whereCode($value)
+ * @method static Builder|Website whereCreatedAt($value)
+ * @method static Builder|Website whereData($value)
+ * @method static Builder|Website whereDeletedAt($value)
+ * @method static Builder|Website whereDomain($value)
+ * @method static Builder|Website whereId($value)
+ * @method static Builder|Website whereName($value)
+ * @method static Builder|Website whereSlug($value)
+ * @method static Builder|Website whereUpdatedAt($value)
+ * @method static Builder|Website withTrashed()
+ * @method static Builder|Website withoutTrashed()
  * @mixin \Eloquent
  */
 class Website extends Model
 {
     use HasSlug;
     use SoftDeletes;
-    use HasUniversalSearch;
 
     protected $casts = [
         'data'      => 'array',
