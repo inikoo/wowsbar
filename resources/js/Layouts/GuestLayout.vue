@@ -27,9 +27,10 @@ watchEffect(() => {
 
 <template>
 
-    <div class="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+    <div class="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8 ">
         <div class="sm:mx-auto sm:w-full sm:max-w-md">
-            <h2 class="font-logo mt-6 text-center text-3xl text-purple-600">@{{layout.tenant.code}} 😃</h2>
+            <img class="mx-auto h-16 -mb-3 w-auto" src="/art/logo-no-background.png" alt="Wowsbar" />
+            <h2 class="font-logo mt-6 text-center text-3xl text-gray-600">@{{layout.tenant.code}} 😃</h2>
 
         </div>
 
