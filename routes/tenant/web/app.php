@@ -21,9 +21,9 @@ Route::middleware([
         Route::prefix("dashboard")
             ->name("dashboard.")
             ->group(__DIR__."/dashboard.php");
-        Route::prefix("account")
-            ->name("account.")
-            ->group(__DIR__."/account.php");
+        Route::prefix("tenant")
+            ->name("tenant.")
+            ->group(__DIR__."/tenant.php");
         Route::prefix("web")
             ->name("web.")
             ->group(__DIR__."/web.php");

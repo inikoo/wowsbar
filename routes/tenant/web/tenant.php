@@ -6,6 +6,6 @@
  */
 
 
-use App\Actions\Tenancy\Tenant\ShowAccount;
+use App\Actions\Tenancy\Tenant\ShowTenant;
 
-Route::get('/', ShowAccount::class)->name('show');
+Route::get('/', ShowTenant::class)->name('show');
