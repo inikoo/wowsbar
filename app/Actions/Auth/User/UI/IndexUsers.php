@@ -18,7 +18,6 @@ use App\Models\Auth\User;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use Illuminate\Support\Arr;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -38,20 +37,7 @@ class IndexUsers extends InertiaAction
                         $query->where('status', array_pop($elements) === 'active');
                     }
 
-                ],
-                'type'   => [
-                    'label'    => __('Type'),
-                    'elements' => ['employee' => __('Employee'), 'guest' => __('Guest')],
-                    'engine'   => function ($query, $elements) {
-                        $query->whereIn(
-                            'parent_type',
-                            Arr::map($elements, function (string $value, string $key) {
-                                return ucfirst($value);
-                            })
-                        );
-                    }
-
-                ],
+                ]
             ];
     }
 
@@ -82,10 +68,10 @@ class IndexUsers extends InertiaAction
         }
 
 
-        return $queryBuilder->with('parent')
+        return $queryBuilder
             ->defaultSort('username')
-            ->select(['username', 'parent_type', 'parent_id', 'email', 'contact_name', 'avatar_id'])
-            ->allowedSorts(['username', 'email', 'parent_type', 'contact_name'])
+            ->select(['username', 'email', 'contact_name', 'avatar_id'])
+            ->allowedSorts(['username', 'email', 'contact_name'])
             ->allowedFilters([$globalSearch])
             ->withPaginator($prefix)
             ->withQueryString();
@@ -116,7 +102,6 @@ class IndexUsers extends InertiaAction
                 ->column(key: 'avatar', label: ['fal', 'fa-user-circle'])
                 ->column(key: 'username', label: __('username'), canBeHidden: false, sortable: true, searchable: true)
                 ->column(key: 'contact_name', label: __('name'), canBeHidden: false, sortable: true, searchable: true)
-                ->column(key: 'parent_type', label: __('type'), canBeHidden: false, sortable: true)
                 ->defaultSort('username');
         };
     }
