@@ -9,9 +9,7 @@ namespace App\Actions\Web\Website\UI;
 
 use App\Actions\InertiaAction;
 use App\Actions\UI\Dashboard\ShowDashboard;
-use App\Enums\Web\Website\WebsiteStateEnum;
-use App\Http\Resources\Market\ShopResource;
-use App\Http\Resources\Market\WebsiteResource;
+use App\Http\Resources\Web\WebsiteResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\Web\Website;
 use Closure;
@@ -47,18 +45,7 @@ class IndexWebsites extends InertiaAction
     {
         $this->elementGroups =
             [
-                'state' => [
-                    'label'    => __('State'),
-                    'elements' => array_merge_recursive(
-                        WebsiteStateEnum::labels(),
-                        WebsiteStateEnum::count()
-                    ),
 
-                    'engine' => function ($query, $elements) {
-                        $query->whereIn('websites.state', $elements);
-                    }
-
-                ]
             ];
     }
 
@@ -89,7 +76,7 @@ class IndexWebsites extends InertiaAction
 
         return $queryBuilder
             ->defaultSort('websites.code')
-            ->select(['websites.code', 'websites.name', 'websites.slug', 'websites.domain', 'in_maintenance', 'websites.state'])
+            ->select(['websites.code', 'websites.name', 'websites.slug', 'websites.domain'])
             ->allowedSorts(['slug', 'code', 'name'])
             ->allowedFilters([$globalSearch])
             ->withPaginator($prefix)
@@ -119,11 +106,10 @@ class IndexWebsites extends InertiaAction
                 ->withEmptyState(
                     [
                         'title' => __('No websites found'),
-                        'count' => app('currentTenant')->webStats->number_websites,
+                        'count' => app('currentTenant')->stats->number_websites,
 
                     ]
                 )
-                ->column(key: 'state', label: ['fal', 'fa-yin-yang'], sortable: true)
                 ->column(key: 'slug', label: __('code'), sortable: true)
                 ->column(key: 'name', label: __('name'), sortable: true)
                 ->column(key: 'domain', label: __('domain'), sortable: true)
@@ -133,7 +119,7 @@ class IndexWebsites extends InertiaAction
 
     public function jsonResponse(): AnonymousResourceCollection
     {
-        return ShopResource::collection($this->handle());
+        return WebsiteResource::collection($this->handle());
     }
 
     public function htmlResponse(LengthAwarePaginator $websites, ActionRequest $request): Response
@@ -156,8 +142,8 @@ class IndexWebsites extends InertiaAction
                         $this->canEdit ? [
                             'type'    => 'button',
                             'style'   => 'create',
-                            'tooltip' => __('Create a no shop connected website'),
-                            'label'   => __('new static website'),
+                            'tooltip' => __('Create website'),
+                            'label'   => __('new website'),
                             'route'   => [
                                 'name' => 'web.websites.create',
                             ]

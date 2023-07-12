@@ -7,6 +7,7 @@
 
 namespace App\Actions\Auth\User;
 
+use App\Actions\Auth\User\Hydrators\UserHydrateUniversalSearch;
 use App\Actions\Auth\User\UI\SetUserAvatar;
 use App\Models\Auth\User;
 use App\Models\Tenancy\Tenant;
@@ -31,6 +32,8 @@ class StoreUser
         $user = $tenant->users()->create($objectData);
         $user->stats()->create();
         SetUserAvatar::run($user);
+
+        UserHydrateUniversalSearch::dispatch($user);
 
         return $user;
     }

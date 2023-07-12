@@ -16,6 +16,17 @@ return new class () extends Migration {
             $table->smallIncrements('id');
             $table->unsignedSmallInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
+
+            $table->unsignedInteger('number_logins')->default(0);
+            $table->datetime('last_login_at')->nullable();
+            $table->string('last_login_ip')->nullable();
+
+            $table->datetime('last_active_at')->nullable();
+
+            $table->unsignedInteger('number_failed_logins')->default(0);
+            $table->string('last_failed_login_ip')->nullable();
+            $table->datetime('last_failed_login_at')->nullable();
+
             $table->timestampsTz();
         });
     }
