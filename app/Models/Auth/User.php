@@ -11,6 +11,7 @@ namespace App\Models\Auth;
 use App\Models\Assets\Language;
 use App\Models\Media\Media;
 use App\Models\Tenancy\Tenant;
+use App\Models\Traits\HasUniversalSearch;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -89,6 +90,7 @@ class User extends Authenticatable implements HasMedia
     use Notifiable;
     use HasRoles;
     use InteractsWithMedia;
+    use HasUniversalSearch;
 
     protected $casts = [
         'data'              => 'array',
