@@ -8,6 +8,7 @@
 namespace App\Models\Web;
 
 use App\Models\Tenancy\Tenant;
+use App\Models\Traits\HasUniversalSearch;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -50,6 +51,7 @@ class Website extends Model
 {
     use HasSlug;
     use SoftDeletes;
+    use HasUniversalSearch;
 
     protected $casts = [
         'data'      => 'array',
