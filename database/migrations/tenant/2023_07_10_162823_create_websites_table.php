@@ -14,6 +14,8 @@ return new class () extends Migration {
     {
         Schema::create('websites', function (Blueprint $table) {
             $table->smallIncrements('id');
+            $table->unsignedSmallInteger('tenant_id')->index();
+            $table->foreign('tenant_id')->references('id')->on('tenants');
             $table->string('slug')->unique()->collation('und_ns');
             $table->string('code')->unique()->collation('und_ns');
             $table->string('domain')->unique()->collation('und_ns');

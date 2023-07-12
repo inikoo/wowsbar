@@ -10,6 +10,7 @@ namespace App\Models\Tenancy;
 use App\Models\Assets\Currency;
 use App\Models\Auth\User;
 use App\Models\Media\Media;
+use App\Models\Web\Website;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -118,6 +119,11 @@ class Tenant extends SpatieTenant implements HasMedia
     public function users(): HasMany
     {
         return $this->hasMany(User::class);
+    }
+
+    public function websites(): HasMany
+    {
+        return $this->hasMany(Website::class);
     }
 
     public function logo(): HasOne
