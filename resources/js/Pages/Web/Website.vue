@@ -14,7 +14,6 @@ import { useTabChange } from "@/Composables/tab-change";
 import ModelDetails from "@/Pages/ModelDetails.vue";
 import Tabs from "@/Components/Navigation/Tabs.vue";
 import { faClock } from "@/../private/pro-solid-svg-icons";
-import TableWebpages from "@/Pages/Tables/TableWebpages.vue";
 import { capitalize } from "@/Composables/capitalize"
 import TableHistories from "@/Pages/Tables/TableHistories.vue";
 
@@ -39,7 +38,6 @@ const props = defineProps<{
         current: string;
         navigation: object;
     }
-    webpages?: string;
     changelog?: object
 }>()
 
@@ -49,7 +47,6 @@ const handleTabUpdate = (tabSlug) => useTabChange(tabSlug, currentTab);
 const component = computed(() => {
 
     const components = {
-        webpages: TableWebpages,
         details: ModelDetails,
         changelog: TableHistories,
     };
