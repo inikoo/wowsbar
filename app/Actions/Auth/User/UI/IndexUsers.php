@@ -82,10 +82,10 @@ class IndexUsers extends InertiaAction
         }
 
 
-        return $queryBuilder->with('parent')
+        return $queryBuilder
             ->defaultSort('username')
-            ->select(['username', 'parent_type', 'parent_id', 'email', 'contact_name', 'avatar_id'])
-            ->allowedSorts(['username', 'email', 'parent_type', 'contact_name'])
+            ->select(['username', 'email', 'contact_name', 'avatar_id'])
+            ->allowedSorts(['username', 'email', 'contact_name'])
             ->allowedFilters([$globalSearch])
             ->withPaginator($prefix)
             ->withQueryString();
@@ -116,7 +116,9 @@ class IndexUsers extends InertiaAction
                 ->column(key: 'avatar', label: ['fal', 'fa-user-circle'])
                 ->column(key: 'username', label: __('username'), canBeHidden: false, sortable: true, searchable: true)
                 ->column(key: 'contact_name', label: __('name'), canBeHidden: false, sortable: true, searchable: true)
-                ->column(key: 'parent_type', label: __('type'), canBeHidden: false, sortable: true)
+                ->column(key: 'email', label: __('email'), canBeHidden: false, sortable: true, searchable: true)
+                ->column(key: 'roles', label: __('roles'), canBeHidden: false, sortable: true, searchable: true)
+                ->column(key: 'permissions', label: __('permissions'), canBeHidden: false, sortable: true, searchable: true)
                 ->defaultSort('username');
         };
     }

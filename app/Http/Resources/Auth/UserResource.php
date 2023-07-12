@@ -24,6 +24,7 @@ class UserResource extends JsonResource
             'id'                 => $user->id,
             'username'           => $user->username,
             'avatar'             => $this->avatar_id,
+            'email'              => $user->email,
             'contact_name'       => $user->contact_name,
             'roles'              => $user->getRoleNames(),
             'direct-permissions' => $user->getDirectPermissions(),

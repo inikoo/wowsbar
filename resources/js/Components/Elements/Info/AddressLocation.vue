@@ -11,9 +11,9 @@ const props = defineProps<{
     data: string[]
 }>()
 
-const countryCode=props.data[0]
-const countryName=props.data[1]
-const addressLocation=props.data[2]??''
+const countryCode= props.data ? props.data[0] : null
+const countryName=props.data ? props.data[1] : null
+const addressLocation=props.data ? props.data[2] : null
 
 let flag=null;
 if(countryCode){
