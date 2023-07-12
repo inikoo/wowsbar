@@ -7,13 +7,10 @@
 
 namespace App\Actions\Auth\User;
 
-use App\Actions\Auth\GroupUser\UpdateGroupUser;
 use App\Actions\WithActionUpdate;
-use App\Enums\Auth\User\SynchronisableUserFieldsEnum;
-use App\Http\Resources\SysAdmin\UserResource;
+use App\Http\Resources\Auth\UserResource;
 use App\Models\Auth\User;
 use App\Rules\AlphaDashDot;
-use Illuminate\Support\Arr;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Validation\Validator;
 use Lorisleiva\Actions\ActionRequest;
