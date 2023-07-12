@@ -52,6 +52,7 @@ class Website extends Model
 {
     use HasSlug;
     use SoftDeletes;
+    use HasUniversalSearch;
 
     protected $casts = [
         'data'      => 'array',
