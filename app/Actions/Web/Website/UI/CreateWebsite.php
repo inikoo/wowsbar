@@ -8,13 +8,7 @@
 namespace App\Actions\Web\Website\UI;
 
 use App\Actions\InertiaAction;
-use App\Actions\Market\Shop\UI\ShowShop;
-use App\Models\Market\Shop;
-use App\Models\Tenancy\Tenant;
-use Exception;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -23,64 +17,30 @@ class CreateWebsite extends InertiaAction
 {
     public function authorize(ActionRequest $request): bool
     {
-        return $request->user()->can('shops.edit');
+        return $request->user()->can('websites.edit');
     }
 
 
-    /**
-     * @throws \Exception
-     */
-    public function inTenant(ActionRequest $request): Response|RedirectResponse
+    public function asController(ActionRequest $request): Response|RedirectResponse
     {
         $this->initialisation($request);
 
-        return $this->handle(app('currentTenant'), $request);
+        return $this->handle();
     }
 
-    /**
-     * @throws Exception
-     */
-    public function inShop(Shop $shop, ActionRequest $request): Response|RedirectResponse
+
+    public function handle(): Response
     {
-        $this->initialisation($request);
-        if ($shop->website) {
-            return Redirect::route('web.websites.show', [
-                $shop->website->slug
-            ]);
-        }
-
-        return $this->handle($shop, $request);
-    }
-
-    /**
-     * @throws Exception
-     */
-    public function handle(Tenant|Shop $parent, ActionRequest $request): Response
-    {
-        $scope     = $parent;
-        $container = null;
-        if (class_basename($scope) == 'Shop') {
-            $container = [
-                'icon'    => ['fal', 'fa-store-alt'],
-                'tooltip' => __('Shop'),
-                'label'   => Str::possessive($scope->name)
-            ];
-        }
-
         return Inertia::render(
             'CreateModel',
             [
-                'breadcrumbs' => $this->getBreadcrumbs(
-                    $scope,
-                    routeParameters: $request->route()->parameters
-                ),
+                'breadcrumbs' => $this->getBreadcrumbs(),
                 'title'       => __('new website'),
                 'pageHead'    => [
                     'title'        => __('website'),
-                    'container'    => $container,
                     'cancelCreate' => [
                         'route' => [
-                            'name'       => 'shops.show',
+                            'name'       => 'websites.index',
                             'parameters' => array_values($this->originalParameters)
                         ],
                     ]
@@ -96,7 +56,7 @@ class CreateWebsite extends InertiaAction
                                     'type'      => 'inputWithAddOn',
                                     'label'     => __('domain'),
                                     'leftAddOn' => [
-                                        'label' => 'http://www.'
+                                        'label' => 'http://'
                                     ],
                                     'required'  => true,
                                 ],
@@ -126,16 +86,9 @@ class CreateWebsite extends InertiaAction
 
 
                     ],
-                    'route'     =>
-                        match (class_basename($scope)) {
-                            'Shop' => [
-                                'name'      => 'models.shop.website.store',
-                                'arguments' => [$parent->slug]
-                            ],
-                            'Tenant' => [
-                                'name' => 'models.website.store',
-                            ],
-                        }
+                    'route'     => [
+                        'name' => 'models.website.store',
+                    ],
 
 
                 ],
@@ -145,37 +98,22 @@ class CreateWebsite extends InertiaAction
     }
 
 
-    public function getBreadcrumbs(Tenant|Shop $scope, $routeParameters): array
+    public function getBreadcrumbs(): array
     {
-        return match (class_basename($scope)) {
-            'Shop' => array_merge(
-                ShowShop::make()->getBreadcrumbs(
-                    $routeParameters
-                ),
+        return array_merge(
+            IndexWebsites::make()->getBreadcrumbs(
+                'web.websites.index',
+                []
+            ),
+            [
                 [
-                    [
-                        'type'          => 'creatingModel',
-                        'creatingModel' => [
-                            'label' => __("creating website"),
-                        ]
+                    'type'          => 'creatingModel',
+                    'creatingModel' => [
+                        'label' => __("creating website"),
                     ]
                 ]
-            ),
-            'Tenant' => array_merge(
-                IndexWebsites::make()->getBreadcrumbs(
-                    'web.websites.index',
-                    []
-                ),
-                [
-                    [
-                        'type'          => 'creatingModel',
-                        'creatingModel' => [
-                            'label' => __("creating website"),
-                        ]
-                    ]
-                ]
-            ),
-        };
+            ]
+        );
     }
 
 
