@@ -36,6 +36,9 @@ Route::middleware([
         Route::prefix("sysadmin")
             ->name("sysadmin.")
             ->group(__DIR__."/sysadmin.php");
+        Route::prefix("models")
+            ->name("models.")
+            ->group(__DIR__."/models.php");
 
     });
 
