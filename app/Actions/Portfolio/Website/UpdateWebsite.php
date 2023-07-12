@@ -5,11 +5,11 @@
  *  Copyright (c) 2022, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Web\Website;
+namespace App\Actions\Portfolio\Website;
 
 use App\Actions\WithActionUpdate;
-use App\Http\Resources\Web\WebsiteResource;
-use App\Models\Web\Website;
+use App\Http\Resources\Portfolio\WebsiteResource;
+use App\Models\Portfolio\Website;
 use Lorisleiva\Actions\ActionRequest;
 
 class UpdateWebsite
@@ -25,7 +25,7 @@ class UpdateWebsite
 
     public function authorize(ActionRequest $request): bool
     {
-        return $request->user()->hasPermissionTo("websites.edit");
+        return $request->user()->can("websites.edit");
     }
 
 

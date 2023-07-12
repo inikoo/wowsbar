@@ -5,7 +5,7 @@
  * Copyright (c) 2023, Inikoo LTD
  */
 
-namespace App\Actions\Web\Website\UI;
+namespace App\Actions\Portfolio\Website\UI;
 
 use App\Actions\InertiaAction;
 use Illuminate\Http\RedirectResponse;
@@ -17,7 +17,7 @@ class CreateWebsite extends InertiaAction
 {
     public function authorize(ActionRequest $request): bool
     {
-        return $request->user()->can('websites.edit');
+        return $request->user()->can('portfolio.edit');
     }
 
 
@@ -102,7 +102,7 @@ class CreateWebsite extends InertiaAction
     {
         return array_merge(
             IndexWebsites::make()->getBreadcrumbs(
-                'web.websites.index',
+                'portfolio.websites.index',
                 []
             ),
             [

@@ -5,10 +5,10 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Web\Website\UI;
+namespace App\Actions\Portfolio\Website\UI;
 
 use App\Actions\InertiaAction;
-use App\Models\Web\Website;
+use App\Models\Portfolio\Website;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -22,7 +22,7 @@ class RemoveWebsite extends InertiaAction
 
     public function authorize(ActionRequest $request): bool
     {
-        return $request->user()->hasPermissionTo("inventory.edit");
+        return $request->user()->can("inventory.edit");
     }
 
     public function asController(Website $website, ActionRequest $request): Website

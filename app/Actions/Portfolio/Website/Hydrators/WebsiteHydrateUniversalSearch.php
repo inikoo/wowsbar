@@ -5,10 +5,10 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Web\Website\Hydrators;
+namespace App\Actions\Portfolio\Website\Hydrators;
 
 use App\Models\Auth\User;
-use App\Models\Web\Website;
+use App\Models\Portfolio\Website;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class WebsiteHydrateUniversalSearch
@@ -21,7 +21,7 @@ class WebsiteHydrateUniversalSearch
             [
                 'section' => 'Website',
                 'route'   => json_encode([
-                    'name'      => 'web.websites.show',
+                    'name'      => 'portfolio.websites.show',
                     'arguments' => [
                         $website->slug
                     ]

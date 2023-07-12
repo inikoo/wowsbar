@@ -22,7 +22,7 @@ class EditSystemSettings
 
     public function authorize(ActionRequest $request): bool
     {
-        return $request->user()->hasPermissionTo("sysadmin.edit");
+        return $request->user()->can("sysadmin.edit");
     }
 
 

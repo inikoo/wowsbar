@@ -38,20 +38,7 @@ class IndexUsers extends InertiaAction
                         $query->where('status', array_pop($elements) === 'active');
                     }
 
-                ],
-                'type'   => [
-                    'label'    => __('Type'),
-                    'elements' => ['employee' => __('Employee'), 'guest' => __('Guest')],
-                    'engine'   => function ($query, $elements) {
-                        $query->whereIn(
-                            'parent_type',
-                            Arr::map($elements, function (string $value, string $key) {
-                                return ucfirst($value);
-                            })
-                        );
-                    }
-
-                ],
+                ]
             ];
     }
 
@@ -130,7 +117,7 @@ class IndexUsers extends InertiaAction
         return
             (
                 $request->user()->tokenCan('root') or
-                $request->user()->hasPermissionTo('sysadmin.view')
+                $request->user()->can('sysadmin.view')
             );
     }
 

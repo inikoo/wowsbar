@@ -91,10 +91,10 @@ const getActionIcon = (action) => {
                     {{ data.container.label }}
                 </span>
 
-                <FontAwesomeIcon v-if="data.icon" :title="capitalize(data.icon.title)" aria-hidden="true"
+                <FontAwesomeIcon v-if="data.icon" :title="capitalize(data.icon.tooltip??'')" aria-hidden="true"
                                  :icon="data.icon.icon" size="xs" class="pr-2" />
                 {{ data.title }}
-                <FontAwesomeIcon v-if="data.iconRight" :title="capitalize(data.iconRight.title)" aria-hidden="true"
+                <FontAwesomeIcon v-if="data.iconRight" :title="capitalize(data.iconRight.tooltip??'')" aria-hidden="true"
                                  :icon="data.iconRight.icon"  class="pl-1 h-4 mb-0.5" />
             </h2>
             <div class="mt-1 flex flex-col sm:mt-0 sm:flex-row sm:flex-wrap sm:space-x-6">

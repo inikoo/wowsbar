@@ -5,13 +5,13 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Web\Website\UI;
+namespace App\Actions\Portfolio\Website\UI;
 
 use App\Actions\InertiaAction;
 use App\Actions\UI\Dashboard\ShowDashboard;
-use App\Http\Resources\Web\WebsiteResource;
+use App\Http\Resources\Portfolio\WebsiteResource;
 use App\InertiaTable\InertiaTable;
-use App\Models\Web\Website;
+use App\Models\Portfolio\Website;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -25,12 +25,12 @@ class IndexWebsites extends InertiaAction
 {
     public function authorize(ActionRequest $request): bool
     {
-        $this->canEdit = $request->user()->can('websites.edit');
+        $this->canEdit = $request->user()->can('portfolio.edit');
 
         return
             (
                 $request->user()->tokenCan('root') or
-                $request->user()->hasPermissionTo('websites.view')
+                $request->user()->can('portfolio.view')
             );
     }
 
@@ -125,7 +125,7 @@ class IndexWebsites extends InertiaAction
     public function htmlResponse(LengthAwarePaginator $websites, ActionRequest $request): Response
     {
         return Inertia::render(
-            'Web/Websites',
+            'Portfolio/Websites',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->getName(),
@@ -145,7 +145,7 @@ class IndexWebsites extends InertiaAction
                             'tooltip' => __('Create website'),
                             'label'   => __('new website'),
                             'route'   => [
-                                'name' => 'web.websites.create',
+                                'name' => 'portfolio.websites.create',
                             ]
                         ] : false,
 
@@ -175,12 +175,12 @@ class IndexWebsites extends InertiaAction
         };
 
         return match ($routeName) {
-            'web.websites.index' =>
+            'portfolio.websites.index' =>
             array_merge(
                 ShowDashboard::make()->getBreadcrumbs(),
                 $headCrumb(
                     [
-                        'name' => 'web.websites.index',
+                        'name' => 'portfolio.websites.index',
                         null
                     ]
                 ),

@@ -39,7 +39,7 @@ class ShowUser extends InertiaAction
     public function authorize(ActionRequest $request): bool
     {
         $this->canEdit = $request->user()->can('sysadmin.users.edit');
-        return $request->user()->hasPermissionTo("sysadmin.view");
+        return $request->user()->can("sysadmin.view");
     }
 
     public function htmlResponse(User $user, ActionRequest $request): Response

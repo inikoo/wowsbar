@@ -5,19 +5,19 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Models\Web;
+namespace App\Models\Portfolio;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * App\Models\Web\WebsiteStats
+ * App\Models\Portfolio\WebsiteStats
  *
  * @property int $id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Models\Web\Website|null $website
+ * @property-read \App\Models\Portfolio\Website|null $website
  * @method static Builder|WebsiteStats newModelQuery()
  * @method static Builder|WebsiteStats newQuery()
  * @method static Builder|WebsiteStats query()

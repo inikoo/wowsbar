@@ -5,11 +5,11 @@
  *  Copyright (c) 2022, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Web\Website;
+namespace App\Actions\Portfolio\Website;
 
 
 use App\Actions\Tenancy\Tenant\Hydrators\TenantHydrateWeb;
-use App\Models\Web\Website;
+use App\Models\Portfolio\Website;
 use App\Rules\CaseSensitive;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
@@ -41,7 +41,7 @@ class StoreWebsite
 
     public function authorize(ActionRequest $request): bool
     {
-        return $request->user()->hasPermissionTo("websites.edit");
+        return $request->user()->can("websites.edit");
     }
 
     public function rules(): array

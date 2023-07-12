@@ -5,7 +5,7 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Web\Website\UI;
+namespace App\Actions\Portfolio\Website\UI;
 
 use App\Actions\Helpers\History\IndexHistories;
 use App\Actions\InertiaAction;
@@ -13,8 +13,8 @@ use App\Actions\UI\Dashboard\ShowDashboard;
 use App\Actions\UI\WithInertia;
 use App\Enums\UI\WebsiteTabsEnum;
 use App\Http\Resources\History\HistoryResource;
-use App\Http\Resources\Web\WebsiteResource;
-use App\Models\Web\Website;
+use App\Http\Resources\Portfolio\WebsiteResource;
+use App\Models\Portfolio\Website;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -28,9 +28,9 @@ class ShowWebsite extends InertiaAction
 
     public function authorize(ActionRequest $request): bool
     {
-        $this->canEdit   = $request->user()->can('websites.edit');
-        $this->canDelete = $request->user()->can('websites.edit');
-        return $request->user()->hasPermissionTo("shops.websites.view");
+        $this->canEdit   = $request->user()->can('portfolio.edit');
+        $this->canDelete = $request->user()->can('portfolio.edit');
+        return $request->user()->can("shops.websites.view");
     }
 
     public function asController(Website $website, ActionRequest $request): Website
@@ -47,7 +47,7 @@ class ShowWebsite extends InertiaAction
         $this->validateAttributes();
 
         return Inertia::render(
-            'Web/Website',
+            'Portfolio/Website',
             [
                 'title'       => __('Website'),
                 'breadcrumbs' => $this->getBreadcrumbs(
@@ -137,8 +137,8 @@ class ShowWebsite extends InertiaAction
 
 
         return match ($routeName) {
-            'web.websites.show',
-            'web.websites.edit' =>
+            'portfolio.websites.show',
+            'portfolio.websites.edit' =>
 
             array_merge(
                 ShowDashboard::make()->getBreadcrumbs(),
@@ -147,11 +147,11 @@ class ShowWebsite extends InertiaAction
                     $routeParameters['website'],
                     [
                         'index' => [
-                            'name'       => 'web.websites.index',
+                            'name'       => 'portfolio.websites.index',
                             'parameters' => []
                         ],
                         'model' => [
-                            'name'       => 'web.websites.show',
+                            'name'       => 'portfolio.websites.show',
                             'parameters' => [$routeParameters['website']->slug]
                         ]
                     ],
@@ -184,7 +184,7 @@ class ShowWebsite extends InertiaAction
         }
 
         return match ($routeName) {
-            'web.websites.show' => [
+            'portfolio.websites.show' => [
                 'label' => $website->name,
                 'route' => [
                     'name'       => $routeName,

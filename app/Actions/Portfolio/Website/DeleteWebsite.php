@@ -5,9 +5,9 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Web\Website;
+namespace App\Actions\Portfolio\Website;
 
-use App\Models\Web\Website;
+use App\Models\Portfolio\Website;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
 use Lorisleiva\Actions\ActionRequest;
@@ -28,7 +28,7 @@ class DeleteWebsite
 
     public function authorize(ActionRequest $request): bool
     {
-        return $request->user()->hasPermissionTo("websites.edit");
+        return $request->user()->can("websites.edit");
     }
 
     public function asController(Website $website, ActionRequest $request): Website
@@ -41,7 +41,7 @@ class DeleteWebsite
 
     public function htmlResponse(): RedirectResponse
     {
-        return Redirect::route('web.websites.index');
+        return Redirect::route('portfolio.websites.index');
     }
 
 }
