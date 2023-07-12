@@ -8,6 +8,7 @@
 namespace App\Models\Web;
 
 use App\Models\Tenancy\Tenant;
+use App\Models\Traits\HasUniversalSearch;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
