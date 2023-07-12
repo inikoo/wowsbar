@@ -6,10 +6,10 @@
  */
 
 
-use App\Actions\Auth\User\DeleteWebsite;
 use App\Actions\Auth\User\UpdateUser;
 use App\Actions\Tenancy\Tenant\UpdateSystemSettings;
 use App\Actions\UI\Profile\UpdateProfile;
+use App\Actions\Web\Website\DeleteWebsite;
 use App\Actions\Web\Website\UpdateWebsite;
 
 Route::patch('/website/{website}', UpdateWebsite::class)->name('website.update');

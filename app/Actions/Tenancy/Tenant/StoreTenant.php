@@ -29,17 +29,21 @@ class StoreTenant
     {
         $tenant = Tenant::create($modelData);
         $tenant->stats()->create();
-
-        $user=StoreUser::run($tenant, $userData);
-
-        $superAdminRole=Role::where('name', 'super-admin')->firstOrFail();
-        $user->assignRole($superAdminRole);
-
         $tenant->execute(
             function (Tenant $tenant) {
                 SetTenantLogo::run($tenant);
             }
         );
+
+        $tenant->execute(
+            function (Tenant $tenant) use ($userData){
+                $user = StoreUser::run($tenant, $userData);
+
+                $superAdminRole = Role::where('name', 'super-admin')->firstOrFail();
+                $user->assignRole($superAdminRole);
+            });
+
+
 
 
         return $tenant;
