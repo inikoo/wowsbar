@@ -9,6 +9,7 @@ namespace App\Actions\Auth\User;
 
 use App\Actions\Auth\User\Hydrators\UserHydrateUniversalSearch;
 use App\Actions\Auth\User\UI\SetUserAvatar;
+use App\Actions\Tenancy\Tenant\Hydrators\TenantHydrateUsers;
 use App\Models\Auth\User;
 use App\Models\Tenancy\Tenant;
 use App\Rules\AlphaDashDot;
@@ -34,7 +35,7 @@ class StoreUser
         SetUserAvatar::run($user);
 
         UserHydrateUniversalSearch::dispatch($user);
-
+        TenantHydrateUsers::run(app('currentTenant'));
         return $user;
     }
 

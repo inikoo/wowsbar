@@ -7,16 +7,14 @@
 
 namespace App\Actions\Web\Website;
 
-use App\Actions\Central\Central\StoreDomain;
+
 use App\Actions\Tenancy\Tenant\Hydrators\TenantHydrateWeb;
-use App\Models\Market\Shop;
 use App\Models\Web\Website;
 use App\Rules\CaseSensitive;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
-use Illuminate\Validation\Validator;
 use Lorisleiva\Actions\Concerns\WithAttributes;
 
 class StoreWebsite
@@ -29,28 +27,21 @@ class StoreWebsite
      * @var true
      */
     private bool $asAction = false;
-    private mixed $shop;
 
 
-    public function handle(Shop $shop, array $modelData): Website
+    public function handle(array $modelData): Website
     {
-        data_set($modelData, 'type', $shop->subtype);
+       $tenant=app('currentTenant');
         /** @var Website $website */
-        $website = $shop->website()->create($modelData);
+        $website = $tenant->websites()->create($modelData);
         $website->stats()->create();
-        StoreDomain::run(app('currentTenant'), $website, [
-            'slug'   => $website->code,
-            'domain' => $website->domain
-        ]);
-
-        $website->webStats()->create();
-        TenantHydrateWeb::dispatch(app('currentTenant'));
+        TenantHydrateWeb::run(app('currentTenant'));
         return $website;
     }
 
     public function authorize(ActionRequest $request): bool
     {
-        return $request->user()->hasPermissionTo("shops.edit");
+        return $request->user()->hasPermissionTo("websites.edit");
     }
 
     public function rules(): array
@@ -62,19 +53,11 @@ class StoreWebsite
         ];
     }
 
-    public function asController(Shop $shop, ActionRequest $request): Website
+    public function asController( ActionRequest $request): Website
     {
-        $this->shop = $shop;
         $request->validate();
 
-        return $this->handle($shop, $request->validated());
-    }
-
-    public function afterValidator(Validator $validator): void
-    {
-        if ($this->shop->website) {
-            $validator->errors()->add('domain', 'This shop already have a website');
-        }
+        return $this->handle($request->validated());
     }
 
     public function htmlResponse(Website $website): RedirectResponse
@@ -84,12 +67,12 @@ class StoreWebsite
         ]);
     }
 
-    public function action(Shop $parent, array $objectData): Website
+    public function action(array $objectData): Website
     {
         $this->asAction = true;
         $this->setRawAttributes($objectData);
         $validatedData = $this->validateAttributes();
 
-        return $this->handle($parent, $validatedData);
+        return $this->handle($validatedData);
     }
 }
