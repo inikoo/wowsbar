@@ -17,7 +17,7 @@ class LogUserRequestMiddleware
         /* @var \App\Models\Auth\User $user */
         $user = $request->user();
 
-        if (!app()->runningUnitTests() && $user && env('ENABLE_LOGS')) {
+        if (!app()->runningUnitTests() && $user && env('USER_REQUEST_LOGGING')) {
             LogUserRequest::run(
                 now(),
                 [
