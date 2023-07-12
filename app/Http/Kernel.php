@@ -11,6 +11,7 @@ use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\EncryptCookies;
 use App\Http\Middleware\HandleInertiaRequests;
 use App\Http\Middleware\LogUserFirebaseMiddleware;
+use App\Http\Middleware\LogUserRequestMiddleware;
 use App\Http\Middleware\PreventRequestsDuringMaintenance;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Middleware\TrimStrings;
@@ -60,7 +61,8 @@ class Kernel extends HttpKernel
             SubstituteBindings::class,
             HandleInertiaRequests::class,
             AddLinkHeadersForPreloadedAssets::class,
-            LogUserFirebaseMiddleware::class
+            LogUserFirebaseMiddleware::class,
+            LogUserRequestMiddleware::class
         ],
         'landlord-web' => [
             EncryptCookies::class,
@@ -71,7 +73,8 @@ class Kernel extends HttpKernel
             SubstituteBindings::class,
             HandleInertiaRequests::class,
             AddLinkHeadersForPreloadedAssets::class,
-            LogUserFirebaseMiddleware::class
+            LogUserFirebaseMiddleware::class,
+            LogUserRequestMiddleware::class
         ],
         'tenant' => [
             NeedsTenant::class,
@@ -84,7 +87,8 @@ class Kernel extends HttpKernel
             SubstituteBindings::class,
             HandleInertiaRequests::class,
             AddLinkHeadersForPreloadedAssets::class,
-            LogUserFirebaseMiddleware::class
+            LogUserFirebaseMiddleware::class,
+            LogUserRequestMiddleware::class
         ],
 
 
