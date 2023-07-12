@@ -20,12 +20,14 @@ class ShowDashboard
         return Inertia::render(
             'Dashboard/Dashboard',
             [
-            'breadcrumbs' => $this->getBreadcrumbs(__('dashboard')),
+                'title' => __('dashboard'),
+
+                'breadcrumbs' => $this->getBreadcrumbs(__('dashboard')),
             ]
         );
     }
 
-    public function getBreadcrumbs($label=null): array
+    public function getBreadcrumbs($label = null): array
     {
         return [
             [

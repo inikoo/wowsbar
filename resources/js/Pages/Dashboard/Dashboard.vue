@@ -7,10 +7,16 @@
 <script setup lang="ts">
 import { Head } from '@inertiajs/vue3';
 import { capitalize } from "@/Composables/capitalize"
+import PageHeading from "@/Components/Headings/PageHeading.vue";
+
+const props = defineProps<{
+    title: string,
+
+}>()
+
 
 </script>
 
 <template layout="App">
-    <Head :title="capitalize('Dashboard')" />
-    Dashboard x
+    <Head :title="capitalize(title)" />
 </template>
