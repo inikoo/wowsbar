@@ -10,8 +10,7 @@ namespace App\Actions\Web\Website\UI;
 use App\Actions\InertiaAction;
 use App\Actions\UI\Dashboard\ShowDashboard;
 use App\Enums\Web\Website\WebsiteStateEnum;
-use App\Http\Resources\Market\ShopResource;
-use App\Http\Resources\Market\WebsiteResource;
+use App\Http\Resources\Web\WebsiteResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\Web\Website;
 use Closure;
@@ -119,11 +118,11 @@ class IndexWebsites extends InertiaAction
                 ->withEmptyState(
                     [
                         'title' => __('No websites found'),
-                        'count' => app('currentTenant')->webStats->number_websites,
+                        'count' => app('currentTenant')->stats->number_websites,
 
                     ]
                 )
-                ->column(key: 'state', label: ['fal', 'fa-yin-yang'], sortable: true)
+//                ->column(key: 'state', label: ['fal', 'fa-yin-yang'], sortable: true)
                 ->column(key: 'slug', label: __('code'), sortable: true)
                 ->column(key: 'name', label: __('name'), sortable: true)
                 ->column(key: 'domain', label: __('domain'), sortable: true)
@@ -133,7 +132,7 @@ class IndexWebsites extends InertiaAction
 
     public function jsonResponse(): AnonymousResourceCollection
     {
-        return ShopResource::collection($this->handle());
+        return WebsiteResource::collection($this->handle());
     }
 
     public function htmlResponse(LengthAwarePaginator $websites, ActionRequest $request): Response
