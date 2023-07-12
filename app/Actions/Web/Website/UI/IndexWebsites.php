@@ -76,7 +76,7 @@ class IndexWebsites extends InertiaAction
 
         return $queryBuilder
             ->defaultSort('websites.code')
-            ->select(['websites.code', 'websites.name', 'websites.slug', 'websites.domain', 'in_maintenance', 'websites.state'])
+            ->select(['websites.code', 'websites.name', 'websites.slug', 'websites.domain'])
             ->allowedSorts(['slug', 'code', 'name'])
             ->allowedFilters([$globalSearch])
             ->withPaginator($prefix)
@@ -110,7 +110,6 @@ class IndexWebsites extends InertiaAction
 
                     ]
                 )
-//                ->column(key: 'state', label: ['fal', 'fa-yin-yang'], sortable: true)
                 ->column(key: 'slug', label: __('code'), sortable: true)
                 ->column(key: 'name', label: __('name'), sortable: true)
                 ->column(key: 'domain', label: __('domain'), sortable: true)
@@ -143,8 +142,8 @@ class IndexWebsites extends InertiaAction
                         $this->canEdit ? [
                             'type'    => 'button',
                             'style'   => 'create',
-                            'tooltip' => __('Create a no shop connected website'),
-                            'label'   => __('new static website'),
+                            'tooltip' => __('Create website'),
+                            'label'   => __('new website'),
                             'route'   => [
                                 'name' => 'web.websites.create',
                             ]
