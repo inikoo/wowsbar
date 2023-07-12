@@ -1,6 +1,6 @@
 <!--
   - Author: Raul Perusquia <raul@inikoo.com>
-  - Created: Wed, 07 Jun 2023 02:44:55 Malaysia Time, Kuala Lumpur, Malaysia
+  - Created: Wed, 12 Jul 2023 16:12:16 Malaysia Time, Kuala Lumpur, Malaysia
   - Copyright (c) 2023, Raul A Perusquia Flores
   -->
 
@@ -14,10 +14,10 @@ defineProps(['title', 'pageHead', 'flatTreeMaps']);
 
 import {library} from '@fortawesome/fontawesome-svg-core';
 import {
-    faMoneyCheckAlt, faCashRegister, faFileInvoiceDollar, faCoins,
-} from '@/../private/pro-light-svg-icons';
+    faGlobe
+} from '../../../private/pro-light-svg-icons';
 
-library.add(faCoins, faMoneyCheckAlt, faCashRegister, faFileInvoiceDollar);
+library.add(faGlobe);
 
 </script>
 

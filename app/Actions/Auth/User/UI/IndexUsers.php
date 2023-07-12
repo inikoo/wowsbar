@@ -128,7 +128,7 @@ class IndexUsers extends InertiaAction
         return
             (
                 $request->user()->tokenCan('root') or
-                $request->user()->hasPermissionTo('sysadmin.view')
+                $request->user()->can('sysadmin.view')
             );
     }
 

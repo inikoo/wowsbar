@@ -5,7 +5,7 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Models\Web;
+namespace App\Models\Portfolio;
 
 use App\Models\Tenancy\Tenant;
 use App\Models\Traits\HasUniversalSearch;
@@ -18,7 +18,7 @@ use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
 /**
- * App\Models\Web\Website
+ * App\Models\Portfolio\Website
  *
  * @property int $id
  * @property string $slug
@@ -29,7 +29,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
- * @property-read \App\Models\Web\WebsiteStats|null $stats
+ * @property-read \App\Models\Portfolio\WebsiteStats|null $stats
  * @property-read Tenant $tenant
  * @method static Builder|Website newModelQuery()
  * @method static Builder|Website newQuery()

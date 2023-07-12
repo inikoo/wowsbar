@@ -9,9 +9,9 @@
 use App\Actions\Auth\User\UpdateUser;
 use App\Actions\Tenancy\Tenant\UpdateSystemSettings;
 use App\Actions\UI\Profile\UpdateProfile;
-use App\Actions\Web\Website\DeleteWebsite;
-use App\Actions\Web\Website\StoreWebsite;
-use App\Actions\Web\Website\UpdateWebsite;
+use App\Actions\Portfolio\Website\DeleteWebsite;
+use App\Actions\Portfolio\Website\StoreWebsite;
+use App\Actions\Portfolio\Website\UpdateWebsite;
 
 Route::post('/website/', StoreWebsite::class)->name('website.store');
 Route::patch('/website/{website}', UpdateWebsite::class)->name('website.update');

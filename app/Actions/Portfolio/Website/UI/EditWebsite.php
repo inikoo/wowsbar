@@ -5,10 +5,10 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Web\Website\UI;
+namespace App\Actions\Portfolio\Website\UI;
 
 use App\Actions\InertiaAction;
-use App\Models\Web\Website;
+use App\Models\Portfolio\Website;
 use Exception;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
@@ -24,8 +24,8 @@ class EditWebsite extends InertiaAction
 
     public function authorize(ActionRequest $request): bool
     {
-        $this->canEdit = $request->user()->can('websites.edit');
-        return $request->user()->hasPermissionTo("websites.edit");
+        $this->canEdit = $request->user()->can('portfolio.edit');
+        return $request->user()->can("websites.edit");
 
     }
 
@@ -145,7 +145,7 @@ class EditWebsite extends InertiaAction
                                 ],
                                 'web_registrations' => [
                                     'type'     => 'webRegistrations',
-                                    'label'    => __('Web Registration'),
+                                    'label'    => __('Portfolio Registration'),
                                     'value'    => [
                                         [
                                             'key'       => 'telephone',
@@ -294,7 +294,7 @@ class EditWebsite extends InertiaAction
         }
 
         return match ($routeName) {
-            'web.websites.edit' => [
+            'portfolio.websites.edit' => [
                 'label' => $website->name,
                 'route' => [
                     'name'       => $routeName,

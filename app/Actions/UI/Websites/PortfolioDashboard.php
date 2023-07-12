@@ -15,7 +15,7 @@ use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 
-class WebsitesDashboard
+class PortfolioDashboard
 {
     use AsAction;
     use WithInertia;
@@ -27,7 +27,7 @@ class WebsitesDashboard
 
     public function authorize(ActionRequest $request): bool
     {
-        return $request->user()->hasPermissionTo("websites.view");
+        return $request->user()->can("websites.view");
     }
 
 
@@ -42,12 +42,16 @@ class WebsitesDashboard
     {
 
         return Inertia::render(
-            'Web/WebsitesDashboard',
+            'Portfolio/PortfolioDashboard',
             [
                 'breadcrumbs'  => $this->getBreadcrumbs(),
-                'title'        => __('websites dashboard'),
+                'title'        => __('portfolio'),
                 'pageHead'     => [
-                    'title'     => __('websites dashboard'),
+                    'title'     => __('portfolio'),
+                    'icon'              => [
+                        'icon'    => ['fal', 'fa-briefcase'],
+                        'tooltip' => __('portfolio')
+                    ],
                 ],
                 'flatTreeMaps' => [
                     [
@@ -55,7 +59,7 @@ class WebsitesDashboard
                         [
                             'name'  => __('websites'),
                             'icon'  => ['fal', 'fa-globe'],
-                            'href'  => ['web.websites.index'],
+                            'href'  => ['portfolio.websites.index'],
                             'index' => [
                                 'number' => $tenant->stats->number_websites
                             ]
@@ -82,9 +86,9 @@ class WebsitesDashboard
                         'type'   => 'simple',
                         'simple' => [
                             'route' => [
-                                'name' => 'web.dashboard'
+                                'name' => 'portfolio.dashboard'
                             ],
-                            'label' => __('websites dashboard'),
+                            'label' => __('portfolio'),
                         ]
                     ]
                 ]

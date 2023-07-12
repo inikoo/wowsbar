@@ -2,7 +2,19 @@
     {
         "name":"super-admin",
         "permissions": [
-            "sysadmin","websites","banners"
+            "sysadmin","portfolio","banners"
+        ]
+    },
+    {
+        "name":"creator",
+        "permissions": [
+            "portfolio","banners"
+        ]
+    },
+    {
+        "name":"editor",
+        "permissions": [
+            "portfolio","banners"
         ]
     }
 ]

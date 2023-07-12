@@ -6,17 +6,17 @@
  */
 
 
-use App\Actions\UI\Websites\WebsitesDashboard;
-use App\Actions\Web\Website\UI\CreateWebsite;
-use App\Actions\Web\Website\UI\EditWebsite;
-use App\Actions\Web\Website\UI\IndexWebsites;
-use App\Actions\Web\Website\UI\RemoveWebsite;
-use App\Actions\Web\Website\UI\ShowWebsite;
+use App\Actions\UI\Websites\PortfolioDashboard;
+use App\Actions\Portfolio\Website\UI\CreateWebsite;
+use App\Actions\Portfolio\Website\UI\EditWebsite;
+use App\Actions\Portfolio\Website\UI\IndexWebsites;
+use App\Actions\Portfolio\Website\UI\RemoveWebsite;
+use App\Actions\Portfolio\Website\UI\ShowWebsite;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/dashboard', WebsitesDashboard::class)->name('dashboard');
+Route::get('/dashboard', PortfolioDashboard::class)->name('dashboard');
 
-Route::get('/websites/dashboard', WebsitesDashboard::class)->name('websites.dashboard');
+Route::get('/websites/dashboard', PortfolioDashboard::class)->name('websites.dashboard');
 Route::get('/websites', IndexWebsites::class)->name('websites.index');
 Route::get('/websites/create', CreateWebsite::class)->name('websites.create');
 

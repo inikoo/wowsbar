@@ -24,9 +24,9 @@ Route::middleware([
         Route::prefix("tenant")
             ->name("tenant.")
             ->group(__DIR__."/tenant.php");
-        Route::prefix("web")
-            ->name("web.")
-            ->group(__DIR__."/web.php");
+        Route::prefix("portfolio")
+            ->name("portfolio.")
+            ->group(__DIR__."/portfolio.php");
         Route::prefix("media")
             ->name("media.")
             ->group(__DIR__."/media.php");

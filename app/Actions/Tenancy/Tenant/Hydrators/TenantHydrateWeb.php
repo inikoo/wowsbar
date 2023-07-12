@@ -8,7 +8,7 @@
 namespace App\Actions\Tenancy\Tenant\Hydrators;
 
 use App\Models\Tenancy\Tenant;
-use App\Models\Web\Website;
+use App\Models\Portfolio\Website;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Lorisleiva\Actions\Concerns\AsAction;
 
