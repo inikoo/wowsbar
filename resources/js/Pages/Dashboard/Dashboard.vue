@@ -5,8 +5,12 @@
   -->
 
 <script setup lang="ts">
+import { Head } from '@inertiajs/vue3';
+import { capitalize } from "@/Composables/capitalize"
+
 </script>
 
 <template layout="App">
-
+    <Head :title="capitalize('Dashboard')" />
+    Dashboard x
 </template>

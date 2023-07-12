@@ -185,7 +185,6 @@ const user = ref(usePage().props.auth.user);
 </script>
 
 <template>
-    <link rel="shortcut icon" type="image/png" href="/favicon.png"/>
     <div class="relative min-h-full transition-all duration-200 ease-in-out"
         :class="[Object.values(layout.rightSidebar).some(value => value === true) ? 'mr-44' : 'mr-0']"
     >
