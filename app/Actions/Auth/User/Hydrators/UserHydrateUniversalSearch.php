@@ -26,8 +26,8 @@ class UserHydrateUniversalSearch
                     ]
                 ]),
                 'icon'           => 'fa-user',
-                'primary_term'   => $user->contact_name,
-                'secondary_term' => $user->username
+                'primary_term'   => $user->username,
+                'secondary_term' => trim($user->email.' '.$user->contact_name)
             ]
         );
     }

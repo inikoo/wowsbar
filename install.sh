@@ -5,14 +5,18 @@
 #
 
 DB=wowsbar
+BACKUP_DB=wowsbar_backup_elasticsearch
 
-echo -e "✨ Resetting database ${ITALIC}${DB}${NONE}"
+echo -e "✨ Resetting databases ${ITALIC}${DB}${NONE}"
 dropdb --force --if-exists ${DB}
 createdb --template=template0 --lc-collate="${DB_COLLATE}" --lc-ctype="${DB_COLLATE}"  ${DB}
+dropdb --force --if-exists ${BACKUP_DB}
+createdb --template=template0 --lc-collate="${DB_COLLATE}" --lc-ctype="${DB_COLLATE}"  ${BACKUP_DB}
 echo -e "✨ Installing dependencies"
 composer install
 npm install
 echo "🌱 Migrating and seeding database"
+php artisan migrate --database=backup  --path=database/migrations/backup
 php artisan migrate --path=database/migrations/landlord
 php artisan migrate --path=database/migrations/tenant
 php artisan db:seed
