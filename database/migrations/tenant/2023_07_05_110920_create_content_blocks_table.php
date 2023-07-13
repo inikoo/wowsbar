@@ -16,6 +16,10 @@ return new class () extends Migration {
             $table->mediumIncrements('id');
             $table->unsignedSmallInteger('web_block_id');
             $table->foreign('web_block_id')->references('id')->on('public.web_blocks')->onUpdate('cascade')->onDelete('cascade');
+
+            $table->unsignedSmallInteger('tenant_id');
+            $table->foreign('tenant_id')->references('id')->on('landlord.tenants')->onUpdate('cascade')->onDelete('cascade');
+
             $table->jsonb('data');
             $table->timestampsTz();
             $table->softDeletesTz();
