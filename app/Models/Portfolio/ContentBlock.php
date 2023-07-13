@@ -18,9 +18,34 @@ use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
 /**
+ * App\Models\Portfolio\ContentBlock
  *
- * @property int $id;
- * @property \Eloquent
+ * @property int $id
+ * @property int $web_block_type_id
+ * @property int $web_block_id
+ * @property int $tenant_id
+ * @property mixed $data
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read WebBlock $webBlock
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Portfolio\Website> $website
+ * @property-read int|null $website_count
+ * @method static \Illuminate\Database\Eloquent\Builder|ContentBlock newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|ContentBlock newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|ContentBlock onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|ContentBlock query()
+ * @method static \Illuminate\Database\Eloquent\Builder|ContentBlock whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ContentBlock whereData($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ContentBlock whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ContentBlock whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ContentBlock whereTenantId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ContentBlock whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ContentBlock whereWebBlockId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ContentBlock whereWebBlockTypeId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ContentBlock withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|ContentBlock withoutTrashed()
+ * @mixin \Eloquent
  */
 
 class ContentBlock extends Model

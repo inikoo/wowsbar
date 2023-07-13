@@ -6,19 +6,17 @@
 
 <script setup lang="ts">
 
-import { Link } from "@inertiajs/vue3";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { library } from "@fortawesome/fontawesome-svg-core";
+import {Link} from "@inertiajs/vue3";
+import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
+import {library} from "@fortawesome/fontawesome-svg-core";
 import {
-    faPeopleArrows, faPersonDolly, faClipboardList, faTerminal, faUserAlien, faCog, faNetworkWired, faCalendar, faStopwatch, faChessClock,
-    faBuilding, faBox, faBoxesAlt, faTachometer, faChartNetwork, faNarwhal, faBusinessTime, faUserTie
+    faTerminal, faUserAlien, faCog, faGlobe, faWindowMaximize, faChartNetwork
 } from "../../../private/pro-light-svg-icons";
-import { useLayoutStore } from "@/Stores/layout";
-import { capitalize } from "@/Composables/capitalize";
+import {useLayoutStore} from "@/Stores/layout";
+import {capitalize} from "@/Composables/capitalize";
 
-library.add(faPeopleArrows, faPersonDolly, faClipboardList, faTerminal, faUserAlien, faCog, faNetworkWired, faCalendar, faStopwatch, faChessClock,
-    faBuilding, faBox, faBoxesAlt, faTachometer, faChartNetwork, faNarwhal, faBusinessTime, faUserTie
-);
+library.add(
+    faTerminal, faUserAlien, faCog, faGlobe, faWindowMaximize, faChartNetwork);
 
 const layout = useLayoutStore();
 
@@ -33,7 +31,7 @@ const layout = useLayoutStore();
         :title="capitalize(menu.tooltip??menu.label??'')">
         <FontAwesomeIcon :icon="menu.icon"
                          class="h-5 lg:h-3.5 w-auto group-hover:opacity-100 opacity-70 transition duration-100 ease-in-out"
-                         aria-hidden="true" />
+                         aria-hidden="true"/>
         <span v-if="menu.label" class="hidden lg:inline capitalize whitespace-nowrap">{{ menu.label }}</span>
     </Link>
 </template>

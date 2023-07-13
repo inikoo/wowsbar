@@ -5,6 +5,7 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
+use App\Enums\Web\WebBlockType\WebBlockTypeSlugEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -19,7 +20,16 @@ return new class () extends Migration {
             $table->unsignedSmallInteger('number_users')->default(0);
             $table->unsignedSmallInteger('number_users_status_active')->default(0);
             $table->unsignedSmallInteger('number_users_status_inactive')->default(0);
+
             $table->unsignedSmallInteger('number_websites')->default(0);
+
+            $table->unsignedSmallInteger('number_content_blocks')->default(0);
+
+            foreach (WebBlockTypeSlugEnum::cases() as $webBlockTypeSlug) {
+                $table->unsignedInteger('number_content_blocks_web_block_type_'.$webBlockTypeSlug->snake())->default(0);
+            }
+
+
             $table->unsignedSmallInteger('number_images')->default(0);
             $table->unsignedBigInteger('filesize_images')->default(0);
             $table->unsignedSmallInteger('number_attachments')->default(0);

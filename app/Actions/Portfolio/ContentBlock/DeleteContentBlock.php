@@ -1,14 +1,13 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Wed, 12 Jul 2023 12:15:45 Malaysia Time, Kuala Lumpur, Malaysia
+ * Created: Thu, 13 Jul 2023 19:49:29 Malaysia Time, Kuala Lumpur, Malaysia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Portfolio\Banners;
+namespace App\Actions\Portfolio\ContentBlock;
 
 use App\Models\Portfolio\ContentBlock;
-use App\Models\Portfolio\Website;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
 use Lorisleiva\Actions\ActionRequest;

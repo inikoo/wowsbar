@@ -9,7 +9,7 @@ namespace App\Enums\Web\WebBlockType;
 
 use App\Enums\EnumHelperTrait;
 
-enum WebBlockTypeClassEnum: string
+enum WebBlockTypeSlugEnum: string
 {
     use EnumHelperTrait;
 
@@ -21,10 +21,9 @@ enum WebBlockTypeClassEnum: string
     case FOOTER   = 'footer';
     case HEADER   = 'header';
     case BANNER   = 'banner';
-
-    case TEXT    = 'text';
-    case PICTURE = 'picture';
-    case MAPS    = 'maps';
+    case TEXT     = 'text';
+    case PICTURE  = 'picture';
+    case MAPS     = 'maps';
 
 
 }

@@ -20,6 +20,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $number_users_status_active
  * @property int $number_users_status_inactive
  * @property int $number_websites
+ * @property int $number_content_blocks
  * @property int $number_images
  * @property int $filesize_images
  * @property int $number_attachments
@@ -35,6 +36,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static Builder|TenantStats whereFilesizeImages($value)
  * @method static Builder|TenantStats whereId($value)
  * @method static Builder|TenantStats whereNumberAttachments($value)
+ * @method static Builder|TenantStats whereNumberContentBlocks($value)
  * @method static Builder|TenantStats whereNumberImages($value)
  * @method static Builder|TenantStats whereNumberUsers($value)
  * @method static Builder|TenantStats whereNumberUsersStatusActive($value)

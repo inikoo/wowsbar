@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             PermissionSeeder::class,
+            WebBlockSeeder::class,
             CountrySeeder::class,
             CurrencySeeder::class,
             TimezoneSeeder::class,

@@ -18,7 +18,7 @@ return new class () extends Migration {
             $table->foreign('website_id')->references('id')->on('websites')->onUpdate('cascade')->onDelete('cascade');
 
             $table->unsignedSmallInteger('tenant_id');
-            $table->foreign('tenant_id')->references('id')->on('landlord.tenants')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('tenant_id')->references('id')->on('tenants')->onUpdate('cascade')->onDelete('cascade');
 
             $table->unsignedInteger('content_block_id')->index();
             $table->foreign('content_block_id')->references('id')->on('content_blocks')->onUpdate('cascade')->onDelete('cascade');

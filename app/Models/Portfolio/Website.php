@@ -34,6 +34,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read \App\Models\Portfolio\WebsiteStats|null $stats
  * @property-read Tenant $tenant
  * @property-read \App\Models\Search\UniversalSearch|null $universalSearch
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Portfolio\ContentBlock> $website
+ * @property-read int|null $website_count
  * @method static Builder|Website newModelQuery()
  * @method static Builder|Website newQuery()
  * @method static Builder|Website onlyTrashed()

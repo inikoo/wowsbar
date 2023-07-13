@@ -1,31 +1,25 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Mon, 29 May 2023 12:18:36 Malaysia Time, Kuala Lumpur, Malaysia
+ * Created: Thu, 13 Jul 2023 19:49:40 Malaysia Time, Kuala Lumpur, Malaysia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Portfolio\Banners\UI;
+namespace App\Actions\Portfolio\ContentBlock\Banners\UI;
 
 use App\Actions\InertiaAction;
 use App\Actions\UI\Dashboard\ShowDashboard;
 use App\Http\Resources\Portfolio\WebsiteResource;
-use App\InertiaTable\InertiaTable;
-use App\Models\Portfolio\ContentBlock;
 use App\Models\Portfolio\Website;
 use App\Models\Tenancy\Tenant;
-use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
-use Spatie\QueryBuilder\AllowedFilter;
-use Spatie\QueryBuilder\QueryBuilder;
 
-class IndexBanners extends InertiaAction
+class ShowBanner extends InertiaAction
 {
-
     private Tenant|Website $parent;
 
     public function authorize(ActionRequest $request): bool
@@ -46,7 +40,7 @@ class IndexBanners extends InertiaAction
         return $this->handle();
     }
 
-    public function inWebsite(Website $website,ActionRequest $request): LengthAwarePaginator
+    public function inWebsite(Website $website, ActionRequest $request): LengthAwarePaginator
     {
         $this->initialisation($request);
         $this->parent=$website;
@@ -64,67 +58,7 @@ class IndexBanners extends InertiaAction
     /** @noinspection PhpUndefinedMethodInspection */
     public function handle($prefix = null): LengthAwarePaginator
     {
-        $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
-            $query->where(function ($query) use ($value) {
-                $query->whereAnyWordStartWith('content_blocks.name', $value)
-                    ->orWhere('content_blocks.code', 'ilike', "$value%");
-            });
-        });
-        if ($prefix) {
-            InertiaTable::updateQueryBuilderParameters($prefix);
-        }
-
-        $queryBuilder = QueryBuilder::for(ContentBlock::class);
-        foreach ($this->elementGroups as $key => $elementGroup) {
-            $queryBuilder->whereElementGroup(
-                prefix: $prefix,
-                key: $key,
-                allowedElements: array_keys($elementGroup['elements']),
-                engine: $elementGroup['engine']
-            );
-        }
-
-
-        return $queryBuilder
-            ->defaultSort('content_blocks.code')
-            ->select(['content_blocks.code', 'content_blocks.name', 'content_blocks.slug'])
-            ->allowedSorts(['slug', 'code', 'name'])
-            ->allowedFilters([$globalSearch])
-            ->withPaginator($prefix)
-            ->withQueryString();
-    }
-
-    public function tableStructure(?array $modelOperations = null, $prefix = null): Closure
-    {
-        return function (InertiaTable $table) use ($modelOperations, $prefix) {
-            if ($prefix) {
-                $table
-                    ->name($prefix)
-                    ->pageName($prefix.'Page');
-            }
-
-            foreach ($this->elementGroups as $key => $elementGroup) {
-                $table->elementGroup(
-                    key: $key,
-                    label: $elementGroup['label'],
-                    elements: $elementGroup['elements']
-                );
-            }
-
-            $table
-                ->withModelOperations($modelOperations)
-                ->withGlobalSearch()
-                ->withEmptyState(
-                    [
-                        'title' => __('No websites found'),
-                        'count' => app('currentTenant')->stats->number_websites,
-
-                    ]
-                )
-                ->column(key: 'slug', label: __('code'), sortable: true)
-                ->column(key: 'name', label: __('name'), sortable: true)
-                ->defaultSort('slug');
-        };
+        //
     }
 
     public function jsonResponse(): AnonymousResourceCollection
@@ -135,7 +69,7 @@ class IndexBanners extends InertiaAction
     public function htmlResponse(LengthAwarePaginator $websites, ActionRequest $request): Response
     {
         return Inertia::render(
-            'Portfolio/Websites',
+            'Portfolio/Website',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->getName(),
@@ -165,7 +99,7 @@ class IndexBanners extends InertiaAction
                 'data'        => WebsiteResource::collection($websites),
 
             ]
-        )->table($this->tableStructure());
+        );
     }
 
     /** @noinspection PhpUnusedParameterInspection */

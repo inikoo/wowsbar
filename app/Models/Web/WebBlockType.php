@@ -7,25 +7,21 @@
 
 namespace App\Models\Web;
 
-use App\Enums\Web\WebBlockType\WebBlockTypeClassEnum;
+use App\Enums\Web\WebBlockType\WebBlockTypeSlugEnum;
 use App\Enums\Web\WebBlockType\WebBlockTypeScopeEnum;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Spatie\Sluggable\HasSlug;
-use Spatie\Sluggable\SlugOptions;
 
 /**
  * App\Models\Web\WebBlockType
  *
  * @property int $id
  * @property WebBlockTypeScopeEnum $scope
- * @property string $slug
- * @property string $code
+ * @property WebBlockTypeSlugEnum $slug
  * @property string $name
- * @property WebBlockTypeClassEnum $class
  * @property array $data
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -37,8 +33,6 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|WebBlockType newQuery()
  * @method static Builder|WebBlockType onlyTrashed()
  * @method static Builder|WebBlockType query()
- * @method static Builder|WebBlockType whereClass($value)
- * @method static Builder|WebBlockType whereCode($value)
  * @method static Builder|WebBlockType whereCreatedAt($value)
  * @method static Builder|WebBlockType whereData($value)
  * @method static Builder|WebBlockType whereDeletedAt($value)
@@ -54,11 +48,10 @@ use Spatie\Sluggable\SlugOptions;
 class WebBlockType extends Model
 {
     use SoftDeletes;
-    use HasSlug;
 
     protected $casts = [
         'data'  => 'array',
-        'class' => WebBlockTypeClassEnum::class,
+        'slug'  => WebBlockTypeSlugEnum::class,
         'scope' => WebBlockTypeScopeEnum::class,
     ];
 
@@ -69,13 +62,6 @@ class WebBlockType extends Model
 
     protected $guarded = [];
 
-    public function getSlugOptions(): SlugOptions
-    {
-        return SlugOptions::create()
-            ->generateSlugsFrom('code')
-            ->doNotGenerateSlugsOnUpdate()
-            ->saveSlugsTo('slug');
-    }
 
     public function webBlock(): HasMany
     {
