@@ -14,9 +14,23 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * App\Models\Backup\ActionHistory
  *
+ * @property int $id
+ * @property string $index
+ * @property string $type
+ * @property bool $synced
+ * @property array $body
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
  * @method static Builder|ActionHistory newModelQuery()
  * @method static Builder|ActionHistory newQuery()
  * @method static Builder|ActionHistory query()
+ * @method static Builder|ActionHistory whereBody($value)
+ * @method static Builder|ActionHistory whereCreatedAt($value)
+ * @method static Builder|ActionHistory whereId($value)
+ * @method static Builder|ActionHistory whereIndex($value)
+ * @method static Builder|ActionHistory whereSynced($value)
+ * @method static Builder|ActionHistory whereType($value)
+ * @method static Builder|ActionHistory whereUpdatedAt($value)
  * @mixin Eloquent
  */
 

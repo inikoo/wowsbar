@@ -1,12 +1,11 @@
 <?php
 /*
- *  Author: Raul Perusquia <raul@inikoo.com>
- *  Created: Thu, 28 Oct 2021 22:30:38 Malaysia Time, Kuala Lumpur, Malaysia
- *  Copyright (c) 2021, Inikoo
- *  Version 4.0
+ * Author: Raul Perusquia <raul@inikoo.com>
+ * Created: Thu, 13 Jul 2023 14:31:17 Malaysia Time, Kuala Lumpur, Malaysia
+ * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions;
+namespace App\Actions\Traits;
 
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Arr;

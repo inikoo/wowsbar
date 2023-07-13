@@ -7,7 +7,7 @@
 
 namespace App\Actions\Portfolio\Website;
 
-use App\Actions\WithActionUpdate;
+use App\Actions\Traits\WithActionUpdate;
 use App\Http\Resources\Portfolio\WebsiteResource;
 use App\Models\Portfolio\Website;
 use Lorisleiva\Actions\ActionRequest;

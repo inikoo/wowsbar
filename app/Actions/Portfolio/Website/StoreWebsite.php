@@ -7,7 +7,6 @@
 
 namespace App\Actions\Portfolio\Website;
 
-
 use App\Actions\Tenancy\Tenant\Hydrators\TenantHydrateWeb;
 use App\Models\Portfolio\Website;
 use App\Rules\CaseSensitive;
@@ -31,7 +30,7 @@ class StoreWebsite
 
     public function handle(array $modelData): Website
     {
-       $tenant=app('currentTenant');
+        $tenant=app('currentTenant');
         /** @var Website $website */
         $website = $tenant->websites()->create($modelData);
         $website->stats()->create();
@@ -53,7 +52,7 @@ class StoreWebsite
         ];
     }
 
-    public function asController( ActionRequest $request): Website
+    public function asController(ActionRequest $request): Website
     {
         $request->validate();
 

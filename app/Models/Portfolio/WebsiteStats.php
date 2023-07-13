@@ -15,15 +15,17 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * App\Models\Portfolio\WebsiteStats
  *
  * @property int $id
+ * @property int $website_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Models\Portfolio\Website|null $website
+ * @property-read \App\Models\Portfolio\Website $website
  * @method static Builder|WebsiteStats newModelQuery()
  * @method static Builder|WebsiteStats newQuery()
  * @method static Builder|WebsiteStats query()
  * @method static Builder|WebsiteStats whereCreatedAt($value)
  * @method static Builder|WebsiteStats whereId($value)
  * @method static Builder|WebsiteStats whereUpdatedAt($value)
+ * @method static Builder|WebsiteStats whereWebsiteId($value)
  * @mixin \Eloquent
  */
 class WebsiteStats extends Model

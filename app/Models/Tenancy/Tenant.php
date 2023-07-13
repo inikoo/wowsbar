@@ -49,6 +49,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read \App\Models\Tenancy\TenantStats|null $stats
  * @property-read \Illuminate\Database\Eloquent\Collection<int, User> $users
  * @property-read int|null $users_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Website> $websites
+ * @property-read int|null $websites_count
  * @method static TenantCollection<int, static> all($columns = ['*'])
  * @method static \Database\Factories\Tenancy\TenantFactory factory($count = null, $state = [])
  * @method static TenantCollection<int, static> get($columns = ['*'])

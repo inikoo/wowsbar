@@ -47,7 +47,7 @@ class PortfolioDashboard
                 'breadcrumbs'  => $this->getBreadcrumbs(),
                 'title'        => __('portfolio'),
                 'pageHead'     => [
-                    'title'     => __('portfolio'),
+                    'title'             => __('portfolio'),
                     'icon'              => [
                         'icon'    => ['fal', 'fa-briefcase'],
                         'tooltip' => __('portfolio')

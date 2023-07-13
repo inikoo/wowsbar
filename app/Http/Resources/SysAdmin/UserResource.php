@@ -7,7 +7,6 @@
 
 namespace App\Http\Resources\SysAdmin;
 
-use App\Http\Resources\HumanResources\EmployeeResource;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Http\Resources\Json\JsonResource;
 use JsonSerializable;

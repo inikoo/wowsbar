@@ -10410,6 +10410,104 @@
                         return $instance->setConnectionName($name);
         }
                     /**
+         * Get the number of queue jobs that are ready to process.
+         *
+         * @param string|null $queue
+         * @return int 
+         * @static 
+         */ 
+        public static function readyNow($queue = null)
+        {
+                        /** @var \Laravel\Horizon\RedisQueue $instance */
+                        return $instance->readyNow($queue);
+        }
+                    /**
+         * Migrate the delayed jobs that are ready to the regular queue.
+         *
+         * @param string $from
+         * @param string $to
+         * @return void 
+         * @static 
+         */ 
+        public static function migrateExpiredJobs($from, $to)
+        {
+                        /** @var \Laravel\Horizon\RedisQueue $instance */
+                        $instance->migrateExpiredJobs($from, $to);
+        }
+                    /**
+         * Delete a reserved job from the queue.
+         *
+         * @param string $queue
+         * @param \Illuminate\Queue\Jobs\RedisJob $job
+         * @return void 
+         * @static 
+         */ 
+        public static function deleteReserved($queue, $job)
+        {
+                        /** @var \Laravel\Horizon\RedisQueue $instance */
+                        $instance->deleteReserved($queue, $job);
+        }
+                    /**
+         * Delete a reserved job from the reserved queue and release it.
+         *
+         * @param string $queue
+         * @param \Illuminate\Queue\Jobs\RedisJob $job
+         * @param int $delay
+         * @return void 
+         * @static 
+         */ 
+        public static function deleteAndRelease($queue, $job, $delay)
+        {
+                        /** @var \Laravel\Horizon\RedisQueue $instance */
+                        $instance->deleteAndRelease($queue, $job, $delay);
+        }
+                    /**
+         * Delete all of the jobs from the queue.
+         *
+         * @param string $queue
+         * @return int 
+         * @static 
+         */ 
+        public static function clear($queue)
+        {            //Method inherited from \Illuminate\Queue\RedisQueue         
+                        /** @var \Laravel\Horizon\RedisQueue $instance */
+                        return $instance->clear($queue);
+        }
+                    /**
+         * Get the queue or return the default.
+         *
+         * @param string|null $queue
+         * @return string 
+         * @static 
+         */ 
+        public static function getQueue($queue)
+        {            //Method inherited from \Illuminate\Queue\RedisQueue         
+                        /** @var \Laravel\Horizon\RedisQueue $instance */
+                        return $instance->getQueue($queue);
+        }
+                    /**
+         * Get the connection for the queue.
+         *
+         * @return \Illuminate\Redis\Connections\Connection 
+         * @static 
+         */ 
+        public static function getConnection()
+        {            //Method inherited from \Illuminate\Queue\RedisQueue         
+                        /** @var \Laravel\Horizon\RedisQueue $instance */
+                        return $instance->getConnection();
+        }
+                    /**
+         * Get the underlying Redis instance.
+         *
+         * @return \Illuminate\Contracts\Redis\Factory 
+         * @static 
+         */ 
+        public static function getRedis()
+        {            //Method inherited from \Illuminate\Queue\RedisQueue         
+                        /** @var \Laravel\Horizon\RedisQueue $instance */
+                        return $instance->getRedis();
+        }
+                    /**
          * Get the backoff for an object-based queue handler.
          *
          * @param mixed $job
@@ -10418,7 +10516,7 @@
          */ 
         public static function getJobBackoff($job)
         {            //Method inherited from \Illuminate\Queue\Queue         
-                        /** @var \Illuminate\Queue\SyncQueue $instance */
+                        /** @var \Laravel\Horizon\RedisQueue $instance */
                         return $instance->getJobBackoff($job);
         }
                     /**
@@ -10430,7 +10528,7 @@
          */ 
         public static function getJobExpiration($job)
         {            //Method inherited from \Illuminate\Queue\Queue         
-                        /** @var \Illuminate\Queue\SyncQueue $instance */
+                        /** @var \Laravel\Horizon\RedisQueue $instance */
                         return $instance->getJobExpiration($job);
         }
                     /**
@@ -10442,7 +10540,7 @@
          */ 
         public static function createPayloadUsing($callback)
         {            //Method inherited from \Illuminate\Queue\Queue         
-                        \Illuminate\Queue\SyncQueue::createPayloadUsing($callback);
+                        \Laravel\Horizon\RedisQueue::createPayloadUsing($callback);
         }
                     /**
          * Get the container instance being used by the connection.
@@ -10452,7 +10550,7 @@
          */ 
         public static function getContainer()
         {            //Method inherited from \Illuminate\Queue\Queue         
-                        /** @var \Illuminate\Queue\SyncQueue $instance */
+                        /** @var \Laravel\Horizon\RedisQueue $instance */
                         return $instance->getContainer();
         }
                     /**
@@ -10464,7 +10562,7 @@
          */ 
         public static function setContainer($container)
         {            //Method inherited from \Illuminate\Queue\Queue         
-                        /** @var \Illuminate\Queue\SyncQueue $instance */
+                        /** @var \Laravel\Horizon\RedisQueue $instance */
                         $instance->setContainer($container);
         }
          
@@ -18392,7 +18490,87 @@
      
 }
 
-        namespace Intervention\Image\Facades { 
+        namespace hisorange\BrowserDetect { 
+            /**
+     * Facading class to mask the service behind the "Browser" class.
+     *
+     * @method static bool isMobile()
+     * @method static bool isTablet()
+     * @method static bool isDesktop()
+     * @method static bool isChrome()
+     * @method static bool isFirefox()
+     * @method static bool isOpera()
+     * @method static bool isSafari()
+     * @method static bool isIE()
+     * @method static bool isEdge()
+     * @method static bool isWindows()
+     * @method static bool isAndroid()
+     * @method static bool isMac()
+     * @method static bool isLinux()
+     * @method static bool isInApp()
+     * @method static bool isBot()
+     * @method static bool isIEVersion()
+     * @method static string browserEngine()
+     * @method static string browserName()
+     * @method static string browserVersion()
+     * @method static string deviceFamily()
+     * @method static string deviceModel()
+     * @method static string deviceType()
+     * @method static string mobileGrade()
+     * @method static string platformName()
+     * @method static string platformVersion()
+     * @method static string userAgent()
+     * @method static string|null platformFamily()
+     * @method static string|null browserFamily()
+     * @method static int browserVersionMajor()
+     * @method static int browserVersionMinor()
+     * @method static int browserVersionPatch()
+     * @method static int platformVersionMajor()
+     * @method static int platformVersionMinor()
+     * @method static int platformVersionPatch()
+     * @example Browser::isMobile();
+     * @package hisorange\BrowserDetect
+     */ 
+        class Facade {
+                    /**
+         * Read the applied final config.
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function config()
+        {
+                        /** @var \hisorange\BrowserDetect\Parser $instance */
+                        return $instance->config();
+        }
+                    /**
+         * 
+         *
+         * @inheritdoc 
+         * @static 
+         */ 
+        public static function detect()
+        {
+                        /** @var \hisorange\BrowserDetect\Parser $instance */
+                        return $instance->detect();
+        }
+                    /**
+         * 
+         *
+         * @inheritdoc 
+         * @static 
+         */ 
+        public static function parse($agent)
+        {
+                        /** @var \hisorange\BrowserDetect\Parser $instance */
+                        return $instance->parse($agent);
+        }
+         
+    }
+     
+}
+
+    namespace Intervention\Image\Facades { 
             /**
      * 
      *
@@ -19449,6 +19627,69 @@
         {
                         /** @var \Spatie\FlareClient\Flare $instance */
                         return $instance->group($groupName, $properties);
+        }
+         
+    }
+     
+}
+
+    namespace Stevebauman\Location\Facades { 
+            /**
+     * 
+     *
+     */ 
+        class Location {
+                    /**
+         * Set the current driver to use.
+         *
+         * @static 
+         */ 
+        public static function setDriver($driver)
+        {
+                        /** @var \Stevebauman\Location\LocationManager $instance */
+                        return $instance->setDriver($driver);
+        }
+                    /**
+         * Set the default location driver to use.
+         *
+         * @throws DriverDoesNotExistException
+         * @static 
+         */ 
+        public static function setDefaultDriver()
+        {
+                        /** @var \Stevebauman\Location\LocationManager $instance */
+                        return $instance->setDefaultDriver();
+        }
+                    /**
+         * Attempt to retrieve the location of the user.
+         *
+         * @static 
+         */ 
+        public static function get($ip = null)
+        {
+                        /** @var \Stevebauman\Location\LocationManager $instance */
+                        return $instance->get($ip);
+        }
+                    /**
+         * Set the request resolver callback.
+         *
+         * @static 
+         */ 
+        public static function resolveRequestUsing($callback)
+        {
+                        /** @var \Stevebauman\Location\LocationManager $instance */
+                        return $instance->resolveRequestUsing($callback);
+        }
+                    /**
+         * Get the loaded driver instances.
+         *
+         * @return \Stevebauman\Location\Drivers\Driver[] 
+         * @static 
+         */ 
+        public static function drivers()
+        {
+                        /** @var \Stevebauman\Location\LocationManager $instance */
+                        return $instance->drivers();
         }
          
     }
@@ -23607,6 +23848,7 @@ namespace  {
             class Validator extends \Illuminate\Support\Facades\Validator {}
             class View extends \Illuminate\Support\Facades\View {}
             class Vite extends \Illuminate\Support\Facades\Vite {}
+            class Browser extends \hisorange\BrowserDetect\Facade {}
             class Image extends \Intervention\Image\Facades\Image {}
             class Firebase extends \Kreait\Laravel\Firebase\Facades\Firebase {}
             class Horizon extends \Laravel\Horizon\Horizon {}
@@ -23614,6 +23856,7 @@ namespace  {
             class Lody extends \Lorisleiva\Lody\Lody {}
             class Excel extends \Maatwebsite\Excel\Facades\Excel {}
             class Flare extends \Spatie\LaravelIgnition\Facades\Flare {}
+            class Location extends \Stevebauman\Location\Facades\Location {}
      
 }
 
