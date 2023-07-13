@@ -10,7 +10,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 // import { useDatabaseList, useDatabaseObject } from "vuefire"
 // import { getDatabase, ref as dbRef } from "firebase/database"
 // import { initializeApp } from "firebase/app"
-// import serviceAccount from "@/../private/firebase/aiku-firebase.json"
+// import serviceAccount from "@/../private/firebase/wowsbar-firebase.json"
 
 library.add(faCircle)
 // const firebaseApp = initializeApp(serviceAccount);
