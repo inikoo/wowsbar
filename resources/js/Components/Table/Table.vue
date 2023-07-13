@@ -576,7 +576,7 @@ const handleElementsChange = (data) => {
                             <div v-else class="px-2 ">{{ locale.number(0) }} {{ trans('record') }}</div>
                         </div>
                         <!-- Button -->
-                        <div v-if="queryBuilderProps.modelOperations.createLink">
+                        <div v-if="queryBuilderProps.modelOperations?.createLink">
                             <Link :href="route(queryBuilderProps.modelOperations.createLink.route.name, queryBuilderProps.modelOperations.createLink.route.parameters[0])">
                                 <!--suppress HtmlWrongAttributeValue -->
                                 <Button :style="`create`" action="create"  class="capitalize">

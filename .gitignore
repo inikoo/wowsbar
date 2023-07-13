@@ -21,3 +21,4 @@ yarn-error.log
 /.env.testing
 /load_my_snapshot.sh
 /resources/private/
+lang/php_*.json
