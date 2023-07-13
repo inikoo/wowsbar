@@ -81,7 +81,7 @@ class IndexHistories
     {
         return function (InertiaTable $table) {
             $table
-                ->name('history')
+                ->name('hst')
                 ->pageName('historyPage')
                 ->column(key: 'ip_address', label: __('IP Address'), canBeHidden: false, sortable: true, searchable: true)
                 ->column(key: 'user_id', label: __('User ID'), canBeHidden: false, sortable: true)
