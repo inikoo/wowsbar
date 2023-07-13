@@ -12,6 +12,7 @@ use App\Models\Traits\HasUniversalSearch;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Sluggable\HasSlug;
@@ -58,11 +59,11 @@ class Website extends Model
     use HasUniversalSearch;
 
     protected $casts = [
-        'data'      => 'array',
+        'data' => 'array',
     ];
 
     protected $attributes = [
-        'data'      => '{}',
+        'data' => '{}',
     ];
 
     protected $guarded = [];
@@ -88,6 +89,12 @@ class Website extends Model
     public function tenant(): BelongsTo
     {
         return $this->belongsTo(Tenant::class);
+    }
+
+    public function website(): BelongsToMany
+    {
+        return $this->belongsToMany(ContentBlock::class)->using(ContentBlockWebsite::class)
+            ->withTimestamps();
     }
 
 }

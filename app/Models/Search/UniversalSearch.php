@@ -11,39 +11,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\App;
 use Laravel\Scout\Searchable;
-use Spatie\Multitenancy\Models\Concerns\UsesTenantConnection;
 
-/**
- * App\Models\Search\UniversalSearch
- *
- * @property int $id
- * @property string|null $model_type
- * @property int|null $model_id
- * @property string|null $section
- * @property mixed|null $route
- * @property string|null $icon
- * @property string $primary_term
- * @property string|null $secondary_term
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @method static \Illuminate\Database\Eloquent\Builder|UniversalSearch newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|UniversalSearch newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|UniversalSearch query()
- * @method static \Illuminate\Database\Eloquent\Builder|UniversalSearch whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|UniversalSearch whereIcon($value)
- * @method static \Illuminate\Database\Eloquent\Builder|UniversalSearch whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|UniversalSearch whereModelId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|UniversalSearch whereModelType($value)
- * @method static \Illuminate\Database\Eloquent\Builder|UniversalSearch wherePrimaryTerm($value)
- * @method static \Illuminate\Database\Eloquent\Builder|UniversalSearch whereRoute($value)
- * @method static \Illuminate\Database\Eloquent\Builder|UniversalSearch whereSecondaryTerm($value)
- * @method static \Illuminate\Database\Eloquent\Builder|UniversalSearch whereSection($value)
- * @method static \Illuminate\Database\Eloquent\Builder|UniversalSearch whereUpdatedAt($value)
- * @mixin \Eloquent
- */
+
 class UniversalSearch extends Model
 {
-    use UsesTenantConnection;
     use Searchable;
 
     protected $guarded = [];
