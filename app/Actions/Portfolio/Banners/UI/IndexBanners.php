@@ -11,6 +11,7 @@ use App\Actions\InertiaAction;
 use App\Actions\UI\Dashboard\ShowDashboard;
 use App\Http\Resources\Portfolio\WebsiteResource;
 use App\InertiaTable\InertiaTable;
+use App\Models\Portfolio\ContentBlock;
 use App\Models\Portfolio\Website;
 use App\Models\Tenancy\Tenant;
 use Closure;
@@ -65,16 +66,15 @@ class IndexBanners extends InertiaAction
     {
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
             $query->where(function ($query) use ($value) {
-                $query->whereAnyWordStartWith('websites.name', $value)
-                    ->orWhere('websites.domain', 'ilike', "%$value%")
-                    ->orWhere('websites.code', 'ilike', "$value%");
+                $query->whereAnyWordStartWith('content_blocks.name', $value)
+                    ->orWhere('content_blocks.code', 'ilike', "$value%");
             });
         });
         if ($prefix) {
             InertiaTable::updateQueryBuilderParameters($prefix);
         }
 
-        $queryBuilder = QueryBuilder::for(Website::class);
+        $queryBuilder = QueryBuilder::for(ContentBlock::class);
         foreach ($this->elementGroups as $key => $elementGroup) {
             $queryBuilder->whereElementGroup(
                 prefix: $prefix,
@@ -86,8 +86,8 @@ class IndexBanners extends InertiaAction
 
 
         return $queryBuilder
-            ->defaultSort('websites.code')
-            ->select(['websites.code', 'websites.name', 'websites.slug', 'websites.domain'])
+            ->defaultSort('content_blocks.code')
+            ->select(['content_blocks.code', 'content_blocks.name', 'content_blocks.slug'])
             ->allowedSorts(['slug', 'code', 'name'])
             ->allowedFilters([$globalSearch])
             ->withPaginator($prefix)
@@ -123,7 +123,6 @@ class IndexBanners extends InertiaAction
                 )
                 ->column(key: 'slug', label: __('code'), sortable: true)
                 ->column(key: 'name', label: __('name'), sortable: true)
-                ->column(key: 'domain', label: __('domain'), sortable: true)
                 ->defaultSort('slug');
         };
     }
