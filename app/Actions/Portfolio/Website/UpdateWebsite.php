@@ -25,7 +25,7 @@ class UpdateWebsite
 
     public function authorize(ActionRequest $request): bool
     {
-        return $request->user()->can("websites.edit");
+        return $request->user()->can("portfolio.edit");
     }
 
 

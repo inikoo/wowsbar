@@ -27,7 +27,7 @@ class PortfolioDashboard
 
     public function authorize(ActionRequest $request): bool
     {
-        return $request->user()->can("websites.view");
+        return $request->user()->can("portfolio.view");
     }
 
 

@@ -40,7 +40,7 @@ class StoreWebsite
 
     public function authorize(ActionRequest $request): bool
     {
-        return $request->user()->can("websites.edit");
+        return $request->user()->can("portfolio.edit");
     }
 
     public function rules(): array
@@ -61,7 +61,7 @@ class StoreWebsite
 
     public function htmlResponse(Website $website): RedirectResponse
     {
-        return Redirect::route('websites.show', [
+        return Redirect::route('portfolio.websites.show', [
             $website->slug
         ]);
     }

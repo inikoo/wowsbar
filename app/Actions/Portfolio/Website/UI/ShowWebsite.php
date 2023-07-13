@@ -30,7 +30,7 @@ class ShowWebsite extends InertiaAction
     {
         $this->canEdit   = $request->user()->can('portfolio.edit');
         $this->canDelete = $request->user()->can('portfolio.edit');
-        return $request->user()->can("shops.websites.view");
+        return $request->user()->can('portfolio.view');
     }
 
     public function asController(Website $website, ActionRequest $request): Website
