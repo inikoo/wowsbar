@@ -32,7 +32,7 @@ class GetLayout
                                 'name' => 'portfolio.dashboard',
                             ]
                         ],
-
+                        /*
                         [
                             'icon'  => ['fal', 'fa-window-minimize'],
                             'label'=>__('banners'),
@@ -40,6 +40,7 @@ class GetLayout
                                 'name' => 'portfolio.banners.index',
                             ]
                         ],
+                        */
                     ],
 
                 ]
