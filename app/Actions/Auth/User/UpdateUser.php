@@ -38,9 +38,9 @@ class UpdateUser
     public function rules(): array
     {
         return [
-            'username' => ['sometimes', 'required', new AlphaDashDot(), 'unique:App\Models\SysAdmin\SysUser,username'],
+            'username' => ['sometimes', 'required', new AlphaDashDot(), 'unique:users,username'],
             'password' => ['sometimes', 'required', app()->isLocal()  || app()->environment('testing') ? null : Password::min(8)->uncompromised()],
-            'email'    => 'sometimes|required|email|unique:App\Models\Auth\GroupUser,email'
+            'email'    => 'sometimes|required|email|unique:users,email'
         ];
     }
 
