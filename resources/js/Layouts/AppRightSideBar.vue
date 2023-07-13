@@ -36,7 +36,7 @@ const layout = useLayoutStore()
                 </div>
                 <div v-for="(option, index) in activities"
                     class="pl-2.5 pr-1.5 flex justify-start items-center py-1 gap-x-2.5 cursor-default">
-                    <img :src="`/media/group/${option.user.avatar_id}`" :alt="option.user.contact_name" srcset=""
+                    <img :src="`/media/${option.user.avatar_id}`" :alt="option.user.contact_name" srcset=""
                         class="h-5 rounded-full shadow ring-1 ring-gray-100">
                     <p class="text-gray-100 flex flex-col gap-y-0.5">
                         <span class="font-semibold text-gray-200 leading-none">{{ option.user.username }}</span>

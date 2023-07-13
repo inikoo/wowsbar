@@ -18,7 +18,6 @@ use App\Models\Auth\User;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use Illuminate\Support\Arr;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -33,7 +32,17 @@ class IndexUsers extends InertiaAction
             [
                 'status' => [
                     'label'    => __('Status'),
-                    'elements' => ['active' => __('Active'), 'suspended' => __('Suspended')],
+                    'elements' => [
+                        'active'    =>
+                            [
+                                __('Active'),
+                                app('currentTenant')->stats->number_users_status_active
+                            ],
+                        'suspended' => [
+                            __('Suspended'),
+                            app('currentTenant')->stats->number_users_status_inactive
+                        ]
+                    ],
                     'engine'   => function ($query, $elements) {
                         $query->where('status', array_pop($elements) === 'active');
                     }
@@ -148,12 +157,12 @@ class IndexUsers extends InertiaAction
                 ],
 
                 UsersTabsEnum::USERS->value => $this->tab == UsersTabsEnum::USERS->value ?
-                    fn () => UserResource::collection($users)
-                    : Inertia::lazy(fn () => UserResource::collection($users)),
+                    fn() => UserResource::collection($users)
+                    : Inertia::lazy(fn() => UserResource::collection($users)),
 
                 UsersTabsEnum::USERS_REQUESTS->value => $this->tab == UsersTabsEnum::USERS_REQUESTS->value ?
-                    fn () => UserRequestLogsResource::collection(IndexUserRequestLogs::run())
-                    : Inertia::lazy(fn () => UserRequestLogsResource::collection(IndexUserRequestLogs::run()))
+                    fn() => UserRequestLogsResource::collection(IndexUserRequestLogs::run())
+                    : Inertia::lazy(fn() => UserRequestLogsResource::collection(IndexUserRequestLogs::run()))
 
             ]
         )->table(

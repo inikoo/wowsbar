@@ -7,6 +7,9 @@
 DB=wowsbar
 BACKUP_DB=wowsbar_backup_elasticsearch
 
+echo -e "🧼 Cleaning storage"
+rm -rf public/tenants
+rm -rf storage/app/tenants
 echo -e "✨ Resetting databases ${ITALIC}${DB}${NONE}"
 dropdb --force --if-exists ${DB}
 createdb --template=template0 --lc-collate="${DB_COLLATE}" --lc-ctype="${DB_COLLATE}"  ${DB}

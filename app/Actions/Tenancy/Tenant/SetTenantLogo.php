@@ -22,12 +22,12 @@ class SetTenantLogo
         $tenant=app('currentTenant');
         try {
             $seed       = 'tenant-'.$tenant->id;
-            $groupMedia = $tenant->addMediaFromUrl("https://api.dicebear.com/6.x/shapes/svg?seed=$seed")
+            $media = $tenant->addMediaFromUrl("https://api.dicebear.com/6.x/shapes/svg?seed=$seed")
                 ->preservingOriginal()
                 ->usingFileName($tenant->slug."-logo.sgv")
                 ->toMediaCollection('logo');
 
-            $logoId = $groupMedia->id;
+            $logoId = $media->id;
 
             $tenant->update(['logo_id' => $logoId]);
         } catch(Exception) {
