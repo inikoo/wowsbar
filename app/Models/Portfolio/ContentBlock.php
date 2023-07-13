@@ -17,6 +17,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
+/**
+ *
+ * @property int $id;
+ * @property \Eloquent
+ */
 
 class ContentBlock extends Model
 {
