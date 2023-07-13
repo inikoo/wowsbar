@@ -34,6 +34,14 @@ class GetLayout
                                 'name' => 'portfolio.dashboard',
                             ]
                         ],
+
+                        [
+                            'icon'  => ['fal', 'fa-globe'],
+                            'label'=>__('websites'),
+                            'route' => [
+                                'name' => 'portfolio.websites.index',
+                            ]
+                        ],
                     ],
 
                 ]

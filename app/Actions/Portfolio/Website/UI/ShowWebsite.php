@@ -79,7 +79,7 @@ class ShowWebsite extends InertiaAction
                             'type'  => 'button',
                             'style' => 'delete',
                             'route' => [
-                                'name'       => 'websites.remove',
+                                'name'       => 'portfolio.websites.remove',
                                 'parameters' => array_values($this->originalParameters)
                             ]
                         ] : false
