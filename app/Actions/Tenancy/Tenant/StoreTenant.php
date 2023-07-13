@@ -41,6 +41,7 @@ class StoreTenant
 
                 $superAdminRole = Role::where('name', 'super-admin')->firstOrFail();
                 $user->assignRole($superAdminRole);
+
             });
 
 

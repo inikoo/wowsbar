@@ -48,6 +48,13 @@ return [
             'visibility' => 'public',
             'throw'      => false,
         ],
+        'tenants_public' => [
+            'driver'     => 'local',
+            'root'       => env('FILESYSTEM_GROUP_PUBLIC_ROOT', storage_path('app/tenants')),
+            'url'        => env('APP_URL').'/tenants/storage',
+            'visibility' => 'public',
+            'throw'      => false,
+        ],
 
         's3' => [
             'driver'                  => 's3',

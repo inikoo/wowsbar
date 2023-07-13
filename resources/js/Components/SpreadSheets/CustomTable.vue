@@ -7,9 +7,9 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { getDatabase, ref as dbRef, set, onValue, get } from 'firebase/database';
 import { initializeApp } from "firebase/app"
-import serviceAccount from "@/../private/firebase/aiku-firebase.json"
+import serviceAccount from "@/../private/firebase/wowsbar-firebase.json"
 import { usePage } from "@inertiajs/vue3";
-import ColumsComponents from './Colums.vue';
+import ColumnsComponents from './Columns.vue';
 
 
 library.add(faSave, faPlus);
@@ -243,7 +243,7 @@ const setFocusedCell = async (rowIndex, columnIndex) => {
     data.push({ focusedCellIndex: focusedCellIndex.value, ...user.value });
   }
   const focusedCellRef = dbRef(db, 'focusedIndex');
-  
+
   try {
     await set(focusedCellRef, data);
   } catch (error) {
@@ -258,7 +258,7 @@ const selected = (row, column) => {
       return true;
     }
   }
-  
+
   return false;
 };
 
@@ -303,7 +303,7 @@ const onCopyAllEmpty = (position) => {
             'selected': selected(rowIndex, colIndex)
           }" :tabindex="(rowIndex === focusedCellIndex.rowIndex && colIndex === focusedCellIndex.columnIndex) ? 0 : -1"
             @focus="setFocusedCell(rowIndex, colIndex)" @click="setFocusedCell(rowIndex, colIndex)">
-           <ColumsComponents 
+           <ColumnsComponents
            :onCopyAll = "onCopyAll"
            :onCopyRow ="onCopyRow"
            :rowIndex = "rowIndex"

@@ -684,7 +684,7 @@ const handleElementsChange = (data) => {
 
                                             ]">
                                             <slot :name="`cell(${column.key})`" :item="item">
-                                                <img v-if="column.key === 'avatar'" :src="`/media/group/${item[column.key]}`" class="w-5 rounded-full" alt="avatar"/>
+                                                <img v-if="column.key === 'avatar'" :src="`/media/${item[column.key]}`" class="w-5 rounded-full" alt="avatar"/>
                                                 <div v-else class="text-gray-500">{{ item[column.key] }}</div>
                                             </slot>
                                         </td>
