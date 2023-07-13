@@ -8,6 +8,7 @@
 namespace App\Actions\Portfolio\ContentBlock;
 
 use App\Models\Portfolio\Website;
+use App\Models\Web\WebBlockType;
 use Illuminate\Database\Eloquent\Model;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -34,7 +35,10 @@ class StoreContentBlock
         return $request->user()->can("portfolio.edit");
     }
 
-    public function asController(Website $website, ActionRequest $request): Model
+
+
+
+    public function inWebsiteInWebBlockType(Website $website,WebBlockType $webBlockType, ActionRequest $request): Model
     {
         $request->validate();
 

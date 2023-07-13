@@ -8,6 +8,8 @@
 namespace App\Actions\Portfolio\ContentBlock\Banners\UI;
 
 use App\Actions\InertiaAction;
+use App\Models\Portfolio\Website;
+use App\Models\Web\WebBlockType;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -21,29 +23,36 @@ class CreateBanner extends InertiaAction
     }
 
 
-    public function asController(ActionRequest $request): Response|RedirectResponse
+    public function inWebsite(Website $website, ActionRequest $request): Response|RedirectResponse
     {
         $this->initialisation($request);
 
-        return $this->handle();
+        return $this->handle($website, $request);
     }
 
 
-    public function handle(): Response
+    public function handle(Website $website, ActionRequest $request): Response
     {
         return Inertia::render(
             'CreateModel',
             [
-                'breadcrumbs' => $this->getBreadcrumbs(),
+                'breadcrumbs' => $this->getBreadcrumbs(
+                    $request->route()->parameters()
+                ),
                 'title'       => __('new banner'),
                 'pageHead'    => [
                     'title'        => __('banner'),
-                    'cancelCreate' => [
-                        'route' => [
-                            'name'       => 'portfolio.banners.index',
-                            'parameters' => array_values($this->originalParameters)
-                        ],
+                    'actions'   => [
+                        [
+                            'type'  => 'button',
+                            'style' => 'exitEdit',
+                            'route' => [
+                                'name'       => preg_replace('/create$/', 'index', $this->routeName),
+                                'parameters' => array_values($this->originalParameters)
+                            ]
+                        ]
                     ]
+
 
                 ],
                 'formData'    => [
@@ -69,7 +78,11 @@ class CreateBanner extends InertiaAction
 
                     ],
                     'route'     => [
-                        'name' => 'models.banner.store',
+                        'name'       => 'models.website.web-block-type.banner.store',
+                        'arguments' => [
+                            'website' => $website->slug,
+                            'webBlockType'=> WebBlockType::where('slug', 'banner')->first()
+                        ]
                     ],
 
 
@@ -80,12 +93,12 @@ class CreateBanner extends InertiaAction
     }
 
 
-    public function getBreadcrumbs(): array
+    public function getBreadcrumbs($routeParameters): array
     {
         return array_merge(
             IndexBanners::make()->getBreadcrumbs(
-                'portfolio.banners.index',
-                []
+                'portfolio.websites.show.banners.index',
+                $routeParameters
             ),
             [
                 [

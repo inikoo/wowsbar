@@ -10,6 +10,7 @@ namespace App\Models\Portfolio;
 use App\Actions\Utils\Abbreviate;
 use App\Actions\Utils\ReadableRandomStringGenerator;
 use App\Models\Web\WebBlock;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -31,20 +32,20 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read WebBlock $webBlock
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Portfolio\Website> $website
  * @property-read int|null $website_count
- * @method static \Illuminate\Database\Eloquent\Builder|ContentBlock newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|ContentBlock newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|ContentBlock onlyTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder|ContentBlock query()
- * @method static \Illuminate\Database\Eloquent\Builder|ContentBlock whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ContentBlock whereData($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ContentBlock whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ContentBlock whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ContentBlock whereTenantId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ContentBlock whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ContentBlock whereWebBlockId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ContentBlock whereWebBlockTypeId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ContentBlock withTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder|ContentBlock withoutTrashed()
+ * @method static Builder|ContentBlock newModelQuery()
+ * @method static Builder|ContentBlock newQuery()
+ * @method static Builder|ContentBlock onlyTrashed()
+ * @method static Builder|ContentBlock query()
+ * @method static Builder|ContentBlock whereCreatedAt($value)
+ * @method static Builder|ContentBlock whereData($value)
+ * @method static Builder|ContentBlock whereDeletedAt($value)
+ * @method static Builder|ContentBlock whereId($value)
+ * @method static Builder|ContentBlock whereTenantId($value)
+ * @method static Builder|ContentBlock whereUpdatedAt($value)
+ * @method static Builder|ContentBlock whereWebBlockId($value)
+ * @method static Builder|ContentBlock whereWebBlockTypeId($value)
+ * @method static Builder|ContentBlock withTrashed()
+ * @method static Builder|ContentBlock withoutTrashed()
  * @mixin \Eloquent
  */
 

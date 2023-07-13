@@ -7,6 +7,7 @@
 
 
 use App\Actions\Auth\User\UpdateUser;
+use App\Actions\Portfolio\ContentBlock\StoreContentBlock;
 use App\Actions\Tenancy\Tenant\UpdateSystemSettings;
 use App\Actions\UI\Profile\UpdateProfile;
 use App\Actions\Portfolio\Website\DeleteWebsite;
@@ -16,6 +17,7 @@ use App\Actions\Portfolio\Website\UpdateWebsite;
 Route::post('/website/', StoreWebsite::class)->name('website.store');
 Route::patch('/website/{website}', UpdateWebsite::class)->name('website.update');
 Route::delete('/website/{website}', DeleteWebsite::class)->name('website.delete');
+Route::post('/website/{website}/web-block-type/{webBlockType}/banners', [StoreContentBlock::class,'inWebsiteInWebBlockType'])->name('website.web-block-type.banner.store');
 
 
 Route::patch('/user/{user:username}', UpdateUser::class)->name('user.update');

@@ -108,7 +108,7 @@ class IndexContentBlocks
                             'label'   => __('banner'),
                             'route'   => [
                                 'name'       => 'portfolio.websites.show.banners.create',
-                                'parameters' => ['website' => $parent]
+                                'parameters' => ['website' => $parent->slug]
                             ]
                         ] : null
                     ],
