@@ -17,6 +17,8 @@ enum WebsiteTabsEnum: string
 
     case SHOWCASE             = 'showcase';
 
+    case BANNERS             = 'banners';
+
     case CHANGELOG            = 'changelog';
 
     case DATA                 = 'data';
@@ -29,7 +31,10 @@ enum WebsiteTabsEnum: string
                 'title' => __('website'),
                 'icon'  => 'fas fa-info-circle',
             ],
-
+            WebsiteTabsEnum::BANNERS => [
+                'title' => __('banners'),
+                'icon'  => 'fal fa-window-maximize',
+            ],
             WebsiteTabsEnum::DATA => [
                 'title' => __('data'),
                 'icon'  => 'fal fa-database',

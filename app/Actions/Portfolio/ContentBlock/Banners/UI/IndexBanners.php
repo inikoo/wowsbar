@@ -9,13 +9,14 @@ namespace App\Actions\Portfolio\ContentBlock\Banners\UI;
 
 use App\Actions\InertiaAction;
 use App\Actions\Portfolio\ContentBlock\UI\IndexContentBlocks;
+use App\Actions\Portfolio\Website\UI\ShowWebsite;
 use App\Actions\UI\Dashboard\ShowDashboard;
 use App\Http\Resources\Portfolio\ContentBlockResource;
 use App\Models\Portfolio\Website;
 use App\Models\Tenancy\Tenant;
 use App\Models\Web\WebBlockType;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -42,7 +43,7 @@ class IndexBanners extends InertiaAction
         $this->initialisation($request);
         $this->parent = app('currentTenant');
 
-        return $this->handle();
+        return $this->handle($this->parent);
     }
 
     public function inWebsite(Website $website, ActionRequest $request): LengthAwarePaginator
@@ -50,28 +51,35 @@ class IndexBanners extends InertiaAction
         $this->initialisation($request);
         $this->parent = $website;
 
-        return $this->handle();
+        return $this->handle($this->parent);
     }
 
 
-    public function handle($prefix = null): LengthAwarePaginator
+    public function handle(Tenant|Website $parent, $prefix = null): LengthAwarePaginator
     {
         $this->webBlockType = WebBlockType::where('slug', 'banner')->first();
 
         return IndexContentBlocks::run(
+            parent: $parent,
             prefix: $prefix,
             webBlockType: $this->webBlockType
         );
     }
 
 
-    public function jsonResponse(): AnonymousResourceCollection
-    {
-        return ContentBlockResource::collection($this->handle());
-    }
 
     public function htmlResponse(LengthAwarePaginator $banners, ActionRequest $request): Response
     {
+        $scope     = $this->parent;
+        $container = null;
+        if (class_basename($scope) == 'Website') {
+            $container = [
+                'icon'    => ['fal', 'fa-globe'],
+                'tooltip' => __('website'),
+                'label'   => Str::possessive($scope->name)
+            ];
+        }
+
         return Inertia::render(
             'Portfolio/Banners',
             [
@@ -81,12 +89,13 @@ class IndexBanners extends InertiaAction
                 ),
                 'title'       => __('banners'),
                 'pageHead'    => [
-                    'title'   => __('banners'),
-                    'iconRight'    => [
+                    'title'     => __('banners'),
+                    'container' => $container,
+                    'iconRight' => [
                         'title' => __('banner'),
                         'icon'  => 'fal fa-window-maximize'
                     ],
-                    'actions' => [
+                    'actions'   => [
                         $this->canEdit and class_basename($this->parent) == 'Website'
                         && [
                             'type'    => 'button',
@@ -106,13 +115,14 @@ class IndexBanners extends InertiaAction
             ]
         )->table(
             IndexContentBlocks::make()->tableStructure(
-                webBlockType: $this->webBlockType
+                parent: $this->parent,
+                webBlockType: $this->webBlockType,
+                canEdit: $this->canEdit
 
             )
         );
     }
 
-    /** @noinspection PhpUnusedParameterInspection */
     public function getBreadcrumbs(string $routeName, array $routeParameters): array
     {
         $headCrumb = function (array $routeParameters = []) {
@@ -134,12 +144,23 @@ class IndexBanners extends InertiaAction
                 ShowDashboard::make()->getBreadcrumbs(),
                 $headCrumb(
                     [
-                        'name' => 'portfolio.banners.index',
-                        null
+                        'name' => 'portfolio.banners.index'
                     ]
                 ),
             ),
-
+            'portfolio.websites.show.banners.index' =>
+            array_merge(
+                ShowWebsite::make()->getBreadcrumbs(
+                    'portfolio.websites.show',
+                    $routeParameters
+                ),
+                $headCrumb(
+                    [
+                        'name'       => 'portfolio.websites.show.banners.index',
+                        'parameters' => $routeParameters
+                    ]
+                ),
+            ),
             default => []
         };
     }

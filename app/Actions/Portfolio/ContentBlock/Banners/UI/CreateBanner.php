@@ -5,7 +5,7 @@
  * Copyright (c) 2023, Inikoo LTD
  */
 
-namespace App\Actions\Portfolio\Website\UI;
+namespace App\Actions\Portfolio\ContentBlock\Banners\UI;
 
 use App\Actions\InertiaAction;
 use Illuminate\Http\RedirectResponse;
@@ -13,7 +13,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
 
-class CreateWebsite extends InertiaAction
+class CreateBanner extends InertiaAction
 {
     public function authorize(ActionRequest $request): bool
     {
@@ -35,12 +35,12 @@ class CreateWebsite extends InertiaAction
             'CreateModel',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(),
-                'title'       => __('new website'),
+                'title'       => __('new banner'),
                 'pageHead'    => [
-                    'title'        => __('website'),
+                    'title'        => __('banner'),
                     'cancelCreate' => [
                         'route' => [
-                            'name'       => 'portfolio.websites.index',
+                            'name'       => 'portfolio.banners.index',
                             'parameters' => array_values($this->originalParameters)
                         ],
                     ]
@@ -48,22 +48,6 @@ class CreateWebsite extends InertiaAction
                 ],
                 'formData'    => [
                     'blueprint' => [
-                        [
-                            'title'  => __('domain'),
-                            'fields' => [
-
-                                'domain' => [
-                                    'type'      => 'inputWithAddOn',
-                                    'label'     => __('domain'),
-                                    'leftAddOn' => [
-                                        'label' => 'http://'
-                                    ],
-                                    'required'  => true,
-                                ],
-
-
-                            ]
-                        ],
                         [
                             'title'  => __('ID/name'),
                             'fields' => [
@@ -79,15 +63,13 @@ class CreateWebsite extends InertiaAction
                                     'required' => true,
                                     'value'    => '',
                                 ],
-
-
                             ]
                         ],
 
 
                     ],
                     'route'     => [
-                        'name' => 'models.website.store',
+                        'name' => 'models.banner.store',
                     ],
 
 
@@ -101,15 +83,15 @@ class CreateWebsite extends InertiaAction
     public function getBreadcrumbs(): array
     {
         return array_merge(
-            IndexWebsites::make()->getBreadcrumbs(
-                'portfolio.websites.index',
+            IndexBanners::make()->getBreadcrumbs(
+                'portfolio.banners.index',
                 []
             ),
             [
                 [
                     'type'          => 'creatingModel',
                     'creatingModel' => [
-                        'label' => __("creating website"),
+                        'label' => __("creating banner"),
                     ]
                 ]
             ]

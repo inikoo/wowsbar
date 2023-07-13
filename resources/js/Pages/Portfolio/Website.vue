@@ -1,5 +1,3 @@
-
-
 <!--
   - Author: Raul Perusquia <raul@inikoo.com>
   - Created: Wed, 12 Jul 2023 16:12:16 Malaysia Time, Kuala Lumpur, Malaysia
@@ -9,31 +7,19 @@
 <script setup lang="ts">
 import {Head} from '@inertiajs/vue3';
 import {library} from '@fortawesome/fontawesome-svg-core';
-import {
-    faAnalytics, faBrowser,
-    faChartLine, faDraftingCompass, faRoad, faSlidersH, faUsersClass
-} from "../../../private/pro-light-svg-icons";
-
 import PageHeading from '@/Components/Headings/PageHeading.vue';
-import { computed, defineAsyncComponent, ref } from "vue";
-import { useTabChange } from "@/Composables/tab-change";
+import {computed, defineAsyncComponent, ref} from "vue";
+import {useTabChange} from "@/Composables/tab-change";
 import ModelDetails from "@/Pages/ModelDetails.vue";
 import Tabs from "@/Components/Navigation/Tabs.vue";
-import { faClock } from "../../../private/pro-solid-svg-icons";
-import { capitalize } from "@/Composables/capitalize"
+import {capitalize} from "@/Composables/capitalize"
 import TableHistories from "@/Pages/Tables/TableHistories.vue";
+import TableBanners from "@/Pages/Tables/TableBanners.vue";
 
-library.add(
-    faChartLine,
-    faClock,
-    faAnalytics,
-    faUsersClass,
-    faDraftingCompass,
-    faSlidersH,
-    faRoad,
-    faClock,
-    faBrowser,
-);
+import {faWindowMaximize, faGlobe} from "@/../private/pro-light-svg-icons"
+
+library.add(faWindowMaximize, faGlobe)
+
 
 const ModelChangelog = defineAsyncComponent(() => import('@/Pages/ModelChangelog.vue'))
 
@@ -45,6 +31,7 @@ const props = defineProps<{
         navigation: object;
     }
     changelog?: object
+    banners?: object
 }>()
 
 let currentTab = ref(props.tabs.current);
@@ -55,6 +42,7 @@ const component = computed(() => {
     const components = {
         details: ModelDetails,
         changelog: TableHistories,
+        banners: TableBanners
     };
     return components[currentTab.value];
 
@@ -67,6 +55,6 @@ const component = computed(() => {
     <Head :title="capitalize(title)"/>
     <PageHeading :data="pageHead"></PageHeading>
     <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate"/>
-    <component :is="component" :data="props[currentTab]"></component>
+    <component :is="component"  :tab="currentTab" :data="props[currentTab]"></component>
 </template>
 

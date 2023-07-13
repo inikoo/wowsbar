@@ -22,7 +22,7 @@ Route::get('/websites/create', CreateWebsite::class)->name('websites.create');
 Route::get('/websites/{website}', ShowWebsite::class)->name('websites.show');
 Route::get('/websites/{website}/edit', EditWebsite::class)->name('websites.edit');
 Route::get('/websites/{website}/delete', RemoveWebsite::class)->name('websites.remove');
-//Route::get('/websites/{website}/banners/create', [CreateBanner::class,'inWebsite'])->name('websites.show.banners.create');
+Route::get('/websites/{website}/banners/create', [CreateBanner::class,'inWebsite'])->name('websites.show.banners.create');
 Route::get('/websites/{website}/banners', [IndexBanners::class,'inWebsite'])->name('websites.show.banners.index');
 //Route::get('/websites/{website}/{banner}', [ShowBanner::class,'inWebsite'])->name('websites.show.banners.show');
 //Route::get('/websites/{website}/{banner}/edit', [EditBanner::class,'inWebsite'])->name('websites.show.banners.edit');

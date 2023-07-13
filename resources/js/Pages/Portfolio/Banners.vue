@@ -9,6 +9,9 @@ import {Head} from '@inertiajs/vue3';
 import PageHeading from '@/Components/Headings/PageHeading.vue';
 import TableWebsites from "@/Pages/Tables/TableWebsites.vue";
 import { capitalize } from "@/Composables/capitalize"
+import {library} from "@fortawesome/fontawesome-svg-core";
+import {faGlobe} from "@/../private/pro-light-svg-icons"
+library.add(faGlobe)
 
 const props = defineProps <{
     pageHead: object

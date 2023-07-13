@@ -11,7 +11,7 @@ import {Banner} from "@/types/banner";
 
 const props = defineProps<{
     data: object,
-    tab:string
+    tab?:string
 }>()
 
 

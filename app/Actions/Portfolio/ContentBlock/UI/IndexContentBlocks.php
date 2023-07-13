@@ -10,6 +10,8 @@ namespace App\Actions\Portfolio\ContentBlock\UI;
 use App\Enums\Web\WebBlockType\WebBlockTypeSlugEnum;
 use App\InertiaTable\InertiaTable;
 use App\Models\Portfolio\ContentBlock;
+use App\Models\Portfolio\Website;
+use App\Models\Tenancy\Tenant;
 use App\Models\Web\WebBlockType;
 use Closure;
 use Illuminate\Contracts\Database\Query\Builder;
@@ -30,7 +32,7 @@ class IndexContentBlocks
     }
 
     /** @noinspection PhpUndefinedMethodInspection */
-    public function handle($prefix = null, WebBlockType $webBlockType = null): LengthAwarePaginator
+    public function handle(Tenant|Website $parent, $prefix = null, WebBlockType $webBlockType = null): LengthAwarePaginator
     {
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
             $query->where(function ($query) use ($value) {
@@ -67,9 +69,14 @@ class IndexContentBlocks
             ->withQueryString();
     }
 
-    public function tableStructure(?array $modelOperations = null, $prefix = null, WebBlockType $webBlockType = null): Closure
-    {
-        return function (InertiaTable $table) use ($modelOperations, $prefix, $webBlockType) {
+    public function tableStructure(
+        Tenant|Website $parent,
+        ?array $modelOperations = null,
+        $prefix = null,
+        WebBlockType $webBlockType = null,
+        $canEdit = false
+    ): Closure {
+        return function (InertiaTable $table) use ($modelOperations, $parent, $prefix, $webBlockType, $canEdit) {
             if ($prefix) {
                 $table
                     ->name($prefix)
@@ -92,8 +99,18 @@ class IndexContentBlocks
             if ($webBlockType) {
                 $emptyState = match ($webBlockType->slug) {
                     WebBlockTypeSlugEnum::BANNER => [
-                        'title' => __('No banners found'),
-                        'count' => app('currentTenant')->stats->number_content_blocks_web_block_type_banner,
+                        'title'  => __('No banners found'),
+                        'count'  => app('currentTenant')->stats->number_content_blocks_web_block_type_banner,
+                        'action' => $canEdit && class_basename($parent) == 'Website' ? [
+                            'type'    => 'button',
+                            'style'   => 'create',
+                            'tooltip' => __('new banner'),
+                            'label'   => __('banner'),
+                            'route'   => [
+                                'name'       => 'portfolio.websites.show.banners.create',
+                                'parameters' => ['website' => $parent]
+                            ]
+                        ] : null
                     ],
                     default => null
                 };

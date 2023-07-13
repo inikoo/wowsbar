@@ -9,12 +9,16 @@ namespace App\Actions\Portfolio\Website\UI;
 
 use App\Actions\Helpers\History\IndexHistories;
 use App\Actions\InertiaAction;
+use App\Actions\Portfolio\ContentBlock\Banners\UI\IndexBanners;
+use App\Actions\Portfolio\ContentBlock\UI\IndexContentBlocks;
 use App\Actions\UI\Dashboard\ShowDashboard;
 use App\Actions\UI\WithInertia;
 use App\Enums\UI\WebsiteTabsEnum;
 use App\Http\Resources\History\HistoryResource;
+use App\Http\Resources\Portfolio\ContentBlockResource;
 use App\Http\Resources\Portfolio\WebsiteResource;
 use App\Models\Portfolio\Website;
+use App\Models\Web\WebBlockType;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -30,6 +34,7 @@ class ShowWebsite extends InertiaAction
     {
         $this->canEdit   = $request->user()->can('portfolio.edit');
         $this->canDelete = $request->user()->can('portfolio.edit');
+
         return $request->user()->can('portfolio.view');
     }
 
@@ -39,7 +44,6 @@ class ShowWebsite extends InertiaAction
 
         return $website;
     }
-
 
 
     public function htmlResponse(Website $website, ActionRequest $request): Response
@@ -54,7 +58,7 @@ class ShowWebsite extends InertiaAction
                     $request->route()->getName(),
                     $request->route()->parameters
                 ),
-                'navigation'   => [
+                'navigation'  => [
                     'previous' => $this->getPrevious($website, $request),
                     'next'     => $this->getNext($website, $request),
                 ],
@@ -86,16 +90,50 @@ class ShowWebsite extends InertiaAction
                     ],
 
                 ],
-                'tabs'                                => [
+                'tabs'        => [
                     'current'    => $this->tab,
                     'navigation' => WebsiteTabsEnum::navigation()
                 ],
 
+                WebsiteTabsEnum::BANNERS->value => $this->tab == WebsiteTabsEnum::BANNERS->value
+                    ?
+                    fn() => ContentBlockResource::collection(
+                        IndexBanners::run(
+                            parent: $website,
+                            prefix: 'banners'
+                        )
+                    )
+                    : Inertia::lazy(fn() => ContentBlockResource::collection(
+                        IndexBanners::run(
+                            parent: $website,
+                            prefix: 'banners'
+                        )
+                    )),
+
+
                 WebsiteTabsEnum::CHANGELOG->value => $this->tab == WebsiteTabsEnum::CHANGELOG->value ?
-                    fn () => HistoryResource::collection(IndexHistories::run($website))
-                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistories::run($website)))
+                    fn() => HistoryResource::collection(IndexHistories::run($website))
+                    : Inertia::lazy(fn() => HistoryResource::collection(IndexHistories::run($website)))
             ]
-        )->table(IndexHistories::make()->tableStructure());
+        )->table(IndexHistories::make()->tableStructure())
+            ->table(
+                IndexContentBlocks::make()->tableStructure(
+                    parent: $website,
+                    modelOperations: [
+                        'createLink' => $this->canEdit ? [
+                            'route' => [
+                                'name'       => 'portfolio.websites.show.banners.create',
+                                'parameters' => array_values([$website->slug])
+                            ],
+                            'label' => __('website'),
+                            'style' => 'create'
+                        ] : false
+                    ],
+                    prefix: 'banners',
+                    webBlockType: WebBlockType::where('slug', 'banner')->first(),
+                    canEdit: $this->canEdit
+                )
+            );
     }
 
 
@@ -122,18 +160,17 @@ class ShowWebsite extends InertiaAction
                         ],
 
                     ],
-                    'simple'=> [
+                    'simple'         => [
                         'route' => $routeParameters['model'],
                         'label' => $website->name
                     ],
 
 
-                    'suffix'=> $suffix
+                    'suffix' => $suffix
 
                 ],
             ];
         };
-
 
 
         return match ($routeName) {
