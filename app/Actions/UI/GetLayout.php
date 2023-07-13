@@ -19,13 +19,11 @@ class GetLayout
         $navigation = [];
 
         if ($user->can('portfolio.view')) {
-            $navigation['web'] = [
+            $navigation['portfolio'] = [
                 'scope' => 'portfolio',
                 'icon'  => ['fal', 'fa-briefcase'],
                 'label' => __('Portfolio'),
                 'route' => 'portfolio.dashboard',
-
-
                 'topMenu' => [
                     'subSections' => [
                         [
@@ -36,10 +34,10 @@ class GetLayout
                         ],
 
                         [
-                            'icon'  => ['fal', 'fa-globe'],
-                            'label'=>__('websites'),
+                            'icon'  => ['fal', 'fa-window-minimize'],
+                            'label'=>__('banners'),
                             'route' => [
-                                'name' => 'portfolio.websites.index',
+                                'name' => 'portfolio.banners.index',
                             ]
                         ],
                     ],
