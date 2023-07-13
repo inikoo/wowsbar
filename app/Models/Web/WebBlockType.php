@@ -27,8 +27,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read \App\Models\Web\WebBlockTypeStats|null $stats
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Web\WebBlock> $webBlock
- * @property-read int|null $web_block_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Web\WebBlock> $webBlocks
+ * @property-read int|null $web_blocks_count
  * @method static Builder|WebBlockType newModelQuery()
  * @method static Builder|WebBlockType newQuery()
  * @method static Builder|WebBlockType onlyTrashed()
@@ -63,7 +63,7 @@ class WebBlockType extends Model
     protected $guarded = [];
 
 
-    public function webBlock(): HasMany
+    public function webBlocks(): HasMany
     {
         return $this->hasMany(WebBlock::class);
     }

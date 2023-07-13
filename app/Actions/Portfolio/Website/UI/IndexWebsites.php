@@ -133,7 +133,7 @@ class IndexWebsites extends InertiaAction
                 ),
                 'title'       => __('websites'),
                 'pageHead'    => [
-                    'title'   => __('websites'),
+                    'title'        => __('websites'),
                     'iconRight'    => [
                         'title' => __('website'),
                         'icon'  => 'fal fa-globe'

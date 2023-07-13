@@ -42,7 +42,7 @@ class CreateBanner extends InertiaAction
                 'title'       => __('new banner'),
                 'pageHead'    => [
                     'title'        => __('banner'),
-                    'actions'   => [
+                    'actions'      => [
                         [
                             'type'  => 'button',
                             'style' => 'exitEdit',
@@ -79,8 +79,8 @@ class CreateBanner extends InertiaAction
                     ],
                     'route'     => [
                         'name'       => 'models.website.web-block-type.banner.store',
-                        'arguments' => [
-                            'website' => $website->slug,
+                        'arguments'  => [
+                            'website'     => $website->slug,
                             'webBlockType'=> WebBlockType::where('slug', 'banner')->first()
                         ]
                     ],

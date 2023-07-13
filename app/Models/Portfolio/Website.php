@@ -31,11 +31,11 @@ use Spatie\Sluggable\SlugOptions;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Portfolio\ContentBlock> $contentBlocks
+ * @property-read int|null $content_blocks_count
  * @property-read \App\Models\Portfolio\WebsiteStats|null $stats
  * @property-read Tenant $tenant
  * @property-read \App\Models\Search\UniversalSearch|null $universalSearch
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Portfolio\ContentBlock> $website
- * @property-read int|null $website_count
  * @method static Builder|Website newModelQuery()
  * @method static Builder|Website newQuery()
  * @method static Builder|Website onlyTrashed()
@@ -93,7 +93,7 @@ class Website extends Model
         return $this->belongsTo(Tenant::class);
     }
 
-    public function website(): BelongsToMany
+    public function contentBlocks(): BelongsToMany
     {
         return $this->belongsToMany(ContentBlock::class)->using(ContentBlockWebsite::class)
             ->withTimestamps();

@@ -21,6 +21,16 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $number_users_status_inactive
  * @property int $number_websites
  * @property int $number_content_blocks
+ * @property int $number_content_blocks_web_block_type_product
+ * @property int $number_content_blocks_web_block_type_category
+ * @property int $number_content_blocks_web_block_type_basket
+ * @property int $number_content_blocks_web_block_type_checkout
+ * @property int $number_content_blocks_web_block_type_footer
+ * @property int $number_content_blocks_web_block_type_header
+ * @property int $number_content_blocks_web_block_type_banner
+ * @property int $number_content_blocks_web_block_type_text
+ * @property int $number_content_blocks_web_block_type_picture
+ * @property int $number_content_blocks_web_block_type_maps
  * @property int $number_images
  * @property int $filesize_images
  * @property int $number_attachments
@@ -37,6 +47,16 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static Builder|TenantStats whereId($value)
  * @method static Builder|TenantStats whereNumberAttachments($value)
  * @method static Builder|TenantStats whereNumberContentBlocks($value)
+ * @method static Builder|TenantStats whereNumberContentBlocksWebBlockTypeBanner($value)
+ * @method static Builder|TenantStats whereNumberContentBlocksWebBlockTypeBasket($value)
+ * @method static Builder|TenantStats whereNumberContentBlocksWebBlockTypeCategory($value)
+ * @method static Builder|TenantStats whereNumberContentBlocksWebBlockTypeCheckout($value)
+ * @method static Builder|TenantStats whereNumberContentBlocksWebBlockTypeFooter($value)
+ * @method static Builder|TenantStats whereNumberContentBlocksWebBlockTypeHeader($value)
+ * @method static Builder|TenantStats whereNumberContentBlocksWebBlockTypeMaps($value)
+ * @method static Builder|TenantStats whereNumberContentBlocksWebBlockTypePicture($value)
+ * @method static Builder|TenantStats whereNumberContentBlocksWebBlockTypeProduct($value)
+ * @method static Builder|TenantStats whereNumberContentBlocksWebBlockTypeText($value)
  * @method static Builder|TenantStats whereNumberImages($value)
  * @method static Builder|TenantStats whereNumberUsers($value)
  * @method static Builder|TenantStats whereNumberUsersStatusActive($value)

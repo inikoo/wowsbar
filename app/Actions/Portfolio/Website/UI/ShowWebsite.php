@@ -97,13 +97,13 @@ class ShowWebsite extends InertiaAction
 
                 WebsiteTabsEnum::BANNERS->value => $this->tab == WebsiteTabsEnum::BANNERS->value
                     ?
-                    fn() => ContentBlockResource::collection(
+                    fn () => ContentBlockResource::collection(
                         IndexBanners::run(
                             parent: $website,
                             prefix: 'banners'
                         )
                     )
-                    : Inertia::lazy(fn() => ContentBlockResource::collection(
+                    : Inertia::lazy(fn () => ContentBlockResource::collection(
                         IndexBanners::run(
                             parent: $website,
                             prefix: 'banners'
@@ -112,8 +112,8 @@ class ShowWebsite extends InertiaAction
 
 
                 WebsiteTabsEnum::CHANGELOG->value => $this->tab == WebsiteTabsEnum::CHANGELOG->value ?
-                    fn() => HistoryResource::collection(IndexHistories::run($website))
-                    : Inertia::lazy(fn() => HistoryResource::collection(IndexHistories::run($website)))
+                    fn () => HistoryResource::collection(IndexHistories::run($website))
+                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistories::run($website)))
             ]
         )->table(IndexHistories::make()->tableStructure())
             ->table(

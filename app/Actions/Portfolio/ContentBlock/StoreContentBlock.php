@@ -7,7 +7,9 @@
 
 namespace App\Actions\Portfolio\ContentBlock;
 
+use App\Models\Portfolio\ContentBlock;
 use App\Models\Portfolio\Website;
+use App\Models\Web\WebBlock;
 use App\Models\Web\WebBlockType;
 use Illuminate\Database\Eloquent\Model;
 use Lorisleiva\Actions\ActionRequest;
@@ -19,13 +21,17 @@ class StoreContentBlock
     use AsAction;
     use WithAttributes;
 
-    /**
-     * @var true
-     */
+
     private bool $asAction = false;
-    public function handle(Website $website, array $modelData): Model
+
+    public function handle(Website $website, WebBlock $webBlock, array $modelData): Model
     {
-        $website->website()->create($modelData);
+        data_set($modelData, 'web_block_type_id', $webBlock->web_block_type_id);
+
+        /** @var ContentBlock $contentBlock */
+        $contentBlock = $webBlock->contentBlocks()->create($modelData);
+
+        $website->contentBlocks()->attach($contentBlock->id);
 
         return $website;
     }
@@ -36,20 +42,22 @@ class StoreContentBlock
     }
 
 
-
-
-    public function inWebsiteInWebBlockType(Website $website,WebBlockType $webBlockType, ActionRequest $request): Model
+    public function inWebsiteInWebBlockType(Website $website, WebBlockType $webBlockType, ActionRequest $request): Model
     {
         $request->validate();
-
-        return $this->handle($website, $request->validated());
+        // todo change this
+        // need to get the WebBlock from the createUI (if is more than one banner/WebBlock type) if only one just fetch it from db
+        $webBlock = $webBlockType->webBlocks[0];
+        //-------
+        return $this->handle($website, $webBlock, $request->validated());
     }
-    public function action(Website $website, array $objectData): Model
+
+    public function action(Website $website, WebBlock $webBlock, array $objectData): Model
     {
         $this->asAction = true;
         $this->setRawAttributes($objectData);
         $validatedData = $this->validateAttributes();
 
-        return $this->handle($website, $validatedData);
+        return $this->handle($website, $webBlock, $validatedData);
     }
 }

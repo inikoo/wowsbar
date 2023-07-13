@@ -118,7 +118,6 @@ class IndexBanners extends InertiaAction
                 parent: $this->parent,
                 webBlockType: $this->webBlockType,
                 canEdit: $this->canEdit
-
             )
         );
     }
