@@ -22,5 +22,5 @@ Route::get('/users', IndexUsers::class)->name('users.index');
 Route::get('/users/export', ExportUsers::class)->name('users.export');
 
 Route::get('/users/create', CreateUser::class)->name('users.create');
-Route::get('/users/{user}', ShowUser::class)->name('users.show');
-Route::get('/users/{user}/edit', EditUser::class)->name('users.edit');
+Route::get('/users/{user:username}', ShowUser::class)->name('users.show');
+Route::get('/users/{user:username}/edit', EditUser::class)->name('users.edit');

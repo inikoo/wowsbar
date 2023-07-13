@@ -18,7 +18,7 @@ Route::patch('/website/{website}', UpdateWebsite::class)->name('website.update')
 Route::delete('/website/{website}', DeleteWebsite::class)->name('website.delete');
 
 
-Route::patch('/user/{user}', UpdateUser::class)->name('user.update');
+Route::patch('/user/{user:username}', UpdateUser::class)->name('user.update');
 Route::patch('/profile', UpdateProfile::class)->name('profile.update');
 
 
