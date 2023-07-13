@@ -8,7 +8,7 @@
 import {Head} from '@inertiajs/vue3';
 import {library} from '@fortawesome/fontawesome-svg-core';
 import PageHeading from '@/Components/Headings/PageHeading.vue';
-import {computed, defineAsyncComponent, ref} from "vue";
+import {computed, ref} from "vue";
 import {useTabChange} from "@/Composables/tab-change";
 import ModelDetails from "@/Pages/ModelDetails.vue";
 import Tabs from "@/Components/Navigation/Tabs.vue";
@@ -19,9 +19,6 @@ import TableBanners from "@/Pages/Tables/TableBanners.vue";
 import {faWindowMaximize, faGlobe} from "@/../private/pro-light-svg-icons"
 
 library.add(faWindowMaximize, faGlobe)
-
-
-const ModelChangelog = defineAsyncComponent(() => import('@/Pages/ModelChangelog.vue'))
 
 const props = defineProps<{
     title: string,
