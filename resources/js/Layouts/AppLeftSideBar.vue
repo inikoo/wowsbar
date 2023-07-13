@@ -85,7 +85,7 @@ const handleKey = (event: any) => {
                         :aria-current="itemKey === layout.currentModule ? 'page' : undefined"
                     >
                         <div>
-                            <img v-if="item.name == 'dashboard'" src="@/../art/favicons/favicon-purple-16x16.png" alt="" class="h-4 aspect-square"
+                            <img v-if="item.name == 'dashboard'" src="@/../art/logo/png/logo-no-background.png" alt="" class="h-4 aspect-square"
                                  :class="[ itemKey === layout.currentModule
 											? 'text-indigo-500'
 											: 'text-gray-400 group-hover:text-gray-600',
