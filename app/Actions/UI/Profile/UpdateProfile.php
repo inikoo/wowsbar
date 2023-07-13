@@ -7,7 +7,7 @@
 
 namespace App\Actions\UI\Profile;
 
-use App\Actions\WithActionUpdate;
+use App\Actions\Traits\WithActionUpdate;
 use App\Models\Auth\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\UploadedFile;

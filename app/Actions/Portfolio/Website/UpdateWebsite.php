@@ -7,7 +7,7 @@
 
 namespace App\Actions\Portfolio\Website;
 
-use App\Actions\WithActionUpdate;
+use App\Actions\Traits\WithActionUpdate;
 use App\Http\Resources\Portfolio\WebsiteResource;
 use App\Models\Portfolio\Website;
 use Lorisleiva\Actions\ActionRequest;
@@ -25,7 +25,7 @@ class UpdateWebsite
 
     public function authorize(ActionRequest $request): bool
     {
-        return $request->user()->can("websites.edit");
+        return $request->user()->can("portfolio.edit");
     }
 
 

@@ -16,16 +16,10 @@ return new class () extends Migration {
             $table->smallIncrements('id');
             $table->unsignedSmallInteger('tenant_id');
             $table->foreign('tenant_id')->references('id')->on('tenants')->onUpdate('cascade')->onDelete('cascade');
-
-
             $table->unsignedSmallInteger('number_users')->default(0);
             $table->unsignedSmallInteger('number_users_status_active')->default(0);
             $table->unsignedSmallInteger('number_users_status_inactive')->default(0);
-
-
             $table->unsignedSmallInteger('number_websites')->default(0);
-
-
             $table->unsignedSmallInteger('number_images')->default(0);
             $table->unsignedBigInteger('filesize_images')->default(0);
             $table->unsignedSmallInteger('number_attachments')->default(0);

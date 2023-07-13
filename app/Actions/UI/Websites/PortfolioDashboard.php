@@ -27,7 +27,7 @@ class PortfolioDashboard
 
     public function authorize(ActionRequest $request): bool
     {
-        return $request->user()->can("websites.view");
+        return $request->user()->can("portfolio.view");
     }
 
 
@@ -47,7 +47,7 @@ class PortfolioDashboard
                 'breadcrumbs'  => $this->getBreadcrumbs(),
                 'title'        => __('portfolio'),
                 'pageHead'     => [
-                    'title'     => __('portfolio'),
+                    'title'             => __('portfolio'),
                     'icon'              => [
                         'icon'    => ['fal', 'fa-briefcase'],
                         'tooltip' => __('portfolio')

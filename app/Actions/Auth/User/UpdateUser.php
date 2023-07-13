@@ -7,7 +7,7 @@
 
 namespace App\Actions\Auth\User;
 
-use App\Actions\WithActionUpdate;
+use App\Actions\Traits\WithActionUpdate;
 use App\Http\Resources\Auth\UserResource;
 use App\Models\Auth\User;
 use App\Rules\AlphaDashDot;
@@ -23,7 +23,7 @@ class UpdateUser
 
     public function handle(User $user, array $modelData): User
     {
-        return $this->update($user, $modelData,  'settings');
+        return $this->update($user, $modelData, 'settings');
     }
 
     public function authorize(ActionRequest $request): bool

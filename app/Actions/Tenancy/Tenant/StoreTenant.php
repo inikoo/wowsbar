@@ -36,13 +36,14 @@ class StoreTenant
         );
 
         $tenant->execute(
-            function (Tenant $tenant) use ($userData){
+            function (Tenant $tenant) use ($userData) {
                 $user = StoreUser::run($tenant, $userData);
 
                 $superAdminRole = Role::where('name', 'super-admin')->firstOrFail();
                 $user->assignRole($superAdminRole);
 
-            });
+            }
+        );
 
 
 

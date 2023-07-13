@@ -21,6 +21,7 @@ use Spatie\Sluggable\SlugOptions;
  * App\Models\Portfolio\Website
  *
  * @property int $id
+ * @property int $tenant_id
  * @property string $slug
  * @property string $code
  * @property string $domain
@@ -31,6 +32,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read \App\Models\Portfolio\WebsiteStats|null $stats
  * @property-read Tenant $tenant
+ * @property-read \App\Models\Search\UniversalSearch|null $universalSearch
  * @method static Builder|Website newModelQuery()
  * @method static Builder|Website newQuery()
  * @method static Builder|Website onlyTrashed()
@@ -43,6 +45,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Website whereId($value)
  * @method static Builder|Website whereName($value)
  * @method static Builder|Website whereSlug($value)
+ * @method static Builder|Website whereTenantId($value)
  * @method static Builder|Website whereUpdatedAt($value)
  * @method static Builder|Website withTrashed()
  * @method static Builder|Website withoutTrashed()

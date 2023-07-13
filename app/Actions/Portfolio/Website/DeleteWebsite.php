@@ -28,7 +28,7 @@ class DeleteWebsite
 
     public function authorize(ActionRequest $request): bool
     {
-        return $request->user()->can("websites.edit");
+        return $request->user()->can("portfolio.edit");
     }
 
     public function asController(Website $website, ActionRequest $request): Website
