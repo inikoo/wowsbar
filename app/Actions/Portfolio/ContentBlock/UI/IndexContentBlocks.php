@@ -123,6 +123,7 @@ class IndexContentBlocks
                 ->withEmptyState($emptyState)
                 ->column(key: 'slug', label: __('code'), sortable: true)
                 ->column(key: 'name', label: __('name'), sortable: true)
+                ->column(key: 'banner', label: __('banner'), sortable: true)
                 ->defaultSort('slug');
         };
     }
