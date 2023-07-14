@@ -1,4 +1,5 @@
-<?php
+<?php /** @noinspection PhpParamsInspection */
+
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
  * Created: Mon, 10 Jul 2023 10:49:40 Malaysia Time, Kuala Lumpur, Malaysia
@@ -42,10 +43,14 @@ test('create websites', function () {
         ->and($tenant->stats->number_websites)->toBe(1);
     $modelData = Website::factory()->definition();
     $website2  =StoreWebsite::make()->action($modelData);
-    /** @noinspection PhpParamsInspection */
     $tenant->refresh();
     expect($website2)->toBeInstanceOf(Website::class)
         ->and($tenant->stats->number_websites)->toBe(2);
+
+    $this->artisan('website:create abc hello.com HI Hello')->assertExitCode(0);
+    $tenant->refresh();
+
+    expect($tenant->stats->number_websites)->toBe(3);
     return $website;
 });
 

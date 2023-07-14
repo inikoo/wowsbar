@@ -9,7 +9,9 @@ namespace App\Actions\Portfolio\Website;
 
 use App\Actions\Tenancy\Tenant\Hydrators\TenantHydratePortfolio;
 use App\Models\Portfolio\Website;
+use App\Models\Tenancy\Tenant;
 use App\Rules\CaseSensitive;
+use Illuminate\Console\Command;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
 use Lorisleiva\Actions\ActionRequest;
@@ -78,5 +80,30 @@ class StoreWebsite
         $validatedData = $this->validateAttributes();
 
         return $this->handle($validatedData);
+    }
+
+    public function getCommandSignature(): string
+    {
+        return 'website:create {tenant} {domain} {code} {name}';
+    }
+
+    public function asCommand(Command $command): void
+    {
+        $tenant = Tenant::where('slug', $command->argument('tenant'))->firstOrFail();
+        $tenant->makeCurrent();
+
+        $this->asAction = true;
+        $this->setRawAttributes(
+            [
+                'domain' => $command->argument('domain'),
+                'code'   => $command->argument('code'),
+                'name'   => $command->argument('name')
+            ]
+        );
+        $validatedData = $this->validateAttributes();
+
+        $this->handle($validatedData);
+
+        $command->info('Done!');
     }
 }
