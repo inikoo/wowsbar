@@ -104,6 +104,6 @@ class StoreWebsite
 
         $this->handle($validatedData);
 
-        $command->info('Done!');
+        $command->info('Done! 🥳');
     }
 }
