@@ -10,8 +10,10 @@ namespace App\Actions\Portfolio\ContentBlock;
 use App\Actions\Tenancy\Tenant\Hydrators\TenantHydratePortfolio;
 use App\Models\Portfolio\ContentBlock;
 use App\Models\Portfolio\Website;
+use App\Models\Tenancy\Tenant;
 use App\Models\Web\WebBlock;
 use App\Models\Web\WebBlockType;
+use Illuminate\Console\Command;
 use Illuminate\Support\Str;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -75,5 +77,33 @@ class StoreContentBlock
         $validatedData = $this->validateAttributes();
 
         return $this->handle($website, $webBlock, $validatedData);
+    }
+
+    public function getCommandSignature(): string
+    {
+        return 'content-block:create {tenant} {website} {web-block} {code} {name}';
+    }
+
+    public function asCommand(Command $command): void
+    {
+        $tenant = Tenant::where('slug', $command->argument('tenant'))->firstOrFail();
+        $tenant->makeCurrent();
+
+        $website = Website::where('slug', $command->argument('website'))->firstOrFail();
+        $webBlock = WebBlock::where('slug', $command->argument('web-block'))->firstOrFail();
+
+
+        $this->asAction = true;
+        $this->setRawAttributes(
+            [
+                'code'   => $command->argument('code'),
+                'name'   => $command->argument('name')
+            ]
+        );
+        $validatedData = $this->validateAttributes();
+
+        $this->handle($website,$webBlock,$validatedData);
+
+        $command->info('Done! 🎉');
     }
 }
