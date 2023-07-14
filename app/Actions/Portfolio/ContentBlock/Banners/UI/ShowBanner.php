@@ -7,13 +7,15 @@
 
 namespace App\Actions\Portfolio\ContentBlock\Banners\UI;
 
+use App\Actions\Helpers\History\IndexHistories;
 use App\Actions\InertiaAction;
 use App\Actions\UI\Dashboard\ShowDashboard;
-use App\Http\Resources\Portfolio\WebsiteResource;
+use App\Enums\UI\BannerTabsEnum;
+use App\Enums\UI\WebsiteTabsEnum;
+use App\Http\Resources\History\HistoryResource;
+use App\Models\Portfolio\ContentBlock;
 use App\Models\Portfolio\Website;
 use App\Models\Tenancy\Tenant;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -25,6 +27,7 @@ class ShowBanner extends InertiaAction
     public function authorize(ActionRequest $request): bool
     {
         $this->canEdit = $request->user()->can('portfolio.edit');
+        $this->canDelete = $request->user()->can('portfolio.edit');
 
         return
             (
@@ -33,73 +36,82 @@ class ShowBanner extends InertiaAction
             );
     }
 
-    public function inTenant(ActionRequest $request): LengthAwarePaginator
+    public function inTenant(ContentBlock $banner, ActionRequest $request):ContentBlock
     {
-        $this->initialisation($request);
+        $this->initialisation($request)->withTab(BannerTabsEnum::values());
         $this->parent=app('currentTenant');
-        return $this->handle();
+        return $banner;
     }
 
-    public function inWebsite(Website $website, ActionRequest $request): LengthAwarePaginator
+    public function inWebsite(Website $website, ContentBlock $banner,ActionRequest $request): ContentBlock
     {
-        $this->initialisation($request);
+        $this->initialisation($request)->withTab(BannerTabsEnum::values());
         $this->parent=$website;
-        return $this->handle();
+        return $banner;
     }
 
-    protected function getElementGroups(): void
-    {
-        $this->elementGroups =
-            [
 
-            ];
-    }
 
-    /** @noinspection PhpUndefinedMethodInspection */
-    public function handle($prefix = null): LengthAwarePaginator
+    public function htmlResponse(ContentBlock $banner, ActionRequest $request): Response
     {
-        //
-    }
 
-    public function jsonResponse(): AnonymousResourceCollection
-    {
-        return WebsiteResource::collection($this->handle());
-    }
 
-    public function htmlResponse(LengthAwarePaginator $websites, ActionRequest $request): Response
-    {
         return Inertia::render(
-            'Portfolio/Website',
+            'Portfolio/Banner',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->getName(),
                     $request->route()->parameters
                 ),
-                'title'       => __('websites'),
+                'title'       => $banner->code,
                 'pageHead'    => [
-                    'title'   => __('websites'),
+                    'title'   => $banner->name,
                     'icon'    => [
-                        'title' => __('website'),
-                        'icon'  => 'fal fa-globe'
+                        'title' => __('banner'),
+                        'icon'  => 'fal fa-window-maximize'
                     ],
                     'actions' => [
                         $this->canEdit ? [
-                            'type'    => 'button',
-                            'style'   => 'create',
-                            'tooltip' => __('Create website'),
-                            'label'   => __('new website'),
-                            'route'   => [
-                                'name' => 'portfolio.websites.create',
+                            'type'  => 'button',
+                            'style' => 'edit',
+                            'label' => __('settings'),
+                            'icon'  => ["fal", "fa-sliders-h"],
+                            'route' => [
+                                'name'       => preg_replace('/show$/', 'edit', $this->routeName),
+                                'parameters' => array_values($this->originalParameters)
                             ]
                         ] : false,
-
-
-                    ]
+                        $this->canEdit ? [
+                            'type'  => 'button',
+                            'style' => 'edit',
+                            'label' => __('workshop'),
+                            'icon'  => ["fal", "fa-drafting-compass"],
+                            'route' => [
+                                'name'       => preg_replace('/show$/', 'workshop', $this->routeName),
+                                'parameters' => array_values($this->originalParameters)
+                            ]
+                        ] : false,
+                        /*$this->canDelete ? [
+                            'type'  => 'button',
+                            'style' => 'delete',
+                            'route' => [
+                                'name'       => 'websites.remove',
+                                'parameters' => array_values($this->originalParameters)
+                            ]
+                        ] : false */
+                    ],
                 ],
-                'data'        => WebsiteResource::collection($websites),
+                'tabs'        => [
+                    'current'    => $this->tab,
+                    'navigation' => BannerTabsEnum::navigation()
+                ],
+
+                WebsiteTabsEnum::CHANGELOG->value => $this->tab == WebsiteTabsEnum::CHANGELOG->value ?
+                    fn () => HistoryResource::collection(IndexHistories::run($banner))
+                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistories::run($banner)))
 
             ]
-        );
+        )->table(IndexHistories::make()->tableStructure());
     }
 
     /** @noinspection PhpUnusedParameterInspection */
@@ -111,7 +123,7 @@ class ShowBanner extends InertiaAction
                     'type'   => 'simple',
                     'simple' => [
                         'route' => $routeParameters,
-                        'label' => __('websites'),
+                        'label' => __('banners'),
                         'icon'  => 'fal fa-bars'
                     ],
                 ],
@@ -119,12 +131,12 @@ class ShowBanner extends InertiaAction
         };
 
         return match ($routeName) {
-            'portfolio.websites.index' =>
+            'portfolio.banners.index' =>
             array_merge(
                 ShowDashboard::make()->getBreadcrumbs(),
                 $headCrumb(
                     [
-                        'name' => 'portfolio.websites.index',
+                        'name' => 'portfolio.banners.index',
                         null
                     ]
                 ),

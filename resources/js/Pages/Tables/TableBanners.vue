@@ -21,6 +21,10 @@ function bannerRoute(banner: Banner) {
             return route(
                 'portfolio.banners.show',
                 [banner.slug]);
+        case 'portfolio.websites.show':
+            return route(
+                'portfolio.websites.show.banners.show',
+                [route().params['website'],banner.slug]);
     }
 }
 

@@ -48,8 +48,6 @@ class ShowWebsite extends InertiaAction
 
     public function htmlResponse(Website $website, ActionRequest $request): Response
     {
-        $this->validateAttributes();
-
         return Inertia::render(
             'Portfolio/Website',
             [

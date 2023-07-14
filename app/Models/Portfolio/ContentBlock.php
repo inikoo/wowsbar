@@ -84,14 +84,7 @@ class ContentBlock extends Model
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
-            ->generateSlugsFrom(function () {
-                $webBlockSlug = $this->webBlock->slug;
-                if ($webBlockSlug != '') {
-                    return Abbreviate::run($webBlockSlug);
-                }
-
-                return ReadableRandomStringGenerator::run();
-            })
+            ->generateSlugsFrom('code')
             ->doNotGenerateSlugsOnUpdate()
             ->saveSlugsTo('slug')
             ->slugsShouldBeNoLongerThan(64);

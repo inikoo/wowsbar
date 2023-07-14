@@ -7,7 +7,10 @@
 
 
 use App\Actions\Portfolio\ContentBlock\Banners\UI\CreateBanner;
+use App\Actions\Portfolio\ContentBlock\Banners\UI\EditBanner;
 use App\Actions\Portfolio\ContentBlock\Banners\UI\IndexBanners;
+use App\Actions\Portfolio\ContentBlock\Banners\UI\ShowBanner;
+use App\Actions\Portfolio\ContentBlock\Banners\UI\ShowBannerWorkshop;
 use App\Actions\UI\Websites\PortfolioDashboard;
 use App\Actions\Portfolio\Website\UI\CreateWebsite;
 use App\Actions\Portfolio\Website\UI\EditWebsite;
@@ -25,11 +28,15 @@ Route::get('/websites/{website}/edit', EditWebsite::class)->name('websites.edit'
 Route::get('/websites/{website}/delete', RemoveWebsite::class)->name('websites.remove');
 Route::get('/websites/{website}/banners/create', [CreateBanner::class,'inWebsite'])->name('websites.show.banners.create');
 Route::get('/websites/{website}/banners', [IndexBanners::class,'inWebsite'])->name('websites.show.banners.index');
-//Route::get('/websites/{website}/{banner}', [ShowBanner::class,'inWebsite'])->name('websites.show.banners.show');
-//Route::get('/websites/{website}/{banner}/edit', [EditBanner::class,'inWebsite'])->name('websites.show.banners.edit');
-//Route::get('/websites/{website}/{banner}/delete', [RemoveBanner::class,'inWebsite'])->name('websites.show.banners.remove');
+Route::get('/websites/{website}/banners/{banner}', [ShowBanner::class,'inWebsite'])->name('websites.show.banners.show');
+Route::get('/websites/{website}/banners/{banner}/edit', [EditBanner::class,'inWebsite'])->name('websites.show.banners.edit');
+Route::get('/websites/{website}/banners/{banner}/workshop', [ShowBannerWorkshop::class, 'inWebsite'])->name('websites.show.banners.workshop');
+
+//Route::get('/websites/{website}/banners/{banner}/delete', [RemoveBanner::class,'inWebsite'])->name('websites.show.banners.remove');
 
 Route::get('/banners', [IndexBanners::class,'inTenant'])->name('banners.index');
-//Route::get('/{banner}', [ShowBanner::class,'inTenant'])->name('banners.show');
-//Route::get('/{banner}/edit', [EditBanner::class,'inTenant'])->name('banners.edit');
-//Route::get('/{banner}/delete', [RemoveBanner::class,'inTenant'])->name('banners.remove');
+Route::get('/banners/{banner}', [ShowBanner::class,'inTenant'])->name('banners.show');
+Route::get('/banners/{banner}/edit', [EditBanner::class,'inTenant'])->name('banners.edit');
+Route::get('/banners/{banner}/workshop', [ShowBannerWorkshop::class,'inTenant'])->name('banners.workshop');
+
+//Route::get('/banners/{banner}/delete', [RemoveBanner::class,'inTenant'])->name('banners.remove');
