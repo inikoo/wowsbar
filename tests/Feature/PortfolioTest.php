@@ -42,6 +42,7 @@ test('create websites', function () {
         ->and($tenant->stats->number_websites)->toBe(1);
     $modelData = Website::factory()->definition();
     $website2  =StoreWebsite::make()->action($modelData);
+    /** @noinspection PhpParamsInspection */
     $tenant->refresh();
     expect($website2)->toBeInstanceOf(Website::class)
         ->and($tenant->stats->number_websites)->toBe(2);
