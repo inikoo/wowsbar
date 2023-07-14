@@ -8,21 +8,37 @@
 namespace App\Actions\Tenancy\Tenant\Hydrators;
 
 use App\Models\Tenancy\Tenant;
-use App\Models\Portfolio\Website;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Lorisleiva\Actions\Concerns\AsAction;
 
-class TenantHydrateWeb implements ShouldBeUnique
+class TenantHydratePortfolio implements ShouldBeUnique
 {
     use AsAction;
     use HasTenantHydrate;
 
     public function handle(Tenant $tenant): void
     {
-        $stats = [
-            'number_websites' => Website::count(),
-        ];
 
+
+        $this->websites($tenant);
+        $this->contentBlocks($tenant);
+    }
+
+    public function websites(Tenant $tenant): void
+    {
+        $stats = [
+            'number_websites'       => $tenant->websites()->count(),
+
+        ];
+        $tenant->stats()->update($stats);
+    }
+
+    public function contentBlocks(Tenant $tenant): void
+    {
+        $stats = [
+            'number_content_blocks' => $tenant->contentBlocks()->count()
+
+        ];
         $tenant->stats()->update($stats);
     }
 }

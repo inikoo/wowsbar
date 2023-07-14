@@ -22,6 +22,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property WebBlockTypeScopeEnum $scope
  * @property WebBlockTypeSlugEnum $slug
  * @property string $name
+ * @property array $blueprint
  * @property array $data
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -33,6 +34,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static Builder|WebBlockType newQuery()
  * @method static Builder|WebBlockType onlyTrashed()
  * @method static Builder|WebBlockType query()
+ * @method static Builder|WebBlockType whereBlueprint($value)
  * @method static Builder|WebBlockType whereCreatedAt($value)
  * @method static Builder|WebBlockType whereData($value)
  * @method static Builder|WebBlockType whereDeletedAt($value)
@@ -50,15 +52,16 @@ class WebBlockType extends Model
     use SoftDeletes;
 
     protected $casts = [
-        'data'  => 'array',
-        'slug'  => WebBlockTypeSlugEnum::class,
-        'scope' => WebBlockTypeScopeEnum::class,
+        'blueprint' => 'array',
+        'data'      => 'array',
+        'slug'      => WebBlockTypeSlugEnum::class,
+        'scope'     => WebBlockTypeScopeEnum::class,
     ];
 
     protected $attributes = [
-        'data' => '{}',
+        'blueprint' => '{}',
+        'data'      => '{}',
     ];
-
 
     protected $guarded = [];
 

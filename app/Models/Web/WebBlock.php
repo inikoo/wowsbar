@@ -28,6 +28,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property string $name
  * @property string|null $description
  * @property int $web_block_type_id
+ * @property array $blueprint
  * @property array $data
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -40,6 +41,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|WebBlock newQuery()
  * @method static Builder|WebBlock onlyTrashed()
  * @method static Builder|WebBlock query()
+ * @method static Builder|WebBlock whereBlueprint($value)
  * @method static Builder|WebBlock whereCode($value)
  * @method static Builder|WebBlock whereCreatedAt($value)
  * @method static Builder|WebBlock whereData($value)
@@ -61,13 +63,14 @@ class WebBlock extends Model
     use HasSlug;
 
     protected $casts = [
-        'data'  => 'array',
-        'scope' => WebBlockScopeEnum::class,
-
+        'blueprint' => 'array',
+        'data'      => 'array',
+        'scope'     => WebBlockScopeEnum::class,
     ];
 
     protected $attributes = [
-        'data' => '{}',
+        'blueprint' => '{}',
+        'data'      => '{}',
     ];
 
     protected $guarded = [];

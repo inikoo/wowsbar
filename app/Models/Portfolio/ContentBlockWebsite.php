@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
  * App\Models\Portfolio\ContentBlockWebsite
  *
  * @property int $id
+ * @property string $ulid
  * @property int $website_id
  * @property int $tenant_id
  * @property int $content_block_id
@@ -25,6 +26,7 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
  * @method static \Illuminate\Database\Eloquent\Builder|ContentBlockWebsite whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ContentBlockWebsite whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ContentBlockWebsite whereTenantId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ContentBlockWebsite whereUlid($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ContentBlockWebsite whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ContentBlockWebsite whereWebsiteId($value)
  * @mixin \Eloquent

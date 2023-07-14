@@ -22,8 +22,13 @@ return new class () extends Migration {
 
             $table->unsignedSmallInteger('tenant_id');
             $table->foreign('tenant_id')->references('id')->on('tenants')->onUpdate('cascade')->onDelete('cascade');
-
+            $table->string('slug')->unique()->collation('und_ns');
+            ;
+            $table->string('code')->collation('und_ns_ci');
+            $table->string('name')->collation('und_ns_ci');
+            $table->jsonb('layout');
             $table->jsonb('data');
+
             $table->timestampsTz();
             $table->softDeletesTz();
         });

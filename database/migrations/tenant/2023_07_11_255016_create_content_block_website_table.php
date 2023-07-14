@@ -14,6 +14,7 @@ return new class () extends Migration {
     {
         Schema::create('content_block_website', function (Blueprint $table) {
             $table->integerIncrements('id');
+            $table->ulid()->index();
             $table->unsignedInteger('website_id')->index();
             $table->foreign('website_id')->references('id')->on('websites')->onUpdate('cascade')->onDelete('cascade');
 

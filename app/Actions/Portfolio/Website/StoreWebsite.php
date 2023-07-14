@@ -7,9 +7,11 @@
 
 namespace App\Actions\Portfolio\Website;
 
-use App\Actions\Tenancy\Tenant\Hydrators\TenantHydrateWeb;
+use App\Actions\Tenancy\Tenant\Hydrators\TenantHydratePortfolio;
 use App\Models\Portfolio\Website;
+use App\Models\Tenancy\Tenant;
 use App\Rules\CaseSensitive;
+use Illuminate\Console\Command;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
 use Lorisleiva\Actions\ActionRequest;
@@ -30,16 +32,21 @@ class StoreWebsite
 
     public function handle(array $modelData): Website
     {
-        $tenant=app('currentTenant');
+        $tenant = app('currentTenant');
         /** @var Website $website */
         $website = $tenant->websites()->create($modelData);
         $website->stats()->create();
-        TenantHydrateWeb::run(app('currentTenant'));
+        TenantHydratePortfolio::make()->websites(app('currentTenant'));
+
         return $website;
     }
 
     public function authorize(ActionRequest $request): bool
     {
+        if ($this->asAction) {
+            return true;
+        }
+
         return $request->user()->can("portfolio.edit");
     }
 
@@ -47,7 +54,7 @@ class StoreWebsite
     {
         return [
             'domain' => ['required', new CaseSensitive('websites')],
-            'code'   => ['required', 'unique:tenant.websites','max:8'],
+            'code'   => ['required', 'unique:tenant.websites', 'max:8'],
             'name'   => ['required']
         ];
     }
@@ -73,5 +80,30 @@ class StoreWebsite
         $validatedData = $this->validateAttributes();
 
         return $this->handle($validatedData);
+    }
+
+    public function getCommandSignature(): string
+    {
+        return 'website:create {tenant} {domain} {code} {name}';
+    }
+
+    public function asCommand(Command $command): void
+    {
+        $tenant = Tenant::where('slug', $command->argument('tenant'))->firstOrFail();
+        $tenant->makeCurrent();
+
+        $this->asAction = true;
+        $this->setRawAttributes(
+            [
+                'domain' => $command->argument('domain'),
+                'code'   => $command->argument('code'),
+                'name'   => $command->argument('name')
+            ]
+        );
+        $validatedData = $this->validateAttributes();
+
+        $this->handle($validatedData);
+
+        $command->info('Done!');
     }
 }
