@@ -105,6 +105,9 @@ class ShowBanner extends InertiaAction
                     'current'    => $this->tab,
                     'navigation' => BannerTabsEnum::navigation()
                 ],
+                WebsiteTabsEnum::SHOWCASE->value => $this->tab == WebsiteTabsEnum::SHOWCASE->value ?
+                    fn () => $banner
+                    : Inertia::lazy(fn () => $banner),
 
                 WebsiteTabsEnum::CHANGELOG->value => $this->tab == WebsiteTabsEnum::CHANGELOG->value ?
                     fn () => HistoryResource::collection(IndexHistories::run($banner))

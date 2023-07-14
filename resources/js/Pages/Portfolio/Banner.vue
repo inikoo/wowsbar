@@ -14,6 +14,7 @@ import ModelDetails from "@/Pages/ModelDetails.vue";
 import Tabs from "@/Components/Navigation/Tabs.vue";
 import {capitalize} from "@/Composables/capitalize"
 import TableHistories from "@/Pages/Tables/TableHistories.vue";
+import BannerShowcase from "@/Pages/Portfolio/BannerShowcase.vue";
 
 import {faWindowMaximize, faGlobe} from "@/../private/pro-light-svg-icons"
 
@@ -26,7 +27,8 @@ const props = defineProps<{
         current: string;
         navigation: object;
     }
-    changelog?: object
+    changelog?: object,
+    showcase?: object
 }>()
 
 let currentTab = ref(props.tabs.current);
@@ -35,6 +37,7 @@ const handleTabUpdate = (tabSlug) => useTabChange(tabSlug, currentTab);
 const component = computed(() => {
 
     const components = {
+        showcase: BannerShowcase,
         details: ModelDetails,
         changelog: TableHistories,
     };
@@ -49,6 +52,6 @@ const component = computed(() => {
     <Head :title="capitalize(title)"/>
     <PageHeading :data="pageHead"></PageHeading>
     <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate"/>
-    <component :is="component"  :tab="currentTab" :data="props[currentTab]"></component>
+    <component :is="component" :tab="currentTab" :data="props[currentTab]"></component>
 </template>
 
