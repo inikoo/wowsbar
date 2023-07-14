@@ -5,7 +5,7 @@
         "defaultParameters": {},
         "dummyData": {
                 "delay": 2500,
-                "imgsBanner": [
+                "slides": [
                     {
                         "imageSrc": "https://tailwindui.com/img/ecommerce-images/incentives-07-hero.jpg",
                         "imageAlt": "Front of men's Basic Tee in sienna",
