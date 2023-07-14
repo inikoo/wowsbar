@@ -5,22 +5,40 @@
   -->
 
 <script setup lang="ts">
-import {Head} from '@inertiajs/vue3';
-import {library} from '@fortawesome/fontawesome-svg-core';
+import { Head } from '@inertiajs/vue3';
+import { library } from '@fortawesome/fontawesome-svg-core';
 import PageHeading from '@/Components/Headings/PageHeading.vue';
-import {computed, ref} from "vue";
-import {useTabChange} from "@/Composables/tab-change";
+import { computed, ref } from "vue";
+import { useTabChange } from "@/Composables/tab-change";
 import ModelDetails from "@/Pages/ModelDetails.vue";
 import Tabs from "@/Components/Navigation/Tabs.vue";
-import {capitalize} from "@/Composables/capitalize"
+import Banner from "@/Components/Banner.vue";
+import { capitalize } from "@/Composables/capitalize"
 import TableHistories from "@/Pages/Tables/TableHistories.vue";
 
-import {faWindowMaximize, faGlobe} from "@/../private/pro-light-svg-icons"
+import { faWindowMaximize, faGlobe } from "@/../private/pro-light-svg-icons"
 
 library.add(faWindowMaximize, faGlobe)
 
 const props = defineProps<{
-    data:object
+    data: {
+        layout: {
+            parameters: {}
+            data: {
+                delay: number,
+                slides: [
+                    {
+                        imageSrc: string,
+                        imageAlt: string,
+                        link?: {
+                            label: string,
+                            target: string
+                        }
+                    }
+                ]
+            }
+        }
+    }
 }>()
 
 
@@ -29,6 +47,6 @@ const props = defineProps<{
 
 
 <template>
-    {{data.layout}}
+    <Banner :data="data.layout" />
 </template>
 

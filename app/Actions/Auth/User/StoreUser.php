@@ -34,7 +34,7 @@ class StoreUser
         $user->stats()->create();
         SetUserAvatar::run($user);
 
-        UserHydrateUniversalSearch::dispatch($user);
+        // UserHydrateUniversalSearch::dispatch($user);
         TenantHydrateUsers::run(app('currentTenant'));
         return $user;
     }
