@@ -22,8 +22,6 @@ class ContentBlockResource extends JsonResource
             'slug'           => $this->slug,
             'code'           => $this->code,
             'name'           => $this->name,
-
-
         ];
     }
 }
