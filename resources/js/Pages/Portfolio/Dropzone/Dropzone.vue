@@ -6,6 +6,7 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 library.add(faImage)
 const props = defineProps<{
   files: Array
+  filesChange : Function
 }>()
 
 const isDragging = ref(false)
@@ -16,6 +17,7 @@ console.log(files)
 const onChange = () => {
   const newFiles = [...fileInput.value.files]
   files.value = [...files.value, ...newFiles]
+  props.filesChange([...files.value, ...newFiles])
 }
 
 const generateThumbnail = (file) => {

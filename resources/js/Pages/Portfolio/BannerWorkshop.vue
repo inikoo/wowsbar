@@ -19,6 +19,21 @@ const props = defineProps<{
 
 const data = ref(props.banner.layout.dummyData.imgsBanner)
  
+const filesChange =(value)=>{
+    data.value = value
+}
+
+const generateThumbnail = (file) => {
+  if(file && file instanceof File ){
+    let fileSrc = URL.createObjectURL(file)
+  setTimeout(() => {
+    URL.revokeObjectURL(fileSrc)
+  }, 1000)
+  return fileSrc
+  }else{
+    return file.imageSrc
+  }
+}
 
 console.log(props)
 </script>
@@ -42,14 +57,14 @@ console.log(props)
             }"
             :navigation="false" :modules="[Autoplay, Pagination, Navigation]" class="mySwiper">
             <SwiperSlide v-for="imgBanner in data">
-                <img :src="imgBanner.imageSrc" :alt="imgBanner.imageAlt" srcset="">
+                <img :src="generateThumbnail(imgBanner)" :alt="imgBanner.imageAlt" srcset="">
                 <Link v-if="imgBanner.link" :href="imgBanner.link.target" class="bg-gray-800/40 text-gray-100 border border-gray-50/50 absolute bottom-6 right-11 rounded px-3 py-1 hover:bg-gray-900/60">
                     {{imgBanner.link.label}}
                 </Link>
             </SwiperSlide>
         </Swiper>
     </div>
-    <div class="m-2.5"><DropZone :files="data" /></div>
+    <div class="m-2.5"><DropZone :files="data" :filesChange="filesChange"/></div>
     </div>
     </div>
  
