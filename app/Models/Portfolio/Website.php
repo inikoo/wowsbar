@@ -37,6 +37,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read \App\Models\Portfolio\WebsiteStats|null $stats
  * @property-read Tenant $tenant
  * @property-read \App\Models\Search\UniversalSearch|null $universalSearch
+ * @method static \Database\Factories\Portfolio\WebsiteFactory factory($count = null, $state = [])
  * @method static Builder|Website newModelQuery()
  * @method static Builder|Website newQuery()
  * @method static Builder|Website onlyTrashed()

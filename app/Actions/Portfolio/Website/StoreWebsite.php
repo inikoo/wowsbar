@@ -7,7 +7,7 @@
 
 namespace App\Actions\Portfolio\Website;
 
-use App\Actions\Tenancy\Tenant\Hydrators\TenantHydrateWeb;
+use App\Actions\Tenancy\Tenant\Hydrators\TenantHydratePortfolio;
 use App\Models\Portfolio\Website;
 use App\Rules\CaseSensitive;
 use Illuminate\Http\RedirectResponse;
@@ -30,19 +30,21 @@ class StoreWebsite
 
     public function handle(array $modelData): Website
     {
-        $tenant=app('currentTenant');
+        $tenant = app('currentTenant');
         /** @var Website $website */
         $website = $tenant->websites()->create($modelData);
         $website->stats()->create();
-        TenantHydrateWeb::run(app('currentTenant'));
+        TenantHydratePortfolio::make()->websites(app('currentTenant'));
+
         return $website;
     }
 
     public function authorize(ActionRequest $request): bool
     {
-        if($this->asAction ){
+        if ($this->asAction) {
             return true;
         }
+
         return $request->user()->can("portfolio.edit");
     }
 
@@ -50,7 +52,7 @@ class StoreWebsite
     {
         return [
             'domain' => ['required', new CaseSensitive('websites')],
-            'code'   => ['required', 'unique:tenant.websites','max:8'],
+            'code'   => ['required', 'unique:tenant.websites', 'max:8'],
             'name'   => ['required']
         ];
     }
@@ -58,6 +60,7 @@ class StoreWebsite
     public function asController(ActionRequest $request): Website
     {
         $request->validate();
+
         return $this->handle($request->validated());
     }
 

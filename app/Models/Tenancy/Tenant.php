@@ -10,6 +10,7 @@ namespace App\Models\Tenancy;
 use App\Models\Assets\Currency;
 use App\Models\Auth\User;
 use App\Models\Media\Media;
+use App\Models\Portfolio\ContentBlock;
 use App\Models\Portfolio\Website;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -42,6 +43,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string|null $deleted_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, ContentBlock> $contentBlocks
+ * @property-read int|null $content_blocks_count
  * @property-read Currency $currency
  * @property-read Media|null $logo
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \Spatie\MediaLibrary\MediaCollections\Models\Media> $media
@@ -126,6 +129,11 @@ class Tenant extends SpatieTenant implements HasMedia
     public function websites(): HasMany
     {
         return $this->hasMany(Website::class);
+    }
+
+    public function contentBlocks(): HasMany
+    {
+        return $this->hasMany(ContentBlock::class);
     }
 
     public function logo(): HasOne

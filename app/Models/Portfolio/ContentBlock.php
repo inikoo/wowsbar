@@ -11,6 +11,7 @@ use App\Actions\Utils\Abbreviate;
 use App\Actions\Utils\ReadableRandomStringGenerator;
 use App\Models\Web\WebBlock;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -25,21 +26,30 @@ use Spatie\Sluggable\SlugOptions;
  * @property int $web_block_type_id
  * @property int $web_block_id
  * @property int $tenant_id
- * @property mixed $data
+ * @property string $slug
+ * @property string $code
+ * @property string $name
+ * @property array $layout
+ * @property array $data
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read WebBlock $webBlock
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Portfolio\Website> $website
  * @property-read int|null $website_count
+ * @method static \Database\Factories\Portfolio\ContentBlockFactory factory($count = null, $state = [])
  * @method static Builder|ContentBlock newModelQuery()
  * @method static Builder|ContentBlock newQuery()
  * @method static Builder|ContentBlock onlyTrashed()
  * @method static Builder|ContentBlock query()
+ * @method static Builder|ContentBlock whereCode($value)
  * @method static Builder|ContentBlock whereCreatedAt($value)
  * @method static Builder|ContentBlock whereData($value)
  * @method static Builder|ContentBlock whereDeletedAt($value)
  * @method static Builder|ContentBlock whereId($value)
+ * @method static Builder|ContentBlock whereLayout($value)
+ * @method static Builder|ContentBlock whereName($value)
+ * @method static Builder|ContentBlock whereSlug($value)
  * @method static Builder|ContentBlock whereTenantId($value)
  * @method static Builder|ContentBlock whereUpdatedAt($value)
  * @method static Builder|ContentBlock whereWebBlockId($value)
@@ -48,17 +58,33 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|ContentBlock withoutTrashed()
  * @mixin \Eloquent
  */
-
 class ContentBlock extends Model
 {
     use SoftDeletes;
     use HasSlug;
+    use HasFactory;
+
+    protected $casts = [
+        'layout' => 'array',
+        'data'   => 'array',
+    ];
+
+    protected $attributes = [
+        'layout' => '{}',
+        'data'   => '{}',
+    ];
+
+    protected $guarded = [];
+
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
 
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
             ->generateSlugsFrom(function () {
-
                 $webBlockSlug = $this->webBlock->slug;
                 if ($webBlockSlug != '') {
                     return Abbreviate::run($webBlockSlug);

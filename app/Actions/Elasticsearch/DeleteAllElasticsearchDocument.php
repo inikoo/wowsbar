@@ -9,7 +9,6 @@ namespace App\Actions\Elasticsearch;
 
 use Exception;
 use Lorisleiva\Actions\Concerns\AsAction;
-use Illuminate\Console\Command;
 use Lorisleiva\Actions\Concerns\AsObject;
 
 class DeleteAllElasticsearchDocument
@@ -27,7 +26,7 @@ class DeleteAllElasticsearchDocument
         try {
             $response = $client->deleteByQuery([
                 'index' => '_all',
-                'body' => [
+                'body'  => [
                     'query' => [
                         'match_all' => new \stdClass(),
                     ],
