@@ -22,7 +22,6 @@ use Lorisleiva\Actions\ActionRequest;
 
 class ShowBanner extends InertiaAction
 {
-    private Tenant|Website $parent;
 
     public function authorize(ActionRequest $request): bool
     {
@@ -39,14 +38,12 @@ class ShowBanner extends InertiaAction
     public function inTenant(ContentBlock $banner, ActionRequest $request):ContentBlock
     {
         $this->initialisation($request)->withTab(BannerTabsEnum::values());
-        $this->parent=app('currentTenant');
         return $banner;
     }
 
     public function inWebsite(Website $website, ContentBlock $banner,ActionRequest $request): ContentBlock
     {
         $this->initialisation($request)->withTab(BannerTabsEnum::values());
-        $this->parent=$website;
         return $banner;
     }
 
