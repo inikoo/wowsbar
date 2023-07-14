@@ -40,6 +40,9 @@ class StoreWebsite
 
     public function authorize(ActionRequest $request): bool
     {
+        if($this->asAction ){
+            return true;
+        }
         return $request->user()->can("portfolio.edit");
     }
 
@@ -55,7 +58,6 @@ class StoreWebsite
     public function asController(ActionRequest $request): Website
     {
         $request->validate();
-
         return $this->handle($request->validated());
     }
 

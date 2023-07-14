@@ -10,6 +10,7 @@ namespace App\Models\Portfolio;
 use App\Models\Tenancy\Tenant;
 use App\Models\Traits\HasUniversalSearch;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -59,6 +60,7 @@ class Website extends Model
     use HasSlug;
     use SoftDeletes;
     use HasUniversalSearch;
+    use HasFactory;
 
     protected $casts = [
         'data' => 'array',
