@@ -1,57 +1,41 @@
 <script setup lang="ts">
 import {Head} from '@inertiajs/vue3';
+import { ref } from 'vue'
 import PageHeading from '@/Components/Headings/PageHeading.vue';
 import { capitalize } from "@/Composables/capitalize"
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import { Link } from "@inertiajs/vue3"
 import { Autoplay, Pagination, Navigation } from 'swiper/modules'
-import DropZone from '@/Components/Dropzone/Dropzone.vue'
+import DropZone from './Dropzone/Dropzone.vue'
 // Import Swiper styles
 import 'swiper/css'
 // import 'swiper/css/pagination';
 import 'swiper/css/navigation';
-
-
-const data = {
-    delay: 2500,
-    slides: [
-        {
-            imageSrc: "https://tailwindui.com/img/logos/mark.svg" ,
-            imageAlt: "Front of men's Basic Tee in sienna",
-            link: {
-                label: "Open",
-                target: "#"
-            }
-        },
-        {
-            imageSrc: "https://tailwindui.com/img/logos/mark.svg" ,
-            imageAlt: "Lorem ipsum dolor sit amet consectetur.",
-        },
-        {
-            imageSrc: "https://tailwindui.com/img/logos/mark.svg" ,
-            imageAlt: "Lorem ipsum dolor Basic Tee in sienna",
-            link: {
-                label: "Browse Promo",
-                target: "#"
-            }
-        },
-        {
-            imageSrc: "https://tailwindui.com/img/ecommerce-images/home-page-01-category-01.jpg" ,
-            imageAlt: "Continuous infinite slider",
-        },
-    ]
-}
- 
 const props = defineProps<{
     title: string,
     pageHead: object,
     banner: object
-
 }>()
 
+const data = ref(props.banner.layout.dummyData.imgsBanner)
+ 
+const filesChange =(value)=>{
+    data.value = value
+}
 
+const generateThumbnail = (file) => {
+  if(file && file instanceof File ){
+    let fileSrc = URL.createObjectURL(file)
+  setTimeout(() => {
+    URL.revokeObjectURL(fileSrc)
+  }, 1000)
+  return fileSrc
+  }else{
+    return file.imageSrc
+  }
+}
 
-
+console.log(props)
 </script>
 
 
@@ -72,15 +56,15 @@ const props = defineProps<{
                 clickable: true,
             }"
             :navigation="false" :modules="[Autoplay, Pagination, Navigation]" class="mySwiper">
-            <SwiperSlide v-for="imgBanner in data.slides">
-                <img :src="imgBanner.imageSrc" :alt="imgBanner.imageAlt" srcset="">
+            <SwiperSlide v-for="imgBanner in data">
+                <img :src="generateThumbnail(imgBanner)" :alt="imgBanner.imageAlt" srcset="">
                 <Link v-if="imgBanner.link" :href="imgBanner.link.target" class="bg-gray-800/40 text-gray-100 border border-gray-50/50 absolute bottom-6 right-11 rounded px-3 py-1 hover:bg-gray-900/60">
                     {{imgBanner.link.label}}
                 </Link>
             </SwiperSlide>
         </Swiper>
     </div>
-    <div class="m-2.5"><DropZone /></div>
+    <div class="m-2.5"><DropZone :files="data" :filesChange="filesChange"/></div>
     </div>
     </div>
  

@@ -1,26 +1,43 @@
-<script setup>
+<script  setup lang="ts">
 import { ref } from 'vue'
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faImage } from "@/../private/pro-solid-svg-icons"
 import { library } from "@fortawesome/fontawesome-svg-core";
 library.add(faImage)
+const props = defineProps<{
+  files: Array
+  filesChange : Function
+}>()
 
 const isDragging = ref(false)
-const files = ref([])
+const files = ref(props.files)
 const fileInput = ref(null)
+console.log(files)
 
 const onChange = () => {
   const newFiles = [...fileInput.value.files]
   files.value = [...files.value, ...newFiles]
-  console.log(files)
+  props.filesChange([...files.value, ...newFiles])
 }
 
 const generateThumbnail = (file) => {
-  let fileSrc = URL.createObjectURL(file)
+  if(file && file instanceof File ){
+    let fileSrc = URL.createObjectURL(file)
   setTimeout(() => {
     URL.revokeObjectURL(fileSrc)
   }, 1000)
   return fileSrc
+  }else{
+    return file.imageSrc
+  }
+}
+
+const generateName = (file) => {
+  if(file && file instanceof File ){
+   return file.name
+  }else{
+    return file.imageAlt
+  }
 }
 
 const makeName = (name) => {
@@ -82,7 +99,7 @@ const drop = (e) => {
         <div class="img">
           <img class="preview-img" :src="generateThumbnail(file)" />
         </div>
-        <span class="title">{{ file.name }}</span>
+        <span class="title">{{ generateName(file) }}</span>
         <div>
           <button
             class="ml-2"

@@ -32,6 +32,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property int $tenant_id
  * @property bool $is_root
  * @property bool $status
+ * @property bool $is_deactivate
  * @property string $username
  * @property string|null $contact_name
  * @property string $email
