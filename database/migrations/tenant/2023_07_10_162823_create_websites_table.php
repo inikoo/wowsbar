@@ -16,13 +16,17 @@ return new class () extends Migration {
             $table->smallIncrements('id');
             $table->unsignedSmallInteger('tenant_id')->index();
             $table->foreign('tenant_id')->references('id')->on('tenants');
-            $table->string('slug')->unique()->collation('und_ns');
-            $table->string('code')->unique()->collation('und_ns');
-            $table->string('domain')->unique()->collation('und_ns');
-            $table->string('name')->unique()->collation('und_ns');
+            $table->string('slug')->collation('und_ns');
+            $table->string('code')->collation('und_ns');
+            $table->string('domain')->collation('und_ns');
+            $table->string('name')->collation('und_ns');
             $table->jsonb('data');
             $table->timestampsTz();
             $table->softDeletesTz();
+            $table->unique(['tenant_id','slug']);
+            $table->unique(['tenant_id','code']);
+            $table->unique(['tenant_id','domain']);
+
         });
     }
 

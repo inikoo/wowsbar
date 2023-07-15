@@ -9,6 +9,7 @@ namespace App\Models\Portfolio;
 
 use App\Actions\Utils\Abbreviate;
 use App\Actions\Utils\ReadableRandomStringGenerator;
+use App\Concerns\BelongsToTenant;
 use App\Models\Web\WebBlock;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -63,6 +64,8 @@ class ContentBlock extends Model
     use SoftDeletes;
     use HasSlug;
     use HasFactory;
+    use BelongsToTenant;
+
 
     protected $casts = [
         'layout' => 'array',

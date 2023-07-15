@@ -7,12 +7,13 @@
 
 namespace App\Models\Portfolio;
 
+use App\Concerns\BelongsToTenant;
 use App\Models\Tenancy\Tenant;
 use App\Models\Traits\HasUniversalSearch;
+use Database\Factories\Portfolio\WebsiteFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -37,7 +38,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read \App\Models\Portfolio\WebsiteStats|null $stats
  * @property-read Tenant $tenant
  * @property-read \App\Models\Search\UniversalSearch|null $universalSearch
- * @method static \Database\Factories\Portfolio\WebsiteFactory factory($count = null, $state = [])
+ * @method static WebsiteFactory factory($count = null, $state = [])
  * @method static Builder|Website newModelQuery()
  * @method static Builder|Website newQuery()
  * @method static Builder|Website onlyTrashed()
@@ -62,6 +63,7 @@ class Website extends Model
     use SoftDeletes;
     use HasUniversalSearch;
     use HasFactory;
+    use BelongsToTenant;
 
     protected $casts = [
         'data' => 'array',
@@ -89,11 +91,6 @@ class Website extends Model
     public function stats(): HasOne
     {
         return $this->hasOne(WebsiteStats::class);
-    }
-
-    public function tenant(): BelongsTo
-    {
-        return $this->belongsTo(Tenant::class);
     }
 
     public function contentBlocks(): BelongsToMany

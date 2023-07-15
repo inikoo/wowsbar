@@ -47,6 +47,7 @@ test('create websites', function () {
             ]
         )
     );
+    $tenant->refresh();
     expect($website)->toBeInstanceOf(Website::class)
         ->and($website->slug)->toBe('web1')
         ->and($tenant->stats->number_websites)->toBe(1);

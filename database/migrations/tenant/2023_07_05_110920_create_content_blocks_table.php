@@ -14,23 +14,20 @@ return new class () extends Migration {
     {
         Schema::create('content_blocks', function (Blueprint $table) {
             $table->mediumIncrements('id');
+            $table->unsignedSmallInteger('tenant_id')->index();
+            $table->foreign('tenant_id')->references('id')->on('tenants');
             $table->unsignedSmallInteger('web_block_type_id');
             $table->foreign('web_block_type_id')->references('id')->on('web_block_types')->onUpdate('cascade')->onDelete('cascade');
-
             $table->unsignedSmallInteger('web_block_id');
             $table->foreign('web_block_id')->references('id')->on('web_blocks')->onUpdate('cascade')->onDelete('cascade');
-
-            $table->unsignedSmallInteger('tenant_id');
-            $table->foreign('tenant_id')->references('id')->on('tenants')->onUpdate('cascade')->onDelete('cascade');
-            $table->string('slug')->unique()->collation('und_ns');
-            ;
+            $table->string('slug')->collation('und_ns');
             $table->string('code')->collation('und_ns_ci');
             $table->string('name')->collation('und_ns_ci');
             $table->jsonb('layout');
             $table->jsonb('data');
-
             $table->timestampsTz();
             $table->softDeletesTz();
+            $table->unique(['tenant_id','slug']);
         });
     }
 

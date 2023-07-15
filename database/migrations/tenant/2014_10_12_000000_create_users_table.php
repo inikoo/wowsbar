@@ -18,10 +18,9 @@ return new class () extends Migration {
             $table->foreign('tenant_id')->references('id')->on('tenants');
             $table->boolean('is_root')->index()->default(false);
             $table->boolean('status')->default(true);
-            $table->boolean('is_deactivate')->default(false);
-            $table->string('username')->unique()->collation('und_ns');
+            $table->string('username')->collation('und_ns');
             $table->string('contact_name')->nullable()->collation('und_ns');
-            $table->string('email')->unique()->collation('und_ns');
+            $table->string('email')->collation('und_ns');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
@@ -33,6 +32,8 @@ return new class () extends Migration {
             $table->unsignedInteger('avatar_id')->nullable();
             $table->timestampsTz();
             $table->softDeletesTz();
+            $table->unique(['tenant_id','username']);
+            $table->unique(['tenant_id','email']);
         });
     }
 
