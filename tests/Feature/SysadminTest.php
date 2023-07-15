@@ -9,6 +9,7 @@
 
 use App\Actions\Auth\User\StoreUser;
 use App\Actions\Auth\User\UpdateUser;
+use App\Actions\Auth\User\UpdateUserStatus;
 use App\Actions\Tenancy\Tenant\StoreTenant;
 use App\Models\Auth\User;
 use App\Models\Tenancy\Tenant;
@@ -51,8 +52,8 @@ test('update user', function ($user) {
 })->depends('create user');
 
 test('deactivate a user', function ($user) {
-    $storeUser = UpdateUser::make()->action($user, array_merge(User::factory()->definition(), ['is_deactivate' => true]));
+    $user = UpdateUserStatus::make()->action($user, false );
 
-    expect($storeUser)->toBeInstanceOf(User::class)
-        ->and($storeUser->is_deactivate)->toBeTrue();
+    expect($user)->toBeInstanceOf(User::class)
+        ->and($user->status)->toBeFalse();
 })->depends('create user');
