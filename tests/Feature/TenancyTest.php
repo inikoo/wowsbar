@@ -18,6 +18,7 @@ test('create tenant', function () {
     $modelData = Tenant::factory()->definition();
     $tenant    = StoreTenant::make()->action($modelData);
     expect($tenant)->toBeInstanceOf(Tenant::class);
+    $tenant->makeCurrent();
     /** @var \App\Models\Auth\User $user */
     $user = $tenant->users()->first();
     expect($user)->toBeInstanceOf(User::class)
