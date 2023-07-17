@@ -6,7 +6,13 @@ import { createInertiaApp } from "@inertiajs/vue3";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { ZiggyVue } from "../../vendor/tightenco/ziggy/dist/vue.m";
 import { i18nVue } from "laravel-vue-i18n"
+import { fab } from "@fortawesome/free-brands-svg-icons"
+import { fas } from '@/../private/pro-solid-svg-icons'
+import { far } from '@/../private/pro-regular-svg-icons'
+import { fal } from '@/../private/pro-light-svg-icons'
+import { library } from '@fortawesome/fontawesome-svg-core'
 
+library.add(fas, fab, far, fal)
 import { createPinia } from "pinia";
 const appName =
     window.document.getElementsByTagName("title")[0]?.innerText || "Laravel";
