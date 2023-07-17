@@ -4,24 +4,30 @@
   - Copyright (c) 2023, Raul A Perusquia Flores
   -->
 
-  <script setup lang="ts">
-  import { capitalize } from "@/Composables/capitalize"
-  import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-  
-  const props = defineProps<{
-      data: [
-          string,
-          string,
-          string
-      ]
-  }>()
-  </script>
-  
-  <template>
-      <div class="flex text-gray-700">
-          <FontAwesomeIcon :icon='(JSON.parse(data[0])).icon' class='w-6' aria-hidden='true' :title='capitalize((JSON.parse(data[0])).title)' />
-          <FontAwesomeIcon :icon='(JSON.parse(data[1])).icon' class='w-6' aria-hidden='true' :title='capitalize((JSON.parse(data[1])).title)' />
-          <FontAwesomeIcon :icon='(JSON.parse(data[2])).icon' class='w-6' aria-hidden='true' :title='capitalize((JSON.parse(data[2])).title)' />
-      </div>
-  </template>
-  
+<script setup lang="ts">
+import { capitalize } from "@/Composables/capitalize"
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
+const props = defineProps<{
+    data: [
+        string,
+        string,
+        string
+    ]
+}>()
+
+// To make it safe when data[0] is empty
+const parseJson = (data: any) => {
+    return data ? JSON.parse(data) : ''
+}
+
+
+</script>
+
+<template>
+    <div class="flex text-gray-600">
+        <FontAwesomeIcon :icon='(parseJson(data[0])).icon' class='w-6' aria-hidden='true' :title='capitalize((parseJson(data[0])).title)' />
+        <FontAwesomeIcon :icon='(parseJson(data[1])).icon' class='w-6' aria-hidden='true' :title='capitalize((parseJson(data[1])).title)' />
+        <FontAwesomeIcon :icon='(parseJson(data[2])).icon' class='w-6' aria-hidden='true' :title='capitalize((parseJson(data[2])).title)' />
+    </div>
+</template>

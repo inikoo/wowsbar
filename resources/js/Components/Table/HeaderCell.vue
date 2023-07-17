@@ -42,7 +42,7 @@ function onClick() {
                             aria-hidden="true" :icon="cell.label.data" size="lg" />
                         <FontAwesomeIcon v-else :title="'icon'" aria-hidden="true" :icon="cell.label" size="lg" />
                     </div>
-                    <span v-else class="first-letter:uppercase">{{ cell.label }}</span>
+                    <span v-else class="capitalize">{{ cell.label }}</span>
                 </slot>
 
                 <slot name="sort">
