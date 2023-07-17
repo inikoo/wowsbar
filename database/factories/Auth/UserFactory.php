@@ -5,9 +5,7 @@ namespace Database\Factories\Auth;
 use App\Models\Assets\Language;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
- */
+
 class UserFactory extends Factory
 {
     /**
@@ -17,6 +15,7 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        /** @var \App\Models\Assets\Language $language */
         $language = Language::inRandomOrder()->first();
 
         return [

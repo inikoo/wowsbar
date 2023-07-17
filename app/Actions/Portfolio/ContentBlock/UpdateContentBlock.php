@@ -12,7 +12,6 @@ use App\Actions\Tenancy\Tenant\Hydrators\TenantHydrateContentBlocks;
 use App\Actions\Traits\WithActionUpdate;
 use App\Http\Resources\Portfolio\ContentBlockResource;
 use App\Models\Portfolio\ContentBlock;
-use App\Models\Portfolio\Website;
 use Lorisleiva\Actions\ActionRequest;
 
 class UpdateContentBlock
@@ -43,7 +42,7 @@ class UpdateContentBlock
         ];
     }
 
-    public function asController(ContentBlock $contentBlock, ActionRequest $request): Website
+    public function asController(ContentBlock $contentBlock, ActionRequest $request): ContentBlock
     {
         $request->validate();
 
