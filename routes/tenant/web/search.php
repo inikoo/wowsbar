@@ -6,9 +6,9 @@
  */
 
 
-use App\Actions\Search\FlashSearchQuery;
-use App\Actions\Search\ShowSearch;
+use App\Actions\Search\UniversalSearch\UI\IndexUniversalSearch;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/fast', FlashSearchQuery::class)->name('run');
-Route::get('/', ShowSearch::class)->name('show');
+Route::get('/', IndexUniversalSearch::class)->name('index');
+
+//Route::get('/', ShowSearch::class)->name('show');
