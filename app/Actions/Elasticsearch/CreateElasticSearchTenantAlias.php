@@ -15,7 +15,7 @@ class CreateElasticSearchTenantAlias
 {
     use AsAction;
 
-    public string $commandSignature = 'elasticsearch:tenant-alias {tenant}';
+    public string $commandSignature = 'es:tenant-alias {tenant}';
 
     public function getCommandDescription(): string
     {

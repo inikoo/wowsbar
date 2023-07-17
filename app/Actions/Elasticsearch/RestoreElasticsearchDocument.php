@@ -18,7 +18,7 @@ class RestoreElasticsearchDocument
     use AsObject;
     use AsAction;
 
-    public string $commandSignature   = 'elasticsearch:restore';
+    public string $commandSignature   = 'es:restore';
     public string $commandDescription = 'Restore the data from backup database';
 
     public function handle(): void
