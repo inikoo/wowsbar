@@ -55,6 +55,7 @@ const generateName = (file) => {
 
 const remove = (i) => {
   files.value.splice(i, 1)
+  props.filesChange([...files.value])
 }
 
 const dragover = (e) => {
@@ -84,7 +85,6 @@ const closeEditModal=()=>{
 }
 
 const changeLink=(file,value)=>{
-  console.log('sdfsdf',file,value)
   open.value = false
   props.changeLink(file,value)
 }
