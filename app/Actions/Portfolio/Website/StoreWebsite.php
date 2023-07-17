@@ -7,7 +7,7 @@
 
 namespace App\Actions\Portfolio\Website;
 
-use App\Actions\Portfolio\Website\Hydrators\WebsiteHydrateUniversalSearch;
+use App\Actions\Portfolio\Website\Hydrators\ContentBlockHydrateUniversalSearch;
 use App\Actions\Tenancy\Tenant\Hydrators\TenantHydrateWebsites;
 use App\Models\Portfolio\Website;
 use App\Models\Tenancy\Tenant;
@@ -37,7 +37,7 @@ class StoreWebsite
         $website = Website::create($modelData);
         $website->stats()->create();
         TenantHydrateWebsites::dispatch(app('currentTenant'));
-        WebsiteHydrateUniversalSearch::dispatch($website);
+        ContentBlockHydrateUniversalSearch::dispatch($website);
 
         return $website;
     }
