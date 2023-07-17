@@ -8,6 +8,7 @@
 namespace App\Actions\Tenancy\Tenant;
 
 use App\Actions\Auth\User\StoreUser;
+use App\Actions\Elasticsearch\CreateElasticSearchTenantAlias;
 use App\Models\Assets\Country;
 use App\Models\Assets\Currency;
 use App\Models\Assets\Language;
@@ -29,19 +30,16 @@ class StoreTenant
     {
         $tenant = Tenant::create($modelData);
         $tenant->stats()->create();
-        $tenant->execute(
-            function (Tenant $tenant) {
-                SetTenantLogo::run($tenant);
-            }
-        );
+
 
         $tenant->execute(
             function (Tenant $tenant) use ($userData) {
+                CreateElasticSearchTenantAlias::run();
+                SetTenantLogo::run($tenant);
                 $user = StoreUser::run($tenant, $userData);
 
                 $superAdminRole = Role::where('name', 'super-admin')->firstOrFail();
                 $user->assignRole($superAdminRole);
-
             }
         );
 

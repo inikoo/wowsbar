@@ -33,6 +33,8 @@ class StoreContentBlock
         data_set($modelData, 'web_block_type_id', $webBlock->web_block_type_id);
         data_set($modelData, 'tenant_id', app('currentTenant')->id);
         data_set($modelData, 'layout', $webBlock->blueprint);
+        data_set($modelData, 'data.website_slug', $website->slug);
+
 
         /** @var ContentBlock $contentBlock */
         $contentBlock = $webBlock->contentBlocks()->create($modelData);

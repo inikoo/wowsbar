@@ -18,16 +18,9 @@ class WebsiteHydrateUniversalSearch
     {
         $website->universalSearch()->create(
             [
-                'section' => 'Website',
-                'route'   => json_encode([
-                    'name'      => 'portfolio.websites.show',
-                    'arguments' => [
-                        $website->slug
-                    ]
-                ]),
-                'icon'           => 'fa-globe',
-                'primary_term'   => $website->name,
-                'secondary_term' => $website->domain
+                'section' => 'portfolio',
+                'title'       => trim($website->code.' '.$website->name),
+                'description' => $website->domain
             ]
         );
     }

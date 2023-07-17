@@ -18,16 +18,9 @@ class UserHydrateUniversalSearch
     {
         $user->universalSearch()->create(
             [
-                'section' => 'User',
-                'route'   => json_encode([
-                    'name'      => 'sysadmin.users.index',
-                    'arguments' => [
-                        $user->username
-                    ]
-                ]),
-                'icon'           => 'fa-user',
-                'primary_term'   => $user->username,
-                'secondary_term' => trim($user->email.' '.$user->contact_name)
+                'section'        => 'sysadmin',
+                'title'   => $user->username,
+                'description' => trim($user->email.' '.$user->contact_name)
             ]
         );
     }

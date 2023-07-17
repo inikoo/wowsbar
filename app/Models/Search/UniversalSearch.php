@@ -7,10 +7,11 @@
 
 namespace App\Models\Search;
 
+use App\Concerns\BelongsToTenant;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\App;
 use Laravel\Scout\Searchable;
 
 /**
@@ -44,17 +45,25 @@ use Laravel\Scout\Searchable;
 class UniversalSearch extends Model
 {
     use Searchable;
+    use BelongsToTenant;
+
+
 
     protected $guarded = [];
 
     public function searchableAs(): string
     {
-        $index = array_filter([config('app.name'), App::environment('production') ? null : App::environment(), app('currentTenant')->slug, 'universal_search']);
-        return implode('_', $index);
+        return config('app.name').'_search';
     }
 
     public function toSearchableArray(): array
     {
         return Arr::except($this->toArray(), ['updated_at', 'created_at']);
     }
+
+    public function model(): MorphTo
+    {
+        return $this->morphTo();
+    }
+
 }

@@ -18,16 +18,9 @@ class ContentBlockHydrateUniversalSearch
     {
         $contentBlock->universalSearch()->create(
             [
-                'section' => 'Content Block',
-                'route'   => json_encode([
-                    'name'      => 'portfolio.websites.show.banners.workshop',
-                    'arguments' => [
-                        $contentBlock->slug
-                    ]
-                ]),
-                'icon'           => 'fa-globe',
-                'primary_term'   => $contentBlock->name,
-                'secondary_term' => $contentBlock->slug
+                'section' => 'portfolio',
+                'title'   => trim($contentBlock->code.' '.$contentBlock->name),
+                'description' => ''
             ]
         );
     }

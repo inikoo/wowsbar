@@ -8,7 +8,6 @@
 namespace App\Models\Auth;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use App\Concerns\BelongsToTenant;
 use App\Models\Assets\Language;
 use App\Models\Media\Media;
 use App\Models\Tenancy\Tenant;
@@ -100,7 +99,6 @@ class User extends Authenticatable implements HasMedia, Auditable
     use InteractsWithMedia;
     use HasUniversalSearch;
     use HasHistory;
-    use BelongsToTenant;
 
     protected $casts = [
         'data'              => 'array',

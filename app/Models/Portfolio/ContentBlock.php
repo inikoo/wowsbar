@@ -7,11 +7,10 @@
 
 namespace App\Models\Portfolio;
 
-use App\Actions\Utils\Abbreviate;
-use App\Actions\Utils\ReadableRandomStringGenerator;
 use App\Concerns\BelongsToTenant;
 use App\Models\Traits\HasUniversalSearch;
 use App\Models\Web\WebBlock;
+use Database\Factories\Portfolio\ContentBlockFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -39,7 +38,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read WebBlock $webBlock
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Portfolio\Website> $website
  * @property-read int|null $website_count
- * @method static \Database\Factories\Portfolio\ContentBlockFactory factory($count = null, $state = [])
+ * @method static ContentBlockFactory factory($count = null, $state = [])
  * @method static Builder|ContentBlock newModelQuery()
  * @method static Builder|ContentBlock newQuery()
  * @method static Builder|ContentBlock onlyTrashed()
@@ -68,7 +67,6 @@ class ContentBlock extends Model
     use BelongsToTenant;
     use HasUniversalSearch;
 
-
     protected $casts = [
         'layout' => 'array',
         'data'   => 'array',
@@ -80,6 +78,7 @@ class ContentBlock extends Model
     ];
 
     protected $guarded = [];
+
 
     public function getRouteKeyName(): string
     {

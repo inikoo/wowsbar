@@ -7,6 +7,9 @@
 
 namespace App\Http\Resources\UniversalSearch;
 
+use App\Http\Resources\Auth\UserSearchResultResource;
+use App\Http\Resources\Portfolio\ContentBlockSearchResultResource;
+use App\Http\Resources\Portfolio\WebsiteSearchResultResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
@@ -21,22 +24,21 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property string $route
  * @property string $section
  */
-
 class UniversalSearchResource extends JsonResource
 {
     public function toArray($request): array
     {
         return [
-            'id'             => $this->id,
-            'model_type'     => $this->model_type,
-            'model_id'       => $this->model_id,
-            'section'        => $this->section,
-            'icon'           => $this->icon,
-            'route'          => json_decode($this->route, true),
-            'primary_term'   => $this->primary_term,
-            'secondary_term' => $this->secondary_term,
-            'created_at'     => $this->created_at,
-            'updated_at'     => $this->updated_at,
+            'model_type' => $this->model_type,
+            'model'      => $this->when(true, function () {
+                return match (class_basename($this->resource->model)) {
+                    'Website' => new WebsiteSearchResultResource($this->resource->model),
+                    'ContentBlock' => new ContentBlockSearchResultResource($this->resource->model),
+                    'User' => new UserSearchResultResource($this->resource->model),
+                    default => [],
+                };
+            }),
+
         ];
     }
 }

@@ -10,7 +10,7 @@ namespace App\Actions\Search\UniversalSearch\UI;
 use App\Actions\InertiaAction;
 use App\Http\Resources\UniversalSearch\UniversalSearchResource;
 use App\Models\Search\UniversalSearch;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsController;
@@ -20,22 +20,21 @@ class IndexUniversalSearch extends InertiaAction
     use AsController;
 
 
-    public function handle(string $query): LengthAwarePaginator
+    public function handle(string $query): Collection
     {
-        return UniversalSearch::search($query)->paginate(10);
-    }
-
-    public function asController(ActionRequest $request): LengthAwarePaginator
-    {
-
-
-        return $this->handle($request->input('q',''));
+        return UniversalSearch::search($query)
+            ->within(UniversalSearch::make()->searchableAs().'_'.app('currentTenant')->slug)
+            ->get()
+            ->load('model');
 
     }
 
-    public function jsonResponse(LengthAwarePaginator $searchResults): AnonymousResourceCollection
+    public function asController(ActionRequest $request): AnonymousResourceCollection
     {
+
+        $searchResults=$this->handle($request->input('q',''));
         return UniversalSearchResource::collection($searchResults);
+
     }
 
 
