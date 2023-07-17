@@ -7,8 +7,11 @@
 
 namespace App\Actions\Portfolio\ContentBlock;
 
+use App\Actions\Portfolio\ContentBlock\Hydrators\ContentBlockHydrateUniversalSearch;
+use App\Actions\Tenancy\Tenant\Hydrators\TenantHydrateContentBlocks;
 use App\Actions\Traits\WithActionUpdate;
-use App\Http\Resources\Portfolio\WebsiteResource;
+use App\Http\Resources\Portfolio\ContentBlockResource;
+use App\Models\Portfolio\ContentBlock;
 use App\Models\Portfolio\Website;
 use Lorisleiva\Actions\ActionRequest;
 
@@ -16,41 +19,39 @@ class UpdateContentBlock
 {
     use WithActionUpdate;
 
-
-    public function handle(Website $website, array $modelData): Website
+    public function handle(ContentBlock $contentBlock, array $modelData): ContentBlock
     {
-        $contentBlock = $website->website();
+        $this->update($contentBlock, $modelData, ['data', 'layout']);
 
-        return $this->update($contentBlock, $modelData, ['data']);
+        ContentBlockHydrateUniversalSearch::dispatch($contentBlock);
+        TenantHydrateContentBlocks::dispatch(app('currentTenant'));
+
+        return $contentBlock;
     }
-
 
     public function authorize(ActionRequest $request): bool
     {
         return $request->user()->can("portfolio.edit");
     }
 
-
     public function rules(): array
     {
         return [
-            'domain' => ['sometimes','required'],
             'code'   => ['sometimes','required', 'unique:tenant.websites','max:8'],
-            'name'   => ['sometimes','required']
+            'name'   => ['sometimes','required'],
+            'layout'   => ['sometimes','required']
         ];
     }
 
-    public function asController(Website $website, ActionRequest $request): Website
+    public function asController(ContentBlock $contentBlock, ActionRequest $request): Website
     {
         $request->validate();
 
-        return $this->handle($website, $request->all());
+        return $this->handle($contentBlock, $request->all());
     }
 
-
-
-    public function jsonResponse(Website $website): WebsiteResource
+    public function jsonResponse(ContentBlock $website): ContentBlockResource
     {
-        return new WebsiteResource($website);
+        return new ContentBlockResource($website);
     }
 }
