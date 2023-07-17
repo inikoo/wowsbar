@@ -1,16 +1,20 @@
 <template>
     <div class="h-96">
-        <Swiper :spaceBetween="-1" :slidesPerView="1" :centeredSlides="true" :loop="true" :autoplay="{
-            delay: data.data.delay,
-            disableOnInteraction: false,
-        }" :pagination="{
-    clickable: true,
-}" :navigation="false" :modules="[Autoplay, Pagination, Navigation]" class="mySwiper">
-            <SwiperSlide v-for="slide in $props.data.data.slides">
+        <Swiper :spaceBetween="-1" :slidesPerView="1" :centeredSlides="true" :loop="true"
+            :autoplay="{
+                delay: data.data.delay,
+                disableOnInteraction: false,
+            }"
+            :pagination="{
+                clickable: true,
+            }"
+            :navigation="false" :modules="[Autoplay, Pagination, Navigation]" class="mySwiper"
+        >
+            <SwiperSlide v-for="slide in $props.data.data.slides" :key="slide.id">
                 <img :src="slide.imageSrc" :alt="slide.imageAlt" srcset="">
                 <Link v-if="slide.link" :href="slide.link.target"
                     class="bg-gray-800/40 text-gray-100 border border-gray-50/50 absolute bottom-6 right-11 rounded px-3 py-1 hover:bg-gray-900/60">
-                {{ slide.link.label }}
+                    {{ slide.link.label }}
                 </Link>
             </SwiperSlide>
         </Swiper>
@@ -35,6 +39,7 @@ const props = defineProps<{
             delay: number,
             slides: [
                 {
+                    id: number
                     imageSrc: string,
                     imageAlt: string,
                     link?: {
