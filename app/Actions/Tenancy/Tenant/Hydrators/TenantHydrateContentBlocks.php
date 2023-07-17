@@ -18,9 +18,11 @@ class TenantHydrateContentBlocks implements ShouldBeUnique
 
     public function handle(Tenant $tenant): void
     {
-        $this->websites($tenant);
-        $this->contentBlocks($tenant);
-    }
+        $stats = [
+            'number_content_blocks' => $tenant->contentBlocks()->count()
 
+        ];
+        $tenant->stats()->update($stats);
+    }
 
 }
