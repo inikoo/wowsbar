@@ -12,18 +12,18 @@ rm -rf public/tenants
 rm -rf storage/app/tenants
 echo -e "✨ Resetting databases ${ITALIC}${DB}${NONE}"
 dropdb --force --if-exists ${DB}
-createdb --template=template0 --lc-collate="${DB_COLLATE}" --lc-ctype="${DB_COLLATE}"  ${DB}
+createdb --template=template0 --lc-collate="${DB_COLLATE}" --lc-ctype="${DB_COLLATE}" ${DB}
 dropdb --force --if-exists ${BACKUP_DB}
-createdb --template=template0 --lc-collate="${DB_COLLATE}" --lc-ctype="${DB_COLLATE}"  ${BACKUP_DB}
-echo -e "✨ Resetting elasticsearch"
-php artisan elasticsearch:flush
-echo -e "✨ Resetting firebase"
-php artisan firebase:flush
+createdb --template=template0 --lc-collate="${DB_COLLATE}" --lc-ctype="${DB_COLLATE}" ${BACKUP_DB}
+#echo -e "✨ Resetting elasticsearch"
+#php artisan elasticsearch:flush
+#echo -e "✨ Resetting firebase"
+#php artisan firebase:flush
 echo -e "✨ Installing dependencies"
 composer install
 npm install
 echo "🌱 Migrating and seeding database"
-php artisan migrate --database=backup  --path=database/migrations/backup
+php artisan migrate --database=backup --path=database/migrations/backup
 php artisan migrate --path=database/migrations/landlord
 php artisan migrate --path=database/migrations/tenant
 php artisan db:seed

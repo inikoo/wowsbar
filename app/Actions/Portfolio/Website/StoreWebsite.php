@@ -32,9 +32,8 @@ class StoreWebsite
 
     public function handle(array $modelData): Website
     {
-        $tenant = app('currentTenant');
-        /** @var Website $website */
-        $website = $tenant->websites()->create($modelData);
+
+        $website = Website::create($modelData);
         $website->stats()->create();
         TenantHydratePortfolio::make()->websites(app('currentTenant'));
 

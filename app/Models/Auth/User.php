@@ -8,6 +8,7 @@
 namespace App\Models\Auth;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Concerns\BelongsToTenant;
 use App\Models\Assets\Language;
 use App\Models\Media\Media;
 use App\Models\Tenancy\Tenant;
@@ -32,6 +33,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property int $tenant_id
  * @property bool $is_root
  * @property bool $status
+ * @property bool $is_deactivate
  * @property string $username
  * @property string|null $contact_name
  * @property string $email
@@ -98,6 +100,7 @@ class User extends Authenticatable implements HasMedia, Auditable
     use InteractsWithMedia;
     use HasUniversalSearch;
     use HasHistory;
+    use BelongsToTenant;
 
     protected $casts = [
         'data'              => 'array',

@@ -45,9 +45,6 @@ class StoreTenant
             }
         );
 
-
-
-
         return $tenant;
     }
 

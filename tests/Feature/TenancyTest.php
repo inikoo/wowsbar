@@ -5,6 +5,7 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
+
 use App\Actions\Tenancy\Tenant\StoreTenant;
 use App\Models\Auth\User;
 use App\Models\Tenancy\Tenant;
@@ -18,6 +19,7 @@ test('create tenant', function () {
     $modelData = Tenant::factory()->definition();
     $tenant    = StoreTenant::make()->action($modelData);
     expect($tenant)->toBeInstanceOf(Tenant::class);
+    $tenant->makeCurrent();
     /** @var \App\Models\Auth\User $user */
     $user = $tenant->users()->first();
     expect($user)->toBeInstanceOf(User::class)
@@ -25,5 +27,13 @@ test('create tenant', function () {
         ->and($user->getMedia('avatar')->first())->toBeInstanceOf(Media::class)
         ->and($user->avatar)->toBeInstanceOf(App\Models\Media\Media::class);
 
-    return $tenant;
 });
+
+test('create tenant command', function () {
+    $this->artisan('tenant:create aiku devels@aw-advantage.com Devs aiku hello GB GBP')->assertExitCode(0);
+    expect(Tenant::count())->toBe(2);
+
+});
+
+
+
