@@ -22,7 +22,7 @@ class LogUserRequest
     {
         $tenant = app('currentTenant');
 
-        $index =  config('elasticsearch.index_prefix') . 'user_requests_'.$tenant->slug;
+        $index = config('elasticsearch.index_prefix').'user_requests_'.$tenant->slug;
 
         $parsedUserAgent = (new Browser())->parse($userAgent);
 
@@ -56,11 +56,12 @@ class LogUserRequest
 
 
         IndexElasticsearchDocument::dispatch(index: $index, body: $body);
+        $user->stats->update(['last_active_at' => $datetime]);
     }
 
     public function getDeviceIcon($deviceType): string
     {
-        if($deviceType == 'Desktop') {
+        if ($deviceType == 'Desktop') {
             return 'far fa-desktop-alt';
         }
 
@@ -69,10 +70,12 @@ class LogUserRequest
 
     public function getBrowserIcon($browser): string
     {
-        if(explode(' ', $browser)[0] == 'chrome') {
+        if (explode(' ', $browser)[0] == 'chrome') {
             return 'fab fa-chrome';
-        } else if($browser == 'microsoft') {
-            return 'fab fa-edge';
+        } else {
+            if ($browser == 'microsoft') {
+                return 'fab fa-edge';
+            }
         }
 
         return 'fab fa-firefox-browser';
@@ -80,10 +83,12 @@ class LogUserRequest
 
     public function getPlatformIcon($platform): string
     {
-        if($platform == 'android') {
+        if ($platform == 'android') {
             return 'fab fa-android';
-        } else if($platform == 'apple') {
-            return 'fab fa-apple';
+        } else {
+            if ($platform == 'apple') {
+                return 'fab fa-apple';
+            }
         }
 
         return 'fab fa-windows';
@@ -104,7 +109,7 @@ class LogUserRequest
 
     public function detectWindows11($parsedUserAgent): string
     {
-        if($parsedUserAgent->isWindows()) {
+        if ($parsedUserAgent->isWindows()) {
             if (str_contains($parsedUserAgent->userAgent(), 'Windows NT 10.0; Win64; x64')) {
                 return 'Windows 11';
             }
