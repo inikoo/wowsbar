@@ -20,7 +20,7 @@ class ContentBlockHydrateUniversalSearch
             [
                 'section' => 'Content Block',
                 'route'   => json_encode([
-                    'name'      => 'portfolio.websites.show',
+                    'name'      => 'portfolio.websites.show.banners.workshop',
                     'arguments' => [
                         $contentBlock->slug
                     ]

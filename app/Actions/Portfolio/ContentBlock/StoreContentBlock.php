@@ -7,6 +7,7 @@
 
 namespace App\Actions\Portfolio\ContentBlock;
 
+use App\Actions\Portfolio\ContentBlock\Hydrators\ContentBlockHydrateUniversalSearch;
 use App\Actions\Tenancy\Tenant\Hydrators\TenantHydrateContentBlocks;
 use App\Models\Portfolio\ContentBlock;
 use App\Models\Portfolio\Website;
@@ -41,6 +42,7 @@ class StoreContentBlock
             'ulid'      => Str::ulid()
         ]);
         TenantHydrateContentBlocks::dispatch(app('currentTenant'));
+        ContentBlockHydrateUniversalSearch::dispatch($contentBlock);
 
         return $contentBlock;
     }

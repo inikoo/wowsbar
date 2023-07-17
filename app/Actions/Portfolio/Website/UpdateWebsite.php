@@ -7,6 +7,7 @@
 
 namespace App\Actions\Portfolio\Website;
 
+use App\Actions\Portfolio\Website\Hydrators\WebsiteHydrateUniversalSearch;
 use App\Actions\Traits\WithActionUpdate;
 use App\Http\Resources\Portfolio\WebsiteResource;
 use App\Models\Portfolio\Website;
@@ -19,7 +20,11 @@ class UpdateWebsite
 
     public function handle(Website $website, array $modelData): Website
     {
-        return $this->update($website, $modelData, ['data']);
+        $this->update($website, $modelData, ['data']);
+
+        WebsiteHydrateUniversalSearch::dispatch($website);
+
+        return $website;
     }
 
 
