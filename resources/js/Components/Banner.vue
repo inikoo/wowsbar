@@ -1,5 +1,5 @@
 <template>
-    <div class="h-96">
+    <div class="w-full aspect-[16/4]">
         <Swiper :spaceBetween="-1" :slidesPerView="1" :centeredSlides="true" :loop="true"
             :autoplay="{
                 delay: data.data.delay,
