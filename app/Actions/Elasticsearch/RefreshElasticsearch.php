@@ -19,7 +19,7 @@ class RefreshElasticsearch
 
     public function getCommandDescription(): string
     {
-        return 'Delete the data based on index name';
+        return 'Refresh app elasticsearch indices';
     }
 
     public function handle()
