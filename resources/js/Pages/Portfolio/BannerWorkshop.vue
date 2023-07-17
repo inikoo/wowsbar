@@ -7,6 +7,7 @@ import { Swiper, SwiperSlide } from "swiper/vue";
 import { Link } from "@inertiajs/vue3";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import DropZone from "./Dropzone/Dropzone.vue";
+import { get } from 'lodash'
 // Import Swiper styles
 import "swiper/css";
 // import 'swiper/css/pagination';
@@ -18,7 +19,9 @@ const props = defineProps<{
     banner: object;
 }>();
 
-const data = ref(props.banner.layout.dummyData.imgsBanner);
+console.log(props)
+
+const data = ref(props.banner.layout.data.imgsBanner);
 const dropZone = ref(null);
 
 const filesChange = (value) => {
@@ -73,7 +76,7 @@ const set =()=>{
                     :centeredSlides="true"
                     :loop="true"
                     :autoplay="{
-                        delay: banner.layout.dummyData.delay,
+                        delay: get(banner,['layout','data','delay'],2500),
                         disableOnInteraction: false,
                     }"
                     :pagination="{
