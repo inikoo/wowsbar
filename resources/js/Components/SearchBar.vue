@@ -4,7 +4,7 @@
   - Copyright (c) 2023, Inikoo LTD
   -->
 
-<script setup>
+<script setup lang="ts">
 import { computed, ref } from 'vue'
 import {
     Combobox,
@@ -19,7 +19,7 @@ import { usePage } from '@inertiajs/vue3'
 import {router} from "@inertiajs/vue3";
 import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
 
-const searchResults = computed(() => usePage().props.searchResults)
+const searchResults = ref('')
 
 const open = ref(true)
 const query = ref('')
@@ -31,16 +31,26 @@ let timeoutId;
 function handleSearchInput() {
     clearTimeout(timeoutId);
     timeoutId = setTimeout(() => {
-        console.log(searchInput.value);
-        router.get(
-            route('search.run', {
-                _query: {
-                    q: searchInput.value
-                }
-            })
-        );
-
+        fetchApi(searchInput.value)
     }, 200);
+}
+
+const fetchApi = async (query: string) => {
+    if (query !== '') {
+        await fetch('http://aiku.wowsbar.test/search/?q=' + query)
+            .then(response => {
+                console.log("==================")
+                console.log(response)
+                response.json().then((data: Object) => {
+                    console.log("5555555555555555555555")
+                    console.log(data)
+                })
+            })
+            .catch(err => console.log(err))
+    }
+    else {
+        comboValue.value = 'Select Users'
+    }
 }
 
 function handleKeyDown() {
