@@ -119,7 +119,7 @@ router.on('navigate', (event) => {
                                 aria-hidden="true" />
                             <component
                                 :is="breadcrumb.simple.route ? Link : 'span'"
-                                :class="'hover:text-gray-700' || ''"
+                                :class="'hover:text-orange-400' || ''"
                                 :href="
 									breadcrumb.simple.route
 										? route(
@@ -172,7 +172,7 @@ router.on('navigate', (event) => {
                             </div>
                             <span class="mx-3 select-none">→</span>
                             <Link
-                                class="text-indigo-400 hover:text-indigo-500"
+                                class="text-orange-400 hover:text-orange-500"
                                 :href="
 									route(
 										breadcrumb.modelWithIndex.model.route.name,
@@ -289,7 +289,7 @@ router.on('navigate', (event) => {
 
                                     <!-- Subpage -->
                                     <Link
-                                        class="py-2 grid grid-flow-col justify-start items-center text-indigo-400"
+                                        class="py-2 grid grid-flow-col justify-start items-center text-orange-400"
                                         :href="
 											route(
 												breadcrumb.modelWithIndex.model.route.name,
@@ -316,7 +316,7 @@ router.on('navigate', (event) => {
             <div v-if="props.navigation.previous || props.navigation.next" class="grid grid-flow-col justify-end items-center pr-2 space-x-2 text-sm text-gray-700 font-semibold">
                 <!-- Button: Previous -->
                 <div class="flex justify-center items-center w-8">
-                    <Link v-if="props.navigation.previous" :href="route(props.navigation.previous?.route.name, props.navigation.previous?.route.parameters)  + urlParameter" class="rounded w-full h-full flex items-center justify-center opacity-70 hover:opacity-100 hover:cursor-pointer hover:text-indigo-900"
+                    <Link v-if="props.navigation.previous" :href="route(props.navigation.previous?.route.name, props.navigation.previous?.route.parameters)  + urlParameter" class="rounded w-full h-full flex items-center justify-center opacity-70 hover:opacity-100 hover:cursor-pointer hover:text-orange-900"
                           :title="capitalize(props.navigation.previous?.label)"
                     >
                         <FontAwesomeIcon icon="fas fa-arrow-left" class="" aria-hidden="true" />
@@ -326,7 +326,7 @@ router.on('navigate', (event) => {
 
                 <!-- Button: Next -->
                 <div class="flex justify-center items-center w-8">
-                    <Link v-if="props.navigation.next" class="rounded w-full h-full flex items-center justify-center opacity-70 hover:opacity-100 hover:cursor-pointer hover:text-indigo-900"
+                    <Link v-if="props.navigation.next" class="rounded w-full h-full flex items-center justify-center opacity-70 hover:opacity-100 hover:cursor-pointer hover:text-orange-900"
                           :title="capitalize(props.navigation.next?.label)"
                           :href="route(props.navigation.next?.route.name, props.navigation.next?.route.parameters) + urlParameter"
                     >

@@ -27,7 +27,7 @@ const layout = useLayoutStore()
 </script>
 
 <template>
-    <div class="bg-gray-800 text-xs h-full border-l border-gray-200 space-y-4">
+    <div class="bg-gray-200 text-xs h-full border-l border-gray-200 space-y-4">
         <TransitionGroup name="list" tag="ul">
             <!-- Online Users -->
             <li class="text-white" v-if="layout.rightSidebar.activeUsers" key="1">
