@@ -28,7 +28,7 @@ class HandleInertiaRequests extends Middleware
 
 
         if (!$request->inertia() or Session::get('reloadLayout')) {
-            $firstLoadOnlyProps =GetFirstLoadProps::run($user);
+            $firstLoadOnlyProps         =GetFirstLoadProps::run($user);
             $firstLoadOnlyProps['ziggy']= function () use ($request) {
                 return array_merge((new Ziggy())->toArray(), [
                     'location' => $request->url(),

@@ -19,8 +19,8 @@ class UserHydrateUniversalSearch
         $user->universalSearch()->create(
             [
                 'section'        => 'sysadmin',
-                'title'   => $user->username,
-                'description' => trim($user->email.' '.$user->contact_name)
+                'title'          => $user->username,
+                'description'    => trim($user->email.' '.$user->contact_name)
             ]
         );
     }

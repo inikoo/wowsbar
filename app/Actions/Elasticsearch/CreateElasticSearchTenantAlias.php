@@ -24,7 +24,7 @@ class CreateElasticSearchTenantAlias
 
     public function handle()
     {
-        $tenant=app('currentTenant');
+        $tenant =app('currentTenant');
         $client = BuildElasticsearchClient::run();
 
         $params['body'] = array(

@@ -32,7 +32,6 @@ use Spatie\Permission\Traits\HasRoles;
  * @property int $tenant_id
  * @property bool $is_root
  * @property bool $status
- * @property bool $is_deactivate
  * @property string $username
  * @property string|null $contact_name
  * @property string $email
@@ -65,6 +64,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Laravel\Sanctum\PersonalAccessToken> $tokens
  * @property-read int|null $tokens_count
  * @property-read \App\Models\Search\UniversalSearch|null $universalSearch
+ * @method static \Database\Factories\Auth\UserFactory factory($count = null, $state = [])
  * @method static Builder|User newModelQuery()
  * @method static Builder|User newQuery()
  * @method static Builder|User permission($permissions)

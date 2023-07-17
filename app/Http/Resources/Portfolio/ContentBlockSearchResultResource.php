@@ -24,8 +24,8 @@ class ContentBlockSearchResultResource extends JsonResource
         return [
             'code'           => $contentBlock->code,
             'name'           => $contentBlock->name,
-            'route'  => [
-                'name'      => 'portfolio.websites.show.banners.show',
+            'route'          => [
+                'name'       => 'portfolio.websites.show.banners.show',
                 'parameters' => [
                     $contentBlock->data['website_slug'],
                     $contentBlock->slug

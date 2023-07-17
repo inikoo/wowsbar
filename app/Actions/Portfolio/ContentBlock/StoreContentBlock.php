@@ -93,7 +93,7 @@ class StoreContentBlock
         $tenant = Tenant::where('slug', $command->argument('tenant'))->firstOrFail();
         $tenant->makeCurrent();
 
-        $website = Website::where('slug', $command->argument('website'))->firstOrFail();
+        $website  = Website::where('slug', $command->argument('website'))->firstOrFail();
         $webBlock = WebBlock::where('slug', $command->argument('web-block'))->firstOrFail();
 
 
@@ -106,7 +106,7 @@ class StoreContentBlock
         );
         $validatedData = $this->validateAttributes();
 
-        $contentBlock=$this->handle($website,$webBlock,$validatedData);
+        $contentBlock=$this->handle($website, $webBlock, $validatedData);
 
         $command->info("Done! Content block $contentBlock->code created 🎉");
     }

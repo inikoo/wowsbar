@@ -15,17 +15,15 @@ use App\Enums\UI\WebsiteTabsEnum;
 use App\Http\Resources\History\HistoryResource;
 use App\Models\Portfolio\ContentBlock;
 use App\Models\Portfolio\Website;
-use App\Models\Tenancy\Tenant;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
 
 class ShowBanner extends InertiaAction
 {
-
     public function authorize(ActionRequest $request): bool
     {
-        $this->canEdit = $request->user()->can('portfolio.edit');
+        $this->canEdit   = $request->user()->can('portfolio.edit');
         $this->canDelete = $request->user()->can('portfolio.edit');
 
         return
@@ -35,13 +33,13 @@ class ShowBanner extends InertiaAction
             );
     }
 
-    public function inTenant(ContentBlock $banner, ActionRequest $request):ContentBlock
+    public function inTenant(ContentBlock $banner, ActionRequest $request): ContentBlock
     {
         $this->initialisation($request)->withTab(BannerTabsEnum::values());
         return $banner;
     }
 
-    public function inWebsite(Website $website, ContentBlock $banner,ActionRequest $request): ContentBlock
+    public function inWebsite(Website $website, ContentBlock $banner, ActionRequest $request): ContentBlock
     {
         $this->initialisation($request)->withTab(BannerTabsEnum::values());
         return $banner;

@@ -20,14 +20,14 @@ class UserFactory extends Factory
         $language = Language::inRandomOrder()->first();
 
         return [
-            'username' => fake()->userName,
-            'is_root' => fake()->boolean,
-            'status' => fake()->boolean,
+            'username'     => fake()->userName,
+            'is_root'      => fake()->boolean,
+            'status'       => fake()->boolean,
             'contact_name' => fake()->name,
-            'email' => fake()->email,
-            'password' => 'password',
-            'about' => fake()->words,
-            'language_id' => $language->id,
+            'email'        => fake()->email,
+            'password'     => 'password',
+            'about'        => fake()->words,
+            'language_id'  => $language->id,
         ];
     }
 }

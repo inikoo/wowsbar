@@ -10,7 +10,6 @@ namespace App\Models\Portfolio;
 use App\Concerns\BelongsToTenant;
 use App\Models\Tenancy\Tenant;
 use App\Models\Traits\HasUniversalSearch;
-use Database\Factories\Portfolio\WebsiteFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -38,7 +37,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read \App\Models\Portfolio\WebsiteStats|null $stats
  * @property-read Tenant $tenant
  * @property-read \App\Models\Search\UniversalSearch|null $universalSearch
- * @method static WebsiteFactory factory($count = null, $state = [])
+ * @method static \Database\Factories\Portfolio\WebsiteFactory factory($count = null, $state = [])
  * @method static Builder|Website newModelQuery()
  * @method static Builder|Website newQuery()
  * @method static Builder|Website onlyTrashed()

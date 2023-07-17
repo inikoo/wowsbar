@@ -34,6 +34,3 @@ test('create tenant command', function () {
     expect(Tenant::count())->toBe(2);
 
 });
-
-
-

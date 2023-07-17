@@ -7,7 +7,6 @@
 
 namespace App\Actions\Portfolio\ContentBlock;
 
-use App\Actions\Portfolio\ContentBlock\Hydrators\ContentBlockHydrateUniversalSearch;
 use App\Models\Portfolio\ContentBlock;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;

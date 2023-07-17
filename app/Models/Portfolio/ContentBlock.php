@@ -10,7 +10,6 @@ namespace App\Models\Portfolio;
 use App\Concerns\BelongsToTenant;
 use App\Models\Traits\HasUniversalSearch;
 use App\Models\Web\WebBlock;
-use Database\Factories\Portfolio\ContentBlockFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -24,9 +23,9 @@ use Spatie\Sluggable\SlugOptions;
  * App\Models\Portfolio\ContentBlock
  *
  * @property int $id
+ * @property int $tenant_id
  * @property int $web_block_type_id
  * @property int $web_block_id
- * @property int $tenant_id
  * @property string $slug
  * @property string $code
  * @property string $name
@@ -35,10 +34,12 @@ use Spatie\Sluggable\SlugOptions;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read \App\Models\Tenancy\Tenant $tenant
+ * @property-read \App\Models\Search\UniversalSearch|null $universalSearch
  * @property-read WebBlock $webBlock
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Portfolio\Website> $website
  * @property-read int|null $website_count
- * @method static ContentBlockFactory factory($count = null, $state = [])
+ * @method static \Database\Factories\Portfolio\ContentBlockFactory factory($count = null, $state = [])
  * @method static Builder|ContentBlock newModelQuery()
  * @method static Builder|ContentBlock newQuery()
  * @method static Builder|ContentBlock onlyTrashed()

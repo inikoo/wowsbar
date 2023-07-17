@@ -33,7 +33,7 @@ class ShowBannerWorkshop extends InertiaAction
         return $banner;
     }
 
-    public function inWebsite(Website $website,ContentBlock $banner, ActionRequest $request): ContentBlock
+    public function inWebsite(Website $website, ContentBlock $banner, ActionRequest $request): ContentBlock
     {
         $this->initialisation($request);
         return $banner;
@@ -81,7 +81,7 @@ class ShowBannerWorkshop extends InertiaAction
                         ]
                     ],
                 ],
-                'banner'=>$banner
+                'banner'=> $banner
 
 
             ]

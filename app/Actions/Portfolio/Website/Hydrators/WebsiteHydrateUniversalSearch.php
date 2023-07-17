@@ -18,7 +18,7 @@ class WebsiteHydrateUniversalSearch
     {
         $website->universalSearch()->create(
             [
-                'section' => 'portfolio',
+                'section'     => 'portfolio',
                 'title'       => trim($website->code.' '.$website->name),
                 'description' => $website->domain
             ]

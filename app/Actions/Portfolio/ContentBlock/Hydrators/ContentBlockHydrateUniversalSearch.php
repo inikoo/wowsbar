@@ -18,8 +18,8 @@ class ContentBlockHydrateUniversalSearch
     {
         $contentBlock->universalSearch()->create(
             [
-                'section' => 'portfolio',
-                'title'   => trim($contentBlock->code.' '.$contentBlock->name),
+                'section'     => 'portfolio',
+                'title'       => trim($contentBlock->code.' '.$contentBlock->name),
                 'description' => ''
             ]
         );

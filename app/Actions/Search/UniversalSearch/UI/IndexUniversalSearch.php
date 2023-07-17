@@ -32,7 +32,7 @@ class IndexUniversalSearch extends InertiaAction
     public function asController(ActionRequest $request): AnonymousResourceCollection
     {
 
-        $searchResults=$this->handle($request->input('q',''));
+        $searchResults=$this->handle($request->input('q', ''));
         return UniversalSearchResource::collection($searchResults);
 
     }

@@ -1,4 +1,5 @@
 <?php
+
 /** @noinspection PhpParamsInspection */
 
 /*
@@ -54,7 +55,7 @@ test('update user', function ($user) {
 
 test('deactivate a user', function ($user) {
     $tenant    = app('currentTenant');
-    $user = UpdateUserStatus::make()->action($user, false);
+    $user      = UpdateUserStatus::make()->action($user, false);
     expect($user)->toBeInstanceOf(User::class)
         ->and($user->status)->toBeFalse()
         ->and($tenant->stats->number_users)->toBe(2)

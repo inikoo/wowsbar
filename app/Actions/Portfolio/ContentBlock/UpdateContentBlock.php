@@ -37,8 +37,8 @@ class UpdateContentBlock
     public function rules(): array
     {
         return [
-            'code'   => ['sometimes','required', 'unique:tenant.websites','max:8'],
-            'name'   => ['sometimes','required'],
+            'code'     => ['sometimes','required', 'unique:tenant.websites','max:8'],
+            'name'     => ['sometimes','required'],
             'layout'   => ['sometimes','required']
         ];
     }
