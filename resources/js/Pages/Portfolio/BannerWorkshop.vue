@@ -21,7 +21,7 @@ const props = defineProps<{
 
 console.log(props)
 
-const data = ref(props.banner.layout.data.imgsBanner);
+const data = ref(props.banner.layout.data.slides);
 const dropZone = ref(null);
 
 const filesChange = (value) => {
