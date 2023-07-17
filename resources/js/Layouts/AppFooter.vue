@@ -41,7 +41,7 @@ const isTabActive = ref(false)
             <div class="flex items-end flex-row-reverse text-sm">
                 <!-- Tab: Active Users -->
                 <div class="relative h-full flex z-50 select-none justify-center items-center px-8 gap-x-1 cursor-pointer"
-                    :class="[isTabActive == 'activeUsers' ? 'bg-gray-200' : '']"
+                    :class="[isTabActive == 'activeUsers' ? 'bg-gray-700' : '']"
                     @click="isTabActive == 'activeUsers' ? isTabActive = !isTabActive : isTabActive = 'activeUsers'"
                 >
                     <div class="text-xs flex items-center gap-x-1">
@@ -65,7 +65,7 @@ const isTabActive = ref(false)
 
                 <!-- Tab: Language -->
                 <div class="relative h-full flex z-50 select-none justify-center items-center px-8 cursor-pointer"
-                    :class="[isTabActive == 'language' ? 'bg-gray-800' : '']"
+                    :class="[isTabActive == 'language' ? 'bg-gray-700' : '']"
                     @click="isTabActive == 'language' ? isTabActive = !isTabActive : isTabActive = 'language'"
 
                 >

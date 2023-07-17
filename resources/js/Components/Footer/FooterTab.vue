@@ -10,7 +10,7 @@
                 <FontAwesomeIcon icon="fas fa-thumbtack" class="h-3" title="Pin tab to right side layout" aria-hidden="true" />
             </div>
         </div>
-        <div class="w-full bg-gray-800 shadow-lg flex-row items-start text-gray-100 text-[11px] leading-none" >
+        <div class="w-full bg-gray-700 shadow-lg flex-row items-start text-gray-100 text-[11px] leading-none" >
             <div class="flex flex-col justify-center text-center pb-3 gap-y-1">
                 <slot />
             </div>
