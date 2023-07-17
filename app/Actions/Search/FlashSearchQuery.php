@@ -8,16 +8,27 @@
 namespace App\Actions\Search;
 
 use App\Actions\InertiaAction;
+use App\Http\Resources\UniversalSearch\UniversalSearchResource;
+use App\Models\Search\UniversalSearch;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Lorisleiva\Actions\Concerns\AsController;
 
 class FlashSearchQuery extends InertiaAction
 {
     use AsController;
 
-    public function asController(Request $request): RedirectResponse
+    public function asController(Request $request): AnonymousResourceCollection|array
     {
-        return back()->with('fastSearchQuery', $request->get('q'));
+        $query = $request->get('q');
+
+        if ($query) {
+            $items = UniversalSearch::search($query)->paginate(5);
+
+            return UniversalSearchResource::collection($items);
+        }
+
+        return ['data' => []];
     }
 }
