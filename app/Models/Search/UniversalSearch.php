@@ -7,6 +7,7 @@
 
 namespace App\Models\Search;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\App;
@@ -25,19 +26,19 @@ use Laravel\Scout\Searchable;
  * @property string|null $secondary_term
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @method static \Illuminate\Database\Eloquent\Builder|UniversalSearch newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|UniversalSearch newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|UniversalSearch query()
- * @method static \Illuminate\Database\Eloquent\Builder|UniversalSearch whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|UniversalSearch whereIcon($value)
- * @method static \Illuminate\Database\Eloquent\Builder|UniversalSearch whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|UniversalSearch whereModelId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|UniversalSearch whereModelType($value)
- * @method static \Illuminate\Database\Eloquent\Builder|UniversalSearch wherePrimaryTerm($value)
- * @method static \Illuminate\Database\Eloquent\Builder|UniversalSearch whereRoute($value)
- * @method static \Illuminate\Database\Eloquent\Builder|UniversalSearch whereSecondaryTerm($value)
- * @method static \Illuminate\Database\Eloquent\Builder|UniversalSearch whereSection($value)
- * @method static \Illuminate\Database\Eloquent\Builder|UniversalSearch whereUpdatedAt($value)
+ * @method static Builder|UniversalSearch newModelQuery()
+ * @method static Builder|UniversalSearch newQuery()
+ * @method static Builder|UniversalSearch query()
+ * @method static Builder|UniversalSearch whereCreatedAt($value)
+ * @method static Builder|UniversalSearch whereIcon($value)
+ * @method static Builder|UniversalSearch whereId($value)
+ * @method static Builder|UniversalSearch whereModelId($value)
+ * @method static Builder|UniversalSearch whereModelType($value)
+ * @method static Builder|UniversalSearch wherePrimaryTerm($value)
+ * @method static Builder|UniversalSearch whereRoute($value)
+ * @method static Builder|UniversalSearch whereSecondaryTerm($value)
+ * @method static Builder|UniversalSearch whereSection($value)
+ * @method static Builder|UniversalSearch whereUpdatedAt($value)
  * @mixin \Eloquent
  */
 class UniversalSearch extends Model

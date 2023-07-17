@@ -56,7 +56,7 @@ return [
             'host'           => env('DB_BACKUP_HOST', '127.0.0.1'),
             'port'           => env('DB_BACKUP_PORT', '5432'),
             'database'       => env('DB_BACKUP_DATABASE', 'wowsbar_backup_elasticsearch'),
-            'username'       => env('DB_BACKUP_USERNAME', 'aiku'),
+            'username'       => env('DB_BACKUP_USERNAME', 'wowsbar'),
             'password'       => env('DB_BACKUP_PASSWORD', ''),
             'charset'        => 'utf8',
             'prefix'         => '',

@@ -7,7 +7,7 @@ import { Swiper, SwiperSlide } from "swiper/vue";
 import { Link } from "@inertiajs/vue3";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import DropZone from "./Dropzone/Dropzone.vue";
-import { get } from 'lodash'
+import PrimaryButton from '@/Components/PrimaryButton.vue'
 // Import Swiper styles
 import "swiper/css";
 // import 'swiper/css/pagination';
@@ -18,6 +18,8 @@ const props = defineProps<{
     pageHead: object;
     banner: object;
 }>();
+
+console.log(props)
 
 const data = ref(props.banner.layout.data.slides);
 const dropZone = ref(null);
@@ -57,11 +59,10 @@ const set =()=>{
     <Head :title="capitalize(title)" />
     <PageHeading :data="pageHead"></PageHeading>
     <div>
-        <button @click="set"
-        class="px-4 py-2 font-semibold text-sm bg-orange-600 text-white rounded-lg float-right m-2.5 w-60 shadow-sm"
+        <PrimaryButton class='float-right m-2.5' @click="set"
     >
         Save Changes
-    </button>
+    </PrimaryButton>
     </div>
    
 
