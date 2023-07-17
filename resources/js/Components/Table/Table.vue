@@ -569,7 +569,7 @@ const handleElementsChange = (data) => {
                 <!-- Left Section: Records, -->
                 <div class="flex space-x-2">
                     <!-- Result Number -->
-                    <div class="flex border border-orange-100 rounded-md">
+                    <div class="flex border outline-orange-100 rounded-md">
                         <div class="grid justify-end items-center text-base font-normal text-gray-700"
                             title="Results">
                             <div v-if="resourceMeta.total" class="px-2 ">{{ locale.number(resourceMeta.total) }} {{ trans(resourceMeta.total > 1 ? 'records' : 'record') }}</div>
@@ -579,7 +579,7 @@ const handleElementsChange = (data) => {
                         <div v-if="queryBuilderProps.modelOperations?.createLink">
                             <Link :href="route(queryBuilderProps.modelOperations.createLink.route.name, queryBuilderProps.modelOperations.createLink.route.parameters[0])">
                                 <!--suppress HtmlWrongAttributeValue -->
-                                <Button :style="`create`" action="create"  class="capitalize">
+                                <Button :style="`primary`" action="create"  class="capitalize">
                                     {{queryBuilderProps.modelOperations.createLink.label}}
                                 </Button>
                             </Link>

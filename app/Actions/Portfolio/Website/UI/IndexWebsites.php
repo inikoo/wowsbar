@@ -141,7 +141,7 @@ class IndexWebsites extends InertiaAction
                     'actions' => [
                         $this->canEdit ? [
                             'type'    => 'button',
-                            'style'   => 'create',
+                            'style'   => 'primary',
                             'tooltip' => __('Create website'),
                             'label'   => __('new website'),
                             'route'   => [

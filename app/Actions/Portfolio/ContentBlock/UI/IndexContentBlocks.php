@@ -103,7 +103,7 @@ class IndexContentBlocks
                         'count'  => app('currentTenant')->stats->number_content_blocks_web_block_type_banner,
                         'action' => $canEdit && class_basename($parent) == 'Website' ? [
                             'type'    => 'button',
-                            'style'   => 'create',
+                            'style'   => 'primary',
                             'tooltip' => __('new banner'),
                             'label'   => __('banner'),
                             'route'   => [

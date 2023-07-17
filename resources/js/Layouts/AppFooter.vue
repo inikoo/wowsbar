@@ -25,14 +25,14 @@ const isTabActive = ref(false)
 </script>
 
 <template>
-    <footer class="z-20 fixed w-screen bg-gray-300 bottom-0 right-0  text-white">
+    <footer class="z-20 fixed w-screen bg-gray-800 bottom-0 right-0  text-white">
         <!-- Helper: Outer background (close popup purpose) -->
         <div class="fixed z-40 right-0 top-0 bg-transparent w-screen h-screen" @click="isTabActive = !isTabActive"
             :class="[isTabActive ? '' : 'hidden']"></div>
         <div class="flex justify-between">
             <!-- Left Section -->
             <div class="pl-4 flex items-center gap-x-1.5 py-1">
-                <img src="@/../art/logo/svg/logo-no-background.svg" alt="" class="h-4">
+                <img src="@/../art/logo/png/logo-white.png" alt="" class="h-4">
                 <!-- <img src="/art/logo-color-trimmed.png" alt="" class="h-4"> -->
                 <!-- <span class="text-purple-400 font-semibold">aiku</span> -->
             </div>
@@ -46,7 +46,7 @@ const isTabActive = ref(false)
                 >
                     <div class="text-xs flex items-center gap-x-1">
                         <div class="ring-1 h-2 aspect-square rounded-full" :class="[activities.length > 0 ? 'bg-green-400 ring-green-600' : 'bg-gray-400 ring-gray-600']" />
-                        <span class="text-gray-700 ">Active Users ({{ activities.length }})</span>
+                        <span class="text-gray-200 ">Active Users ({{ activities.length }})</span>
                     </div>
 
                     <FooterTab @pinTab="() => isTabActive = false" v-if="isTabActive == 'activeUsers'" :tabName="`activeUsers`">
@@ -65,15 +65,15 @@ const isTabActive = ref(false)
 
                 <!-- Tab: Language -->
                 <div class="relative h-full flex z-50 select-none justify-center items-center px-8 cursor-pointer"
-                    :class="[isTabActive == 'language' ? 'bg-gray-200' : '']"
+                    :class="[isTabActive == 'language' ? 'bg-gray-800' : '']"
                     @click="isTabActive == 'language' ? isTabActive = !isTabActive : isTabActive = 'language'"
 
                 >
-                    <FontAwesomeIcon icon="fal fa-language" class="text-xs mr-1 h-5 text-gray-500"></FontAwesomeIcon>
-                    <div class="h-full font-extralight text-xs flex items-center leading-none text-gray-700">{{ locale.language.code }}</div>
+                    <FontAwesomeIcon icon="fal fa-language" class="text-xs mr-1 h-5 text-gray-300"></FontAwesomeIcon>
+                    <div class="h-full font-extralight text-xs flex items-center leading-none text-gray-200">{{ locale.language.code }}</div>
                     <FooterTab @pinTab="() => isTabActive = false" v-if="isTabActive === 'language'" :tabName="`language`">
                         <template #default>
-                            <div v-for="(option, index) in locale.languageOptions" :class="[ locale.language.id == index ? 'bg-orange-200 text-gray-700' : 'text-gray-700 hover:bg-gray-300', 'grid py-1.5']"
+                            <div v-for="(option, index) in locale.languageOptions" :class="[ locale.language.id == index ? 'bg-gray-400 text-gray-100' : 'text-gray-100 hover:bg-gray-500', 'grid py-1.5']"
                                 @click="locale.language.id = Number(index), locale.language.name = option.label"
                             >
                                 {{ option.label }}

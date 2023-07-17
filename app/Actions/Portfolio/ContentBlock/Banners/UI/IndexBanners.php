@@ -99,7 +99,7 @@ class IndexBanners extends InertiaAction
                         $this->canEdit and class_basename($this->parent) == 'Website'
                         && [
                             'type'    => 'button',
-                            'style'   => 'create',
+                            'style'   => 'primary',
                             'tooltip' => __('Create banner'),
                             'label'   => __('new banner'),
                             'route'   => [

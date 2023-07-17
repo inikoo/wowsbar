@@ -124,7 +124,7 @@ class ShowWebsite extends InertiaAction
                                 'parameters' => array_values([$website->slug])
                             ],
                             'label' => __('website'),
-                            'style' => 'create'
+                            'style' => 'primary'
                         ] : false
                     ],
                     prefix: 'banners',
