@@ -47,8 +47,8 @@ const compareObjects = (objA, objB) => {
                                 <div
                                     :class="[
                                         'cursor-pointer focus:outline-none flex items-center justify-center rounded-md py-3 px-3 text-sm font-medium capitalize', 
-                                        active ? 'ring-2 ring-indigo-600 ring-offset-2' : '',
-                                        checked ? 'bg-indigo-600 text-white hover:bg-indigo-500' : 'ring-1 ring-inset ring-gray-300 bg-white text-gray-700 hover:bg-gray-50',
+                                        active ? 'ring-2 ring-orange-600 ring-offset-2' : '',
+                                        checked ? 'bg-orange-600 text-white hover:bg-orange-500' : 'ring-1 ring-inset ring-gray-300 bg-white text-gray-700 hover:bg-gray-50',
                                     ]">
                                     <RadioGroupLabel as="span">{{ option.value }}</RadioGroupLabel>
                                 </div>
@@ -66,7 +66,7 @@ const compareObjects = (objA, objB) => {
                         <RadioGroupOption as="template" v-for="(option, index) in fieldData.options" :key="option.value" :value="option" v-slot="{ active, checked }">
                             <div :class="[
                                 'relative flex cursor-pointer rounded-lg border bg-white py-2 px-3 shadow-sm focus:outline-none',
-                                active ? 'border-indigo-600 ring-2 ring-indigo-600' : 'border-gray-300'
+                                active ? 'border-orange-600 ring-2 ring-orange-600' : 'border-gray-300'
                             ]">
                             <!-- {{ compareObjects(form[fieldName], option) }} -->
                                 <span class="flex flex-1">
@@ -76,8 +76,8 @@ const compareObjects = (objA, objB) => {
                                     <RadioGroupDescription as="span" class="mt-6 text-xs font-medium text-gray-600">{{ option.label }}</RadioGroupDescription>
                                     </span>
                                 </span>
-                                <!-- <FontAwesomeIcon icon='far fa-check' :class="[!checked ? 'invisible' : '', 'h-4 w-4 text-indigo-600']" aria-hidden="true" /> -->
-                                <span :class="[active ? 'border' : 'border-2', compareObjects(form[fieldName], option) ? 'border-indigo-600' : 'border-transparent', 'pointer-events-none absolute -inset-px rounded-lg']" aria-hidden="true" />
+                                <!-- <FontAwesomeIcon icon='far fa-check' :class="[!checked ? 'invisible' : '', 'h-4 w-4 text-orange-600']" aria-hidden="true" /> -->
+                                <span :class="[active ? 'border' : 'border-2', compareObjects(form[fieldName], option) ? 'border-orange-600' : 'border-transparent', 'pointer-events-none absolute -inset-px rounded-lg']" aria-hidden="true" />
                             </div>
                         </RadioGroupOption>
                         </div>
@@ -89,7 +89,7 @@ const compareObjects = (objA, objB) => {
                     :key="option.label + index" class="inline-flex gap-x-2.5 items-center">
                     <input v-model="form[fieldName]" :id="option.label + index" :key="option.label + index"
                         :name="option.value" type="radio" :value="option.value" :checked="option.value == form[fieldName]"
-                        class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-0 focus:outline-none focus:ring-transparent cursor-pointer" />
+                        class="h-4 w-4 border-gray-300 text-orange-600 focus:ring-0 focus:outline-none focus:ring-transparent cursor-pointer" />
                     <label :for="option.label + index" class="flex items-center gap-x-1.5 cursor-pointer">
                         <p class="text-sm font-medium leading-6 text-gray-700 capitalize">
                             {{ option.value }}

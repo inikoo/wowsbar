@@ -58,7 +58,7 @@ const randomIndex = Math.floor(Math.random() * randomIcon.length)
         <p v-if="data.description" class="text-sm mt-2 text-gray-500 mb-4">{{ data.description }}</p>
         <Link v-if="data.action" :href="route(data.action.route.name, data.action.route.parameters)" class="">
             <Button size="xs" :style="data.action.style"
-                class="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm capitalize hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                class="inline-flex items-center rounded-md bg-orange-600 px-3 py-2 text-sm font-semibold text-white shadow-sm capitalize hover:bg-orange-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600">
                 <FontAwesomeIcon icon="far fa-plus" class="-ml-0.5 mr-1.5 h-5 w-5" aria-hidden="true" />
                 {{ trans(data.action.tooltip) }}
             </Button>

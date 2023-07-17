@@ -60,7 +60,7 @@ const set =()=>{
     <PageHeading :data="pageHead"></PageHeading>
     <div>
         <button @click="set"
-        class="px-4 py-2 font-semibold text-sm bg-indigo-600 text-white rounded-lg float-right m-2.5 w-60 shadow-sm"
+        class="px-4 py-2 font-semibold text-sm bg-orange-600 text-white rounded-lg float-right m-2.5 w-60 shadow-sm"
     >
         Save Changes
     </button>
@@ -76,7 +76,7 @@ const set =()=>{
                     :centeredSlides="true"
                     :loop="true"
                     :autoplay="{
-                        delay: get(banner,['layout','data','delay'],2500),
+                        delay: banner.layout.data.delay,
                         disableOnInteraction: false,
                     }"
                     :pagination="{

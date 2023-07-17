@@ -27,7 +27,7 @@ const layout = useLayoutStore()
 </script>
 
 <template>
-    <div class="bg-gray-800 text-xs h-full border-l border-gray-200 space-y-4">
+    <div class="bg-gray-200 text-xs h-full border-l border-gray-200 space-y-4">
         <TransitionGroup name="list" tag="ul">
             <!-- Online Users -->
             <li class="text-white" v-if="layout.rightSidebar.activeUsers" key="1">
@@ -46,7 +46,7 @@ const layout = useLayoutStore()
             </li>
             <!-- Language -->
             <!-- <li class="text-white space-y-1" v-if="layout.rightSidebar.language" key="2">
-                <div class="pl-2.5 pr-1.5 py-1 bg-indigo-500 flex items-center leading-none">
+                <div class="pl-2.5 pr-1.5 py-1 bg-orange-500 flex items-center leading-none">
                     <div>Language</div>
                 </div>
                 <div class="text-gray-600 pl-2.5 pr-1.5">

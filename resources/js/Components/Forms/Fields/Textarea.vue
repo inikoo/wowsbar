@@ -31,7 +31,7 @@ if(props.options!==undefined && props.options.type ){
                     :name="fieldName"
                     :placeholder="fieldData?.placeholder"
                     rows="3"
-                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
+                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm" />
             </div>
             <div v-if="fieldData.counter" class="grid grid-flow-col text-xs italic text-gray-500 mt-2 space-x-12 justify-start">
                 <p class="">

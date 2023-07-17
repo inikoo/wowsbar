@@ -112,7 +112,7 @@ const changeLink=(file,value)=>{
       />
 
       <label for="fileInput" class="file-label">
-      <div style="font-size: 40px;" class="text-indigo-600"><font-awesome-icon :icon="['fass', 'image']" /></div>
+      <div style="font-size: 40px;" class="text-orange-600"><font-awesome-icon :icon="['fass', 'image']" /></div>
         <div>Click or drag file to this area to upload</div>
       </label>
 

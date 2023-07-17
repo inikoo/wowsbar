@@ -3,59 +3,59 @@
         <div class="bg-white rounded border border-gray-400 focus:border-gray-300">
             <!-- Button Group -->
             <div
-                class="bg-indigo-100 p-2 grid grid-flow-col space-around text-slate-800 select-none space-x-1 border border-gray-100">
+                class="bg-orange-100 p-2 grid grid-flow-col space-around text-slate-800 select-none space-x-1 border border-gray-100">
                 <div class="grid grid-flow-col justify-start space-x-1">
                     <div :class="{
-                        'bg-indigo-400 text-white':
+                        'bg-orange-400 text-white':
                             editor.isActive('bold'),
-                    }" class="rounded-sm grid justify-center items-center border border-transparent active:border-indigo-700 box-content cursor-pointer px-1 py-0.5"
+                    }" class="rounded-sm grid justify-center items-center border border-transparent active:border-orange-700 box-content cursor-pointer px-1 py-0.5"
                         @click="editor.chain().focus().toggleBold().run()">
                         <FontAwesomeIcon aria-hidden="true" icon="far fa-bold" />
                     </div>
                     <div :class="{
-                        'bg-indigo-400 text-white':
+                        'bg-orange-400 text-white':
                             editor.isActive('italic'),
-                    }" class="rounded-sm grid justify-center items-center border border-transparent active:border-indigo-700 box-content cursor-pointer px-1 py-0.5"
+                    }" class="rounded-sm grid justify-center items-center border border-transparent active:border-orange-700 box-content cursor-pointer px-1 py-0.5"
                         @click="editor.chain().focus().toggleItalic().run()">
                         <FontAwesomeIcon aria-hidden="true" icon="far fa-italic" />
                     </div>
                     <div :class="{
-                        'bg-indigo-400 text-white':
+                        'bg-orange-400 text-white':
                             editor.isActive('underline'),
-                    }" class="rounded-sm grid justify-center items-end border border-transparent active:border-indigo-700 box-content cursor-pointer px-1 py-0.5"
+                    }" class="rounded-sm grid justify-center items-end border border-transparent active:border-orange-700 box-content cursor-pointer px-1 py-0.5"
                         @click="editor.chain().focus().toggleUnderline().run()">
                         <FontAwesomeIcon aria-hidden="true" icon="far fa-underline" />
                     </div>
                     <div :class="{
-                        'bg-indigo-400 text-white':
+                        'bg-orange-400 text-white':
                             editor.isActive('bulletList'),
-                    }" class="rounded-sm grid justify-center items-center border border-transparent active:border-indigo-700 box-content cursor-pointer px-1 py-0.5"
+                    }" class="rounded-sm grid justify-center items-center border border-transparent active:border-orange-700 box-content cursor-pointer px-1 py-0.5"
                         @click="editor.chain().focus().toggleBulletList().run()">
                         <FontAwesomeIcon aria-hidden="true" icon="far fa-list-ul" />
                     </div>
                     <div :class="{
-                        'bg-indigo-400 text-white':
+                        'bg-orange-400 text-white':
                             editor.isActive('orderedList'),
-                    }" class="rounded-sm grid justify-center items-center border border-transparent active:border-indigo-700 box-content cursor-pointer px-1 py-0.5"
+                    }" class="rounded-sm grid justify-center items-center border border-transparent active:border-orange-700 box-content cursor-pointer px-1 py-0.5"
                         @click="editor.chain().focus().toggleOrderedList().run()">
                         <FontAwesomeIcon aria-hidden="true" icon="far fa-list-ol" />
                     </div>
                     <div :class="{
-                        'bg-indigo-400 text-white':
+                        'bg-orange-400 text-white':
                             editor.isActive('orderedList'),
-                    }" class="rounded-sm grid justify-center items-center border border-transparent active:border-indigo-700 box-content cursor-pointer px-1 py-0.5"
+                    }" class="rounded-sm grid justify-center items-center border border-transparent active:border-orange-700 box-content cursor-pointer px-1 py-0.5"
                         @click="editor.commands.undo()">
                         <FontAwesomeIcon aria-hidden="true" icon="far fa-undo" />
                     </div>
                     <div :class="{
-                        'bg-indigo-400 text-white':
+                        'bg-orange-400 text-white':
                             editor.isActive('orderedList'),
-                    }" class="rounded-sm grid justify-center items-center border border-transparent active:border-indigo-700 box-content cursor-pointer px-1 py-0.5"
+                    }" class="rounded-sm grid justify-center items-center border border-transparent active:border-orange-700 box-content cursor-pointer px-1 py-0.5"
                         @click="editor.commands.redo()">
                         <FontAwesomeIcon aria-hidden="true" icon="far fa-redo" />
                     </div>
                 </div>
-                <div class="w-min rounded-sm grid justify-end items-center place-self-end border border-transparent active:border-indigo-700 box-content cursor-pointer px-1 py-0.5"
+                <div class="w-min rounded-sm grid justify-end items-center place-self-end border border-transparent active:border-orange-700 box-content cursor-pointer px-1 py-0.5"
                     @click="editor.chain().focus().clearContent(true).run()">
                     <FontAwesomeIcon aria-hidden="true" icon="far fa-trash-alt" />
                 </div>

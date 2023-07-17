@@ -10,18 +10,25 @@ namespace App\Actions\Elasticsearch;
 use Exception;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Illuminate\Console\Command;
+use Lorisleiva\Actions\Concerns\AsCommand;
 use Lorisleiva\Actions\Concerns\AsObject;
 
 class DeleteElasticsearchDocument
 {
-    use AsObject;
-    use AsAction;
+    use AsCommand;
 
     public string $commandSignature   = 'elasticsearch:destroy {indexName}';
-    public string $commandDescription = 'Delete the data based on index name';
-
-    public function handle(string $indexName): ?bool
+    public function getCommandDescription():string
     {
+        return  'Delete the data based on index name';
+    }
+
+
+
+    public function asCommand(Command $command): int
+    {
+
+        $indexName=$command->argument('indexName');
         $client = BuildElasticsearchClient::run();
 
         try {
@@ -32,23 +39,20 @@ class DeleteElasticsearchDocument
             $response = $client->indices()->delete($params);
 
             if ($response['acknowledged']) {
-                echo "Data successfully deleted \n";
+                $command->line("Data successfully deleted 🧼");
 
-                return true;
+                return 0;
             }
 
-            echo "Delete data failed \n";
+            $command->error("Unknown error. Delete data failed");
 
             return false;
-        } catch(Exception) {
-            echo "Delete data failed \n";
+        } catch(Exception $exception) {
+            $msg=$exception->getMessage();
+            $command->error( "Delete data failed ($msg)");
 
-            return false;
+            return 1;
         }
-    }
 
-    public function asCommand(Command $command): ?bool
-    {
-        return $this->handle($command->argument('indexName'));
     }
 }

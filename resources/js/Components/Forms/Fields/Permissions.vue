@@ -174,11 +174,11 @@ function toggleCheckbox(value) {
 }
 
 .Panel:hover {
-  color: indigo;
+  color: orange;
 }
 
 .Active {
-  color: indigo;
+  color: orange;
   background: #eef2ff;
 }
 

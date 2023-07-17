@@ -55,7 +55,7 @@ let filteredOptions = computed(() =>
     <Combobox by="value" :model-value="props.modelValue" @update:model-value="value => $emit('update:modelValue', value)">
         <div class="relative mt-1">
             <div
-                class="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left border border-gray-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-700 focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
+                class="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left border border-gray-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-700 focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
                 <ComboboxInput class="w-full border-none py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 focus:ring-0"
                     :displayValue="(abcde) => abcde" @change="query = $event.target.value" />
                 <ComboboxButton class="absolute inset-y-0 right-0 flex items-center pr-2">
@@ -87,7 +87,7 @@ let filteredOptions = computed(() =>
                             v-slot="{ selected, active }"
                         >
                             <li class="relative cursor-pointer select-none py-2 pl-10 pr-4" :class="{
-                                'bg-indigo-600 text-white': active,
+                                'bg-orange-600 text-white': active,
                                 'text-gray-800': !active,
                             }">
                                 <span class="block truncate" :class="{ 'font-medium': selected, 'font-normal': !selected }">
@@ -95,7 +95,7 @@ let filteredOptions = computed(() =>
                                 </span>
                                 <span v-if="selected" class="absolute inset-y-0 left-0 flex items-center pl-3"
                                     :class="{ 'text-white': active, 'text-teal-600': !active }">
-                                    <FontAwesomeIcon icon="fas fa-check" class="h-4 w-4 text-indigo-600" aria-hidden="true" />
+                                    <FontAwesomeIcon icon="fas fa-check" class="h-4 w-4 text-orange-600" aria-hidden="true" />
                                 </span>
                             </li>
                         </ComboboxOption>

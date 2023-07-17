@@ -87,8 +87,8 @@ const current = null
                     <div v-for="(item, key) in formData['blueprint']" @click="jumpToElement(`field${key}`)"
                         :class="[
                             key == current
-                                ? 'bg-indigo-200 border-indigo-500 text-indigo-700 hover:bg-indigo-50 hover:text-indigo-700'
-                                : 'border-transparent text-gray-600 hover:bg-indigo-100 hover:text-indigo-700',
+                                ? 'bg-orange-200 border-orange-500 text-orange-700 hover:bg-orange-50 hover:text-orange-700'
+                                : 'border-transparent text-gray-600 hover:bg-orange-100 hover:text-orange-700',
                             'cursor-pointer group border-l-4 px-3 py-2 flex items-center text-sm font-medium',
                         ]"
                         :aria-current="key === current ? 'page' : undefined"
@@ -96,7 +96,7 @@ const current = null
                         <FontAwesomeIcon v-if="item.icon" aria-hidden="true"
                         :class="[
                             key === current
-                                ? 'text-indigo-500 group-hover:text-indigo-500'
+                                ? 'text-orange-500 group-hover:text-orange-500'
                                 : 'text-gray-400 group-hover:text-gray-500',
                             'flex-shrink-0 -ml-1 mr-3 h-6 w-6',
                         ]"
@@ -159,11 +159,11 @@ const current = null
                     </div>
                 </div>
 
-                <div class="pt-5 border-t-2 border-indigo-500">
+                <div class="pt-5 border-t-2 border-orange-500">
                     <div class="flex justify-end">
 
                         <button type="submit" :disabled="form.processing"
-                                class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500">
                             {{ trans('Save') }}
                         </button>
                     </div>

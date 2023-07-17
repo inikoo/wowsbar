@@ -16,7 +16,8 @@ createdb --template=template0 --lc-collate="${DB_COLLATE}" --lc-ctype="${DB_COLL
 dropdb --force --if-exists ${BACKUP_DB}
 createdb --template=template0 --lc-collate="${DB_COLLATE}" --lc-ctype="${DB_COLLATE}" ${BACKUP_DB}
 echo -e "✨ Resetting elasticsearch"
-php artisan elasticsearch:flush
+php artisan elasticsearch:destroy wowsbar_local_aiku_universal_search
+php artisan elasticsearch:destroy wowsbar_user_requests_aiku
 #echo -e "✨ Resetting firebase"
 #php artisan firebase:flush
 echo -e "✨ Installing dependencies"
