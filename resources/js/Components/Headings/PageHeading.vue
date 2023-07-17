@@ -85,7 +85,7 @@ const getActionIcon = (action) => {
         <div>
             <h2 class="font-bold text-gray-900 text-2xl tracking-tight capitalize">
 
-                <span v-if="data.container" class="text-indigo-500 font-medium mr-2">
+                <span v-if="data.container" class="text-orange-500 font-medium mr-2">
                     <FontAwesomeIcon v-if="data.container.icon" :title="capitalize(data.container.tooltip)" aria-hidden="true"
                                      :icon="data.container.icon" size="xs" />
                     {{ data.container.label }}
@@ -170,7 +170,7 @@ const getActionIcon = (action) => {
                     <Button
                         size="xs"
                         type="button"
-                        class="inline-flex items-center rounded-md border border-gray-300 bg-white text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                        class="inline-flex items-center rounded-md border border-gray-300 bg-white text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2">
                         <FontAwesomeIcon icon="far fa-pencil" class="-ml-1 mr-2 text-gray-500" aria-hidden="true" />
                         {{ trans("Edit") }}
                     </Button>
@@ -219,7 +219,7 @@ const getActionIcon = (action) => {
             <span v-if="data['exitEdit']">
                 <Link :href="route(data['exitEdit']['route']['name'],data['exitEdit']['route']['parameters'])">
                     <Button type="button"
-                            class="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                            class="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2">
                         <FontAwesomeIcon icon="far fa-arrow-left" class="-ml-1 mr-2 h-5 w-5 text-gray-500" aria-hidden="true" />
                         <span v-if="data['exitEdit']['label']">{{ trans(data["exitEdit"]["label"]) }}</span>
                         <span v-if="!data['exitEdit']['label']"> {{ trans("Exit edit") }}</span>
@@ -230,7 +230,7 @@ const getActionIcon = (action) => {
             <span v-if="data['clearMulti']">
                 <Link :href="route(data['clearMulti']['route']['name'], data['clearMulti']['route']['parameters'])">
                     <Button type="button"
-                            class="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                            class="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2">
                         <FontAwesomeIcon icon="far fa-trash-alt" class="h-5 w-5 text-gray-500" aria-hidden="true" />
                     </Button>
                 </Link>
@@ -239,7 +239,7 @@ const getActionIcon = (action) => {
             <!-- Dropdown -->
             <!-- <Menu as="div" class="relative ml-3 sm:hidden">
                 <MenuButton
-                    class="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                    class="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2">
                     More
                     <FontAwesomeIcon aria-hidden="true" class="-mr-1 ml-2 h-5 w-5 text-gray-500" icon="fa-regular fa-chevron-down"/>
 

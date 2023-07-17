@@ -46,7 +46,7 @@ const layout = useLayoutStore()
             </li>
             <!-- Language -->
             <!-- <li class="text-white space-y-1" v-if="layout.rightSidebar.language" key="2">
-                <div class="pl-2.5 pr-1.5 py-1 bg-indigo-500 flex items-center leading-none">
+                <div class="pl-2.5 pr-1.5 py-1 bg-orange-500 flex items-center leading-none">
                     <div>Language</div>
                 </div>
                 <div class="text-gray-600 pl-2.5 pr-1.5">

@@ -110,7 +110,7 @@ form['fieldType'] = 'edit';
                         <span class="ml-2 flex-shrink-0">
                             <button class="align-bottom" :disabled="form.processing || !form.isDirty" type="submit">
                                 <FontAwesomeIcon icon="fal fa-save" class="h-8 "
-                                    :class="form.isDirty ? 'text-indigo-500' : 'text-gray-200'" aria-hidden="true" />
+                                    :class="form.isDirty ? 'text-orange-500' : 'text-gray-200'" aria-hidden="true" />
                             </button>
                         </span>
                     </div>

@@ -45,7 +45,7 @@ const locale = useLocaleStore();
                 <div v-if="node.rightSubLink" class="pr-4 " :title="capitalize(node.rightSubLink.tooltip)">
                     <!-- {{ importIcon(node.rightSubLink.icon) }} -->
                     <Link :href="route(node.rightSubLink.href[0])"
-                        class="w-9 h-9 flex flex-0 justify-center items-center border-2 text-indigo-500 border-indigo-500 rounded-lg cursor-pointer hover:bg-indigo-500 hover:text-white transition-all duration-75 ease-in-out">
+                        class="w-9 h-9 flex flex-0 justify-center items-center border-2 text-orange-500 border-orange-500 rounded-lg cursor-pointer hover:bg-orange-500 hover:text-white transition-all duration-75 ease-in-out">
                         <FontAwesomeIcon :icon="node.rightSubLink.icon" class="flex-shrink-0 " aria-hidden="true" />
                     </Link>
                 </div>

@@ -27,7 +27,7 @@ const layout = useLayoutStore();
     <Link
         v-for="menu in layout.navigation?.[layout.currentModule]?.topMenu.subSections" :href="route(menu.route.name)"
         class="group text-sm flex justify-end items-center cursor-pointer py-1 space-x-1 px-4 md:px-4 lg:px-4"
-        :class="[layout.currentRoute.includes(route(menu.route.name)) ? 'text-indigo-600' : 'text-gray-600']"
+        :class="[layout.currentRoute.includes(route(menu.route.name)) ? 'text-orange-600' : 'text-gray-600']"
         :title="capitalize(menu.tooltip??menu.label??'')">
         <FontAwesomeIcon :icon="menu.icon"
                          class="h-5 lg:h-3.5 w-auto group-hover:opacity-100 opacity-70 transition duration-100 ease-in-out"

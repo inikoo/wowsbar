@@ -33,7 +33,7 @@ const props = defineProps<{
 <template>
     <div>
         <label :for="fieldName" class="block text-sm font-medium leading-6 text-gray-800"></label>
-        <div class="flex rounded-md px-3 shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+        <div class="flex rounded-md px-3 shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-orange-600 sm:max-w-md">
             <!-- Add On: Left -->
             <div v-if="fieldData.leftAddOn" class="flex items-center gap-x-1.5">
                 <div v-for="leftAddOn in fieldData.leftAddOn" class="flex select-none items-center text-gray-400 sm:text-sm">

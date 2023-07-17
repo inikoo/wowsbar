@@ -33,9 +33,9 @@ const showPassword = ref(true);
     <div class="mt-1 relative rounded-md shadow-sm">
         <div class="flex">
             <input @input="handleChange(form)" v-model="form[fieldName]" :type="showPassword ? 'password' : 'text'"  autocomplete="off"  
-                class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 w-full border-gray-300 rounded-l-md" />
+                class="shadow-sm focus:ring-orange-500 focus:border-orange-500 w-full border-gray-300 rounded-l-md" />
             <button type="button" @click="showPassword = !showPassword"
-                class="w-min px-3 py-2 border border-gray-300 text-sm font-medium rounded-r-md text-gray-700 bg-gray-50 hover:bg-gray-100 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500">
+                class="w-min px-3 py-2 border border-gray-300 text-sm font-medium rounded-r-md text-gray-700 bg-gray-50 hover:bg-gray-100 focus:outline-none focus:ring-1 focus:ring-orange-500 focus:border-orange-500">
                 <font-awesome-icon aria-hidden="true" class="h-5 w-5 text-gray-400" :icon="showPassword ? 'fas fa-eye' : 'fas fa-eye-slash' " />
             </button>
         </div>

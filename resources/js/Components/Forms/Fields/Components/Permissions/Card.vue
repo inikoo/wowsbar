@@ -26,7 +26,7 @@ function toggleCheckbox(value) {
         <div class="font-bold text-sm">{{ data.title }}</div>
         <div class="flex-grow"></div>
         <label class="inline-flex items-center">
-          <input type="checkbox" id="mike1" value="Mike" class="form-checkbox h-4 w-4 text-indigo-600"
+          <input type="checkbox" id="mike1" value="Mike" class="form-checkbox h-4 w-4 text-orange-600"
             style="margin-right: 10px;">
         </label>
       </div>
@@ -38,7 +38,7 @@ function toggleCheckbox(value) {
           class="inline-flex items-center bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-500 w-full cursor-pointer"
           @click="toggleCheckbox(per.name)">
           <input type="checkbox" :id="per.name" :value="per.name" v-model="checkboxValues"
-            class="form-checkbox h-4 w-4 text-indigo-600">
+            class="form-checkbox h-4 w-4 text-orange-600">
           <label :for="per.name" class="ml-2">{{ per.name }}</label>
         </span>
       </div>

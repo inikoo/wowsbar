@@ -569,7 +569,7 @@ const handleElementsChange = (data) => {
                 <!-- Left Section: Records, -->
                 <div class="flex space-x-2">
                     <!-- Result Number -->
-                    <div class="flex border border-indigo-100 rounded-md">
+                    <div class="flex border border-orange-100 rounded-md">
                         <div class="grid justify-end items-center text-base font-normal text-gray-700"
                             title="Results">
                             <div v-if="resourceMeta.total" class="px-2 ">{{ locale.number(resourceMeta.total) }} {{ trans(resourceMeta.total > 1 ? 'records' : 'record') }}</div>

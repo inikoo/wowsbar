@@ -90,18 +90,18 @@ function handleKeyDown() {
                                             <dd>{{ activeOption.phone }}</dd>
                                             <dt class="col-end-1 font-semibold text-gray-900">URL</dt>
                                             <dd class="truncate">
-                                                <a :href="activeOption.url" class="text-indigo-600 underline">
+                                                <a :href="activeOption.url" class="text-orange-600 underline">
                                                     {{ activeOption.url }}
                                                 </a>
                                             </dd>
                                             <dt class="col-end-1 font-semibold text-gray-900">Email</dt>
                                             <dd class="truncate">
-                                                <a :href="`mailto:${activeOption.email}`" class="text-indigo-600 underline">
+                                                <a :href="`mailto:${activeOption.email}`" class="text-orange-600 underline">
                                                     {{ activeOption.email }}
                                                 </a>
                                             </dd>
                                         </dl>
-                                        <button type="button" class="mt-6 w-full rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Send message</button>
+                                        <button type="button" class="mt-6 w-full rounded-md bg-orange-600 py-2 px-3 text-sm font-semibold text-white shadow-sm hover:bg-orange-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600">Send message</button>
                                     </div>
                                 </div>
                             </ComboboxOptions>
