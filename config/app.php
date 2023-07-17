@@ -171,6 +171,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\TelescopeServiceProvider::class,
         App\Providers\MacroServiceProvider::class,
+        \Matchish\ScoutElasticSearch\ElasticSearchServiceProvider::class
 
     ])->toArray(),
 
