@@ -119,10 +119,10 @@ const changeLink=(file,value)=>{
     </div>
     <div class="container-preview" v-if="files.length">
       <div v-for="file in files" :key="file.name" class="preview-card" >
-        <div class="img"  @click="openEditModal(file)">
+        <div class="img" >
           <img class="preview-img" :src="generateThumbnail(file)" />
         </div>
-        <div class="title">
+        <div class="title"  @click="openEditModal(file)">
           <div>{{generateName(file) }}</div>
           <div  class="text-xs text-gray-300">{{get(file,['link','target'],'https//:....')}}</div>
         </div>
