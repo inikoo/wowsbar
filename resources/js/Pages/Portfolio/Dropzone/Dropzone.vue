@@ -2,27 +2,44 @@
 import { ref } from 'vue'
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faImage } from "@/../private/pro-solid-svg-icons"
+import { faTrash } from "@/../private/pro-light-svg-icons"
 import { library } from "@fortawesome/fontawesome-svg-core";
-library.add(faImage)
+import {get} from 'lodash'
+import Modal from '../Modal/Modal.vue'
+library.add(faImage, faTrash)
 const props = defineProps<{
   files: Array
   filesChange : Function
+  changeLink : Function
 }>()
 
 const isDragging = ref(false)
 const files = ref(props.files)
 const fileInput = ref(null)
-console.log(files)
+const open = ref(false)
+const fileEdit = ref(null)
+const dropZoneRef = ref(null);
 
 const onChange = () => {
-  const newFiles = [...fileInput.value.files]
+  let setData = []
+  for (const set of fileInput.value.files) {
+    if (set && set instanceof File) {
+      setData.push({
+        file: set,
+        link: { label: "set", target: "#" },
+        imageAlt: set.name,
+        imageSrc: ''
+      })
+    }
+  }
+  const newFiles = [...setData]
   files.value = [...files.value, ...newFiles]
-  props.filesChange([...files.value, ...newFiles])
+  props.filesChange([...files.value])
 }
 
 const generateThumbnail = (file) => {
-  if(file && file instanceof File ){
-    let fileSrc = URL.createObjectURL(file)
+  if(file.file && file.file instanceof File ){
+    let fileSrc = URL.createObjectURL(file.file)
   setTimeout(() => {
     URL.revokeObjectURL(fileSrc)
   }, 1000)
@@ -33,23 +50,12 @@ const generateThumbnail = (file) => {
 }
 
 const generateName = (file) => {
-  if(file && file instanceof File ){
-   return file.name
-  }else{
     return file.imageAlt
   }
-}
-
-const makeName = (name) => {
-  return (
-    name.split(".")[0].substring(0, 3) +
-    "..." +
-    name.split(".")[name.split(".").length - 1]
-  )
-}
 
 const remove = (i) => {
   files.value.splice(i, 1)
+  props.filesChange([...files.value])
 }
 
 const dragover = (e) => {
@@ -67,10 +73,27 @@ const drop = (e) => {
   files.value = [...files.value, ...newFiles]
   isDragging.value = false
 }
+
+const openEditModal=(file)=>{
+  fileEdit.value = file
+  open.value = true
+}
+
+const closeEditModal=()=>{
+  fileEdit.value = null
+  open.value = false
+}
+
+const changeLink=(file,value)=>{
+  open.value = false
+  props.changeLink(file,value)
+}
+
 </script>
 
 <template>
   <div class="main">
+  <Modal :isOpen="open" :closeModal="closeEditModal" :data="fileEdit" :changeLink="changeLink"/>
     <div
       class="dropzone-container"
       @dragover="dragover"
@@ -95,19 +118,22 @@ const drop = (e) => {
 
     </div>
     <div class="container-preview" v-if="files.length">
-      <div v-for="file in files" :key="file.name" class="preview-card">
-        <div class="img">
+      <div v-for="file in files" :key="file.name" class="preview-card" >
+        <div class="img" >
           <img class="preview-img" :src="generateThumbnail(file)" />
         </div>
-        <span class="title">{{ generateName(file) }}</span>
-        <div>
+        <div class="title"  @click="openEditModal(file)">
+          <div>{{generateName(file) }}</div>
+          <div  class="text-xs text-gray-300">{{get(file,['link','target'],'https//:....')}}</div>
+        </div>
+        <div class="flex justify-center items-center">
           <button
-            class="ml-2"
+            class="ml-2 text-rose-500"
             type="button"
             @click="remove(files.indexOf(file))"
             title="Remove file"
           >
-            <b>&times;</b>
+          <font-awesome-icon :icon="['fal', 'trash']" />
           </button>
         </div>
       </div>

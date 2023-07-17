@@ -8,18 +8,22 @@
 namespace App\Actions\Elasticsearch;
 
 use Exception;
-use Lorisleiva\Actions\Concerns\AsAction;
-use Lorisleiva\Actions\Concerns\AsObject;
+use Illuminate\Console\Command;
+use Lorisleiva\Actions\Concerns\AsCommand;
+use stdClass;
 
 class DeleteAllElasticsearchDocument
 {
-    use AsObject;
-    use AsAction;
+    use AsCommand;
 
     public string $commandSignature   = 'elasticsearch:flush';
-    public string $commandDescription = 'Delete the all data elasticsearch';
 
-    public function handle(): ?bool
+    public function getCommandDescription():string
+    {
+        return  'Delete the all data elasticsearch';
+    }
+
+    public function asCommand(Command $command): int
     {
         $client = BuildElasticsearchClient::run();
 
@@ -28,29 +32,23 @@ class DeleteAllElasticsearchDocument
                 'index' => '_all',
                 'body'  => [
                     'query' => [
-                        'match_all' => new \stdClass(),
+                        'match_all' => new stdClass(),
                     ],
                 ],
             ]);
 
             if ($response['deleted'] >= 0) {
-                echo "🧼 Successfully {$response['deleted']} data deleted \n";
-
-                return true;
+                $command->line("🧼 Successfully {$response['deleted']} data deleted");
+                return 0;
             }
 
-            echo "Delete data failed \n";
+            $command->error("Unknown error. Delete data failed");
+            return 1;
+        } catch(Exception $exception) {
+            $msg=$exception->getMessage();
+            $command->error( "Delete data failed ($msg)");
 
-            return false;
-        } catch(Exception) {
-            echo "Delete data failed \n";
-
-            return false;
+            return 1;
         }
-    }
-
-    public function asCommand(): ?bool
-    {
-        return $this->handle();
     }
 }
