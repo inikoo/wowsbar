@@ -39,6 +39,9 @@ Route::middleware([
         Route::prefix("models")
             ->name("models.")
             ->group(__DIR__."/models.php");
+        Route::prefix("search")
+            ->name("search.")
+            ->group(__DIR__."/search.php");
 
     });
 
