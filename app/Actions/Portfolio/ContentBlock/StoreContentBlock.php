@@ -7,7 +7,7 @@
 
 namespace App\Actions\Portfolio\ContentBlock;
 
-use App\Actions\Tenancy\Tenant\Hydrators\TenantHydratePortfolio;
+use App\Actions\Tenancy\Tenant\Hydrators\TenantHydrateContentBlocks;
 use App\Models\Portfolio\ContentBlock;
 use App\Models\Portfolio\Website;
 use App\Models\Tenancy\Tenant;
@@ -40,7 +40,7 @@ class StoreContentBlock
             'tenant_id' => app('currentTenant')->id,
             'ulid'      => Str::ulid()
         ]);
-        TenantHydratePortfolio::make()->contentBlocks(app('currentTenant'));
+        TenantHydrateContentBlocks::dispatch(app('currentTenant'));
 
         return $contentBlock;
     }
@@ -102,8 +102,8 @@ class StoreContentBlock
         );
         $validatedData = $this->validateAttributes();
 
-        $this->handle($website,$webBlock,$validatedData);
+        $contentBlock=$this->handle($website,$webBlock,$validatedData);
 
-        $command->info('Done! 🎉');
+        $command->info("Done! Content block $contentBlock->code created 🎉");
     }
 }

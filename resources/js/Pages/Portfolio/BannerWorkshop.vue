@@ -7,6 +7,7 @@ import { Swiper, SwiperSlide } from "swiper/vue";
 import { Link } from "@inertiajs/vue3";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import DropZone from "./Dropzone/Dropzone.vue";
+import { get } from 'lodash'
 // Import Swiper styles
 import "swiper/css";
 // import 'swiper/css/pagination';
