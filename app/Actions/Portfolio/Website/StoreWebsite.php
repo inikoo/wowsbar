@@ -7,7 +7,8 @@
 
 namespace App\Actions\Portfolio\Website;
 
-use App\Actions\Tenancy\Tenant\Hydrators\TenantHydratePortfolio;
+use App\Actions\Portfolio\Website\Hydrators\WebsiteHydrateUniversalSearch;
+use App\Actions\Tenancy\Tenant\Hydrators\TenantHydrateWebsites;
 use App\Models\Portfolio\Website;
 use App\Models\Tenancy\Tenant;
 use App\Rules\CaseSensitive;
@@ -35,7 +36,8 @@ class StoreWebsite
 
         $website = Website::create($modelData);
         $website->stats()->create();
-        TenantHydratePortfolio::make()->websites(app('currentTenant'));
+        TenantHydrateWebsites::dispatch(app('currentTenant'));
+        WebsiteHydrateUniversalSearch::dispatch($website);
 
         return $website;
     }
@@ -101,8 +103,8 @@ class StoreWebsite
         );
         $validatedData = $this->validateAttributes();
 
-        $this->handle($validatedData);
+        $website=$this->handle($validatedData);
 
-        $command->info('Done! 🥳');
+        $command->info("Done! website $website->code created  🥳");
     }
 }
