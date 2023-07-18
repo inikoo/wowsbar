@@ -42,9 +42,10 @@ const paramsToString = computed(() => {
 
 const fetchApi = async (query: string) => {
     if (query !== '') {
-        await fetch(`http://aiku.wowsbar.test/search/?q=${query}&route_src=${route().current()}&route_params=${paramsToString.value}`)
+        await fetch(`http://aiku.wowsbar.test/search/?q=${query}&route_src=${route().current()}&${paramsToString.value}`)
             .then(response => {
                 response.json().then((data: Object) => {
+                    console.log(`http://aiku.wowsbar.test/search/?q=${query}&route_src=${route().current()}&${paramsToString.value}`)
                     resultsSearch.value = data
 
                 })
