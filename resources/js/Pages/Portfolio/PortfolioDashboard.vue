@@ -24,6 +24,6 @@ library.add(faGlobe);
 <template layout="App">
     <Head :title="capitalize(title)"/>
     <PageHeading :data="pageHead"></PageHeading>
-    <FlatTreeMap class="mx-4" v-for="(treeMap,idx) in flatTreeMaps" :key="idx" :nodes="treeMap"/>
+    <FlatTreeMap class="mx-4 mt-4" v-for="(treeMap,idx) in flatTreeMaps" :key="idx" :nodes="treeMap"/>
 </template>
 

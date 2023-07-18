@@ -92,7 +92,7 @@ router.on('navigate', (event) => {
 <template>
     <div v-if="displayBreadcrumbs" class="md:pr-10 xl:pr-56">
         <nav
-            class="bg-white py-4 md:py-0 flex text-gray-600 border-b h-6 border-gray-200 text-sm"
+            class="bg-white py-4 md:py-0 flex text-gray-500 border-b h-6 border-gray-200 text-sm"
             aria-label="Breadcrumb">
             <!-- Breadcrumb -->
             <ol role="list" class="w-full mx-auto px-4 flex">
@@ -111,6 +111,7 @@ router.on('navigate', (event) => {
                             <span>...</span>
                         </div>
 
+                        <!-- The nodes -->
                         <template v-if="breadcrumb.type === 'simple'">
                             <FontAwesomeIcon
                                 v-if="breadcrumbIdx !== 0"
@@ -119,7 +120,7 @@ router.on('navigate', (event) => {
                                 aria-hidden="true" />
                             <component
                                 :is="breadcrumb.simple.route ? Link : 'span'"
-                                :class="'hover:text-orange-400' || ''"
+                                :class="'hover:text-gray-700' || ''"
                                 :href="
 									breadcrumb.simple.route
 										? route(
@@ -165,9 +166,9 @@ router.on('navigate', (event) => {
                                         :icon="['fal', 'bars']"
                                         class="flex-shrink-0 h-3.5 w-3.5 mr-1"
                                         aria-hidden="true" />
-                                    <span class="capitalize">{{
-                                            breadcrumb.modelWithIndex.index.label
-                                        }}</span>
+                                    <span class="capitalize">
+                                        {{ breadcrumb.modelWithIndex.index.label }}
+                                    </span>
                                 </Link>
                             </div>
                             <span class="mx-3 select-none">→</span>
