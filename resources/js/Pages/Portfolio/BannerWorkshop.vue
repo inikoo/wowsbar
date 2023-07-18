@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Head } from "@inertiajs/vue3";
+import { Head, router } from "@inertiajs/vue3";
 import { ref } from "vue";
 import PageHeading from "@/Components/Headings/PageHeading.vue";
 import { capitalize } from "@/Composables/capitalize";
@@ -51,6 +51,7 @@ const changeLink = (file, value) => {
 };
 
 const set =()=>{
+    router.post(route('website.web-block-type.banner.store'), data.value)
     console.log(data.value)
 }
 </script>

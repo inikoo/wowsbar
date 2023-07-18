@@ -173,7 +173,7 @@ router.on('navigate', (event) => {
                             </div>
                             <span class="mx-3 select-none">→</span>
                             <Link
-                                class="text-orange-400 hover:text-orange-500"
+                                class="hover:text-gray-700"
                                 :href="
 									route(
 										breadcrumb.modelWithIndex.model.route.name,
