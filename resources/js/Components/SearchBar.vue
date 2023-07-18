@@ -87,7 +87,8 @@ function handleKeyDown() {
                                         <ComboboxOption v-if="resultsSearch?.data.length > 0" v-for="item in resultsSearch?.data" :key="item.id" :value="item" as="template" v-slot="{ active }">
                                             <Link :href="route(item.model.route.name, item.model.route.parameters)" :class="['group flex cursor-default select-none items-center rounded-md p-2', active && 'bg-gray-100 text-gray-900']">
                                                 <!-- <img :src="item.imageUrl" alt="" class="h-6 w-6 flex-none rounded-full" /> -->
-                                                <span class="ml-3 flex-auto truncate">{{ item.model.slug }} - {{ item.model.code }} - {{ item.model.name }}</span>
+                                                <FontAwesomeIcon :icon='item.model.icon' class='' aria-hidden='true' />
+                                                <span class="ml-3 flex-auto truncate">{{ item.model.name }}</span>
                                                 <FontAwesomeIcon icon="fa-regular fa-chevron-right" v-if="active" class="ml-3 h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
                                             </Link>
                                         </ComboboxOption>
@@ -108,14 +109,14 @@ function handleKeyDown() {
                                         <dl class="grid grid-cols-1 gap-x-6 gap-y-3 text-sm text-gray-700">
                                             <dt class="col-end-1 font-semibold text-gray-900">Domain</dt>
                                             <dd>{{ activeOption.model.domain }}</dd>
-                                            <dt class="col-end-1 font-semibold text-gray-900">Route</dt>
+                                            <dt class="col-end-1 font-semibold text-gray-900">Code</dt>
                                             <dd class="truncate">
-                                                {{ activeOption.model.route }}
+                                                {{ activeOption.model.code }}
                                             </dd>
-                                            <dt class="col-end-1 font-semibold text-gray-900">Icon</dt>
+                                            <!-- <dt class="col-end-1 font-semibold text-gray-900">Icon</dt>
                                             <dd class="truncate">
                                                 {{ activeOption.model.icon }}
-                                            </dd>
+                                            </dd> -->
                                         </dl>
                                         <button type="button" class="mt-6 w-full rounded-md bg-gray-700 py-2 px-3 text-sm font-semibold text-white shadow-sm hover:bg-gray-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600">Send message</button>
                                     </div>
