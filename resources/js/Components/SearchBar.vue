@@ -15,7 +15,7 @@ import {
     TransitionChild,
     TransitionRoot,
 } from '@headlessui/vue'
-import { usePage } from '@inertiajs/vue3'
+import { Link, usePage } from '@inertiajs/vue3'
 import {router} from "@inertiajs/vue3";
 import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
 
@@ -35,15 +35,18 @@ function handleSearchInput() {
     }, 200);
 }
 
+const resultsSearch = ref()
+const paramsToString = computed(() => {
+    return Object.entries(route().v().params).map(([key, value]) => `param_${key}=${value}`).join('&')
+})
+
 const fetchApi = async (query: string) => {
     if (query !== '') {
-        await fetch('http://aiku.wowsbar.test/search/?q=' + query)
+        await fetch(`http://aiku.wowsbar.test/search/?q=${query}&route_src=${route().current()}&route_params=${paramsToString.value}`)
             .then(response => {
-                console.log("==================")
-                console.log(response)
                 response.json().then((data: Object) => {
-                    console.log("5555555555555555555555")
-                    console.log(data)
+                    resultsSearch.value = data
+
                 })
             })
             .catch(err => console.log(err))
@@ -75,43 +78,45 @@ function handleKeyDown() {
                                 class="h-12 w-full border-0 bg-transparent pl-11 pr-4 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm" placeholder="Search..." @change="query = $event.target.value">
                             </div>
                             <ComboboxOptions  class="flex divide-x divide-gray-100" as="div" static hold>
+                                
+                                <!-- Left: Result Panel -->
                                 <div :class="['max-h-96 min-w-0 flex-auto scroll-py-4 overflow-y-auto px-6 py-4', activeOption && 'sm:h-96']">
                                     <div hold class="-mx-2 text-sm text-gray-700">
-                                        <ComboboxOption v-for="item in searchResults.data" :key="item.id" :value="item" as="template" v-slot="{ active }">
-                                            <div :class="['group flex cursor-default select-none items-center rounded-md p-2', active && 'bg-gray-100 text-gray-900']">
-                                                <img :src="item.imageUrl" alt="" class="h-6 w-6 flex-none rounded-full" />
-                                                <span class="ml-3 flex-auto truncate">{{ item.name }}</span>
+                                        <!-- Looping: Results -->
+                                        <ComboboxOption v-if="resultsSearch?.data.length > 0" v-for="item in resultsSearch?.data" :key="item.id" :value="item" as="template" v-slot="{ active }">
+                                            <Link :href="route(item.model.route.name, item.model.route.parameters)" :class="['group flex cursor-default select-none items-center rounded-md p-2', active && 'bg-gray-100 text-gray-900']">
+                                                <!-- <img :src="item.imageUrl" alt="" class="h-6 w-6 flex-none rounded-full" /> -->
+                                                <span class="ml-3 flex-auto truncate">{{ item.model.slug }} - {{ item.model.code }} - {{ item.model.name }}</span>
                                                 <FontAwesomeIcon icon="fa-regular fa-chevron-right" v-if="active" class="ml-3 h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
-                                            </div>
+                                            </Link>
                                         </ComboboxOption>
+                                        <div v-else>Nothing to show here</div>
                                     </div>
                                 </div>
+                                
+                                <!-- Right: Detail Panel -->
                                 <div v-if="activeOption" class="hidden h-96 w-1/2 flex-none flex-col divide-y divide-gray-100 overflow-y-auto sm:flex">
                                     <div class="flex-none p-6 text-center">
-                                        <img :src="activeOption.imageUrl" alt="" class="mx-auto h-16 w-16 rounded-full" />
+                                        <img :src="activeOption.imageUrl" :alt="activeOption.model.code" class="bg-gray-400 mx-auto h-16 w-16 rounded-full" />
                                         <h2 class="mt-3 font-semibold text-gray-900">
-                                            {{ activeOption.name }}
+                                            {{ activeOption.model_type }}
                                         </h2>
                                         <p class="text-sm leading-6 text-gray-500">{{ activeOption.role }}</p>
                                     </div>
                                     <div class="flex flex-auto flex-col justify-between p-6">
                                         <dl class="grid grid-cols-1 gap-x-6 gap-y-3 text-sm text-gray-700">
-                                            <dt class="col-end-1 font-semibold text-gray-900">Phone</dt>
-                                            <dd>{{ activeOption.phone }}</dd>
-                                            <dt class="col-end-1 font-semibold text-gray-900">URL</dt>
+                                            <dt class="col-end-1 font-semibold text-gray-900">Domain</dt>
+                                            <dd>{{ activeOption.model.domain }}</dd>
+                                            <dt class="col-end-1 font-semibold text-gray-900">Route</dt>
                                             <dd class="truncate">
-                                                <a :href="activeOption.url" class="text-orange-600 underline">
-                                                    {{ activeOption.url }}
-                                                </a>
+                                                {{ activeOption.model.route }}
                                             </dd>
-                                            <dt class="col-end-1 font-semibold text-gray-900">Email</dt>
+                                            <dt class="col-end-1 font-semibold text-gray-900">Icon</dt>
                                             <dd class="truncate">
-                                                <a :href="`mailto:${activeOption.email}`" class="text-orange-600 underline">
-                                                    {{ activeOption.email }}
-                                                </a>
+                                                {{ activeOption.model.icon }}
                                             </dd>
                                         </dl>
-                                        <button type="button" class="mt-6 w-full rounded-md bg-orange-600 py-2 px-3 text-sm font-semibold text-white shadow-sm hover:bg-orange-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600">Send message</button>
+                                        <button type="button" class="mt-6 w-full rounded-md bg-gray-700 py-2 px-3 text-sm font-semibold text-white shadow-sm hover:bg-gray-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600">Send message</button>
                                     </div>
                                 </div>
                             </ComboboxOptions>
