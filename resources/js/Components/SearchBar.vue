@@ -37,15 +37,15 @@ function handleSearchInput() {
 
 const resultsSearch = ref()
 const paramsToString = computed(() => {
-    return Object.entries(route().v().params).map(([key, value]) => `param_${key}=${value}`).join('&')
+    return route().v().params ? '&' + Object.entries(route().v().params).map(([key, value]) => `param_${key}=${value}`).join('&') : ''
 })
 
 const fetchApi = async (query: string) => {
     if (query !== '') {
-        await fetch(`http://aiku.wowsbar.test/search/?q=${query}&route_src=${route().current()}&${paramsToString.value}`)
+        await fetch(`http://aiku.wowsbar.test/search/?q=${query}&route_src=${route().current()}${paramsToString.value}`)
             .then(response => {
                 response.json().then((data: Object) => {
-                    console.log(`http://aiku.wowsbar.test/search/?q=${query}&route_src=${route().current()}&${paramsToString.value}`)
+                    console.log(`http://aiku.wowsbar.test/search/?q=${query}&route_src=${route().current()}${paramsToString.value}`)
                     resultsSearch.value = data
 
                 })
