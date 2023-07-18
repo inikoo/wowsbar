@@ -16,13 +16,13 @@ const layout = useLayoutStore();
 <template>
     <div class="flex flex-1 items-center justify-between lg:justify-start">
         <Link :href="route('dashboard.show')"
-              class="md:pl-3 flex items-center h-full xl:overflow-hidden space-x-2 mr-6 xl:w-56 xl:pr-2 xl:border-r-2 xl:border-gray-200 xl:mr-0">
+            class="md:pl-3 flex items-center h-full xl:overflow-hidden space-x-2 mr-6 xl:w-56 xl:pr-2 xl:border-r-2 xl:border-gray-200 xl:mr-0">
             <img class="h-7 md:h-5 shadow" :src="`/media/${layout.tenant.logo_id}`" :alt="layout.tenant.code" />
             <span class="hidden leading-none md:inline font-bold text-orange-600 xl:truncate">
-			{{ layout.tenant.name }}
-		</span>
+                {{ layout.tenant.name }}
+            </span>
         </Link>
-        <AppTopBarNavs/>
+        <AppTopBarNavs />
 
     </div>
 </template>
