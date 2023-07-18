@@ -7,28 +7,42 @@
 
 namespace App\Actions\Portfolio\ContentBlock;
 
+use App\Actions\Tenancy\Tenant\Hydrators\TenantHydrateContentBlocks;
 use App\Models\Portfolio\ContentBlock;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
 use Lorisleiva\Actions\ActionRequest;
+use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\AsController;
 use Lorisleiva\Actions\Concerns\WithAttributes;
 
 class DeleteContentBlock
 {
+    use AsAction;
     use AsController;
     use WithAttributes;
+
+    public bool $isAction = false;
 
     public function handle(ContentBlock $contentBlock): ContentBlock
     {
         $contentBlock->delete();
+
+        TenantHydrateContentBlocks::dispatch(app('currentTenant'));
 
         return $contentBlock;
     }
 
     public function authorize(ActionRequest $request): bool
     {
+        if($this->isAction) return true;
+
         return $request->user()->can("portfolio.edit");
+    }
+
+    public function action(ContentBlock $contentBlock): ContentBlock
+    {
+        return $this->handle($contentBlock);
     }
 
     public function asController(ContentBlock $contentBlock, ActionRequest $request): ContentBlock

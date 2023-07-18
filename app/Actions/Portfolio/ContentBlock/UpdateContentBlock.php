@@ -18,6 +18,8 @@ class UpdateContentBlock
 {
     use WithActionUpdate;
 
+    public bool $isAction = false;
+
     public function handle(ContentBlock $contentBlock, array $modelData): ContentBlock
     {
         $this->update($contentBlock, $modelData, ['data', 'layout']);
@@ -30,6 +32,8 @@ class UpdateContentBlock
 
     public function authorize(ActionRequest $request): bool
     {
+        if($this->isAction) return true;
+
         return $request->user()->can("portfolio.edit");
     }
 
@@ -47,6 +51,15 @@ class UpdateContentBlock
         $request->validate();
 
         return $this->handle($contentBlock, $request->all());
+    }
+
+    public function action(ContentBlock $contentBlock, $modelData): ContentBlock
+    {
+        $this->isAction = true;
+        $this->setRawAttributes($modelData);
+        $validatedData = $this->validateAttributes();
+
+        return $this->handle($contentBlock, $validatedData);
     }
 
     public function jsonResponse(ContentBlock $website): ContentBlockResource

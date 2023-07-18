@@ -8,7 +8,9 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
+use App\Actions\Portfolio\ContentBlock\DeleteContentBlock;
 use App\Actions\Portfolio\ContentBlock\StoreContentBlock;
+use App\Actions\Portfolio\ContentBlock\UpdateContentBlock;
 use App\Actions\Portfolio\Website\StoreWebsite;
 use App\Actions\Tenancy\Tenant\StoreTenant;
 use App\Models\Portfolio\ContentBlock;
@@ -80,4 +82,20 @@ test('create banners', function ($website) {
     $this->artisan("content-block:create abc web1 banner test1 'My first banner' ")->assertExitCode(0);
     $tenant->refresh();
     expect($tenant->stats->number_content_blocks)->toBe(2);
+
+    return $contentBlock;
 })->depends('create websites');
+
+test('update banners', function ($contentBlock) {
+    $modelData    = ContentBlock::factory()->definition();
+
+    $contentBlock = UpdateContentBlock::make()->action($contentBlock, $modelData);
+    expect($contentBlock)->toBeInstanceOf(ContentBlock::class);
+})->depends('create banners');
+
+test('delete banners', function ($contentBlock) {
+    $tenant = app('currentTenant');
+
+    DeleteContentBlock::make()->action($contentBlock);
+    expect($tenant->stats->number_content_blocks)->toBe(1);
+})->depends('create banners');
