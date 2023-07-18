@@ -21,15 +21,13 @@ class HandleInertiaRequests extends Middleware
 
     public function share(Request $request): array
     {
-
         $user = $request->user();
 
         $firstLoadOnlyProps = [];
 
-
         if (!$request->inertia() or Session::get('reloadLayout')) {
-            $firstLoadOnlyProps         =GetFirstLoadProps::run($user);
-            $firstLoadOnlyProps['ziggy']= function () use ($request) {
+            $firstLoadOnlyProps          = GetFirstLoadProps::run($user);
+            $firstLoadOnlyProps['ziggy'] = function () use ($request) {
                 return array_merge((new Ziggy())->toArray(), [
                     'location' => $request->url(),
                 ]);
@@ -43,21 +41,18 @@ class HandleInertiaRequests extends Middleware
             }
         }
 
-
-
-
         return array_merge(
             parent::share($request),
             $firstLoadOnlyProps,
             [
-            'auth' => [
-                'user' => $request->user() ? LoggedUserResource::make($request->user())->getArray() : null,
-            ],
-            'ziggy' => [
-                'location' => $request->url(),
-            ],
+                'auth'  => [
+                    'user' => $request->user() ? LoggedUserResource::make($request->user())->getArray() : null,
+                ],
+                'ziggy' => [
+                    'location' => $request->url(),
+                ],
 
-        ]
+            ]
         );
     }
 }

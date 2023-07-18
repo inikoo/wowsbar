@@ -15,7 +15,7 @@ class CreateElasticSearchTenantAlias
 {
     use AsAction;
 
-    public string $commandSignature = 'elasticsearch:tenant-alias {tenant}';
+    public string $commandSignature = 'es:tenant-alias {tenant}';
 
     public function getCommandDescription(): string
     {
@@ -24,7 +24,7 @@ class CreateElasticSearchTenantAlias
 
     public function handle()
     {
-        $tenant =app('currentTenant');
+        $tenant = app('currentTenant');
         $client = BuildElasticsearchClient::run();
 
         $params['body'] = array(
@@ -44,17 +44,16 @@ class CreateElasticSearchTenantAlias
                 )
             )
         );
-        return  $client->indices()->updateAliases($params);
 
+        return $client->indices()->updateAliases($params);
     }
-
 
     public function asCommand(Command $command): int
     {
         $tenant = Tenant::where('slug', $command->argument('tenant'))->firstOrFail();
         $tenant->makeCurrent();
 
-        $response=$this->handle();
+        $response = $this->handle();
 
         if ($response['acknowledged']) {
             $command->line("Alias added 🫡");

@@ -19,7 +19,7 @@ class RefreshElasticsearch
 
     public function getCommandDescription(): string
     {
-        return 'Delete the data based on index name';
+        return 'Refresh app elasticsearch indices';
     }
 
     public function handle()
@@ -30,14 +30,14 @@ class RefreshElasticsearch
             'index' => config('app.name').'_search'
         ];
 
-        $response = $client->indices()->delete($params);
 
-        if ($response['acknowledged']) {
-            return $client->indices()->create($params);
+        $response = $client->indices()->exists($params);
+
+        if ($response->getStatusCode() != 404) {
+            $client->indices()->delete($params);
         }
 
-
-        return $response;
+        return $client->indices()->create($params);
     }
 
     public function asCommand(Command $command): int

@@ -18,7 +18,7 @@ class FillMissingItemsElasticsearchDocument
     use AsObject;
     use AsAction;
 
-    public string $commandSignature   = 'elasticsearch:fill-missing-items';
+    public string $commandSignature   = 'es:fill-missing-items';
     public string $commandDescription = 'Sync the data from backup database';
 
     public function handle(): void

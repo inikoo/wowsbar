@@ -20,7 +20,6 @@ class WebsiteSearchResultResource extends JsonResource
     public function toArray($request): array
     {
         return [
-            'slug'   => $this->slug,
             'code'   => $this->code,
             'name'   => $this->name,
             'domain' => $this->domain,
