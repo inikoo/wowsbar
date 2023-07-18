@@ -34,7 +34,7 @@ class StoreTenant
 
         $tenant->execute(
             function (Tenant $tenant) use ($userData) {
-                CreateElasticSearchTenantAlias::run();
+                // CreateElasticSearchTenantAlias::run();
                 SetTenantLogo::run($tenant);
                 $user = StoreUser::run($tenant, $userData);
 
