@@ -8,6 +8,7 @@ import { Link } from "@inertiajs/vue3";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import DropZone from "./Dropzone/Dropzone.vue";
 import PrimaryButton from '@/Components/PrimaryButton.vue'
+import Banner from '@/Components/Banner.vue'
 // Import Swiper styles
 import "swiper/css";
 // import 'swiper/css/pagination';
@@ -51,7 +52,7 @@ const changeLink = (file, value) => {
 };
 
 const set =()=>{
-    router.post(route('website.web-block-type.banner.store'), data.value)
+    router.post('website.web-block-type.banner.store', data.value)
     console.log(data.value)
 }
 </script>
