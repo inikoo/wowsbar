@@ -100,7 +100,8 @@ const changeIndex = () => {
 <template>
   <div class="main">
     <Modal :isOpen="open" :closeModal="closeEditModal" :data="fileEdit" :changeLink="changeLink" />
-    <div class="dropzone-container" @dragover="dragover" @dragleave="dragleave" @drop="drop">
+    <div style="width: 30%;">
+      <div class="dropzone-container" @dragover="dragover" @dragleave="dragleave" @drop="drop">
       <input type="file" multiple name="file" id="fileInput" class="hidden-input" @change="onChange" ref="fileInput"
         accept=".pdf,.jpg,.jpeg,.png" />
 
@@ -109,10 +110,12 @@ const changeIndex = () => {
             :icon="['fass', 'image']" /></div>
         <div class="mt-4 flex text-sm leading-6 text-gray-600">Click or drag file to this area to upload</div>
       </label>
-
     </div>
-    <div class="container-preview" v-if="files.length">
+    <div class="text-gray-500 text-xs px-5 py-2" >* recommended to upload images with a resolution of 300px x 1200 px</div>
+    </div>
+    
 
+    <div class="container-preview" v-if="files.length">
       <draggable :list="files" group="files" item-key="id" handle=".handle" @change="changeIndex">
         <template #item="{ element: file }">
           <div class="preview-card flex items-center"> <!-- Add "flex" and "items-center" classes here -->
@@ -123,7 +126,7 @@ const changeIndex = () => {
             </div>
             <div class="title cursor-pointer" @click="openEditModal(file)">
               <div>{{ generateName(file) }}</div>
-              <div class="text-xs text-gray-300">{{ get(file, ['link', 'target'], 'https//: -') }}</div>
+              <div class="text-xs text-gray-300">{{ get(file, ['link', 'target']) }}</div>
             </div>
             <div class="flex justify-center items-center">
               <button class="ml-2 text-rose-500" type="button" @click="remove(files.indexOf(file))" title="Remove file">
@@ -147,7 +150,7 @@ const changeIndex = () => {
 
 .dropzone-container {
   height: 208px;
-  width: 30%;
+  width: 100%;
   text-align: center;
   background: rgba(0, 0, 0, 0.02);
   border: 1px dashed #d9d9d9;
