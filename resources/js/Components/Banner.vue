@@ -50,7 +50,7 @@ const getImageUrl = (name: string) => {
 </script>
 
 <template>
-    <div class="w-full aspect-[16/4]">
+    <div class="w-full aspect-[16/4] overflow-hidden">
         <Swiper :spaceBetween="-1" :slidesPerView="1" :centeredSlides="true" :loop="true"
             :autoplay="{
                 delay: data.data.delay,
