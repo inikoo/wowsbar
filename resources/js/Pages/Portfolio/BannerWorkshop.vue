@@ -25,7 +25,7 @@ const defaultSlide = {
   id: 3,
   imageAlt: "Lorem ipsum dolor Basic Tee in sienna",
   imageSrc: "/banner/product-page-03-product-01.jpg",
-  link: { label: 'Browse Promo', target: '#' }
+  link: { label: 'open', target: '' }
 };
 
 const data = ref(props.banner.layout.data.slides.length > 0

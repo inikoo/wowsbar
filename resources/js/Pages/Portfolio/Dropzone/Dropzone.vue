@@ -28,7 +28,7 @@ const onChange = () => {
     if (set && set instanceof File) {
       setData.push({
         file: set,
-        link: { label: "new Img", target: "" },
+        link: { label: "open", target: "" },
         imageAlt: set.name,
         imageSrc: 'img',
         id: uuidv4()
@@ -92,6 +92,10 @@ const changeLink=(file,value)=>{
   props.changeLink(file,value)
 }
 
+const changeIndex=()=>{
+  props.filesChange(files.value)
+}
+
 </script>
 
 <template>
@@ -122,7 +126,7 @@ const changeLink=(file,value)=>{
     </div>
     <div class="container-preview" v-if="files.length">
 
-      <draggable v-model="files" group="files" item-key="id" handle=".handle">
+      <draggable :list="files" group="files" item-key="id" handle=".handle" @change="changeIndex">
   <template #item="{element: file}">
     <div class="preview-card flex items-center"> <!-- Add "flex" and "items-center" classes here -->
       <font-awesome-icon icon="fa fa-align-justify" class="handle p-2.5 text-gray-300"></font-awesome-icon>
