@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, Ref } from 'vue'
 import FooterTab from '@/Components/Footer/FooterTab.vue'
 import { useLocaleStore } from "@/Stores/locale"
 import { useLayoutStore } from "@/Stores/layout"
@@ -20,7 +20,7 @@ const activities: Array<string> = []
 
 const locale = useLocaleStore()
 const layout = useLayoutStore()
-const isTabActive = ref(false)
+const isTabActive: Ref<boolean | string> = ref(false)
 
 </script>
 
