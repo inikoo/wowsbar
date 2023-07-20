@@ -16,7 +16,8 @@ const props = defineProps<{
             delay: number,
             slides: [
                 {
-                    id: number
+                    id: number,
+                    file : File,
                     imageSrc: string,
                     imageAlt: string,
                     link?: {
@@ -28,6 +29,18 @@ const props = defineProps<{
         }
     }
 }>()
+
+const generateThumbnail = (set) => {
+    if (set.file && set.file instanceof File) {
+        let fileSrc = URL.createObjectURL(set.file);
+        setTimeout(() => {
+            URL.revokeObjectURL(fileSrc);
+        }, 1000);
+        return fileSrc;
+    } else {
+        return `@/../art/banner/${set.imageSrc}`;
+    }
+};
 
 </script>
 
@@ -44,7 +57,7 @@ const props = defineProps<{
             :navigation="false" :modules="[Autoplay, Pagination, Navigation]" class="mySwiper"
         >
             <SwiperSlide v-for="slide in $props.data.data.slides" :key="slide.id">
-                <img :src="`@/../art/banner/${slide.imageSrc}`" :alt="slide.imageAlt" srcset="">
+                <img :src="generateThumbnail(slide)" :alt="slide.imageAlt" srcset="">
                 <Link v-if="slide.link" :href="slide.link.target"
                     class="bg-gray-800/40 text-gray-100 border border-gray-50/50 absolute bottom-6 right-11 rounded px-3 py-1 hover:bg-gray-900/60">
                     {{ slide.link.label }}
