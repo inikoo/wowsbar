@@ -39,7 +39,7 @@ const generateThumbnail = (set) => {
         }, 1000);
         return fileSrc;
     } else {
-        return `@/../art/banner/${set.imageSrc}`;
+        return getImageUrl(set.imageSrc);
     }
 };
 
@@ -62,7 +62,7 @@ const getImageUrl = (name: string) => {
             :navigation="false" :modules="[Autoplay, Pagination, Navigation]" class="mySwiper"
         >
             <SwiperSlide v-for="slide in $props.data.data.slides" :key="slide.id">
-                <img :src="getImageUrl(slide.imageSrc)" :alt="slide.imageAlt">
+                <img :src="generateThumbnail(slide)" :alt="slide.imageAlt">
                 <Link v-if="slide.link" :href="slide.link.target"
                     class="bg-gray-800/40 text-gray-100 border border-gray-50/50 absolute bottom-6 right-11 rounded px-3 py-1 hover:bg-gray-900/60">
                     {{ slide.link.label }}
