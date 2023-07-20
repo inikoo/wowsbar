@@ -1,5 +1,6 @@
 <script setup lang="ts">
 // Import Swiper Vue.js components
+import { defineAsyncComponent } from 'vue'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import { Link } from "@inertiajs/vue3"
 import { Autoplay, Pagination, Navigation } from 'swiper/modules'
@@ -42,6 +43,10 @@ const generateThumbnail = (set) => {
     }
 };
 
+const getImageUrl = (name: string) => {
+    return new URL(`@/../../../art/banner/` + name,import.meta.url).href
+}
+
 </script>
 
 <template>
@@ -57,7 +62,7 @@ const generateThumbnail = (set) => {
             :navigation="false" :modules="[Autoplay, Pagination, Navigation]" class="mySwiper"
         >
             <SwiperSlide v-for="slide in $props.data.data.slides" :key="slide.id">
-                <img :src="generateThumbnail(slide)" :alt="slide.imageAlt" srcset="">
+                <img :src="getImageUrl(slide.imageSrc)" :alt="slide.imageAlt">
                 <Link v-if="slide.link" :href="slide.link.target"
                     class="bg-gray-800/40 text-gray-100 border border-gray-50/50 absolute bottom-6 right-11 rounded px-3 py-1 hover:bg-gray-900/60">
                     {{ slide.link.label }}
