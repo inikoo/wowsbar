@@ -7,13 +7,13 @@
 
 namespace App\Actions\UI\Profile;
 
+use App\Actions\Auth\User\UI\SetUserAvatarFromImage;
 use App\Actions\Traits\WithActionUpdate;
 use App\Models\Auth\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\File;
 use Illuminate\Validation\Rules\Password;
 use Lorisleiva\Actions\ActionRequest;
@@ -24,23 +24,18 @@ class UpdateProfile
 
     private bool $asAction = false;
 
-    /**
-     * @throws \Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig
-     * @throws \Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist
-     */
+
     public function handle(User $user, array $modelData, ?UploadedFile $avatar): User
     {
 
-
-
         if ($avatar) {
-            $user->addMedia($avatar)
-                ->preservingOriginal()
-                ->usingFileName(Str::orderedUuid().'.'.$avatar->extension())
-                ->toMediaCollection('profile');
+            SetUserAvatarFromImage::run(
+                user: $user,
+                imagePath: $avatar->getPathName(),
+                originalFilename: $avatar->getClientOriginalName(),
+                extension: $avatar->getClientOriginalExtension()
+            );
         }
-
-
 
         return $this->update($user, $modelData, ['profile', 'settings']);
     }
@@ -51,7 +46,7 @@ class UpdateProfile
         return [
             'password'    => ['sometimes', 'required', app()->isLocal() || app()->environment('testing') ? null : Password::min(8)->uncompromised()],
             'email'       => 'sometimes|required|email|unique:users,email',
-            'about'       => 'sometimes|nullable|string',
+            'about'       => 'sometimes|nullable|string|max:255',
             'language_id' => ['sometimes', 'required', 'exists:central.languages,id'],
             'avatar'      => [
                 'sometimes',
@@ -65,10 +60,7 @@ class UpdateProfile
     }
 
 
-    /**
-     * @throws \Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist
-     * @throws \Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig
-     */
+
     public function asController(ActionRequest $request): User
     {
         $this->fillFromRequest($request);

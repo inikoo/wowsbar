@@ -36,6 +36,7 @@ class ShowProfile
     {
         $this->validateAttributes();
 
+
         return Inertia::render("EditModel", [
             "title"       => __("Profile"),
             "breadcrumbs" => $this->getBreadcrumbs(),
@@ -67,7 +68,7 @@ class ShowProfile
                             "avatar" => [
                                 "type"  => "avatar",
                                 "label" => __("photo"),
-                                "value" => '',
+                                "value" => $user->avatar_id?route('media.show',$user->avatar_id):null,
                             ],
 
                         ],

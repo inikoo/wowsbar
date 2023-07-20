@@ -24,7 +24,7 @@ class LoggedUserResource extends JsonResource
         return [
             'username' => $this->username,
             'email'    => $this->email,
-            'avatar'   => $this->avatar_id
+            'avatar_id'   => $this->avatar_id
         ];
     }
 }

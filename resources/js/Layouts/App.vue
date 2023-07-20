@@ -75,7 +75,7 @@ library.add(
     faAbacus,
     faChevronDown,
     faGlobe,
-    faLanguage, 
+    faLanguage,
     faSearch, faBell
 );
 
@@ -243,8 +243,8 @@ const user = ref(usePage().props.auth.user);
                                 <MenuButton
                                     class="flex max-w-xs items-center rounded-full bg-gray-100 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500">
                                     <span class="sr-only">{{ trans("Open user menu") }}</span>
-                                    <img v-if="user.avatar" class="h-8 w-8 rounded-full"
-                                        :src="route('media.show',user.avatar)"
+                                    <img v-if="user.avatar_id" class="h-8 w-8 rounded-full"
+                                        :src="route('media.show',user.avatar_id)"
                                         alt="" />
                                 </MenuButton>
 
