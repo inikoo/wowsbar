@@ -4,22 +4,18 @@ import FooterTab from '@/Components/Footer/FooterTab.vue'
 import { useLocaleStore } from "@/Stores/locale"
 import { useLayoutStore } from "@/Stores/layout"
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faCircle } from "@/../private/pro-solid-svg-icons"
-import { library } from '@fortawesome/fontawesome-svg-core'
 
-// import { useDatabaseList, useDatabaseObject } from "vuefire"
-// import { getDatabase, ref as dbRef } from "firebase/database"
-// import { initializeApp } from "firebase/app"
-// import serviceAccount from "@/../private/firebase/wowsbar-firebase.json"
-
-library.add(faCircle)
-// const firebaseApp = initializeApp(serviceAccount);
-// const db = getDatabase(firebaseApp)
-// const activities = useDatabaseList(dbRef(db, 'aw'))
-const activities: Array<string> = []
+import { useDatabaseList, useDatabaseObject } from "vuefire"
+import { getDatabase, ref as dbRef } from "firebase/database"
+import { initializeApp } from "firebase/app"
+import serviceAccount from "@/../private/firebase/wowsbar-firebase.json"
 
 const locale = useLocaleStore()
 const layout = useLayoutStore()
+const firebaseApp = initializeApp(serviceAccount);
+const db = getDatabase(firebaseApp)
+const activities = useDatabaseList(dbRef(db, layout.tenant.code))
+
 const isTabActive: Ref<boolean | string> = ref(false)
 
 </script>
@@ -33,8 +29,6 @@ const isTabActive: Ref<boolean | string> = ref(false)
             <!-- Left Section -->
             <div class="pl-4 flex items-center gap-x-1.5 py-1">
                 <img src="@/../art/logo/png/logo-white.png" alt="" class="h-4">
-                <!-- <img src="/art/logo-color-trimmed.png" alt="" class="h-4"> -->
-                <!-- <span class="text-purple-400 font-semibold">aiku</span> -->
             </div>
 
             <!-- Tab Section -->
