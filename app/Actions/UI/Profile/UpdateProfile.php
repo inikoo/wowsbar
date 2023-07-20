@@ -50,7 +50,7 @@ class UpdateProfile
     {
         return [
             'password'    => ['sometimes', 'required', app()->isLocal() || app()->environment('testing') ? null : Password::min(8)->uncompromised()],
-            'email'       => 'sometimes|required|email|unique:App\Models\Auth\GroupUser,email',
+            'email'       => 'sometimes|required|email|unique:users,email',
             'about'       => 'sometimes|nullable|string',
             'language_id' => ['sometimes', 'required', 'exists:central.languages,id'],
             'avatar'      => [
