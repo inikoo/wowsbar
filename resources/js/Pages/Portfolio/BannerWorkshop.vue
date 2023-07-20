@@ -7,8 +7,8 @@ import { Swiper, SwiperSlide } from "swiper/vue";
 import { Link } from "@inertiajs/vue3";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import DropZone from "./Dropzone/Dropzone.vue";
-import PrimaryButton from '@/Components/PrimaryButton.vue'
-import Banner from '@/Components/Banner.vue'
+import PrimaryButton from "@/Components/PrimaryButton.vue";
+import Banner from "@/Components/Banner.vue";
 // Import Swiper styles
 import "swiper/css";
 // import 'swiper/css/pagination';
@@ -20,19 +20,18 @@ const props = defineProps<{
     banner: object;
 }>();
 
-
 const defaultSlide = {
-  id: 3,
-  imageAlt: "Lorem ipsum dolor Basic Tee in sienna",
-  imageSrc: "/banner/product-page-03-product-01.jpg",
-  link: { label: 'open', target: '' }
+    id: 3,
+    imageAlt: "Lorem ipsum dolor Basic Tee in sienna",
+    imageSrc: "/banner/product-page-03-product-01.jpg",
+    link: { label: "open", target: "" },
 };
 
-const data = ref(props.banner.layout.data.slides.length > 0
-  ? [...props.banner.layout.data.slides]
-  : [defaultSlide]
+const data = ref(
+    props.banner.layout.data.slides.length > 0
+        ? [...props.banner.layout.data.slides]
+        : [defaultSlide]
 );
-const dropZone = ref(null);
 
 const filesChange = (value) => {
     data.value = value;
@@ -46,7 +45,10 @@ const generateThumbnail = (file) => {
         }, 1000);
         return fileSrc;
     } else {
-        return file.imageSrc;
+        return new URL(
+            `@/../../../art/banner/` + file.imageSrc,
+            import.meta.url
+        ).href;
     }
 };
 
@@ -55,22 +57,20 @@ const changeLink = (file, value) => {
     if (index !== -1) data.value[index].link = value;
 };
 
-const set =()=>{
-    router.post('website.web-block-type.banner.store', data.value)
-    console.log(data.value)
-}
+const set = () => {
+    router.post("website.web-block-type.banner.store", data.value);
+    console.log(data.value);
+};
 </script>
 
 <template layout="App">
     <Head :title="capitalize(title)" />
     <PageHeading :data="pageHead"></PageHeading>
     <div>
-        <PrimaryButton class='float-right m-2.5' @click="set"
-    >
-        Save Changes
-    </PrimaryButton>
+        <PrimaryButton class="float-right m-2.5" @click="set">
+            Save Changes
+        </PrimaryButton>
     </div>
-   
 
     <div class="p-3">
         <div class="p-2.5" style="background-color: #fafafa">
