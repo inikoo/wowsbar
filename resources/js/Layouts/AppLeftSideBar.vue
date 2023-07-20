@@ -9,18 +9,20 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { Link } from "@inertiajs/vue3"
 import { ref, onMounted, onUnmounted } from 'vue'
 import { router } from '@inertiajs/vue3'
-import { library } from "@fortawesome/fontawesome-svg-core"
-import {
-    faBriefcase,faUsersCog
+import { useAppearanceStore } from "@/Stores/appearance";
 
-} from "@/../private/pro-light-svg-icons"
+// import { library } from "@fortawesome/fontawesome-svg-core"
+// import {
+//     faBriefcase,faUsersCog
+
+// } from "@/../private/pro-light-svg-icons"
 import { useLayoutStore } from "@/Stores/layout.js"
 import { computed } from "vue";
 
-library.add(
-	faBriefcase,faUsersCog
+// library.add(
+// 	faBriefcase,faUsersCog
 
-)
+// )
 
 const layout = useLayoutStore()
 
@@ -54,7 +56,8 @@ const handleKey = (event: any) => {
 </script>
 
 <template>
-	<div class="w-8/12 mt-11 fixed md:border-r md:border-gray-200 bg-white md:flex md:flex-col md:inset-y-0 md:w-10 lg:mt-10 xl:w-56"
+	<div class="w-8/12 mt-11 fixed md:border-r md:border-gray-200 md:flex md:flex-col md:inset-y-0 md:w-10 lg:mt-10 xl:w-56"
+		:class="[useAppearanceStore().darkMode ? 'bg-dark1' : 'bg-light1']"
 		@mouseenter="isHover = true" @mouseleave="isHover = false"
 	>
 		<div class="flex flex-grow flex-col h-full overflow-y-auto custom-hide-scrollbar border-r border-gray-200 pb-4">

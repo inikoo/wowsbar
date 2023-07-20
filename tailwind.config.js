@@ -17,6 +17,10 @@ export default {
             },
             colors: {
                 'regal-pink': '#EDBBBA',
+                'dark1': '#1f2937',
+                'dark2': '#374151',
+                'light1': '#f3f4f6',
+                'light2': '#e5e7eb'
             },
         },
     },

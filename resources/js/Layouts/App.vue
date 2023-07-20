@@ -33,6 +33,8 @@ import Breadcrumbs from "@/Components/Navigation/Breadcrumbs.vue"
 import { loadLanguageAsync, trans } from "laravel-vue-i18n"
 import { Link } from "@inertiajs/vue3"
 import { library } from "@fortawesome/fontawesome-svg-core"
+import { useAppearanceStore } from "@/Stores/appearance";
+
 import {
     faHome,
     faConveyorBeltAlt,
@@ -215,6 +217,8 @@ const user = ref(usePage().props.auth.user);
                         <!-- Avatar Group -->
                         <div class="flex items-center mr-6 space-x-3">
                             <div class="flex">
+                            <div @click="useAppearanceStore().darkMode = !useAppearanceStore().darkMode">Dark mode: {{useAppearanceStore().darkMode}}</div>
+
                                 <!-- Button: Search -->
                                 <button @click="showSearchDialog = !showSearchDialog"
                                         class="h-8 w-8 grid items-center justify-center rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-500">
