@@ -187,14 +187,17 @@ const user = ref(usePage().props.auth.user);
 </script>
 
 <template>
+    <div class="fixed top-0 left-0 w-screen h-screen" :class="[useAppearanceStore().darkMode ? 'bg-dark3' : 'bg-light1']" />
     <div class="relative min-h-full transition-all duration-200 ease-in-out"
         :class="[Object.values(layout.rightSidebar).some(value => value === true) ? 'mr-44' : 'mr-0']"
     >
 
         <!-- TopBar -->
-        <Disclosure as="nav" class="bg-gray-100 fixed top-0 z-20 w-full" v-slot="{ open }">
+        <Disclosure as="nav" class=" fixed top-0 z-20 w-full" v-slot="{ open }"
+        :class="[useAppearanceStore().darkMode ? 'bg-dark2 text-light3' : 'bg-light2 text-dark3']"
+        >
             <div class="px-0">
-                <div class="flex h-11 lg:h-10 flex-shrink-0 border-b border-gray-200 bg-white ">
+                <div class="flex h-11 lg:h-10 flex-shrink-0 border-b border-gray-200 ">
                     <div class="flex flex-1">
                         <div class="flex flex-1 lg:justify-between">
                             <!-- Hamburger -->
@@ -217,7 +220,7 @@ const user = ref(usePage().props.auth.user);
                         <!-- Avatar Group -->
                         <div class="flex items-center mr-6 space-x-3">
                             <div class="flex">
-                            <div @click="useAppearanceStore().darkMode = !useAppearanceStore().darkMode">Dark mode: {{useAppearanceStore().darkMode}}</div>
+                            <div class="cursor-pointer bg-indigo-500 px-2 py-0.5 rounded-md select-none" @click="useAppearanceStore().darkMode = !useAppearanceStore().darkMode">Dark mode: {{useAppearanceStore().darkMode}}</div>
 
                                 <!-- Button: Search -->
                                 <button @click="showSearchDialog = !showSearchDialog"
@@ -329,7 +332,9 @@ const user = ref(usePage().props.auth.user);
         </div>
 
         <!-- Main Content -->
-        <main class="relative flex flex-col pt-16 pb-5 ml-0 md:ml-10 xl:ml-56 ">
+        <main class="relative flex flex-col pt-16 pb-5 ml-0 md:ml-10 xl:ml-56"
+            :class="[useAppearanceStore().darkMode ? 'bg-dark3 text-light4' : 'bg-light1 text-dark4']"
+        >
             <slot />
         </main>
 

@@ -3,6 +3,7 @@ import { ref, Ref } from 'vue'
 import FooterTab from '@/Components/Footer/FooterTab.vue'
 import { useLocaleStore } from "@/Stores/locale"
 import { useLayoutStore } from "@/Stores/layout"
+import { useAppearanceStore } from "@/Stores/appearance";
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 import { useDatabaseList, useDatabaseObject } from "vuefire"
@@ -21,7 +22,9 @@ const isTabActive: Ref<boolean | string> = ref(false)
 </script>
 
 <template>
-    <footer class="z-20 fixed w-screen bg-gray-800 bottom-0 right-0  text-white">
+    <footer class="z-20 fixed w-screen bottom-0 right-0  text-white"
+        :class="[useAppearanceStore().darkMode ? 'bg-light2' : 'bg-dark2']"
+    >
         <!-- Helper: Outer background (close popup purpose) -->
         <div class="fixed z-40 right-0 top-0 bg-transparent w-screen h-screen" @click="isTabActive = !isTabActive"
             :class="[isTabActive ? '' : 'hidden']"></div>
@@ -40,7 +43,7 @@ const isTabActive: Ref<boolean | string> = ref(false)
                 >
                     <div class="text-xs flex items-center gap-x-1">
                         <div class="ring-1 h-2 aspect-square rounded-full" :class="[activities.length > 0 ? 'bg-green-400 ring-green-600' : 'bg-gray-400 ring-gray-600']" />
-                        <span class="text-gray-200 ">Active Users ({{ activities.length }})</span>
+                        <span :class="[useAppearanceStore().darkMode ? 'text-dark3' : 'text-light3']">Active Users ({{ activities.length }})</span>
                     </div>
 
                     <FooterTab @pinTab="() => isTabActive = false" v-if="isTabActive == 'activeUsers'" :tabName="`activeUsers`">
@@ -59,11 +62,12 @@ const isTabActive: Ref<boolean | string> = ref(false)
 
                 <!-- Tab: Language -->
                 <div class="relative h-full flex z-50 select-none justify-center items-center px-8 cursor-pointer"
-                    :class="[isTabActive == 'language' ? 'bg-gray-700' : '']"
+                    :class="[isTabActive == 'language' ? 'bg-gray-700' : '', useAppearanceStore().darkMode ? 'text-dark3' : 'text-light3'] "
                     @click="isTabActive = 'language'"
                 >
-                    <FontAwesomeIcon icon="fal fa-language" class="text-xs mr-1 h-5 text-gray-300"></FontAwesomeIcon>
-                    <div class="h-full font-extralight text-xs flex items-center leading-none text-gray-200">{{ locale.language.code }}</div>
+                    <FontAwesomeIcon icon="fal fa-language" class="text-xs mr-1 h-5 "></FontAwesomeIcon>
+                    <div class="h-full font-extralight text-xs flex items-center leading-none"
+                    >{{ locale.language.code }}</div>
                     <FooterTab @pinTab="() => isTabActive = false" v-if="isTabActive === 'language'" :tabName="`language`">
                         <template #default>
                             <div v-for="(option, index) in locale.languageOptions" :class="[ locale.language.id == index ? 'bg-gray-400 text-gray-100' : 'text-gray-100 hover:bg-gray-500', 'grid py-1.5']"

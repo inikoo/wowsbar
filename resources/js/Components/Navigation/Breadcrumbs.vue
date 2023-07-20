@@ -8,13 +8,15 @@
 import { computed, ref } from "vue";
 import { Link, router } from "@inertiajs/vue3";
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
-import { library } from "@fortawesome/fontawesome-svg-core";
+// import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faChevronRight } from "@/../private/pro-regular-svg-icons";
-import { faSparkles, faArrowFromLeft, faArrowLeft, faArrowRight } from "@/../private/pro-solid-svg-icons";
+// import { faChevronRight } from "@/../private/pro-regular-svg-icons";
+// import { faSparkles, faArrowFromLeft, faArrowLeft, faArrowRight } from "@/../private/pro-solid-svg-icons";
 import { capitalize } from "@/Composables/capitalize"
 
-library.add(faSparkles, faArrowFromLeft, faArrowLeft, faArrowRight,faChevronRight);
+import { useAppearanceStore } from "@/Stores/appearance"
+
+// library.add(faSparkles, faArrowFromLeft, faArrowLeft, faArrowRight,faChevronRight);
 
 const props = defineProps<{
     breadcrumbs: Array<{
@@ -92,7 +94,8 @@ router.on('navigate', (event) => {
 <template>
     <div v-if="displayBreadcrumbs" class="md:pr-10 xl:pr-56">
         <nav
-            class="bg-white py-4 md:py-0 flex text-gray-500 border-b h-6 border-gray-200 text-sm"
+            class="py-4 md:py-0 flex border-b h-6  text-sm"
+            :class="[useAppearanceStore().darkMode ? 'text-light3 border-darklight' : 'text-dark3 border-light3']"
             aria-label="Breadcrumb">
             <!-- Breadcrumb -->
             <ol role="list" class="w-full mx-auto px-4 flex">
