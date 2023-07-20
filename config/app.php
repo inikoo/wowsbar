@@ -1,7 +1,13 @@
 <?php
+/*
+ * Author: Raul Perusquia <raul@inikoo.com>
+ * Created: Wed, 19 Jul 2023 12:03:17 Malaysia Time, Kuala Lumpur, Malaysia
+ * Copyright (c) 2023, Raul A Perusquia Flores
+ */
 
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\ServiceProvider;
+use Matchish\ScoutElasticSearch\ElasticSearchServiceProvider;
 
 return [
 
@@ -16,7 +22,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'wowsbar'),
 
     /*
     |--------------------------------------------------------------------------
@@ -171,7 +177,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\TelescopeServiceProvider::class,
         App\Providers\MacroServiceProvider::class,
-        \Matchish\ScoutElasticSearch\ElasticSearchServiceProvider::class
+        ElasticSearchServiceProvider::class
 
     ])->toArray(),
 
@@ -191,6 +197,6 @@ return [
     ])->toArray(),
 
     'domain'      => env('APP_DOMAIN'),
-
+    'universal_search_index' => env('APP_NAME', 'aiku').(env('APP_ENV') == 'testing' ? '_testing' : '').'_search'
 
 ];
