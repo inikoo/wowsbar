@@ -20,14 +20,22 @@ const props = defineProps<{
     banner: object;
 }>();
 
-console.log(props)
 
-const data = ref(props.banner.layout.data.slides);
+const defaultSlide = {
+  id: 3,
+  imageAlt: "Lorem ipsum dolor Basic Tee in sienna",
+  imageSrc: "/banner/product-page-03-product-01.jpg",
+  link: { label: 'open', target: '' }
+};
+
+const data = ref(props.banner.layout.data.slides.length > 0
+  ? [...props.banner.layout.data.slides]
+  : [defaultSlide]
+);
 const dropZone = ref(null);
 
 const filesChange = (value) => {
     data.value = value;
-    console.log(value);
 };
 
 const generateThumbnail = (file) => {
@@ -43,12 +51,8 @@ const generateThumbnail = (file) => {
 };
 
 const changeLink = (file, value) => {
-    const index = data.value.findIndex(
-        (item) => item.imageAlt === file.imageAlt
-    );
-    if (index !== -1) {
-        data.value[index].link = value;
-    }
+    const index = data.value.findIndex((item) => item.id === file.id);
+    if (index !== -1) data.value[index].link = value;
 };
 
 const set =()=>{

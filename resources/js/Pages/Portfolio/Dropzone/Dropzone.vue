@@ -4,8 +4,10 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faImage } from "@/../private/pro-solid-svg-icons"
 import { faTrash } from "@/../private/pro-light-svg-icons"
 import { library } from "@fortawesome/fontawesome-svg-core";
-import {get} from 'lodash'
+import draggable from "vuedraggable"
+import { get } from 'lodash'
 import Modal from '../Modal/Modal.vue'
+import { v4 as uuidv4 } from 'uuid';
 library.add(faImage, faTrash)
 const props = defineProps<{
   files: Array
@@ -26,9 +28,10 @@ const onChange = () => {
     if (set && set instanceof File) {
       setData.push({
         file: set,
-        link: { label: "set", target: "#" },
+        link: { label: "open", target: "" },
         imageAlt: set.name,
-        imageSrc: ''
+        imageSrc: 'img',
+        id: uuidv4()
       })
     }
   }
@@ -89,6 +92,10 @@ const changeLink=(file,value)=>{
   props.changeLink(file,value)
 }
 
+const changeIndex=()=>{
+  props.filesChange(files.value)
+}
+
 </script>
 
 <template>
@@ -112,31 +119,39 @@ const changeLink=(file,value)=>{
       />
 
       <label for="fileInput" class="file-label">
-      <div style="font-size: 40px;" class="text-orange-600"><font-awesome-icon :icon="['fass', 'image']" /></div>
-        <div>Click or drag file to this area to upload</div>
+      <div style="font-size: 40px;" class="mx-auto h-12 w-12 text-gray-300"><font-awesome-icon :icon="['fass', 'image']" /></div>
+        <div class="mt-4 flex text-sm leading-6 text-gray-600">Click or drag file to this area to upload</div>
       </label>
 
     </div>
     <div class="container-preview" v-if="files.length">
-      <div v-for="file in files" :key="file.name" class="preview-card" >
-        <div class="img" >
-          <img class="preview-img" :src="generateThumbnail(file)" />
-        </div>
-        <div class="title"  @click="openEditModal(file)">
-          <div>{{generateName(file) }}</div>
-          <div  class="text-xs text-gray-300">{{get(file,['link','target'],'https//:....')}}</div>
-        </div>
-        <div class="flex justify-center items-center">
-          <button
-            class="ml-2 text-rose-500"
-            type="button"
-            @click="remove(files.indexOf(file))"
-            title="Remove file"
-          >
-          <font-awesome-icon :icon="['fal', 'trash']" />
-          </button>
-        </div>
+
+      <draggable :list="files" group="files" item-key="id" handle=".handle" @change="changeIndex">
+  <template #item="{element: file}">
+    <div class="preview-card flex items-center"> <!-- Add "flex" and "items-center" classes here -->
+      <font-awesome-icon icon="fa fa-align-justify" class="handle p-2.5 text-gray-300"></font-awesome-icon>
+      <div class="img">
+        <img class="preview-img" :src="generateThumbnail(file)" />
       </div>
+      <div class="title" @click="openEditModal(file)">
+        <div>{{ generateName(file) }}</div>
+        <div class="text-xs text-gray-300">{{ get(file, ['link', 'target'], 'https//: -') }}</div>
+      </div>
+      <div class="flex justify-center items-center">
+        <button
+          class="ml-2 text-rose-500"
+          type="button"
+          @click="remove(files.indexOf(file))"
+          title="Remove file"
+        >
+          <font-awesome-icon :icon="['fal', 'trash']" />
+        </button>
+      </div>
+    </div>
+  </template>
+</draggable>
+
+
     </div>
   </div>
 </template>
@@ -205,5 +220,6 @@ const changeLink=(file,value)=>{
     width: 70%;
     padding: 0px 0px 10px 10px;
 }
+
 
 </style>
