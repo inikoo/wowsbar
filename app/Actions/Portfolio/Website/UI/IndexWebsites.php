@@ -89,7 +89,7 @@ class IndexWebsites extends InertiaAction
             if ($prefix) {
                 $table
                     ->name($prefix)
-                    ->pageName($prefix.'Page');
+                    ->pageName($prefix . 'Page');
             }
 
             foreach ($this->elementGroups as $key => $elementGroup) {
@@ -131,31 +131,31 @@ class IndexWebsites extends InertiaAction
                     $request->route()->getName(),
                     $request->route()->parameters
                 ),
-                'title'       => __('websites'),
-                'pageHead'    => [
-                    'title'        => __('websites'),
-                    'iconRight'    => [
+                'title' => __('websites'),
+                'pageHead' => [
+                    'title' => __('websites'),
+                    'iconRight' => [
                         'title' => __('website'),
-                        'icon'  => 'fal fa-globe'
+                        'icon' => 'fal fa-globe'
                     ],
-                    'actions' => [
-                        $this->canEdit ? [
-                            'type'    => 'button',
-                            'style'   => 'primary',
-                            'tooltip' => __('Create website'),
-                            'label'   => __('new website'),
-                            'route'   => [
-                                'name' => 'portfolio.websites.create',
-                            ]
-                        ] : false,
-
-
-                    ]
                 ],
-                'data'        => WebsiteResource::collection($websites),
+                'data' => WebsiteResource::collection($websites),
 
             ]
-        )->table($this->tableStructure());
+        )->table($this->tableStructure(
+            modelOperations: [
+                'createLink' => [
+                    'route' => [
+                        'name' => 'portfolio.websites.create',
+                        'parameters' => array_values([])
+                    ],
+                    'type' => 'button',
+                    'style' => 'primary',
+                    'tooltip' => __('Create website'),
+                    'label' => __('new website'),
+                ]
+            ]
+        ));
     }
 
     /** @noinspection PhpUnusedParameterInspection */
@@ -164,11 +164,11 @@ class IndexWebsites extends InertiaAction
         $headCrumb = function (array $routeParameters = []) {
             return [
                 [
-                    'type'   => 'simple',
+                    'type' => 'simple',
                     'simple' => [
                         'route' => $routeParameters,
                         'label' => __('websites'),
-                        'icon'  => 'fal fa-bars'
+                        'icon' => 'fal fa-bars'
                     ],
                 ],
             ];
