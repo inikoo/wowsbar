@@ -31,7 +31,7 @@ const isTabActive: Ref<boolean | string> = ref(false)
         <div class="flex justify-between">
             <!-- Left Section -->
             <div class="pl-4 flex items-center gap-x-1.5 py-1">
-                <img src="@/../art/logo/png/logo-white.png" alt="" class="h-4">
+                <img src="@/../art/logo/png/2.png" alt="Wowsbar" class="h-4">
             </div>
 
             <!-- Tab Section -->
