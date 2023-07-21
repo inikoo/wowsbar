@@ -32,10 +32,19 @@ function userRoute(user: User) {
 <template>
     <Table :resource="data" :name="tab" class="mt-5">
         <template #cell(username)="{ item: user }">
-            <Link :href="userRoute(user)">
-                <template v-if="user['username']">{{ user['username'] }}</template>
-                <span v-else class="italic">{{ trans('Not set') }}</span>
-            </Link>
+            <div class="flex">
+                <Link :href="userRoute(user)" class="w-full h-full py-2">
+                    <template v-if="user['username']">{{ user['username'] }}</template>
+                    <span v-else class="italic">{{ trans('Not set') }}</span>
+                </Link>
+            </div>
+        </template>
+
+        <template #cell(avatar)="{ item: user }">
+            <!-- {{ user  }} -->
+            <div class="flex justify-center">
+                <img :src="`/media/${user['avatar']}`" class="w-6 aspect-square rounded-full" :alt="user.contact_name"/>
+            </div>
         </template>
     </Table>
 </template>
