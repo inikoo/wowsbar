@@ -66,16 +66,16 @@ class ShowBanner extends InertiaAction
                         'icon'  => 'fal fa-window-maximize'
                     ],
                     'actions' => [
-                        $this->canEdit ? [
-                            'type'  => 'button',
-                            'style' => 'edit',
-                            'label' => __('settings'),
-                            'icon'  => ["fal", "fa-sliders-h"],
-                            'route' => [
-                                'name'       => preg_replace('/show$/', 'edit', $this->routeName),
-                                'parameters' => array_values($this->originalParameters)
-                            ]
-                        ] : false,
+                        // $this->canEdit ? [
+                        //     'type'  => 'button',
+                        //     'style' => 'edit',
+                        //     'label' => __('settings'),
+                        //     'icon'  => ["fal", "fa-sliders-h"],
+                        //     'route' => [
+                        //         'name'       => preg_replace('/show$/', 'edit', $this->routeName),
+                        //         'parameters' => array_values($this->originalParameters)
+                        //     ]
+                        // ] : false,
                         $this->canEdit ? [
                             'type'  => 'button',
                             'style' => 'edit',
