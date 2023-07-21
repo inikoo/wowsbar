@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // Import Swiper Vue.js components
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import { Link } from "@inertiajs/vue3"
 import { Autoplay, Pagination, Navigation } from 'swiper/modules'
@@ -48,13 +48,39 @@ const getImageUrl = (name: string) => {
     return new URL(`@/../../../art/banner/` + name,import.meta.url).href
 }
 
+const swiperRef = ref()
+const swiperAutoplayPause = ref(false)
+const toggleAutoplay = (swiper: any) => {
+    if (swiperAutoplayPause.value) {
+        swiper.autoplay.start(); // Resume autoplay
+    } else {
+        swiper.autoplay.stop(); // Pause autoplay
+    }
+    swiperAutoplayPause.value = !swiperAutoplayPause.value; // Toggle the autoplay state
+}
+
 </script>
 
 <template>
+    <!-- Button: Previous, Pause/Play, Next -->
+    <div class="flex justify-center items-center gap-x-3 my-3 text-gray-500">
+        <div @click="() => swiperRef.$el.swiper.slidePrev()" class="flex items-center justify-center cursor-pointer w-8 h-fit aspect-square bg-gray-200 rounded-full hover:ring-1 hover:ring-gray-400 active:bg-gray-300" title="Go to previous banner">
+            <FontAwesomeIcon icon='fas fa-chevron-left' class='text-xl' aria-hidden='true' />
+        </div>
+        <div @click="toggleAutoplay(swiperRef.$el.swiper)" class="flex items-center justify-center cursor-pointer w-10 aspect-square bg-gray-200 rounded-full hover:ring-1 hover:ring-gray-400 active:bg-gray-300" title="Pause/resume autoplay">
+            <FontAwesomeIcon v-if="swiperAutoplayPause" icon="fas fa-play" class='text-xl' aria-hidden='true' />
+            <FontAwesomeIcon v-if="!swiperAutoplayPause" icon="fas fa-pause" class='text-xl' aria-hidden='true' />
+        </div>
+        <div @click="() => swiperRef.$el.swiper.slideNext()" class="flex items-center justify-center cursor-pointer w-8 h-fit aspect-square bg-gray-200 rounded-full hover:ring-1 hover:ring-gray-400 active:bg-gray-300" title="Go to next banner">
+            <FontAwesomeIcon icon='fas fa-chevron-right' class='text-xl' aria-hidden='true' />
+        </div>
+    </div>
+
+    <!-- The Banner -->
     <div class="w-full aspect-[16/4] overflow-hidden">
-        <Swiper :spaceBetween="-1" :slidesPerView="1" :centeredSlides="true" :loop="true"
+        <Swiper ref="swiperRef" :spaceBetween="-1" :slidesPerView="1" :centeredSlides="true" :loop="true"
             :autoplay="{
-                delay: 1000000,
+                delay: 10,
                 disableOnInteraction: false,
             }"
             :pagination="{
