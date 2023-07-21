@@ -11,9 +11,9 @@
                     "imageSrc": "incentives-07-hero.jpg",
                     "imageAlt": "Front of men's Basic Tee in sienna",
                     "text": {
-                        "position": "bottomright",
+                        "position": "bottomRight",
                         "title": "Welcome to the jungle",
-                        "subtitle": "Jungle is the best place to go and healing with your family",
+                        "subtitle": "Jungle is the best place to go and healing with your family"
                     }
                 },
                 {
@@ -21,9 +21,9 @@
                     "imageSrc": "product-page-01-featured-product-shot.jpg",
                     "imageAlt": "Lorem ipsum dolor sit amet consectetur.",
                     "text": {
-                        "position": "topleft",
+                        "position": "topLeft",
                         "title": "Welcome to the jungle",
-                        "subtitle": "Jungle is the best place to go and healing with your family",
+                        "subtitle": "Jungle is the best place to go and healing with your family"
                     },
                     "footer": {
                         "position": "right",
@@ -40,7 +40,7 @@
                     },
                     "text": {
                         "title": "Welcome to the jungle",
-                        "subtitle": "Jungle is the best place to go and healing with your family",
+                        "subtitle": "Jungle is the best place to go and healing with your family"
                     }
                 },
                 {
