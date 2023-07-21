@@ -41,8 +41,8 @@ const isTabActive: Ref<boolean | string> = ref(false)
                     :class="[isTabActive == 'activeUsers' ? 'bg-gray-700' : '']"
                     @click="isTabActive == 'activeUsers' ? isTabActive = !isTabActive : isTabActive = 'activeUsers'"
                 >
-                    <div class="text-xs flex items-center gap-x-1">
-                        <div class="ring-1 h-2 aspect-square rounded-full" :class="[activities.length > 0 ? 'bg-green-400 ring-green-600' : 'bg-gray-400 ring-gray-600']" />
+                    <div class="relative text-xs flex items-center gap-x-1">
+                        <div class="animate-pulse ring-1 h-2 aspect-square rounded-full" :class="[activities.length > 0 ? 'bg-green-400 ring-green-600' : 'bg-gray-400 ring-gray-600']" />
                         <span :class="[useAppearanceStore().darkMode ? 'text-dark3' : 'text-light3']">Active Users ({{ activities.length }})</span>
                     </div>
 
@@ -65,7 +65,7 @@ const isTabActive: Ref<boolean | string> = ref(false)
                     :class="[isTabActive == 'language' ? 'bg-gray-700' : '', useAppearanceStore().darkMode ? 'text-dark3' : 'text-light3'] "
                     @click="isTabActive = 'language'"
                 >
-                    <FontAwesomeIcon icon="fal fa-language" class="text-xs mr-1 h-5 "></FontAwesomeIcon>
+                    <FontAwesomeIcon icon="fal fa-language" class="text-xs mr-1 h-5 " />
                     <div class="h-full font-extralight text-xs flex items-center leading-none"
                     >{{ locale.language.code }}</div>
                     <FooterTab @pinTab="() => isTabActive = false" v-if="isTabActive === 'language'" :tabName="`language`">
