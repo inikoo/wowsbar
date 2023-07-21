@@ -103,7 +103,7 @@ class ShowProfile
                         "fields" => [
                             "colorMode" => [
                                 "type"  => "colorMode",
-                                "label" => __("turn dark mode"),
+                                "label" => __("Dark/Light mode"),
                                 "value" => "",
                             ],
                             "theme"     => [
