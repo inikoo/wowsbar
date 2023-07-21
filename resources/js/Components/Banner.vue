@@ -4,6 +4,7 @@ import { ref } from 'vue'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import { Link } from "@inertiajs/vue3"
 import { Autoplay, Pagination, Navigation } from 'swiper/modules'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 // Import Swiper styles
 import 'swiper/css'
@@ -54,11 +55,8 @@ const dummyAbc = ref({
                         "id": 1,
                         "imageSrc": "incentives-07-hero.jpg",
                         "imageAlt": "Front of men's Basic Tee in sienna",
-                        "link": {
-                            "label": "Open",
-                            "target": "#"
-                        },
                         "text" : {
+                            "position": "bottomright",
                             "title": "Welcome to the jungle",
                             "subtitle": "Jungle is the best place to go and healing with your family",
                         }
@@ -93,7 +91,12 @@ const dummyAbc = ref({
                     {
                         "id": 4,
                         "imageSrc": "product-page-05-product-01.jpg",
-                        "imageAlt": "Continuous infinite slider"
+                        "imageAlt": "Continuous infinite slider",
+                        "link": {
+                            "label": "Open",
+                            "target": "#"
+                        },
+                        "bannerLink": "google.com"
                     }
                 ]
         })
@@ -114,11 +117,13 @@ const dummyAbc = ref({
         >
             <SwiperSlide v-for="slide in dummyAbc.slides" :key="slide.id">
                 <img :src="generateThumbnail(slide)" :alt="slide.imageAlt">
+                <FontAwesomeIcon v-if="slide.bannerLink" icon='far fa-external-link' class='text-gray-100/40 text-xl absolute top-2 right-2' aria-hidden='true' />
+                <Link v-if="slide.bannerLink" :href="slide.bannerLink" class="absolute bg-transparent w-full h-full" />
                 <div class="absolute space-y-2" :class="{
-                    'top-5 left-5 text-left': slide.text?.position == 'topleft',
-                    'top-5 right-5 text-right': slide.text?.position == 'topright',
-                    'bottom-5 left-5 text-left': slide.text?.position == 'bottomleft',
-                    'bottom-5 right-5 text-right': slide.text?.position == 'bottomright',
+                    'top-5 left-8 text-left': slide.text?.position == 'topleft',
+                    'top-5 right-8 text-right': slide.text?.position == 'topright',
+                    'bottom-5 left-8 text-left': slide.text?.position == 'bottomleft',
+                    'bottom-5 right-8 text-right': slide.text?.position == 'bottomright',
                 }"
                 >
                     <div class="text-gray-100 drop-shadow-md text-5xl font-bold">{{ slide.text?.title }}</div>
