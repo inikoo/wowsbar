@@ -48,59 +48,6 @@ const getImageUrl = (name: string) => {
     return new URL(`@/../../../art/banner/` + name,import.meta.url).href
 }
 
-const dummyAbc = ref({
-                "delay": 5000,
-                "slides": [
-                    {
-                        "id": 1,
-                        "imageSrc": "incentives-07-hero.jpg",
-                        "imageAlt": "Front of men's Basic Tee in sienna",
-                        "text" : {
-                            "position": "bottomright",
-                            "title": "Welcome to the jungle",
-                            "subtitle": "Jungle is the best place to go and healing with your family",
-                        }
-                    },
-                    {
-                        "id": 2,
-                        "imageSrc": "product-page-01-featured-product-shot.jpg",
-                        "imageAlt": "Lorem ipsum dolor sit amet consectetur.",
-                        "text" : {
-                            "position": "topleft",
-                            "title": "Welcome to the jungle",
-                            "subtitle": "Jungle is the best place to go and healing with your family",
-                        },
-                        "footer": {
-                            "position": "right",
-                            "label": "The banner officially disclaimed by XYZ Company."
-                        }
-                    },
-                    {
-                        "id": 3,
-                        "imageSrc": "product-page-03-product-01.jpg",
-                        "imageAlt": "Lorem ipsum dolor Basic Tee in sienna",
-                        "link": {
-                            "label": "Browse Promo",
-                            "target": "#"
-                        },
-                        "text" : {
-                            "title": "Welcome to the jungle",
-                            "subtitle": "Jungle is the best place to go and healing with your family",
-                        }
-                    },
-                    {
-                        "id": 4,
-                        "imageSrc": "product-page-05-product-01.jpg",
-                        "imageAlt": "Continuous infinite slider",
-                        "link": {
-                            "label": "Open",
-                            "target": "#"
-                        },
-                        "bannerLink": "google.com"
-                    }
-                ]
-        })
-
 </script>
 
 <template>
@@ -115,7 +62,7 @@ const dummyAbc = ref({
             }"
             :navigation="false" :modules="[Autoplay, Pagination, Navigation]" class="mySwiper"
         >
-            <SwiperSlide v-for="slide in dummyAbc.slides" :key="slide.id">
+            <SwiperSlide v-for="slide in $props.data.data.slides" :key="slide.id">
                 <img :src="generateThumbnail(slide)" :alt="slide.imageAlt">
                 <FontAwesomeIcon v-if="slide.bannerLink" icon='far fa-external-link' class='text-gray-100/40 text-xl absolute top-2 right-2' aria-hidden='true' />
                 <Link v-if="slide.bannerLink" :href="slide.bannerLink" class="absolute bg-transparent w-full h-full" />
