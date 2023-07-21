@@ -3,16 +3,10 @@ import { Head, router } from "@inertiajs/vue3";
 import { ref } from "vue";
 import PageHeading from "@/Components/Headings/PageHeading.vue";
 import { capitalize } from "@/Composables/capitalize";
-import { Swiper, SwiperSlide } from "swiper/vue";
-import { Link } from "@inertiajs/vue3";
-import { Autoplay, Pagination, Navigation } from "swiper/modules";
-import DropZone from "./Dropzone/Dropzone.vue";
+import DropZone from "./WorkshopComponents/Dropzone/Dropzone.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import Banner from "@/Components/Banner.vue";
-// Import Swiper styles
-import "swiper/css";
-// import 'swiper/css/pagination';
-import "swiper/css/navigation";
+
 
 const props = defineProps<{
     title: string;
@@ -37,20 +31,6 @@ const filesChange = (value) => {
     data.value = value;
 };
 
-const generateThumbnail = (file) => {
-    if (file.file && file.file instanceof File) {
-        let fileSrc = URL.createObjectURL(file.file);
-        setTimeout(() => {
-            URL.revokeObjectURL(fileSrc);
-        }, 1000);
-        return fileSrc;
-    } else {
-        return new URL(
-            `@/../../../art/banner/` + file.imageSrc,
-            import.meta.url
-        ).href;
-    }
-};
 
 const changeLink = (file, value) => {
     const index = data.value.findIndex((item) => item.id === file.id);
@@ -73,7 +53,7 @@ const set = () => {
     </div>
    
     <div class="p-3">
-        <div class="p-2.5" style="background-color: #fafafa">
+        <div class="p-2.5">
             <Banner :data="{ data: { slides: [...data], delay: 2500 } }" />
             <div class="m-2.5">
                 <DropZone
@@ -85,25 +65,3 @@ const set = () => {
         </div>
     </div>
 </template>
-
-<style lang="scss">
-.swiper {
-    @apply w-full h-full;
-}
-
-.swiper-slide {
-    @apply bg-white;
-    text-align: center;
-    font-size: 18px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid;
-}
-
-.swiper-slide img {
-    @apply w-full h-full;
-    display: block;
-    object-fit: cover;
-}
-</style>
