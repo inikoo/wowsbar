@@ -18,14 +18,24 @@ const props = defineProps<{
             delay: number,
             slides: [
                 {
-                    id: number,
-                    file : File,
-                    imageSrc: string,
-                    imageAlt: string,
+                    id: number
+                    file : File
+                    imageSrc: string
+                    imageAlt: string
                     link?: {
-                        label: string,
+                        label: string
                         target: string
                     }
+                    text: {
+                        position: string
+                        title: string
+                        subtitle: string
+                    }
+                    footer: {
+                        position: string
+                        label: string
+                    }
+                    bannerLink: string
                 }
             ]
         }
@@ -80,7 +90,7 @@ const toggleAutoplay = (swiper: any) => {
     <div class="w-full aspect-[16/4] overflow-hidden">
         <Swiper ref="swiperRef" :spaceBetween="-1" :slidesPerView="1" :centeredSlides="true" :loop="true"
             :autoplay="{
-                delay: 10,
+                delay: $props.data.data.delay,
                 disableOnInteraction: false,
             }"
             :pagination="{
