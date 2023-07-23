@@ -90,9 +90,8 @@ formFields['_method'] = 'patch';
 const form = useForm(formFields);
 form['fieldType'] = 'edit';
 
-const routeUrl=  route(updateRoute.name, updateRoute.parameters);
 function submit() {
-    form.post(routeUrl,{caca:'xxx'})
+    form.post(route(updateRoute.name, updateRoute.parameters))
 }
 
 </script>

@@ -1,7 +1,7 @@
 <script setup>
 import { TransitionRoot, TransitionChild, Dialog, DialogPanel, DialogTitle } from '@headlessui/vue'
 import { ref, watch } from 'vue'
-import Banner from "@/Components/Banner.vue";
+import Banner from "@/Components/Slider/Banner.vue";
 import FieldForm from '@/Components/Forms/FieldForm.vue';
 import Input from '@/Components/Forms/Fields/Input.vue'
 import Select from '@/Components/Forms/Fields/Select.vue'
@@ -12,7 +12,7 @@ import Address from "@/Components/Forms/Fields/Address.vue"
 import Radio from '@/Components/Forms/Fields/Radio.vue'
 import Country from "@/Components/Forms/Fields/Country.vue"
 import Currency from "@/Components/Forms/Fields/Currency.vue"
-import { capitalize } from "@/Composables/capitalize"
+import { capitalize } from "@/Composables/capitalize.js"
 import InputWithAddOn from '@/Components/Forms/Fields/InputWithAddOn.vue'
 import {Head, useForm} from '@inertiajs/vue3'
 
@@ -47,7 +47,7 @@ const getComponent = (componentName) => {
         'country': Country,
         'currency': Currency,
     };
-    return components[componentName] 
+    return components[componentName]
 };
 
 
@@ -137,7 +137,7 @@ const form = useForm(fields);
               <div>
                 <Banner :data="{ data: { slides: [{...dataSet}] } }" />
               </div>
-            
+
               <div class="shadow p-2.5 my-2.5">
                 <div class="divide-y divide-gray-200 lg:grid grid-flow-col lg:grid-cols-12 lg:divide-y-0 lg:divide-x">
 
@@ -167,7 +167,7 @@ const form = useForm(fields);
                   <!-- Content of forms -->
                   <div class="px-4 sm:px-6 md:px-4 col-span-9">
                     <div class="divide-y divide-grey-200 flex flex-col">
-                    
+
                       <div class="mt-2 pt-4 sm:pt-5">
                           <div v-for="(fieldData, fieldName, index ) in blueprint[current].fields" :key="index" class="mt-1 ">
                               <dl class="divide-y divide-green-200  ">

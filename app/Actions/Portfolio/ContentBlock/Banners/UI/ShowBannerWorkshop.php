@@ -33,6 +33,7 @@ class ShowBannerWorkshop extends InertiaAction
         return $banner;
     }
 
+    /** @noinspection PhpUnusedParameterInspection */
     public function inWebsite(Website $website, ContentBlock $banner, ActionRequest $request): ContentBlock
     {
         $this->initialisation($request);
@@ -81,7 +82,11 @@ class ShowBannerWorkshop extends InertiaAction
                         ]
                     ],
                 ],
-                'banner'=> $banner
+                'banner'=> $banner,
+                'updateRoute' => [
+                    'name'       => 'models.content-block.update',
+                    'parameters' => $banner->slug
+                ],
 
 
             ]

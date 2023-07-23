@@ -8,15 +8,15 @@
 import { computed, ref } from "vue";
 import { Link, router } from "@inertiajs/vue3";
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
-// import { library } from "@fortawesome/fontawesome-svg-core";
+import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-// import { faChevronRight } from "@/../private/pro-regular-svg-icons";
-// import { faSparkles, faArrowFromLeft, faArrowLeft, faArrowRight } from "@/../private/pro-solid-svg-icons";
+import { faChevronRight } from "@/../private/pro-regular-svg-icons";
+import { faSparkles, faArrowFromLeft, faArrowLeft, faArrowRight } from "@/../private/pro-solid-svg-icons";
 import { capitalize } from "@/Composables/capitalize"
 
 import { useAppearanceStore } from "@/Stores/appearance"
 
-// library.add(faSparkles, faArrowFromLeft, faArrowLeft, faArrowRight,faChevronRight);
+library.add(faSparkles, faArrowFromLeft, faArrowLeft, faArrowRight,faChevronRight);
 
 const props = defineProps<{
     breadcrumbs: Array<{

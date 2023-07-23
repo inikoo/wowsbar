@@ -5,16 +5,10 @@
   -->
 
 <script setup lang="ts">
-import { Head } from '@inertiajs/vue3';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import PageHeading from '@/Components/Headings/PageHeading.vue';
-import { computed, ref } from "vue";
-import { useTabChange } from "@/Composables/tab-change";
-import ModelDetails from "@/Pages/ModelDetails.vue";
-import Tabs from "@/Components/Navigation/Tabs.vue";
-import Banner from "@/Components/Banner.vue";
-import { capitalize } from "@/Composables/capitalize"
-import TableHistories from "@/Pages/Tables/TableHistories.vue";
+
+import Slider from "@/Components/Slider/Slider.vue";
+
 
 import { faWindowMaximize, faGlobe } from "@/../private/pro-light-svg-icons"
 
@@ -47,6 +41,6 @@ const props = defineProps<{
 
 
 <template>
-    <Banner :data="data.layout" />
+    <Slider :layout="data.layout" />
 </template>
 

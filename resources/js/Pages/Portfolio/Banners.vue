@@ -7,10 +7,10 @@
 <script setup lang="ts">
 import {Head} from '@inertiajs/vue3';
 import PageHeading from '@/Components/Headings/PageHeading.vue';
-import TableWebsites from "@/Pages/Tables/TableWebsites.vue";
 import { capitalize } from "@/Composables/capitalize"
 import {library} from "@fortawesome/fontawesome-svg-core";
 import {faGlobe} from "@/../private/pro-light-svg-icons"
+import TableBanners from "@/Pages/Tables/TableBanners.vue";
 library.add(faGlobe)
 
 const props = defineProps <{
@@ -23,6 +23,6 @@ const props = defineProps <{
 <template layout="App">
     <Head :title="capitalize(title)"/>
     <PageHeading :data="pageHead"></PageHeading>
-    <TableWebsites :data="data" />
+    <TableBanners :data="data" />
 </template>
 

@@ -7,13 +7,13 @@
   <script setup lang="ts">
   import {Head, useForm} from '@inertiajs/vue3'
   import { jumpToElement } from "@/Composables/jumpToElement"
-  
+
   import PageHeading from '@/Components/Headings/PageHeading.vue'
   import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
-  import { faExclamationCircle, faCheckCircle, faAsterisk } from "@/../private/pro-solid-svg-icons"
+  import { faExclamationCircle, faCheckCircle, faAsterisk } from "../../../../private/pro-solid-svg-icons"
   import { library } from "@fortawesome/fontawesome-svg-core"
   library.add(faExclamationCircle, faAsterisk, faCheckCircle)
-  
+
   const props = defineProps<{
       title: string,
       pageHead: object,
@@ -25,8 +25,8 @@
           };
       }
   }>()
-  
-  
+
+
   import Input from '@/Components/Forms/Fields/Input.vue'
   import Select from '@/Components/Forms/Fields/Select.vue'
   import Phone from '@/Components/Forms/Fields/Phone.vue'
@@ -38,8 +38,8 @@
   import Currency from "@/Components/Forms/Fields/Currency.vue"
   import { capitalize } from "@/Composables/capitalize"
   import InputWithAddOn from '@/Components/Forms/Fields/InputWithAddOn.vue'
-  
-  
+
+
   const getComponent = (componentName: string) => {
       const components = {
           'input': Input,
@@ -53,34 +53,34 @@
           'currency': Currency,
       };
       return components[componentName] ?? null;
-  
+
   };
-  
+
   let fields = {};
   Object.entries(props.formData.blueprint).forEach(([, val]) => {
       Object.entries(val['fields']).forEach(([fieldName, fieldData]) => {
           fields[fieldName] = fieldData['value'];
       });
   });
-  
+
   const form = useForm(fields);
-  
+
   const handleFormSubmit = () => {
       form.post(route(
           props.formData.route.name,
           props.formData.route.arguments
   ));
   };
-  
+
   const current = null
   </script>
-  
+
   <template layout="App">
       <Head :title="capitalize(title)"/>
       <PageHeading :data="pageHead"></PageHeading>
       <div class="rounded-lg bg-white shadow">
           <div class="divide-y divide-gray-200 lg:grid grid-flow-col lg:grid-cols-12 lg:divide-y-0 lg:divide-x">
-  
+
               <!-- Left Tab: Navigation -->
               <aside class="py-0 lg:col-span-3 lg:h-full">
                   <div class="sticky top-16">
@@ -105,7 +105,7 @@
                       </div>
                   </div>
               </aside>
-  
+
               <!-- Main form -->
               <form class="px-4 sm:px-6 md:px-10 col-span-9 gap-y-8 pb-8 divide-y divide-blue-200 " @submit.prevent="handleFormSubmit">
                   <div v-for="(sectionData, sectionIdx ) in formData['blueprint']" :key="sectionIdx" class="relative py-4">
@@ -119,7 +119,7 @@
                               {{ sectionData.subtitle }}
                           </p>
                       </div>
-  
+
                       <div class="mt-2 pt-4 sm:pt-5">
                           <div v-for="(fieldData, fieldName, index ) in sectionData.fields" :key="index" class="mt-1 ">
                               <dl class="divide-y divide-green-200  ">
@@ -152,19 +152,18 @@
                           </div>
                       </div>
                   </div>
-  
+
                   <div class="pt-5 border-t-2 border-orange-500">
                       <div class="flex justify-end">
-  
+
                           <button type="submit" :disabled="form.processing"
                                   class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500">
                               {{ trans('Save') }}
                           </button>
                       </div>
                   </div>
-  
+
               </form>
   </div></div>
   </template>
-  
-  
+

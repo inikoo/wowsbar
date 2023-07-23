@@ -2,14 +2,36 @@
     "slug": "banner",
     "name": "Banner",
     "blueprint": {
-        "parameters": {},
-        "data": {
             "delay": 5000,
+            "common": {
+                "corners": {
+                    "topLeft": null,
+                    "topRight": null,
+                    "bottomLeft": {
+                        "type": "slideControls"
+                    },
+                    "bottomRight": null
+                },
+                "centralStage": {
+                    "title": null,
+                    "subtitle": null,
+                    "text": null
+                }
+            },
             "slides": [
                 {
-                    "id": 1,
                     "imageSrc": "incentives-07-hero.jpg",
                     "imageAlt": "Front of men's Basic Tee in sienna",
+                    "corners": {
+                        "bottomRight": {
+                            "type": "linkButton",
+                            "data": {
+                                "label": "Browse Promo",
+                                "target": "#"
+                            }
+                        }
+                    },
+
                     "text": {
                         "position": "bottomRight",
                         "title": "Welcome to the jungle",
@@ -17,9 +39,9 @@
                     }
                 },
                 {
-                    "id": 2,
                     "imageSrc": "product-page-01-featured-product-shot.jpg",
                     "imageAlt": "Lorem ipsum dolor sit amet consectetur.",
+                    "corners": {},
                     "text": {
                         "position": "topLeft",
                         "title": "Welcome to the jungle",
@@ -31,9 +53,9 @@
                     }
                 },
                 {
-                    "id": 3,
                     "imageSrc": "product-page-03-product-01.jpg",
                     "imageAlt": "Lorem ipsum dolor Basic Tee in sienna",
+                    "corners": {},
                     "link": {
                         "label": "Browse Promo",
                         "target": "#"
@@ -47,6 +69,7 @@
                     "id": 4,
                     "imageSrc": "product-page-05-product-01.jpg",
                     "imageAlt": "Continuous infinite slider",
+                    "corners": {},
                     "link": {
                         "label": "Open",
                         "target": "#"
@@ -54,7 +77,7 @@
                     "bannerLink": "google.com"
                 }
             ]
-        }
+
     },
     "scope": "webpage",
     "webBlocks": [

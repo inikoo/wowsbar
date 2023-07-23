@@ -76,7 +76,8 @@ library.add(
     faChevronDown,
     faGlobe,
     faLanguage,
-    faSearch, faBell
+    faSearch,
+    faBell
 );
 
 const initialiseApp = () => {
