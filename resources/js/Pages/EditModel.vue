@@ -77,15 +77,13 @@ const current = ref(0)
                     <ul>
                         <li v-for="(item, key) in formData['blueprint']" @click="current = key" :class="[
                             key == current
-                                ? 'bg-orange-50 border-orange-500 text-orange-700 hover:bg-orange-50 hover:text-orange-700'
-                                : 'border-transparent text-gray-900 hover:bg-gray-50 hover:text-gray-900',
+                                ? 'bg-gray-200 border-orange-500 text-gray-800 hover:bg-gray-200'
+                                : 'border-transparent text-gray-500 hover:bg-gray-50 hover:text-gray-700',
                             'cursor-pointer group border-l-4 px-3 py-2 flex items-center text-sm font-medium',
                         ]" :aria-current="key === current ? 'page' : undefined">
                             <FontAwesomeIcon v-if="item.icon" aria-hidden="true" :class="[
-                                key === current
-                                    ? 'text-orange-500 group-hover:text-orange-500'
-                                    : 'text-gray-400 group-hover:text-gray-500',
-                                'flex-shrink-0 -ml-1 mr-3 h-6 w-6',
+                                key === current ? 'text-gray-600' : 'text-gray-400 group-hover:text-gray-600',
+                                'flex-shrink-0 -ml-1 mr-3 h-5 w-5',
                             ]" :icon="item.icon" />
 
                             <span class="capitalize truncate">{{ item.title }}</span>

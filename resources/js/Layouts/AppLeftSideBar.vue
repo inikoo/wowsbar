@@ -68,8 +68,8 @@ const handleKey = (event: any) => {
                         :href="route(item.route)"
                         :class="[
 							itemKey === layout.currentModule
-								? useAppearanceStore().darkMode ? 'border-light1 bg-dark4 text-light3' : 'border-dark3 bg-light3 text-dark3'
-								: useAppearanceStore().darkMode ? 'border-transparent hover:bg-dark3 text-light2' : 'border-transparent hover:bg-light text-dark3',
+								? useAppearanceStore().darkMode ? 'border-light1 bg-dark4 text-light3' : 'border-orange-500 bg-light3 text-dark3'
+								: useAppearanceStore().darkMode ? 'border-transparent hover:bg-dark3 text-light2' : 'border-transparent hover:bg-white/50 text-dark3',
 							'group flex items-center border-l-4 text-sm font-medium px-0 xl:px-3 py-2',
 						]"
                         :aria-current="itemKey === layout.currentModule ? 'page' : undefined"
@@ -86,7 +86,7 @@ const handleKey = (event: any) => {
                                 aria-hidden="true"
                                 :class="[
 									itemKey === layout.currentModule
-										? useAppearanceStore().darkMode ? 'text-light-1' : 'text-orange-500'
+										? useAppearanceStore().darkMode ? 'text-light-1' : 'text-gray-400'
 										: useAppearanceStore().darkMode ? 'text-light4 group-hover:text-light2' : 'text-gray-400 group-hover:text-gray-600',
 									'ml-2 mr-3 flex-shrink-0 h-4 w-4',
 								]"
