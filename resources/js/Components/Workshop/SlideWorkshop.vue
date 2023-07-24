@@ -111,7 +111,7 @@ const form = useForm(fields);
                 <ul>
                     <li v-for="(item, key) in blueprint" @click="current = key" :class="[
                 key == current
-                  ? 'bg-orange-50 border-orange-500 text-orange-700 hover:bg-orange-50 hover:text-orange-700'
+                  ? 'bg-gray-100 border-orange-500 text-orange-700 hover:bg-gray-100 hover:text-orange-700'
                   : 'border-transparent text-gray-900 hover:bg-gray-50 hover:text-gray-900',
                 'cursor-pointer group border-l-4 px-3 py-2 flex items-center text-sm font-medium',
               ]" :aria-current="key === current ? 'page' : undefined">
