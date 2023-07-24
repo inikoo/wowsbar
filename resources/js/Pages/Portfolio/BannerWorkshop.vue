@@ -36,7 +36,7 @@ const changeLink = (file, value) => {
 
 <template layout="App">
     <Head :title="capitalize(title)" />
-    <PageHeading :data="pageHead"></PageHeading>
+    <PageHeading :data="pageHead" :dataToSubmit="data"></PageHeading>
 
     <Slider :layout="data" />
     <SlidesWorkshop class="clear-both"
