@@ -24,6 +24,7 @@ const props = defineProps<{
                     imageSrc: string
                     imageAlt: string
                     link?: {
+                        visibility: boolean
                         label: string
                         target: string
                     }
@@ -32,11 +33,11 @@ const props = defineProps<{
                         title: string
                         subtitle: string
                     }
+                    bannerLink?: string
                     footer: {
                         position: string
                         label: string
                     }
-                    bannerLink: string
                 }
             ]
         }
@@ -115,13 +116,13 @@ const filteredSlides = computed(() => props.data.data.slides.filter(slide => sli
                     <div class="text-gray-100 drop-shadow-md text-5xl font-bold">{{ slide.text?.title }}</div>
                     <div class="text-gray-300 drop-shadow text-lg italic tracking-widest">{{ slide.text?.subtitle }}</div>
                 </div>
-                <div v-if="slide.footer?.label" class="absolute text-gray-400 text-xs bottom-5"
+                <div v-if="slide.footer?.label.length > 0" class="absolute text-gray-400 text-xs bottom-5"
                     :class="{'left-5': slide.footer?.position == 'left', 'right-5': slide.footer?.position == 'right'}">
                     {{ slide.footer.label }}
                 </div>
-                <Link v-if="slide.link" :href="slide.link.target"
+                <Link v-if="slide.link && slide.link.visibility" :href="slide.link.target"
                     class="bg-gray-800/40 text-gray-100 border border-gray-50/50 absolute bottom-6 right-11 rounded px-3 py-1 hover:bg-gray-900/60">
-                    {{ slide.link.label }}
+                    {{ slide.link.label.length == 0 ? 'Open' : slide.link.label }}
                 </Link>
             </SwiperSlide>
         </Swiper>

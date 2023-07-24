@@ -11,25 +11,38 @@
                     "visibility": true,
                     "imageSrc": "incentives-07-hero.jpg",
                     "imageAlt": "Front of men's Basic Tee in sienna",
+                    "link": {
+                        "visibility": true,
+                        "label": "",
+                        "target": "#"
+                    },
                     "text": {
                         "position": "bottomRight",
                         "title": "Welcome to the jungle",
                         "subtitle": "Jungle is the best place to go and healing with your family"
-                    }
+                    },
+                    "bannerLink": null,
+                    "footer": null
                 },
                 {
                     "id": 2,
                     "visibility": true,
                     "imageSrc": "product-page-01-featured-product-shot.jpg",
                     "imageAlt": "Lorem ipsum dolor sit amet consectetur.",
+                    "link": {
+                        "visibility": false,
+                        "label": "Go to jungle",
+                        "target": "#"
+                    },
                     "text": {
                         "position": "topLeft",
                         "title": "Welcome to the jungle",
                         "subtitle": "Jungle is the best place to go and healing with your family"
                     },
+                    "bannerLink": null,
                     "footer": {
                         "position": "right",
-                        "label": "The banner officially disclaimed by XYZ Company."
+                        "label": ""
                     }
                 },
                 {
@@ -38,13 +51,17 @@
                     "imageSrc": "product-page-03-product-01.jpg",
                     "imageAlt": "Lorem ipsum dolor Basic Tee in sienna",
                     "link": {
+                        "visibility": true,
                         "label": "Browse Promo",
                         "target": "#"
                     },
                     "text": {
+                        "position": "center",
                         "title": "Welcome to the jungle",
                         "subtitle": "Jungle is the best place to go and healing with your family"
-                    }
+                    },
+                    "bannerLink": "google.com",
+                    "footer": null
                 },
                 {
                     "id": 4,
@@ -52,10 +69,16 @@
                     "imageSrc": "product-page-05-product-01.jpg",
                     "imageAlt": "Continuous infinite slider",
                     "link": {
+                        "visibility": true,
                         "label": "Open",
                         "target": "#"
                     },
-                    "bannerLink": "google.com"
+                    "text": null,
+                    "bannerLink": "google.com",
+                    "footer": {
+                        "position": "left",
+                        "label": "The banner officially disclaimed by XYZ Company."
+                    }
                 }
             ]
         }
