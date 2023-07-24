@@ -40,7 +40,11 @@ const positionClasses = computed(() => {
 });
 
 const components = {
-    'slideControls': SlideControls
+    'slideControls': SlideControls,
+    'linkButton': LinkButton,
+    'cornerText': CornerText,
+    'cornerFooter':CornerFooter,
+
 }
 const getComponent = (componentName) => {
     return components[componentName] ?? null;
@@ -50,7 +54,7 @@ const getComponent = (componentName) => {
 
 <template>
     <div :class="positionClasses" class="absolute">
-        <component :is="getComponent(corner.type)">
+        <component :is="getComponent(corner.type)" :data="corner.data" >
         </component>
     </div>
 

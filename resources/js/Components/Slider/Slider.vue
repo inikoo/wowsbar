@@ -20,44 +20,43 @@ import SlideCorner from "@/Components/Slider/SlideCorner.vue";
 
 const props = defineProps<{
         layout: {
+
             delay: number,
             common: {
                 corners:{
                     topLeft?: object,
                     topRight?: object,
                     bottomLeft?: object,
-                    BottomRight?: object
+                    bottomRight?: object
                 }
 
             },
+            link?:string,
             slides: [
                 {
-                    id: number
-                    file: File
+                    id: string,
                     imageSrc: string
                     imageAlt: string,
+                    link?: string,
                     corners:{
-                        topLeft?: object,
+                        topLeft?: {
+                            type: string,
+                            data?: object
+                        },
                         topRight?: object,
                         bottomLeft?: object,
-                        BottomRight?: object
+                        bottomRight?: object
                     }
-                    link?: {
-                        label: string
-                        target: string
+                    centralStage: {
+                        title?: string
+                        subtitle?: string
+                        text?:string,
+                        footer?:string
                     }
-                    text: {
-                        position: string
-                        title: string
-                        subtitle: string
-                    }
-                    footer: {
-                        position: string
-                        label: string
-                    }
-                    bannerLink: string
+
                 }
-            ]
+            ],
+
         }
 
 }>()
@@ -107,6 +106,7 @@ const filteredNulls = (corners) => {
             <SwiperSlide v-for="slide in layout.slides" :key="slide.id">
                 <img :src="generateThumbnail(slide)" :alt="slide.imageAlt">
                 <SlideCorner v-for="(corner,position) in filteredNulls(slide.corners)" :position="position" :corner="corner"/>
+                <CentralStage :data="slide.centralStage" />
             </SwiperSlide>
         </Swiper>
         <SlideCorner class="z-50" v-for="(corner,position) in filteredNulls(layout.common.corners)" :position="position" :corner="corner"/>

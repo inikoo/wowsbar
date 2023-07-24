@@ -5,12 +5,11 @@
             "delay": 5000,
             "common": {
                 "corners": {
-                    "topLeft": null,
-                    "topRight": null,
+
                     "bottomLeft": {
                         "type": "slideControls"
-                    },
-                    "bottomRight": null
+                    }
+
                 },
                 "centralStage": {
                     "title": null,
@@ -20,8 +19,52 @@
             },
             "slides": [
                 {
+                    "id": 1,
                     "imageSrc": "incentives-07-hero.jpg",
                     "imageAlt": "Front of men's Basic Tee in sienna",
+                    "link": null,
+                    "corners": {
+                        "bottomRight": {
+                            "type": "linkButton",
+                            "data": {
+                                "label": "Browse Promo",
+                                "target": "#"
+                            }
+                        }
+
+                    },
+
+                    "centralStage": {
+                        "title": "Welcome to the jungle",
+                        "subtitle": "Jungle is the best place to go and healing with your family"
+                    }
+                },
+                {
+                    "id": 2,
+                    "imageSrc": "product-page-01-featured-product-shot.jpg",
+                    "imageAlt": "Lorem ipsum dolor sit amet consectetur.",
+                    "corners": {
+                        "topLeft": {
+                            "type": "cornerText",
+                            "data":  {
+                                "title": "Welcome to the jungle",
+                                "subtitle": "Jungle is the best place to go and healing with your family"
+                            }
+                        },
+                        "topRight": {
+                            "type": "footer",
+                            "data": {
+                                "label": "The banner officially disclaimed by XYZ Company."
+                            }
+                        }
+
+                    }
+
+                },
+                {
+                    "id": 3,
+                    "imageSrc": "product-page-03-product-01.jpg",
+                    "imageAlt": "Lorem ipsum dolor Basic Tee in sienna",
                     "corners": {
                         "bottomRight": {
                             "type": "linkButton",
@@ -32,35 +75,7 @@
                         }
                     },
 
-                    "text": {
-                        "position": "bottomRight",
-                        "title": "Welcome to the jungle",
-                        "subtitle": "Jungle is the best place to go and healing with your family"
-                    }
-                },
-                {
-                    "imageSrc": "product-page-01-featured-product-shot.jpg",
-                    "imageAlt": "Lorem ipsum dolor sit amet consectetur.",
-                    "corners": {},
-                    "text": {
-                        "position": "topLeft",
-                        "title": "Welcome to the jungle",
-                        "subtitle": "Jungle is the best place to go and healing with your family"
-                    },
-                    "footer": {
-                        "position": "right",
-                        "label": "The banner officially disclaimed by XYZ Company."
-                    }
-                },
-                {
-                    "imageSrc": "product-page-03-product-01.jpg",
-                    "imageAlt": "Lorem ipsum dolor Basic Tee in sienna",
-                    "corners": {},
-                    "link": {
-                        "label": "Browse Promo",
-                        "target": "#"
-                    },
-                    "text": {
+                    "centralStage": {
                         "title": "Welcome to the jungle",
                         "subtitle": "Jungle is the best place to go and healing with your family"
                     }
@@ -69,12 +84,16 @@
                     "id": 4,
                     "imageSrc": "product-page-05-product-01.jpg",
                     "imageAlt": "Continuous infinite slider",
-                    "corners": {},
-                    "link": {
-                        "label": "Open",
-                        "target": "#"
-                    },
-                    "bannerLink": "google.com"
+                    "link": "google.com",
+
+                    "corners": {
+                        "topRight": {
+                            "type": "text",
+                            "data": {
+                                "label": "Hello"
+                            }
+                        }
+                    }
                 }
             ]
 
