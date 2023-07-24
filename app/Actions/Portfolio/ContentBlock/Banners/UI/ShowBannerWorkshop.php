@@ -82,7 +82,7 @@ class ShowBannerWorkshop extends InertiaAction
                         ],
                         [
                             'type'       => 'button',
-                            'style'      => 'save',
+                            'style'      => 'primary',
                             'label'      => __('Save'),
                             'route'      => [
                                 'name'       => 'models.content-block.update',
