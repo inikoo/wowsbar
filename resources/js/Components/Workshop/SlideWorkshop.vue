@@ -22,11 +22,11 @@ import {library} from "@fortawesome/fontawesome-svg-core";
 library.add(faImage,faExpandArrows,faAlignCenter)
 const props = defineProps<{
     fileEdit : Object
+    blueprint : Array
+    form : Object
   }>()
 
-defineExpose({
-    setFormValue
-});
+
 
 const getComponent = (componentName) => {
     const components = {
@@ -40,84 +40,7 @@ const getComponent = (componentName) => {
 };
 
 
-const blueprint = ref([
-    {
-        title: trans('Background'),
-        icon: ['fal', 'fa-image'],
-        fields: [
-            {
-                name: 'imageSrc',
-                type: 'slideBackground',
-                label: trans('image'),
-                value: ['imageSrc']
-            },
-        ]
-
-    },
-    {
-        title: trans('corners'),
-        icon: ['fal', 'fa-expand-arrows'],
-        fields: [
-            {
-                name: 'top-left',
-                type: 'slideBackground',
-                label: null,
-                value: null
-            },
-        ]
-
-    },
-    {
-        title: trans('central stage'),
-        icon: ['fal', 'fa-align-center'],
-        fields: [
-            {
-                name: 'title',
-                type: 'input',
-                label: trans('Title'),
-                value: ['centralStage','title']
-            },
-            {
-                name: 'subtitle',
-                type: 'input',
-                label: trans('subtitle'),
-                value: ['centralStage','subtitle']
-            },
-        ]
-
-    },
-
-
-])
 const current = ref(0)
-
-onMounted(() => {
-    setFormValue()
-});
-
- function setFormValue () {
-    let fields = {};
-    for (const section of blueprint.value) {
-      for (const field of section.fields) {
-        if (Array.isArray(field.value)) {
-          fields[field.name] = getNestedValue(props.fileEdit, field.value);
-        } else {
-          fields[field.name] = props.fileEdit[field.value];
-        }
-      }
-    }
-    form.value = useForm(fields);
-  }
-
-  const getNestedValue = (obj, keys) => {
-    return keys.reduce((acc, key) => {
-      if (acc && typeof acc === 'object' && key in acc) return acc[key];
-      return null;
-    }, obj);
-  }
-
-
-const form = ref({});
 
 </script>
 
@@ -169,7 +92,7 @@ const form = ref({});
                                 <dd class="sm:col-span-2">
                                     <div class="mt-1 flex text-sm text-gray-700 sm:mt-0">
                                         <div class="relative flex-grow">
-                                            <component :is="getComponent(fieldData['type'])" :form="form" :fieldName="fieldData.name"
+                                            <component :is="getComponent(fieldData['type'])" :form="props.form" :fieldName="fieldData.name"
                                                        :fieldData="fieldData" :key="index">
                                             </component>
                                         </div>
