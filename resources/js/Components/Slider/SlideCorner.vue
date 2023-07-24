@@ -18,6 +18,7 @@ const props = defineProps<{
         type: string,
         data?: object
     },
+    swiperRef: Element
 }>()
 
 
@@ -25,16 +26,16 @@ const positionClasses = computed(() => {
     let classes;
     switch (props.position) {
         case 'topRight':
-            classes = 'top-5 right-5';
+            classes = 'top-5 right-5 text-right';
             break;
         case 'topLeft':
-            classes = 'top-5 left-5';
+            classes = 'top-5 left-5 text-left';
             break;
         case 'bottomRight':
-            classes = 'bottom-5 right-5';
+            classes = 'bottom-5 right-5 text-right';
             break;
         case 'bottomLeft':
-            classes = 'bottom-5 left-5';
+            classes = 'bottom-5 left-5 text-left';
             break;
 
     }
@@ -46,10 +47,10 @@ const components = {
     'slideControls': SlideControls,
     'linkButton': LinkButton,
     'cornerText': CornerText,
-    'cornerFooter':CornerFooter,
+    'cornerFooter': CornerFooter,
 
 }
-const getComponent = (componentName) => {
+const getComponent = (componentName: any) => {
     return components[componentName] ?? null;
 };
 
@@ -57,8 +58,7 @@ const getComponent = (componentName) => {
 
 <template>
     <div :class="positionClasses" class="absolute">
-        <component :is="getComponent(corner.type)" :data="corner.data" >
-        </component>
+        <component :is="getComponent(corner.type)" :data="corner.data" :swiperRef="props.swiperRef" />
     </div>
 
 </template>

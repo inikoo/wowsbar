@@ -8,11 +8,16 @@
 import {ref} from 'vue'
 import {Swiper, SwiperSlide} from 'swiper/vue'
 import {Autoplay, Pagination, Navigation} from 'swiper/modules'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { faExternalLink } from '@/../private/pro-regular-svg-icons'
+import { library } from '@fortawesome/fontawesome-svg-core'
+library.add(faExternalLink)
 
 import 'swiper/css'
 import 'swiper/css/navigation';
 import SlideCorner from "@/Components/Slider/SlideCorner.vue";
 import CentralStage from "@/Components/Slider/CentralStage.vue";
+import { Link } from '@inertiajs/vue3';
 
 const props = defineProps<{
         layout: {
@@ -58,8 +63,8 @@ const props = defineProps<{
 }>()
 
 const generateThumbnail = (set) => {
-    if (set.file && set.file instanceof File) {
-        let fileSrc = URL.createObjectURL(set.file);
+    if (set.imageSrc && set.imageSrc instanceof File) {
+        let fileSrc = URL.createObjectURL(set.imageSrc);
         setTimeout(() => {
             URL.revokeObjectURL(fileSrc);
         }, 1000);
@@ -86,26 +91,28 @@ const filteredNulls = (corners) => {
 <template>
     <div class="w-full aspect-[16/4] overflow-hidden relative">
         <Swiper ref="swiperRef"
-                :spaceBetween="-1"
-                :slidesPerView="1"
-                :centeredSlides="true"
-                :loop="true"
-                :autoplay="{
-                    delay: layout.delay,
-                    disableOnInteraction: false,
-                }"
-                :pagination="{
-                    clickable: true,
-                }"
-                :navigation="false"
-                :modules="[Autoplay, Pagination, Navigation]" class="mySwiper">
+            :spaceBetween="-1"
+            :slidesPerView="1"
+            :centeredSlides="true"
+            :loop="true"
+            :autoplay="{
+                delay: layout.delay,
+                disableOnInteraction: false,
+            }"
+            :pagination="{
+                clickable: true,
+            }"
+            :navigation="false"
+            :modules="[Autoplay, Pagination, Navigation]" class="mySwiper">
             <SwiperSlide v-for="slide in layout.slides" :key="slide.id">
                 <img :src="generateThumbnail(slide)" :alt="slide.imageAlt">
-                <SlideCorner v-for="(corner,position) in filteredNulls(slide.corners)" :position="position" :corner="corner"/>
+                <FontAwesomeIcon v-if="slide.link" icon='far fa-external-link' class='text-gray-300/50 text-xl absolute top-2 right-2' aria-hidden='true' />
+                <Link v-if="slide.link" :href="slide.link" class="absolute bg-transparent w-full h-full" />
+                <SlideCorner v-for="(corner, position) in filteredNulls(slide.corners)" :position="position" :corner="corner"/>
                 <CentralStage v-if="slide.centralStage" :data="slide.centralStage" />
             </SwiperSlide>
         </Swiper>
-        <SlideCorner class="z-50" v-for="(corner,position) in filteredNulls(layout.common.corners)" :position="position" :corner="corner"/>
+        <SlideCorner class="z-50" v-for="(corner,position) in filteredNulls(layout.common.corners)" :position="position" :corner="corner" :swiperRef="swiperRef"/>
     </div>
 
 </template>
@@ -116,7 +123,7 @@ const filteredNulls = (corners) => {
 }
 
 .swiper-slide {
-    @apply bg-white;
+    @apply bg-gray-200;
     text-align: center;
     font-size: 18px;
     display: flex;

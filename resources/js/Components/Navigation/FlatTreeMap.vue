@@ -25,10 +25,10 @@ const locale = useLocaleStore();
                 <!-- Main Tree -->
                 <Link :href="route(node.href[0], node.href[1])" class="group flex-1 items-center">
                     <div class="flex items-center px-4 text-lg xl:px-6 py-4 font-medium gap-x-4">
-                            <FontAwesomeIcon size="lg" :icon="node.icon" class="flex-shrink-0 text-gray-400 group-hover:text-orange-400" aria-hidden="true" />
+                            <FontAwesomeIcon size="lg" :icon="node.icon" class="flex-shrink-0 text-gray-400" aria-hidden="true" />
                             <p class="md:leading-none md:text-sm lg:text-base inline capitalize font-medium text-gray-500 group-hover:text-gray-600">
-                                <span class="hidden lg:inline">{{ node.name }}</span>
-                                <span class="inline lg:hidden">{{ node.shortName ?? node.name }}</span>
+                                <span class="hidden lg:inline group-hover:text-orange-400">{{ node.name }}</span>
+                                <span class="inline lg:hidden group-hover:text-orange-400">{{ node.shortName ?? node.name }}</span>
                             </p>
                             
                             <!-- Bars and count -->
