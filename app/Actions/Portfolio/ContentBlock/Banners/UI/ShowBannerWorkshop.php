@@ -79,14 +79,20 @@ class ShowBannerWorkshop extends InertiaAction
                                 'name'       => preg_replace('/workshop$/', 'show', $this->routeName),
                                 'parameters' => array_values($this->originalParameters),
                             ]
+                        ],
+                        [
+                            'type'       => 'button',
+                            'style'      => 'save',
+                            'label'      => __('Save'),
+                            'route'      => [
+                                'name'       => 'models.content-block.update',
+                                'parameters' => $banner->slug
+                            ]
                         ]
                     ],
                 ],
                 'bannerLayout'=> $banner->layout,
-                'updateRoute' => [
-                    'name'       => 'models.content-block.update',
-                    'parameters' => $banner->slug
-                ],
+
 
 
             ]

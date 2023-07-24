@@ -7,7 +7,7 @@
 <script setup>
 import { Link } from "@inertiajs/vue3";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faDraftingCompass,faEmptySet, faMoneyCheckAlt, faPeopleArrows, faSlidersH } from "@/../private/pro-light-svg-icons";
+import { faDraftingCompass,faEmptySet, faMoneyCheckAlt, faPeopleArrows, faSlidersH ,faSave} from "@/../private/pro-light-svg-icons";
 import { faPencil, faArrowLeft, faBorderAll, faTrashAlt } from "@/../private/pro-regular-svg-icons";
 
 import { faPlus } from "@/../private/pro-solid-svg-icons";
@@ -17,7 +17,7 @@ import { useLocaleStore } from "@/Stores/locale.js";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { trans } from "laravel-vue-i18n";
 
-library.add(faDraftingCompass,faEmptySet, faMoneyCheckAlt, faPeopleArrows, faSlidersH, faPlus, faPencil, faArrowLeft, faBorderAll, faTrashAlt);
+library.add(faDraftingCompass,faEmptySet, faMoneyCheckAlt, faPeopleArrows, faSlidersH, faPlus, faPencil, faArrowLeft, faBorderAll, faTrashAlt,faSave);
 const props = defineProps(["data"])
 const locale = useLocaleStore()
 
@@ -28,7 +28,8 @@ const getActionLabel = function (action) {
         switch (action.style) {
             case "edit":
                 return trans("edit")
-
+            case "save":
+                return trans("save")
             case "exitEdit":
                 return trans("exit edit")
 
@@ -54,7 +55,8 @@ const getActionIcon = (action) => {
         switch (action.style) {
             case "edit":
                 return ["far", "fa-pencil"]
-
+            case "save":
+                return ["fal", "fa-save"]
             case "exit":
             case "exitEdit":
                 return ["far", "fa-arrow-left"]
