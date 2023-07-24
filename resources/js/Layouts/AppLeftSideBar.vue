@@ -51,7 +51,7 @@ const handleKey = (event: any) => {
 
 <template>
 	<div class="w-8/12 mt-11 fixed md:border-r md:border-gray-200 md:flex md:flex-col md:inset-y-0 md:w-10 lg:mt-10 xl:w-56"
-		:class="[useAppearanceStore().darkMode ? 'bg-dark2 text-light2' : 'bg-light2']"
+		:class="[useAppearanceStore().darkMode ? 'bg-dark2 text-light2' : 'bg-light2 dark:bg-yellow-500']"
 		@mouseenter="isHover = true" @mouseleave="isHover = false"
 	>
 		<div class="flex flex-grow flex-col h-full overflow-y-auto custom-hide-scrollbar border-r border-gray-200 pb-4">
