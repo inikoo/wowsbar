@@ -18,7 +18,7 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { trans } from "laravel-vue-i18n";
 
 library.add(faDraftingCompass,faEmptySet, faMoneyCheckAlt, faPeopleArrows, faSlidersH, faPlus, faPencil, faArrowLeft, faBorderAll, faTrashAlt,faSave);
-const props = defineProps(["data"])
+const props = defineProps(["data", "dataToSubmit"])
 const locale = useLocaleStore()
 
 const getActionLabel = function (action) {
@@ -125,13 +125,15 @@ const getActionIcon = (action) => {
             <span v-for="action in data.actions">
 
                 <!-- Button -->
-                <Link v-if="action.type === 'button'" :href="route(action['route']['name'], action['route']['parameters'])">
-                <Button size="xs" :style="action.style"
-                    class="capitalize inline-flex items-center rounded-md text-sm font-medium shadow-sm gap-x-2">
-                    <FontAwesomeIcon v-if="getActionIcon(action)" :icon="getActionIcon(action)" class=""
-                        aria-hidden="true" />
-                    {{ getActionLabel(action) }}
-                </Button>
+                <Link v-if="action.type === 'button'" :href="route(action['route']['name'], action['route']['parameters'])"
+                    method="patch" :data="dataToSubmit"
+                >
+                    <Button size="xs" :style="action.style"
+                        class="capitalize inline-flex items-center rounded-md text-sm font-medium shadow-sm gap-x-2">
+                        <FontAwesomeIcon v-if="getActionIcon(action)" :icon="getActionIcon(action)" class=""
+                            aria-hidden="true" />
+                        {{ getActionLabel(action) }}
+                    </Button>
                 </Link>
 
                 <!-- Button Group () -->

@@ -76,7 +76,7 @@ switch (props.size) {
     <button
         type="button"
         :class="[
-            'px-5 inline-flex items-center font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2',
+            'px-5 inline-flex items-center font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2',
             styleClass,
             sizeClass
         ]"
