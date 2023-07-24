@@ -55,6 +55,7 @@ import {
     faLanguage
 } from "@/../private/pro-light-svg-icons"
 import { faSearch, faBell} from "@/../private/pro-regular-svg-icons"
+import { onMounted } from "vue";
 
 
 library.add(
@@ -184,10 +185,38 @@ router.on('navigate', () => {
     }
 })
 
-const layout = initialiseApp();
-const sidebarOpen = ref(false);
-const showSearchDialog = ref(false);
-const user = ref(usePage().props.auth.user);
+const layout = initialiseApp()
+const sidebarOpen = ref(false)
+const showSearchDialog = ref(false)
+const user = ref(usePage().props.auth.user)
+
+const changeColorMode = (mode: boolean) => {
+    // If browsers not support matchMedia
+    if (!window.matchMedia) {
+        return
+    }
+    
+    let query = false
+    
+    if (mode == "system") {
+        // If browsers prefers dark-mode then true
+        query = window.matchMedia('(prefers-color-scheme: dark)').matches
+    } else {
+        query = mode
+    }
+    
+    if(query) {
+        document.documentElement.classList.add('dark')
+        localStorage.setItem('darkMode', `${query}`)
+    } else {
+        document.documentElement.classList.remove('dark')
+        localStorage.setItem('darkMode', `${query}`)
+    }
+}
+
+onMounted(() => {
+    useAppearanceStore().darkMode ? document.documentElement.classList.add('dark') : ''
+})
 
 </script>
 
@@ -225,7 +254,9 @@ const user = ref(usePage().props.auth.user);
                         <!-- Avatar Group -->
                         <div class="flex items-center mr-6 space-x-3">
                             <div class="flex">
-                            <div class="cursor-pointer bg-indigo-500 px-2 py-0.5 rounded-md select-none" @click="useAppearanceStore().darkMode = !useAppearanceStore().darkMode">Dark mode: {{useAppearanceStore().darkMode}}</div>
+                            <div class="cursor-pointer text-white bg-indigo-500 px-2 py-0.5 rounded-md select-none" @click="changeColorMode(true)">Dark mode: True</div>
+                            <div class="cursor-pointer text-white bg-indigo-500 px-2 py-0.5 rounded-md select-none" @click="changeColorMode(false)">Dark mode: False</div>
+                            <div class="cursor-pointer text-white bg-indigo-500 px-2 py-0.5 rounded-md select-none" @click="changeColorMode('system')">Dark mode: OS System</div>
 
                                 <!-- Button: Search -->
                                 <button @click="showSearchDialog = !showSearchDialog"
