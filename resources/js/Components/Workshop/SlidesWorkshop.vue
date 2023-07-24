@@ -13,7 +13,6 @@ import {library} from "@fortawesome/fontawesome-svg-core";
 import draggable from "vuedraggable"
 import {get} from 'lodash'
 import PrimaryButton from "@/Components/PrimaryButton.vue";
-import Modal from './Modal/Modal.vue'
 import {v4 as uuidv4} from 'uuid';
 import Input from '@/Components/Forms/Fields/Input.vue'
 import Select from '@/Components/Forms/Fields/Select.vue'

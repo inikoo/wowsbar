@@ -118,7 +118,6 @@ const form = useForm(fields);
                         <FontAwesomeIcon
                             v-if="item.icon"
                             aria-hidden="true"
-                            :flip="item.iconFlip?item.iconFlip:false"
                             :class="[
                   key === current
                     ? 'text-orange-500 group-hover:text-orange-500'
