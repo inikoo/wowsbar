@@ -1,6 +1,6 @@
 <script setup>
 import { trans } from "laravel-vue-i18n"
-import { ref } from "vue"
+
 
 const props = defineProps(['form'])
 
@@ -53,8 +53,8 @@ const onFileChange = (event) => {
         <input type="file" @change="onFileChange" id="input-avatar-large" name="input-avatar-large" accept="image/*" class="absolute inset-0 h-full w-full cursor-pointer rounded-md border-gray-300 opacity-0" />
       </label>
     </div>
-    <div v-if="props.form.errors.avatar" class="text-red-700">
-      {{ props.form.errors.avatar }}
-    </div>
+    <!-- <div v-if="props.form.errors" class="text-red-700">
+      {{ props.form.errors }}
+    </div> -->
   </div>
 </template>

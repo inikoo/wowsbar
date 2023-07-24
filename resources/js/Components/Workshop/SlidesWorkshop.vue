@@ -65,7 +65,6 @@
   const isDragging = ref(false)
   const slides  = ref(props.data.slides )
   const fileInput = ref(null)
-  const open = ref(false)
   const fileEdit = ref(slides.value[0])
 
   const onChange = () => {
@@ -82,7 +81,7 @@
     }
     const newFiles = [...setData]
     slides.value = [...slides.value, ...newFiles]
-    props.filesChange([...slides.value])
+    props.data.slides = [...slides.value]
   }
 
   const generateThumbnail = (file) => {
@@ -107,7 +106,7 @@
 
   const remove = (i) => {
     slides.value.splice(i, 1)
-    props.filesChange([...slides.value])
+    props.data.slides = [...slides.value]
   }
 
   const dragover = (e) => {
@@ -122,7 +121,7 @@
   const drop = (e) => {
     e.preventDefault()
     let setData = []
-    for (const set of e.dataTransfer.slide ) {
+    for (const set of e.dataTransfer.files ) {
       if (set && set instanceof File) {
         setData.push({
           file: set,
@@ -140,9 +139,8 @@
 
   const openEdit = (file) => {
     fileEdit.value = file
-    open.value = true
-    ChangeData(form.value.data())
-    setFormValue()
+    console.log(SlideWorkshopRef.value)
+    SlideWorkshopRef.value.setFormValue()
   }
 
   const ChangeData = (newData) =>{
@@ -160,98 +158,15 @@
         target : newData.target
       }
     }
-    props.filesChange(slides )
+    props.filesChange(slides)
   }
 
 
-  const changeIndex = () => {
-    props.filesChange(slides.value)
-  }
+//   const changeIndex = () => {
+//     props.data.slides = slides.value
+//   }
 
-
-
-  const slideFormBlueprint = ref([
-    {
-      title: trans('Background'),
-      icon: ['fal','fa-image'],
-      fields: [
-        {
-          name: 'imageSrc',
-          type: 'slideBackground',
-          label: 'Banner Image',
-          value: 'imageSrc'
-        },
-      ]
-    },
-    {
-      title: trans('corners'),
-      fields: [
-
-        {
-          name: 'label',
-          type: 'input',
-          label: 'Button Label',
-          value: ['link','label']
-        },
-        {
-          name: 'target',
-          type: 'input',
-          label: 'Link',
-          value: ['link','target']
-        },
-      ]
-    },
-    {
-      title:  trans('central stage'),
-      fields: [
-        {
-          name: 'title',
-          type: 'input',
-          label: 'Title',
-          value: ['centralStage','title']
-        },
-        {
-          name: 'subtitle',
-          type: 'input',
-          label: 'Subtitle',
-          value: ['centralStage','subtitle']
-        },
-      ]
-    },
-  ])
-  const current = ref(0)
-
-
-  onMounted(() => {
-    setFormValue();
-  });
-
-  const setFormValue = () => {
-    let fields = {};
-    for (const section of slideFormBlueprint.value) {
-      for (const field of section.fields) {
-        // Check if the value is an array (nested field value)
-        if (Array.isArray(field.value)) {
-          fields[field.name] = getNestedValue(fileEdit.value, field.value);
-        } else {
-          fields[field.name] = fileEdit.value[field.value];
-        }
-      }
-    }
-
-    form.value = useForm(fields);
-  }
-
-  const getNestedValue = (obj, keys) => {
-    return keys.reduce((acc, key) => {
-      if (acc && typeof acc === 'object' && key in acc) {
-        return acc[key];
-      }
-      return null; // Or you can return a default value if the key is not found
-    }, obj);
-  }
-
-
+  const SlideWorkshopRef = ref(null)
   const form = ref(useForm({}));
 
   </script>
@@ -263,7 +178,7 @@
               <span class="ml-32">{{trans('Common properties')}}</span>
               </div>
           <div class="mb-2 text-lg font-medium">{{trans('Slides')}}</div>
-        <draggable :list="data.slides" group="slide " item-key="id" handle=".handle" @change="changeIndex">
+        <draggable :list="data.slides" group="slide " item-key="id" handle=".handle">
           <template #item="{ element: file }">
             <div :class="[file.id !== fileEdit.id ?
             ' border-l-orange-500   border-l-4' :
@@ -300,7 +215,7 @@
 
 
       <div style="width: 70%; border: 1px solid #d9d9d9;">
-          <SlideWorkshop ></SlideWorkshop>
+          <SlideWorkshop :fileEdit="fileEdit" ref="SlideWorkshopRef"></SlideWorkshop>
       </div>
     </div>
   </template>

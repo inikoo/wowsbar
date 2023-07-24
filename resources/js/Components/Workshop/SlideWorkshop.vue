@@ -5,7 +5,7 @@
   -->
 
 <script setup lang="ts">
-import {ref, onMounted} from 'vue'
+import {ref, onMounted, defineExpose } from 'vue'
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import {faImage,faExpandArrows,faAlignCenter} from "../../../private/pro-light-svg-icons"
 import Input from '@/Components/Forms/Fields/Input.vue'
@@ -20,6 +20,13 @@ import SlideBackground from "@/Components/Workshop/Fileds/SlideBackground.vue";
 import {library} from "@fortawesome/fontawesome-svg-core";
 
 library.add(faImage,faExpandArrows,faAlignCenter)
+const props = defineProps<{
+    fileEdit : Object
+  }>()
+
+defineExpose({
+    setFormValue
+});
 
 const getComponent = (componentName) => {
     const components = {
@@ -39,10 +46,10 @@ const blueprint = ref([
         icon: ['fal', 'fa-image'],
         fields: [
             {
-                name: 'file',
+                name: 'imageSrc',
                 type: 'slideBackground',
                 label: trans('image'),
-                value: null
+                value: ['imageSrc']
             },
         ]
 
@@ -53,7 +60,7 @@ const blueprint = ref([
         fields: [
             {
                 name: 'top-left',
-                type: 'slideBackground',// Change to cornerWorkshop
+                type: 'slideBackground',
                 label: null,
                 value: null
             },
@@ -68,13 +75,13 @@ const blueprint = ref([
                 name: 'title',
                 type: 'input',
                 label: trans('Title'),
-                value: null
+                value: ['centralStage','title']
             },
             {
-                name: 'sub-title',
+                name: 'subtitle',
                 type: 'input',
                 label: trans('subtitle'),
-                value: null
+                value: ['centralStage','subtitle']
             },
         ]
 
@@ -83,21 +90,34 @@ const blueprint = ref([
 
 ])
 const current = ref(0)
-let fields = {};
+
 onMounted(() => {
     setFormValue()
 });
 
-const setFormValue = () => {
-    for (const data of blueprint.value) {
-        Object.entries(data.fields).forEach(([fieldName, fieldData]) => {
-            fields[fieldName] = fieldData['value'];
-        });
+ function setFormValue () {
+    let fields = {};
+    for (const section of blueprint.value) {
+      for (const field of section.fields) {
+        if (Array.isArray(field.value)) {
+          fields[field.name] = getNestedValue(props.fileEdit, field.value);
+        } else {
+          fields[field.name] = props.fileEdit[field.value];
+        }
+      }
     }
-}
+    form.value = useForm(fields);
+  }
+
+  const getNestedValue = (obj, keys) => {
+    return keys.reduce((acc, key) => {
+      if (acc && typeof acc === 'object' && key in acc) return acc[key];
+      return null;
+    }, obj);
+  }
 
 
-const form = useForm(fields);
+const form = ref({});
 
 </script>
 
@@ -135,7 +155,7 @@ const form = useForm(fields);
         <div class="px-4 sm:px-6 md:px-4 col-span-9">
             <div class="divide-y divide-grey-200 flex flex-col">
                 <div class="mt-2 pt-4 sm:pt-5">
-                    <div v-for="(fieldData, fieldName, index ) in blueprint[current].fields" :key="index" class="mt-1 ">
+                    <div v-for="(fieldData, index ) in blueprint[current].fields" :key="index" class="mt-1 ">
                         <dl class="divide-y divide-green-200  ">
                             <div class="pb-4 sm:pb-5 sm:grid sm:grid-cols-3 sm:gap-4 max-w-2xl">
                                 <dt class="text-sm font-medium text-gray-500 capitalize">
@@ -149,7 +169,7 @@ const form = useForm(fields);
                                 <dd class="sm:col-span-2">
                                     <div class="mt-1 flex text-sm text-gray-700 sm:mt-0">
                                         <div class="relative flex-grow">
-                                            <component :is="getComponent(fieldData['type'])" :form="form" :fieldName="fieldName"
+                                            <component :is="getComponent(fieldData['type'])" :form="form" :fieldName="fieldData.name"
                                                        :fieldData="fieldData" :key="index">
                                             </component>
                                         </div>

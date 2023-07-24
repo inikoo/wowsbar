@@ -21,16 +21,15 @@ const props = defineProps<{
 
 const data = ref(props.bannerLayout);
 
-const filesChange = (value) => {
-    data.value = value;
-};
-
 
 const changeLink = (file, value) => {
     const index = data.value.findIndex((item) => item.id === file.id);
     if (index !== -1) data.value[index].link = value;
 };
 
+const test1=()=>{
+    console.log(data.value.slides)
+}
 
 </script>
 
@@ -41,7 +40,7 @@ const changeLink = (file, value) => {
     <Slider :layout="data" />
     <SlidesWorkshop class="clear-both"
         :data="data"
-        :filesChange="filesChange"
         :changeLink="changeLink"
     />
+    <div @click="test1">chek data</div>
 </template>
