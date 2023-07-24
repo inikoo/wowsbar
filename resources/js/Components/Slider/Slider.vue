@@ -105,7 +105,7 @@ const filteredNulls = (corners) => {
                 <CentralStage v-if="slide.centralStage" :data="slide.centralStage" />
             </SwiperSlide>
         </Swiper>
-        <SlideCorner class="z-50" v-for="(corner,position) in filteredNulls(layout.common.corners)" :position="position" :corner="corner"/>
+        <SlideCorner class="z-50" v-for="(corner,position) in filteredNulls(layout.common.corners)" :position="position" :corner="corner" :swiperRef="swiperRef"/>
     </div>
 
 </template>

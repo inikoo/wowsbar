@@ -5,15 +5,18 @@
   -->
 
 <script setup lang="ts">
-import {faPlay, faPause, faChevronRight, faChevronLeft} from "@/../private/pro-solid-svg-icons"
-import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
-import {library} from "@fortawesome/fontawesome-svg-core";
-import {ref} from 'vue'
+import { faPlay, faPause, faChevronRight, faChevronLeft } from "@/../private/pro-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { ref } from 'vue'
+
+const props = defineProps<{
+    swiperRef: Element
+}>()
 
 library.add(faPlay, faPause, faChevronRight, faChevronLeft)
 
 const swiperAutoplayPause = ref(false)
-
 const toggleAutoplay = (swiper: any) => {
     if (swiperAutoplayPause.value) {
         swiper.autoplay.start(); // Resume autoplay
@@ -23,25 +26,29 @@ const toggleAutoplay = (swiper: any) => {
     swiperAutoplayPause.value = !swiperAutoplayPause.value; // Toggle the autoplay state
 }
 
-
 </script>
 
 <template>
-    <div class="opacity-50  flex justify-center items-center gap-x-3 my-3 text-gray-500">
-
-        <div @click="toggleAutoplay(swiperRef.$el.swiper)" class="flex items-center justify-center cursor-pointer w-10 aspect-square bg-gray-200 rounded-full hover:ring-1 hover:ring-gray-400 active:bg-gray-300"
-             title="Pause/resume autoplay">
-            <FontAwesomeIcon v-if="swiperAutoplayPause" icon="fas fa-play" class='text-xl' aria-hidden='true'/>
-            <FontAwesomeIcon v-if="!swiperAutoplayPause" icon="fas fa-pause" class='text-xl' aria-hidden='true'/>
+    <div class="opacity-50  flex justify-center items-center gap-x-3 my-3 text-gray-800/40">
+        <!-- Button: Previous -->
+        <div @click="() => props.swiperRef.$el.swiper.slidePrev()"
+            class="flex items-center justify-center cursor-pointer w-8 h-fit aspect-square bg-gray-300/50 rounded-full hover:text-gray-800/60 hover:ring-1 hover:ring-gray-400 active:bg-gray-300/80"
+            title="Go to previous banner">
+            <FontAwesomeIcon icon='fas fa-chevron-left' class='text-xl mr-0.5' aria-hidden='true' />
         </div>
 
-        <div @click="() => swiperRef.$el.swiper.slidePrev()" v-if="swiperAutoplayPause"
-             class="flex items-center justify-center cursor-pointer w-8 h-fit aspect-square bg-gray-200 rounded-full hover:ring-1 hover:ring-gray-400 active:bg-gray-300" title="Go to previous banner">
-            <FontAwesomeIcon icon='fas fa-chevron-left' class='text-xl' aria-hidden='true'/>
+        <!-- Button: Play/pause -->
+        <div @click="toggleAutoplay(props.swiperRef.$el.swiper)"
+            class="flex items-center justify-center cursor-pointer w-9 aspect-square bg-gray-300/50 rounded-full hover:text-gray-800/60 hover:ring-1 hover:ring-gray-400 active:bg-gray-300/80"
+            title="Pause/resume autoplay">
+            <FontAwesomeIcon v-if="swiperAutoplayPause" icon="fas fa-play" class='text-xl ml-1' aria-hidden='true' />
+            <FontAwesomeIcon v-if="!swiperAutoplayPause" icon="fas fa-pause" class='text-xl' aria-hidden='true' />
         </div>
-        <div @click="() => swiperRef.$el.swiper.slideNext()" v-if="swiperAutoplayPause"
-             class="flex items-center justify-center cursor-pointer w-8 h-fit aspect-square bg-gray-200 rounded-full hover:ring-1 hover:ring-gray-400 active:bg-gray-300" title="Go to next banner">
-            <FontAwesomeIcon icon='fas fa-chevron-right' class='text-xl' aria-hidden='true'/>
+
+        <!-- Button: Next -->
+        <div @click="() => props.swiperRef.$el.swiper.slideNext()"
+            class="flex items-center justify-center cursor-pointer w-8 h-fit aspect-square bg-gray-300/50 rounded-full hover:text-gray-800/60 hover:ring-1 hover:ring-gray-400 active:bg-gray-300/80"
+            title="Go to next banner">
+            <FontAwesomeIcon icon='fas fa-chevron-right' class='text-xl ml-0.5' aria-hidden='true' />
         </div>
-    </div>
-</template>
+    </div></template>

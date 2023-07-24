@@ -18,6 +18,7 @@ const props = defineProps<{
         type: string,
         data?: object
     },
+    swiperRef: Element
 }>()
 
 
@@ -57,7 +58,7 @@ const getComponent = (componentName) => {
 
 <template>
     <div :class="positionClasses" class="absolute">
-        <component :is="getComponent(corner.type)" :data="corner.data" >
+        <component :is="getComponent(corner.type)" :data="corner.data" :swiperRef="swiperRef">
         </component>
     </div>
 
