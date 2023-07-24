@@ -7,28 +7,19 @@
 <script setup lang="ts">
 import {ref, onMounted} from 'vue'
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
-import {faImage} from "../../../private/pro-solid-svg-icons"
-import {faTrashAlt} from "../../../private/pro-light-svg-icons"
-import {library} from "@fortawesome/fontawesome-svg-core";
-import draggable from "vuedraggable"
-import {get} from 'lodash'
-import PrimaryButton from "@/Components/PrimaryButton.vue";
-import Modal from './Modal/Modal.vue'
-import {v4 as uuidv4} from 'uuid';
+import {faImage,faExpandArrows,faAlignCenter} from "../../../private/pro-light-svg-icons"
 import Input from '@/Components/Forms/Fields/Input.vue'
 import Select from '@/Components/Forms/Fields/Select.vue'
-import Phone from '@/Components/Forms/Fields/Phone.vue'
-import Date from '@/Components/Forms/Fields/Date.vue'
-import {trans} from "laravel-vue-i18n"
-import Address from "@/Components/Forms/Fields/Address.vue"
-import Radio from '@/Components/Forms/Fields/Radio.vue'
-import Country from "@/Components/Forms/Fields/Country.vue"
-import Currency from "@/Components/Forms/Fields/Currency.vue"
-import {capitalize} from "@/Composables/capitalize"
-import InputWithAddOn from '@/Components/Forms/Fields/InputWithAddOn.vue'
-import {Head, useForm} from '@inertiajs/vue3'
-import SlideBackground from "@/Components/Workshop/Fileds/SlideBackground.vue";
 
+import {trans} from "laravel-vue-i18n"
+import Radio from '@/Components/Forms/Fields/Radio.vue'
+
+import InputWithAddOn from '@/Components/Forms/Fields/InputWithAddOn.vue'
+import {useForm} from '@inertiajs/vue3'
+import SlideBackground from "@/Components/Workshop/Fileds/SlideBackground.vue";
+import {library} from "@fortawesome/fontawesome-svg-core";
+
+library.add(faImage,faExpandArrows,faAlignCenter)
 
 const getComponent = (componentName) => {
     const components = {
@@ -62,8 +53,8 @@ const blueprint = ref([
         fields: [
             {
                 name: 'top-left',
-                type: 'slideBackground',
-                label: trans('top left corner'),
+                type: 'slideBackground',// Change to cornerWorkshop
+                label: null,
                 value: null
             },
         ]

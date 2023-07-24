@@ -82,7 +82,7 @@ class ShowBannerWorkshop extends InertiaAction
                         ]
                     ],
                 ],
-                'banner'=> $banner,
+                'bannerLayout'=> $banner->layout,
                 'updateRoute' => [
                     'name'       => 'models.content-block.update',
                     'parameters' => $banner->slug

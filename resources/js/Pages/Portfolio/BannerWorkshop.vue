@@ -1,45 +1,33 @@
 <script setup lang="ts">
-import { Head, router } from "@inertiajs/vue3";
+import { Head } from "@inertiajs/vue3";
 import { ref } from "vue";
 import PageHeading from "@/Components/Headings/PageHeading.vue";
 import { capitalize } from "@/Composables/capitalize";
-import PrimaryButton from "@/Components/PrimaryButton.vue";
-import Banner from "@/Components/Slider/Banner.vue";
-import {trans} from "laravel-vue-i18n";
+import Slider from "@/Components/Slider/Slider.vue";
 import SlidesWorkshop from "@/Components/Workshop/SlidesWorkshop.vue";
 
 
 const props = defineProps<{
     title: string;
     pageHead: object;
-    banner: object;
+    bannerLayout: {};
     updateRoute: {
         name: string,
         parameters: string | string[]
     }
 }>();
 
-const defaultSlide = {
-    id: 3,
-    imageAlt: "Lorem ipsum dolor Basic Tee in sienna",
-    imageSrc: "/banner/product-page-03-product-01.jpg",
-    link: { label: "open", target: "" },
-};
 
-const data = ref(
-    props.banner.layout.data.slides.length > 0
-        ? [...props.banner.layout.data.slides]
-        : [defaultSlide]
-);
+const layout = ref(props.bannerLayout);
 
 const filesChange = (value) => {
-    data.value = value;
+    layout.value = value;
 };
 
 
 const changeLink = (file, value) => {
-    const index = data.value.findIndex((item) => item.id === file.id);
-    if (index !== -1) data.value[index].link = value;
+    const index = layout.value.findIndex((item) => item.id === file.id);
+    if (index !== -1) layout.value[index].link = value;
 };
 
 </script>
@@ -48,9 +36,9 @@ const changeLink = (file, value) => {
     <Head :title="capitalize(title)" />
     <PageHeading :data="pageHead"></PageHeading>
 
-    <Banner :data="{ data: { slides: [...data], delay: 2500 } }" />
+    <Slider :layout="layout" />
     <SlidesWorkshop class="clear-both"
-        :files="data"
+        :files="layout.slides"
         :filesChange="filesChange"
         :changeLink="changeLink"
     />
