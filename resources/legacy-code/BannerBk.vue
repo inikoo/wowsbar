@@ -104,8 +104,6 @@ const filteredSlides = computed(() => props.data.data.slides.filter(slide => sli
         >
             <SwiperSlide v-for="slide in filteredSlides" :key="slide.id">
                 <img :src="generateThumbnail(slide)" :alt="slide.imageAlt">
-                <FontAwesomeIcon v-if="slide.bannerLink" icon='far fa-external-link' class='text-gray-100/40 text-xl absolute top-2 right-2' aria-hidden='true' />
-                <Link v-if="slide.bannerLink" :href="slide.bannerLink" class="absolute bg-transparent w-full h-full" />
                 <div class="absolute space-y-2" :class="{
                     'top-5 left-8 text-left': slide.text?.position == 'topleft',
                     'top-5 right-8 text-right': slide.text?.position == 'topright',
