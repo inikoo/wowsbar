@@ -41,12 +41,12 @@
 
   const onChange = () => {
     let setData = []
-    for (const set of fileInput.value.slide ) {
+    for (const set of fileInput.value.files ) {
       if (set && set instanceof File) {
         setData.push({
-          link: { label: "open", target: "" },
           imageAlt: set.name,
           imageSrc: set,
+          "visibility" : true,
           id: uuidv4()
         })
       }
@@ -57,8 +57,8 @@
   }
 
   const generateThumbnail = (file) => {
-    if (file.file && file.file instanceof File) {
-      let fileSrc = URL.createObjectURL(file.file)
+    if (file.imageSrc && file.imageSrc instanceof File) {
+      let fileSrc = URL.createObjectURL(file.imageSrc)
       setTimeout(() => {
         URL.revokeObjectURL(fileSrc)
       }, 1000)
@@ -69,7 +69,7 @@
   }
 
   const getImageUrl = (name: string) => {
-    return new URL(`@/../../../../../../art/banner/` + name, import.meta.url).href
+    return new URL(`@/../../../../art/banner/` + name, import.meta.url).href
   }
 
   const generateName = (file) => {
@@ -206,20 +206,13 @@
           name: 'title',
           type: 'input',
           label: 'Title',
-          value: ['text','title']
+          value: ['centralStage','title']
         },
         {
           name: 'subtitle',
           type: 'input',
           label: 'Subtitle',
-          value: ['text','subtitle']
-        },
-        {
-          name: 'Position',
-          type: 'select',
-          label: 'position',
-          value: ['text','position'],
-          options : ['center','topLeft','bottomLeft','topRight','bottomRight']
+          value: ['centralStage','subtitle']
         },
       ]
     },

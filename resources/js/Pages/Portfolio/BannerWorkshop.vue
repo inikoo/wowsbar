@@ -25,7 +25,7 @@ const defaultSlide = {
     imageSrc: "/banner/product-page-03-product-01.jpg",
     link: { label: "open", target: "" },
 };
-console.log(props.banner)
+
 const data = ref(
     props.banner.layout.slides.length > 0
         ? [...props.banner.layout.slides]
@@ -42,7 +42,7 @@ const changeLink = (file, value) => {
     if (index !== -1) data.value[index].link = value;
 };
 
-console.log(data)
+
 </script>
 
 <template layout="App">
