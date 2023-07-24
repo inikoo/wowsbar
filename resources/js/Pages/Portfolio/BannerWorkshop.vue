@@ -4,7 +4,7 @@ import { ref } from "vue";
 import PageHeading from "@/Components/Headings/PageHeading.vue";
 import { capitalize } from "@/Composables/capitalize";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
-import Banner from "@/Components/Slider/Banner.vue";
+import Banner from "@/Components/Slider/Slider.vue";
 import {trans} from "laravel-vue-i18n";
 import SlidesWorkshop from "@/Components/Workshop/SlidesWorkshop.vue";
 
@@ -25,10 +25,10 @@ const defaultSlide = {
     imageSrc: "/banner/product-page-03-product-01.jpg",
     link: { label: "open", target: "" },
 };
-
+console.log(props.banner)
 const data = ref(
-    props.banner.layout.data.slides.length > 0
-        ? [...props.banner.layout.data.slides]
+    props.banner.layout.slides.length > 0
+        ? [...props.banner.layout.slides]
         : [defaultSlide]
 );
 
@@ -42,15 +42,16 @@ const changeLink = (file, value) => {
     if (index !== -1) data.value[index].link = value;
 };
 
+console.log(data)
 </script>
 
 <template layout="App">
     <Head :title="capitalize(title)" />
     <PageHeading :data="pageHead"></PageHeading>
 
-    <Banner :data="{ data: { slides: [...data], delay: 2500 } }" />
+    <!-- <Banner :layout="{ slides: { slides: [...data], delay: 2500 } }" /> -->
     <SlidesWorkshop class="clear-both"
-        :files="data"
+        :slide="data"
         :filesChange="filesChange"
         :changeLink="changeLink"
     />
