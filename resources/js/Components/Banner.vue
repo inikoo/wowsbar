@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // Import Swiper Vue.js components
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import { Link } from "@inertiajs/vue3"
 import { Autoplay, Pagination, Navigation } from 'swiper/modules'
@@ -19,6 +19,7 @@ const props = defineProps<{
             slides: [
                 {
                     id: number
+                    visibility: boolean
                     file : File
                     imageSrc: string
                     imageAlt: string
@@ -69,6 +70,8 @@ const toggleAutoplay = (swiper: any) => {
     swiperAutoplayPause.value = !swiperAutoplayPause.value; // Toggle the autoplay state
 }
 
+const filteredSlides = computed(() => props.data.data.slides.filter(slide => slide.visibility))
+
 </script>
 
 <template>
@@ -98,7 +101,7 @@ const toggleAutoplay = (swiper: any) => {
             }"
             :navigation="false" :modules="[Autoplay, Pagination, Navigation]" class="mySwiper"
         >
-            <SwiperSlide v-for="slide in $props.data.data.slides" :key="slide.id">
+            <SwiperSlide v-for="slide in filteredSlides" :key="slide.id">
                 <img :src="generateThumbnail(slide)" :alt="slide.imageAlt">
                 <FontAwesomeIcon v-if="slide.bannerLink" icon='far fa-external-link' class='text-gray-100/40 text-xl absolute top-2 right-2' aria-hidden='true' />
                 <Link v-if="slide.bannerLink" :href="slide.bannerLink" class="absolute bg-transparent w-full h-full" />
