@@ -5,6 +5,7 @@ import PageHeading from "@/Components/Headings/PageHeading.vue";
 import { capitalize } from "@/Composables/capitalize";
 
 import SlidesWorkshop from "@/Components/Workshop/SlidesWorkshop.vue";
+import Slider from "@/Components/Slider/Slider.vue";
 
 
 const props = defineProps<{
