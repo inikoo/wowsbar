@@ -5,18 +5,14 @@
   -->
 
 <script setup lang="ts">
-// Import Swiper Vue.js components
-import {computed, ref} from 'vue'
+import {ref} from 'vue'
 import {Swiper, SwiperSlide} from 'swiper/vue'
-import {Link} from "@inertiajs/vue3"
 import {Autoplay, Pagination, Navigation} from 'swiper/modules'
-import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
 
-// Import Swiper styles
 import 'swiper/css'
-// import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import SlideCorner from "@/Components/Slider/SlideCorner.vue";
+import CentralStage from "@/Components/Slider/CentralStage.vue";
 
 const props = defineProps<{
         layout: {
@@ -32,7 +28,7 @@ const props = defineProps<{
 
             },
             link?:string,
-            slides: [
+            slides: Array<
                 {
                     id: string,
                     imageSrc: string
@@ -55,7 +51,7 @@ const props = defineProps<{
                     }
 
                 }
-            ],
+            >,
 
         }
 
@@ -106,7 +102,7 @@ const filteredNulls = (corners) => {
             <SwiperSlide v-for="slide in layout.slides" :key="slide.id">
                 <img :src="generateThumbnail(slide)" :alt="slide.imageAlt">
                 <SlideCorner v-for="(corner,position) in filteredNulls(slide.corners)" :position="position" :corner="corner"/>
-                <CentralStage :data="slide.centralStage" />
+                <CentralStage v-if="slide.centralStage" :data="slide.centralStage" />
             </SwiperSlide>
         </Swiper>
         <SlideCorner class="z-50" v-for="(corner,position) in filteredNulls(layout.common.corners)" :position="position" :corner="corner"/>
