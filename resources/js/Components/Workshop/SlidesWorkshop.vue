@@ -44,10 +44,9 @@
     for (const set of fileInput.value.slide ) {
       if (set && set instanceof File) {
         setData.push({
-          file: set,
           link: { label: "open", target: "" },
           imageAlt: set.name,
-          imageSrc: 'img',
+          imageSrc: set,
           id: uuidv4()
         })
       }

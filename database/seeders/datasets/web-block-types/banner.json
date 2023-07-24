@@ -20,6 +20,7 @@
             "slides": [
                 {
                     "id": 1,
+                    "visibility" : true,
                     "imageSrc": "incentives-07-hero.jpg",
                     "imageAlt": "Front of men's Basic Tee in sienna",
                     "link": null,
@@ -41,6 +42,7 @@
                 },
                 {
                     "id": 2,
+                    "visibility" : true,
                     "imageSrc": "product-page-01-featured-product-shot.jpg",
                     "imageAlt": "Lorem ipsum dolor sit amet consectetur.",
                     "corners": {
@@ -63,6 +65,7 @@
                 },
                 {
                     "id": 3,
+                    "visibility" : true,
                     "imageSrc": "product-page-03-product-01.jpg",
                     "imageAlt": "Lorem ipsum dolor Basic Tee in sienna",
                     "corners": {
@@ -82,6 +85,7 @@
                 },
                 {
                     "id": 4,
+                    "visibility" : false,
                     "imageSrc": "product-page-05-product-01.jpg",
                     "imageAlt": "Continuous infinite slider",
                     "link": "google.com",
