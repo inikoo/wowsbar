@@ -8,10 +8,13 @@
 
 import {computed} from 'vue'
 import SlideControls from "@/Components/Slider/Corners/SlideControls.vue";
+import LinkButton from "@/Components/Slider/Corners/LinkButton.vue";
+import CornerText from "@/Components/Slider/Corners/CornerText.vue";
+import CornerFooter from "@/Components/Slider/Corners/CornerFooter.vue";
 
 const props = defineProps<{
     position: string,
-    corner?: {
+    corner: {
         type: string,
         data?: object
     },
