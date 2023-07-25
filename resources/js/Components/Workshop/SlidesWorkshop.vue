@@ -271,7 +271,7 @@ const setFormValue=()=>{
                 <div class="overflow-hidden whitespace-nowrap overflow-ellipsis">{{ generateName(file) }}</div>
               </div>
               <div class="flex justify-center items-center m-2.5">
-                <button class="ml-2" type="button" @click="visible(slides.indexOf(file))" title="Remove file">
+                <button :class="['ml-2', file.visibility  ?  'text-orange-500' :  '']" type="button" @click="visible(slides.indexOf(file))" title="Remove file">
                   <font-awesome-icon :icon="['fal', 'eye']" />
                 </button>
                 <button class="ml-2 text-rose-500" type="button" @click="remove(slides.indexOf(file))" title="Remove file">
