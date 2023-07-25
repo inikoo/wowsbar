@@ -221,15 +221,13 @@ onMounted(() => {
 </script>
 
 <template>
-    <div class="fixed top-0 left-0 w-screen h-screen" :class="[useAppearanceStore().darkMode ? 'bg-dark3' : 'bg-light1']" />
+    <div class="fixed top-0 left-0 w-screen h-screen dark:bg-gray-700 bg-gray-50" />
     <div class="relative min-h-full transition-all duration-200 ease-in-out"
         :class="[Object.values(layout.rightSidebar).some(value => value === true) ? 'mr-44' : 'mr-0']"
     >
 
         <!-- TopBar -->
-        <Disclosure as="nav" class=" fixed top-0 z-20 w-full" v-slot="{ open }"
-        :class="[useAppearanceStore().darkMode ? 'bg-dark2 text-light3' : 'bg-light2 text-dark3']"
-        >
+        <Disclosure as="nav" class=" fixed top-0 z-20 w-full bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-200" v-slot="{ open }">
             <div class="px-0">
                 <div class="flex h-11 lg:h-10 flex-shrink-0 border-b border-gray-200 ">
                     <div class="flex flex-1">
@@ -368,9 +366,7 @@ onMounted(() => {
         </div>
 
         <!-- Main Content -->
-        <main class="relative flex flex-col pt-16 pb-5 ml-0 md:ml-10 xl:ml-56"
-            :class="[useAppearanceStore().darkMode ? 'bg-dark3 text-light4' : 'bg-light1 text-dark4']"
-        >
+        <main class="relative flex flex-col pt-16 pb-5 ml-0 md:ml-10 xl:ml-56 bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-400">
             <slot />
         </main>
 
@@ -388,10 +384,12 @@ onMounted(() => {
 
 <style lang="scss">
 .tabNavigationActive {
-    @apply bg-gray-200/80 border-orange-500 text-gray-700
+    // Current active state
+    @apply bg-gray-200/80 border-orange-500 text-gray-700 dark:text-gray-300
 }
 
 .tabNavigation {
-    @apply border-transparent hover:bg-white text-dark3
+    // State not active
+    @apply border-transparent hover:bg-white dark:hover:bg-gray-600 text-gray-700 dark:text-gray-400
 }
 </style>
