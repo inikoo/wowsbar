@@ -25,14 +25,14 @@ const layout = useLayoutStore()
 <template>
     <Link
         v-for="menu in layout.navigation?.[layout.currentModule]?.topMenu.subSections" :href="route(menu.route.name)"
-        class="group relative text-gray-700 group text-sm flex justify-end items-center cursor-pointer py-1 gap-x-2 px-4 md:px-4 lg:px-4"
+        class="group relative text-gray-700 dark:text-gray-400 group text-sm flex justify-end items-center cursor-pointer py-1 gap-x-2 px-4 md:px-4 lg:px-4"
         :title="capitalize(menu.tooltip??menu.label??'')">
         <div class="absolute h-0.5 rounded-full -bottom-1.5 left-[50%] translate-x-[-50%] mx-auto transition-all duration-200 ease-in-out"
              :class="[route(layout.currentRoute, route().v().params).includes(route(menu.route.name)) ? 'bg-orange-500 w-5/6' : 'bg-gray-400 w-0 group-hover:w-3/6']"
-        />
+    />
         <FontAwesomeIcon :icon="menu.icon"
-                         class="h-5 lg:h-3.5 w-auto group-hover:opacity-100 opacity-70 transition duration-100 ease-in-out"
-                         aria-hidden="true"/>
+            class="h-5 lg:h-3.5 w-auto group-hover:opacity-100 opacity-70 transition duration-100 ease-in-out"
+            aria-hidden="true"/>
         <span v-if="menu.label" class="hidden lg:inline capitalize whitespace-nowrap">{{ menu.label }}</span>
     </Link>
 </template>

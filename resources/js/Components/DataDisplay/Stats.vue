@@ -16,9 +16,9 @@ defineProps(['stats']);
 
     <div>
         <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
-            <div v-for="item in stats" :key="item.name" class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
-                <dt class="truncate text-sm font-medium text-gray-500 capitalize">{{ item.name }}</dt>
-                <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-900">
+            <div v-for="item in stats" :key="item.name" class="overflow-hidden rounded-lg bg-white dark:bg-gray-600 px-4 py-5 shadow sm:p-6">
+                <dt class="truncate text-sm font-medium text-gray-500 dark:text-gray-400 capitalize">{{ item.name }}</dt>
+                <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-800 dark:text-gray-300">
                     <Link class="special-underline" v-if="item.href" :href="route(item.href[0])">{{ item.stat }}</Link>
                     <span v-else>{{ item.stat }}</span>
                 </dd>

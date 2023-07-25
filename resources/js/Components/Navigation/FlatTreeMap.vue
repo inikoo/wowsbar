@@ -20,19 +20,19 @@ const locale = useLocaleStore();
 <template>
     <!-- {{ nodes[0] }} -->
     <nav aria-label="Progress" class="py-1 md:py-0">
-        <ol v-if="nodes" role="list" class="divide-y divide-gray-300 rounded-md border border-gray-300 md:flex md:divide-y-0">
+        <ol v-if="nodes" role="list" class="divide-y divide-gray-300 dark:divide-gray-500 rounded-md border border-gray-300 dark:border-gray-500 md:flex md:divide-y-0">
             <li v-for="(node, nodeIdx) in nodes" :key="node.name" class="relative flex flex-1 items-center">
                 <!-- Main Tree -->
                 <Link :href="route(node.href[0], node.href[1])" class="group flex-1 items-center">
                     <div class="flex items-center px-4 text-lg xl:px-6 py-4 font-medium gap-x-4">
-                            <FontAwesomeIcon size="lg" :icon="node.icon" class="flex-shrink-0 text-gray-400" aria-hidden="true" />
-                            <p class="md:leading-none md:text-sm lg:text-base inline capitalize font-medium text-gray-500 group-hover:text-gray-600">
-                                <span class="hidden lg:inline group-hover:text-orange-400">{{ node.name }}</span>
-                                <span class="inline lg:hidden group-hover:text-orange-400">{{ node.shortName ?? node.name }}</span>
+                            <FontAwesomeIcon size="lg" :icon="node.icon" class="flex-shrink-0 text-gray-400 dark:text-gray-500" aria-hidden="true" />
+                            <p class="md:leading-none md:text-sm lg:text-base inline capitalize font-medium text-gray-500 group-hover:text-gray-600 dark:text-gray-400 dark:group-hover:text-gray-300">
+                                <span class="hidden lg:inline">{{ node.name }}</span>
+                                <span class="inline lg:hidden">{{ node.shortName ?? node.name }}</span>
                             </p>
                             
                             <!-- Bars and count -->
-                            <span v-if="node.index" class="font-medium text-gray-500 group-hover:text-gray-600 whitespace-nowrap">
+                            <span v-if="node.index" class="font-medium whitespace-nowrap text-gray-400">
                                 <FontAwesomeIcon icon="fal fa-bars" class="mr-1" />
                                 <span v-if="node.index.number">{{ locale.number(node.index.number) }}</span>
                                 <FontAwesomeIcon v-else icon="fal fa-empty-set" />

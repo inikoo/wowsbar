@@ -14,8 +14,6 @@ import { faChevronRight } from "@/../private/pro-regular-svg-icons";
 import { faSparkles, faArrowFromLeft, faArrowLeft, faArrowRight } from "@/../private/pro-solid-svg-icons";
 import { capitalize } from "@/Composables/capitalize"
 
-import { useAppearanceStore } from "@/Stores/appearance"
-
 library.add(faSparkles, faArrowFromLeft, faArrowLeft, faArrowRight,faChevronRight);
 
 const props = defineProps<{
@@ -94,8 +92,7 @@ router.on('navigate', (event) => {
 <template>
     <div v-if="displayBreadcrumbs" class="md:pr-10 xl:pr-56">
         <nav
-            class="py-4 md:py-0 flex border-b h-6  text-sm"
-            :class="[useAppearanceStore().darkMode ? 'text-light3 border-darklight' : 'bg-white text-dark3 border-light3']"
+            class="py-4 md:py-0 flex border-b h-6 text-sm bg-white text-gray-700 border-gray-200 dark:bg-gray-700 dark:text-gray-400 dark:border-gray-500"
             aria-label="Breadcrumb">
             <!-- Breadcrumb -->
             <ol role="list" class="w-full mx-auto px-4 flex">
@@ -123,7 +120,7 @@ router.on('navigate', (event) => {
                                 aria-hidden="true" />
                             <component
                                 :is="breadcrumb.simple.route ? Link : 'span'"
-                                :class="'hover:text-gray-700' || ''"
+                                :class="'hover:text-gray-700 dark:hover:text-gray-300' || ''"
                                 :href="
 									breadcrumb.simple.route
 										? route(

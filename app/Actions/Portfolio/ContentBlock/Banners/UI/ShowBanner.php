@@ -50,6 +50,7 @@ class ShowBanner extends InertiaAction
     public function htmlResponse(ContentBlock $banner, ActionRequest $request): Response
     {
 
+
         return Inertia::render(
             'Portfolio/Banner',
             [
@@ -100,8 +101,8 @@ class ShowBanner extends InertiaAction
                     'navigation' => BannerTabsEnum::navigation()
                 ],
                 WebsiteTabsEnum::SHOWCASE->value => $this->tab == WebsiteTabsEnum::SHOWCASE->value ?
-                    fn () => $banner
-                    : Inertia::lazy(fn () => $banner),
+                    fn () => $banner->compiledLayout()
+                    : Inertia::lazy(fn () => $banner->compiledLayout()),
 
                 WebsiteTabsEnum::CHANGELOG->value => $this->tab == WebsiteTabsEnum::CHANGELOG->value ?
                     fn () => HistoryResource::collection(IndexHistories::run($banner))

@@ -10,6 +10,7 @@ namespace App\Models\Portfolio;
 use App\Actions\Portfolio\ContentBlock\Elasticsearch\DeleteContentBlockElasticsearch;
 use App\Actions\Portfolio\ContentBlock\Elasticsearch\StoreContentBlockElasticsearch;
 use App\Concerns\BelongsToTenant;
+use App\Http\Resources\Portfolio\ContentBlockComponentResource;
 use App\Models\Traits\HasUniversalSearch;
 use App\Models\Web\WebBlock;
 use Illuminate\Database\Eloquent\Builder;
@@ -28,6 +29,7 @@ use Spatie\Sluggable\SlugOptions;
  * App\Models\Portfolio\ContentBlock
  *
  * @property int $id
+ * @property string $ulid
  * @property int $tenant_id
  * @property int $web_block_type_id
  * @property int $web_block_id
@@ -40,6 +42,10 @@ use Spatie\Sluggable\SlugOptions;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Portfolio\ContentBlockComponent> $contentBlockComponents
+ * @property-read int|null $content_block_components_count
+ * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \App\Models\Media\Media> $media
+ * @property-read int|null $media_count
  * @property-read \App\Models\Tenancy\Tenant $tenant
  * @property-read \App\Models\Search\UniversalSearch|null $universalSearch
  * @property-read WebBlock $webBlock
@@ -59,6 +65,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|ContentBlock whereName($value)
  * @method static Builder|ContentBlock whereSlug($value)
  * @method static Builder|ContentBlock whereTenantId($value)
+ * @method static Builder|ContentBlock whereUlid($value)
  * @method static Builder|ContentBlock whereUpdatedAt($value)
  * @method static Builder|ContentBlock whereWebBlockId($value)
  * @method static Builder|ContentBlock whereWebBlockTypeId($value)
@@ -122,8 +129,9 @@ class ContentBlock extends Model implements HasMedia
 
     public function compiledLayout(): array
     {
-
-        return $this->layout;
+        $compiledLayout=$this->layout;
+        data_set($compiledLayout,'components',json_decode(ContentBlockComponentResource::collection($this->contentBlockComponents)->toJson(),true));
+        return $compiledLayout;
 
     }
 

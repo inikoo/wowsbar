@@ -34,13 +34,11 @@ const props = defineProps<{
         }
     }
 }>()
-
-
-
+console.log(props.data)
 </script>
 
 
 <template>
-    <Slider :layout="data.layout" />
+    <Slider :data="data" />
 </template>
 
