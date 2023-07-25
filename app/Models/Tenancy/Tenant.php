@@ -47,7 +47,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read int|null $content_blocks_count
  * @property-read Currency $currency
  * @property-read Media|null $logo
- * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \Spatie\MediaLibrary\MediaCollections\Models\Media> $media
+ * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, Media> $media
  * @property-read int|null $media_count
  * @property-read \App\Models\Tenancy\TenantStats|null $stats
  * @property-read \Illuminate\Database\Eloquent\Collection<int, User> $users

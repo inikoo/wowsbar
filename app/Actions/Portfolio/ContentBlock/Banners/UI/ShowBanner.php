@@ -51,7 +51,6 @@ class ShowBanner extends InertiaAction
     {
 
 
-
         return Inertia::render(
             'Portfolio/Banner',
             [

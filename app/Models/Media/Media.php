@@ -32,6 +32,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media as BaseMedia;
  * @property array $custom_properties
  * @property array $generated_conversions
  * @property array $responsive_images
+ * @property string|null $checksum
  * @property int|null $order_column
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -44,6 +45,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media as BaseMedia;
  * @method static Builder|Media newQuery()
  * @method static Builder|Media ordered()
  * @method static Builder|Media query()
+ * @method static Builder|Media whereChecksum($value)
  * @method static Builder|Media whereCollectionName($value)
  * @method static Builder|Media whereConversionsDisk($value)
  * @method static Builder|Media whereCreatedAt($value)
