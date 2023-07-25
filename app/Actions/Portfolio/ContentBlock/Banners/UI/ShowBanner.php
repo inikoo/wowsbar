@@ -88,7 +88,7 @@ class ShowBanner extends InertiaAction
                         ] : false,
                         /*$this->canDelete ? [
                             'type'  => 'button',
-                            'style' => 'delete',
+                            'style' => 'negative',
                             'route' => [
                                 'name'       => 'websites.remove',
                                 'parameters' => array_values($this->originalParameters)
