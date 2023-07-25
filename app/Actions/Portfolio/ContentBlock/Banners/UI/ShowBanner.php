@@ -9,6 +9,7 @@ namespace App\Actions\Portfolio\ContentBlock\Banners\UI;
 
 use App\Actions\Helpers\History\IndexHistories;
 use App\Actions\InertiaAction;
+use App\Actions\Portfolio\Website\UI\ShowWebsite;
 use App\Actions\UI\Dashboard\ShowDashboard;
 use App\Enums\UI\BannerTabsEnum;
 use App\Enums\UI\WebsiteTabsEnum;
@@ -36,15 +37,16 @@ class ShowBanner extends InertiaAction
     public function inTenant(ContentBlock $banner, ActionRequest $request): ContentBlock
     {
         $this->initialisation($request)->withTab(BannerTabsEnum::values());
+
         return $banner;
     }
 
     public function inWebsite(Website $website, ContentBlock $banner, ActionRequest $request): ContentBlock
     {
         $this->initialisation($request)->withTab(BannerTabsEnum::values());
+
         return $banner;
     }
-
 
 
     public function htmlResponse(ContentBlock $banner, ActionRequest $request): Response
@@ -53,78 +55,79 @@ class ShowBanner extends InertiaAction
         return Inertia::render(
             'Portfolio/Banner',
             [
-                'breadcrumbs' => $this->getBreadcrumbs(
+                'breadcrumbs'                    => $this->getBreadcrumbs(
                     $request->route()->getName(),
                     $request->route()->parameters
                 ),
-                'title'       => $banner->code,
-                'pageHead'    => [
+                'title'                          => $banner->code,
+                'pageHead'                       => [
                     'title'   => $banner->name,
                     'icon'    => [
                         'title' => __('banner'),
                         'icon'  => 'fal fa-window-maximize'
                     ],
                     'actions' => [
-                        // $this->canEdit ? [
-                        //     'type'  => 'button',
-                        //     'style' => 'tertiary',
-                        //     'label' => __('settings'),
-                        //     'icon'  => ["fal", "fa-sliders-h"],
-                        //     'route' => [
-                        //         'name'       => preg_replace('/show$/', 'edit', $this->routeName),
-                        //         'parameters' => array_values($this->originalParameters)
-                        //     ]
-                        // ] : false,
                         $this->canEdit ? [
                             'type'  => 'button',
                             'style' => 'tertiary',
                             'label' => __('workshop'),
                             'icon'  => ["fal", "fa-drafting-compass"],
                             'route' => [
-                                'name'       => preg_replace('/show$/', 'workshop', $this->routeName),
+                                'name'       => preg_replace('/show$/', 'workshop', $request->route()->getName()),
                                 'parameters' => array_values($this->originalParameters)
                             ]
                         ] : false,
-                        /*$this->canDelete ? [
+                        $this->canDelete ? [
                             'type'  => 'button',
-                            'style' => 'negative',
+                            'style' => 'delete',
                             'route' => [
-                                'name'       => 'websites.remove',
+                                'name'       => preg_replace('/show$/', 'remove', $request->route()->getName()),
                                 'parameters' => array_values($this->originalParameters)
                             ]
-                        ] : false */
+                        ] : false
                     ],
                 ],
-                'tabs'        => [
+                'tabs'                           => [
                     'current'    => $this->tab,
                     'navigation' => BannerTabsEnum::navigation()
                 ],
                 WebsiteTabsEnum::SHOWCASE->value => $this->tab == WebsiteTabsEnum::SHOWCASE->value ?
-                    fn () => $banner->compiledLayout()
-                    : Inertia::lazy(fn () => $banner->compiledLayout()),
+                    fn() => $banner->compiledLayout()
+                    : Inertia::lazy(fn() => $banner->compiledLayout()),
 
                 WebsiteTabsEnum::CHANGELOG->value => $this->tab == WebsiteTabsEnum::CHANGELOG->value ?
-                    fn () => HistoryResource::collection(IndexHistories::run($banner))
-                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistories::run($banner)))
+                    fn() => HistoryResource::collection(IndexHistories::run($banner))
+                    : Inertia::lazy(fn() => HistoryResource::collection(IndexHistories::run($banner)))
 
             ]
         )->table(IndexHistories::make()->tableStructure());
     }
 
-    /** @noinspection PhpUnusedParameterInspection */
-    public function getBreadcrumbs(string $routeName, array $routeParameters): array
+    public function getBreadcrumbs(string $routeName, array $routeParameters, string $suffix = null): array
     {
-        $headCrumb = function (array $routeParameters = []) {
+        $headCrumb = function (string $type, ContentBlock $banner, array $routeParameters, string $suffix) {
             return [
                 [
-                    'type'   => 'simple',
-                    'simple' => [
-                        'route' => $routeParameters,
-                        'label' => __('banners'),
-                        'icon'  => 'fal fa-bars'
+                    'type'           => $type,
+                    'modelWithIndex' => [
+                        'index' => [
+                            'route' => $routeParameters['index'],
+                            'label' => __('websites')
+                        ],
+                        'model' => [
+                            'route' => $routeParameters['model'],
+                            'label' => $banner->name,
+                        ],
+
                     ],
+                    'simple'         => [
+                        'route' => $routeParameters['model'],
+                        'label' => $banner->name
+                    ],
+                    'suffix' => $suffix
                 ],
             ];
+
         };
 
         return match ($routeName) {
@@ -132,10 +135,41 @@ class ShowBanner extends InertiaAction
             array_merge(
                 ShowDashboard::make()->getBreadcrumbs(),
                 $headCrumb(
+                    'modelWithIndex',
+                    $routeParameters['banner'],
                     [
-                        'name' => 'portfolio.banners.index',
-                        null
-                    ]
+                        'index' => [
+                            'name'       => 'portfolio.banners.index',
+                            'parameters' => []
+                        ],
+                        'model' => [
+                            'name'       => 'portfolio.banners.show',
+                            'parameters' => [$routeParameters['banner']->slug]
+                        ]
+                    ],
+                    $suffix
+                ),
+            ),
+            'portfolio.websites.show.banners.show' =>
+            array_merge(
+                ShowWebsite::make()->getBreadcrumbs(
+                    'portfolio.websites.show',
+                    ['website' => $routeParameters['website']]
+                ),
+                $headCrumb(
+                    'modelWithIndex',
+                    $routeParameters['banner'],
+                    [
+                        'index' => [
+                            'name'       => 'portfolio.websites.show.banners.index',
+                            'parameters' => [$routeParameters['website']->slug]
+                        ],
+                        'model' => [
+                            'name'       => 'portfolio.websites.show.banners.show',
+                            'parameters' => $routeParameters
+                        ]
+                    ],
+                    $suffix
                 ),
             ),
 

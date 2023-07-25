@@ -72,7 +72,7 @@ class ShowWebsite extends InertiaAction
                             'style' => 'tertiary',
                             'label' => __('edit'),
                             'route' => [
-                                'name'       => preg_replace('/show$/', 'edit', $this->routeName),
+                                'name'       => preg_replace('/show$/', 'edit', $request->route()->getName()),
                                 'parameters' => array_values($this->originalParameters)
                             ]
                         ] : false,
@@ -148,7 +148,6 @@ class ShowWebsite extends InertiaAction
         $headCrumb = function (string $type, Website $website, array $routeParameters, string $suffix) {
             return [
                 [
-
                     'type'           => $type,
                     'modelWithIndex' => [
                         'index' => [
@@ -165,10 +164,7 @@ class ShowWebsite extends InertiaAction
                         'route' => $routeParameters['model'],
                         'label' => $website->name
                     ],
-
-
                     'suffix' => $suffix
-
                 ],
             ];
         };

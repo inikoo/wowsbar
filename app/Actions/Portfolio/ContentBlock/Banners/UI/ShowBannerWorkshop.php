@@ -76,7 +76,7 @@ class ShowBannerWorkshop extends InertiaAction
                             'style'      => 'tertiary',
                             'label'      => __('Exit workshop'),
                             'route'      => [
-                                'name'       => preg_replace('/workshop$/', 'show', $this->routeName),
+                                'name'       => preg_replace('/workshop$/', 'show', $request->route()->getName()),
                                 'parameters' => array_values($this->originalParameters),
                             ]
                         ],
@@ -86,7 +86,9 @@ class ShowBannerWorkshop extends InertiaAction
                             'label'      => __('Save'),
                             'route'      => [
                                 'name'       => 'models.content-block.update',
-                                'parameters' => $banner->slug
+                                'parameters' => [
+                                    'contentBlock'=>$banner
+                                ]
                             ],
                             'method'      => 'patch',
                         ]
@@ -101,61 +103,15 @@ class ShowBannerWorkshop extends InertiaAction
     }
 
 
-    public function getBreadcrumbs(string $routeName, array $routeParameters, string $suffix = ''): array
+    public function getBreadcrumbs(string $routeName, array $routeParameters): array
     {
-        $headCrumb = function (string $type, ContentBlock $banner, array $routeParameters, string $suffix) {
-            return [
-                [
 
-                    'type'           => $type,
-                    'modelWithIndex' => [
-                        'index' => [
-                            'route' => $routeParameters['index'],
-                            'label' => __('banners')
-                        ],
-                        'model' => [
-                            'route' => $routeParameters['model'],
-                            'label' => $banner->name,
-                        ],
+        return ShowBanner::make()->getBreadcrumbs(
+            preg_replace('/workshop$/', 'show', $routeName),
+            $routeParameters,
+            '('.__('Workshop').')'
+        );
 
-                    ],
-                    'simple'         => [
-                        'route' => $routeParameters['model'],
-                        'label' => $banner->name
-                    ],
-
-
-                    'suffix' => $suffix
-
-                ],
-            ];
-        };
-
-
-        return match ($routeName) {
-            'web.banners.workshop' =>
-
-            array_merge(
-                ShowDashboard::make()->getBreadcrumbs(),
-                $headCrumb(
-                    'modelWithIndex',
-                    $routeParameters['banner'],
-                    [
-                        'index' => [
-                            'name'       => 'web.banners.index',
-                            'parameters' => []
-                        ],
-                        'model' => [
-                            'name'       => 'web.banners.show',
-                            'parameters' => [$routeParameters['banner']->slug]
-                        ]
-                    ],
-                    $suffix
-                ),
-            ),
-
-            default => []
-        };
     }
 
     public function getPrevious(ContentBlock $banner, ActionRequest $request): ?array

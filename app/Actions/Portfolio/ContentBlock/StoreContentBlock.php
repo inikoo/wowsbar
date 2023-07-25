@@ -7,6 +7,7 @@
 
 namespace App\Actions\Portfolio\ContentBlock;
 
+use App\Actions\Portfolio\ContentBlock\Banners\UI\ParseContentBlockLayout;
 use App\Actions\Portfolio\ContentBlock\Elasticsearch\StoreContentBlockElasticsearch;
 use App\Actions\Portfolio\ContentBlock\Hydrators\ContentBlockHydrateUniversalSearch;
 use App\Actions\Portfolio\ContentBlockComponent\StoreContentBlockComponent;

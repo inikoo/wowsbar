@@ -47,7 +47,7 @@ class CreateBanner extends InertiaAction
                             'type'  => 'button',
                             'style' => 'tertiary',
                             'route' => [
-                                'name'       => preg_replace('/create$/', 'index', $this->routeName),
+                                'name'       => preg_replace('/create$/', 'index', $request->route()->getName()),
                                 'parameters' => array_values($this->originalParameters)
                             ]
                         ]

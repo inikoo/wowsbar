@@ -49,7 +49,10 @@ class RemoveWebsite extends InertiaAction
             'RemoveModel',
             [
                 'title'       => __('delete employee'),
-                'breadcrumbs' => $this->getBreadcrumbs(),
+                'breadcrumbs' => $this->getBreadcrumbs(
+                    $request->route()->getName(),
+                    $request->route()->parameters
+                ),
                 'pageHead'    => [
                     'icon'  =>
                         [
@@ -62,7 +65,7 @@ class RemoveWebsite extends InertiaAction
                             'type'  => 'button',
                             'style' => 'cancel',
                             'route' => [
-                                'name'       => preg_replace('/remove$/', 'show', $this->routeName),
+                                'name'       => preg_replace('/remove$/', 'show', $request->route()->getName()),
                                 'parameters' => $website->slug
                             ]
                         ]
@@ -79,8 +82,8 @@ class RemoveWebsite extends InertiaAction
     }
 
 
-    public function getBreadcrumbs(): array
+    public function getBreadcrumbs(string $routeName, array $routeParameters): array
     {
-        return ShowWebsite::make()->getBreadcrumbs($this->routeName, $this->originalParameters, suffix: '('.__('deleting').')');
+        return ShowWebsite::make()->getBreadcrumbs($routeName, $routeParameters, suffix: '('.__('deleting').')');
     }
 }

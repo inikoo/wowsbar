@@ -32,10 +32,8 @@ const getActionLabel = function (action) {
                 return trans("save")
             case "exitEdit":
                 return trans("exit edit")
-
             case "cancel":
                 return trans("cancel")
-
             case "delete":
                 return trans("delete")
             case "clearMulti":
@@ -60,19 +58,14 @@ const getActionIcon = (action) => {
             case "exit":
             case "exitEdit":
                 return ["far", "fa-arrow-left"]
-
             case "create":
                 return ["fas", "fa-plus"]
-
             case "cancel":
                 return ["far", "fa-arrow-left"]
-
             case "delete":
                 return ["far", "fa-trash-alt"]
-
             case "withMulti":
                 return ["far", "fa-border-all"]
-
             default:
                 return null
         }
