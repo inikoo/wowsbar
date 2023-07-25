@@ -15,7 +15,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
@@ -60,13 +63,15 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|ContentBlock withoutTrashed()
  * @mixin \Eloquent
  */
-class ContentBlock extends Model
+class ContentBlock extends Model implements HasMedia
 {
     use SoftDeletes;
     use HasSlug;
     use HasFactory;
     use BelongsToTenant;
     use HasUniversalSearch;
+    use InteractsWithMedia;
+
 
     protected $casts = [
         'layout' => 'array',
@@ -101,10 +106,22 @@ class ContentBlock extends Model
         return $this->belongsTo(WebBlock::class);
     }
 
+    public function contentBlockComponents(): HasMany
+    {
+        return $this->hasMany(ContentBlockComponent::class);
+    }
+
     public function website(): BelongsToMany
     {
         return $this->belongsToMany(Website::class)->using(ContentBlockWebsite::class)
             ->withTimestamps();
+    }
+
+    public function compiledLayout(): array
+    {
+
+        return $this->layout;
+
     }
 
 }

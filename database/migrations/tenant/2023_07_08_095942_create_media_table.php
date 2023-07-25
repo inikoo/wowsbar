@@ -14,10 +14,9 @@ return new class () extends Migration {
     {
         Schema::create('media', function (Blueprint $table) {
             $table->id();
-
             $table->morphs('model');
             $table->uuid()->nullable()->unique();
-            $table->string('collection_name');
+            $table->string('collection_name')->index();
             $table->string('name');
             $table->string('file_name');
             $table->string('mime_type')->nullable();
@@ -28,8 +27,8 @@ return new class () extends Migration {
             $table->json('custom_properties');
             $table->json('generated_conversions');
             $table->json('responsive_images');
+            $table->string('checksum')->index()->nullable();
             $table->unsignedInteger('order_column')->nullable()->index();
-
             $table->nullableTimestamps();
         });
     }

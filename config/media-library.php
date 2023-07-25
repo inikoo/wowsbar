@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Media\Media;
+
 return [
 
     /*
@@ -34,7 +36,7 @@ return [
     /*
      * The fully qualified class name of the media model.
      */
-    'media_model' => Spatie\MediaLibrary\MediaCollections\Models\Media::class,
+    'media_model' => Media::class,
 
     /*
      * The fully qualified class name of the model used for temporary uploads.

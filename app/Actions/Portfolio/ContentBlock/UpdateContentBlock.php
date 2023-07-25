@@ -50,6 +50,8 @@ class UpdateContentBlock
     {
         $request->validate();
 
+        dd($request->all());
+
         return $this->handle($contentBlock, $request->all());
     }
 
