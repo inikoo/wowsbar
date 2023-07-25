@@ -50,7 +50,6 @@ class ShowBanner extends InertiaAction
     public function htmlResponse(ContentBlock $banner, ActionRequest $request): Response
     {
 
-
         return Inertia::render(
             'Portfolio/Banner',
             [

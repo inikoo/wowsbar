@@ -23,7 +23,7 @@ class StoreContentBlockComponent
 
         $imageData=Arr::pull($modelData,'imageData');
 
-        data_fill($modelData,'id',Str::ulid());
+        data_fill($modelData,'ulid',Str::ulid());
         /** @var ContentBlockComponent $contentBlockComponent */
         $contentBlockComponent= $contentBlock->contentBlockComponents()->create($modelData);
 

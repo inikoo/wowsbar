@@ -18,6 +18,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * App\Models\Portfolio\ContentBlockComponent
  *
  * @property int $id
+ * @property string|null $ulid
  * @property ContentBlockComponentTypeEnum $type
  * @property int $tenant_id
  * @property int $content_block_id
@@ -41,6 +42,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @method static \Illuminate\Database\Eloquent\Builder|ContentBlockComponent whereLayout($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ContentBlockComponent whereTenantId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ContentBlockComponent whereType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ContentBlockComponent whereUlid($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ContentBlockComponent whereUpdatedAt($value)
  * @mixin \Eloquent
  */

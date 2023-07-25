@@ -15,7 +15,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('content_block_components', function (Blueprint $table) {
-            $table->ulid('id');
+            $table->mediumIncrements('id');
+            $table->ulid()->index()->nullable();
             $table->string('type')->index();
             $table->unsignedSmallInteger('tenant_id')->index();
             $table->foreign('tenant_id')->references('id')->on('tenants');
