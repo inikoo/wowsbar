@@ -71,6 +71,7 @@ class StoreContentBlock
         data_set($modelData, 'tenant_id', app('currentTenant')->id);
         data_set($modelData, 'layout', $layout);
         data_set($modelData, 'data.website_slug', $website->slug);
+        data_set($modelData, 'ulid', Str::ulid());
 
 
 
