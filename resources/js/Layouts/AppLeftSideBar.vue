@@ -49,11 +49,11 @@ const handleKey = (event: any) => {
 </script>
 
 <template>
-	<div class="w-8/12 mt-11 fixed md:border-r md:border-gray-200 md:flex md:flex-col md:inset-y-0 md:w-10 lg:mt-10 xl:w-56
+	<div class="w-8/12 mt-11 fixed md:flex md:flex-col md:inset-y-0 md:w-10 lg:mt-10 xl:w-56
 		bg-gray-100 dark:bg-gray-800 dark:text-gray-100"
 		@mouseenter="isHover = true" @mouseleave="isHover = false"
 	>
-		<div class="flex flex-grow flex-col h-full overflow-y-auto custom-hide-scrollbar border-r border-gray-200 pb-4">
+		<div class="flex flex-grow flex-col h-full overflow-y-auto custom-hide-scrollbar border-r border-gray-200 dark:border-gray-500 pb-4">
 			<Link :href="route('dashboard.show')" class="flex flex-col justify-center text-gray-700 font-logo md:hidden py-3 text-center gap-y-2">
 				<img class="h-6" :src="`/media/${layout.tenant.logo_id}`" :alt="layout.tenant.code" />
 				<span>{{ layout.tenant.name }}</span>

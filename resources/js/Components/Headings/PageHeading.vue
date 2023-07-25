@@ -142,7 +142,7 @@ const getActionIcon = (action) => {
                     <Link v-for="button in action.buttons"
                         :href="route(button['route']['name'], button['route']['parameters'])" class="">
                         <Button size="xs" :style="button.style"
-                            class="capitalize inline-flex items-center rounded-none text-sm font-medium shadow-sm ">
+                            class="capitalize inline-flex items-center rounded-none  text-sm font-medium shadow-sm ">
                             <div class="">
                                 <FontAwesomeIcon v-if="getActionIcon(button)" :icon="getActionIcon(button)" class=""
                                     aria-hidden="true" />
@@ -154,7 +154,7 @@ const getActionIcon = (action) => {
             </span>
         </div>
     </div>
-    <hr />
+    <hr class="border-gray-300 dark:border-gray-500"/>
 </template>
 
 <style></style>
