@@ -21,6 +21,7 @@ class ContentBlockComponentResource extends JsonResource
 
         return [
             'id'     => $contentBlockComponent->id,
+            'ulid'     => $contentBlockComponent->ulid,
             'layout' => $contentBlockComponent->layout,
             'image_id'=>$contentBlockComponent->image_id,
             'image_source'=>route('media.show',$contentBlockComponent->image_id)

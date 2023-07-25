@@ -16,14 +16,11 @@ use App\Models\Tenancy\Tenant;
 use App\Models\Web\WebBlock;
 use App\Models\Web\WebBlockType;
 use Illuminate\Console\Command;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
-use phpDocumentor\Reflection\Types\Collection;
-use RecursiveArrayIterator;
-use RecursiveIteratorIterator;
+
 
 class StoreContentBlock
 {
@@ -34,23 +31,6 @@ class StoreContentBlock
     private bool $asAction = false;
 
 
-    function recursiveFind(array $haystack, $needle): array
-    {
-        $results   = [];
-        $iterator  = new RecursiveArrayIterator($haystack);
-        $recursive = new RecursiveIteratorIterator(
-            $iterator,
-            RecursiveIteratorIterator::SELF_FIRST
-        );
-        foreach ($recursive as $key => $value) {
-            if ($key === $needle) {
-                $results[] = $value;
-            }
-        }
-
-        return $results;
-    }
-
     public function handle(Website $website, WebBlock $webBlock, array $modelData): ContentBlock
     {
         $layout = $webBlock->blueprint;
@@ -58,13 +38,6 @@ class StoreContentBlock
         list($layout, $contentBlockComponents) = ParseContentBlockLayout::run($layout, $webBlock);
 
 
-        /*
-        $collection = collect($layout);
-        $result     = $collection->search(function ($value, $key) {
-            return $key === 'imageSrc';
-        });
-        */
-        //  dd($this->recursiveFind($layout,'imageSrc'));
 
 
         data_set($modelData, 'web_block_type_id', $webBlock->web_block_type_id);
