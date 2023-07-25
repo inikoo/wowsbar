@@ -7,6 +7,8 @@
 
 namespace App\Models\Portfolio;
 
+use App\Actions\Portfolio\ContentBlock\Elasticsearch\DeleteContentBlockElasticsearch;
+use App\Actions\Portfolio\ContentBlock\Elasticsearch\StoreContentBlockElasticsearch;
 use App\Concerns\BelongsToTenant;
 use App\Models\Traits\HasUniversalSearch;
 use App\Models\Web\WebBlock;
@@ -30,6 +32,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property int $web_block_type_id
  * @property int $web_block_id
  * @property string $slug
+ * @property string $ulid
  * @property string $code
  * @property string $name
  * @property array $layout
@@ -122,6 +125,19 @@ class ContentBlock extends Model implements HasMedia
 
         return $this->layout;
 
+    }
+
+    protected static function boot(): void
+    {
+        parent::boot();
+
+        static::created(function ($contentBlock) {
+            StoreContentBlockElasticsearch::run($contentBlock);
+        });
+
+        static::deleted(function ($contentBlock) {
+            DeleteContentBlockElasticsearch::run($contentBlock);
+        });
     }
 
 }
