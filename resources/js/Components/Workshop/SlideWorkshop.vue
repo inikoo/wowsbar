@@ -16,6 +16,7 @@ import Radio from '@/Components/Forms/Fields/Radio.vue'
 
 import InputWithAddOn from '@/Components/Forms/Fields/InputWithAddOn.vue'
 import SlideBackground from "@/Components/Workshop/Fileds/SlideBackground.vue";
+import Corners from "@/Components/Workshop/Fileds/Corners.vue";
 import {library} from "@fortawesome/fontawesome-svg-core";
 
 library.add(faImage,faExpandArrows,faAlignCenter)
@@ -33,7 +34,8 @@ const getComponent = (componentName) => {
         'inputWithAddOn': InputWithAddOn,
         'select': Select,
         'radio': Radio,
-        'slideBackground': SlideBackground
+        'slideBackground': SlideBackground,
+        'corners':Corners
     };
     return components[componentName]
 };

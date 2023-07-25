@@ -167,7 +167,7 @@ const blueprint = ref([
         fields: [
             {
                 name: 'top-left',
-                type: 'slideBackground',
+                type: 'corners',
                 label: null,
                 value: null
             },
