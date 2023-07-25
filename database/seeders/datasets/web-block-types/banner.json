@@ -2,116 +2,106 @@
     "slug": "banner",
     "name": "Banner",
     "blueprint": {
-            "delay": 5000,
-            "common": {
-                "corners": {
-
-                    "bottomLeft": {
-                        "type": "slideControls"
-                    }
-
-                },
-                "centralStage": {
-                    "title": null,
-                    "subtitle": null,
-                    "text": null
+        "delay": 5000,
+        "common": {
+            "corners": {
+                "bottomLeft": {
+                    "type": "slideControls"
                 }
             },
-            "images": [
-                {
-                    "source": "resources",
-                    "imageSrc": "incentives-07-hero.jpg"
+            "centralStage": {
+                "title": null,
+                "subtitle": null,
+                "text": null
+            }
+        },
+        "images": [
+            {
+                "source": "resources",
+                "imageSrc": "incentives-07-hero.jpg"
+            },
+            {
+                "source": "resources",
+                "imageSrc": "product-page-01-featured-product-shot.jpg"
+            },
+            {
+                "source": "resources",
+                "imageSrc": "product-page-03-product-01.jpg"
+            },
+            {
+                "source": "resources",
+                "imageSrc": "product-page-05-product-01.jpg"
+            }
+        ],
+        "components": [
+            {
+                "visibility": true,
+                "imageAlt": "Front of men's Basic Tee in sienna",
+                "link": null,
+                "corners": {
+                    "bottomRight": {
+                        "type": "linkButton",
+                        "data": {
+                            "text": "Browse Promo",
+                            "target": "#"
+                        }
+                    }
                 },
-                {
-                    "source": "resources",
-                    "imageSrc": "product-page-01-featured-product-shot.jpg"
-                },
-                {
-                    "source": "resources",
-                    "imageSrc": "product-page-03-product-01.jpg"
-                },
-                {
-                    "source": "resources",
-                    "imageSrc": "product-page-05-product-01.jpg"
+                "centralStage": {
+                    "title": "Welcome to the jungle",
+                    "subtitle": "Jungle is the best place to go and healing with your family"
                 }
-            ],
-            "slides": [
-                {
-                    "visibility" : true,
-
-                    "imageAlt": "Front of men's Basic Tee in sienna",
-                    "link": null,
-                    "corners": {
-                        "bottomRight": {
-                            "type": "linkButton",
-                            "data": {
-                                "text": "Browse Promo",
-                                "target": "#"
-                            }
-                        }
-
-                    },
-
-                    "centralStage": {
-                        "title": "Welcome to the jungle",
-                        "subtitle": "Jungle is the best place to go and healing with your family"
-                    }
-                },
-                {
-                    "visibility" : true,
-                    "imageAlt": "Lorem ipsum dolor sit amet consectetur.",
-                    "corners": {
-                        "topLeft": {
-                            "type": "cornerText",
-                            "data":  {
-                                "title": "Welcome to the jungle",
-                                "subtitle": "Jungle is the best place to go and healing with your family"
-                            }
-                        },
-                        "topRight": {
-                            "type": "footer",
-                            "data": {
-                                "text": "The banner officially disclaimed by XYZ Company."
-                            }
-                        }
-
-                    }
-
-                },
-                {
-                    "visibility" : true,
-                    "imageAlt": "Lorem ipsum dolor Basic Tee in sienna",
-                    "corners": {
-                        "bottomRight": {
-                            "type": "linkButton",
-                            "data": {
-                                "text": "Browse Promo",
-                                "target": "#"
-                            }
+            },
+            {
+                "visibility": true,
+                "imageAlt": "Lorem ipsum dolor sit amet consectetur.",
+                "corners": {
+                    "topLeft": {
+                        "type": "cornerText",
+                        "data": {
+                            "title": "Welcome to the jungle",
+                            "subtitle": "Jungle is the best place to go and healing with your family"
                         }
                     },
-
-                    "centralStage": {
-                        "title": "Welcome to the jungle",
-                        "subtitle": "Jungle is the best place to go and healing with your family"
-                    }
-                },
-                {
-                    "visibility" : false,
-                    "imageAlt": "Continuous infinite slider",
-                    "link": "google.com",
-
-                    "corners": {
-                        "topRight": {
-                            "type": "text",
-                            "data": {
-                                "text": "Hello"
-                            }
+                    "topRight": {
+                        "type": "footer",
+                        "data": {
+                            "text": "The banner officially disclaimed by XYZ Company."
                         }
                     }
                 }
-            ]
-
+            },
+            {
+                "visibility": true,
+                "imageAlt": "Lorem ipsum dolor Basic Tee in sienna",
+                "corners": {
+                    "bottomRight": {
+                        "type": "linkButton",
+                        "data": {
+                            "text": "Browse Promo",
+                            "target": "#"
+                        }
+                    }
+                },
+                "centralStage": {
+                    "title": "Welcome to the jungle",
+                    "subtitle": "Jungle is the best place to go and healing with your family"
+                }
+            },
+            {
+                "visibility": false,
+                "imageAlt": "Continuous infinite slider",
+                "link": "google.com",
+                "corners": {
+                    "topRight": {
+                        "type": "cornerText",
+                        "data": {
+                            "text": "Hello"
+                        }
+                    }
+                }
+            }
+        ]
     },
     "scope": "webpage",
     "webBlocks": [
