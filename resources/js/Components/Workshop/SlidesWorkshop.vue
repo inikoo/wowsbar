@@ -17,95 +17,82 @@
   import { useForm } from '@inertiajs/vue3'
   import SlideWorkshop from "@/Components/Workshop/SlideWorkshop.vue";
   import { cloneDeep } from 'lodash'
+import ListItem from '@tiptap/extension-list-item';
   library.add(faEye,  faTrashAlt,faAlignJustify )
   const props = defineProps<{
-        data: {
-          delay: number,
-          common: {
-              corners:{
-                  topLeft?: object,
-                  topRight?: object,
-                  bottomLeft?: object,
-                  bottomRight?: object
-              }
+    data: {
+        common: {
+            centralStage: {
+                subtitle?: string
+                text?: string
+                title?: string
+            }
+            corners: Corners
+        }
+        components: Array<
+            {
+                id: number,
+                image_id: number
+                image_source: string
+                layout: {
+                    link?: string,
+                    centralStage: {
+                        title?: string
+                        subtitle?: string
+                        // text?: string,
+                        // footer?: string
+                    }
+                }
+                corners: Corners
+                imageAlt: string
+                link: string
+                visibility: boolean
+            }
+        >
+        delay: number
 
-          },
-          link?:string,
-          slides: Array<
-              {
-                  id: string,
-                  imageSrc: string
-                  imageAlt: string,
-                  link?: string,
-                  corners:{
-                      topLeft?: {
-                          type: string,
-                          data?: object
-                      },
-                      topRight?: object,
-                      bottomLeft?: object,
-                      bottomRight?: object
-                  }
-                  centralStage: {
-                      title?: string
-                      subtitle?: string
-                      text?:string,
-                      footer?:string
-                  }
+    }
 
-              }
-          >,
-
-      }
-        filesChange: Function
-        changeLink: Function
-  }>()
+}>()
 
   const isDragging = ref(false)
-  const slides  = ref(props.data.slides )
+  const components = ref(props.data.components.map((item) => ({...item, id: uuidV4(),})))
   const fileInput = ref(null)
-  const fileEdit = ref(slides.value[0])
-
+  const fileEdit = ref(components.value[0])
   const onChange = () => {
     let setData = []
     for (const set of fileInput.value.files ) {
       if (set && set instanceof File) {
         setData.push({
-          imageAlt: set.name,
-          imageSrc: set,
-          "visibility" : true,
-          id: uuidV4()
+            id: uuidV4(),
+            image_id: uuidV4(),
+            image_source: set,
+            layout : {
+                imageAlt : set.name,
+            }
         })
       }
     }
     const newFiles = [...setData]
-    slides.value = [...slides.value, ...newFiles]
-    props.data.slides = [...slides.value]
+    components.value = [...components.value, ...newFiles]
+    props.data.components = [...components.value]
   }
 
   const generateThumbnail = (file) => {
-    if (file.imageSrc && file.imageSrc instanceof File) {
-      let fileSrc = URL.createObjectURL(file.imageSrc)
+    if (file.image_source && file.image_source instanceof File) {
+      let fileSrc = URL.createObjectURL(file.image_source)
       setTimeout(() => {
         URL.revokeObjectURL(fileSrc)
       }, 1000)
       return fileSrc
     } else {
-      return getImageUrl(file.imageSrc)
+      return file.image_source
     }
   }
 
-  const getImageUrl = (name: string) => {
-    return new URL(`@/../../../../art/banner/` + name, import.meta.url).href
-  }
-
-  const generateName = (file) => {
-    return file.imageAlt
-  }
-
   const remove = (i) => {
-    slides.value.splice(i, 1)
-    props.data.slides = [...slides.value]
+    components.value.splice(i, 1)
+    props.data.components = [...components.value]
   }
 
   const dragover = (e) => {
@@ -126,25 +113,26 @@
           file: set,
           link: { label: "open", target: "" },
           imageAlt: set.name,
-          imageSrc: 'img',
+          image_source: 'img',
           id: uuidV4()
         })
       }
     }
     const newFiles = [...setData]
-    slides.value = [...slides.value, ...newFiles]
+    components.value = [...components.value, ...newFiles]
     isDragging.value = false
   }
 
   const openEdit = (file) => {
+    console.log(file)
     fileEdit.value = file
-    _SlideWorkshop.value.current = 0
-    setFormValue(file)
+    // _SlideWorkshop.value.current = 0
+    // setFormValue(file)
   }
 
 const visible = (i) => {
-    slides.value[i].visibility = !slides.value[i].visibility
-    props.data.slides = [...slides.value]
+    components.value[i].layout.visibility = !components.value[i].layout.visibility
+    props.data.components = [...components.value]
   }
 
 const blueprint = ref([
@@ -153,10 +141,10 @@ const blueprint = ref([
         icon: ['fal', 'fa-image'],
         fields: [
             {
-                name: 'imageSrc',
+                name: 'image_source',
                 type: 'slideBackground',
-                label: trans('image'),
-                value: ['imageSrc']
+                label: trans('Image'),
+                value: ['image_source']
             },
         ]
 
@@ -201,32 +189,32 @@ onMounted(() => {
 
 const _SlideWorkshop = ref(null)
 const form = ref({});
-const setFormValue=(data)=>{ form.value = useForm(data) , console.log(form) }
+const setFormValue=(data)=>{ form.value = useForm(data) , console.log('form',form.value) }
 
-watch(form, (newValue) => {
-  if (newValue.data()) {
-    let oldFile = cloneDeep(fileEdit.value),
-    newfile = newValue.data()
-    fileEdit.value = { ...newfile, visibility: oldFile.visibility };
-    const index = slides.value.findIndex((item) => item.id === fileEdit.value.id);
-    if (index !== -1)  slides.value[index] = fileEdit.value;
-    props.data.slides = slides.value;
-  }
-});
+// watch(form, (newValue) => {
+//   if (newValue.data()) {
+//     let oldFile = cloneDeep(fileEdit.value),
+//     newfile = newValue.data()
+//     fileEdit.value = { ...newfile, layout.visibility: oldFile.layout.visibility };
+//     const index = components.value.findIndex((item) => item.id === fileEdit.value.id);
+//     if (index !== -1)  components.value[index] = fileEdit.value;
+//     props.data.components = components.value;
+//   }
+// });
 
   </script>
 
   <template>
     <div class="flex flex-grow gap-2.5">
-      <div class="w-30 p-2.5 border-dashed" style="border: 1px dashed #d9d9d9;" v-if="data.slides" @dragover="dragover" @dragleave="dragleave" @drop="drop">
+      <div class="w-30 p-2.5 border-dashed" style="border: 1px dashed #d9d9d9;" v-if="data.components" @dragover="dragover" @dragleave="dragleave" @drop="drop">
           <div class='border-gray-300  h-66 p-2 border  mb-2 items-center'>
               <span class="ml-32">{{trans('Common properties')}}</span>
               </div>
           <div class="mb-2 text-lg font-medium">{{trans('Slides')}}</div>
-        <draggable :list="data.slides" group="slide " item-key="id" handle=".handle">
+        <draggable :list="data.components" group="slide " item-key="id" handle=".handle">
           <template #item="{ element: file }">
-            <div :class="[file.id !== fileEdit.id ?
-            ' border-l-orange-500   border-l-4' :
+            <div :class="[file.id != fileEdit.id ?
+            'border-l-orange-500 border-l-4' :
              'border-gray-300',
              'flex relative h-66 p-2 border  mb-2 items-center ']">
               <font-awesome-icon icon="fal fa-align-justify"
@@ -235,16 +223,15 @@ watch(form, (newValue) => {
                 <img class="overflow-hidden whitespace-nowrap overflow-ellipsis h-12 w-12 leading-60 text-center flex-none" :src="generateThumbnail(file)" />
               </div>
               <div class="overflow-hidden whitespace-nowrap overflow-ellipsis px-8 leading-tight flex-auto transition-all duration-300 cursor-pointer " @click="openEdit(file)">
-                <div class="overflow-hidden whitespace-nowrap overflow-ellipsis">{{ generateName(file) }}</div>
+                <div class="overflow-hidden whitespace-nowrap overflow-ellipsis">{{ file.layout.imageAlt }}</div>
               </div>
               <div class="flex justify-center items-center m-2.5">
-                <button :class="['ml-2', file.visibility  ?  'text-orange-500' :  '']" type="button" @click="visible(slides.indexOf(file))" title="Remove file">
+                <button :class="['ml-2', file.layout.visibility  ?  'text-orange-500' :  '']" type="button" @click="visible(components.indexOf(file))" title="Remove file">
                   <font-awesome-icon :icon="['fal', 'eye']" />
                 </button>
-                <button class="ml-2 text-rose-500" type="button" @click="remove(slides.indexOf(file))" title="Remove file">
+                <button class="ml-2 text-rose-500" type="button" @click="remove(components.indexOf(file))" title="Remove file">
                   <font-awesome-icon :icon="['fal', 'trash-alt']" />
                 </button>
-
 
               </div>
             </div>
