@@ -5,7 +5,7 @@
   -->
 
 <script setup lang="ts">
-import {ref} from 'vue'
+import {ref, computed} from 'vue'
 import {Swiper, SwiperSlide} from 'swiper/vue'
 import {Autoplay, Pagination, Navigation} from 'swiper/modules'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -57,11 +57,11 @@ const props = defineProps<{
                         // text?: string,
                         // footer?: string
                     }
+                    visibility: boolean
                 }
                 corners: Corners
                 imageAlt: string
                 link: string
-                visibility: boolean
             }
         >
         delay: number
@@ -97,6 +97,10 @@ const filteredNulls = (corners: Corners) => {
     return ''
 };
 
+const filteredSlide = computed(() => {
+    return props.data.components.filter((i) => i.layout.visibility === true)
+})
+
 </script>
 
 <template>
@@ -115,7 +119,7 @@ const filteredNulls = (corners: Corners) => {
             }"
             :navigation="false"
             :modules="[Autoplay, Pagination, Navigation]" class="mySwiper">
-            <SwiperSlide v-for="component in data.components" :key="component.id">
+            <SwiperSlide v-for="component in filteredSlide" :key="component.id">
                 <img :src="component.image_source" :alt="component.imageAlt">
                 <FontAwesomeIcon v-if="component.layout.link" icon='far fa-external-link' class='text-gray-300/50 text-xl absolute top-2 right-2' aria-hidden='true' />
                 <Link v-if="component.layout.link" :href="component.layout.link" class="absolute bg-transparent w-full h-full" />
