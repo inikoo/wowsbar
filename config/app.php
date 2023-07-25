@@ -197,6 +197,6 @@ return [
     ])->toArray(),
 
     'domain'      => env('APP_DOMAIN'),
-    'universal_search_index' => env('APP_NAME', 'aiku').(env('APP_ENV') == 'testing' ? '_testing' : '').'_search'
+    'universal_search_index' => env('APP_NAME', 'wowsbar').(env('APP_ENV') == 'testing' ? '_testing' : env('APP_ENV')).'_search'
 
 ];
