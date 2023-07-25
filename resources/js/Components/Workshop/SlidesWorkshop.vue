@@ -12,12 +12,12 @@
   import draggable from "vuedraggable"
   import PrimaryButton from "@/Components/PrimaryButton.vue";
   import { v4 as uuidV4 } from 'uuid';
+  import { ulid } from 'ulid';
   import Input from '@/Components/Forms/Fields/Input.vue'
   import { trans } from "laravel-vue-i18n"
   import { useForm } from '@inertiajs/vue3'
   import SlideWorkshop from "@/Components/Workshop/SlideWorkshop.vue";
   import { cloneDeep } from 'lodash'
-import ListItem from '@tiptap/extension-list-item';
   library.add(faEye,  faTrashAlt,faAlignJustify )
   const props = defineProps<{
     data: {
@@ -56,7 +56,7 @@ import ListItem from '@tiptap/extension-list-item';
 }>()
 
   const isDragging = ref(false)
-  const components = ref(props.data.components.map((item) => ({...item, id: uuidV4(),})))
+  const components = ref(props.data.components)
   const fileInput = ref(null)
   const fileEdit = ref(components.value[0])
   const onChange = () => {
@@ -64,9 +64,11 @@ import ListItem from '@tiptap/extension-list-item';
     for (const set of fileInput.value.files ) {
       if (set && set instanceof File) {
         setData.push({
-            id: uuidV4(),
-            image_id: uuidV4(),
-            image_source: set,
+            id: '',
+            image_id: ulid(),
+            image_source: '',
+            imageFile : set,
+            ulid : ulid(),
             layout : {
                 imageAlt : set.name,
             }
@@ -91,7 +93,8 @@ import ListItem from '@tiptap/extension-list-item';
   }
 
   const remove = (i) => {
-    components.value.splice(i, 1)
+    // components.value.splice(i, 1)
+    components.value[i].ulid = ''
     props.data.components = [...components.value]
   }
 
@@ -114,7 +117,7 @@ import ListItem from '@tiptap/extension-list-item';
           link: { label: "open", target: "" },
           imageAlt: set.name,
           image_source: 'img',
-          id: uuidV4()
+          ulid: ulid()
         })
       }
     }
@@ -124,10 +127,9 @@ import ListItem from '@tiptap/extension-list-item';
   }
 
   const openEdit = (file) => {
-    console.log(file)
     fileEdit.value = file
-    // _SlideWorkshop.value.current = 0
-    // setFormValue(file)
+    _SlideWorkshop.value.current = 0
+    setFormValue(file)
   }
 
 const visible = (i) => {
@@ -167,16 +169,16 @@ const blueprint = ref([
         icon: ['fal', 'fa-align-center'],
         fields: [
             {
-                name: ['centralStage','title'],
+                name: ['layout','centralStage','title'],
                 type: 'input',
                 label: trans('Title'),
-                value: ['centralStage','title']
+                value: ['layout','centralStage','title']
             },
             {
-                name: ['centralStage','subtitle'],
+                name: ['layout','centralStage','subtitle'],
                 type: 'input',
                 label: trans('subtitle'),
-                value: ['centralStage','subtitle']
+                value: ['layout','centralStage','subtitle']
             },
         ]
     },
@@ -191,16 +193,16 @@ const _SlideWorkshop = ref(null)
 const form = ref({});
 const setFormValue=(data)=>{ form.value = useForm(data) , console.log('form',form.value) }
 
-// watch(form, (newValue) => {
-//   if (newValue.data()) {
-//     let oldFile = cloneDeep(fileEdit.value),
-//     newfile = newValue.data()
-//     fileEdit.value = { ...newfile, layout.visibility: oldFile.layout.visibility };
-//     const index = components.value.findIndex((item) => item.id === fileEdit.value.id);
-//     if (index !== -1)  components.value[index] = fileEdit.value;
-//     props.data.components = components.value;
-//   }
-// });
+watch(form, (newValue) => {
+  if (newValue.data()) {
+    let oldFile = cloneDeep(fileEdit.value),
+    newFile = newValue.data()
+    fileEdit.value = { ...newFile, layout: { ...newFile.layout, visibility: oldFile.layout.visibility }};
+    const index = components.value.findIndex((item) => item.ulid === fileEdit.value.ulid);
+    if (index !== -1)  components.value[index] = fileEdit.value;
+    props.data.components = components.value;
+  }
+});
 
   </script>
 
@@ -211,9 +213,9 @@ const setFormValue=(data)=>{ form.value = useForm(data) , console.log('form',for
               <span class="ml-32">{{trans('Common properties')}}</span>
               </div>
           <div class="mb-2 text-lg font-medium">{{trans('Slides')}}</div>
-        <draggable :list="data.components" group="slide " item-key="id" handle=".handle">
+        <draggable :list="data.components.filter((item)=>item.ulid !== '')" group="slide " item-key="ulid" handle=".handle">
           <template #item="{ element: file }">
-            <div :class="[file.id != fileEdit.id ?
+            <div :class="[file.ulid != fileEdit.ulid ?
             'border-l-orange-500 border-l-4' :
              'border-gray-300',
              'flex relative h-66 p-2 border  mb-2 items-center ']">
@@ -239,7 +241,7 @@ const setFormValue=(data)=>{ form.value = useForm(data) , console.log('form',for
         </draggable>
 
         <PrimaryButton class="m-2.5">
-          <input type="file" multiple name="file" id="fileInput" class="opacity-0 overflow-hidden absolute w-1 h-1" @change="onChange" ref="fileInput"
+          <input type="file" multiple name="file" ulid="fileInput" class="opacity-0 overflow-hidden absolute w-1 h-1" @change="onChange" ref="fileInput"
             accept=".pdf,.jpg,.jpeg,.png" />
           <label for="fileInput"> <font-awesome-icon :icon="['fas', 'plus']" class="mr-1" /> Banner</label>
         </PrimaryButton>

@@ -21,7 +21,7 @@ const props = defineProps<{
 
 const data = ref(props.bannerLayout);
 
-
+console.log(data)
 
 const changeLink = (file, value) => {
     const index = data.value.findIndex((item) => item.id === file.id);

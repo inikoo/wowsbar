@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faExclamationCircle, faCheckCircle } from "@/../private/pro-solid-svg-icons"
 import { faCopy } from "@/../private/pro-light-svg-icons"
 import { library } from '@fortawesome/fontawesome-svg-core'
+import { set } from 'lodash'
 library.add(faExclamationCircle, faCheckCircle, faCopy);
 import { ref, watch  } from 'vue'
 
@@ -64,9 +65,14 @@ const updateFormValue = (newValue) => {
     let target = props.form;
     const lastIndex = props.fieldName.length - 1;
     for (let i = 0; i < lastIndex; i++) {
+      if (!target[props.fieldName[i]]) {
+        set(target, props.fieldName, newValue);
+      }
       target = target[props.fieldName[i]];
     }
+    console.log(target);
     target[props.fieldName[lastIndex]] = newValue;
+    
   } else {
     props.form[props.fieldName] = newValue;
   }
