@@ -123,10 +123,10 @@ const getActionIcon = (action) => {
 
         <div class="flex items-center gap-2">
             <span v-for="action in data.actions">
-
+                {{ action.final }}
                 <!-- Button -->
                 <Link v-if="action.type === 'button'" :href="route(action['route']['name'], action['route']['parameters'])"
-                    method="patch" :data="dataToSubmit"
+                    :method="action.method ?? 'get'" :data="dataToSubmit"
                 >
                     <Button size="xs" :style="action.style"
                         class="capitalize inline-flex items-center rounded-md text-sm font-medium shadow-sm gap-x-2">
