@@ -17,18 +17,35 @@
                     "text": null
                 }
             },
+            "images": [
+                {
+                    "source": "resources",
+                    "imageSrc": "incentives-07-hero.jpg"
+                },
+                {
+                    "source": "resources",
+                    "imageSrc": "product-page-01-featured-product-shot.jpg"
+                },
+                {
+                    "source": "resources",
+                    "imageSrc": "product-page-03-product-01.jpg"
+                },
+                {
+                    "source": "resources",
+                    "imageSrc": "product-page-05-product-01.jpg"
+                }
+            ],
             "slides": [
                 {
-                    "id": 1,
                     "visibility" : true,
-                    "imageSrc": "incentives-07-hero.jpg",
+
                     "imageAlt": "Front of men's Basic Tee in sienna",
                     "link": null,
                     "corners": {
                         "bottomRight": {
                             "type": "linkButton",
                             "data": {
-                                "label": "Browse Promo",
+                                "text": "Browse Promo",
                                 "target": "#"
                             }
                         }
@@ -41,9 +58,7 @@
                     }
                 },
                 {
-                    "id": 2,
                     "visibility" : true,
-                    "imageSrc": "product-page-01-featured-product-shot.jpg",
                     "imageAlt": "Lorem ipsum dolor sit amet consectetur.",
                     "corners": {
                         "topLeft": {
@@ -56,7 +71,7 @@
                         "topRight": {
                             "type": "footer",
                             "data": {
-                                "label": "The banner officially disclaimed by XYZ Company."
+                                "text": "The banner officially disclaimed by XYZ Company."
                             }
                         }
 
@@ -64,15 +79,13 @@
 
                 },
                 {
-                    "id": 3,
                     "visibility" : true,
-                    "imageSrc": "product-page-03-product-01.jpg",
                     "imageAlt": "Lorem ipsum dolor Basic Tee in sienna",
                     "corners": {
                         "bottomRight": {
                             "type": "linkButton",
                             "data": {
-                                "label": "Browse Promo",
+                                "text": "Browse Promo",
                                 "target": "#"
                             }
                         }
@@ -84,9 +97,7 @@
                     }
                 },
                 {
-                    "id": 4,
                     "visibility" : false,
-                    "imageSrc": "product-page-05-product-01.jpg",
                     "imageAlt": "Continuous infinite slider",
                     "link": "google.com",
 
@@ -94,7 +105,7 @@
                         "topRight": {
                             "type": "text",
                             "data": {
-                                "label": "Hello"
+                                "text": "Hello"
                             }
                         }
                     }

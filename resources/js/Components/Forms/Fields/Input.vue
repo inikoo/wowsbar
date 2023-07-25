@@ -11,6 +11,7 @@ import { faExclamationCircle, faCheckCircle } from "@/../private/pro-solid-svg-i
 import { faCopy } from "@/../private/pro-light-svg-icons"
 import { library } from '@fortawesome/fontawesome-svg-core'
 library.add(faExclamationCircle, faCheckCircle, faCopy);
+import { ref, watch  } from 'vue'
 
 const props = defineProps<{
     form: any,
@@ -32,12 +33,51 @@ const copyText = (text: string) => {
     textarea.remove()
 }
 
+console.log('porps', props)
+
+const setFormValue = (data : Object, fieldName: String) => {
+    if (Array.isArray(fieldName)) {
+        return getNestedValue(data, fieldName);
+    } else {
+        return data[fieldName];
+    }
+}
+
+const getNestedValue = (obj: Object, keys: Array) => {
+    return keys.reduce((acc, key) => {
+        if (acc && typeof acc === 'object' && key in acc) return acc[key];
+        return null;
+    }, obj);
+}
+
+
+const value = ref(setFormValue(props.form,props.fieldName))
+
+watch(value, (newValue) => {
+  // Update the form field value when the value ref changes
+  updateFormValue(newValue);
+});
+
+const updateFormValue = (newValue) => {
+  // Update the form field value in the form object
+  if (Array.isArray(props.fieldName)) {
+    let target = props.form;
+    const lastIndex = props.fieldName.length - 1;
+    for (let i = 0; i < lastIndex; i++) {
+      target = target[props.fieldName[i]];
+    }
+    target[props.fieldName[lastIndex]] = newValue;
+  } else {
+    props.form[props.fieldName] = newValue;
+  }
+};
+
 </script>
 <template>
     <div class="relative">
         <div class="relative">
             <input
-                v-model.trim="form[fieldName]"
+                v-model.trim="value"
                 :readonly="fieldData.readonly"
                 :type="props.options?.type ?? 'text'" @input="form.errors[fieldName] = ''"
                 :placeholder="fieldData?.placeholder"

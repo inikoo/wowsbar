@@ -8,6 +8,7 @@
 namespace App\Actions\Portfolio\ContentBlock;
 
 use App\Actions\Portfolio\ContentBlock\Hydrators\ContentBlockHydrateUniversalSearch;
+use App\Actions\Portfolio\ContentBlockComponent\StoreContentBlockComponent;
 use App\Actions\Tenancy\Tenant\Hydrators\TenantHydrateContentBlocks;
 use App\Models\Portfolio\ContentBlock;
 use App\Models\Portfolio\Website;
@@ -15,10 +16,14 @@ use App\Models\Tenancy\Tenant;
 use App\Models\Web\WebBlock;
 use App\Models\Web\WebBlockType;
 use Illuminate\Console\Command;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
+use phpDocumentor\Reflection\Types\Collection;
+use RecursiveArrayIterator;
+use RecursiveIteratorIterator;
 
 class StoreContentBlock
 {
@@ -28,16 +33,58 @@ class StoreContentBlock
 
     private bool $asAction = false;
 
+
+    function recursiveFind(array $haystack, $needle): array
+    {
+        $results   = [];
+        $iterator  = new RecursiveArrayIterator($haystack);
+        $recursive = new RecursiveIteratorIterator(
+            $iterator,
+            RecursiveIteratorIterator::SELF_FIRST
+        );
+        foreach ($recursive as $key => $value) {
+            if ($key === $needle) {
+                $results[] = $value;
+            }
+        }
+
+        return $results;
+    }
+
     public function handle(Website $website, WebBlock $webBlock, array $modelData): ContentBlock
     {
+        $layout = $webBlock->blueprint;
+
+        list($layout, $contentBlockComponents) = ParseContentBlockLayout::run($layout, $webBlock);
+
+
+        /*
+        $collection = collect($layout);
+        $result     = $collection->search(function ($value, $key) {
+            return $key === 'imageSrc';
+        });
+        */
+        //  dd($this->recursiveFind($layout,'imageSrc'));
+
+
         data_set($modelData, 'web_block_type_id', $webBlock->web_block_type_id);
         data_set($modelData, 'tenant_id', app('currentTenant')->id);
-        data_set($modelData, 'layout', $webBlock->blueprint);
+        data_set($modelData, 'layout', $layout);
         data_set($modelData, 'data.website_slug', $website->slug);
+        data_set($modelData, 'ulid', Str::ulid());
+
 
 
         /** @var ContentBlock $contentBlock */
         $contentBlock = $webBlock->contentBlocks()->create($modelData);
+        if ($contentBlockComponents) {
+            foreach ($contentBlockComponents as $contentBlockComponent) {
+                StoreContentBlockComponent::run(
+                    contentBlock: $contentBlock,
+                    modelData: $contentBlockComponent,
+                );
+            }
+        }
 
         $website->contentBlocks()->attach($contentBlock->id, [
             'tenant_id' => app('currentTenant')->id,
@@ -100,13 +147,13 @@ class StoreContentBlock
         $this->asAction = true;
         $this->setRawAttributes(
             [
-                'code'   => $command->argument('code'),
-                'name'   => $command->argument('name')
+                'code' => $command->argument('code'),
+                'name' => $command->argument('name')
             ]
         );
         $validatedData = $this->validateAttributes();
 
-        $contentBlock=$this->handle($website, $webBlock, $validatedData);
+        $contentBlock = $this->handle($website, $webBlock, $validatedData);
 
         $command->info("Done! Content block $contentBlock->code created 🎉");
     }

@@ -38,7 +38,7 @@ const test1=()=>{
     <PageHeading :data="pageHead" :dataToSubmit="data"></PageHeading>
 
     <Slider :layout="data" />
-    <SlidesWorkshop class="clear-both"
+    <SlidesWorkshop class="clear-both mt-2 p-2.5"
         :data="data"
         :changeLink="changeLink"
     />
