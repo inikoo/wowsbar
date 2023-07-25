@@ -138,36 +138,114 @@
   }
 
   const openEdit = (file) => {
+    ChangeData(form.value.data(),fileEdit.value)
+
     fileEdit.value = file
-    console.log(SlideWorkshopRef.value)
-    SlideWorkshopRef.value.setFormValue()
+    setFormValue()
+   
   }
 
-  const ChangeData = (newData) =>{
-    const index = slides.value.findIndex((item)=>item.id == fileEdit.value.id)
-    slides[index] = {
-      ...slides[index],
-      visibility : newData.visibility,
-      imageSrc  : newData.imageSrc,
-      text : {
+  const ChangeData = (newData,oldData) => {
+  const index = slides.value.findIndex((item) => item.id === oldData.id);
+    console.log(index)
+  if (index !== -1) {
+    slides.value[index] = {
+      ...slides.value[index],
+      imageSrc: newData.imageSrc,
+      centralStage: {
         subtitle: newData.subtitle,
-        title:  newData.title
+        title: newData.title,
       },
-      link : {
-        label :  newData.title,
-        target : newData.target
+    };
+    props.data.slides = [...slides.value];
+  }
+};
+
+
+const visible = (i) => {
+    slides.value[i].visibility = !slides.value[i].visibility
+    props.data.slides = [...slides.value]
+  }
+
+const blueprint = ref([
+    {
+        title: trans('Background'),
+        icon: ['fal', 'fa-image'],
+        fields: [
+            {
+                name: 'imageSrc',
+                type: 'slideBackground',
+                label: trans('image'),
+                value: ['imageSrc']
+            },
+        ]
+
+    },
+    {
+        title: trans('corners'),
+        icon: ['fal', 'fa-expand-arrows'],
+        fields: [
+            {
+                name: 'top-left',
+                type: 'slideBackground',
+                label: null,
+                value: null
+            },
+        ]
+
+    },
+    {
+        title: trans('central stage'),
+        icon: ['fal', 'fa-align-center'],
+        fields: [
+            {
+                name: 'title',
+                type: 'input',
+                label: trans('Title'),
+                value: ['centralStage','title']
+            },
+            {
+                name: 'subtitle',
+                type: 'input',
+                label: trans('subtitle'),
+                value: ['centralStage','subtitle']
+            },
+        ]
+
+    },
+
+
+])
+
+
+onMounted(() => {
+    setFormValue()
+});
+
+const setFormValue=()=>{
+    let fields = {};
+    for (const section of blueprint.value) {
+      for (const field of section.fields) {
+        if (Array.isArray(field.value)) {
+          fields[field.name] = getNestedValue(fileEdit.value, field.value);
+        } else {
+          fields[field.name] = fileEdit.value[field.value];
+        }
       }
     }
-    props.filesChange(slides)
+    form.value = useForm(fields);
+  }
+
+  const getNestedValue = (obj, keys) => {
+    return keys.reduce((acc, key) => {
+      if (acc && typeof acc === 'object' && key in acc) return acc[key];
+      return null;
+    }, obj);
   }
 
 
-//   const changeIndex = () => {
-//     props.data.slides = slides.value
-//   }
+ const form = ref({});
 
-  const SlideWorkshopRef = ref(null)
-  const form = ref(useForm({}));
 
   </script>
 
@@ -193,7 +271,7 @@
                 <div class="overflow-hidden whitespace-nowrap overflow-ellipsis">{{ generateName(file) }}</div>
               </div>
               <div class="flex justify-center items-center m-2.5">
-                <button class="ml-2" type="button" @click="remove(slides.indexOf(file))" title="Remove file">
+                <button :class="['ml-2', file.visibility  ?  'text-orange-500' :  '']" type="button" @click="visible(slides.indexOf(file))" title="Remove file">
                   <font-awesome-icon :icon="['fal', 'eye']" />
                 </button>
                 <button class="ml-2 text-rose-500" type="button" @click="remove(slides.indexOf(file))" title="Remove file">
@@ -215,7 +293,7 @@
 
 
       <div style="width: 70%; border: 1px solid #d9d9d9;">
-          <SlideWorkshop :fileEdit="fileEdit" ref="SlideWorkshopRef"></SlideWorkshop>
+          <SlideWorkshop :fileEdit="fileEdit" :blueprint="blueprint" :form="form"></SlideWorkshop>
       </div>
     </div>
   </template>
