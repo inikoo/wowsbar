@@ -8,6 +8,7 @@
 namespace App\Models\Portfolio;
 
 use App\Concerns\BelongsToTenant;
+use App\Http\Resources\Portfolio\ContentBlockComponentResource;
 use App\Models\Traits\HasUniversalSearch;
 use App\Models\Web\WebBlock;
 use Illuminate\Database\Eloquent\Builder;
@@ -119,8 +120,9 @@ class ContentBlock extends Model implements HasMedia
 
     public function compiledLayout(): array
     {
-
-        return $this->layout;
+        $compiledLayout=$this->layout;
+        data_set($compiledLayout,'components',json_decode(ContentBlockComponentResource::collection($this->contentBlockComponents)->toJson(),true));
+        return $compiledLayout;
 
     }
 
