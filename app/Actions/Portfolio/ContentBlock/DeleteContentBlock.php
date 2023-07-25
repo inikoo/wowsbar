@@ -7,6 +7,7 @@
 
 namespace App\Actions\Portfolio\ContentBlock;
 
+use App\Actions\Portfolio\ContentBlock\Elasticsearch\DeleteContentBlockElasticsearch;
 use App\Actions\Tenancy\Tenant\Hydrators\TenantHydrateContentBlocks;
 use App\Models\Portfolio\ContentBlock;
 use Illuminate\Http\RedirectResponse;
@@ -29,6 +30,7 @@ class DeleteContentBlock
         $contentBlock->delete();
 
         TenantHydrateContentBlocks::dispatch(app('currentTenant'));
+        DeleteContentBlockElasticsearch::run($contentBlock);
 
         return $contentBlock;
     }

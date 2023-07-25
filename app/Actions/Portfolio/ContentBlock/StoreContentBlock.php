@@ -7,6 +7,7 @@
 
 namespace App\Actions\Portfolio\ContentBlock;
 
+use App\Actions\Portfolio\ContentBlock\Elasticsearch\StoreContentBlockElasticsearch;
 use App\Actions\Portfolio\ContentBlock\Hydrators\ContentBlockHydrateUniversalSearch;
 use App\Actions\Portfolio\ContentBlockComponent\StoreContentBlockComponent;
 use App\Actions\Tenancy\Tenant\Hydrators\TenantHydrateContentBlocks;
@@ -92,6 +93,7 @@ class StoreContentBlock
         ]);
         TenantHydrateContentBlocks::dispatch(app('currentTenant'));
         ContentBlockHydrateUniversalSearch::dispatch($contentBlock);
+        StoreContentBlockElasticsearch::run($contentBlock);
 
         return $contentBlock;
     }

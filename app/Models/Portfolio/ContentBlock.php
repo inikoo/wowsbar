@@ -133,18 +133,4 @@ class ContentBlock extends Model implements HasMedia
         return $compiledLayout;
 
     }
-
-    protected static function boot(): void
-    {
-        parent::boot();
-
-        static::created(function ($contentBlock) {
-            StoreContentBlockElasticsearch::run($contentBlock);
-        });
-
-        static::deleted(function ($contentBlock) {
-            DeleteContentBlockElasticsearch::run($contentBlock);
-        });
-    }
-
 }
