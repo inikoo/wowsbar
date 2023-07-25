@@ -120,7 +120,7 @@ router.on('navigate', (event) => {
                                 aria-hidden="true" />
                             <component
                                 :is="breadcrumb.simple.route ? Link : 'span'"
-                                :class="'hover:text-gray-700' || ''"
+                                :class="'hover:text-gray-700 dark:hover:text-gray-300' || ''"
                                 :href="
 									breadcrumb.simple.route
 										? route(

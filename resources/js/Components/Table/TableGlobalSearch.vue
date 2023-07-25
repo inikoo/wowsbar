@@ -27,7 +27,7 @@ defineProps({
 <template>
   <div class="relative">
     <input
-      class="block w-full pl-9 text-sm rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500 border-gray-300"
+      class="dark:bg-gray-600 block w-full pl-9 text-sm rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500 dark:focus:border-gray-400 border-gray-300 dark:border-gray-500"
       :placeholder="label"
       :value="value"
       type="text"

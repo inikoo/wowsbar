@@ -569,8 +569,8 @@ const handleElementsChange = (data) => {
                 <!-- Left Section: Records, -->
                 <div class="flex space-x-2">
                     <!-- Result Number -->
-                    <div class="flex border outline-orange-100 rounded-md">
-                        <div class="grid justify-end items-center text-base font-normal text-gray-700"
+                    <div class="flex border outline-red-500 rounded-md border-gray-300 dark:border-gray-500">
+                        <div class="grid justify-end items-center text-base font-normal text-gray-700 dark:text-gray-400"
                             title="Results">
                             <div v-if="resourceMeta.total" class="px-2 ">{{ locale.number(resourceMeta.total) }} {{ trans(resourceMeta.total > 1 ? 'records' : 'record') }}</div>
                             <div v-else class="px-2 ">{{ locale.number(0) }} {{ trans('record') }}</div>
@@ -658,32 +658,32 @@ const handleElementsChange = (data) => {
             <slot name="tableWrapper" :meta="resourceMeta">
                 <TableWrapper :class="{ 'mt-0': !hasOnlyData }">
                     <slot name="table">
-                        <table class="divide-y divide-gray-200 bg-white w-full">
-                            <thead class="bg-gray-50">
-                                <tr class="border-t border-gray-200">
+                        <table class="divide-y divide-gray-200 dark:divide-gray-500 bg-white dark:bg-gray-700 w-full">
+                            <thead class="bg-gray-50 dark:bg-gray-800">
+                                <tr class="border-t border-gray-200 dark:border-gray-500">
                                     <HeaderCell v-for="column in queryBuilderProps.columns"
                                         :key="`table-${name}-header-${column.key}`" :cell="header(column.key)"
                                         :type="columnsType[column.key]" :abc="column"/>
                                 </tr>
                             </thead>
 
-                            <tbody class="bg-white divide-y divide-gray-200">
+                            <tbody class="bg-white dark:bg-gray-600 dark:text-gray-400 divide-y divide-gray-200 dark:divide-gray-500">
                                 <slot name="body" :show="show">
                                     <tr v-for="(item, key) in resourceData" :key="`table-${name}-row-${key}`" class=""
                                         :class="{
                                             'bg-gray-50': striped && key % 2,
-                                            'hover:bg-gray-100': striped,
-                                            'hover:bg-gray-50': !striped,
+                                            'hover:bg-gray-100 dark:hover:bg-gray-500/50': striped,
+                                            'hover:bg-gray-50 dark:hover:bg-gray-500/20': !striped,
                                         }">
                                         <td v-for="column in queryBuilderProps.columns" v-show="show(column.key)"
                                             :key="`table-${name}-row-${key}-column-${column.key}`"
                                             :class="[
                                                 typeof item[column.key] == 'number' ? 'text-right' : '',
                                                 column.key === 'avatar' ? '' : 'px-6 min-w-fit max-w-[450px]',
-                                                'text-sm py-2 text-gray-800 whitespace-normal',
+                                                'text-sm py-2 text-gray-800 dark:text-gray-300 whitespace-normal',
                                         ]">
                                             <slot :name="`cell(${column.key})`" :item="item" class="">
-                                                <div class="text-gray-500">{{ item[column.key] }}</div>
+                                                <div class="text-gray-500 dark:text-gray-400">{{ item[column.key] }}</div>
                                             </slot>
                                         </td>
                                     </tr>
