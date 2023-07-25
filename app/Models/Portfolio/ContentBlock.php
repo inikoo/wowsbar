@@ -34,7 +34,6 @@ use Spatie\Sluggable\SlugOptions;
  * @property int $web_block_type_id
  * @property int $web_block_id
  * @property string $slug
- * @property string $ulid
  * @property string $code
  * @property string $name
  * @property array $layout
