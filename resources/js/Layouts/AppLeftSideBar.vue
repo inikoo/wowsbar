@@ -68,8 +68,8 @@ const handleKey = (event: any) => {
                         :href="route(item.route)"
                         :class="[
 							itemKey === layout.currentModule
-								? useAppearanceStore().darkMode ? 'border-light1 bg-dark4 text-light3' : 'border-orange-500 bg-light3 text-dark3'
-								: useAppearanceStore().darkMode ? 'border-transparent hover:bg-dark3 text-light2' : 'border-transparent hover:bg-white/50 text-dark3',
+								? useAppearanceStore().darkMode ? 'border-light1 bg-dark4 text-light3' : 'tabNavigationActive'
+								: useAppearanceStore().darkMode ? 'border-transparent hover:bg-dark3 text-light2' : 'tabNavigation',
 							'group flex items-center border-l-4 text-sm font-medium px-0 xl:px-3 py-2',
 						]"
                         :aria-current="itemKey === layout.currentModule ? 'page' : undefined"

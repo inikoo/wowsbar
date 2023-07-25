@@ -23,7 +23,7 @@ const isTabActive: Ref<boolean | string> = ref(false)
 
 <template>
     <footer class="z-20 fixed w-screen bottom-0 right-0  text-white"
-        :class="[useAppearanceStore().darkMode ? 'bg-light2' : 'bg-dark2']"
+        :class="[useAppearanceStore().darkMode ? 'bg-light2' : 'bg-black']"
     >
         <!-- Helper: Outer background (close popup purpose) -->
         <div class="fixed z-40 right-0 top-0 bg-transparent w-screen h-screen" @click="isTabActive = !isTabActive"

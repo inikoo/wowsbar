@@ -5,7 +5,7 @@
   -->
 
 <script setup lang="ts">
-import {Head, useForm} from '@inertiajs/vue3'
+import { Head, useForm } from '@inertiajs/vue3'
 import { jumpToElement } from "@/Composables/jumpToElement"
 import Button from '@/Components/Elements/Buttons/Button.vue'
 
@@ -27,19 +27,18 @@ const props = defineProps<{
     }
 }>()
 
-
 import Input from '@/Components/Forms/Fields/Input.vue'
 import Select from '@/Components/Forms/Fields/Select.vue'
 import Phone from '@/Components/Forms/Fields/Phone.vue'
 import Date from '@/Components/Forms/Fields/Date.vue'
-import {trans} from "laravel-vue-i18n"
+import { trans } from "laravel-vue-i18n"
 import Address from "@/Components/Forms/Fields/Address.vue"
 import Radio from '@/Components/Forms/Fields/Radio.vue'
 import Country from "@/Components/Forms/Fields/Country.vue"
 import Currency from "@/Components/Forms/Fields/Currency.vue"
 import { capitalize } from "@/Composables/capitalize"
 import InputWithAddOn from '@/Components/Forms/Fields/InputWithAddOn.vue'
-
+import { ref, onMounted } from 'vue';
 
 const getComponent = (componentName: string) => {
     const components = {
@@ -48,7 +47,7 @@ const getComponent = (componentName: string) => {
         'phone': Phone,
         'date': Date,
         'select': Select,
-        'address':Address,
+        'address': Address,
         'radio': Radio,
         'country': Country,
         'currency': Currency,
@@ -70,14 +69,40 @@ const handleFormSubmit = () => {
     form.post(route(
         props.formData.route.name,
         props.formData.route.arguments
-));
+    ));
 };
 
 const current = null
+
+const handleIntersection = (element: Element, index: number) => (entries) => {
+    const [entry] = entries;
+    tabActive.value[`${index}`] = entry.isIntersecting;
+}
+const buttonRefs = ref([])
+const tabActive = ref({})
+
+onMounted(() => {
+    // To indicate active state that on viewport
+    buttonRefs.value.forEach((element, index) => {
+        const observer = new IntersectionObserver(handleIntersection(element, index));
+        observer.observe(element);
+
+        // Clean up the observer when the component is unmounted
+        element.cleanupObserver = () => {
+            observer.disconnect();
+        };
+    });
+
+    // Clean up all the observers when the component is unmounted
+    return () => {
+        buttonRefs.value.forEach((button) => button.cleanupObserver());
+    };
+});
+
 </script>
 
 <template layout="App">
-    <Head :title="capitalize(title)"/>
+    <Head :title="capitalize(title)" />
     <PageHeading :data="pageHead"></PageHeading>
     <div class="rounded-lg bg-white shadow">
         <div class="divide-y divide-gray-200 lg:grid grid-flow-col lg:grid-cols-12 lg:divide-y-0 lg:divide-x">
@@ -85,33 +110,29 @@ const current = null
             <!-- Left Tab: Navigation -->
             <aside class="py-0 lg:col-span-3 lg:h-full">
                 <div class="sticky top-16">
-                    <div v-for="(item, key) in formData['blueprint']" @click="jumpToElement(`field${key}`)"
-                        :class="[
-                            key == current
-                                ? 'bg-orange-200 border-orange-500 text-orange-700 hover:bg-orange-50 hover:text-orange-700'
-                                : 'border-transparent text-gray-600 hover:bg-gray-100 hover:text-gray-700',
-                            'cursor-pointer group border-l-4 px-3 py-2 flex items-center text-sm font-medium',
-                        ]"
-                        :aria-current="key === current ? 'page' : undefined"
-                    >
-                        <FontAwesomeIcon v-if="item.icon" aria-hidden="true"
-                        :class="[ key === current
-                                    ? 'text-orange-500 group-hover:text-orange-500'
-                                    : 'text-gray-400 group-hover:text-gray-500',
+                    <div v-for="(item, key) in formData['blueprint']" @click="jumpToElement(`field${key}`)" :class="[
+                        tabActive[key]
+                            ? 'tabNavigationActive'
+                            : 'border-transparent text-gray-600 hover:bg-gray-100 hover:text-gray-700',
+                        'cursor-pointer group border-l-4 px-3 py-2 flex items-center text-sm font-medium',
+                        ]">
+                        <FontAwesomeIcon v-if="item.icon" aria-hidden="true" :class="[key === current
+                            ? 'text-orange-500 group-hover:text-orange-500'
+                            : 'text-gray-400 group-hover:text-gray-500',
                             'flex-shrink-0 -ml-1 mr-3 h-6 w-6',
-                        ]"
-                        :icon="item.icon" />
+                        ]" :icon="item.icon" />
                         <span class="capitalize truncate">{{ item.title }}</span>
                     </div>
                 </div>
             </aside>
 
             <!-- Main form -->
-            <form class="px-4 sm:px-6 md:px-10 col-span-9 gap-y-8 pb-8 divide-y divide-gray-200 " @submit.prevent="handleFormSubmit">
+            <form class="px-4 sm:px-6 md:px-10 col-span-9 gap-y-8 pb-8 divide-y divide-gray-200"
+                @submit.prevent="handleFormSubmit">
                 <div v-for="(sectionData, sectionIdx ) in formData['blueprint']" :key="sectionIdx" class="relative py-4">
                     <!-- Helper: Section click -->
                     <div class="sr-only absolute -top-16" :id="`field${sectionIdx}`" />
-                    <div v-if="sectionData.title || sectionData.subtitle" class="space-y-1">
+                    <div v-if="sectionData.title || sectionData.subtitle" class="space-y-1"  ref="buttonRefs">
                         <h3 class="text-lg leading-6 font-medium text-gray-800 capitalize">
                             {{ sectionData.title }}
                         </h3>
@@ -124,11 +145,13 @@ const current = null
                         <div v-for="(fieldData, fieldName, index ) in sectionData.fields" :key="index" class="mt-1 ">
                             <dl class="divide-y divide-green-200  ">
                                 <div class="pb-4 sm:pb-5 sm:grid sm:grid-cols-3 sm:gap-4 max-w-2xl">
+
                                     <!-- Title of Field -->
                                     <dt class="text-sm font-medium text-gray-500 capitalize">
                                         <div class="inline-flex items-start leading-none">
                                             <!-- Icon: Required -->
-                                            <FontAwesomeIcon v-if="fieldData.required" :icon="['fas', 'asterisk']" class="font-light text-[12px] text-red-400 mr-1"/>
+                                            <FontAwesomeIcon v-if="fieldData.required" :icon="['fas', 'asterisk']"
+                                                class="font-light text-[12px] text-red-400 mr-1" />
                                             <span>{{ fieldData.label }}</span>
                                         </div>
                                     </dt>
@@ -138,14 +161,9 @@ const current = null
                                         <div class="mt-1 flex text-sm text-gray-700 sm:mt-0">
                                             <div class="relative flex-grow">
                                                 <!-- Dynamic component -->
-                                                <component
-                                                    :is="getComponent(fieldData['type'])"
-                                                    :form="form"
-                                                    :fieldName="fieldName"
-                                                    :options="fieldData['options']"
-                                                    :fieldData="fieldData"
-                                                    :key="index"
-                                                >
+                                                <component :is="getComponent(fieldData['type'])" :form="form"
+                                                    :fieldName="fieldName" :options="fieldData['options']"
+                                                    :fieldData="fieldData" :key="index">
                                                 </component>
                                             </div>
                                             <!-- <span class="ml-4 flex-shrink-0 w-5 bg-red-500">
@@ -172,6 +190,7 @@ const current = null
                 </div>
 
             </form>
-</div></div>
+        </div>
+    </div>
 </template>
 
