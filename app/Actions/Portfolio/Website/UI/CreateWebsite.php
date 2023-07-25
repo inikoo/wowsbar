@@ -83,6 +83,101 @@ class CreateWebsite extends InertiaAction
 
                             ]
                         ],
+                        [
+                            'title'  => __('ID/name'),
+                            'fields' => [
+
+                                'code' => [
+                                    'type'     => 'input',
+                                    'label'    => __('code'),
+                                    'required' => true,
+                                ],
+                                'name' => [
+                                    'type'     => 'input',
+                                    'label'    => __('name'),
+                                    'required' => true,
+                                    'value'    => '',
+                                ],
+
+
+                            ]
+                        ],
+                        [
+                            'title'  => __('ID/name'),
+                            'fields' => [
+
+                                'code' => [
+                                    'type'     => 'input',
+                                    'label'    => __('code'),
+                                    'required' => true,
+                                ],
+                                'name' => [
+                                    'type'     => 'input',
+                                    'label'    => __('name'),
+                                    'required' => true,
+                                    'value'    => '',
+                                ],
+
+
+                            ]
+                        ],
+                        [
+                            'title'  => __('ID/name'),
+                            'fields' => [
+
+                                'code' => [
+                                    'type'     => 'input',
+                                    'label'    => __('code'),
+                                    'required' => true,
+                                ],
+                                'name' => [
+                                    'type'     => 'input',
+                                    'label'    => __('name'),
+                                    'required' => true,
+                                    'value'    => '',
+                                ],
+
+
+                            ]
+                        ],
+                        [
+                            'title'  => __('ID/name'),
+                            'fields' => [
+
+                                'code' => [
+                                    'type'     => 'input',
+                                    'label'    => __('code'),
+                                    'required' => true,
+                                ],
+                                'name' => [
+                                    'type'     => 'input',
+                                    'label'    => __('name'),
+                                    'required' => true,
+                                    'value'    => '',
+                                ],
+
+
+                            ]
+                        ],
+                        [
+                            'title'  => __('ID/name'),
+                            'fields' => [
+
+                                'code' => [
+                                    'type'     => 'input',
+                                    'label'    => __('code'),
+                                    'required' => true,
+                                ],
+                                'name' => [
+                                    'type'     => 'input',
+                                    'label'    => __('name'),
+                                    'required' => true,
+                                    'value'    => '',
+                                ],
+
+
+                            ]
+                        ],
 
 
                     ],

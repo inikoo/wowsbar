@@ -153,6 +153,7 @@ class IndexWebsites extends InertiaAction
                     'style' => 'primary',
                     'tooltip' => __('Create website'),
                     'label' => __('new website'),
+                    'icon'  => 'fas fa-plus'
                 ]
             ]
         ));

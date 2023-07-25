@@ -95,7 +95,7 @@ router.on('navigate', (event) => {
     <div v-if="displayBreadcrumbs" class="md:pr-10 xl:pr-56">
         <nav
             class="py-4 md:py-0 flex border-b h-6  text-sm"
-            :class="[useAppearanceStore().darkMode ? 'text-light3 border-darklight' : 'text-dark3 border-light3']"
+            :class="[useAppearanceStore().darkMode ? 'text-light3 border-darklight' : 'bg-white text-dark3 border-light3']"
             aria-label="Breadcrumb">
             <!-- Breadcrumb -->
             <ol role="list" class="w-full mx-auto px-4 flex">

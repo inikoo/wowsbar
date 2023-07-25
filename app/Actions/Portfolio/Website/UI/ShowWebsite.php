@@ -69,7 +69,7 @@ class ShowWebsite extends InertiaAction
                     'actions' => [
                         $this->canEdit ? [
                             'type'  => 'button',
-                            'style' => 'edit',
+                            'style' => 'tertiary',
                             'label' => __('edit'),
                             'route' => [
                                 'name'       => preg_replace('/show$/', 'edit', $this->routeName),
@@ -124,7 +124,8 @@ class ShowWebsite extends InertiaAction
                                 'parameters' => array_values([$website->slug])
                             ],
                             'label' => __('website'),
-                            'style' => 'primary'
+                            'style' => 'primary',
+                            'icon'  => 'fas fa-plus'
                         ] : false
                     ],
                     prefix: 'banners',

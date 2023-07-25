@@ -73,7 +73,7 @@ class ShowBannerWorkshop extends InertiaAction
                     'actions' => [
                         [
                             'type'       => 'button',
-                            'style'      => 'exitEdit',
+                            'style'      => 'tertiary',
                             'label'      => __('Exit workshop'),
                             'route'      => [
                                 'name'       => preg_replace('/workshop$/', 'show', $this->routeName),

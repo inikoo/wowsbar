@@ -386,4 +386,12 @@ onMounted(() => {
 
 </template>
 
+<style lang="scss">
+.tabNavigationActive {
+    @apply bg-gray-200/80 border-orange-500 text-gray-700
+}
 
+.tabNavigation {
+    @apply border-transparent hover:bg-white text-dark3
+}
+</style>

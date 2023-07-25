@@ -6,11 +6,11 @@
 
 <script setup lang="ts">
 
-import {library} from '@fortawesome/fontawesome-svg-core';
-import {faPlus} from '@/../private/pro-solid-svg-icons';
-import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faPlus, faSave } from '@/../private/pro-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
-library.add(faPlus);
+library.add(faPlus, faSave);
 
 const props = defineProps(
     {
@@ -21,6 +21,10 @@ const props = defineProps(
         'size': {
             type: String,
             default: 'm',
+        },
+        'icon': {
+            type: String,
+            default: ''
         },
         'leftIcon': {
             type: Object,
@@ -38,64 +42,51 @@ let iconClass = ''
 let sizeClass = ''
 
 // Styling depends on the 'style' props
-if(props.style == 'edit' || props.style == 'exitEdit') styleClass = 'border border-gray-300 bg-white text-gray-700 hover:bg-gray-100/70 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2'
-else if (props.style == 'primary') styleClass = 'bg-gray-700 text-gray-100 hover:bg-gray-900 focus:outline-none focus:ring-gray-600 focus:ring-offset-1'
+if (props.style == 'primary') styleClass = 'bg-gray-700 text-white hover:bg-gray-800 focus:outline-none focus:ring-gray-600 focus:ring-offset-1'
+else if (props.style == 'secondary') styleClass = 'border border-gray-400/80 bg-gray-300 text-gray-700 hover:bg-gray-400/60 focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-offset-2'
+else if (props.style == 'tertiary') styleClass = 'border border-gray-300 bg-transparent text-gray-700 hover:bg-gray-200/70 focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-offset-2'
+// else if(props.style == 'edit' || props.style == 'exitEdit') styleClass = 'border border-gray-300 bg-white text-gray-700 hover:bg-gray-100/70 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2'
 else if (props.style == 'delete') styleClass = 'border border-red-400 text-red-600 hover:text-red-800 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2'
-else if (props.style == 'cancel') styleClass = 'border border-gray-400 bg-gray-100 text-gray-700 hover:text-gray-800 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2'
-else (styleClass = 'border-gray-100 text-gray-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2')
+// else if (props.style == 'cancel') styleClass = 'border border-gray-400 bg-gray-100 text-gray-700 hover:text-gray-800 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2'
+else styleClass = 'border border-gray-300 bg-transparent text-gray-700 hover:bg-gray-200/70 focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-offset-2'
+
 
 
 // Styling depends on the 'size' props
 switch (props.size) {
     case 'xs':
         sizeClass = 'rounded px-2.5 py-1.5 text-xs'
-        iconClass= '-ml-0.5 mr-2 h-3 w-3 '
+        iconClass = '-ml-0.5 mr-2 h-3 w-3 '
         break
     case 's':
         sizeClass = 'rounded-md px-3 py-2 text-sm'
-        iconClass= '-ml-0.5 mr-2 h-4 w-4'
+        iconClass = '-ml-0.5 mr-2 h-4 w-4'
         break
     case 'm':
         sizeClass = 'rounded-md x-4 py-2 text-sm'
-        iconClass= '-ml-1 mr-2 '
+        iconClass = '-ml-1 mr-2 '
         break
     case 'l':
         sizeClass = 'rounded-md px-4 py-2 text-base'
-        iconClass= '-ml-1 mr-3 h-5 w-5'
+        iconClass = '-ml-1 mr-3 h-5 w-5'
         break
     case 'xl':
         sizeClass = 'rounded-md px-6 py-3 text-base'
-        iconClass= 'ml-1 mr-3 h-5 w-5'
+        iconClass = 'ml-1 mr-3 h-5 w-5'
         break
 }
 
 </script>
 
 <template>
-
-    <button
-        type="button"
-        :class="[
-            'px-5 inline-flex items-center font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2',
-            styleClass,
-            sizeClass
-        ]"
-    >
-        <FontAwesomeIcon
-            v-if="action==='primary'"
-            aria-hidden="true"
-            icon="fas fa-plus"
-            size="sm"
-            :class="[iconClass]"/>
-        <FontAwesomeIcon
-            v-if="leftIcon"
-            :title="leftIcon['tooltip']"
-            aria-hidden="true"
-            :icon="leftIcon['icon']"
-            size="lg"
-            :class="[iconClass]"/>
-        <slot/>
+    <button type="button" :class="[
+        'px-5 inline-flex items-center font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2',
+        styleClass,
+        sizeClass
+    ]">
+        <FontAwesomeIcon v-if="icon" aria-hidden="true" :icon="icon" size="sm" :class="[iconClass]" />
+        <FontAwesomeIcon v-if="leftIcon" :title="leftIcon['tooltip']" aria-hidden="true" :icon="leftIcon['icon']" size="lg"
+            :class="[iconClass]" />
+        <slot />
     </button>
-
-
 </template>
