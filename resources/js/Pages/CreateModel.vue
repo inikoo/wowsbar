@@ -7,6 +7,7 @@
 <script setup lang="ts">
 import {Head, useForm} from '@inertiajs/vue3'
 import { jumpToElement } from "@/Composables/jumpToElement"
+import Button from '@/Components/Elements/Buttons/Button.vue'
 
 import PageHeading from '@/Components/Headings/PageHeading.vue'
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
@@ -88,16 +89,15 @@ const current = null
                         :class="[
                             key == current
                                 ? 'bg-orange-200 border-orange-500 text-orange-700 hover:bg-orange-50 hover:text-orange-700'
-                                : 'border-transparent text-gray-600 hover:bg-orange-100 hover:text-orange-700',
+                                : 'border-transparent text-gray-600 hover:bg-gray-100 hover:text-gray-700',
                             'cursor-pointer group border-l-4 px-3 py-2 flex items-center text-sm font-medium',
                         ]"
                         :aria-current="key === current ? 'page' : undefined"
                     >
                         <FontAwesomeIcon v-if="item.icon" aria-hidden="true"
-                        :class="[
-                            key === current
-                                ? 'text-orange-500 group-hover:text-orange-500'
-                                : 'text-gray-400 group-hover:text-gray-500',
+                        :class="[ key === current
+                                    ? 'text-orange-500 group-hover:text-orange-500'
+                                    : 'text-gray-400 group-hover:text-gray-500',
                             'flex-shrink-0 -ml-1 mr-3 h-6 w-6',
                         ]"
                         :icon="item.icon" />
@@ -107,12 +107,12 @@ const current = null
             </aside>
 
             <!-- Main form -->
-            <form class="px-4 sm:px-6 md:px-10 col-span-9 gap-y-8 pb-8 divide-y divide-blue-200 " @submit.prevent="handleFormSubmit">
+            <form class="px-4 sm:px-6 md:px-10 col-span-9 gap-y-8 pb-8 divide-y divide-gray-200 " @submit.prevent="handleFormSubmit">
                 <div v-for="(sectionData, sectionIdx ) in formData['blueprint']" :key="sectionIdx" class="relative py-4">
                     <!-- Helper: Section click -->
                     <div class="sr-only absolute -top-16" :id="`field${sectionIdx}`" />
                     <div v-if="sectionData.title || sectionData.subtitle" class="space-y-1">
-                        <h3 class="text-lg leading-6 font-medium text-gray-900 capitalize">
+                        <h3 class="text-lg leading-6 font-medium text-gray-800 capitalize">
                             {{ sectionData.title }}
                         </h3>
                         <p v-show="sectionData['subtitle']" class="max-w-2xl text-sm text-gray-500">
@@ -124,6 +124,7 @@ const current = null
                         <div v-for="(fieldData, fieldName, index ) in sectionData.fields" :key="index" class="mt-1 ">
                             <dl class="divide-y divide-green-200  ">
                                 <div class="pb-4 sm:pb-5 sm:grid sm:grid-cols-3 sm:gap-4 max-w-2xl">
+                                    <!-- Title of Field -->
                                     <dt class="text-sm font-medium text-gray-500 capitalize">
                                         <div class="inline-flex items-start leading-none">
                                             <!-- Icon: Required -->
@@ -131,6 +132,8 @@ const current = null
                                             <span>{{ fieldData.label }}</span>
                                         </div>
                                     </dt>
+
+                                    <!-- Field -->
                                     <dd class="sm:col-span-2">
                                         <div class="mt-1 flex text-sm text-gray-700 sm:mt-0">
                                             <div class="relative flex-grow">
@@ -159,13 +162,12 @@ const current = null
                     </div>
                 </div>
 
+                <!-- Button -->
                 <div class="pt-5 border-t-2 border-orange-500">
                     <div class="flex justify-end">
-
-                        <button type="submit" :disabled="form.processing"
-                                class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500">
+                        <Button type="submit" :disabled="form.processing" :style="'primary'" size="m">
                             {{ trans('Save') }}
-                        </button>
+                        </Button>
                     </div>
                 </div>
 

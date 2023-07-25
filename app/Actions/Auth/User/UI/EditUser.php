@@ -49,7 +49,7 @@ class EditUser extends InertiaAction
                     'actions'   => [
                       [
                           'type'  => 'button',
-                          'style' => 'exitEdit',
+                          'style' => 'tertiary',
                           'route' => [
                               'name'       => preg_replace('/edit$/', 'show', $this->routeName),
                               'parameters' => array_values($this->originalParameters)

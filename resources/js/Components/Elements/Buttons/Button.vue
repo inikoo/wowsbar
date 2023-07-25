@@ -38,11 +38,14 @@ let iconClass = ''
 let sizeClass = ''
 
 // Styling depends on the 'style' props
-if(props.style == 'edit' || props.style == 'exitEdit') styleClass = 'border border-gray-300 bg-white text-gray-700 hover:bg-gray-100/70 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2'
-else if (props.style == 'primary') styleClass = 'bg-gray-700 text-gray-100 hover:bg-gray-900 focus:outline-none focus:ring-gray-600 focus:ring-offset-1'
+if (props.style == 'primary') styleClass = 'bg-gray-700 text-white hover:bg-gray-800 focus:outline-none focus:ring-gray-600 focus:ring-offset-1'
+else if(props.style == 'secondary') styleClass = 'border border-gray-400/80 bg-gray-300 text-gray-700 hover:bg-gray-400/60 focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-offset-2'
+else if(props.style == 'tertiary') styleClass = 'border border-gray-300 bg-transparent text-gray-700 hover:bg-gray-200/70 focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-offset-2'
+// else if(props.style == 'edit' || props.style == 'exitEdit') styleClass = 'border border-gray-300 bg-white text-gray-700 hover:bg-gray-100/70 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2'
 else if (props.style == 'delete') styleClass = 'border border-red-400 text-red-600 hover:text-red-800 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2'
-else if (props.style == 'cancel') styleClass = 'border border-gray-400 bg-gray-100 text-gray-700 hover:text-gray-800 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2'
-else (styleClass = 'border-gray-100 text-gray-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2')
+// else if (props.style == 'cancel') styleClass = 'border border-gray-400 bg-gray-100 text-gray-700 hover:text-gray-800 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2'
+else styleClass = 'border border-gray-300 bg-transparent text-gray-700 hover:bg-gray-200/70 focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-offset-2'
+
 
 
 // Styling depends on the 'size' props
