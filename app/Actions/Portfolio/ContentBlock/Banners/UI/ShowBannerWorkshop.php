@@ -92,7 +92,7 @@ class ShowBannerWorkshop extends InertiaAction
                         ]
                     ],
                 ],
-                'bannerLayout'=> $banner->layout,
+                'bannerLayout'=> $banner->compiledLayout(),
 
 
 
