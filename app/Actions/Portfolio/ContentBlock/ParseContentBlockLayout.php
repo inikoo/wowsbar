@@ -29,7 +29,7 @@ class ParseContentBlockLayout
     public function parseBanner($layout): array
     {
         $slides = [];
-        foreach (Arr::get($layout, 'slides') as $key => $slideLayout) {
+        foreach (Arr::get($layout, 'components') as $key => $slideLayout) {
             $slides[] = [
                 'type'      => ContentBlockComponentTypeEnum::SLIDE->value,
                 'layout'    => $slideLayout,
@@ -38,7 +38,7 @@ class ParseContentBlockLayout
         }
 
         return [
-            Arr::except($layout, ['slides', 'images']),
+            Arr::except($layout, ['components', 'images']),
             $slides
         ];
     }
