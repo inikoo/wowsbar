@@ -21,6 +21,8 @@ const props = defineProps<{
     swiperRef: Element
 }>()
 
+console.log("==================")
+console.log(props.corner)
 
 const positionClasses = computed(() => {
     let classes;
@@ -48,8 +50,8 @@ const components = {
     'linkButton': LinkButton,
     'cornerText': CornerText,
     'cornerFooter': CornerFooter,
-
 }
+
 const getComponent = (componentName: any) => {
     return components[componentName] ?? null;
 };
