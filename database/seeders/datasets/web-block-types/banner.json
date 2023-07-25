@@ -45,7 +45,7 @@
                         "bottomRight": {
                             "type": "linkButton",
                             "data": {
-                                "label": "Browse Promo",
+                                "text": "Browse Promo",
                                 "target": "#"
                             }
                         }
@@ -71,7 +71,7 @@
                         "topRight": {
                             "type": "footer",
                             "data": {
-                                "label": "The banner officially disclaimed by XYZ Company."
+                                "text": "The banner officially disclaimed by XYZ Company."
                             }
                         }
 
@@ -85,7 +85,7 @@
                         "bottomRight": {
                             "type": "linkButton",
                             "data": {
-                                "label": "Browse Promo",
+                                "text": "Browse Promo",
                                 "target": "#"
                             }
                         }
@@ -105,7 +105,7 @@
                         "topRight": {
                             "type": "text",
                             "data": {
-                                "label": "Hello"
+                                "text": "Hello"
                             }
                         }
                     }
