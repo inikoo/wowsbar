@@ -165,7 +165,7 @@ const current = null
                 <!-- Button -->
                 <div class="pt-5 border-t-2 border-orange-500">
                     <div class="flex justify-end">
-                        <Button type="submit" :disabled="form.processing" :style="'primary'" size="m">
+                        <Button type="submit" :disabled="form.processing" :style="'primary'" size="m" icon="fas fa-save">
                             {{ trans('Save') }}
                         </Button>
                     </div>
