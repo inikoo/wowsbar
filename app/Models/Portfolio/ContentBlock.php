@@ -7,6 +7,8 @@
 
 namespace App\Models\Portfolio;
 
+use App\Actions\Portfolio\ContentBlock\Elasticsearch\DeleteContentBlockElasticsearch;
+use App\Actions\Portfolio\ContentBlock\Elasticsearch\StoreContentBlockElasticsearch;
 use App\Concerns\BelongsToTenant;
 use App\Http\Resources\Portfolio\ContentBlockComponentResource;
 use App\Models\Traits\HasUniversalSearch;
@@ -130,6 +132,19 @@ class ContentBlock extends Model implements HasMedia
         data_set($compiledLayout,'components',json_decode(ContentBlockComponentResource::collection($this->contentBlockComponents)->toJson(),true));
         return $compiledLayout;
 
+    }
+
+    protected static function boot(): void
+    {
+        parent::boot();
+
+        static::created(function ($contentBlock) {
+            StoreContentBlockElasticsearch::run($contentBlock);
+        });
+
+        static::deleted(function ($contentBlock) {
+            DeleteContentBlockElasticsearch::run($contentBlock);
+        });
     }
 
 }
