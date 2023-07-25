@@ -10,10 +10,7 @@ import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import {faImage,faExpandArrows,faAlignCenter} from "../../../private/pro-light-svg-icons"
 import Input from '@/Components/Forms/Fields/Input.vue'
 import Select from '@/Components/Forms/Fields/Select.vue'
-
-import {trans} from "laravel-vue-i18n"
 import Radio from '@/Components/Forms/Fields/Radio.vue'
-
 import InputWithAddOn from '@/Components/Forms/Fields/InputWithAddOn.vue'
 import SlideBackground from "@/Components/Workshop/Fileds/SlideBackground.vue";
 import Corners from "@/Components/Workshop/Fileds/Corners.vue";

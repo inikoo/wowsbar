@@ -22,13 +22,14 @@ const props = defineProps<{
 const data = ref(props.bannerLayout);
 
 
+
 const changeLink = (file, value) => {
     const index = data.value.findIndex((item) => item.id === file.id);
     if (index !== -1) data.value[index].link = value;
 };
 
 const test1=()=>{
-    console.log(data.value.slides)
+    console.log(data.value.components)
 }
 
 </script>
@@ -37,7 +38,7 @@ const test1=()=>{
     <Head :title="capitalize(title)" />
     <PageHeading :data="pageHead" :dataToSubmit="data"></PageHeading>
 
-    <Slider :layout="data" />
+    <Slider :data="data" />
     <SlidesWorkshop class="clear-both mt-2 p-2.5"
         :data="data"
         :changeLink="changeLink"
