@@ -5,7 +5,7 @@
   -->
 
   <script  setup lang="ts">
-  import { ref, onMounted } from 'vue'
+  import { ref, onMounted, watch } from 'vue'
   import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
   import { faEye,  faTrashAlt, faAlignJustify } from "@/../private/pro-light-svg-icons"
   import { library } from '@fortawesome/fontawesome-svg-core';
@@ -13,11 +13,10 @@
   import PrimaryButton from "@/Components/PrimaryButton.vue";
   import { v4 as uuidV4 } from 'uuid';
   import Input from '@/Components/Forms/Fields/Input.vue'
-
   import { trans } from "laravel-vue-i18n"
-
   import { useForm } from '@inertiajs/vue3'
   import SlideWorkshop from "@/Components/Workshop/SlideWorkshop.vue";
+  import { cloneDeep } from 'lodash'
   library.add(faEye,  faTrashAlt,faAlignJustify )
   const props = defineProps<{
         data: {
@@ -138,29 +137,10 @@
   }
 
   const openEdit = (file) => {
-    ChangeData(form.value.data(),fileEdit.value)
-
     fileEdit.value = file
-    setFormValue()
-   
+    _SlideWorkshop.value.current = 0
+    setFormValue(file)
   }
-
-  const ChangeData = (newData,oldData) => {
-  const index = slides.value.findIndex((item) => item.id === oldData.id);
-    console.log(index)
-  if (index !== -1) {
-    slides.value[index] = {
-      ...slides.value[index],
-      imageSrc: newData.imageSrc,
-      centralStage: {
-        subtitle: newData.subtitle,
-        title: newData.title,
-      },
-    };
-    props.data.slides = [...slides.value];
-  }
-};
-
 
 const visible = (i) => {
     slides.value[i].visibility = !slides.value[i].visibility
@@ -199,53 +179,40 @@ const blueprint = ref([
         icon: ['fal', 'fa-align-center'],
         fields: [
             {
-                name: 'title',
+                name: ['centralStage','title'],
                 type: 'input',
                 label: trans('Title'),
                 value: ['centralStage','title']
             },
             {
-                name: 'subtitle',
+                name: ['centralStage','subtitle'],
                 type: 'input',
                 label: trans('subtitle'),
                 value: ['centralStage','subtitle']
             },
         ]
-
     },
-
-
 ])
 
 
 onMounted(() => {
-    setFormValue()
+    setFormValue(fileEdit.value)
 });
 
-const setFormValue=()=>{
-    let fields = {};
-    for (const section of blueprint.value) {
-      for (const field of section.fields) {
-        if (Array.isArray(field.value)) {
-          fields[field.name] = getNestedValue(fileEdit.value, field.value);
-        } else {
-          fields[field.name] = fileEdit.value[field.value];
-        }
-      }
-    }
-    form.value = useForm(fields);
+const _SlideWorkshop = ref(null)
+const form = ref({});
+const setFormValue=(data)=>{ form.value = useForm(data) , console.log(form) }
+
+watch(form, (newValue) => {
+  if (newValue.data()) {
+    let oldFile = cloneDeep(fileEdit.value),
+    newfile = newValue.data()
+    fileEdit.value = { ...newfile, visibility: oldFile.visibility };
+    const index = slides.value.findIndex((item) => item.id === fileEdit.value.id);
+    if (index !== -1)  slides.value[index] = fileEdit.value;
+    props.data.slides = slides.value;
   }
-
-  const getNestedValue = (obj, keys) => {
-    return keys.reduce((acc, key) => {
-      if (acc && typeof acc === 'object' && key in acc) return acc[key];
-      return null;
-    }, obj);
-  }
-
-
- const form = ref({});
-
+});
 
   </script>
 
@@ -293,7 +260,7 @@ const setFormValue=()=>{
 
 
       <div style="width: 70%; border: 1px solid #d9d9d9;">
-          <SlideWorkshop :fileEdit="fileEdit" :blueprint="blueprint" :form="form"></SlideWorkshop>
+          <SlideWorkshop :fileEdit="fileEdit" :blueprint="blueprint" :form="form" ref="_SlideWorkshop"></SlideWorkshop>
       </div>
     </div>
   </template>

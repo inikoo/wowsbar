@@ -5,7 +5,7 @@
   -->
 
 <script setup lang="ts">
-import {ref, onMounted, defineExpose } from 'vue'
+import {ref, defineExpose } from 'vue'
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import {faImage,faExpandArrows,faAlignCenter} from "../../../private/pro-light-svg-icons"
 import Input from '@/Components/Forms/Fields/Input.vue'
@@ -15,7 +15,6 @@ import {trans} from "laravel-vue-i18n"
 import Radio from '@/Components/Forms/Fields/Radio.vue'
 
 import InputWithAddOn from '@/Components/Forms/Fields/InputWithAddOn.vue'
-import {useForm} from '@inertiajs/vue3'
 import SlideBackground from "@/Components/Workshop/Fileds/SlideBackground.vue";
 import {library} from "@fortawesome/fontawesome-svg-core";
 
@@ -40,7 +39,11 @@ const getComponent = (componentName) => {
 };
 
 
-const current = ref(0)
+const current = ref(0);
+
+defineExpose({
+    current,
+});
 
 </script>
 
