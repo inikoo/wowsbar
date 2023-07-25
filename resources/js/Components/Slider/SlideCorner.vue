@@ -18,11 +18,8 @@ const props = defineProps<{
         type: string,
         data?: object
     },
-    swiperRef: Element
+    swiperRef?: Element
 }>()
-
-console.log("==================")
-console.log(props.corner)
 
 const positionClasses = computed(() => {
     let classes;

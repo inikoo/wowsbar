@@ -79,7 +79,9 @@ class ShowWebsite extends InertiaAction
 
                         $this->canDelete ? [
                             'type'  => 'button',
-                            'style' => 'delete',
+                            'style' => 'negative',
+                            'label' => __('delete'),
+                            'icon'  => 'far fa-trash-alt',
                             'route' => [
                                 'name'       => 'portfolio.websites.remove',
                                 'parameters' => array_values($this->originalParameters)
