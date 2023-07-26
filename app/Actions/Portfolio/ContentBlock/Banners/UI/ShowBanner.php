@@ -105,7 +105,7 @@ class ShowBanner extends InertiaAction
 
     public function getBreadcrumbs(string $routeName, array $routeParameters, string $suffix = null): array
     {
-        $headCrumb = function (string $type, ContentBlock $banner, array $routeParameters, string $suffix) {
+        $headCrumb = function (string $type, ContentBlock $banner, array $routeParameters, string $suffix = null) {
             return [
                 [
                     'type'           => $type,
