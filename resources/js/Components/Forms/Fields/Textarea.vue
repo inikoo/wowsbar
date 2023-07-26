@@ -21,17 +21,17 @@ if(props.options!==undefined && props.options.type ){
 
 
 <template>
-    <div class="mt-1 relative">
+    <div class="relative">
         <div>
             <label :for="fieldName" class="block text-sm font-medium text-gray-700"></label>
-            <div class="mt-1 rounded-md shadow-sm">
+            <div class="rounded-md shadow-sm">
                 <textarea
                     v-model.trim="form[fieldName]"
                     :id="fieldName"
                     :name="fieldName"
                     :placeholder="fieldData?.placeholder"
                     rows="3"
-                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm" />
+                    class="block w-full rounded-md shadow-sm dark:bg-gray-600 dark:text-gray-400 border-gray-300 dark:border-gray-500 focus:border-gray-500 focus:ring-gray-500 sm:text-sm" />
             </div>
             <div v-if="fieldData.counter" class="grid grid-flow-col text-xs italic text-gray-500 mt-2 space-x-12 justify-start">
                 <p class="">
@@ -44,9 +44,12 @@ if(props.options!==undefined && props.options.type ){
                 </p>
             </div>
         </div>
-        <div v-if="form.errors[fieldName] || form.recentlySuccessful " class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-            <FontAwesomeIcon icon="fas fa-exclamation-circle" v-if="form.errors[fieldName]" class="h-5 w-5 text-red-500" aria-hidden="true" />
-            <FontAwesomeIcon icon="fas fa-check-circle" v-if="form.recentlySuccessful" class="mt-1.5  h-5 w-5 text-green-500" aria-hidden="true"/>
+
+        <!-- Icon: Error, Success, Loading -->
+        <div class="absolute top-2 right-0 pr-3 flex items-center pointer-events-none">
+            <FontAwesomeIcon v-if="form.errors[fieldName]" icon="fas fa-exclamation-circle" class="h-5 w-5 text-red-500" aria-hidden="true" />
+            <FontAwesomeIcon v-if="form.recentlySuccessful" icon="fas fa-check-circle" class="h-5 w-5 text-green-500" aria-hidden="true" />
+            <FontAwesomeIcon v-if="form.processing" icon="fad fa-spinner-third" class="h-5 w-5 animate-spin dark:text-gray-200" />
         </div>
     </div>
     <p v-if="form.errors[fieldName]" class="mt-2 text-sm text-red-600" id="email-error">{{ form.errors[fieldName] }}</p>

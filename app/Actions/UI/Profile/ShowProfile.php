@@ -97,48 +97,48 @@ class ShowProfile
                             ],
                         ],
                     ],
-                    [
-                        "title"  => __("appearance"),
-                        "icon"   => "fa-light fa-paint-brush",
-                        "fields" => [
-                            "colorMode" => [
-                                "type"  => "colorMode",
-                                "label" => __("Dark/Light mode"),
-                                "value" => "",
-                            ],
-                            "theme"     => [
-                                "type"  => "theme",
-                                "label" => __("choose your theme"),
-                                "value" => "",
-                            ],
-                        ],
-                    ],
-                    [
-                        "title"  => __("notifications"),
-                        "icon"   => "fa-light fa-bell",
-                        "fields" => [
-                            "notifications" => [
-                                "type"  => "myNotifications",
-                                "label" => __("notifications"),
-                                "value" => [],
-                                "data"  => [
-                                    [
-                                        'type' => 'new-order',
-                                        'label'=> __('new order'),
-                                    ],
-                                    [
-                                        'type' => 'new re',
-                                        'label'=> __('new order'),
-                                    ],
-                                    [
-                                        'type' => 'new user',
-                                        'label'=> __('new order'),
-                                    ],
-                                ]
-                            ],
+                    // [
+                    //     "title"  => __("appearance"),
+                    //     "icon"   => "fa-light fa-paint-brush",
+                    //     "fields" => [
+                    //         "colorMode" => [
+                    //             "type"  => "colorMode",
+                    //             "label" => __("Dark/Light mode"),
+                    //             "value" => "",
+                    //         ],
+                    //         "theme"     => [
+                    //             "type"  => "theme",
+                    //             "label" => __("choose your theme"),
+                    //             "value" => "",
+                    //         ],
+                    //     ],
+                    // ],
+                    // [
+                    //     "title"  => __("notifications"),
+                    //     "icon"   => "fa-light fa-bell",
+                    //     "fields" => [
+                    //         "notifications" => [
+                    //             "type"  => "myNotifications",
+                    //             "label" => __("notifications"),
+                    //             "value" => [],
+                    //             "data"  => [
+                    //                 [
+                    //                     'type' => 'new-order',
+                    //                     'label'=> __('new order'),
+                    //                 ],
+                    //                 [
+                    //                     'type' => 'new re',
+                    //                     'label'=> __('new order'),
+                    //                 ],
+                    //                 [
+                    //                     'type' => 'new user',
+                    //                     'label'=> __('new order'),
+                    //                 ],
+                    //             ]
+                    //         ],
 
-                        ],
-                    ],
+                    //     ],
+                    // ],
                 ],
                 "args"      => [
                     "updateRoute" => [

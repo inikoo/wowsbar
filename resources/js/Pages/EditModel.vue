@@ -69,7 +69,7 @@ const current = ref(0)
 
     <!-- If overflow-hidden, affect to Multiselect on Address -->
     <div class="rounded-lg shadow">
-        <div class="divide-y divide-gray-200 lg:grid grid-flow-col lg:grid-cols-12 lg:divide-y-0 lg:divide-x">
+        <div class="divide-y divide-gray-200 dark:divide-gray-500 lg:grid grid-flow-col lg:grid-cols-12 lg:divide-y-0 lg:divide-x">
 
             <!-- Left Tab: Navigation -->
             <aside class="py-0 lg:col-span-3 lg:h-full">
@@ -77,12 +77,12 @@ const current = ref(0)
                     <ul>
                         <li v-for="(item, key) in formData['blueprint']" @click="current = key" :class="[
                             key == current
-                                ? 'bg-gray-200 border-orange-500 text-gray-800 hover:bg-gray-200'
-                                : 'border-transparent text-gray-500 hover:bg-gray-50 hover:text-gray-700',
+                                ? 'bg-gray-200 dark:bg-gray-500 border-orange-500 text-gray-800 dark:text-gray-300'
+                                : 'border-transparent text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-gray-700',
                             'cursor-pointer group border-l-4 px-3 py-2 flex items-center text-sm font-medium',
-                        ]" :aria-current="key === current ? 'page' : undefined">
+                            ]" :aria-current="key === current ? 'page' : undefined">
                             <FontAwesomeIcon v-if="item.icon" aria-hidden="true" :class="[
-                                key === current ? 'text-gray-600' : 'text-gray-400 group-hover:text-gray-600',
+                                key === current ? 'text-gray-400' : 'text-gray-500',
                                 'flex-shrink-0 -ml-1 mr-3 h-5 w-5',
                             ]" :icon="item.icon" />
 
@@ -94,7 +94,7 @@ const current = ref(0)
 
             <!-- Content of forms -->
             <div class="px-4 sm:px-6 md:px-4 col-span-9">
-                <div class="divide-y divide-grey-200 flex flex-col">
+                <div class="divide-y divide-gray-200 dark:divide-gray-500 flex flex-col">
                     <!-- <div class="space-y-1 mb-6 ">
                         <h3 class="text-lg leading-6 font-medium text-gray-900 capitalize">
                             {{ formData['blueprint'][current].title }}

@@ -8,16 +8,16 @@
 <script setup lang="ts">
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faExclamationCircle, faCheckCircle } from "@/../private/pro-solid-svg-icons"
-import { faCopy } from "@/../private/pro-light-svg-icons"
+import { faSpinnerThird } from "@/../private/pro-duotone-svg-icons"
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { set } from 'lodash'
-library.add(faExclamationCircle, faCheckCircle, faCopy);
+library.add(faExclamationCircle, faCheckCircle, faSpinnerThird)
 import { ref, watch  } from 'vue'
 
 const props = defineProps<{
-    form: any,
-    fieldName: string,
-    options?: any,
+    form: any
+    fieldName: string
+    options?: any
     fieldData?: {
         placeholder: string
         readonly: boolean
@@ -77,12 +77,12 @@ const updateFormValue = (newValue) => {
         <div class="relative">
             <input
                 v-model.trim="value"
-                :readonly="fieldData.readonly"
+                :readonly="fieldData?.readonly"
                 :type="props.options?.type ?? 'text'" @input="form.errors[fieldName] = ''"
                 :placeholder="fieldData?.placeholder"
-                class="shadow-sm focus:ring-gray-500 focus:border-gray-500 block w-full sm:text-sm border-gray-300 rounded-md read-only:bg-gray-100 read-only:ring-0 read-only:ring-transparent read-only:text-gray-500"
+                class="block w-full shadow-sm rounded-md dark:bg-gray-600 dark:text-gray-400 focus:ring-gray-500 focus:border-gray-500 sm:text-sm border-gray-300 dark:border-gray-500 read-only:bg-gray-100 read-only:ring-0 read-only:ring-transparent read-only:text-gray-500"
             />
-            <div v-if="fieldData.copyButton" class="absolute inset-y-0 right-0 group cursor-pointer px-1.5 flex justify-center items-center text-gray-600"
+            <div v-if="fieldData?.copyButton" class="absolute inset-y-0 right-0 group cursor-pointer px-1.5 flex justify-center items-center text-gray-600"
                 @click="copyText(form[fieldName])">
                 <FontAwesomeIcon
                     icon="fal fa-copy"
@@ -90,12 +90,12 @@ const updateFormValue = (newValue) => {
                     aria-hidden="true"
                 />
             </div>
-            <div v-if="form.errors[fieldName] || form.recentlySuccessful"
-                class="absolute inset-y-2/4 right-0 pr-3 flex items-center pointer-events-none">
-                <FontAwesomeIcon icon="fas fa-exclamation-circle" v-if="form.errors[fieldName]" class="h-5 w-5 text-red-500"
-                    aria-hidden="true" />
-                <FontAwesomeIcon icon="fas fa-check-circle" v-if="form.recentlySuccessful"
-                    class="mt-1.5  h-5 w-5 text-green-500" aria-hidden="true" />
+
+            <!-- Icon: Error, Success, Loading -->
+            <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                <FontAwesomeIcon v-if="form.errors[fieldName]" icon="fas fa-exclamation-circle" class="h-5 w-5 text-red-500" aria-hidden="true" />
+                <FontAwesomeIcon v-if="form.recentlySuccessful" icon="fas fa-check-circle" class="h-5 w-5 text-green-500" aria-hidden="true" />
+                <FontAwesomeIcon v-if="form.processing" icon="fad fa-spinner-third" class="h-5 w-5 animate-spin dark:text-gray-200"/>
             </div>
         </div>
 
