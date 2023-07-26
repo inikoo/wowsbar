@@ -118,7 +118,7 @@ const remove = (file) => {
             openEdit(nextIndex < components.value.length ? components.value[nextIndex] : components.value.filter((item)=>item.ulid !== null)[0])
         } 
         components.value[index].ulid = null;
-        props.data.components = components.value.filter(item => item.ulid !== null); // Remove items with null ulid
+        props.data.components = components.value; // Remove items with null ulid
     } else {
         console.log('Index not found');
     }
