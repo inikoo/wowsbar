@@ -12,12 +12,10 @@ use App\Actions\Tenancy\Tenant\Hydrators\TenantHydrateContentBlocks;
 use App\Models\Portfolio\ContentBlock;
 use App\Models\Portfolio\Website;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Redirect;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\AsController;
 use Lorisleiva\Actions\Concerns\WithAttributes;
-use PhpOffice\PhpSpreadsheet\Calculation\Web;
 
 class DeleteContentBlock
 {
@@ -26,9 +24,11 @@ class DeleteContentBlock
     use WithAttributes;
 
     public bool $isAction = false;
+    public Website|null $website = null;
 
-    public function handle(ContentBlock $contentBlock): ContentBlock
+    public function handle(Website $website, ContentBlock $contentBlock): ContentBlock
     {
+        $this->website = $website;
         $contentBlock->delete();
 
         TenantHydrateContentBlocks::dispatch(app('currentTenant'));
@@ -44,21 +44,20 @@ class DeleteContentBlock
         return $request->user()->can("portfolio.edit");
     }
 
-    public function action(ContentBlock $contentBlock): ContentBlock
+    public function action(Website $website, ContentBlock $contentBlock): ContentBlock
     {
-        return $this->handle($contentBlock);
+        return $this->handle($website, $contentBlock);
     }
 
-    public function asController(ContentBlock $contentBlock, ActionRequest $request): ContentBlock
+    public function asController(Website $website, ContentBlock $contentBlock, ActionRequest $request): ContentBlock
     {
         $request->validate();
-        return $this->handle($contentBlock);
+        return $this->handle($website, $contentBlock);
     }
 
 
     public function htmlResponse(): RedirectResponse
     {
-        return back();
+        return redirect()->route('portfolio.websites.show.banners.index', $this->website->code);
     }
-
 }
