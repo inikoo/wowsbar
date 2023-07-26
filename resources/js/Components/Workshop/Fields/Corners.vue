@@ -17,14 +17,14 @@ const props = defineProps<{
 
 
 const area = ref(null)
-const current = ref(0);
 
-const corners = [
+
+const corners = ref([
   {label : trans('top left'), valueForm : get(props.form.layout,['corners',`topLeft`],null), id : 'topLeft' },
   {label : trans('Top right'), valueForm : get(props.form.layout,['corners',`topRight`],null), id : 'topRight' },
   {label : trans('bottom left'), valueForm : get(props.form.layout,['corners',`bottomLeft`],null), id : 'bottomLeft' },
   {label : trans('Bottom right'), valueForm : get(props.form.layout,['corners',`bottomRight`],null), id : 'bottomRight' },
-]
+])
 
 const Type = [
   {
@@ -77,6 +77,18 @@ const Type = [
   },
 ]
 
+const defaultCurrent = computed(() => {
+  if (area.value != null) {
+    const areaType = props.form.layout.corners[area.value.id]?.type;
+    const index =  Type.findIndex(item => item.value === areaType);
+    return index == -1 ? 0 : index
+  } else {
+    return 0; // Return 0 if area.value is null
+  }
+});
+
+  // Set current to the default index
+  const current = ref(defaultCurrent.value)
 
 const currentTypeFields = computed(() => {
   const currentType = Type[current.value]
@@ -91,6 +103,8 @@ const currentTypeFields = computed(() => {
 
 const handleClick = (corner) => {
   area.value = corner;
+  current.value = defaultCurrent.value
+  setUpData();
 }
 
 const setUpData= ()=>{
@@ -105,7 +119,9 @@ const setUpData= ()=>{
     data : {...data}
   }
   props.form.layout.corners[area.value.id] = setData
-  console.log(setData)
+  const indexCornres = corners.value.findIndex((item)=>item.id == area.value.id)
+  corners.value[indexCornres].valueForm = setData
+  // if(area.value.valueForm != null && area.value.valueForm.data )area.value.valueForm.data = setData.data
 }
 
 watch(current, () => {
@@ -126,7 +142,7 @@ defineExpose({
       <div
         v-for="(corner, index) in corners"
         :key="corner.id"
-        :class="['border', 'flex-grow', { 'bg-blue-200': get(form.layout,['corners',`${corner.id}`]) },{ 'bg-red-200': get(area,'id') == corner.id }]"
+        :class="['border', 'flex-grow',{ 'bg-red-200': get(area,'id') == corner.id }]"
         @click="handleClick(corner)"
       >
         {{ corner.label }}
