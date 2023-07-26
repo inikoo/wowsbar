@@ -1,11 +1,11 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Tue, 25 Jul 2023 12:56:21 Malaysia Time, Kuala Lumpur, Malaysia
+ * Created: Wed, 26 Jul 2023 01:42:41 Malaysia Time, Kuala Lumpur, Malaysia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Portfolio\ContentBlock;
+namespace App\Actions\Portfolio\ContentBlock\Banners\UI;
 
 use App\Enums\Portfolio\ContentBlockComponent\ContentBlockComponentTypeEnum;
 use App\Enums\Web\WebBlockType\WebBlockTypeSlugEnum;

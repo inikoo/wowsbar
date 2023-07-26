@@ -51,7 +51,7 @@ class EditUser extends InertiaAction
                           'type'  => 'button',
                           'style' => 'tertiary',
                           'route' => [
-                              'name'       => preg_replace('/edit$/', 'show', $this->routeName),
+                              'name'       => preg_replace('/edit$/', 'show', $request->route()->getName()),
                               'parameters' => array_values($this->originalParameters)
                           ]
                       ]

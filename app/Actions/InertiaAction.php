@@ -34,7 +34,6 @@ class InertiaAction
 
     public function initialisation(ActionRequest $request): static
     {
-        $this->routeName          = $request->route()->getName();
         $this->originalParameters = $request->route()->originalParameters();
         $this->rawInputs          = $request->all();
         $request->validate();

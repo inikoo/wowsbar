@@ -10,12 +10,14 @@ namespace App\Actions\Portfolio\ContentBlock;
 use App\Actions\Portfolio\ContentBlock\Elasticsearch\DeleteContentBlockElasticsearch;
 use App\Actions\Tenancy\Tenant\Hydrators\TenantHydrateContentBlocks;
 use App\Models\Portfolio\ContentBlock;
+use App\Models\Portfolio\Website;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\AsController;
 use Lorisleiva\Actions\Concerns\WithAttributes;
+use PhpOffice\PhpSpreadsheet\Calculation\Web;
 
 class DeleteContentBlock
 {
@@ -54,10 +56,9 @@ class DeleteContentBlock
     }
 
 
-
     public function htmlResponse(): RedirectResponse
     {
-        return Redirect::route('portfolio.websites.index');
+        return back();
     }
 
 }
