@@ -7,11 +7,16 @@
 
 namespace App\Actions\Portfolio\ContentBlock;
 
+use App\Actions\Portfolio\ContentBlock\Banners\UI\ParseContentBlockLayout;
 use App\Actions\Portfolio\ContentBlock\Hydrators\ContentBlockHydrateUniversalSearch;
+use App\Actions\Portfolio\ContentBlockComponent\StoreContentBlockComponent;
+use App\Actions\Portfolio\ContentBlockComponent\UpdateContentBlockComponent;
 use App\Actions\Tenancy\Tenant\Hydrators\TenantHydrateContentBlocks;
 use App\Actions\Traits\WithActionUpdate;
 use App\Http\Resources\Portfolio\ContentBlockResource;
 use App\Models\Portfolio\ContentBlock;
+use App\Models\Portfolio\ContentBlockComponent;
+use Illuminate\Support\Arr;
 use Lorisleiva\Actions\ActionRequest;
 
 class UpdateContentBlock
@@ -22,7 +27,39 @@ class UpdateContentBlock
 
     public function handle(ContentBlock $contentBlock, array $modelData): ContentBlock
     {
-        $this->update($contentBlock, $modelData, ['data', 'layout']);
+
+
+        if(Arr::has($modelData,'layout')){
+            $layout=Arr::pull($modelData,'layout');
+            list($layout, $contentBlockComponents) = ParseContentBlockLayout::run($layout, $contentBlock->webBlock);
+            data_set($modelData,'layout',$layout);
+
+            if ($contentBlockComponents) {
+                foreach ($contentBlockComponents as $ulid=>$contentBlockComponentData) {
+
+                    $contentBlockComponent=ContentBlockComponent::where('ulid',$ulid)->first();
+                    if($contentBlockComponent){
+                        UpdateContentBlockComponent::run(
+                            $contentBlockComponent,
+                            Arr::only($contentBlockComponentData,['layout','imageData'])
+
+                        );
+                    }else{
+                        data_set($contentBlockComponent,'ulid',$ulid);
+                        StoreContentBlockComponent::run(
+                            contentBlock: $contentBlock,
+                            modelData: $contentBlockComponentData,
+                        );
+                    }
+                    /*
+
+                    */
+                }
+            }
+
+        }
+
+        $this->update($contentBlock, $modelData, ['data','layout']);
 
         ContentBlockHydrateUniversalSearch::dispatch($contentBlock);
         TenantHydrateContentBlocks::dispatch(app('currentTenant'));
@@ -32,7 +69,9 @@ class UpdateContentBlock
 
     public function authorize(ActionRequest $request): bool
     {
-        if($this->isAction) return true;
+        if ($this->isAction) {
+            return true;
+        }
 
         return $request->user()->can("portfolio.edit");
     }
@@ -40,17 +79,25 @@ class UpdateContentBlock
     public function rules(): array
     {
         return [
-            'code'     => ['sometimes','required', 'unique:tenant.websites','max:8'],
-            'name'     => ['sometimes','required'],
-            'layout'   => ['sometimes','required']
+            'code'   => ['sometimes', 'required', 'unique:tenant.websites', 'max:8'],
+            'name'   => ['sometimes', 'required'],
+            'layout' => ['sometimes', 'required','array:delay,common,components']
         ];
+    }
+
+    public function prepareForValidation(ActionRequest $request): void
+    {
+        $request->merge(
+            [
+                'layout' => $request->only(['delay', 'common', 'components'])
+            ]
+        );
     }
 
     public function asController(ContentBlock $contentBlock, ActionRequest $request): ContentBlock
     {
         $request->validate();
-
-        return $this->handle($contentBlock, $request->all());
+        return $this->handle($contentBlock, $request->validated());
     }
 
     public function action(ContentBlock $contentBlock, $modelData): ContentBlock

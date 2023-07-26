@@ -12,16 +12,12 @@ const props = defineProps<{
     title: string;
     pageHead: object;
     bannerLayout: object;
-    updateRoute: {
-        name: string,
-        parameters: string | string[]
-    }
+
 }>();
 
 
 const data = ref(cloneDeep(props.bannerLayout));
 
-console.log(data)
 
 const changeLink = (file, value) => {
     const index = data.value.findIndex((item) => item.id === file.id);
@@ -64,6 +60,6 @@ const test1=()=>{
             </div>
           </div>
     </div>
-   
+
     <div @click="test1">chek data</div>
 </template>

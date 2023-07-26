@@ -30,10 +30,10 @@ class ParseContentBlockLayout
     {
         $slides = [];
         foreach (Arr::get($layout, 'components') as $key => $slideLayout) {
-            $slides[] = [
+            $slides[Arr::get($slideLayout,'ulid',$key)] = [
                 'type'      => ContentBlockComponentTypeEnum::SLIDE->value,
                 'layout'    => $slideLayout,
-                'imageData' => Arr::get($layout, 'images')[$key]
+                'imageData' => Arr::get($layout, 'images.'.$key)
             ];
         }
 

@@ -27,7 +27,9 @@ class StoreContentBlockComponent
         /** @var ContentBlockComponent $contentBlockComponent */
         $contentBlockComponent= $contentBlock->contentBlockComponents()->create($modelData);
 
-        AttachImageToContentBlockComponent::run($contentBlockComponent,$imageData);
+        if($imageData) {
+            AttachImageToContentBlockComponent::run($contentBlockComponent, $imageData);
+        }
         return $contentBlockComponent;
     }
 

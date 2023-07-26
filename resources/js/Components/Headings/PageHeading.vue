@@ -118,8 +118,11 @@ const getActionIcon = (action) => {
             <span v-for="action in data.actions">
                 {{ action.final }}
                 <!-- Button -->
-                <Link v-if="action.type === 'button'" :href="route(action['route']['name'], action['route']['parameters'])"
-                    :method="action.method ?? 'get'" :data="dataToSubmit"
+                <Link v-if="action.type === 'button'"
+                      :href="route(action['route']['name'], action['route']['parameters'])"
+                      :method="action.method ?? 'get'"
+                      :data="dataToSubmit"
+                      as="button"
                 >
                     <Button size="xs" :style="action.style"
                         class="capitalize inline-flex items-center rounded-md text-sm font-medium shadow-sm gap-x-2">

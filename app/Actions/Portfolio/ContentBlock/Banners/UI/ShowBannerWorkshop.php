@@ -87,7 +87,7 @@ class ShowBannerWorkshop extends InertiaAction
                             'route'      => [
                                 'name'       => 'models.content-block.update',
                                 'parameters' => [
-                                    'contentBlock'=>$banner
+                                    'contentBlock'=>$banner->slug
                                 ]
                             ],
                             'method'      => 'patch',

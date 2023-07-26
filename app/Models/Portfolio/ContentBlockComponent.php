@@ -9,6 +9,7 @@ namespace App\Models\Portfolio;
 
 use App\Concerns\BelongsToTenant;
 use App\Enums\Portfolio\ContentBlockComponent\ContentBlockComponentTypeEnum;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\MediaLibrary\HasMedia;
@@ -31,19 +32,19 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \App\Models\Media\Media> $media
  * @property-read int|null $media_count
  * @property-read \App\Models\Tenancy\Tenant $tenant
- * @method static \Illuminate\Database\Eloquent\Builder|ContentBlockComponent newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|ContentBlockComponent newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|ContentBlockComponent query()
- * @method static \Illuminate\Database\Eloquent\Builder|ContentBlockComponent whereContentBlockId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ContentBlockComponent whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ContentBlockComponent whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ContentBlockComponent whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ContentBlockComponent whereImageId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ContentBlockComponent whereLayout($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ContentBlockComponent whereTenantId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ContentBlockComponent whereType($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ContentBlockComponent whereUlid($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ContentBlockComponent whereUpdatedAt($value)
+ * @method static Builder|ContentBlockComponent newModelQuery()
+ * @method static Builder|ContentBlockComponent newQuery()
+ * @method static Builder|ContentBlockComponent query()
+ * @method static Builder|ContentBlockComponent whereContentBlockId($value)
+ * @method static Builder|ContentBlockComponent whereCreatedAt($value)
+ * @method static Builder|ContentBlockComponent whereDeletedAt($value)
+ * @method static Builder|ContentBlockComponent whereId($value)
+ * @method static Builder|ContentBlockComponent whereImageId($value)
+ * @method static Builder|ContentBlockComponent whereLayout($value)
+ * @method static Builder|ContentBlockComponent whereTenantId($value)
+ * @method static Builder|ContentBlockComponent whereType($value)
+ * @method static Builder|ContentBlockComponent whereUlid($value)
+ * @method static Builder|ContentBlockComponent whereUpdatedAt($value)
  * @mixin \Eloquent
  */
 class ContentBlockComponent extends Model implements HasMedia
