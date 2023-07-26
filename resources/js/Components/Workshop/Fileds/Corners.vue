@@ -19,12 +19,12 @@ const props = defineProps<{
 const area = ref(null)
 
 
-const corners = [
+const corners = ref([
   {label : trans('top left'), valueForm : get(props.form.layout,['corners',`topLeft`],null), id : 'topLeft' },
   {label : trans('Top right'), valueForm : get(props.form.layout,['corners',`topRight`],null), id : 'topRight' },
   {label : trans('bottom left'), valueForm : get(props.form.layout,['corners',`bottomLeft`],null), id : 'bottomLeft' },
   {label : trans('Bottom right'), valueForm : get(props.form.layout,['corners',`bottomRight`],null), id : 'bottomRight' },
-]
+])
 
 const Type = [
   {
@@ -119,7 +119,9 @@ const setUpData= ()=>{
     data : {...data}
   }
   props.form.layout.corners[area.value.id] = setData
-  console.log(props.form.layout.corners)
+  const indexCornres = corners.value.findIndex((item)=>item.id == area.value.id)
+  corners.value[indexCornres].valueForm = setData
+  // if(area.value.valueForm != null && area.value.valueForm.data )area.value.valueForm.data = setData.data
 }
 
 watch(current, () => {
