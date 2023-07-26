@@ -280,7 +280,7 @@ const applyChanges = () => {
                 <label for="fileInput" class="flex items-center">
                     <input type="file" multiple name="file" id="fileInput"
                         class="opacity-0 overflow-hidden absolute w-1 h-1" @change="onChange" ref="fileInput"
-                        accept=".pdf,.jpg,.jpeg,.png" />
+                        accept="image/*" />
                     <FontAwesomeIcon :icon="['fas', 'plus']" class="mr-1" /> Banner
                 </label>
             </PrimaryButton>
