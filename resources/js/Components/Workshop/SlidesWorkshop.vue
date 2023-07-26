@@ -229,11 +229,13 @@ const applyChanges = () => {
 
 <template>
     <div class="flex flex-grow gap-2.5">
-        <div class="w-1/3 xl:w-2/3 p-2.5 border-dashed" style="border: 1px dashed #d9d9d9;" v-if="data.components"
+        <div class="w-[30%] lg:w-2/3 p-2.5 border-dashed" style="border: 1px dashed #d9d9d9;" v-if="data.components"
             @dragover="dragover" @dragleave="dragleave" @drop="drop">
             <div class='border-gray-300 p-2 border mb-2 text-center'>
                 {{ trans('Common properties') }}
             </div>
+
+            <!-- Drag area -->
             <div class="mb-2 text-lg font-medium">{{ trans('Slides') }}</div>
             <draggable :list="data.components.filter((item) => item.ulid !== null)" group="slide " item-key="ulid"
                 handle=".handle">
@@ -241,33 +243,34 @@ const applyChanges = () => {
                     <div :class="[file.ulid != fileEdit.ulid ?
                             'border-gray-300' :
                             'border-l-orange-500 border-l-4 bg-gray-200/60',
-                        'grid grid-flow-col relative py-1 border mb-2 items-center hover:cursor-pointer']"
+                        'grid grid-flow-col relative py-1 border mb-2 items-center justify-between hover:cursor-pointer']"
                         @click="openEdit(file)"
                     >
-                        <!-- Icon: Bars -->
-                        <FontAwesomeIcon icon="fal fa-align-justify"
-                            class="handle p-2.5 mr-4 text-gray-700 cursor-grab" />
-                        
-                        <!-- Image slide -->
-                        <div class="h-12 w-12 bg-contain flex items-center justify-center">
-                            <img class="h-12 max-w-full shadow" :src="generateThumbnail(file)" />
-                        </div>
+                        <div class="grid grid-flow-col gap-x-1 py-1">
+                            <!-- Icon: Bars, class 'handle' to grabable -->
+                            <FontAwesomeIcon icon="fal fa-bars" class="handle p-1 text-xs sm:text-base sm:p-2.5 text-gray-700 cursor-grab place-self-center" />
+                            
+                            <!-- Image slide -->
+                            <div class="h-5 w-5 sm:h-10 sm:w-10 bg-contain flex items-center justify-center">
+                                <img class="h-5 sm:h-10 max-w-full shadow" :src="generateThumbnail(file)" />
+                            </div>
 
-                        <!-- Label slide -->
-                        <div class="overflow-hidden whitespace-nowrap overflow-ellipsis px-4 leading-tight flex-auto">
-                            <div class="overflow-hidden whitespace-nowrap overflow-ellipsis lg:text-sm xl:text-base">{{ file.layout.imageAlt }}</div>
+                            <!-- Label slide -->
+                            <div class="hidden lg:inline-flex overflow-hidden whitespace-nowrap overflow-ellipsis pl-2 leading-tight flex-auto items-center">
+                                <div class="overflow-hidden whitespace-nowrap overflow-ellipsis lg:text-xs xl:text-sm">{{ file.layout.imageAlt }}</div>
+                            </div>
                         </div>
 
                         <!-- Button: Show/hide, delete slide -->
-                        <div class="flex justify-center items-center m-2.5">
-                            <button class="ml-2 px-2 py-1" type="button"
+                        <div class="flex justify-center items-center pr-2 justify-self-end">
+                            <button class="px-2 py-1" type="button"
                                 @click="visible(components.indexOf(file))" title="Show/hide the slide">
-                                <FontAwesomeIcon v-if="file.layout.visibility" icon="fas fa-eye" class="text-sm text-gray-400" />
-                                <FontAwesomeIcon v-else icon="fas fa-eye-slash" class="text-sm text-gray-300" />
+                                <FontAwesomeIcon v-if="file.layout.visibility" icon="fas fa-eye" class="text-xs sm:text-sm text-gray-400 hover:text-gray-500" />
+                                <FontAwesomeIcon v-else icon="fas fa-eye-slash" class="text-xs sm:text-sm text-gray-300 hover:text-gray-400/70" />
                             </button>
-                            <button class="ml-2 text-red-500" type="button" @click="remove(components.indexOf(file))"
+                            <button class="text-red-500" type="button" @click="remove(components.indexOf(file))"
                                 title="Remove file">
-                                <FontAwesomeIcon :icon="['fal', 'trash-alt']" />
+                                <FontAwesomeIcon :icon="['fal', 'trash-alt']" class="text-xs sm:text-sm"/>
                             </button>
                         </div>
                     </div>
@@ -287,7 +290,7 @@ const applyChanges = () => {
         </div>
 
         <!-- The Editor -->
-        <div style="width: 70%; border: 1px solid #d9d9d9">
+        <div class="w-full border border-gray-300">
             <SlideWorkshop :fileEdit="fileEdit" :blueprint="blueprint" :form="form" ref="_SlideWorkshop"></SlideWorkshop>
             <div class="border border-gray-200 flex justify-end  p-1" style="height: 10%;">
                 <Button @click=applyChanges>
