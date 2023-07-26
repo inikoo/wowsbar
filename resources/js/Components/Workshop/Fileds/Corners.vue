@@ -17,7 +17,7 @@ const props = defineProps<{
 
 
 const area = ref(null)
-const current = ref(0);
+
 
 const corners = [
   {label : trans('top left'), valueForm : get(props.form.layout,['corners',`topLeft`],null), id : 'topLeft' },
@@ -77,6 +77,18 @@ const Type = [
   },
 ]
 
+const defaultCurrent = computed(() => {
+  if (area.value != null) {
+    const areaType = props.form.layout.corners[area.value.id]?.type;
+    const index =  Type.findIndex(item => item.value === areaType);
+    return index == -1 ? 0 : index
+  } else {
+    return 0; // Return 0 if area.value is null
+  }
+});
+
+  // Set current to the default index
+  const current = ref(defaultCurrent.value)
 
 const currentTypeFields = computed(() => {
   const currentType = Type[current.value]
@@ -91,6 +103,8 @@ const currentTypeFields = computed(() => {
 
 const handleClick = (corner) => {
   area.value = corner;
+  current.value = defaultCurrent.value
+  setUpData();
 }
 
 const setUpData= ()=>{
@@ -105,7 +119,7 @@ const setUpData= ()=>{
     data : {...data}
   }
   props.form.layout.corners[area.value.id] = setData
-  console.log(setData)
+  console.log(props.form.layout.corners)
 }
 
 watch(current, () => {
