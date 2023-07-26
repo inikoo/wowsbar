@@ -6,18 +6,20 @@
 
 <script setup lang="ts">
 import { ref, defineExpose } from 'vue'
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { faImage, faExpandArrows, faAlignCenter } from "../../../private/pro-light-svg-icons"
+import { faTrash } from "../../../private/pro-solid-svg-icons"
 import Input from '@/Components/Forms/Fields/Input.vue'
 import Select from '@/Components/Forms/Fields/Select.vue'
 import Radio from '@/Components/Forms/Fields/Radio.vue'
 import InputWithAddOn from '@/Components/Forms/Fields/InputWithAddOn.vue'
-import SlideBackground from "@/Components/Workshop/Fileds/SlideBackground.vue";
-import Corners from "@/Components/Workshop/Fileds/Corners.vue";
-import Button from '../Elements/Buttons/Button.vue';
-import { library } from "@fortawesome/fontawesome-svg-core";
+import SlideBackground from "@/Components/Workshop/Fields/SlideBackground.vue"
+import Corners from "@/Components/Workshop/Fields/Corners.vue"
+import Delete from "@/Components/Workshop/Fields/Delete.vue"
+import Button from '../Elements/Buttons/Button.vue'
+import { library } from "@fortawesome/fontawesome-svg-core"
 
-library.add(faImage, faExpandArrows, faAlignCenter)
+library.add(faImage, faExpandArrows, faAlignCenter, faTrash)
 const props = defineProps<{
     fileEdit: Object,
     blueprint: Array,
@@ -33,7 +35,8 @@ const getComponent = (componentName) => {
         'select': Select,
         'radio': Radio,
         'slideBackground': SlideBackground,
-        'corners': Corners
+        'corners': Corners,
+        'delete': Delete
     };
     return components[componentName]
 };

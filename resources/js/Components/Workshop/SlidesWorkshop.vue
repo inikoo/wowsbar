@@ -203,6 +203,18 @@ const blueprint = ref([
             },
         ]
     },
+    {
+        title: trans('delete'),
+        icon: ['fas', 'fa-trash'],
+        fields: [
+            {
+                name: ['layout', 'centralStage', 'title'],
+                type: 'delete',
+                label: trans('Title'),
+                value: ['layout', 'centralStage', 'title']
+            },
+        ]
+    },
 ])
 
 
@@ -240,7 +252,9 @@ const applyChanges = () => {
             <draggable :list="data.components.filter((item) => item.ulid !== null)" group="slide " item-key="ulid"
                 handle=".handle">
                 <template #item="{ element: file }">
-                    <div :class="[file.ulid != fileEdit.ulid ?
+                    <div 
+                        v-if="file.ulid !== null"
+                        :class="[file.ulid != fileEdit.ulid ?
                             'border-gray-300' :
                             'border-l-orange-500 border-l-4 bg-gray-200/60',
                         'grid grid-flow-col relative py-1 border mb-2 items-center justify-between hover:cursor-pointer']"
@@ -267,10 +281,6 @@ const applyChanges = () => {
                                 @click="visible(components.indexOf(file))" title="Show/hide the slide">
                                 <FontAwesomeIcon v-if="file.layout.visibility" icon="fas fa-eye" class="text-xs sm:text-sm text-gray-400 hover:text-gray-500" />
                                 <FontAwesomeIcon v-else icon="fas fa-eye-slash" class="text-xs sm:text-sm text-gray-300 hover:text-gray-400/70" />
-                            </button>
-                            <button class="text-red-500" type="button" @click="remove(components.indexOf(file))"
-                                title="Remove file">
-                                <FontAwesomeIcon :icon="['fal', 'trash-alt']" class="text-xs sm:text-sm"/>
                             </button>
                         </div>
                     </div>
