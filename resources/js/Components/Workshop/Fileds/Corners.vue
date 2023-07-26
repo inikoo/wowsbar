@@ -7,6 +7,7 @@ import Radio from '@/Components/Forms/Fields/Radio.vue'
 import InputWithAddOn from '@/Components/Forms/Fields/InputWithAddOn.vue'
 import SlideBackground from "@/Components/Workshop/Fileds/SlideBackground.vue";
 import Corners from "@/Components/Workshop/Fileds/Corners.vue";
+import { get }  from 'lodash'
 
 const props = defineProps<{
   form: any,
@@ -19,6 +20,7 @@ const props = defineProps<{
   }
 }>()
 
+console.log(props.form)
 
 const getComponent = (componentName) => {
     const components = {
@@ -35,7 +37,7 @@ const getComponent = (componentName) => {
 const Type = [
   {
     label: 'Footer',
-    value: 'footer',
+    value: 'cornerFooter',
     fields: [
       {
         name: 'text',
@@ -94,27 +96,38 @@ const Type = [
   },
 ]
 
+const corners = [
+  {label : 'top left', valueForm : null, id : 'topLeft' },
+  {label : 'Top right', valueForm : null, id : 'topRight' },
+  {label : 'bottom left', valueForm : null, id : 'bottomLeft' },
+  {label : 'Bottom right', valueForm : null, id : 'bottomRight' },
+]
+
+const formCorners = ref({});
+const setFormValue=(data)=>{formCorners.value = useForm(data)}
 
 
-
+const area = ref(null)
 const current = ref(0);
 </script>
 
 
 <template>
   <div class="h-64">
-    <div class="w-full h-full flex">
-      <div class="w-1/2 flex flex-col">
-        <div class="border flex-grow hover:bg-blue-200">Top left</div>
-        <div class="border flex-grow hover:bg-blue-200">Bottom left</div>
-      </div>
-      <div class="w-1/2 flex flex-col">
-        <div class="border flex-grow hover:bg-blue-200">Top right</div>
-        <div class="border flex-grow hover:bg-blue-200">Bottom right</div>
+    <div class="grid grid-cols-2 gap-2 h-full">
+      <div
+        v-for="(corner, index) in corners"
+        :key="corner.id"
+        :class="['border', 'flex-grow', { 'bg-blue-200': get(form.layout,['corners',`${corner.id}`]) },{ 'bg-red-200': get(area,'id') == corner.id }]"
+        @click="area = corner"
+      >
+        {{ corner.label }}
       </div>
     </div>
+  
 
-    <div class="w-full flex mt-3">
+    <div v-if="area != null">
+      <div class="w-full flex mt-3">
       <span class="isolate flex w-full rounded-md shadow-sm">
         <!-- Use v-for to loop through buttonType array -->
         <button v-for="(item, key) in Type" :key="item.value" type="button" @click="current = key"
@@ -151,6 +164,8 @@ const current = ref(0);
       </dl>
     </div>
 
+    </div>
+    
 
   </div>
 </template>
