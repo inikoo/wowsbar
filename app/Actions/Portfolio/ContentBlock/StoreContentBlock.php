@@ -18,6 +18,7 @@ use App\Models\Tenancy\Tenant;
 use App\Models\Web\WebBlock;
 use App\Models\Web\WebBlockType;
 use Illuminate\Console\Command;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Str;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -31,10 +32,12 @@ class StoreContentBlock
 
 
     private bool $asAction = false;
+    private Website|null $website = null;
 
 
     public function handle(Website $website, WebBlock $webBlock, array $modelData): ContentBlock
     {
+        $this->website  = $website;
         $layout = $webBlock->blueprint;
 
         list($layout, $contentBlockComponents) = ParseContentBlockLayout::run($layout, $webBlock);
@@ -132,5 +135,10 @@ class StoreContentBlock
         $contentBlock = $this->handle($website, $webBlock, $validatedData);
 
         $command->info("Done! Content block $contentBlock->code created 🎉");
+    }
+
+    public function htmlResponse(): RedirectResponse
+    {
+        return redirect()->route('portfolio.websites.show.banners.index', $this->website->code);
     }
 }
