@@ -264,11 +264,11 @@ const applyChanges=()=>{
             </div>
 
 
-      <div style="width: 70%; border: 1px solid #d9d9d9; height:100%" >
+      <div style="width: 70%; border: 1px solid #d9d9d9" >
           <SlideWorkshop :fileEdit="fileEdit" :blueprint="blueprint" :form="form" ref="_SlideWorkshop" ></SlideWorkshop>
-          <div class="border border-gray-200 flex justify-end  p-2.5">
+          <div class="border border-gray-200 flex justify-end  p-1" style="height: 10%;">
       <Button @click = applyChanges>
-        Apply in Preview
+        Apply
       </Button>
     </div>
       </div>
