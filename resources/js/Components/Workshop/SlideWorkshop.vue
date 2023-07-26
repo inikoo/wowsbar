@@ -16,14 +16,16 @@ import InputWithAddOn from '@/Components/Forms/Fields/InputWithAddOn.vue'
 import SlideBackground from "@/Components/Workshop/Fields/SlideBackground.vue"
 import Corners from "@/Components/Workshop/Fields/Corners.vue"
 import Delete from "@/Components/Workshop/Fields/Delete.vue"
-import Button from '../Elements/Buttons/Button.vue'
 import { library } from "@fortawesome/fontawesome-svg-core"
+import { trans } from "laravel-vue-i18n"
+
 
 library.add(faImage, faExpandArrows, faAlignCenter, faTrash)
 const props = defineProps<{
     fileEdit: Object,
     blueprint: Array,
     form: Object,
+    remove : Function
 }>()
 
 
@@ -48,6 +50,12 @@ defineExpose({
     current,
 });
 
+
+const setCurrent=(key)=>{
+    if(props.blueprint[key].title == 'delete') props.remove(props.fileEdit)
+    else current.value = key
+}
+
 </script>
 
 <template>
@@ -58,7 +66,7 @@ defineExpose({
         <aside class="py-0 lg:col-span-3 lg:h-full">
             <nav role="navigation" class="space-y-1">
                 <ul>
-                    <li v-for="(item, key) in blueprint" @click="current = key" :class="[
+                    <li v-for="(item, key) in blueprint" @click="setCurrent(key)" :class="[
                         key == current
                             ? 'bg-gray-100 border-orange-500 text-orange-700 hover:bg-gray-100 hover:text-orange-700'
                             : 'border-transparent text-gray-900 hover:bg-gray-50 hover:text-gray-900',
@@ -71,7 +79,7 @@ defineExpose({
                             'flex-shrink-0 -ml-1 mr-3 h-6 w-6',
                         ]" :icon="item.icon" />
 
-                        <span class="capitalize truncate">{{ item.title }}</span>
+                        <span class="capitalize truncate">{{trans(item.title)}}</span>
                     </li>
                 </ul>
             </nav>
