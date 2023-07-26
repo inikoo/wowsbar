@@ -13,6 +13,7 @@ const props = defineProps<{
         text?: string
         target: string
     }
+    swiperRef?: Element 
 }>()
 
 </script>

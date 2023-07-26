@@ -227,7 +227,7 @@ onMounted(() => {
     >
 
         <!-- TopBar -->
-        <Disclosure as="nav" class=" fixed top-0 z-20 w-full bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-200" v-slot="{ open }">
+        <Disclosure as="nav" class=" fixed top-0 z-20 w-full bg-gray-50 text-gray-700 dark:bg-gray-800 dark:text-gray-200" v-slot="{ open }">
             <div class="px-0">
                 <div class="flex h-11 lg:h-10 flex-shrink-0 border-b border-gray-200 dark:border-gray-500 ">
                     <div class="flex flex-1">
@@ -366,7 +366,7 @@ onMounted(() => {
         </div>
 
         <!-- Main Content -->
-        <main class="relative flex flex-col pt-16 pb-5 ml-0 md:ml-10 xl:ml-56 bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-400">
+        <main class="relative flex flex-col pt-16 pb-5 ml-0 md:ml-10 xl:ml-56 bg-gray-50 text-gray-700 dark:bg-gray-700 dark:text-gray-400">
             <slot />
         </main>
 
