@@ -245,12 +245,23 @@ const applyChanges=()=>{
           </template>
         </draggable>
 
-        <PrimaryButton class="m-2.5">
-          <input type="file" multiple name="file" ulid="fileInput" class="opacity-0 overflow-hidden absolute w-1 h-1" @change="onChange" ref="fileInput"
-            accept=".pdf,.jpg,.jpeg,.png" />
-          <label for="fileInput"> <font-awesome-icon :icon="['fas', 'plus']" class="mr-1" /> Banner</label>
+              <PrimaryButton class="m-2.5">
+          <!-- Remove the input element from inside the label -->
+          <label for="fileInput" class="flex items-center">
+            <input
+              type="file"
+              multiple
+              name="file"
+              id="fileInput"
+              class="opacity-0 overflow-hidden absolute w-1 h-1"
+              @change="onChange"
+              ref="fileInput"
+              accept=".pdf,.jpg,.jpeg,.png"
+            />
+            <FontAwesomeIcon :icon="['fas', 'plus']" class="mr-1" /> Banner
+          </label>
         </PrimaryButton>
-      </div>
+            </div>
 
 
       <div style="width: 70%; border: 1px solid #d9d9d9; height:100%" >
