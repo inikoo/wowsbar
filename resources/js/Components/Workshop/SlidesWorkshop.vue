@@ -12,7 +12,6 @@ import { faEye, faEyeSlash } from "@/../private/pro-solid-svg-icons"
 import { library } from '@fortawesome/fontawesome-svg-core';
 import draggable from "vuedraggable"
 import PrimaryButton from "@/Components/PrimaryButton.vue";
-import { v4 as uuidV4 } from 'uuid';
 import { ulid } from 'ulid';
 import Input from '@/Components/Forms/Fields/Input.vue'
 import { trans } from "laravel-vue-i18n"
@@ -99,8 +98,8 @@ const onChange = () => {
 }
 
 const generateThumbnail = (file) => {
-    if (file.image_source && file.image_source instanceof File) {
-        let fileSrc = URL.createObjectURL(file.image_source)
+    if (file.imageFile && file.imageFile instanceof File) {
+        let fileSrc = URL.createObjectURL(file.imageFile)
         setTimeout(() => {
             URL.revokeObjectURL(fileSrc)
         }, 1000)
@@ -110,11 +109,21 @@ const generateThumbnail = (file) => {
     }
 }
 
-const remove = (i) => {
-    // components.value.splice(i, 1)
-    components.value[i].ulid = null
-    props.data.components = [...components.value]
-}
+const remove = (file) => {
+    const index = components.value.findIndex(item => item.ulid === file.ulid);
+    if (index !== -1) {
+        console.log(fileEdit.value);
+        if (fileEdit.value && fileEdit.value.ulid === components.value[index].ulid) {
+            const nextIndex = index + 1;
+            openEdit(nextIndex < components.value.length ? components.value[nextIndex] : components.value.filter((item)=>item.ulid !== null)[0])
+        } 
+        components.value[index].ulid = null;
+        props.data.components = components.value.filter(item => item.ulid !== null); // Remove items with null ulid
+    } else {
+        console.log('Index not found');
+    }
+};
+
 
 const dragover = (e) => {
     e.preventDefault()
@@ -160,7 +169,7 @@ const visible = (i) => {
 
 const blueprint = ref([
     {
-        title: trans('Background'),
+        title: 'Background',
         icon: ['fal', 'fa-image'],
         fields: [
             {
@@ -173,7 +182,7 @@ const blueprint = ref([
 
     },
     {
-        title: trans('corners'),
+        title: 'corners',
         icon: ['fal', 'fa-expand-arrows'],
         fields: [
             {
@@ -186,7 +195,7 @@ const blueprint = ref([
 
     },
     {
-        title: trans('central stage'),
+        title: 'central stage',
         icon: ['fal', 'fa-align-center'],
         fields: [
             {
@@ -204,7 +213,7 @@ const blueprint = ref([
         ]
     },
     {
-        title: trans('delete'),
+        title: 'delete',
         icon: ['fas', 'fa-trash'],
         fields: [
             {
@@ -301,7 +310,7 @@ const applyChanges = () => {
 
         <!-- The Editor -->
         <div class="w-full border border-gray-300">
-            <SlideWorkshop :fileEdit="fileEdit" :blueprint="blueprint" :form="form" ref="_SlideWorkshop"></SlideWorkshop>
+            <SlideWorkshop :fileEdit="fileEdit" :blueprint="blueprint" :form="form" ref="_SlideWorkshop" :remove="remove"></SlideWorkshop>
             <div class="border border-gray-200 flex justify-end  p-1" style="height: 10%;">
                 <Button @click=applyChanges>
                     Apply
