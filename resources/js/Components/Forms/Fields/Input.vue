@@ -59,23 +59,16 @@ watch(value, (newValue) => {
   updateFormValue(newValue);
 });
 
+
+
 const updateFormValue = (newValue) => {
-  // Update the form field value in the form object
+    let target = props.form
   if (Array.isArray(props.fieldName)) {
-    let target = props.form;
-    const lastIndex = props.fieldName.length - 1;
-    for (let i = 0; i < lastIndex; i++) {
-      if (!target[props.fieldName[i]]) {
-        set(target, props.fieldName, newValue);
-      }
-      target = target[props.fieldName[i]];
-    }
-    console.log(target);
-    target[props.fieldName[lastIndex]] = newValue;
-    
+    set(target, props.fieldName, newValue);
   } else {
-    props.form[props.fieldName] = newValue;
+    target[props.fieldName] = newValue;
   }
+  props.form = {...target}
 };
 
 </script>

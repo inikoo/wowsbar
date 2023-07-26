@@ -18,6 +18,7 @@
   import { useForm } from '@inertiajs/vue3'
   import SlideWorkshop from "@/Components/Workshop/SlideWorkshop.vue";
   import { cloneDeep } from 'lodash'
+  import Button from '../Elements/Buttons/Button.vue';
   library.add(faEye,  faTrashAlt,faAlignJustify )
   const props = defineProps<{
     data: {
@@ -194,18 +195,19 @@ onMounted(() => {
 
 const _SlideWorkshop = ref(null)
 const form = ref({});
-const setFormValue=(data)=>{ form.value = useForm(data) , console.log('form',form.value) }
+const setFormValue=(data)=>{form.value = useForm(data)}
 
-// watch(form, (newValue) => {
-//   if (newValue.data()) {
-//     let oldFile = cloneDeep(fileEdit.value),
-//     newFile = newValue.data()
-//     fileEdit.value = { ...newFile, layout: { ...newFile.layout, visibility: oldFile.layout.visibility }};
-//     const index = components.value.findIndex((item) => item.ulid === fileEdit.value.ulid);
-//     if (index !== -1)  components.value[index] = fileEdit.value;
-//     props.data.components = components.value;
-//   }
-// });
+const applyChanges=()=>{
+    if (form.value.data()) {
+    let oldFile = cloneDeep(fileEdit.value),
+    newFile = cloneDeep(form.value.data())
+    fileEdit.value = { ...newFile, layout: { ...newFile.layout, visibility: oldFile.layout.visibility }};
+    const index = components.value.findIndex((item) => item.ulid === fileEdit.value.ulid);
+    if (index !== -1)  components.value[index] = fileEdit.value;
+    props.data.components = components.value;
+  }
+}
+
 
   </script>
 
@@ -251,8 +253,13 @@ const setFormValue=(data)=>{ form.value = useForm(data) , console.log('form',for
       </div>
 
 
-      <div style="width: 70%; border: 1px solid #d9d9d9;">
-          <SlideWorkshop :fileEdit="fileEdit" :blueprint="blueprint" :form="form" ref="_SlideWorkshop"></SlideWorkshop>
+      <div style="width: 70%; border: 1px solid #d9d9d9; height:100%" >
+          <SlideWorkshop :fileEdit="fileEdit" :blueprint="blueprint" :form="form" ref="_SlideWorkshop" ></SlideWorkshop>
+          <div class="border border-gray-200 flex justify-end  p-2.5">
+      <Button @click = applyChanges>
+        Apply in Preview
+      </Button>
+    </div>
       </div>
     </div>
   </template>
