@@ -1,13 +1,8 @@
 <script setup lang="ts">
 import { trans } from "laravel-vue-i18n"
-import { ref } from 'vue'
+import { ref, watch, computed, defineExpose  } from 'vue'
 import Input from '@/Components/Forms/Fields/Input.vue'
-import Select from '@/Components/Forms/Fields/Select.vue'
-import Radio from '@/Components/Forms/Fields/Radio.vue'
-import InputWithAddOn from '@/Components/Forms/Fields/InputWithAddOn.vue'
-import SlideBackground from "@/Components/Workshop/Fileds/SlideBackground.vue";
-import Corners from "@/Components/Workshop/Fileds/Corners.vue";
-import { get }  from 'lodash'
+import { get, cloneDeep }  from 'lodash'
 
 const props = defineProps<{
   form: any,
@@ -20,19 +15,16 @@ const props = defineProps<{
   }
 }>()
 
-console.log(props.form)
 
-const getComponent = (componentName) => {
-    const components = {
-        'input': Input,
-        'inputWithAddOn': InputWithAddOn,
-        'select': Select,
-        'radio': Radio,
-        'slideBackground': SlideBackground,
-        'corners':Corners
-    };
-    return components[componentName]
-};
+const area = ref(null)
+const current = ref(0);
+
+const corners = [
+  {label : trans('top left'), valueForm : get(props.form.layout,['corners',`topLeft`],null), id : 'topLeft' },
+  {label : trans('Top right'), valueForm : get(props.form.layout,['corners',`topRight`],null), id : 'topRight' },
+  {label : trans('bottom left'), valueForm : get(props.form.layout,['corners',`bottomLeft`],null), id : 'bottomLeft' },
+  {label : trans('Bottom right'), valueForm : get(props.form.layout,['corners',`bottomRight`],null), id : 'bottomRight' },
+]
 
 const Type = [
   {
@@ -40,10 +32,10 @@ const Type = [
     value: 'cornerFooter',
     fields: [
       {
-        name: 'text',
+        name:  'text',
         type: 'input',
         label: trans('Text'),
-        value: ['data', 'text']
+        value: null
       },
     ]
   },
@@ -55,13 +47,13 @@ const Type = [
         name: 'title',
         type: 'input',
         label: trans('title'),
-        value: ['data', 'title']
+        value: null
       },
       {
-        name: 'subtitle',
+        name:  'subtitle',
         type: 'input',
         label: trans('subtitle'),
-        value: ['data', 'subtitle']
+        value: null
       },
     ]
   },
@@ -73,42 +65,58 @@ const Type = [
         name: 'text',
         type: 'input',
         label: trans('text'),
-        value: ['data', 'title']
+        value: null
       },
       {
-        name: 'subtitle',
+        name:  'target',
         type: 'input',
         label: trans('subtitle'),
-        value: ['data', 'subtitle']
-      },
-    ]
-  },
-  {
-    label: 'Text', value: 'text',
-    fields: [
-      {
-        name: 'text',
-        type: 'input',
-        label: trans('Text'),
-        value: ['data', 'text']
+        value: null
       },
     ]
   },
 ]
 
-const corners = [
-  {label : 'top left', valueForm : null, id : 'topLeft' },
-  {label : 'Top right', valueForm : null, id : 'topRight' },
-  {label : 'bottom left', valueForm : null, id : 'bottomLeft' },
-  {label : 'Bottom right', valueForm : null, id : 'bottomRight' },
-]
 
-const formCorners = ref({});
-const setFormValue=(data)=>{formCorners.value = useForm(data)}
+const currentTypeFields = computed(() => {
+  const currentType = Type[current.value]
+  return currentType.fields.map((field) => {
+    return {
+      ...field,
+      value: currentType.value === Type[current.value].value && get(area.value,['valueForm','type']) == currentType.value ? get(area.value,['valueForm','data',`${field.name}`]) : null,
+    }
+  })
+})
 
 
-const area = ref(null)
-const current = ref(0);
+const handleClick = (corner) => {
+  area.value = corner;
+}
+
+const setUpData= ()=>{
+  const currentType = Type[current.value]
+  let data = {}
+  for(const s of currentTypeFields.value){
+    data[s.name] = s.value
+  }
+  let setData = cloneDeep(props.form.layout.corners[area.value.id])
+  setData = {
+    type : currentType.value,
+    data : {...data}
+  }
+  props.form.layout.corners[area.value.id] = setData
+  console.log(setData)
+}
+
+watch(current, () => {
+    setUpData();
+  });
+
+
+defineExpose({
+  setUpData,
+});
+
 </script>
 
 
@@ -119,7 +127,7 @@ const current = ref(0);
         v-for="(corner, index) in corners"
         :key="corner.id"
         :class="['border', 'flex-grow', { 'bg-blue-200': get(form.layout,['corners',`${corner.id}`]) },{ 'bg-red-200': get(area,'id') == corner.id }]"
-        @click="area = corner"
+        @click="handleClick(corner)"
       >
         {{ corner.label }}
       </div>
@@ -139,7 +147,7 @@ const current = ref(0);
 
 
 
-    <div v-for="(fieldData, index ) in Type[current].fields" :key="index" class="mt-2.5">
+    <div v-for="(fieldData, index ) in currentTypeFields" :key="index" class="mt-2.5">
       <dl class="divide-y divide-green-200  ">
         <div class="pb-4 sm:pb-5 sm:grid sm:grid-cols-3 sm:gap-4 max-w-2xl">
           <dt class="text-sm font-medium text-gray-500 capitalize">
@@ -153,10 +161,12 @@ const current = ref(0);
           <dd class="sm:col-span-2">
             <div class="mt-1 flex text-sm text-gray-700 sm:mt-0">
               <div class="relative flex-grow">
-                <component :is="getComponent(fieldData['type'])" :form="props.form" :fieldName="fieldData.name"
-                  :fieldData="fieldData" :key="index">
-                </component>
-                
+                <input
+                  v-model = fieldData.value
+                  @change="setUpData"
+                  class="block w-full shadow-sm rounded-md dark:bg-gray-600 dark:text-gray-400 focus:ring-gray-500 focus:border-gray-500 sm:text-sm border-gray-300 dark:border-gray-500 read-only:bg-gray-100 read-only:ring-0 read-only:ring-transparent read-only:text-gray-500"
+              />
+         
               </div>
             </div>
           </dd>
