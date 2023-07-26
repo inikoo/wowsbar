@@ -3,7 +3,7 @@ import { Head } from "@inertiajs/vue3";
 import { ref } from "vue";
 import PageHeading from "@/Components/Headings/PageHeading.vue";
 import { capitalize } from "@/Composables/capitalize";
-
+import { cloneDeep } from 'lodash'
 import SlidesWorkshop from "@/Components/Workshop/SlidesWorkshop.vue";
 import Slider from "@/Components/Slider/Slider.vue";
 
@@ -19,7 +19,7 @@ const props = defineProps<{
 }>();
 
 
-const data = ref(props.bannerLayout);
+const data = ref(cloneDeep(props.bannerLayout));
 
 console.log(data)
 

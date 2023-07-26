@@ -216,7 +216,7 @@ const setFormValue=(data)=>{ form.value = useForm(data) , console.log('form',for
               <span class="ml-32">{{trans('Common properties')}}</span>
               </div>
           <div class="mb-2 text-lg font-medium">{{trans('Slides')}}</div>
-        <draggable :list="data.components.filter((item)=>item.ulid !== '')" group="slide " item-key="ulid" handle=".handle">
+        <draggable :list="data.components.filter((item)=>item.ulid !== null)" group="slide " item-key="ulid" handle=".handle">
           <template #item="{ element: file }">
             <div :class="[file.ulid != fileEdit.ulid ?
             'border-l-orange-500 border-l-4' :
