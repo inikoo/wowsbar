@@ -64,9 +64,9 @@
     for (const set of fileInput.value.files ) {
       if (set && set instanceof File) {
         setData.push({
-            id: '',
+            id: null,
             image_id: ulid(),
-            image_source: '',
+            image_source: null,
             imageFile : set,
             ulid : ulid(),
             layout : {
@@ -94,7 +94,7 @@
 
   const remove = (i) => {
     // components.value.splice(i, 1)
-    components.value[i].ulid = ''
+    components.value[i].ulid = null
     props.data.components = [...components.value]
   }
 
@@ -113,11 +113,14 @@
     for (const set of e.dataTransfer.files ) {
       if (set && set instanceof File) {
         setData.push({
-          file: set,
-          link: { label: "open", target: "" },
-          imageAlt: set.name,
-          image_source: 'img',
-          ulid: ulid()
+          id: null,
+            image_id: ulid(),
+            image_source: null,
+            imageFile : set,
+            ulid : ulid(),
+            layout : {
+                imageAlt : set.name,
+            }
         })
       }
     }
@@ -193,16 +196,16 @@ const _SlideWorkshop = ref(null)
 const form = ref({});
 const setFormValue=(data)=>{ form.value = useForm(data) , console.log('form',form.value) }
 
-watch(form, (newValue) => {
-  if (newValue.data()) {
-    let oldFile = cloneDeep(fileEdit.value),
-    newFile = newValue.data()
-    fileEdit.value = { ...newFile, layout: { ...newFile.layout, visibility: oldFile.layout.visibility }};
-    const index = components.value.findIndex((item) => item.ulid === fileEdit.value.ulid);
-    if (index !== -1)  components.value[index] = fileEdit.value;
-    props.data.components = components.value;
-  }
-});
+// watch(form, (newValue) => {
+//   if (newValue.data()) {
+//     let oldFile = cloneDeep(fileEdit.value),
+//     newFile = newValue.data()
+//     fileEdit.value = { ...newFile, layout: { ...newFile.layout, visibility: oldFile.layout.visibility }};
+//     const index = components.value.findIndex((item) => item.ulid === fileEdit.value.ulid);
+//     if (index !== -1)  components.value[index] = fileEdit.value;
+//     props.data.components = components.value;
+//   }
+// });
 
   </script>
 
