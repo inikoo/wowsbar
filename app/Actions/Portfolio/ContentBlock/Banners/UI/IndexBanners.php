@@ -106,8 +106,15 @@ class IndexBanners extends InertiaAction
                                 'name' => 'portfolio.banners.create',
                             ]
                         ],
-
-
+                        [
+                            'type'  => 'button',
+                            'style' => 'create',
+                            'label' => 'create banner',
+                            'route' => [
+                                'name'       => preg_replace('/index$/', 'create', $request->route()->getName()),
+                                'parameters' => array_values($this->originalParameters)
+                            ]
+                        ]
                     ]
                 ],
                 'data'        => ContentBlockResource::collection($banners),

@@ -245,19 +245,30 @@ const applyChanges=()=>{
           </template>
         </draggable>
 
-        <PrimaryButton class="m-2.5">
-          <input type="file" multiple name="file" ulid="fileInput" class="opacity-0 overflow-hidden absolute w-1 h-1" @change="onChange" ref="fileInput"
-            accept=".pdf,.jpg,.jpeg,.png" />
-          <label for="fileInput"> <font-awesome-icon :icon="['fas', 'plus']" class="mr-1" /> Banner</label>
+              <PrimaryButton class="m-2.5">
+          <!-- Remove the input element from inside the label -->
+          <label for="fileInput" class="flex items-center">
+            <input
+              type="file"
+              multiple
+              name="file"
+              id="fileInput"
+              class="opacity-0 overflow-hidden absolute w-1 h-1"
+              @change="onChange"
+              ref="fileInput"
+              accept=".pdf,.jpg,.jpeg,.png"
+            />
+            <FontAwesomeIcon :icon="['fas', 'plus']" class="mr-1" /> Banner
+          </label>
         </PrimaryButton>
-      </div>
+            </div>
 
 
-      <div style="width: 70%; border: 1px solid #d9d9d9; height:100%" >
+      <div style="width: 70%; border: 1px solid #d9d9d9" >
           <SlideWorkshop :fileEdit="fileEdit" :blueprint="blueprint" :form="form" ref="_SlideWorkshop" ></SlideWorkshop>
-          <div class="border border-gray-200 flex justify-end  p-2.5">
+          <div class="border border-gray-200 flex justify-end  p-1" style="height: 10%;">
       <Button @click = applyChanges>
-        Apply in Preview
+        Apply
       </Button>
     </div>
       </div>

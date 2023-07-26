@@ -26,9 +26,10 @@ class DeleteContentBlockElasticsearch
         $client = BuildElasticsearchClient::run();
 
         $params = [
+            'id'  => $contentBlock->id,
             'index'  => strtolower($contentBlock->ulid)
         ];
 
-        return $client->deleteByQuery($params);
+        return $client->delete($params);
     }
 }

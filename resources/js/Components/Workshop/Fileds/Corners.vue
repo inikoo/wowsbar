@@ -94,6 +94,9 @@ const Type = [
   },
 ]
 
+
+
+
 const current = ref(0);
 </script>
 
