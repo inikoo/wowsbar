@@ -11,6 +11,7 @@ const props = defineProps<{
         title?: string
         subtitle?: string
     }
+    swiperRef?: Element 
 }>()
 
 </script>

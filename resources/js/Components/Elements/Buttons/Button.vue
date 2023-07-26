@@ -45,12 +45,9 @@ let sizeClass = ''
 if (props.style == 'primary') styleClass = 'bg-gray-700 dark:bg-gray-300/90 text-white dark:text-gray-700 hover:bg-gray-800 dark:hover:bg-gray-300'
 else if (props.style == 'secondary') styleClass = 'border border-gray-400/80 bg-gray-300 text-gray-700 hover:bg-gray-400/60'
 else if (props.style == 'tertiary') styleClass = 'border border-gray-300 dark:border-gray-500 bg-transparent text-gray-700 dark:text-gray-400 hover:bg-gray-200/70 dark:hover:bg-gray-600/90'
-// else if(props.style == 'edit' || props.style == 'exitEdit') styleClass = 'border border-gray-300 bg-white text-gray-700 hover:bg-gray-100/70 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2'
+else if (props.style == 'delete') styleClass = 'border border-red-400 dark:border-red-600 text-red-500 dark:text-red-600 hover:text-red-800 hover:bg-red-100 dark:hover:bg-red-100/10 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2'
 else if (props.style == 'negative') styleClass = 'border border-red-400 dark:border-red-800 text-red-600 dark:text-red-700 hover:text-red-800 hover:bg-red-100 dark:hover:bg-red-100/10 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2'
-// else if (props.style == 'cancel') styleClass = 'border border-gray-400 bg-gray-100 text-gray-700 hover:text-gray-800 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2'
-else styleClass = 'border border-gray-300 bg-transparent text-gray-700 hover:bg-gray-200/70'
-
-
+else styleClass = 'border border-gray-300 bg-transparent text-gray-700 dark:text-gray-400 hover:bg-gray-200/70'
 
 // Styling depends on the 'size' props
 switch (props.size) {
@@ -83,7 +80,7 @@ switch (props.size) {
         'px-5 inline-flex items-center font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-500 dark:focus:ring-gray-400 focus:ring-offset-2',
         styleClass,
         sizeClass
-    ]"> {{ icon }}
+    ]">
         <FontAwesomeIcon v-if="icon" aria-hidden="true" :icon="icon" size="sm" :class="[iconClass]" />
         <FontAwesomeIcon v-if="leftIcon" :title="leftIcon['tooltip']" aria-hidden="true" :icon="leftIcon['icon']" size="lg"
             :class="[iconClass]" />

@@ -9,8 +9,8 @@
 const props = defineProps<{
     data: {
         text?: string
-
     }
+    swiperRef?: Element 
 }>()
 
 </script>

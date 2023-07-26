@@ -92,7 +92,7 @@ router.on('navigate', (event) => {
 <template>
     <div v-if="displayBreadcrumbs" class="md:pr-10 xl:pr-56">
         <nav
-            class="py-4 md:py-0 flex border-b h-6 text-sm bg-white text-gray-700 border-gray-200 dark:bg-gray-700 dark:text-gray-400 dark:border-gray-500"
+            class="py-4 md:py-0 flex border-b h-6 text-sm bg-gray-50 text-gray-700 border-gray-200 dark:bg-gray-700 dark:text-gray-400 dark:border-gray-500"
             aria-label="Breadcrumb">
             <!-- Breadcrumb -->
             <ol role="list" class="w-full mx-auto px-4 flex">
@@ -120,7 +120,7 @@ router.on('navigate', (event) => {
                                 aria-hidden="true" />
                             <component
                                 :is="breadcrumb.simple.route ? Link : 'span'"
-                                :class="'hover:text-gray-700 dark:hover:text-gray-300' || ''"
+                                :class="'hover:text-gray-700 dark:hover:text-gray-400' || ''"
                                 :href="
 									breadcrumb.simple.route
 										? route(
@@ -155,7 +155,7 @@ router.on('navigate', (event) => {
                                     icon="fa-regular fa-chevron-right"
                                     aria-hidden="true" />
                                 <Link
-                                    class="hover:text-gray-700 grid grid-flow-col items-center"
+                                    class="hover:text-gray-700 dark:hover:text-gray-400 grid grid-flow-col items-center"
                                     :href="
 										route(
 											breadcrumb.modelWithIndex.index.route.name,
@@ -173,7 +173,7 @@ router.on('navigate', (event) => {
                             </div>
                             <span class="mx-3 select-none">→</span>
                             <Link
-                                class="hover:text-gray-700"
+                                class="hover:text-gray-700 dark:hover:text-gray-400"
                                 :href="
 									route(
 										breadcrumb.modelWithIndex.model.route.name,
@@ -189,8 +189,9 @@ router.on('navigate', (event) => {
                             :class="breadcrumb.type ? 'ml-1' : ''"
                             v-show="breadcrumb.suffix"
                             class="italic"
-                        >{{ breadcrumb.suffix }}</span
                         >
+                            {{ breadcrumb.suffix }}
+                        </span>
                     </div>
                 </li>
             </ol>
@@ -317,7 +318,7 @@ router.on('navigate', (event) => {
             <div v-if="props.navigation.previous || props.navigation.next" class="grid grid-flow-col justify-end items-center pr-2 space-x-2 text-sm text-gray-700 font-semibold">
                 <!-- Button: Previous -->
                 <div class="flex justify-center items-center w-8">
-                    <Link v-if="props.navigation.previous" :href="route(props.navigation.previous?.route.name, props.navigation.previous?.route.parameters)  + urlParameter" class="rounded w-full h-full flex items-center justify-center opacity-70 hover:opacity-100 hover:cursor-pointer hover:text-orange-900"
+                    <Link v-if="props.navigation.previous" :href="route(props.navigation.previous?.route.name, props.navigation.previous?.route.parameters)  + urlParameter" class="rounded w-full h-full flex items-center justify-center opacity-70 hover:opacity-100 hover:cursor-pointer hover:text-gray-800"
                           :title="capitalize(props.navigation.previous?.label)"
                     >
                         <FontAwesomeIcon icon="fas fa-arrow-left" class="" aria-hidden="true" />
@@ -327,7 +328,7 @@ router.on('navigate', (event) => {
 
                 <!-- Button: Next -->
                 <div class="flex justify-center items-center w-8">
-                    <Link v-if="props.navigation.next" class="rounded w-full h-full flex items-center justify-center opacity-70 hover:opacity-100 hover:cursor-pointer hover:text-orange-900"
+                    <Link v-if="props.navigation.next" class="rounded w-full h-full flex items-center justify-center opacity-70 hover:opacity-100 hover:cursor-pointer hover:text-orange-800"
                           :title="capitalize(props.navigation.next?.label)"
                           :href="route(props.navigation.next?.route.name, props.navigation.next?.route.parameters) + urlParameter"
                     >
