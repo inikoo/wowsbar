@@ -140,7 +140,7 @@ defineExpose({
       <div
         v-for="(corner, index) in corners"
         :key="corner.id"
-        :class="['border', 'flex-grow', { 'bg-blue-200': get(form.layout,['corners',`${corner.id}`]) },{ 'bg-red-200': get(area,'id') == corner.id }]"
+        :class="['border', 'flex-grow',{ 'bg-red-200': get(area,'id') == corner.id }]"
         @click="handleClick(corner)"
       >
         {{ corner.label }}
