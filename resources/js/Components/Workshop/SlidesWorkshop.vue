@@ -214,7 +214,7 @@ const blueprint = ref([
     },
     {
         title: 'delete',
-        icon: ['fas', 'fa-trash'],
+        icon: ['fal', 'fa-trash'],
         fields: [
             {
                 name: ['layout', 'centralStage', 'title'],
