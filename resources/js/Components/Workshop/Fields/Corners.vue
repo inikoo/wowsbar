@@ -5,7 +5,7 @@ import Input from '@/Components/Forms/Fields/Input.vue'
 import { get, cloneDeep, set } from 'lodash'
 
 const props = defineProps<{
-    form: any,
+    data: any,
     fieldName: string,
     options?: any,
     fieldData?: {
@@ -20,10 +20,10 @@ const area = ref(null)
 
 
 const corners = ref([
-    { label: trans('top left'), valueForm: get(props.form.layout, ['corners', `topLeft`], null), id: 'topLeft' },
-    { label: trans('Top right'), valueForm: get(props.form.layout, ['corners', `topRight`], null), id: 'topRight' },
-    { label: trans('bottom left'), valueForm: get(props.form.layout, ['corners', `bottomLeft`], null), id: 'bottomLeft' },
-    { label: trans('Bottom right'), valueForm: get(props.form.layout, ['corners', `bottomRight`], null), id: 'bottomRight' },
+    { label: trans('top left'), valueForm: get(props.data.layout, ['corners', `topLeft`], null), id: 'topLeft' },
+    { label: trans('Top right'), valueForm: get(props.data.layout, ['corners', `topRight`], null), id: 'topRight' },
+    { label: trans('bottom left'), valueForm: get(props.data.layout, ['corners', `bottomLeft`], null), id: 'bottomLeft' },
+    { label: trans('Bottom right'), valueForm: get(props.data.layout, ['corners', `bottomRight`], null), id: 'bottomRight' },
 ])
 
 const Type = [
@@ -79,8 +79,8 @@ const Type = [
 
 const defaultCurrent = computed(() => {
     if (area.value != null) {
-        if(props.form.layout.corners){
-        const areaType = props.form.layout.corners[area.value.id]?.type;
+        if(props.data.layout.corners){
+        const areaType = props.data.layout.corners[area.value.id]?.type;
         const index = Type.findIndex(item => item.value === areaType);
         return index == -1 ? 0 : index
         }else return 0
@@ -117,17 +117,17 @@ const setUpData = () => {
         data[s.name] = s.value;
     }
 
-    if (!props.form.layout.corners) {
-        props.form.layout.corners = {}; // Initialize corners as an empty object
+    if (!props.data.layout.corners) {
+        props.data.layout.corners = {}; // Initialize corners as an empty object
     }
 
-    let setData = cloneDeep(props.form.layout.corners[area.value.id]);
+    let setData = cloneDeep(props.data.layout.corners[area.value.id]);
     setData = {
         type: currentType.value,
         data: { ...data },
     };
 
-    props.form.layout.corners[area.value.id] = setData;
+    props.data.layout.corners[area.value.id] = setData;
 
     // Check if corners is an object, and convert it to an array if needed
     let cornersArray = Array.isArray(corners) ? corners : Object.values(corners);

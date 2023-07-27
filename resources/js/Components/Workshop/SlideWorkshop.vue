@@ -60,8 +60,7 @@ const setCurrent=(key)=>{
 </script>
 
 <template>
-    <div class="divide-y divide-gray-200 lg:grid grid-flow-col lg:grid-cols-12 lg:divide-y-0 lg:divide-x overflow-auto"
-        style="height: 90%;">
+    <div class="divide-y divide-gray-200 lg:grid grid-flow-col lg:grid-cols-12 lg:divide-y-0 lg:divide-x overflow-auto h-full">
 
         <!-- Left Tab: Navigation -->
         <aside class="py-0 lg:col-span-3 lg:h-full">
@@ -104,7 +103,7 @@ const setCurrent=(key)=>{
                                 <dd class="">
                                     <div class="mt-1 flex text-sm text-gray-700 sm:mt-0">
                                         <div class="relative flex-grow">
-                                            <component :is="getComponent(fieldData['type'])" :form="currentComponentBeenEdited"
+                                            <component :is="getComponent(fieldData['type'])" :data="currentComponentBeenEdited"
                                                 :fieldName="fieldData.name" :fieldData="fieldData" :key="index">
                                             </component>
                                         </div>
