@@ -72,9 +72,8 @@ const props = defineProps<{
 }>()
 
 const isDragging = ref(false)
-const components = ref(props.data.components)
 const fileInput = ref(null)
-const currentComponentBeenEdited = ref(components.value[0])
+const currentComponentBeenEdited = ref(props.data.components[0])
 const addComponent = () => {
     let setData = []
     for (const set of fileInput.value?.files) {
@@ -93,8 +92,7 @@ const addComponent = () => {
         }
     }
     const newFiles = [...setData]
-    components.value = [...components.value, ...newFiles]
-    props.data.components = [...components.value]
+    props.data.components = [... props.data.components, ...newFiles]
 }
 
 const generateThumbnail = (file) => {
@@ -110,16 +108,14 @@ const generateThumbnail = (file) => {
 }
 
 const removeComponent = (file) => {
-    console.log(file)
-    const index = components.value.findIndex(item => item.ulid === file.ulid);
+    const index =  props.data.components.findIndex(item => item.ulid === file.ulid);
     if (index !== -1) {
         console.log(currentComponentBeenEdited.value);
-        if (currentComponentBeenEdited.value && currentComponentBeenEdited.value.ulid === components.value[index].ulid) {
+        if (currentComponentBeenEdited.value && currentComponentBeenEdited.value.ulid ===  props.data.components[index].ulid) {
             const nextIndex = index + 1;
-            selectComponentForEdition(nextIndex < components.value.length ? components.value[nextIndex] : components.value.filter((item)=>item.ulid !== null)[0])
+            selectComponentForEdition(nextIndex <  props.data.components.length ?  props.data.components[nextIndex] :  props.data.components.filter((item)=>item.ulid !== null)[0])
         }
-        components.value[index].ulid = null;
-        props.data.components = components.value; // Remove items with null ulid
+        props.data.components[index].ulid = null;
     } else {
         console.log('Index not found');
     }
@@ -154,22 +150,20 @@ const drop = (e) => {
         }
     }
     const newFiles = [...setData]
-    components.value = [...components.value, ...newFiles]
-    props.data.components = [...components.value]
+    props.data.components = [...props.data.components, ...newFiles]
     isDragging.value = false
 }
 
 const selectComponentForEdition = (slide) => {
     currentComponentBeenEdited.value = slide
     _SlideWorkshop.value.current = 0
-    setFormValue(slide)
+    // setFormValue(slide)
 }
 
 const visible = (file) => {
-    const index = components.value.findIndex((item) => item.ulid === file.ulid);
+    const index = props.data.components.findIndex((item) => item.ulid === file.ulid);
     if (index !== -1) {
-        components.value[index].layout.visibility = !components.value[index].layout.visibility;
-        props.data.components = [...components.value];
+        props.data.components[index].layout.visibility = !props.data.components[index].layout.visibility;
     }
 };
 
@@ -233,44 +227,42 @@ const blueprint = ref([
 ])
 
 
-onMounted(() => {
-    setFormValue(currentComponentBeenEdited.value)
-});
+// onMounted(() => {
+//     setFormValue(currentComponentBeenEdited.value)
+// });
 
 const _SlideWorkshop = ref(null)
-const form = ref({});
-const setFormValue = (data) => { form.value = useForm(data) }
+// const form = ref({});
+// const setFormValue = (data) => { form.value = useForm(data) }
 
-const applyChanges = () => {
-    if (form.value.data()) {
-        const newFile = cloneDeep(form.value.data());
+// const applyChanges = () => {
+//     if (form.value.data()) {
+//         const newFile = cloneDeep(form.value.data());
 
-        if (newFile.image_source && newFile.image_source instanceof File) {
-            newFile.imageFile = newFile.image_source;
-            newFile.image_source = null;
-        }
+//         if (newFile.image_source && newFile.image_source instanceof File) {
+//             newFile.imageFile = newFile.image_source;
+//             newFile.image_source = null;
+//         }
 
-        currentComponentBeenEdited.value = {
-            ...newFile,
-            layout: {
-                ...newFile.layout,
-                visibility: currentComponentBeenEdited.value.layout.visibility
-            }
-        };
+//         currentComponentBeenEdited.value = {
+//             ...newFile,
+//             layout: {
+//                 ...newFile.layout,
+//                 visibility: currentComponentBeenEdited.value.layout.visibility
+//             }
+//         };
 
-        const index = components.value.findIndex((item) => item.ulid === currentComponentBeenEdited.value.ulid);
-        if (index !== -1) {
-            components.value[index] = currentComponentBeenEdited.value;
-        }
+//         const index = components.value.findIndex((item) => item.ulid === currentComponentBeenEdited.value.ulid);
+//         if (index !== -1) {
+//             components.value[index] = currentComponentBeenEdited.value;
+//         }
 
-        props.data.components = components.value;
-        console.log(currentComponentBeenEdited.value);
-    }
-};
+//         props.data.components = components.value;
+//         console.log(currentComponentBeenEdited.value);
+//     }
+// };
 
-const changeDnD = (data) => {
-    props.data.components = components.value;
-}
+
 
 </script>
 
@@ -284,7 +276,7 @@ const changeDnD = (data) => {
 
             <!-- Drag area -->
             <div class="mb-2 text-lg font-medium">{{ trans('Slides') }}</div>
-            <draggable :list="components" group="slide " item-key="ulid" @change="changeDnD"
+            <draggable :list="data.components" group="slide " item-key="ulid"
                 handle=".handle" >
                 <template #item="{ element: file }">
                     <div
@@ -337,10 +329,7 @@ const changeDnD = (data) => {
 
         <!-- The Editor -->
         <div class="w-full border border-gray-300">
-            <SlideWorkshop :fileEdit="currentComponentBeenEdited" :blueprint="blueprint"  :data="data"  :form="form" ref="_SlideWorkshop" :remove="removeComponent"></SlideWorkshop>
-            <div class="border border-gray-200 flex justify-end  p-1" style="height: 10%;">
-                <Button @click="applyChanges" :style="`primary`" size="xs">{{ trans('Apply')}}</Button>
-            </div>
+            <SlideWorkshop :currentComponentBeenEdited="currentComponentBeenEdited" :blueprint="blueprint" ref="_SlideWorkshop" :remove="removeComponent"></SlideWorkshop>
         </div>
     </div>
 </template>

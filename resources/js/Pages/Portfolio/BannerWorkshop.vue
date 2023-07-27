@@ -16,10 +16,10 @@ const props = defineProps<{
 }>();
 
 
-const data = ref(cloneDeep(props.bannerLayout));
-console.log(data.value)
+
+
 const test1=()=>{
-    console.log(data.value.components)
+    console.log(props.bannerLayout)
 }
 
 </script>
@@ -30,13 +30,13 @@ const test1=()=>{
 
     <div>
     <!-- First set of components -->
-    <div v-if="data.components.filter((item) => item.ulid != null).length > 0">
+    <div v-if="bannerLayout.components.filter((item) => item.ulid != null).length > 0">
       <Slider :data="bannerLayout" />
       <SlidesWorkshop class="clear-both mt-2 p-2.5" :data="bannerLayout" />
     </div>
 
     <!-- Second set of components -->
-    <div v-if="data.components.filter((item) => item.ulid != null).length == 0">
+    <div v-if="bannerLayout.components.filter((item) => item.ulid != null).length == 0">
       <SlidesWorkshopAddMode :data="data" />
     </div>
   </div>
