@@ -268,7 +268,7 @@ const _SlideWorkshop = ref(null)
 
 <template>
     <div class="flex flex-grow gap-2.5">
-        <div class="w-[30%] lg:w-2/3 p-2.5 border-dashed" style="border: 1px dashed #d9d9d9;" v-if="data.components"
+        <div class="w-[30%] lg:w-2/3 p-2.5 border rounded h-fit shadow" v-if="data.components"
             @dragover="dragover" @dragleave="dragleave" @drop="drop">
             <div class='border-gray-300 p-2 border mb-2 text-center'>
                 {{ trans('Common properties') }}
@@ -323,7 +323,7 @@ const _SlideWorkshop = ref(null)
                 <input ref="fileInput" type="file" multiple name="file" id="fileInput"
                     @change="addComponent" accept="image/*"
                     class="absolute h-full w-full cursor-pointer rounded-md border-gray-300 opacity-0" />
-                <Button :style="`tertinary`" icon="fas fa-plus" size="xs">{{ trans("Add slide") }}</Button>
+                <Button :style="`secondary`" icon="fas fa-plus" size="xs">{{ trans("Add slide") }}</Button>
             </label>
         </div>
 

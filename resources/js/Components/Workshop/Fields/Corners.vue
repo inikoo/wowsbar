@@ -177,8 +177,6 @@ defineExpose({
                     <div class="pb-4 sm:pb-5 sm:grid sm:grid-cols-3 sm:gap-4 max-w-2xl">
                         <dt class="text-sm font-medium text-gray-500 capitalize">
                             <div class="inline-flex items-start leading-none">
-                                <FontAwesomeIcon v-if="fieldData.required" :icon="['fas', 'asterisk']"
-                                    class="font-light text-[12px] text-red-400 mr-1" />
                                 <span>{{ fieldData.label }}</span>
                             </div>
                         </dt>
@@ -187,7 +185,6 @@ defineExpose({
                                 <div class="relative flex-grow">
                                     <input v-model=fieldData.value @input="setUpData"
                                         class="block w-full shadow-sm rounded-md dark:bg-gray-600 dark:text-gray-400 focus:ring-gray-500 focus:border-gray-500 sm:text-sm border-gray-300 dark:border-gray-500 read-only:bg-gray-100 read-only:ring-0 read-only:ring-transparent read-only:text-gray-500" />
-
                                 </div>
                             </div>
                         </dd>

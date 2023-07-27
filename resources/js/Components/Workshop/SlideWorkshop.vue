@@ -92,14 +92,15 @@ const setCurrent=(key)=>{
                     <div v-for="(fieldData, index ) in blueprint[current].fields" :key="index" class="">
                         <dl class="divide-y divide-green-200  ">
                             <div class="pb-4 sm:pb-5 sm:gap-4 max-w-2xl ">
-                                <!-- <dt class="text-sm font-medium text-gray-500 capitalize">
-                                    <div class="inline-flex items-start leading-none">
 
-                                        <FontAwesomeIcon v-if="fieldData.required" :icon="['fas', 'asterisk']"
-                                            class="font-light text-[12px] text-red-400 mr-1" />
+                                <!-- Title -->
+                                <dt class="text-sm font-medium text-gray-500 capitalize">
+                                    <div class="inline-flex items-start leading-none">
                                         <span>{{ fieldData.label }}</span>
                                     </div>
-                                </dt> -->
+                                </dt>
+
+                                <!-- Fields -->
                                 <dd class="">
                                     <div class="mt-1 flex text-sm text-gray-700 sm:mt-0">
                                         <div class="relative flex-grow">
