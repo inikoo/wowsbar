@@ -185,7 +185,7 @@ defineExpose({
                         <dd class="sm:col-span-2">
                             <div class="mt-1 flex text-sm text-gray-700 sm:mt-0">
                                 <div class="relative flex-grow">
-                                    <input v-model=fieldData.value @change="setUpData"
+                                    <input v-model=fieldData.value @input="setUpData"
                                         class="block w-full shadow-sm rounded-md dark:bg-gray-600 dark:text-gray-400 focus:ring-gray-500 focus:border-gray-500 sm:text-sm border-gray-300 dark:border-gray-500 read-only:bg-gray-100 read-only:ring-0 read-only:ring-transparent read-only:text-gray-500" />
 
                                 </div>
