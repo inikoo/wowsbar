@@ -18,7 +18,7 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { trans } from "laravel-vue-i18n";
 
 library.add(faDraftingCompass,faEmptySet, faMoneyCheckAlt, faPeopleArrows, faSlidersH, faPlus, faPencil, faArrowLeft, faBorderAll, faTrashAlt,faSave);
-const props = defineProps(["data", "dataToSubmit"])
+const props = defineProps(["data", "dataToSubmit","dataToSubmitIsDirty"])
 const locale = useLocaleStore()
 
 const getActionLabel = function (action) {
@@ -30,8 +30,8 @@ const getActionLabel = function (action) {
                 return trans("edit")
             case "save":
                 return trans("save")
-            case "exitEdit":
-                return trans("exit edit")
+            case "exit":
+                return trans("exit")
             case "cancel":
                 return trans("cancel")
             case "delete":
@@ -45,22 +45,20 @@ const getActionLabel = function (action) {
 };
 
 
-// Set icon depends on the Style props
 const getActionIcon = (action) => {
     if (action.hasOwnProperty("icon")) {
         return action.icon
     } else {
         switch (action.style) {
-            // case "edit":
-            //     return ["far", "fa-pencil"]
-            // case "save":
-            //     return ["fal", "fa-save"]
+            case "edit":
+                 return ["far", "fa-pencil"]
+             case "save":
+                return ["fa", "fa-save"]
             case "cancel":
             case "exit":
-            case "exitEdit":
                 return ["far", "fa-arrow-left"]
-            // case "create":
-            //     return ["fas", "fa-plus"]
+             case "create":
+                 return ["fas", "fa-plus"]
             case "delete":
                 return ["far", "fa-trash-alt"]
             case "withMulti":
@@ -123,12 +121,14 @@ const getActionIcon = (action) => {
                       :data="dataToSubmit"
                       as="button"
                 >
-                    <Button size="xs" 
-                        :icon="action.icon"
+                    <Button size="xs"
+
                         :style="action.style"
                         class="capitalize inline-flex items-center rounded-md text-sm font-medium shadow-sm gap-x-2">
+                        <!--
                         <FontAwesomeIcon v-if="action.icon && action.icon == 'fad fa-save'" aria-hidden="true" :icon="['fad', 'save']" style="--fa-primary-color: #f3f3f3; --fa-secondary-color: #ff6600; --fa-secondary-opacity: 1;" size="sm" :class="[iconClass]" />
-                        <FontAwesomeIcon v-else="getActionIcon(action)" :icon="getActionIcon(action)" class=""
+                        -->
+                        <FontAwesomeIcon  :icon="getActionIcon(action)"
                             aria-hidden="true" />
                         {{ getActionLabel(action) }}
                     </Button>

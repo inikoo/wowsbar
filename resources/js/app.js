@@ -6,6 +6,9 @@ import { createInertiaApp } from "@inertiajs/vue3";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { ZiggyVue } from "../../vendor/tightenco/ziggy/dist/vue.m";
 import { i18nVue } from "laravel-vue-i18n"
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faPlus } from "@/../private/pro-regular-svg-icons";
+library.add(faPlus);
 
 import { createPinia } from "pinia";
 const appName =

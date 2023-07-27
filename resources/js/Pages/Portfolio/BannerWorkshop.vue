@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import { Head } from "@inertiajs/vue3";
-import { ref } from "vue";
 import PageHeading from "@/Components/Headings/PageHeading.vue";
 import { capitalize } from "@/Composables/capitalize";
-import { cloneDeep } from 'lodash'
 import SlidesWorkshop from "@/Components/Workshop/SlidesWorkshop.vue";
 import Slider from "@/Components/Slider/Slider.vue";
 import SlidesWorkshopAddMode from "@/Components/Workshop/SlidesWorkshopAddMode.vue";
@@ -26,7 +24,7 @@ const test1=()=>{
 
 <template layout="App">
     <Head :title="capitalize(title)" />
-    <PageHeading :data="pageHead" :dataToSubmit="data"></PageHeading>
+    <PageHeading :data="pageHead" :dataToSubmit="bannerLayout"></PageHeading>
 
     <div>
     <!-- First set of components -->

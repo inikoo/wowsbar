@@ -69,7 +69,7 @@ class ShowBanner extends InertiaAction
                     'actions' => [
                         $this->canEdit ? [
                             'type'  => 'button',
-                            'style' => 'tertiary',
+                            'style' => 'edit',
                             'label' => __('workshop'),
                             'icon'  => ["fal", "fa-drafting-compass"],
                             'route' => [
