@@ -239,7 +239,13 @@ const applyChanges = () => {
     if (form.value.data()) {
         let oldFile = cloneDeep(fileEdit.value),
             newFile = cloneDeep(form.value.data())
-        fileEdit.value = { ...newFile, layout: { ...newFile.layout, visibility: oldFile.layout.visibility } };
+        fileEdit.value = { ...newFile, layout: {...newFile.layout, visibility: oldFile.layout.visibility } };
+       
+        if (fileEdit.value.image_source instanceof File) { 
+            fileEdit.value.imageFile = fileEdit.value.image_source;
+            fileEdit.value.image_source = null;
+        }
+        console.log( fileEdit.value )
         const index = components.value.findIndex((item) => item.ulid === fileEdit.value.ulid);
         if (index !== -1) components.value[index] = fileEdit.value;
         props.data.components = components.value;
