@@ -88,6 +88,7 @@ const onChange = () => {
                 ulid: ulid(),
                 layout: {
                     imageAlt: set.name,
+                    visibility : true
                 }
             })
         }
@@ -147,12 +148,14 @@ const drop = (e) => {
                 ulid: ulid(),
                 layout: {
                     imageAlt: set.name,
+                    visibility : true
                 }
             })
         }
     }
     const newFiles = [...setData]
     components.value = [...components.value, ...newFiles]
+    props.data.components = [...components.value]
     isDragging.value = false
 }
 
@@ -162,10 +165,13 @@ const openEdit = (file) => {
     setFormValue(file)
 }
 
-const visible = (i) => {
-    components.value[i].layout.visibility = !components.value[i].layout.visibility
-    props.data.components = [...components.value]
-}
+const visible = (file) => {
+    const index = components.value.findIndex((item) => item.ulid === file.ulid);
+    if (index !== -1) {
+        components.value[index].layout.visibility = !components.value[index].layout.visibility;
+        props.data.components = [...components.value];
+    }
+};
 
 const blueprint = ref([
     {
@@ -252,6 +258,10 @@ const applyChanges = () => {
     }
 }
 
+const changeDnD=(data)=>{
+    props.data.components = components.value;
+}
+
 </script>
 
 <template>
@@ -264,7 +274,7 @@ const applyChanges = () => {
 
             <!-- Drag area -->
             <div class="mb-2 text-lg font-medium">{{ trans('Slides') }}</div>
-            <draggable :list="data.components.filter((item) => item.ulid !== null)" group="slide " item-key="ulid"
+            <draggable :list="components" group="slide " item-key="ulid" @change="changeDnD"
                 handle=".handle">
                 <template #item="{ element: file }">
                     <div 
@@ -293,7 +303,7 @@ const applyChanges = () => {
                         <!-- Button: Show/hide, delete slide -->
                         <div class="flex justify-center items-center pr-2 justify-self-end">
                             <button class="px-2 py-1" type="button"
-                                @click="visible(components.indexOf(file))" title="Show/hide the slide">
+                                @click="visible(file)" title="Show/hide the slide">
                                 <FontAwesomeIcon v-if="file.layout.visibility" icon="fas fa-eye" class="text-xs sm:text-sm text-gray-400 hover:text-gray-500" />
                                 <FontAwesomeIcon v-else icon="fas fa-eye-slash" class="text-xs sm:text-sm text-gray-300 hover:text-gray-400/70" />
                             </button>
