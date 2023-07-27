@@ -5,10 +5,10 @@
   -->
 
 <script setup lang="ts">
-import { ref, defineExpose } from 'vue'
+import { ref } from 'vue'
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
-import { faImage, faExpandArrows, faAlignCenter } from "../../../private/pro-light-svg-icons"
-import { faTrash } from "../../../private/pro-solid-svg-icons"
+import { faImage, faExpandArrows, faAlignCenter, faTrash } from "../../../private/pro-light-svg-icons"
+import { faStopwatch } from "../../../private/pro-regular-svg-icons"
 import Input from '@/Components/Forms/Fields/Input.vue'
 import Select from '@/Components/Forms/Fields/Select.vue'
 import Radio from '@/Components/Forms/Fields/Radio.vue'
@@ -16,11 +16,12 @@ import InputWithAddOn from '@/Components/Forms/Fields/InputWithAddOn.vue'
 import SlideBackground from "@/Components/Workshop/Fields/SlideBackground.vue"
 import Corners from "@/Components/Workshop/Fields/Corners.vue"
 import Delete from "@/Components/Workshop/Fields/Delete.vue"
+import Range from "@/Components/Workshop/Fields/Range.vue"
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { trans } from "laravel-vue-i18n"
 
 
-library.add(faImage, faExpandArrows, faAlignCenter, faTrash)
+library.add(faImage, faExpandArrows, faAlignCenter, faTrash, faStopwatch)
 const props = defineProps<{
     fileEdit: Object,
     blueprint: Array,
@@ -30,7 +31,7 @@ const props = defineProps<{
 
 
 
-const getComponent = (componentName) => {
+const getComponent = (componentName: string) => {
     const components = {
         'input': Input,
         'inputWithAddOn': InputWithAddOn,
@@ -38,7 +39,8 @@ const getComponent = (componentName) => {
         'radio': Radio,
         'slideBackground': SlideBackground,
         'corners': Corners,
-        'delete': Delete
+        'delete': Delete,
+        'range': Range,
     };
     return components[componentName]
 };

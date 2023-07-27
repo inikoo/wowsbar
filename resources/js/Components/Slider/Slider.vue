@@ -10,9 +10,9 @@ import {Swiper, SwiperSlide} from 'swiper/vue'
 import {Autoplay, Pagination, Navigation} from 'swiper/modules'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faEyeSlash } from '@/../private/pro-solid-svg-icons'
-import { faExternalLink } from '@/../private/pro-regular-svg-icons'
+import { faExternalLink, faExclamationTriangle } from '@/../private/pro-regular-svg-icons'
 import { library } from '@fortawesome/fontawesome-svg-core'
-library.add(faExternalLink, faEyeSlash)
+library.add(faExternalLink, faEyeSlash, faExclamationTriangle)
 
 import 'swiper/css'
 import 'swiper/css/navigation';
@@ -124,8 +124,13 @@ const filteredNulls = (corners: Corners) => {
                 <img :src="generateThumbnail(component)" :alt="component.imageAlt" class="">
                 
                 <div v-if="component.layout.visibility === false" class="absolute h-full w-full bg-gray-800/50 z-10 " />
-                <FontAwesomeIcon v-if="component.layout.visibility === false" icon='fas fa-eye-slash' class='z-[11] absolute left-10 text-gray-100 text-4xl' aria-hidden='true' />
-                <span v-if="component.layout.visibility === false" class='z-[11] absolute left-10 bottom-24 text-gray-100 text-base' aria-hidden='true'>Is not visible</span>
+                <div class="z-[11] absolute left-7 flex flex-col gap-y-2">
+                    <FontAwesomeIcon v-if="component.layout.visibility === false" icon='fas fa-eye-slash' class=' text-orange-400 text-4xl' aria-hidden='true' />
+                    <span v-if="component.layout.visibility === false" class="text-orange-400/60 text-sm italic select-none" aria-hidden='true'>
+                        <FontAwesomeIcon icon='far fa-exclamation-triangle' class='' aria-hidden='true' />
+                        Not visible
+                    </span>
+                </div>
 
                 <FontAwesomeIcon v-if="component.layout.link" icon='far fa-external-link' class='text-gray-300/50 text-xl absolute top-2 right-2' aria-hidden='true' />
                 <Link v-if="component.layout.link" :href="component.layout.link" class="absolute bg-transparent w-full h-full" />

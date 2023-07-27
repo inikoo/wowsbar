@@ -20,7 +20,7 @@ const props = defineProps<{
 
 <template>
     <Link :href="data.target"
-        class="bg-gray-800/40 text-gray-100 border border-gray-50/50 absolute bottom-6 right-11 rounded-md px-3 py-1 hover:bg-gray-900/60 whitespace-nowrap">
-    {{ data.text?.length == 0 ? trans('Open') : data.text }}
+        class="bg-gray-800/40 text-gray-100 border border-gray-50/50 rounded-md px-3 py-1 hover:bg-gray-900/60 whitespace-nowrap">
+        {{ data.text?.length == 0 ? trans('Open') : data.text }}
     </Link>
 </template>
