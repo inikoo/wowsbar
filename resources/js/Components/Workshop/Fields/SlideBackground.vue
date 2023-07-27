@@ -1,16 +1,27 @@
 <script setup>
-import { trans } from "laravel-vue-i18n"
+import { trans } from "laravel-vue-i18n";
 
-
-const props = defineProps(['form'])
+const props = defineProps(["form"]);
 
 const generateThumbnail = (fileOrUrl) => {
-    if (fileOrUrl instanceof File) {
-        let fileSrc = URL.createObjectURL(fileOrUrl);
-        setTimeout(() => { URL.revokeObjectURL(fileSrc) }, 1000);
-        return fileSrc;
-    } else if (typeof fileOrUrl === 'string') {
-        return fileOrUrl;
+    if (fileOrUrl == null) {
+        if (props.form.imageFile && props.form.imageFile instanceof File) {
+            let fileSrc = URL.createObjectURL(props.form.imageFile);
+            setTimeout(() => {
+                URL.revokeObjectURL(fileSrc);
+            }, 1000);
+            return fileSrc;
+        }
+    } else {
+        if (fileOrUrl instanceof File) {
+            let fileSrc = URL.createObjectURL(fileOrUrl);
+            setTimeout(() => {
+                URL.revokeObjectURL(fileSrc);
+            }, 1000);
+            return fileSrc;
+        } else if (typeof fileOrUrl === "string") {
+            return fileOrUrl;
+        }
     }
 };
 
@@ -47,16 +58,29 @@ const onFileChange = (event) => {
 
         <!-- Avatar Button: Large view -->
         <div class="block w-full relative space-y-4">
-            <div class="w-full aspect-[16/4] overflow-hidden relative shadow-md">
-                <img class="absolute top-1/2 -translate-y-1/2 w-full" :src="generateThumbnail(props.form.image_source)" alt="" />
+            <div
+                class="w-full aspect-[16/4] overflow-hidden relative shadow-md"
+            >
+                <img
+                    class="absolute top-1/2 -translate-y-1/2 w-full"
+                    :src="generateThumbnail(props.form.image_source)"
+                    alt=""
+                />
             </div>
             <label
                 class="relative flex h-full w-full py-2 items-center justify-center rounded bg-gray-100 hover:bg-gray-200 text-sm font-medium text-gray-700 border border-dashed border-gray-300"
-                id="input-slide-large-mask" for="input-slide-large"
+                id="input-slide-large-mask"
+                for="input-slide-large"
             >
                 <span>{{ trans("Change") }}</span>
-                <input type="file" @change="onFileChange" id="input-slide-large" name="input-slide-large" accept="image/*"
-                    class="absolute h-full w-full cursor-pointer rounded-md border-gray-300 opacity-0" />
+                <input
+                    type="file"
+                    @change="onFileChange"
+                    id="input-slide-large"
+                    name="input-slide-large"
+                    accept="image/*"
+                    class="absolute h-full w-full cursor-pointer rounded-md border-gray-300 opacity-0"
+                />
             </label>
         </div>
         <!-- <div v-if="props.form.errors" class="text-red-700">
