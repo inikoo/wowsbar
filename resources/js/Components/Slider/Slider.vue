@@ -71,17 +71,17 @@ const props = defineProps<{
 
 }>()
 
-const generateThumbnail = (set) => {
-    if (set.imageSrc && set.imageSrc instanceof File) {
-        let fileSrc = URL.createObjectURL(set.imageSrc);
+const generateThumbnail = (file) => {
+    if (file.imageFile && file.imageFile instanceof File) {
+        let fileSrc = URL.createObjectURL(file.imageFile)
         setTimeout(() => {
-            URL.revokeObjectURL(fileSrc);
-        }, 1000);
-        return fileSrc;
+            URL.revokeObjectURL(fileSrc)
+        }, 1000)
+        return fileSrc
     } else {
-        return getImageUrl(set.imageSrc);
+        return file.image_source
     }
-};
+}
 
 const getImageUrl = (name: string) => {
     return new URL(`@/../../../art/banner/` + name, import.meta.url).href
@@ -121,7 +121,7 @@ const filteredNulls = (corners: Corners) => {
             :navigation="false"
             :modules="[Autoplay, Pagination, Navigation]" class="mySwiper">
             <SwiperSlide v-for="component in props.data.components" :key="component.id">
-                <img :src="component.image_source" :alt="component.imageAlt" class="">
+                <img :src="generateThumbnail(component)" :alt="component.imageAlt" class="">
                 
                 <div v-if="component.layout.visibility === false" class="absolute h-full w-full bg-gray-800/50 z-10 " />
                 <div class="z-[11] absolute left-7 flex flex-col gap-y-2">

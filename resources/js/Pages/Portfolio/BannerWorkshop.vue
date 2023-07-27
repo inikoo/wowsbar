@@ -17,13 +17,7 @@ const props = defineProps<{
 
 
 const data = ref(cloneDeep(props.bannerLayout));
-
-
-const changeLink = (file, value) => {
-    const index = data.value.findIndex((item) => item.id === file.id);
-    if (index !== -1) data.value[index].link = value;
-};
-
+console.log(props.bannerLayout)
 const test1=()=>{
     console.log(data.value.components)
 }
@@ -38,12 +32,11 @@ const test1=()=>{
     <Slider :data="data" />
     <SlidesWorkshop class="clear-both mt-2 p-2.5"
         :data="data"
-        :changeLink="changeLink"
     />
     </div>
 
     <!-- add new file -->
-    <div v-if="data.components.length == 0">
+    <!-- <div v-if="data.components.length == 0">
         <div class="col-span-full">
             <div class="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
               <div class="text-center">
@@ -59,7 +52,7 @@ const test1=()=>{
               </div>
             </div>
           </div>
-    </div>
+    </div> -->
 
     <div @click="test1">chek data</div>
 </template>
