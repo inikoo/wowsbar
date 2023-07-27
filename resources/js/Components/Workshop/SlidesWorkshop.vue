@@ -6,19 +6,18 @@
 
 <script  setup lang="ts">
 import { ref, onMounted, watch } from 'vue'
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { faTrashAlt, faAlignJustify } from "@/../private/pro-light-svg-icons"
 import { faEye, faEyeSlash } from "@/../private/pro-solid-svg-icons"
-import { library } from '@fortawesome/fontawesome-svg-core';
+import { library } from '@fortawesome/fontawesome-svg-core'
 import draggable from "vuedraggable"
-import PrimaryButton from "@/Components/PrimaryButton.vue";
-import { ulid } from 'ulid';
+import { ulid } from 'ulid'
 import Input from '@/Components/Forms/Fields/Input.vue'
 import { trans } from "laravel-vue-i18n"
 import { useForm } from '@inertiajs/vue3'
-import SlideWorkshop from "@/Components/Workshop/SlideWorkshop.vue";
+import SlideWorkshop from "@/Components/Workshop/SlideWorkshop.vue"
 import { cloneDeep } from 'lodash'
-import Button from '../Elements/Buttons/Button.vue';
+import Button from '../Elements/Buttons/Button.vue'
 library.add(faEye, faEyeSlash, faTrashAlt, faAlignJustify)
 
 interface CornersPositionData {
@@ -256,12 +255,9 @@ const changeDnD = (data) => {
     props.data.components = components.value;
 }
 
-const isDrag = ref(false)
-
 </script>
 
 <template>
-    {{ isDrag }}
     <div class="flex flex-grow gap-2.5">
         <div class="w-[30%] lg:w-2/3 p-2.5 border-dashed" style="border: 1px dashed #d9d9d9;" v-if="data.components"
             @dragover="dragover" @dragleave="dragleave" @drop="drop">

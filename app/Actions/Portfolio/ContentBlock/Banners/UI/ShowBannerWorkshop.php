@@ -84,6 +84,7 @@ class ShowBannerWorkshop extends InertiaAction
                             'type'       => 'button',
                             'style'      => 'primary',
                             'label'      => __('Save'),
+                            'icon'       => 'fad fa-save',
                             'route'      => [
                                 'name'       => 'models.content-block.update',
                                 'parameters' => [
