@@ -9,7 +9,7 @@ import { ref } from 'vue'
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { faImage, faExpandArrows, faAlignCenter, faTrash } from "../../../private/pro-light-svg-icons"
 import { faStopwatch } from "../../../private/pro-regular-svg-icons"
-import Input from '@/Components/Forms/Fields/Input.vue'
+import PrimitiveInput from '@/Components/Forms/Fields/Primitive/PrimitiveInput.vue'
 import Select from '@/Components/Forms/Fields/Select.vue'
 import Radio from '@/Components/Forms/Fields/Radio.vue'
 import InputWithAddOn from '@/Components/Forms/Fields/InputWithAddOn.vue'
@@ -32,7 +32,7 @@ const props = defineProps<{
 
 const getComponent = (componentName: string) => {
     const components = {
-        'input': Input,
+        'input': PrimitiveInput,
         'inputWithAddOn': InputWithAddOn,
         'select': Select,
         'radio': Radio,
@@ -104,7 +104,7 @@ const setCurrent=(key)=>{
                                     <div class="mt-1 flex text-sm text-gray-700 sm:mt-0">
                                         <div class="relative flex-grow">
                                             <component :is="getComponent(fieldData['type'])" :data="currentComponentBeenEdited"
-                                                :fieldName="fieldData.name" :fieldData="fieldData" :key="index">
+                                                :fieldName="fieldData.name" :fieldData="fieldData" :key="index" :counter="false">
                                             </component>
                                         </div>
                                     </div>

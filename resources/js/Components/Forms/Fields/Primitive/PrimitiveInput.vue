@@ -70,7 +70,7 @@ const updateFormValue = (newValue) => {
         </div>
 
         <!-- Counter: Letters and Words -->
-        <div v-if="counter"
+        <div v-if="counter && fieldData?.[fieldName]"
             class="grid grid-flow-col text-xs italic text-gray-500 mt-2 space-x-12 justify-start">
             <p class="">
                 Letters: {{ fieldData?.[fieldName].length }}
