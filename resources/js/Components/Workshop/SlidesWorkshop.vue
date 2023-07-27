@@ -74,8 +74,8 @@ const props = defineProps<{
 const isDragging = ref(false)
 const components = ref(props.data.components)
 const fileInput = ref(null)
-const fileEdit = ref(components.value[0])
-const onChange = () => {
+const currentComponentBeenEdited = ref(components.value[0])
+const addComponent = () => {
     let setData = []
     for (const set of fileInput.value?.files) {
         if (set && set instanceof File) {
@@ -109,14 +109,14 @@ const generateThumbnail = (file) => {
     }
 }
 
-const remove = (file) => {
+const removeComponent = (file) => {
     const index = components.value.findIndex(item => item.ulid === file.ulid);
     if (index !== -1) {
-        console.log(fileEdit.value);
-        if (fileEdit.value && fileEdit.value.ulid === components.value[index].ulid) {
+        console.log(currentComponentBeenEdited.value);
+        if (currentComponentBeenEdited.value && currentComponentBeenEdited.value.ulid === components.value[index].ulid) {
             const nextIndex = index + 1;
-            openEdit(nextIndex < components.value.length ? components.value[nextIndex] : components.value.filter((item)=>item.ulid !== null)[0])
-        } 
+            selectComponentForEdition(nextIndex < components.value.length ? components.value[nextIndex] : components.value.filter((item)=>item.ulid !== null)[0])
+        }
         components.value[index].ulid = null;
         props.data.components = components.value; // Remove items with null ulid
     } else {
@@ -158,10 +158,10 @@ const drop = (e) => {
     isDragging.value = false
 }
 
-const openEdit = (file) => {
-    fileEdit.value = file
+const selectComponentForEdition = (slide) => {
+    currentComponentBeenEdited.value = slide
     _SlideWorkshop.value.current = 0
-    setFormValue(file)
+    setFormValue(slide)
 }
 
 const visible = (file) => {
@@ -233,7 +233,7 @@ const blueprint = ref([
 
 
 onMounted(() => {
-    setFormValue(fileEdit.value)
+    setFormValue(currentComponentBeenEdited.value)
 });
 
 const _SlideWorkshop = ref(null)
@@ -243,27 +243,27 @@ const setFormValue = (data) => { form.value = useForm(data) }
 const applyChanges = () => {
     if (form.value.data()) {
         const newFile = cloneDeep(form.value.data());
-        
+
         if (newFile.image_source && newFile.image_source instanceof File) {
             newFile.imageFile = newFile.image_source;
             newFile.image_source = null;
         }
-        
-        fileEdit.value = {
+
+        currentComponentBeenEdited.value = {
             ...newFile,
             layout: {
                 ...newFile.layout,
-                visibility: fileEdit.value.layout.visibility
+                visibility: currentComponentBeenEdited.value.layout.visibility
             }
         };
 
-        const index = components.value.findIndex((item) => item.ulid === fileEdit.value.ulid);
+        const index = components.value.findIndex((item) => item.ulid === currentComponentBeenEdited.value.ulid);
         if (index !== -1) {
-            components.value[index] = fileEdit.value;
+            components.value[index] = currentComponentBeenEdited.value;
         }
 
         props.data.components = components.value;
-        console.log(fileEdit.value);
+        console.log(currentComponentBeenEdited.value);
     }
 };
 
@@ -286,18 +286,18 @@ const changeDnD = (data) => {
             <draggable :list="components" group="slide " item-key="ulid" @change="changeDnD"
                 handle=".handle" >
                 <template #item="{ element: file }">
-                    <div 
+                    <div
                         v-if="file.ulid !== null"
-                        :class="[file.ulid != fileEdit.ulid ?
+                        :class="[file.ulid != currentComponentBeenEdited.ulid ?
                             'border-gray-300' :
                             'border-l-orange-500 border-l-4 bg-gray-200/60',
                         'grid grid-flow-col relative py-1 border mb-2 items-center justify-between hover:cursor-pointer']"
-                        @click="openEdit(file)"
+                        @click="selectComponentForEdition(file)"
                     >
                         <div class="grid grid-flow-col gap-x-1 py-1">
                             <!-- Icon: Bars, class 'handle' to grabable -->
                             <FontAwesomeIcon icon="fal fa-bars" class="handle p-1 text-xs sm:text-base sm:p-2.5 text-gray-700 cursor-grab place-self-center" />
-                            
+
                             <!-- Image slide -->
                             <div class="h-5 w-5 sm:h-10 sm:w-10 bg-contain flex items-center justify-center">
                                 <img class="h-5 sm:h-10 max-w-full shadow" :src="generateThumbnail(file)" />
@@ -325,10 +325,10 @@ const changeDnD = (data) => {
             <!-- Remove the input element from inside the label -->
             <label
                 class="relative inline-block"
-                id="input-slide-large-mask" for="fileInput" 
+                id="input-slide-large-mask" for="fileInput"
             >
                 <input ref="fileInput" type="file" multiple name="file" id="fileInput"
-                    @change="onChange" accept="image/*"
+                    @change="addComponent" accept="image/*"
                     class="absolute h-full w-full cursor-pointer rounded-md border-gray-300 opacity-0" />
                 <Button :style="`tertinary`" icon="fas fa-plus" size="xs">{{ trans("Add slide") }}</Button>
             </label>
@@ -336,7 +336,7 @@ const changeDnD = (data) => {
 
         <!-- The Editor -->
         <div class="w-full border border-gray-300">
-            <SlideWorkshop :fileEdit="fileEdit" :blueprint="blueprint" :form="form" ref="_SlideWorkshop" :remove="remove"></SlideWorkshop>
+            <SlideWorkshop :currentComponentBeenEdited="currentComponentBeenEdited" :blueprint="blueprint"  :data="data"  :form="form" ref="_SlideWorkshop" :remove="removeComponent"></SlideWorkshop>
             <div class="border border-gray-200 flex justify-end  p-1" style="height: 10%;">
                 <Button @click="applyChanges" :style="`primary`" size="xs">{{ trans('Apply')}}</Button>
             </div>

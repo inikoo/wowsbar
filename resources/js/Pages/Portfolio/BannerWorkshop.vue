@@ -31,8 +31,8 @@ const test1=()=>{
     <div>
     <!-- First set of components -->
     <div v-if="data.components.filter((item) => item.ulid != null).length > 0">
-      <Slider :data="data" />
-      <SlidesWorkshop class="clear-both mt-2 p-2.5" :data="data" />
+      <Slider :data="bannerLayout" />
+      <SlidesWorkshop class="clear-both mt-2 p-2.5" :data="bannerLayout" />
     </div>
 
     <!-- Second set of components -->
@@ -41,7 +41,7 @@ const test1=()=>{
     </div>
   </div>
 
-   
+
 
     <div @click="test1">chek data</div>
 </template>
