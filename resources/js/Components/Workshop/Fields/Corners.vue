@@ -110,6 +110,7 @@ const handleClick = (corner) => {
 }
 
 const setUpData = () => {
+    console.log('dfgdfg')
     const currentType = Type[current.value];
     let data = {};
     for (const s of currentTypeFields.value) {
@@ -119,8 +120,6 @@ const setUpData = () => {
     if (!props.form.layout.corners) {
         props.form.layout.corners = {}; // Initialize corners as an empty object
     }
-
-    console.log(props.form.layout);
 
     let setData = cloneDeep(props.form.layout.corners[area.value.id]);
     setData = {
@@ -141,12 +140,6 @@ const setUpData = () => {
         cornersArray[indexCorners].valueForm = setData;
     }
 };
-
-
-
-watch(current, () => {
-    setUpData();
-});
 
 
 defineExpose({

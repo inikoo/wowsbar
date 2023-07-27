@@ -29,7 +29,8 @@ const generateThumbnail = (fileOrUrl) => {
 const onFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
-        props.form.image_source = file;
+        props.form.image_source = null;
+        props.form.imageFile = file;
     }
 };
 </script>

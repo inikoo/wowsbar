@@ -23,10 +23,8 @@ import { trans } from "laravel-vue-i18n"
 
 library.add(faImage, faExpandArrows, faAlignCenter, faTrash, faStopwatch)
 const props = defineProps<{
-    data: Object,
-    fileEdit: Object,
+    currentComponentBeenEdited: Object,
     blueprint: Array,
-    form: Object,
     remove : Function
 }>()
 
@@ -55,7 +53,7 @@ defineExpose({
 
 
 const setCurrent=(key)=>{
-    if(props.blueprint[key].title == 'delete') props.remove(props.fileEdit)
+    if(props.blueprint[key].title == 'delete') props.remove(props.currentComponentBeenEdited)
     else current.value = key
 }
 
@@ -106,7 +104,7 @@ const setCurrent=(key)=>{
                                 <dd class="">
                                     <div class="mt-1 flex text-sm text-gray-700 sm:mt-0">
                                         <div class="relative flex-grow">
-                                            <component :is="getComponent(fieldData['type'])" :form="props.form"
+                                            <component :is="getComponent(fieldData['type'])" :form="currentComponentBeenEdited"
                                                 :fieldName="fieldData.name" :fieldData="fieldData" :key="index">
                                             </component>
                                         </div>
