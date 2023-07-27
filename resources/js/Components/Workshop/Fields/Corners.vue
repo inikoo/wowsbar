@@ -5,7 +5,7 @@ import Input from '@/Components/Forms/Fields/Input.vue'
 import { get, cloneDeep, set } from 'lodash'
 
 const props = defineProps<{
-    form: any,
+    data: any,
     fieldName: string,
     options?: any,
     fieldData?: {
@@ -20,10 +20,10 @@ const area = ref(null)
 
 
 const corners = ref([
-    { label: trans('top left'), valueForm: get(props.form.layout, ['corners', `topLeft`], null), id: 'topLeft' },
-    { label: trans('Top right'), valueForm: get(props.form.layout, ['corners', `topRight`], null), id: 'topRight' },
-    { label: trans('bottom left'), valueForm: get(props.form.layout, ['corners', `bottomLeft`], null), id: 'bottomLeft' },
-    { label: trans('Bottom right'), valueForm: get(props.form.layout, ['corners', `bottomRight`], null), id: 'bottomRight' },
+    { label: trans('top left'), valueForm: get(props.data.layout, ['corners', `topLeft`], null), id: 'topLeft' },
+    { label: trans('Top right'), valueForm: get(props.data.layout, ['corners', `topRight`], null), id: 'topRight' },
+    { label: trans('bottom left'), valueForm: get(props.data.layout, ['corners', `bottomLeft`], null), id: 'bottomLeft' },
+    { label: trans('Bottom right'), valueForm: get(props.data.layout, ['corners', `bottomRight`], null), id: 'bottomRight' },
 ])
 
 const Type = [
@@ -79,8 +79,8 @@ const Type = [
 
 const defaultCurrent = computed(() => {
     if (area.value != null) {
-        if(props.form.layout.corners){
-        const areaType = props.form.layout.corners[area.value.id]?.type;
+        if(props.data.layout.corners){
+        const areaType = props.data.layout.corners[area.value.id]?.type;
         const index = Type.findIndex(item => item.value === areaType);
         return index == -1 ? 0 : index
         }else return 0
@@ -110,25 +110,24 @@ const handleClick = (corner) => {
 }
 
 const setUpData = () => {
+    console.log('dfgdfg')
     const currentType = Type[current.value];
     let data = {};
     for (const s of currentTypeFields.value) {
         data[s.name] = s.value;
     }
 
-    if (!props.form.layout.corners) {
-        props.form.layout.corners = {}; // Initialize corners as an empty object
+    if (!props.data.layout.corners) {
+        props.data.layout.corners = {}; // Initialize corners as an empty object
     }
 
-    console.log(props.form.layout);
-
-    let setData = cloneDeep(props.form.layout.corners[area.value.id]);
+    let setData = cloneDeep(props.data.layout.corners[area.value.id]);
     setData = {
         type: currentType.value,
         data: { ...data },
     };
 
-    props.form.layout.corners[area.value.id] = setData;
+    props.data.layout.corners[area.value.id] = setData;
 
     // Check if corners is an object, and convert it to an array if needed
     let cornersArray = Array.isArray(corners) ? corners : Object.values(corners);
@@ -141,12 +140,6 @@ const setUpData = () => {
         cornersArray[indexCorners].valueForm = setData;
     }
 };
-
-
-
-watch(current, () => {
-    setUpData();
-});
 
 
 defineExpose({
@@ -192,7 +185,7 @@ defineExpose({
                         <dd class="sm:col-span-2">
                             <div class="mt-1 flex text-sm text-gray-700 sm:mt-0">
                                 <div class="relative flex-grow">
-                                    <input v-model=fieldData.value @change="setUpData"
+                                    <input v-model=fieldData.value @input="setUpData"
                                         class="block w-full shadow-sm rounded-md dark:bg-gray-600 dark:text-gray-400 focus:ring-gray-500 focus:border-gray-500 sm:text-sm border-gray-300 dark:border-gray-500 read-only:bg-gray-100 read-only:ring-0 read-only:ring-transparent read-only:text-gray-500" />
 
                                 </div>

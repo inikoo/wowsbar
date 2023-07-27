@@ -2,12 +2,12 @@
 import { trans } from "laravel-vue-i18n"
 import Button from "@/Components/Elements/Buttons/Button.vue"
 
-const props = defineProps(["form"]);
+const props = defineProps(["data"]);
 
 const generateThumbnail = (fileOrUrl) => {
     if (fileOrUrl == null) {
-        if (props.form.imageFile && props.form.imageFile instanceof File) {
-            let fileSrc = URL.createObjectURL(props.form.imageFile);
+        if (props.data.imageFile && props.data.imageFile instanceof File) {
+            let fileSrc = URL.createObjectURL(props.data.imageFile);
             setTimeout(() => {
                 URL.revokeObjectURL(fileSrc);
             }, 1000);
@@ -29,7 +29,8 @@ const generateThumbnail = (fileOrUrl) => {
 const onFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
-        props.form.image_source = file;
+        props.data.image_source = null;
+        props.data.imageFile = file;
     }
 };
 </script>
@@ -41,7 +42,7 @@ const onFileChange = (event) => {
             <div class="flex items-center">
                 <div class="inline-block h-12 w-12 flex-shrink-0 overflow-hidden rounded-full" aria-hidden="true">
                     <img id="avatar_mobile" class="h-full w-full rounded-full"
-                        :src="generateThumbnail(props.form.image_source)" />
+                        :src="generateThumbnail(props.data.image_source)" />
                 </div>
                 <div class="ml-5 rounded-md shadow-sm">
                     <div
@@ -60,7 +61,7 @@ const onFileChange = (event) => {
         <!-- Avatar Button: Large view -->
         <div class="w-full relative space-y-4">
             <div class="w-full aspect-[16/4] overflow-hidden relative shadow-md">
-                <img class="absolute top-1/2 -translate-y-1/2 w-full" :src="generateThumbnail(props.form.image_source)" alt="" />
+                <img class="absolute top-1/2 -translate-y-1/2 w-full" :src="generateThumbnail(props.data.image_source)" alt="" />
             </div>
             
             <label
@@ -72,8 +73,8 @@ const onFileChange = (event) => {
                 <Button :style="`tertiary`" class="" size="xs">{{ trans("Change image") }}</Button>
             </label>
         </div>
-        <!-- <div v-if="props.form.errors" class="text-red-700">
-        {{ props.form.errors }}
+        <!-- <div v-if="props.data\.errors" class="text-red-700">
+        {{ props.data\.errors }}
     </div> -->
     </div>
 </template>
