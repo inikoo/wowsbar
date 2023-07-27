@@ -25,16 +25,16 @@ const positionClasses = computed(() => {
     let classes;
     switch (props.position) {
         case 'topRight':
-            classes = 'top-5 right-5 text-right';
+            classes = 'top-6 right-7 text-right';
             break;
         case 'topLeft':
-            classes = 'top-5 left-5 text-left';
+            classes = 'top-6 left-7 text-left';
             break;
         case 'bottomRight':
-            classes = 'bottom-5 right-5 text-right';
+            classes = 'bottom-6 right-8 text-right';
             break;
         case 'bottomLeft':
-            classes = 'bottom-5 left-5 text-left';
+            classes = 'bottom-6 left-8 text-left';
             break;
 
     }
@@ -57,6 +57,7 @@ const getComponent = (componentName: any) => {
 
 <template>
     <div :class="positionClasses" class="absolute">
+    <!-- {{ positionClasses }} -->
         <component :is="getComponent(corner.type)" :data="corner.data" :swiperRef="props.swiperRef" />
     </div>
 

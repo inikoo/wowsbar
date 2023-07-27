@@ -312,7 +312,7 @@ const applyChanges = () => {
         <div class="w-full border border-gray-300">
             <SlideWorkshop :fileEdit="fileEdit" :blueprint="blueprint" :form="form" ref="_SlideWorkshop" :remove="remove"></SlideWorkshop>
             <div class="border border-gray-200 flex justify-end  p-1" style="height: 10%;">
-                <Button @click=applyChanges>
+                <Button @click="applyChanges">
                     Apply
                 </Button>
             </div>
