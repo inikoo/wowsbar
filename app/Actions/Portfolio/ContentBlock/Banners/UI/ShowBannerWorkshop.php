@@ -43,6 +43,7 @@ class ShowBannerWorkshop extends InertiaAction
 
     public function htmlResponse(ContentBlock $banner, ActionRequest $request): Response
     {
+        dd($banner->compiledLayout());
 
         return Inertia::render(
             'Portfolio/BannerWorkshop',
