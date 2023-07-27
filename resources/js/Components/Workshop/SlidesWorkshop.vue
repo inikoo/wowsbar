@@ -110,6 +110,7 @@ const generateThumbnail = (file) => {
 }
 
 const removeComponent = (file) => {
+    console.log(file)
     const index = components.value.findIndex(item => item.ulid === file.ulid);
     if (index !== -1) {
         console.log(currentComponentBeenEdited.value);
@@ -336,7 +337,7 @@ const changeDnD = (data) => {
 
         <!-- The Editor -->
         <div class="w-full border border-gray-300">
-            <SlideWorkshop :currentComponentBeenEdited="currentComponentBeenEdited" :blueprint="blueprint"  :data="data"  :form="form" ref="_SlideWorkshop" :remove="removeComponent"></SlideWorkshop>
+            <SlideWorkshop :fileEdit="currentComponentBeenEdited" :blueprint="blueprint"  :data="data"  :form="form" ref="_SlideWorkshop" :remove="removeComponent"></SlideWorkshop>
             <div class="border border-gray-200 flex justify-end  p-1" style="height: 10%;">
                 <Button @click="applyChanges" :style="`primary`" size="xs">{{ trans('Apply')}}</Button>
             </div>
