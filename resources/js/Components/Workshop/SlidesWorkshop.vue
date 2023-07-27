@@ -245,26 +245,23 @@ const applyChanges = () => {
     if (form.value.data()) {
         let oldFile = cloneDeep(fileEdit.value),
             newFile = cloneDeep(form.value.data())
-        fileEdit.value = { ...newFile, layout: {...newFile.layout, visibility: oldFile.layout.visibility } };
-       
-        if (fileEdit.value.image_source instanceof File) { 
-            fileEdit.value.imageFile = fileEdit.value.image_source;
-            fileEdit.value.image_source = null;
-        }
-        console.log( fileEdit.value )
+        fileEdit.value = { ...newFile, layout: { ...newFile.layout, visibility: oldFile.layout.visibility } };
         const index = components.value.findIndex((item) => item.ulid === fileEdit.value.ulid);
         if (index !== -1) components.value[index] = fileEdit.value;
         props.data.components = components.value;
     }
 }
 
-const changeDnD=(data)=>{
+const changeDnD = (data) => {
     props.data.components = components.value;
 }
+
+const isDrag = ref(false)
 
 </script>
 
 <template>
+    {{ isDrag }}
     <div class="flex flex-grow gap-2.5">
         <div class="w-[30%] lg:w-2/3 p-2.5 border-dashed" style="border: 1px dashed #d9d9d9;" v-if="data.components"
             @dragover="dragover" @dragleave="dragleave" @drop="drop">
@@ -275,7 +272,7 @@ const changeDnD=(data)=>{
             <!-- Drag area -->
             <div class="mb-2 text-lg font-medium">{{ trans('Slides') }}</div>
             <draggable :list="components" group="slide " item-key="ulid" @change="changeDnD"
-                handle=".handle">
+                handle=".handle" >
                 <template #item="{ element: file }">
                     <div 
                         v-if="file.ulid !== null"
@@ -313,24 +310,23 @@ const changeDnD=(data)=>{
             </draggable>
 
             <!-- Button: Add slide -->
-            <PrimaryButton class="m-2.5">
-                <!-- Remove the input element from inside the label -->
-                <label for="fileInput" class="flex items-center">
-                    <input type="file" multiple name="file" id="fileInput"
-                        class="opacity-0 overflow-hidden absolute w-1 h-1" @change="onChange" ref="fileInput"
-                        accept="image/*" />
-                    <FontAwesomeIcon :icon="['fas', 'plus']" class="mr-1" /> Banner
-                </label>
-            </PrimaryButton>
+            <!-- Remove the input element from inside the label -->
+            <label
+                class="relative inline-block"
+                id="input-slide-large-mask" for="fileInput" 
+            >
+                <input ref="fileInput" type="file" multiple name="file" id="fileInput"
+                    @change="onChange" accept="image/*"
+                    class="absolute h-full w-full cursor-pointer rounded-md border-gray-300 opacity-0" />
+                <Button :style="`tertinary`" icon="fas fa-plus" size="xs">{{ trans("Add slide") }}</Button>
+            </label>
         </div>
 
         <!-- The Editor -->
         <div class="w-full border border-gray-300">
             <SlideWorkshop :fileEdit="fileEdit" :blueprint="blueprint" :form="form" ref="_SlideWorkshop" :remove="remove"></SlideWorkshop>
             <div class="border border-gray-200 flex justify-end  p-1" style="height: 10%;">
-                <Button @click="applyChanges">
-                    Apply
-                </Button>
+                <Button @click="applyChanges" :style="`primary`" size="xs">{{ trans('Apply')}}</Button>
             </div>
         </div>
     </div>

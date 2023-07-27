@@ -64,13 +64,13 @@ const Type = [
             {
                 name: 'text',
                 type: 'input',
-                label: trans('text'),
+                label: trans('Title'),
                 value: null
             },
             {
                 name: 'target',
                 type: 'input',
-                label: trans('subtitle'),
+                label: trans('Link'),
                 value: null
             },
         ]
