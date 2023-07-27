@@ -6,12 +6,7 @@
 
 
 <script setup lang="ts">
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faExclamationCircle, faCheckCircle } from "@/../private/pro-solid-svg-icons"
-import { faSpinnerThird } from "@/../private/pro-duotone-svg-icons"
-import { library } from '@fortawesome/fontawesome-svg-core'
 import { set } from 'lodash'
-library.add(faExclamationCircle, faCheckCircle, faSpinnerThird)
 import { ref, watch } from 'vue'
 
 const props = defineProps<{
