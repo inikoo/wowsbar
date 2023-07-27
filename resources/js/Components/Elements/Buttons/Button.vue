@@ -6,11 +6,12 @@
 
 <script setup lang="ts">
 
+import { faSave as fadSave } from "@/../private/pro-duotone-svg-icons"
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faPlus, faSave } from '@/../private/pro-solid-svg-icons';
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
-library.add(faPlus, faSave);
+library.add(faPlus, faSave, fadSave);
 
 const props = defineProps(
     {
@@ -81,9 +82,9 @@ switch (props.size) {
         styleClass,
         sizeClass
     ]">
-        <FontAwesomeIcon v-if="icon" aria-hidden="true" :icon="icon" size="sm" :class="[iconClass]" />
-        <FontAwesomeIcon v-if="leftIcon" :title="leftIcon['tooltip']" aria-hidden="true" :icon="leftIcon['icon']" size="lg"
-            :class="[iconClass]" />
+        <!-- <FontAwesomeIcon v-if="icon == 'fad fa-save'" :icon="['fad', 'save']" style="--fa-primary-color: #1c1c1c; --fa-secondary-color: #ff6600; --fa-secondary-opacity: 1;" /> -->
+        <FontAwesomeIcon v-if="icon && icon != 'fad fa-save'" aria-hidden="true" :icon="icon" size="sm" :class="[iconClass]" />
+        <FontAwesomeIcon v-if="leftIcon" :title="leftIcon['tooltip']" aria-hidden="true" :icon="leftIcon['icon']" size="lg" :class="[iconClass]" />
         <slot />
     </button>
 </template>

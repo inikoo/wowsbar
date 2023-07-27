@@ -23,6 +23,7 @@ import { trans } from "laravel-vue-i18n"
 
 library.add(faImage, faExpandArrows, faAlignCenter, faTrash, faStopwatch)
 const props = defineProps<{
+    data: Object,
     fileEdit: Object,
     blueprint: Array,
     form: Object,

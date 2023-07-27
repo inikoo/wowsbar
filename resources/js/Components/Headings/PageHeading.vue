@@ -51,17 +51,16 @@ const getActionIcon = (action) => {
         return action.icon
     } else {
         switch (action.style) {
-            case "edit":
-                return ["far", "fa-pencil"]
-            case "save":
-                return ["fal", "fa-save"]
+            // case "edit":
+            //     return ["far", "fa-pencil"]
+            // case "save":
+            //     return ["fal", "fa-save"]
+            case "cancel":
             case "exit":
             case "exitEdit":
                 return ["far", "fa-arrow-left"]
-            case "create":
-                return ["fas", "fa-plus"]
-            case "cancel":
-                return ["far", "fa-arrow-left"]
+            // case "create":
+            //     return ["fas", "fa-plus"]
             case "delete":
                 return ["far", "fa-trash-alt"]
             case "withMulti":
@@ -124,9 +123,12 @@ const getActionIcon = (action) => {
                       :data="dataToSubmit"
                       as="button"
                 >
-                    <Button size="xs" :style="action.style"
+                    <Button size="xs" 
+                        :icon="action.icon"
+                        :style="action.style"
                         class="capitalize inline-flex items-center rounded-md text-sm font-medium shadow-sm gap-x-2">
-                        <FontAwesomeIcon v-if="getActionIcon(action)" :icon="getActionIcon(action)" class=""
+                        <FontAwesomeIcon v-if="action.icon && action.icon == 'fad fa-save'" aria-hidden="true" :icon="['fad', 'save']" style="--fa-primary-color: #f3f3f3; --fa-secondary-color: #ff6600; --fa-secondary-opacity: 1;" size="sm" :class="[iconClass]" />
+                        <FontAwesomeIcon v-else="getActionIcon(action)" :icon="getActionIcon(action)" class=""
                             aria-hidden="true" />
                         {{ getActionLabel(action) }}
                     </Button>
