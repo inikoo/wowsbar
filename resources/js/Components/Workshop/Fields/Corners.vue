@@ -2,7 +2,7 @@
 import { trans } from "laravel-vue-i18n"
 import { ref, watch, computed, defineExpose } from 'vue'
 import Input from '@/Components/Forms/Fields/Input.vue'
-import { get, cloneDeep } from 'lodash'
+import { get, cloneDeep, set } from 'lodash'
 
 const props = defineProps<{
     form: any,
@@ -79,9 +79,11 @@ const Type = [
 
 const defaultCurrent = computed(() => {
     if (area.value != null) {
+        if(props.form.layout.corners){
         const areaType = props.form.layout.corners[area.value.id]?.type;
         const index = Type.findIndex(item => item.value === areaType);
         return index == -1 ? 0 : index
+        }else return 0
     } else {
         return 0; // Return 0 if area.value is null
     }
@@ -108,21 +110,39 @@ const handleClick = (corner) => {
 }
 
 const setUpData = () => {
-    const currentType = Type[current.value]
-    let data = {}
+    const currentType = Type[current.value];
+    let data = {};
     for (const s of currentTypeFields.value) {
-        data[s.name] = s.value
+        data[s.name] = s.value;
     }
-    let setData = cloneDeep(props.form.layout.corners[area.value.id])
+
+    if (!props.form.layout.corners) {
+        props.form.layout.corners = {}; // Initialize corners as an empty object
+    }
+
+    console.log(props.form.layout);
+
+    let setData = cloneDeep(props.form.layout.corners[area.value.id]);
     setData = {
         type: currentType.value,
-        data: { ...data }
-    }
-    props.form.layout.corners[area.value.id] = setData
-    const indexCornres = corners.value.findIndex((item) => item.id == area.value.id)
+        data: { ...data },
+    };
 
-    if (corners.value[indexCornres].valueForm != null) corners.value[indexCornres].valueForm = setData
-}
+    props.form.layout.corners[area.value.id] = setData;
+
+    // Check if corners is an object, and convert it to an array if needed
+    let cornersArray = Array.isArray(corners) ? corners : Object.values(corners);
+
+    // Find the index in the cornersArray
+    const indexCorners = cornersArray.findIndex((item) => item.id == area.value.id);
+
+    // Use optional chaining (?.) to check if valueForm is defined
+    if (indexCorners !== -1 && cornersArray[indexCorners]?.valueForm != null) {
+        cornersArray[indexCorners].valueForm = setData;
+    }
+};
+
+
 
 watch(current, () => {
     setUpData();

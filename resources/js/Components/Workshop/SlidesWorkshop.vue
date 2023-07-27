@@ -242,14 +242,30 @@ const setFormValue = (data) => { form.value = useForm(data) }
 
 const applyChanges = () => {
     if (form.value.data()) {
-        let oldFile = cloneDeep(fileEdit.value),
-            newFile = cloneDeep(form.value.data())
-        fileEdit.value = { ...newFile, layout: { ...newFile.layout, visibility: oldFile.layout.visibility } };
+        const newFile = cloneDeep(form.value.data());
+        
+        if (newFile.image_source && newFile.image_source instanceof File) {
+            newFile.imageFile = newFile.image_source;
+            newFile.image_source = null;
+        }
+        
+        fileEdit.value = {
+            ...newFile,
+            layout: {
+                ...newFile.layout,
+                visibility: fileEdit.value.layout.visibility
+            }
+        };
+
         const index = components.value.findIndex((item) => item.ulid === fileEdit.value.ulid);
-        if (index !== -1) components.value[index] = fileEdit.value;
+        if (index !== -1) {
+            components.value[index] = fileEdit.value;
+        }
+
         props.data.components = components.value;
+        console.log(fileEdit.value);
     }
-}
+};
 
 const changeDnD = (data) => {
     props.data.components = components.value;
