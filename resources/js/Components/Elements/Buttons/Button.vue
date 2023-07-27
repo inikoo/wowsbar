@@ -83,7 +83,7 @@ switch (props.size) {
         sizeClass
     ]">
         <!-- <FontAwesomeIcon v-if="icon == 'fad fa-save'" :icon="['fad', 'save']" style="--fa-primary-color: #1c1c1c; --fa-secondary-color: #ff6600; --fa-secondary-opacity: 1;" /> -->
-        <FontAwesomeIcon v-if="icon && icon != 'fad fa-save'" aria-hidden="true" :icon="icon" size="sm" :class="[iconClass]" />
+        <!-- <FontAwesomeIcon v-if="icon && icon != 'fad fa-save'" aria-hidden="true" :icon="icon" size="sm" :class="[iconClass]" /> -->
         <FontAwesomeIcon v-if="leftIcon" :title="leftIcon['tooltip']" aria-hidden="true" :icon="leftIcon['icon']" size="lg" :class="[iconClass]" />
         <slot />
     </button>

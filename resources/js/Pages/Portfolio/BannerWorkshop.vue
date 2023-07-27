@@ -17,7 +17,7 @@ const props = defineProps<{
 
 
 const data = ref(cloneDeep(props.bannerLayout));
-console.log(props.bannerLayout)
+console.log(data.value)
 const test1=()=>{
     console.log(data.value.components)
 }
