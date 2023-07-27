@@ -56,10 +56,10 @@ class StoreContentBlock
         /** @var ContentBlock $contentBlock */
         $contentBlock = $webBlock->contentBlocks()->create($modelData);
         if ($contentBlockComponents) {
-            foreach ($contentBlockComponents as $contentBlockComponent) {
+            foreach ($contentBlockComponents as $contentBlockComponentData) {
                 StoreContentBlockComponent::run(
                     contentBlock: $contentBlock,
-                    modelData: $contentBlockComponent,
+                    modelData: $contentBlockComponentData,
                 );
             }
         }
