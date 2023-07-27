@@ -16,8 +16,11 @@ const props = defineProps<{
         readonly: boolean
         copyButton: boolean
     }
+    data : Object
     counter: boolean
 }>()
+
+console.log('sdfsdf',props)
 
 const setFormValue = (data: Object, fieldName: String) => {
     if (Array.isArray(fieldName)) {
@@ -35,7 +38,7 @@ const getNestedValue = (obj: Object, keys: Array) => {
 }
 
 
-const value = ref(setFormValue(props.form, props.fieldName))
+const value = ref(setFormValue(props.data, props.fieldName))
 
 watch(value, (newValue) => {
     // Update the form field value when the value ref changes
@@ -45,20 +48,23 @@ watch(value, (newValue) => {
 
 
 const updateFormValue = (newValue) => {
-    let target = props.form
+    console.log('sdsdf')
+    let target = props.data
     if (Array.isArray(props.fieldName)) {
         set(target, props.fieldName, newValue);
     } else {
         target[props.fieldName] = newValue;
     }
-    props.form = { ...target }
+    console.log('asdfsdfsd',target)
+    props.data = { ...target }
 };
 
+console.log(value,'sdfsdf')
 </script>
 <template>
     <div class="relative">
         <div class="relative">
-            <input v-if="fieldData" v-model.trim="fieldData[fieldName]" :readonly="fieldData?.readonly" :type="props.options?.type ?? 'text'"
+            <input v-if="fieldData" v-model.trim="value" :readonly="fieldData?.readonly" :type="props.options?.type ?? 'text'"
                 :placeholder="fieldData?.placeholder"
                 class="block w-full shadow-sm rounded-md dark:bg-gray-600 dark:text-gray-400 focus:ring-gray-500 focus:border-gray-500 sm:text-sm border-gray-300 dark:border-gray-500 read-only:bg-gray-100 read-only:ring-0 read-only:ring-transparent read-only:text-gray-500" />
             <div v-else>No field data passed</div>
