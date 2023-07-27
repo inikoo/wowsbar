@@ -4,6 +4,7 @@ import { library } from "@fortawesome/fontawesome-svg-core"
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faImage } from '@/../private/pro-light-svg-icons'
 import { ulid } from 'ulid';
+import { trans } from "laravel-vue-i18n"
 library.add(faImage)
 
 const props = defineProps<{
@@ -107,12 +108,12 @@ const drop = (e) => {
                 <font-awesome-icon :icon="['fal', 'image']"  class="mx-auto h-12 w-12 text-gray-300" aria-hidden="true" />
                 <div class="mt-4 flex text-sm leading-6 text-gray-600">
                   <label for="fileInput" class="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500">
-                    <span>Click</span>
+                    <span>{{trans('Click')}}</span>
                     <input type="file" multiple name="file" id="fileInput" class="sr-only" @change="onChange" ref="fileInput"/>
                   </label>
-                  <p class="pl-1">or drag and drop</p>
+                  <p class="pl-1">{{trans('or drag and drop')}}</p>
                 </div>
-                <p class="text-xs leading-5 text-gray-600">PNG, JPG, GIF up to 10MB</p>
+                <p class="text-xs leading-5 text-gray-600">{{trans('PNG, JPG, GIF up to 10MB')}}</p>
               </div>
             </div>
           </div>
