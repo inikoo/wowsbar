@@ -53,14 +53,12 @@ watch(value, (newValue) => {
 
 
 const updateFormValue = (newValue) => {
-    console.log('sdsdf')
     let target = props.data
     if (Array.isArray(props.fieldName)) {
         set(target, props.fieldName, newValue);
     } else {
         target[props.fieldName] = newValue;
     }
-    console.log('asdfsdfsd',target)
     props.data = { ...target }
 };
 
