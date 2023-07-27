@@ -2,16 +2,27 @@
 import { trans } from "laravel-vue-i18n"
 import Button from "@/Components/Elements/Buttons/Button.vue"
 
-
-const props = defineProps(['form'])
+const props = defineProps(["form"]);
 
 const generateThumbnail = (fileOrUrl) => {
-    if (fileOrUrl instanceof File) {
-        let fileSrc = URL.createObjectURL(fileOrUrl);
-        setTimeout(() => { URL.revokeObjectURL(fileSrc) }, 1000);
-        return fileSrc;
-    } else if (typeof fileOrUrl === 'string') {
-        return fileOrUrl;
+    if (fileOrUrl == null) {
+        if (props.form.imageFile && props.form.imageFile instanceof File) {
+            let fileSrc = URL.createObjectURL(props.form.imageFile);
+            setTimeout(() => {
+                URL.revokeObjectURL(fileSrc);
+            }, 1000);
+            return fileSrc;
+        }
+    } else {
+        if (fileOrUrl instanceof File) {
+            let fileSrc = URL.createObjectURL(fileOrUrl);
+            setTimeout(() => {
+                URL.revokeObjectURL(fileSrc);
+            }, 1000);
+            return fileSrc;
+        } else if (typeof fileOrUrl === "string") {
+            return fileOrUrl;
+        }
     }
 };
 
