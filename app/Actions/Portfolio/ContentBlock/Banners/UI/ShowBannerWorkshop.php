@@ -73,7 +73,7 @@ class ShowBannerWorkshop extends InertiaAction
                     'actions' => [
                         [
                             'type'       => 'button',
-                            'style'      => 'tertiary',
+                            'style'      => 'exit',
                             'label'      => __('Exit workshop'),
                             'route'      => [
                                 'name'       => preg_replace('/workshop$/', 'show', $request->route()->getName()),
@@ -82,9 +82,7 @@ class ShowBannerWorkshop extends InertiaAction
                         ],
                         [
                             'type'       => 'button',
-                            'style'      => 'primary',
-                            'label'      => __('Save'),
-                            'icon'       => 'fad fa-save',
+                            'style'      => 'save',
                             'route'      => [
                                 'name'       => 'models.content-block.update',
                                 'parameters' => [
