@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Head } from "@inertiajs/vue3"
-import { ref } from "vue"
+import { ref, reactive } from "vue"
 import PageHeading from "@/Components/Headings/PageHeading.vue"
 import { capitalize } from "@/Composables/capitalize"
 import SlidesWorkshop from "@/Components/Workshop/SlidesWorkshop.vue"
@@ -14,7 +14,9 @@ const props = defineProps<{
 
 }>();
 
-const data = ref(cloneDeep(props.bannerLayout))
+const data = reactive(props.bannerLayout)
+data.components.map(id => id.layout = {})
+console.log(data)
 
 
 const test1=()=>{
@@ -43,5 +45,5 @@ const jumpToIndex = ref(0)
 
 
 
-    <div @click="() => {jumpToIndex = 3, console.log(data.components)}">chek data</div>
+    <div @click="() => {jumpToIndex = 3, console.log(data)}">chek data</div>
 </template>
