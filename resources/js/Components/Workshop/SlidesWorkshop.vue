@@ -17,6 +17,7 @@ import { trans } from "laravel-vue-i18n"
 import SlideWorkshop from "@/Components/Workshop/SlideWorkshop.vue"
 import Button from '../Elements/Buttons/Button.vue'
 import { get } from 'lodash'
+import SliderCommonWorkshop from './SliderCommonWorkshop.vue'
 library.add(faEye, faEyeSlash, faTrashAlt, faAlignJustify)
 
 interface CornersPositionData {
@@ -376,7 +377,7 @@ const setCommonEdit =()=>{
         </div>
 
         <div class="w-full border border-gray-300" v-if="commonEditActive">
-            <SlideWorkshop :currentComponentBeenEdited="props.data" :blueprint="CommonBlueprint" ref="_SlideWorkshop" :remove="removeComponent"></SlideWorkshop>
+            <SliderCommonWorkshop :currentComponentBeenEdited="props.data" :blueprint="CommonBlueprint" ref="_SlideWorkshop" :remove="removeComponent"></SliderCommonWorkshop>
         </div>
     </div>
 </template>

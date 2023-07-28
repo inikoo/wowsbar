@@ -9,12 +9,7 @@ import { ref } from 'vue'
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { faImage, faExpandArrows, faAlignCenter, faTrash, faStopwatch } from "../../../private/pro-light-svg-icons"
 import PrimitiveInput from '@/Components/Forms/Fields/Primitive/PrimitiveInput.vue'
-import Select from '@/Components/Forms/Fields/Select.vue'
-import Radio from '@/Components/Forms/Fields/Radio.vue'
-import InputWithAddOn from '@/Components/Forms/Fields/InputWithAddOn.vue'
-import SlideBackground from "@/Components/Workshop/Fields/SlideBackground.vue"
 import Corners from "@/Components/Workshop/Fields/Corners.vue"
-import Delete from "@/Components/Workshop/Fields/Delete.vue"
 import Range from "@/Components/Workshop/Fields/Range.vue"
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { trans } from "laravel-vue-i18n"
@@ -32,7 +27,6 @@ const props = defineProps<{
 const getComponent = (componentName: string) => {
     const components = {
         'input': PrimitiveInput,
-        'radio': Radio,
         'corners': Corners,
         'range': Range,
     };
