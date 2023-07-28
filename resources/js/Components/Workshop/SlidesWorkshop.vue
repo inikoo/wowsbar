@@ -59,8 +59,8 @@ const props = defineProps<{
                         // text?: string,
                         // footer?: string
                     }
-                    visibility: boolean
                 }
+                visibility: boolean
                 corners: Corners
                 imageAlt: string
                 link: string
@@ -92,8 +92,8 @@ const addComponent = () => {
                 ulid: ulid(),
                 layout: {
                     imageAlt: set.name,
-                    visibility : true
-                }
+                },
+                visibility : true
             })
         }
     }
@@ -150,8 +150,8 @@ const drop = (e) => {
                 ulid: ulid(),
                 layout: {
                     imageAlt: set.name,
-                    visibility : true
-                }
+                },
+                visibility : true
             })
         }
     }
@@ -170,9 +170,9 @@ const selectComponentForEdition = (slide) => {
 const changeVisibility = (slide: any) => {
     const index = props.data.components.findIndex((item) => item.ulid === slide.ulid)
     if (index !== -1) {
-        props.data.components[index].layout.hasOwnProperty('visibility')
-            ? props.data.components[index].layout.visibility = !props.data.components[index].layout.visibility
-            : props.data.components[index].layout.visibility = false
+        props.data.components[index].hasOwnProperty('visibility')
+            ? props.data.components[index].visibility = !props.data.components[index].visibility
+            : props.data.components[index].visibility = false
     }
 }
 
@@ -355,7 +355,7 @@ const setCommonEdit =()=>{
                         <div class="flex justify-center items-center pr-2 justify-self-end">
                             <button class="px-2 py-1" type="button"
                                 @click="changeVisibility(slide)" title="Show/hide the slide">
-                                <FontAwesomeIcon v-if="slide.layout?.hasOwnProperty('visibility') ? slide.layout.visibility : true" icon="fas fa-eye" class="text-xs sm:text-sm text-gray-400 hover:text-gray-500" />
+                                <FontAwesomeIcon v-if="slide.hasOwnProperty('visibility') ? slide.visibility : true" icon="fas fa-eye" class="text-xs sm:text-sm text-gray-400 hover:text-gray-500" />
                                 <FontAwesomeIcon v-else icon="fas fa-eye-slash" class="text-xs sm:text-sm text-gray-300 hover:text-gray-400/70" />
                             </button>
                         </div>
