@@ -186,7 +186,7 @@ const ComponentsBlueprint = ref([
         icon: ['fal', 'fa-expand-arrows'],
         fields: [
             {
-                name: 'top-left',
+                name: ['layout', 'corners'],
                 type: 'corners',
                 label: null,
                 value: null
@@ -246,7 +246,7 @@ const CommonBlueprint = ref([
         icon: ['fal', 'fa-expand-arrows'],
         fields: [
             {
-                name: 'top-left',
+                name: ['common', 'corners'],
                 type: 'corners',
                 label: null,
                 value: null

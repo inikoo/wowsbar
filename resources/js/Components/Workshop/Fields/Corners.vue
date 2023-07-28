@@ -18,12 +18,28 @@ const props = defineProps<{
 
 const area = ref(null)
 
+const setFormValue = (data: Object, fieldName: String) => {
+    if (Array.isArray(fieldName)) {
+        return getNestedValue(data, fieldName);
+    } else {
+        return data[fieldName];
+    }
+}
 
+const getNestedValue = (obj: Object, keys: Array) => {
+    return keys.reduce((acc, key) => {
+        if (acc && typeof acc === 'object' && key in acc) return acc[key];
+        return null;
+    }, obj);
+}
+
+
+const value = ref(setFormValue(props.data, props.fieldName))
 const corners = ref([
-    { label: trans('top left'), valueForm: get(props.data.layout, ['corners', `topLeft`], null), id: 'topLeft' },
-    { label: trans('Top right'), valueForm: get(props.data.layout, ['corners', `topRight`], null), id: 'topRight' },
-    { label: trans('bottom left'), valueForm: get(props.data.layout, ['corners', `bottomLeft`], null), id: 'bottomLeft' },
-    { label: trans('Bottom right'), valueForm: get(props.data.layout, ['corners', `bottomRight`], null), id: 'bottomRight' },
+    { label: trans('top left'), valueForm: get(value.value, [`topLeft`], null), id: 'topLeft' },
+    { label: trans('Top right'), valueForm: get(value.value, [`topRight`], null), id: 'topRight' },
+    { label: trans('bottom left'), valueForm: get(value.value, [`bottomLeft`], null), id: 'bottomLeft' },
+    { label: trans('Bottom right'), valueForm: get(value.value, [`bottomRight`], null), id: 'bottomRight' },
 ])
 
 const Type = [
@@ -79,8 +95,8 @@ const Type = [
 
 const defaultCurrent = computed(() => {
     if (area.value != null) {
-        if(props.data.layout.corners){
-        const areaType = props.data.layout.corners[area.value.id]?.type;
+        if(value.value){
+        const areaType = value.value[area.value.id]?.type;
         const index = Type.findIndex(item => item.value === areaType);
         return index == -1 ? 0 : index
         }else return 0
@@ -110,24 +126,23 @@ const handleClick = (corner) => {
 }
 
 const setUpData = () => {
-    console.log('dfgdfg')
     const currentType = Type[current.value];
     let data = {};
     for (const s of currentTypeFields.value) {
         data[s.name] = s.value;
     }
 
-    if (!props.data.layout.corners) {
-        props.data.layout.corners = {}; // Initialize corners as an empty object
+    if (!value.value) {
+        value.value = {}; // Initialize corners as an empty object
     }
 
-    let setData = cloneDeep(props.data.layout.corners[area.value.id]);
+    let setData = cloneDeep(value.value[area.value.id]);
     setData = {
         type: currentType.value,
         data: { ...data },
     };
 
-    props.data.layout.corners[area.value.id] = setData;
+    value.value[area.value.id] = setData;
 
     // Check if corners is an object, and convert it to an array if needed
     let cornersArray = Array.isArray(corners) ? corners : Object.values(corners);
@@ -139,6 +154,22 @@ const setUpData = () => {
     if (indexCorners !== -1 && cornersArray[indexCorners]?.valueForm != null) {
         cornersArray[indexCorners].valueForm = setData;
     }
+
+   
+    updateFormValue(value.value)
+};
+
+
+
+
+const updateFormValue = (newValue) => {
+    let target = props.data
+    if (Array.isArray(props.fieldName)) {
+        set(target, props.fieldName, newValue);
+    } else {
+        target[props.fieldName] = newValue;
+    }
+    props.data = { ...target }
 };
 
 
