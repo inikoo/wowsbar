@@ -20,7 +20,6 @@ const props = defineProps<{
     counter: boolean
 }>()
 
-console.log('sdfsdf',props)
 
 const setFormValue = (data: Object, fieldName: String) => {
     if (Array.isArray(fieldName)) {
@@ -57,7 +56,7 @@ const updateFormValue = (newValue) => {
     props.data = { ...target }
 };
 
-console.log(value,'sdfsdf')
+
 </script>
 <template>
     <div class="relative">
