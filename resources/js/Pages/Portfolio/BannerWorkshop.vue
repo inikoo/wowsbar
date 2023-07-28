@@ -14,7 +14,8 @@ const props = defineProps<{
 
 }>();
 
-const data = reactive(props.bannerLayout)
+
+const data=reactive(cloneDeep(props.bannerLayout))
 data.components.map(id => id.layout = {})
 console.log(data)
 

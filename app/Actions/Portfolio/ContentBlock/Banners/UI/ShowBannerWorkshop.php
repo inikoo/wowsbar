@@ -69,6 +69,7 @@ class ShowBannerWorkshop extends InertiaAction
                             'title' => __("Banner's workshop")
                         ],
 
+                    'actionActualMethod' => 'patch',
                     'actions' => [
                         [
                             'type'  => 'button',
@@ -89,7 +90,7 @@ class ShowBannerWorkshop extends InertiaAction
                                 ]
                             ],
                             'method'  => 'post',
-                            '_method' => 'patch'
+
                         ]
                     ],
                 ],

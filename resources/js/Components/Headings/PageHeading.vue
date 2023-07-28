@@ -21,6 +21,11 @@ library.add(faDraftingCompass,faEmptySet, faMoneyCheckAlt, faPeopleArrows, faSli
 const props = defineProps(["data", "dataToSubmit","dataToSubmitIsDirty"])
 const locale = useLocaleStore()
 
+
+if(props.dataToSubmit && props.data.actionActualMethod ) {
+    props.dataToSubmit['_method'] = props.data.actionActualMethod
+    console.log(props.dataToSubmit)
+}
 const getActionLabel = function (action) {
     if (action.hasOwnProperty("label")) {
         return action.label
