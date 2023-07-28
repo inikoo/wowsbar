@@ -86,7 +86,7 @@ const addComponent = () => {
         if (set && set instanceof File) {
             setData.push({
                 id: null,
-                image_id: ulid(),
+                image_id: null,
                 image_source: null,
                 imageFile: set,
                 ulid: ulid(),
@@ -144,7 +144,7 @@ const drop = (e) => {
         if (set && set instanceof File) {
             setData.push({
                 id: null,
-                image_id: ulid(),
+                image_id: null,
                 image_source: null,
                 imageFile: set,
                 ulid: ulid(),
