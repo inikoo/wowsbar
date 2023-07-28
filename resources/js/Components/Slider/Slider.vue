@@ -5,9 +5,9 @@
   -->
 
 <script setup lang="ts">
-import {ref, computed} from 'vue'
-import {Swiper, SwiperSlide} from 'swiper/vue'
-import {Autoplay, Pagination, Navigation} from 'swiper/modules'
+import { ref } from 'vue'
+import { Swiper, SwiperSlide } from 'swiper/vue'
+import { Autoplay, Pagination, Navigation } from 'swiper/modules'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faEyeSlash } from '@/../private/pro-solid-svg-icons'
 import { faExternalLink, faExclamationTriangle } from '@/../private/pro-regular-svg-icons'
@@ -19,6 +19,7 @@ import 'swiper/css/navigation';
 import SlideCorner from "@/Components/Slider/SlideCorner.vue";
 import CentralStage from "@/Components/Slider/CentralStage.vue";
 import { Link } from '@inertiajs/vue3';
+import { watch } from 'vue'
 
 interface CornersPositionData {
     data: {
@@ -36,6 +37,7 @@ interface Corners {
 }
 
 const props = defineProps<{
+    jumpToIndex: number
     data: {
         common: {
             centralStage: {
@@ -89,24 +91,24 @@ const getImageUrl = (name: string) => {
 
 const swiperRef = ref()
 
-
 const filteredNulls = (corners: Corners) => {
     if(corners) {
         return Object.fromEntries(Object.entries(corners).filter(([_, v]) => v != null));
     }
 
     return ''
-};
+}
 
-// const filteredSlide = computed(() => {
-//     return props.data.components.filter((i) => i.layout.visibility === true)
-// })
+watch(() => props.jumpToIndex, (newVal) => {
+    swiperRef.value.$el.swiper.slideToLoop(newVal, 0, false)
+})
 
 </script>
 
 <template>
     <div class="w-full aspect-[16/4] overflow-hidden relative">
         <Swiper ref="swiperRef"
+            :slideToClickedSlide="true"
             :spaceBetween="-1"
             :slidesPerView="1"
             :centeredSlides="true"
