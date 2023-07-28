@@ -15,7 +15,7 @@ const props = defineProps<{
 }>();
 
 
-console.log('dfsdf',props.bannerLayout)
+
 
 const test1=()=>{
     console.log(props.bannerLayout)
