@@ -33,9 +33,8 @@ const getComponent = (componentName: string) => {
     const components = {
         'input': PrimitiveInput,
         'radio': Radio,
-        'slideBackground': SlideBackground,
         'corners': Corners,
-        'delete': Delete,
+        'range': Range,
     };
     return components[componentName]
 };
