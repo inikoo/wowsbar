@@ -14,14 +14,20 @@ const props = defineProps<{
 
 }>();
 
+
+console.log('dfsdf',props.bannerLayout)
+
+const test1=()=>{
+    console.log(props.bannerLayout)
+}
 const jumpToIndex = ref(0)
 
 </script>
 
 <template layout="App">
     <Head :title="capitalize(title)" />
-    <PageHeading :data="pageHead" :dataToSubmit="data"></PageHeading>
-    
+    <PageHeading :data="pageHead" :dataToSubmit="bannerLayout"></PageHeading>
+
     <div>
         <!-- First set of components -->
         <div v-if="bannerLayout.components.filter((item) => item.ulid != null).length > 0">
@@ -29,11 +35,11 @@ const jumpToIndex = ref(0)
             <SlidesWorkshop class="clear-both mt-2 p-2.5" :data="bannerLayout" @jumpToIndex="(val) => jumpToIndex = val"/>
         </div>
 
-        <!-- Second set of components -->
-        <div v-if="bannerLayout.components.filter((item) => item.ulid != null).length == 0">
-            <SlidesWorkshopAddMode :data="data" />
-        </div>
+    <!-- Second set of components -->
+    <div v-if="bannerLayout.components.filter((item) => item.ulid != null).length == 0">
+      <SlidesWorkshopAddMode :data="bannerLayout" />
     </div>
+  </div>
 
 
 

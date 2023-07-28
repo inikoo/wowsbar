@@ -69,7 +69,7 @@ class EditWebsite extends InertiaAction
                         'actions'   => [
                             [
                                 'type'  => 'button',
-                                'style' => 'tertiary',
+                                'style' => 'exit',
                                 'label' => __('Exit edit'),
                                 'route' => [
                                     'name'       => preg_replace('/edit$/', 'show', $request->route()->getName()),

@@ -18,7 +18,6 @@ class ContentBlockComponentResource extends JsonResource
     {
         /** @var ContentBlockComponent $contentBlockComponent */
         $contentBlockComponent = $this;
-
         return [
             'id'     => $contentBlockComponent->id,
             'ulid'     => $contentBlockComponent->ulid,

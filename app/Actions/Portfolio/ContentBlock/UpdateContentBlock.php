@@ -39,6 +39,9 @@ class UpdateContentBlock
 
                     $contentBlockComponent=ContentBlockComponent::where('ulid',$ulid)->first();
                     if($contentBlockComponent){
+
+
+
                         UpdateContentBlockComponent::run(
                             $contentBlockComponent,
                             Arr::only($contentBlockComponentData,['layout','imageData'])
@@ -87,11 +90,13 @@ class UpdateContentBlock
 
     public function prepareForValidation(ActionRequest $request): void
     {
+
         $request->merge(
             [
                 'layout' => $request->only(['delay', 'common', 'components'])
             ]
         );
+
     }
 
     public function asController(ContentBlock $contentBlock, ActionRequest $request): ContentBlock

@@ -28,14 +28,19 @@ class ParseContentBlockLayout
 
     public function parseBanner($layout): array
     {
+
         $slides = [];
-        foreach (Arr::get($layout, 'components') as $key => $slideLayout) {
-            $slides[Arr::get($slideLayout,'ulid',$key)] = [
+        foreach (Arr::get($layout, 'components') as $key => $slideData) {
+
+
+
+            $slides[Arr::get($slideData,'ulid',$key)] = [
                 'type'      => ContentBlockComponentTypeEnum::SLIDE->value,
-                'layout'    => $slideLayout,
+                'layout'    => Arr::get($slideData,'layout'),
                 'imageData' => Arr::get($layout, 'images.'.$key)
             ];
         }
+
 
         return [
             Arr::except($layout, ['components', 'images']),

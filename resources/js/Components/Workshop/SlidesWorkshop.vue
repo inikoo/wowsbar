@@ -14,10 +14,9 @@ import draggable from "vuedraggable"
 import { ulid } from 'ulid'
 import Input from '@/Components/Forms/Fields/Input.vue'
 import { trans } from "laravel-vue-i18n"
-import { useForm } from '@inertiajs/vue3'
 import SlideWorkshop from "@/Components/Workshop/SlideWorkshop.vue"
-import { cloneDeep } from 'lodash'
 import Button from '../Elements/Buttons/Button.vue'
+import { get } from 'lodash'
 library.add(faEye, faEyeSlash, faTrashAlt, faAlignJustify)
 
 interface CornersPositionData {
@@ -78,6 +77,7 @@ const emits = defineEmits<{
 const isDragging = ref(false)
 const fileInput = ref(null)
 const currentComponentBeenEdited = ref(props.data.components[0])
+const commonEditActive = ref(false)
 const addComponent = () => {
     let setData = []
     for (const set of fileInput.value?.files) {
@@ -159,9 +159,9 @@ const drop = (e) => {
 }
 
 const selectComponentForEdition = (slide) => {
+    commonEditActive.value = false
     currentComponentBeenEdited.value = slide
     _SlideWorkshop.value.current = 0
-    // setFormValue(slide)
 }
 
 const visible = (file) => {
@@ -171,7 +171,7 @@ const visible = (file) => {
     }
 };
 
-const blueprint = ref([
+const ComponentsBlueprint = ref([
     {
         title: 'Background',
         icon: ['fal', 'fa-image'],
@@ -190,10 +190,11 @@ const blueprint = ref([
         icon: ['fal', 'fa-expand-arrows'],
         fields: [
             {
-                name: 'top-left',
+                name: ['layout', 'corners'],
                 type: 'corners',
                 label: null,
-                value: null
+                value: null,
+                optionType : ['cornerFooter','cornerText','linkButton']
             },
         ]
 
@@ -231,40 +232,77 @@ const blueprint = ref([
 ])
 
 
-// onMounted(() => {
-//     setFormValue(currentComponentBeenEdited.value)
-// });
+const CommonBlueprint = ref([
+    {
+        title: 'Duration',
+        icon: ['fal', 'stopwatch'],
+        fields: [
+            {
+                name: 'delay',
+                type: 'range',
+                label: trans('Duration'),
+                value: null
+            },
+        ]
+
+    },
+    {
+        title: 'corners',
+        icon: ['fal', 'fa-expand-arrows'],
+        fields: [
+            {
+                name: ['common', 'corners'],
+                type: 'corners',
+                label: null,
+                value: null,
+                optionType : ['cornerFooter','cornerText','linkButton','slideControls']
+            },
+        ]
+
+    },
+    {
+        title: 'central stage',
+        icon: ['fal', 'fa-align-center'],
+        fields: [
+            {
+                name: ['common', 'centralStage', 'title'],
+                type: 'input',
+                label: trans('Title'),
+                value: ['common', 'centralStage', 'title']
+            },
+            {
+                name: ['common', 'centralStage', 'subtitle'],
+                type: 'input',
+                label: trans('subtitle'),
+                value: ['common', 'centralStage', 'subtitle']
+            },
+        ]
+    },
+
+    // },
+    // {
+    //     title: 'Button Position',
+    //     icon: ['fal', 'fa-align-center'],
+    //     fields: [
+    //         {
+    //             name: ['layout', 'centralStage', 'title'],
+    //             type: 'input',
+    //             label: trans('Title'),
+    //             value: ['layout', 'centralStage', 'title']
+    //         },
+    
+    //     ]
+    // },
+])
+
 
 const _SlideWorkshop = ref(null)
-// const form = ref({});
-// const setFormValue = (data) => { form.value = useForm(data) }
 
-// const applyChanges = () => {
-//     if (form.value.data()) {
-//         const newFile = cloneDeep(form.value.data());
-
-//         if (newFile.image_source && newFile.image_source instanceof File) {
-//             newFile.imageFile = newFile.image_source;
-//             newFile.image_source = null;
-//         }
-
-//         currentComponentBeenEdited.value = {
-//             ...newFile,
-//             layout: {
-//                 ...newFile.layout,
-//                 visibility: currentComponentBeenEdited.value.layout.visibility
-//             }
-//         };
-
-//         const index = components.value.findIndex((item) => item.ulid === currentComponentBeenEdited.value.ulid);
-//         if (index !== -1) {
-//             components.value[index] = currentComponentBeenEdited.value;
-//         }
-
-//         props.data.components = components.value;
-//         console.log(currentComponentBeenEdited.value);
-//     }
-// };
+const setCommonEdit =()=>{
+    commonEditActive.value = !commonEditActive.value 
+    if(commonEditActive.value) currentComponentBeenEdited.value = null
+    else currentComponentBeenEdited.value = props.data.components[0]
+}
 
 </script>
 
@@ -272,7 +310,7 @@ const _SlideWorkshop = ref(null)
     <div class="flex flex-grow gap-2.5">
         <div class="w-[30%] lg:w-2/3 p-2.5 border rounded h-fit shadow" v-if="data.components"
             @dragover="dragover" @dragleave="dragleave" @drop="drop">
-            <div class='border-gray-300 p-2 border mb-2 text-center'>
+            <div :class="['border-gray-300 p-2 border mb-2 text-center', { 'border-orange-500 text-orange-500 font-medium': commonEditActive }]" @click="setCommonEdit">
                 {{ trans('Common properties') }}
             </div>
 
@@ -286,9 +324,9 @@ const _SlideWorkshop = ref(null)
                     <div
                         @mousedown="selectComponentForEdition(file), emits('jumpToIndex', data.components.findIndex((component) => { return component.id == file.id}))"
                         v-if="file.ulid !== null"
-                        :class="[file.ulid != currentComponentBeenEdited.ulid ?
+                        :class="[file.ulid != get(currentComponentBeenEdited,'ulid') ?
                             'border-gray-300' :
-                            'border-l-orange-500 border-l-4 bg-gray-200/60',
+                            'border-l-orange-500 border-l-4 bg-gray-200/60 text-orange-500 font-medium',
                         'grid grid-flow-col relative py-1 border mb-2 items-center justify-between hover:cursor-pointer']"
                         
                     >
@@ -333,8 +371,12 @@ const _SlideWorkshop = ref(null)
         </div>
 
         <!-- The Editor -->
-        <div class="w-full border border-gray-300">
-            <SlideWorkshop :currentComponentBeenEdited="currentComponentBeenEdited" :blueprint="blueprint" ref="_SlideWorkshop" :remove="removeComponent"></SlideWorkshop>
+        <div class="w-full border border-gray-300" v-if="currentComponentBeenEdited != null">
+            <SlideWorkshop :currentComponentBeenEdited="currentComponentBeenEdited" :blueprint="ComponentsBlueprint" ref="_SlideWorkshop" :remove="removeComponent"></SlideWorkshop>
+        </div>
+
+        <div class="w-full border border-gray-300" v-if="commonEditActive">
+            <SlideWorkshop :currentComponentBeenEdited="props.data" :blueprint="CommonBlueprint" ref="_SlideWorkshop" :remove="removeComponent"></SlideWorkshop>
         </div>
     </div>
 </template>

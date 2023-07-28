@@ -579,6 +579,7 @@ const handleElementsChange = (data) => {
                         <div v-if="queryBuilderProps.modelOperations?.createLink">
                             <Link :href="route(queryBuilderProps.modelOperations.createLink.route.name, queryBuilderProps.modelOperations.createLink.route.parameters[0])">
                                 <!--suppress HtmlWrongAttributeValue -->
+
                                 <Button :style="`primary`" :icon="queryBuilderProps.modelOperations.createLink.icon" action="create"  class="capitalize">
                                     {{queryBuilderProps.modelOperations.createLink.label}}
                                 </Button>

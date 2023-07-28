@@ -69,7 +69,7 @@ class ShowWebsite extends InertiaAction
                     'actions' => [
                         $this->canEdit ? [
                             'type'  => 'button',
-                            'style' => 'tertiary',
+                            'style' => 'edit',
                             'label' => __('edit'),
                             'route' => [
                                 'name'       => preg_replace('/show$/', 'edit', $request->route()->getName()),

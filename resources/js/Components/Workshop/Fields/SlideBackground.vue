@@ -31,6 +31,7 @@ const onFileChange = (event) => {
     if (file) {
         props.data.image_source = null;
         props.data.imageFile = file;
+        props.data.layout.imageAlt = file.name
     }
 };
 </script>
