@@ -230,7 +230,7 @@ const ComponentsBlueprint = ref([
 const CommonBlueprint = ref([
     {
         title: 'Duration',
-        icon: ['fal', 'fa-image'],
+        icon: ['fal', 'stopwatch'],
         fields: [
             {
                 name: 'delay',
@@ -241,17 +241,37 @@ const CommonBlueprint = ref([
         ]
 
     },
-    // {
-    //     title: 'Common',
-    //     icon: ['fal', 'fa-expand-arrows'],
-    //     fields: [
-    //         {
-    //             name: 'delay',
-    //             type: 'input',
-    //             label: null,
-    //             value: null
-    //         },
-    //     ]
+    {
+        title: 'corners',
+        icon: ['fal', 'fa-expand-arrows'],
+        fields: [
+            {
+                name: 'top-left',
+                type: 'corners',
+                label: null,
+                value: null
+            },
+        ]
+
+    },
+    {
+        title: 'central stage',
+        icon: ['fal', 'fa-align-center'],
+        fields: [
+            {
+                name: ['common', 'centralStage', 'title'],
+                type: 'input',
+                label: trans('Title'),
+                value: ['common', 'centralStage', 'title']
+            },
+            {
+                name: ['common', 'centralStage', 'subtitle'],
+                type: 'input',
+                label: trans('subtitle'),
+                value: ['common', 'centralStage', 'subtitle']
+            },
+        ]
+    },
 
     // },
     // {

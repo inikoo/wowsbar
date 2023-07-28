@@ -7,8 +7,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
-import { faImage, faExpandArrows, faAlignCenter, faTrash } from "../../../private/pro-light-svg-icons"
-import { faStopwatch } from "../../../private/pro-regular-svg-icons"
+import { faImage, faExpandArrows, faAlignCenter, faTrash, faStopwatch } from "../../../private/pro-light-svg-icons"
 import PrimitiveInput from '@/Components/Forms/Fields/Primitive/PrimitiveInput.vue'
 import Select from '@/Components/Forms/Fields/Select.vue'
 import Radio from '@/Components/Forms/Fields/Radio.vue'
