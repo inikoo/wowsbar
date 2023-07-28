@@ -22,7 +22,7 @@ const props = defineProps<{
     remove : Function
 }>()
 
-
+console.log(props.blueprint)
 
 const getComponent = (componentName: string) => {
     const components = {
