@@ -118,6 +118,7 @@ const getActionIcon = (action) => {
                 <Link v-if="action.type === 'button'"
                       :href="route(action['route']['name'], action['route']['parameters'])"
                       :method="action.method ?? 'get'"
+                      :_method="action.actualMethod ?? action.method ?? 'get' "
                       :data="dataToSubmit"
                       as="button"
                 >
