@@ -341,7 +341,7 @@ const setCommonEdit =()=>{
 
                             <!-- Label slide -->
                             <div class="hidden lg:inline-flex overflow-hidden whitespace-nowrap overflow-ellipsis pl-2 leading-tight flex-auto items-center">
-                                <div class="overflow-hidden whitespace-nowrap overflow-ellipsis lg:text-xs xl:text-sm">{{ file.layout.imageAlt }}</div>
+                                <div class="overflow-hidden whitespace-nowrap overflow-ellipsis lg:text-xs xl:text-sm">{{ file?.layout?.imageAlt ?? 'Image ' + file.id}}</div>
                             </div>
                         </div>
 
@@ -349,7 +349,7 @@ const setCommonEdit =()=>{
                         <div class="flex justify-center items-center pr-2 justify-self-end">
                             <button class="px-2 py-1" type="button"
                                 @click="visible(file)" title="Show/hide the slide">
-                                <FontAwesomeIcon v-if="file.layout.visibility" icon="fas fa-eye" class="text-xs sm:text-sm text-gray-400 hover:text-gray-500" />
+                                <FontAwesomeIcon v-if="file.layout?.visibility" icon="fas fa-eye" class="text-xs sm:text-sm text-gray-400 hover:text-gray-500" />
                                 <FontAwesomeIcon v-else icon="fas fa-eye-slash" class="text-xs sm:text-sm text-gray-300 hover:text-gray-400/70" />
                             </button>
                         </div>
