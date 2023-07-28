@@ -304,7 +304,7 @@ const setCommonEdit =()=>{
     <div class="flex flex-grow gap-2.5">
         <div class="w-[30%] lg:w-2/3 p-2.5 border rounded h-fit shadow" v-if="data.components"
             @dragover="dragover" @dragleave="dragleave" @drop="drop">
-            <div :class="['border-gray-300 p-2 border mb-2 text-center', { 'border-orange-500': commonEditActive }]" @click="setCommonEdit">
+            <div :class="['border-gray-300 p-2 border mb-2 text-center', { 'border-orange-500 text-orange-500 font-medium': commonEditActive }]" @click="setCommonEdit">
                 {{ trans('Common properties') }}
             </div>
 
@@ -317,7 +317,7 @@ const setCommonEdit =()=>{
                         v-if="file.ulid !== null"
                         :class="[file.ulid != get(currentComponentBeenEdited,'ulid') ?
                             'border-gray-300' :
-                            'border-l-orange-500 border-l-4 bg-gray-200/60',
+                            'border-l-orange-500 border-l-4 bg-gray-200/60 text-orange-500 font-medium',
                         'grid grid-flow-col relative py-1 border mb-2 items-center justify-between hover:cursor-pointer']"
                         @click="selectComponentForEdition(file)"
                     >
