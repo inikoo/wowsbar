@@ -6,7 +6,7 @@ import { capitalize } from "@/Composables/capitalize"
 import SlidesWorkshop from "@/Components/Workshop/SlidesWorkshop.vue"
 import Slider from "@/Components/Slider/Slider.vue"
 import SlidesWorkshopAddMode from "@/Components/Workshop/SlidesWorkshopAddMode.vue"
-
+import { cloneDeep } from 'lodash'
 const props = defineProps<{
     title: string;
     pageHead: object;
@@ -14,11 +14,11 @@ const props = defineProps<{
 
 }>();
 
-
+const data = ref(cloneDeep(props.bannerLayout))
 
 
 const test1=()=>{
-    console.log(props.bannerLayout)
+    console.log(props.data)
 }
 const jumpToIndex = ref(0)
 
@@ -26,22 +26,22 @@ const jumpToIndex = ref(0)
 
 <template layout="App">
     <Head :title="capitalize(title)" />
-    <PageHeading :data="pageHead" :dataToSubmit="bannerLayout"></PageHeading>
+    <PageHeading :data="pageHead" :dataToSubmit="data"></PageHeading>
 
     <div>
         <!-- First set of components -->
-        <div v-if="bannerLayout.components.filter((item) => item.ulid != null).length > 0">
-            <Slider :data="bannerLayout" :jumpToIndex="jumpToIndex" />
-            <SlidesWorkshop class="clear-both mt-2 p-2.5" :data="bannerLayout" @jumpToIndex="(val) => jumpToIndex = val"/>
+        <div v-if="data.components.filter((item) => item.ulid != null).length > 0">
+            <Slider :data="data" :jumpToIndex="jumpToIndex" />
+            <SlidesWorkshop class="clear-both mt-2 p-2.5" :data="data" @jumpToIndex="(val) => jumpToIndex = val"/>
         </div>
 
     <!-- Second set of components -->
-    <div v-if="bannerLayout.components.filter((item) => item.ulid != null).length == 0">
-      <SlidesWorkshopAddMode :data="bannerLayout" />
+    <div v-if="data.components.filter((item) => item.ulid != null).length == 0">
+      <SlidesWorkshopAddMode :data="data" />
     </div>
   </div>
 
 
 
-    <div @click="() => {jumpToIndex = 3, console.log(bannerLayout.components)}">chek data</div>
+    <div @click="() => {jumpToIndex = 3, console.log(data.components)}">chek data</div>
 </template>

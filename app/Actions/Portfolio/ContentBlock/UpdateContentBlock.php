@@ -101,6 +101,7 @@ class UpdateContentBlock
 
     public function asController(ContentBlock $contentBlock, ActionRequest $request): ContentBlock
     {
+        dd($request->all());
         $request->validate();
         return $this->handle($contentBlock, $request->validated());
     }

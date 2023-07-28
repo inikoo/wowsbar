@@ -117,32 +117,31 @@ class ShowBannerWorkshop extends InertiaAction
     {
         $previous = ContentBlock::where('code', '<', $banner->code)->orderBy('code', 'desc')->first();
 
-        return $this->getNavigation($previous, $request->route()->getName());
+        return $this->getNavigation($previous, $request->route()->getName(),$request->route()->parameters);
     }
 
     public function getNext(ContentBlock $banner, ActionRequest $request): ?array
     {
         $next = ContentBlock::where('code', '>', $banner->code)->orderBy('code')->first();
 
-        return $this->getNavigation($next, $request->route()->getName());
+        return $this->getNavigation($next, $request->route()->getName(),$request->route()->parameters);
     }
 
-    private function getNavigation(?ContentBlock $banner, string $routeName): ?array
+    private function getNavigation(?ContentBlock $banner, string $routeName,array $routeParameters): ?array
     {
         if (!$banner) {
             return null;
         }
 
         return match ($routeName) {
-            'web.banners.workshop' => [
+            'portfolio.banners.workshop', 'portfolio.websites.show.banners.workshop' => [
                 'label' => $banner->name,
                 'route' => [
                     'name'       => $routeName,
-                    'parameters' => [
-                        'banner' => $banner->slug
-                    ]
+                    'parameters' => $routeParameters
                 ]
-            ]
+            ],
+
         };
     }
 

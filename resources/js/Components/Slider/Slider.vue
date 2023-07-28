@@ -137,13 +137,13 @@ watch(() => props.jumpToIndex, (newVal) => {
 
                 <FontAwesomeIcon v-if="!!component?.layout?.link" icon='far fa-external-link' class='text-gray-300/50 text-xl absolute top-2 right-2' aria-hidden='true' />
                 <Link v-if="!!component?.layout?.link" :href="'abc'" class="absolute bg-transparent w-full h-full" />
-                <SlideCorner v-for="(corner, position) in filteredNulls(component?.layout?.corners)" :position="position" :corner="corner"/>
+                <SlideCorner v-for="(slideCorner, position) in filteredNulls(component?.layout?.corners)" :position="position" :corner="slideCorner" :commonCorner="data.common.corners" />
                 <CentralStage v-if="component?.layout?.centralStage" :data="component?.layout?.centralStage" />
             </SwiperSlide>
         </Swiper>
 
         <!-- Reserved Corner: Button Controls -->
-        <SlideCorner class="z-50" v-for="(corner, position) in filteredNulls(data.common.corners)" :position="position" :corner="corner" :swiperRef="swiperRef"/>
+        <SlideCorner class="z-50" v-for="(corner, position) in filteredNulls(data.common.corners)" :position="position" :corner="corner"   :swiperRef="swiperRef"/>
     </div>
 
 </template>
