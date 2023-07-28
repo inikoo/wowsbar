@@ -45,5 +45,5 @@ const jumpToIndex = ref(0)
 
 
 
-    <div @click="() => {jumpToIndex = 3, console.log(data)}">chek data</div>
+    <div @click="() => {jumpToIndex = 3, console.log(data)}">Check data</div>
 </template>

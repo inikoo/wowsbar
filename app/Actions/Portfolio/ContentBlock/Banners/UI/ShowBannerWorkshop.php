@@ -36,34 +36,34 @@ class ShowBannerWorkshop extends InertiaAction
     public function inWebsite(Website $website, ContentBlock $banner, ActionRequest $request): ContentBlock
     {
         $this->initialisation($request);
+
         return $banner;
     }
 
 
     public function htmlResponse(ContentBlock $banner, ActionRequest $request): Response
     {
-
         return Inertia::render(
             'Portfolio/BannerWorkshop',
             [
-                'title'       => __("Banner's workshop"),
-                'breadcrumbs' => $this->getBreadcrumbs(
+                'title'        => __("Banner's workshop"),
+                'breadcrumbs'  => $this->getBreadcrumbs(
                     $request->route()->getName(),
                     $request->route()->parameters
                 ),
-                'navigation'  => [
+                'navigation'   => [
                     'previous' => $this->getPrevious($banner, $request),
                     'next'     => $this->getNext($banner, $request),
                 ],
-                'pageHead'    => [
+                'pageHead'     => [
 
-                    'title'    => __('Workshop'),
-                    'container'=> [
+                    'title'     => __('Workshop'),
+                    'container' => [
                         'icon'    => ['fal', 'fa-window-maximize'],
                         'tooltip' => __('Banner'),
                         'label'   => Str::possessive($banner->name)
                     ],
-                    'iconRight'    =>
+                    'iconRight' =>
                         [
                             'icon'  => ['fal', 'drafting-compass'],
                             'title' => __("Banner's workshop")
@@ -71,29 +71,29 @@ class ShowBannerWorkshop extends InertiaAction
 
                     'actions' => [
                         [
-                            'type'       => 'button',
-                            'style'      => 'exit',
-                            'label'      => __('Exit workshop'),
-                            'route'      => [
+                            'type'  => 'button',
+                            'style' => 'exit',
+                            'label' => __('Exit workshop'),
+                            'route' => [
                                 'name'       => preg_replace('/workshop$/', 'show', $request->route()->getName()),
                                 'parameters' => array_values($this->originalParameters),
                             ]
                         ],
                         [
-                            'type'       => 'button',
-                            'style'      => 'save',
-                            'route'      => [
+                            'type'    => 'button',
+                            'style'   => 'save',
+                            'route'   => [
                                 'name'       => 'models.content-block.update',
                                 'parameters' => [
-                                    'contentBlock'=> $banner->slug
+                                    'contentBlock' => $banner->slug
                                 ]
                             ],
-                            'method'      => 'patch',
+                            'method'  => 'post',
+                            '_method' => 'patch'
                         ]
                     ],
                 ],
-                'bannerLayout'=> $banner->compiledLayout(),
-
+                'bannerLayout' => $banner->compiledLayout(),
 
 
             ]
@@ -103,13 +103,11 @@ class ShowBannerWorkshop extends InertiaAction
 
     public function getBreadcrumbs(string $routeName, array $routeParameters): array
     {
-
         return ShowBanner::make()->getBreadcrumbs(
             preg_replace('/workshop$/', 'show', $routeName),
             $routeParameters,
             '('.__('Workshop').')'
         );
-
     }
 
     public function getPrevious(ContentBlock $banner, ActionRequest $request): ?array
@@ -140,7 +138,6 @@ class ShowBannerWorkshop extends InertiaAction
                     'parameters' => $routeParameters
                 ]
             ],
-
         };
     }
 
