@@ -316,7 +316,7 @@ const setCommonEdit =()=>{
     <div class="flex flex-grow gap-2.5">
         <div class="w-[30%] lg:w-2/3 p-2.5 border rounded h-fit shadow" v-if="data.components"
             @dragover="dragover" @dragleave="dragleave" @drop="drop">
-            <div :class="['border-gray-300 p-2 border mb-2 text-center', { 'border-orange-500 text-orange-500 font-medium': commonEditActive }]" @click="setCommonEdit">
+            <div :class="['border-gray-300 p-2 border mb-2 text-center cursor-pointer bg-gray-100 hover:bg-gray-200', { 'border-orange-500 text-orange-500 font-medium': commonEditActive }]" @click="setCommonEdit">
                 {{ trans('Common properties') }}
             </div>
 
@@ -366,7 +366,7 @@ const setCommonEdit =()=>{
             <!-- Button: Add slide -->
             <!-- Remove the input element from inside the label -->
             <label
-                class="relative inline-block"
+                class="relative inline-block cursor-pointer"
                 id="input-slide-large-mask" for="fileInput"
             >
                 <input ref="fileInput" type="file" multiple name="file" id="fileInput"
@@ -376,13 +376,14 @@ const setCommonEdit =()=>{
             </label>
         </div>
 
-        <!-- The Editor -->
-        <div class="w-full border border-gray-300" v-if="currentComponentBeenEdited != null">
-            <SlideWorkshop :currentComponentBeenEdited="currentComponentBeenEdited" :blueprint="ComponentsBlueprint" ref="_SlideWorkshop" :remove="removeComponent"></SlideWorkshop>
-        </div>
-
+        <!-- The Editor: Common -->
         <div class="w-full border border-gray-300" v-if="commonEditActive">
             <SliderCommonWorkshop :currentComponentBeenEdited="props.data" :blueprint="CommonBlueprint" ref="_SlideWorkshop" :remove="removeComponent"></SliderCommonWorkshop>
+        </div>
+
+        <!-- The Editor: Slide -->
+        <div class="w-full border border-gray-300" v-if="currentComponentBeenEdited != null">
+            <SlideWorkshop :common="data.common" :currentComponentBeenEdited="currentComponentBeenEdited" :blueprint="ComponentsBlueprint" ref="_SlideWorkshop" :remove="removeComponent"></SlideWorkshop>
         </div>
     </div>
 </template>

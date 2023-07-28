@@ -5,16 +5,18 @@ import Input from '@/Components/Forms/Fields/Input.vue'
 import { get, cloneDeep, set } from 'lodash'
 
 const props = defineProps<{
-    data: any,
-    fieldName: string,
-    options?: any,
+    data: any
+    fieldName: string
+    options?: any
     fieldData?: {
         placeholder: string
         readonly: boolean
         copyButton: boolean
     }
+    common?: any
 }>()
 
+console.log(props.common)
 
 const area = ref(null)
 
@@ -217,18 +219,25 @@ defineExpose({
 
 
 <template>
-    <div class="h-24">
-        <div class="grid grid-cols-2 gap-2 h-full">
+    <div class="h-24 space-y-8">
+        <!-- Choose: The Corners box -->
+        <div class="grid grid-cols-2 gap-0.5 h-full bg-orange-400">
             <div v-for="(corner, index) in corners" :key="corner.id"
-                class="flex items-center justify-center capitalize rounded flex-grow cursor-pointer"
-                :class="[get(area, 'id') == corner.id ? 'bg-gray-300 hover:bg-gray-300 text-gray-600 ring-2 ring-gray-500' : 'hover:bg-gray-200/70 border border-dashed border-gray-400']" @click="cornerClick(corner)">
-                {{ corner.label }}
+                class="flex items-center justify-center capitalize flex-grow text-base font-semibold"
+                :class="[
+                    common.corners.hasOwnProperty(corner.id) ? 'cursor-not-allowed bg-gray-500 text-gray-300' : get(area, 'id') == corner.id ? 'bg-gray-300 hover:bg-gray-300 text-gray-600 cursor-pointer' : 'bg-gray-100 hover:bg-gray-200 text-gray-500 cursor-pointer'
+                ]"
+                @click="cornerClick(corner)"
+            >
+                <span v-if="common.corners.hasOwnProperty(corner.id)" class="text-sm italic font-normal text-gray-300">Reserved in Common</span>
+                <span v-else>{{ corner.label }}</span>
             </div>
         </div>
 
         <div v-if="area != null">
-            <div class="w-full flex mt-3">
-                <span class="isolate flex w-full rounded-md shadow-sm gap-x-2">
+            <!-- Choose: Card -->
+            <div class="w-full flex">
+                <span class="isolate flex w-full rounded-md gap-x-2">
                     <!-- Select the corners -->
                     <button v-for="(item, key) in Type" :key="item.value" type="button" @click="typeClick(key)"
                         class="py-2 px-4 rounded"
@@ -238,10 +247,10 @@ defineExpose({
                 </span>
             </div>
 
-            <!-- Input -->
-            <div v-for="(fieldData, index ) in currentTypeFields" :key="index" class="mt-2.5">
-                <dl class="divide-y divide-green-200  ">
-                    <div class="pb-4 sm:pb-5 sm:grid sm:grid-cols-3 sm:gap-4 max-w-2xl">
+            <!-- Field -->
+            <div class="mt-6">
+                <div v-for="(fieldData, index ) in currentTypeFields" :key="index">
+                    <dl class="pb-4 flex flex-col max-w-lg gap-1">
                         <dt class="text-sm font-medium text-gray-500 capitalize">
                             <div class="inline-flex items-start leading-none">
                                 <span>{{ fieldData.label }}</span>
@@ -255,8 +264,8 @@ defineExpose({
                                 </div>
                             </div>
                         </dd>
-                    </div>
-                </dl>
+                    </dl>
+                </div>
             </div>
 
         </div>
