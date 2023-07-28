@@ -34,6 +34,7 @@ const getNestedValue = (obj: Object, keys: Array) => {
 }
 
 
+
 const value = ref(setFormValue(props.data, props.fieldName))
 const corners = ref([
     { label: trans('top left'), valueForm: get(value.value, [`topLeft`], null), id: 'topLeft' },
@@ -42,7 +43,7 @@ const corners = ref([
     { label: trans('Bottom right'), valueForm: get(value.value, [`bottomRight`], null), id: 'bottomRight' },
 ])
 
-const Type = [
+const optionType = [
     {
         label: 'Footer',
         value: 'cornerFooter',
@@ -91,7 +92,26 @@ const Type = [
             },
         ]
     },
+    {
+        label: 'Slide Controls',
+        value: "slideControls",
+        fields: [],
+    },
 ]
+
+
+const filterType = () => {
+  if (props.fieldData.optionType) {
+    const data = optionType.filter((item) => {
+      // Check if the item's value is present in the optionType array
+      return props.fieldData.optionType.includes(item.value);
+    });
+    return data;
+  }
+  return optionType
+}
+
+const Type = filterType()
 
 const defaultCurrent = computed(() => {
     if (area.value != null) {
@@ -119,7 +139,7 @@ const currentTypeFields = computed(() => {
 })
 
 
-const handleClick = (corner) => {
+const cornerClick = (corner) => {
     area.value = corner;
     current.value = defaultCurrent.value
     setUpData();
@@ -155,10 +175,26 @@ const setUpData = () => {
         cornersArray[indexCorners].valueForm = setData;
     }
 
+    if(Type[current.value]){
+        if(Type[current.value].value == 'slideControls'){
+            for(const set in value.value){
+                if(value.value[set].type == 'slideControls' && area.value.id != set){
+                    delete value.value[set]
+                }
+            }
+        }
+    }
+    
+
    
     updateFormValue(value.value)
+    console.log('value',value.value)
 };
 
+const typeClick = (key) => {
+    current.value = key 
+    setUpData();
+}
 
 
 
@@ -185,7 +221,7 @@ defineExpose({
         <div class="grid grid-cols-2 gap-2 h-full">
             <div v-for="(corner, index) in corners" :key="corner.id"
                 class="flex items-center justify-center capitalize rounded flex-grow cursor-pointer"
-                :class="[get(area, 'id') == corner.id ? 'bg-gray-300 hover:bg-gray-300 text-gray-600 ring-2 ring-gray-500' : 'hover:bg-gray-200/70 border border-dashed border-gray-400']" @click="handleClick(corner)">
+                :class="[get(area, 'id') == corner.id ? 'bg-gray-300 hover:bg-gray-300 text-gray-600 ring-2 ring-gray-500' : 'hover:bg-gray-200/70 border border-dashed border-gray-400']" @click="cornerClick(corner)">
                 {{ corner.label }}
             </div>
         </div>
@@ -194,7 +230,7 @@ defineExpose({
             <div class="w-full flex mt-3">
                 <span class="isolate flex w-full rounded-md shadow-sm gap-x-2">
                     <!-- Select the corners -->
-                    <button v-for="(item, key) in Type" :key="item.value" type="button" @click="current = key"
+                    <button v-for="(item, key) in Type" :key="item.value" type="button" @click="typeClick(key)"
                         class="py-2 px-4 rounded"
                         :class="[current === key ? 'bg-gray-300 text-gray-600 ring-2 ring-gray-500' : 'hover:bg-gray-200/70 border border-gray-400']">
                         {{ item.label }}

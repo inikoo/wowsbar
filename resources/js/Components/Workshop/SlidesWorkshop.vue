@@ -189,7 +189,8 @@ const ComponentsBlueprint = ref([
                 name: ['layout', 'corners'],
                 type: 'corners',
                 label: null,
-                value: null
+                value: null,
+                optionType : ['cornerFooter','cornerText','linkButton']
             },
         ]
 
@@ -249,7 +250,8 @@ const CommonBlueprint = ref([
                 name: ['common', 'corners'],
                 type: 'corners',
                 label: null,
-                value: null
+                value: null,
+                optionType : ['cornerFooter','cornerText','linkButton','slideControls']
             },
         ]
 
