@@ -246,7 +246,8 @@ const CommonBlueprint = ref([
                 name: 'delay',
                 type: 'range',
                 label: trans('Duration'),
-                value: null
+                value: null,
+                timeRange : { min:"2.5", max:"15", step:"0.5", range:['2.5','5','7.5','10','12.5','15']} //always in set second and will be convert to milisecond
             },
         ]
 
