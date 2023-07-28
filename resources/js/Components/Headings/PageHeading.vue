@@ -155,6 +155,5 @@ const getActionIcon = (action) => {
     <hr class="border-gray-300 dark:border-gray-500"/>
 </template>
 
-<style></style>
 
 
