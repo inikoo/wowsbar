@@ -35,7 +35,7 @@ const test1=()=>{
 
     <!-- Second set of components -->
     <div v-if="bannerLayout.components.filter((item) => item.ulid != null).length == 0">
-      <SlidesWorkshopAddMode :data="data" />
+      <SlidesWorkshopAddMode :data="bannerLayout" />
     </div>
   </div>
 
