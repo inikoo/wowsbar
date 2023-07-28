@@ -5,7 +5,7 @@
   -->
 
 <script  setup lang="ts">
-import { ref, onMounted, watch } from 'vue'
+import { ref, onMounted, watch, computed } from 'vue'
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { faTrashAlt, faAlignJustify } from "@/../private/pro-light-svg-icons"
 import { faEye, faEyeSlash } from "@/../private/pro-solid-svg-icons"
@@ -69,6 +69,10 @@ const props = defineProps<{
 
     }
 
+}>()
+
+const emits = defineEmits<{
+    (e: 'jumpToIndex', id: number): void
 }>()
 
 const isDragging = ref(false)
@@ -262,8 +266,6 @@ const _SlideWorkshop = ref(null)
 //     }
 // };
 
-
-
 </script>
 
 <template>
@@ -277,15 +279,18 @@ const _SlideWorkshop = ref(null)
             <!-- Drag area -->
             <div class="mb-2 text-lg font-medium">{{ trans('Slides') }}</div>
             <draggable :list="data.components" group="slide " item-key="ulid"
-                handle=".handle" >
+                handle=".handle"
+                :onChange="(e: any) => emits('jumpToIndex', e.moved.newIndex)"
+            >
                 <template #item="{ element: file }">
                     <div
+                        @mousedown="selectComponentForEdition(file), emits('jumpToIndex', data.components.findIndex((component) => { return component.id == file.id}))"
                         v-if="file.ulid !== null"
                         :class="[file.ulid != currentComponentBeenEdited.ulid ?
                             'border-gray-300' :
                             'border-l-orange-500 border-l-4 bg-gray-200/60',
                         'grid grid-flow-col relative py-1 border mb-2 items-center justify-between hover:cursor-pointer']"
-                        @click="selectComponentForEdition(file)"
+                        
                     >
                         <div class="grid grid-flow-col gap-x-1 py-1">
                             <!-- Icon: Bars, class 'handle' to grabable -->
