@@ -8,7 +8,6 @@
 namespace App\Actions\Portfolio\ContentBlock\Banners\UI;
 
 use App\Actions\InertiaAction;
-use App\Actions\UI\Dashboard\ShowDashboard;
 use App\Models\Portfolio\ContentBlock;
 use App\Models\Portfolio\Website;
 use Illuminate\Support\Str;
@@ -86,7 +85,7 @@ class ShowBannerWorkshop extends InertiaAction
                             'route'      => [
                                 'name'       => 'models.content-block.update',
                                 'parameters' => [
-                                    'contentBlock'=>$banner->slug
+                                    'contentBlock'=> $banner->slug
                                 ]
                             ],
                             'method'      => 'patch',
@@ -117,17 +116,17 @@ class ShowBannerWorkshop extends InertiaAction
     {
         $previous = ContentBlock::where('code', '<', $banner->code)->orderBy('code', 'desc')->first();
 
-        return $this->getNavigation($previous, $request->route()->getName(),$request->route()->parameters);
+        return $this->getNavigation($previous, $request->route()->getName(), $request->route()->parameters);
     }
 
     public function getNext(ContentBlock $banner, ActionRequest $request): ?array
     {
         $next = ContentBlock::where('code', '>', $banner->code)->orderBy('code')->first();
 
-        return $this->getNavigation($next, $request->route()->getName(),$request->route()->parameters);
+        return $this->getNavigation($next, $request->route()->getName(), $request->route()->parameters);
     }
 
-    private function getNavigation(?ContentBlock $banner, string $routeName,array $routeParameters): ?array
+    private function getNavigation(?ContentBlock $banner, string $routeName, array $routeParameters): ?array
     {
         if (!$banner) {
             return null;

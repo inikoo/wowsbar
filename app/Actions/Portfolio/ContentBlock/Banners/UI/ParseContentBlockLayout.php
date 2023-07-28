@@ -22,7 +22,7 @@ class ParseContentBlockLayout
     {
         return match ($webBlock->slug) {
             WebBlockTypeSlugEnum::BANNER->value => $this->parseBanner($layout),
-            default => [$layout, null, null],
+            default                             => [$layout, null, null],
         };
     }
 
@@ -31,13 +31,11 @@ class ParseContentBlockLayout
 
         $slides = [];
         foreach (Arr::get($layout, 'components') as $key => $slideData) {
-
-
-
-            $slides[Arr::get($slideData,'ulid',$key)] = [
-                'type'      => ContentBlockComponentTypeEnum::SLIDE->value,
-                'layout'    => Arr::get($slideData,'layout'),
-                'imageData' => Arr::get($layout, 'images.'.$key)
+            $slides[Arr::get($slideData, 'ulid', $key)] = [
+                'type'          => ContentBlockComponentTypeEnum::SLIDE->value,
+                'layout'        => Arr::get($slideData, 'layout'),
+                'visibility'    => Arr::get($slideData, 'visibility'),
+                'imageData'     => Arr::get($layout, 'images.'.$key)
             ];
         }
 

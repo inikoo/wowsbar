@@ -12,7 +12,6 @@ use App\Models\Auth\User;
 use App\Models\Media\Media;
 use Lorisleiva\Actions\Concerns\AsAction;
 
-
 class SetUserAvatarFromImage
 {
     use AsAction;

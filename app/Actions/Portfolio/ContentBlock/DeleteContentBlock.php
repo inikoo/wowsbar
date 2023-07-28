@@ -23,7 +23,7 @@ class DeleteContentBlock
     use AsController;
     use WithAttributes;
 
-    public bool $isAction = false;
+    public bool $isAction        = false;
     public Website|null $website = null;
 
     public function handle(Website $website, ContentBlock $contentBlock): ContentBlock
@@ -39,7 +39,9 @@ class DeleteContentBlock
 
     public function authorize(ActionRequest $request): bool
     {
-        if($this->isAction) return true;
+        if($this->isAction) {
+            return true;
+        }
 
         return $request->user()->can("portfolio.edit");
     }

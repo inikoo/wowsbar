@@ -24,25 +24,22 @@ use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
 
-
 class StoreContentBlock
 {
     use AsAction;
     use WithAttributes;
 
 
-    private bool $asAction = false;
+    private bool $asAction        = false;
     private Website|null $website = null;
 
 
     public function handle(Website $website, WebBlock $webBlock, array $modelData): ContentBlock
     {
         $this->website  = $website;
-        $layout = $webBlock->blueprint;
+        $layout         = $webBlock->blueprint;
 
         list($layout, $contentBlockComponents) = ParseContentBlockLayout::run($layout, $webBlock);
-
-
 
 
         data_set($modelData, 'web_block_type_id', $webBlock->web_block_type_id);

@@ -19,11 +19,11 @@ class AttachImageToContentBlockComponent
 
     public function handle(ContentBlockComponent $contentBlockComponent, array $imageData): void
     {
-        $imagePath=null;
+        $imagePath       =null;
         $originalFilename=null;
         switch (Arr::get($imageData, 'source')) {
             case 'resources':
-                $imagePath=resource_path('art/banner/'.Arr::get($imageData, 'imageSrc'));
+                $imagePath       =resource_path('art/banner/'.Arr::get($imageData, 'imageSrc'));
                 $originalFilename=Arr::get($imageData, 'imageSrc');
         }
 

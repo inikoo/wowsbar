@@ -36,70 +36,82 @@
         "components": [
             {
                 "visibility": true,
-                "imageAlt": "Front of men's Basic Tee in sienna",
-                "link": null,
-                "corners": {
-                    "bottomRight": {
-                        "type": "linkButton",
-                        "data": {
-                            "text": "Browse Promo",
-                            "target": "#"
-                        }
-                    }
-                },
-                "centralStage": {
-                    "title": "Welcome to the jungle",
-                    "subtitle": "Jungle is the best place to go and healing with your family"
-                }
-            },
-            {
-                "visibility": true,
-                "imageAlt": "Lorem ipsum dolor sit amet consectetur.",
-                "corners": {
-                    "topLeft": {
-                        "type": "cornerText",
-                        "data": {
-                            "title": "Welcome to the jungle",
-                            "subtitle": "Jungle is the best place to go and healing with your family"
+                "layout": {
+                    "imageAlt": "Front of men's Basic Tee in sienna",
+                    "link": null,
+                    "corners": {
+                        "bottomRight": {
+                            "type": "linkButton",
+                            "data": {
+                                "text": "Browse Promo",
+                                "target": "#"
+                            }
                         }
                     },
-                    "topRight": {
-                        "type": "cornerFooter",
-                        "data": {
-                            "text": "The banner officially disclaimed by XYZ Company."
-                        }
+                    "centralStage": {
+                        "title": "Welcome to the jungle",
+                        "subtitle": "Jungle is the best place to go and healing with your family"
                     }
                 }
+
             },
             {
                 "visibility": true,
-                "imageAlt": "Lorem ipsum dolor Basic Tee in sienna",
-                "corners": {
-                    "bottomRight": {
-                        "type": "linkButton",
-                        "data": {
-                            "text": "Browse Promo",
-                            "target": "#"
+                "layout":{
+                    "imageAlt": "Lorem ipsum dolor sit amet consecrate.",
+                    "corners": {
+                        "topLeft": {
+                            "type": "cornerText",
+                            "data": {
+                                "title": "Welcome to the jungle",
+                                "subtitle": "Jungle is the best place to go and healing with your family"
+                            }
+                        },
+                        "topRight": {
+                            "type": "cornerFooter",
+                            "data": {
+                                "text": "The banner officially disclaimed by XYZ Company."
+                            }
                         }
                     }
-                },
-                "centralStage": {
-                    "title": "Welcome to the jungle",
-                    "subtitle": "Jungle is the best place to go and healing with your family"
                 }
+
+            },
+            {
+                "visibility": true,
+                "layout": {
+                    "imageAlt": "Lorem ipsum dolor Basic Tee in sienna",
+                    "corners": {
+                        "bottomRight": {
+                            "type": "linkButton",
+                            "data": {
+                                "text": "Browse Promo",
+                                "target": "#"
+                            }
+                        }
+                    },
+                    "centralStage": {
+                        "title": "Welcome to the jungle",
+                        "subtitle": "Jungle is the best place to go and healing with your family"
+                    }
+                }
+
             },
             {
                 "visibility": false,
-                "imageAlt": "Continuous infinite slider",
-                "link": "google.com",
-                "corners": {
-                    "topRight": {
-                        "type": "cornerText",
-                        "data": {
-                            "text": "Hello"
+                "layout": {
+                    "imageAlt": "Continuous infinite slider",
+                    "link": "google.com",
+                    "corners": {
+                        "topRight": {
+                            "type": "cornerText",
+                            "data": {
+                                "text": "Hello"
+                            }
                         }
                     }
                 }
+
             }
         ]
     },

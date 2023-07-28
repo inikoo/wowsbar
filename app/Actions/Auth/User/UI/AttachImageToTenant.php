@@ -12,7 +12,6 @@ use App\Models\Tenancy\Tenant;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-
 class AttachImageToTenant
 {
     use AsAction;
@@ -29,7 +28,7 @@ class AttachImageToTenant
 
 
         /** @var Media $media */
-        $media=$tenant->media()->where('collection_name',$collection)->where('checksum',$checksum)->first();
+        $media=$tenant->media()->where('collection_name', $collection)->where('checksum', $checksum)->first();
         if (!$media) {
             $media = $tenant->addMedia($imagePath)
                 ->preservingOriginal()

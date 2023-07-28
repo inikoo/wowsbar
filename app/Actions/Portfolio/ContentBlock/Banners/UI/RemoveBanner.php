@@ -84,7 +84,7 @@ class RemoveBanner extends InertiaAction
                     route: [
                         'name'       => 'models.content-block.delete',
                         'parameters' => [
-                            'website' => $request->route()->originalParameters()['website'],
+                            'website'      => $request->route()->originalParameters()['website'],
                             'contentBlock' => $request->route()->originalParameters()['banner']
                         ]
                     ]

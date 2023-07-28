@@ -92,12 +92,12 @@ class ShowBanner extends InertiaAction
                     'navigation' => BannerTabsEnum::navigation()
                 ],
                 WebsiteTabsEnum::SHOWCASE->value => $this->tab == WebsiteTabsEnum::SHOWCASE->value ?
-                    fn() => $banner->compiledLayout()
-                    : Inertia::lazy(fn() => $banner->compiledLayout()),
+                    fn () => $banner->compiledLayout()
+                    : Inertia::lazy(fn () => $banner->compiledLayout()),
 
                 WebsiteTabsEnum::CHANGELOG->value => $this->tab == WebsiteTabsEnum::CHANGELOG->value ?
-                    fn() => HistoryResource::collection(IndexHistories::run($banner))
-                    : Inertia::lazy(fn() => HistoryResource::collection(IndexHistories::run($banner)))
+                    fn () => HistoryResource::collection(IndexHistories::run($banner))
+                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistories::run($banner)))
 
             ]
         )->table(IndexHistories::make()->tableStructure());

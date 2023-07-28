@@ -7,7 +7,6 @@
 
 namespace App\Actions\Portfolio\ContentBlockComponent;
 
-
 use App\Actions\Traits\WithActionUpdate;
 use App\Models\Portfolio\ContentBlockComponent;
 use Arr;
@@ -19,12 +18,12 @@ class UpdateContentBlockComponent
 
     public function handle(ContentBlockComponent $contentBlockComponent, array $modelData): ContentBlockComponent
     {
-        $imageData=Arr::pull($modelData,'imageData');
+        $imageData=Arr::pull($modelData, 'imageData');
 
         $this->update($contentBlockComponent, $modelData, ['layout']);
 
-        if($imageData){
-            AttachImageToContentBlockComponent::run($contentBlockComponent,$imageData);
+        if($imageData) {
+            AttachImageToContentBlockComponent::run($contentBlockComponent, $imageData);
         }
         return $contentBlockComponent;
     }
