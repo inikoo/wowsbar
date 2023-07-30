@@ -28,8 +28,6 @@ const props = defineProps<{
 </script>
 
 <template>
-
-
     <div class="bg-gray-50 shadow sm:rounded-lg max-w-xl mt-2 ">
         <div class="px-4 py-5 sm:p-6">
             <h3 class="text-base font-semibold leading-6 text-gray-800">
@@ -42,7 +40,8 @@ const props = defineProps<{
                     </p>
                 </div>
                 <div class="mt-5 sm:ml-6 sm:mt-0 sm:flex sm:flex-shrink-0 sm:items-center">
-                    <Link :href="route(action.route.name,action.route.parameters)" method="delete"  as="button"  type="button" class="inline-flex items-center gap-x-1.5 rounded-md bg-orange-600 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-orange-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600">
+                    <Link :href="route(action.route.name,action.route.parameters)" method="delete" as="button"  type="button"
+                          class="inline-flex items-center gap-x-1.5 rounded-md bg-red-500 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-red-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600">
                         <FontAwesomeIcon aria-hidden="true" icon="fal fa-trash-alt" class="-ml-0.5 mr-1 h-5 w-5" />
                         {{ action.buttonLabel == null ? trans('Delete') : action.buttonLabel }}
                     </Link>

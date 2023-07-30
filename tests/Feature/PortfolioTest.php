@@ -86,14 +86,14 @@ test('create banners', function ($website) {
     return $contentBlock;
 })->depends('create websites');
 
-test('update banners', function ($contentBlock) {
+test('update banner', function ($contentBlock) {
     $modelData    = ContentBlock::factory()->definition();
 
     $contentBlock = UpdateContentBlock::make()->action($contentBlock, $modelData);
     expect($contentBlock)->toBeInstanceOf(ContentBlock::class);
 })->depends('create banners');
 
-test('delete banners', function ($contentBlock) {
+test('delete banner', function ($contentBlock) {
     $tenant = app('currentTenant');
 
     DeleteContentBlock::make()->action($contentBlock);

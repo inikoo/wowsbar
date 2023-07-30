@@ -38,7 +38,7 @@ interface Corners {
 }
 
 const props = defineProps<{
-    jumpToIndex: number
+    jumpToIndex?: number
     data: {
         common: {
             centralStage: {
@@ -125,7 +125,7 @@ watch(() => props.jumpToIndex, (newVal) => {
             :modules="[Autoplay, Pagination, Navigation]" class="mySwiper">
             <SwiperSlide v-for="component in data.components" :key="component.id">
                 <img :src="generateThumbnail(component)" :alt="component.imageAlt" class="">
-                
+
                 <div v-if="get(component, ['visibility'], true) === false" class="absolute h-full w-full bg-gray-800/50 z-10 " />
                 <div class="z-[11] absolute left-7 flex flex-col gap-y-2">
                     <FontAwesomeIcon v-if="get(component, ['visibility'], true) === false" icon='fas fa-eye-slash' class=' text-orange-400 text-4xl' aria-hidden='true' />

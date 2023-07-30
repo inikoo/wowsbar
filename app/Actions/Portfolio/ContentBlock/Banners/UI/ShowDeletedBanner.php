@@ -20,12 +20,12 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
 
-class ShowBanner extends InertiaAction
+class ShowDeletedBanner extends InertiaAction
 {
+
     public function authorize(ActionRequest $request): bool
     {
-        $this->canEdit   = $request->user()->can('portfolio.edit');
-        $this->canDelete = $request->user()->can('portfolio.edit');
+        $this->canRestore   = $request->user()->can('portfolio.edit');
 
         return
             (
@@ -67,24 +67,16 @@ class ShowBanner extends InertiaAction
                         'icon'  => 'fal fa-window-maximize'
                     ],
                     'actions' => [
-                        $this->canEdit ? [
+                        $this->canRestore ? [
                             'type'  => 'button',
                             'style' => 'edit',
-                            'label' => __('workshop'),
-                            'icon'  => ["fal", "fa-drafting-compass"],
+                            'label' => __('restore'),
+                            'icon'  => ["fal", "fa-trash-restore-alt"],
                             'route' => [
                                 'name'       => preg_replace('/show$/', 'workshop', $request->route()->getName()),
                                 'parameters' => array_values($this->originalParameters)
                             ]
                         ] : false,
-                        $this->canDelete ? [
-                            'type'  => 'button',
-                            'style' => 'delete',
-                            'route' => [
-                                'name'       => preg_replace('/show$/', 'remove', $request->route()->getName()),
-                                'parameters' => array_values($this->originalParameters)
-                            ]
-                        ] : false
                     ],
                 ],
                 'tabs'                           => [
@@ -130,7 +122,7 @@ class ShowBanner extends InertiaAction
 
         };
         return match ($routeName) {
-            'portfolio.banners.show' =>
+            'portfolio.banners.deleted' =>
             array_merge(
                 ShowDashboard::make()->getBreadcrumbs(),
                 $headCrumb(
@@ -142,14 +134,14 @@ class ShowBanner extends InertiaAction
                             'parameters' => []
                         ],
                         'model' => [
-                            'name'       => 'portfolio.banners.show',
+                            'name'       => 'portfolio.banners.deleted',
                             'parameters' => [$routeParameters['banner']->slug]
                         ]
                     ],
                     $suffix
                 ),
             ),
-            'portfolio.websites.show.banners.show' =>
+            'portfolio.websites.show.banners.deleted' =>
             array_merge(
                 ShowWebsite::make()->getBreadcrumbs(
                     'portfolio.websites.show',
@@ -164,7 +156,7 @@ class ShowBanner extends InertiaAction
                             'parameters' => [$routeParameters['website']->slug]
                         ],
                         'model' => [
-                            'name'       => 'portfolio.websites.show.banners.show',
+                            'name'       => 'portfolio.websites.show.banners.deleted',
                             'parameters' => $routeParameters
                         ]
                     ],
