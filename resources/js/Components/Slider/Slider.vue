@@ -86,10 +86,6 @@ const generateThumbnail = (file) => {
     }
 }
 
-const getImageUrl = (name: string) => {
-    return new URL(`@/../../../art/banner/` + name, import.meta.url).href
-}
-
 const swiperRef = ref()
 
 const filteredNulls = (corners: Corners) => {
@@ -143,7 +139,7 @@ watch(() => props.jumpToIndex, (newVal) => {
         </Swiper>
 
         <!-- Reserved Corner: Button Controls -->
-        <SlideCorner class="z-50" v-for="(corner, position) in filteredNulls(data.common.corners)" :position="position" :corner="corner"   :swiperRef="swiperRef"/>
+        <SlideCorner class="z-10" v-for="(corner, position) in filteredNulls(data.common.corners)" :position="position" :corner="corner"   :swiperRef="swiperRef"/>
     </div>
 
 </template>
