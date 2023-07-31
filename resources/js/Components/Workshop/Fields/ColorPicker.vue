@@ -7,14 +7,13 @@ import { set } from 'lodash'
 import { ref, watch  } from 'vue'
 
 const props = defineProps<{
-    fieldName: string
+    fieldName: string | []
     fieldData?: {
         placeholder: string
         readonly: boolean
         copyButton: boolean
     }
     data : Object
-    counter: boolean
 }>()
 
 console.log(props)

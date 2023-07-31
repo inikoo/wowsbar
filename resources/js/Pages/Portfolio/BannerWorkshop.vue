@@ -37,9 +37,9 @@ const jumpToIndex = ref(0)
 
     <!-- Second set of components -->
     <div v-if="data.components.filter((item) => item.ulid != null).length == 0">
-      <SlidesWorkshopAddMode :data="data" />
+        <SlidesWorkshopAddMode :data="data" />
     </div>
-  </div>
+</div>
 
 
 
