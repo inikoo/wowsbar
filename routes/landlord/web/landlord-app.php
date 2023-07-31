@@ -5,12 +5,12 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-use App\Actions\Landlord\UI\ShowLandlordLandingPage;
+use App\Actions\Landlord\UI\ShowWelcome;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/', ShowLandlordLandingPage::class);
+Route::get('/', ShowWelcome::class);
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');

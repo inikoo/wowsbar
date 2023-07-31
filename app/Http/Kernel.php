@@ -10,6 +10,7 @@ namespace App\Http;
 use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\EncryptCookies;
 use App\Http\Middleware\HandleInertiaRequests;
+use App\Http\Middleware\HandleLandlordInertiaRequests;
 use App\Http\Middleware\LogUserFirebaseMiddleware;
 use App\Http\Middleware\LogUserRequestMiddleware;
 use App\Http\Middleware\PreventRequestsDuringMaintenance;
@@ -71,10 +72,8 @@ class Kernel extends HttpKernel
             ShareErrorsFromSession::class,
             VerifyCsrfToken::class,
             SubstituteBindings::class,
-            HandleInertiaRequests::class,
+            HandleLandlordInertiaRequests::class,
             AddLinkHeadersForPreloadedAssets::class,
-            LogUserFirebaseMiddleware::class,
-            LogUserRequestMiddleware::class
         ],
         'tenant' => [
             NeedsTenant::class,
