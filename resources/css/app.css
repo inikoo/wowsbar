@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+
+
 .special-underline {
     @apply bg-gradient-to-t from-yellow-200 to-yellow-200 dark:from-gray-800 dark:to-gray-800
     bg-no-repeat [background-position:0_88%]
@@ -10,3 +12,4 @@
     hover:[background-size:100%_100%]
     focus:[background-size:100%_100%] px-1;
 }
+

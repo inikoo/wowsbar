@@ -226,7 +226,7 @@ const ComponentsBlueprint = ref([
                 type: 'select',
                 label: trans('Font Family'),
                 value: ['layout', 'centralStage', 'style','fontFamily'],
-                options : ['Arial','Verdana','Tahoma','Trebuchet MS','Times New Roman','Georgia','Garamond','Courier New','Brush Script MT']
+                options : ['Arial', 'Comfortaa', 'Lobster', 'Laila', 'Port Lligat Slab', 'Playfair', 'Quicksand', 'Times New Roman', 'Yatra One']
             },
             {
                 name: ['layout', 'centralStage', 'style','color'],

@@ -6,19 +6,14 @@
 
 <script setup lang="ts">
 import Multiselect from "@vueform/multiselect"
-import { faExclamationCircle, faCheckCircle } from "@/../private/pro-solid-svg-icons"
-import { library } from "@fortawesome/fontawesome-svg-core"
 import { set } from 'lodash'
 import { ref, watch } from 'vue'
-library.add(faExclamationCircle, faCheckCircle)
 const props = defineProps<{
     data: any
     fieldName: any
     options: string[] | object
     fieldData: {
         placeholder: string
-        required: boolean
-        mode: string
         searchable: boolean
     }
 }>()
@@ -58,22 +53,21 @@ const updateFormValue = (newValue) => {
     props.data = { ...target }
 };
 </script>
-  
+
 <template>
     <div class="">
         <div class="relative">
             <Multiselect v-model="value" 
                 :options="props.fieldData.options" :placeholder="props.fieldData.placeholder ?? 'Select your option'"
-                :canClear="!props.fieldData.required" :mode="props.fieldData.mode ? props.fieldData.mode : 'single'"
+                :canClear="!props.fieldData.required"
                 :closeOnSelect="props.fieldData.mode == 'multiple' ? false : true" :canDeselect="!props.fieldData.required"
                 :hideSelected="false" :searchable="!!props.fieldData.searchable" />
         </div>
-
     </div>
 </template>
-  
+
 <style src="@vueform/multiselect/themes/default.css"></style>
-  
+
 <style>
 /* Style for multiselect globally */
 .multiselect-option.is-selected,
@@ -92,4 +86,3 @@ const updateFormValue = (newValue) => {
     box-shadow: 0 0 0 var(--ms-ring-width, 3px) var(--ms-ring-color, rgba(99, 102, 241, 0.188));
 }
 </style>
-  
