@@ -6,7 +6,7 @@ import { get, cloneDeep, set } from 'lodash'
 
 const props = defineProps<{
     data: any
-    fieldName: string
+    fieldName: string | []
     options?: any
     fieldData?: {
         placeholder: string
@@ -15,8 +15,6 @@ const props = defineProps<{
     }
     common?: any
 }>()
-
-console.log(props.common)
 
 const area = ref(null)
 
@@ -190,7 +188,6 @@ const setUpData = () => {
 
    
     updateFormValue(value.value)
-    console.log('value',value.value)
 };
 
 const typeClick = (key) => {
@@ -201,13 +198,38 @@ const typeClick = (key) => {
 
 
 const updateFormValue = (newValue) => {
-    let target = props.data
+    // Step 1: Log the newValue
+
+
+    // Step 2: Iterate over properties of newValue
+    for (const v in newValue) {
+        if (newValue[v].type != 'slideControls') {
+            for (const c in newValue[v].data) {
+
+                if (newValue[v].data[c] === null) {
+                    delete newValue[v].data[c];
+                }
+            }
+
+            // Step 5: Check if newValue[v].data is empty and log if it is
+            if (Object.keys(newValue[v].data).length === 0) {
+                delete newValue[v];
+            }
+        }
+
+    }
+
+    // Step 6: Update props.data based on props.fieldName
+    let target = { ...props.data }; // Make a shallow copy of props.data
+
     if (Array.isArray(props.fieldName)) {
         set(target, props.fieldName, newValue);
     } else {
         target[props.fieldName] = newValue;
     }
-    props.data = { ...target }
+
+    // Step 7: Update props.data with the new object
+    props.data = { ...target };
 };
 
 
@@ -225,15 +247,16 @@ defineExpose({
             <div v-for="(corner, index) in corners" :key="corner.id"
                 class="flex items-center justify-center capitalize flex-grow text-base font-semibold"
                 :class="[
-                    common.corners.hasOwnProperty(corner.id) ? 'cursor-not-allowed bg-gray-500 text-gray-300' : get(area, 'id') == corner.id ? 'bg-gray-300 hover:bg-gray-300 text-gray-600 cursor-pointer' : 'bg-gray-100 hover:bg-gray-200 text-gray-500 cursor-pointer'
+                    common && common.corners?.hasOwnProperty(corner.id) ? 'cursor-not-allowed bg-gray-500 text-gray-300' : get(area, 'id') == corner.id ? 'bg-gray-300 hover:bg-gray-300 text-gray-600 cursor-pointer' : 'bg-gray-100 hover:bg-gray-200 text-gray-500 cursor-pointer'
                 ]"
                 @click="cornerClick(corner)"
             >
-                <span v-if="common.corners.hasOwnProperty(corner.id)" class="text-sm italic font-normal text-gray-300">Reserved in Common</span>
+                <span v-if="common && common.corners?.hasOwnProperty(corner.id)" class="text-sm italic font-normal text-gray-300">Reserved in Common</span>
                 <span v-else>{{ corner.label }}</span>
             </div>
         </div>
 
+        <!-- Choose: The type of component (after select Corners) -->
         <div v-if="area != null">
             <!-- Choose: Card -->
             <div class="w-full flex">

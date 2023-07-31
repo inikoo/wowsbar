@@ -24,7 +24,7 @@ const locale = useLocaleStore()
 
 if(props.dataToSubmit && props.data.actionActualMethod ) {
     props.dataToSubmit['_method'] = props.data.actionActualMethod
-    console.log(props.dataToSubmit)
+    // console.log(props.dataToSubmit)
 }
 const getActionLabel = function (action) {
     if (action.hasOwnProperty("label")) {
