@@ -16,8 +16,6 @@ const props = defineProps<{
     common?: any
 }>()
 
-console.log(props.common)
-
 const area = ref(null)
 
 const setFormValue = (data: Object, fieldName: String) => {
@@ -225,11 +223,11 @@ defineExpose({
             <div v-for="(corner, index) in corners" :key="corner.id"
                 class="flex items-center justify-center capitalize flex-grow text-base font-semibold"
                 :class="[
-                    common.corners.hasOwnProperty(corner.id) ? 'cursor-not-allowed bg-gray-500 text-gray-300' : get(area, 'id') == corner.id ? 'bg-gray-300 hover:bg-gray-300 text-gray-600 cursor-pointer' : 'bg-gray-100 hover:bg-gray-200 text-gray-500 cursor-pointer'
+                    common && common.corners?.hasOwnProperty(corner.id) ? 'cursor-not-allowed bg-gray-500 text-gray-300' : get(area, 'id') == corner.id ? 'bg-gray-300 hover:bg-gray-300 text-gray-600 cursor-pointer' : 'bg-gray-100 hover:bg-gray-200 text-gray-500 cursor-pointer'
                 ]"
                 @click="cornerClick(corner)"
             >
-                <span v-if="common.corners.hasOwnProperty(corner.id)" class="text-sm italic font-normal text-gray-300">Reserved in Common</span>
+                <span v-if="common && common.corners?.hasOwnProperty(corner.id)" class="text-sm italic font-normal text-gray-300">Reserved in Common</span>
                 <span v-else>{{ corner.label }}</span>
             </div>
         </div>
