@@ -7,7 +7,8 @@
 <script  setup lang="ts">
 import { ref, onMounted, watch, computed } from 'vue'
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
-import { faTrashAlt, faAlignJustify } from "@/../private/pro-light-svg-icons"
+import { faTrashAlt, faAlignJustify, faCog } from "@/../private/pro-light-svg-icons"
+// import {  } from "@/../private/pro-regular-svg-icons"
 import { faEye, faEyeSlash } from "@/../private/pro-solid-svg-icons"
 import { library } from '@fortawesome/fontawesome-svg-core'
 import draggable from "vuedraggable"
@@ -18,7 +19,7 @@ import SlideWorkshop from "@/Components/Workshop/SlideWorkshop.vue"
 import Button from '../Elements/Buttons/Button.vue'
 import { get } from 'lodash'
 import SliderCommonWorkshop from './SliderCommonWorkshop.vue'
-library.add(faEye, faEyeSlash, faTrashAlt, faAlignJustify)
+library.add(faEye, faEyeSlash, faTrashAlt, faAlignJustify, faCog)
 
 interface CornersPositionData {
     data: {
@@ -304,7 +305,7 @@ const CommonBlueprint = ref([
 
 const _SlideWorkshop = ref(null)
 
-const setCommonEdit =()=>{
+const setCommonEdit = () => {
     commonEditActive.value = !commonEditActive.value 
     if(commonEditActive.value) currentComponentBeenEdited.value = null
     else currentComponentBeenEdited.value = props.data.components[0]
@@ -316,8 +317,14 @@ const setCommonEdit =()=>{
     <div class="flex flex-grow gap-2.5">
         <div class="w-[30%] lg:w-2/3 p-2.5 border rounded h-fit shadow" v-if="data.components"
             @dragover="dragover" @dragleave="dragleave" @drop="drop">
-            <div :class="['border-gray-300 p-2 border mb-2 text-center cursor-pointer bg-gray-100 hover:bg-gray-200', { 'border-orange-500 text-orange-500 font-medium': commonEditActive }]" @click="setCommonEdit">
-                {{ trans('Common properties') }}
+            <!-- Common Properties -->
+            <div :class="[
+                    'p-2 mb-2 cursor-pointer space-x-2 border',
+                    commonEditActive ? 'bg-gray-200/60 font-medium border-l-4 border-l-orange-500' : 'hover:bg-gray-100 border-gray-300',
+                ]"
+                @click="setCommonEdit">
+                <FontAwesomeIcon icon='fal fa-cog' class='' aria-hidden='true' />
+                <span class="text-gray-600">{{ trans('Common properties') }}</span>
             </div>
 
             <!-- Drag area -->
@@ -330,10 +337,12 @@ const setCommonEdit =()=>{
                     <div
                         @mousedown="selectComponentForEdition(slide), emits('jumpToIndex', data.components.findIndex((component) => { return component.id == slide.id}))"
                         v-if="slide.ulid !== null"
-                        :class="[slide.ulid != get(currentComponentBeenEdited,'ulid') ?
-                            'border-gray-300' :
-                            'border-l-orange-500 border-l-4 bg-gray-200/60 text-orange-500 font-medium',
-                        'grid grid-flow-col relative py-1 border mb-2 items-center justify-between hover:cursor-pointer']"
+                        :class="[
+                            'grid grid-flow-col relative py-1 border mb-2 items-center justify-between hover:cursor-pointer',
+                            slide.ulid == get(currentComponentBeenEdited,'ulid') ?
+                                'border-l-orange-500 border-l-4 bg-gray-200/60 text-gray-600 font-medium' :
+                                'border-gray-300'
+                        ]"
                         
                     >
                         <div class="grid grid-flow-col gap-x-1 py-1">

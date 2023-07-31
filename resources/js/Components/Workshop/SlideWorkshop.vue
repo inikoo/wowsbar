@@ -61,7 +61,7 @@ const setCurrent=(key)=>{
     <div class="divide-y divide-gray-200 lg:grid grid-flow-col lg:grid-cols-12 lg:divide-y-0 lg:divide-x overflow-auto h-full">
 
         <!-- Left Tab: Navigation -->
-        <aside class="py-0 lg:col-span-3 lg:h-full border-2 border-red-500">
+        <aside class="py-0 lg:col-span-3 lg:h-full">
             <nav role="navigation" class="space-y-1">
                 <ul>
                     <li v-for="(item, key) in blueprint" @click="setCurrent(key)" :class="[
@@ -79,7 +79,7 @@ const setCurrent=(key)=>{
 
         <!-- Content of forms -->
         <div class="px-4 sm:px-6 md:px-4 pt-6 xl:pt-0 col-span-9 flex flex-grow justify-center">
-            <div class="flex flex-col w-full border-2 border-red-500">
+            <div class="flex flex-col w-full">
                 <dl v-for="(fieldData, index ) in blueprint[current].fields" :key="index" class="pb-4 sm:pb-5 sm:gap-4 w-full">
                     <!-- Title -->
                     <dt v-if="fieldData.name != 'image_source' && fieldData.label" class="text-sm font-medium text-gray-500 capitalize">
@@ -89,7 +89,7 @@ const setCurrent=(key)=>{
                     </dt>
 
                     <!-- Fields -->
-                    <dd class="flex text-sm text-gray-700 sm:mt-0 w-full border-yellow-500">
+                    <dd class="flex text-sm text-gray-700 sm:mt-0 w-full">
                         <div class="relative flex-grow">
                             <component :is="getComponent(fieldData['type'])" :data="currentComponentBeenEdited"
                                 :fieldName="fieldData.name" :fieldData="fieldData" :key="index" :counter="false" :common="common">
