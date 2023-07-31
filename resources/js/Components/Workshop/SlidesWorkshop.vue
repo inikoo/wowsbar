@@ -229,6 +229,19 @@ const ComponentsBlueprint = ref([
                 options : ['Arial','Verdana','Tahoma','Trebuchet MS','Times New Roman','Georgia','Garamond','Courier New','Brush Script MT']
             },
             {
+                name: ['layout', 'centralStage', 'style','fontSize'],
+                type: 'radio',
+                label: trans('Font Family'),
+                value: ['layout', 'centralStage', 'style','fontSize'],
+                defaultValue :{fontTitle : '27px', fontSubtitle : '14px'},
+                options : [
+                    {label : 'Small', value : {fontTitle : '21px', fontSubtitle : '12px'}, },
+                    {label : 'Medium', value: {fontTitle : '27px', fontSubtitle : '14px'} , },
+                    {label : 'large', value: {fontTitle : '34px', fontSubtitle : '16px'} , },
+                    {label : 'Xlarge', value: {fontTitle : '42px', fontSubtitle : '19px'}, }
+                ]
+            },
+            {
                 name: ['layout', 'centralStage', 'style','color'],
                 type: 'colorpicker',
                 label: trans('color'),

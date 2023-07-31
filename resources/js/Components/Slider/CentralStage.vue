@@ -5,7 +5,7 @@
   -->
 
 <script setup lang="ts">
-
+import { get } from 'lodash'
 const props = defineProps<{
     data: {
         title?: string
@@ -13,14 +13,14 @@ const props = defineProps<{
         text?: string
         style : Object
     }
- 
+  
 }>()
 console.log('as',props)
 </script>
 
 <template>
     <div class="absolute">
-        <div v-if="data.title" :style="{...data.style}" class="text-gray-100 drop-shadow-md text-5xl font-bold">{{ data.title }}</div>
-        <div v-if="data.subtitle" :style="{...data.style}" class="text-gray-300 drop-shadow text-base italic tracking-widest">{{ data.subtitle }}</div>
+        <div v-if="data.title" :style="{...data.style, fontSize : get(data,['style','fontSize','fontTitle'],'27px') }" class="text-gray-100 drop-shadow-md  font-bold">{{ data.title }}</div>
+        <div v-if="data.subtitle" :style="{...data.style, fontSize : get(data,['style','fontSize','fontSubtitle'],'14px') }" class="text-gray-300 drop-shadow  tracking-widest">{{ data.subtitle }}</div>
     </div>
 </template>
