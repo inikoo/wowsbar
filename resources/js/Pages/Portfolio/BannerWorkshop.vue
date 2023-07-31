@@ -14,15 +14,12 @@ const props = defineProps<{
 
 }>();
 
+console.log('DataFormDB',props.bannerLayout)
 
 const data=reactive(cloneDeep(props.bannerLayout))
-data.components.map(id => id.layout = {})
-console.log(data)
 
+console.log('SendData',data)
 
-const test1=()=>{
-    console.log(props.data)
-}
 const jumpToIndex = ref(0)
 
 </script>
