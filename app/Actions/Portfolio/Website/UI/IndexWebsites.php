@@ -131,12 +131,12 @@ class IndexWebsites extends InertiaAction
                     $request->route()->getName(),
                     $request->route()->parameters
                 ),
-                'title' => __('websites'),
+                'title'    => __('websites'),
                 'pageHead' => [
-                    'title' => __('websites'),
+                    'title'     => __('websites'),
                     'iconRight' => [
                         'title' => __('website'),
-                        'icon' => 'fal fa-globe'
+                        'icon'  => 'fal fa-globe'
                     ],
                 ],
                 'data' => WebsiteResource::collection($websites),
@@ -146,14 +146,14 @@ class IndexWebsites extends InertiaAction
             modelOperations: [
                 'createLink' => [
                     'route' => [
-                        'name' => 'portfolio.websites.create',
+                        'name'       => 'portfolio.websites.create',
                         'parameters' => array_values([])
                     ],
-                    'type' => 'button',
-                    'style' => 'primary',
+                    'type'    => 'button',
+                    'style'   => 'primary',
                     'tooltip' => __('Create website'),
-                    'label' => __('new website'),
-                    'icon'  => 'fas fa-plus'
+                    'label'   => __('new website'),
+                    'icon'    => 'fas fa-plus'
                 ]
             ]
         ));
@@ -165,11 +165,11 @@ class IndexWebsites extends InertiaAction
         $headCrumb = function (array $routeParameters = []) {
             return [
                 [
-                    'type' => 'simple',
+                    'type'   => 'simple',
                     'simple' => [
                         'route' => $routeParameters,
                         'label' => __('websites'),
-                        'icon' => 'fal fa-bars'
+                        'icon'  => 'fal fa-bars'
                     ],
                 ],
             ];

@@ -8,7 +8,6 @@
 namespace App\Actions\Portfolio\ContentBlock\Banners\UI;
 
 use App\Actions\InertiaAction;
-use App\Actions\UI\Dashboard\ShowDashboard;
 use App\Models\Portfolio\ContentBlock;
 use App\Models\Portfolio\Website;
 use Illuminate\Support\Str;
@@ -37,64 +36,65 @@ class ShowBannerWorkshop extends InertiaAction
     public function inWebsite(Website $website, ContentBlock $banner, ActionRequest $request): ContentBlock
     {
         $this->initialisation($request);
+
         return $banner;
     }
 
 
     public function htmlResponse(ContentBlock $banner, ActionRequest $request): Response
     {
-
         return Inertia::render(
             'Portfolio/BannerWorkshop',
             [
-                'title'       => __("Banner's workshop"),
-                'breadcrumbs' => $this->getBreadcrumbs(
+                'title'        => __("Banner's workshop"),
+                'breadcrumbs'  => $this->getBreadcrumbs(
                     $request->route()->getName(),
                     $request->route()->parameters
                 ),
-                'navigation'  => [
+                'navigation'   => [
                     'previous' => $this->getPrevious($banner, $request),
                     'next'     => $this->getNext($banner, $request),
                 ],
-                'pageHead'    => [
+                'pageHead'     => [
 
-                    'title'    => __('Workshop'),
-                    'container'=> [
+                    'title'     => __('Workshop'),
+                    'container' => [
                         'icon'    => ['fal', 'fa-window-maximize'],
                         'tooltip' => __('Banner'),
                         'label'   => Str::possessive($banner->name)
                     ],
-                    'iconRight'    =>
+                    'iconRight' =>
                         [
                             'icon'  => ['fal', 'drafting-compass'],
                             'title' => __("Banner's workshop")
                         ],
 
+                    'actionActualMethod' => 'patch',
                     'actions' => [
                         [
-                            'type'       => 'button',
-                            'style'      => 'exit',
-                            'label'      => __('Exit workshop'),
-                            'route'      => [
+                            'type'  => 'button',
+                            'style' => 'exit',
+                            'label' => __('Exit workshop'),
+                            'route' => [
                                 'name'       => preg_replace('/workshop$/', 'show', $request->route()->getName()),
                                 'parameters' => array_values($this->originalParameters),
                             ]
                         ],
                         [
-                            'type'       => 'button',
-                            'style'      => 'save',
-                            'route'      => [
+                            'type'    => 'button',
+                            'style'   => 'save',
+                            'route'   => [
                                 'name'       => 'models.content-block.update',
                                 'parameters' => [
-                                    'contentBlock'=>$banner->slug
+                                    'contentBlock' => $banner->slug
                                 ]
                             ],
-                            'method'      => 'patch',
+                            'method'  => 'post',
+
                         ]
                     ],
                 ],
-                'bannerLayout'=> $banner->compiledLayout(),
-
+                'bannerLayout' => $banner->compiledLayout(),
 
 
             ]
@@ -104,45 +104,41 @@ class ShowBannerWorkshop extends InertiaAction
 
     public function getBreadcrumbs(string $routeName, array $routeParameters): array
     {
-
         return ShowBanner::make()->getBreadcrumbs(
             preg_replace('/workshop$/', 'show', $routeName),
             $routeParameters,
             '('.__('Workshop').')'
         );
-
     }
 
     public function getPrevious(ContentBlock $banner, ActionRequest $request): ?array
     {
         $previous = ContentBlock::where('code', '<', $banner->code)->orderBy('code', 'desc')->first();
 
-        return $this->getNavigation($previous, $request->route()->getName());
+        return $this->getNavigation($previous, $request->route()->getName(), $request->route()->parameters);
     }
 
     public function getNext(ContentBlock $banner, ActionRequest $request): ?array
     {
         $next = ContentBlock::where('code', '>', $banner->code)->orderBy('code')->first();
 
-        return $this->getNavigation($next, $request->route()->getName());
+        return $this->getNavigation($next, $request->route()->getName(), $request->route()->parameters);
     }
 
-    private function getNavigation(?ContentBlock $banner, string $routeName): ?array
+    private function getNavigation(?ContentBlock $banner, string $routeName, array $routeParameters): ?array
     {
         if (!$banner) {
             return null;
         }
 
         return match ($routeName) {
-            'web.banners.workshop' => [
+            'portfolio.banners.workshop', 'portfolio.websites.show.banners.workshop' => [
                 'label' => $banner->name,
                 'route' => [
                     'name'       => $routeName,
-                    'parameters' => [
-                        'banner' => $banner->slug
-                    ]
+                    'parameters' => $routeParameters
                 ]
-            ]
+            ],
         };
     }
 

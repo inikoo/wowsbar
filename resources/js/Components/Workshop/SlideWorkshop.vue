@@ -22,23 +22,22 @@ import { trans } from "laravel-vue-i18n"
 
 library.add(faImage, faExpandArrows, faAlignCenter, faTrash, faStopwatch)
 const props = defineProps<{
-    currentComponentBeenEdited: Object,
-    blueprint: Array,
+    currentComponentBeenEdited: Object
+    blueprint: Array
     remove : Function
+    common: any
 }>()
 
+console.log(props.common)
 
 
 const getComponent = (componentName: string) => {
     const components = {
         'input': PrimitiveInput,
-        'inputWithAddOn': InputWithAddOn,
-        'select': Select,
         'radio': Radio,
         'slideBackground': SlideBackground,
         'corners': Corners,
         'delete': Delete,
-        'range': Range,
     };
     return components[componentName]
 };
@@ -62,22 +61,16 @@ const setCurrent=(key)=>{
     <div class="divide-y divide-gray-200 lg:grid grid-flow-col lg:grid-cols-12 lg:divide-y-0 lg:divide-x overflow-auto h-full">
 
         <!-- Left Tab: Navigation -->
-        <aside class="py-0 lg:col-span-3 lg:h-full">
+        <aside class="py-0 lg:col-span-3 lg:h-full border-2 border-red-500">
             <nav role="navigation" class="space-y-1">
                 <ul>
                     <li v-for="(item, key) in blueprint" @click="setCurrent(key)" :class="[
+                        'group cursor-pointer border-l-4 px-3 py-2 flex items-center text-sm font-medium',
                         key == current
-                            ? 'bg-gray-100 border-orange-500 text-orange-700 hover:bg-gray-100 hover:text-orange-700'
-                            : 'border-transparent text-gray-900 hover:bg-gray-50 hover:text-gray-900',
-                        'cursor-pointer group border-l-4 px-3 py-2 flex items-center text-sm font-medium',
+                            ? 'bg-gray-100 border-orange-500 hover:bg-gray-100 text-gray-600'
+                            : 'border-transparent hover:bg-gray-50 text-gray-500 hover:text-gray-700',
                     ]" :aria-current="key === current ? 'page' : undefined">
-                        <FontAwesomeIcon v-if="item.icon" aria-hidden="true" :class="[
-                            key === current
-                                ? 'text-orange-500 group-hover:text-orange-500'
-                                : 'text-gray-400 group-hover:text-gray-500',
-                            'flex-shrink-0 -ml-1 mr-3 h-6 w-6',
-                        ]" :icon="item.icon" />
-
+                        <FontAwesomeIcon v-if="item.icon" aria-hidden="true" class="flex-shrink-0 -ml-1 mr-3 h-6 w-6 text-gray-400 group-hover:text-gray-500" :icon="item.icon" />
                         <span class="capitalize truncate">{{trans(item.title)}}</span>
                     </li>
                 </ul>
@@ -85,34 +78,25 @@ const setCurrent=(key)=>{
         </aside>
 
         <!-- Content of forms -->
-        <div class="px-4 sm:px-6 md:px-4 col-span-9">
-            <div class="divide-y divide-grey-200 flex flex-col">
-                <div class="mt-2 pt-3">
-                    <div v-for="(fieldData, index ) in blueprint[current].fields" :key="index" class="">
-                        <dl class="divide-y divide-green-200  ">
-                            <div class="pb-4 sm:pb-5 sm:gap-4 max-w-2xl ">
+        <div class="px-4 sm:px-6 md:px-4 pt-6 xl:pt-0 col-span-9 flex flex-grow justify-center">
+            <div class="flex flex-col w-full border-2 border-red-500">
+                <dl v-for="(fieldData, index ) in blueprint[current].fields" :key="index" class="pb-4 sm:pb-5 sm:gap-4 w-full">
+                    <!-- Title -->
+                    <dt v-if="fieldData.name != 'image_source' && fieldData.label" class="text-sm font-medium text-gray-500 capitalize">
+                        <div class="inline-flex items-start leading-none">
+                            <span>{{ fieldData.label }}</span>
+                        </div>
+                    </dt>
 
-                                <!-- Title -->
-                                <dt class="text-sm font-medium text-gray-500 capitalize">
-                                    <div class="inline-flex items-start leading-none">
-                                        <span>{{ fieldData.label }}</span>
-                                    </div>
-                                </dt>
-
-                                <!-- Fields -->
-                                <dd class="">
-                                    <div class="mt-1 flex text-sm text-gray-700 sm:mt-0">
-                                        <div class="relative flex-grow">
-                                            <component :is="getComponent(fieldData['type'])" :data="currentComponentBeenEdited"
-                                                :fieldName="fieldData.name" :fieldData="fieldData" :key="index" :counter="false">
-                                            </component>
-                                        </div>
-                                    </div>
-                                </dd>
-                            </div>
-                        </dl>
-                    </div>
-                </div>
+                    <!-- Fields -->
+                    <dd class="flex text-sm text-gray-700 sm:mt-0 w-full border-yellow-500">
+                        <div class="relative flex-grow">
+                            <component :is="getComponent(fieldData['type'])" :data="currentComponentBeenEdited"
+                                :fieldName="fieldData.name" :fieldData="fieldData" :key="index" :counter="false" :common="common">
+                            </component>
+                        </div>
+                    </dd>
+                </dl>
             </div>
         </div>
     </div>

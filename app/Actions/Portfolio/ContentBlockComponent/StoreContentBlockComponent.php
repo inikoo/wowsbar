@@ -21,9 +21,9 @@ class StoreContentBlockComponent
     public function handle(ContentBlock $contentBlock, array $modelData): ContentBlockComponent
     {
 
-        $imageData=Arr::pull($modelData,'imageData');
+        $imageData=Arr::pull($modelData, 'imageData');
 
-        data_fill($modelData,'ulid',Str::ulid());
+        data_fill($modelData, 'ulid', Str::ulid());
         /** @var ContentBlockComponent $contentBlockComponent */
         $contentBlockComponent= $contentBlock->contentBlockComponents()->create($modelData);
 

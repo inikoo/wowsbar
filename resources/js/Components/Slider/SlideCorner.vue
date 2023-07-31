@@ -18,6 +18,10 @@ const props = defineProps<{
         type: string,
         data?: object
     },
+    commonCorner?: {
+        type: string,
+        data?: object
+    },
     swiperRef?: Element
 }>()
 

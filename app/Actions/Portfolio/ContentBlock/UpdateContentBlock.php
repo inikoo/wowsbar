@@ -29,26 +29,25 @@ class UpdateContentBlock
     {
 
 
-        if(Arr::has($modelData,'layout')){
-            $layout=Arr::pull($modelData,'layout');
+        if(Arr::has($modelData, 'layout')) {
+            $layout                                =Arr::pull($modelData, 'layout');
             list($layout, $contentBlockComponents) = ParseContentBlockLayout::run($layout, $contentBlock->webBlock);
-            data_set($modelData,'layout',$layout);
+            data_set($modelData, 'layout', $layout);
 
             if ($contentBlockComponents) {
                 foreach ($contentBlockComponents as $ulid=>$contentBlockComponentData) {
 
-                    $contentBlockComponent=ContentBlockComponent::where('ulid',$ulid)->first();
-                    if($contentBlockComponent){
+                    $contentBlockComponent=ContentBlockComponent::where('ulid', $ulid)->first();
+                    if($contentBlockComponent) {
 
 
 
                         UpdateContentBlockComponent::run(
                             $contentBlockComponent,
-                            Arr::only($contentBlockComponentData,['layout','imageData'])
-
+                            Arr::only($contentBlockComponentData, ['layout','imageData'])
                         );
-                    }else{
-                        data_set($contentBlockComponent,'ulid',$ulid);
+                    } else {
+                        data_set($contentBlockComponent, 'ulid', $ulid);
                         StoreContentBlockComponent::run(
                             contentBlock: $contentBlock,
                             modelData: $contentBlockComponentData,
@@ -101,6 +100,7 @@ class UpdateContentBlock
 
     public function asController(ContentBlock $contentBlock, ActionRequest $request): ContentBlock
     {
+        dd($request->all());
         $request->validate();
         return $this->handle($contentBlock, $request->validated());
     }

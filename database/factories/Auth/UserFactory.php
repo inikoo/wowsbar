@@ -5,7 +5,6 @@ namespace Database\Factories\Auth;
 use App\Models\Assets\Language;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-
 class UserFactory extends Factory
 {
     /**

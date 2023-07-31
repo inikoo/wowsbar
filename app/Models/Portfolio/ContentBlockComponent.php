@@ -23,7 +23,8 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property ContentBlockComponentTypeEnum $type
  * @property int $tenant_id
  * @property int $content_block_id
- * @property array $layout
+ * @property bool $visibility
+ * @property array|null $layout
  * @property int|null $image_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -45,18 +46,18 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @method static Builder|ContentBlockComponent whereType($value)
  * @method static Builder|ContentBlockComponent whereUlid($value)
  * @method static Builder|ContentBlockComponent whereUpdatedAt($value)
+ * @method static Builder|ContentBlockComponent whereVisibility($value)
  * @mixin \Eloquent
  */
 class ContentBlockComponent extends Model implements HasMedia
 {
-
     use BelongsToTenant;
     use InteractsWithMedia;
 
 
     protected $casts = [
         'layout'   => 'array',
-        'type'=>ContentBlockComponentTypeEnum::class
+        'type'     => ContentBlockComponentTypeEnum::class
     ];
 
     protected $attributes = [

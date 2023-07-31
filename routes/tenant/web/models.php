@@ -21,7 +21,7 @@ Route::patch('/website/{website}', UpdateWebsite::class)->name('website.update')
 Route::delete('/website/{website}', DeleteWebsite::class)->name('website.delete');
 Route::post('/website/{website}/web-block-type/{webBlockType}/banners', [StoreContentBlock::class,'inWebsiteInWebBlockType'])->name('website.web-block-type.banner.store');
 Route::patch('/content-block/{contentBlock}', UpdateContentBlock::class)->name('content-block.update');
-Route::delete('/website/{website}/content-block/{contentBlock}', DeleteContentBlock::class)->name('content-block.delete');
+Route::delete('/content-block/{contentBlock}', DeleteContentBlock::class)->name('content-block.delete');
 
 
 Route::patch('/user/{user:username}', UpdateUser::class)->name('user.update');

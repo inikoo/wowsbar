@@ -25,6 +25,8 @@ class InertiaAction
     protected bool $canEdit  = false;
     protected bool $canDelete= false;
 
+    protected bool $canRestore  = false;
+
     protected int $perPage = 50;
     private array $rawInputs;
 

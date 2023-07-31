@@ -5,7 +5,7 @@
   -->
 
 <script  setup lang="ts">
-import { ref, onMounted, watch } from 'vue'
+import { ref, onMounted, watch, computed } from 'vue'
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { faTrashAlt, faAlignJustify } from "@/../private/pro-light-svg-icons"
 import { faEye, faEyeSlash } from "@/../private/pro-solid-svg-icons"
@@ -17,6 +17,7 @@ import { trans } from "laravel-vue-i18n"
 import SlideWorkshop from "@/Components/Workshop/SlideWorkshop.vue"
 import Button from '../Elements/Buttons/Button.vue'
 import { get } from 'lodash'
+import SliderCommonWorkshop from './SliderCommonWorkshop.vue'
 library.add(faEye, faEyeSlash, faTrashAlt, faAlignJustify)
 
 interface CornersPositionData {
@@ -49,6 +50,7 @@ const props = defineProps<{
                 id: number,
                 image_id: number
                 image_source: string
+                ulid?: number
                 layout: {
                     link?: string,
                     centralStage: {
@@ -58,16 +60,20 @@ const props = defineProps<{
                         // footer?: string
                     }
                 }
+                visibility: boolean
                 corners: Corners
                 imageAlt: string
                 link: string
-                visibility: boolean
             }
         >
         delay: number
 
     }
 
+}>()
+
+const emits = defineEmits<{
+    (e: 'jumpToIndex', id: number): void
 }>()
 
 const isDragging = ref(false)
@@ -80,14 +86,14 @@ const addComponent = () => {
         if (set && set instanceof File) {
             setData.push({
                 id: null,
-                image_id: ulid(),
+                image_id: null,
                 image_source: null,
                 imageFile: set,
                 ulid: ulid(),
                 layout: {
                     imageAlt: set.name,
-                    visibility : true
-                }
+                },
+                visibility : true
             })
         }
     }
@@ -138,14 +144,14 @@ const drop = (e) => {
         if (set && set instanceof File) {
             setData.push({
                 id: null,
-                image_id: ulid(),
+                image_id: null,
                 image_source: null,
                 imageFile: set,
                 ulid: ulid(),
                 layout: {
                     imageAlt: set.name,
-                    visibility : true
-                }
+                },
+                visibility : true
             })
         }
     }
@@ -160,12 +166,15 @@ const selectComponentForEdition = (slide) => {
     _SlideWorkshop.value.current = 0
 }
 
-const visible = (file) => {
-    const index = props.data.components.findIndex((item) => item.ulid === file.ulid);
+// To change visibility of the each slide
+const changeVisibility = (slide: any) => {
+    const index = props.data.components.findIndex((item) => item.ulid === slide.ulid)
     if (index !== -1) {
-        props.data.components[index].layout.visibility = !props.data.components[index].layout.visibility;
+        props.data.components[index].hasOwnProperty('visibility')
+            ? props.data.components[index].visibility = !props.data.components[index].visibility
+            : props.data.components[index].visibility = false
     }
-};
+}
 
 const ComponentsBlueprint = ref([
     {
@@ -237,7 +246,8 @@ const CommonBlueprint = ref([
                 name: 'delay',
                 type: 'range',
                 label: trans('Duration'),
-                value: null
+                value: null,
+                timeRange : { min:"2.5", max:"15", step:"0.5", range:['2.5','5','7.5','10','12.5','15']} //always in set second and will be convert to milisecond
             },
         ]
 
@@ -306,22 +316,25 @@ const setCommonEdit =()=>{
     <div class="flex flex-grow gap-2.5">
         <div class="w-[30%] lg:w-2/3 p-2.5 border rounded h-fit shadow" v-if="data.components"
             @dragover="dragover" @dragleave="dragleave" @drop="drop">
-            <div :class="['border-gray-300 p-2 border mb-2 text-center', { 'border-orange-500 text-orange-500 font-medium': commonEditActive }]" @click="setCommonEdit">
+            <div :class="['border-gray-300 p-2 border mb-2 text-center cursor-pointer bg-gray-100 hover:bg-gray-200', { 'border-orange-500 text-orange-500 font-medium': commonEditActive }]" @click="setCommonEdit">
                 {{ trans('Common properties') }}
             </div>
 
             <!-- Drag area -->
             <div class="mb-2 text-lg font-medium">{{ trans('Slides') }}</div>
             <draggable :list="data.components" group="slide " item-key="ulid"
-                handle=".handle" >
-                <template #item="{ element: file }">
+                handle=".handle"
+                :onChange="(e: any) => emits('jumpToIndex', e.moved.newIndex)"
+            >
+                <template #item="{ element: slide }">
                     <div
-                        v-if="file.ulid !== null"
-                        :class="[file.ulid != get(currentComponentBeenEdited,'ulid') ?
+                        @mousedown="selectComponentForEdition(slide), emits('jumpToIndex', data.components.findIndex((component) => { return component.id == slide.id}))"
+                        v-if="slide.ulid !== null"
+                        :class="[slide.ulid != get(currentComponentBeenEdited,'ulid') ?
                             'border-gray-300' :
                             'border-l-orange-500 border-l-4 bg-gray-200/60 text-orange-500 font-medium',
                         'grid grid-flow-col relative py-1 border mb-2 items-center justify-between hover:cursor-pointer']"
-                        @click="selectComponentForEdition(file)"
+                        
                     >
                         <div class="grid grid-flow-col gap-x-1 py-1">
                             <!-- Icon: Bars, class 'handle' to grabable -->
@@ -329,20 +342,20 @@ const setCommonEdit =()=>{
 
                             <!-- Image slide -->
                             <div class="h-5 w-5 sm:h-10 sm:w-10 bg-contain flex items-center justify-center">
-                                <img class="h-5 sm:h-10 max-w-full shadow" :src="generateThumbnail(file)" />
+                                <img class="h-5 sm:h-10 max-w-full shadow" :src="generateThumbnail(slide)" />
                             </div>
 
                             <!-- Label slide -->
                             <div class="hidden lg:inline-flex overflow-hidden whitespace-nowrap overflow-ellipsis pl-2 leading-tight flex-auto items-center">
-                                <div class="overflow-hidden whitespace-nowrap overflow-ellipsis lg:text-xs xl:text-sm">{{ file.layout.imageAlt }}</div>
+                                <div class="overflow-hidden whitespace-nowrap overflow-ellipsis lg:text-xs xl:text-sm">{{ slide?.layout?.imageAlt ?? 'Image ' + slide.id}}</div>
                             </div>
                         </div>
 
                         <!-- Button: Show/hide, delete slide -->
                         <div class="flex justify-center items-center pr-2 justify-self-end">
                             <button class="px-2 py-1" type="button"
-                                @click="visible(file)" title="Show/hide the slide">
-                                <FontAwesomeIcon v-if="file.layout.visibility" icon="fas fa-eye" class="text-xs sm:text-sm text-gray-400 hover:text-gray-500" />
+                                @click="changeVisibility(slide)" title="Show/hide the slide">
+                                <FontAwesomeIcon v-if="slide.hasOwnProperty('visibility') ? slide.visibility : true" icon="fas fa-eye" class="text-xs sm:text-sm text-gray-400 hover:text-gray-500" />
                                 <FontAwesomeIcon v-else icon="fas fa-eye-slash" class="text-xs sm:text-sm text-gray-300 hover:text-gray-400/70" />
                             </button>
                         </div>
@@ -353,7 +366,7 @@ const setCommonEdit =()=>{
             <!-- Button: Add slide -->
             <!-- Remove the input element from inside the label -->
             <label
-                class="relative inline-block"
+                class="relative inline-block cursor-pointer"
                 id="input-slide-large-mask" for="fileInput"
             >
                 <input ref="fileInput" type="file" multiple name="file" id="fileInput"
@@ -363,13 +376,14 @@ const setCommonEdit =()=>{
             </label>
         </div>
 
-        <!-- The Editor -->
-        <div class="w-full border border-gray-300" v-if="currentComponentBeenEdited != null">
-            <SlideWorkshop :currentComponentBeenEdited="currentComponentBeenEdited" :blueprint="ComponentsBlueprint" ref="_SlideWorkshop" :remove="removeComponent"></SlideWorkshop>
+        <!-- The Editor: Common -->
+        <div class="w-full border border-gray-300" v-if="commonEditActive">
+            <SliderCommonWorkshop :currentComponentBeenEdited="props.data" :blueprint="CommonBlueprint" ref="_SlideWorkshop" :remove="removeComponent"></SliderCommonWorkshop>
         </div>
 
-        <div class="w-full border border-gray-300" v-if="commonEditActive">
-            <SlideWorkshop :currentComponentBeenEdited="props.data" :blueprint="CommonBlueprint" ref="_SlideWorkshop" :remove="removeComponent"></SlideWorkshop>
+        <!-- The Editor: Slide -->
+        <div class="w-full border border-gray-300" v-if="currentComponentBeenEdited != null">
+            <SlideWorkshop :common="data.common" :currentComponentBeenEdited="currentComponentBeenEdited" :blueprint="ComponentsBlueprint" ref="_SlideWorkshop" :remove="removeComponent"></SlideWorkshop>
         </div>
     </div>
 </template>
