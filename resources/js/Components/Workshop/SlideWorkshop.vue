@@ -15,7 +15,8 @@ import InputWithAddOn from '@/Components/Forms/Fields/InputWithAddOn.vue'
 import SlideBackground from "@/Components/Workshop/Fields/SlideBackground.vue"
 import Corners from "@/Components/Workshop/Fields/Corners.vue"
 import Delete from "@/Components/Workshop/Fields/Delete.vue"
-import Range from "@/Components/Workshop/Fields/Range.vue"
+import Colorpicker from '@/Components/Workshop/Fields/ColorPicker.vue'
+
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { trans } from "laravel-vue-i18n"
 
@@ -37,7 +38,7 @@ const getComponent = (componentName: string) => {
         'radio': Radio,
         'slideBackground': SlideBackground,
         'corners': Corners,
-        'delete': Delete,
+        'colorpicker' : Colorpicker,
     };
     return components[componentName]
 };

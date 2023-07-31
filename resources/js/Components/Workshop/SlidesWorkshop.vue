@@ -221,6 +221,12 @@ const ComponentsBlueprint = ref([
                 label: trans('subtitle'),
                 value: ['layout', 'centralStage', 'subtitle']
             },
+            {
+                name: ['layout', 'centralStage', 'style','color'],
+                type: 'colorpicker',
+                label: trans('color'),
+                value: ['layout', 'centralStage', 'style','color'],
+            },
         ]
     },
     {
