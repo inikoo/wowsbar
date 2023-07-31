@@ -11,6 +11,10 @@ const props = defineProps<{
     title: string;
     pageHead: object;
     bannerLayout: object;
+    imagesUploadRoute: {
+        name: string
+        parameters?: Array<string>
+    }
 
 }>();
 
