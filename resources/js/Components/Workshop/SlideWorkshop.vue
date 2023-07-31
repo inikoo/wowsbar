@@ -32,7 +32,7 @@ const props = defineProps<{
 
 const getComponent = (componentName: string) => {
     const components = {
-        'input': PrimitiveInput,
+        'text': PrimitiveInput,
         'radio': Radio,
         'slideBackground': SlideBackground,
         'corners': Corners,

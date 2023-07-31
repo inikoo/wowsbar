@@ -61,7 +61,7 @@ const updateFormValue = (newValue) => {
 <template>
     <div class="relative">
         <div class="relative">
-            <input v-if="fieldData" v-model.trim="value" :readonly="fieldData?.readonly" :type="props.options?.type ?? 'text'"
+            <input v-if="fieldData" v-model.trim="value" :readonly="fieldData?.readonly" :type="props.fieldData.type ?? 'text'"
                 :placeholder="fieldData?.placeholder"
                 class="block w-full shadow-sm rounded-md dark:bg-gray-600 dark:text-gray-400 focus:ring-gray-500 focus:border-gray-500 sm:text-sm border-gray-300 dark:border-gray-500 read-only:bg-gray-100 read-only:ring-0 read-only:ring-transparent read-only:text-gray-500" />
             <div v-else>No field data passed</div>

@@ -211,13 +211,13 @@ const ComponentsBlueprint = ref([
         fields: [
             {
                 name: ['layout', 'centralStage', 'title'],
-                type: 'input',
+                type: 'text',
                 label: trans('Title'),
                 value: ['layout', 'centralStage', 'title']
             },
             {
                 name: ['layout', 'centralStage', 'subtitle'],
-                type: 'input',
+                type: 'text',
                 label: trans('subtitle'),
                 value: ['layout', 'centralStage', 'subtitle']
             },
@@ -286,13 +286,13 @@ const CommonBlueprint = ref([
         fields: [
             {
                 name: ['common', 'centralStage', 'title'],
-                type: 'input',
+                type: 'text',
                 label: trans('Title'),
                 value: ['common', 'centralStage', 'title']
             },
             {
                 name: ['common', 'centralStage', 'subtitle'],
-                type: 'input',
+                type: 'text',
                 label: trans('subtitle'),
                 value: ['common', 'centralStage', 'subtitle']
             },
@@ -306,7 +306,7 @@ const CommonBlueprint = ref([
     //     fields: [
     //         {
     //             name: ['layout', 'centralStage', 'title'],
-    //             type: 'input',
+    //             type: 'text',
     //             label: trans('Title'),
     //             value: ['layout', 'centralStage', 'title']
     //         },
