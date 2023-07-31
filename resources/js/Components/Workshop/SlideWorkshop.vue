@@ -9,12 +9,10 @@ import { ref } from 'vue'
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { faImage, faExpandArrows, faAlignCenter, faTrash, faStopwatch } from "../../../private/pro-light-svg-icons"
 import PrimitiveInput from '@/Components/Forms/Fields/Primitive/PrimitiveInput.vue'
-import Select from '@/Components/Forms/Fields/Select.vue'
+import Select from '@/Components/Forms/Fields/Primitive/PrimitiveSelect.vue'
 import Radio from '@/Components/Forms/Fields/Radio.vue'
-import InputWithAddOn from '@/Components/Forms/Fields/InputWithAddOn.vue'
 import SlideBackground from "@/Components/Workshop/Fields/SlideBackground.vue"
 import Corners from "@/Components/Workshop/Fields/Corners.vue"
-import Delete from "@/Components/Workshop/Fields/Delete.vue"
 import Colorpicker from '@/Components/Workshop/Fields/ColorPicker.vue'
 
 import { library } from "@fortawesome/fontawesome-svg-core"
@@ -39,6 +37,7 @@ const getComponent = (componentName: string) => {
         'slideBackground': SlideBackground,
         'corners': Corners,
         'colorpicker' : Colorpicker,
+        'select': Select,
     };
     return components[componentName]
 };
