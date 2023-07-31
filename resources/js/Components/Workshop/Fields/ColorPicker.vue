@@ -2,9 +2,9 @@
 <script  setup lang="ts">
 import { ColorPicker } from 'vue-color-kit'
 import 'vue-color-kit/dist/vue-color-kit.css'
-import { Menu, MenuButton, MenuItems } from '@headlessui/vue'
+import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue'
 import { set } from 'lodash'
-import { ref, watch  } from 'vue'
+import { ref, watch } from 'vue'
 
 const props = defineProps<{
     fieldName: string | []
@@ -13,7 +13,7 @@ const props = defineProps<{
         readonly: boolean
         copyButton: boolean
     }
-    data : Object
+    data: Object
 }>()
 
 console.log(props)
@@ -64,24 +64,26 @@ const updateFormValue = (newValue) => {
 
 <template>
     <div>
-        <Menu as="div" class="relative inline-block text-left">
+        <Popover v-slot="{ open }" class="relative">
             <div>
-                <MenuButton :style="{ backgroundColor: color }" class="inline-flex w-10 h-10 justify-center  rounded-full"/>
-            </div>
+                <PopoverButton :class="{
+                    'bg-black bg-opacity-20 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75': true,
+                    'rounded-full w-10 h-10 justify-center': true
+                }" :style="`background-color: ${color};`" />
 
-            <transition enter-active-class="transition duration-100 ease-out"
-                enter-from-class="transform scale-95 opacity-0" enter-to-class="transform scale-100 opacity-100"
-                leave-active-class="transition duration-75 ease-in" leave-from-class="transform scale-100 opacity-100"
-                leave-to-class="transform scale-95 opacity-0">
-                <MenuItems
-                    class="absolute left-0 mt-2 w-56 origin-top-left divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                    <div :style="{ background: color }">
-                        <!-- Here, we bind the color value to the ColorPicker component using `v-model`. -->
-                        <ColorPicker theme="light" v-model="color" :sucker-hide="false" @changeColor="changeColor" />
-                    </div>
-                </MenuItems>
-            </transition>
-        </Menu>
+                <Transition enter-active-class="transition duration-200 ease-out" enter-from-class="translate-y-1 opacity-0"
+                    enter-to-class="translate-y-0 opacity-100" leave-active-class="transition duration-150 ease-in"
+                    leave-from-class="translate-y-0 opacity-100" leave-to-class="translate-y-1 opacity-0">
+                    <PopoverPanel v-show="open"
+                        class="absolute left-0 mt-2 w-56 origin-top-left divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                        <div :style="{ background: color }">
+                            <ColorPicker theme="light" v-model="color" :sucker-hide="false" @changeColor="changeColor"
+                                style="width: 225px;" />
+                        </div>
+                    </PopoverPanel>
+                </Transition>
+            </div>
+        </Popover>
     </div>
 </template>
-
+  

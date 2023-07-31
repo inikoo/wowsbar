@@ -11,14 +11,16 @@ const props = defineProps<{
         title?: string
         subtitle?: string
         text?: string
+        style : Object
     }
+ 
 }>()
-
+console.log('as',props)
 </script>
 
 <template>
     <div class="absolute">
-        <div v-if="data.title" class="text-gray-100 drop-shadow-md text-5xl font-bold">{{ data.title }}</div>
-        <div v-if="data.subtitle" class="text-gray-300 drop-shadow text-base italic tracking-widest">{{ data.subtitle }}</div>
+        <div v-if="data.title" :style="{...data.style}" class="text-gray-100 drop-shadow-md text-5xl font-bold">{{ data.title }}</div>
+        <div v-if="data.subtitle" :style="{...data.style}" class="text-gray-300 drop-shadow text-base italic tracking-widest">{{ data.subtitle }}</div>
     </div>
 </template>
