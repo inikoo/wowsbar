@@ -18,11 +18,11 @@ import { trans } from "laravel-vue-i18n"
 library.add(faImage, faExpandArrows, faAlignCenter, faTrash, faStopwatch)
 const props = defineProps<{
     currentComponentBeenEdited: Object,
-    blueprint: Array,
+    blueprint: Array<Object>,
     remove : Function
 }>()
 
-console.log(props.blueprint)
+// console.log(props.blueprint)
 
 const getComponent = (componentName: string) => {
     const components = {
