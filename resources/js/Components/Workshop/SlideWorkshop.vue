@@ -29,7 +29,7 @@ const props = defineProps<{
     common: any
 }>()
 
-console.log(props.common)
+// console.log(props.common)
 
 
 const getComponent = (componentName: string) => {

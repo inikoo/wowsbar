@@ -111,7 +111,7 @@ watch(() => props.jumpToIndex, (newVal) => {
             :centeredSlides="true"
             :loop="true"
             :autoplay="{
-                delay: data.delay,
+                delay: data.delay/2,
                 disableOnInteraction: false,
             }"
             :pagination="{

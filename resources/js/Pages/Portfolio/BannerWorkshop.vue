@@ -14,11 +14,11 @@ const props = defineProps<{
 
 }>();
 
-console.log('DataFormDB',props.bannerLayout)
+// console.log('DataFormDB',props.bannerLayout)
 
-const data=reactive(cloneDeep(props.bannerLayout))
+const data = reactive(cloneDeep(props.bannerLayout))
 
-console.log('SendData',data)
+// console.log('SendData',data)
 
 const jumpToIndex = ref(0)
 

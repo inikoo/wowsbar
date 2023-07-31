@@ -8,11 +8,16 @@ const props = defineProps<{
         placeholder: string
         readonly: boolean
         copyButton: boolean
+        timeRange: {
+            max: number
+            min: number
+            step: number
+            range: string
+        }
     }
-    data : Object
+    data: Object
     counter: boolean
 }>()
-
 
 const setFormValue = (data: Object, fieldName: String) => {
     if (Array.isArray(fieldName)) {
@@ -22,13 +27,12 @@ const setFormValue = (data: Object, fieldName: String) => {
     }
 }
 
-const getNestedValue = (obj: Object, keys: Array) => {
+const getNestedValue = (obj: Object, keys: Array<string>) => {
     return keys.reduce((acc, key) => {
-        if (acc && typeof acc === 'object' && key in acc) return acc[key];
-        return null;
-    }, obj);
+        if (acc && typeof acc === 'object' && key in acc) return acc[key]
+        return null
+    }, obj)
 }
-
 
 const value = ref(setFormValue(props.data, props.fieldName))
 
@@ -36,14 +40,12 @@ watch(value, (newValue) => {
     updateFormValue(newValue);
 });
 
-
-
-const updateFormValue = (newValue) => {
+const updateFormValue = (newValue: number) => {
     let target = props.data
     if (Array.isArray(props.fieldName)) {
-        set(target, props.fieldName, newValue * 1000);
+        set(target, props.fieldName, newValue * 1000)
     } else {
-        target[props.fieldName] = newValue * 1000;
+        target[props.fieldName] = newValue * 1000
     }
     props.data = { ...target }
 };
@@ -53,11 +55,13 @@ const updateFormValue = (newValue) => {
 
 <template>
     <div class="flex flex-col space-y-2 p-2 w-full">
-        <p>Duration: {{ value }}</p>
-        <input v-model="value" type="range" class="w-full range accent-orange-500" :min='fieldData.timeRange.min' :max="fieldData.timeRange.max" :step="fieldData.timeRange.step" />
-        <ul class="flex justify-between w-full px-[10px]">
-            <li v-for="item in fieldData.timeRange.range" :key="item" class="flex justify-center relative"><span class="absolute">{{ item }}</span>
-      </li>
+        <p class="text-gray-600">Duration: <span class="font-bold">{{ value }}</span> seconds</p>
+        <input v-model="value" type="range" class="w-full range accent-orange-500" :min='fieldData?.timeRange.min'
+            :max="fieldData?.timeRange.max" :step="fieldData?.timeRange.step" />
+        <ul class="flex justify-between w-full px-2.5">
+            <li v-for="item in fieldData?.timeRange.range" :key="item" class="flex justify-center relative"><span
+                    class="absolute">{{ item }}</span>
+            </li>
         </ul>
     </div>
 </template>

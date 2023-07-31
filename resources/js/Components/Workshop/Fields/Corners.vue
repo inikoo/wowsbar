@@ -6,7 +6,7 @@ import { get, cloneDeep, set } from 'lodash'
 
 const props = defineProps<{
     data: any
-    fieldName: string
+    fieldName: string | []
     options?: any
     fieldData?: {
         placeholder: string
@@ -256,6 +256,7 @@ defineExpose({
             </div>
         </div>
 
+        <!-- Choose: The type of component (after select Corners) -->
         <div v-if="area != null">
             <!-- Choose: Card -->
             <div class="w-full flex">
