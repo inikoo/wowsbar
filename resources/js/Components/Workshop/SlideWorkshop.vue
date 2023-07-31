@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { faImage, faExpandArrows, faAlignCenter, faTrash, faStopwatch } from "../../../private/pro-light-svg-icons"
 import PrimitiveInput from '@/Components/Forms/Fields/Primitive/PrimitiveInput.vue'
 import Select from '@/Components/Forms/Fields/Primitive/PrimitiveSelect.vue'
-import Radio from '@/Components/Forms/Fields/Radio.vue'
+import Radio from '@/Components/Forms/Fields/Primitive/PrimitiveRadio.vue'
 import SlideBackground from "@/Components/Workshop/Fields/SlideBackground.vue"
 import Corners from "@/Components/Workshop/Fields/Corners.vue"
 import Colorpicker from '@/Components/Workshop/Fields/ColorPicker.vue'
