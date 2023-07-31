@@ -17,32 +17,26 @@ class RouteServiceProvider extends ServiceProvider
 {
     public const HOME = '/dashboard';
 
-    /**
-     * Define your route model bindings, pattern filters, and other route configuration.
-     */
+
     public function boot(): void
     {
-
         $this->configureRateLimiting();
 
-
-
-        Route::middleware('landlord-web')
-            ->domain(config('app.domain'))
-            ->namespace($this->namespace)
-            ->name('landlord.')
-            ->group(base_path('routes/landlord/web/landlord-app.php'));
-
-
         $this->routes(function () {
+            Route::middleware('landlord-web')
+                ->domain(config('app.domain'))
+                ->name('landlord.')
+                ->group(base_path('routes/landlord/web/landlord-app.php'));
+
+
             Route::middleware('api')
                 ->prefix('api')
                 ->group(base_path('routes/tenant/api/api.php'));
 
             Route::middleware('web')
                 ->group(base_path('routes/tenant/web/app.php'));
-        });
 
+        });
     }
 
     protected function configureRateLimiting(): void

@@ -11,12 +11,12 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\Concerns\AsController;
 
-class ShowLandlordLandingPage
+class ShowWelcome
 {
     use AsController;
 
     public function handle(): Response
     {
-        return Inertia::render('Landlord/LandingPage');
+        return Inertia::render('Landlord/Welcome');
     }
 }
