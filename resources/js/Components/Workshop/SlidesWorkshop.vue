@@ -110,9 +110,13 @@ const addComponent = async (element) => {
 
     // Save the new image to database
     try {
-        const response = await axios.post(route(props.imagesUploadRoute.name, props.imagesUploadRoute.arguments), {
-            'images': element.target.files
-        })
+        console.log(element.target.files)
+        const response = await axios.post(route(props.imagesUploadRoute.name, props.imagesUploadRoute.arguments),
+            { 'images': element.target.files },
+            { 
+                headers: { 'Content-Type': 'multipart/form-data' }
+            }
+        )
 
         console.log(response.data)
 
