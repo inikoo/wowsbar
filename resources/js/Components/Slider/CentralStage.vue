@@ -7,11 +7,11 @@
 <script setup lang="ts">
 import { get } from 'lodash'
 const props = defineProps<{
-    data: {
+    data?: {
         title?: string
         subtitle?: string
         text?: string
-        style : Object
+        style?: Object
     }
   
 }>()
@@ -20,8 +20,8 @@ console.log('as',props)
 
 <template>
     <div class="absolute">
-        <div v-if="data.title" :style="{...data.style, fontSize : get(data,['style','fontSize','fontTitle'],'27px') }" class="text-gray-100 drop-shadow-md  font-bold">{{ data.title }}</div>
-        <div v-if="data.subtitle" :style="{...data.style, fontSize : get(data,['style','fontSize','fontSubtitle'],'14px') }" class="text-gray-300 drop-shadow  tracking-widest">{{ data.subtitle }}</div>
+        <div v-if="data?.title" :style="{...data.style, fontSize : get(data,['style','fontSize','fontTitle'],'27px') }" class="text-gray-100 drop-shadow-md  font-bold">{{ data.title }}</div>
+        <div v-if="data?.subtitle" :style="{...data.style, fontSize : get(data,['style','fontSize','fontSubtitle'],'14px') }" class="text-gray-300 drop-shadow  tracking-widest">{{ data.subtitle }}</div>
     </div>
 </template>
 

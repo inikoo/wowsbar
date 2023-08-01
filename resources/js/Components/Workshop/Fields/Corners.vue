@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { trans } from "laravel-vue-i18n"
-import { ref, watch, computed, defineExpose } from 'vue'
+import { ref, watch, computed } from 'vue'
 import Input from '@/Components/Forms/Fields/Input.vue'
 import { get, cloneDeep, set } from 'lodash'
 
@@ -186,7 +186,6 @@ const setUpData = () => {
     }
     
 
-   
     updateFormValue(value.value)
 };
 

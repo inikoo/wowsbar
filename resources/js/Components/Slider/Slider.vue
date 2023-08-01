@@ -137,11 +137,13 @@ watch(() => props.jumpToIndex, (newVal) => {
                         Not visible
                     </span>
                 </div>
-
                 <FontAwesomeIcon v-if="!!component?.layout?.link" icon='far fa-external-link' class='text-gray-300/50 text-xl absolute top-2 right-2' aria-hidden='true' />
-                <Link v-if="!!component?.layout?.link" :href="'abc'" class="absolute bg-transparent w-full h-full" />
+                <Link v-if="!!component?.layout?.link" :href="component?.layout?.link" class="absolute bg-transparent w-full h-full" />
                 <SlideCorner v-for="(slideCorner, position) in filteredNulls(component?.layout?.corners)" :position="position" :corner="slideCorner" :commonCorner="data.common.corners" />
-                <CentralStage v-if="component?.layout?.centralStage" :data="component?.layout?.centralStage" />
+                
+                <!-- CentralStage: common.centralStage (prioritize) and layout.centralstage -->
+                <CentralStage v-if="data.common?.centralStage.title != '' || data.common?.centralStage.subtitle != ''" :data="data.common?.centralStage" />
+                <CentralStage v-else="component?.layout?.centralStage" :data="component?.layout?.centralStage" />
             </SwiperSlide>
         </Swiper>
 
