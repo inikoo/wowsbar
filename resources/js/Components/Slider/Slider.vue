@@ -101,14 +101,15 @@ watch(() => props.jumpToIndex, (newVal) => {
     swiperRef.value.$el.swiper.slideToLoop(newVal, 0, false)
 })
 const getImageStyle=(component)=> {
-      const x = get(component,['imagePosition','x']);
-      const y = get(component,['imagePosition','y']);
-      const translateStyle = `translate(${x}px, ${y}px)`;
-      const style = {
-        transform: translateStyle,
-      };
-      return style;
+    const x = get(component,['imagePosition','x'])
+    const y = get(component,['imagePosition','y'])
+    const style = {
+        // left: `-${x}px`,
+        // top: `-${y}px`,
+        transform: `translateX(-${x}px) translateY(-${y}px)`
     }
+    return style
+}
 
 
 </script>
@@ -137,7 +138,7 @@ const getImageStyle=(component)=> {
             :navigation="false"
             :modules="[Autoplay, Pagination, Navigation]" class="mySwiper">
             <SwiperSlide v-for="component in data.components" :key="component.id">
-                <div class="relative w-full h-full">
+                <div class="relative w-full h-full overflow-hidden">
                     <img :src="generateThumbnail(component)" :alt="component.imageAlt" class="absolute" :style="getImageStyle(component)">
                 </div>
                 <div v-if="get(component, ['visibility'], true) === false" class="absolute h-full w-full bg-gray-800/50 z-10 " />

@@ -118,7 +118,7 @@ const initialiseApp = () => {
 
         layout.currentRouteParameters=route().params;
         layout.currentRoute=route().current();
-        layout.currentModule=layout.currentRoute.substring(0, layout.currentRoute.indexOf("."));
+        layout.currentModule = layout.currentRoute?.substring(0, layout.currentRoute?.indexOf("."));
 
 
         if (usePage().props.layoutShopsList) {
@@ -190,13 +190,13 @@ const sidebarOpen = ref(false)
 const showSearchDialog = ref(false)
 const user = ref(usePage().props.auth.user)
 
-const changeColorMode = (mode: boolean) => {
+const changeColorMode = (mode: boolean | string) => {
     // If browsers not support matchMedia
     if (!window.matchMedia) {
         return
     }
     
-    let query = false
+    let query: boolean | string = false
     
     if (mode == "system") {
         // If browsers prefers dark-mode then true

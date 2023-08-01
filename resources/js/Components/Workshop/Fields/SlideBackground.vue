@@ -75,15 +75,28 @@ const onFileChange = (event) => {
             </div>
             
             <!-- Button: Add slide -->
-            <Button :style="`secondary`" class="" size="xs">
-                {{ trans("Change image") }}
-                <label
-                    class="bg-transparent inset-0 absolute inline-block cursor-pointer"
-                    id="input-slide-large-mask" for="input-slide-large"
-                />
-                <input type="file" @change="onFileChange" id="input-slide-large" name="input-slide-large" accept="image/*"
-                    class="absolute cursor-pointer rounded-md border-gray-300 sr-only" />
-            </Button>
+            <div class="flex gap-x-2">
+                <Button :style="`secondary`" icon="fas fa-upload" class="" size="xs">
+                    {{ trans("Upload image") }}
+                    <label
+                        class="bg-transparent inset-0 absolute inline-block cursor-pointer"
+                        id="input-slide-large-mask" for="input-slide-large"
+                    />
+                    <input type="file" @change="onFileChange" id="input-slide-large" name="input-slide-large" accept="image/*"
+                        class="absolute cursor-pointer rounded-md border-gray-300 sr-only" />
+                </Button>
+
+                <Button :style="`tertiary`" icon="fal fa-image" size="xs" class="relative">
+                    {{ trans("Libraries") }}
+                    <label
+                        class="bg-transparent inset-0 absolute inline-block cursor-pointer"
+                        id="input-slide-large-mask" for="fileInput"
+                    />
+                    <input ref="fileInput" type="file" multiple name="file" id="fileInput"
+                        @change="addComponent" accept="image/*"
+                        class="absolute cursor-pointer rounded-md border-gray-300 sr-only" />
+                </Button>
+            </div>
         </div>
     </div>
 </template>

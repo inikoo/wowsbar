@@ -7,7 +7,7 @@
 <script  setup lang="ts">
 import { ref, onMounted, watch, computed } from 'vue'
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
-import { faTrashAlt, faAlignJustify, faCog } from "@/../private/pro-light-svg-icons"
+import { faTrashAlt, faAlignJustify, faCog, faImage } from "@/../private/pro-light-svg-icons"
 // import {  } from "@/../private/pro-regular-svg-icons"
 import { faEye, faEyeSlash } from "@/../private/pro-solid-svg-icons"
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -20,7 +20,7 @@ import Button from '../Elements/Buttons/Button.vue'
 import { get } from 'lodash'
 import { router } from '@inertiajs/vue3'
 import SliderCommonWorkshop from './SliderCommonWorkshop.vue'
-library.add(faEye, faEyeSlash, faTrashAlt, faAlignJustify, faCog)
+library.add(faEye, faEyeSlash, faTrashAlt, faAlignJustify, faCog, faImage)
 
 interface CornersPositionData {
     data: {
@@ -71,7 +71,10 @@ const props = defineProps<{
         delay: number
 
     }
-    imagesUploadRoute : Object
+    imagesUploadRoute: {
+        name: string
+        arguments: string
+    }
 }>()
 
 const emits = defineEmits<{
@@ -82,11 +85,15 @@ const isDragging = ref(false)
 const fileInput = ref(null)
 const currentComponentBeenEdited = ref(props.data.components[0])
 const commonEditActive = ref(false)
+
+// When new slide added
 const addComponent = () => {
     let setData = []
-
-    router.post(route(props.imagesUploadRoute.name,props.imagesUploadRoute.arguments),fileInput.value?.files)
-
+    console.log(props.imagesUploadRoute.name)
+    console.log(props.imagesUploadRoute.arguments)
+    console.log(route(props.imagesUploadRoute.name, props.imagesUploadRoute.arguments))
+    console.log(fileInput.value?.files)
+    router.post(route(props.imagesUploadRoute.name, props.imagesUploadRoute.arguments), fileInput.value?.files)
 
     for (const set of fileInput.value?.files) {
         if (set && set instanceof File) {
@@ -105,6 +112,7 @@ const addComponent = () => {
     }
     const newFiles = [...setData]
     props.data.components = [... props.data.components, ...newFiles]
+    console.log("===========================")
 }
 
 const generateThumbnail = (file) => {
@@ -430,16 +438,29 @@ const setCommonEdit = () => {
             </draggable>
 
             <!-- Button: Add slide -->
-            <Button :style="`secondary`" icon="fas fa-plus" size="xs" class="relative">
-                {{ trans("Add slide") }}
-                <label
-                    class="bg-transparent inset-0 absolute inline-block cursor-pointer"
-                    id="input-slide-large-mask" for="fileInput"
-                />
-                <input ref="fileInput" type="file" multiple name="file" id="fileInput"
-                    @change="addComponent" accept="image/*"
-                    class="absolute cursor-pointer rounded-md border-gray-300 sr-only" />
-            </Button>
+            <div class="flex gap-x-2">
+                <Button :style="`secondary`" icon="fas fa-plus" size="xs" class="relative">
+                    {{ trans("Add slide") }}
+                    <label
+                        class="bg-transparent inset-0 absolute inline-block cursor-pointer"
+                        id="input-slide-large-mask" for="fileInput"
+                    />
+                    <input ref="fileInput" type="file" multiple name="file" id="fileInput"
+                        @change="addComponent" accept="image/*"
+                        class="absolute cursor-pointer rounded-md border-gray-300 sr-only" />
+                </Button>
+
+                <Button :style="`tertiary`" icon="fal fa-image" size="xs" class="relative">
+                    {{ trans("Libraries") }}
+                    <label
+                        class="bg-transparent inset-0 absolute inline-block cursor-pointer"
+                        id="input-slide-large-mask" for="fileInput"
+                    />
+                    <input ref="fileInput" type="file" multiple name="file" id="fileInput"
+                        @change="addComponent" accept="image/*"
+                        class="absolute cursor-pointer rounded-md border-gray-300 sr-only" />
+                </Button>
+            </div>
         </div>
 
         <!-- The Editor: Common -->
