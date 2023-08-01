@@ -47,18 +47,13 @@ const onFileChange = (event) => {
     <div class="w-full">
         <VuePictureCropper
             ref="crooper"
-            :boxStyle="{
-                width: '100%',
-                height: '100%',
-                backgroundColor: '#f8f8f8',
-                margin: 'auto',
-            }"
             @crop="onCrop"
             :img="generateThumbnail(props.data.image_source)"
             :options="{
                 viewMode: 1,
-                dragMode: 'crop',
                 aspectRatio: 4 / 1,
+                dragMode: 'move',
+                cropBoxResizable: false,
             }"
         />
 
