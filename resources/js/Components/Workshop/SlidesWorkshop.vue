@@ -85,7 +85,11 @@ const commonEditActive = ref(false)
 const addComponent = () => {
     let setData = []
 
-    router.post(route(props.imagesUploadRoute.name,props.imagesUploadRoute.arguments),fileInput.value?.files)
+    router.post(route(props.imagesUploadRoute.name,props.imagesUploadRoute.arguments),
+        {
+            images:fileInput.value?.files
+        }
+    )
 
 
     for (const set of fileInput.value?.files) {
@@ -354,7 +358,7 @@ const CommonBlueprint = ref([
     //             label: trans('Title'),
     //             value: ['layout', 'centralStage', 'title']
     //         },
-    
+
     //     ]
     // },
 ])
@@ -363,7 +367,7 @@ const CommonBlueprint = ref([
 const _SlideWorkshop = ref(null)
 
 const setCommonEdit = () => {
-    commonEditActive.value = !commonEditActive.value 
+    commonEditActive.value = !commonEditActive.value
     if(commonEditActive.value) currentComponentBeenEdited.value = null
     else currentComponentBeenEdited.value = props.data.components[0]
 }
@@ -400,7 +404,7 @@ const setCommonEdit = () => {
                                 'border-l-orange-500 border-l-4 bg-gray-200/60 text-gray-600 font-medium' :
                                 'border-gray-300'
                         ]"
-                        
+
                     >
                         <div class="grid grid-flow-col gap-x-1 py-1">
                             <!-- Icon: Bars, class 'handle' to grabable -->

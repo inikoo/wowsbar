@@ -13,12 +13,13 @@ use App\Actions\Portfolio\ContentBlock\Banners\UI\RemoveBanner;
 use App\Actions\Portfolio\ContentBlock\Banners\UI\ShowBanner;
 use App\Actions\Portfolio\ContentBlock\Banners\UI\ShowBannerWorkshop;
 use App\Actions\Portfolio\ContentBlock\Banners\UI\ShowDeletedBanner;
-use App\Actions\UI\Websites\PortfolioDashboard;
+use App\Actions\Portfolio\ContentBlock\UploadImagesToContentBlock;
 use App\Actions\Portfolio\Website\UI\CreateWebsite;
 use App\Actions\Portfolio\Website\UI\EditWebsite;
 use App\Actions\Portfolio\Website\UI\IndexWebsites;
 use App\Actions\Portfolio\Website\UI\RemoveWebsite;
 use App\Actions\Portfolio\Website\UI\ShowWebsite;
+use App\Actions\UI\Websites\PortfolioDashboard;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/dashboard', PortfolioDashboard::class)->name('dashboard');
@@ -33,13 +34,13 @@ Route::get('/websites/{website}/banners', [IndexBanners::class,'inWebsite'])->na
 Route::get('/websites/{website}/banners/{banner}', [ShowBanner::class,'inWebsite'])->name('websites.show.banners.show');
 Route::get('/websites/{website}/banners/{banner}/edit', [EditBanner::class,'inWebsite'])->name('websites.show.banners.edit');
 Route::get('/websites/{website}/banners/{banner}/workshop', [ShowBannerWorkshop::class, 'inWebsite'])->name('websites.show.banners.workshop');
-Route::post('/websites/{website}/banners/{banner}/workshop/images', [ShowBannerWorkshop::class, 'inWebsite'])->name('websites.show.banners.workshop.images.store');
+Route::post('/websites/{website}/banners/{banner}/workshop/images', [UploadImagesToContentBlock::class, 'inBannerInWebsite'])->name('websites.show.banners.workshop.images.store');
 Route::get('/websites/{website}/banners/{banner}/delete', [RemoveBanner::class,'inWebsite'])->withTrashed()->name('websites.show.banners.remove');
 Route::get('/banners', [IndexBanners::class,'inTenant'])->name('banners.index');
 Route::get('/banners/{banner}', [ShowBanner::class,'inTenant'])->name('banners.show');
 Route::get('/banners/{banner}/edit', [EditBanner::class,'inTenant'])->name('banners.edit');
 Route::get('/banners/{banner}/workshop', [ShowBannerWorkshop::class,'inTenant'])->name('banners.workshop');
-Route::post('/banners/{banner}/workshop/images', [ShowBannerWorkshop::class,'inTenant'])->name('banners.workshop.images.store');
+Route::post('/banners/{banner}/workshop/images', [UploadImagesToContentBlock::class, 'inBanner'])->name('banners.workshop.images.store');
 
 Route::get('/banners/{banner}/delete', [RemoveBanner::class,'inTenant'])->name('banners.remove');
 Route::get('/banners/{banner}/deleted', [ShowDeletedBanner::class,'inTenant'])->withTrashed()->name('banners.deleted');
