@@ -314,6 +314,32 @@ const CommonBlueprint = ref([
                 label: trans('subtitle'),
                 value: ['common', 'centralStage', 'subtitle']
             },
+             {
+                name: ['common', 'centralStage', 'style','fontFamily'],
+                type: 'select',
+                label: trans('Font Family'),
+                value: ['common', 'centralStage', 'style','fontFamily'],
+                options : ['Arial', 'Comfortaa', 'Lobster', 'Laila', 'Port Lligat Slab', 'Playfair', 'Quicksand', 'Times New Roman', 'Yatra One']
+            },
+            {
+                name: ['common', 'centralStage', 'style','fontSize'],
+                type: 'radio',
+                label: trans('Font Family'),
+                value: ['common', 'centralStage', 'style','fontSize'],
+                defaultValue :{fontTitle : '27px', fontSubtitle : '14px'},
+                options : [
+                    {label : 'Small', value : {fontTitle : '21px', fontSubtitle : '12px'}, },
+                    {label : 'Medium', value: {fontTitle : '27px', fontSubtitle : '14px'} , },
+                    {label : 'large', value: {fontTitle : '34px', fontSubtitle : '16px'} , },
+                    {label : 'Xlarge', value: {fontTitle : '42px', fontSubtitle : '19px'}, }
+                ]
+            },
+            {
+                name: ['common', 'centralStage', 'style','color'],
+                type: 'colorpicker',
+                label: trans('color'),
+                value: ['common', 'centralStage', 'style','color'],
+            },
         ]
     },
 

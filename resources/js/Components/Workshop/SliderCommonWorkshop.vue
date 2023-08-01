@@ -13,7 +13,9 @@ import Corners from "@/Components/Workshop/Fields/Corners.vue"
 import Range from "@/Components/Workshop/Fields/Range.vue"
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { trans } from "laravel-vue-i18n"
-
+import Colorpicker from '@/Components/Workshop/Fields/ColorPicker.vue'
+import Select from '@/Components/Forms/Fields/Primitive/PrimitiveSelect.vue'
+import Radio from '@/Components/Forms/Fields/Primitive/PrimitiveRadio.vue'
 
 library.add(faImage, faExpandArrows, faAlignCenter, faTrash, faStopwatch)
 const props = defineProps<{
@@ -26,9 +28,12 @@ const props = defineProps<{
 
 const getComponent = (componentName: string) => {
     const components = {
-        'input': PrimitiveInput,
+        'text': PrimitiveInput,
         'corners': Corners,
         'range': Range,
+        'colorpicker' : Colorpicker,
+        'select': Select,
+        'radio': Radio,
     };
     return components[componentName]
 };
