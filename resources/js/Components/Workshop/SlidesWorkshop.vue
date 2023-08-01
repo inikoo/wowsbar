@@ -430,16 +430,16 @@ const setCommonEdit = () => {
             </draggable>
 
             <!-- Button: Add slide -->
-            <!-- Remove the input element from inside the label -->
-            <label
-                class="relative inline-block cursor-pointer"
-                id="input-slide-large-mask" for="fileInput"
-            >
+            <Button :style="`secondary`" icon="fas fa-plus" size="xs" class="relative">
+                {{ trans("Add slide") }}
+                <label
+                    class="bg-transparent inset-0 absolute inline-block cursor-pointer"
+                    id="input-slide-large-mask" for="fileInput"
+                />
                 <input ref="fileInput" type="file" multiple name="file" id="fileInput"
                     @change="addComponent" accept="image/*"
-                    class="absolute h-full w-full cursor-pointer rounded-md border-gray-300 opacity-0" />
-                <Button :style="`secondary`" icon="fas fa-plus" size="xs">{{ trans("Add slide") }}</Button>
-            </label>
+                    class="absolute cursor-pointer rounded-md border-gray-300 sr-only" />
+            </Button>
         </div>
 
         <!-- The Editor: Common -->

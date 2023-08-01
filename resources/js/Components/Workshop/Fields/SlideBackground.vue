@@ -44,13 +44,16 @@ const onFileChange = (event) => {
                 <img class="absolute top-1/2 -translate-y-1/2 w-full" :src="generateThumbnail(props.data.image_source)" alt="" />
             </div>
             
-            <label class="relative inline-block"
-                id="input-slide-large-mask" for="input-slide-large"
-            >
+            <!-- Button: Add slide -->
+            <Button :style="`secondary`" class="" size="xs">
+                {{ trans("Change image") }}
+                <label
+                    class="bg-transparent inset-0 absolute inline-block cursor-pointer"
+                    id="input-slide-large-mask" for="input-slide-large"
+                />
                 <input type="file" @change="onFileChange" id="input-slide-large" name="input-slide-large" accept="image/*"
-                    class="absolute h-full w-full cursor-pointer rounded-md border-gray-300 opacity-0" />
-                <Button :style="`secondary`" class="" size="xs">{{ trans("Change image") }}</Button>
-            </label>
+                    class="absolute cursor-pointer rounded-md border-gray-300 sr-only" />
+            </Button>
         </div>
     </div>
 </template>
