@@ -46,16 +46,16 @@ class ShowBannerWorkshop extends InertiaAction
         return Inertia::render(
             'Portfolio/BannerWorkshop',
             [
-                'title'        => __("Banner's workshop"),
-                'breadcrumbs'  => $this->getBreadcrumbs(
+                'title'             => __("Banner's workshop"),
+                'breadcrumbs'       => $this->getBreadcrumbs(
                     $request->route()->getName(),
                     $request->route()->parameters
                 ),
-                'navigation'   => [
+                'navigation'        => [
                     'previous' => $this->getPrevious($banner, $request),
                     'next'     => $this->getNext($banner, $request),
                 ],
-                'pageHead'     => [
+                'pageHead'          => [
 
                     'title'     => __('Workshop'),
                     'container' => [
@@ -70,7 +70,7 @@ class ShowBannerWorkshop extends InertiaAction
                         ],
 
                     'actionActualMethod' => 'patch',
-                    'actions' => [
+                    'actions'            => [
                         [
                             'type'  => 'button',
                             'style' => 'exit',
@@ -81,20 +81,24 @@ class ShowBannerWorkshop extends InertiaAction
                             ]
                         ],
                         [
-                            'type'    => 'button',
-                            'style'   => 'save',
-                            'route'   => [
+                            'type'   => 'button',
+                            'style'  => 'save',
+                            'route'  => [
                                 'name'       => 'models.content-block.update',
                                 'parameters' => [
                                     'contentBlock' => $banner->slug
                                 ]
                             ],
-                            'method'  => 'post',
+                            'method' => 'post',
 
                         ]
                     ],
                 ],
-                'bannerLayout' => $banner->compiledLayout(),
+                'bannerLayout'      => $banner->compiledLayout(),
+                'imagesUploadRoute' => [
+                    'name'      => $request->route()->getName().'.images.store',
+                    'arguments' => $request->route()->originalParameters()
+                ]
 
 
             ]

@@ -11,10 +11,14 @@ const props = defineProps<{
     title: string;
     pageHead: object;
     bannerLayout: object;
+    imagesUploadRoute: {
+        name: string
+        parameters?: Array<string>
+    }
 
 }>();
 
-// console.log('DataFormDB',props.bannerLayout)
+// console.log('DataFormDB',props.imagesUploadRoute)
 
 const data = reactive(cloneDeep(props.bannerLayout))
 
@@ -32,7 +36,7 @@ const jumpToIndex = ref(0)
         <!-- First set of components -->
         <div v-if="data.components.filter((item) => item.ulid != null).length > 0">
             <Slider :data="data" :jumpToIndex="jumpToIndex" />
-            <SlidesWorkshop class="clear-both mt-2 p-2.5" :data="data" @jumpToIndex="(val) => jumpToIndex = val"/>
+            <SlidesWorkshop class="clear-both mt-2 p-2.5" :data="data" @jumpToIndex="(val) => jumpToIndex = val" :imagesUploadRoute="imagesUploadRoute"/>
         </div>
 
     <!-- Second set of components -->

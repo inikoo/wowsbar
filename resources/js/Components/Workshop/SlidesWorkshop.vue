@@ -18,6 +18,7 @@ import { trans } from "laravel-vue-i18n"
 import SlideWorkshop from "@/Components/Workshop/SlideWorkshop.vue"
 import Button from '../Elements/Buttons/Button.vue'
 import { get } from 'lodash'
+import { router } from '@inertiajs/vue3'
 import SliderCommonWorkshop from './SliderCommonWorkshop.vue'
 library.add(faEye, faEyeSlash, faTrashAlt, faAlignJustify, faCog)
 
@@ -70,7 +71,7 @@ const props = defineProps<{
         delay: number
 
     }
-
+    imagesUploadRoute : Object
 }>()
 
 const emits = defineEmits<{
@@ -83,6 +84,10 @@ const currentComponentBeenEdited = ref(props.data.components[0])
 const commonEditActive = ref(false)
 const addComponent = () => {
     let setData = []
+
+    router.post(route(props.imagesUploadRoute.name,props.imagesUploadRoute.arguments),fileInput.value?.files)
+
+
     for (const set of fileInput.value?.files) {
         if (set && set instanceof File) {
             setData.push({
