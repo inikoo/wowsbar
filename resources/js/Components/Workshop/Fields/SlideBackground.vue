@@ -43,17 +43,14 @@ const onFileChange = (event) => {
 };
 
 
-const onImageLoad = () => {
-    console.log('dd', crooper)
-    //   this.$refs.crooper.cropper.setOption("zoomable", false);
-}
+
 </script>
 
 <template>
     <div class="w-full">
         <div class="w-full h-52 overflow-hidden">
             <VuePictureCropper ref="crooper" @crop="onCrop" :img="generateThumbnail(props.data.image_source)"
-                @ready="onImageLoad" :options="{
+                :options="{
                     viewMode: 1,
                     aspectRatio: 4 / 1,
                     dragMode: 'move',
