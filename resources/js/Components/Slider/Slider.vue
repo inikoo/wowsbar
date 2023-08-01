@@ -127,7 +127,9 @@ watch(() => props.jumpToIndex, (newVal) => {
             :navigation="false"
             :modules="[Autoplay, Pagination, Navigation]" class="mySwiper">
             <SwiperSlide v-for="component in data.components" :key="component.id">
-                <img :src="generateThumbnail(component)" :alt="component.imageAlt" class="">
+                <div class="relative w-full h-full">
+                    <img :src="generateThumbnail(component)" :alt="component.imageAlt" class="absolute" :class="`-top-[${yyyy}px] -left-[${xxx}px]`">
+                </div>
 
                 <div v-if="get(component, ['visibility'], true) === false" class="absolute h-full w-full bg-gray-800/50 z-10 " />
                 <div class="z-[11] absolute left-7 flex flex-col gap-y-2">
@@ -168,7 +170,7 @@ watch(() => props.jumpToIndex, (newVal) => {
 }
 
 .swiper-slide img {
-    @apply w-full h-full;
+    // @apply w-full h-full;
     display: block;
     object-fit: cover;
 }
