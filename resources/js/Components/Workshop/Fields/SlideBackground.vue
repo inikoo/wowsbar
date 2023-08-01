@@ -71,7 +71,7 @@ const onFileChange = (event) => {
             
             <!-- Button: Add slide -->
             <div class="flex gap-x-2">
-                <Button :style="`secondary`" icon="fas fa-upload" class="" size="xs">
+                <Button :style="`secondary`" icon="fas fa-upload" class="relative" size="xs">
                     {{ trans("Upload image") }}
                     <label
                         class="bg-transparent inset-0 absolute inline-block cursor-pointer"

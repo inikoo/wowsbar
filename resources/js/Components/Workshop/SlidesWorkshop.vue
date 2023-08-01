@@ -6,6 +6,7 @@
 
 <script  setup lang="ts">
 import { ref, onMounted, watch, computed } from 'vue'
+import axios from 'axios'
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { faTrashAlt, faAlignJustify, faCog, faImage } from "@/../private/pro-light-svg-icons"
 // import {  } from "@/../private/pro-regular-svg-icons"
@@ -87,7 +88,7 @@ const currentComponentBeenEdited = ref(props.data.components[0])
 const commonEditActive = ref(false)
 
 // When new slide added
-const addComponent = async () => {
+const addComponent = async (element) => {
     let setData = []
     for (const set of fileInput.value?.files) {
         if (set && set instanceof File) {
@@ -109,26 +110,11 @@ const addComponent = async () => {
 
     // Save the new image to database
     try {
-        const response = await fetch(route(props.imagesUploadRoute.name, props.imagesUploadRoute.arguments), {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                images: fileInput.value?.files
-            }),
-        });
+        const response = await axios.post(route(props.imagesUploadRoute.name, props.imagesUploadRoute.arguments), {
+            'images': element.target.files
+        })
 
-        // If the fetch() is not success
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-
-        // Parse the response body as JSON
-        const responseData = await response.json();
-
-        // Handle the response data without redirecting
-        console.log(responseData);
+        console.log(response.data)
 
     } catch (error) {
         // Handle any errors that might occur during the POST request
@@ -459,7 +445,7 @@ const setCommonEdit = () => {
                 </template>
             </draggable>
 
-            <!-- Button: Add slide -->
+            <!-- Button: Add slide, Libraries -->
             <div class="flex gap-x-2">
                 <Button :style="`secondary`" icon="fas fa-plus" size="xs" class="relative">
                     {{ trans("Add slide") }}
@@ -471,7 +457,7 @@ const setCommonEdit = () => {
                         @change="addComponent" accept="image/*"
                         class="absolute cursor-pointer rounded-md border-gray-300 sr-only" />
                 </Button>
-
+                
                 <Button :style="`tertiary`" icon="fal fa-image" size="xs" class="relative">
                     {{ trans("Libraries") }}
                     <label
