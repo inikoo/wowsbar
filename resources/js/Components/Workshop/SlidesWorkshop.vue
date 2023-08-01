@@ -87,16 +87,8 @@ const currentComponentBeenEdited = ref(props.data.components[0])
 const commonEditActive = ref(false)
 
 // When new slide added
-const addComponent = () => {
+const addComponent = async () => {
     let setData = []
-
-    router.post(route(props.imagesUploadRoute.name, props.imagesUploadRoute.arguments),
-        {
-            images:fileInput.value?.files
-        }
-    )
-
-
     for (const set of fileInput.value?.files) {
         if (set && set instanceof File) {
             setData.push({
@@ -114,8 +106,36 @@ const addComponent = () => {
     }
     const newFiles = [...setData]
     props.data.components = [... props.data.components, ...newFiles]
-    console.log("===========================")
-}
+
+    // Save the new image to database
+    try {
+        const response = await fetch(route(props.imagesUploadRoute.name, props.imagesUploadRoute.arguments), {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                images: fileInput.value?.files
+            }),
+        });
+
+        // If the fetch() is not success
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        // Parse the response body as JSON
+        const responseData = await response.json();
+
+        // Handle the response data without redirecting
+        console.log(responseData);
+
+    } catch (error) {
+        // Handle any errors that might occur during the POST request
+        console.error(error);
+    }
+};
+
 
 const generateThumbnail = (file) => {
     if (file.imageFile && file.imageFile instanceof File) {
