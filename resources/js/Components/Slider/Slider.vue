@@ -103,7 +103,7 @@ watch(() => props.jumpToIndex, (newVal) => {
 </script>
 
 <template>
-    <div class="w-full aspect-[16/4] overflow-hidden relative">
+    <div class="w-full aspect-[2/1] md:aspect-[3/1] lg:aspect-[4/1] overflow-hidden relative">
         <Swiper ref="swiperRef"
             :slideToClickedSlide="true"
             :spaceBetween="-1"
