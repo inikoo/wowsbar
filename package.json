@@ -53,6 +53,8 @@
         "uuid": "^9.0.0",
         "vue-collapsed": "^1.1.3",
         "vue-color-kit": "^1.0.6",
+        "vue-cropperjs": "^5.0.0",
+        "vue-picture-cropper": "^0.6.1",
         "vue-tel-input": "^8.1.1",
         "vue3-popper": "^1.5.0",
         "vuedraggable": "^4.1.0",
