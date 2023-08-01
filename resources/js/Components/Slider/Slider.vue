@@ -180,7 +180,7 @@ const getImageStyle=(component)=> {
 }
 
 .swiper-slide img {
-    // @apply w-full h-full;
+    @apply w-full h-auto;
     display: block;
     object-fit: cover;
 }

@@ -7,7 +7,7 @@ import { set } from "lodash";
 const props = defineProps(["data"]);
 const crooper = ref(null);
 const onCrop = (cropPosition) => {
-    set(props,['data','imagePosition'],cropPosition.detail)
+    set(props, ['data', 'imagePosition'], cropPosition.detail)
 };
 
 
@@ -41,55 +41,53 @@ const onFileChange = (event) => {
         props.data.layout.imageAlt = file.name;
     }
 };
+
+
+
 </script>
 
 <template>
     <div class="w-full">
-        <VuePictureCropper
-            ref="crooper"
-            @crop="onCrop"
-            :img="generateThumbnail(props.data.image_source)"
-            :options="{
-                viewMode: 1,
-                aspectRatio: 4 / 1,
-                dragMode: 'move',
-                cropBoxResizable: false,
-            }"
-        />
+        <div class="w-full h-52 overflow-hidden">
+            <VuePictureCropper ref="crooper" @crop="onCrop" :img="generateThumbnail(props.data.image_source)"
+                :options="{
+                    viewMode: 1,
+                    aspectRatio: 4 / 1,
+                    dragMode: 'move',
+                    cropBoxResizable: false,
+                    zoomable: false,
+                    responsive: false,
+                    restore: false,
+                    rotatable: false,
+                    scalable: false,
+                    minContainerWidth: 100,
+                    minContainerHeight: 100,
+                    minCropBoxWidth: 320,
+                    minCropBoxHeight: 80,
+                }" :outputSize="outputSize" />
+        </div>
+
 
         <!-- Avatar Button: Large view -->
         <div class="w-full relative space-y-4">
-            <div
-                class="w-full aspect-[16/4] overflow-hidden relative shadow-md"
-            >
-                <img
-                    class="absolute top-1/2 -translate-y-1/2 w-full"
-                    :src="generateThumbnail(props.data.image_source)"
-                    alt=""
-                />
-            </div>
-            
+
+
             <!-- Button: Add slide -->
             <div class="flex gap-x-2">
                 <Button :style="`secondary`" icon="fas fa-upload" class="relative" size="xs">
                     {{ trans("Upload image") }}
-                    <label
-                        class="bg-transparent inset-0 absolute inline-block cursor-pointer"
-                        id="input-slide-large-mask" for="input-slide-large"
-                    />
-                    <input type="file" @change="onFileChange" id="input-slide-large" name="input-slide-large" accept="image/*"
-                        class="absolute cursor-pointer rounded-md border-gray-300 sr-only" />
+                    <label class="bg-transparent inset-0 absolute inline-block cursor-pointer" id="input-slide-large-mask"
+                        for="input-slide-large" />
+                    <input type="file" @change="onFileChange" id="input-slide-large" name="input-slide-large"
+                        accept="image/*" class="absolute cursor-pointer rounded-md border-gray-300 sr-only" />
                 </Button>
 
                 <Button :style="`tertiary`" icon="fal fa-image" size="xs" class="relative">
                     {{ trans("Libraries") }}
-                    <label
-                        class="bg-transparent inset-0 absolute inline-block cursor-pointer"
-                        id="input-slide-large-mask" for="fileInput"
-                    />
-                    <input ref="fileInput" type="file" multiple name="file" id="fileInput"
-                        @change="addComponent" accept="image/*"
-                        class="absolute cursor-pointer rounded-md border-gray-300 sr-only" />
+                    <label class="bg-transparent inset-0 absolute inline-block cursor-pointer" id="input-slide-large-mask"
+                        for="fileInput" />
+                    <input ref="fileInput" type="file" multiple name="file" id="fileInput" @change="addComponent"
+                        accept="image/*" class="absolute cursor-pointer rounded-md border-gray-300 sr-only" />
                 </Button>
             </div>
         </div>
