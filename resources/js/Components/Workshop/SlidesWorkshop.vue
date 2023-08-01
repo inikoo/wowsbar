@@ -90,7 +90,7 @@ const commonEditActive = ref(false)
 // When new slide added
 const addComponent = async (element) => {
     let setData = []
-    for (const set of fileInput.value?.files) {
+    for (const set of element.target.files) {
         if (set && set instanceof File) {
             setData.push({
                 id: null,
