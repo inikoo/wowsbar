@@ -104,8 +104,6 @@ const getImageStyle=(component)=> {
     const x = get(component,['imagePosition','x'])
     const y = get(component,['imagePosition','y'])
     const style = {
-        // left: `-${x}px`,
-        // top: `-${y}px`,
         transform: `translateX(-${x}px) translateY(-${y}px)`
     }
     return style

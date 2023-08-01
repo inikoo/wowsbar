@@ -7,6 +7,7 @@ import { set } from "lodash";
 const props = defineProps(["data"]);
 const crooper = ref(null);
 const onCrop = (cropPosition) => {
+    console.log(crooper.value)
     set(props, ['data', 'imagePosition'], cropPosition.detail)
 };
 
@@ -60,8 +61,7 @@ const onFileChange = (event) => {
                     restore: false,
                     rotatable: false,
                     scalable: false,
-                    minContainerWidth: 100,
-                    minContainerHeight: 100,
+                    
                     minCropBoxWidth: 320,
                     minCropBoxHeight: 80,
                 }" :outputSize="outputSize" />
@@ -69,9 +69,7 @@ const onFileChange = (event) => {
 
 
         <!-- Avatar Button: Large view -->
-        <div class="w-full relative space-y-4">
-
-
+        <div class="w-full relative space-y-4 mt-2.5">
             <!-- Button: Add slide -->
             <div class="flex gap-x-2">
                 <Button :style="`secondary`" icon="fas fa-upload" class="" size="xs">
