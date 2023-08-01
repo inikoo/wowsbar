@@ -71,6 +71,7 @@ const props = defineProps<{
         delay: number
 
     }
+    view?: string
 
 }>()
 
@@ -103,7 +104,13 @@ watch(() => props.jumpToIndex, (newVal) => {
 </script>
 
 <template>
-    <div class="w-full aspect-[2/1] md:aspect-[3/1] lg:aspect-[4/1] overflow-hidden relative">
+    <div class="w-full overflow-hidden relative"
+        :class="[$props.view
+            ? { 'aspect-[3/1]' : $props.view == 'tablet',
+                'aspect-[2/1]' : $props.view == 'mobile',
+                'aspect-[4/1]' : $props.view == 'desktop'}
+            : 'aspect-[2/1] md:aspect-[3/1] lg:aspect-[4/1]']"
+    >
         <Swiper ref="swiperRef"
             :slideToClickedSlide="true"
             :spaceBetween="-1"

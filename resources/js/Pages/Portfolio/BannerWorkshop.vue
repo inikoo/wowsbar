@@ -7,6 +7,9 @@ import SlidesWorkshop from "@/Components/Workshop/SlidesWorkshop.vue"
 import Slider from "@/Components/Slider/Slider.vue"
 import SlidesWorkshopAddMode from "@/Components/Workshop/SlidesWorkshopAddMode.vue"
 import { cloneDeep } from 'lodash'
+import ScreenView from "@/Components/ScreenView.vue"
+
+
 const props = defineProps<{
     title: string;
     pageHead: object;
@@ -25,6 +28,7 @@ const data = reactive(cloneDeep(props.bannerLayout))
 // console.log('SendData',data)
 
 const jumpToIndex = ref(0)
+const screenView = ref('')
 
 </script>
 
@@ -35,7 +39,10 @@ const jumpToIndex = ref(0)
     <div>
         <!-- First set of components -->
         <div v-if="data.components.filter((item) => item.ulid != null).length > 0">
-            <Slider :data="data" :jumpToIndex="jumpToIndex" />
+            <div class="flex justify-end px-4">
+                <ScreenView @screenView="(val) => screenView = val"/>
+            </div>
+            <Slider :data="data" :jumpToIndex="jumpToIndex" :view="screenView"/>
             <SlidesWorkshop class="clear-both mt-2 p-2.5" :data="data" @jumpToIndex="(val) => jumpToIndex = val" :imagesUploadRoute="imagesUploadRoute"/>
         </div>
 
