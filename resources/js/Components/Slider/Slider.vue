@@ -164,7 +164,7 @@ const getResult =  (component: Object) => {
                 <SlideCorner v-for="(slideCorner, position) in filteredNulls(component?.layout?.corners)" :position="position" :corner="slideCorner" :commonCorner="data.common.corners" />
                 
                 <!-- CentralStage: common.centralStage (prioritize) and layout.centralstage -->
-                <CentralStage v-if="data.common?.centralStage.title != '' || data.common?.centralStage.subtitle != ''" :data="data.common?.centralStage" />
+                <CentralStage v-if="data.common?.centralStage?.title?.length > 0 || data.common?.centralStage?.subtitle?.length > 0" :data="data.common?.centralStage" />
                 <CentralStage v-else="component?.layout?.centralStage" :data="component?.layout?.centralStage" />
             </SwiperSlide>
         </Swiper>
@@ -172,7 +172,6 @@ const getResult =  (component: Object) => {
         <!-- Reserved Corner: Button Controls -->
         <SlideCorner class="z-10" v-for="(corner, position) in filteredNulls(data.common.corners)" :position="position" :corner="corner"   :swiperRef="swiperRef"/>
     </div>
-
 </template>
 
 <style lang="scss">
