@@ -100,14 +100,26 @@ const filteredNulls = (corners: Corners) => {
 watch(() => props.jumpToIndex, (newVal) => {
     swiperRef.value.$el.swiper.slideToLoop(newVal, 0, false)
 })
-const getImageStyle=(component)=> {
-    const x = get(component,['imagePosition','x'])
-    const y = get(component,['imagePosition','y'])
-    const style = {
-        transform: `translateX(-${x}px) translateY(-${y}px)`
+
+// const getImageStyle=(component)=> {
+//     const x = get(component,['imagePosition','x'])
+//     const y = get(component,['imagePosition','y'])
+//     const style = {
+//         transform: `translateX(-${x}px) translateY(-${y}px)`
+//     }
+//     return style
+// }
+
+
+const getResult =  (component: Object) => {
+    if (component.imagePosition) {
+        const base64 =  component.imagePosition?.canvas.toDataURL();
+        return base64
+    } else {
+        return generateThumbnail(component);
     }
-    return style
 }
+
 
 
 </script>
@@ -137,7 +149,7 @@ const getImageStyle=(component)=> {
             :modules="[Autoplay, Pagination, Navigation]" class="mySwiper">
             <SwiperSlide v-for="component in data.components" :key="component.id">
                 <div class="relative w-full h-full overflow-hidden">
-                    <img :src="generateThumbnail(component)" :alt="component.imageAlt" class="absolute" :style="getImageStyle(component)">
+                    <img :src="getResult(component)" :alt="component.layout?.imageAlt" class="absolute">
                 </div>
                 <div v-if="get(component, ['visibility'], true) === false" class="absolute h-full w-full bg-gray-800/50 z-10 " />
                 <div class="z-[11] absolute left-7 flex flex-col gap-y-2">
