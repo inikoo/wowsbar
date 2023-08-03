@@ -113,12 +113,12 @@ const getImageStyle=(component)=> {
 </script>
 
 <template>
-    <div class="w-full overflow-hidden relative"
+    <div class=" overflow-hidden relative border border-gray-300 shadow-md"
         :class="[$props.view
-            ? { 'aspect-[3/1]' : $props.view == 'tablet',
-                'aspect-[2/1]' : $props.view == 'mobile',
+            ? { 'aspect-[2/1] w-1/2' : $props.view == 'mobile',
+                'aspect-[3/1] w-3/4' : $props.view == 'tablet',
                 'aspect-[4/1]' : $props.view == 'desktop'}
-            : 'aspect-[2/1] md:aspect-[3/1] lg:aspect-[4/1]']"
+            : 'w-full aspect-[2/1] md:aspect-[3/1] lg:aspect-[4/1]']"
     >
         <Swiper ref="swiperRef"
             :slideToClickedSlide="true"

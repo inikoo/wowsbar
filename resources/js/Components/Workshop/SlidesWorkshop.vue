@@ -276,7 +276,7 @@ const ComponentsBlueprint = ref([
     },
     {
         title: 'delete',
-        icon: ['fal', 'fa-trash'],
+        icon: ['fal', 'fa-trash-alt'],
         fields: [
             {
                 name: ['layout', 'centralStage', 'title'],
