@@ -426,8 +426,8 @@ const setCommonEdit = () => {
                             <FontAwesomeIcon icon="fal fa-bars" class="handle p-1 text-xs sm:text-base sm:p-2.5 text-gray-700 cursor-grab place-self-center" />
 
                             <!-- Image slide -->
-                            <div class="h-5 w-5 sm:h-10 sm:w-10 bg-contain flex items-center justify-center">
-                                <img class="h-5 sm:h-10 max-w-full shadow" :src="generateThumbnail(slide)" />
+                            <div class="h-5 w-5 sm:h-10 sm:w-10 flex items-center justify-center">
+                                <img class="" :src="generateThumbnail(slide)" />
                             </div>
 
                             <!-- Label slide -->
