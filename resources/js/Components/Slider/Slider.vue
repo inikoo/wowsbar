@@ -100,25 +100,37 @@ const filteredNulls = (corners: Corners) => {
 watch(() => props.jumpToIndex, (newVal) => {
     swiperRef.value.$el.swiper.slideToLoop(newVal, 0, false)
 })
-const getImageStyle=(component)=> {
-    const x = get(component,['imagePosition','x'])
-    const y = get(component,['imagePosition','y'])
-    const style = {
-        transform: `translateX(-${x}px) translateY(-${y}px)`
+
+// const getImageStyle=(component)=> {
+//     const x = get(component,['imagePosition','x'])
+//     const y = get(component,['imagePosition','y'])
+//     const style = {
+//         transform: `translateX(-${x}px) translateY(-${y}px)`
+//     }
+//     return style
+// }
+
+
+const getResult =  (component: Object) => {
+    if (component.imagePosition) {
+        const base64 =  component.imagePosition?.canvas.toDataURL();
+        return base64
+    } else {
+        return generateThumbnail(component);
     }
-    return style
 }
+
 
 
 </script>
 
 <template>
-    <div class="w-full overflow-hidden relative"
+    <div class=" overflow-hidden relative border border-gray-300 shadow-md"
         :class="[$props.view
-            ? { 'aspect-[3/1]' : $props.view == 'tablet',
-                'aspect-[2/1]' : $props.view == 'mobile',
+            ? { 'aspect-[2/1] w-1/2' : $props.view == 'mobile',
+                'aspect-[3/1] w-3/4' : $props.view == 'tablet',
                 'aspect-[4/1]' : $props.view == 'desktop'}
-            : 'aspect-[2/1] md:aspect-[3/1] lg:aspect-[4/1]']"
+            : 'w-full aspect-[2/1] md:aspect-[3/1] lg:aspect-[4/1]']"
     >
         <Swiper ref="swiperRef"
             :slideToClickedSlide="true"
@@ -137,7 +149,7 @@ const getImageStyle=(component)=> {
             :modules="[Autoplay, Pagination, Navigation]" class="mySwiper">
             <SwiperSlide v-for="component in data.components" :key="component.id">
                 <div class="relative w-full h-full overflow-hidden">
-                    <img :src="generateThumbnail(component)" :alt="component.imageAlt" class="absolute" :style="getImageStyle(component)">
+                    <img :src="getResult(component)" :alt="component.layout?.imageAlt" class="absolute">
                 </div>
                 <div v-if="get(component, ['visibility'], true) === false" class="absolute h-full w-full bg-gray-800/50 z-10 " />
                 <div class="z-[11] absolute left-7 flex flex-col gap-y-2">
@@ -152,7 +164,7 @@ const getImageStyle=(component)=> {
                 <SlideCorner v-for="(slideCorner, position) in filteredNulls(component?.layout?.corners)" :position="position" :corner="slideCorner" :commonCorner="data.common.corners" />
                 
                 <!-- CentralStage: common.centralStage (prioritize) and layout.centralstage -->
-                <CentralStage v-if="data.common?.centralStage.title != '' || data.common?.centralStage.subtitle != ''" :data="data.common?.centralStage" />
+                <CentralStage v-if="data.common?.centralStage?.title?.length > 0 || data.common?.centralStage?.subtitle?.length > 0" :data="data.common?.centralStage" />
                 <CentralStage v-else="component?.layout?.centralStage" :data="component?.layout?.centralStage" />
             </SwiperSlide>
         </Swiper>
@@ -160,7 +172,6 @@ const getImageStyle=(component)=> {
         <!-- Reserved Corner: Button Controls -->
         <SlideCorner class="z-10" v-for="(corner, position) in filteredNulls(data.common.corners)" :position="position" :corner="corner"   :swiperRef="swiperRef"/>
     </div>
-
 </template>
 
 <style lang="scss">

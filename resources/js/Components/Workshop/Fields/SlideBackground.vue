@@ -1,15 +1,17 @@
 <script setup>
 import { trans } from "laravel-vue-i18n";
 import Button from "@/Components/Elements/Buttons/Button.vue";
-import { ref, onMounted, watch, computed } from "vue";
+import { ref, } from "vue";
 import VuePictureCropper, { cropper } from "vue-picture-cropper";
 import { set } from "lodash";
 const props = defineProps(["data"]);
-const crooper = ref(null);
+const _crooper = ref()
 const onCrop = (cropPosition) => {
-    console.log(crooper.value)
-    set(props, ['data', 'imagePosition'], cropPosition.detail)
+    console.log(cropPosition)
+    set(props, ['data', 'imagePosition'], { canvas: cropper.getCroppedCanvas(), cropPosition: cropPosition.detail })
 };
+
+
 
 
 const generateThumbnail = (fileOrUrl) => {
@@ -50,21 +52,17 @@ const onFileChange = (event) => {
 <template>
     <div class="w-full">
         <div class="w-full h-52 overflow-hidden">
-            <VuePictureCropper ref="crooper" @crop="onCrop" :img="generateThumbnail(props.data.image_source)"
-                :options="{
+            <VuePictureCropper ref="_crooper" @crop="onCrop" :img="generateThumbnail(props.data.image_source)"
+             :options="{
                     viewMode: 1,
                     aspectRatio: 4 / 1,
                     dragMode: 'move',
                     cropBoxResizable: false,
-                    zoomable: false,
-                    responsive: false,
+                    responsive: true,
                     restore: false,
                     rotatable: false,
                     scalable: false,
-                    
-                    minCropBoxWidth: 320,
-                    minCropBoxHeight: 80,
-                }" :outputSize="outputSize" />
+                }" />
         </div>
 
 
@@ -82,10 +80,10 @@ const onFileChange = (event) => {
 
                 <Button :style="`tertiary`" icon="fal fa-image" size="xs" class="relative">
                     {{ trans("Libraries") }}
-                    <label class="bg-transparent inset-0 absolute inline-block cursor-pointer" id="input-slide-large-mask"
+                    <!-- <label class="bg-transparent inset-0 absolute inline-block cursor-pointer" id="input-slide-large-mask"
                         for="fileInput" />
                     <input ref="fileInput" type="file" multiple name="file" id="fileInput" @change="addComponent"
-                        accept="image/*" class="absolute cursor-pointer rounded-md border-gray-300 sr-only" />
+                        accept="image/*" class="absolute cursor-pointer rounded-md border-gray-300 sr-only" /> -->
                 </Button>
             </div>
         </div>
