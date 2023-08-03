@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faDesktop, faMobileAndroidAlt, faTabletAndroidAlt } from '@/../private/pro-regular-svg-icons'
+import { faDesktop, faMobileAndroidAlt, faTabletAndroidAlt } from '@/../private/pro-light-svg-icons'
 import { library } from '@fortawesome/fontawesome-svg-core'
 library.add(faDesktop, faMobileAndroidAlt, faTabletAndroidAlt)
 

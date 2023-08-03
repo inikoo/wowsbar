@@ -392,7 +392,7 @@ const setCommonEdit = () => {
 
 <template>
     <div class="flex flex-grow gap-2.5">
-        <div class="w-[30%] lg:w-2/3 p-2.5 border rounded h-fit shadow" v-if="data.components"
+        <div class="w-[30%] lg:w-2/4 p-2.5 border rounded h-fit shadow" v-if="data.components"
             @dragover="dragover" @dragleave="dragleave" @drop="drop">
             <!-- Common Properties -->
             <div :class="[
@@ -404,7 +404,7 @@ const setCommonEdit = () => {
                 <span class="text-gray-600">{{ trans('Common properties') }}</span>
             </div>
 
-            <!-- Drag area -->
+            <!-- Slides/Drag area -->
             <div class="mb-2 text-lg font-medium">{{ trans('Slides') }}</div>
             <draggable :list="data.components" group="slide " item-key="ulid"
                 handle=".handle"
@@ -420,9 +420,8 @@ const setCommonEdit = () => {
                                 'border-l-orange-500 border-l-4 bg-gray-200/60 text-gray-600 font-medium' :
                                 'border-gray-300'
                         ]"
-
                     >
-                        <div class="grid grid-flow-col gap-x-1 py-1">
+                        <div class="grid grid-flow-col gap-x-1 lg:gap-x-0 py-1 lg:py-0">
                             <!-- Icon: Bars, class 'handle' to grabable -->
                             <FontAwesomeIcon icon="fal fa-bars" class="handle p-1 text-xs sm:text-base sm:p-2.5 text-gray-700 cursor-grab place-self-center" />
 
@@ -464,13 +463,13 @@ const setCommonEdit = () => {
                 
                 <Button :style="`tertiary`" icon="fal fa-image" size="xs" class="relative">
                     {{ trans("Libraries") }}
-                    <label
+                    <!-- <label
                         class="bg-transparent inset-0 absolute inline-block cursor-pointer"
                         id="input-slide-large-mask" for="fileInput"
                     />
                     <input ref="fileInput" type="file" multiple name="file" id="fileInput"
                         @change="addComponent" accept="image/*"
-                        class="absolute cursor-pointer rounded-md border-gray-300 sr-only" />
+                        class="absolute cursor-pointer rounded-md border-gray-300 sr-only" /> -->
                 </Button>
             </div>
         </div>
