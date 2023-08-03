@@ -6,11 +6,13 @@
  */
 
 use App\Actions\Landlord\UI\ShowWelcome;
+use App\Actions\Landlord\UI\ShowPricing;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', ShowWelcome::class);
+Route::get('/pricing', ShowPricing::class);
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
