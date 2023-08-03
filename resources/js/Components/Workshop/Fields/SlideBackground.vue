@@ -80,10 +80,10 @@ const onFileChange = (event) => {
 
                 <Button :style="`tertiary`" icon="fal fa-image" size="xs" class="relative">
                     {{ trans("Libraries") }}
-                    <label class="bg-transparent inset-0 absolute inline-block cursor-pointer" id="input-slide-large-mask"
+                    <!-- <label class="bg-transparent inset-0 absolute inline-block cursor-pointer" id="input-slide-large-mask"
                         for="fileInput" />
                     <input ref="fileInput" type="file" multiple name="file" id="fileInput" @change="addComponent"
-                        accept="image/*" class="absolute cursor-pointer rounded-md border-gray-300 sr-only" />
+                        accept="image/*" class="absolute cursor-pointer rounded-md border-gray-300 sr-only" /> -->
                 </Button>
             </div>
         </div>

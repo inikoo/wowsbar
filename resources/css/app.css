@@ -13,3 +13,7 @@
     focus:[background-size:100%_100%] px-1;
 }
 
+.qwezxc {
+    @apply border border-red-500
+}
+

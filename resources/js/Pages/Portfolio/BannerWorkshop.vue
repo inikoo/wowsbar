@@ -39,10 +39,12 @@ const screenView = ref('')
     <div>
         <!-- First set of components -->
         <div v-if="data.components.filter((item) => item.ulid != null).length > 0">
-            <div class="flex justify-end px-4">
+            <div class="flex justify-end pr-2">
                 <ScreenView @screenView="(val) => screenView = val"/>
             </div>
-            <Slider :data="data" :jumpToIndex="jumpToIndex" :view="screenView"/>
+            <div class="flex justify-center pr-0.5">
+                <Slider :data="data" :jumpToIndex="jumpToIndex" :view="screenView"/>
+            </div>
             <SlidesWorkshop class="clear-both mt-2 p-2.5" :data="data" @jumpToIndex="(val) => jumpToIndex = val" :imagesUploadRoute="imagesUploadRoute"/>
         </div>
 

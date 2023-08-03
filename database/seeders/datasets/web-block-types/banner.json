@@ -18,19 +18,19 @@
         "images": [
             {
                 "source": "resources",
-                "imageSrc": "incentives-07-hero.jpg"
+                "imageSrc": "Image 555.jpg"
             },
             {
                 "source": "resources",
-                "imageSrc": "product-page-01-featured-product-shot.jpg"
+                "imageSrc": "Car1.jpg"
             },
             {
                 "source": "resources",
-                "imageSrc": "product-page-03-product-01.jpg"
+                "imageSrc": "Image 444.jpg"
             },
             {
                 "source": "resources",
-                "imageSrc": "product-page-05-product-01.jpg"
+                "imageSrc": "Image 111.jpg"
             }
         ],
         "components": [
