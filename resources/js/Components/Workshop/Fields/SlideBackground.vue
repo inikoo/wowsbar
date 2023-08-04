@@ -8,7 +8,6 @@ const props = defineProps(["data"]);
 const _crooper = ref()
 const onCrop = (cropPosition) => {
     set(props, ['data', 'imagePosition'], { canvas: cropper.getCroppedCanvas(), cropPosition: cropPosition.detail })
-    console.log(cropper.getCroppedCanvas())
 };
 
 
