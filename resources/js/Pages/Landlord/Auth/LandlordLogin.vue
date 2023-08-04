@@ -12,16 +12,16 @@ const form = useForm({
                      });
 
 const submit = () => {
-    form.post(route('login'), {
+    form.post(route('landlord.login'), {
         onFinish: () => form.reset('password'),
     });
 };
 </script>
 
-<template layout="GuestLayout">
+<template layout="LandlordAuthActions">
+
     <Head title="Login"/>
-    <div class="flex justify-center text-2xl">Landlord</div>
-    <form class="space-y-6" @submit.prevent="submit" >
+    <form class="space-y-6  " @submit.prevent="submit" >
         <div>
             <label for="login" class="block text-sm font-medium text-gray-700">{{ trans('Username') }}</label>
             <div class="mt-1">

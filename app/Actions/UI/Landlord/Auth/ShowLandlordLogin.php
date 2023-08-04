@@ -18,6 +18,7 @@ class ShowLandlordLogin
 
     public function handle(): Response
     {
+
         return Inertia::render('Landlord/Auth/LandlordLogin', [
         ]);
     }
