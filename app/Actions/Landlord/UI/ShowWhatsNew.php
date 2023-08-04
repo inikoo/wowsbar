@@ -20,7 +20,7 @@ class ShowWhatsNew
         return Inertia::render(
             'Landlord/WhatsNew',
             [
-                
+
             ]
         );
     }

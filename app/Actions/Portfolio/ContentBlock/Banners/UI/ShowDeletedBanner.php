@@ -22,7 +22,6 @@ use Lorisleiva\Actions\ActionRequest;
 
 class ShowDeletedBanner extends InertiaAction
 {
-
     public function authorize(ActionRequest $request): bool
     {
         $this->canRestore   = $request->user()->can('portfolio.edit');

@@ -4,9 +4,9 @@
   - Copyright (c) 2023, Raul A Perusquia Flores
   -->
 <script setup lang="ts">
-import { Head } from "@inertiajs/vue3"
+import { Head } from "@inertiajs/vue3";
 import { ChevronRightIcon } from '@heroicons/vue/20/solid'
-import { Link } from "@inertiajs/vue3"
+import { Link } from "@inertiajs/vue3";
 
 const props = defineProps<{
     whatsNew: {
@@ -34,8 +34,7 @@ const props = defineProps<{
 
         <div class="mx-auto max-w-7xl px-6 pb-24 pt-10 sm:pb-32 lg:flex lg:px-8 lg:py-40">
             <div class="mx-auto max-w-2xl lg:mx-0 lg:max-w-xl lg:flex-shrink-0 lg:pt-0">
-                <img class="h-24 select-none" src="@/../art/logo/png/1.png" alt="Wowsbar" />
-                <!-- <img src="@/../art/logo/png/2.png" alt="Wowsbar" class="h-4"> -->
+                <img class="h-24" src="@/../art/logo/png/1.png" alt="Wowsbar" />
                 <div v-if="whatsNew" class="mt-8">
                     <Link :href="route(whatsNew.route.name, whatsNew.route.parameters)" class="inline-flex space-x-6">
                         <span class="rounded-full bg-gray-600/10 px-3 py-1 text-sm font-semibold leading-6 text-gray-600 ring-1 ring-inset ring-gray-600/10">What's new</span>

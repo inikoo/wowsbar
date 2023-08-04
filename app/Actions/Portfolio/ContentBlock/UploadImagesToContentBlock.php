@@ -30,12 +30,11 @@ class UploadImagesToContentBlock
 
         $medias=[];
 
-        foreach ($imageFiles as $imageFile){
-         $medias[]=AttachImageToContentBlock::run(
-             contentBlock:$contentBlock,
-             file:$imageFile
-
-         );
+        foreach ($imageFiles as $imageFile) {
+            $medias[]=AttachImageToContentBlock::run(
+                contentBlock:$contentBlock,
+                file:$imageFile
+            );
         }
 
         return collect($medias);
@@ -50,7 +49,7 @@ class UploadImagesToContentBlock
     public function rules(): array
     {
         return [
-            'images' => ['required'],
+            'images'   => ['required'],
             'images.*' => ["mimes:jpg,png,jpeg|max:20000"]
         ];
     }

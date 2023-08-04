@@ -27,7 +27,7 @@ task('install:reset-db', function () {
 desc('🌱 Copy artifacts no present in repo');
 task('install:copy-artifacts', function () {
     $copyVerbosity = output()->getVerbosity() === OutputInterface::VERBOSITY_DEBUG ? 'v' : '';
-    $sharedPath = "{{deploy_path}}/shared";
+    $sharedPath    = "{{deploy_path}}/shared";
     run("cp artifacts/env.{{environment}} $sharedPath/.env");
     run("cp -r$copyVerbosity artifacts/private $sharedPath");
 

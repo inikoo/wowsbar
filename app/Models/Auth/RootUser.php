@@ -11,7 +11,6 @@ namespace App\Models\Auth;
 use App\Models\Assets\Language;
 use App\Models\Media\Media;
 use App\Models\Tenancy\Tenant;
-use App\Models\Traits\HasHistory;
 use App\Models\Traits\HasUniversalSearch;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -20,7 +19,6 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Permission\Traits\HasRoles;
@@ -29,8 +27,7 @@ use Spatie\Permission\Traits\HasRoles;
  * App\Models\Auth\User
  *
  * @property int $id
- * @property int $tenant_id
- * @property bool $is_root
+ * @property int|null $tenant_id
  * @property bool $status
  * @property string $username
  * @property string|null $contact_name
@@ -46,10 +43,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string|null $deleted_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \OwenIt\Auditing\Models\Audit> $audits
- * @property-read int|null $audits_count
  * @property-read Media|null $avatar
- * @property-read array $es_audits
  * @property-read Language $language
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, Media> $media
  * @property-read int|null $media_count
@@ -60,34 +54,32 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Permission\Models\Role> $roles
  * @property-read int|null $roles_count
  * @property-read \App\Models\Auth\UserStats|null $stats
- * @property-read Tenant $tenant
+ * @property-read Tenant|null $tenant
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Laravel\Sanctum\PersonalAccessToken> $tokens
  * @property-read int|null $tokens_count
  * @property-read \App\Models\Search\UniversalSearch|null $universalSearch
- * @method static \Database\Factories\Auth\UserFactory factory($count = null, $state = [])
- * @method static Builder|User newModelQuery()
- * @method static Builder|User newQuery()
- * @method static Builder|User permission($permissions)
- * @method static Builder|User query()
- * @method static Builder|User role($roles, $guard = null)
- * @method static Builder|User whereAbout($value)
- * @method static Builder|User whereAvatarId($value)
- * @method static Builder|User whereContactName($value)
- * @method static Builder|User whereCreatedAt($value)
- * @method static Builder|User whereData($value)
- * @method static Builder|User whereDeletedAt($value)
- * @method static Builder|User whereEmail($value)
- * @method static Builder|User whereEmailVerifiedAt($value)
- * @method static Builder|User whereId($value)
- * @method static Builder|User whereIsRoot($value)
- * @method static Builder|User whereLanguageId($value)
- * @method static Builder|User wherePassword($value)
- * @method static Builder|User whereRememberToken($value)
- * @method static Builder|User whereSettings($value)
- * @method static Builder|User whereStatus($value)
- * @method static Builder|User whereTenantId($value)
- * @method static Builder|User whereUpdatedAt($value)
- * @method static Builder|User whereUsername($value)
+ * @method static Builder|RootUser newModelQuery()
+ * @method static Builder|RootUser newQuery()
+ * @method static Builder|RootUser permission($permissions)
+ * @method static Builder|RootUser query()
+ * @method static Builder|RootUser role($roles, $guard = null)
+ * @method static Builder|RootUser whereAbout($value)
+ * @method static Builder|RootUser whereAvatarId($value)
+ * @method static Builder|RootUser whereContactName($value)
+ * @method static Builder|RootUser whereCreatedAt($value)
+ * @method static Builder|RootUser whereData($value)
+ * @method static Builder|RootUser whereDeletedAt($value)
+ * @method static Builder|RootUser whereEmail($value)
+ * @method static Builder|RootUser whereEmailVerifiedAt($value)
+ * @method static Builder|RootUser whereId($value)
+ * @method static Builder|RootUser whereLanguageId($value)
+ * @method static Builder|RootUser wherePassword($value)
+ * @method static Builder|RootUser whereRememberToken($value)
+ * @method static Builder|RootUser whereSettings($value)
+ * @method static Builder|RootUser whereStatus($value)
+ * @method static Builder|RootUser whereTenantId($value)
+ * @method static Builder|RootUser whereUpdatedAt($value)
+ * @method static Builder|RootUser whereUsername($value)
  * @mixin \Eloquent
  */
 class RootUser extends Authenticatable implements HasMedia

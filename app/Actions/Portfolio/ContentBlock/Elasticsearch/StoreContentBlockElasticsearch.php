@@ -26,7 +26,7 @@ class StoreContentBlockElasticsearch
         $client = BuildElasticsearchClient::run();
 
         $params = [
-            'id'  => $contentBlock->id,
+            'id'     => $contentBlock->id,
             'index'  => strtolower($contentBlock->ulid),
             'body'   => json_encode([
                 'name'   => $contentBlock->name,

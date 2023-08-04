@@ -12,9 +12,9 @@ namespace Deployer;
 require_once __DIR__.'/../vendor/autoload.php';
 
 use Webmozart\Assert\Assert;
-use function file_get_contents;
 use Symfony\Component\Finder\Finder;
 
+use function file_get_contents;
 
 set('http_port', '80');
 
@@ -65,4 +65,3 @@ task('nginx:enable-site', static function (): void {
 task('nginx:restart', static function (): void {
     run('sudo systemctl restart nginx.service');
 })->desc('Restarts nginx');
-

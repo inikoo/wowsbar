@@ -24,7 +24,7 @@ task('install:seeding', function () {
 desc('🌱 Symlink private folder to resources dir');
 task('deploy:shared-private', function () {
     $sharedPath = "{{deploy_path}}/shared";
-    $dir='private';
+    $dir        ='private';
     run("{{bin/symlink}} $sharedPath/$dir {{release_path}}/resources/$dir");
 
 });
@@ -41,5 +41,3 @@ task('deploy:copy-env', function () {
     run("cp artifacts/env.{{environment}} $sharedPath/.env");
 
 });
-
-

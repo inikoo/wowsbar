@@ -18,7 +18,8 @@ class AttachImageToContentBlock
     use AsAction;
 
 
-    public function handle(ContentBlock $contentBlock, UploadedFile $file): Media {
+    public function handle(ContentBlock $contentBlock, UploadedFile $file): Media
+    {
         /** @var Media $media */
         $media = AttachImageToTenant::run(
             tenant: app('currentTenant'),

@@ -31,6 +31,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property int $id
  * @property int $tenant_id
  * @property bool $is_root
+ * @property int|null $root_user_id
  * @property bool $status
  * @property string $username
  * @property string|null $contact_name
@@ -83,6 +84,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static Builder|User whereLanguageId($value)
  * @method static Builder|User wherePassword($value)
  * @method static Builder|User whereRememberToken($value)
+ * @method static Builder|User whereRootUserId($value)
  * @method static Builder|User whereSettings($value)
  * @method static Builder|User whereStatus($value)
  * @method static Builder|User whereTenantId($value)

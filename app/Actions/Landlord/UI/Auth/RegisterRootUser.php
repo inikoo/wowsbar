@@ -7,15 +7,11 @@
 
 namespace App\Actions\Landlord\UI\Auth;
 
-use App\Actions\Auth\RootUser\StoreRootUser;
-use App\Actions\Auth\User\StoreUser;
 use App\Models\Auth\RootUser;
-use App\Models\Auth\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -46,8 +42,8 @@ class RegisterRootUser
     {
         return [
             'contact_name'     => 'required|string|max:255',
-            'email'    => 'required|string|email|max:255|unique:'.RootUser::class,
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'email'            => 'required|string|email|max:255|unique:'.RootUser::class,
+            'password'         => ['required', 'confirmed', Rules\Password::defaults()],
         ];
     }
 

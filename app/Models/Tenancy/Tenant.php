@@ -50,6 +50,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read Media|null $logo
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, Media> $media
  * @property-read int|null $media_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, RootUser> $rootUsers
+ * @property-read int|null $root_users_count
  * @property-read \App\Models\Tenancy\TenantStats|null $stats
  * @property-read \Illuminate\Database\Eloquent\Collection<int, User> $users
  * @property-read int|null $users_count

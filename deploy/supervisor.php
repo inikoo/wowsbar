@@ -13,8 +13,9 @@ namespace Deployer;
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use Webmozart\Assert\Assert;
-use function file_get_contents;
 use Symfony\Component\Finder\Finder;
+
+use function file_get_contents;
 
 /**
  * The supervisor(ctl) binary
@@ -97,8 +98,8 @@ task('supervisor:upload', static function (): void {
     }
 
     run("mkdir -p artifacts/supervisor");
-    run("echo -e \"$mergedConfigs\" > artifacts/supervisor/{{supervisor_config_filename}} " );
-    run ("sudo cp artifacts/supervisor/{{supervisor_config_filename}} {{supervisor_remote_dir}}/{{supervisor_config_filename}} ");
+    run("echo -e \"$mergedConfigs\" > artifacts/supervisor/{{supervisor_config_filename}} ");
+    run("sudo cp artifacts/supervisor/{{supervisor_config_filename}} {{supervisor_remote_dir}}/{{supervisor_config_filename}} ");
 
 })->desc('This task uploads your processed supervisor configs to the specified directory on your server');
 
