@@ -14,21 +14,17 @@ return new class () extends Migration {
     use WithUserDetailTrait;
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('root_users', function (Blueprint $table) {
             $table->smallIncrements('id');
             $table->unsignedSmallInteger('tenant_id')->index();
             $table->foreign('tenant_id')->references('id')->on('tenants');
-            $table->boolean('is_root')->index()->default(false);
-
-            $table->unsignedSmallInteger('root_user_id')->index()->nullable();
-            $table->foreign('root_user_id')->references('id')->on('root_users');
 
             $this->userDetailsColumns($table);
 
             $table->timestampsTz();
             $table->softDeletesTz();
-            $table->unique(['tenant_id','username', 'root_user_id']);
-            $table->unique(['tenant_id','email', 'root_user_id']);
+            $table->unique(['tenant_id','username']);
+            $table->unique(['tenant_id','email']);
         });
     }
 

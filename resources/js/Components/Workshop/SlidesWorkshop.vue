@@ -112,9 +112,10 @@ const addComponent = async (element) => {
     // Save the new image to database
     try {
         console.log(element.target.files)
+        console.log(props.imagesUploadRoute.name)
         const response = await axios.post(route(props.imagesUploadRoute.name, props.imagesUploadRoute.arguments),
             { 'images': element.target.files },
-            { 
+            {
                 headers: { 'Content-Type': 'multipart/form-data' }
             }
         )
@@ -452,7 +453,7 @@ const setCommonEdit = () => {
                 <template #item="{ element: slide }">
                     <div
                         @mousedown="selectComponentForEdition(slide), emits('jumpToIndex', data.components.findIndex((component) => { return component.id == slide.id}))"
-                        v-if="slide.ulid" 
+                        v-if="slide.ulid"
                         :class="[
                             'grid grid-flow-col relative py-1 border mb-2 items-center justify-between hover:cursor-pointer',
                             slide.ulid == get(currentComponentBeenEdited,'ulid') ?
@@ -505,7 +506,7 @@ const setCommonEdit = () => {
                         @change="addComponent" accept="image/*"
                         class="absolute cursor-pointer rounded-md border-gray-300 sr-only" />
                 </Button>
-                
+
                 <Button :style="`tertiary`" icon="fal fa-image" size="xs" class="relative">
                     {{ trans("Libraries") }}
                     <!-- <label
