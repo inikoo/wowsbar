@@ -7,11 +7,13 @@
 
 use App\Actions\Landlord\UI\ShowWelcome;
 use App\Actions\Landlord\UI\ShowPricing;
+use App\Actions\Landlord\UI\ShowWhatsNew;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/', ShowWelcome::class);
+Route::get('/', ShowWelcome::class)->name('welcome');
+Route::get('/whatsnew', ShowWhatsNew::class)->name('whats-new');
 Route::get('/pricing', ShowPricing::class);
 
 Route::get('/dashboard', function () {
