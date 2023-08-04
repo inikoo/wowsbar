@@ -20,7 +20,7 @@ const submit = () => {
 
 <template layout="GuestLayout">
     <Head title="Login"/>
-    <div class="flex justify-center text-2xl">This is for Tenant</div>
+    <div class="flex justify-center text-2xl">Landlord</div>
     <form class="space-y-6" @submit.prevent="submit" >
         <div>
             <label for="login" class="block text-sm font-medium text-gray-700">{{ trans('Username') }}</label>
@@ -42,8 +42,6 @@ const submit = () => {
                 <Checkbox name="remember-me" id="remember-me" v-model:checked="form.remember"/>
                 <label for="remember-me" class="ml-2 block text-sm text-gray-900"> {{ trans('Remember me') }} </label>
             </div>
-
-
         </div>
 
         <div>
