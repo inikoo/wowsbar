@@ -112,12 +112,12 @@ watch(() => props.jumpToIndex, (newVal) => {
 
 
 const getResult =  (component: Object) => {
-    // if (component.imagePosition) {
-    //     const base64 =  component.imagePosition?.canvas.toDataURL();
-    //     return base64
-    // } else {
+    if (component.imagePosition) {
+        const base64 =  component.imagePosition?.canvas.toDataURL();
+        return base64
+    } else {
         return generateThumbnail(component);
-    // }
+    }
 }
 
 </script>
