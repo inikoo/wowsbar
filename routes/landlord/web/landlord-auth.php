@@ -1,5 +1,6 @@
 <?php
 
+use App\Actions\UI\Landlord\Auth\LandlordLogin;
 use App\Actions\UI\Landlord\Auth\ShowLandlordLogin;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\ConfirmablePasswordController;
@@ -20,7 +21,7 @@ Route::middleware('guest')->group(function () {
 
     Route::get('login', ShowLandlordLogin::class)->name('login');
 
-    Route::post('login', [AuthenticatedSessionController::class, 'store']);
+    Route::post('login', LandlordLogin::class)->name('login.store');
 
     Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
                 ->name('password.request');
