@@ -11,6 +11,7 @@ import ScreenView from "@/Components/ScreenView.vue"
 import { getDatabase, ref as dbRef, set, onValue, get } from 'firebase/database';
 import { initializeApp } from "firebase/app"
 import serviceAccount from "@/../private/firebase/wowsbar-firebase.json"
+import { usePage, router } from "@inertiajs/vue3"
 
 const props = defineProps<{
     title: string;
@@ -25,8 +26,7 @@ const props = defineProps<{
 
 const firebaseApp = initializeApp(serviceAccount);
 const db = getDatabase(firebaseApp);
-
-
+const user = ref(usePage().props.auth.user)
 const fetchInitialData = async () => {
   try {
     const snapshot = await get(dbRef(db, 'Banner'));
@@ -93,7 +93,7 @@ console.log(props.imagesUploadRoute.arguments.banner)
             <div class="flex justify-center pr-0.5">
                 <Slider :data="data" :jumpToIndex="jumpToIndex" :view="screenView"/>
             </div>
-            <SlidesWorkshop class="clear-both mt-2 p-2.5" :data="data" @jumpToIndex="(val) => jumpToIndex = val" :imagesUploadRoute="imagesUploadRoute"/>
+            <SlidesWorkshop class="clear-both mt-2 p-2.5" :data="data" @jumpToIndex="(val) => jumpToIndex = val" :imagesUploadRoute="imagesUploadRoute" :user="user"/>
         </div>
 
     <!-- Second set of components -->
