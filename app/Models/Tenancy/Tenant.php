@@ -8,6 +8,7 @@
 namespace App\Models\Tenancy;
 
 use App\Models\Assets\Currency;
+use App\Models\Auth\RootUser;
 use App\Models\Auth\User;
 use App\Models\Media\Media;
 use App\Models\Portfolio\ContentBlock;
@@ -124,6 +125,11 @@ class Tenant extends SpatieTenant implements HasMedia
     public function users(): HasMany
     {
         return $this->hasMany(User::class);
+    }
+
+    public function rootUsers(): HasMany
+    {
+        return $this->hasMany(RootUser::class);
     }
 
     public function websites(): HasMany

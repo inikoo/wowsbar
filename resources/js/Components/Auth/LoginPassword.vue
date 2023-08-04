@@ -28,11 +28,13 @@ onMounted(() => {
     <div class="relative flex items-stretch flex-grow focus-within:z-10">
 
         <input :value="modelValue" @input="$emit('update:modelValue', $event.target.value)" ref="input" :id="id" :name="name" :type="showPassword ? 'text' : 'password'" autocomplete="current-password" required=""
-               class="focus:ring-gray-500 focus:border-gray-500 block w-full rounded-none rounded-l-md border-gray-300"/>
+            class="focus:ring-gray-500 focus:border-gray-500 block w-full rounded-none rounded-l-md border-gray-300"/>
     </div>
-    <button type="button"
-            class="-ml-px relative inline-flex items-center  px-4 py-2 border border-gray-300 text-sm font-medium rounded-r-md text-gray-700 bg-gray-50 hover:bg-gray-100 focus:outline-none focus:ring-1 focus:ring-gray-500 focus:border-gray-500">
-        <FontAwesomeIcon @click="showPassword=false" v-show=showPassword aria-hidden="true" class="h-5 w-5 text-gray-400" icon="fa-regular fa-eye"/>
-        <FontAwesomeIcon @click="showPassword=true" v-show=!showPassword aria-hidden="true" class="h-5 w-5 text-gray-400" icon="fa-regular fa-eye-slash"/>
+    <button
+        @click="showPassword = !showPassword"
+        type="button"
+        class="-ml-px relative inline-flex items-center  px-4 py-2 border border-gray-300 text-sm font-medium rounded-r-md text-gray-700 bg-gray-50 hover:bg-gray-100 focus:outline-none focus:ring-1 focus:ring-gray-500 focus:border-gray-500">
+        <FontAwesomeIcon v-show="showPassword" aria-hidden="true" class="h-5 w-5 text-gray-400" icon="fa-regular fa-eye"/>
+        <FontAwesomeIcon v-show="!showPassword" aria-hidden="true" class="h-5 w-5 text-gray-400" icon="fa-regular fa-eye-slash"/>
     </button>
 </template>
