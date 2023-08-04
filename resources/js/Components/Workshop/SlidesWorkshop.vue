@@ -413,7 +413,7 @@ const setCommonEdit = () => {
                 <template #item="{ element: slide }">
                     <div
                         @mousedown="selectComponentForEdition(slide), emits('jumpToIndex', data.components.findIndex((component) => { return component.id == slide.id}))"
-                        v-if="slide.ulid !== null"
+                        v-if="slide.ulid" 
                         :class="[
                             'grid grid-flow-col relative py-1 border mb-2 items-center justify-between hover:cursor-pointer',
                             slide.ulid == get(currentComponentBeenEdited,'ulid') ?

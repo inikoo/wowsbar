@@ -1,14 +1,16 @@
 <script setup lang="ts">
 import { Head } from "@inertiajs/vue3"
-import { ref, reactive } from "vue"
+import { ref, reactive, onBeforeMount, watch, defineProps } from "vue"
 import PageHeading from "@/Components/Headings/PageHeading.vue"
 import { capitalize } from "@/Composables/capitalize"
 import SlidesWorkshop from "@/Components/Workshop/SlidesWorkshop.vue"
 import Slider from "@/Components/Slider/Slider.vue"
 import SlidesWorkshopAddMode from "@/Components/Workshop/SlidesWorkshopAddMode.vue"
-import { cloneDeep } from 'lodash'
+import { cloneDeep, set as setData } from 'lodash'
 import ScreenView from "@/Components/ScreenView.vue"
-
+import { getDatabase, ref as dbRef, set, onValue, get } from 'firebase/database';
+import { initializeApp } from "firebase/app"
+import serviceAccount from "@/../private/firebase/wowsbar-firebase.json"
 
 const props = defineProps<{
     title: string;
@@ -21,17 +23,63 @@ const props = defineProps<{
 
 }>();
 
-// console.log('DataFormDB',props.imagesUploadRoute)
+const firebaseApp = initializeApp(serviceAccount);
+const db = getDatabase(firebaseApp);
 
-const data = reactive(cloneDeep(props.bannerLayout))
 
-// console.log('SendData',data)
+const fetchInitialData = async () => {
+  try {
+    const snapshot = await get(dbRef(db, 'Banner'));
+    if (snapshot.exists()) {
+      const firebaseData = snapshot.val()
+      if(firebaseData[props.imagesUploadRoute.arguments.banner]){
+        Object.assign(data,{...data,...firebaseData[props.imagesUploadRoute.arguments.banner]}); 
+      console.log('Updated data from fetchInitialData:', snapshot.val());
+      }
+     
+    }else{
+      Object.assign(data, cloneDeep(props.bannerLayout)); 
+    }
+  } catch (error) {
+    console.error('Error fetching initial data:', error);
+  }
+};
+
+onValue(dbRef(db, 'Banner'), (snapshot) => {
+  if (snapshot.exists()) {
+    const firebaseData = snapshot.val();
+    if(firebaseData[props.imagesUploadRoute.arguments.banner]){
+        Object.assign(data,{...data,...firebaseData[props.imagesUploadRoute.arguments.banner]}); 
+      console.log('Updated data from fetchInitialData:', snapshot.val());
+      }
+  }
+});
+
+
+
+const updateData = async () => {
+  console.log('berhasil',data);
+  try {
+    if (data) {
+      await set(dbRef(db, 'Banner'),{[props.imagesUploadRoute.arguments.banner] : data});
+    }
+  } catch (error) {
+    console.error('Error updating data:', error);
+  }
+};
 
 const jumpToIndex = ref(0)
 const screenView = ref('')
+const data = reactive(cloneDeep(props.bannerLayout))
 
+watch(data, updateData, { deep: true });
+watch(data.components, (newValue, oldValue) => {
+  data.components = newValue
+});
+
+onBeforeMount(fetchInitialData);
+console.log(props.imagesUploadRoute.arguments.banner)
 </script>
-
 <template layout="App">
     <Head :title="capitalize(title)" />
     <PageHeading :data="pageHead" :dataToSubmit="data"></PageHeading>
