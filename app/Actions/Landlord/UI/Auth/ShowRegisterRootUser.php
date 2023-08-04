@@ -11,12 +11,17 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\Concerns\AsController;
 
-class ShowRegisterUser
+class ShowRegisterRootUser
 {
     use AsController;
 
     public function handle(): Response
     {
         return Inertia::render('Auth/Register');
+    }
+
+    public function asController(): Response
+    {
+        return $this->handle();
     }
 }

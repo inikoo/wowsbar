@@ -1,7 +1,7 @@
 <?php
 
-use App\Actions\Landlord\UI\Auth\RegisterUser;
-use App\Actions\Landlord\UI\Auth\ShowRegisterUser;
+use App\Actions\Landlord\UI\Auth\RegisterRootUser;
+use App\Actions\Landlord\UI\Auth\ShowRegisterRootUser;
 use App\Actions\UI\Landlord\Auth\ShowLandlordLogin;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\ConfirmablePasswordController;
@@ -14,10 +14,10 @@ use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
-    Route::get('register', [ShowRegisterUser::class])
+    Route::get('register', ShowRegisterRootUser::class)
                 ->name('register');
 
-    Route::post('register', [RegisterUser::class]);
+    Route::post('register', RegisterRootUser::class);
 
     Route::get('login', ShowLandlordLogin::class)->name('login');
 

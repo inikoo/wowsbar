@@ -90,7 +90,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static Builder|User whereUsername($value)
  * @mixin \Eloquent
  */
-class RootUser extends Authenticatable implements HasMedia, Auditable
+class RootUser extends Authenticatable implements HasMedia
 {
     use HasApiTokens;
     use HasFactory;
@@ -98,7 +98,6 @@ class RootUser extends Authenticatable implements HasMedia, Auditable
     use HasRoles;
     use InteractsWithMedia;
     use HasUniversalSearch;
-    use HasHistory;
 
     protected $casts = [
         'data'              => 'array',

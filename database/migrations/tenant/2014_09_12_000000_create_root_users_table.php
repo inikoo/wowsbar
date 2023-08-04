@@ -14,11 +14,8 @@ return new class () extends Migration {
     {
         Schema::create('root_users', function (Blueprint $table) {
             $table->smallIncrements('id');
-            $table->unsignedSmallInteger('tenant_id')->index();
+            $table->unsignedSmallInteger('tenant_id')->index()->nullable();
             $table->foreign('tenant_id')->references('id')->on('tenants');
-
-            $table->unsignedSmallInteger('user_id')->nullable()->index();
-            $table->foreign('user_id')->references('id')->on('users');
 
             $table->boolean('status')->default(true);
             $table->string('username')->collation('und_ns');
@@ -35,8 +32,8 @@ return new class () extends Migration {
             $table->unsignedInteger('avatar_id')->nullable();
             $table->timestampsTz();
             $table->softDeletesTz();
-            $table->unique(['tenant_id','username', 'user_id']);
-            $table->unique(['tenant_id','email', 'user_id']);
+            $table->unique(['tenant_id','username']);
+            $table->unique(['tenant_id','email']);
         });
     }
 

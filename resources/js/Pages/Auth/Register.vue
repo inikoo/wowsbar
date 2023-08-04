@@ -8,14 +8,14 @@ import TextInput from '@/Components/TextInput.vue'
 import { Head, Link, useForm } from '@inertiajs/vue3'
 
 const form = useForm({
-    name: '',
+    contact_name: '',
     email: '',
     password: '',
     password_confirmation: '',
 })
 
 const submit = () => {
-    form.post(route('landlord'), {
+    form.post(route('landlord.register'), {
         onFinish: () => form.reset('password', 'password_confirmation'),
     })
 }
@@ -33,13 +33,13 @@ const submit = () => {
                     id="name"
                     type="text"
                     class="mt-1 block w-full"
-                    v-model="form.name"
+                    v-model="form.contact_name"
                     required
                     autofocus
                     autocomplete="name"
                 />
 
-                <InputError class="mt-2" :message="form.errors.name" />
+                <InputError class="mt-2" :message="form.errors.contact_name" />
             </div>
 
             <div class="mt-4">

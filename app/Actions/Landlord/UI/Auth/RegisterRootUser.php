@@ -7,28 +7,34 @@
 
 namespace App\Actions\Landlord\UI\Auth;
 
+use App\Actions\Auth\RootUser\StoreRootUser;
 use App\Actions\Auth\User\StoreUser;
 use App\Models\Auth\RootUser;
+use App\Models\Auth\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
+use Lorisleiva\Actions\Concerns\AsController;
 use Lorisleiva\Actions\Concerns\WithAttributes;
 
-class RegisterUser
+class RegisterRootUser
 {
     use AsAction;
     use WithAttributes;
+    use AsController;
 
     private bool $asAction = false;
 
-
     public function handle(array $modelData): RedirectResponse
     {
-        $user = StoreUser::run(app('currentTenant'), $modelData);
+        $mergedArray = array_merge($modelData, ['username' => \Str::slug($modelData['contact_name'])]);
+
+        $user = RootUser::create($mergedArray);
 
         event(new Registered($user));
         Auth::login($user);
@@ -39,13 +45,13 @@ class RegisterUser
     public function rules(): array
     {
         return [
-            'name'     => 'required|string|max:255',
+            'contact_name'     => 'required|string|max:255',
             'email'    => 'required|string|email|max:255|unique:'.RootUser::class,
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ];
     }
 
-    public function action(ActionRequest $request): RedirectResponse
+    public function asController(ActionRequest $request): RedirectResponse
     {
         $request->validate();
 
