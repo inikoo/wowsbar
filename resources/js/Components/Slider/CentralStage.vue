@@ -15,7 +15,7 @@ const props = defineProps<{
     }
   
 }>()
-console.log('as',props)
+
 </script>
 
 <template>
