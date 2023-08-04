@@ -1,5 +1,6 @@
 <?php
 
+use App\Actions\UI\Landlord\Auth\ShowLandlordLogin;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
@@ -17,8 +18,7 @@ Route::middleware('guest')->group(function () {
 
     Route::post('register', [RegisteredUserController::class, 'store']);
 
-    Route::get('login', [AuthenticatedSessionController::class, 'create'])
-                ->name('login');
+    Route::get('login', ShowLandlordLogin::class)->name('login');
 
     Route::post('login', [AuthenticatedSessionController::class, 'store']);
 

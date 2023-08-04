@@ -24,6 +24,7 @@
         "maatwebsite/excel": "^3.1",
         "matchish/laravel-scout-elasticsearch": "^7.2",
         "owen-it/laravel-auditing": "^13.5",
+        "sentry/sentry-laravel": "^3.7",
         "spatie/laravel-medialibrary": "^10.0.0",
         "spatie/laravel-multitenancy": "^3.0",
         "spatie/laravel-permission": "^5.10",
@@ -35,6 +36,7 @@
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.13",
+        "deployer/deployer": "^7.3",
         "fakerphp/faker": "^1.9.1",
         "laravel/breeze": "^1.21",
         "laravel/pint": "^1.10",

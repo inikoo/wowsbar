@@ -90,24 +90,7 @@ const commonEditActive = ref(false)
 
 // When new slide added
 const addComponent = async (element) => {
-    let setData = []
-    for (const set of element.target.files) {
-        if (set && set instanceof File) {
-            setData.push({
-                id: null,
-                image_id: null,
-                image_source: null,
-                imageFile: set,
-                ulid: ulid(),
-                layout: {
-                    imageAlt: set.name,
-                },
-                visibility : true
-            })
-        }
-    }
-    const newFiles = [...setData]
-    props.data.components = [... props.data.components, ...newFiles]
+    let setData = props.data.components
 
     // Save the new image to database
     try {
@@ -119,9 +102,23 @@ const addComponent = async (element) => {
                 headers: { 'Content-Type': 'multipart/form-data' }
             }
         )
-
         console.log("===========================")
+        console.log(ulid())
         console.log(response.data)
+        
+        for (const set of response.data) {
+                setData.push({
+                    id: null,
+                    image_id: set.id,
+                    image_source: set.original_url,
+                    ulid: ulid(),
+                    layout: {
+                        imageAlt: set.name,
+                    },
+                    visibility : true
+                    })
+        }
+        props.data.components = [...setData]
 
     } catch (error) {
         // Handle any errors that might occur during the POST request

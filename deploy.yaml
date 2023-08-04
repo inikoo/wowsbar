@@ -1,0 +1,35 @@
+import:
+  - recipe/laravel.php
+  - deploy/common.php
+  - deploy/supervisor.php
+  - deploy/nginx.php
+  - deploy/install.php
+  - contrib/npm.php
+
+config:
+  application: 'wowsbar'
+  host: 'wowsbar'
+  remote_user: wowsbar
+  repository: 'https://github.com/inikoo/wowsbar.git'
+  db: 'wowsbar'
+  db_backup: 'wowsbar_backup'
+  db_collate: 'C.UTF-8'
+  writable_use_sudo: true
+  root_path: '/var/www/wowsbar'
+  app_url: 'wowsbar.com'
+  http_port: 8080
+
+hosts:
+  prod_helio:
+    environment: 'prod'
+    deploy_path: '{{root_path}}/prod'
+  staging:
+    environment: 'staging'
+    deploy_path: '{{root_path}}/staging'
+tasks:
+  build:
+    - run: uptime
+
+after:
+  deploy:failed: deploy:unlock
+  deploy:update_code: [npm:install, deploy:vendors]
