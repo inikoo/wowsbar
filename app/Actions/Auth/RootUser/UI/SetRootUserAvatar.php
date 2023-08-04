@@ -8,7 +8,6 @@
 namespace App\Actions\Auth\RootUser\UI;
 
 use App\Models\Auth\RootUser;
-use App\Models\Auth\User;
 use App\Models\Media\Media;
 use Exception;
 use Illuminate\Console\Command;
