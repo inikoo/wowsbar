@@ -3,43 +3,25 @@ import { trans } from "laravel-vue-i18n";
 import Button from "@/Components/Elements/Buttons/Button.vue";
 import { ref, h, defineComponent } from "vue";
 import VuePictureCropper, { cropper } from "vue-picture-cropper";
-import { set } from "lodash";
+import { set, get } from "lodash";
 import { Cropper } from 'vue-advanced-cropper'
 import 'vue-advanced-cropper/dist/style.css';
 import 'vue-advanced-cropper/dist/theme.compact.css';
 
 
+
 const props = defineProps(["data"]);
-const _crooper = ref()
-const onCrop = (cropPosition) => {
-    set(props, ['data', 'imagePosition'], { canvas: cropper.getCroppedCanvas(), cropPosition: cropPosition.detail })
-};
-
-const cropCanvas = ref()
 const _cropper = ref()
-const _abcdef = ref()
-const cropImgSrc = ref()
-const cropCoordinate = ref(null)
-const imgaaa =  'https://images.unsplash.com/photo-1619737307100-55b82496fcda?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80'
-const cropOnChange = ({coordinates, canvas}) => {
-    console.log(coordinates, canvas)
-    cropCoordinate.value = coordinates
-    cropCanvas.value = canvas
 
-    if (_cropper.value) {
-        const { canvas } = _cropper.value.getResult();
-
-        console.log("test", canvas);
-        const injectedImage = h('img', { src: canvas.toDataURL('image/jpg'), alt: 'hehe' })
-        cropImgSrc.value = canvas.toDataURL('image/jpg')
-        // _abcdef.value = injectedImage
-
-    }
+const cropOnChange = ({ coordinates, canvas }) => {
+    set(props, ['data', 'imagePosition'], coordinates)
 }
 
 const onReady = () => {
-    _cropper.value.coordinates.width = 800;
-    _cropper.value.coordinates.height = 200;
+    _cropper.value.setCoordinates({
+          left: get(props.data,['imagePosition','left'],0), // Set the left position to 0
+          top: get(props.data,['imagePosition','top'],0), // Set the top position to 0
+        });
 }
 
 
@@ -80,31 +62,12 @@ const onFileChange = (event) => {
 
 <template>
     <div class="block w-full">
-    dd
-    <div ref="_abcdef"><img :src="cropImgSrc" /></div>
-    zz
-    <pre>{{ cropCanvas   }}</pre>
-    <pre>{{ cropCoordinate }}</pre>
-        <div class="w-full h-96 qwezxc overflow-hidden relative">
-            <Cropper
-                ref="_cropper"
-                class="cropper"
-                :src="props.data.image_source"
-                :stencil-props="{
-                    aspectRatio: 4 / 1
-                }"
-                :auto-zoom="true"
-                :default-size="({ imageSize, visibleArea }) => {
-                    return {
-                        width: (visibleArea || imageSize).width,
-                        height: (visibleArea || imageSize).height,
-                    }
-                }"
-                @ready="onReady"
-                @change="cropOnChange"
-                minWidth=""
-            >
-                <canvas ref="cropCanvas" />
+        <div class="w-full  overflow-hidden relative">
+            <Cropper ref="_cropper" class="cropper" :src="generateThumbnail(props.data.image_source)" :stencil-props="{
+                aspectRatio: 4 / 1,
+                movable: true,
+                resizable: false,
+            }" :auto-zoom="true" @ready="onReady" @change="cropOnChange" minWidth="">
             </Cropper>
         </div>
 
@@ -123,7 +86,7 @@ const onFileChange = (event) => {
                 }" />
         </div> -->
 
-{{  }}
+        {{ }}
 
         <!-- Avatar Button: Large view -->
         <div class="w-full relative space-y-4 mt-2.5">
@@ -151,8 +114,7 @@ const onFileChange = (event) => {
 
 <style lang="scss">
 .cropper {
-    max-height: 500px;
+    max-height: 300px;
     max-width: 600px;
 }
-
 </style>
