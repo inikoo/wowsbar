@@ -53,8 +53,8 @@ const submit = () => {
         
         <div>
             <p class="text-sm font-light text-gray-500 dark:text-gray-400">
-                Don't have an account yet?
-                <Link :href="route('landlord.register')" class="font-bold text-primary-700 hover:underline dark:text-primary-500">Register</Link>
+                {{ trans('Don`t have an account yet?') }}
+                <Link :href="route('landlord.register')" class="font-bold text-primary-700 hover:underline dark:text-primary-500">{{ trans('Register') }}</Link>
             </p>
         </div>
     </form>

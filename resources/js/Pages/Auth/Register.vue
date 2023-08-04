@@ -6,6 +6,7 @@ import PrimaryButton from '@/Components/PrimaryButton.vue'
 import Button from '@/Components/Elements/Buttons/Button.vue'
 import TextInput from '@/Components/TextInput.vue'
 import { Head, Link, useForm } from '@inertiajs/vue3'
+import { trans } from 'laravel-vue-i18n'
 
 const form = useForm({
     name: '',
@@ -95,8 +96,8 @@ const submit = () => {
 
             <div class="">
                 <p class="text-sm font-light text-gray-500 dark:text-gray-400">
-                    Already registered?
-                    <Link :href="route('landlord.login')" class="font-bold text-primary-700 hover:underline dark:text-primary-500">Login</Link>
+                    {{ trans('Already registered?') }}
+                    <Link :href="route('landlord.login')" class="font-bold text-primary-700 hover:underline dark:text-primary-500">{{ trans('Login') }}</Link>
                 </p>
             </div>
         </form>
