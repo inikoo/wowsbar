@@ -7,7 +7,6 @@ import { set } from "lodash";
 const props = defineProps(["data"]);
 const _crooper = ref()
 const onCrop = (cropPosition) => {
-    console.log(cropPosition)
     set(props, ['data', 'imagePosition'], { canvas: cropper.getCroppedCanvas(), cropPosition: cropPosition.detail })
 };
 

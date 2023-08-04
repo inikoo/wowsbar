@@ -8,7 +8,7 @@
 import { ref, onMounted, watch, computed } from 'vue'
 import axios from 'axios'
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
-import { faTrashAlt, faAlignJustify, faCog, faImage } from "@/../private/pro-light-svg-icons"
+import { faTrashAlt, faAlignJustify, faCog, faImage, faLock } from "@/../private/pro-light-svg-icons"
 // import {  } from "@/../private/pro-regular-svg-icons"
 import { faEye, faEyeSlash } from "@/../private/pro-solid-svg-icons"
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -21,7 +21,7 @@ import Button from '../Elements/Buttons/Button.vue'
 import { get } from 'lodash'
 import { router } from '@inertiajs/vue3'
 import SliderCommonWorkshop from './SliderCommonWorkshop.vue'
-library.add(faEye, faEyeSlash, faTrashAlt, faAlignJustify, faCog, faImage)
+library.add(faEye, faEyeSlash, faTrashAlt, faAlignJustify, faCog, faImage, faLock)
 
 interface CornersPositionData {
     data: {
@@ -76,6 +76,7 @@ const props = defineProps<{
         name: string
         arguments: string
     }
+    user : Object
 }>()
 
 const emits = defineEmits<{
@@ -84,7 +85,7 @@ const emits = defineEmits<{
 
 const isDragging = ref(false)
 const fileInput = ref(null)
-const currentComponentBeenEdited = ref(props.data.components[0])
+const currentComponentBeenEdited = ref(null)
 const commonEditActive = ref(false)
 
 // When new slide added
@@ -185,12 +186,32 @@ const drop = (e) => {
     props.data.components = [...props.data.components, ...newFiles]
     isDragging.value = false
 }
-
 const selectComponentForEdition = (slide) => {
-    commonEditActive.value = false
-    currentComponentBeenEdited.value = slide
-    _SlideWorkshop.value.current = 0
-}
+    const componentToEdit = props.data.components.find(item => item.ulid === slide.ulid);
+
+    if (!componentToEdit) {
+        console.log('Component not found');
+        return;
+    }
+
+    if (slide.user && slide.user !== props.user.username) {
+        console.log('Cannot edit: Component already in use');
+    } else {
+        const oldComponentToEdit = props.data.components.find(item => item.ulid === get(currentComponentBeenEdited.value,'ulid'));
+
+        if (oldComponentToEdit) {
+            oldComponentToEdit.user = null;
+        }
+
+        componentToEdit.user = props.user.username;
+        if(commonEditActive){
+            props.data.common.user = null
+        }
+        commonEditActive.value = false;
+        currentComponentBeenEdited.value = slide;
+        _SlideWorkshop.value.current = 0;
+    }
+};
 
 // To change visibility of the each slide
 const changeVisibility = (slide: any) => {
@@ -383,10 +404,26 @@ const CommonBlueprint = ref([
 const _SlideWorkshop = ref(null)
 
 const setCommonEdit = () => {
-    commonEditActive.value = !commonEditActive.value
-    if(commonEditActive.value) currentComponentBeenEdited.value = null
-    else currentComponentBeenEdited.value = props.data.components[0]
-}
+    if (props.data.common.user && props.data.common.user !== props.user.username) {
+        console.log('masih dipakek');
+    } else {
+        const oldComponentToEdit = props.data.components.find(item => item.ulid === get(currentComponentBeenEdited.value, 'ulid'));
+        props.data.common.user = props.user.username
+        if (oldComponentToEdit) {
+            oldComponentToEdit.user = null;
+        }
+
+        commonEditActive.value = !commonEditActive.value;
+
+        if (commonEditActive.value) {
+            currentComponentBeenEdited.value = null;
+        } else {
+            currentComponentBeenEdited.value = props.data.components[0];
+        }
+
+    }
+};
+
 
 </script>
 
@@ -400,7 +437,8 @@ const setCommonEdit = () => {
                     commonEditActive ? 'bg-gray-200/60 font-medium border-l-4 border-l-orange-500' : 'hover:bg-gray-100 border-gray-300',
                 ]"
                 @click="setCommonEdit">
-                <FontAwesomeIcon icon='fal fa-cog' class='' aria-hidden='true' />
+                <FontAwesomeIcon v-if="props.data.common.user == props.user.username || !props.data.common.user" icon='fal fa-cog' class='' aria-hidden='true' />
+                <FontAwesomeIcon v-else="props.data.common.user == props.user.username || !props.data.common.user"  :icon="['fal', 'lock']" class='' aria-hidden='true' />
                 <span class="text-gray-600">{{ trans('Common properties') }}</span>
             </div>
 
@@ -413,12 +451,15 @@ const setCommonEdit = () => {
                 <template #item="{ element: slide }">
                     <div
                         @mousedown="selectComponentForEdition(slide), emits('jumpToIndex', data.components.findIndex((component) => { return component.id == slide.id}))"
-                        v-if="slide.ulid !== null"
+                        v-if="slide.ulid" 
                         :class="[
                             'grid grid-flow-col relative py-1 border mb-2 items-center justify-between hover:cursor-pointer',
                             slide.ulid == get(currentComponentBeenEdited,'ulid') ?
                                 'border-l-orange-500 border-l-4 bg-gray-200/60 text-gray-600 font-medium' :
-                                'border-gray-300'
+                                'border-gray-300',
+                            slide.user != props.user.username  && slide.user ?
+                            'border-l-red-500 border-l-4 bg-gray-200/60 text-gray-600 font-medium' :
+                            'border-gray-300',
                         ]"
                     >
                         <div class="grid grid-flow-col gap-x-1 lg:gap-x-0 py-1 lg:py-0">
@@ -438,10 +479,13 @@ const setCommonEdit = () => {
 
                         <!-- Button: Show/hide, delete slide -->
                         <div class="flex justify-center items-center pr-2 justify-self-end">
-                            <button class="px-2 py-1" type="button"
+                            <button class="px-2 py-1" type="button" v-if="slide.user == props.user.username || !slide.user"
                                 @click="changeVisibility(slide)" title="Show/hide the slide">
                                 <FontAwesomeIcon v-if="slide.hasOwnProperty('visibility') ? slide.visibility : true" icon="fas fa-eye" class="text-xs sm:text-sm text-gray-400 hover:text-gray-500" />
                                 <FontAwesomeIcon v-else icon="fas fa-eye-slash" class="text-xs sm:text-sm text-gray-300 hover:text-gray-400/70" />
+                            </button>
+                            <button class="px-2 py-1" type="button" v-else>
+                                <font-awesome-icon :icon="['fal', 'lock']"  class="text-xs sm:text-sm text-gray-300 hover:text-gray-400/70" />
                             </button>
                         </div>
                     </div>
