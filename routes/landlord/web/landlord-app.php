@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', ShowWelcome::class)->name('welcome');
-Route::get('/whatsnew', ShowWhatsNew::class)->name('whats-new');
+Route::get('/whats-new', ShowWhatsNew::class)->name('whats-new');
 Route::get('/pricing', ShowPricing::class);
 
 Route::get('/dashboard', function () {
