@@ -5,7 +5,7 @@
 #
 
 DB=wowsbar
-BACKUP_DB=wowsbar_backup_elasticsearch
+BACKUP_DB=wowsbar_backup
 
 echo -e "🧼 Cleaning storage"
 rm -rf public/tenants
