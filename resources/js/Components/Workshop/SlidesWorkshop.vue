@@ -90,7 +90,7 @@ const commonEditActive = ref(false)
 
 // When new slide added
 const addComponent = async (element) => {
-    let setData = []
+    let setData = props.data.components 
     for (const set of element.target.files) {
         if (set && set instanceof File) {
             setData.push({
@@ -106,8 +106,8 @@ const addComponent = async (element) => {
             })
         }
     }
-    const newFiles = [...setData]
-    props.data.components = [... props.data.components, ...newFiles]
+    
+    props.data.components = [...setData]
 
     // Save the new image to database
     try {
@@ -119,6 +119,7 @@ const addComponent = async (element) => {
             }
         )
 
+        console.log("===========================")
         console.log(response.data)
 
     } catch (error) {

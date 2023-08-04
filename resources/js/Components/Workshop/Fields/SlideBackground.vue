@@ -64,6 +64,7 @@ const onFileChange = (event) => {
                 }" />
         </div>
 
+{{  }}
 
         <!-- Avatar Button: Large view -->
         <div class="w-full relative space-y-4 mt-2.5">

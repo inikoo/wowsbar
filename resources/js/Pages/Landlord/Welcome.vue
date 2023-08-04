@@ -3,9 +3,20 @@
   - Created: Mon, 31 Jul 2023 16:01:32 Malaysia Time, Kuala Lumpur, Malaysia
   - Copyright (c) 2023, Raul A Perusquia Flores
   -->
-<script setup>
-    import { Head } from "@inertiajs/vue3";
-    import { ChevronRightIcon } from '@heroicons/vue/20/solid'
+<script setup lang="ts">
+import { Head } from "@inertiajs/vue3";
+import { ChevronRightIcon } from '@heroicons/vue/20/solid'
+import { Link } from "@inertiajs/vue3";
+
+const props = defineProps<{
+    whatsNew: {
+        label: string
+        route: {
+            name: string
+            parameters: string
+        }
+    }
+}>()
 </script>
 
 <template>
@@ -25,14 +36,14 @@
             <div class="mx-auto max-w-2xl lg:mx-0 lg:max-w-xl lg:flex-shrink-0 lg:pt-0">
                 <img class="h-24" src="@/../art/logo/png/1.png" alt="Wowsbar" />
                 <!-- <img src="@/../art/logo/png/2.png" alt="Wowsbar" class="h-4"> -->
-                <div class="mt-8">
-                    <a href="#" class="inline-flex space-x-6">
+                <div v-if="whatsNew" class="mt-8">
+                    <Link :href="route(whatsNew.route.name, whatsNew.route.parameters)" class="inline-flex space-x-6">
                         <span class="rounded-full bg-gray-600/10 px-3 py-1 text-sm font-semibold leading-6 text-gray-600 ring-1 ring-inset ring-gray-600/10">What's new</span>
                         <span class="inline-flex items-center space-x-2 text-sm font-medium leading-6 text-gray-600">
-                            <span>Just shipped v1.0</span>
+                            <span>{{ whatsNew.label }}</span>
                             <ChevronRightIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
                         </span>
-                    </a>
+                    </Link>
                 </div>
                 <h1 class="mt-3 text-4xl font-bold tracking-tight text-gray-700 sm:text-6xl">Your One-Stop Platform Banners Creator</h1>
                 <p class="mt-6 text-lg leading-8 text-gray-600">Create stunning website banners effortlessly! Easy to use, customizable templates, and no design experience required. Elevate your website's appeal today!</p>
