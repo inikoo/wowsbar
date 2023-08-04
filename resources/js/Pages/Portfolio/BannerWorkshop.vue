@@ -6,7 +6,7 @@ import { capitalize } from "@/Composables/capitalize"
 import SlidesWorkshop from "@/Components/Workshop/SlidesWorkshop.vue"
 import Slider from "@/Components/Slider/Slider.vue"
 import SlidesWorkshopAddMode from "@/Components/Workshop/SlidesWorkshopAddMode.vue"
-import { cloneDeep, set as setData } from 'lodash'
+import { cloneDeep, set as setData, isEqual } from 'lodash'
 import ScreenView from "@/Components/ScreenView.vue"
 import { getDatabase, ref as dbRef, set, onValue, get } from 'firebase/database';
 import { initializeApp } from "firebase/app"
@@ -27,6 +27,7 @@ const props = defineProps<{
 const firebaseApp = initializeApp(serviceAccount);
 const db = getDatabase(firebaseApp);
 const user = ref(usePage().props.auth.user)
+console.log(user.value)
 const fetchInitialData = async () => {
   try {
     const snapshot = await get(dbRef(db, 'Banner'));
@@ -49,6 +50,12 @@ onValue(dbRef(db, 'Banner'), (snapshot) => {
     const firebaseData = snapshot.val();
     if(firebaseData[props.imagesUploadRoute.arguments.banner]){
         Object.assign(data,{...data,...firebaseData[props.imagesUploadRoute.arguments.banner]}); 
+        // if(!isEqual(data.components,components)){
+        //   Object.assign(components,data.components); 
+        // }
+        // if(!isEqual(data.common,common)){
+        //   Object.assign(common,data.common); 
+        // }
       }
   }
 });
@@ -59,6 +66,7 @@ const updateData = async () => {
   try {
     if (data) {
       await set(dbRef(db, 'Banner'),{[props.imagesUploadRoute.arguments.banner] : data});
+      console.log('data',data)
     }
   } catch (error) {
     console.error('Error updating data:', error);
@@ -68,19 +76,21 @@ const updateData = async () => {
 const jumpToIndex = ref(0)
 const screenView = ref('')
 const data = reactive(cloneDeep(props.bannerLayout))
-const components = reactive(cloneDeep(props.bannerLayout.components))
-const common = reactive(cloneDeep(props.bannerLayout.common))
+// const components = reactive(data.components)
+// const common = reactive(data.common)
 watch(data, updateData, { deep: true });
 
-watch(components, (newComponents, oldComponents) => {
-    data.components = newComponents
-    updateData()
-}, { deep: true });
+// watch(components, (newComponents, oldComponents) => {
+//     data.components = newComponents
+//     updateData()
+//     console.log('dsdfsdfsdfddd')
+// }, { deep: true });
 
-watch(common, (newComponents, oldComponents) => {
-    data.common = newComponents
-    updateData()
-}, { deep: true });
+// watch(common, (newComponents, oldComponents) => {
+//     data.common = newComponents
+//     console.log('dddd')
+//     updateData()
+// }, { deep: true });
 
 onBeforeMount(fetchInitialData);
 
@@ -96,9 +106,9 @@ onBeforeMount(fetchInitialData);
                 <ScreenView @screenView="(val) => screenView = val"/>
             </div>
             <div class="flex justify-center pr-0.5">
-                <Slider :data="{ ...data , common: common, components : components}" :jumpToIndex="jumpToIndex" :view="screenView"/>
+                <Slider :data="{ ...data}" :jumpToIndex="jumpToIndex" :view="screenView"/>
             </div>
-            <SlidesWorkshop class="clear-both mt-2 p-2.5" :data="{ ...data , common: common, components : components}" @jumpToIndex="(val) => jumpToIndex = val" :imagesUploadRoute="imagesUploadRoute" :user="user"/>
+            <SlidesWorkshop class="clear-both mt-2 p-2.5" :data="{ ...data }" @jumpToIndex="(val) => jumpToIndex = val" :imagesUploadRoute="imagesUploadRoute" :user="user"/>
         </div>
 
     <!-- Second set of components -->
