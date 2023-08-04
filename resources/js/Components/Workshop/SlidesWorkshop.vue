@@ -119,6 +119,7 @@ const addComponent = async (element) => {
             }
         )
 
+        console.log("===========================")
         console.log(response.data)
 
     } catch (error) {

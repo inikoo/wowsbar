@@ -8,6 +8,7 @@ const props = defineProps(["data"]);
 const _crooper = ref()
 const onCrop = (cropPosition) => {
     set(props, ['data', 'imagePosition'], { canvas: cropper.getCroppedCanvas(), cropPosition: cropPosition.detail })
+    console.log(cropper.getCroppedCanvas())
 };
 
 
@@ -64,6 +65,7 @@ const onFileChange = (event) => {
                 }" />
         </div>
 
+{{  }}
 
         <!-- Avatar Button: Large view -->
         <div class="w-full relative space-y-4 mt-2.5">

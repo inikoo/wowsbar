@@ -11,22 +11,16 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\Concerns\AsController;
 
-class ShowWelcome
+class ShowWhatsNew
 {
     use AsController;
 
     public function handle(): Response
     {
         return Inertia::render(
-            'Landlord/Welcome',
+            'Landlord/WhatsNew',
             [
-                'whatsNew' => [
-                    'label' => __('Just shipped v0.9'),
-                    'route' => [
-                        'name'       => 'landlord.whats-new',
-                        'parameters' => null
-                    ]
-                ]
+                
             ]
         );
     }
