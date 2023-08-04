@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Head } from "@inertiajs/vue3"
-import { ref, reactive, onBeforeMount, watch, defineProps } from "vue"
+import { ref, reactive, onBeforeMount, watch, computed } from "vue"
 import PageHeading from "@/Components/Headings/PageHeading.vue"
 import { capitalize } from "@/Composables/capitalize"
 import SlidesWorkshop from "@/Components/Workshop/SlidesWorkshop.vue"
@@ -34,7 +34,6 @@ const fetchInitialData = async () => {
       const firebaseData = snapshot.val()
       if(firebaseData[props.imagesUploadRoute.arguments.banner]){
         Object.assign(data,{...data,...firebaseData[props.imagesUploadRoute.arguments.banner]}); 
-      console.log('Updated data from fetchInitialData:', snapshot.val());
       }
      
     }else{
@@ -50,7 +49,6 @@ onValue(dbRef(db, 'Banner'), (snapshot) => {
     const firebaseData = snapshot.val();
     if(firebaseData[props.imagesUploadRoute.arguments.banner]){
         Object.assign(data,{...data,...firebaseData[props.imagesUploadRoute.arguments.banner]}); 
-      console.log('Updated data from fetchInitialData:', snapshot.val());
       }
   }
 });
@@ -58,7 +56,6 @@ onValue(dbRef(db, 'Banner'), (snapshot) => {
 
 
 const updateData = async () => {
-  console.log('berhasil',data);
   try {
     if (data) {
       await set(dbRef(db, 'Banner'),{[props.imagesUploadRoute.arguments.banner] : data});
@@ -71,14 +68,22 @@ const updateData = async () => {
 const jumpToIndex = ref(0)
 const screenView = ref('')
 const data = reactive(cloneDeep(props.bannerLayout))
-
+const components = reactive(cloneDeep(props.bannerLayout.components))
+const common = reactive(cloneDeep(props.bannerLayout.common))
 watch(data, updateData, { deep: true });
-watch(data.components, (newValue, oldValue) => {
-  data.components = newValue
-});
+
+watch(components, (newComponents, oldComponents) => {
+    data.components = newComponents
+    updateData()
+}, { deep: true });
+
+watch(common, (newComponents, oldComponents) => {
+    data.common = newComponents
+    updateData()
+}, { deep: true });
 
 onBeforeMount(fetchInitialData);
-console.log(props.imagesUploadRoute.arguments.banner)
+
 </script>
 <template layout="App">
     <Head :title="capitalize(title)" />
@@ -93,7 +98,7 @@ console.log(props.imagesUploadRoute.arguments.banner)
             <div class="flex justify-center pr-0.5">
                 <Slider :data="data" :jumpToIndex="jumpToIndex" :view="screenView"/>
             </div>
-            <SlidesWorkshop class="clear-both mt-2 p-2.5" :data="data" @jumpToIndex="(val) => jumpToIndex = val" :imagesUploadRoute="imagesUploadRoute" :user="user"/>
+            <SlidesWorkshop class="clear-both mt-2 p-2.5" :data="{ ...data , common: common, components : components,}" @jumpToIndex="(val) => jumpToIndex = val" :imagesUploadRoute="imagesUploadRoute" :user="user"/>
         </div>
 
     <!-- Second set of components -->
