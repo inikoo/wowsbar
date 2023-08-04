@@ -9,7 +9,7 @@ namespace App\Actions\Auth\RootUser;
 
 use App\Actions\Traits\WithActionUpdate;
 use App\Http\Resources\Auth\UserResource;
-use App\Models\Auth\RootUser;
+use App\Models\Auth\User;
 use App\Rules\AlphaDashDot;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Validation\Validator;
@@ -21,9 +21,9 @@ class DeleteRootUser
 
     private bool $asAction = false;
 
-    public function handle(RootUser $rootUser, array $modelData): RootUser
+    public function handle(User $user, array $modelData): User
     {
-        return $this->update($rootUser, $modelData, 'settings');
+        return $this->update($user, $modelData, 'settings');
     }
 
     public function authorize(ActionRequest $request): bool
@@ -38,9 +38,9 @@ class DeleteRootUser
     public function rules(): array
     {
         return [
-            'username' => ['sometimes', 'required', new AlphaDashDot(), 'unique:root_users,username'],
+            'username' => ['sometimes', 'required', new AlphaDashDot(), 'unique:users,username'],
             'password' => ['sometimes', 'required', app()->isLocal()  || app()->environment('testing') ? null : Password::min(8)->uncompromised()],
-            'email'    => 'sometimes|required|email|unique:root_users,email'
+            'email'    => 'sometimes|required|email|unique:users,email'
         ];
     }
 
@@ -53,23 +53,24 @@ class DeleteRootUser
     }
 
 
-    public function asController(RootUser $rootUser, ActionRequest $request): RootUser
+    public function asController(User $user, ActionRequest $request): User
     {
         $request->validate();
-        return $this->handle($rootUser, $request->validated());
+        return $this->handle($user, $request->validated());
     }
 
-    public function action(RootUser $rootUser, $objectData): RootUser
+    public function action(User $user, $objectData): User
     {
         $this->asAction = true;
         $this->setRawAttributes($objectData);
         $validatedData = $this->validateAttributes();
 
-        return $this->handle($rootUser, $validatedData);
+        return $this->handle($user, $validatedData);
+
     }
 
-    public function jsonResponse(RootUser $rootUser): UserResource
+    public function jsonResponse(User $user): UserResource
     {
-        return new UserResource($rootUser);
+        return new UserResource($user);
     }
 }

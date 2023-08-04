@@ -7,8 +7,10 @@
 
 namespace App\Actions\Auth\RootUser;
 
-use App\Actions\Auth\RootUser\UI\SetRootUserAvatar;
-use App\Models\Auth\RootUser;
+use App\Actions\Auth\User\Hydrators\UserHydrateUniversalSearch;
+use App\Actions\Auth\User\UI\SetUserAvatar;
+use App\Actions\Tenancy\Tenant\Hydrators\TenantHydrateUsers;
+use App\Models\Auth\User;
 use App\Models\Tenancy\Tenant;
 use App\Rules\AlphaDashDot;
 use Illuminate\Validation\Rule;
@@ -25,14 +27,16 @@ class StoreRootUser
     private bool $asAction = false;
 
 
-    public function handle(Tenant $tenant, array $objectData = []): RootUser
+    public function handle(Tenant $tenant, array $objectData = []): User
     {
-        /** @var \App\Models\Auth\RootUser $rootUser */
-        $rootUser = $tenant->rootUsers()->create($objectData);
-//        $rootUser->stats()->create();
-        SetRootUserAvatar::run($rootUser);
+        /** @var User $user */
+        $user = $tenant->users()->create($objectData);
+        $user->stats()->create();
+        SetUserAvatar::run($user);
 
-        return $rootUser;
+        UserHydrateUniversalSearch::dispatch($user);
+        TenantHydrateUsers::dispatch(app('currentTenant'));
+        return $user;
     }
 
     public function authorize(ActionRequest $request): bool
@@ -47,13 +51,13 @@ class StoreRootUser
     public function rules(): array
     {
         return [
-            'username' => ['required', new AlphaDashDot(), 'unique:root_users,username', Rule::notIn(['export', 'create'])],
+            'username' => ['required', new AlphaDashDot(), 'unique:users,username', Rule::notIn(['export', 'create'])],
             'password' => ['required', app()->isLocal() || app()->environment('testing') ? null : Password::min(8)->uncompromised()],
-            'email'    => ['required', 'email', 'unique:root_users,email']
+            'email'    => ['required', 'email', 'unique:users,email']
         ];
     }
 
-    public function action(Tenant $tenant, ?array $objectData = []): RootUser
+    public function action(Tenant $tenant, ?array $objectData = []): User
     {
         $this->asAction = true;
         $this->setRawAttributes($objectData);
@@ -61,4 +65,6 @@ class StoreRootUser
 
         return $this->handle($tenant, $validatedData);
     }
+
+
 }

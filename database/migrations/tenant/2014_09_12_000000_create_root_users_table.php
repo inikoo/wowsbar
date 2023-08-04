@@ -5,13 +5,11 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-use App\Models\Traits\WithUserDetailTrait;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class () extends Migration {
-    use WithUserDetailTrait;
     public function up(): void
     {
         Schema::create('root_users', function (Blueprint $table) {
@@ -19,12 +17,26 @@ return new class () extends Migration {
             $table->unsignedSmallInteger('tenant_id')->index();
             $table->foreign('tenant_id')->references('id')->on('tenants');
 
-            $this->userDetailsColumns($table);
+            $table->unsignedSmallInteger('user_id')->nullable()->index();
+            $table->foreign('user_id')->references('id')->on('users');
 
+            $table->boolean('status')->default(true);
+            $table->string('username')->collation('und_ns');
+            $table->string('contact_name')->nullable()->collation('und_ns');
+            $table->string('email')->collation('und_ns');
+            $table->timestamp('email_verified_at')->nullable();
+            $table->string('password');
+            $table->rememberToken();
+            $table->string('about')->nullable();
+            $table->jsonb('data');
+            $table->jsonb('settings');
+            $table->unsignedSmallInteger('language_id')->default(68);
+            $table->foreign('language_id')->references('id')->on('languages');
+            $table->unsignedInteger('avatar_id')->nullable();
             $table->timestampsTz();
             $table->softDeletesTz();
-            $table->unique(['tenant_id','username']);
-            $table->unique(['tenant_id','email']);
+            $table->unique(['tenant_id','username', 'user_id']);
+            $table->unique(['tenant_id','email', 'user_id']);
         });
     }
 
