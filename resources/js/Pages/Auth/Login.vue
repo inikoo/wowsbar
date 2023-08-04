@@ -20,7 +20,6 @@ const submit = () => {
 
 <template layout="GuestLayout">
     <Head title="Login"/>
-    <div class="flex justify-center text-2xl">This is for Tenant</div>
     <form class="space-y-6" @submit.prevent="submit" >
         <div>
             <label for="login" class="block text-sm font-medium text-gray-700">{{ trans('Username') }}</label>
