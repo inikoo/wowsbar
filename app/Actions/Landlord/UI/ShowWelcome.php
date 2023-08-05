@@ -21,7 +21,7 @@ class ShowWelcome
             'Landlord/Welcome',
             [
 
-                'hero'=>[
+                'hero' => [
                     'whatsNew' => [
                         'label' => __('Just shipped v0.9'),
                         'route' => [
@@ -29,8 +29,13 @@ class ShowWelcome
                             'parameters' => null
                         ]
                     ],
-                    'title'=>'Your One-Stop Platform Banners Creator',
-                    'text'=>"Create stunning website banners effortlessly! Easy to use, customizable templates, and no design experience required. Elevate your website's appeal today!"
+                    'title'    => 'Your One-Stop Platform Banners Creator',
+                    'text'     => "Create stunning website banners effortlessly! Easy to use, customizable templates, and no design experience required. Elevate your website's appeal today!",
+                    'media'    => [
+                        'logo'          => url('/images/logo.png'),
+                        'appScreenshot' => url('/images/marketing/app-screenshot.png')
+                    ]
+
                 ],
 
 

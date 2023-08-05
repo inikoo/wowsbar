@@ -1,4 +1,3 @@
-
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
  * Created: Sat, 05 Aug 2023 00:23:06 Malaysia Time, Kuala Lumpur, Malaysia
@@ -6,15 +5,20 @@
  */
 
 export interface Hero {
-        whatsNew?: {
-            label: string
-            route: {
-                name: string
-                parameters: string
-            }
-        },
-        title: string,
-        text?: string
+    whatsNew?: {
+        label: string
+        route: {
+            name: string
+            parameters: string
+        }
+    },
+    title: string,
+    text?: string,
+    media: {
+        logo:string,
+        appScreenshot: string
+    }
+
 
 
 }

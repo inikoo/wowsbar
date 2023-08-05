@@ -9,7 +9,7 @@ import {Link} from "@inertiajs/vue3";
 import {Hero} from "@/types/hero";
 
 const props = defineProps<{
-  hero:Hero
+    hero: Hero
 }>()
 </script>
 
@@ -17,7 +17,7 @@ const props = defineProps<{
 
     <div class="mx-auto max-w-7xl px-6 pb-24 pt-10 sm:pb-32 lg:flex lg:px-8 lg:py-40">
         <div class="mx-auto max-w-2xl lg:mx-0 lg:max-w-xl lg:flex-shrink-0 lg:pt-0">
-            <img class="h-24" src="@/../art/logo/png/1.png" alt="Wowsbar"/>
+            <img class="h-24" :src="hero.media.logo" alt="Wowsbar"/>
             <div v-if="hero.whatsNew" class="mt-8">
                 <Link :href="route(hero.whatsNew.route.name, hero.whatsNew.route.parameters)" class="inline-flex space-x-6">
                     <span class="rounded-full bg-gray-600/10 px-3 py-1 text-sm font-semibold leading-6 text-gray-600 ring-1 ring-inset ring-gray-600/10">What's new</span>
@@ -39,7 +39,7 @@ const props = defineProps<{
         <div class="mx-auto mt-16 flex max-w-2xl sm:mt-24 lg:ml-10 lg:mr-0 lg:mt-0 lg:flex-none ">
             <div class="max-w-3xl flex-none">
                 <div class="-m-2 rounded-xl bg-gray-700/5 p-2 ring-1 ring-inset ring-gray-700/10 lg:-m-4 lg:rounded-2xl lg:p-4">
-                    <img src="@/../art/others/welcome.png" alt="App screenshot" width="2432" height="1442" class="w-[76rem] rounded-md shadow-2xl ring-1 ring-gray-700/10 select-none"/>
+                    <img :src="hero.media.appScreenshot" alt="App screenshot" width="2432" height="1442" class="w-[76rem] rounded-md shadow-2xl ring-1 ring-gray-700/10 select-none"/>
                 </div>
             </div>
         </div>

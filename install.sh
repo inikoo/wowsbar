@@ -22,6 +22,8 @@ php artisan es:refresh
 echo -e "✨ Installing dependencies"
 composer install
 npm install
+echo "Public assets link 🔗"
+php artisan storage:link
 echo "🌱 Migrating and seeding database"
 php artisan migrate --database=backup --path=database/migrations/backup
 php artisan migrate --path=database/migrations/landlord
