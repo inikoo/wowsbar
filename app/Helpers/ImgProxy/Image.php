@@ -28,7 +28,7 @@ class Image
     protected string $gravity;
     protected int $enlarge;
 
-    protected string $extension;
+    protected ?string $extension=null;
 
     protected mixed $url;
 
@@ -175,7 +175,7 @@ class Image
     }
 
 
-    public function getExtension(): string
+    public function getExtension(): ?string
     {
         return $this->extension;
     }
