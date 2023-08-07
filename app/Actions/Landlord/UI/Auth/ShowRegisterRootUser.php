@@ -17,7 +17,7 @@ class ShowRegisterRootUser
 
     public function handle(): Response
     {
-        return Inertia::render('Auth/Register');
+        return Inertia::render('Landlord/Auth/LandlordRegister');
     }
 
     public function asController(): Response
