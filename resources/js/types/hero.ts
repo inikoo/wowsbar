@@ -16,8 +16,14 @@ export interface Hero {
     title: string
     text?: string
     media: {
-        logo: Image
-        appScreenshot: Image
+        logo: {
+            original: string,
+            webp?: string
+        }
+        appScreenshot: {
+            original: string,
+            webp?: string
+        }
     }
 
 

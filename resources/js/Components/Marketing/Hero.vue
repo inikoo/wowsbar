@@ -32,7 +32,7 @@ const props = defineProps<{
             <p v-if="hero.text" class="mt-6 text-lg leading-8 text-gray-600">{{ hero.text }}</p>
             <div class="mt-8 flex items-center gap-x-6 select-none">
                 <a href="#"
-                   class="rounded-md bg-gray-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600">Get
+                    class="rounded-md bg-gray-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600">Get
                     started</a>
                 <a href="#" class="text-sm font-semibold leading-6 text-gray-700">Learn more <span aria-hidden="true">→</span></a>
             </div>
