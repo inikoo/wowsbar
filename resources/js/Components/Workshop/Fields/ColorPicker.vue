@@ -4,7 +4,7 @@ import { ColorPicker } from 'vue-color-kit'
 import 'vue-color-kit/dist/vue-color-kit.css'
 import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue'
 import { set } from 'lodash'
-import { ref, watch } from 'vue'
+import { ref, watch, defineEmits } from 'vue'
 
 const props = defineProps<{
     fieldName: string | []
@@ -16,8 +16,8 @@ const props = defineProps<{
     data: Object
 }>()
 
-console.log(props)
 
+const emit = defineEmits()
 
 
 const changeColor = (value) => {
@@ -50,15 +50,17 @@ watch(color, (newValue) => {
 });
 
 const updateFormValue = (newValue) => {
-    let target = props.data
+    let target = { ...props.data };
+
     if (Array.isArray(props.fieldName)) {
         set(target, props.fieldName, newValue);
     } else {
         target[props.fieldName] = newValue;
     }
-    props.data = { ...target }
-};
 
+    // Emit an event to notify the parent component
+    emit('input', target);
+};
 
 </script>
 
