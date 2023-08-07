@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { set } from 'lodash'
-import { ref, watch } from 'vue'
+import { ref, watch, defineEmits } from 'vue'
 
 const props = defineProps<{
     fieldName: string
@@ -19,7 +19,9 @@ const props = defineProps<{
     counter: boolean
 }>()
 
-const setFormValue = (data: Object, fieldName: String) => {
+const emit = defineEmits()
+
+const setFormValue = (data: Object, fieldName: string) => {
     if (Array.isArray(fieldName)) {
         return getNestedValue(data, fieldName) / 1000
     } else {
@@ -41,16 +43,14 @@ watch(value, (newValue) => {
 });
 
 const updateFormValue = (newValue: number) => {
-    let target = props.data
+    let target = { ...props.data } // Create a copy of props.data to avoid directly modifying it
     if (Array.isArray(props.fieldName)) {
         set(target, props.fieldName, newValue * 1000)
     } else {
         target[props.fieldName] = newValue * 1000
     }
-    props.data = { ...target }
+    emit('update:data', target); // Emit an event to notify the parent component
 };
-
-
 </script>
 
 <template>
@@ -65,7 +65,5 @@ const updateFormValue = (newValue: number) => {
         </ul>
     </div>
 </template>
-
-
 
 <style scoped></style>
