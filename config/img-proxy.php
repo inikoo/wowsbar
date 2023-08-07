@@ -7,7 +7,7 @@
 
 
 return [
-    'base_url'       => env('IMGPROXY_URL','http://localhost:8080'),
+    'base_url'       => env('IMGPROXY_URL'),
 
     //security
     'key'            => env('IMGPROXY_KEY'),
@@ -44,6 +44,6 @@ return [
     /**
      * The supported formats
      */
-    'formats'        => ['.jpeg', '.jpg', '.png', '.gif', '.webp'],
+    'formats'        => ['jpeg', 'jpg', 'png', 'gif', 'webp'],
     'default_extension'        => false,
 ];

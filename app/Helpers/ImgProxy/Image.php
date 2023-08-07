@@ -151,29 +151,26 @@ class Image
         return $this;
     }
 
-
     public function getEnlarge(): int
     {
         return $this->enlarge;
     }
 
 
-    public function setExtension($argument1): static
+    public function extension($extension): static
     {
-        if (is_null($argument1)) {
-            $argument1 = config('img-proxy.default_extension');
-        }
-        if ($argument1) {
-            $argument1 = Str::lower($argument1);
 
-            if (! in_array($argument1, config('img-proxy.formats'))) {
-                throw new InvalidFormat($argument1);
+        if ($extension) {
+            $extension = Str::lower($extension);
+
+            if (! in_array($extension, config('img-proxy.formats'))) {
+                throw new InvalidFormat($extension);
             }
         }
-        if (!$argument1) {
-            $argument1 = '';
+        if (!$extension) {
+            $extension = '';
         }
-        $this->extension = $argument1;
+        $this->extension = $extension;
         return $this;
     }
 

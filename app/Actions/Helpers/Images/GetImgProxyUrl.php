@@ -5,7 +5,7 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Helpers\ImgProxy;
+namespace App\Actions\Helpers\Images;
 
 use App\Helpers\ImgProxy\Exceptions\InvalidKey;
 use App\Helpers\ImgProxy\Exceptions\InvalidSalt;
@@ -35,6 +35,11 @@ class GetImgProxyUrl
 
     public function handle(Image $image): string
     {
+
+        if(!config('img-proxy.base_url')){
+            return $image->getOriginalPictureUrl();
+        }
+
         $this->image = $image;
 
         return
@@ -52,7 +57,11 @@ class GetImgProxyUrl
 
     public function getEncodedSourceUrl(): string
     {
-        return rtrim(strtr(base64_encode($this->image->getOriginalPictureUrl()), '+/', '-_'), '=');
+        $encodedSourceUrl= rtrim(strtr(base64_encode($this->image->getOriginalPictureUrl()), '+/', '-_'), '=');
+        if($extension=$this->image->getExtension()){
+            $encodedSourceUrl.='.'.$extension;
+        }
+        return  $encodedSourceUrl;
 
     }
 

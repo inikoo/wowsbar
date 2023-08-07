@@ -4,6 +4,7 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
+
 export interface Hero {
     whatsNew?: {
         label: string
@@ -15,8 +16,8 @@ export interface Hero {
     title: string,
     text?: string,
     media: {
-        logo:string,
-        appScreenshot: string
+        logo:object,
+        appScreenshot: object
     }
 
 

@@ -7,6 +7,8 @@
 
 namespace App\Actions\Landlord\UI;
 
+use App\Actions\Helpers\Images\GetPictureSources;
+use App\Helpers\ImgProxy\Image;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\Concerns\AsController;
@@ -32,8 +34,9 @@ class ShowWelcome
                     'title'    => 'Your One-Stop Platform Banners Creator',
                     'text'     => "Create stunning website banners effortlessly! Easy to use, customizable templates, and no design experience required. Elevate your website's appeal today!",
                     'media'    => [
-                        'logo'          => url('/images/logo.png'),
-                        'appScreenshot' => url('/images/marketing/app-screenshot.png')
+                        'logo'          => GetPictureSources::run((new Image)->make(url('/images/logo.png'))),
+                        'appScreenshot' => GetPictureSources::run((new Image)->make(url('/images/marketing/app-screenshot.png'))),
+
                     ]
 
                 ],
