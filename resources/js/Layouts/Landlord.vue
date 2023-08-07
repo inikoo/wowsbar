@@ -5,7 +5,9 @@
   -->
 
 <script setup lang="ts">
-import { Link } from '@inertiajs/vue3';
+import { Link } from '@inertiajs/vue3'
+import Cookies from '@/Components/Cookies.vue'
+
 </script>
 
 <template>
@@ -15,11 +17,11 @@ import { Link } from '@inertiajs/vue3';
                 <img class="h-6 select-none" src="@/../art/logo/png/1.png" alt="Wowsbar" />
             </Link>
             <div class="flex justify-end gap-x-4 text-sm font-medium">
-                <Link :href="route('login')" class="bg-gray-500 text-gray-100 py-0.5 flex place-items-center cursor-pointer px-4 rounded-md hover:bg-gray-600/90 active:bg-gray-600 select-none">
-                    Login
-                </Link>
-                <Link :href="route('register')" class="bg-gray-100/30 border-2 border-gray-500 cursor-pointer text-gray-600 py-0.5 flex place-items-center px-4 rounded-md hover:bg-gray-200/70 active:bg-gray-300 select-none">
+                <Link :href="route('landlord.register')" class="bg-gray-100/30 border-2 border-gray-600 cursor-pointer text-gray-600 py-0.5 flex place-items-center px-4 rounded-md hover:bg-gray-200/70 active:bg-gray-300 select-none">
                     Register
+                </Link>
+                <Link :href="route('landlord.login')" class="bg-gray-600 text-gray-100 py-0.5 flex place-items-center cursor-pointer px-4 rounded-md hover:bg-gray-700 active:bg-gray-800 select-none">
+                    Login
                 </Link>
             </div>
         </div>
@@ -39,5 +41,7 @@ import { Link } from '@inertiajs/vue3';
 
         </div>
     </div>
+
+    <Cookies />
 </template>
 

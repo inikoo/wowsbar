@@ -3,6 +3,7 @@
  * Created: Sat, 05 Aug 2023 00:23:06 Malaysia Time, Kuala Lumpur, Malaysia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
+import { Image } from "@/types/image";
 
 export interface Hero {
     whatsNew?: {
@@ -12,11 +13,17 @@ export interface Hero {
             parameters: string
         }
     },
-    title: string,
-    text?: string,
+    title: string
+    text?: string
     media: {
-        logo:string,
-        appScreenshot: string
+        logo: {
+            original: string,
+            webp?: string
+        }
+        appScreenshot: {
+            original: string,
+            webp?: string
+        }
     }
 
 

@@ -195,16 +195,16 @@ const changeColorMode = (mode: boolean | string) => {
     if (!window.matchMedia) {
         return
     }
-    
+
     let query: boolean | string = false
-    
+
     if (mode == "system") {
         // If browsers prefers dark-mode then true
         query = window.matchMedia('(prefers-color-scheme: dark)').matches
     } else {
         query = mode
     }
-    
+
     if(query) {
         document.documentElement.classList.add('dark')
         localStorage.setItem('darkMode', `${query}`)
@@ -258,7 +258,7 @@ onMounted(() => {
 
                                 <!-- Button: Search -->
                                 <button @click="showSearchDialog = !showSearchDialog"
-                                        class="h-8 w-8 grid items-center justify-center rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                                        class="h-8 w-8 grid items-center justify-center rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500">
                                     <span class="sr-only">{{ trans("Search") }}</span>
                                     <font-awesome-icon aria-hidden="true" icon="fa-regular fa-search" size="lg" />
                                     <SearchBar v-if="showSearchDialog" v-on:close="showSearchDialog = false" />
@@ -266,7 +266,7 @@ onMounted(() => {
 
                                 <!-- Button: Notifications -->
                                 <button type="button"
-                                        class="h-8 w-8 grid items-center justify-center rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                                        class="h-8 w-8 grid items-center justify-center rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500">
                                     <span class="sr-only">{{ trans("View notifications") }}</span>
                                     <font-awesome-icon aria-hidden="true" icon="fa-regular fa-bell" size="lg" />
                                 </button>
@@ -275,7 +275,7 @@ onMounted(() => {
                             <!-- Avatar Button -->
                             <Menu as="div" class="relative">
                                 <MenuButton
-                                    class="flex max-w-xs items-center rounded-full bg-gray-100 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500">
+                                    class="flex max-w-xs items-center rounded-full bg-gray-100 text-sm focus:outline-none focus:ring-2 focus:ring-gray-500">
                                     <span class="sr-only">{{ trans("Open user menu") }}</span>
                                     <img v-if="layout.avatar_id" class="h-8 w-8 rounded-full"
                                         :src="route('media.show',layout.avatar_id)"
@@ -331,11 +331,11 @@ onMounted(() => {
                         </div>
 
                         <Button type="button"
-                                class=" p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500">
+                                class=" p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
                             <span class="sr-only">{{ trans("View notifications") }}</span>
                             <font-awesome-icon aria-hidden="true" icon="fa-regular fa-bell" size="lg" />
                         </Button>
-                        <Button type="button" class=" p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500">
+                        <Button type="button" class=" p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
                             <span class="sr-only">{{ trans("View notifications") }}</span>
                             <FontAwesomeIcon aria-hidden="true" icon="fa-regular fa-bell" size="lg" />
 
@@ -385,7 +385,7 @@ onMounted(() => {
 <style lang="scss">
 .tabNavigationActive {
     // Current active state
-    @apply bg-gray-200/80 border-orange-500 text-gray-700 dark:text-gray-300
+    @apply bg-gray-200/80 border-gray-500 text-gray-700 dark:text-gray-300
 }
 
 .tabNavigation {
