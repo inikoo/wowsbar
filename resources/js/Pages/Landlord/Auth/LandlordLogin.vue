@@ -12,7 +12,7 @@ const form = useForm({
                      })
 
 const submit = () => {
-    form.post(route('landlord.login'), {
+    form.post(route('login'), {
         onFinish: () => form.reset('password'),
     })
 }
@@ -50,11 +50,11 @@ const submit = () => {
                 {{ trans('Login') }}
             </button>
         </div>
-        
+
         <div>
             <p class="text-sm font-light text-gray-500 dark:text-gray-400">
                 {{ trans('Don`t have an account yet?') }}
-                <Link :href="route('landlord.register')" class="font-bold text-primary-700 hover:underline dark:text-primary-500">{{ trans('Register') }}</Link>
+                <Link :href="route('register')" class="font-bold text-primary-700 hover:underline dark:text-primary-500">{{ trans('Register') }}</Link>
             </p>
         </div>
     </form>

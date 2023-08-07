@@ -16,7 +16,7 @@ const form = useForm({
 })
 
 const submit = () => {
-    form.post(route('landlord.register'), {
+    form.post(route('register'), {
         onFinish: () => form.reset('password', 'password_confirmation'),
     })
 }
@@ -98,7 +98,7 @@ const submit = () => {
             <div class="">
                 <p class="text-sm font-light text-gray-500 dark:text-gray-400">
                     {{ trans('Already registered?') }}
-                    <Link :href="route('landlord.login')" class="font-bold text-primary-700 hover:underline dark:text-primary-500">{{ trans('Login') }}</Link>
+                    <Link :href="route('login')" class="font-bold text-primary-700 hover:underline dark:text-primary-500">{{ trans('Login') }}</Link>
                 </p>
             </div>
         </form>

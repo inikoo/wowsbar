@@ -19,12 +19,12 @@ class LandlordVerifyEmail
 
     public function handle(ActionRequest $request): RedirectResponse
     {
-        if ($request->user()->hasVerifiedEmail()) {
+        if ($request->user('landlord')->hasVerifiedEmail()) {
             return redirect()->intended(RouteServiceProvider::HOME.'?verified=1');
         }
 
-        if ($request->user()->markEmailAsVerified()) {
-            event(new Verified($request->user()));
+        if ($request->user('landlord')->markEmailAsVerified()) {
+            event(new Verified($request->user('landlord')));
         }
 
         return redirect()->intended(RouteServiceProvider::HOME.'?verified=1');

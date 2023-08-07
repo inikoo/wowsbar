@@ -5,6 +5,7 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
+use App\Models\Auth\RootUser;
 use App\Models\Auth\User;
 
 return [
@@ -47,6 +48,10 @@ return [
             'driver'   => 'session',
             'provider' => 'users',
         ],
+        'landlord' => [
+            'driver'   => 'session',
+            'provider' => 'root_users',
+        ],
     ],
 
     /*
@@ -70,6 +75,10 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model'  => User::class,
+        ],
+        'root_users' => [
+            'driver' => 'eloquent',
+            'model'  => RootUser::class,
         ],
 
         // 'users' => [
