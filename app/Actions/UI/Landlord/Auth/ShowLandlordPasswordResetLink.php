@@ -5,19 +5,21 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Landlord\UI\Auth;
+namespace App\Actions\UI\Landlord\Auth;
 
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\Concerns\AsController;
 
-class ShowRegisterRootUser
+class ShowLandlordPasswordResetLink
 {
     use AsController;
 
     public function handle(): Response
     {
-        return Inertia::render('Landlord/Auth/LandlordRegister');
+        return Inertia::render('Auth/ForgotPassword', [
+            'status' => session('status'),
+        ]);
     }
 
     public function asController(): Response

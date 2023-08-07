@@ -5,7 +5,7 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Landlord\UI\Auth;
+namespace App\Actions\UI\Landlord\Auth;
 
 use App\Models\Auth\RootUser;
 use App\Providers\RouteServiceProvider;
@@ -18,7 +18,7 @@ use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\AsController;
 use Lorisleiva\Actions\Concerns\WithAttributes;
 
-class RegisterRootUser
+class LandlordRegister
 {
     use AsAction;
     use WithAttributes;

@@ -63,7 +63,6 @@ class UpdateProfile
 
     public function asController(ActionRequest $request): User
     {
-        dd($request->all());
         $this->fillFromRequest($request);
 
         $validated = $this->validateAttributes();
