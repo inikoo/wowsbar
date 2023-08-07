@@ -8,6 +8,7 @@
 namespace App\Helpers\ImgProxy;
 
 use App\Helpers\ImgProxy\Exceptions\InvalidFormat;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
 class Image
@@ -17,30 +18,41 @@ class Image
      * north (top edge)
      */
     public const DEFAULT_GRAVITY = 'no';
-    public const MAX_ENLARGE     = 5;
-    public const MIN_ENLARGE     = 0;
+    public const MAX_ENLARGE = 5;
+    public const MIN_ENLARGE = 0;
 
-    protected string $resize;
 
-    protected int $width=0;
+    protected ?string $sizeProcessOption=null;
 
-    protected int $height=0;
+    protected ?array $resize = null;
+
+    protected int $width = 0;
+
+    protected int $height = 0;
     protected string $gravity;
     protected int $enlarge;
 
-    protected ?string $extension=null;
+    protected ?string $extension = null;
 
     protected mixed $url;
 
-    protected ?string $preset=null;
+    protected ?string $preset = null;
 
 
     public function make(string $path): static
     {
         $this->setOriginalPictureUrl($path);
+
         return $this;
     }
-    public function makePreset(string $path, string $preset, $extension=null): static
+
+
+    public function getSizeProcessOption(): ?string
+    {
+        return $this->sizeProcessOption;
+    }
+
+    public function makePreset(string $path, string $preset, $extension = null): static
     {
         $this->setOriginalPictureUrl($path)
             ->setPreset($preset)
@@ -51,38 +63,76 @@ class Image
 
     public function getPreset(): ?string
     {
-
         return $this->preset;
     }
+
     public function setPreset($preset): static
     {
         $this->preset = $preset;
+
         return $this;
     }
 
-    public function setResize(string $argument1 = null): static
+    public function resize($width = null, $height = null, $type = null, $enlarge = null, $extend = null): static
     {
-        $argument1 = Str::lower($argument1);
 
-        $this->resize = (! in_array($argument1, config('img-proxy.resize_values'), true))
-            ? self::DEFAULT_RESIZE
-            : $argument1;
+
+        $this->sizeProcessOption='resize';
+        $this->resize=[
+            'type'=>null,
+            'width'=>null,
+            'height'=>null,
+            'enlarge'=>null,
+            'extend'=>null,
+
+
+        ];
+
+        if (!is_null($type) && Arr::get(['fit', 'fill', 'fill-down', 'force', 'auto'], $type)) {
+            $this->resize['type'] = $type;
+        }
+
+        if (!is_null($width)) {
+            $this->width=$this->parseDimension($width);
+            $this->resize['width'] = $this->width;
+
+        }
+        if (!is_null($height)) {
+            $this->height=$this->parseDimension($height);
+            $this->resize['height'] = $this->height;
+        }
+
+        if ($enlarge) {
+            $this->resize['enlarge'] = 1;
+        }
+        if ($extend) {
+            $this->resize['extend'] = 1;
+        }
+
 
         return $this;
     }
 
 
-    public function getResize(): string
+    public function getResize(): ?array
     {
         return $this->resize;
     }
 
+    public function parseDimension(int $width)
+    {
+        $width = abs($width);
+        if ($width > config('img-proxy.max_dim_px')) {
+            $width = config('img-proxy.max_dim_px');
+        }
+
+        return $width;
+    }
 
     public function setWidth(?int $width = 1): static
     {
-
-        if(is_null($width)){
-            return  $this;
+        if (is_null($width)) {
+            return $this;
         }
 
         $width = abs($width) ?: 1;
@@ -101,22 +151,6 @@ class Image
     }
 
 
-    public function setHeight(?int $height = 1): static
-    {
-        if(is_null($height)){
-            return  $this;
-        }
-
-        $height = abs($height) ?: 1;
-        if ($height > config('img-proxy.max_dim_px')) {
-            $height = config('img-proxy.max_dim_px');
-        }
-        $this->height = $height;
-
-        return $this;
-    }
-
-
     public function getHeight(): int
     {
         return $this->height;
@@ -126,7 +160,7 @@ class Image
     public function setGravity(string $argument1 = null): static
     {
         $argument1     = Str::lower($argument1);
-        $this->gravity = (! in_array($argument1, config('img-proxy.gravity_values')))
+        $this->gravity = (!in_array($argument1, config('img-proxy.gravity_values')))
             ? self::DEFAULT_GRAVITY
             : $argument1;
 
@@ -140,30 +174,12 @@ class Image
     }
 
 
-    public function setEnlarge(int $argument1 = 0): static
-    {
-        $argument1 = abs($argument1);
-        if ($argument1 > self::MAX_ENLARGE) {
-            $argument1 = self::MAX_ENLARGE;
-        }
-        $this->enlarge = $argument1;
-
-        return $this;
-    }
-
-    public function getEnlarge(): int
-    {
-        return $this->enlarge;
-    }
-
-
     public function extension($extension): static
     {
-
         if ($extension) {
             $extension = Str::lower($extension);
 
-            if (! in_array($extension, config('img-proxy.formats'))) {
+            if (!in_array($extension, config('img-proxy.formats'))) {
                 throw new InvalidFormat($extension);
             }
         }
@@ -171,6 +187,7 @@ class Image
             $extension = '';
         }
         $this->extension = $extension;
+
         return $this;
     }
 

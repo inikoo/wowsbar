@@ -8,6 +8,8 @@
 namespace App\Actions\UI;
 
 use App\Actions\Assets\Language\UI\GetLanguagesOptions;
+use App\Actions\Helpers\Images\GetPictureSources;
+use App\Helpers\ImgProxy\Image;
 use App\Http\Resources\Assets\LanguageResource;
 use App\Models\Assets\Language;
 use App\Models\Auth\User;
@@ -39,12 +41,19 @@ class GetFirstLoadProps
                 ],
 
 
-
             'layout' => function () use ($user) {
                 if ($user) {
                     return GetLayout::run($user);
                 } else {
-                    return [];
+                    return [
+
+                        'logo' => GetPictureSources::run(
+                            (new Image)->make(url('/images/logo.png'))->resize(0,64)
+                        ),
+
+
+
+                    ];
                 }
             }
         ];
