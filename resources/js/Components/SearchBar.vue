@@ -16,24 +16,29 @@ import {
     TransitionRoot,
 } from '@headlessui/vue'
 import { Link, usePage } from '@inertiajs/vue3'
-import {router} from "@inertiajs/vue3";
-import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
+import {router} from "@inertiajs/vue3"
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { faSpinnerThird } from '@/../private/pro-duotone-svg-icons'
+import { library } from '@fortawesome/fontawesome-svg-core'
+library.add(faSpinnerThird)
 
 const searchResults = ref('')
 
 const open = ref(true)
 const query = ref('')
 
-const searchInput = ref('');
+const searchInput = ref('')
 
-let timeoutId;
+let timeoutId: any
 
-function handleSearchInput() {
-    clearTimeout(timeoutId);
+const handleSearchInput = () => {
+    clearTimeout(timeoutId)
     timeoutId = setTimeout(() => {
         fetchApi(searchInput.value)
-    }, 200);
+    }, 700)
 }
+
+const loadingState = ref(false)
 
 const resultsSearch = ref()
 const paramsToString = computed(() => {
@@ -41,12 +46,13 @@ const paramsToString = computed(() => {
 })
 
 const fetchApi = async (query: string) => {
+    loadingState.value = true
     if (query !== '') {
         await fetch(`http://aiku.wowsbar.test/search/?q=${query}&route_src=${route().current()}${paramsToString.value}`)
             .then(response => {
                 response.json().then((data: Object) => {
-                    console.log(`http://aiku.wowsbar.test/search/?q=${query}&route_src=${route().current()}${paramsToString.value}`)
                     resultsSearch.value = data
+                    loadingState.value = false
 
                 })
             })
@@ -58,7 +64,7 @@ const fetchApi = async (query: string) => {
 }
 
 function handleKeyDown() {
-    clearTimeout(timeoutId);
+    clearTimeout(timeoutId)
 }
 
 </script>
@@ -92,7 +98,15 @@ function handleKeyDown() {
                                                 <FontAwesomeIcon icon="fa-regular fa-chevron-right" v-if="active" class="ml-3 h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
                                             </Link>
                                         </ComboboxOption>
-                                        <div v-else>Nothing to show here</div>
+                                        <div v-else>
+                                            <div v-if="loadingState" class="flex gap-x-2 items-center">
+                                                <FontAwesomeIcon icon='fad fa-spinner-third' class='animate-spin' aria-hidden='true' />
+                                                <span>Looking for data..</span>
+                                            </div>
+                                            <div v-else>
+                                                Nothing to show
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 
