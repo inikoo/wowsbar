@@ -3,6 +3,7 @@
 use App\Actions\UI\Landlord\Auth\LandlordConfirmablePassword;
 use App\Actions\UI\Landlord\Auth\LandlordEmailVerification;
 use App\Actions\UI\Landlord\Auth\LandlordLogin;
+use App\Actions\UI\Landlord\Auth\LandlordLogout;
 use App\Actions\UI\Landlord\Auth\LandlordNewPassword;
 use App\Actions\UI\Landlord\Auth\LandlordPasswordResetLink;
 use App\Actions\UI\Landlord\Auth\LandlordRegister;
@@ -65,6 +66,6 @@ Route::middleware('auth')->group(function () {
 
     Route::put('password', LandlordUpdatePassword::class)->name('password.update');
 
-    Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
+    Route::post('logout', LandlordLogout::class)
                 ->name('logout');
 });
