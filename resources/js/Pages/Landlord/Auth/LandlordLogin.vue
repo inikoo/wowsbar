@@ -5,6 +5,10 @@ import Password from '@/Components/Auth/LoginPassword.vue'
 import Checkbox from '@/Components/Checkbox.vue'
 import ValidationErrors from '@/Components/ValidationErrors.vue'
 import { trans } from 'laravel-vue-i18n'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { faArrowLeft } from '@/../private/pro-light-svg-icons'
+import { library } from '@fortawesome/fontawesome-svg-core'
+library.add(faArrowLeft)
 
 const form = useForm({
     username: '',
@@ -70,28 +74,33 @@ const condition: Ref<string | boolean> = ref(false)
     </form>
 
     <!-- Forgot Password: if click the 'forgot password' -->
-    <form v-if="condition === 'forgotpassword'" class="space-y-5">
-        <div class="flex flex-col">
-            <label for="email" class="text-center font-medium text-gray-600">{{ trans('Reset password') }}</label>
+    <div v-show="condition === 'forgotpassword'" class="space-y-4">
+        <div class="flex items-center gap-x-1 text-gray-500 cursor-pointer hover:text-gray-700" @click="condition = false">
+            <FontAwesomeIcon icon='fal fa-arrow-left' class='w-2' aria-hidden='true' />
+            <span class="text-xs">{{ trans('Back to login') }}</span>
         </div>
-
-        <div class="flex flex-col">
-            <div class="mt-1">
-                <input v-model="resetPassword.email" id="email" name="email" autocomplete="email" type="email" required
-                    class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-gray-500 focus:border-gray-500 sm:text-sm"
-                    placeholder="Enter your email"    
-                />
-                <div v-if="resetPassword.errors.email">{{ resetPassword.errors.email }}</div>
+        <form class="space-y-5">
+            <div class="flex flex-col">
+                <label for="email" class="text-center font-medium text-gray-600">{{ trans('Reset password') }}</label>
             </div>
-        </div>
-    
-        <div>
-            <button type="submit"
-                    class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
-                {{ trans('Send link via e-mail') }}
-            </button>
-        </div>
-    </form>
+            <div class="flex flex-col">
+                <div class="mt-1">
+                    <input v-model="resetPassword.email" id="email" name="email" autocomplete="email" type="email" required
+                        class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-gray-500 focus:border-gray-500 sm:text-sm"
+                        placeholder="Enter your email"
+                    />
+                    <div v-if="resetPassword.errors.email">{{ resetPassword.errors.email }}</div>
+                </div>
+            </div>
+        
+            <div>
+                <button type="submit"
+                        class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+                    {{ trans('Send link via e-mail') }}
+                </button>
+            </div>
+        </form>
+    </div>
 
     <ValidationErrors/>
 
