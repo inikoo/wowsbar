@@ -40,7 +40,7 @@ const props = defineProps<{
         <div class="mx-auto mt-16 flex max-w-2xl sm:mt-24 lg:ml-10 lg:mr-0 lg:mt-0 lg:flex-none ">
             <div class="max-w-3xl flex-none">
                 <div class="-m-2 rounded-xl bg-gray-700/5 p-2 ring-1 ring-inset ring-gray-700/10 lg:-m-4 lg:rounded-2xl lg:p-4">
-                    <Image :src="hero.media.appScreenshot" alt="App screenshot" width="2432" height="1442" class="w-[76rem] rounded-md shadow-2xl ring-1 ring-gray-700/10 select-none"/>
+                    <Image :src="hero.media.appScreenshot" alt="App screenshot"  class="w-[76rem] rounded-md shadow-2xl ring-1 ring-gray-700/10 select-none"/>
                 </div>
             </div>
         </div>
