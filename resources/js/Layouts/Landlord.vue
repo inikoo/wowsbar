@@ -5,7 +5,9 @@
   -->
 
 <script setup lang="ts">
-import { Link } from '@inertiajs/vue3';
+import { Link } from '@inertiajs/vue3'
+import Cookies from '@/Components/Cookies.vue'
+
 </script>
 
 <template>
@@ -39,5 +41,7 @@ import { Link } from '@inertiajs/vue3';
 
         </div>
     </div>
+
+    <Cookies />
 </template>
 
