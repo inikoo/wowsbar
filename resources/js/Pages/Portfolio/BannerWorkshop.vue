@@ -27,72 +27,64 @@ const props = defineProps<{
 const firebaseApp = initializeApp(serviceAccount);
 const db = getDatabase(firebaseApp);
 const user = ref(usePage().props.auth.user)
-console.log(user.value)
-const fetchInitialData = async () => {
-  try {
-    const snapshot = await get(dbRef(db, 'Banner'));
-    if (snapshot.exists()) {
-      const firebaseData = snapshot.val()
-      if(firebaseData[props.imagesUploadRoute.arguments.banner]){
-        Object.assign(data,{...data,...firebaseData[props.imagesUploadRoute.arguments.banner]}); 
-      }
-     
-    }else{
-      Object.assign(data, cloneDeep(props.bannerLayout)); 
-    }
-  } catch (error) {
-    console.error('Error fetching initial data:', error);
-  }
-};
-
-onValue(dbRef(db, 'Banner'), (snapshot) => {
-  if (snapshot.exists()) {
-    const firebaseData = snapshot.val();
-    if(firebaseData[props.imagesUploadRoute.arguments.banner]){
-        Object.assign(data,{...data,...firebaseData[props.imagesUploadRoute.arguments.banner]}); 
-        // if(!isEqual(data.components,components)){
-        //   Object.assign(components,data.components); 
-        // }
-        // if(!isEqual(data.common,common)){
-        //   Object.assign(common,data.common); 
-        // }
-      }
-  }
-});
-
-
-
-const updateData = async () => {
-  try {
-    if (data) {
-      await set(dbRef(db, 'Banner'),{[props.imagesUploadRoute.arguments.banner] : data});
-      console.log('data',data)
-    }
-  } catch (error) {
-    console.error('Error updating data:', error);
-  }
-};
-
 const jumpToIndex = ref(0)
 const screenView = ref('')
 const data = reactive(cloneDeep(props.bannerLayout))
-// const components = reactive(data.components)
-// const common = reactive(data.common)
-watch(data, updateData, { deep: true });
+console.log(user.value)
+// const fetchInitialData = async () => {
+//   try {
+//     const snapshot = await get(dbRef(db, 'Banner'));
+//     if (snapshot.exists()) {
+//       const firebaseData = snapshot.val()
+//       if(firebaseData[props.imagesUploadRoute.arguments.banner]){
+//         Object.assign(data,{...data,...firebaseData[props.imagesUploadRoute.arguments.banner]}); 
+//         data.components.forEach((obj, index) => {
+//           console.log(index)
+//       data.components[index] = reactive(obj);
+//     });
+//       }
+     
+//     }else{
+//       Object.assign(data, cloneDeep(props.bannerLayout)); 
+//     }
+//   } catch (error) {
+//     console.error('Error fetching initial data:', error);
+//   }
+// };
 
-// watch(components, (newComponents, oldComponents) => {
-//     data.components = newComponents
-//     updateData()
-//     console.log('dsdfsdfsdfddd')
-// }, { deep: true });
+// onValue(dbRef(db, 'Banner'), (snapshot) => {
+//   if (snapshot.exists()) {
+//     const firebaseData = snapshot.val();
+//     if(firebaseData[props.imagesUploadRoute.arguments.banner]){
+//         Object.assign(data,{...data,...firebaseData[props.imagesUploadRoute.arguments.banner]}); 
+//         data.components.forEach((obj, index) => {
+//           console.log(index)
+//       data.components[index] = reactive(obj);
+//     });
+//       }
+//   }
+// });
 
-// watch(common, (newComponents, oldComponents) => {
-//     data.common = newComponents
-//     console.log('dddd')
-//     updateData()
-// }, { deep: true });
 
-onBeforeMount(fetchInitialData);
+
+// const updateData = async () => {
+//   console.log('sdsd')
+//   try {
+//     if (data) {
+//       await set(dbRef(db, 'Banner'),{[props.imagesUploadRoute.arguments.banner] : data});
+//       console.log('data',data)
+//     }
+//   } catch (error) {
+//     console.error('Error updating data:', error);
+//   }
+// };
+
+
+
+// watch(data, updateData, { deep: true });
+
+
+// onBeforeMount(fetchInitialData);
 
 </script>
 <template layout="App">
