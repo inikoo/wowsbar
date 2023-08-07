@@ -44,7 +44,7 @@ class Image
     {
         $this->setOriginalPictureUrl($path)
             ->setPreset($preset)
-            ->setExtension($extension);
+            ->extension($extension);
 
         return $this;
     }
