@@ -1,14 +1,11 @@
 <script setup lang="ts">
-
-    const props = defineProps<{
-        src: {
-            original:string,
-            webp?:string
-        }
-        alt?:string
-    }>();
-
-
+const props = defineProps<{
+    src: {
+        original: string
+        webp?: string
+    }
+    alt?: string
+}>()
 </script>
 
 <template>
