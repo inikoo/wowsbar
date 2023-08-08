@@ -39,7 +39,7 @@ const submit = () => {
         <div class="flex items-center justify-between">
             <div class="flex items-center">
                 <Checkbox name="remember-me" id="remember-me" v-model:checked="form.remember"/>
-                <label for="remember-me" class="ml-2 block text-sm text-gray-900"> {{ trans('Remember me') }} </label>
+                <label for="remember-me" class="ml-2 block text-sm text-gray-900 cursor-pointer select-none"> {{ trans('Remember me') }} </label>
             </div>
 
 
