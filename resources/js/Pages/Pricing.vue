@@ -110,8 +110,9 @@ const frequency = ref(pricing.frequencies[0])
                         </RadioGroupOption>
                     </RadioGroup>
                 </div>
+                <div class="isolate mx-auto mt-10 flex justify-center items-center">
                 <div
-                    class="isolate mx-auto mt-10 grid max-w-md grid-cols-1 gap-8 md:max-w-2xl md:grid-cols-2 lg:max-w-4xl xl:mx-0 xl:max-w-none xl:grid-cols-4">
+                    class="flex mx-auto mt-10 grid max-w-md grid-cols-1 gap-8 md:max-w-2xl md:grid-cols-2 lg:max-w-4xl xl:mx-0 xl:max-w-none xl:grid-cols-2">
                     <div v-for="tier in pricing.tiers" :key="tier.id"
                         :class="[tier.mostPopular ? 'ring-2 ring-indigo-600' : 'ring-1 ring-gray-200', 'rounded-3xl p-8']">
                         <h2 :id="tier.id"
@@ -135,6 +136,7 @@ const frequency = ref(pricing.frequencies[0])
                     </div>
                 </div>
             </div>
+        </div>
 
             <!-- Logo cloud -->
             <div class="mx-auto mt-24 max-w-7xl px-6 sm:mt-32 lg:px-8">
