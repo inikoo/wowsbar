@@ -63,7 +63,6 @@ const updateData = async () => {
   try {
     if (data) {
       await set(dbRef(db, 'Banner'),{[props.imagesUploadRoute.arguments.banner] : data});
-      console.log('data',data)
     }
   } catch (error) {
     console.error('Error updating data:', error);
