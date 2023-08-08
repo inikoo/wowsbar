@@ -18,7 +18,7 @@ Route::get('/pricing', ShowPricing::class);
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard/Dashboard');
-})->middleware(['auth:landlord', 'verified'])->name('dashboard');
+})->middleware(['auth:landlord'])->name('dashboard');
 
 Route::middleware('auth:landlord')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

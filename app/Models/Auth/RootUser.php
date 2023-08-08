@@ -12,7 +12,9 @@ use App\Models\Assets\Language;
 use App\Models\Media\Media;
 use App\Models\Tenancy\Tenant;
 use App\Models\Traits\HasUniversalSearch;
+use App\Notifications\Auth\ResetPassword;
 use App\Notifications\Auth\VerifyEmail;
+use Illuminate\Contracts\Auth\CanResetPassword;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -84,7 +86,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static Builder|RootUser whereUsername($value)
  * @mixin \Eloquent
  */
-class RootUser extends Authenticatable implements HasMedia, MustVerifyEmail
+class RootUser extends Authenticatable implements HasMedia, CanResetPassword, MustVerifyEmail
 {
     use HasApiTokens;
     use HasFactory;
@@ -145,4 +147,8 @@ class RootUser extends Authenticatable implements HasMedia, MustVerifyEmail
         $this->notify(new VerifyEmail());
     }
 
+    public function sendPasswordResetNotification($token): void
+    {
+        $this->notify(new ResetPassword($token));
+    }
 }

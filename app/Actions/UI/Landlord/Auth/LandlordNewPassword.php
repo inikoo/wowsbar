@@ -26,7 +26,7 @@ class LandlordNewPassword
      */
     public function handle(ActionRequest $request): RedirectResponse
     {
-        $status = Password::reset(
+        $status = Password::broker('landlord')->reset(
             $request->only('email', 'password', 'password_confirmation', 'token'),
             function ($user) use ($request) {
                 $user->forceFill([

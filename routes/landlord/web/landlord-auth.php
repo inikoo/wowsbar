@@ -17,7 +17,7 @@ use App\Actions\UI\Landlord\Auth\ShowLandlordPasswordResetLink;
 use App\Actions\UI\Landlord\Auth\ShowLandlordRegister;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware('guest')->group(function () {
+Route::middleware('guest:landlord')->group(function () {
     Route::get('register', ShowLandlordRegister::class)
                 ->name('register');
 

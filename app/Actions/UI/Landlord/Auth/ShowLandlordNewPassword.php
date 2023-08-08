@@ -18,7 +18,7 @@ class ShowLandlordNewPassword
 
     public function handle(ActionRequest $request): Response
     {
-        return Inertia::render('Auth/ResetPassword', [
+        return Inertia::render('Landlord/Auth/LandlordResetPassword', [
             'email' => $request->email,
             'token' => $request->route('token'),
         ]);
