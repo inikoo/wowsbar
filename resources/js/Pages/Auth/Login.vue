@@ -1,9 +1,10 @@
 <script setup>
-import {Head, useForm} from '@inertiajs/vue3'
+import { Head, useForm } from '@inertiajs/vue3'
 import Password from '@/Components/Auth/LoginPassword.vue'
 import Checkbox from '@/Components/Checkbox.vue'
 import ValidationErrors from '@/Components/ValidationErrors.vue'
-import {trans} from 'laravel-vue-i18n'
+import { trans } from 'laravel-vue-i18n'
+import { useLayoutStore } from '@/Stores/layout'
 
 const form = useForm({
     username: '',
@@ -16,10 +17,12 @@ const submit = () => {
         onFinish: () => form.reset('password'),
     })
 }
+
 </script>
 
 <template layout="GuestLayout">
-    <Head title="Login"/>
+    <!-- This file for login Tenant -->
+    <Head title="Login" />
     <form class="space-y-6" @submit.prevent="submit" >
         <div>
             <label for="login" class="block text-sm font-medium text-gray-700">{{ trans('Username') }}</label>
@@ -39,10 +42,8 @@ const submit = () => {
         <div class="flex items-center justify-between">
             <div class="flex items-center">
                 <Checkbox name="remember-me" id="remember-me" v-model:checked="form.remember"/>
-                <label for="remember-me" class="ml-2 block text-sm text-gray-900"> {{ trans('Remember me') }} </label>
+                <label for="remember-me" class="ml-2 block text-sm text-gray-900 cursor-pointer select-none"> {{ trans('Remember me') }} </label>
             </div>
-
-
         </div>
 
         <div>
@@ -53,6 +54,6 @@ const submit = () => {
         </div>
     </form>
 
-    <ValidationErrors/>
+    <ValidationErrors />
 
 </template>

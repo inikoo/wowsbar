@@ -71,8 +71,8 @@ const closeModal = () => {
             <LibrariesImage />
         </div>
     </Modal>
-        <div class="w-full  overflow-hidden relative">
-            <Cropper ref="_cropper" class="cropper" :src="generateThumbnail(props.data.image_source)" :stencil-props="{
+        <div class="w-full overflow-hidden relative">
+            <Cropper ref="_cropper" class="w-[400px] md:w-[440px] h-[200px]" :src="generateThumbnail(props.data.image_source)" :stencil-props="{
                 aspectRatio: 4 / 1,
                 movable: true,
                 resizable: false,
@@ -123,7 +123,8 @@ const closeModal = () => {
 
 <style lang="scss">
 .cropper {
-    max-height: 300px;
-    max-width: 600px;
+    height: 200px;
+    width: 400px;
+    @apply md:w-[400px] 
 }
 </style>

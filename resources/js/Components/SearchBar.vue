@@ -16,7 +16,7 @@ import {
     TransitionRoot,
 } from '@headlessui/vue'
 import { Link, usePage } from '@inertiajs/vue3'
-import {router} from "@inertiajs/vue3"
+import { router } from "@inertiajs/vue3"
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faSpinnerThird } from '@/../private/pro-duotone-svg-icons'
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -59,7 +59,7 @@ const fetchApi = async (query: string) => {
             .catch(err => console.log(err))
     }
     else {
-        comboValue.value = 'Select Users'
+        // comboValue.value = 'Select Users'
     }
 }
 
@@ -78,7 +78,7 @@ function handleKeyDown() {
             <div class="fixed inset-0 z-10 overflow-y-auto pt-20 px-12">
                 <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0 scale-95" enter-to="opacity-100 scale-100" leave="ease-in duration-200" leave-from="opacity-100 scale-100" leave-to="opacity-0 scale-95">
                     <DialogPanel class="mx-auto max-w-3xl transform divide-y divide-gray-100 overflow-hidden rounded-xl bg-white shadow-2xl ring-1 ring-black ring-opacity-5 transition-all">
-                        <Combobox v-slot="{ activeOption }" @update:modelValue="onSelect">
+                        <Combobox v-slot="{ activeOption }" @update:modelValue="">
                             <div class="relative">
                                 <FontAwesomeIcon class="pointer-events-none absolute top-3.5 left-4 h-5 w-5 text-gray-400" aria-hidden="true" icon="fa-regular fa-search" size="lg"/>
                                 <input type="text" v-model="searchInput" @input="handleSearchInput" @keydown="handleKeyDown"
@@ -87,18 +87,18 @@ function handleKeyDown() {
                             <ComboboxOptions  class="flex divide-x divide-gray-100" as="div" static hold>
 
                                 <!-- Left: Result Panel -->
-                                <div :class="['max-h-96 min-w-0 flex-auto scroll-py-4 overflow-y-auto px-6 py-4', activeOption && 'sm:h-96']">
+                                <div :class="['h-fit min-w-0 flex-auto scroll-py-4 overflow-y-auto px-6 py-4 transition-all duration-500 ease-in-out', {'sm:h-96': false}]">
                                     <div hold class="-mx-2 text-sm text-gray-700">
                                         <!-- Looping: Results -->
                                         <ComboboxOption v-if="resultsSearch?.data.length > 0" v-for="item in resultsSearch?.data" :key="item.id" :value="item" as="template" v-slot="{ active }">
-                                            <Link :href="route(item.model.route.name, item.model.route.parameters)" :class="['group flex cursor-default select-none items-center rounded-md p-2', active && 'bg-gray-100 text-gray-900']">
+                                            <Link :href="`${route(item.model.route.name, item.model.route.parameters)}`" :class="['group flex cursor-pointer select-none items-center rounded-md p-2', active && 'bg-gray-100 text-gray-900']">
                                                 <!-- <img :src="item.imageUrl" alt="" class="h-6 w-6 flex-none rounded-full" /> -->
                                                 <FontAwesomeIcon :icon='item.model.icon' class='' aria-hidden='true' />
                                                 <span class="ml-3 flex-auto truncate">{{ item.model.name }}</span>
                                                 <FontAwesomeIcon icon="fa-regular fa-chevron-right" v-if="active" class="ml-3 h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
                                             </Link>
                                         </ComboboxOption>
-                                        <div v-else>
+                                        <div v-else class="">
                                             <div v-if="loadingState" class="flex gap-x-2 items-center">
                                                 <FontAwesomeIcon icon='fad fa-spinner-third' class='animate-spin' aria-hidden='true' />
                                                 <span>Looking for data..</span>
@@ -111,7 +111,7 @@ function handleKeyDown() {
                                 </div>
 
                                 <!-- Right: Detail Panel -->
-                                <div v-if="activeOption" class="hidden h-96 w-1/2 flex-none flex-col divide-y divide-gray-100 overflow-y-auto sm:flex">
+                                <div v-if="activeOption && false" class="hidden h-96 w-1/2 flex-none flex-col divide-y divide-gray-100 overflow-y-auto sm:flex">
                                     <div class="flex-none p-6 text-center">
                                         <img :src="activeOption.imageUrl" :alt="activeOption.model.code" class="bg-gray-400 mx-auto h-16 w-16 rounded-full" />
                                         <h2 class="mt-3 font-semibold text-gray-900">
@@ -132,9 +132,10 @@ function handleKeyDown() {
                                                 {{ activeOption.model.icon }}
                                             </dd> -->
                                         </dl>
-                                        <button type="button" class="mt-6 w-full rounded-md bg-gray-700 py-2 px-3 text-sm font-semibold text-white shadow-sm hover:bg-gray-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600">Send message</button>
+                                        <!-- <button type="button" class="mt-6 w-full rounded-md bg-gray-700 py-2 px-3 text-sm font-semibold text-white shadow-sm hover:bg-gray-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600">Send message</button> -->
                                     </div>
                                 </div>
+                                <!-- <pre>{{ activeOption }}</pre> -->
                             </ComboboxOptions>
                         </Combobox>
                     </DialogPanel>

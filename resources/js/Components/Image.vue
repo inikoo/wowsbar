@@ -31,8 +31,8 @@ if(props.src.original_2x){
 
 <template>
     <picture>
-        <source  v-if="src.avif" type="image/avif" :srcset="avif">
-        <source  v-if="src.webp" type="image/webp" :srcset="webp">
-        <img :class="class"  :srcset="original"  :src="src.original" :alt="alt">
+        <source v-if="src.avif" type="image/avif" :srcset="avif">
+        <source v-if="src.webp" type="image/webp" :srcset="webp">
+        <img :class="class" :srcset="original" :src="src.original" :alt="alt">
     </picture>
 </template>
