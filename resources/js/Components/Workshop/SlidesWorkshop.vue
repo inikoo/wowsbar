@@ -212,7 +212,22 @@ const selectComponentForEdition = (slide) => {
         currentComponentBeenEdited.value = slide;
         if(!isNull(_SlideWorkshop.value)) _SlideWorkshop.value.current = 0;
     }
+    console.log('ini',currentComponentBeenEdited)
 };
+
+watch(
+  currentComponentBeenEdited,(value, oldValue)=> {
+    console.log('set', value, oldValue);
+    if (value !== null) {
+      const component = [...props.data.components]; // Create a shallow copy of the components array
+      const index = component.findIndex((item) => item.ulid === value.ulid);
+      if (index !== -1) {
+        component[index] = { ...value };
+        props.data.components = component;
+      }
+    }
+  },{ deep: true }
+)
 
 // To change visibility of the each slide
 const changeVisibility = (slide: any) => {
@@ -415,6 +430,7 @@ const isOpen = ref(false)
 const closeModal = () => {
     isOpen.value = false
 }
+
 
 </script>
 

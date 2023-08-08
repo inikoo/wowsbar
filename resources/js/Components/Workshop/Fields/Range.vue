@@ -50,7 +50,7 @@ const updateLocalFormValue = (newValue) => {
           localData[props.fieldName] = newValue * 1000; // Convert back to milliseconds
       }
       
-      props.data.delay = localData.delay
+      props.data[props.fieldName] = localData[props.fieldName]
   };
 </script>
 

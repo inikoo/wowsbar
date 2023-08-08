@@ -40,7 +40,7 @@ const tabs = [
         name: 'Wood',
         images: [
             {
-                id: 1,
+                id: 4,
                 name: "Basic Tee",
                 href: "#",
                 imageSrc:
@@ -50,7 +50,7 @@ const tabs = [
                 color: "Black",
             },
             {
-                id: 2,
+                id: 5,
                 name: "Basic Tee",
                 href: "#",
                 imageSrc:
@@ -60,7 +60,7 @@ const tabs = [
                 color: "Black",
             },
             {
-                id: 3,
+                id: 6,
                 name: 'Leather Long Wallet',
                 color: 'Natural',
                 price: '$75',
@@ -74,7 +74,7 @@ const tabs = [
         name: 'Beach',
         images: [
             {
-                id: 3,
+                id: 7,
                 name: 'Leather Long Wallet',
                 color: 'Natural',
                 price: '$75',
@@ -83,7 +83,7 @@ const tabs = [
                 imageAlt: 'Hand stitched, orange leather long wallet.',
             },
             {
-                id: 2,
+                id: 8,
                 name: "Basic Tee",
                 href: "#",
                 imageSrc:
@@ -93,7 +93,7 @@ const tabs = [
                 color: "Black",
             },
             {
-                id: 1,
+                id: 9,
                 name: "Basic Tee",
                 href: "#",
                 imageSrc:
@@ -108,7 +108,7 @@ const tabs = [
         name: 'Sky',
         images: [
             {
-                id: 4,
+                id: 10,
                 name: "Basic Tee",
                 href: "#",
                 imageSrc:
@@ -118,7 +118,7 @@ const tabs = [
                 color: "Black",
             },
             {
-                id: 5,
+                id: 11,
                 name: 'Leather Long Wallet',
                 color: 'Natural',
                 price: '$75',
@@ -127,7 +127,7 @@ const tabs = [
                 imageAlt: 'Hand stitched, orange leather long wallet.',
             },
             {
-                id: 3,
+                id: 12,
                 name: 'Leather Long Wallet',
                 color: 'Natural',
                 price: '$75',
