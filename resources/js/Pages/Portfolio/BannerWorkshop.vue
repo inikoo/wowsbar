@@ -31,60 +31,51 @@ const jumpToIndex = ref(0)
 const screenView = ref('')
 const data = reactive(cloneDeep(props.bannerLayout))
 console.log(user.value)
-// const fetchInitialData = async () => {
-//   try {
-//     const snapshot = await get(dbRef(db, 'Banner'));
-//     if (snapshot.exists()) {
-//       const firebaseData = snapshot.val()
-//       if(firebaseData[props.imagesUploadRoute.arguments.banner]){
-//         Object.assign(data,{...data,...firebaseData[props.imagesUploadRoute.arguments.banner]});
-//         data.components.forEach((obj, index) => {
-//           console.log(index)
-//       data.components[index] = reactive(obj);
-//     });
-//       }
+const fetchInitialData = async () => {
+  try {
+    const snapshot = await get(dbRef(db, 'Banner'));
+    if (snapshot.exists()) {
+      const firebaseData = snapshot.val()
+      if(firebaseData[props.imagesUploadRoute.arguments.banner]){
+        Object.assign(data,{...data,...firebaseData[props.imagesUploadRoute.arguments.banner]});
+      }
 
-//     }else{
-//       Object.assign(data, cloneDeep(props.bannerLayout));
-//     }
-//   } catch (error) {
-//     console.error('Error fetching initial data:', error);
-//   }
-// };
+    }else{
+      Object.assign(data, cloneDeep(props.bannerLayout));
+    }
+  } catch (error) {
+    console.error('Error fetching initial data:', error);
+  }
+};
 
-// onValue(dbRef(db, 'Banner'), (snapshot) => {
-//   if (snapshot.exists()) {
-//     const firebaseData = snapshot.val();
-//     if(firebaseData[props.imagesUploadRoute.arguments.banner]){
-//         Object.assign(data,{...data,...firebaseData[props.imagesUploadRoute.arguments.banner]});
-//         data.components.forEach((obj, index) => {
-//           console.log(index)
-//       data.components[index] = reactive(obj);
-//     });
-//       }
-//   }
-// });
+onValue(dbRef(db, 'Banner'), (snapshot) => {
+  if (snapshot.exists()) {
+    const firebaseData = snapshot.val();
+    if(firebaseData[props.imagesUploadRoute.arguments.banner]){
+        Object.assign(data,{...data,...firebaseData[props.imagesUploadRoute.arguments.banner]});
+      }
+  }
+});
 
 
 
-// const updateData = async () => {
-//   console.log('sdsd')
-//   try {
-//     if (data) {
-//       await set(dbRef(db, 'Banner'),{[props.imagesUploadRoute.arguments.banner] : data});
-//       console.log('data',data)
-//     }
-//   } catch (error) {
-//     console.error('Error updating data:', error);
-//   }
-// };
+const updateData = async () => {
+  try {
+    if (data) {
+      await set(dbRef(db, 'Banner'),{[props.imagesUploadRoute.arguments.banner] : data});
+      console.log('data',data)
+    }
+  } catch (error) {
+    console.error('Error updating data:', error);
+  }
+};
 
 
 
-// watch(data, updateData, { deep: true });
+watch(data, updateData, { deep: true });
 
 
-// onBeforeMount(fetchInitialData);
+onBeforeMount(fetchInitialData);
 
 </script>
 <template layout="App">
@@ -98,9 +89,9 @@ console.log(user.value)
                 <ScreenView @screenView="(val) => screenView = val"/>
             </div>
             <div class="flex justify-center pr-0.5">
-                <Slider :data="{ ...data}" :jumpToIndex="jumpToIndex" :view="screenView"/>
+                <Slider :data="data" :jumpToIndex="jumpToIndex" :view="screenView"/>
             </div>
-            <SlidesWorkshop class="clear-both mt-2 p-2.5" :data="{ ...data }" @jumpToIndex="(val) => jumpToIndex = val" :imagesUploadRoute="imagesUploadRoute" :user="user"/>
+            <SlidesWorkshop class="clear-both mt-2 p-2.5" :data="data" @jumpToIndex="(val) => jumpToIndex = val" :imagesUploadRoute="imagesUploadRoute" :user="user"/>
         </div>
 
     <!-- Second set of components -->

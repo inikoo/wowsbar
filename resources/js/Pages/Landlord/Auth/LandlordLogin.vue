@@ -20,6 +20,12 @@ const resetPassword = useForm({
     email: ''
 })
 
+const submitResetPassword = () => {
+    resetPassword.post(route('landlord.password.email'), {
+        onFinish: () => form.reset('email'),
+    })
+}
+
 const submit = () => {
     form.post(route('landlord.login'), {
         onFinish: () => form.reset('password'),
@@ -79,7 +85,7 @@ const condition: Ref<string | boolean> = ref(false)
             <FontAwesomeIcon icon='fal fa-arrow-left' class='w-2' aria-hidden='true' />
             <span class="text-xs">{{ trans('Back to login') }}</span>
         </div>
-        <form class="space-y-5">
+        <form class="space-y-5" @submit.prevent="submitResetPassword">
             <div class="flex flex-col">
                 <label for="email" class="text-center font-medium text-gray-600">{{ trans('Reset password') }}</label>
             </div>

@@ -22,7 +22,7 @@ class ShowLandlordEmailVerificationPrompt
     {
         return $request->user()->hasVerifiedEmail()
             ? redirect()->intended(RouteServiceProvider::HOME)
-            : Inertia::render('Auth/VerifyEmail', ['status' => session('status')]);
+            : Inertia::render('Landlord/Auth/LandlordVerifyEmail', ['status' => session('status')]);
     }
 
     public function asController(ActionRequest $request): Response|RedirectResponse

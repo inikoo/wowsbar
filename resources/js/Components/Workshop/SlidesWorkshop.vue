@@ -18,7 +18,7 @@ import Input from '@/Components/Forms/Fields/Input.vue'
 import { trans } from "laravel-vue-i18n"
 import SlideWorkshop from "@/Components/Workshop/SlideWorkshop.vue"
 import Button from '../Elements/Buttons/Button.vue'
-import { get } from 'lodash'
+import { get, isNull } from 'lodash'
 import { router } from '@inertiajs/vue3'
 import SliderCommonWorkshop from './SliderCommonWorkshop.vue'
 import Modal from './Modal/Modal.vue'
@@ -210,9 +210,24 @@ const selectComponentForEdition = (slide) => {
         }
         commonEditActive.value = false;
         currentComponentBeenEdited.value = slide;
-        _SlideWorkshop.value.current = 0;
+        if(!isNull(_SlideWorkshop.value)) _SlideWorkshop.value.current = 0;
     }
+    console.log('ini',currentComponentBeenEdited)
 };
+
+watch(
+  currentComponentBeenEdited,(value, oldValue)=> {
+    console.log('set', value, oldValue);
+    if (value !== null) {
+      const component = [...props.data.components]; // Create a shallow copy of the components array
+      const index = component.findIndex((item) => item.ulid === value.ulid);
+      if (index !== -1) {
+        component[index] = { ...value };
+        props.data.components = component;
+      }
+    }
+  },{ deep: true }
+)
 
 // To change visibility of the each slide
 const changeVisibility = (slide: any) => {
@@ -321,7 +336,7 @@ const CommonBlueprint = ref([
                 type: 'range',
                 label: trans('Duration'),
                 value: null,
-                timeRange : { min:"2.5", max:"15", step:"0.5", range:['2.5','5','7.5','10','12.5','15']} //always in set second and will be convert to milisecond
+                timeRange : { min:"2.5", max:"15", step:"0.5", range:['2.5','5','7.5','10','12.5','15']}
             },
         ]
 
@@ -384,21 +399,6 @@ const CommonBlueprint = ref([
             },
         ]
     },
-
-    // },
-    // {
-    //     title: 'Button Position',
-    //     icon: ['fal', 'fa-align-center'],
-    //     fields: [
-    //         {
-    //             name: ['layout', 'centralStage', 'title'],
-    //             type: 'text',
-    //             label: trans('Title'),
-    //             value: ['layout', 'centralStage', 'title']
-    //         },
-
-    //     ]
-    // },
 ])
 
 
@@ -430,6 +430,7 @@ const isOpen = ref(false)
 const closeModal = () => {
     isOpen.value = false
 }
+
 
 </script>
 
@@ -531,7 +532,7 @@ const closeModal = () => {
 
         <!-- The Editor: Common -->
         <div class="w-full border border-gray-300" v-if="commonEditActive">
-            <SliderCommonWorkshop :currentComponentBeenEdited="props.data" :blueprint="CommonBlueprint" ref="_SlideWorkshop" :remove="removeComponent"></SliderCommonWorkshop>
+            <SliderCommonWorkshop :currentComponentBeenEdited="props.data" :blueprint="CommonBlueprint" ref="_SlideWorkshop" ></SliderCommonWorkshop>
         </div>
 
         <!-- The Editor: Slide -->

@@ -12,6 +12,8 @@ use App\Models\Assets\Language;
 use App\Models\Media\Media;
 use App\Models\Tenancy\Tenant;
 use App\Models\Traits\HasUniversalSearch;
+use App\Notifications\Auth\VerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -82,7 +84,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static Builder|RootUser whereUsername($value)
  * @mixin \Eloquent
  */
-class RootUser extends Authenticatable implements HasMedia
+class RootUser extends Authenticatable implements HasMedia, MustVerifyEmail
 {
     use HasApiTokens;
     use HasFactory;
@@ -138,5 +140,9 @@ class RootUser extends Authenticatable implements HasMedia
         return $this->belongsTo(Language::class);
     }
 
+    public function sendEmailVerificationNotification(): void
+    {
+        $this->notify(new VerifyEmail());
+    }
 
 }

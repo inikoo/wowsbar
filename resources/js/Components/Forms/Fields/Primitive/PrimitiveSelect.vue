@@ -11,7 +11,6 @@ import { ref, watch, defineEmits } from 'vue'
 const props = defineProps<{
     data: any
     fieldName: any
-    options: string[] | object
     fieldData: {
         placeholder: string
         searchable: boolean
