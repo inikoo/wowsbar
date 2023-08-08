@@ -72,7 +72,7 @@ const closeModal = () => {
         </div>
     </Modal>
         <div class="w-full overflow-hidden relative">
-            <Cropper ref="_cropper" class="w-[400px] md:w-[440px] h-[200px] border-2 border-red-500" :src="generateThumbnail(props.data.image_source)" :stencil-props="{
+            <Cropper ref="_cropper" class="w-[400px] md:w-[440px] h-[200px]" :src="generateThumbnail(props.data.image_source)" :stencil-props="{
                 aspectRatio: 4 / 1,
                 movable: true,
                 resizable: false,

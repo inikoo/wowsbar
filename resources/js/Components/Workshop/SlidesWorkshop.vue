@@ -439,7 +439,8 @@ const closeModal = () => {
             <LibrariesImage />
         </div>
     </Modal>
-        <div class="w-[30%] lg:w-2/4 p-2.5 border rounded h-fit shadow" v-if="data.components"
+        <div class="p-2.5 border rounded h-fit shadow"
+            :class="[commonEditActive ? 'w-[30%] lg:w-2/4' : 'w-[100%]']" v-if="data.components"
             @dragover="dragover" @dragleave="dragleave" @drop="drop">
             <!-- Common Properties -->
             <div :class="[
@@ -503,7 +504,7 @@ const closeModal = () => {
             </draggable>
 
             <!-- Button: Add slide, Libraries -->
-            <div class="flex flex-col md:flex-row gap-x-2 gap-y-1 md:gap-y-0">
+            <div class="flex flex-wrap md:flex-row gap-x-2 gap-y-1 md:gap-y-0 max-w-fit">
                 <Button :style="`secondary`" icon="fas fa-plus" size="xs" class="relative">
                     {{ trans("Add slide") }}
                     <label
