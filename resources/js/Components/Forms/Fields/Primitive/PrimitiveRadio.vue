@@ -1,11 +1,11 @@
 <script setup lang="ts">
 
 import { RadioGroup, RadioGroupLabel, RadioGroupOption, RadioGroupDescription } from '@headlessui/vue'
-import { ref, watch } from 'vue'
+import { ref, watch, defineEmits } from 'vue'
 import { set , isEqual } from 'lodash'
 
 const props = defineProps(['data', 'fieldName', 'fieldData'])
-
+const emit = defineEmits()
 
 const setFormValue = (data: Object, fieldName: String) => {
     if (Array.isArray(fieldName)) {
@@ -32,15 +32,18 @@ watch(value, (newValue) => {
 
 
 
+
 const updateFormValue = (newValue) => {
-    console.log('ssss',newValue)
-    let target = props.data
+    let target = { ...props.data };
+
     if (Array.isArray(props.fieldName)) {
         set(target, props.fieldName, newValue);
     } else {
         target[props.fieldName] = newValue;
     }
-    props.data = { ...target }
+
+    // Emit an event to notify the parent component
+    emit('input', target);
 };
 
 </script>

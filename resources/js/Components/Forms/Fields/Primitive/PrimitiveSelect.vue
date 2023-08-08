@@ -7,7 +7,7 @@
 <script setup lang="ts">
 import Multiselect from "@vueform/multiselect"
 import { set } from 'lodash'
-import { ref, watch } from 'vue'
+import { ref, watch, defineEmits } from 'vue'
 const props = defineProps<{
     data: any
     fieldName: any
@@ -17,7 +17,7 @@ const props = defineProps<{
         searchable: boolean
     }
 }>()
-
+const emit = defineEmits()
 const setFormValue = (data: Object, fieldName: String) => {
     if (Array.isArray(fieldName)) {
         return getNestedValue(data, fieldName);
@@ -44,13 +44,16 @@ watch(value, (newValue) => {
 
 
 const updateFormValue = (newValue) => {
-    let target = props.data
+    let target = { ...props.data };
+
     if (Array.isArray(props.fieldName)) {
         set(target, props.fieldName, newValue);
     } else {
         target[props.fieldName] = newValue;
     }
-    props.data = { ...target }
+
+    // Emit an event to notify the parent component
+    emit('input', target);
 };
 </script>
 
