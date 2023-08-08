@@ -18,7 +18,7 @@ import Input from '@/Components/Forms/Fields/Input.vue'
 import { trans } from "laravel-vue-i18n"
 import SlideWorkshop from "@/Components/Workshop/SlideWorkshop.vue"
 import Button from '../Elements/Buttons/Button.vue'
-import { get } from 'lodash'
+import { get, isNull } from 'lodash'
 import { router } from '@inertiajs/vue3'
 import SliderCommonWorkshop from './SliderCommonWorkshop.vue'
 import Modal from './Modal/Modal.vue'
@@ -210,7 +210,7 @@ const selectComponentForEdition = (slide) => {
         }
         commonEditActive.value = false;
         currentComponentBeenEdited.value = slide;
-        _SlideWorkshop.value.current = 0;
+        if(!isNull(_SlideWorkshop.value)) _SlideWorkshop.value.current = 0;
     }
 };
 
@@ -321,7 +321,7 @@ const CommonBlueprint = ref([
                 type: 'range',
                 label: trans('Duration'),
                 value: null,
-                timeRange : { min:"2.5", max:"15", step:"0.5", range:['2.5','5','7.5','10','12.5','15']} //always in set second and will be convert to milisecond
+                timeRange : { min:"2.5", max:"15", step:"0.5", range:['2.5','5','7.5','10','12.5','15']}
             },
         ]
 
@@ -384,21 +384,6 @@ const CommonBlueprint = ref([
             },
         ]
     },
-
-    // },
-    // {
-    //     title: 'Button Position',
-    //     icon: ['fal', 'fa-align-center'],
-    //     fields: [
-    //         {
-    //             name: ['layout', 'centralStage', 'title'],
-    //             type: 'text',
-    //             label: trans('Title'),
-    //             value: ['layout', 'centralStage', 'title']
-    //         },
-
-    //     ]
-    // },
 ])
 
 
@@ -531,7 +516,7 @@ const closeModal = () => {
 
         <!-- The Editor: Common -->
         <div class="w-full border border-gray-300" v-if="commonEditActive">
-            <SliderCommonWorkshop :currentComponentBeenEdited="props.data" :blueprint="CommonBlueprint" ref="_SlideWorkshop" :remove="removeComponent"></SliderCommonWorkshop>
+            <SliderCommonWorkshop :currentComponentBeenEdited="props.data" :blueprint="CommonBlueprint" ref="_SlideWorkshop" ></SliderCommonWorkshop>
         </div>
 
         <!-- The Editor: Slide -->
