@@ -19,11 +19,11 @@ class LandlordEmailVerification
 
     public function handle(ActionRequest $request): RedirectResponse
     {
-        if ($request->user()->hasVerifiedEmail()) {
+        if ($request->user('landlord')->hasVerifiedEmail()) {
             return redirect()->intended(RouteServiceProvider::HOME);
         }
 
-        $request->user()->sendEmailVerificationNotification();
+        $request->user('landlord')->sendEmailVerificationNotification();
 
         return back()->with('status', 'verification-link-sent');
     }
