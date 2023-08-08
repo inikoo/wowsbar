@@ -9,6 +9,7 @@ namespace App\Actions\UI\Landlord\Auth;
 
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -24,9 +25,14 @@ class LandlordPasswordResetLink
      */
     public function handle(ActionRequest $request): RedirectResponse
     {
-        $status = Password::sendResetLink(
-            $request->only('email')
-        );
+        $token = Str::random(60);
+
+        \DB::table('password_reset_tokens')->insert([
+            'email' => $request->only('email'),
+            'token' => $token
+        ]);
+
+        // TODO Send email link to user
 
         if ($status == Password::RESET_LINK_SENT) {
             return back()->with('status', __($status));
