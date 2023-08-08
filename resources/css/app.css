@@ -17,3 +17,6 @@
     @apply border border-red-500
 }
 
+.button-wowsbar {
+    @apply bg-gray-600 hover:bg-gray-700 active:bg-gray-800 select-none
+}

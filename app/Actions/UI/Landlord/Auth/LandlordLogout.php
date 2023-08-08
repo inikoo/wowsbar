@@ -7,31 +7,36 @@
 
 namespace App\Actions\UI\Landlord\Auth;
 
-use App\Providers\RouteServiceProvider;
-use Illuminate\Auth\Events\Verified;
+use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Validation\Rules;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsController;
 
-class LandlordVerifyEmail
+class LandlordLogout
 {
     use AsController;
 
     public function handle(ActionRequest $request): RedirectResponse
     {
-        if ($request->user('landlord')->hasVerifiedEmail()) {
-            return redirect()->intended(RouteServiceProvider::HOME.'?verified=1');
-        }
+        Auth::guard('web')->logout();
 
-        if ($request->user('landlord')->markEmailAsVerified()) {
-            event(new Verified($request->user('landlord')));
-        }
+        $request->session()->invalidate();
 
-        return redirect()->intended(RouteServiceProvider::HOME.'?verified=1');
+        $request->session()->regenerateToken();
+
+        return redirect('/');
     }
 
     public function asController(ActionRequest $request): RedirectResponse
     {
+        $request->validate();
+
         return $this->handle($request);
     }
 }

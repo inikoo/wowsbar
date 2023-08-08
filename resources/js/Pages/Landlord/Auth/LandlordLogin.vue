@@ -21,7 +21,7 @@ const resetPassword = useForm({
 })
 
 const submit = () => {
-    form.post(route('landlord.login'), {
+    form.post(route('login'), {
         onFinish: () => form.reset('password'),
     })
 }
@@ -64,11 +64,11 @@ const condition: Ref<string | boolean> = ref(false)
                 {{ trans('Login') }}
             </button>
         </div>
-        
+
         <div>
             <p class="text-sm font-light text-gray-500 dark:text-gray-400">
                 {{ trans('Don`t have an account yet?') }}
-                <Link :href="route('landlord.register')" class="font-bold text-primary-700 hover:underline dark:text-primary-500">{{ trans('Register') }}</Link>
+                <Link :href="route('register')" class="font-bold text-primary-700 hover:underline dark:text-primary-500">{{ trans('Register') }}</Link>
             </p>
         </div>
     </form>
@@ -92,7 +92,7 @@ const condition: Ref<string | boolean> = ref(false)
                     <div v-if="resetPassword.errors.email">{{ resetPassword.errors.email }}</div>
                 </div>
             </div>
-        
+
             <div>
                 <button type="submit"
                         class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">

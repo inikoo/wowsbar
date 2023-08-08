@@ -3,6 +3,7 @@
 use App\Actions\UI\Landlord\Auth\LandlordConfirmablePassword;
 use App\Actions\UI\Landlord\Auth\LandlordEmailVerification;
 use App\Actions\UI\Landlord\Auth\LandlordLogin;
+use App\Actions\UI\Landlord\Auth\LandlordLogout;
 use App\Actions\UI\Landlord\Auth\LandlordNewPassword;
 use App\Actions\UI\Landlord\Auth\LandlordPasswordResetLink;
 use App\Actions\UI\Landlord\Auth\LandlordRegister;
@@ -14,13 +15,6 @@ use App\Actions\UI\Landlord\Auth\ShowLandlordLogin;
 use App\Actions\UI\Landlord\Auth\ShowLandlordNewPassword;
 use App\Actions\UI\Landlord\Auth\ShowLandlordPasswordResetLink;
 use App\Actions\UI\Landlord\Auth\ShowLandlordRegister;
-use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\Auth\ConfirmablePasswordController;
-use App\Http\Controllers\Auth\EmailVerificationNotificationController;
-use App\Http\Controllers\Auth\EmailVerificationPromptController;
-use App\Http\Controllers\Auth\NewPasswordController;
-use App\Http\Controllers\Auth\PasswordController;
-use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
@@ -46,7 +40,7 @@ Route::middleware('guest')->group(function () {
                 ->name('password.store');
 });
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth:landlord')->group(function () {
     Route::get('verify-email', ShowLandlordEmailVerificationPrompt::class)
                 ->name('verification.notice');
 
@@ -65,6 +59,6 @@ Route::middleware('auth')->group(function () {
 
     Route::put('password', LandlordUpdatePassword::class)->name('password.update');
 
-    Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
+    Route::post('logout', LandlordLogout::class)
                 ->name('logout');
 });

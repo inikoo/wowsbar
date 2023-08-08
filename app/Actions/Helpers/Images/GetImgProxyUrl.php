@@ -42,6 +42,18 @@ class GetImgProxyUrl
 
         $this->image = $image;
 
+        /*
+        dd( join(
+            '/',
+            array_filter([
+                config('img-proxy.base_url'),
+                $this->getSignature(),
+                $this->getParameters(),
+
+            ])
+        ));
+        */
+
         return
 
             join(
@@ -95,9 +107,26 @@ class GetImgProxyUrl
 
     }
 
-    public function getProcessingOptions(): string
+    public function getProcessingOptions(Image $img=null): string
     {
-        return '';
+
+        if(!$img){
+            $img=$this->image;
+        }
+
+        $processingOptions='';
+
+        switch ($img->getSizeProcessOption()){
+            case 'resize':
+                $resize=$img->getResize();
+                $processingOptions.='rs:'.join(':',$resize);
+
+                break;
+        }
+
+
+
+        return $processingOptions;
     }
 
     public function getKey(): string

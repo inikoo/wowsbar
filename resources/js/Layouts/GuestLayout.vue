@@ -10,6 +10,7 @@ import {useLayoutStore} from '@/Stores/layout';
 import {usePage} from '@inertiajs/vue3';
 import {loadLanguageAsync} from 'laravel-vue-i18n';
 import {watchEffect} from 'vue';
+import Image from '@/Components/Image.vue';
 
 const layout = useLayoutStore();
 if (usePage().props.language) {
@@ -22,14 +23,14 @@ watchEffect(() => {
     }
 });
 
+const logoSrc=usePage().props.layout.logo;
 
 </script>
 
 <template>
-
     <div class="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8 ">
         <div class="sm:mx-auto sm:w-full sm:max-w-md">
-            <img class="mx-auto h-16 -mb-3 w-auto" src="/art/logo-no-background.png" alt="Wowsbar" />
+            <Image :class="'mx-auto h-16 -mb-3 w-auto'" :src="logoSrc" alt="Wowsbar" />
             <h2 class="font-logo mt-6 text-center text-3xl text-gray-600">@{{layout.tenant.code}} 😃</h2>
 
         </div>

@@ -37,15 +37,15 @@ console.log(user.value)
 //     if (snapshot.exists()) {
 //       const firebaseData = snapshot.val()
 //       if(firebaseData[props.imagesUploadRoute.arguments.banner]){
-//         Object.assign(data,{...data,...firebaseData[props.imagesUploadRoute.arguments.banner]}); 
+//         Object.assign(data,{...data,...firebaseData[props.imagesUploadRoute.arguments.banner]});
 //         data.components.forEach((obj, index) => {
 //           console.log(index)
 //       data.components[index] = reactive(obj);
 //     });
 //       }
-     
+
 //     }else{
-//       Object.assign(data, cloneDeep(props.bannerLayout)); 
+//       Object.assign(data, cloneDeep(props.bannerLayout));
 //     }
 //   } catch (error) {
 //     console.error('Error fetching initial data:', error);
@@ -56,7 +56,7 @@ console.log(user.value)
 //   if (snapshot.exists()) {
 //     const firebaseData = snapshot.val();
 //     if(firebaseData[props.imagesUploadRoute.arguments.banner]){
-//         Object.assign(data,{...data,...firebaseData[props.imagesUploadRoute.arguments.banner]}); 
+//         Object.assign(data,{...data,...firebaseData[props.imagesUploadRoute.arguments.banner]});
 //         data.components.forEach((obj, index) => {
 //           console.log(index)
 //       data.components[index] = reactive(obj);

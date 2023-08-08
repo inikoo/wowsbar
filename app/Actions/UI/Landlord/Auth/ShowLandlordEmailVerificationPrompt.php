@@ -25,7 +25,7 @@ class ShowLandlordEmailVerificationPrompt
             : Inertia::render('Auth/VerifyEmail', ['status' => session('status')]);
     }
 
-    public function asController(ActionRequest $request): Response
+    public function asController(ActionRequest $request): Response|RedirectResponse
     {
         return $this->handle($request);
     }

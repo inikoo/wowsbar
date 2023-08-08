@@ -28,6 +28,9 @@ class RouteServiceProvider extends ServiceProvider
                 ->name('landlord.')
                 ->group(base_path('routes/landlord/web/landlord-app.php'));
 
+            Route::middleware('landlord-web')
+                ->domain(config('app.domain'))
+                ->group(base_path('routes/landlord/web/landlord-auth.php'));
 
             Route::middleware('api')
                 ->prefix('api')

@@ -8,7 +8,7 @@
   <script setup lang="ts">
   import { set } from 'lodash'
   import { ref, watch, defineProps, defineEmits } from 'vue'
-  
+
   const props = defineProps<{
       fieldName: string | []
       fieldData?: {
@@ -19,9 +19,9 @@
       data: Object
       counter: boolean
   }>()
-  
+
   const emits = defineEmits()
-  
+
   const setFormValue = (data: Object, fieldName: string | []) => {
       if (Array.isArray(fieldName)) {
           return getNestedValue(data, fieldName);
@@ -29,21 +29,21 @@
           return data[fieldName];
       }
   }
-  
+
   const getNestedValue = (obj: Object, keys: string[]) => {
       return keys.reduce((acc, key) => {
           if (acc && typeof acc === 'object' && key in acc) return acc[key];
           return null;
       }, obj);
   }
-  
+
   const value = ref(setFormValue(props.data, props.fieldName))
-  
+
   watch(value, (newValue) => {
       // Update the local form value when the value ref changes
       updateLocalFormValue(newValue);
   });
-  
+
   const updateLocalFormValue = (newValue) => {
       let localData = { ...props.data }
       if (Array.isArray(props.fieldName)) {
@@ -55,7 +55,7 @@
   };
 
 
- 
+
   </script>
 <template>
     <div class="relative">

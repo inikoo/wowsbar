@@ -33,7 +33,7 @@ class LandlordRegister
         $user = RootUser::create($mergedArray);
 
         event(new Registered($user));
-        Auth::login($user);
+        Auth::guard('landlord')->login($user);
 
         return redirect(RouteServiceProvider::HOME);
     }
