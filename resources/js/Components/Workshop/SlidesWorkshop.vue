@@ -212,12 +212,10 @@ const selectComponentForEdition = (slide) => {
         currentComponentBeenEdited.value = slide;
         if(!isNull(_SlideWorkshop.value)) _SlideWorkshop.value.current = 0;
     }
-    console.log('ini',currentComponentBeenEdited)
 };
 
 watch(
   currentComponentBeenEdited,(value, oldValue)=> {
-    console.log('set', value, oldValue);
     if (value !== null) {
       const component = [...props.data.components]; // Create a shallow copy of the components array
       const index = component.findIndex((item) => item.ulid === value.ulid);
