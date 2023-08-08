@@ -30,6 +30,7 @@ class RouteServiceProvider extends ServiceProvider
 
             Route::middleware('landlord-web')
                 ->domain(config('app.domain'))
+                ->name('landlord.')
                 ->group(base_path('routes/landlord/web/landlord-auth.php'));
 
             Route::middleware('api')

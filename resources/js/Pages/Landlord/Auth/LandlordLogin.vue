@@ -21,7 +21,7 @@ const resetPassword = useForm({
 })
 
 const submit = () => {
-    form.post(route('login'), {
+    form.post(route('landlord.login'), {
         onFinish: () => form.reset('password'),
     })
 }
@@ -68,7 +68,7 @@ const condition: Ref<string | boolean> = ref(false)
         <div>
             <p class="text-sm font-light text-gray-500 dark:text-gray-400">
                 {{ trans('Don`t have an account yet?') }}
-                <Link :href="route('register')" class="font-bold text-primary-700 hover:underline dark:text-primary-500">{{ trans('Register') }}</Link>
+                <Link :href="route('landlord.register')" class="font-bold text-primary-700 hover:underline dark:text-primary-500">{{ trans('Register') }}</Link>
             </p>
         </div>
     </form>
