@@ -79,11 +79,11 @@ switch (props.size) {
 
 <template>
     <button type="button" :class="[
-        'px-5 inline-flex items-center font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-500 dark:focus:ring-gray-400 focus:ring-offset-2',
+        'px-3 sm:px-5 min-w-max inline-flex items-center font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-500 dark:focus:ring-gray-400 focus:ring-offset-2',
         styleClass,
         sizeClass
     ]">
-             <FontAwesomeIcon v-if="icon"  aria-hidden="true" :icon="icon" size="sm"  class="mr-2" />
+        <FontAwesomeIcon v-if="icon"  aria-hidden="true" :icon="icon" size="sm"  class="mr-2" />
         <slot />
     </button>
 </template>

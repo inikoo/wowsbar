@@ -63,15 +63,18 @@ const setCurrent=(key)=>{
         <!-- Left Tab: Navigation -->
         <aside class="py-0 lg:col-span-3 lg:h-full">
             <nav role="navigation" class="space-y-1">
-                <ul>
-                    <li v-for="(item, key) in blueprint" @click="setCurrent(key)" :class="[
-                        'group cursor-pointer border-l-4 px-3 py-2 flex items-center text-sm font-medium',
-                        key == current
-                            ? 'bg-gray-100 border-orange-500 hover:bg-gray-100 text-gray-600'
-                            : 'border-transparent hover:bg-gray-50 text-gray-500 hover:text-gray-700',
-                    ]" :aria-current="key === current ? 'page' : undefined">
-                        <FontAwesomeIcon v-if="item.icon" aria-hidden="true" class="flex-shrink-0 -ml-1 mr-3 h-6 w-6 text-gray-400 group-hover:text-gray-500" :icon="item.icon" />
-                        <span class="capitalize truncate">{{trans(item.title)}}</span>
+                <ul class="flex justify-between sm:block">
+                    <li v-for="(item, key) in blueprint" @click="setCurrent(key)"
+                        :class="[
+                            'group cursor-pointer sm:border-l-4 px-6 sm:px-3 py-2 flex items-center justify-center sm:justify-start text-sm font-medium',
+                            key == current
+                                ? 'bg-gray-300 sm:bg-gray-100 sm:border-orange-500 sm:hover:bg-gray-100 text-gray-600'
+                                : 'border-transparent hover:bg-gray-300/40 sm:hover:bg-gray-50 text-gray-500 hover:text-gray-700',
+                        ]"
+                        :aria-current="key === current ? 'page' : undefined"
+                    >
+                        <FontAwesomeIcon v-if="item.icon" aria-hidden="true" class="flex-shrink-0 sm:-ml-1 sm:mr-3 h-6 w-6 text-gray-400 sm:group-hover:text-gray-500" :icon="item.icon" />
+                        <span class="hidden sm:inline capitalize truncate">{{trans(item.title)}}</span>
                     </li>
                 </ul>
             </nav>

@@ -439,19 +439,19 @@ const closeModal = () => {
     <Modal :isOpen="isOpen" @onClose="closeModal">
         <div>
             <LibrariesImage />
-      </div>
+        </div>
     </Modal>
         <div class="w-[30%] lg:w-2/4 p-2.5 border rounded h-fit shadow" v-if="data.components"
             @dragover="dragover" @dragleave="dragleave" @drop="drop">
             <!-- Common Properties -->
             <div :class="[
-                    'p-2 mb-2 cursor-pointer space-x-2 border',
+                    'p-2 mb-2 md:pl-3 cursor-pointer space-x-3 md:space-x-2 border flex flex-row items-center md:block',
                     commonEditActive ? 'bg-gray-200/60 font-medium border-l-4 border-l-orange-500' : 'hover:bg-gray-100 border-gray-300',
                 ]"
                 @click="setCommonEdit">
-                <FontAwesomeIcon v-if="props.data.common.user == props.user.username || !props.data.common.user" icon='fal fa-cog' class='' aria-hidden='true' />
+                <FontAwesomeIcon v-if="props.data.common.user == props.user.username || !props.data.common.user" icon='fal fa-cog' class='text-xl md:text-base' aria-hidden='true' />
                 <FontAwesomeIcon v-else="props.data.common.user == props.user.username || !props.data.common.user"  :icon="['fal', 'lock']" class='' aria-hidden='true' />
-                <span class="text-gray-600">{{ trans('Common properties') }}</span>
+                <span class="text-gray-600 text-sm">{{ trans('Common properties') }}</span>
             </div>
 
             <!-- Slides/Drag area -->
@@ -465,7 +465,7 @@ const closeModal = () => {
                         @mousedown="selectComponentForEdition(slide), emits('jumpToIndex', data.components.findIndex((component) => { return component.id == slide.id}))"
                         v-if="slide.ulid"
                         :class="[
-                            'grid grid-flow-col relative py-1 border mb-2 items-center justify-between hover:cursor-pointer',
+                            'grid grid-flow-col relative sm:py-1 border mb-2 items-center justify-between hover:cursor-pointer',
                             slide.ulid == get(currentComponentBeenEdited,'ulid') ?
                                 'border-l-orange-500 border-l-4 bg-gray-200/60 text-gray-600 font-medium' :
                                 'border-gray-300',
@@ -474,12 +474,12 @@ const closeModal = () => {
                             'border-gray-300',
                         ]"
                     >
-                        <div class="grid grid-flow-col gap-x-1 lg:gap-x-0 py-1 lg:py-0">
+                        <div class="grid grid-flow-col gap-x-1 lg:gap-x-0 ssm:py-1 lg:py-0">
                             <!-- Icon: Bars, class 'handle' to grabable -->
                             <FontAwesomeIcon icon="fal fa-bars" class="handle p-1 text-xs sm:text-base sm:p-2.5 text-gray-700 cursor-grab place-self-center" />
 
                             <!-- Image slide -->
-                            <div class="h-5 w-5 sm:h-10 sm:w-10 flex items-center justify-center">
+                            <div class="h-10 w-10 sm:w-10 flex items-center justify-center py-1">
                                 <img class="" :src="generateThumbnail(slide)" />
                             </div>
 
@@ -505,7 +505,7 @@ const closeModal = () => {
             </draggable>
 
             <!-- Button: Add slide, Libraries -->
-            <div class="flex gap-x-2">
+            <div class="flex flex-col md:flex-row gap-x-2 gap-y-1 md:gap-y-0">
                 <Button :style="`secondary`" icon="fas fa-plus" size="xs" class="relative">
                     {{ trans("Add slide") }}
                     <label
