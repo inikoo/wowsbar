@@ -21,6 +21,8 @@ import Button from '../Elements/Buttons/Button.vue'
 import { get } from 'lodash'
 import { router } from '@inertiajs/vue3'
 import SliderCommonWorkshop from './SliderCommonWorkshop.vue'
+import Modal from './Modal/Modal.vue'
+import LibrariesImage from './LibrariesImage.vue'
 library.add(faEye, faEyeSlash, faTrashAlt, faAlignJustify, faCog, faImage, faLock)
 
 interface CornersPositionData {
@@ -423,11 +425,21 @@ const setCommonEdit = () => {
     }
 };
 
+const isOpen = ref(false)
+
+const closeModal = () => {
+    isOpen.value = false
+}
 
 </script>
 
 <template>
     <div class="flex flex-grow gap-2.5">
+    <Modal :isOpen="isOpen" @onClose="closeModal">
+        <div>
+            <LibrariesImage />
+      </div>
+    </Modal>
         <div class="w-[30%] lg:w-2/4 p-2.5 border rounded h-fit shadow" v-if="data.components"
             @dragover="dragover" @dragleave="dragleave" @drop="drop">
             <!-- Common Properties -->
@@ -504,7 +516,7 @@ const setCommonEdit = () => {
                         class="absolute cursor-pointer rounded-md border-gray-300 sr-only" />
                 </Button>
 
-                <Button :style="`tertiary`" icon="fal fa-image" size="xs" class="relative">
+                <Button :style="`tertiary`" icon="fal fa-image" size="xs" class="relative" @click="isOpen = !isOpen">
                     {{ trans("Libraries") }}
                     <!-- <label
                         class="bg-transparent inset-0 absolute inline-block cursor-pointer"
