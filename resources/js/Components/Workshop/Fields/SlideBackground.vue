@@ -7,8 +7,8 @@ import { set, get } from "lodash";
 import { Cropper } from 'vue-advanced-cropper'
 import 'vue-advanced-cropper/dist/style.css';
 import 'vue-advanced-cropper/dist/theme.compact.css';
-
-
+import Modal from "../Modal/Modal.vue";
+import LibrariesImage from "../LibrariesImage.vue";
 
 const props = defineProps(["data"]);
 const _cropper = ref()
@@ -56,12 +56,21 @@ const onFileChange = (event) => {
     }
 };
 
+const isOpen = ref(false)
 
+const closeModal = () => {
+    isOpen.value = false
+}
 
 </script>
 
 <template>
     <div class="block w-full">
+      <Modal :show="isOpen" @onClose="closeModal">
+        <div>
+            <LibrariesImage />
+        </div>
+    </Modal>
         <div class="w-full  overflow-hidden relative">
             <Cropper ref="_cropper" class="cropper" :src="generateThumbnail(props.data.image_source)" :stencil-props="{
                 aspectRatio: 4 / 1,
@@ -100,7 +109,7 @@ const onFileChange = (event) => {
                         accept="image/*" class="absolute cursor-pointer rounded-md border-gray-300 sr-only" />
                 </Button>
 
-                <Button :style="`tertiary`" icon="fal fa-image" size="xs" class="relative">
+                <Button :style="`tertiary`" icon="fal fa-image" size="xs" class="relative" @click="isOpen = !isOpen">
                     {{ trans("Libraries") }}
                     <!-- <label class="bg-transparent inset-0 absolute inline-block cursor-pointer" id="input-slide-large-mask"
                         for="fileInput" />

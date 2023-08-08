@@ -39,18 +39,19 @@ const getNestedValue = (obj: Object, keys: Array<string>) => {
 const value = ref(setFormValue(props.data, props.fieldName))
 
 watch(value, (newValue) => {
-    updateFormValue(newValue);
+    updateLocalFormValue(newValue);
 });
 
-const updateFormValue = (newValue: number) => {
-    let target = { ...props.data } // Create a copy of props.data to avoid directly modifying it
-    if (Array.isArray(props.fieldName)) {
-        set(target, props.fieldName, newValue * 1000)
-    } else {
-        target[props.fieldName] = newValue * 1000
-    }
-    emit('update:data', target); // Emit an event to notify the parent component
-};
+const updateLocalFormValue = (newValue) => {
+      let localData = { ...props.data }
+      if (Array.isArray(props.fieldName)) {
+          set(localData, props.fieldName, newValue * 1000); // Convert back to milliseconds
+      } else {
+          localData[props.fieldName] = newValue * 1000; // Convert back to milliseconds
+      }
+      
+      props.data.delay = localData.delay
+  };
 </script>
 
 <template>

@@ -21,7 +21,6 @@ library.add(faImage, faExpandArrows, faAlignCenter, faTrash, faStopwatch)
 const props = defineProps<{
     currentComponentBeenEdited: Object,
     blueprint: Array<Object>,
-    remove : Function
 }>()
 
 // console.log(props.blueprint)
