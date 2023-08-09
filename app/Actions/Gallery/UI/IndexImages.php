@@ -77,8 +77,8 @@ class IndexImages extends InertiaAction
         return $queryBuilder
             ->defaultSort('media.name')
             ->where('collection_name','contentBlock')
-            ->select(['media.name'])
-            ->allowedSorts(['name'])
+            ->select(['media.name','media.id','size','mime_type'])
+            ->allowedSorts(['name','size'])
             ->allowedFilters([$globalSearch])
             ->withPaginator($prefix)
             ->withQueryString();
@@ -112,6 +112,10 @@ class IndexImages extends InertiaAction
                     ]
                 )
                 ->column(key: 'name', label: __('name'), sortable: true)
+                ->column(key: 'thumbnail', label: __('image'), sortable: true)
+
+                ->column(key: 'size', label: __('size'), sortable: true)
+
                 ->defaultSort('name');
         };
     }
@@ -124,7 +128,7 @@ class IndexImages extends InertiaAction
     public function htmlResponse(LengthAwarePaginator $websites, ActionRequest $request): Response
     {
         return Inertia::render(
-            'Portfolio/Websites',
+            'Portfolio/Images',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->getName(),
@@ -138,7 +142,7 @@ class IndexImages extends InertiaAction
                         'icon'  => 'fal fa-images'
                     ],
                 ],
-                'data' => WebsiteResource::collection($websites),
+                'data' => ImageResource::collection($websites),
 
             ]
         )->table($this->tableStructure(

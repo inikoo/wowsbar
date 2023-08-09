@@ -7,6 +7,9 @@
 
 namespace App\Http\Resources\Gallery;
 
+use App\Actions\Helpers\Images\GetPictureSources;
+use App\Helpers\ImgProxy\Image;
+use App\Helpers\NaturalLanguage;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ImageResource extends JsonResource
@@ -16,14 +19,15 @@ class ImageResource extends JsonResource
         /** @var \App\Models\Media\Media $media */
         $media = $this;
 
+        $image = (new Image)->make(route('media.show', $media->id))->resize(0, 24);
+
+
         return [
             'id'        => $media->id,
-            'uuid'      => $media->uuid,
-            'file_name' => $media->file_name,
+            'name'      => $media->name,
             'mime_type' => $media->mime_type,
-            'size'      => $media->size,
-            'checksum'  => $media->checksum,
-            'url'       => route('media.show', $media->id)
+            'size'      => NaturalLanguage::make()->fileSize($media->size),
+            'thumbnail'       => GetPictureSources::run($image)
 
 
         ];
