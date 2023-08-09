@@ -7,7 +7,6 @@
 
 namespace App\Actions\Helpers\Images;
 
-
 use App\Helpers\ImgProxy\Image;
 use Illuminate\Support\Arr;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -35,15 +34,15 @@ class GetPictureSources
 
         if ($image->getWidth() or $image->getHeight()) {
             $image_2x = $image->resize(
-                ($image->getWidth() ?? 0) * 2,
+                ($image->getWidth() ?? 0)  * 2,
                 ($image->getHeight() ?? 0) * 2,
             );
 
-            if(Arr::has($sources,'avif')){
+            if(Arr::has($sources, 'avif')) {
                 $sources['avif_2x']     = GetImgProxyUrl::run($image_2x->extension('avif'));
             }
 
-            if(Arr::has($sources,'webp')){
+            if(Arr::has($sources, 'webp')) {
                 $sources['webp_2x']     = GetImgProxyUrl::run($image_2x->extension('webp'));
             }
 

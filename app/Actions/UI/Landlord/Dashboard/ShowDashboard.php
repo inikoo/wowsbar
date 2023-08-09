@@ -5,7 +5,7 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\UI\Dashboard;
+namespace App\Actions\UI\Landlord\Dashboard;
 
 use App\Actions\Portfolio\ContentBlock\Banners\UI\GetLastEditedBanner;
 use Inertia\Inertia;
@@ -19,12 +19,10 @@ class ShowDashboard
     public function handle(): Response
     {
         return Inertia::render(
-            'Dashboard/Dashboard',
+            'Landlord/Dashboard/Dashboard',
             [
-                'title'       => __('dashboard'),
+                'title' => __('dashboard'),
                 'breadcrumbs' => $this->getBreadcrumbs(__('dashboard')),
-
-                'banners' => GetLastEditedBanner::run(app('currentTenant'))
             ]
         );
     }

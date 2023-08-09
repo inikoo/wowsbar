@@ -26,17 +26,18 @@ class GetImgProxyUrl
 
     public function __construct()
     {
-        if (config('img-proxy.signature_size')){
+        if (config('img-proxy.signature_size')) {
             $signature_size = config('img-proxy.signature_size');
-            if (is_numeric($signature_size))
+            if (is_numeric($signature_size)) {
                 $this->signature_size = (int)$signature_size;
+            }
         }
     }
 
     public function handle(Image $image): string
     {
 
-        if(!config('img-proxy.base_url')){
+        if(!config('img-proxy.base_url')) {
             return $image->getOriginalPictureUrl();
         }
 
@@ -57,20 +58,20 @@ class GetImgProxyUrl
         return
 
             join(
-            '/',
-            array_filter([
+                '/',
+                array_filter([
                 config('img-proxy.base_url'),
                 $this->getSignature(),
                 $this->getParameters(),
 
             ])
-        );
+            );
     }
 
     public function getEncodedSourceUrl(): string
     {
         $encodedSourceUrl= rtrim(strtr(base64_encode($this->image->getOriginalPictureUrl()), '+/', '-_'), '=');
-        if($extension=$this->image->getExtension()){
+        if($extension=$this->image->getExtension()) {
             $encodedSourceUrl.='.'.$extension;
         }
         return  $encodedSourceUrl;
@@ -80,11 +81,13 @@ class GetImgProxyUrl
     public function getParameters(): string
     {
         return   join(
-            '/',array_filter([
+            '/',
+            array_filter([
             $this->getProcessingOptions(),
             $this->getEncodedSourceUrl()
 
-        ]));
+        ])
+        );
     }
 
 
@@ -94,7 +97,7 @@ class GetImgProxyUrl
 
 
 
-        if( app()->environment(['local']) && empty(config('img-proxy.key'))){
+        if(app()->environment(['local']) && empty(config('img-proxy.key'))) {
             return 'signature';
         }
 
@@ -105,8 +108,9 @@ class GetImgProxyUrl
             true
         );
 
-        if ($this->signature_size)
+        if ($this->signature_size) {
             $signature = pack('A'.$this->signature_size, $signature);
+        }
 
         return rtrim(strtr(base64_encode($signature), '+/', '-_'), '=');
 
@@ -115,16 +119,16 @@ class GetImgProxyUrl
     public function getProcessingOptions(Image $img=null): string
     {
 
-        if(!$img){
+        if(!$img) {
             $img=$this->image;
         }
 
         $processingOptions='';
 
-        switch ($img->getSizeProcessOption()){
+        switch ($img->getSizeProcessOption()) {
             case 'resize':
                 $resize=$img->getResize();
-                $processingOptions.='rs:'.join(':',$resize);
+                $processingOptions.='rs:'.join(':', $resize);
 
                 break;
         }

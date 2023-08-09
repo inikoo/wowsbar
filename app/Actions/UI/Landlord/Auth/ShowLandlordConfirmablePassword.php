@@ -7,11 +7,9 @@
 
 namespace App\Actions\UI\Landlord\Auth;
 
-use App\Providers\RouteServiceProvider;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
-use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsController;
 
 class ShowLandlordConfirmablePassword

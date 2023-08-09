@@ -8,10 +8,9 @@
 use App\Actions\Helpers\Images\GetImgProxyUrl;
 use App\Helpers\ImgProxy\Image;
 
-
 beforeEach(function () {
     $imgSrc      = 'https://place-hold.it/300';
-    $this->image = (new Image)->make($imgSrc);
+    $this->image = (new Image())->make($imgSrc);
     config(['img-proxy.base_url' => 'http://localhost:8080']);
 });
 

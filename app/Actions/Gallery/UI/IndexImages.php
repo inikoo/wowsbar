@@ -10,10 +10,8 @@ namespace App\Actions\Gallery\UI;
 use App\Actions\InertiaAction;
 use App\Actions\UI\Dashboard\ShowDashboard;
 use App\Http\Resources\Gallery\ImageResource;
-use App\Http\Resources\Portfolio\WebsiteResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\Media\Media;
-use App\Models\Portfolio\Website;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -76,8 +74,8 @@ class IndexImages extends InertiaAction
 
         return $queryBuilder
             ->defaultSort('media.name')
-            ->where('collection_name','contentBlock')
-            ->select(['media.name','media.id','size','mime_type'])
+            ->where('collection_name', 'contentBlock')
+            ->select(['media.name','media.id','size','mime_type','file_name','disk','media.slug'])
             ->allowedSorts(['name','size'])
             ->allowedFilters([$globalSearch])
             ->withPaginator($prefix)

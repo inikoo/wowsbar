@@ -8,21 +8,17 @@
 namespace App\Actions\Portfolio\ContentBlock\Banners\UI;
 
 use App\Actions\InertiaAction;
-use App\Actions\Portfolio\ContentBlock\UI\IndexContentBlocks;
 use App\Http\Resources\Portfolio\ContentBlockResource;
 use App\Models\Portfolio\Website;
 use App\Models\Tenancy\Tenant;
-use App\Models\Web\WebBlockType;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class GetLastEditedBanner extends InertiaAction
 {
-    public function handle(Tenant|Website $parent, $prefix = null): ContentBlockResource
+    public function handle(Tenant|Website $parent, $prefix = null): AnonymousResourceCollection
     {
-        $result = $parent->contentBlocks()->latest('updated_at')->first();
+        $responses = $parent->contentBlocks()->limit(3)->latest('updated_at')->get();
 
-        return new ContentBlockResource($result);
+        return ContentBlockResource::collection($responses);
     }
 }

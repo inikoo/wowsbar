@@ -17,13 +17,12 @@ const layout = useLayoutStore()
         <Link :href="route('dashboard.show')"
             class="md:pl-3 flex items-center h-full xl:overflow-hidden space-x-2 mr-6 xl:w-56 xl:pr-2 xl:border-r-2 xl:mr-0 xl:border-gray-200 dark:xl:border-gray-500"
         >
-            <img class="h-7 md:h-5 shadow" :src="`/media/${layout.tenant.logo_id}`" :alt="layout.tenant.code" />
+            <img v-if="layout.tenant.logo_id" class="h-7 md:h-5 shadow" :src="`/media/${layout.tenant.logo_id}`" :alt="layout.tenant.code" />
             <span class="hidden leading-none md:inline font-bold  xl:truncate text-gray-800 dark:text-gray-300">
                 {{ layout.tenant.name ?? 'Tenant Demo' }}
             </span>
         </Link>
         <AppTopBarNavs />
-
     </div>
 </template>
 
