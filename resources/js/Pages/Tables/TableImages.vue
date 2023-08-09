@@ -34,7 +34,7 @@ function imageRoute(image) {
             </Link>
         </template>
         <template #cell(thumbnail)="{ item: image }">
-           xx <Image src="image.thumbnail"/>
+            <Image :src="image.thumbnail"/>
         </template>
     </Table>
 
