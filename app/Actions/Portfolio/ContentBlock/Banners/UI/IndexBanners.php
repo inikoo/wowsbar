@@ -96,7 +96,6 @@ class IndexBanners extends InertiaAction
                         'icon'  => 'fal fa-window-maximize'
                     ],
                     'actions'   => [
-                        $this->canEdit and class_basename($this->parent) == 'Website' ?
                         [
                             'type'  => 'button',
                             'style' => 'create',
@@ -105,7 +104,7 @@ class IndexBanners extends InertiaAction
                                 'name'       => preg_replace('/index$/', 'create', $request->route()->getName()),
                                 'parameters' => array_values($this->originalParameters)
                             ]
-                        ] : null
+                        ]
                     ]
                 ],
                 'data'        => ContentBlockResource::collection($banners),
@@ -114,6 +113,17 @@ class IndexBanners extends InertiaAction
         )->table(
             IndexContentBlocks::make()->tableStructure(
                 parent: $this->parent,
+                modelOperations: [
+                    'createLink' => $this->canEdit ? [
+                        'route' => [
+                            'name'       => 'portfolio.websites.show.banners.create',
+                            'parameters' => array_values([$this->parent->slug])
+                        ],
+                        'label' => __('banner'),
+                        'style' => 'primary',
+                        'icon'  => 'fas fa-plus'
+                    ] : false
+                ],
                 webBlockType: $this->webBlockType,
                 canEdit: $this->canEdit
             )

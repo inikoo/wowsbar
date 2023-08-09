@@ -36,4 +36,3 @@ const layout = useLayoutStore()
         <span v-if="menu.label" class="hidden lg:inline capitalize whitespace-nowrap">{{ menu.label }}</span>
     </Link>
 </template>
-
