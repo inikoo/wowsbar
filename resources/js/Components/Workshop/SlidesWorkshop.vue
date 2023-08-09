@@ -23,8 +23,8 @@ import { router } from '@inertiajs/vue3'
 import SliderCommonWorkshop from './SliderCommonWorkshop.vue'
 import Modal from './Modal/Modal.vue'
 import LibrariesImage from './LibrariesImage.vue'
+import CropImage from './CropImage/CropImage.vue'
 library.add(faEye, faEyeSlash, faTrashAlt, faAlignJustify, faCog, faImage, faLock)
-
 interface CornersPositionData {
     data: {
         text: string
@@ -89,43 +89,50 @@ const isDragging = ref(false)
 const fileInput = ref(null)
 const currentComponentBeenEdited = ref(null)
 const commonEditActive = ref(false)
+const isOpenLibrariesImage = ref(false)
+const addFiles = ref([])
+const closeModalisOpenLibrariesImage = () => {
+    isOpenLibrariesImage.value = false
+}
+
+const isOpenCropModal = ref(false)
+
+const closeModalisOpenCropModal = () => {
+    isOpenCropModal.value = false
+}
 
 // When new slide added
 const addComponent = async (element) => {
     let setData = props.data.components
-
+    addFiles.value = element.target.files
+    isOpenCropModal.value = true
     // Save the new image to database
-    try {
-        console.log(element.target.files)
-        console.log(props.imagesUploadRoute.name)
-        const response = await axios.post(route(props.imagesUploadRoute.name, props.imagesUploadRoute.arguments),
-            { 'images': element.target.files },
-            {
-                headers: { 'Content-Type': 'multipart/form-data' }
-            }
-        )
-        console.log("===========================")
-        console.log(ulid())
-        console.log(response.data)
+    // try {
+    //     const response = await axios.post(route(props.imagesUploadRoute.name, props.imagesUploadRoute.arguments),
+    //         { 'images': element.target.files },
+    //         {
+    //             headers: { 'Content-Type': 'multipart/form-data' }
+    //         }
+    //     )
         
-        for (const set of response.data) {
-                setData.push({
-                    id: null,
-                    image_id: set.id,
-                    image_source: set.original_url,
-                    ulid: ulid(),
-                    layout: {
-                        imageAlt: set.name,
-                    },
-                    visibility : true
-                    })
-        }
-        props.data.components = [...setData]
+    //     for (const set of response.data) {
+    //             setData.push({
+    //                 id: null,
+    //                 image_id: set.id,
+    //                 image_source: set.original_url,
+    //                 ulid: ulid(),
+    //                 layout: {
+    //                     imageAlt: set.name,
+    //                 },
+    //                 visibility : true
+    //                 })
+    //     }
+    //     props.data.components = [...setData]
 
-    } catch (error) {
-        // Handle any errors that might occur during the POST request
-        console.error(error);
-    }
+    // } catch (error) {
+    //     // Handle any errors that might occur during the POST request
+    //     console.error(error);
+    // }
 };
 
 
@@ -431,22 +438,25 @@ const setCommonEdit = () => {
     }
 };
 
-const isOpen = ref(false)
 
-const closeModal = () => {
-    isOpen.value = false
-}
 
 
 </script>
 
 <template>
     <div class="flex flex-grow gap-2.5">
-    <Modal :isOpen="isOpen" @onClose="closeModal">
+    <Modal :isOpen="isOpenLibrariesImage" @onClose="closeModalisOpenLibrariesImage">
         <div>
             <LibrariesImage />
         </div>
     </Modal>
+
+    <Modal :isOpen="isOpenCropModal" @onClose="closeModalisOpenCropModal">
+        <div>
+            <CropImage :data="addFiles"  :imagesUploadRoute="props.imagesUploadRoute"/>
+        </div>
+    </Modal>
+
         <div class="p-2.5 border rounded h-fit shadow"
             :class="[commonEditActive ? 'w-[30%] lg:w-2/4' : 'w-[100%]']" v-if="data.components"
             @dragover="dragover" @dragleave="dragleave" @drop="drop">
@@ -524,7 +534,7 @@ const closeModal = () => {
                         class="absolute cursor-pointer rounded-md border-gray-300 sr-only" />
                 </Button>
 
-                <Button :style="`tertiary`" icon="fal fa-image" size="xs" class="relative" @click="isOpen = !isOpen">
+                <Button :style="`tertiary`" icon="fal fa-image" size="xs" class="relative" @click="isOpenLibrariesImage = !isOpen">
                     {{ trans("Libraries") }}
                     <!-- <label
                         class="bg-transparent inset-0 absolute inline-block cursor-pointer"

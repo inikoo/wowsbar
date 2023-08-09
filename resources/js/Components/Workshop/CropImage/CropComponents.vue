@@ -1,0 +1,72 @@
+<script setup>
+import { ref, h, defineComponent } from "vue";
+import { set, get } from "lodash";
+import { Cropper } from 'vue-advanced-cropper'
+import 'vue-advanced-cropper/dist/style.css';
+import 'vue-advanced-cropper/dist/theme.compact.css';
+
+const props = defineProps(["data"]);
+const _cropper = ref()
+
+const cropOnChange = ({ coordinates, image, visibleArea, canvas }) => {
+    set(props, ['data', 'imagePosition'], {coordinates, image, visibleArea, canvas})
+}
+
+const onReady = () => {
+    _cropper.value.setCoordinates({
+          left: get(props.data,['imagePosition','coordinates','left'],0), // Set the left position to 0
+          top: get(props.data,['imagePosition','coordinates','top'],0), // Set the top position to 0
+        });
+}
+
+
+const generateThumbnail = (fileOrUrl) => {
+        if (fileOrUrl.originalFile instanceof File) {
+            let fileSrc = URL.createObjectURL(fileOrUrl.originalFile);
+            setTimeout(() => {
+                URL.revokeObjectURL(fileSrc);
+            }, 1000);
+            return fileSrc;
+        } else if (fileOrUrl.originalFile  === "string") {
+            return fileOrUrl.originalFile ;
+        }
+};
+
+const onFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+        props.data.image_source = null;
+        props.data.imageFile = file;
+        props.data.layout.imageAlt = file.name;
+    }
+};
+
+
+
+</script>
+
+<template>
+    <div class="block w-full">
+        <div class="w-full overflow-hidden relative">
+            <Cropper ref="_cropper" class="w-[400px] md:w-[440px] h-[200px]" :src="generateThumbnail(props.data)" :stencil-props="{
+                aspectRatio: 4 / 1,
+                movable: true,
+                resizable: false,
+            }" :auto-zoom="true"  @ready="onReady" @change="cropOnChange" >
+            </Cropper>
+        </div>
+        <div class="w-full relative space-y-4 mt-2.5">
+            <!-- Button: Add slide -->
+            <div class="flex gap-x-2">
+            </div>
+        </div>
+    </div>
+</template>
+
+<style lang="scss">
+.cropper {
+    height: 200px;
+    width: 400px;
+    @apply md:w-[400px] 
+}
+</style>
