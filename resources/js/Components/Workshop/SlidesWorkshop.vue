@@ -248,6 +248,12 @@ const ComponentsBlueprint = ref([
                 label: trans('Image'),
                 value: ['image_source']
             },
+            {
+                name: ['layout', 'link'],
+                type: 'Link',
+                label: trans('Image'),
+                value: ['layout', 'link'],
+            },
         ]
 
     },
