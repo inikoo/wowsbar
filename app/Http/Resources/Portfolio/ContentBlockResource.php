@@ -7,6 +7,7 @@
 
 namespace App\Http\Resources\Portfolio;
 
+use App\Models\Portfolio\Website;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
@@ -15,6 +16,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property string $code
  * @property string $updated_at
  * @property $website
+ * @property $contentBlockComponents
  */
 class ContentBlockResource extends JsonResource
 {
@@ -28,7 +30,7 @@ class ContentBlockResource extends JsonResource
             'updated_at'     => $this->updated_at,
             'route'          => [
                 'name' => 'portfolio.websites.show.banners.show',
-                'parameters' => [$this->slug, $this->slug]
+                'parameters' => ['hello', $this->slug]
             ]
         ];
     }
