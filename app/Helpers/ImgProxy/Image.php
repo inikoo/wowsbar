@@ -18,8 +18,8 @@ class Image
      * north (top edge)
      */
     public const DEFAULT_GRAVITY = 'no';
-    public const MAX_ENLARGE = 5;
-    public const MIN_ENLARGE = 0;
+    public const MAX_ENLARGE     = 5;
+    public const MIN_ENLARGE     = 0;
 
 
     protected ?string $sizeProcessOption=null;
@@ -78,12 +78,12 @@ class Image
 
 
         $this->sizeProcessOption='resize';
-        $this->resize=[
-            'type'=>null,
-            'width'=>null,
-            'height'=>null,
-            'enlarge'=>null,
-            'extend'=>null,
+        $this->resize           =[
+            'type'   => null,
+            'width'  => null,
+            'height' => null,
+            'enlarge'=> null,
+            'extend' => null,
 
 
         ];
@@ -93,12 +93,12 @@ class Image
         }
 
         if (!is_null($width)) {
-            $this->width=$this->parseDimension($width);
+            $this->width           =$this->parseDimension($width);
             $this->resize['width'] = $this->width;
 
         }
         if (!is_null($height)) {
-            $this->height=$this->parseDimension($height);
+            $this->height           =$this->parseDimension($height);
             $this->resize['height'] = $this->height;
         }
 
