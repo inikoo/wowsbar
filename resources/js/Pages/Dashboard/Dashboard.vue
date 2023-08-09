@@ -24,7 +24,7 @@ import { BellIcon, XMarkIcon } from '@heroicons/vue/24/outline'
 
 const props = defineProps<{
     title: string,
-
+    last_edited_banner: any
 }>()
 
 const lastEditedBanners = [
@@ -65,6 +65,7 @@ const lastEditedBanners = [
 
 <template layout="App">
     <Head :title="capitalize(title)" />
+    {{ last_edited_banner }}
     <div class="max-w-7xl px-4 sm:px-6 lg:px-8 lg:py-6">
         <div class="max-w-2xl lg:mx-0 lg:max-w-none">
             <div class="flex items-center justify-between">
@@ -76,21 +77,22 @@ const lastEditedBanners = [
 
             <!-- Looping: Last Edited Banners -->
             <ul role="list" class="mt-3 grid grid-cols-1 gap-x-6 gap-y-8 lg:grid-cols-3 xl:gap-x-8">
-                <Link href='#' v-for="lastEditedBanner in lastEditedBanners" :key="lastEditedBanner.id" class="overflow-hidden rounded-xl ring-1 ring-gray-300 transition-all duration-200 ease-in-out hover:ring-2 hover:ring-orange-500">
+                <Link href='#' v-for="lastEditedBanner in last_edited_banner" :key="lastEditedBanner.id" class="overflow-hidden rounded-xl ring-1 ring-gray-300 transition-all duration-200 ease-in-out hover:ring-2 hover:ring-gray-400">
                     <div class="flex items-center gap-x-4 border-b border-gray-700/5 bg-indigo-100">
-                        <img src="@/../art/banner/Image 555.jpg" :alt="lastEditedBanner.name" class="aspect-[4/1]" />
+                        <!-- <img src="@/../art/banner/Image 555.jpg" :alt="lastEditedBanner.name" class="aspect-[4/1]" /> -->
+                        <div class="bg-gray-400 aspect-[4/1] w-full" />
                     </div>
                     <dl class="divide-y divide-gray-100 px-6 py-3">
                         <div class="flex justify-between items-center gap-x-4 py-3">
-                            <dt class="text-gray-500 text-sm">{{ trans('Name') }}</dt>
+                            <!-- <dt class="text-gray-500 text-sm">{{ trans('Name') }}</dt> -->
                             <dd class="flex items-start gap-x-2">
                                 <div class="font-semibold text-gray-500">{{ lastEditedBanner.name }}</div>
                             </dd>
                         </div>
                         <div class="flex justify-between items-center gap-x-4 py-3">
-                            <dt class="text-gray-500 text-sm">{{ trans('Last edit') }}</dt>
+                            <!-- <dt class="text-gray-500 text-sm">{{ trans('Last edit') }}</dt> -->
                             <dd class="text-gray-500 font-semibold">
-                                <time :datetime="lastEditedBanner.lastEdited">{{ lastEditedBanner.lastEdited }}</time>
+                                <time :datetime="lastEditedBanner.lastEdited">{{ lastEditedBanner.lastEdited ?? '-' }}</time>
                             </dd>
                         </div>
                     </dl>
