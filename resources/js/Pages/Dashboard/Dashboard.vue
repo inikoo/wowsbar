@@ -24,48 +24,25 @@ import { BellIcon, XMarkIcon } from '@heroicons/vue/24/outline'
 
 const props = defineProps<{
     title: string,
-    last_edited_banner: any
+    banners: any
 }>()
 
-const lastEditedBanners = [
-    {
-        id: 1,
-        name: 'Banner Exodus',
-        imageUrl: 'https://tailwindui.com/img/logos/48x48/tuple.svg',
-        lastEdited: 'December 13, 2022',
-        // dateTime: '2022-12-13',
-        // amount: '$2,000.00',
-        // status: 'Overdue'
-        
-    },
-    {
-        id: 2,
-        name: 'Banner Savycal',
-        imageUrl: 'https://tailwindui.com/img/logos/48x48/savvycal.svg',
-        lastEdited: 'January 22, 2023',
-        // dateTime: '2023-01-22',
-        // amount: '$14,000.00',
-        // status: 'Paid'
-        
-    },
-    {
-        id: 3,
-        name: 'Banner Reform',
-        imageUrl: 'https://tailwindui.com/img/logos/48x48/reform.svg',
-        lastEdited: 'January 23, 2023',
-        // dateTime: '2023-01-23',
-        // amount: '$7,600.00',
-        // status: 'Paid'
-        
-    },
-]
+const formatDate = (dateIso: Date) => {
+    const date = new Date(dateIso)
+    const year = date.getFullYear()
+    const month = (date.getMonth() + 1).toString().padStart(2, '0')
+    const day = date.getDate().toString().padStart(2, '0')
 
+    const hours = date.getHours().toString()
+    const minutes = date.getMinutes().toString()
+
+    return `${year}-${month}-${day} ${hours}:${minutes}`
+}
 
 </script>
 
 <template layout="App">
     <Head :title="capitalize(title)" />
-    {{ last_edited_banner }}
     <div class="max-w-7xl px-4 sm:px-6 lg:px-8 lg:py-6">
         <div class="max-w-2xl lg:mx-0 lg:max-w-none">
             <div class="flex items-center justify-between">
@@ -77,9 +54,9 @@ const lastEditedBanners = [
 
             <!-- Looping: Last Edited Banners -->
             <ul role="list" class="mt-3 grid grid-cols-1 gap-x-6 gap-y-8 lg:grid-cols-3 xl:gap-x-8">
-                <Link href='#' v-for="lastEditedBanner in last_edited_banner" :key="lastEditedBanner.id" class="overflow-hidden rounded-xl ring-1 ring-gray-300 transition-all duration-200 ease-in-out hover:ring-2 hover:ring-gray-400">
+                <Link :href="route(lastEditedBanner.route['name'], lastEditedBanner.route['parameters'])" v-for="lastEditedBanner in banners.data" :key="lastEditedBanner.id" class="overflow-hidden rounded-xl ring-1 ring-gray-300 transition-all duration-200 ease-in-out hover:ring-2 hover:ring-gray-400">
                     <div class="flex items-center gap-x-4 border-b border-gray-700/5 bg-indigo-100">
-                        <!-- <img src="@/../art/banner/Image 555.jpg" :alt="lastEditedBanner.name" class="aspect-[4/1]" /> -->
+                         <img :src="lastEditedBanner.components[0].image_source" :alt="lastEditedBanner.name" class="aspect-[4/1]" />
                         <div class="bg-gray-400 aspect-[4/1] w-full" />
                     </div>
                     <dl class="divide-y divide-gray-100 px-6 py-3">
@@ -92,7 +69,7 @@ const lastEditedBanners = [
                         <div class="flex justify-between items-center gap-x-4 py-3">
                             <!-- <dt class="text-gray-500 text-sm">{{ trans('Last edit') }}</dt> -->
                             <dd class="text-gray-500 font-semibold">
-                                <time :datetime="lastEditedBanner.lastEdited">{{ lastEditedBanner.lastEdited ?? '-' }}</time>
+                                Last Edited At: <time :datetime="lastEditedBanner.updated_at">{{  formatDate(lastEditedBanner.updated_at) }}</time>
                             </dd>
                         </div>
                     </dl>
