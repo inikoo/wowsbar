@@ -250,8 +250,8 @@ const ComponentsBlueprint = ref([
             },
             {
                 name: ['layout', 'link'],
-                type: 'Link',
-                label: trans('Image'),
+                type: 'text',
+                label: trans('Link'),
                 value: ['layout', 'link'],
             },
         ]
