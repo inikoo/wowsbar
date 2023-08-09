@@ -47,10 +47,10 @@ class GetLayout
                             ]
                         ],
                         [
-                            'icon'  => ['fal', 'fa-images'],
+                            'icon'  => ['fal', 'fa-photo-video'],
                             'label' => __('gallery'),
                             'route' => [
-                                'name' => 'portfolio.images.index',
+                                'name' => 'portfolio.gallery',
                             ]
                         ],
 

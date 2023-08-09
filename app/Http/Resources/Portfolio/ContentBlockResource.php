@@ -26,7 +26,7 @@ class ContentBlockResource extends JsonResource
             'name'           => $this->name,
             'updated_at'     => $this->updated_at,
             'route'          => [
-                'name' => 'websites.show.banners.show',
+                'name'       => 'websites.show.banners.show',
                 'parameters' => [$this->slug, $this->slug]
             ]
         ];

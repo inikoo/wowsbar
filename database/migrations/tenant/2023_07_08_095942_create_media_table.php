@@ -13,7 +13,10 @@ return new class () extends Migration {
     public function up(): void
     {
         Schema::create('media', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
+            $table->unsignedSmallInteger('tenant_id')->nullable()->index();
+            $table->foreign('tenant_id')->references('id')->on('tenants');
+            $table->string('slug')->unique()->index();
             $table->morphs('model');
             $table->uuid()->nullable()->unique();
             $table->string('collection_name')->index();
