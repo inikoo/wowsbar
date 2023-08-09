@@ -10,13 +10,13 @@ import {Link} from "@inertiajs/vue3";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import {library} from "@fortawesome/fontawesome-svg-core";
 import {
-    faTerminal, faUserAlien, faCog, faGlobe, faWindowMaximize, faChartNetwork,faImages
+    faTerminal, faUserAlien, faCog, faGlobe, faWindowMaximize, faChartNetwork, faPhotoVideo
 } from "@/../private/pro-light-svg-icons";
 import {useLayoutStore} from "@/Stores/layout";
 import {capitalize} from "@/Composables/capitalize";
 
 library.add(
-    faTerminal, faUserAlien, faCog, faGlobe, faWindowMaximize, faChartNetwork,faImages);
+    faTerminal, faUserAlien, faCog, faGlobe, faWindowMaximize, faChartNetwork, faPhotoVideo);
 
 const layout = useLayoutStore()
 
@@ -29,10 +29,10 @@ const layout = useLayoutStore()
         :title="capitalize(menu.tooltip??menu.label??'')">
         <div class="absolute h-0.5 rounded-full -bottom-2 xl:-bottom-1.5 left-[50%] translate-x-[-50%] mx-auto transition-all duration-200 ease-in-out"
              :class="[route(layout.currentRoute, route().v().params).includes(route(menu.route.name)) ? 'bg-orange-500 dark:bg-gray-300 w-5/6' : 'bg-gray-400 w-0 group-hover:w-3/6']"
-    />
+        />
         <FontAwesomeIcon :icon="menu.icon"
-            class="h-5 lg:h-3.5 w-auto group-hover:opacity-100 opacity-70 transition duration-100 ease-in-out"
-            aria-hidden="true"/>
+                         class="h-5 lg:h-3.5 w-auto group-hover:opacity-100 opacity-70 transition duration-100 ease-in-out"
+                         aria-hidden="true"/>
         <span v-if="menu.label" class="hidden lg:inline capitalize whitespace-nowrap">{{ menu.label }}</span>
     </Link>
 </template>

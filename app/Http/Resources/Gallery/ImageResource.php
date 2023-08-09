@@ -20,15 +20,15 @@ class ImageResource extends JsonResource
         $media = $this;
 
 
-        $image = (new Image)->make($media->getLocalImgProxyFilename())->resize(0, 48);
+        $image = (new Image())->make($media->getLocalImgProxyFilename())->resize(0, 48);
 
 
         return [
-            'id'        => $media->id,
+            'slug'      => $media->slug,
             'name'      => $media->name,
             'mime_type' => $media->mime_type,
             'size'      => NaturalLanguage::make()->fileSize($media->size),
-            'thumbnail'       => GetPictureSources::run($image)
+            'thumbnail' => GetPictureSources::run($image)
 
 
         ];

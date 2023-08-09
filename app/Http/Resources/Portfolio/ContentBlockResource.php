@@ -15,7 +15,6 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property string $code
  * @property string $updated_at
  * @property $website
- * @property $contentBlockComponents
  */
 class ContentBlockResource extends JsonResource
 {

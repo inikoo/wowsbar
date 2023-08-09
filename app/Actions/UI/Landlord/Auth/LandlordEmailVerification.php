@@ -8,7 +8,6 @@
 namespace App\Actions\UI\Landlord\Auth;
 
 use App\Providers\RouteServiceProvider;
-use Illuminate\Auth\Events\Verified;
 use Illuminate\Http\RedirectResponse;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsController;

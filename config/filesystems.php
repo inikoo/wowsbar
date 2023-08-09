@@ -48,11 +48,16 @@ return [
             'visibility' => 'public',
             'throw'      => false,
         ],
-        'tenants_public' => [
+        'tenants' => [
             'driver'     => 'local',
             'root'       => storage_path('app/tenants'),
-            'url'        => env('APP_URL').'/tenants/storage',
-            'visibility' => 'public',
+        //    'url'        => env('APP_URL').'/tenants/storage',
+            'throw'      => false,
+        ],
+        'landlord' => [
+            'driver'     => 'local',
+            'root'       => storage_path('app/landlord'),
+         //   'url'        => env('APP_URL').'/tenants/storage',
             'throw'      => false,
         ],
 

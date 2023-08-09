@@ -44,6 +44,6 @@ return [
     /**
      * The supported formats
      */
-    'formats'        =>  explode(',', env('IMGPROXY_FORMATS','jpeg,jpg,png,gif,webp,avif')),
+    'formats'                  => explode(',', env('IMGPROXY_FORMATS', 'jpeg,jpg,png,gif,webp,avif')),
     'default_extension'        => false,
 ];
