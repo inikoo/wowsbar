@@ -2,19 +2,25 @@
     {
         "name":"super-admin",
         "permissions": [
-            "sysadmin","portfolio","banners"
+            "sysadmin","portfolio","banners","gallery"
         ]
     },
     {
         "name":"creator",
         "permissions": [
-            "portfolio","banners"
+            "portfolio","banners","gallery"
+        ]
+    },
+    {
+        "name":"artist",
+        "permissions": [
+            "portfolio.gallery","portfolio.view"
         ]
     },
     {
         "name":"editor",
         "permissions": [
-            "portfolio","banners"
+            "portfolio","banners","gallery"
         ]
     }
 ]

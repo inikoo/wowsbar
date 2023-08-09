@@ -10,13 +10,13 @@ import {Link} from "@inertiajs/vue3";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import {library} from "@fortawesome/fontawesome-svg-core";
 import {
-    faTerminal, faUserAlien, faCog, faGlobe, faWindowMaximize, faChartNetwork
+    faTerminal, faUserAlien, faCog, faGlobe, faWindowMaximize, faChartNetwork,faImages
 } from "@/../private/pro-light-svg-icons";
 import {useLayoutStore} from "@/Stores/layout";
 import {capitalize} from "@/Composables/capitalize";
 
 library.add(
-    faTerminal, faUserAlien, faCog, faGlobe, faWindowMaximize, faChartNetwork);
+    faTerminal, faUserAlien, faCog, faGlobe, faWindowMaximize, faChartNetwork,faImages);
 
 const layout = useLayoutStore()
 
@@ -36,4 +36,3 @@ const layout = useLayoutStore()
         <span v-if="menu.label" class="hidden lg:inline capitalize whitespace-nowrap">{{ menu.label }}</span>
     </Link>
 </template>
-
