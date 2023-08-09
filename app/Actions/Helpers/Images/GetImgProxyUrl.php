@@ -93,6 +93,11 @@ class GetImgProxyUrl
     {
 
 
+
+        if( app()->environment(['local']) && empty(config('img-proxy.key'))){
+            return 'signature';
+        }
+
         $signature = hash_hmac(
             'sha256',
             $this->getBinarySalt() .'/'. $this->getParameters(),
