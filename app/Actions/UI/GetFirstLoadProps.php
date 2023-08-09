@@ -48,7 +48,7 @@ class GetFirstLoadProps
                     return [
 
                         'logo' => GetPictureSources::run(
-                            (new Image)->make(url('/images/logo.png'))->resize(0,64)
+                            (new Image())->make(url('/images/logo.png'))->resize(0, 64)
                         ),
 
 

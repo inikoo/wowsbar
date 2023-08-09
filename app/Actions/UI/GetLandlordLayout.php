@@ -20,14 +20,14 @@ class GetLandlordLayout
 
         $navigation['dashboard'] = [
             'scope' => 'portfolio',
-            'icon' => ['fal', 'fa-home'],
+            'icon'  => ['fal', 'fa-home'],
             'label' => __('dashboard'),
             'route' => 'portfolio.dashboard'
         ];
 
         $navigation['banner'] = [
             'label' => __('banner'),
-            'icon' => ['fal', 'fa-briefcase'],
+            'icon'  => ['fal', 'fa-briefcase'],
             'route' => 'sysadmin.dashboard',
         ];
 

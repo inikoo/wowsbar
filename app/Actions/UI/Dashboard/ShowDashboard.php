@@ -21,7 +21,7 @@ class ShowDashboard
         return Inertia::render(
             'Dashboard/Dashboard',
             [
-                'title' => __('dashboard'),
+                'title'       => __('dashboard'),
                 'breadcrumbs' => $this->getBreadcrumbs(__('dashboard')),
 
                 'banners' => GetLastEditedBanner::run(app('currentTenant'))
