@@ -24,9 +24,10 @@ class ContentBlockResource extends JsonResource
             'slug'           => $this->slug,
             'code'           => $this->code,
             'name'           => $this->name,
+            'components'     => ContentBlockComponentResource::collection($this->contentBlockComponents),
             'updated_at'     => $this->updated_at,
             'route'          => [
-                'name'       => 'websites.show.banners.show',
+                'name' => 'portfolio.websites.show.banners.show',
                 'parameters' => [$this->slug, $this->slug]
             ]
         ];
