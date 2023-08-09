@@ -7,15 +7,17 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { ref, Ref, computed } from 'vue'
 library.add(faCookieBite, faTimes)
 
-// make it True so the popup is disappear at first load
+// Make it True so the popup is disappear at first load (before Timeout on OnMounted)
 const isCookieAccepted = ref(true)
 
+// Save to Cookie (browser)
 const setCookie = (cookieName: string, cookieValue: string, expDay: number) => {
     const d = new Date()
     d.setTime(d.getTime() + (expDay * 24 * 60 * 60 * 1000))
     document.cookie = cookieName + "=" + cookieValue + ";expires=" + d.toUTCString() + ";path=/"
 }
 
+// Get data from Cookie (on browser), is it exist? if no return empty string
 const getCookie = (cookieName: string) => {
     let name = cookieName + "="
     let decodedCookie = decodeURIComponent(document.cookie)
@@ -33,39 +35,26 @@ const getCookie = (cookieName: string) => {
 }
 
 const checkCookie = (cookieName: string) => {
-    let cookieValue = getCookie(cookieName)
-    // console.log(cookieValue)
-    if (cookieValue != "") {
-        // alert("Welcome again " + cookieValue)
-        return true
-    } else {
-        // cookieValue = prompt('ddd')
-        // if (cookieValue != "" && cookieValue != null) {
-        //     setCookie("username", cookieValue, 30)
-        // }
-        return false
-    }
+    return getCookie(cookieName) != "" ? true : false
 }
 
+// If click the 'Accept all cookies'
 const acceptAllCokies = () => {
     setCookie("isCookieAccepted", 'true', 999999999999)
     isCookieAccepted.value = true
     // Add more function
 }
 
+// If click the 'Necessary cookies only'
 const acceptNecessaryCokies = () => {
     setCookie("isCookieAccepted", 'true', 999999999999)
     isCookieAccepted.value = true
     // Add more function below
 }
 
-const compCookieAccepted = computed(() => {
-    return checkCookie("isCookieAccepted")
-})
-
 onMounted(() => {
     setTimeout(() => {
-        // if the popup is not setted before, The popup will appear after 5 seconds
+        // The popup will appear after 5 seconds if it would
         isCookieAccepted.value = checkCookie("isCookieAccepted")
     }, 5000);
 })
