@@ -21,7 +21,7 @@ use Lorisleiva\Actions\ActionRequest;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
-class IndexImages extends InertiaAction
+class IndexUploadedImages extends InertiaAction
 {
     public function authorize(ActionRequest $request): bool
     {

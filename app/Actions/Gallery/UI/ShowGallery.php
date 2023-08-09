@@ -61,19 +61,19 @@ class ShowGallery extends InertiaAction
                 GalleryTabsEnum::UPLOADED_IMAGES->value => $this->tab == GalleryTabsEnum::UPLOADED_IMAGES->value
                     ?
                     fn () => ImageResource::collection(
-                        IndexImages::run(
+                        IndexUploadedImages::run(
                             prefix: 'uploaded_images'
                         )
                     )
                     : Inertia::lazy(fn () => ImageResource::collection(
-                        IndexImages::run(
+                        IndexUploadedImages::run(
                             prefix: 'uploaded_images'
                         )
                     )),
 
             ]
         )->table(
-            IndexImages::make()->tableStructure(
+            IndexUploadedImages::make()->tableStructure(
                 prefix: 'uploaded_images'
                 /* modelOperations: [
                       'createLink' => $this->canEdit ? [
