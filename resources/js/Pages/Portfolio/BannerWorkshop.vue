@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Head } from "@inertiajs/vue3"
-import { ref, reactive, onBeforeMount, watch, computed } from "vue"
+import { ref, reactive, onBeforeMount, watch, onBeforeUnmount } from "vue"
 import PageHeading from "@/Components/Headings/PageHeading.vue"
 import { capitalize } from "@/Composables/capitalize"
 import SlidesWorkshop from "@/Components/Workshop/SlidesWorkshop.vue"
@@ -83,6 +83,25 @@ watch(data, updateData, { deep: true });
 onBeforeMount(fetchInitialData)
 
 
+
+const setDataBeforeLeave = () => {
+  const set = { ...data };  // Creating a copy of the data object
+  for (const index in set.components) {
+    if (set.components[index].user == user.value.username) {
+      delete set.components[index].user;  // Removing the 'user' property from components
+    }
+  }
+  Object.assign(data, set);  // Assigning the modified 'set' object back to 'data'
+  updateData();  // This line should help you see the modified 'data' object
+};
+
+onBeforeUnmount(() => {
+  setDataBeforeLeave()
+});
+
+window.addEventListener('beforeunload', function (event) {
+  event.returnValue = setDataBeforeLeave(); // This message will be shown to the user
+});
 
 </script>
 <template layout="App">

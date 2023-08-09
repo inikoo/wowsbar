@@ -6,6 +6,7 @@
  */
 
 
+use App\Actions\Gallery\UI\IndexImages;
 use App\Actions\Portfolio\ContentBlock\Banners\UI\CreateBanner;
 use App\Actions\Portfolio\ContentBlock\Banners\UI\EditBanner;
 use App\Actions\Portfolio\ContentBlock\Banners\UI\IndexBanners;
@@ -37,6 +38,8 @@ Route::get('/websites/{website}/banners/{banner}/workshop', [ShowBannerWorkshop:
 Route::post('/websites/{website}/banners/{banner}/workshop/images', [UploadImagesToContentBlock::class, 'inBannerInWebsite'])->name('websites.show.banners.workshop.images.store');
 Route::get('/websites/{website}/banners/{banner}/delete', [RemoveBanner::class,'inWebsite'])->withTrashed()->name('websites.show.banners.remove');
 Route::get('/banners', [IndexBanners::class,'inTenant'])->name('banners.index');
+Route::get('/banners/create', [CreateBanner::class,'inTenant'])->name('banners.create');
+
 Route::get('/banners/{banner}', [ShowBanner::class,'inTenant'])->name('banners.show');
 Route::get('/banners/{banner}/edit', [EditBanner::class,'inTenant'])->name('banners.edit');
 Route::get('/banners/{banner}/workshop', [ShowBannerWorkshop::class,'inTenant'])->name('banners.workshop');
@@ -47,3 +50,6 @@ Route::get('/banners/{banner}/deleted', [ShowDeletedBanner::class,'inTenant'])->
 
 
 //Route::get('/banners/{banner}/delete', [RemoveBanner::class,'inTenant'])->name('banners.remove');
+
+
+Route::get('/images', IndexImages::class)->name('images.index');

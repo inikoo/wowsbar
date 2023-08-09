@@ -21,8 +21,8 @@ class GetLayout
         if ($user->can('portfolio.view')) {
             $navigation['portfolio'] = [
                 'scope'   => 'portfolio',
-                'icon'    => ['fal', 'fa-briefcase'],
-                'label'   => __('Portfolio'),
+                'icon'    => ['fal', 'fa-puzzle-piece'],
+                'label'   => __('Web blocks'),
                 'route'   => 'portfolio.dashboard',
                 'topMenu' => [
                     'subSections' => [
@@ -46,6 +46,13 @@ class GetLayout
                                 'name' => 'portfolio.banners.index',
                             ]
                         ],
+                        [
+                            'icon'  => ['fal', 'fa-images'],
+                            'label' => __('gallery'),
+                            'route' => [
+                                'name' => 'portfolio.images.index',
+                            ]
+                        ],
 
                     ],
 
@@ -54,6 +61,7 @@ class GetLayout
 
             ];
         }
+
 
 
         if ($user->can('sysadmin')) {

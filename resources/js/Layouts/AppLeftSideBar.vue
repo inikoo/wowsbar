@@ -11,11 +11,11 @@ import { ref, onMounted, onUnmounted } from 'vue'
 import { router } from '@inertiajs/vue3'
 
 import { library } from "@fortawesome/fontawesome-svg-core"
-import { faBriefcase,faUsersCog} from "@/../private/pro-light-svg-icons"
+import { faBriefcase,faPuzzlePiece} from "@/../private/pro-light-svg-icons"
 import { useLayoutStore } from "@/Stores/layout.js"
 import { computed } from "vue";
 
-library.add(faBriefcase,faUsersCog)
+library.add(faBriefcase,faPuzzlePiece)
 
 const layout = useLayoutStore()
 
