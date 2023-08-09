@@ -280,6 +280,9 @@ onMounted(() => {
                                     <img v-if="layout.avatar_id" class="h-8 w-8 rounded-full"
                                         :src="route('media.show',layout.avatar_id)"
                                         alt="" />
+                                    <img v-if="!layout.avatar_id" class="h-8 w-8 rounded-full"
+                                         src="https://ui-avatars.com/api/?background=random"
+                                         alt="" />
                                 </MenuButton>
 
                                 <transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100"

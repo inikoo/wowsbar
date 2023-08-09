@@ -13,6 +13,8 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property string $slug
  * @property string $name
  * @property string $code
+ * @property string $updated_at
+ * @property $website
  */
 class ContentBlockResource extends JsonResource
 {
@@ -22,6 +24,11 @@ class ContentBlockResource extends JsonResource
             'slug'           => $this->slug,
             'code'           => $this->code,
             'name'           => $this->name,
+            'updated_at'     => $this->updated_at,
+            'route'          => [
+                'name' => 'websites.show.banners.show',
+                'parameters' => [$this->slug, $this->slug]
+            ]
         ];
     }
 }

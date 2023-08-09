@@ -50,7 +50,7 @@ return [
         ],
         'tenants_public' => [
             'driver'     => 'local',
-            'root'       => env('FILESYSTEM_GROUP_PUBLIC_ROOT', storage_path('app/tenants')),
+            'root'       => storage_path('app/tenants'),
             'url'        => env('APP_URL').'/tenants/storage',
             'visibility' => 'public',
             'throw'      => false,

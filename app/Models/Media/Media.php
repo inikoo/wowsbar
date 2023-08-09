@@ -11,6 +11,8 @@ use App\Models\Tenancy\Tenant;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection;
 use Spatie\MediaLibrary\MediaCollections\Models\Media as BaseMedia;
 
@@ -72,4 +74,17 @@ class Media extends BaseMedia
     {
         return $this->belongsToMany(Tenant::class)->withTimestamps();
     }
+
+    function getLocalImgProxyFilename(): string
+    {
+        $rootPath='/'.config('app.name').Str::after(Storage::disk($this->disk)->path(''),storage_path());
+
+        $prefix=config('media-library.prefix', '');
+        $mediaPath=$prefix?$prefix.'/':'';
+        $mediaPath.=$this->id.'/'.$this->file_name;
+
+        return 'local://'.$rootPath.$mediaPath;
+    }
+
+
 }
