@@ -19,7 +19,7 @@ const layout = useLayoutStore()
         >
             <img class="h-7 md:h-5 shadow" :src="`/media/${layout.tenant.logo_id}`" :alt="layout.tenant.code" />
             <span class="hidden leading-none md:inline font-bold  xl:truncate text-gray-800 dark:text-gray-300">
-                {{ layout.tenant.name }}
+                {{ layout.tenant.name ?? 'Tenant Demo' }}
             </span>
         </Link>
         <AppTopBarNavs />

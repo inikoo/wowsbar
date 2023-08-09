@@ -8,6 +8,7 @@
 namespace App\Http\Middleware;
 
 use App\Actions\UI\GetFirstLoadProps;
+use App\Actions\UI\GetLandlordFirstLoadProps;
 use App\Http\Resources\UI\LoggedUserResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -21,13 +22,12 @@ class HandleLandlordInertiaRequests extends Middleware
 
     public function share(Request $request): array
     {
-        $user = $request->user();
-
+        $user = $request->user('landlord');
 
         $firstLoadOnlyProps = [];
 
         if (!$request->inertia() or Session::get('reloadLayout')) {
-            //  $firstLoadOnlyProps          = GetFirstLoadProps::run($user);
+            $firstLoadOnlyProps          = GetLandlordFirstLoadProps::run($user);
             $firstLoadOnlyProps['ziggy'] = function () use ($request) {
                 return array_merge((new Ziggy())->toArray(), [
                     'location' => $request->url(),

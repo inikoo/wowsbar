@@ -30,21 +30,29 @@ const user = ref(usePage().props.auth.user)
 const jumpToIndex = ref(0)
 const screenView = ref('')
 const data = reactive(cloneDeep(props.bannerLayout))
-console.log(user.value)
+const setData = ref(false)
+
 const fetchInitialData = async () => {
   try {
+    setData.value =  true
     const snapshot = await get(dbRef(db, 'Banner'));
     if (snapshot.exists()) {
-      const firebaseData = snapshot.val()
-      if(firebaseData[props.imagesUploadRoute.arguments.banner]){
-        Object.assign(data,{...data,...firebaseData[props.imagesUploadRoute.arguments.banner]});
+      const firebaseData = snapshot.val();
+      if (firebaseData[props.imagesUploadRoute.arguments.banner]) {
+        Object.assign(data,{...firebaseData[props.imagesUploadRoute.arguments.banner]});
+        console.log('masuk', data)
+      } else {
+        Object.assign(data,{...data,...cloneDeep(props.bannerLayout)});
+        return;
       }
-
-    }else{
-      Object.assign(data, cloneDeep(props.bannerLayout));
+    } else {
+      Object.assign(data,{...data,...cloneDeep(props.bannerLayout)});
     }
+    setData.value =  false
   } catch (error) {
+    setData.value =  false
     console.error('Error fetching initial data:', error);
+    Object.assign(data,{...data,...cloneDeep(props.bannerLayout)});
   }
 };
 
@@ -61,7 +69,7 @@ onValue(dbRef(db, 'Banner'), (snapshot) => {
 
 const updateData = async () => {
   try {
-    if (data) {
+    if (data && setData.value == false) {
       await set(dbRef(db, 'Banner'),{[props.imagesUploadRoute.arguments.banner] : data});
     }
   } catch (error) {
@@ -72,9 +80,9 @@ const updateData = async () => {
 
 
 watch(data, updateData, { deep: true });
+onBeforeMount(fetchInitialData)
 
 
-onBeforeMount(fetchInitialData);
 
 </script>
 <template layout="App">
