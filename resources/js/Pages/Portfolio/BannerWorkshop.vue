@@ -100,7 +100,6 @@ onBeforeUnmount(() => {
 });
 
 window.addEventListener('beforeunload', function (event) {
-  event.preventDefault();
   event.returnValue = setDataBeforeLeave(); // This message will be shown to the user
 });
 
