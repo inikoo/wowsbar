@@ -7,7 +7,7 @@
 
   <script setup lang="ts">
   import { set } from 'lodash'
-  import { ref, watch, defineEmits } from 'vue'
+  import { ref, watch, defineEmits, toRefs } from 'vue'
 
   const props = defineProps<{
       fieldName: string | []
@@ -20,6 +20,7 @@
       counter: boolean
   }>()
 
+  const { data, fieldName  } = toRefs(props);
   const emits = defineEmits()
 
   const setFormValue = (data: Object, fieldName: string | []) => {
@@ -42,6 +43,10 @@
   watch(value, (newValue) => {
       // Update the local form value when the value ref changes
       updateLocalFormValue(newValue);
+  });
+
+  watch(data, (newValue) => {
+     value.value = setFormValue(newValue, props.fieldName)
   });
 
   const updateLocalFormValue = (newValue) => {
