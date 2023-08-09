@@ -22,15 +22,16 @@ watchEffect(() => {
     }
 })
 
-const logoSrc = usePage().props.layout.logo ?? null
+const logoSrc=usePage().props.layout.logo;
 
 </script>
 
 <template>
     <div class="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8 ">
         <div class="sm:mx-auto sm:w-full sm:max-w-md">
-            <Image v-if="logoSrc" :class="'mx-auto h-16 -mb-3 w-auto'" :src="logoSrc" alt="Wowsbar" />
-            <h2 v-if="layout.tenant.code" class="font-logo mt-6 text-center text-3xl text-gray-600">@{{ layout.tenant.code }} 😃</h2>
+           <Image :class="'mx-auto h-16 -mb-3 w-auto'" :src="logoSrc" alt="Wowsbar" />
+            <h2 class="font-logo mt-6 text-center text-3xl text-gray-600">@{{layout.tenant.code}} 😃</h2>
+
         </div>
 
         <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">

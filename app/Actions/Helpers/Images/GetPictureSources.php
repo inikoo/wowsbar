@@ -9,6 +9,7 @@ namespace App\Actions\Helpers\Images;
 
 
 use App\Helpers\ImgProxy\Image;
+use Illuminate\Support\Arr;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class GetPictureSources
@@ -19,21 +20,33 @@ class GetPictureSources
     public function handle(Image $image): array
     {
         $sources = [
-            'avif'     => GetImgProxyUrl::run($image->extension('avif')),
-            'webp'     => GetImgProxyUrl::run($image->extension('webp')),
             'original' => GetImgProxyUrl::run($image)
         ];
 
 
-        if ($image->getWidth() or $image->getHeight()) {
+        if (in_array('avif', config('img-proxy.formats'))) {
+            $sources['avif'] = GetImgProxyUrl::run($image->extension('avif'));
+        }
 
-            $image_2x=$image->resize(
+        if (in_array('webp', config('img-proxy.formats'))) {
+            $sources['webp'] = GetImgProxyUrl::run($image->extension('webp'));
+        }
+
+
+        if ($image->getWidth() or $image->getHeight()) {
+            $image_2x = $image->resize(
                 ($image->getWidth() ?? 0) * 2,
                 ($image->getHeight() ?? 0) * 2,
             );
 
-            $sources['avif_2x']     = GetImgProxyUrl::run($image_2x->extension('avif'));
-            $sources['webp_2x']     = GetImgProxyUrl::run($image_2x->extension('webp'));
+            if(Arr::has($sources,'avif')){
+                $sources['avif_2x']     = GetImgProxyUrl::run($image_2x->extension('avif'));
+            }
+
+            if(Arr::has($sources,'webp')){
+                $sources['webp_2x']     = GetImgProxyUrl::run($image_2x->extension('webp'));
+            }
+
             $sources['original_2x'] = GetImgProxyUrl::run($image_2x->extension(null));
         }
 
