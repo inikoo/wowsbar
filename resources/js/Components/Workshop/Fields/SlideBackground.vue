@@ -13,7 +13,8 @@ import LibrariesImage from "../LibrariesImage.vue";
 const props = defineProps(["data"]);
 const _cropper = ref()
 
-const cropOnChange = ({ coordinates, canvas }) => {
+const cropOnChange = ({ coordinates, image, visibleArea, }) => {
+    console.log(coordinates, image, visibleArea,)
     set(props, ['data', 'imagePosition'], coordinates)
 }
 

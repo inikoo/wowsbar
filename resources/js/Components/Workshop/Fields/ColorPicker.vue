@@ -69,9 +69,9 @@ const updateFormValue = (newValue) => {
         <Popover v-slot="{ open }" class="relative">
             <div>
                 <PopoverButton :class="{
-                    'bg-black bg-opacity-20 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75': true,
-                    'rounded-full w-10 h-10 justify-center': true
-                }" :style="`background-color: ${color};`" />
+                    'bg-black bg-opacity-20 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2  focus-visible:ring-opacity-75': true,
+                    'rounded-full w-10 h-10 justify-center ': true
+                }" :style="`background-color: ${color}; border: 1px solid`" />
 
                 <Transition enter-active-class="transition duration-200 ease-out" enter-from-class="translate-y-1 opacity-0"
                     enter-to-class="translate-y-0 opacity-100" leave-active-class="transition duration-150 ease-in"
