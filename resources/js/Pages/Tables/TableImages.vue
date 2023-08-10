@@ -8,7 +8,7 @@
 import { Link } from '@inertiajs/vue3'
 import Table from '@/Components/Table/Table.vue'
 import Image from "@/Components/Image.vue"
-import { ref, watch } from 'vue'
+import { ref, watch, reactive } from 'vue'
 import Checkbox from '@/Components/Checkbox.vue'
 
 const props = defineProps<{
@@ -28,10 +28,13 @@ function imageRoute(image) {
                 [image.slug])
     }
 }
-const selectedRow = ref([])
+const selectedRow = reactive({
+    'uploaded_images': [],
+    'stock_images': []
+})
 
 watch(selectedRow, () => {
-    emits('selectedRow', selectedRow.value)
+    emits('selectedRow', selectedRow)
 })
 </script>
 
@@ -45,8 +48,8 @@ watch(selectedRow, () => {
         <template #cell(thumbnail)="{ item: image }">
             <Image :src="image.thumbnail" class="shadow"/>
         </template>
-        <template #cell(select)="{ item }">
-            <Checkbox class="p-2.5" :value="item.id" name="select-image" id="select-image" v-model:checked="selectedRow"/>
+        <template #cell(select)="{ item, tabName }">
+            <Checkbox class="p-2.5" :value="item.id" name="select-image" id="select-image" v-model:checked="selectedRow[tabName]"/>
         </template>
     </Table>
 

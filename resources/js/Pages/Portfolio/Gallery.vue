@@ -5,7 +5,7 @@
   -->
 
 <script setup lang="ts">
-import { Head } from '@inertiajs/vue3'
+import { Head, Link } from '@inertiajs/vue3'
 import PageHeading from '@/Components/Headings/PageHeading.vue'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faImagePolaroid, faCloudUpload } from '@/../private/pro-light-svg-icons'
@@ -14,6 +14,7 @@ import { computed, ref } from "vue"
 
 import { useTabChange } from "@/Composables/tab-change"
 import { capitalize } from "@/Composables/capitalize"
+import Button from '@/Components/Elements/Buttons/Button.vue';
 import TableImages from "@/Pages/Tables/TableImages.vue"
 
 library.add(faImagePolaroid,faCloudUpload)
@@ -40,14 +41,30 @@ const component = computed(() => {
     return components[currentTab.value]
 })
 
+const selectedRow = ref([])
 </script>
 
 <template layout="App">
     <!--suppress HtmlRequiredTitleElement -->
     <Head :title="capitalize(title)"/>
-    <PageHeading :data="pageHead"></PageHeading>
-    <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate"/>
-    <component :is="component" @selected-row="(abcd) => console.log(abcd)" :tab="currentTab" :data="props[currentTab]"></component>
+    <PageHeading :data="pageHead">
+        <template #button>
+            <Link
+                href="d"
+                :method="'post'"
+                as="button"
+            >
+                <Button :key="selectedRow.length" size="xs"
+                    :style="selectedRow.length > 0 ? 'primary' : 'tertiary'"
+                    class="capitalize inline-flex items-center rounded-md text-sm font-medium shadow-sm gap-x-2"
+                >
+                    {{ selectedRow.length > 0 ? `Create Banner (${selectedRow.length})` : 'Select images' }}
+                </Button>
+            </Link>
+        </template>
+    </PageHeading>
+    <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate" :selectedRow="selectedRow"/>
+    <component :is="component" @selected-row="(value: any) => selectedRow = value" :tab="currentTab" :data="props[currentTab]"></component>
 </template>
 
 

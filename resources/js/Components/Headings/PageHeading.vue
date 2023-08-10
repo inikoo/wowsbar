@@ -116,46 +116,47 @@ const getActionIcon = (action) => {
             </div>
         </div>
 
-        <div class="flex items-center gap-2">
-            <span v-for="action in data.actions">
-                {{ action.final }}
-                <!-- Button -->
-                <Link v-if="action.type === 'button'"
-                      :href="route(action['route']['name'], action['route']['parameters'])"
-                      :method="action.method ?? 'get'"
-                      :data="dataToSubmit"
-                      as="button"
-                >
-                    <Button size="xs"
-
-                        :style="action.style"
-                        class="capitalize inline-flex items-center rounded-md text-sm font-medium shadow-sm gap-x-2">
-                        <!--
-                        <FontAwesomeIcon v-if="action.icon && action.icon == 'fad fa-save'" aria-hidden="true" :icon="['fad', 'save']" style="--fa-primary-color: #f3f3f3; --fa-secondary-color: #ff6600; --fa-secondary-opacity: 1;" size="sm" :class="[iconClass]" />
-                        -->
-                        <FontAwesomeIcon  :icon="getActionIcon(action)"
-                            aria-hidden="true" />
-                        {{ getActionLabel(action) }}
-                    </Button>
-                </Link>
-
-                <!-- Button Group () -->
-                <!--suppress HtmlUnknownTag -->
-                <div v-if="action.type === 'buttonGroup'" class="first:rounded-l-md overflow-hidden last:rounded-r-md">
-                    <Link v-for="button in action.buttons"
-                        :href="route(button['route']['name'], button['route']['parameters'])" class="">
-                        <Button size="xs" :style="button.style"
-                            class="capitalize inline-flex items-center rounded-none  text-sm font-medium shadow-sm ">
-                            <div class="">
-                                <FontAwesomeIcon v-if="getActionIcon(button)" :icon="getActionIcon(button)" class=""
-                                    aria-hidden="true" />
-                                <span v-if="button.label" class="ml-2">{{ getActionLabel(button) }}</span>
-                            </div>
+        <!-- To replace the Button, call template in Parent -->
+        <slot name="button">
+            <div class="flex items-center gap-2">
+                <span v-for="action in data.actions">
+                    {{ action.final }}
+                    <!-- Button -->
+                    <Link v-if="action.type === 'button'"
+                        :href="route(action['route']['name'], action['route']['parameters'])"
+                        :method="action.method ?? 'get'"
+                        :data="dataToSubmit"
+                        as="button"
+                    >
+                        <Button size="xs"
+                            :style="action.style"
+                            class="capitalize inline-flex items-center rounded-md text-sm font-medium shadow-sm gap-x-2">
+                            <!--
+                            <FontAwesomeIcon v-if="action.icon && action.icon == 'fad fa-save'" aria-hidden="true" :icon="['fad', 'save']" style="--fa-primary-color: #f3f3f3; --fa-secondary-color: #ff6600; --fa-secondary-opacity: 1;" size="sm" :class="[iconClass]" />
+                            -->
+                            <FontAwesomeIcon  :icon="getActionIcon(action)"
+                                aria-hidden="true" />
+                            {{ getActionLabel(action) }}
                         </Button>
                     </Link>
-                </div>
-            </span>
-        </div>
+                    <!-- Button Group () -->
+                    <!--suppress HtmlUnknownTag -->
+                    <div v-if="action.type === 'buttonGroup'" class="first:rounded-l-md overflow-hidden last:rounded-r-md">
+                        <Link v-for="button in action.buttons"
+                            :href="route(button['route']['name'], button['route']['parameters'])" class="">
+                            <Button size="xs" :style="button.style"
+                                class="capitalize inline-flex items-center rounded-none  text-sm font-medium shadow-sm ">
+                                <div class="">
+                                    <FontAwesomeIcon v-if="getActionIcon(button)" :icon="getActionIcon(button)" class=""
+                                        aria-hidden="true" />
+                                    <span v-if="button.label" class="ml-2">{{ getActionLabel(button) }}</span>
+                                </div>
+                            </Button>
+                        </Link>
+                    </div>
+                </span>
+            </div>
+        </slot>
     </div>
     <hr class="border-gray-300 dark:border-gray-500"/>
 </template>
