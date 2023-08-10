@@ -24,6 +24,7 @@ class ImageResource extends JsonResource
 
 
         return [
+            'id'        => $media->id,
             'slug'      => $media->slug,
             'name'      => $media->name,
             'mime_type' => $media->mime_type,

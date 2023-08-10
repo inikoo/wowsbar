@@ -114,6 +114,9 @@ const props = defineProps(
                 return [];
             },
             required: false,
+        },
+        selectedRow: {
+            type: Array
         }
     });
     const app = getCurrentInstance();
@@ -670,18 +673,21 @@ const handleElementsChange = (data) => {
 
                             <tbody class="bg-white dark:bg-gray-600 dark:text-gray-400 divide-y divide-gray-200 dark:divide-gray-500">
                                 <slot name="body" :show="show">
-                                    <tr v-for="(item, key) in resourceData" :key="`table-${name}-row-${key}`" class=""
+                                    <tr v-for="(item, key) in resourceData" :key="`table-${name}-row-${key}`"
+                                        class=""
                                         :class="{
                                             'bg-gray-50': striped && key % 2,
                                             'hover:bg-gray-100 dark:hover:bg-gray-500/50': striped,
                                             'hover:bg-gray-50 dark:hover:bg-gray-500/20': !striped,
-                                        }">
+                                        }
+                                    ">
                                         <td v-for="column in queryBuilderProps.columns" v-show="show(column.key)"
                                             :key="`table-${name}-row-${key}-column-${column.key}`"
                                             :class="[
                                                 typeof item[column.key] == 'number' ? 'text-right' : '',
                                                 column.key === 'avatar' ? '' : 'px-6 min-w-fit max-w-[450px]',
                                                 'text-sm py-2 text-gray-800 dark:text-gray-300 whitespace-normal',
+                                                { 'first:border-l-4 first:border-gray-700 bg-gray-200/75': selectedRow.includes(item.id) }
                                         ]">
                                             <slot :name="`cell(${column.key})`" :item="item" class="">
                                                 <div class="text-gray-500 dark:text-gray-400">{{ item[column.key] }}</div>
