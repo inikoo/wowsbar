@@ -8,7 +8,7 @@
 import { Link } from '@inertiajs/vue3'
 import Table from '@/Components/Table/Table.vue'
 import Image from "@/Components/Image.vue"
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import Checkbox from '@/Components/Checkbox.vue'
 
 const props = defineProps<{
@@ -16,6 +16,9 @@ const props = defineProps<{
     tab?: string
 }>()
 
+const emits = defineEmits<{
+    (e: 'selectedRow', value: any): void
+}>()
 
 function imageRoute(image) {
     switch (route().current()) {
@@ -26,6 +29,10 @@ function imageRoute(image) {
     }
 }
 const selectedRow = ref([])
+
+watch(selectedRow, () => {
+    emits('selectedRow', selectedRow.value)
+})
 </script>
 
 <template>

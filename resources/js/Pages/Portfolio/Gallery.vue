@@ -27,7 +27,6 @@ const props = defineProps<{
     title: string
     uploaded_images?: object
     stock_images?: object
-
 }>()
 
 let currentTab = ref(props.tabs.current)
@@ -48,7 +47,7 @@ const component = computed(() => {
     <Head :title="capitalize(title)"/>
     <PageHeading :data="pageHead"></PageHeading>
     <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate"/>
-    <component :is="component"  :tab="currentTab" :data="props[currentTab]"></component>
+    <component :is="component" @selected-row="(abcd) => console.log(abcd)" :tab="currentTab" :data="props[currentTab]"></component>
 </template>
 
 
