@@ -25,10 +25,10 @@ class StoreStockImage
         string $collection,
         string $imagePath,
         string $originalFilename,
-        string $extension=null): LandlordMedia|Media
-    {
+        string $extension=null
+    ): LandlordMedia|Media {
 
-        $landlord=LandLord::find(1);
+        $landlord =LandLord::find(1);
         $checksum = md5_file($imagePath);
 
         $landlordMedia = LandlordMedia::where('checksum', $checksum)->first();
@@ -36,14 +36,17 @@ class StoreStockImage
             $filename=dechex(crc32($checksum)).'.';
             $filename.=empty($extension) ? pathinfo($imagePath, PATHINFO_EXTENSION) : $extension;
 
+
+            $name=preg_replace('/\..*$/', '', $originalFilename);
+            $name=preg_replace('/_/', ' ', $name);
             return $landlord->addMedia($imagePath)
                 ->preservingOriginal()
                 ->withProperties(['checksum' => $checksum])
-                ->usingName($originalFilename)
+                ->usingName($name)
                 ->usingFileName($filename)
                 ->toMediaCollection($collection);
 
-        }else{
+        } else {
             return $landlordMedia;
 
         }

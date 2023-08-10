@@ -39,14 +39,14 @@ class PermissionSeeder extends Seeder
     {
 
 
-        $currentPermissions = Permission::where('guard_name',$guard)->pluck('name');
+        $currentPermissions = Permission::where('guard_name', $guard)->pluck('name');
         $currentPermissions->diff($permissions)
             ->each(function ($permissionName) use ($guard) {
                 Permission::where('name', $permissionName)->where('guard_name', $guard)->first()->delete();
             });
 
 
-        $currentRoles = Role::where('guard_name',$guard)->pluck('name');
+        $currentRoles = Role::where('guard_name', $guard)->pluck('name');
 
         $currentRoles->diff(collect(config("blueprint.roles"))->keys())
             ->each(function ($roleName) use ($guard) {
@@ -56,7 +56,8 @@ class PermissionSeeder extends Seeder
 
         $permissions->each(function ($permissionName) use ($guard) {
             try {
-                Permission::create([
+                Permission::create(
+                    [
                         'guard_name' => $guard,
                         'name'       => $permissionName
                     ]
@@ -69,7 +70,7 @@ class PermissionSeeder extends Seeder
         $roles->each(function ($roleData) use ($guard) {
 
 
-            if (!$role = (new Role())->where('name', $roleData['name'])->where('guard_name',$guard)
+            if (!$role = (new Role())->where('name', $roleData['name'])->where('guard_name', $guard)
                 ->first()) {
 
 
@@ -83,7 +84,7 @@ class PermissionSeeder extends Seeder
             foreach ($roleData['permissions'] as $permissionName) {
                 if ($permission = (new Permission())
                     ->where('name', $permissionName)
-                    ->where('guard_name',$guard)
+                    ->where('guard_name', $guard)
                     ->first()) {
                     $permissions[] = $permission;
                 }

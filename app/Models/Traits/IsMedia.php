@@ -7,8 +7,6 @@
 
 namespace App\Models\Traits;
 
-
-
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Spatie\Sluggable\HasSlug;
@@ -22,7 +20,7 @@ trait IsMedia
     {
         return SlugOptions::create()
             ->generateSlugsFrom(function () {
-              return   preg_replace('/\.(png|jpg|jpeg|webp|avif|svg)$/i', '', $this->name)   ;
+                return   preg_replace('/\.(png|jpg|jpeg|webp|avif|svg)$/i', '', $this->name)   ;
 
             })
             ->doNotGenerateSlugsOnUpdate()

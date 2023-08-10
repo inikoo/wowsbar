@@ -8,14 +8,7 @@
 namespace Database\Seeders;
 
 use App\Actions\Media\StoreStockImage;
-use App\Actions\Web\WebBlock\StoreWebBlock;
-use App\Actions\Web\WebBlock\UpdateWebBlock;
-use App\Actions\Web\WebBlockType\StoreWebBlockType;
-use App\Actions\Web\WebBlockType\UpdateWebBlockType;
-use App\Models\Web\WebBlockType;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class StockImageSeeder extends Seeder

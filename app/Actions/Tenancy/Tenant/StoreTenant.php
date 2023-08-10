@@ -38,7 +38,7 @@ class StoreTenant
                 SetTenantLogo::run($tenant);
                 $user = StoreUser::run($tenant, $userData);
 
-                $superAdminRole = Role::where('guard_name','web')->where('name', 'super-admin')->firstOrFail();
+                $superAdminRole = Role::where('guard_name', 'web')->where('name', 'super-admin')->firstOrFail();
                 $user->assignRole($superAdminRole);
             }
         );

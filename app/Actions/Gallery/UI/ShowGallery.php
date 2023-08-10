@@ -81,7 +81,18 @@ class ShowGallery extends InertiaAction
                             prefix: 'uploaded_images'
                         )
                     )),
-
+                GalleryTabsEnum::STOCK_IMAGES->value => $this->tab == GalleryTabsEnum::STOCK_IMAGES->value
+                    ?
+                    fn () => ImageResource::collection(
+                        IndexStockImages::run(
+                            prefix: 'uploaded_images'
+                        )
+                    )
+                    : Inertia::lazy(fn () => ImageResource::collection(
+                        IndexStockImages::run(
+                            prefix: 'stock_images'
+                        )
+                    )),
             ]
         )->table(
             IndexImages::make()->tableStructure(
@@ -97,6 +108,10 @@ class ShowGallery extends InertiaAction
                       ] : false,
                   ],
                   prefix: 'warehouse_areas' */
+            )
+        )->table(
+            IndexStockImages::make()->tableStructure(
+                prefix: 'stock_images'
             )
         );
     }

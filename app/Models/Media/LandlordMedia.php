@@ -7,19 +7,10 @@
 
 namespace App\Models\Media;
 
-use App\Concerns\BelongsToTenant;
-use App\Models\Tenancy\Tenant;
-
 use App\Models\Traits\IsMedia;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 use Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection;
 use Spatie\MediaLibrary\MediaCollections\Models\Media as BaseMedia;
-use Spatie\Sluggable\HasSlug;
-use Spatie\Sluggable\SlugOptions;
-
 
 /**
  * App\Models\Media\LandlordMedia

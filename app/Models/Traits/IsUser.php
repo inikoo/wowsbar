@@ -7,8 +7,6 @@
 
 namespace App\Models\Traits;
 
-
-
 use App\Models\Assets\Language;
 use App\Models\Media\Media;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -16,9 +14,6 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 trait IsUser
 {
-
-
-
     public function avatar(): HasOne
     {
         return $this->hasOne(Media::class, 'id', 'avatar_id');

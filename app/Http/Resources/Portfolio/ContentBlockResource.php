@@ -7,7 +7,6 @@
 
 namespace App\Http\Resources\Portfolio;
 
-use App\Models\Portfolio\Website;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
@@ -29,7 +28,7 @@ class ContentBlockResource extends JsonResource
             'components'     => ContentBlockComponentResource::collection($this->contentBlockComponents),
             'updated_at'     => $this->updated_at,
             'route'          => [
-                'name' => 'portfolio.websites.show.banners.show',
+                'name'       => 'portfolio.websites.show.banners.show',
                 'parameters' => ['hello', $this->slug]
             ]
         ];

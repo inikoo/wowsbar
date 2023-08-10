@@ -30,7 +30,7 @@ class AttachImageToContentBlockComponent
         if($imagePath) {
             $media = AttachImageToTenant::run(
                 tenant: app('currentTenant'),
-                collection: 'contentBlock',
+                collection: 'content_block',
                 imagePath: $imagePath,
                 originalFilename: $originalFilename,
             );
