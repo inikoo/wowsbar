@@ -7,6 +7,10 @@
 <script setup lang="ts">
 import { capitalize } from "@/Composables/capitalize"
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { faFirefoxBrowser, faWindows} from "@fortawesome/free-brands-svg-icons"
+import { faDesktop, faMobile, faDesktopAlt } from '@/../private/pro-regular-svg-icons'
+import { library } from '@fortawesome/fontawesome-svg-core'
+library.add(faDesktop, faMobile, faDesktopAlt, faFirefoxBrowser, faWindows)
 
 const props = defineProps<{
     data: [
