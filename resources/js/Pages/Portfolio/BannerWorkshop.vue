@@ -32,76 +32,76 @@ const screenView = ref('')
 const data = reactive(cloneDeep(props.bannerLayout))
 const setData = ref(false)
 
-// const fetchInitialData = async () => {
-//   try {
-//     setData.value =  true
-//     const snapshot = await get(dbRef(db, 'Banner'));
-//     if (snapshot.exists()) {
-//       const firebaseData = snapshot.val();
-//       if (firebaseData[props.imagesUploadRoute.arguments.banner]) {
-//         Object.assign(data,{...firebaseData[props.imagesUploadRoute.arguments.banner]});
-//         console.log('masuk', data)
-//       } else {
-//         Object.assign(data,{...data,...cloneDeep(props.bannerLayout)});
-//         return;
-//       }
-//     } else {
-//       Object.assign(data,{...data,...cloneDeep(props.bannerLayout)});
-//     }
-//     setData.value =  false
-//   } catch (error) {
-//     setData.value =  false
-//     console.error('Error fetching initial data:', error);
-//     Object.assign(data,{...data,...cloneDeep(props.bannerLayout)});
-//   }
-// };
+const fetchInitialData = async () => {
+  try {
+    setData.value =  true
+    const snapshot = await get(dbRef(db, 'Banner'));
+    if (snapshot.exists()) {
+      const firebaseData = snapshot.val();
+      if (firebaseData[props.imagesUploadRoute.arguments.banner]) {
+        Object.assign(data,{...firebaseData[props.imagesUploadRoute.arguments.banner]});
+        console.log('masuk', data)
+      } else {
+        Object.assign(data,{...data,...cloneDeep(props.bannerLayout)});
+        return;
+      }
+    } else {
+      Object.assign(data,{...data,...cloneDeep(props.bannerLayout)});
+    }
+    setData.value =  false
+  } catch (error) {
+    setData.value =  false
+    console.error('Error fetching initial data:', error);
+    Object.assign(data,{...data,...cloneDeep(props.bannerLayout)});
+  }
+};
 
-// onValue(dbRef(db, 'Banner'), (snapshot) => {
-//   if (snapshot.exists()) {
-//     const firebaseData = snapshot.val();
-//     if(firebaseData[props.imagesUploadRoute.arguments.banner]){
-//         Object.assign(data,{...data,...firebaseData[props.imagesUploadRoute.arguments.banner]});
-//       }
-//   }
-// });
-
-
-
-// const updateData = async () => {
-//   try {
-//     if (data && setData.value == false) {
-//       await set(dbRef(db, 'Banner'),{[props.imagesUploadRoute.arguments.banner] : data});
-//     }
-//   } catch (error) {
-//     console.error('Error updating data:', error);
-//   }
-// };
+onValue(dbRef(db, 'Banner'), (snapshot) => {
+  if (snapshot.exists()) {
+    const firebaseData = snapshot.val();
+    if(firebaseData[props.imagesUploadRoute.arguments.banner]){
+        Object.assign(data,{...data,...firebaseData[props.imagesUploadRoute.arguments.banner]});
+      }
+  }
+});
 
 
 
-// watch(data, updateData, { deep: true });
-// onBeforeMount(fetchInitialData)
+const updateData = async () => {
+  try {
+    if (data && setData.value == false) {
+      await set(dbRef(db, 'Banner'),{[props.imagesUploadRoute.arguments.banner] : data});
+    }
+  } catch (error) {
+    console.error('Error updating data:', error);
+  }
+};
 
 
 
-// const setDataBeforeLeave = () => {
-//   const set = { ...data };  // Creating a copy of the data object
-//   for (const index in set.components) {
-//     if (set.components[index].user == user.value.username) {
-//       delete set.components[index].user;  // Removing the 'user' property from components
-//     }
-//   }
-//   Object.assign(data, set);  // Assigning the modified 'set' object back to 'data'
-//   updateData();  // This line should help you see the modified 'data' object
-// };
+watch(data, updateData, { deep: true });
+onBeforeMount(fetchInitialData)
 
-// onBeforeUnmount(() => {
-//   setDataBeforeLeave()
-// });
 
-// window.addEventListener('beforeunload', function (event) {
-//   event.returnValue = setDataBeforeLeave(); // This message will be shown to the user
-// });
+
+const setDataBeforeLeave = () => {
+  const set = { ...data };  // Creating a copy of the data object
+  for (const index in set.components) {
+    if (set.components[index].user == user.value.username) {
+      delete set.components[index].user;  // Removing the 'user' property from components
+    }
+  }
+  Object.assign(data, set);  // Assigning the modified 'set' object back to 'data'
+  updateData();  // This line should help you see the modified 'data' object
+};
+
+onBeforeUnmount(() => {
+  setDataBeforeLeave()
+});
+
+window.addEventListener('beforeunload', function (event) {
+  event.returnValue = setDataBeforeLeave(); // This message will be shown to the user
+});
 
 </script>
 <template layout="App">
