@@ -13,6 +13,7 @@ use App\Models\Media\Media;
 use App\Models\Tenancy\Tenant;
 use App\Models\Traits\HasHistory;
 use App\Models\Traits\HasUniversalSearch;
+use App\Models\Traits\IsUser;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -94,6 +95,7 @@ use Spatie\Permission\Traits\HasRoles;
  */
 class User extends Authenticatable implements HasMedia, Auditable
 {
+    use IsUser;
     use HasApiTokens;
     use HasFactory;
     use Notifiable;
@@ -101,6 +103,7 @@ class User extends Authenticatable implements HasMedia, Auditable
     use InteractsWithMedia;
     use HasUniversalSearch;
     use HasHistory;
+
 
     protected $casts = [
         'data'              => 'array',
@@ -123,6 +126,7 @@ class User extends Authenticatable implements HasMedia, Auditable
     ];
 
 
+
     public function stats(): HasOne
     {
         return $this->hasOne(UserStats::class);
@@ -138,16 +142,5 @@ class User extends Authenticatable implements HasMedia, Auditable
         $this->addMediaCollection('avatar')
             ->singleFile();
     }
-
-    public function avatar(): HasOne
-    {
-        return $this->hasOne(Media::class, 'id', 'avatar_id');
-    }
-
-    public function language(): BelongsTo
-    {
-        return $this->belongsTo(Language::class);
-    }
-
 
 }

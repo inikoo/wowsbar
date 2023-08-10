@@ -10,6 +10,7 @@ namespace App\Models\Media;
 use App\Concerns\BelongsToTenant;
 use App\Models\Tenancy\Tenant;
 
+use App\Models\Traits\IsMedia;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\Storage;
@@ -25,8 +26,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property int $id
  * @property int|null $tenant_id
  * @property string $slug
- * @property string $model_type
- * @property int $model_id
+ * @property string|null $model_type
+ * @property int|null $model_id
  * @property string|null $uuid
  * @property string $collection_name
  * @property string $name
@@ -78,7 +79,7 @@ use Spatie\Sluggable\SlugOptions;
  */
 class Media extends BaseMedia
 {
-    use HasSlug;
+    use IsMedia;
     use BelongsToTenant;
 
     public function tenants(): BelongsToMany
@@ -86,30 +87,7 @@ class Media extends BaseMedia
         return $this->belongsToMany(Tenant::class)->withTimestamps();
     }
 
-    public function getSlugOptions(): SlugOptions
-    {
-        return SlugOptions::create()
-            ->generateSlugsFrom('name')
-            ->slugsShouldBeNoLongerThan(24)
-            ->doNotGenerateSlugsOnUpdate()
-            ->saveSlugsTo('slug');
-    }
 
-    public function getRouteKeyName(): string
-    {
-        return 'slug';
-    }
-
-    public function getLocalImgProxyFilename(): string
-    {
-        $rootPath='/'.config('app.name').Str::after(Storage::disk($this->disk)->path(''), storage_path());
-
-        $prefix   =config('media-library.prefix', '');
-        $mediaPath=$prefix ? $prefix.'/' : '';
-        $mediaPath.=$this->id.'/'.$this->file_name;
-
-        return 'local://'.$rootPath.$mediaPath;
-    }
 
 
 }

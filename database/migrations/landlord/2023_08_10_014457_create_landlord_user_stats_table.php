@@ -1,7 +1,7 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Sun, 09 Jul 2023 23:15:14 Malaysia Time, Kuala Lumpur, Malaysia
+ * Created: Thu, 10 Aug 2023 09:51:40 Malaysia Time, Pantai Lembeng,, Bali
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
@@ -10,15 +10,16 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class () extends Migration {
+return new class extends Migration
+{
+
     use HasUserStats;
     public function up(): void
     {
-        Schema::create('user_stats', function (Blueprint $table) {
+        Schema::create('landlord_user_stats', function (Blueprint $table) {
             $table->smallIncrements('id');
-            $table->unsignedSmallInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
-
+            $table->unsignedSmallInteger('landlord_user_id');
+            $table->foreign('landlord_user_id')->references('id')->on('landlord_users');
             $table=$this->userStatsColumns($table);
             $table->timestampsTz();
         });
@@ -27,6 +28,6 @@ return new class () extends Migration {
 
     public function down(): void
     {
-        Schema::dropIfExists('user_stats');
+        Schema::dropIfExists('landlord_user_stats');
     }
 };

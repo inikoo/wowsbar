@@ -19,9 +19,9 @@ echo -e "✨ Resetting elasticsearch"
 php artisan es:refresh
 #echo -e "✨ Resetting firebase"
 #php artisan firebase:flush
-echo -e "✨ Installing dependencies"
-composer install
-npm install
+#echo -e "✨ Installing dependencies"
+#composer install
+#npm install
 echo "Public assets link 🔗"
 php artisan storage:link
 echo "🌱 Migrating and seeding database"
@@ -30,6 +30,8 @@ php artisan migrate --path=database/migrations/landlord
 php artisan migrate --path=database/migrations/tenant
 php artisan db:seed
 pg_dump -Fc -f "devops/devel/snapshots/fresh.dump" ${DB}
+echo "🌱 create devel landlord"
+php artisan landlord:create wowsbar wowsbar@inikoo.com Wowsbar aiku hello GB GBP
 echo "🌱 create devel tenant"
 php artisan tenant:create aiku devels@aw-advantage.com Devs aiku hello GB GBP
 php artisan tenant:create test1 dev@aw-advantage.com Devs test1 hello GB GBP

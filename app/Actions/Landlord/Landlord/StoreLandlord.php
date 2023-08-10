@@ -1,57 +1,53 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Sun, 23 Apr 2023 11:33:30 Malaysia Time, Sanur, Bali, Indonesia
+ * Created: Thu, 10 Aug 2023 12:14:27 Malaysia Time, Pantai Lembeng, Bali
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Tenancy\Tenant;
+namespace App\Actions\Landlord\Landlord;
 
-use App\Actions\Auth\User\StoreUser;
-use App\Actions\Elasticsearch\CreateElasticSearchTenantAlias;
+use App\Actions\Landlord\LandlordUser\StoreLandlordUser;
 use App\Models\Assets\Country;
 use App\Models\Assets\Currency;
 use App\Models\Assets\Language;
 use App\Models\Assets\Timezone;
 use App\Models\Auth\Role;
-use App\Models\Tenancy\Tenant;
+use App\Models\Landlord\Landlord;
 use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Arr;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
 
-class StoreTenant
+class StoreLandlord
 {
     use AsAction;
     use WithAttributes;
 
-    public function handle(array $modelData, array $userData): Tenant
+    public function handle(array $modelData, array $landlordUserData): Landlord
     {
-        $tenant = Tenant::create($modelData);
-        $tenant->stats()->create();
+        if (Landlord::count() > 0) {
+            abort(419, 'Can not create more than one landlord');
+        }
+
+        $landlord = Landlord::create($modelData);
+        $landlord->stats()->create();
 
 
-        $tenant->execute(
-            function (Tenant $tenant) use ($userData) {
-                CreateElasticSearchTenantAlias::run();
-                SetTenantLogo::run($tenant);
-                $user = StoreUser::run($tenant, $userData);
+        $landlordUser   = StoreLandlordUser::run($landlordUserData);
+        $superAdminRole = Role::where('guard_name', 'landlord')->where('name', 'super-admin')->firstOrFail();
+        $landlordUser->assignRole($superAdminRole);
 
-                $superAdminRole = Role::where('guard_name','web')->where('name', 'super-admin')->firstOrFail();
-                $user->assignRole($superAdminRole);
-            }
-        );
 
-        return $tenant;
+        return $landlord;
     }
 
     public function rules(): array
     {
         return [
-            'code'        => ['required', 'unique:tenants', 'between:1,6', 'alpha_dash'],
+            'code'        => ['required', 'unique:landlords', 'between:1,16', 'alpha_dash'],
             'name'        => ['required', 'max:64'],
-            'email'       => ['required', 'email', 'unique:tenants'],
             'currency_id' => ['required', 'exists:currencies,id'],
             'country_id'  => ['required', 'exists:countries,id'],
             'language_id' => ['required', 'exists:languages,id'],
@@ -63,33 +59,33 @@ class StoreTenant
     }
 
 
-    public function action($modelData): Tenant
+    public function action($modelData): Landlord
     {
         $this->setRawAttributes($modelData);
         $validatedData = $this->validateAttributes();
 
         return $this->handle(
             Arr::except($validatedData, ['username', 'password']),
-            array_merge(
-                Arr::only($validatedData, [
-                    'username',
-                    'password',
-                    'email'
-                ]),
-                [
-                    'is_root' => true
-                ]
-            )
+            Arr::only($validatedData, [
+                'username',
+                'password',
+                'email'
+            ]),
         );
     }
 
     public function getCommandSignature(): string
     {
-        return 'tenant:create {code} {email} {name} {username} {password} {country_code} {currency_code} {--l|language_code= : Language code} {--tz|timezone= : Timezone}';
+        return 'landlord:create {code} {email} {name} {username} {password} {country_code} {currency_code} {--l|language_code= : Language code} {--tz|timezone= : Timezone}';
     }
 
     public function asCommand(Command $command): int
     {
+        if (Landlord::count() > 0) {
+            $command->error('There is already one landlord (You can only have one 😝)');
+            exit;
+        }
+
         try {
             $country = Country::where('code', $command->argument('country_code'))->firstOrFail();
         } catch (Exception $e) {
@@ -151,21 +147,16 @@ class StoreTenant
             return 1;
         }
 
-        $tenant = $this->handle(
+        $landlord = $this->handle(
             Arr::except($validatedData, ['username', 'password']),
-            array_merge(
-                Arr::only($validatedData, [
-                    'username',
-                    'password',
-                    'email'
-                ]),
-                [
-                    'is_root' => true
-                ]
-            )
+            Arr::only($validatedData, [
+                'username',
+                'password',
+                'email'
+            ]),
         );
 
-        $command->info("Tenant $tenant->slug created successfully 🎉");
+        $command->info("Landlord $landlord->slug created successfully 🎉");
 
         return 0;
     }

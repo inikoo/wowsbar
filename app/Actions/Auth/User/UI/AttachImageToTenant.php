@@ -23,12 +23,9 @@ class AttachImageToTenant
      */
     public function handle(Tenant $tenant, string $collection, string $imagePath, string $originalFilename, string $extension = null): Media
     {
-
         $checksum = md5_file($imagePath);
-
-
         /** @var Media $media */
-        $media=$tenant->media()->where('collection_name', $collection)->where('checksum', $checksum)->first();
+        $media = $tenant->media()->where('collection_name', $collection)->where('checksum', $checksum)->first();
         if (!$media) {
             $media = $tenant->addMedia($imagePath)
                 ->preservingOriginal()
@@ -36,9 +33,8 @@ class AttachImageToTenant
                 ->usingName($originalFilename)
                 ->usingFileName($checksum.".".$extension ?? pathinfo($imagePath, PATHINFO_EXTENSION))
                 ->toMediaCollection($collection);
-
         }
-        return $media;
 
+        return $media;
     }
 }

@@ -1,7 +1,7 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Sat, 08 Jul 2023 17:36:01 Malaysia Time, Kuala Lumpur, Malaysia
+ * Created: Thu, 10 Aug 2023 09:48:32 Malaysia Time, Pantai Lembeng,, Bali
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
@@ -10,26 +10,22 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class () extends Migration {
+return new class extends Migration {
     use HasUserDetails;
 
     public function up(): void
     {
-        Schema::create('root_users', function (Blueprint $table) {
+        Schema::create('landlord_users', function (Blueprint $table) {
             $table->smallIncrements('id');
-            $table->unsignedSmallInteger('tenant_id')->index()->nullable();
-            $table->foreign('tenant_id')->references('id')->on('tenants');
             $table = $this->userDetailsColumns($table);
             $table->timestampsTz();
             $table->softDeletesTz();
-            $table->unique(['tenant_id', 'username']);
-            $table->unique(['tenant_id', 'email']);
         });
     }
 
 
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('landlord_users');
     }
 };
