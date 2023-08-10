@@ -563,104 +563,103 @@ const handleElementsChange = (data) => {
             <div class="my-2">
             <!-- Wrapper -->
 
+                <slot @changed="handleElementsChange">
+                    <TableElements class="mb-2" v-if="queryBuilderProps.elementGroups?.length && queryBuilderData.title" :elements="queryBuilderProps.elementGroups" @changed="handleElementsChange" :title="queryBuilderData.title" />
+                </slot>
+                <div class="grid grid-flow-col justify-between flex-nowrap px-4">
 
-            <slot @changed="handleElementsChange">
-                <TableElements class="mb-2" v-if="queryBuilderProps.elementGroups?.length && queryBuilderData.title" :elements="queryBuilderProps.elementGroups" @changed="handleElementsChange" :title="queryBuilderData.title" />
-            </slot>
-            <div class="grid grid-flow-col justify-between flex-nowrap px-4">
+                    <!-- Left Section: Records, -->
+                    <div class="flex space-x-2">
+                        <!-- Result Number -->
+                        <div class="flex border outline-red-500 rounded-md border-gray-300 dark:border-gray-500">
+                            <div class="grid justify-end items-center text-base font-normal text-gray-700 dark:text-gray-400"
+                                title="Results">
+                                <div v-if="resourceMeta.total" class="px-2 py-1.5 ">{{ locale.number(resourceMeta.total) }} {{ trans(resourceMeta.total > 1 ? 'records' : 'record') }}</div>
+                                <div v-else class="px-2 py-1.5">{{ locale.number(0) }} {{ trans('record') }}</div>
+                            </div>
+                            <!-- Button -->
+                            <div v-if="queryBuilderProps.modelOperations?.createLink">
+                                <Link :href="route(queryBuilderProps.modelOperations.createLink.route.name, queryBuilderProps.modelOperations.createLink.route.parameters[0])">
+                                    <!--suppress HtmlWrongAttributeValue -->
 
-                <!-- Left Section: Records, -->
-                <div class="flex space-x-2">
-                    <!-- Result Number -->
-                    <div class="flex border outline-red-500 rounded-md border-gray-300 dark:border-gray-500">
-                        <div class="grid justify-end items-center text-base font-normal text-gray-700 dark:text-gray-400"
-                            title="Results">
-                            <div v-if="resourceMeta.total" class="px-2 ">{{ locale.number(resourceMeta.total) }} {{ trans(resourceMeta.total > 1 ? 'records' : 'record') }}</div>
-                            <div v-else class="px-2 ">{{ locale.number(0) }} {{ trans('record') }}</div>
-                        </div>
-                        <!-- Button -->
-                        <div v-if="queryBuilderProps.modelOperations?.createLink">
-                            <Link :href="route(queryBuilderProps.modelOperations.createLink.route.name, queryBuilderProps.modelOperations.createLink.route.parameters[0])">
-                                <!--suppress HtmlWrongAttributeValue -->
-
-                                <Button :style="`primary`" :icon="queryBuilderProps.modelOperations.createLink.icon" action="create"  class="capitalize">
-                                    {{queryBuilderProps.modelOperations.createLink.label}}
-                                </Button>
-                            </Link>
+                                    <Button :style="`primary`" :icon="queryBuilderProps.modelOperations.createLink.icon" action="create"  class="capitalize">
+                                        {{queryBuilderProps.modelOperations.createLink.label}}
+                                    </Button>
+                                </Link>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Search Group -->
-                <div class="flex flex-row justify-end items-start flex-nowrap space-x-2">
-                    <div class="order-2 sm:order-1 mr-2 sm:mr-4" v-if="queryBuilderProps.hasFilters">
-                        <slot name="tableFilter" :has-filters="queryBuilderProps.hasFilters"
-                            :has-enabled-filters="queryBuilderProps.hasEnabledFilters" :filters="queryBuilderProps.filters"
-                            :on-filter-change="changeFilterValue">
-                            <TableFilter :has-enabled-filters="queryBuilderProps.hasEnabledFilters"
-                                :filters="queryBuilderProps.filters" :on-filter-change="changeFilterValue" />
+                    <!-- Search Group -->
+                    <div class="flex flex-row justify-end items-start flex-nowrap space-x-2">
+                        <div class="order-2 sm:order-1 mr-2 sm:mr-4" v-if="queryBuilderProps.hasFilters">
+                            <slot name="tableFilter" :has-filters="queryBuilderProps.hasFilters"
+                                :has-enabled-filters="queryBuilderProps.hasEnabledFilters" :filters="queryBuilderProps.filters"
+                                :on-filter-change="changeFilterValue">
+                                <TableFilter :has-enabled-filters="queryBuilderProps.hasEnabledFilters"
+                                    :filters="queryBuilderProps.filters" :on-filter-change="changeFilterValue" />
+                            </slot>
+                        </div>
+
+                        <!-- Search Input Button -->
+                        <div v-if="queryBuilderProps.globalSearch"
+                            class="flex flex-row w-64 order-1 md:order-2 transition-all ease-in-out duration-100">
+                            <slot name="tableGlobalSearch" :has-global-search="queryBuilderProps.globalSearch"
+                                :label="queryBuilderProps.globalSearch ? queryBuilderProps.globalSearch.label : null"
+                                :value="queryBuilderProps.globalSearch ? queryBuilderProps.globalSearch.value : null"
+                                :on-change="changeGlobalSearchValue">
+                                <TableGlobalSearch v-if="queryBuilderProps.globalSearch" class="flex-grow"
+                                    :label="queryBuilderProps.globalSearch.label" :value="queryBuilderProps.globalSearch.value"
+                                    :on-change="changeGlobalSearchValue" />
+                            </slot>
+                        </div>
+
+                        <!-- Button: Reset -->
+                        <!--suppress HtmlUnknownAttribute -->
+                        <slot name="searchReset" can-be-reset="canBeReset" @resetSearch="() => resetQuery()">
+                            <div v-if="canBeReset" class="order-3">
+                                <SearchReset @resetSearch="() => resetQuery()" />
+                            </div>
                         </slot>
-                    </div>
 
-                    <!-- Search Input Button -->
-                    <div v-if="queryBuilderProps.globalSearch"
-                        class="flex flex-row w-64 order-1 md:order-2 transition-all ease-in-out duration-100">
-                        <slot name="tableGlobalSearch" :has-global-search="queryBuilderProps.globalSearch"
-                            :label="queryBuilderProps.globalSearch ? queryBuilderProps.globalSearch.label : null"
-                            :value="queryBuilderProps.globalSearch ? queryBuilderProps.globalSearch.value : null"
-                            :on-change="changeGlobalSearchValue">
-                            <TableGlobalSearch v-if="queryBuilderProps.globalSearch" class="flex-grow"
-                                :label="queryBuilderProps.globalSearch.label" :value="queryBuilderProps.globalSearch.value"
-                                :on-change="changeGlobalSearchValue" />
+                        <!-- Button: Filter table -->
+                        <slot name="tableAddSearchRow" :has-search-inputs="queryBuilderProps.hasSearchInputs"
+                            :has-search-inputs-without-value="queryBuilderProps.hasSearchInputsWithoutValue"
+                            :search-inputs="queryBuilderProps.searchInputsWithoutGlobal" :on-add="showSearchInput">
+                            <TableAddSearchRow v-if="queryBuilderProps.hasSearchInputs" class="order-4"
+                                :search-inputs="queryBuilderProps.searchInputsWithoutGlobal" :has-search-inputs-without-value="queryBuilderProps.hasSearchInputsWithoutValue
+                                    " :on-add="showSearchInput" />
                         </slot>
-                    </div>
-
-                    <!-- Button: Reset -->
-                    <!--suppress HtmlUnknownAttribute -->
-                    <slot name="searchReset" can-be-reset="canBeReset" @resetSearch="() => resetQuery()">
-                        <div v-if="canBeReset" class="order-3">
-                            <SearchReset @resetSearch="() => resetQuery()" />
-                        </div>
-                    </slot>
-
-                    <!-- Button: Filter table -->
-                    <slot name="tableAddSearchRow" :has-search-inputs="queryBuilderProps.hasSearchInputs"
-                        :has-search-inputs-without-value="queryBuilderProps.hasSearchInputsWithoutValue"
-                        :search-inputs="queryBuilderProps.searchInputsWithoutGlobal" :on-add="showSearchInput">
-                        <TableAddSearchRow v-if="queryBuilderProps.hasSearchInputs" class="order-4"
-                            :search-inputs="queryBuilderProps.searchInputsWithoutGlobal" :has-search-inputs-without-value="queryBuilderProps.hasSearchInputsWithoutValue
-                                " :on-add="showSearchInput" />
-                    </slot>
 
 
 
-                    <!-- Button: Switch toggle search the column of table -->
-                    <slot name="tableColumns" :has-columns="queryBuilderProps.hasToggleableColumns"
-                        :columns="queryBuilderProps.columns" :has-hidden-columns="queryBuilderProps.hasHiddenColumns"
-                        :on-change="changeColumnStatus">
-                        <TableColumns v-if="queryBuilderProps.hasToggleableColumns" class="order-4 mr-4 sm:mr-0 sm:order-5"
+                        <!-- Button: Switch toggle search the column of table -->
+                        <slot name="tableColumns" :has-columns="queryBuilderProps.hasToggleableColumns"
                             :columns="queryBuilderProps.columns" :has-hidden-columns="queryBuilderProps.hasHiddenColumns"
-                            :on-change="changeColumnStatus" />
-                    </slot>
+                            :on-change="changeColumnStatus">
+                            <TableColumns v-if="queryBuilderProps.hasToggleableColumns" class="order-4 mr-4 sm:mr-0 sm:order-5"
+                                :columns="queryBuilderProps.columns" :has-hidden-columns="queryBuilderProps.hasHiddenColumns"
+                                :on-change="changeColumnStatus" />
+                        </slot>
+                    </div>
                 </div>
-            </div>
 
-            <!-- Field: search by column of table-->
-            <slot name="tableSearchRows" :has-search-rows-with-value="queryBuilderProps.hasSearchInputsWithValue"
-                :search-inputs="queryBuilderProps.searchInputsWithoutGlobal"
-                :forced-visible-search-inputs="forcedVisibleSearchInputs" :on-change="changeSearchInputValue">
-                <TableSearchRows v-if="queryBuilderProps.hasSearchInputsWithValue ||
-                    forcedVisibleSearchInputs.length > 0
-                    " :search-inputs="queryBuilderProps.searchInputsWithoutGlobal"
-                    :forced-visible-search-inputs="forcedVisibleSearchInputs" :on-change="changeSearchInputValue"
-                    :on-remove="disableSearchInput" />
-            </slot>
+                <!-- Field: search by column of table-->
+                <slot name="tableSearchRows" :has-search-rows-with-value="queryBuilderProps.hasSearchInputsWithValue"
+                    :search-inputs="queryBuilderProps.searchInputsWithoutGlobal"
+                    :forced-visible-search-inputs="forcedVisibleSearchInputs" :on-change="changeSearchInputValue">
+                    <TableSearchRows v-if="queryBuilderProps.hasSearchInputsWithValue ||
+                        forcedVisibleSearchInputs.length > 0
+                        " :search-inputs="queryBuilderProps.searchInputsWithoutGlobal"
+                        :forced-visible-search-inputs="forcedVisibleSearchInputs" :on-change="changeSearchInputValue"
+                        :on-remove="disableSearchInput" />
+                </slot>
 
             </div>
 
             <!-- The Main Table -->
             <slot name="tableWrapper" :meta="resourceMeta">
-                <TableWrapper :class="{ 'mt-0': !hasOnlyData }">
+                <TableWrapper :result="resourceMeta.total === 0" :class="{ 'mt-0': !hasOnlyData }">
                     <slot name="table">
                         <table class="divide-y divide-gray-200 dark:divide-gray-500 bg-white dark:bg-gray-700 w-full">
                             <thead class="bg-gray-50 dark:bg-gray-800">
