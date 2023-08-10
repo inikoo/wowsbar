@@ -73,7 +73,7 @@ const addComponent = async () => {
                 props.imagesUploadRoute.name,
                 props.imagesUploadRoute.arguments
             ),
-            { images: [setData.value[0].originalFile] },
+            { images: SendData },
             {
                 headers: { "Content-Type": "multipart/form-data" },
             }
