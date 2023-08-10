@@ -18,6 +18,7 @@ library.add(faExternalLink, faEyeSlash, faExclamationTriangle)
 import 'swiper/css'
 import 'swiper/css/navigation';
 import SlideCorner from "@/Components/Slider/SlideCorner.vue";
+import Image from "@/Components/Image.vue";
 import CentralStage from "@/Components/Slider/CentralStage.vue";
 import { Link } from '@inertiajs/vue3';
 import { watch } from 'vue'
@@ -147,7 +148,8 @@ const getImageStyle=(component)=> {
             :modules="[Autoplay, Pagination, Navigation]" class="mySwiper">
             <SwiperSlide v-for="component in data.components" :key="component.id">
                 <div class="relative w-full h-full overflow-hidden">
-                    <img :src="generateThumbnail(component)" :alt="component.layout?.imageAlt" class="absolute" :style="getImageStyle(component)">
+                    <!-- <img :src="" :alt="component.layout?.imageAlt" class="absolute" :style="getImageStyle(component)"> -->
+                    <Image :src="component.image.source" alt="Wowsbar" />
                 </div>
                 <div v-if="get(component, ['visibility'], true) === false" class="absolute h-full w-full bg-gray-800/50 z-10 " />
                 <div class="z-[11] absolute left-7 flex flex-col gap-y-2">
