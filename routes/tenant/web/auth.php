@@ -6,8 +6,8 @@
  */
 
 use App\Actions\UI\Auth\Login;
+use App\Actions\UI\Auth\Logout;
 use App\Actions\UI\Auth\ShowLogin;
-use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
@@ -16,6 +16,5 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
-        ->name('logout');
+    Route::post('logout', Logout::class)->name('logout');
 });
