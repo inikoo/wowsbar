@@ -20,10 +20,6 @@ class AttachImageToContentBlock
 
     public function handle(ContentBlock $contentBlock, UploadedFile $file): Media
     {
-
-
-
-        dd($file);
         /** @var Media $media */
         $media = AttachImageToTenant::run(
             tenant: app('currentTenant'),
