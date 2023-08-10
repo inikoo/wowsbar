@@ -32,23 +32,13 @@ const generateThumbnail = (fileOrUrl) => {
         }
 };
 
-const onFileChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-        props.data.image_source = null;
-        props.data.imageFile = file;
-        props.data.layout.imageAlt = file.name;
-    }
-};
-
-
 
 </script>
 
 <template>
     <div class="block w-full">
         <div class="w-full overflow-hidden relative">
-            <Cropper ref="_cropper" class="w-[400px] md:w-[440px] h-[200px]" :src="generateThumbnail(props.data)" :stencil-props="{
+            <Cropper ref="_cropper" class="w-[400px] md:w-[440px] h-[200px] rounded-2xl object-cover" :src="generateThumbnail(props.data)" :stencil-props="{
                 aspectRatio: 4 / 1,
                 movable: true,
                 resizable: false,
