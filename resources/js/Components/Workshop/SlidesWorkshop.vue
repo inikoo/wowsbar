@@ -98,12 +98,14 @@ const closeModalisOpenLibrariesImage = () => {
 const isOpenCropModal = ref(false)
 
 const closeModalisOpenCropModal = () => {
+    addFiles.value = []
     isOpenCropModal.value = false
+    console.log(addFiles.value, isOpenCropModal.value)
 }
 
-// When new slide added
 const addComponent = async (element) => {
-    let setData = props.data.components
+    console.log(element)
+    // let setData = props.data.components
     addFiles.value = element.target.files
     isOpenCropModal.value = true
     // Save the new image to database
@@ -536,13 +538,6 @@ const setCommonEdit = () => {
 
                 <Button :style="`tertiary`" icon="fal fa-image" size="xs" class="relative" @click="isOpenLibrariesImage = !isOpen">
                     {{ trans("Libraries") }}
-                    <!-- <label
-                        class="bg-transparent inset-0 absolute inline-block cursor-pointer"
-                        id="input-slide-large-mask" for="fileInput"
-                    />
-                    <input ref="fileInput" type="file" multiple name="file" id="fileInput"
-                        @change="addComponent" accept="image/*"
-                        class="absolute cursor-pointer rounded-md border-gray-300 sr-only" /> -->
                 </Button>
             </div>
         </div>

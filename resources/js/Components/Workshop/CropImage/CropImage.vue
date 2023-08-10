@@ -5,9 +5,9 @@
   -->
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
-import { Autoplay, Pagination, Navigation } from "swiper/modules";
+import { Pagination, Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import CropComponents from "./CropComponents.vue";
@@ -16,7 +16,7 @@ import Button from "@/Components/Elements/Buttons/Button.vue";
 
 const props = defineProps<{
     data: FileList;
-    imagesUploadRoute : object
+    imagesUploadRoute: object;
 }>();
 
 const setData2 = () => {
@@ -30,7 +30,6 @@ const setData2 = () => {
 };
 
 const setData = ref(setData2());
-
 
 const generateThumbnail = (file) => {
     if (
@@ -50,50 +49,54 @@ const generateThumbnail = (file) => {
     }
 };
 
-
 const addComponent = async () => {
-  const SendData = [];
+    const SendData = [];
 
-  const processItem = async (item) => {
-    return new Promise((resolve, reject) => {
-      if (item.imagePosition) {
-        item.imagePosition.canvas.toBlob((blob) => {
-          SendData.push(blob);
-          resolve();
-        });
-      } else {
-        resolve();
-      }
-    });
-  };
-
-  await Promise.all(setData.value.map(processItem));
-  console.log(SendData)
-  
-    try {
-        const response = await axios.post(route(props.imagesUploadRoute.name, props.imagesUploadRoute.arguments),
-            { 'images':  SendData},
-            {
-                headers: { 'Content-Type': 'multipart/form-data' }
+    const processItem = async (item) => {
+        return new Promise((resolve, reject) => {
+            if (item.imagePosition) {
+                item.imagePosition.canvas.toBlob((blob) => {
+                    SendData.push(blob);
+                    resolve();
+                });
+            } else {
+                resolve();
             }
-        )
-        
-        console.log(response.data)
-               
+        });
+    };
 
+    await Promise.all(setData.value.map(processItem));
+    console.log("dataSend", SendData);
+    try {
+        const response = await axios.post(
+            route(
+                props.imagesUploadRoute.name,
+                props.imagesUploadRoute.arguments
+            ),
+            { images: SendData },
+            {
+                headers: { "Content-Type": "multipart/form-data" },
+            }
+        );
+
+        console.log(response.data);
     } catch (error) {
-        // Handle any errors that might occur during the POST request
         console.error(error);
     }
 };
 
+const swiperRef = ref(null);
 
 
-const current = ref(0);
-const setCurrent = (key) => {
-    current.value = key;
-};
-const swiperRef = ref();
+
+const current = ref(0)
+
+watch(current, (newVal) => {
+    console.log('masuk')
+    swiperRef.value.$el.swiper.slideToLoop(newVal, 0, false)
+})
+
+console.log('masukkkkk')
 </script>
 
 <template>
@@ -107,15 +110,8 @@ const swiperRef = ref();
             :slidesPerView="1"
             :centeredSlides="true"
             :loop="true"
-            :autoplay="{
-                delay: 100000,
-                disableOnInteraction: false,
-            }"
-            :pagination="{
-                clickable: true,
-            }"
             :navigation="false"
-            :modules="[Autoplay, Pagination, Navigation]"
+            :modules="[Pagination, Navigation]"
             class="mySwiper"
         >
             <SwiperSlide v-for="(component, index) in setData" :key="index">
@@ -130,51 +126,35 @@ const swiperRef = ref();
         </Swiper>
     </div>
     <div>
-        <div
-            class="divide-y divide-gray-200 lg:grid grid-flow-col lg:grid-cols-12 lg:divide-y-0 lg:divide-x overflow-auto h-full"
-        >
-            <!-- Left Tab: Navigation -->
-            <aside class="py-0 lg:col-span-3 lg:h-full">
-                <nav role="navigation" class="space-y-1">
-                    <ul class="flex justify-between sm:block">
-                        <li
-                            v-for="(item, key) in setData"
-                            @click="setCurrent(key)"
-                            :class="[
-                                'group cursor-pointer sm:border-l-4 px-6 sm:px-3 py-2 flex items-center justify-center sm:justify-start text-sm font-medium',
-                                key == current
-                                    ? 'bg-gray-300 sm:bg-gray-100 sm:border-orange-500 sm:hover:bg-gray-100 text-gray-600'
-                                    : 'border-transparent hover:bg-gray-300/40 sm:hover:bg-gray-50 text-gray-500 hover:text-gray-700',
-                            ]"
-                            :aria-current="key === current ? 'page' : undefined"
-                        >
-                            <span
-                                class="hidden sm:inline capitalize truncate"
-                                >{{ item.originalFile.name }}</span
-                            >
-                        </li>
-                    </ul>
-                </nav>
-            </aside>
-            <div
-                class="px-4 sm:px-6 md:px-4 pt-6 xl:pt-4 col-span-9 flex flex-grow justify-center"
+        <div class="max-w-full px-6 h-96 overflow-y-auto border border-solid border-gray-300 rounded-lg my-9">
+            <ul
+                role="list"
+                class="mx-auto mt-5 grid max-w-full grid-cols-1 gap-x-8 gap-y-16 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3"
             >
-                <div class="flex flex-col w-full">
-                    <dl class="pb-4 sm:pb-5 sm:gap-4 w-full">
-                        <dd class="flex text-sm text-gray-700 sm:mt-0 w-full">
-                            <div class="relative flex-grow">
-                                <CropComponents :data="setData[current]" />
-                            </div>
-                        </dd>
-                    </dl>
-                </div>
-            </div>
+                <li v-for="(item, index) in setData" :key="index">
+                    <div @click="current = index">
+                        <CropComponents :data="item" />
+                        <div class="flex justify-center align-middle">
+                            <h3
+                                :class="['text-lg font-semibold leading-4 tracking-tight', setData[current] == item ? 'text-orange-500' : 'text-gray-900']"
+                            >
+                                {{ item.originalFile.name }}
+                            </h3>
+                        </div>
+                    </div>
+                </li>
+            </ul>
         </div>
     </div>
-    <Button :style="`secondary`" icon="fas fa-upload" class="relative" size="xs" @click="addComponent">
-                    {{ trans("Save Image") }}
-                  
-                </Button>
+    <Button
+        :style="`secondary`"
+        icon="fas fa-upload"
+        class="relative"
+        size="xs"
+        @click="addComponent"
+    >
+        {{ trans("Save Image") }}
+    </Button>
 </template>
 
 <style lang="scss">
