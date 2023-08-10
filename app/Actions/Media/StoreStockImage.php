@@ -7,36 +7,34 @@
 
 namespace App\Actions\Media;
 
-use App\Actions\Auth\User\UI\AttachImageToTenant;
+use App\Models\Landlord\Landlord;
 use App\Models\Media\LandlordMedia;
-use App\Models\Portfolio\ContentBlockComponent;
-use Illuminate\Support\Arr;
 use Lorisleiva\Actions\Concerns\AsAction;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class StoreStockImage
 {
     use AsAction;
 
 
-    public function handle( string $imagePath): void
+    public function handle(string $collection, string $imagePath,string $originalFilename, string $extension=null): LandlordMedia
     {
 
         $landlord=LandLord::find(1);
         $checksum = md5_file($imagePath);
-        $media = LandlordMedia::where('checksum', $checksum)->first();
-        if (!$media) {
-            /*
-            $media = $tenant->addMedia($imagePath)
+
+        $landlordMedia = LandlordMedia::where('checksum', $checksum)->first();
+        if (!$landlordMedia) {
+
+            $landlordMedia = $landlord->addMedia($imagePath)
                 ->preservingOriginal()
                 ->withProperties(['checksum' => $checksum])
                 ->usingName($originalFilename)
                 ->usingFileName($checksum.".".$extension ?? pathinfo($imagePath, PATHINFO_EXTENSION))
                 ->toMediaCollection($collection);
-            */
+
         }
 
-       // return $media;
+        return $landlordMedia;
 
     }
 
