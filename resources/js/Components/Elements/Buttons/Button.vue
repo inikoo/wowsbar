@@ -44,7 +44,7 @@ let iconClass = ''
 let sizeClass = ''
 
 // Styling depends on the 'style' props
-if (props.style == 'primary' || props.style == 'create') styleClass = 'bg-gray-700 dark:bg-gray-300/90 text-white dark:text-gray-700 hover:bg-gray-800 dark:hover:bg-gray-300'
+if (props.style == 'primary' || props.style == 'create' || props.style == 'save') styleClass = 'bg-gray-700 dark:bg-gray-300/90 text-white dark:text-gray-700 hover:bg-gray-800 dark:hover:bg-gray-300'
 else if (props.style == 'secondary' || props.style == 'edit') styleClass = 'border border-gray-400/80 bg-gray-300 text-gray-700 hover:bg-gray-400/60'
 else if (props.style == 'tertiary') styleClass = 'border border-gray-300 dark:border-gray-500 bg-transparent text-gray-700 dark:text-gray-400 hover:bg-gray-200/70 dark:hover:bg-gray-600/90'
 else if (props.style == 'delete') styleClass = 'border border-red-400 dark:border-red-600 text-red-500 dark:text-red-600 hover:text-red-800 hover:bg-red-100 dark:hover:bg-red-100/10 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2'
