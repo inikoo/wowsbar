@@ -24,7 +24,7 @@ class ImageResource extends JsonResource
 
 
         $image          = (new Image())->make($media->getLocalImgProxyFilename());
-        $imageThumbnail = $image->resize(0, 48);
+        $imageThumbnail = (new Image())->make($media->getLocalImgProxyFilename())->resize(0, 48);
 
 
         return [
