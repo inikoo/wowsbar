@@ -686,7 +686,7 @@ const handleElementsChange = (data) => {
                                                 typeof item[column.key] == 'number' ? 'text-right' : '',
                                                 column.key === 'avatar' ? '' : 'px-6 min-w-fit max-w-[450px]',
                                                 'text-sm py-2 text-gray-800 dark:text-gray-300 whitespace-normal',
-                                                { 'first:border-l-4 first:border-gray-700 bg-gray-200/75': selectedRow[name]?.includes(item.id) }
+                                                { 'first:border-l-4 first:border-gray-700 bg-gray-200/75': selectedRow?.includes(item.id) }
                                         ]">
                                             <slot :name="`cell(${column.key})`" :item="item" :tabName="name" class="">
                                                 <div class="text-gray-500 dark:text-gray-400">{{ item[column.key] }}</div>
