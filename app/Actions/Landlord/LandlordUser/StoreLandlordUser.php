@@ -7,7 +7,6 @@
 
 namespace App\Actions\Landlord\LandlordUser;
 
-
 use App\Models\Landlord\LandlordUser;
 use App\Rules\AlphaDashDot;
 use Illuminate\Validation\Rule;
@@ -31,8 +30,8 @@ class StoreLandlordUser
         $landlordUser->stats()->create();
         //SetUserAvatar::run($landlordUser);
 
-       // UserHydrateUniversalSearch::dispatch($landlordUser);
-       // TenantHydrateUsers::dispatch(app('currentTenant'));
+        // UserHydrateUniversalSearch::dispatch($landlordUser);
+        // TenantHydrateUsers::dispatch(app('currentTenant'));
         return $landlordUser;
     }
 

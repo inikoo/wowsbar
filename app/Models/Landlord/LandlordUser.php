@@ -23,11 +23,10 @@ use Spatie\Permission\Traits\HasRoles;
  * App\Models\Landlord\LandlordUser
  *
  * @property int $id
- * @property int $landlord_id
  * @property bool $status
  * @property string $username
  * @property string|null $contact_name
- * @property string $email
+ * @property string|null $email
  * @property \Illuminate\Support\Carbon|null $email_verified_at
  * @property mixed $password
  * @property string|null $remember_token
@@ -67,7 +66,6 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static Builder|LandlordUser whereEmail($value)
  * @method static Builder|LandlordUser whereEmailVerifiedAt($value)
  * @method static Builder|LandlordUser whereId($value)
- * @method static Builder|LandlordUser whereLandlordId($value)
  * @method static Builder|LandlordUser whereLanguageId($value)
  * @method static Builder|LandlordUser wherePassword($value)
  * @method static Builder|LandlordUser whereRememberToken($value)

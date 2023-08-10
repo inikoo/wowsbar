@@ -1,7 +1,7 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Wed, 09 Aug 2023 10:44:37 Malaysia Time, Kuala Lumpur, Malaysia
+ * Created: Thu, 10 Aug 2023 15:02:39 Malaysia Time, Pantai Lembeng, Bali
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
@@ -21,11 +21,10 @@ use Lorisleiva\Actions\ActionRequest;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
-class IndexImages extends InertiaAction
+class IndexStockImages extends InertiaAction
 {
     public function authorize(ActionRequest $request): bool
     {
-        $this->canEdit = $request->user()->can('portfolio.images.edit');
 
         return
             (
@@ -41,13 +40,7 @@ class IndexImages extends InertiaAction
         return $this->handle();
     }
 
-    protected function getElementGroups(): void
-    {
-        $this->elementGroups =
-            [
 
-            ];
-    }
 
     /** @noinspection PhpUndefinedMethodInspection */
     public function handle($prefix = null): LengthAwarePaginator
@@ -62,19 +55,11 @@ class IndexImages extends InertiaAction
         }
 
         $queryBuilder = QueryBuilder::for(LandlordMedia::class);
-        foreach ($this->elementGroups as $key => $elementGroup) {
-            $queryBuilder->whereElementGroup(
-                prefix: $prefix,
-                key: $key,
-                allowedElements: array_keys($elementGroup['elements']),
-                engine: $elementGroup['engine']
-            );
-        }
 
 
         return $queryBuilder
             ->defaultSort('media.name')
-            ->where('collection_name', 'content_block')
+            ->where('collection_name', 'stock_images')
             ->select(['media.name','media.id','size','mime_type','file_name','disk','media.slug'])
             ->allowedSorts(['name','size'])
             ->allowedFilters([$globalSearch])
@@ -102,10 +87,18 @@ class IndexImages extends InertiaAction
             $table
                 ->withModelOperations($modelOperations)
                 ->withGlobalSearch()
+                ->withEmptyState(
+                    [
+                        'title' => __('No images found'),
+                        'count' => app('currentTenant')->stats->number_websites,
+
+                    ]
+                )
                 ->column(key: 'name', label: __('name'), sortable: true)
                 ->column(key: 'thumbnail', label: __('image'))
                 ->column(key: 'size', label: __('size'), sortable: true)
                 ->column(key: 'select', label: __(' '))
+
                 ->defaultSort('name');
         };
     }
@@ -118,24 +111,38 @@ class IndexImages extends InertiaAction
     public function htmlResponse(LengthAwarePaginator $websites, ActionRequest $request): Response
     {
         return Inertia::render(
-            'Portfolio/Images',
+            'Portfolio/StockImages',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->getName(),
                     $request->route()->parameters
                 ),
-                'title'    => __('stock images'),
+                'title'    => __('images'),
                 'pageHead' => [
-                    'title'     => __('stock images'),
+                    'title'     => __('images'),
                     'iconRight' => [
                         'title' => __('image'),
-                        'icon'  => 'fal fa-image-polaroid'
+                        'icon'  => 'fal fa-images'
                     ],
                 ],
                 'data' => ImageResource::collection($websites),
 
             ]
-        )->table($this->tableStructure());
+        )->table($this->tableStructure(
+            modelOperations: [
+                'createLink' => [
+                    'route' => [
+                        'name'       => 'portfolio.websites.create',
+                        'parameters' => array_values([])
+                    ],
+                    'type'    => 'button',
+                    'style'   => 'primary',
+                    'tooltip' => __('upload image'),
+                    'label'   => __('upload image'),
+                    'icon'    => 'fas fa-upload'
+                ]
+            ]
+        ));
     }
 
     /** @noinspection PhpUnusedParameterInspection */
@@ -147,13 +154,12 @@ class IndexImages extends InertiaAction
                     'type'   => 'simple',
                     'simple' => [
                         'route' => $routeParameters,
-                        'label' => __('stock images'),
+                        'label' => __('images'),
                         'icon'  => 'fal fa-bars'
                     ],
                 ],
             ];
         };
-
 
         return match ($routeName) {
             'portfolio.images.index' =>

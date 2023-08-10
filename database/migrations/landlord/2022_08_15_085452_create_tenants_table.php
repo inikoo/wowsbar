@@ -16,7 +16,8 @@ return new class () extends Migration {
             $table->smallIncrements('id');
             $table->string('slug')->unique()->collation('und_ns');
             $table->string('code')->index();
-            $table->string('name')->collation('und_ns_ci');;
+            $table->string('name')->collation('und_ns_ci');
+            ;
             $table->string('email')->collation('und_ns_ci')->index();
             $table->boolean('status')->default(true);
             $table->jsonb('data');

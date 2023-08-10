@@ -17,6 +17,7 @@ use App\Models\Landlord\Landlord;
 use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Artisan;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
 
@@ -38,6 +39,8 @@ class StoreLandlord
         $landlordUser   = StoreLandlordUser::run($landlordUserData);
         $superAdminRole = Role::where('guard_name', 'landlord')->where('name', 'super-admin')->firstOrFail();
         $landlordUser->assignRole($superAdminRole);
+
+        Artisan::call("db:seed --force --class=StockImageSeeder");
 
 
         return $landlord;

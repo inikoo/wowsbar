@@ -13,6 +13,8 @@ import "swiper/css/navigation";
 import CropComponents from "./CropComponents.vue";
 import { trans } from "laravel-vue-i18n";
 import Button from "@/Components/Elements/Buttons/Button.vue";
+import { useForm } from '@inertiajs/vue3'
+
 
 const props = defineProps<{
     data: FileList;
@@ -49,13 +51,17 @@ const generateThumbnail = (file) => {
     }
 };
 
+const form = new FormData()
+console.log(form)
+
 const addComponent = async () => {
     const SendData = [];
     const processItem = async (item) => {
         return new Promise((resolve, reject) => {
             if (item.imagePosition) {
                 item.imagePosition.canvas.toBlob((blob) => {
-                    SendData.push(blob);
+                    // SendData.push(blob);
+                    form.append("blob", blob, item.originalFile.name); // Append blobs to FormData
                     resolve();
                 });
             } else {
@@ -65,8 +71,9 @@ const addComponent = async () => {
     };
 
     await Promise.all(setData.value.map(processItem));
-    console.log("dataSend", SendData,setData);
-    
+    for (const [key, value] of form.entries()) {
+        SendData.push(value)
+    }
     try {
         const response = await axios.post(
             route(

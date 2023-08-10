@@ -250,7 +250,7 @@ const changeVisibility = (slide: any) => {
 
 const ComponentsBlueprint = ref([
     {
-        title: 'Background',
+        title: 'Background & Link',
         icon: ['fal', 'fa-image'],
         fields: [
             {

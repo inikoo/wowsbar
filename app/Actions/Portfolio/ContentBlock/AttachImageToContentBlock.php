@@ -23,10 +23,10 @@ class AttachImageToContentBlock
         /** @var Media $media */
         $media = AttachImageToTenant::run(
             tenant: app('currentTenant'),
-            collection: 'contentBlock',
+            collection: 'content_block',
             imagePath: $file->getPathName(),
             originalFilename: $file->getClientOriginalName(),
-            extension: $file->getClientOriginalExtension()
+            extension: $file->guessClientExtension()
         );
 
         return $media;

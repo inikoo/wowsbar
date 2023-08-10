@@ -35,7 +35,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property bool $status
  * @property string $username
  * @property string|null $contact_name
- * @property string $email
+ * @property string|null $email
  * @property \Illuminate\Support\Carbon|null $email_verified_at
  * @property mixed $password
  * @property string|null $remember_token
