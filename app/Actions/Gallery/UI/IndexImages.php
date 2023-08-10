@@ -110,7 +110,7 @@ class IndexImages extends InertiaAction
                     ]
                 )
                 ->column(key: 'name', label: __('name'), sortable: true)
-                ->column(key: 'thumbnail', label: __('image'), sortable: true)
+                ->column(key: 'thumbnail', label: __('image'))
                 ->column(key: 'size', label: __('size'), sortable: true)
                 ->column(key: 'select', label: __(' '), sortable: false)
 

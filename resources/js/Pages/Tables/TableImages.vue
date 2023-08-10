@@ -43,7 +43,7 @@ watch(selectedRow, () => {
             </Link>
         </template>
         <template #cell(thumbnail)="{ item: image }">
-            <Image :src="image.thumbnail"/>
+            <Image :src="image.thumbnail" class="shadow"/>
         </template>
         <template #cell(select)="{ item }">
             <Checkbox class="p-2.5" :value="item.id" name="select-image" id="select-image" v-model:checked="selectedRow"/>
