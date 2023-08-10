@@ -90,12 +90,13 @@ const closeModalisOpenCropModal = () => {
         </div>
     </Modal>
         <div class="w-full overflow-hidden relative">
-            <Cropper ref="_cropper" class="w-[400px] md:w-[440px] h-[200px]" :src="generateThumbnail(props.data.image_source)" :stencil-props="{
+            <img class="aspect-[4/1] w-full rounded-2xl object-cover" :src="generateThumbnail(props.data.image_source)" alt="" />
+            <!-- <Cropper ref="_cropper" class="w-[400px] md:w-[440px] h-[200px]" :src="generateThumbnail(props.data.image_source)" :stencil-props="{
                 aspectRatio: 4 / 1,
                 movable: true,
                 resizable: false,
             }" :auto-zoom="true" @ready="onReady" @change="cropOnChange" minWidth="">
-            </Cropper>
+            </Cropper> -->
         </div>
 
         <div class="w-full relative space-y-4 mt-2.5">
