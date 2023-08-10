@@ -1,7 +1,7 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Sat, 08 Jul 2023 17:16:49 Malaysia Time, Kuala Lumpur, Malaysia
+ * Created: Thu, 10 Aug 2023 12:14:27 Malaysia Time, Pantai Lembeng, Bali
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
@@ -12,13 +12,10 @@ use Illuminate\Support\Facades\Schema;
 return new class () extends Migration {
     public function up(): void
     {
-        Schema::create('tenants', function (Blueprint $table) {
+        Schema::create('landlords', function (Blueprint $table) {
             $table->smallIncrements('id');
-            $table->string('slug')->unique()->collation('und_ns');
-            $table->string('code')->index();
-            $table->string('name')->collation('und_ns_ci');;
-            $table->string('email')->collation('und_ns_ci')->index();
-            $table->boolean('status')->default(true);
+            $table->string('code', 16)->unique()->collation('und_ns_ci');
+            $table->string('name')->collation('und_ns_ci');
             $table->jsonb('data');
             $table->jsonb('settings');
             $table->unsignedSmallInteger('country_id');
@@ -29,16 +26,13 @@ return new class () extends Migration {
             $table->foreign('timezone_id')->references('id')->on('timezones');
             $table->unsignedSmallInteger('currency_id')->comment('tenant accounting currency');
             $table->foreign('currency_id')->references('id')->on('currencies');
-            $table->unsignedInteger('logo_id')->nullable();
-            $table->timestampsTz();
-            $table->softDeletesTz();
 
+            $table->timestampsTz();
         });
     }
 
-
     public function down(): void
     {
-        Schema::dropIfExists('tenant_stats');
+        Schema::dropIfExists('landlords');
     }
 };
