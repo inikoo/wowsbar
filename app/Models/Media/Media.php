@@ -80,7 +80,6 @@ use Spatie\Sluggable\SlugOptions;
 class Media extends BaseMedia
 {
     use IsMedia;
-    use BelongsToTenant;
 
     public function tenants(): BelongsToMany
     {

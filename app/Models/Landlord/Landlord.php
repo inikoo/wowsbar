@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
 /**
@@ -59,7 +60,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @method static Builder|Landlord withoutTrashed()
  * @mixin \Eloquent
  */
-class Landlord extends Model
+class Landlord extends Model implements HasMedia
 {
     use InteractsWithMedia;
 

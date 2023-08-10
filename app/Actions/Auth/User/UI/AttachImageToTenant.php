@@ -27,11 +27,19 @@ class AttachImageToTenant
         /** @var Media $media */
         $media = $tenant->media()->where('collection_name', $collection)->where('checksum', $checksum)->first();
         if (!$media) {
+            $filename=dechex(crc32($checksum)).'.';
+            $filename.=empty($extension) ? pathinfo($imagePath, PATHINFO_EXTENSION) : $extension;
+
             $media = $tenant->addMedia($imagePath)
                 ->preservingOriginal()
-                ->withProperties(['checksum' => $checksum])
+                ->withProperties(
+                    [
+                        'checksum'  => $checksum,
+                        'tenant_id' => app('currentTenant')->id
+                    ]
+                )
                 ->usingName($originalFilename)
-                ->usingFileName($checksum.".".$extension ?? pathinfo($imagePath, PATHINFO_EXTENSION))
+                ->usingFileName($filename)
                 ->toMediaCollection($collection);
         }
 

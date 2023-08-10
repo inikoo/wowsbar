@@ -24,6 +24,12 @@ class SetUserAvatar
             /** @var Media $media */
             $media = $user->addMediaFromUrl("https://avatars.dicebear.com/api/identicon/$seed.svg")
                 ->preservingOriginal()
+                ->withProperties(
+                    [
+                        'tenant_id' => app('currentTenant')->id
+                    ]
+                )
+                ->usingName($user->username."-avatar")
                 ->usingFileName($user->username."-avatar.sgv")
                 ->toMediaCollection('avatar');
 

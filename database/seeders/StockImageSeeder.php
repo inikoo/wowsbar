@@ -22,19 +22,19 @@ class StockImageSeeder extends Seeder
 {
     public function run(): void
     {
-
         foreach (glob(resource_path('art/stock_images/*/*')) as $filename) {
-            $_filename=Str::after($filename,resource_path('art/stock_images'));
-            if(preg_match('/\/(.*)\/(.*)/',$_filename,$fileData)){
-                $category=$fileData[1];
-                $imageName=$fileData[2];
-
-StoreStockImage::run();
+            $_filename = Str::after($filename, resource_path('art/stock_images'));
+            if (preg_match('/\/(.*)\/(.*)/', $_filename, $fileData)) {
+                $category  = $fileData[1];
+                $imageName = $fileData[2];
 
 
+                StoreStockImage::run(
+                    collection:'stock_images',
+                    imagePath:resource_path('art/stock_images'.$_filename),
+                    originalFilename:$imageName
+                );
             }
-
         }
-
     }
 }

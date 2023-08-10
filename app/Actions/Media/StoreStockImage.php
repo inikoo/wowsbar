@@ -9,6 +9,7 @@ namespace App\Actions\Media;
 
 use App\Models\Landlord\Landlord;
 use App\Models\Media\LandlordMedia;
+use App\Models\Media\Media;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class StoreStockImage
@@ -16,7 +17,15 @@ class StoreStockImage
     use AsAction;
 
 
-    public function handle(string $collection, string $imagePath,string $originalFilename, string $extension=null): LandlordMedia
+    /**
+     * @throws \Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig
+     * @throws \Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist
+     */
+    public function handle(
+        string $collection,
+        string $imagePath,
+        string $originalFilename,
+        string $extension=null): LandlordMedia|Media
     {
 
         $landlord=LandLord::find(1);
@@ -24,17 +33,21 @@ class StoreStockImage
 
         $landlordMedia = LandlordMedia::where('checksum', $checksum)->first();
         if (!$landlordMedia) {
+            $filename=dechex(crc32($checksum)).'.';
+            $filename.=empty($extension) ? pathinfo($imagePath, PATHINFO_EXTENSION) : $extension;
 
-            $landlordMedia = $landlord->addMedia($imagePath)
+            return $landlord->addMedia($imagePath)
                 ->preservingOriginal()
                 ->withProperties(['checksum' => $checksum])
                 ->usingName($originalFilename)
-                ->usingFileName($checksum.".".$extension ?? pathinfo($imagePath, PATHINFO_EXTENSION))
+                ->usingFileName($filename)
                 ->toMediaCollection($collection);
+
+        }else{
+            return $landlordMedia;
 
         }
 
-        return $landlordMedia;
 
     }
 
