@@ -100,11 +100,10 @@ const isOpenCropModal = ref(false)
 const closeModalisOpenCropModal = () => {
     addFiles.value = []
     isOpenCropModal.value = false
-    console.log(addFiles.value, isOpenCropModal.value)
+    fileInput.value.value = ''
 }
 
 const addComponent = async (element) => {
-    console.log(element)
     // let setData = props.data.components
     addFiles.value = element.target.files
     isOpenCropModal.value = true
@@ -177,25 +176,28 @@ const dragleave = () => {
 const drop = (e) => {
     e.preventDefault()
     let setData = []
-    for (const set of e.dataTransfer.files) {
-        if (set && set instanceof File) {
-            setData.push({
-                id: null,
-                image_id: null,
-                image_source: null,
-                imageFile: set,
-                ulid: ulid(),
-                layout: {
-                    imageAlt: set.name,
-                },
-                visibility : true
-            })
-        }
-    }
-    const newFiles = [...setData]
-    props.data.components = [...props.data.components, ...newFiles]
+    addFiles.value = e.dataTransfer.files
+    isOpenCropModal.value = true
+    // for (const set of e.dataTransfer.files) {
+    //     if (set && set instanceof File) {
+    //         setData.push({
+    //             id: null,
+    //             image_id: null,
+    //             image_source: null,
+    //             imageFile: set,
+    //             ulid: ulid(),
+    //             layout: {
+    //                 imageAlt: set.name,
+    //             },
+    //             visibility : true
+    //         })
+    //     }
+    // }
+    // const newFiles = [...setData]
+    // props.data.components = [...props.data.components, ...newFiles]
     isDragging.value = false
 }
+
 const selectComponentForEdition = (slide) => {
     const componentToEdit = props.data.components.find(item => item.ulid === slide.ulid);
 

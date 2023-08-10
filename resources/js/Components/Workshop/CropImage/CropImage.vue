@@ -51,7 +51,6 @@ const generateThumbnail = (file) => {
 
 const addComponent = async () => {
     const SendData = [];
-
     const processItem = async (item) => {
         return new Promise((resolve, reject) => {
             if (item.imagePosition) {
@@ -66,14 +65,15 @@ const addComponent = async () => {
     };
 
     await Promise.all(setData.value.map(processItem));
-    console.log("dataSend", SendData);
+    console.log("dataSend", SendData,setData);
+    
     try {
         const response = await axios.post(
             route(
                 props.imagesUploadRoute.name,
                 props.imagesUploadRoute.arguments
             ),
-            { images: SendData },
+            { images: [setData.value[0].originalFile] },
             {
                 headers: { "Content-Type": "multipart/form-data" },
             }
@@ -92,11 +92,9 @@ const swiperRef = ref(null);
 const current = ref(0)
 
 watch(current, (newVal) => {
-    console.log('masuk')
     swiperRef.value.$el.swiper.slideToLoop(newVal, 0, false)
 })
 
-console.log('masukkkkk')
 </script>
 
 <template>
@@ -132,7 +130,7 @@ console.log('masukkkkk')
                 class="mx-auto mt-5 grid max-w-full grid-cols-1 gap-x-8 gap-y-16 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3"
             >
                 <li v-for="(item, index) in setData" :key="index">
-                    <div @click="current = index">
+                    <div @click="current = index" :class="['p-2.5 border border-solid  rounded-lg', setData[current] == item ?  'border-orange-500'  : 'border-gray-300']">
                         <CropComponents :data="item" />
                         <div class="flex justify-center align-middle">
                             <h3
