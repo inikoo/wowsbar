@@ -52,6 +52,17 @@ class ShowGallery extends InertiaAction
                         'title' => __('image'),
                         'icon'  => 'fal fa-photo-video'
                     ],
+                    'actions'   => [
+                        [
+                            'type'  => 'button',
+                            'style' => 'create',
+                            'label' => 'create Banner',
+                            'route' => [
+                                'name'       => preg_replace('/index$/', 'create', $request->route()->getName()),
+                                'parameters' => array_values($this->originalParameters)
+                            ]
+                        ]
+                    ]
                 ],
                 'tabs'                             => [
                     'current'    => $this->tab,

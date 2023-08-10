@@ -14,20 +14,8 @@ import {library} from '@fortawesome/fontawesome-svg-core'
 
 library.add(faInfoCircle, faRoad, faClock, faDatabase)
 
-interface Navigation {
-    align: string
-    icon: string
-    title: string
-    type: string
-}
-
 const props = defineProps<{
-    navigation: {
-        banners: Navigation
-        changelog: Navigation
-        data: Navigation
-        showcase: Navigation
-    }
+    navigation: any
     current: string
 }>()
 
@@ -35,11 +23,11 @@ defineEmits(['update:tab']);
 
 let currentTab = ref(props.current);
 
-const changeTab = function (tabSlug) {
+const changeTab = (tabSlug: string) => {
     currentTab.value = tabSlug;
 }
 
-const tabIconClass = function (current, type, align, extraClass) {
+const tabIconClass = (current, type, align, extraClass) => {
     let iconClass = '-ml-0.5 h-5 w-5   ' + extraClass;
     iconClass += current ? '' : 'text-gray-400 dark:text-gray-500 group-hover:text-gray-500 ';
     iconClass += (type == 'icon' && align == 'right') ? 'ml-2 ' : 'mr-2 '
