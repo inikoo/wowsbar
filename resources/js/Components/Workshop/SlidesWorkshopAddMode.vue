@@ -5,8 +5,10 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faImage } from '@/../private/pro-light-svg-icons'
 import { ulid } from 'ulid';
 import { trans } from "laravel-vue-i18n"
-library.add(faImage)
+import Modal from './Modal/Modal.vue'
+import CropImage from './CropImage/CropImage.vue'
 
+library.add(faImage)
 const props = defineProps<{
     data: {
         common: {
@@ -42,29 +44,38 @@ const props = defineProps<{
 
 }>();
 
+const isOpen = ref(false)
+const addFiles = ref([])
+const closeModal = () => {
+    addFiles.value.files = null
+    isOpen.value = false
+    fileInput.value.value = ''
+}
+
 const isDragging = ref(false)
 const components = ref(props.data.components)
 const fileInput = ref(null)
 
 const onChange = () => {
-    let setData = []
-    for (const set of fileInput.value?.files) {
-        if (set && set instanceof File) {
-            setData.push({
-                id: null,
-                image_id: ulid(),
-                image_source: null,
-                imageFile: set,
-                ulid: ulid(),
-                layout: {
-                    imageAlt: set.name,
-                }
-            })
-        }
-    }
-    const newFiles = [...setData]
-    components.value = [...components.value, ...newFiles]
-    props.data.components = [...components.value]
+    addFiles.value = fileInput.value?.files
+    isOpen.value = true
+    // for (const set of fileInput.value?.files) {
+    //     if (set && set instanceof File) {
+    //         setData.push({
+    //             id: null,
+    //             image_id: ulid(),
+    //             image_source: null,
+    //             imageFile: set,
+    //             ulid: ulid(),
+    //             layout: {
+    //                 imageAlt: set.name,
+    //             }
+    //         })
+    //     }
+    // }
+    // const newFiles = [...setData]
+    // components.value = [...components.value, ...newFiles]
+    // props.data.components = [...components.value]
 }
 
 const dragover = (e) => {
@@ -78,30 +89,37 @@ const dragleave = () => {
 
 const drop = (e) => {
     e.preventDefault()
-    let setData = []
-    for (const set of e.dataTransfer.files) {
-        if (set && set instanceof File) {
-            setData.push({
-                id: null,
-                image_id: ulid(),
-                image_source: null,
-                imageFile: set,
-                ulid: ulid(),
-                layout: {
-                    imageAlt: set.name,
-                }
-            })
-        }
-    }
-    const newFiles = [...setData]
-    components.value = [...components.value, ...newFiles]
-    props.data.components = [...components.value]
+    addFiles.value = e.dataTransfer.files
+    isOpen.value = true
+    // let setData = []
+    // for (const set of e.dataTransfer.files) {
+    //     if (set && set instanceof File) {
+    //         setData.push({
+    //             id: null,
+    //             image_id: ulid(),
+    //             image_source: null,
+    //             imageFile: set,
+    //             ulid: ulid(),
+    //             layout: {
+    //                 imageAlt: set.name,
+    //             }
+    //         })
+    //     }
+    // }
+    // const newFiles = [...setData]
+    // components.value = [...components.value, ...newFiles]
+    // props.data.components = [...components.value]
     isDragging.value = false
 }
 
 </script>
 
 <template layout="App">
+     <Modal :isOpen="isOpen" @onClose="closeModal">
+        <div>
+            <CropImage :data="addFiles"  :imagesUploadRoute="props.imagesUploadRoute"/>
+        </div>
+    </Modal>
         <div class="col-span-full p-3" @dragover="dragover" @dragleave="dragleave" @drop="drop">
             <div class="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
               <div class="text-center">
