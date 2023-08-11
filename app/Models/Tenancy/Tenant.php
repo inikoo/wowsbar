@@ -53,6 +53,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, PublicUser> $rootUsers
  * @property-read int|null $root_users_count
  * @property-read \App\Models\Tenancy\TenantStats|null $stats
+ * @property-read \App\Models\Tenancy\TenantContentBlockStats|null contentBlockStats
  * @property-read \Illuminate\Database\Eloquent\Collection<int, User> $users
  * @property-read int|null $users_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Website> $websites
@@ -118,6 +119,12 @@ class Tenant extends SpatieTenant implements HasMedia
     {
         return $this->hasOne(TenantStats::class);
     }
+
+    public function contentBlockStats(): HasOne
+    {
+        return $this->hasOne(TenantContentBlockStats::class);
+    }
+
 
     public function currency(): BelongsTo
     {
