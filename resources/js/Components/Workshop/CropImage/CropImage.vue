@@ -161,7 +161,7 @@ watch(current, (newVal) => {
                 </li>
             </ul>
         </div>
-        <div v-if="catchError" class="text-red-500">
+        <div v-if="catchError?.response" class="text-red-500">
             <FontAwesomeIcon icon='fas fa-exclamation' class='' aria-hidden='true' />
             {{ catchError.response.statusText}}
         </div>
