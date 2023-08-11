@@ -27,4 +27,3 @@ Route::middleware([
     });
     require __DIR__."/public-auth.php";
 });
-

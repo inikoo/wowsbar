@@ -50,7 +50,7 @@ class GetFirstLoadProps
                         'logo' => GetPictureSources::run(
                             (new Image())->make(url('/images/logo.png'))->resize(0, 64)
                         ),
-                        'publicUrl'=>config('app.url')
+                        'publicUrl'=> config('app.url')
 
 
                     ];
