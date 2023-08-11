@@ -153,7 +153,7 @@ const setData = ref(false)
 
     <!-- Second set of components -->
     <div v-if="data.components.filter((item) => item.ulid != null).length == 0">
-        <SlidesWorkshopAddMode :data="data" />
+        <SlidesWorkshopAddMode :data="data" :imagesUploadRoute="imagesUploadRoute"/>
     </div>
 </div>
 

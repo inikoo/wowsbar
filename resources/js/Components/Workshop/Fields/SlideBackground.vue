@@ -66,6 +66,7 @@ watch(value, (newValue) => {
       }
      set(props.data,[props.fieldName],newValue)
   };
+  
 const uploadImageRespone=(res)=>{
     value.value = {...res.data[0]}
     isOpenCropModal.value = false
