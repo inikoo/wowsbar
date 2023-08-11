@@ -5,7 +5,7 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Gallery\UI;
+namespace App\Actions\Gallery\UI\UploadedImages;
 
 use App\Actions\InertiaAction;
 use App\Actions\UI\Dashboard\ShowDashboard;
