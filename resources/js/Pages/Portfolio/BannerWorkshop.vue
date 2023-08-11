@@ -10,7 +10,7 @@ import { cloneDeep, set as setData, isEqual } from "lodash";
 import ScreenView from "@/Components/ScreenView.vue";
 import { getDatabase, ref as dbRef, set, onValue, get } from "firebase/database";
 import { initializeApp } from "firebase/app";
-import serviceAccount from "@/../private/firebase/wowsbar-firebase.json";
+//import serviceAccount from "@/../private/firebase/wowsbar-firebase.json";
 import { usePage, router } from "@inertiajs/vue3";
 
 const props = defineProps<{
@@ -55,7 +55,11 @@ const props = defineProps<{
 
 console.log(props);
 
-const firebaseApp = initializeApp(serviceAccount);
+import {useFirebaseStore} from "@/Stores/firebase";
+
+const firebase = useFirebaseStore();
+console.log(firebase);
+const firebaseApp = initializeApp(firebase.credentials);
 const db = getDatabase(firebaseApp);
 const user = ref(usePage().props.auth.user);
 const jumpToIndex = ref(0);
