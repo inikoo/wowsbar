@@ -5,6 +5,7 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
+use App\Enums\Portfolio\ContentBlock\ContentBlockStateEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -24,6 +25,10 @@ return new class () extends Migration {
             $table->string('slug')->collation('und_ns');
             $table->string('code')->collation('und_ns_ci');
             $table->string('name')->collation('und_ns_ci');
+            $table->string('state')->default(ContentBlockStateEnum::IN_PROCESS->value);
+            $table->dateTimeTz('ready_at')->nullable();
+            $table->dateTimeTz('live_at')->nullable();
+            $table->dateTimeTz('retired_at')->nullable();
             $table->jsonb('layout');
             $table->jsonb('data');
             $table->timestampsTz();
