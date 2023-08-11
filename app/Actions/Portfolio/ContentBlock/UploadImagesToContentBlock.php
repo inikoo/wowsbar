@@ -7,7 +7,7 @@
 
 namespace App\Actions\Portfolio\ContentBlock;
 
-use App\Http\Resources\Media\MediaResource;
+use App\Http\Resources\Gallery\ImageResource;
 use App\Models\Portfolio\ContentBlock;
 use App\Models\Portfolio\Website;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -70,6 +70,6 @@ class UploadImagesToContentBlock
 
     public function htmlResponse($medias): AnonymousResourceCollection
     {
-        return MediaResource::collection($medias);
+        return ImageResource::collection($medias);
     }
 }
