@@ -80,7 +80,9 @@ class Media extends BaseMedia
         return $this->belongsToMany(Tenant::class)->withTimestamps();
     }
 
-
-
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
 
 }

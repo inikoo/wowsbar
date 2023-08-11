@@ -72,12 +72,12 @@ class ShowGallery extends InertiaAction
                 GalleryTabsEnum::UPLOADED_IMAGES->value => $this->tab == GalleryTabsEnum::UPLOADED_IMAGES->value
                     ?
                     fn () => ImageResource::collection(
-                        IndexImages::run(
+                        IndexUploadedImages::run(
                             prefix: 'uploaded_images'
                         )
                     )
                     : Inertia::lazy(fn () => ImageResource::collection(
-                        IndexImages::run(
+                        IndexUploadedImages::run(
                             prefix: 'uploaded_images'
                         )
                     )),
@@ -95,19 +95,18 @@ class ShowGallery extends InertiaAction
                     )),
             ]
         )->table(
-            IndexImages::make()->tableStructure(
+            IndexUploadedImages::make()->tableStructure(
+                modelOperations: [
+                    'uploadFile' => $this->canEdit ? [
+                        'route' => [
+                            'name'       => 'portfolio.images.upload',
+                            'parameters' => []
+                        ],
+                        'label' => __('asasasasasas image'),
+                        'style' => 'uploadFile'
+                    ] : false,
+               ],
                 prefix: 'uploaded_images'
-                /* modelOperations: [
-                      'createLink' => $this->canEdit ? [
-                          'route' => [
-                              'name'       => 'inventory.warehouses.show.warehouse-areas.create',
-                              'parameters' => array_values([$warehouse->slug])
-                          ],
-                          'label' => __('area'),
-                          'style' => 'create'
-                      ] : false,
-                  ],
-                  prefix: 'warehouse_areas' */
             )
         )->table(
             IndexStockImages::make()->tableStructure(

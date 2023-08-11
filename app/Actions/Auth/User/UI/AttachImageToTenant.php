@@ -42,7 +42,6 @@ class AttachImageToTenant
                 ->usingFileName($filename)
                 ->toMediaCollection($collection);
         }
-
         return $media;
     }
 }
