@@ -69,7 +69,7 @@ const addComponent = async () => {
             if (item.imagePosition) {
                 item.imagePosition.canvas.toBlob((blob) => {
                     // SendData.push(blob)
-                    form.value.append("blob", blob, item.originalFile.name) 
+                    form.value.append("blob", blob, item.originalFile.name)
                     resolve()
                 })
             } else {

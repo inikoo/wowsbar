@@ -14,12 +14,16 @@ use App\Http\Resources\Assets\LanguageResource;
 use App\Models\Assets\Language;
 use App\Models\Auth\User;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\File;
 use Lorisleiva\Actions\Concerns\AsObject;
 
 class GetFirstLoadProps
 {
     use AsObject;
 
+    /**
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     */
     public function handle(?User $user): array
     {
         if ($user) {
@@ -47,15 +51,16 @@ class GetFirstLoadProps
                 } else {
                     return [
 
-                        'logo' => GetPictureSources::run(
+                        'logo'      => GetPictureSources::run(
                             (new Image())->make(url('/images/logo.png'))->resize(0, 64)
                         ),
-                        'publicUrl'=> config('app.url')
+                        'publicUrl' => config('app.url')
 
 
                     ];
                 }
-            }
+            },
+            'FK'    => File::get(base_path(config('firebase.projects.app.credentials.file')))
         ];
     }
 }

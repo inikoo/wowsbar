@@ -78,7 +78,7 @@ class ShowUploadedImage extends InertiaAction
                             'style' => 'delete',
                             'route' => [
                                 'name'       => 'portfolio.images.remove',
-                                'parameters' => array_values($this->originalParameters)
+                                'parameters' => [$media->slug]
                             ]
                         ]
                     ],

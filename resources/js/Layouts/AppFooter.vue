@@ -8,13 +8,19 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { useDatabaseList } from "vuefire"
 import { getDatabase, ref as dbRef } from "firebase/database"
 import { initializeApp } from "firebase/app"
-import serviceAccount from "@/../private/firebase/wowsbar-firebase.json"
+
+
+
+import {useFirebaseStore} from "@/Stores/firebase";
+
+const firebase = useFirebaseStore();
+
 
 const activities = ref()
 
 const locale = useLocaleStore()
 const layout = useLayoutStore()
-const firebaseApp = initializeApp(serviceAccount);
+const firebaseApp = initializeApp(JSON.parse(firebase.credentials));
 const db = getDatabase(firebaseApp)
 // const activities = useDatabaseList(dbRef(db, layout.tenant.code))
 

@@ -8,9 +8,9 @@
 namespace App\Actions\Gallery;
 
 use App\Actions\Auth\User\UI\AttachImageToTenant;
-use App\Actions\Portfolio\ContentBlock\AttachImageToContentBlock;
-use App\Http\Resources\Media\MediaResource;
-use App\Models\Portfolio\ContentBlock;
+use App\Actions\Traits\WithActionUpdate;
+use App\Http\Resources\Gallery\ImageResource;
+use App\Models\Media\Media;
 use App\Models\Portfolio\Website;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Collection;
@@ -20,51 +20,46 @@ use Lorisleiva\Actions\Concerns\WithAttributes;
 
 class UpdateUploadedImage
 {
-    use AsAction;
-    use WithAttributes;
+    use WithActionUpdate;
 
     private Website|null $website = null;
 
-    public function handle(array $imageFiles): Collection
+    public function handle(Media $media, ?array $modelData): Media
     {
+        $imageFiles = $modelData['images'] ?? [];
 
-        $medias=[];
-
-        foreach ($imageFiles as $imageFile) {
-            $medias[] = AttachImageToTenant::run(
-                tenant: app('currentTenant'),
-                collection: 'content_block',
-                imagePath: $imageFile->getPathName(),
-                originalFilename: $imageFile->getClientOriginalName(),
-                extension: $imageFile->guessClientExtension()
-            );
+        if(count($imageFiles) > 0) {
+            foreach ($imageFiles as $imageFile) {
+                AttachImageToTenant::run(
+                    tenant: app('currentTenant'),
+                    collection: 'content_block',
+                    imagePath: $imageFile->getPathName(),
+                    originalFilename: $imageFile->getClientOriginalName(),
+                    extension: $imageFile->guessClientExtension()
+                );
+            }
         }
 
-        return collect($medias);
+        return $this->update($media, $modelData);
     }
 
     public function authorize(ActionRequest $request): bool
     {
-
         return $request->user()->can("portfolio.edit");
     }
 
     public function rules(): array
     {
         return [
-            'images'   => ['required'],
+            'name'     => ['sometimes', 'string'],
+            'images'   => ['sometimes'],
             'images.*' => ["mimes:jpg,png,jpeg|max:20000"]
         ];
     }
 
-    public function asController(ActionRequest $request): Collection
+    public function asController(Media $media, ActionRequest $request): Media
     {
         $request->validate();
-        return $this->handle($request->validated('images'));
-    }
-
-    public function htmlResponse($medias): AnonymousResourceCollection
-    {
-        return MediaResource::collection($medias);
+        return $this->handle($media, $request->validated());
     }
 }

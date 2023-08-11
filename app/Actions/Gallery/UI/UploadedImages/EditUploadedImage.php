@@ -81,21 +81,9 @@ class EditUploadedImage extends InertiaAction
                             'title'  => __('Metadata'),
                             'icon'   => 'fa-light fa-id-card',
                             'fields' => [
-                                'code' => [
+                                'name' => [
                                     'type'     => 'input',
                                     'label'    => __('Name'),
-                                    'value'    => $media->name,
-                                    'required' => true,
-                                ]
-                            ]
-                        ],
-                        [
-                            'title'  => __('Image'),
-                            'icon'   => 'fa-light fa-image',
-                            'fields' => [
-                                'code' => [
-                                    'type'     => 'input',
-                                    'label'    => __('Upload Image'),
                                     'value'    => $media->name,
                                     'required' => true,
                                 ]
@@ -104,7 +92,7 @@ class EditUploadedImage extends InertiaAction
                     ],
                     'args'      => [
                         'updateRoute' => [
-                            'name'       => 'model.images.update',
+                            'name'       => 'models.images.update',
                             'parameters' => $media->slug
                         ],
                     ]

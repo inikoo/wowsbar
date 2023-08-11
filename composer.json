@@ -7,18 +7,16 @@
     "require": {
         "php": "^8.2",
         "ext-pdo": "*",
-        "aws/aws-sdk-php": "^2.8",
+        "aws/aws-sdk-php": "^3.278",
         "commerceguys/addressing": "^2.0",
         "commerceguys/intl": "^2.0",
         "elasticsearch/elasticsearch": "^8.8",
-        "guzzlehttp/guzzle": "^7.2",
         "hisorange/browser-detect": "^4.5",
         "inertiajs/inertia-laravel": "^0.6.8",
         "kreait/laravel-firebase": "^5.2",
         "laravel/framework": "^10.10",
         "laravel/horizon": "^5.17",
         "laravel/sanctum": "^3.2",
-        "laravel/telescope": "^4.15",
         "laravel/tinker": "^2.8",
         "lorisleiva/laravel-actions": "^2.6",
         "maatwebsite/excel": "^3.1",
@@ -41,6 +39,7 @@
         "laravel/breeze": "^1.21",
         "laravel/pint": "^1.10",
         "laravel/sail": "^1.18",
+        "laravel/telescope": "^4.16",
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^7.0",
         "pestphp/pest": "^2.8",
@@ -77,7 +76,9 @@
     },
     "extra": {
         "laravel": {
-            "dont-discover": []
+            "dont-discover": [
+                "laravel/telescope"
+            ]
         }
     },
     "config": {

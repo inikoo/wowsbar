@@ -56,6 +56,8 @@ import {
 } from "@/../private/pro-light-svg-icons"
 import { faSearch, faBell} from "@/../private/pro-regular-svg-icons"
 import { onMounted } from "vue";
+import {useFirestore} from "vuefire";
+import {useFirebaseStore} from "@/Stores/firebase";
 
 
 library.add(
@@ -84,6 +86,12 @@ library.add(
 const initialiseApp = () => {
     const layout = useLayoutStore();
     const locale = useLocaleStore();
+    const firebase = useFirebaseStore();
+
+
+    if (usePage().props.FK) {
+        firebase.credentials=usePage().props.FK;
+    }
 
     if (usePage().props.localeData) {
         loadLanguageAsync(usePage().props.localeData.language.code);

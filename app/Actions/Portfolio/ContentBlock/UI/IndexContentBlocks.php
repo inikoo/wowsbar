@@ -7,6 +7,7 @@
 
 namespace App\Actions\Portfolio\ContentBlock\UI;
 
+use App\Enums\Portfolio\ContentBlock\ContentBlockStateEnum;
 use App\Enums\Web\WebBlockType\WebBlockTypeSlugEnum;
 use App\InertiaTable\InertiaTable;
 use App\Models\Portfolio\ContentBlock;
@@ -29,6 +30,33 @@ class IndexContentBlocks
 
     protected function getElementGroups(): void
     {
+        $this->elementGroups =
+            [
+                'state' => [
+                    'label' => __('State'),
+                    'elements' => [
+                        ContentBlockStateEnum::IN_PROCESS->value => [
+                            __('In Process'),
+                            app('currentTenant')->contentBlockStats->number_banners_in_process
+                        ],
+                        ContentBlockStateEnum::READY->value => [
+                            __('Ready'),
+                            app('currentTenant')->contentBlockStats->number_banners_ready
+                        ],
+                        ContentBlockStateEnum::LIVE->value => [
+                            __('Live'),
+                            app('currentTenant')->contentBlockStats->number_banners_live
+                        ],
+                        ContentBlockStateEnum::RETIRED->value => [
+                            __('Retired'),
+                            app('currentTenant')->contentBlockStats->number_banners_retired
+                        ]
+                    ],
+                    'engine' => function ($query, $elements) {
+                        $query->where('state', array_pop($elements) === 'number_banners_in_process');
+                    }
+                ]
+            ];
     }
 
     /** @noinspection PhpUndefinedMethodInspection */
@@ -76,6 +104,8 @@ class IndexContentBlocks
         WebBlockType $webBlockType = null,
         $canEdit = false
     ): Closure {
+        $this->getElementGroups();
+
         return function (InertiaTable $table) use ($modelOperations, $parent, $prefix, $webBlockType, $canEdit) {
             if ($prefix) {
                 $table

@@ -175,7 +175,6 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\HorizonServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        App\Providers\TelescopeServiceProvider::class,
         App\Providers\MacroServiceProvider::class,
         ElasticSearchServiceProvider::class
 
@@ -197,6 +196,5 @@ return [
     ])->toArray(),
 
     'domain'                 => env('APP_DOMAIN'),
-    'universal_search_index' => env('APP_NAME', 'wowsbar').(env('APP_ENV') == 'testing' ? '_testing' : env('APP_ENV')).'_search'
-
+    'universal_search_index' => env('APP_NAME', 'wowsbar').(env('APP_ENV') == 'testing' ? '_testing' : env('APP_ENV')).'_search',
 ];

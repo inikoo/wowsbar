@@ -10,12 +10,16 @@ import { cloneDeep, set as setData, isEqual } from "lodash";
 import ScreenView from "@/Components/ScreenView.vue";
 import { getDatabase, ref as dbRef, set, onValue, get } from "firebase/database";
 import { initializeApp } from "firebase/app";
-import serviceAccount from "@/../private/firebase/wowsbar-firebase.json";
+//import serviceAccount from "@/../private/firebase/wowsbar-firebase.json";
 import { usePage, router } from "@inertiajs/vue3";
-
+import { faUser, faUserFriends  } from "@/../private/pro-light-svg-icons";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+library.add(faUser, faUserFriends);
 const props = defineProps<{
   title: string;
   pageHead: object;
+  firebase : Boolean;
   bannerLayout: {
     delay: number;
     common: {
@@ -55,78 +59,88 @@ const props = defineProps<{
 
 console.log(props);
 
-const firebaseApp = initializeApp(serviceAccount);
+import {useFirebaseStore} from "@/Stores/firebase";
+
+const credential = useFirebaseStore();
+const firebaseApp = initializeApp(JSON.parse(credential.credentials));
 const db = getDatabase(firebaseApp);
 const user = ref(usePage().props.auth.user);
 const jumpToIndex = ref(0);
 const screenView = ref("");
 const data = reactive(cloneDeep(props.bannerLayout));
 const setData = ref(false);
+const firebase = ref(cloneDeep(props.firebase))
+const fetchInitialData = async () => {
+  try {
+    setData.value =  true
+    const snapshot = await get(dbRef(db, 'Banner'));
+    if (snapshot.exists()) {
+      const firebaseData = snapshot.val();
+      if (firebaseData[props.imagesUploadRoute.arguments.banner]) {
+        Object.assign(data,{...firebaseData,...firebaseData[props.imagesUploadRoute.arguments.banner]});
+      } else {
+        Object.assign(data,{...data,...cloneDeep(props.bannerLayout)});
+        await set(dbRef(db, 'Banner'),{...firebaseData,[props.imagesUploadRoute.arguments.banner] : data});
+        return;
+      }
+    } else {
+      Object.assign(data,{...data,...cloneDeep(props.bannerLayout)});
+    }
+    setData.value =  false
+  } catch (error) {
+    setData.value =  false
+    Object.assign(data,{...data,...cloneDeep(props.bannerLayout)});
+  }
+};
 
-// const fetchInitialData = async () => {
-//   try {
-//     setData.value =  true
-//     const snapshot = await get(dbRef(db, 'Banner'));
-//     if (snapshot.exists()) {
-//       const firebaseData = snapshot.val();
-//       if (firebaseData[props.imagesUploadRoute.arguments.banner]) {
-//         Object.assign(data,{...firebaseData[props.imagesUploadRoute.arguments.banner]});
-//         console.log('masuk', data)
-//       } else {
-//         Object.assign(data,{...data,...cloneDeep(props.bannerLayout)});
-//         return;
-//       }
-//     } else {
-//       Object.assign(data,{...data,...cloneDeep(props.bannerLayout)});
-//     }
-//     setData.value =  false
-//   } catch (error) {
-//     setData.value =  false
-//     console.error('Error fetching initial data:', error);
-//     Object.assign(data,{...data,...cloneDeep(props.bannerLayout)});
-//   }
-// };
+onValue(dbRef(db, 'Banner'), (snapshot) => {
+  if (snapshot.exists()) {
+    const firebaseData = snapshot.val();
+    if(firebaseData[props.imagesUploadRoute.arguments.banner]){
+        Object.assign(data,{...data,...firebaseData[props.imagesUploadRoute.arguments.banner]});
+      }
+  }
+});
 
-// onValue(dbRef(db, 'Banner'), (snapshot) => {
-//   if (snapshot.exists()) {
-//     const firebaseData = snapshot.val();
-//     if(firebaseData[props.imagesUploadRoute.arguments.banner]){
-//         Object.assign(data,{...data,...firebaseData[props.imagesUploadRoute.arguments.banner]});
-//       }
-//   }
-// });
+const updateData = async () => {
+  if(firebase.value){
+    try {
+        if (data && setData.value == false) {
+            const snapshot = await get(dbRef(db, 'Banner'));
+            if (snapshot.exists()) {
+                const firebaseData = snapshot.val();
+                await set(dbRef(db, 'Banner'), { ...firebaseData, [props.imagesUploadRoute.arguments.banner]: data });
+            }
+        }
+    } catch (error) {
+        console.error('Error updating data:', error);
+    }
+  }
+};
 
-// const updateData = async () => {
-//   try {
-//     if (data && setData.value == false) {
-//       await set(dbRef(db, 'Banner'),{[props.imagesUploadRoute.arguments.banner] : data});
-//     }
-//   } catch (error) {
-//     console.error('Error updating data:', error);
-//   }
-// };
+watch(data, updateData, { deep: true });
+onBeforeMount(()=>{
+  if(firebase.value)fetchInitialData
+})
 
-// watch(data, updateData, { deep: true });
-// onBeforeMount(fetchInitialData)
+const setDataBeforeLeave = () => {
+  const set = { ...data };  // Creating a copy of the data object
+  for (const index in set.components) {
+    if (set.components[index].user == user.value.username) {
+      delete set.components[index].user;  // Removing the 'user' property from components
+    }
+  }
+  Object.assign(data, set);  // Assigning the modified 'set' object back to 'data'
+  updateData();  // This line should help you see the modified 'data' object
+};
 
-// const setDataBeforeLeave = () => {
-//   const set = { ...data };  // Creating a copy of the data object
-//   for (const index in set.components) {
-//     if (set.components[index].user == user.value.username) {
-//       delete set.components[index].user;  // Removing the 'user' property from components
-//     }
-//   }
-//   Object.assign(data, set);  // Assigning the modified 'set' object back to 'data'
-//   updateData();  // This line should help you see the modified 'data' object
-// };
+onBeforeUnmount(() => {
+  setDataBeforeLeave()
+});
 
-// onBeforeUnmount(() => {
-//   setDataBeforeLeave()
-// });
-
-// window.addEventListener('beforeunload', function (event) {
-//   event.returnValue = setDataBeforeLeave(); // This message will be shown to the user
-// });
+window.addEventListener('beforeunload', function (event) {
+  event.returnValue = setDataBeforeLeave(); // This message will be shown to the user
+});
 </script>
 <template layout="App">
   <Head :title="capitalize(title)" />
@@ -135,9 +149,22 @@ const setData = ref(false);
   <div>
     <!-- First set of components -->
     <div v-if="data.components.filter((item) => item.ulid != null).length > 0">
-      <div class="flex justify-end pr-2">
-        <ScreenView @screenView="(val) => (screenView = val)" />
-      </div>
+    <div class="flex w-full">
+    <div class="isolate inline-flex shadow-sm w-3/6" >
+      <button type="button"  @click="firebase = true" :class="[
+    'relative inline-flex items-center bg-white px-3 py-2 text-xs font-semibold border-r hover:bg-gray-50 focus:z-10',
+    firebase ? 'text-orange-500' : 'text-gray-900'
+  ]"><font-awesome-icon :icon="['fal', 'user']" class="p-1"/> Collaborative Work</button>
+      <button type="button" @click="firebase = false" :class="[
+    'relative inline-flex items-center bg-white px-3 py-2 text-xs font-semibold border-r hover:bg-gray-50 focus:z-10',
+    !firebase ? 'text-orange-500' : 'text-gray-900'
+  ]"><font-awesome-icon :icon="['fal', 'user-friends']" class="p-1"/> Individual Work</button>
+    </div>
+        <div class="flex justify-end pr-2 w-3/6">
+          <ScreenView @screenView="(val) => (screenView = val)" />
+        </div>
+    </div>
+     
       <div class="flex justify-center pr-0.5">
         <Slider :data="data" :jumpToIndex="jumpToIndex" :view="screenView" />
       </div>
