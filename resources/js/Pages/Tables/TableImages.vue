@@ -22,12 +22,13 @@ const emits = defineEmits<{
 
 function imageRoute(image) {
     switch (route().current()) {
-        case 'portfolio.images.index':
+        case 'portfolio.gallery':
             return route(
                 'portfolio.images.show',
                 [image.slug])
     }
 }
+
 const selectedRow = reactive({
     'uploaded_images': [],
     'stock_images': []
@@ -40,9 +41,9 @@ watch(selectedRow, () => {
 
 <template>
     <Table :resource="data" :name="tab" class="mt-5" :selectedRow="selectedRow">
-        <template #cell(slug)="{ item: image }">
+        <template #cell(name)="{ item: image }">
             <Link :href="imageRoute(image)">
-                {{ image['slug'] }}
+                {{ image['name'] }}
             </Link>
         </template>
         <template #cell(thumbnail)="{ item: image }">
@@ -52,8 +53,4 @@ watch(selectedRow, () => {
             <Checkbox class="p-2.5" :value="item.id" name="select-image" id="select-image" v-model:checked="selectedRow[tabName]"/>
         </template>
     </Table>
-
-
 </template>
-
-

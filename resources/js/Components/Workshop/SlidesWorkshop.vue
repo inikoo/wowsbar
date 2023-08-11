@@ -105,40 +105,9 @@ const closeModalisOpenCropModal = () => {
 }
 
 const addComponent = async (element) => {
-    // let setData = props.data.components
     addFiles.value = element.target.files
     isOpenCropModal.value = true
-    // Save the new image to database
-    // try {
-    //     const response = await axios.post(route(props.imagesUploadRoute.name, props.imagesUploadRoute.arguments),
-    //         { 'images': element.target.files },
-    //         {
-    //             headers: { 'Content-Type': 'multipart/form-data' }
-    //         }
-    //     )
-        
-    //     for (const set of response.data) {
-    //             setData.push({
-    //                 id: null,
-    //                 image_id: set.id,
-    //                 image_source: set.original_url,
-    //                 ulid: ulid(),
-    //                 layout: {
-    //                     imageAlt: set.name,
-    //                 },
-    //                 visibility : true
-    //                 })
-    //     }
-    //     props.data.components = [...setData]
-
-    // } catch (error) {
-    //     // Handle any errors that might occur during the POST request
-    //     console.error(error);
-    // }
 };
-
-
-
 
 const removeComponent = (file) => {
     const index =  props.data.components.findIndex(item => item.ulid === file.ulid);
@@ -166,26 +135,8 @@ const dragleave = () => {
 
 const drop = (e) => {
     e.preventDefault()
-    let setData = []
     addFiles.value = e.dataTransfer.files
     isOpenCropModal.value = true
-    // for (const set of e.dataTransfer.files) {
-    //     if (set && set instanceof File) {
-    //         setData.push({
-    //             id: null,
-    //             image_id: null,
-    //             image_source: null,
-    //             imageFile: set,
-    //             ulid: ulid(),
-    //             layout: {
-    //                 imageAlt: set.name,
-    //             },
-    //             visibility : true
-    //         })
-    //     }
-    // }
-    // const newFiles = [...setData]
-    // props.data.components = [...props.data.components, ...newFiles]
     isDragging.value = false
 }
 
@@ -248,7 +199,8 @@ const ComponentsBlueprint = ref([
                 name: 'image',
                 type: 'slideBackground',
                 label: trans('Image'),
-                value: ['image']
+                value: ['image'],
+                uploadRoute : props.imagesUploadRoute
             },
             {
                 name: ['layout', 'link'],
@@ -434,7 +386,24 @@ const setCommonEdit = () => {
 };
 
 
-
+const uploadImageRespone=(res)=>{
+    console.log(res)
+    let setData = []
+     for (const set of res.data) {
+            setData.push({
+                id: null,
+                ulid: ulid(),
+                layout: {
+                    imageAlt: set.name,
+                },
+                image : set,
+                visibility : true
+            })
+    }
+    const newFiles = [...setData]
+    props.data.components = [...props.data.components, ...newFiles]
+    isOpenCropModal.value = false
+}
 
 </script>
 
@@ -448,7 +417,7 @@ const setCommonEdit = () => {
 
     <Modal :isOpen="isOpenCropModal" @onClose="closeModalisOpenCropModal">
         <div>
-            <CropImage :data="addFiles"  :imagesUploadRoute="props.imagesUploadRoute"/>
+            <CropImage :data="addFiles"  :imagesUploadRoute="props.imagesUploadRoute"  :respone="uploadImageRespone"/>
         </div>
     </Modal>
 

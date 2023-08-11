@@ -6,8 +6,9 @@
  */
 
 
-use App\Actions\Gallery\UI\IndexImages;
+use App\Actions\Gallery\UI\IndexUploadedImages;
 use App\Actions\Gallery\UI\ShowGallery;
+use App\Actions\Gallery\UI\ShowUploadedImage;
 use App\Actions\Portfolio\ContentBlock\Banners\UI\CreateBanner;
 use App\Actions\Portfolio\ContentBlock\Banners\UI\EditBanner;
 use App\Actions\Portfolio\ContentBlock\Banners\UI\IndexBanners;
@@ -52,6 +53,10 @@ Route::get('/banners/{banner}/deleted', [ShowDeletedBanner::class,'inTenant'])->
 
 //Route::get('/banners/{banner}/delete', [RemoveBanner::class,'inTenant'])->name('banners.remove');
 
-Route::get('/gallery', ShowGallery::class)->name('gallery');
+Route::prefix('gallery')->group(function () {
+    Route::get('/', ShowGallery::class)->name('gallery');
+    Route::get('/images/{media}', ShowUploadedImage::class)->name('images.show');
+    Route::post('/images', ShowUploadedImage::class)->name('images.upload');
+});
 
 //Route::get('/images', IndexImages::class)->name('images.index');

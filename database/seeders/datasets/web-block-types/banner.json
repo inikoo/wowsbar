@@ -18,26 +18,30 @@
         "images": [
             {
                 "source": "resources",
-                "imageSrc": "Image 555.jpg"
+                "imageSrc": "Car.jpg",
+                "imageAlt": "lamborghini car"
             },
             {
                 "source": "resources",
-                "imageSrc": "Car1.jpg"
+                "imageSrc": "Shopping Mall.jpg",
+                "imageAlt": "Shopping Mall"
             },
             {
                 "source": "resources",
-                "imageSrc": "Image 444.jpg"
+                "imageSrc": "Skincare.jpg",
+                "imageAlt": "Skincare"
             },
             {
                 "source": "resources",
-                "imageSrc": "Image 111.jpg"
+                "imageSrc": "soap.jpg",
+                "imageAlt": "Soap"
             }
         ],
         "components": [
             {
                 "visibility": true,
                 "layout": {
-                    "imageAlt": "Front of men's Basic Tee in sienna",
+                  
                     "link": null,
                     "corners": {
                         "bottomRight": {
@@ -58,7 +62,7 @@
             {
                 "visibility": true,
                 "layout":{
-                    "imageAlt": "Lorem ipsum dolor sit amet consecrate.",
+                    
                     "corners": {
                         "topLeft": {
                             "type": "cornerText",
@@ -100,7 +104,6 @@
             {
                 "visibility": false,
                 "layout": {
-                    "imageAlt": "Continuous infinite slider",
                     "link": "google.com",
                     "corners": {
                         "topRight": {
