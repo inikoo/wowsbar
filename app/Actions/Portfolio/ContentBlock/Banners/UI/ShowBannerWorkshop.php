@@ -10,6 +10,7 @@ namespace App\Actions\Portfolio\ContentBlock\Banners\UI;
 use App\Actions\InertiaAction;
 use App\Models\Portfolio\ContentBlock;
 use App\Models\Portfolio\Website;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -41,6 +42,9 @@ class ShowBannerWorkshop extends InertiaAction
     }
 
 
+    /**
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     */
     public function htmlResponse(ContentBlock $banner, ActionRequest $request): Response
     {
         return Inertia::render(
@@ -99,9 +103,8 @@ class ShowBannerWorkshop extends InertiaAction
                 'imagesUploadRoute' => [
                     'name'      => $request->route()->getName().'.images.store',
                     'arguments' => $request->route()->originalParameters()
-                ]
-
-
+                ],
+                'fcf'=>File::get(base_path(config('firebase.credentials.file')))
             ]
         );
     }
