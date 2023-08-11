@@ -48,8 +48,6 @@ class StoreContentBlock
         data_set($modelData, 'data.website_slug', $website->slug);
         data_set($modelData, 'ulid', Str::ulid());
 
-
-
         /** @var ContentBlock $contentBlock */
         $contentBlock = $webBlock->contentBlocks()->create($modelData);
         if ($contentBlockComponents) {
