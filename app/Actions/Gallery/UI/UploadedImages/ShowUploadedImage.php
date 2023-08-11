@@ -5,22 +5,15 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Gallery\UI;
+namespace App\Actions\Gallery\UI\UploadedImages;
 
 use App\Actions\InertiaAction;
 use App\Actions\UI\Dashboard\ShowDashboard;
-use App\Enums\UI\GalleryTabsEnum;
-use App\Http\Resources\Gallery\ImageResource;
-use App\InertiaTable\InertiaTable;
 use App\Models\Media\Media;
-use Closure;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
-use Spatie\QueryBuilder\AllowedFilter;
-use Spatie\QueryBuilder\QueryBuilder;
 
 class ShowUploadedImage extends InertiaAction
 {
@@ -69,6 +62,25 @@ class ShowUploadedImage extends InertiaAction
                     'iconRight' => [
                         'title' => __('image'),
                         'icon'  => 'fal fa-images'
+                    ],
+                    'actions' => [
+                        [
+                            'type'  => 'button',
+                            'style' => 'edit',
+                            'label' => __('edit'),
+                            'route' => [
+                                'name'       => preg_replace('/show$/', 'edit', $request->route()->getName()),
+                                'parameters' => [$media->slug]
+                            ]
+                        ],
+                        [
+                            'type'  => 'button',
+                            'style' => 'delete',
+                            'route' => [
+                                'name'       => 'portfolio.images.remove',
+                                'parameters' => array_values($this->originalParameters)
+                            ]
+                        ]
                     ],
                 ],
             ]

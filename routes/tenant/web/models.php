@@ -7,9 +7,11 @@
 
 
 use App\Actions\Auth\User\UpdateUser;
+use App\Actions\Gallery\UpdateUploadedImage;
 use App\Actions\Portfolio\ContentBlock\DeleteContentBlock;
 use App\Actions\Portfolio\ContentBlock\StoreContentBlock;
 use App\Actions\Portfolio\ContentBlock\UpdateContentBlock;
+use App\Actions\Portfolio\ContentBlock\UpdateStateContentBlock;
 use App\Actions\Tenancy\Tenant\UpdateSystemSettings;
 use App\Actions\UI\Profile\UpdateProfile;
 use App\Actions\Portfolio\Website\DeleteWebsite;
@@ -21,8 +23,10 @@ Route::patch('/website/{website}', UpdateWebsite::class)->name('website.update')
 Route::delete('/website/{website}', DeleteWebsite::class)->name('website.delete');
 Route::post('/website/{website}/web-block-type/{webBlockType}/banners', [StoreContentBlock::class,'inWebsiteInWebBlockType'])->name('website.web-block-type.banner.store');
 Route::patch('/content-block/{contentBlock}', UpdateContentBlock::class)->name('content-block.update');
+Route::patch('/content-block/{contentBlock}/state/{state}', UpdateStateContentBlock::class)->name('content-block.updateState');
 Route::delete('/content-block/{contentBlock}', DeleteContentBlock::class)->name('content-block.delete');
 
+Route::patch('/images/{media}', UpdateUploadedImage::class)->name('images.update');
 
 Route::patch('/user/{user:username}', UpdateUser::class)->name('user.update');
 Route::patch('/profile', UpdateProfile::class)->name('profile.update');
