@@ -60,7 +60,6 @@ class Website extends Model
 {
     use HasSlug;
     use SoftDeletes;
-
     use HasUniversalSearch;
     use HasFactory;
     use BelongsToTenant;
