@@ -68,27 +68,23 @@ const updateFormValue = (newValue) => {
 };
 </script>
 <template>
-  <div class="relative">
     <div class="relative">
-      <input
-        v-model.trim="value"
-        :readonly="fieldData?.readonly"
-        :type="props.options?.type ?? 'text'"
-        @input="form.errors[fieldName] = ''"
-        :placeholder="fieldData?.placeholder"
-        class="block w-full shadow-sm rounded-md dark:bg-gray-600 dark:text-gray-400 focus:ring-gray-500 focus:border-gray-500 sm:text-sm border-gray-300 dark:border-gray-500 read-only:bg-gray-100 read-only:ring-0 read-only:ring-transparent read-only:text-gray-500"
-      />
-      <div
-        v-if="fieldData?.copyButton"
-        class="absolute inset-y-0 right-0 group cursor-pointer px-1.5 flex justify-center items-center text-gray-600"
-        @click="copyText(form[fieldName])"
-      >
-        <FontAwesomeIcon
-          icon="fal fa-copy"
-          class="text-lg leading-none mr-1 opacity-20 group-hover:opacity-75 group-active:opacity-100"
-          aria-hidden="true"
-        />
-      </div>
+        <div class="relative">
+            <input
+                v-model.trim="value"
+                :readonly="fieldData?.readonly"
+                :type="props.options?.type ?? 'text'" @input="form.errors[fieldName] = ''"
+                :placeholder="fieldData?.placeholder"
+                class="block w-full shadow-sm rounded-md text-gray-600 dark:bg-gray-600 dark:text-gray-400 focus:ring-gray-500 focus:border-gray-500 sm:text-sm border-gray-300 dark:border-gray-500 read-only:bg-gray-100 read-only:ring-0 read-only:ring-transparent read-only:text-gray-500"
+            />
+            <div v-if="fieldData?.copyButton" class="absolute inset-y-0 right-0 group cursor-pointer px-1.5 flex justify-center items-center text-gray-600"
+                @click="copyText(form[fieldName])">
+                <FontAwesomeIcon
+                    icon="fal fa-copy"
+                    class="text-lg leading-none mr-1 opacity-20 group-hover:opacity-75 group-active:opacity-100"
+                    aria-hidden="true"
+                />
+            </div>
 
       <!-- Icon: Error, Success, Loading -->
       <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
