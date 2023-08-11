@@ -17,7 +17,7 @@ library.add(faInfoCircle, faRoad, faClock, faDatabase)
 const props = defineProps<{
     navigation: any
     current: string
-    selectedRow: number
+    selectedRow?: any // dynamic key-value object
 }>()
 
 defineEmits(['update:tab']);
@@ -60,7 +60,7 @@ const tabIconClass = (current: string, type: string, align: string, extraClass: 
                                     'group inline-flex items-center py-2 px-1 font-medium text-sm']"
                                 :aria-current="tabSlug === currentTab ? 'page' : undefined">
                                 <FontAwesomeIcon v-if="tab.icon" :icon="tab.icon" :class="tabIconClass(tabSlug === currentTab, tab.type, tab.align, tab.iconClass ?? '')" aria-hidden="true"/>
-                                <span v-if="tab.type !== 'icon'" class="capitalize">{{ tab.title }}</span>
+                                <span v-if="tab.type !== 'icon'" class="capitalize">{{ tab.title }} {{ selectedRow?.[tabSlug] ? `(${selectedRow[tabSlug]?.length})` : '' }}</span>
                             </button>
                             <div class="absolute h-0.5 rounded-full bottom0 xl:bottom-0 left-[50%] translate-x-[-50%] mx-auto transition-all duration-200 ease-in-out"
                                 :class="[tabSlug === currentTab ? 'bg-orange-500 dark:bg-gray-300 w-full' : 'bg-gray-400 w-0 group-hover:w-3/6']"
@@ -71,7 +71,7 @@ const tabIconClass = (current: string, type: string, align: string, extraClass: 
 
                 <!-- Right section -->
                 <nav class="flex flex-row-reverse mr-4" aria-label="Secondary Tabs">
-                    <template v-for="(tab, tabSlug) in navigation" :key="tabSlug">
+                    <template v-for="(tab, tabSlug, index) in navigation" :key="tabSlug">
                         <div class="relative group">
                             <button
                                 v-if="tab.align === 'right'"
