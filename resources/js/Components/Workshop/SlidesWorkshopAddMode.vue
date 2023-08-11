@@ -40,8 +40,8 @@ const props = defineProps<{
             }
         >
         delay: number,
-        imagesUploadRoute : Object
     }
+    imagesUploadRoute : Object
 
 }>();
 
@@ -80,23 +80,24 @@ const drop = (e) => {
 
 const uploadImageRespone=(res)=>{
     console.log(res)
-    // let setData = []
-    //  for (const set of res.data) {
-    //         setData.push({
-    //             id: null,
-    //             ulid: ulid(),
-    //             layout: {
-    //                 imageAlt: set.name,
-    //             },
-    //             image : set,
-    //             visibility : true
-    //         })
-    // }
-    // const newFiles = [...setData]
-    // props.data.components = [...props.data.components, ...newFiles]
-    // isOpen.value = false
+    let setData = []
+     for (const set of res.data) {
+            setData.push({
+                id: null,
+                ulid: ulid(),
+                layout: {
+                    imageAlt: set.name,
+                },
+                image : set,
+                visibility : true
+            })
+    }
+    const newFiles = [...setData]
+    props.data.components = [...props.data.components, ...newFiles]
+    isOpen.value = false
 }
 
+console.log('add',props)
 
 </script>
 
