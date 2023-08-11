@@ -67,7 +67,6 @@ class IndexBanners extends InertiaAction
     }
 
 
-
     public function htmlResponse(LengthAwarePaginator $banners, ActionRequest $request): Response
     {
         $scope     = $this->parent;
@@ -95,17 +94,30 @@ class IndexBanners extends InertiaAction
                         'title' => __('banner'),
                         'icon'  => 'fal fa-window-maximize'
                     ],
-                    'actions'   => [
-                        [
-                            'type'  => 'button',
-                            'style' => 'create',
-                            'label' => 'create banner',
-                            'route' => [
-                                'name'       => preg_replace('/index$/', 'create', $request->route()->getName()),
-                                'parameters' => array_values($this->originalParameters)
+                    'actions'   =>
+                        match (app('currentTenant')->stats->number_websites) {
+                            0=>[],
+                            1 => [
+                                'type'  => 'button',
+                                'style' => 'create',
+                                'label' => 'create banner',
+                                'route' => [
+                                    'name'       => 'portfolio.websites.show.banners.create',
+                                    'parameters' => app('currentTenant')->websites()->first()->slug
+                                ]
+                            ],
+                            default => [
+                                'type'  => 'modal',
+                                'component'=>'chooseWebsite',
+                                'style' => 'create',
+                                'label' => 'create banner',
+                                'route' => [
+                                    'name'       => 'portfolio.banners.create',
+                                ]
                             ]
-                        ]
-                    ]
+                        }
+
+
                 ],
                 'data'        => ContentBlockResource::collection($banners),
 
@@ -113,6 +125,7 @@ class IndexBanners extends InertiaAction
         )->table(
             IndexContentBlocks::make()->tableStructure(
                 parent: $this->parent,
+                /*
                 modelOperations: [
                     'createLink' => $this->canEdit ? [
                         'route' => [
@@ -124,6 +137,7 @@ class IndexBanners extends InertiaAction
                         'icon'  => 'fas fa-plus'
                     ] : false
                 ],
+                */
                 webBlockType: $this->webBlockType,
                 canEdit: $this->canEdit
             )

@@ -97,10 +97,34 @@ class IndexContentBlocks
                 'count' => app('currentTenant')->stats->number_content_blocks,
             ];
             if ($webBlockType) {
-                $emptyState = match ($webBlockType->slug) {
-                    WebBlockTypeSlugEnum::BANNER => [
-                        'title'  => __('No banners found'),
-                        'count'  => app('currentTenant')->stats->number_content_blocks_web_block_type_banner,
+                $emptyState = null;
+
+                if ($webBlockType->slug == WebBlockTypeSlugEnum::BANNER) {
+                    $action = null;
+
+                    $description = null;
+                    if ($canEdit) {
+                        if (app('currentTenant')->stats->number_websites == 0) {
+                            $description = __('Before creating your first banner you need a website').' 😉';
+
+                            $action = [
+                                'type'    => 'button',
+                                'style'   => 'primary',
+                                'tooltip' => __('new website'),
+                                'label'   => __('website'),
+                                'route'   => [
+                                    'name' => 'portfolio.websites.create',
+                                ]
+                            ];
+                        }
+                    }
+
+                    $emptyState = [
+                        'title'       => __('No banners found'),
+                        'count'       => app('currentTenant')->stats->number_content_blocks_web_block_type_banner,
+                        'description' => $description,
+                        'action'      => $action
+                        /*
                         'action' => $canEdit && class_basename($parent) == 'Website' ? [
                             'type'    => 'button',
                             'style'   => 'primary',
@@ -111,9 +135,9 @@ class IndexContentBlocks
                                 'parameters' => ['website' => $parent->slug]
                             ]
                         ] : null
-                    ],
-                    default => null
-                };
+                        */
+                    ];
+                }
             }
 
 

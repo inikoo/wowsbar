@@ -11,7 +11,7 @@ use App\Models\Tenancy\Tenant;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Lorisleiva\Actions\Concerns\AsAction;
 
-class TenantHydrateWebsites implements ShouldBeUnique
+class TenantHydrateWebsites
 {
     use AsAction;
     use HasTenantHydrate;
@@ -21,7 +21,6 @@ class TenantHydrateWebsites implements ShouldBeUnique
 
         $stats = [
             'number_websites'       => $tenant->websites()->count(),
-
         ];
         $tenant->stats()->update($stats);
     }
