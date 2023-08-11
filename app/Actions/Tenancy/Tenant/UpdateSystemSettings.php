@@ -52,7 +52,7 @@ class UpdateSystemSettings
             data_set(
                 $modelData,
                 match ($key) {
-                    'name'                    => 'settings.ui.name',
+                    'name'                    => 'name',
                     'google_client_id'        => 'settings.google.id',
                     'google_client_secret'    => 'settings.google.secret',
                     'google_drive_folder_key' => 'settings.google.drive.folder',

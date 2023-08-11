@@ -54,7 +54,7 @@ class EditSystemSettings
                                 "name" => [
                                     "type"  => "input",
                                     "label" => __("Name"),
-                                    "value" => Arr::get($tenant->settings, 'ui.name', $tenant->name)
+                                    "value" => $tenant->name
                                 ],
                                 "logo" => [
                                     "type"  => "avatar",
