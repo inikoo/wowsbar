@@ -6,12 +6,9 @@
  */
 
 
-use App\Actions\Gallery\UI\IndexUploadedImages;
 use App\Actions\Gallery\UI\ShowGallery;
-use App\Actions\Gallery\UI\ShowUploadedImage;
-use App\Actions\Gallery\UploadImagesToGallery;
-use App\Actions\Gallery\UI\UploadedImages\EditUploadedImage;
 use App\Actions\Gallery\UI\UploadedImages\ShowUploadedImage;
+use App\Actions\Gallery\UploadImagesToGallery;
 use App\Actions\Portfolio\ContentBlock\Banners\UI\CreateBanner;
 use App\Actions\Portfolio\ContentBlock\Banners\UI\EditBanner;
 use App\Actions\Portfolio\ContentBlock\Banners\UI\IndexBanners;
