@@ -77,7 +77,7 @@ class StoreTenant
                     'email'
                 ]),
                 [
-                    'is_root' => true
+                    'is_public' => true
                 ]
             )
         );
@@ -160,7 +160,7 @@ class StoreTenant
                     'email'
                 ]),
                 [
-                    'is_root' => true
+                    'is_public' => true
                 ]
             )
         );

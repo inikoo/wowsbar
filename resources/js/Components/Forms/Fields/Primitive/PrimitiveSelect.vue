@@ -1,6 +1,6 @@
 <!--
   - Author: Raul Perusquia <raul@inikoo.com>
-  - Created: Wed, 10 May 2023 09:18:00 Malaysia Time, Pantai Lembeng, Bali, Id
+  - Created: Wed, 10 May 2023 09:18:00 Malaysia Time, Pantai Lembeng, Bali, Indonesia
   - Copyright (c) 2023, Raul A Perusquia Flores
   -->
 
@@ -59,7 +59,7 @@ const updateFormValue = (newValue) => {
 <template>
     <div class="">
         <div class="relative">
-            <Multiselect v-model="value" 
+            <Multiselect v-model="value"
                 :options="props.fieldData.options" :placeholder="props.fieldData.placeholder ?? 'Select your option'"
                 :canClear="!props.fieldData.required"
                 :closeOnSelect="props.fieldData.mode == 'multiple' ? false : true" :canDeselect="!props.fieldData.required"

@@ -10,7 +10,7 @@ namespace App\Actions\Auth\RootUser;
 use App\Actions\Auth\User\Hydrators\UserHydrateUniversalSearch;
 use App\Actions\Auth\User\UI\SetUserAvatar;
 use App\Actions\Tenancy\Tenant\Hydrators\TenantHydrateUsers;
-use App\Models\Auth\RootUser;
+use App\Models\Auth\PublicUser;
 use App\Models\Auth\User;
 use App\Models\Tenancy\Tenant;
 use App\Rules\AlphaDashDot;
@@ -28,7 +28,7 @@ class StoreRootUser
     private bool $asAction = false;
 
 
-    public function handle(Tenant $tenant, array $objectData = []): RootUser
+    public function handle(Tenant $tenant, array $objectData = []): PublicUser
     {
         /** @var User $rootUser */
         $rootUser = $tenant->rootUsers()->create($objectData);
@@ -59,7 +59,7 @@ class StoreRootUser
         ];
     }
 
-    public function action(Tenant $tenant, ?array $objectData = []): RootUser
+    public function action(Tenant $tenant, ?array $objectData = []): PublicUser
     {
         $this->asAction = true;
         $this->setRawAttributes($objectData);

@@ -1,7 +1,7 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Fri, 12 May 2023 10:34:26 Malaysia Time, Pantai Lembeng, Bali, Id
+ * Created: Fri, 12 May 2023 10:34:26 Malaysia Time, Pantai Lembeng, Bali, Indonesia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
@@ -12,7 +12,7 @@ use App\Actions\Helpers\Images\GetPictureSources;
 use App\Helpers\ImgProxy\Image;
 use App\Http\Resources\Assets\LanguageResource;
 use App\Models\Assets\Language;
-use App\Models\Auth\RootUser;
+use App\Models\Auth\PublicUser;
 use Illuminate\Support\Facades\App;
 use Lorisleiva\Actions\Concerns\AsObject;
 
@@ -20,7 +20,7 @@ class GetLandlordFirstLoadProps
 {
     use AsObject;
 
-    public function handle(?RootUser $user): array
+    public function handle(?PublicUser $user): array
     {
         if ($user) {
             $language = $user->language;

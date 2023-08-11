@@ -1,7 +1,7 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Thu, 10 Aug 2023 09:48:32 Malaysia Time, Pantai Lembeng,, Bali
+ * Created: Fri, 11 Aug 2023 09:57:40 Malaysia Time, Pantai Lembeng, Bali
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
@@ -14,7 +14,6 @@ trait HasUserDetails
     public function userDetailsColumns(Blueprint $table): Blueprint
     {
         $table->boolean('status')->default(true);
-        $table->string('username')->collation('und_ns');
         $table->string('contact_name')->nullable()->collation('und_ns');
         $table->string('email')->nullable()->collation('und_ns');
         $table->timestamp('email_verified_at')->nullable();

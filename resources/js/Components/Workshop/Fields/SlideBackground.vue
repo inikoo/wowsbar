@@ -1,19 +1,20 @@
 <script setup>
 import { trans } from "laravel-vue-i18n";
 import Button from "@/Components/Elements/Buttons/Button.vue";
-import { ref, toRefs, watch } from "vue";
+import { ref, toRefs, watch, defineEmits } from "vue";
 import 'vue-advanced-cropper/dist/style.css';
 import 'vue-advanced-cropper/dist/theme.compact.css';
 import Modal from "../Modal/Modal.vue";
 import CropImage from '../CropImage/CropImage.vue'
 import LibrariesImage from "../LibrariesImage.vue";
 import Image from '@/Components/Image.vue'
+import { set } from 'lodash'
 
-const props = defineProps(["data", 'fieldName']);
+const props = defineProps(["data", 'fieldName','fieldData']);
 const { data, fieldName } = toRefs(props);
 const isOpen = ref(false)
 const fileInput = ref(null)
-
+const emits = defineEmits()
 const closeModal = () => {
     isOpen.value = false
 }
@@ -24,8 +25,6 @@ const closeModalisOpenCropModal = () => {
     isOpenCropModal.value = false
     fileInput.value.value = ''
 }
-
-
 
 const setFormValue = (data,fieldName) => {
     if (Array.isArray(fieldName)) {
@@ -45,7 +44,6 @@ const getNestedValue = (obj, keys) => {
 const value = ref(setFormValue(props.data, props.fieldName))
 
 watch(data, (newValue) => {
-    console.log('sss', value.value)
     value.value = setFormValue(newValue, props.fieldName)
 });
 
@@ -54,6 +52,24 @@ const onFileChange = (event) => {
     addFiles.value = event.target.files
     isOpenCropModal.value = true
 };
+
+watch(value, (newValue) => {
+      updateLocalFormValue({...newValue});
+  });
+
+  const updateLocalFormValue = (newValue) => {
+      let localData = { ...props.data }
+      if (Array.isArray(props.fieldName)) {
+          set(localData, props.fieldName, newValue);
+      } else {
+          localData[props.fieldName] = newValue;
+      }
+     set(props.data,[props.fieldName],newValue)
+  };
+const uploadImageRespone=(res)=>{
+    value.value = {...res.data[0]}
+    isOpenCropModal.value = false
+}
 
 </script>
 
@@ -66,7 +82,7 @@ const onFileChange = (event) => {
         </Modal>
         <Modal :isOpen="isOpenCropModal" @onClose="closeModalisOpenCropModal">
             <div>
-                <CropImage :data="addFiles" :imagesUploadRoute="props.imagesUploadRoute" />
+                <CropImage :data="addFiles" :imagesUploadRoute="props.fieldData.uploadRoute"  :respone="uploadImageRespone"/>
             </div>
         </Modal>
         <div class="w-full overflow-hidden relative">

@@ -23,8 +23,8 @@ use Spatie\Permission\Traits\HasRoles;
  * App\Models\Landlord\LandlordUser
  *
  * @property int $id
- * @property bool $status
  * @property string $username
+ * @property bool $status
  * @property string|null $contact_name
  * @property string|null $email
  * @property \Illuminate\Support\Carbon|null $email_verified_at

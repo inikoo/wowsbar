@@ -23,15 +23,11 @@ class RouteServiceProvider extends ServiceProvider
         $this->configureRateLimiting();
 
         $this->routes(function () {
-            Route::middleware('landlord-web')
+            Route::middleware('public-web')
                 ->domain(config('app.domain'))
-                ->name('landlord.')
-                ->group(base_path('routes/landlord/web/landlord-app.php'));
+                ->name('public.')
+                ->group(base_path('routes/public/web/public-app.php'));
 
-            Route::middleware('landlord-web')
-                ->domain(config('app.domain'))
-                ->name('landlord.')
-                ->group(base_path('routes/landlord/web/landlord-auth.php'));
 
             Route::middleware('api')
                 ->prefix('api')
