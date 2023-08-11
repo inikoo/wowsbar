@@ -5,7 +5,7 @@
   -->
 
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { ref, watch, defineEmits  } from "vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Pagination, Navigation } from "swiper/modules";
 import "swiper/css";
@@ -13,14 +13,15 @@ import "swiper/css/navigation";
 import CropComponents from "./CropComponents.vue";
 import { trans } from "laravel-vue-i18n";
 import Button from "@/Components/Elements/Buttons/Button.vue";
-import { useForm } from '@inertiajs/vue3'
 
 
 const props = defineProps<{
     data: FileList;
     imagesUploadRoute: object;
+    respone : Function
 }>();
 
+const emits = defineEmits()
 const setData2 = () => {
     const data = [];
     for (const set of props.data) {
@@ -51,7 +52,7 @@ const generateThumbnail = (file) => {
     }
 };
 
-const form = new FormData()
+const form = ref(new FormData())
 
 
 const addComponent = async () => {
@@ -61,7 +62,7 @@ const addComponent = async () => {
             if (item.imagePosition) {
                 item.imagePosition.canvas.toBlob((blob) => {
                     // SendData.push(blob);
-                    form.append("blob", blob, item.originalFile.name); // Append blobs to FormData
+                    form.value.append("blob", blob, item.originalFile.name); 
                     resolve();
                 });
             } else {
@@ -71,10 +72,9 @@ const addComponent = async () => {
     };
 
     await Promise.all(setData.value.map(processItem));
-    for (const [key, value] of form.entries()) {
+    for (const [key, value] of form.value.entries()) {
         SendData.push(value)
     }
-    console.log(SendData)
     try {
         const response = await axios.post(
             route(
@@ -86,10 +86,11 @@ const addComponent = async () => {
                 headers: { "Content-Type": "multipart/form-data" },
             }
         );
-
-        console.log(response.data);
+        form.value = new FormData()
+        props.respone(response.data)
     } catch (error) {
         console.error(error);
+        props.respone(error.response)
     }
 };
 
