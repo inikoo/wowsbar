@@ -10,6 +10,7 @@ namespace App\Actions\Portfolio\ContentBlock\Banners\UI;
 use App\Actions\InertiaAction;
 use App\Models\Portfolio\ContentBlock;
 use App\Models\Portfolio\Website;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -43,6 +44,7 @@ class ShowBannerWorkshop extends InertiaAction
 
     public function htmlResponse(ContentBlock $banner, ActionRequest $request): Response
     {
+
         return Inertia::render(
             'Portfolio/BannerWorkshop',
             [
@@ -94,12 +96,12 @@ class ShowBannerWorkshop extends InertiaAction
                         ]
                     ],
                 ],
+                'firebase'          => false,
                 'bannerLayout'      => $banner->compiledLayout(),
                 'imagesUploadRoute' => [
                     'name'      => $request->route()->getName().'.images.store',
                     'arguments' => $request->route()->originalParameters()
-                ]
-
+                ],
 
             ]
         );

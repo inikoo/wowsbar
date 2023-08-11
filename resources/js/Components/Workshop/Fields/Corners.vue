@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { trans } from "laravel-vue-i18n"
-import { ref, watch, computed } from 'vue'
+import { ref, watch, computed, defineEmits  } from 'vue'
 import Input from '@/Components/Forms/Fields/Input.vue'
 import { get, cloneDeep, set } from 'lodash'
 
@@ -15,6 +15,8 @@ const props = defineProps<{
     }
     common?: any
 }>()
+
+const emits = defineEmits()
 
 const area = ref(null)
 
@@ -228,7 +230,7 @@ const updateFormValue = (newValue) => {
     }
 
     // Step 7: Update props.data with the new object
-    props.data = { ...target };
+    emits("update:data", target);
 };
 
 
