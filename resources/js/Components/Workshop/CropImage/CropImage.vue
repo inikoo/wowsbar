@@ -11,6 +11,11 @@ import { Pagination, Navigation } from "swiper/modules"
 import "swiper/css"
 import "swiper/css/navigation"
 
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { faExclamation } from '@/../private/pro-solid-svg-icons'
+import { library } from '@fortawesome/fontawesome-svg-core'
+library.add(faExclamation)
+
 import { trans } from "laravel-vue-i18n"
 import Button from "@/Components/Elements/Buttons/Button.vue"
 import CropComponents from "@/Components/Workshop/CropImage/CropComponents.vue"
@@ -54,6 +59,8 @@ const generateThumbnail = (file) => {
 
 const form = ref(new FormData())
 
+const catchError = ref()
+
 
 const addComponent = async () => {
     const SendData = []
@@ -89,8 +96,10 @@ const addComponent = async () => {
         form.value = new FormData()
         props.respone(response.data)
     } catch (error) {
+        console.error("===========================")
         console.error(error)
-        props.respone(error.response)
+        catchError.value = error
+        // props.respone(error.response)
     }
 }
 
@@ -108,7 +117,7 @@ watch(current, (newVal) => {
 
 <template>
     <div
-        class="overflow-hidden relative border border-gray-300 shadow-md w-full aspect-[2/1] md:aspect-[3/1] lg:aspect-[4/1]"
+        class="mb-6 overflow-hidden relative border border-gray-300 shadow-md w-full aspect-[2/1] md:aspect-[3/1] lg:aspect-[4/1]"
     >
         <Swiper
             ref="swiperRef"
@@ -132,11 +141,11 @@ watch(current, (newVal) => {
             </SwiperSlide>
         </Swiper>
     </div>
-    <div>
-        <div class="max-w-full px-6 h-96 overflow-y-auto border border-solid border-gray-300 rounded-lg my-9">
+    <div class="mb-6 space-y-3">
+        <div class="max-w-full py-5 px-6 h-96 overflow-y-auto border border-solid border-gray-300 rounded-lg">
             <ul
                 role="list"
-                class="mx-auto mt-5 grid max-w-full grid-cols-1 gap-x-8 gap-y-16 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3"
+                class="mx-auto grid max-w-full grid-cols-1 gap-x-8 gap-y-16 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3"
             >
                 <li v-for="(item, index) in setData" :key="index">
                     <div @click="current = index" :class="['p-2.5 border border-solid rounded-lg cursor-pointer ', setData[current] == item ?  'border-gray-400 bg-gray-200'  : 'border-gray-300']">
@@ -151,6 +160,10 @@ watch(current, (newVal) => {
                     </div>
                 </li>
             </ul>
+        </div>
+        <div v-if="catchError?.response" class="text-red-500">
+            <FontAwesomeIcon icon='fas fa-exclamation' class='' aria-hidden='true' />
+            {{ catchError.response.statusText}}
         </div>
     </div>
     <Button

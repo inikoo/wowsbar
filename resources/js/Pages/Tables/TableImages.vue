@@ -14,6 +14,7 @@ import Modal from '@/Components/Workshop/Modal/Modal.vue'
 import CropImage from '@/Components/Workshop/CropImage/CropImage.vue'
 import Button from '@/Components/Elements/Buttons/Button.vue'
 import { trans } from 'laravel-vue-i18n'
+import { ulid } from 'ulid'
 
 const props = defineProps<{
     data: object
@@ -69,8 +70,7 @@ const uploadImageRespone=(res)=>{
             })
     }
     const newFiles = [...setData]
-    props.data.components = [...props.data.components, ...newFiles]
-    isOpenCropModal.value = false
+    isOpen.value = false
 }
 </script>
 

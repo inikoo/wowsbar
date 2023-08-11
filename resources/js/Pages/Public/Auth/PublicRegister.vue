@@ -1,12 +1,16 @@
 <script setup lang="ts">
-import GuestLayout from '@/Layouts/GuestLayout.vue'
 import InputError from '@/Components/InputError.vue'
 import InputLabel from '@/Components/InputLabel.vue'
-import PrimaryButton from '@/Components/PrimaryButton.vue'
 import Button from '@/Components/Elements/Buttons/Button.vue'
 import TextInput from '@/Components/TextInput.vue'
 import { Head, Link, useForm } from '@inertiajs/vue3'
 import { trans } from 'laravel-vue-i18n'
+import Password from '@/Components/Forms/Fields/Password.vue'
+
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { faSpinnerThird } from '@/../private/pro-duotone-svg-icons'
+import { library } from '@fortawesome/fontawesome-svg-core'
+library.add(faSpinnerThird)
 
 const form = useForm({
     contact_name: '',
@@ -30,7 +34,7 @@ const submit = () => {
         <div>
             <InputLabel for="name" value="Name" />
             <TextInput id="name" type="text" class="mt-1 block w-full" v-model="form.contact_name" required autofocus
-                autocomplete="name" />
+                autocomplete="name" placeholder="John Doe"/>
 
             <InputError class="mt-2" :message="form.errors.contact_name" />
         </div>
@@ -39,40 +43,42 @@ const submit = () => {
         <div class="">
             <InputLabel for="email" value="Email" />
             <TextInput id="email" type="email" class="mt-1 block w-full" v-model="form.email" required
-                autocomplete="username" />
+                autocomplete="username" placeholder="johndoe@mail.com" />
             <InputError class="mt-2" :message="form.errors.email" />
         </div>
 
         <!-- Field: Password -->
         <div class="">
             <InputLabel for="password" value="Password" />
-            <TextInput id="password" type="password" class="mt-1 block w-full" v-model="form.password" required
-                autocomplete="new-password" />
-            <InputError class="mt-2" :message="form.errors.password" />
+            <!-- <TextInput id="password" type="password" class="mt-1 block w-full" v-model="form.password" required
+                autocomplete="new-password" /> -->
+            <Password :form=form fieldName='password' :showProcessing="false" placeholder="Enter your password" />
         </div>
 
         <!-- Field: Confirm Password -->
         <div class="">
             <InputLabel for="password_confirmation" value="Confirm Password" />
-            <TextInput id="password_confirmation" type="password" class="mt-1 block w-full"
-                v-model="form.password_confirmation" required autocomplete="new-password" />
-            <InputError class="mt-2" :message="form.errors.password_confirmation" />
+            <!-- <TextInput id="password_confirmation" type="password" class="mt-1 block w-full"
+                v-model="form.password_confirmation" required autocomplete="new-password" /> -->
+            <Password :form=form fieldName='password_confirmation' :showProcessing="false" placeholder="Re-enter your password" />
         </div>
 
+        <!-- Button: Submit register -->
         <div class="">
             <button type="submit"
                 class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
-                :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                {{ ('Register') }}
+                :class="{ 'opacity-50 cursor-not-allowed': form.processing }" :disabled="form.processing">
+                <div class="pl-3">{{ trans('Register') }}</div>
+                <FontAwesomeIcon icon="fad fa-spinner-third" class="ml-2 h-5 w-5 animate-spin dark:text-gray-200 opacity-0" :class="{'opacity-100': form.processing}"/>
             </button>
         </div>
 
         <div class="">
-            <p class="text-sm font-light text-gray-500 dark:text-gray-400">
+            <div class="text-sm font-light text-gray-500 dark:text-gray-400">
                 {{ trans('Already registered?') }}
                 <Link :href="route('public.login')"
                     class="font-bold text-primary-700 hover:underline dark:text-primary-500">{{ trans('Login') }}</Link>
-            </p>
+            </div>
         </div>
     </form>
 </template>
