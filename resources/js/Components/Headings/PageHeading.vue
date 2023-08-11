@@ -5,17 +5,18 @@
   -->
 
 <script setup>
-import { Link } from "@inertiajs/vue3";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { faDraftingCompass,faEmptySet, faMoneyCheckAlt, faPeopleArrows, faSlidersH ,faSave} from "@/../private/pro-light-svg-icons";
-import { faPencil, faArrowLeft, faBorderAll, faTrashAlt } from "@/../private/pro-regular-svg-icons";
+import { Link } from "@inertiajs/vue3"
 
-import { faPlus } from "@/../private/pro-solid-svg-icons";
-import Button from "@/Components/Elements/Buttons/Button.vue";
-import { capitalize } from "@/Composables/capitalize";
-import { useLocaleStore } from "@/Stores/locale.js";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { trans } from "laravel-vue-i18n";
+import { library } from "@fortawesome/fontawesome-svg-core"
+import { faDraftingCompass,faEmptySet, faMoneyCheckAlt, faPeopleArrows, faSlidersH ,faSave} from "@/../private/pro-light-svg-icons"
+import { faPencil, faArrowLeft, faBorderAll, faTrashAlt } from "@/../private/pro-regular-svg-icons"
+import { faPlus } from "@/../private/pro-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
+
+import Button from "@/Components/Elements/Buttons/Button.vue"
+import { capitalize } from "@/Composables/capitalize"
+import { useLocaleStore } from "@/Stores/locale.js"
+import { trans } from "laravel-vue-i18n"
 
 library.add(faDraftingCompass,faEmptySet, faMoneyCheckAlt, faPeopleArrows, faSlidersH, faPlus, faPencil, faArrowLeft, faBorderAll, faTrashAlt,faSave);
 const props = defineProps(["data", "dataToSubmit","dataToSubmitIsDirty"])
@@ -121,6 +122,7 @@ const getActionIcon = (action) => {
             <div class="flex items-center gap-2">
                 <span v-for="action in data.actions">
                     {{ action.final }}
+
                     <!-- Button -->
                     <Link v-if="action.type === 'button'"
                         :href="route(action['route']['name'], action['route']['parameters'])"
@@ -139,6 +141,7 @@ const getActionIcon = (action) => {
                             {{ getActionLabel(action) }}
                         </Button>
                     </Link>
+
                     <!-- Button Group () -->
                     <!--suppress HtmlUnknownTag -->
                     <div v-if="action.type === 'buttonGroup'" class="first:rounded-l-md overflow-hidden last:rounded-r-md">
@@ -154,6 +157,8 @@ const getActionIcon = (action) => {
                             </Button>
                         </Link>
                     </div>
+                    
+                    <slot v-if="action.type === 'modal'" name="modal" :data="action" />
                 </span>
             </div>
         </slot>
