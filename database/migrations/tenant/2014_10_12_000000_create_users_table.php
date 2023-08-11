@@ -19,14 +19,15 @@ return new class () extends Migration {
             $table->smallIncrements('id');
             $table->unsignedSmallInteger('tenant_id')->index();
             $table->foreign('tenant_id')->references('id')->on('tenants');
-            $table->boolean('is_root')->index()->default(false);
-            $table->unsignedSmallInteger('root_user_id')->index()->nullable();
-            $table->foreign('root_user_id')->references('id')->on('root_users');
+            $table->boolean('is_public')->index()->default(false);
+            $table->unsignedSmallInteger('public_user_id')->index()->nullable();
+            $table->foreign('public_user_id')->references('id')->on('public_users');
+            $table->string('username')->collation('und_ns');
             $table = $this->userDetailsColumns($table);
             $table->timestampsTz();
             $table->softDeletesTz();
-            $table->unique(['tenant_id', 'username', 'root_user_id']);
-            $table->unique(['tenant_id', 'email', 'root_user_id']);
+            $table->unique(['tenant_id', 'username', 'public_user_id']);
+            $table->unique(['tenant_id', 'email', 'public_user_id']);
         });
     }
 

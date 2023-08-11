@@ -19,7 +19,7 @@ class UserFactory extends Factory
 
         return [
             'username'     => fake()->userName,
-            'is_root'      => fake()->boolean,
+            'is_public'      => fake()->boolean,
             'status'       => fake()->boolean,
             'contact_name' => fake()->name,
             'email'        => fake()->email,

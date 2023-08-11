@@ -7,7 +7,7 @@
 
 namespace App\Actions\Auth\RootUser\UI;
 
-use App\Models\Auth\RootUser;
+use App\Models\Auth\PublicUser;
 use App\Models\Media\Media;
 use Exception;
 use Illuminate\Console\Command;
@@ -17,7 +17,7 @@ class SetRootUserAvatar
 {
     use AsAction;
 
-    public function handle(RootUser $rootUser): RootUser
+    public function handle(PublicUser $rootUser): PublicUser
     {
         try {
             $seed = $rootUser->id;
@@ -48,7 +48,7 @@ class SetRootUserAvatar
     {
 
 
-        $rootUser = RootUser::where('username', $command->argument('username'))->first();
+        $rootUser = PublicUser::where('username', $command->argument('username'))->first();
         if (!$rootUser) {
             $command->error('User not found');
             return 1;
