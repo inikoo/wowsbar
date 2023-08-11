@@ -39,37 +39,6 @@ class IndexBanners extends InertiaAction
             );
     }
 
-    protected function getElementGroups(): void
-    {
-        $this->elementGroups =
-            [
-                'status' => [
-                    'label' => __('Status'),
-                    'elements' => [
-                        ContentBlockStateEnum::IN_PROCESS->value => [
-                            __('In Process'),
-                            app('currentTenant')->stats->number_users_status_active
-                        ],
-                        ContentBlockStateEnum::READY->value => [
-                            __('Ready'),
-                            app('currentTenant')->stats->number_users_status_inactive
-                        ],
-                        ContentBlockStateEnum::LIVE->value => [
-                            __('Live'),
-                            app('currentTenant')->stats->number_users_status_inactive
-                        ],
-                        ContentBlockStateEnum::RETIRED->value => [
-                            __('Retired'),
-                            app('currentTenant')->stats->number_users_status_inactive
-                        ]
-                    ],
-                    'engine' => function ($query, $elements) {
-                        $query->where('status', array_pop($elements) === 'active');
-                    }
-                ]
-            ];
-    }
-
     public function inTenant(ActionRequest $request): LengthAwarePaginator
     {
         $this->initialisation($request);
