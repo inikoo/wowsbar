@@ -7,14 +7,14 @@
 
 namespace App\Actions\UI;
 
-use App\Models\Auth\RootUser;
+use App\Models\Auth\PublicUser;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class GetLandlordLayout
 {
     use AsAction;
 
-    public function handle(RootUser $user): array
+    public function handle(PublicUser $user): array
     {
         $navigation = [];
 

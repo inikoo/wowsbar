@@ -19,7 +19,7 @@ class VerifyEmail extends \Illuminate\Auth\Notifications\VerifyEmail implements 
         }
 
         return URL::temporarySignedRoute(
-            'landlord.verification.verify',
+            'public.verification.verify',
             Carbon::now()->addMinutes(Config::get('auth.verification.expire', 60)),
             [
                 'id'   => $notifiable->getKey(),

@@ -1,7 +1,7 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Thu, 10 Aug 2023 09:48:32 Malaysia Time, Pantai Lembeng,, Bali
+ * Created: Thu, 10 Aug 2023 09:48:32 Malaysia Time, Pantai Lembeng, Bali
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
@@ -17,6 +17,7 @@ return new class () extends Migration {
     {
         Schema::create('landlord_users', function (Blueprint $table) {
             $table->smallIncrements('id');
+            $table->string('username')->collation('und_ns');
             $table = $this->userDetailsColumns($table);
             $table->timestampsTz();
             $table->softDeletesTz();

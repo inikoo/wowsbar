@@ -27,5 +27,5 @@ test('Can create a resized imgproxy url.', function () {
     $image->resize(400, 400);
 
     expect(GetImgProxyUrl::make()->getProcessingOptions($image))
-        ->toBe('rs:400:400::');
+        ->toBe('rs::400:400::');
 });
