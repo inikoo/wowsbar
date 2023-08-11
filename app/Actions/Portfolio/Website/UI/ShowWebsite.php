@@ -69,6 +69,16 @@ class ShowWebsite extends InertiaAction
                     'actions' => [
                         $this->canEdit ? [
                             'type'  => 'button',
+                            'style' => 'create',
+                            'label' => __('new banner'),
+                            'route' => [
+                                'name'       => $request->route()->getName().'.banners.create',
+                                'parameters' => array_values($this->originalParameters)
+                            ]
+                        ] : false,
+
+                        $this->canEdit ? [
+                            'type'  => 'button',
                             'style' => 'edit',
                             'label' => __('edit'),
                             'route' => [

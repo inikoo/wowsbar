@@ -37,7 +37,7 @@ class StoreWebsite
         $website = Website::create($modelData);
         $website->stats()->create();
         TenantHydrateWebsites::dispatch(app('currentTenant'));
-        WebsiteHydrateUniversalSearch::run($website);
+        WebsiteHydrateUniversalSearch::dispatch($website);
 
         return $website;
     }
