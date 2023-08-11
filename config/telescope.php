@@ -76,7 +76,7 @@ return [
     */
 
     'middleware' => [
-        'landlord-web',
+        'public-web',
         Authorize::class,
     ],
 

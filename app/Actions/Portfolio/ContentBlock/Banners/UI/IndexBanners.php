@@ -78,7 +78,6 @@ class IndexBanners extends InertiaAction
                 'label'   => Str::possessive($scope->name)
             ];
         }
-
         return Inertia::render(
             'Portfolio/Banners',
             [
@@ -94,7 +93,7 @@ class IndexBanners extends InertiaAction
                         'title' => __('banner'),
                         'icon'  => 'fal fa-window-maximize'
                     ],
-                    'actions'   =>
+                    'actions'   =>[
                         match (app('currentTenant')->stats->number_websites) {
                             0=>[],
                             1 => [
@@ -116,7 +115,7 @@ class IndexBanners extends InertiaAction
                                 ]
                             ]
                         }
-
+]
 
                 ],
                 'data'        => ContentBlockResource::collection($banners),
