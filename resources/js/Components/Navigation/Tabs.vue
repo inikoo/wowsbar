@@ -9,7 +9,8 @@ import { ref } from "vue"
 import { capitalize } from "@/Composables/capitalize"
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faInfoCircle } from "@/../private/pro-solid-svg-icons"
-import { faRoad, faClock, faDatabase } from "@/../private/pro-light-svg-icons"
+import { faClock, faDatabase } from "@/../private/pro-light-svg-icons"
+import { faRoad } from "@/../private/pro-solid-svg-icons"
 import { library } from '@fortawesome/fontawesome-svg-core'
 
 library.add(faInfoCircle, faRoad, faClock, faDatabase)
@@ -17,7 +18,7 @@ library.add(faInfoCircle, faRoad, faClock, faDatabase)
 const props = defineProps<{
     navigation: any
     current: string
-    selectedRow?: any // dynamic key-value object
+    selectedRow?: any // Because dynamic key-value object
 }>()
 
 defineEmits(['update:tab']);
