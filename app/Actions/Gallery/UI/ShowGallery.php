@@ -96,18 +96,17 @@ class ShowGallery extends InertiaAction
             ]
         )->table(
             IndexUploadedImages::make()->tableStructure(
+                modelOperations: [
+                    'uploadFile' => $this->canEdit ? [
+                        'route' => [
+                            'name'       => 'portfolio.images.upload',
+                            'parameters' => []
+                        ],
+                        'label' => __('asasasasasas image'),
+                        'style' => 'uploadFile'
+                    ] : false,
+               ],
                 prefix: 'uploaded_images'
-                /* modelOperations: [
-                      'createLink' => $this->canEdit ? [
-                          'route' => [
-                              'name'       => 'inventory.warehouses.show.warehouse-areas.create',
-                              'parameters' => array_values([$warehouse->slug])
-                          ],
-                          'label' => __('area'),
-                          'style' => 'create'
-                      ] : false,
-                  ],
-                  prefix: 'warehouse_areas' */
             )
         )->table(
             IndexStockImages::make()->tableStructure(

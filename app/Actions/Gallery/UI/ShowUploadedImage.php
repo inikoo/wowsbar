@@ -9,6 +9,7 @@ namespace App\Actions\Gallery\UI;
 
 use App\Actions\InertiaAction;
 use App\Actions\UI\Dashboard\ShowDashboard;
+use App\Enums\UI\GalleryTabsEnum;
 use App\Http\Resources\Gallery\ImageResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\Media\Media;
@@ -58,9 +59,13 @@ class ShowUploadedImage extends InertiaAction
                     $request->route()->getName(),
                     $request->route()->parameters
                 ),
+                'tabs' => [
+                    'current'    => $this->tab,
+                    'navigation' => [],
+                ],
                 'title'    => __('images'),
                 'pageHead' => [
-                    'title'     => __('images'),
+                    'title'     => __($media->name),
                     'iconRight' => [
                         'title' => __('image'),
                         'icon'  => 'fal fa-images'

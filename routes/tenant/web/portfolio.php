@@ -53,9 +53,10 @@ Route::get('/banners/{banner}/deleted', [ShowDeletedBanner::class,'inTenant'])->
 
 //Route::get('/banners/{banner}/delete', [RemoveBanner::class,'inTenant'])->name('banners.remove');
 
-Route::prefix('gallery')->as('gallery.')->group(function () {
-    Route::get('/gallery', ShowGallery::class);
-    Route::get('/gallery/images/{image}', ShowUploadedImage::class)->name('show.image');
+Route::prefix('gallery')->group(function () {
+    Route::get('/', ShowGallery::class)->name('gallery');
+    Route::get('/images/{media}', ShowUploadedImage::class)->name('images.show');
+    Route::post('/images', ShowUploadedImage::class)->name('images.upload');
 });
 
 //Route::get('/images', IndexImages::class)->name('images.index');
