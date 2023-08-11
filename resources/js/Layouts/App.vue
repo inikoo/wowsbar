@@ -387,12 +387,12 @@ onMounted(() => {
 
 <style lang="scss">
 .tabNavigationActive {
-    // Current active state
-    @apply bg-gray-200/80 border-gray-500 text-gray-700 dark:text-gray-300
+    // Current active state to have consistent style. Use for: AppLeftSideBar, CreateModel
+    @apply bg-gray-200/80 border-orange-500 text-gray-700 dark:text-gray-300
 }
 
 .tabNavigation {
-    // State not active
-    @apply border-transparent hover:bg-white dark:hover:bg-gray-600 text-gray-700 dark:text-gray-400
+    // Current active state to have consistent style. Use for: AppLeftSideBar, CreateModel
+    @apply border-transparent hover:bg-gray-200/30 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-400
 }
 </style>

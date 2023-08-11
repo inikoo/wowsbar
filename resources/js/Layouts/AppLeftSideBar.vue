@@ -61,8 +61,7 @@ const handleKey = (event: any) => {
 			<div class="flex flex-grow flex-col pb-16">
 				<nav class="flex-1 space-y-1" aria-label="Sidebar">
 					<!-- LeftSide Links -->
-                    <Link
-                        v-for="(item, itemKey) in layout.navigation"
+                    <Link v-for="(item, itemKey) in layout.navigation"
                         :key="itemKey"
                         :href="route(item.route)"
                         :class="[
