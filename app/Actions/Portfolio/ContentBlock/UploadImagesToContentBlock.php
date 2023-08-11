@@ -29,20 +29,17 @@ class UploadImagesToContentBlock
     {
 
         $medias=[];
-
         foreach ($imageFiles as $imageFile) {
             $medias[]=AttachImageToContentBlock::run(
                 contentBlock:$contentBlock,
                 file:$imageFile
             );
         }
-
         return collect($medias);
     }
 
     public function authorize(ActionRequest $request): bool
     {
-
         return $request->user()->can("portfolio.edit");
     }
 
@@ -66,10 +63,9 @@ class UploadImagesToContentBlock
         return $this->handle($banner, $request->validated('images'));
     }
 
-
-
-    public function htmlResponse($medias): AnonymousResourceCollection
+    public function jsonResponse($medias): AnonymousResourceCollection
     {
         return ImageResource::collection($medias);
     }
+
 }
