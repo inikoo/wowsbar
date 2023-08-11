@@ -18,22 +18,22 @@
         "images": [
             {
                 "source": "resources",
-                "imageSrc": "Car.jpg",
-                "imageAlt": "lamborghini car"
+                "imageSrc": "car.png",
+                "imageAlt": "Lamborghini Car"
             },
             {
                 "source": "resources",
-                "imageSrc": "Shopping Mall.jpg",
+                "imageSrc": "shopping_mall.png",
                 "imageAlt": "Shopping Mall"
             },
             {
                 "source": "resources",
-                "imageSrc": "Skincare.jpg",
+                "imageSrc": "skincare.png",
                 "imageAlt": "Skincare"
             },
             {
                 "source": "resources",
-                "imageSrc": "soap.jpg",
+                "imageSrc": "soap.png",
                 "imageAlt": "Soap"
             }
         ],
