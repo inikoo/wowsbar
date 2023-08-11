@@ -7,14 +7,10 @@
 
 namespace App\Actions\Tenancy\Tenant\Hydrators;
 
-use App\Models\Tenancy\Tenant;
 
 trait HasTenantHydrate
 {
-    public function getJobUniqueId(Tenant $tenant): string
-    {
-        return $tenant->id;
-    }
+
 
     public function getJobTags(): array
     {

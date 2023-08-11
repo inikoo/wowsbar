@@ -41,15 +41,25 @@ class CreateBanner extends InertiaAction
                 ),
                 'title'       => __('new banner'),
                 'pageHead'    => [
-                    'title'        => __('banner'),
-                    'actions'      => [
+                    'title'   => __('banner'),
+                    'actions' => [
                         [
                             'type'  => 'button',
                             'style' => 'cancel',
-                            'route' => [
-                                'name'       => preg_replace('/create$/', 'index', $request->route()->getName()),
-                                'parameters' => array_values($this->originalParameters)
-                            ]
+                            'route' =>
+                                match ($request->route()->getName()) {
+                                    'portfolio.websites.show.banners.create' =>
+                                    [
+                                        'name'       =>'portfolio.websites.show',
+                                        'parameters' => array_values($this->originalParameters)
+                                    ],
+                                    default => [
+                                        'name'       => preg_replace('/create$/', 'index', $request->route()->getName()),
+                                        'parameters' => array_values($this->originalParameters)
+                                    ]
+                                }
+
+
                         ]
                     ]
 
@@ -78,10 +88,10 @@ class CreateBanner extends InertiaAction
 
                     ],
                     'route'     => [
-                        'name'       => 'models.website.web-block-type.banner.store',
-                        'arguments'  => [
-                            'website'     => $website->slug,
-                            'webBlockType'=> WebBlockType::where('slug', 'banner')->first()
+                        'name'      => 'models.website.web-block-type.banner.store',
+                        'arguments' => [
+                            'website'      => $website->slug,
+                            'webBlockType' => WebBlockType::where('slug', 'banner')->first()
                         ]
                     ],
 

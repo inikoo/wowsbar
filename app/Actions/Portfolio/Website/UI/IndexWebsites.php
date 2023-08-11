@@ -37,7 +37,6 @@ class IndexWebsites extends InertiaAction
     public function asController(ActionRequest $request): LengthAwarePaginator
     {
         $this->initialisation($request);
-
         return $this->handle();
     }
 
@@ -138,25 +137,22 @@ class IndexWebsites extends InertiaAction
                         'title' => __('website'),
                         'icon'  => 'fal fa-globe'
                     ],
+                    'actions'   => [
+                        [
+                            'type'  => 'button',
+                            'style' => 'create',
+                            'label' => 'create website',
+                            'route' => [
+                                'name'       => preg_replace('/index$/', 'create', $request->route()->getName()),
+                                'parameters' => array_values($this->originalParameters)
+                            ]
+                        ]
+                    ]
                 ],
                 'data' => WebsiteResource::collection($websites),
 
             ]
-        )->table($this->tableStructure(
-            modelOperations: [
-                'createLink' => [
-                    'route' => [
-                        'name'       => 'portfolio.websites.create',
-                        'parameters' => array_values([])
-                    ],
-                    'type'    => 'button',
-                    'style'   => 'primary',
-                    'tooltip' => __('Create website'),
-                    'label'   => __('new website'),
-                    'icon'    => 'fas fa-plus'
-                ]
-            ]
-        ));
+        )->table($this->tableStructure());
     }
 
     /** @noinspection PhpUnusedParameterInspection */
