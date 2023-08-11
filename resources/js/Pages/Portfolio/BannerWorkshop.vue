@@ -61,9 +61,8 @@ console.log(props);
 
 import {useFirebaseStore} from "@/Stores/firebase";
 
-const firebase = useFirebaseStore();
-console.log(firebase);
-const firebaseApp = initializeApp(firebase.credentials);
+const credential = useFirebaseStore();
+const firebaseApp = initializeApp(JSON.parse(credential.credentials));
 const db = getDatabase(firebaseApp);
 const user = ref(usePage().props.auth.user);
 const jumpToIndex = ref(0);
