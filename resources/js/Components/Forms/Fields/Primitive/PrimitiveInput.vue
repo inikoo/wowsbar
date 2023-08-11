@@ -4,82 +4,92 @@
   - Copyright (c) 2023, Raul A Perusquia Flores
   -->
 
+<script setup lang="ts">
+import { set } from "lodash";
+import { ref, watch, defineEmits, toRefs } from "vue";
 
-  <script setup lang="ts">
-  import { set } from 'lodash'
-  import { ref, watch, defineEmits, toRefs } from 'vue'
-
-  const props = defineProps<{
-      fieldName: string | []
-      fieldData?: {
-          placeholder: string
-          readonly: boolean
-          copyButton: boolean
-      }
-      data: Object
-      counter: boolean
-  }>()
-
-  const { data, fieldName  } = toRefs(props);
-  const emits = defineEmits()
-
-  const setFormValue = (data: Object, fieldName: string | []) => {
-      if (Array.isArray(fieldName)) {
-          return getNestedValue(data, fieldName);
-      } else {
-          return data[fieldName];
-      }
-  }
-
-  const getNestedValue = (obj: Object, keys: string[]) => {
-      return keys.reduce((acc, key) => {
-          if (acc && typeof acc === 'object' && key in acc) return acc[key];
-          return null;
-      }, obj);
-  }
-
-  const value = ref(setFormValue(props.data, props.fieldName))
-
-  watch(value, (newValue) => {
-      // Update the local form value when the value ref changes
-      updateLocalFormValue(newValue);
-  });
-
-  watch(data, (newValue) => {
-     value.value = setFormValue(newValue, props.fieldName)
-  });
-
-  const updateLocalFormValue = (newValue) => {
-      let localData = { ...props.data }
-      if (Array.isArray(props.fieldName)) {
-          set(localData, props.fieldName, newValue);
-      } else {
-          localData[props.fieldName] = newValue;
-      }
-      emits('update:data', localData); // Emit event to update parent component's data
+const props = defineProps<{
+  fieldName: string | [];
+  fieldData?: {
+    placeholder: string;
+    readonly: boolean;
+    copyButton: boolean;
   };
+  data: Object;
+  counter: boolean;
+}>();
 
+const { data, fieldName } = toRefs(props);
+const emits = defineEmits();
 
+const setFormValue = (data: Object, fieldName: string | []) => {
+  if (Array.isArray(fieldName)) {
+    return getNestedValue(data, fieldName);
+  } else {
+    return data[fieldName];
+  }
+};
 
-  </script>
+const getNestedValue = (obj: Object, keys: string[]) => {
+  return keys.reduce((acc, key) => {
+    if (acc && typeof acc === "object" && key in acc) return acc[key];
+    return null;
+  }, obj);
+};
+
+const value = ref(setFormValue(props.data, props.fieldName));
+
+watch(value, (newValue) => {
+  // Update the local form value when the value ref changes
+  updateLocalFormValue(newValue);
+});
+
+watch(data, (newValue) => {
+  value.value = setFormValue(newValue, props.fieldName);
+});
+
+const updateLocalFormValue = (newValue) => {
+  let localData = { ...props.data };
+  if (Array.isArray(props.fieldName)) {
+    set(localData, props.fieldName, newValue);
+  } else {
+    localData[props.fieldName] = newValue;
+  }
+  emits("update:data", localData); // Emit event to update parent component's data
+};
+</script>
 <template>
+  <div class="relative">
     <div class="relative">
-        <div class="relative">
-            <input v-if="fieldData" v-model.trim="value" :readonly="fieldData?.readonly" :type="props.fieldData.type ?? 'text'"
-                :placeholder="fieldData?.placeholder"
-                class="block w-full shadow-sm rounded-md dark:bg-gray-600 dark:text-gray-400 focus:ring-gray-500 focus:border-gray-500 sm:text-sm border-gray-300 dark:border-gray-500 read-only:bg-gray-100 read-only:ring-0 read-only:ring-transparent read-only:text-gray-500" />
-            <div v-else>No field data passed</div>
-        </div>
-
-        <!-- Counter: Letters and Words -->
-        <div v-if="counter && fieldData?.[fieldName]"
-            class="grid grid-flow-col text-xs italic text-gray-500 mt-2 space-x-12 justify-start">
-            <p class="">
-                Letters: {{ fieldData?.[fieldName].length }}
-            </p>
-            <p class="">
-                Words: {{ fieldData?.[fieldName].trim().split(/\s+/).filter(Boolean).length }}
-            </p>
-        </div>
+      <div
+        class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600"
+      >
+        <span
+          v-if="fieldData.prefix"
+          class="flex select-none items-center pl-3 text-gray-500 sm:text-sm"
+          >{{ fieldData.prefix }}</span
+        >
+        <input
+          v-if="fieldData"
+          v-model.trim="value"
+          :readonly="fieldData?.readonly"
+          :type="props.fieldData.type ?? 'text'"
+          :placeholder="fieldData?.placeholder"
+          class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+        />
+        <div v-else>No field data passed</div>
+      </div>
     </div>
+
+    <!-- Counter: Letters and Words -->
+    <div
+      v-if="counter && fieldData?.[fieldName]"
+      class="grid grid-flow-col text-xs italic text-gray-500 mt-2 space-x-12 justify-start"
+    >
+      <p class="">Letters: {{ fieldData?.[fieldName].length }}</p>
+      <p class="">
+        Words: {{ fieldData?.[fieldName].trim().split(/\s+/).filter(Boolean).length }}
+      </p>
+    </div>
+  </div>
 </template>
