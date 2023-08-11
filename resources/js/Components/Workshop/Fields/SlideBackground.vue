@@ -55,10 +55,6 @@ const onFileChange = (event) => {
     isOpenCropModal.value = true
 };
 
-
-
-console.log('sss', value.value)
-
 </script>
 
 <template>
