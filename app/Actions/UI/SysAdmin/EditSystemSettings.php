@@ -63,22 +63,22 @@ class EditSystemSettings
                                 ],
                             ],
                         ],
-                        [
-                            "title"  => __("appearance"),
-                            "icon"   => "fa-light fa-paint-brush",
-                            "fields" => [
-                                "colorMode" => [
-                                    "type"  => "colorMode",
-                                    "label" => __("turn dark mode"),
-                                    "value" => "",
-                                ],
-                                "theme"     => [
-                                    "type"  => "theme",
-                                    "label" => __("choose your theme"),
-                                    "value" => "",
-                                ],
-                            ],
-                        ],
+                        // [
+                        //     "title"  => __("appearance"),
+                        //     "icon"   => "fa-light fa-paint-brush",
+                        //     "fields" => [
+                        //         "colorMode" => [
+                        //             "type"  => "colorMode",
+                        //             "label" => __("turn dark mode"),
+                        //             "value" => "",
+                        //         ],
+                        //         "theme"     => [
+                        //             "type"  => "theme",
+                        //             "label" => __("choose your theme"),
+                        //             "value" => "",
+                        //         ],
+                        //     ],
+                        // ],
                     ],
                     "args"      => [
                         "updateRoute" => [
