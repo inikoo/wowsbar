@@ -7,17 +7,13 @@
 
 namespace App\Models\Media;
 
-use App\Concerns\BelongsToTenant;
 use App\Models\Tenancy\Tenant;
 
+use App\Models\Traits\IsMedia;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 use Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection;
 use Spatie\MediaLibrary\MediaCollections\Models\Media as BaseMedia;
-use Spatie\Sluggable\HasSlug;
-use Spatie\Sluggable\SlugOptions;
 
 /**
  * App\Models\Media\Media
@@ -25,8 +21,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property int $id
  * @property int|null $tenant_id
  * @property string $slug
- * @property string $model_type
- * @property int $model_id
+ * @property string|null $model_type
+ * @property int|null $model_id
  * @property string|null $uuid
  * @property string $collection_name
  * @property string $name
@@ -44,7 +40,6 @@ use Spatie\Sluggable\SlugOptions;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Model|\Eloquent $model
- * @property-read Tenant|null $tenant
  * @property-read \Spatie\Multitenancy\TenantCollection<int, Tenant> $tenants
  * @property-read int|null $tenants_count
  * @method static MediaCollection<int, static> all($columns = ['*'])
@@ -78,38 +73,14 @@ use Spatie\Sluggable\SlugOptions;
  */
 class Media extends BaseMedia
 {
-    use HasSlug;
-    use BelongsToTenant;
+    use IsMedia;
 
     public function tenants(): BelongsToMany
     {
         return $this->belongsToMany(Tenant::class)->withTimestamps();
     }
 
-    public function getSlugOptions(): SlugOptions
-    {
-        return SlugOptions::create()
-            ->generateSlugsFrom('name')
-            ->slugsShouldBeNoLongerThan(24)
-            ->doNotGenerateSlugsOnUpdate()
-            ->saveSlugsTo('slug');
-    }
 
-    public function getRouteKeyName(): string
-    {
-        return 'slug';
-    }
-
-    public function getLocalImgProxyFilename(): string
-    {
-        $rootPath='/'.config('app.name').Str::after(Storage::disk($this->disk)->path(''), storage_path());
-
-        $prefix   =config('media-library.prefix', '');
-        $mediaPath=$prefix ? $prefix.'/' : '';
-        $mediaPath.=$this->id.'/'.$this->file_name;
-
-        return 'local://'.$rootPath.$mediaPath;
-    }
 
 
 }

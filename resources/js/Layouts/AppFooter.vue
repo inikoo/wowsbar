@@ -5,16 +5,25 @@ import { useLocaleStore } from "@/Stores/locale"
 import { useLayoutStore } from "@/Stores/layout"
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-import { useDatabaseList, useDatabaseObject } from "vuefire"
+import { useDatabaseList } from "vuefire"
 import { getDatabase, ref as dbRef } from "firebase/database"
 import { initializeApp } from "firebase/app"
 import serviceAccount from "@/../private/firebase/wowsbar-firebase.json"
+
+const activities = ref()
 
 const locale = useLocaleStore()
 const layout = useLayoutStore()
 const firebaseApp = initializeApp(serviceAccount);
 const db = getDatabase(firebaseApp)
-const activities = useDatabaseList(dbRef(db, layout.tenant.code))
+// const activities = useDatabaseList(dbRef(db, layout.tenant.code))
+
+try {
+    // const activitiesRef = dbRef(db, layout.tenant.code)
+    activities.value = useDatabaseList(dbRef(db, layout.tenant.code))
+} catch (error) {
+    console.error("An error occurred while fetching data from Firebase:", error)
+}
 
 const isTabActive: Ref<boolean | string> = ref(false)
 
@@ -39,13 +48,13 @@ const isTabActive: Ref<boolean | string> = ref(false)
                     @click="isTabActive == 'activeUsers' ? isTabActive = !isTabActive : isTabActive = 'activeUsers'"
                 >
                     <div class="relative text-xs flex items-center gap-x-1">
-                        <div class="animate-pulse ring-1 h-2 aspect-square rounded-full" :class="[activities.length > 0 ? 'bg-green-400 ring-green-600' : 'bg-gray-400 ring-gray-600']" />
-                        <span class="">Active Users ({{ activities.length }})</span>
+                        <div class="animate-pulse ring-1 h-2 aspect-square rounded-full" :class="[activities.value.length > 0 ? 'bg-green-400 ring-green-600' : 'bg-gray-400 ring-gray-600']" />
+                        <span class="">Active Users ({{ activities.value.length ?? 0 }})</span>
                     </div>
 
                     <FooterTab @pinTab="() => isTabActive = false" v-if="isTabActive == 'activeUsers'" :tabName="`activeUsers`">
                         <template #default>
-                            <div v-for="(option, index) in activities" class="flex justify-start py-1 px-2 gap-x-1.5 hover:bg-gray-700 cursor-default">
+                            <div v-if="activities.value.length > 0" v-for="(option, index) in activities.value" class="flex justify-start py-1 px-2 gap-x-1.5 hover:bg-gray-700 cursor-default">
                                 <img :src="`/media/${option.user.avatar_id}`" :alt="option.user.contact_name" srcset="" class="h-4 rounded-full shadow">
                                 <p class="text-left text-gray-100">
                                     <!-- <span class="font-semibold">{{ option.user.contact_name }}</span>  -->

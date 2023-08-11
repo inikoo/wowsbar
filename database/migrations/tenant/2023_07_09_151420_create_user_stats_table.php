@@ -5,11 +5,13 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
+use App\Stubs\Migrations\HasUserStats;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class () extends Migration {
+    use HasUserStats;
     public function up(): void
     {
         Schema::create('user_stats', function (Blueprint $table) {
@@ -17,16 +19,7 @@ return new class () extends Migration {
             $table->unsignedSmallInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
 
-            $table->unsignedInteger('number_logins')->default(0);
-            $table->datetime('last_login_at')->nullable();
-            $table->string('last_login_ip')->nullable();
-
-            $table->datetime('last_active_at')->nullable();
-
-            $table->unsignedInteger('number_failed_logins')->default(0);
-            $table->string('last_failed_login_ip')->nullable();
-            $table->datetime('last_failed_login_at')->nullable();
-
+            $table=$this->userStatsColumns($table);
             $table->timestampsTz();
         });
     }

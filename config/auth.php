@@ -7,6 +7,7 @@
 
 use App\Models\Auth\RootUser;
 use App\Models\Auth\User;
+use App\Models\Landlord\LandlordUser;
 
 return [
 
@@ -48,9 +49,13 @@ return [
             'driver'   => 'session',
             'provider' => 'users',
         ],
-        'landlord' => [
+        'root' => [
             'driver'   => 'session',
             'provider' => 'root_users',
+        ],
+        'landlord' => [
+            'driver'   => 'session',
+            'provider' => 'landlord_users',
         ],
     ],
 
@@ -80,11 +85,12 @@ return [
             'driver' => 'eloquent',
             'model'  => RootUser::class,
         ],
+        'landlord_users' => [
+            'driver' => 'eloquent',
+            'model'  => LandlordUser::class,
+        ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+
     ],
 
     /*
@@ -113,8 +119,14 @@ return [
             'expire'   => 60,
             'throttle' => 60,
         ],
-        'landlord' => [
+        'root' => [
             'provider' => 'root_users',
+            'table'    => 'password_reset_tokens',
+            'expire'   => 60,
+            'throttle' => 60,
+        ],
+        'landlord' => [
+            'provider' => 'landlord_users',
             'table'    => 'password_reset_tokens',
             'expire'   => 60,
             'throttle' => 60,

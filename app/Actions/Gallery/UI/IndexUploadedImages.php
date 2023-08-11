@@ -11,7 +11,7 @@ use App\Actions\InertiaAction;
 use App\Actions\UI\Dashboard\ShowDashboard;
 use App\Http\Resources\Gallery\ImageResource;
 use App\InertiaTable\InertiaTable;
-use App\Models\Media\Media;
+use App\Models\Media\LandlordMedia;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -61,7 +61,7 @@ class IndexUploadedImages extends InertiaAction
             InertiaTable::updateQueryBuilderParameters($prefix);
         }
 
-        $queryBuilder = QueryBuilder::for(Media::class);
+        $queryBuilder = QueryBuilder::for(LandlordMedia::class);
         foreach ($this->elementGroups as $key => $elementGroup) {
             $queryBuilder->whereElementGroup(
                 prefix: $prefix,
@@ -74,7 +74,7 @@ class IndexUploadedImages extends InertiaAction
 
         return $queryBuilder
             ->defaultSort('media.name')
-            ->where('collection_name', 'contentBlock')
+            ->where('collection_name', 'content_block')
             ->select(['media.name','media.id','size','mime_type','file_name','disk','media.slug'])
             ->allowedSorts(['name','size'])
             ->allowedFilters([$globalSearch])
@@ -102,18 +102,10 @@ class IndexUploadedImages extends InertiaAction
             $table
                 ->withModelOperations($modelOperations)
                 ->withGlobalSearch()
-                ->withEmptyState(
-                    [
-                        'title' => __('No images found'),
-                        'count' => app('currentTenant')->stats->number_websites,
-
-                    ]
-                )
                 ->column(key: 'name', label: __('name'), sortable: true)
-                ->column(key: 'thumbnail', label: __('image'), sortable: true)
-
+                ->column(key: 'thumbnail', label: __('image'))
                 ->column(key: 'size', label: __('size'), sortable: true)
-
+                ->column(key: 'select', label: __(' '))
                 ->defaultSort('name');
         };
     }
@@ -132,32 +124,18 @@ class IndexUploadedImages extends InertiaAction
                     $request->route()->getName(),
                     $request->route()->parameters
                 ),
-                'title'    => __('images'),
+                'title'    => __('stock images'),
                 'pageHead' => [
-                    'title'     => __('images'),
+                    'title'     => __('stock images'),
                     'iconRight' => [
                         'title' => __('image'),
-                        'icon'  => 'fal fa-images'
+                        'icon'  => 'fal fa-image-polaroid'
                     ],
                 ],
                 'data' => ImageResource::collection($websites),
 
             ]
-        )->table($this->tableStructure(
-            modelOperations: [
-                'createLink' => [
-                    'route' => [
-                        'name'       => 'portfolio.websites.create',
-                        'parameters' => array_values([])
-                    ],
-                    'type'    => 'button',
-                    'style'   => 'primary',
-                    'tooltip' => __('upload image'),
-                    'label'   => __('upload image'),
-                    'icon'    => 'fas fa-upload'
-                ]
-            ]
-        ));
+        )->table($this->tableStructure());
     }
 
     /** @noinspection PhpUnusedParameterInspection */
@@ -169,12 +147,13 @@ class IndexUploadedImages extends InertiaAction
                     'type'   => 'simple',
                     'simple' => [
                         'route' => $routeParameters,
-                        'label' => __('images'),
+                        'label' => __('stock images'),
                         'icon'  => 'fal fa-bars'
                     ],
                 ],
             ];
         };
+
 
         return match ($routeName) {
             'portfolio.images.index' =>

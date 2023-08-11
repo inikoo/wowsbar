@@ -98,12 +98,13 @@ const closeModalisOpenLibrariesImage = () => {
 const isOpenCropModal = ref(false)
 
 const closeModalisOpenCropModal = () => {
+    addFiles.value = []
     isOpenCropModal.value = false
+    fileInput.value.value = ''
 }
 
-// When new slide added
 const addComponent = async (element) => {
-    let setData = props.data.components
+    // let setData = props.data.components
     addFiles.value = element.target.files
     isOpenCropModal.value = true
     // Save the new image to database
@@ -175,25 +176,28 @@ const dragleave = () => {
 const drop = (e) => {
     e.preventDefault()
     let setData = []
-    for (const set of e.dataTransfer.files) {
-        if (set && set instanceof File) {
-            setData.push({
-                id: null,
-                image_id: null,
-                image_source: null,
-                imageFile: set,
-                ulid: ulid(),
-                layout: {
-                    imageAlt: set.name,
-                },
-                visibility : true
-            })
-        }
-    }
-    const newFiles = [...setData]
-    props.data.components = [...props.data.components, ...newFiles]
+    addFiles.value = e.dataTransfer.files
+    isOpenCropModal.value = true
+    // for (const set of e.dataTransfer.files) {
+    //     if (set && set instanceof File) {
+    //         setData.push({
+    //             id: null,
+    //             image_id: null,
+    //             image_source: null,
+    //             imageFile: set,
+    //             ulid: ulid(),
+    //             layout: {
+    //                 imageAlt: set.name,
+    //             },
+    //             visibility : true
+    //         })
+    //     }
+    // }
+    // const newFiles = [...setData]
+    // props.data.components = [...props.data.components, ...newFiles]
     isDragging.value = false
 }
+
 const selectComponentForEdition = (slide) => {
     const componentToEdit = props.data.components.find(item => item.ulid === slide.ulid);
 
@@ -246,7 +250,7 @@ const changeVisibility = (slide: any) => {
 
 const ComponentsBlueprint = ref([
     {
-        title: 'Background',
+        title: 'Background & Link',
         icon: ['fal', 'fa-image'],
         fields: [
             {
@@ -536,13 +540,6 @@ const setCommonEdit = () => {
 
                 <Button :style="`tertiary`" icon="fal fa-image" size="xs" class="relative" @click="isOpenLibrariesImage = !isOpen">
                     {{ trans("Libraries") }}
-                    <!-- <label
-                        class="bg-transparent inset-0 absolute inline-block cursor-pointer"
-                        id="input-slide-large-mask" for="fileInput"
-                    />
-                    <input ref="fileInput" type="file" multiple name="file" id="fileInput"
-                        @change="addComponent" accept="image/*"
-                        class="absolute cursor-pointer rounded-md border-gray-300 sr-only" /> -->
                 </Button>
             </div>
         </div>

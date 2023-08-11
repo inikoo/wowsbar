@@ -123,7 +123,7 @@ class ShowWebsite extends InertiaAction
                                 'name'       => 'portfolio.websites.show.banners.create',
                                 'parameters' => array_values([$website->slug])
                             ],
-                            'label' => __('website'),
+                            'label' => __('banner'),
                             'style' => 'primary',
                             'icon'  => 'fas fa-plus'
                         ] : false

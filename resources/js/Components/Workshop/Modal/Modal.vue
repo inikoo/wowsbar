@@ -4,7 +4,7 @@ import { TransitionRoot, TransitionChild, Dialog, DialogPanel } from '@headlessu
 
 const props = defineProps(['isOpen','onClose'])
 const emits = defineEmits()
-console.log('jfjfdjjfjfjfjffj')
+
 
 const closeModal = () => {
   emits('onClose') // Emit a custom event to close the modal

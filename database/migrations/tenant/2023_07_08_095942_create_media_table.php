@@ -17,7 +17,8 @@ return new class () extends Migration {
             $table->unsignedSmallInteger('tenant_id')->nullable()->index();
             $table->foreign('tenant_id')->references('id')->on('tenants');
             $table->string('slug')->unique()->index();
-            $table->morphs('model');
+            $table->string('model_type')->nullable();
+            $table->unsignedInteger('model_id')->nullable();
             $table->uuid()->nullable()->unique();
             $table->string('collection_name')->index();
             $table->string('name');
@@ -33,6 +34,7 @@ return new class () extends Migration {
             $table->string('checksum')->index()->nullable();
             $table->unsignedInteger('order_column')->nullable()->index();
             $table->nullableTimestamps();
+            $table->index(['model_type','model_id']);
         });
     }
 };

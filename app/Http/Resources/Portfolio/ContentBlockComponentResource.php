@@ -7,6 +7,7 @@
 
 namespace App\Http\Resources\Portfolio;
 
+use App\Http\Resources\Gallery\ImageResource;
 use App\Models\Portfolio\ContentBlockComponent;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -18,12 +19,12 @@ class ContentBlockComponentResource extends JsonResource
         $contentBlockComponent = $this;
 
         return [
-            'id'           => $contentBlockComponent->id,
-            'ulid'         => $contentBlockComponent->ulid,
-            'layout'       => $contentBlockComponent->layout,
-            'visibility'   => $contentBlockComponent->visibility,
-            'image_id'     => $contentBlockComponent->image_id,
-            'image_source' => route('media.show', $contentBlockComponent->image_id)
+            'id'         => $contentBlockComponent->id,
+            'ulid'       => $contentBlockComponent->ulid,
+            'layout'     => $contentBlockComponent->layout,
+            'visibility' => $contentBlockComponent->visibility,
+            'image'      => ImageResource::make($contentBlockComponent->image)->getArray(),
+
         ];
     }
 }

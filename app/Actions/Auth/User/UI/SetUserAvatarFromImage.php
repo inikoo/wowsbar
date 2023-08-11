@@ -31,7 +31,12 @@ class SetUserAvatarFromImage
             /** @var Media $media */
             $media = $user->addMedia($imagePath)
                 ->preservingOriginal()
-                ->withCustomProperties(['checksum' => $checksum])
+                ->withProperties(
+                    [
+                        'checksum'  => $checksum,
+                        'tenant_id' => app('currentTenant')->id
+                    ]
+                )
                 ->usingName($originalFilename)
                 ->usingFileName($checksum.".".$extension ?? pathinfo($imagePath, PATHINFO_EXTENSION))
                 ->toMediaCollection('profile');

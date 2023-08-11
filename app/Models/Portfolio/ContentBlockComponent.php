@@ -9,6 +9,7 @@ namespace App\Models\Portfolio;
 
 use App\Concerns\BelongsToTenant;
 use App\Enums\Portfolio\ContentBlockComponent\ContentBlockComponentTypeEnum;
+use App\Models\Media\Media;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -30,7 +31,8 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string|null $deleted_at
  * @property-read \App\Models\Portfolio\ContentBlock $contentBlock
- * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \App\Models\Media\Media> $media
+ * @property-read Media|null $image
+ * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, Media> $media
  * @property-read int|null $media_count
  * @property-read \App\Models\Tenancy\Tenant $tenant
  * @method static Builder|ContentBlockComponent newModelQuery()
@@ -65,10 +67,15 @@ class ContentBlockComponent extends Model implements HasMedia
     ];
 
     protected $guarded=[];
+
     public function contentBlock(): BelongsTo
     {
         return $this->belongsTo(ContentBlock::class);
     }
 
+    public function image():BelongsTo
+    {
+        return $this->belongsTo(Media::class,'image_id');
+    }
 
 }

@@ -1,0 +1,9 @@
+[
+    {
+        "name":"super-admin",
+        "permissions": [
+            "sysadmin","portfolio","banners","gallery"
+        ]
+    }
+
+]
