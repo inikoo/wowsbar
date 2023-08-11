@@ -30,7 +30,7 @@ class StoreTenant
     {
         $tenant = Tenant::create($modelData);
         $tenant->stats()->create();
-
+        $tenant->contentBlockStats()->create();
 
         $tenant->execute(
             function (Tenant $tenant) use ($userData) {
