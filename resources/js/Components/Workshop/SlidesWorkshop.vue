@@ -24,6 +24,7 @@ import SliderCommonWorkshop from './SliderCommonWorkshop.vue'
 import Modal from './Modal/Modal.vue'
 import LibrariesImage from './LibrariesImage.vue'
 import CropImage from './CropImage/CropImage.vue'
+import Image from '@/Components/Image.vue'
 library.add(faEye, faEyeSlash, faTrashAlt, faAlignJustify, faCog, faImage, faLock)
 interface CornersPositionData {
     data: {
@@ -137,17 +138,7 @@ const addComponent = async (element) => {
 };
 
 
-const generateThumbnail = (file) => {
-    if (file.imageFile && file.imageFile instanceof File) {
-        let fileSrc = URL.createObjectURL(file.imageFile)
-        setTimeout(() => {
-            URL.revokeObjectURL(fileSrc)
-        }, 1000)
-        return fileSrc
-    } else {
-        return file.image_source
-    }
-}
+
 
 const removeComponent = (file) => {
     const index =  props.data.components.findIndex(item => item.ulid === file.ulid);
@@ -254,10 +245,10 @@ const ComponentsBlueprint = ref([
         icon: ['fal', 'fa-image'],
         fields: [
             {
-                name: 'image_source',
+                name: 'image',
                 type: 'slideBackground',
                 label: trans('Image'),
-                value: ['image_source']
+                value: ['image']
             },
             {
                 name: ['layout', 'link'],
@@ -501,7 +492,7 @@ const setCommonEdit = () => {
 
                             <!-- Image slide -->
                             <div class="h-10 w-10 sm:w-10 flex items-center justify-center py-1">
-                                <img class="" :src="generateThumbnail(slide)" />
+                                <Image :src="slide.image.thumbnail"></Image>
                             </div>
 
                             <!-- Label slide -->
