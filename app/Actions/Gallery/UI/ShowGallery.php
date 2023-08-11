@@ -102,10 +102,10 @@ class ShowGallery extends InertiaAction
                             'name'       => 'portfolio.images.upload',
                             'parameters' => []
                         ],
-                        'label' => __('asasasasasas image'),
-                        'style' => 'uploadFile'
+                        'label' => __('Upload image'),
+                        'style' => 'create'
                     ] : false,
-               ],
+                ],
                 prefix: 'uploaded_images'
             )
         )->table(

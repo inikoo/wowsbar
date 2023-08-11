@@ -5,34 +5,34 @@
   -->
 
 <script setup lang="ts">
-import { ref, watch, defineEmits  } from "vue";
-import { Swiper, SwiperSlide } from "swiper/vue";
-import { Pagination, Navigation } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/navigation";
-import CropComponents from "./CropComponents.vue";
-import { trans } from "laravel-vue-i18n";
-import Button from "@/Components/Elements/Buttons/Button.vue";
+import { ref, watch } from "vue"
+import { Swiper, SwiperSlide } from "swiper/vue"
+import { Pagination, Navigation } from "swiper/modules"
+import "swiper/css"
+import "swiper/css/navigation"
+
+import { trans } from "laravel-vue-i18n"
+import Button from "@/Components/Elements/Buttons/Button.vue"
+import CropComponents from "@/Components/Workshop/CropImage/CropComponents.vue"
 
 
 const props = defineProps<{
     data: FileList;
     imagesUploadRoute: object;
     respone : Function
-}>();
+}>()
 
-const emits = defineEmits()
 const setData2 = () => {
-    const data = [];
+    const data = []
     for (const set of props.data) {
         data.push({
             originalFile: set,
-        });
+        })
     }
-    return data;
-};
+    return data
+}
 
-const setData = ref(setData2());
+const setData = ref(setData2())
 
 const generateThumbnail = (file) => {
     if (
@@ -43,12 +43,12 @@ const generateThumbnail = (file) => {
         let fileSrc = URL.createObjectURL(file.originalFile);
         setTimeout(() => {
             URL.revokeObjectURL(fileSrc);
-        }, 1000);
-        return fileSrc;
+        }, 1000)
+        return fileSrc
     } else if (file.imagePosition) {
-        return file.imagePosition.canvas.toDataURL();
+        return file.imagePosition.canvas.toDataURL()
     } else {
-        return file.originalFile;
+        return file.originalFile
     }
 };
 
@@ -56,17 +56,17 @@ const form = ref(new FormData())
 
 
 const addComponent = async () => {
-    const SendData = [];
+    const SendData = []
     const processItem = async (item) => {
         return new Promise((resolve, reject) => {
             if (item.imagePosition) {
                 item.imagePosition.canvas.toBlob((blob) => {
-                    // SendData.push(blob);
-                    form.value.append("blob", blob, item.originalFile.name); 
-                    resolve();
-                });
+                    // SendData.push(blob)
+                    form.value.append("blob", blob, item.originalFile.name) 
+                    resolve()
+                })
             } else {
-                resolve();
+                resolve()
             }
         });
     };
@@ -89,12 +89,12 @@ const addComponent = async () => {
         form.value = new FormData()
         props.respone(response.data)
     } catch (error) {
-        console.error(error);
+        console.error(error)
         props.respone(error.response)
     }
-};
+}
 
-const swiperRef = ref(null);
+const swiperRef = ref(null)
 
 
 
@@ -139,11 +139,11 @@ watch(current, (newVal) => {
                 class="mx-auto mt-5 grid max-w-full grid-cols-1 gap-x-8 gap-y-16 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3"
             >
                 <li v-for="(item, index) in setData" :key="index">
-                    <div @click="current = index" :class="['p-2.5 border border-solid  rounded-lg', setData[current] == item ?  'border-orange-500'  : 'border-gray-300']">
+                    <div @click="current = index" :class="['p-2.5 border border-solid rounded-lg cursor-pointer ', setData[current] == item ?  'border-gray-400 bg-gray-200'  : 'border-gray-300']">
                         <CropComponents :data="item" />
                         <div class="flex justify-center align-middle">
                             <h3
-                                :class="['text-lg font-semibold leading-4 tracking-tight', setData[current] == item ? 'text-orange-500' : 'text-gray-900']"
+                                :class="['leading-4 tracking-tight', setData[current] == item ? 'text-orange-500 font-semibold' : 'text-gray-500']"
                             >
                                 {{ item.originalFile.name }}
                             </h3>
@@ -154,7 +154,7 @@ watch(current, (newVal) => {
         </div>
     </div>
     <Button
-        :style="`secondary`"
+        :style="`primary`"
         icon="fas fa-upload"
         class="relative"
         size="xs"
