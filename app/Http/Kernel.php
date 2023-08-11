@@ -10,7 +10,7 @@ namespace App\Http;
 use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\EncryptCookies;
 use App\Http\Middleware\HandleInertiaRequests;
-use App\Http\Middleware\HandleLandlordInertiaRequests;
+use App\Http\Middleware\HandleRootInertiaRequests;
 use App\Http\Middleware\LogUserFirebaseMiddleware;
 use App\Http\Middleware\LogUserRequestMiddleware;
 use App\Http\Middleware\PreventRequestsDuringMaintenance;
@@ -65,14 +65,14 @@ class Kernel extends HttpKernel
             LogUserFirebaseMiddleware::class,
             LogUserRequestMiddleware::class
         ],
-        'landlord-web' => [
+        'public-web' => [
             EncryptCookies::class,
             AddQueuedCookiesToResponse::class,
             StartSession::class,
             ShareErrorsFromSession::class,
             VerifyCsrfToken::class,
             SubstituteBindings::class,
-            HandleLandlordInertiaRequests::class,
+            HandleRootInertiaRequests::class,
             AddLinkHeadersForPreloadedAssets::class,
         ],
         'tenant' => [

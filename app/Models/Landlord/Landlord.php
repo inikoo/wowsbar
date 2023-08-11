@@ -1,7 +1,7 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Thu, 10 Aug 2023 09:10:04 Malaysia Time, Pantai Lembeng,, Bali
+ * Created: Thu, 10 Aug 2023 09:10:04 Malaysia Time, Pantai Lembeng, Bali
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 

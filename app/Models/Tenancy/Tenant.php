@@ -8,7 +8,7 @@
 namespace App\Models\Tenancy;
 
 use App\Models\Assets\Currency;
-use App\Models\Auth\RootUser;
+use App\Models\Auth\PublicUser;
 use App\Models\Auth\User;
 use App\Models\Media\Media;
 use App\Models\Portfolio\ContentBlock;
@@ -50,7 +50,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read Media|null $logo
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, Media> $media
  * @property-read int|null $media_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, RootUser> $rootUsers
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, PublicUser> $rootUsers
  * @property-read int|null $root_users_count
  * @property-read \App\Models\Tenancy\TenantStats|null $stats
  * @property-read \Illuminate\Database\Eloquent\Collection<int, User> $users
@@ -131,7 +131,7 @@ class Tenant extends SpatieTenant implements HasMedia
 
     public function rootUsers(): HasMany
     {
-        return $this->hasMany(RootUser::class);
+        return $this->hasMany(PublicUser::class);
     }
 
     public function websites(): HasMany

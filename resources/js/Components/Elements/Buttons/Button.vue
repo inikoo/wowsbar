@@ -14,30 +14,18 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 library.add(faPlus, faSave, fadSave, faUpload);
 
-const props = defineProps(
-    {
-        'style': {
-            type: String,
-            default: 'primary',
-        },
-        'size': {
-            type: String,
-            default: 'm',
-        },
-        'icon': {
-            type: String,
-            default: ''
-        },
-        'leftIcon': {
-            type: Object,
-        },
-        'rightIcon': {
-            type: Object,
-        },
-        'action': {
-            type: String,
-        },
-    })
+const props = withDefaults(defineProps<{
+    'style'?: string
+    'size'?: string
+    'icon'?: string
+    'leftIcon'?: Object
+    'rightIcon'?: Object
+    'action'?: string
+}>(), {
+    style: 'primary',
+    size: 'm'
+})
+
 
 let styleClass = ''
 let iconClass = ''

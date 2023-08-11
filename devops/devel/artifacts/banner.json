@@ -1,0 +1,128 @@
+{
+    "slug": "banner",
+    "name": "Banner",
+    "blueprint": {
+        "delay": 5000,
+        "common": {
+            "corners": {
+                "bottomLeft": {
+                    "type": "slideControls"
+                }
+            },
+            "centralStage": {
+                "title": null,
+                "subtitle": null,
+                "text": null
+            }
+        },
+        "images": [
+            {
+                "source": "resources",
+                "imageSrc": "car.png",
+                "imageAlt": "Lamborghini Car"
+            },
+            {
+                "source": "resources",
+                "imageSrc": "shopping_mall.png",
+                "imageAlt": "Shopping Mall"
+            },
+            {
+                "source": "resources",
+                "imageSrc": "skincare.png",
+                "imageAlt": "Skincare"
+            },
+            {
+                "source": "resources",
+                "imageSrc": "soap.png",
+                "imageAlt": "Soap"
+            }
+        ],
+        "components": [
+            {
+                "visibility": true,
+                "layout": {
+
+                    "link": null,
+                    "corners": {
+                        "bottomRight": {
+                            "type": "linkButton",
+                            "data": {
+                                "text": "Browse Promo",
+                                "target": "#"
+                            }
+                        }
+                    },
+                    "centralStage": {
+                        "title": "Welcome to the jungle",
+                        "subtitle": "Jungle is the best place to go and healing with your family"
+                    }
+                }
+
+            },
+            {
+                "visibility": true,
+                "layout":{
+
+                    "corners": {
+                        "topLeft": {
+                            "type": "cornerText",
+                            "data": {
+                                "title": "Welcome to the jungle",
+                                "subtitle": "Jungle is the best place to go and healing with your family"
+                            }
+                        },
+                        "topRight": {
+                            "type": "cornerFooter",
+                            "data": {
+                                "text": "The banner officially disclaimed by XYZ Company."
+                            }
+                        }
+                    }
+                }
+
+            },
+            {
+                "visibility": true,
+                "layout": {
+                    "imageAlt": "Lorem ipsum dolor Basic Tee in sienna",
+                    "corners": {
+                        "bottomRight": {
+                            "type": "linkButton",
+                            "data": {
+                                "text": "Browse Promo",
+                                "target": "#"
+                            }
+                        }
+                    },
+                    "centralStage": {
+                        "title": "Welcome to the jungle",
+                        "subtitle": "Jungle is the best place to go and healing with your family"
+                    }
+                }
+
+            },
+            {
+                "visibility": false,
+                "layout": {
+                    "link": "google.com",
+                    "corners": {
+                        "topRight": {
+                            "type": "cornerText",
+                            "data": {
+                                "text": "Hello"
+                            }
+                        }
+                    }
+                }
+
+            }
+        ]
+    },
+    "scope": "webpage",
+    "webBlocks": [
+        {
+            "code": "Banner",
+            "name": "Main Banner"
+        }
+    ]
+}

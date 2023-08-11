@@ -33,19 +33,21 @@ const props = defineProps<{
                         // footer?: string
                     }
                 }
-                corners: Corners
+                corners: Object,
                 imageAlt: string
                 link: string
                 visibility: boolean
             }
         >
-        delay: number
+        delay: number,
     }
+    imagesUploadRoute : Object
 
 }>();
 
 const isOpen = ref(false)
 const addFiles = ref([])
+
 const closeModal = () => {
     addFiles.value.files = null
     isOpen.value = false
@@ -53,29 +55,11 @@ const closeModal = () => {
 }
 
 const isDragging = ref(false)
-const components = ref(props.data.components)
 const fileInput = ref(null)
 
 const onChange = () => {
     addFiles.value = fileInput.value?.files
     isOpen.value = true
-    // for (const set of fileInput.value?.files) {
-    //     if (set && set instanceof File) {
-    //         setData.push({
-    //             id: null,
-    //             image_id: ulid(),
-    //             image_source: null,
-    //             imageFile: set,
-    //             ulid: ulid(),
-    //             layout: {
-    //                 imageAlt: set.name,
-    //             }
-    //         })
-    //     }
-    // }
-    // const newFiles = [...setData]
-    // components.value = [...components.value, ...newFiles]
-    // props.data.components = [...components.value]
 }
 
 const dragover = (e) => {
@@ -91,33 +75,36 @@ const drop = (e) => {
     e.preventDefault()
     addFiles.value = e.dataTransfer.files
     isOpen.value = true
-    // let setData = []
-    // for (const set of e.dataTransfer.files) {
-    //     if (set && set instanceof File) {
-    //         setData.push({
-    //             id: null,
-    //             image_id: ulid(),
-    //             image_source: null,
-    //             imageFile: set,
-    //             ulid: ulid(),
-    //             layout: {
-    //                 imageAlt: set.name,
-    //             }
-    //         })
-    //     }
-    // }
-    // const newFiles = [...setData]
-    // components.value = [...components.value, ...newFiles]
-    // props.data.components = [...components.value]
     isDragging.value = false
 }
+
+const uploadImageRespone=(res)=>{
+    console.log(res)
+    let setData = []
+     for (const set of res.data) {
+            setData.push({
+                id: null,
+                ulid: ulid(),
+                layout: {
+                    imageAlt: set.name,
+                },
+                image : set,
+                visibility : true
+            })
+    }
+    const newFiles = [...setData]
+    props.data.components = [...props.data.components, ...newFiles]
+    isOpen.value = false
+}
+
+console.log('add',props)
 
 </script>
 
 <template layout="App">
      <Modal :isOpen="isOpen" @onClose="closeModal">
         <div>
-            <CropImage :data="addFiles"  :imagesUploadRoute="props.imagesUploadRoute"/>
+            <CropImage :data="addFiles"  :imagesUploadRoute="props.imagesUploadRoute"  :respone="uploadImageRespone"/>
         </div>
     </Modal>
         <div class="col-span-full p-3" @dragover="dragover" @dragleave="dragleave" @drop="drop">

@@ -8,9 +8,7 @@
 namespace App\Actions\Gallery;
 
 use App\Actions\Auth\User\UI\AttachImageToTenant;
-use App\Actions\Portfolio\ContentBlock\AttachImageToContentBlock;
-use App\Http\Resources\Media\MediaResource;
-use App\Models\Portfolio\ContentBlock;
+use App\Http\Resources\Gallery\ImageResource;
 use App\Models\Portfolio\Website;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Collection;
@@ -46,7 +44,7 @@ class UploadImagesToGallery
     public function authorize(ActionRequest $request): bool
     {
 
-        return $request->user()->can("portfolio.edit");
+        return $request->user()->can("portfolio.gallery.edit");
     }
 
     public function rules(): array
@@ -63,8 +61,8 @@ class UploadImagesToGallery
         return $this->handle($request->validated('images'));
     }
 
-    public function htmlResponse($medias): AnonymousResourceCollection
+    public function jsonResponse($medias): AnonymousResourceCollection
     {
-        return MediaResource::collection($medias);
+        return ImageResource::collection($medias);
     }
 }

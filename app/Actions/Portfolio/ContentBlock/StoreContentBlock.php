@@ -30,14 +30,14 @@ class StoreContentBlock
     use WithAttributes;
 
 
-    private bool $asAction        = false;
+    private bool $asAction = false;
     private Website|null $website = null;
 
 
     public function handle(Website $website, WebBlock $webBlock, array $modelData): ContentBlock
     {
-        $this->website  = $website;
-        $layout         = $webBlock->blueprint;
+        $this->website = $website;
+        $layout        = $webBlock->blueprint;
 
         list($layout, $contentBlockComponents) = ParseContentBlockLayout::run($layout, $webBlock);
 
@@ -47,8 +47,6 @@ class StoreContentBlock
         data_set($modelData, 'layout', $layout);
         data_set($modelData, 'data.website_slug', $website->slug);
         data_set($modelData, 'ulid', Str::ulid());
-
-
 
         /** @var ContentBlock $contentBlock */
         $contentBlock = $webBlock->contentBlocks()->create($modelData);
@@ -116,7 +114,7 @@ class StoreContentBlock
         $tenant = Tenant::where('slug', $command->argument('tenant'))->firstOrFail();
         $tenant->makeCurrent();
 
-        $website  = Website::where('slug', $command->argument('website'))->firstOrFail();
+        $website = Website::where('slug', $command->argument('website'))->firstOrFail();
         $webBlock = WebBlock::where('slug', $command->argument('web-block'))->firstOrFail();
 
 
@@ -134,8 +132,20 @@ class StoreContentBlock
         $command->info("Done! Content block $contentBlock->code created 🎉");
     }
 
-    public function htmlResponse(): RedirectResponse
+    public function htmlResponse(ContentBlock $contentBlock, ActionRequest $request): RedirectResponse
     {
-        return redirect()->route('portfolio.websites.show.banners.index', $this->website->code);
+        return match ($request->route()->getName()) {
+            'models.website.web-block-type.banner.store' => redirect()->route(
+                'portfolio.websites.show.banners.workshop',
+                [
+                    $this->website->code,
+                    $contentBlock->slug
+                ]
+            ),
+            default => redirect()->route(
+                'portfolio.websites.show.banners.index',
+                $this->website->code,
+            ),
+        };
     }
 }

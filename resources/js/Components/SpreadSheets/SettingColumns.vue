@@ -1,6 +1,6 @@
 <!--
   - Author: Raul Perusquia <raul@inikoo.com>
-  - Created: Tue, 20 Jun 2023 10:16:56 Malaysia Time, Pantai Lembeng, Bali, Id
+  - Created: Tue, 20 Jun 2023 10:16:56 Malaysia Time, Pantai Lembeng, Bali, Indonesia
   - Copyright (c) 2023, Raul A Perusquia Flores
   -->
 
@@ -43,7 +43,7 @@ const onCopyRow = (position) => {
 };
 
 </script>
-  
+
 <template>
     <div>
         <ul class="list-none">
@@ -59,7 +59,7 @@ const onCopyRow = (position) => {
         </ul>
     </div>
 </template>
-  
+
 <style>
 .input-setting {
     height: 24px;
@@ -70,5 +70,4 @@ const onCopyRow = (position) => {
     font-size: 15px;
 }
 </style>
-  
-  
+

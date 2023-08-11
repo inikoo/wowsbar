@@ -5,7 +5,7 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-use App\Models\Auth\RootUser;
+use App\Models\Auth\PublicUser;
 use App\Models\Auth\User;
 use App\Models\Landlord\LandlordUser;
 
@@ -49,7 +49,7 @@ return [
             'driver'   => 'session',
             'provider' => 'users',
         ],
-        'root' => [
+        'public' => [
             'driver'   => 'session',
             'provider' => 'root_users',
         ],
@@ -83,7 +83,7 @@ return [
         ],
         'root_users' => [
             'driver' => 'eloquent',
-            'model'  => RootUser::class,
+            'model'  => PublicUser::class,
         ],
         'landlord_users' => [
             'driver' => 'eloquent',

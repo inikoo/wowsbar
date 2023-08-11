@@ -10,6 +10,10 @@ import Table from '@/Components/Table/Table.vue'
 import Image from "@/Components/Image.vue"
 import { ref, watch, reactive } from 'vue'
 import Checkbox from '@/Components/Checkbox.vue'
+import Modal from '@/Components/Workshop/Modal/Modal.vue'
+import CropImage from '@/Components/Workshop/CropImage/CropImage.vue'
+import Button from '@/Components/Elements/Buttons/Button.vue'
+import { trans } from 'laravel-vue-i18n'
 
 const props = defineProps<{
     data: object
@@ -37,18 +41,74 @@ const selectedRow = reactive({
 watch(selectedRow, () => {
     emits('selectedRow', selectedRow)
 })
+
+const isOpen = ref(false)
+const addFiles = ref([])
+const closeModal = () => {
+    addFiles.value.files = null
+    isOpen.value = false
+}
+
+const addComponent = async (element) => {
+    addFiles.value = element.target.files
+    isOpen.value = true
+}
+
+const uploadImageRespone=(res)=>{
+    console.log(res)
+    let setData = []
+    for (const set of res.data) {
+            setData.push({
+                id: null,
+                ulid: ulid(),
+                layout: {
+                    imageAlt: set.name,
+                },
+                image : set,
+                visibility : true
+            })
+    }
+    const newFiles = [...setData]
+    props.data.components = [...props.data.components, ...newFiles]
+    isOpenCropModal.value = false
+}
 </script>
 
 <template>
     <Table :resource="data" :name="tab" class="mt-5" :selectedRow="selectedRow">
+        <!-- Button Upload Files -->
+        <template #uploadFile="{item}">
+            <Button :style="`primary`" icon="fas fa-plus" class="relative">
+                {{ trans(item.label) }}
+                <label
+                    class="bg-transparent inset-0 absolute cursor-pointer"
+                    id="addFilesLabel" for="addFiles"
+                />
+                <input type="file" multiple name="file" id="addFiles"
+                    @change="addComponent" accept="image/*"
+                    class="absolute cursor-pointer rounded-md border-gray-300 sr-only" />
+            </Button>
+
+            <Modal :isOpen="isOpen" @onClose="closeModal">
+                <div>
+                    <CropImage :data="addFiles" :imagesUploadRoute="item.route" :respone="uploadImageRespone"/>
+                </div>
+            </Modal>
+        </template>
+
+        <!-- Table: Column Name -->
         <template #cell(name)="{ item: image }">
             <Link :href="imageRoute(image)">
                 {{ image['name'] }}
             </Link>
         </template>
+
+        <!-- Table: Column image thumbnail -->
         <template #cell(thumbnail)="{ item: image }">
             <Image :src="image.thumbnail" class="shadow"/>
         </template>
+
+        <!-- Table: Column select item -->
         <template #cell(select)="{ item, tabName }">
             <Checkbox class="p-2.5" :value="item.id" name="select-image" id="select-image" v-model:checked="selectedRow[tabName]"/>
         </template>
