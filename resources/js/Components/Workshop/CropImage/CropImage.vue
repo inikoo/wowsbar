@@ -52,7 +52,7 @@ const generateThumbnail = (file) => {
 };
 
 const form = new FormData()
-console.log(form)
+
 
 const addComponent = async () => {
     const SendData = [];
@@ -74,6 +74,7 @@ const addComponent = async () => {
     for (const [key, value] of form.entries()) {
         SendData.push(value)
     }
+    console.log(SendData)
     try {
         const response = await axios.post(
             route(

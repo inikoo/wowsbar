@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { toRefs, watch } from 'vue'
 const props = defineProps<{
     src: {
         original: string
@@ -11,6 +12,12 @@ const props = defineProps<{
     alt?: string,
     class?: string
 }>()
+
+const { src } = toRefs(props);
+
+watch(src, (newValue) => {
+     console.log(newValue)
+  });
 
 let avif = props.src.avif;
 if(props.src.avif_2x){
