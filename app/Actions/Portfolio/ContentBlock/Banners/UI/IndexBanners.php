@@ -11,6 +11,7 @@ use App\Actions\InertiaAction;
 use App\Actions\Portfolio\ContentBlock\UI\IndexContentBlocks;
 use App\Actions\Portfolio\Website\UI\ShowWebsite;
 use App\Actions\UI\Dashboard\ShowDashboard;
+use App\Enums\Portfolio\ContentBlock\ContentBlockStateEnum;
 use App\Http\Resources\Portfolio\ContentBlockResource;
 use App\Models\Portfolio\Website;
 use App\Models\Tenancy\Tenant;
@@ -36,6 +37,37 @@ class IndexBanners extends InertiaAction
                 $request->user()->tokenCan('root') or
                 $request->user()->can('portfolio.view')
             );
+    }
+
+    protected function getElementGroups(): void
+    {
+        $this->elementGroups =
+            [
+                'status' => [
+                    'label' => __('Status'),
+                    'elements' => [
+                        ContentBlockStateEnum::IN_PROCESS->value => [
+                            __('In Process'),
+                            app('currentTenant')->stats->number_users_status_active
+                        ],
+                        ContentBlockStateEnum::READY->value => [
+                            __('Ready'),
+                            app('currentTenant')->stats->number_users_status_inactive
+                        ],
+                        ContentBlockStateEnum::LIVE->value => [
+                            __('Live'),
+                            app('currentTenant')->stats->number_users_status_inactive
+                        ],
+                        ContentBlockStateEnum::RETIRED->value => [
+                            __('Retired'),
+                            app('currentTenant')->stats->number_users_status_inactive
+                        ]
+                    ],
+                    'engine' => function ($query, $elements) {
+                        $query->where('status', array_pop($elements) === 'active');
+                    }
+                ]
+            ];
     }
 
     public function inTenant(ActionRequest $request): LengthAwarePaginator
@@ -69,13 +101,13 @@ class IndexBanners extends InertiaAction
 
     public function htmlResponse(LengthAwarePaginator $banners, ActionRequest $request): Response
     {
-        $scope     = $this->parent;
+        $scope = $this->parent;
         $container = null;
         if (class_basename($scope) == 'Website') {
             $container = [
-                'icon'    => ['fal', 'fa-globe'],
+                'icon' => ['fal', 'fa-globe'],
                 'tooltip' => __('website'),
-                'label'   => Str::possessive($scope->name)
+                'label' => Str::possessive($scope->name)
             ];
         }
 
@@ -86,40 +118,40 @@ class IndexBanners extends InertiaAction
                     $request->route()->getName(),
                     $request->route()->parameters
                 ),
-                'title'       => __('banners'),
-                'pageHead'    => [
-                    'title'     => __('banners'),
+                'title' => __('banners'),
+                'pageHead' => [
+                    'title' => __('banners'),
                     'container' => $container,
                     'iconRight' => [
                         'title' => __('banner'),
-                        'icon'  => 'fal fa-window-maximize'
+                        'icon' => 'fal fa-window-maximize'
                     ],
-                    'actions'   =>
+                    'actions' =>
                         match (app('currentTenant')->stats->number_websites) {
-                            0=>[],
+                            0 => [],
                             1 => [
-                                'type'  => 'button',
+                                'type' => 'button',
                                 'style' => 'create',
                                 'label' => 'create banner',
                                 'route' => [
-                                    'name'       => 'portfolio.websites.show.banners.create',
+                                    'name' => 'portfolio.websites.show.banners.create',
                                     'parameters' => app('currentTenant')->websites()->first()->slug
                                 ]
                             ],
                             default => [
-                                'type'  => 'modal',
-                                'component'=>'chooseWebsite',
+                                'type' => 'modal',
+                                'component' => 'chooseWebsite',
                                 'style' => 'create',
                                 'label' => 'create banner',
                                 'route' => [
-                                    'name'       => 'portfolio.banners.create',
+                                    'name' => 'portfolio.banners.create',
                                 ]
                             ]
                         }
 
 
                 ],
-                'data'        => ContentBlockResource::collection($banners),
+                'data' => ContentBlockResource::collection($banners),
 
             ]
         )->table(
@@ -149,11 +181,11 @@ class IndexBanners extends InertiaAction
         $headCrumb = function (array $routeParameters = []) {
             return [
                 [
-                    'type'   => 'simple',
+                    'type' => 'simple',
                     'simple' => [
                         'route' => $routeParameters,
                         'label' => __('banners'),
-                        'icon'  => 'fal fa-bars'
+                        'icon' => 'fal fa-bars'
                     ],
                 ],
             ];
@@ -177,7 +209,7 @@ class IndexBanners extends InertiaAction
                 ),
                 $headCrumb(
                     [
-                        'name'       => 'portfolio.websites.show.banners.index',
+                        'name' => 'portfolio.websites.show.banners.index',
                         'parameters' => $routeParameters
                     ]
                 ),

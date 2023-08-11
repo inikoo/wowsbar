@@ -51,8 +51,6 @@ class GetFirstLoadProps
                             (new Image())->make(url('/images/logo.png'))->resize(0, 64)
                         ),
                         'publicUrl'=> config('app.url')
-
-
                     ];
                 }
             }
