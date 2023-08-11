@@ -7,6 +7,7 @@
 
 namespace App\Actions\Gallery\UI;
 
+use App\Actions\Gallery\UI\UploadedImages\IndexUploadedImages;
 use App\Actions\InertiaAction;
 use App\Actions\UI\Dashboard\ShowDashboard;
 use App\Enums\UI\GalleryTabsEnum;
