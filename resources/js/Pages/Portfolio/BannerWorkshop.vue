@@ -62,7 +62,7 @@ console.log(props);
 import {useFirebaseStore} from "@/Stores/firebase";
 
 const credential = useFirebaseStore();
-const firebaseApp = initializeApp(JSON.parse(credential.credentials));
+const firebaseApp = initializeApp(credential);
 const db = getDatabase(firebaseApp);
 const user = ref(usePage().props.auth.user);
 const jumpToIndex = ref(0);
@@ -164,7 +164,7 @@ window.addEventListener('beforeunload', function (event) {
           <ScreenView @screenView="(val) => (screenView = val)" />
         </div>
     </div>
-     
+
       <div class="flex justify-center pr-0.5">
         <Slider :data="data" :jumpToIndex="jumpToIndex" :view="screenView" />
       </div>

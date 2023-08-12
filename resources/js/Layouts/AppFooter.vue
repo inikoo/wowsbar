@@ -15,12 +15,13 @@ import {useFirebaseStore} from "@/Stores/firebase";
 
 const firebase = useFirebaseStore();
 
-
 const activities = ref()
 
 const locale = useLocaleStore()
 const layout = useLayoutStore()
-const firebaseApp = initializeApp(JSON.parse(firebase.credentials));
+const firebaseApp = initializeApp(firebase);
+
+
 const db = getDatabase(firebaseApp)
 // const activities = useDatabaseList(dbRef(db, layout.tenant.code))
 

@@ -88,9 +88,9 @@ const initialiseApp = () => {
     const locale = useLocaleStore();
     const firebase = useFirebaseStore();
 
-
-    if (usePage().props.FK) {
-        firebase.credentials=usePage().props.FK;
+    if (usePage().props.firebase) {
+        firebase.credential=JSON.parse(usePage().props.firebase.credential);
+        firebase.databaseURL=usePage().props.firebase.databaseURL;
     }
 
     if (usePage().props.localeData) {

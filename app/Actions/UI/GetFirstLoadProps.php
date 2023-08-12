@@ -45,7 +45,7 @@ class GetFirstLoadProps
                 ],
 
 
-            'layout' => function () use ($user) {
+            'layout'   => function () use ($user) {
                 if ($user) {
                     return GetLayout::run($user);
                 } else {
@@ -60,7 +60,10 @@ class GetFirstLoadProps
                     ];
                 }
             },
-            'FK'    => File::get(base_path(config('firebase.projects.app.credentials.file')))
+            'firebase' => [
+                'credential'  => File::get(base_path(config('firebase.projects.app.credentials.file'))),
+                'databaseURL' => config('firebase.projects.app.database.url')
+            ]
         ];
     }
 }
