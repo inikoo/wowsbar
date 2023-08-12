@@ -22,7 +22,7 @@ php artisan firebase:flush
 echo "Public assets link 🔗"
 php artisan storage:link
 echo "Clear horizon 🧼"
-php artisan horixon:clear
+php artisan horizon:clear
 echo "🌱 Migrating and seeding database"
 php artisan migrate --database=backup --path=database/migrations/backup
 php artisan migrate --path=database/migrations/landlord
