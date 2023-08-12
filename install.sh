@@ -19,16 +19,16 @@ echo -e "✨ Resetting elasticsearch"
 php artisan es:refresh
 echo -e "✨ Resetting firebase"
 php artisan firebase:flush
-#echo -e "✨ Installing dependencies"
-#composer install
-#npm install
 echo "Public assets link 🔗"
 php artisan storage:link
+echo "Clear horizon 🧼"
+php artisan horixon:clear
 echo "🌱 Migrating and seeding database"
 php artisan migrate --database=backup --path=database/migrations/backup
 php artisan migrate --path=database/migrations/landlord
 php artisan migrate --path=database/migrations/tenant
 php artisan db:seed
+php artisan telescope:clear
 pg_dump -Fc -f "devops/devel/snapshots/fresh.dump" ${DB}
 echo "🌱 create devel landlord"
 php artisan landlord:create wowsbar wowsbar@inikoo.com Wowsbar aiku hello GB GBP

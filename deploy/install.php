@@ -74,6 +74,7 @@ task('install', [
     'artisan:route:cache',
     'artisan:view:cache',
     'artisan:event:cache',
+    'artisan:horizon:clear',
     'deploy:build',
     'deploy:publish',
     'supervisor:upload',
