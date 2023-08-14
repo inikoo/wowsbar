@@ -5,9 +5,9 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-use App\Actions\UI\Auth\Login;
-use App\Actions\UI\Auth\Logout;
-use App\Actions\UI\Auth\ShowLogin;
+use App\Actions\UI\Common\Auth\Login;
+use App\Actions\UI\Common\Auth\Logout;
+use App\Actions\UI\Common\Auth\ShowLogin;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {

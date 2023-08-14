@@ -9,14 +9,9 @@ namespace App\Actions\Gallery;
 
 use App\Actions\Auth\User\UI\AttachImageToTenant;
 use App\Actions\Traits\WithActionUpdate;
-use App\Http\Resources\Gallery\ImageResource;
 use App\Models\Media\Media;
 use App\Models\Portfolio\Website;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use Illuminate\Support\Collection;
 use Lorisleiva\Actions\ActionRequest;
-use Lorisleiva\Actions\Concerns\AsAction;
-use Lorisleiva\Actions\Concerns\WithAttributes;
 
 class UpdateUploadedImage
 {

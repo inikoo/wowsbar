@@ -54,10 +54,7 @@ const handleKey = (event: any) => {
 		@mouseenter="isHover = true" @mouseleave="isHover = false"
 	>
 		<div class="flex flex-grow flex-col h-full overflow-y-auto custom-hide-scrollbar border-r border-gray-200 dark:border-gray-500 pb-4">
-			<Link :href="route('dashboard.show')" class="flex flex-col justify-center text-gray-700 font-logo md:hidden py-3 text-center gap-y-2">
-				<img class="h-6" :src="`/media/${layout.tenant.logo_id}`" :alt="layout.tenant.code" />
-				<span>{{ layout.tenant.name }}</span>
-			</Link>
+
 			<div class="flex flex-grow flex-col pb-16">
 				<nav class="flex-1 space-y-1" aria-label="Sidebar">
 					<!-- LeftSide Links -->

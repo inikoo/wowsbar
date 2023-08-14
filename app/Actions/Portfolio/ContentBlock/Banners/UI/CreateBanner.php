@@ -50,7 +50,7 @@ class CreateBanner extends InertiaAction
                                 match ($request->route()->getName()) {
                                     'portfolio.websites.show.banners.create' =>
                                     [
-                                        'name'       =>'portfolio.websites.show',
+                                        'name'       => 'portfolio.websites.show',
                                         'parameters' => array_values($this->originalParameters)
                                     ],
                                     default => [

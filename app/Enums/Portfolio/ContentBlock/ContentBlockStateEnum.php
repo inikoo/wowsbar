@@ -13,7 +13,7 @@ enum ContentBlockStateEnum: string
 {
     use EnumHelperTrait;
     case IN_PROCESS = 'in-process';
-    case READY = 'ready';
-    case LIVE = 'live';
-    case RETIRED = 'retired';
+    case READY      = 'ready';
+    case LIVE       = 'live';
+    case RETIRED    = 'retired';
 }

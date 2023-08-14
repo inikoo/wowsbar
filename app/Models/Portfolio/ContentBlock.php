@@ -34,6 +34,10 @@ use Spatie\Sluggable\SlugOptions;
  * @property string $slug
  * @property string $code
  * @property string $name
+ * @property string $state
+ * @property string|null $ready_at
+ * @property string|null $live_at
+ * @property string|null $retired_at
  * @property array $layout
  * @property array $data
  * @property \Illuminate\Support\Carbon|null $created_at
@@ -59,8 +63,12 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|ContentBlock whereDeletedAt($value)
  * @method static Builder|ContentBlock whereId($value)
  * @method static Builder|ContentBlock whereLayout($value)
+ * @method static Builder|ContentBlock whereLiveAt($value)
  * @method static Builder|ContentBlock whereName($value)
+ * @method static Builder|ContentBlock whereReadyAt($value)
+ * @method static Builder|ContentBlock whereRetiredAt($value)
  * @method static Builder|ContentBlock whereSlug($value)
+ * @method static Builder|ContentBlock whereState($value)
  * @method static Builder|ContentBlock whereTenantId($value)
  * @method static Builder|ContentBlock whereUlid($value)
  * @method static Builder|ContentBlock whereUpdatedAt($value)

@@ -6,8 +6,8 @@
  */
 
 
-use App\Actions\UI\Profile\ShowProfile;
-use App\Actions\UI\Profile\UpdateProfile;
+use App\Actions\UI\Tenant\Profile\ShowProfile;
+use App\Actions\UI\Tenant\Profile\UpdateProfile;
 
 Route::get('/', ShowProfile::class)->name('show');
 Route::post('/', UpdateProfile::class)->name('update');

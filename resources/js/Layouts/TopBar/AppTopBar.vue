@@ -10,17 +10,19 @@ import { useLayoutStore } from "@/Stores/layout"
 import AppTopBarNavs from "@/Layouts/TopBar/AppTopBarNavs.vue"
 const layout = useLayoutStore()
 
+const props = defineProps<{
+    dashboardRoute: string
+}>()
+
 </script>
 
 <template>
     <div class="flex flex-1 items-center justify-between lg:justify-start">
-        <Link :href="route('dashboard.show')"
+        <Link :href="route(dashboardRoute)"
             class="md:pl-3 flex items-center h-full xl:overflow-hidden space-x-2 mr-6 xl:w-56 xl:pr-2 xl:border-r-2 xl:mr-0 xl:border-gray-200 dark:xl:border-gray-500"
         >
-            <img v-if="layout.tenant.logo_id" class="h-7 md:h-5 shadow" :src="`/media/${layout.tenant.logo_id}`" :alt="layout.tenant.code" />
-            <span class="hidden leading-none md:inline font-bold  xl:truncate text-gray-800 dark:text-gray-300">
-                {{ layout.tenant.name ?? 'Tenant Demo' }}
-            </span>
+            <slot></slot>
+
         </Link>
         <AppTopBarNavs />
     </div>

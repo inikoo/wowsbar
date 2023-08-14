@@ -11,8 +11,8 @@ use App\Actions\Auth\User\UI\CreateUser;
 use App\Actions\Auth\User\UI\EditUser;
 use App\Actions\Auth\User\UI\IndexUsers;
 use App\Actions\Auth\User\UI\ShowUser;
-use App\Actions\UI\SysAdmin\EditSystemSettings;
-use App\Actions\UI\SysAdmin\SysAdminDashboard;
+use App\Actions\UI\Common\SysAdmin\EditSystemSettings;
+use App\Actions\UI\Common\SysAdmin\SysAdminDashboard;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', SysAdminDashboard::class)->name('dashboard');

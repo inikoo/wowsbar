@@ -77,14 +77,14 @@ const footerNavigation = {
         { name: 'Privacy', href: '#' },
         { name: 'Terms', href: '#' },
     ],
-    
+
 }
 
 const mobileMenuOpen = ref(false)
 const frequency = ref(pricing.frequencies[0])
 </script>
 
-<template layout="Landlord">
+<template layout="Public">
     <div class="bg-white">
         <main>
             <!-- Pricing section -->

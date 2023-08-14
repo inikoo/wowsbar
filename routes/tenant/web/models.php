@@ -12,11 +12,11 @@ use App\Actions\Portfolio\ContentBlock\DeleteContentBlock;
 use App\Actions\Portfolio\ContentBlock\StoreContentBlock;
 use App\Actions\Portfolio\ContentBlock\UpdateContentBlock;
 use App\Actions\Portfolio\ContentBlock\UpdateStateContentBlock;
-use App\Actions\Tenancy\Tenant\UpdateSystemSettings;
-use App\Actions\UI\Profile\UpdateProfile;
 use App\Actions\Portfolio\Website\DeleteWebsite;
 use App\Actions\Portfolio\Website\StoreWebsite;
 use App\Actions\Portfolio\Website\UpdateWebsite;
+use App\Actions\Tenancy\Tenant\UpdateSystemSettings;
+use App\Actions\UI\Tenant\Profile\UpdateProfile;
 
 Route::post('/website/', StoreWebsite::class)->name('website.store');
 Route::patch('/website/{website}', UpdateWebsite::class)->name('website.update');

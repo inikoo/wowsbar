@@ -41,7 +41,7 @@ class EditWebsite extends InertiaAction
     public function htmlResponse(Website $website, ActionRequest $request): Response
     {
         return Inertia::render(
-            'EditModel',
+            'Tenant/EditModel',
             [
                     'title'       => __("Website's settings"),
                     'breadcrumbs' => $this->getBreadcrumbs(

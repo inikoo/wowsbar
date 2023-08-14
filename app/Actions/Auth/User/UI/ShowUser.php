@@ -11,7 +11,7 @@ use App\Actions\Auth\UserRequest\ShowUserRequestLogs;
 use App\Actions\Helpers\History\IndexHistories;
 use App\Actions\InertiaAction;
 use App\Actions\Traits\WithElasticsearch;
-use App\Actions\UI\SysAdmin\SysAdminDashboard;
+use App\Actions\UI\Common\SysAdmin\SysAdminDashboard;
 use App\Enums\UI\UserTabsEnum;
 use App\Http\Resources\History\HistoryResource;
 use App\Http\Resources\SysAdmin\UserRequestLogsResource;

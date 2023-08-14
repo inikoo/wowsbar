@@ -8,7 +8,6 @@
 namespace App\Actions\Tenancy\Tenant\Hydrators;
 
 use App\Models\Tenancy\Tenant;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class TenantHydrateWebsites

@@ -1,4 +1,9 @@
 <?php
+/*
+ * Author: Raul Perusquia <raul@inikoo.com>
+ * Created: Sun, 13 Aug 2023 10:02:07 Malaysia Time, Sanur, Bali
+ * Copyright (c) 2023, Raul A Perusquia Flores
+ */
 
 declare(strict_types=1);
 

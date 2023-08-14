@@ -14,7 +14,7 @@ const props = defineProps<{
 }>()
 </script>
 
-<template layout="Landlord">
+<template layout="Public">
     <Head title="Homepage"/>
     <Hero :hero="hero"></Hero>
 </template>

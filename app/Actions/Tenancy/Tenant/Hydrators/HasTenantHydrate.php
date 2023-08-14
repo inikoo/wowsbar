@@ -7,11 +7,8 @@
 
 namespace App\Actions\Tenancy\Tenant\Hydrators;
 
-
 trait HasTenantHydrate
 {
-
-
     public function getJobTags(): array
     {
         /** @var \App\Models\Tenancy\Tenant $tenant */

@@ -8,7 +8,7 @@
 namespace App\Actions\Portfolio\Website\UI;
 
 use App\Actions\InertiaAction;
-use App\Actions\UI\Dashboard\ShowDashboard;
+use App\Actions\UI\Tenant\Dashboard\ShowDashboard;
 use App\Http\Resources\Portfolio\WebsiteResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\Portfolio\Website;
@@ -124,7 +124,7 @@ class IndexWebsites extends InertiaAction
     public function htmlResponse(LengthAwarePaginator $websites, ActionRequest $request): Response
     {
         return Inertia::render(
-            'Portfolio/Websites',
+            'Tenant/Portfolio/Websites',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->getName(),

@@ -31,7 +31,7 @@ class StoreRootUser
     public function handle(Tenant $tenant, array $objectData = []): PublicUser
     {
         /** @var User $rootUser */
-        $rootUser = $tenant->rootUsers()->create($objectData);
+        $rootUser = $tenant->publicUsers()->create($objectData);
         $rootUser->stats()->create();
         SetUserAvatar::run($rootUser);
 

@@ -7,7 +7,7 @@
 
 namespace App\Actions\Landlord\LandlordUser;
 
-use App\Models\Landlord\LandlordUser;
+use App\Models\Organisation\OrgUser;
 use App\Rules\AlphaDashDot;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
@@ -23,14 +23,14 @@ class StoreLandlordUser
     private bool $asAction = false;
 
 
-    public function handle(array $objectData = []): LandlordUser
+    public function handle(array $objectData = []): OrgUser
     {
-        /** @var LandlordUser $landlordUser */
-        $landlordUser = LandlordUser::create($objectData);
+        /** @var \App\Models\Organisation\OrgUser $landlordUser */
+        $landlordUser = OrgUser::create($objectData);
         $landlordUser->stats()->create();
-        //SetUserAvatar::run($landlordUser);
+        //SetUserAvatar::run($orgUser);
 
-        // UserHydrateUniversalSearch::dispatch($landlordUser);
+        // UserHydrateUniversalSearch::dispatch($orgUser);
         // TenantHydrateUsers::dispatch(app('currentTenant'));
         return $landlordUser;
     }
@@ -47,13 +47,13 @@ class StoreLandlordUser
     public function rules(): array
     {
         return [
-            'username' => ['required', new AlphaDashDot(), 'unique:landlord_users,username', Rule::notIn(['export', 'create'])],
+            'username' => ['required', new AlphaDashDot(), 'unique:org_users,username', Rule::notIn(['export', 'create'])],
             'password' => ['required', app()->isLocal() || app()->environment('testing') ? null : Password::min(8)->uncompromised()],
-            'email'    => ['sometimes','required', 'email', 'unique:landlord_users,email']
+            'email'    => ['sometimes','required', 'email', 'unique:org_users,email']
         ];
     }
 
-    public function action(array $objectData = []): LandlordUser
+    public function action(array $objectData = []): OrgUser
     {
         $this->asAction = true;
         $this->setRawAttributes($objectData);

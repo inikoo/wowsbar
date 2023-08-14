@@ -9,7 +9,7 @@ namespace App\Actions\Gallery\UI;
 
 use App\Actions\Gallery\UI\UploadedImages\IndexUploadedImages;
 use App\Actions\InertiaAction;
-use App\Actions\UI\Dashboard\ShowDashboard;
+use App\Actions\UI\Tenant\Dashboard\ShowDashboard;
 use App\Enums\UI\GalleryTabsEnum;
 use App\Http\Resources\Gallery\ImageResource;
 use Inertia\Inertia;
@@ -40,7 +40,7 @@ class ShowGallery extends InertiaAction
     public function htmlResponse(ActionRequest $request): Response
     {
         return Inertia::render(
-            'Portfolio/Gallery',
+            'Tenant/Portfolio/Gallery',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->getName(),

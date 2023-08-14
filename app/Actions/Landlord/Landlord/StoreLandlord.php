@@ -37,7 +37,7 @@ class StoreLandlord
 
 
         $landlordUser   = StoreLandlordUser::run($landlordUserData);
-        $superAdminRole = Role::where('guard_name', 'landlord')->where('name', 'super-admin')->firstOrFail();
+        $superAdminRole = Role::where('guard_name', 'org')->where('name', 'super-admin')->firstOrFail();
         $landlordUser->assignRole($superAdminRole);
 
         Artisan::call("db:seed --force --class=StockImageSeeder");

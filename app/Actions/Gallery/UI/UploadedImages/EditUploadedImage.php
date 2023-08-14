@@ -8,7 +8,7 @@
 namespace App\Actions\Gallery\UI\UploadedImages;
 
 use App\Actions\InertiaAction;
-use App\Actions\UI\Dashboard\ShowDashboard;
+use App\Actions\UI\Tenant\Dashboard\ShowDashboard;
 use App\Models\Media\Media;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Inertia\Inertia;
@@ -40,13 +40,13 @@ class EditUploadedImage extends InertiaAction
 
     public function jsonResponse(): AnonymousResourceCollection
     {
-//        return ImageResource::collection($this->handle());
+        //        return ImageResource::collection($this->handle());
     }
 
     public function htmlResponse(Media $media, ActionRequest $request): Response
     {
         return Inertia::render(
-            'EditModel',
+            'Tenant/EditModel',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->getName(),

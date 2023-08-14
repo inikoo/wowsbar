@@ -6,7 +6,7 @@
  */
 
 
-use App\Actions\UI\Dashboard\ShowDashboard;
+use App\Actions\UI\Tenant\Dashboard\ShowDashboard;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', ShowDashboard::class)->name('show');

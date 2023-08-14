@@ -10,10 +10,13 @@ namespace App\Http;
 use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\EncryptCookies;
 use App\Http\Middleware\HandleInertiaRequests;
-use App\Http\Middleware\HandleRootInertiaRequests;
+use App\Http\Middleware\HandleOrgInertiaRequests;
+use App\Http\Middleware\HandlePublicInertiaRequests;
 use App\Http\Middleware\LogUserFirebaseMiddleware;
 use App\Http\Middleware\LogUserRequestMiddleware;
+use App\Http\Middleware\OrgAuthenticate;
 use App\Http\Middleware\PreventRequestsDuringMaintenance;
+use App\Http\Middleware\PublicAuthenticate;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Middleware\TrimStrings;
 use App\Http\Middleware\TrustProxies;
@@ -53,7 +56,7 @@ class Kernel extends HttpKernel
 
 
     protected $middlewareGroups = [
-        'web' => [
+        'web'        => [
             EncryptCookies::class,
             AddQueuedCookiesToResponse::class,
             StartSession::class,
@@ -72,10 +75,22 @@ class Kernel extends HttpKernel
             ShareErrorsFromSession::class,
             VerifyCsrfToken::class,
             SubstituteBindings::class,
-            HandleRootInertiaRequests::class,
+            HandlePublicInertiaRequests::class,
             AddLinkHeadersForPreloadedAssets::class,
         ],
-        'tenant' => [
+        'org-web'    => [
+            EncryptCookies::class,
+            AddQueuedCookiesToResponse::class,
+            StartSession::class,
+            ShareErrorsFromSession::class,
+            VerifyCsrfToken::class,
+            SubstituteBindings::class,
+            HandleOrgInertiaRequests::class,
+            AddLinkHeadersForPreloadedAssets::class,
+            //LogUserFirebaseMiddleware::class,
+            //LogUserRequestMiddleware::class
+        ],
+        'tenant'     => [
             NeedsTenant::class,
             EnsureValidTenantSession::class,
             EncryptCookies::class,
@@ -101,6 +116,8 @@ class Kernel extends HttpKernel
 
     protected $middlewareAliases = [
         'auth'             => Authenticate::class,
+        'org-auth'         => OrgAuthenticate::class,
+        'public-auth'      => PublicAuthenticate::class,
         'auth.basic'       => AuthenticateWithBasicAuth::class,
         'auth.session'     => AuthenticateSession::class,
         'cache.headers'    => SetCacheHeaders::class,

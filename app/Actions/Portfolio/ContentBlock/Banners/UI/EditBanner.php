@@ -42,7 +42,7 @@ class EditBanner extends InertiaAction
     public function htmlResponse(ContentBlock $banner, ActionRequest $request): Response
     {
         return Inertia::render(
-            'EditModel',
+            'Tenant/EditModel',
             [
                     'title'       => __("Website's settings"),
                     'breadcrumbs' => $this->getBreadcrumbs(

@@ -1,0 +1,73 @@
+<!--
+  - Author: Raul Perusquia <raul@inikoo.com>
+  - Created: Mon, 14 Aug 2023 08:45:47 Malaysia Time, Sanur, Bali
+  - Copyright (c) 2023, Raul A Perusquia Flores
+  -->
+
+<script setup lang="ts">
+import { Head, useForm } from '@inertiajs/vue3'
+import Password from '@/Components/Auth/LoginPassword.vue'
+import Checkbox from '@/Components/Checkbox.vue'
+import ValidationErrors from '@/Components/ValidationErrors.vue'
+import { trans } from 'laravel-vue-i18n'
+import { faArrowLeft } from '@/../private/pro-light-svg-icons'
+import { library } from '@fortawesome/fontawesome-svg-core'
+library.add(faArrowLeft)
+
+const form = useForm({
+    username: '',
+    password: '',
+    remember: false,
+})
+
+const submit = () => {
+    form.post(route('org.login'),
+        {
+        onFinish: () => form.reset('password'),
+        });
+
+
+
+}
+
+</script>
+
+<template layout="OrgAppGuest">
+
+    <Head title="Login"/>
+    <form class="space-y-6" @submit.prevent="submit" >
+        <div>
+            <label for="login" class="block text-sm font-medium text-gray-600">{{ trans('Username') }}</label>
+            <div class="mt-1">
+                <input v-model="form.username" id="username" name="username" autocomplete="username"  required
+                    class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-gray-500 focus:border-gray-500 sm:text-sm"/>
+            </div>
+        </div>
+
+        <div>
+            <label for="password" class="block text-sm font-medium text-gray-600"> {{ trans('Password') }} </label>
+            <div class="mt-1 flex rounded-md shadow-sm">
+                <Password id="password" name="password" v-model="form.password"/>
+            </div>
+        </div>
+
+        <div class="flex items-center justify-between">
+            <div class="flex items-center">
+                <Checkbox name="remember-me" id="remember-me" v-model:checked="form.remember"/>
+                <label for="remember-me" class="cursor-pointer ml-2 block text-sm text-gray-600 select-none"> {{ trans('Remember me') }} </label>
+            </div>
+        </div>
+
+        <div>
+            <button type="submit"
+                    class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+                {{ trans('Login') }}
+            </button>
+        </div>
+
+
+    </form>
+
+    <ValidationErrors/>
+
+</template>

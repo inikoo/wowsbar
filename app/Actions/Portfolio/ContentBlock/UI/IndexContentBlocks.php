@@ -33,7 +33,7 @@ class IndexContentBlocks
         $this->elementGroups =
             [
                 'state' => [
-                    'label' => __('State'),
+                    'label'    => __('State'),
                     'elements' => [
                         ContentBlockStateEnum::IN_PROCESS->value => [
                             __('In Process'),

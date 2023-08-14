@@ -17,16 +17,21 @@ class RouteServiceProvider extends ServiceProvider
 {
     public const HOME = '/dashboard';
 
-
     public function boot(): void
     {
         $this->configureRateLimiting();
 
         $this->routes(function () {
+            Route::middleware('org-web')
+                ->prefix('org')
+                ->domain(config('app.domain'))
+                ->name('org.')
+                ->group(base_path('routes/org/web/app.php'));
+
             Route::middleware('public-web')
                 ->domain(config('app.domain'))
                 ->name('public.')
-                ->group(base_path('routes/public/web/public-app.php'));
+                ->group(base_path('routes/public/web/app.php'));
 
 
             Route::middleware('api')
@@ -35,7 +40,6 @@ class RouteServiceProvider extends ServiceProvider
 
             Route::middleware('web')
                 ->group(base_path('routes/tenant/web/app.php'));
-
         });
     }
 

@@ -1,0 +1,20 @@
+<?php
+/*
+ * Author: Raul Perusquia <raul@inikoo.com>
+ * Created: Mon, 14 Aug 2023 08:45:47 Malaysia Time, Sanur, Bali
+ * Copyright (c) 2023, Raul A Perusquia Flores
+ */
+
+use App\Actions\UI\Common\Auth\Login;
+use App\Actions\UI\Common\Auth\ShowLogin;
+use App\Actions\UI\Common\Auth\Logout;
+use Illuminate\Support\Facades\Route;
+
+Route::middleware('guest:org')->group(function () {
+    Route::get('login', ShowLogin::class)->name('login');
+    Route::post('login', Login::class)->name('login.store');
+});
+
+Route::middleware('org-auth:org')->group(function () {
+    Route::post('logout', Logout::class)->name('logout');
+});

@@ -7,7 +7,7 @@
 
 use App\Models\Auth\PublicUser;
 use App\Models\Auth\User;
-use App\Models\Landlord\LandlordUser;
+use App\Models\Organisation\OrgUser;
 
 return [
 
@@ -51,11 +51,11 @@ return [
         ],
         'public' => [
             'driver'   => 'session',
-            'provider' => 'root_users',
+            'provider' => 'public_users',
         ],
-        'landlord' => [
+        'org' => [
             'driver'   => 'session',
-            'provider' => 'landlord_users',
+            'provider' => 'org_users',
         ],
     ],
 
@@ -81,13 +81,13 @@ return [
             'driver' => 'eloquent',
             'model'  => User::class,
         ],
-        'root_users' => [
+        'public_users' => [
             'driver' => 'eloquent',
             'model'  => PublicUser::class,
         ],
-        'landlord_users' => [
+        'org_users' => [
             'driver' => 'eloquent',
-            'model'  => LandlordUser::class,
+            'model'  => OrgUser::class,
         ],
 
 
@@ -120,13 +120,13 @@ return [
             'throttle' => 60,
         ],
         'root' => [
-            'provider' => 'root_users',
+            'provider' => 'public_users',
             'table'    => 'password_reset_tokens',
             'expire'   => 60,
             'throttle' => 60,
         ],
         'landlord' => [
-            'provider' => 'landlord_users',
+            'provider' => 'org_users',
             'table'    => 'password_reset_tokens',
             'expire'   => 60,
             'throttle' => 60,

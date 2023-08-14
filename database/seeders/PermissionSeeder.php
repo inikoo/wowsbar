@@ -28,10 +28,16 @@ class PermissionSeeder extends Seeder
 
         $this->storePermissionsRoles($permissions, $roles, 'web');
 
-        $landlordPermissions = collect(json_decode(Storage::disk('datasets')->get('landlord-permissions.json'), true));
-        $landlordRoles       = collect(json_decode(Storage::disk('datasets')->get('landlord-roles.json'), true));
+        $publicPermissions = collect(json_decode(Storage::disk('datasets')->get('public-permissions.json'), true));
+        $publicRoles       = collect(json_decode(Storage::disk('datasets')->get('public-roles.json'), true));
 
-        $this->storePermissionsRoles($landlordPermissions, $landlordRoles, 'landlord');
+        $this->storePermissionsRoles($publicPermissions, $publicRoles, 'public');
+
+        $orgPermissions = collect(json_decode(Storage::disk('datasets')->get('org-permissions.json'), true));
+        $orgRoles       = collect(json_decode(Storage::disk('datasets')->get('org-roles.json'), true));
+
+        $this->storePermissionsRoles($orgPermissions, $orgRoles, 'org');
+
     }
 
 

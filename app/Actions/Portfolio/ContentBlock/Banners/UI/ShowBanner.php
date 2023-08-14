@@ -10,7 +10,7 @@ namespace App\Actions\Portfolio\ContentBlock\Banners\UI;
 use App\Actions\Helpers\History\IndexHistories;
 use App\Actions\InertiaAction;
 use App\Actions\Portfolio\Website\UI\ShowWebsite;
-use App\Actions\UI\Dashboard\ShowDashboard;
+use App\Actions\UI\Tenant\Dashboard\ShowDashboard;
 use App\Enums\UI\BannerTabsEnum;
 use App\Enums\UI\WebsiteTabsEnum;
 use App\Http\Resources\History\HistoryResource;
@@ -53,7 +53,7 @@ class ShowBanner extends InertiaAction
     {
 
         return Inertia::render(
-            'Portfolio/Banner',
+            'Tenant/Portfolio/Banner',
             [
                 'breadcrumbs'                    => $this->getBreadcrumbs(
                     $request->route()->getName(),

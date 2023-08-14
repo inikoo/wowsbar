@@ -8,7 +8,7 @@
 namespace App\Actions\Gallery\UI;
 
 use App\Actions\InertiaAction;
-use App\Actions\UI\Dashboard\ShowDashboard;
+use App\Actions\UI\Tenant\Dashboard\ShowDashboard;
 use App\Http\Resources\Gallery\ImageResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\Media\LandlordMedia;
@@ -111,7 +111,7 @@ class IndexStockImages extends InertiaAction
     public function htmlResponse(LengthAwarePaginator $websites, ActionRequest $request): Response
     {
         return Inertia::render(
-            'Portfolio/StockImages',
+            'Tenant/Portfolio/StockImages',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->getName(),

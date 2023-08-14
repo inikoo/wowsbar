@@ -253,7 +253,12 @@ onMounted(() => {
                             </button>
                             <!-- Menu -->
 
-                            <AppTopBar  />
+                            <AppTopBar :dashboardRoute="'dashboard.show'">
+                                <img v-if="layout.tenant.logo_id" class="h-7 md:h-5 shadow" :src="`/media/${layout.tenant.logo_id}`" :alt="layout.tenant.code" />
+                                <span class="hidden leading-none md:inline font-bold  xl:truncate text-gray-800 dark:text-gray-300">
+                                    {{ layout.tenant.name}}
+                                </span>
+                            </AppTopBar>
 
                         </div>
 

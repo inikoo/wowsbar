@@ -18,7 +18,7 @@ class ShowPublicDashboard
     public function handle(): Response
     {
         return Inertia::render(
-            'Public/Dashboard/Dashboard',
+            'Public/Dashboard',
             [
                 'title'       => __('dashboard'),
                 'breadcrumbs' => $this->getBreadcrumbs(__('dashboard')),

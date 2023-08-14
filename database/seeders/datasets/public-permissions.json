@@ -1,0 +1,8 @@
+[
+    "sysadmin",
+    "sysadmin.view",
+    "sysadmin.create",
+    "sysadmin.edit",
+    "sysadmin.delete",
+    "sysadmin.look-and-field"
+]

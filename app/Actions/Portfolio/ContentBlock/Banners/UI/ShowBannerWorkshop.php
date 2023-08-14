@@ -10,7 +10,6 @@ namespace App\Actions\Portfolio\ContentBlock\Banners\UI;
 use App\Actions\InertiaAction;
 use App\Models\Portfolio\ContentBlock;
 use App\Models\Portfolio\Website;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -46,7 +45,7 @@ class ShowBannerWorkshop extends InertiaAction
     {
 
         return Inertia::render(
-            'Portfolio/BannerWorkshop',
+            'Tenant/Portfolio/BannerWorkshop',
             [
                 'title'             => __("Banner's workshop"),
                 'breadcrumbs'       => $this->getBreadcrumbs(
