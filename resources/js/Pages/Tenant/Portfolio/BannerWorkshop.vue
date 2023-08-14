@@ -18,7 +18,7 @@ import { getDatabase, ref as dbRef, set, onValue, get } from "firebase/database"
 import { initializeApp } from "firebase/app"
 import { useFirebaseStore } from "@/Stores/firebase"
 
-//import serviceAccount from "@/../private/firebase/wowsbar-firebase.json"
+import serviceAccount from "@/../private/firebase/wowsbar-firebase.json"
 import { usePage, router } from "@inertiajs/vue3"
 import { faUser, faUserFriends } from "@/../private/pro-light-svg-icons"
 import { library } from "@fortawesome/fontawesome-svg-core"
@@ -68,9 +68,9 @@ const props = defineProps<{
 console.log(props)
 
 
-const firebaseCredentials: any = useFirebaseStore()
-console.log(firebaseCredentials)
-const firebaseApp = initializeApp(firebaseCredentials)
+// const firebaseCredentials = useFirebaseStore()
+// console.log(firebaseCredentials);
+const firebaseApp = initializeApp(serviceAccount)
 const db = getDatabase(firebaseApp)
 const user = ref(usePage().props.auth.user)
 const jumpToIndex = ref(0)

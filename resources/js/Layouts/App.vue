@@ -86,11 +86,11 @@ library.add(
 const initialiseApp = () => {
     const layout = useLayoutStore();
     const locale = useLocaleStore();
-    const firebase = useFirebaseStore();
+    const firebaseCredential = useFirebaseStore();
 
     if (usePage().props.firebase) {
-        firebase.credential=JSON.parse(usePage().props.firebase.credential);
-        firebase.databaseURL=usePage().props.firebase.databaseURL;
+        firebaseCredential.credential=JSON.parse(usePage().props.firebase.credential);
+        firebaseCredential.databaseURL=usePage().props.firebase.databaseURL;
     }
 
     if (usePage().props.localeData) {
