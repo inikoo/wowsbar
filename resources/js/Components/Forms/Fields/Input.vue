@@ -7,10 +7,11 @@
 <script setup lang="ts">
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faExclamationCircle, faCheckCircle } from "@/../private/pro-solid-svg-icons";
+import { faCopy } from "@/../private/pro-light-svg-icons";
 import { faSpinnerThird } from "@/../private/pro-duotone-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { set } from "lodash";
-library.add(faExclamationCircle, faCheckCircle, faSpinnerThird);
+import { set, get } from "lodash";
+library.add(faExclamationCircle, faCheckCircle, faSpinnerThird, faCopy);
 import { ref, watch, defineEmits } from "vue";
 
 const props = defineProps<{
@@ -25,7 +26,7 @@ const props = defineProps<{
 }>();
 
 const emits = defineEmits();
-
+console.log('props',props)
 const copyText = (text: string) => {
   const textarea = document.createElement("textarea");
   textarea.value = text;
@@ -89,7 +90,7 @@ const updateFormValue = (newValue) => {
       <!-- Icon: Error, Success, Loading -->
       <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
         <FontAwesomeIcon
-          v-if="form.errors[fieldName]"
+          v-if="get(form,['errors',`${fieldName}`])"
           icon="fas fa-exclamation-circle"
           class="h-5 w-5 text-red-500"
           aria-hidden="true"
@@ -120,7 +121,7 @@ const updateFormValue = (newValue) => {
     </div>
   </div>
   <p
-    v-if="form.errors[fieldName]"
+    v-if="get(form,['errors',`${fieldName}`])"
     class="mt-2 text-sm text-red-600"
     :id="`${fieldName}-error`"
   >

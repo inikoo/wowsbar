@@ -7,33 +7,25 @@
 <script setup lang="ts">
 import { Head, Link } from '@inertiajs/vue3'
 import { capitalize } from "@/Composables/capitalize"
-import PageHeading from "@/Components/Headings/PageHeading.vue"
-import { trans } from 'laravel-vue-i18n'
-
-import { ref } from 'vue'
-import { Dialog, DialogPanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
-import {
-    ArrowDownCircleIcon,
-    ArrowPathIcon,
-    ArrowUpCircleIcon,
-    Bars3Icon,
-    EllipsisHorizontalIcon,
-    PlusSmallIcon,
-} from '@heroicons/vue/20/solid'
-import { BellIcon, XMarkIcon } from '@heroicons/vue/24/outline'
+import Input from '@/Components/Forms/Fields/Input.vue'
 
 const props = defineProps<{
     title: string,
 }>()
 
+const fieldData = {
+    type: "input", 
+        label: "google redirect URI", 
+        value: "test", 
+        readonly: true,
+        copyButton: true 
+}
 </script>
 
 <template layout="PublicApp">
     <Head :title="capitalize(title)" />
-    <div class="max-w-7xl px-4 sm:px-6 lg:px-8 lg:py-6">
-        <div class="max-w-2xl lg:mx-0 lg:max-w-none">
-
-        </div>
-    </div>
-
+    <div class="max-w-2xl lg:mx-0 lg:max-w-none">
+    <Input class="pt-4 sm:pt-5 px-6" :form="{name:'test'}" fieldName="name"
+    :fieldData="fieldData"/>
+</div>
 </template>

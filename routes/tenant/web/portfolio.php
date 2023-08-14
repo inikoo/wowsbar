@@ -24,10 +24,10 @@ use App\Actions\Portfolio\Website\UI\EditWebsite;
 use App\Actions\Portfolio\Website\UI\IndexWebsites;
 use App\Actions\Portfolio\Website\UI\RemoveWebsite;
 use App\Actions\Portfolio\Website\UI\ShowWebsite;
-use App\Actions\UI\Tenant\Websites\PortfolioDashboard;
+use App\Actions\Portfolio\UI\ShowPortfolioDashboard;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/dashboard', PortfolioDashboard::class)->name('dashboard');
+Route::get('/dashboard', ShowPortfolioDashboard::class)->name('dashboard');
 
 Route::get('/websites', IndexWebsites::class)->name('websites.index');
 Route::get('/websites/create', CreateWebsite::class)->name('websites.create');
