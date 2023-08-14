@@ -13,7 +13,7 @@ use App\Models\Assets\Currency;
 use App\Models\Assets\Language;
 use App\Models\Assets\Timezone;
 use App\Models\Auth\Role;
-use App\Models\Landlord\Landlord;
+use App\Models\Organisation\Organisation;
 use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Arr;
@@ -26,13 +26,13 @@ class StoreLandlord
     use AsAction;
     use WithAttributes;
 
-    public function handle(array $modelData, array $landlordUserData): Landlord
+    public function handle(array $modelData, array $landlordUserData): Organisation
     {
-        if (Landlord::count() > 0) {
+        if (Organisation::count() > 0) {
             abort(419, 'Can not create more than one landlord');
         }
 
-        $landlord = Landlord::create($modelData);
+        $landlord = Organisation::create($modelData);
         $landlord->stats()->create();
 
 
@@ -49,7 +49,7 @@ class StoreLandlord
     public function rules(): array
     {
         return [
-            'code'        => ['required', 'unique:landlords', 'between:1,16', 'alpha_dash'],
+            'code'        => ['required', 'unique:organisations', 'between:1,16', 'alpha_dash'],
             'name'        => ['required', 'max:64'],
             'currency_id' => ['required', 'exists:currencies,id'],
             'country_id'  => ['required', 'exists:countries,id'],
@@ -62,7 +62,7 @@ class StoreLandlord
     }
 
 
-    public function action($modelData): Landlord
+    public function action($modelData): Organisation
     {
         $this->setRawAttributes($modelData);
         $validatedData = $this->validateAttributes();
@@ -84,7 +84,7 @@ class StoreLandlord
 
     public function asCommand(Command $command): int
     {
-        if (Landlord::count() > 0) {
+        if (Organisation::count() > 0) {
             $command->error('There is already one landlord (You can only have one 😝)');
             exit;
         }

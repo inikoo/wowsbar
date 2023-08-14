@@ -8,6 +8,7 @@
 namespace App\Actions\Tenancy\Tenant\Hydrators;
 
 use App\Enums\Portfolio\ContentBlock\ContentBlockStateEnum;
+use App\Enums\Web\WebBlockType\WebBlockTypeSlugEnum;
 use App\Models\Tenancy\Tenant;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -20,11 +21,19 @@ class TenantHydrateContentBlocks implements ShouldBeUnique
     public function handle(Tenant $tenant): void
     {
         $stats = [
-            'number_banners' => $tenant->contentBlocks()->count()
+            'number_content_blocks' => $tenant->contentBlocks()->count()
         ];
 
+        foreach (WebBlockTypeSlugEnum::cases() as $type) {
+            $stats['number_content_blocks_type_' . $type->snake()] = $tenant->contentBlocks->where('type', $type->value)->count();
+            foreach (ContentBlockStateEnum::cases() as $state) {
+                $stats['number_content_blocks_type_' . $type->snake().'_state_'.$state->snake()] =
+                    $tenant->contentBlocks->where('type', $type->value)->where('state', $state->value)->count();
+            }
+        }
+
         foreach (ContentBlockStateEnum::cases() as $state) {
-            $stats['number_banners_' . $state->snake()] = $tenant->contentBlocks->where('state', $state->value)->count();
+            $stats['number_content_blocks_state_' . $state->snake()] = $tenant->contentBlocks->where('state', $state->value)->count();
         }
 
         $tenant->contentBlockStats->update($stats);

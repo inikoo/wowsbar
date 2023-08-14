@@ -32,7 +32,7 @@ class CreateWebsite extends InertiaAction
     public function handle(): Response
     {
         return Inertia::render(
-            'CreateModel',
+            'Tenant/CreateModel',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(),
                 'title'       => __('new website'),

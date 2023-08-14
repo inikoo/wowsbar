@@ -15,6 +15,7 @@ return new class () extends Migration {
     {
         Schema::create('content_blocks', function (Blueprint $table) {
             $table->mediumIncrements('id');
+            $table->string('type')->index()->comment('same as web_block_type.slug');
             $table->ulid()->index();
             $table->unsignedSmallInteger('tenant_id')->index();
             $table->foreign('tenant_id')->references('id')->on('tenants');

@@ -41,12 +41,12 @@ class StoreContentBlock
 
         list($layout, $contentBlockComponents) = ParseContentBlockLayout::run($layout, $webBlock);
 
-
         data_set($modelData, 'web_block_type_id', $webBlock->web_block_type_id);
         data_set($modelData, 'tenant_id', app('currentTenant')->id);
         data_set($modelData, 'layout', $layout);
         data_set($modelData, 'data.website_slug', $website->slug);
         data_set($modelData, 'ulid', Str::ulid());
+        data_set($modelData, 'type', $webBlock->webBlockType->slug);
 
         /** @var ContentBlock $contentBlock */
         $contentBlock = $webBlock->contentBlocks()->create($modelData);

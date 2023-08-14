@@ -7,7 +7,7 @@
 
 namespace App\Actions\Landlord\LandlordUser;
 
-use App\Models\Organisation\OrgUser;
+use App\Models\Organisation\OrganisationUser;
 use App\Rules\AlphaDashDot;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
@@ -23,10 +23,10 @@ class StoreLandlordUser
     private bool $asAction = false;
 
 
-    public function handle(array $objectData = []): OrgUser
+    public function handle(array $objectData = []): OrganisationUser
     {
-        /** @var \App\Models\Organisation\OrgUser $landlordUser */
-        $landlordUser = OrgUser::create($objectData);
+        /** @var \App\Models\Organisation\OrganisationUser $landlordUser */
+        $landlordUser = OrganisationUser::create($objectData);
         $landlordUser->stats()->create();
         //SetUserAvatar::run($orgUser);
 
@@ -53,7 +53,7 @@ class StoreLandlordUser
         ];
     }
 
-    public function action(array $objectData = []): OrgUser
+    public function action(array $objectData = []): OrganisationUser
     {
         $this->asAction = true;
         $this->setRawAttributes($objectData);

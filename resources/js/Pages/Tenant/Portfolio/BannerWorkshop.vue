@@ -1,3 +1,9 @@
+<!--
+  - Author: Raul Perusquia <raul@inikoo.com>
+  - Created: Mon, 14 Aug 2023 10:38:30 Malaysia Time, Pantai Lembeng, Bali
+  - Copyright (c) 2023, Raul A Perusquia Flores
+  -->
+
 <script setup lang="ts">
 import { Head } from "@inertiajs/vue3";
 import { ref, reactive, onBeforeMount, watch, onBeforeUnmount } from "vue";
@@ -61,8 +67,8 @@ console.log(props);
 
 import {useFirebaseStore} from "@/Stores/firebase";
 
-const credential = useFirebaseStore();
-const firebaseApp = initializeApp(credential);
+const firebaseCredentials = useFirebaseStore();
+const firebaseApp = initializeApp(firebaseCredentials);
 const db = getDatabase(firebaseApp);
 const user = ref(usePage().props.auth.user);
 const jumpToIndex = ref(0);

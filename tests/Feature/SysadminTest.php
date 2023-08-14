@@ -40,8 +40,8 @@ test('create user', function () {
     $tenant    = app('currentTenant');
     $storeUser = StoreUser::make()->action($tenant, User::factory()->definition());
     expect($storeUser)->toBeInstanceOf(User::class)
-        ->and($tenant->stats->number_users)->toBe(3)
-        ->and($tenant->stats->number_users_status_active)->toBe(3)
+        ->and($tenant->stats->number_users)->toBe(2)
+        ->and($tenant->stats->number_users_status_active)->toBe(2)
         ->and($tenant->stats->number_users_status_inactive)->toBe(0);
 
     return $storeUser;
@@ -58,7 +58,7 @@ test('deactivate a user', function ($user) {
     $user      = UpdateUserStatus::make()->action($user, false);
     expect($user)->toBeInstanceOf(User::class)
         ->and($user->status)->toBeFalse()
-        ->and($tenant->stats->number_users)->toBe(3)
-        ->and($tenant->stats->number_users_status_active)->toBe(2)
+        ->and($tenant->stats->number_users)->toBe(2)
+        ->and($tenant->stats->number_users_status_active)->toBe(1)
         ->and($tenant->stats->number_users_status_inactive)->toBe(1);
 })->depends('create user');

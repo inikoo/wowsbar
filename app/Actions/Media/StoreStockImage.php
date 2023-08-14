@@ -7,9 +7,9 @@
 
 namespace App\Actions\Media;
 
-use App\Models\Landlord\Landlord;
 use App\Models\Media\LandlordMedia;
 use App\Models\Media\Media;
+use App\Models\Organisation\Organisation;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class StoreStockImage
@@ -28,18 +28,18 @@ class StoreStockImage
         string $extension=null
     ): LandlordMedia|Media {
 
-        $landlord =LandLord::find(1);
+        $organisation =Organisation::find(1);
         $checksum = md5_file($imagePath);
 
-        $landlordMedia = LandlordMedia::where('checksum', $checksum)->first();
-        if (!$landlordMedia) {
+        $organisationMedia = LandlordMedia::where('checksum', $checksum)->first();
+        if (!$organisationMedia) {
             $filename=dechex(crc32($checksum)).'.';
             $filename.=empty($extension) ? pathinfo($imagePath, PATHINFO_EXTENSION) : $extension;
 
 
             $name=preg_replace('/\..*$/', '', $originalFilename);
             $name=preg_replace('/_/', ' ', $name);
-            return $landlord->addMedia($imagePath)
+            return $organisation->addMedia($imagePath)
                 ->preservingOriginal()
                 ->withProperties(['checksum' => $checksum])
                 ->usingName($name)
@@ -47,7 +47,7 @@ class StoreStockImage
                 ->toMediaCollection($collection);
 
         } else {
-            return $landlordMedia;
+            return $organisationMedia;
 
         }
 

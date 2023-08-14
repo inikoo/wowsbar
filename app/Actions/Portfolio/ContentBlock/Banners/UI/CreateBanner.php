@@ -34,7 +34,7 @@ class CreateBanner extends InertiaAction
     public function handle(Website $website, ActionRequest $request): Response
     {
         return Inertia::render(
-            'CreateModel',
+            'Tenant/CreateModel',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->parameters()

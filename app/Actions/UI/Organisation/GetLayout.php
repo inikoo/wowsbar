@@ -7,14 +7,14 @@
 
 namespace App\Actions\UI\Organisation;
 
-use App\Models\Organisation\OrgUser;
+use App\Models\Organisation\OrganisationUser;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class GetLayout
 {
     use AsAction;
 
-    public function handle(OrgUser $user): array
+    public function handle(OrganisationUser $user): array
     {
         $navigation = [];
 

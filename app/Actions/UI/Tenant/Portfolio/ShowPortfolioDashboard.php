@@ -5,7 +5,7 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\UI\Tenant\Websites;
+namespace App\Actions\UI\Tenant\Portfolio;
 
 use App\Actions\UI\Tenant\Dashboard\ShowDashboard;
 use App\Actions\UI\WithInertia;
@@ -15,7 +15,7 @@ use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 
-class PortfolioDashboard
+class ShowPortfolioDashboard
 {
     use AsAction;
     use WithInertia;

@@ -12,7 +12,7 @@ use App\Actions\Helpers\Images\GetPictureSources;
 use App\Helpers\ImgProxy\Image;
 use App\Http\Resources\Assets\LanguageResource;
 use App\Models\Assets\Language;
-use App\Models\Organisation\OrgUser;
+use App\Models\Organisation\OrganisationUser;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\File;
 use Lorisleiva\Actions\Concerns\AsObject;
@@ -22,7 +22,7 @@ class GetFirstLoadProps
     use AsObject;
 
 
-    public function handle(?OrgUser $user): array
+    public function handle(?OrganisationUser $user): array
     {
         if ($user) {
             $language = $user->language;
