@@ -15,7 +15,7 @@ return new class () extends Migration {
 
     public function up(): void
     {
-        Schema::create('org_users', function (Blueprint $table) {
+        Schema::create('organisation_users', function (Blueprint $table) {
             $table->smallIncrements('id');
             $table->string('username')->collation('und_ns');
             $table = $this->userDetailsColumns($table);
@@ -27,6 +27,6 @@ return new class () extends Migration {
 
     public function down(): void
     {
-        Schema::dropIfExists('org_users');
+        Schema::dropIfExists('organisation_users');
     }
 };

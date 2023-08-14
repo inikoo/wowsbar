@@ -1,7 +1,7 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Sat, 12 Aug 2023 11:03:06 Malaysia Time, Pantai Lembeng, Bali
+ * Created: Mon, 14 Aug 2023 10:04:57 Malaysia Time, Pantai Lembeng, Bali
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
@@ -19,8 +19,9 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Permission\Traits\HasRoles;
 
+
 /**
- * App\Models\Organisation\OrgUser
+ * App\Models\Organisation\OrganisationUser
  *
  * @property int $id
  * @property string $username
@@ -49,33 +50,33 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read int|null $permissions_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Permission\Models\Role> $roles
  * @property-read int|null $roles_count
- * @property-read \App\Models\Organisation\OrgUserStats|null $stats
+ * @property-read \App\Models\Organisation\OrganisationUserStats|null $stats
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Laravel\Sanctum\PersonalAccessToken> $tokens
  * @property-read int|null $tokens_count
- * @method static Builder|OrgUser newModelQuery()
- * @method static Builder|OrgUser newQuery()
- * @method static Builder|OrgUser permission($permissions)
- * @method static Builder|OrgUser query()
- * @method static Builder|OrgUser role($roles, $guard = null)
- * @method static Builder|OrgUser whereAbout($value)
- * @method static Builder|OrgUser whereAvatarId($value)
- * @method static Builder|OrgUser whereContactName($value)
- * @method static Builder|OrgUser whereCreatedAt($value)
- * @method static Builder|OrgUser whereData($value)
- * @method static Builder|OrgUser whereDeletedAt($value)
- * @method static Builder|OrgUser whereEmail($value)
- * @method static Builder|OrgUser whereEmailVerifiedAt($value)
- * @method static Builder|OrgUser whereId($value)
- * @method static Builder|OrgUser whereLanguageId($value)
- * @method static Builder|OrgUser wherePassword($value)
- * @method static Builder|OrgUser whereRememberToken($value)
- * @method static Builder|OrgUser whereSettings($value)
- * @method static Builder|OrgUser whereStatus($value)
- * @method static Builder|OrgUser whereUpdatedAt($value)
- * @method static Builder|OrgUser whereUsername($value)
+ * @method static Builder|OrganisationUser newModelQuery()
+ * @method static Builder|OrganisationUser newQuery()
+ * @method static Builder|OrganisationUser permission($permissions)
+ * @method static Builder|OrganisationUser query()
+ * @method static Builder|OrganisationUser role($roles, $guard = null)
+ * @method static Builder|OrganisationUser whereAbout($value)
+ * @method static Builder|OrganisationUser whereAvatarId($value)
+ * @method static Builder|OrganisationUser whereContactName($value)
+ * @method static Builder|OrganisationUser whereCreatedAt($value)
+ * @method static Builder|OrganisationUser whereData($value)
+ * @method static Builder|OrganisationUser whereDeletedAt($value)
+ * @method static Builder|OrganisationUser whereEmail($value)
+ * @method static Builder|OrganisationUser whereEmailVerifiedAt($value)
+ * @method static Builder|OrganisationUser whereId($value)
+ * @method static Builder|OrganisationUser whereLanguageId($value)
+ * @method static Builder|OrganisationUser wherePassword($value)
+ * @method static Builder|OrganisationUser whereRememberToken($value)
+ * @method static Builder|OrganisationUser whereSettings($value)
+ * @method static Builder|OrganisationUser whereStatus($value)
+ * @method static Builder|OrganisationUser whereUpdatedAt($value)
+ * @method static Builder|OrganisationUser whereUsername($value)
  * @mixin \Eloquent
  */
-class OrgUser extends Authenticatable implements HasMedia, Auditable
+class OrganisationUser extends Authenticatable implements HasMedia, Auditable
 {
     use IsUser;
     use HasFactory;
@@ -109,7 +110,7 @@ class OrgUser extends Authenticatable implements HasMedia, Auditable
 
     public function stats(): HasOne
     {
-        return $this->hasOne(OrgUserStats::class);
+        return $this->hasOne(OrganisationUserStats::class);
     }
 
     public function registerMediaCollections(): void

@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Schema;
 return new class () extends Migration {
     public function up(): void
     {
-        Schema::create('landlords', function (Blueprint $table) {
+        Schema::create('organisations', function (Blueprint $table) {
             $table->smallIncrements('id');
             $table->string('code', 16)->unique()->collation('und_ns_ci');
             $table->string('name')->collation('und_ns_ci');
@@ -33,6 +33,6 @@ return new class () extends Migration {
 
     public function down(): void
     {
-        Schema::dropIfExists('landlords');
+        Schema::dropIfExists('organisations');
     }
 };

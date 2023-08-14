@@ -7,7 +7,7 @@
 
 use App\Models\Auth\PublicUser;
 use App\Models\Auth\User;
-use App\Models\Organisation\OrgUser;
+use App\Models\Organisation\OrganisationUser;
 
 return [
 
@@ -87,7 +87,7 @@ return [
         ],
         'org_users' => [
             'driver' => 'eloquent',
-            'model'  => OrgUser::class,
+            'model'  => OrganisationUser::class,
         ],
 
 

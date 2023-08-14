@@ -14,10 +14,10 @@ return new class () extends Migration {
     use HasUserStats;
     public function up(): void
     {
-        Schema::create('org_user_stats', function (Blueprint $table) {
+        Schema::create('organisation_user_stats', function (Blueprint $table) {
             $table->smallIncrements('id');
-            $table->unsignedSmallInteger('org_user_id');
-            $table->foreign('org_user_id')->references('id')->on('org_users');
+            $table->unsignedSmallInteger('organisation_user_id');
+            $table->foreign('organisation_user_id')->references('id')->on('organisation_users');
             $table=$this->userStatsColumns($table);
             $table->timestampsTz();
         });
@@ -26,6 +26,6 @@ return new class () extends Migration {
 
     public function down(): void
     {
-        Schema::dropIfExists('org_user_stats');
+        Schema::dropIfExists('organisation_user_stats');
     }
 };

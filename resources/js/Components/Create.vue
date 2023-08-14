@@ -5,19 +5,15 @@
   -->
 
 <script setup lang="ts">
-import { Head, useForm } from '@inertiajs/vue3'
+import {  useForm } from '@inertiajs/vue3'
 import { jumpToElement } from "@/Composables/jumpToElement"
 import Button from '@/Components/Elements/Buttons/Button.vue'
-
-import PageHeading from '@/Components/Headings/PageHeading.vue'
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { faExclamationCircle, faCheckCircle, faAsterisk } from "@/../private/pro-solid-svg-icons"
 import { library } from "@fortawesome/fontawesome-svg-core"
 library.add(faExclamationCircle, faAsterisk, faCheckCircle)
 
 const props = defineProps<{
-    title: string,
-    pageHead: object,
     formData: {
         blueprint: object;
         route: {
@@ -102,8 +98,6 @@ onMounted(() => {
 </script>
 
 <template layout="App">
-    <Head :title="capitalize(title)" />
-    <PageHeading :data="pageHead"></PageHeading>
     <div class="rounded-lg bg-white shadow">
         <div class="divide-y divide-gray-200 lg:grid grid-flow-col lg:grid-cols-12 lg:divide-y-0 lg:divide-x">
 

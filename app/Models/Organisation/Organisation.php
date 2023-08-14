@@ -1,11 +1,11 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Thu, 10 Aug 2023 09:10:04 Malaysia Time, Pantai Lembeng, Bali
+ * Created: Mon, 14 Aug 2023 09:23:22 Malaysia Time, Pantai Lembeng, Bali
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Models\Landlord;
+namespace App\Models\Organisation;
 
 use App\Models\Assets\Currency;
 use App\Models\Auth\User;
@@ -17,8 +17,9 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
+
 /**
- * App\Models\Landlord\Landlord
+ * App\Models\Organisation\Organisation
  *
  * @property int $id
  * @property string $code
@@ -34,26 +35,26 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property-read Currency $currency
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \App\Models\Media\Media> $media
  * @property-read int|null $media_count
- * @property-read \App\Models\Landlord\LandlordStats|null $stats
- * @property-read \Illuminate\Database\Eloquent\Collection<int, User> $users
+ * @property-read \App\Models\Organisation\OrganisationStats|null $stats
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Organisation\OrganisationUser> $users
  * @property-read int|null $users_count
- * @method static Builder|Landlord newModelQuery()
- * @method static Builder|Landlord newQuery()
- * @method static Builder|Landlord query()
- * @method static Builder|Landlord whereCode($value)
- * @method static Builder|Landlord whereCountryId($value)
- * @method static Builder|Landlord whereCreatedAt($value)
- * @method static Builder|Landlord whereCurrencyId($value)
- * @method static Builder|Landlord whereData($value)
- * @method static Builder|Landlord whereId($value)
- * @method static Builder|Landlord whereLanguageId($value)
- * @method static Builder|Landlord whereName($value)
- * @method static Builder|Landlord whereSettings($value)
- * @method static Builder|Landlord whereTimezoneId($value)
- * @method static Builder|Landlord whereUpdatedAt($value)
+ * @method static Builder|Organisation newModelQuery()
+ * @method static Builder|Organisation newQuery()
+ * @method static Builder|Organisation query()
+ * @method static Builder|Organisation whereCode($value)
+ * @method static Builder|Organisation whereCountryId($value)
+ * @method static Builder|Organisation whereCreatedAt($value)
+ * @method static Builder|Organisation whereCurrencyId($value)
+ * @method static Builder|Organisation whereData($value)
+ * @method static Builder|Organisation whereId($value)
+ * @method static Builder|Organisation whereLanguageId($value)
+ * @method static Builder|Organisation whereName($value)
+ * @method static Builder|Organisation whereSettings($value)
+ * @method static Builder|Organisation whereTimezoneId($value)
+ * @method static Builder|Organisation whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-class Landlord extends Model implements HasMedia
+class Organisation extends Model implements HasMedia
 {
     use InteractsWithMedia;
 
@@ -73,7 +74,7 @@ class Landlord extends Model implements HasMedia
 
     public function stats(): HasOne
     {
-        return $this->hasOne(LandlordStats::class);
+        return $this->hasOne(OrganisationStats::class);
     }
 
     public function currency(): BelongsTo
@@ -83,6 +84,6 @@ class Landlord extends Model implements HasMedia
 
     public function users(): HasMany
     {
-        return $this->hasMany(User::class);
+        return $this->hasMany(OrganisationUser::class);
     }
 }

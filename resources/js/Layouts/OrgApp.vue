@@ -96,10 +96,8 @@ const initialiseApp = () => {
     watchEffect(() => {
         if (usePage().props.layout) {
             layout.navigation = usePage().props.layout.navigation ?? null;
-            layout.secondaryNavigation = usePage().props.layout.secondaryNavigation ?? null;
-
+            //layout.secondaryNavigation = usePage().props.layout.secondaryNavigation ?? null;
         }
-
 
         if (usePage().props.localeData) {
             locale.language = usePage().props.localeData.language;
@@ -113,13 +111,6 @@ const initialiseApp = () => {
         layout.currentRouteParameters=route().params;
         layout.currentRoute=route().current();
         layout.currentModule = layout.currentRoute?.substring(0, layout.currentRoute?.indexOf("."));
-
-
-
-
-
-
-        layout.booted=true;
 
         if (usePage().props.auth.user.avatar_id) {
             layout.avatar_id=usePage().props.auth.user.avatar_id;
@@ -169,7 +160,7 @@ onMounted(() => {
 <template>
     <div class="fixed top-0 left-0 w-screen h-screen dark:bg-gray-700 bg-gray-50" />
     <div class="relative min-h-full transition-all duration-200 ease-in-out"
-        :class="[Object.values(layout.rightSidebar).some(value => value === true) ? 'mr-44' : 'mr-0']"
+        :class="[Object.values(layout.rightSidebar).some(value => value) ? 'mr-44' : 'mr-0']"
     >
 
         <!-- TopBar -->
@@ -191,7 +182,9 @@ onMounted(() => {
                             </button>
                             <!-- Menu -->
 
-                            <AppTopBar :dashboardRoute="'org.dashboard.show'"  />
+                            <AppTopBar :dashboardRoute="'org.dashboard.show'">
+                                hello
+                            </AppTopBar>
 
                         </div>
 

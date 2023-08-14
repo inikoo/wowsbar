@@ -1,7 +1,7 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Sun, 13 Aug 2023 18:27:02 Malaysia Time, Sanur, Bali
+ * Created: Mon, 14 Aug 2023 09:24:49 Malaysia Time, Pantai Lembeng, Bali
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
@@ -11,7 +11,7 @@ use App\Actions\Assets\Language\UI\GetLanguagesOptions;
 use App\Actions\UI\Tenant\Dashboard\ShowDashboard;
 use App\Actions\UI\WithInertia;
 use App\Http\Resources\Auth\UserResource;
-use App\Models\Organisation\OrgUser;
+use App\Models\Organisation\OrganisationUser;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -22,19 +22,19 @@ class ShowProfile
     use AsAction;
     use WithInertia;
 
-    public function asController(ActionRequest $request): OrgUser
+    public function asController(ActionRequest $request): OrganisationUser
     {
 
 
         return $request->user();
     }
 
-    public function jsonResponse(OrgUser $user): UserResource
+    public function jsonResponse(OrganisationUser $user): UserResource
     {
         return new UserResource($user);
     }
 
-    public function htmlResponse(OrgUser $user): Response
+    public function htmlResponse(OrganisationUser $user): Response
     {
 
 

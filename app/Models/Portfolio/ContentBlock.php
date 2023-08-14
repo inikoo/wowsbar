@@ -27,6 +27,7 @@ use Spatie\Sluggable\SlugOptions;
  * App\Models\Portfolio\ContentBlock
  *
  * @property int $id
+ * @property string $type same as web_block_type.slug
  * @property string $ulid
  * @property int $tenant_id
  * @property int $web_block_type_id
@@ -70,6 +71,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|ContentBlock whereSlug($value)
  * @method static Builder|ContentBlock whereState($value)
  * @method static Builder|ContentBlock whereTenantId($value)
+ * @method static Builder|ContentBlock whereType($value)
  * @method static Builder|ContentBlock whereUlid($value)
  * @method static Builder|ContentBlock whereUpdatedAt($value)
  * @method static Builder|ContentBlock whereWebBlockId($value)

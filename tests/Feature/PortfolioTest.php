@@ -70,18 +70,18 @@ test('create websites', function () {
 
 test('create banners', function ($website) {
     $tenant = app('currentTenant');
-
     $webBlockType = WebBlockType::where('slug', 'banner')->first();
     $webBlock     = $webBlockType->webBlocks[0];
     $modelData    = ContentBlock::factory()->definition();
 
     $contentBlock = StoreContentBlock::make()->action($website, $webBlock, $modelData);
+    $tenant->refresh();
     expect($contentBlock)->toBeInstanceOf(ContentBlock::class)
-        ->and($tenant->stats->number_content_blocks)->toBe(1);
+        ->and($tenant->contentBlockStats->number_content_blocks)->toBe(1);
 
     $this->artisan("content-block:create abc web1 banner test1 'My first banner' ")->assertExitCode(0);
     $tenant->refresh();
-    expect($tenant->stats->number_content_blocks)->toBe(2);
+    expect($tenant->contentBlockStats->number_content_blocks)->toBe(2);
 
     return $contentBlock;
 })->depends('create websites');
@@ -97,5 +97,5 @@ test('delete banner', function ($contentBlock) {
     $tenant = app('currentTenant');
 
     DeleteContentBlock::make()->action($contentBlock);
-    expect($tenant->stats->number_content_blocks)->toBe(1);
+    expect($tenant->contentBlockStats->number_content_blocks)->toBe(1);
 })->depends('create banners');

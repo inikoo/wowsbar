@@ -12,10 +12,10 @@ use Illuminate\Support\Facades\Schema;
 return new class () extends Migration {
     public function up(): void
     {
-        Schema::create('landlord_stats', function (Blueprint $table) {
+        Schema::create('organisation_stats', function (Blueprint $table) {
             $table->smallIncrements('id');
-            $table->unsignedSmallInteger('landlord_id');
-            $table->foreign('landlord_id')->references('id')->on('landlords')->onUpdate('cascade')->onDelete('cascade');
+            $table->unsignedSmallInteger('organisation_id');
+            $table->foreign('organisation_id')->references('id')->on('organisations')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -23,6 +23,6 @@ return new class () extends Migration {
 
     public function down(): void
     {
-        Schema::dropIfExists('landlord_stats');
+        Schema::dropIfExists('organisation_stats');
     }
 };
