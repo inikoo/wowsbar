@@ -1,7 +1,7 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Sat, 12 Aug 2023 20:00:51 Malaysia Time, Sanur, Bali
+ * Created: Mon, 14 Aug 2023 10:41:46 Malaysia Time, Pantai Lembeng, Bali
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
@@ -21,13 +21,13 @@ class GetLayout
         if ($user->can('portfolio.view')) {
             $navigation['portfolio'] = [
                 'scope'   => 'portfolio',
-                'icon'    => ['fal', 'fa-puzzle-piece'],
-                'label'   => __('Web blocks'),
+                'icon'    => ['fal', 'fa-briefcase'],
+                'label'   => __('Portfolio'),
                 'route'   => 'portfolio.dashboard',
                 'topMenu' => [
                     'subSections' => [
                         [
-                            'icon'  => ['fal', 'fa-chart-network'],
+                            'icon'  => ['fal', 'fa-briefcase'],
                             'route' => [
                                 'name' => 'portfolio.dashboard',
                             ]

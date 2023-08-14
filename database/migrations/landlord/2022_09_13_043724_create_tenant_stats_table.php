@@ -5,7 +5,6 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-use App\Enums\Web\WebBlockType\WebBlockTypeSlugEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;

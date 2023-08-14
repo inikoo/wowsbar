@@ -8,7 +8,7 @@
 namespace App\Actions\Gallery\UI\UploadedImages;
 
 use App\Actions\InertiaAction;
-use App\Actions\UI\Tenant\Dashboard\ShowDashboard;
+use App\Actions\UI\Tenant\Portfolio\ShowPortfolioDashboard;
 use App\Models\Media\Media;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Inertia\Inertia;
@@ -120,7 +120,7 @@ class EditUploadedImage extends InertiaAction
         return match ($routeName) {
             'portfolio.images.index' =>
             array_merge(
-                ShowDashboard::make()->getBreadcrumbs(),
+                ShowPortfolioDashboard::make()->getBreadcrumbs(),
                 $headCrumb(
                     [
                         'name' => 'portfolio.images.index',

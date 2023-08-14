@@ -29,7 +29,7 @@ class StoreStockImage
     ): LandlordMedia|Media {
 
         $organisation =Organisation::find(1);
-        $checksum = md5_file($imagePath);
+        $checksum     = md5_file($imagePath);
 
         $organisationMedia = LandlordMedia::where('checksum', $checksum)->first();
         if (!$organisationMedia) {

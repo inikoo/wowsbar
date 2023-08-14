@@ -10,7 +10,7 @@ namespace App\Actions\Portfolio\ContentBlock\Banners\UI;
 use App\Actions\InertiaAction;
 use App\Actions\Portfolio\ContentBlock\UI\IndexContentBlocks;
 use App\Actions\Portfolio\Website\UI\ShowWebsite;
-use App\Actions\UI\Tenant\Dashboard\ShowDashboard;
+use App\Actions\UI\Tenant\Portfolio\ShowPortfolioDashboard;
 use App\Http\Resources\Portfolio\ContentBlockResource;
 use App\Models\Portfolio\Website;
 use App\Models\Tenancy\Tenant;
@@ -162,7 +162,7 @@ class IndexBanners extends InertiaAction
         return match ($routeName) {
             'portfolio.banners.index' =>
             array_merge(
-                ShowDashboard::make()->getBreadcrumbs(),
+                ShowPortfolioDashboard::make()->getBreadcrumbs(),
                 $headCrumb(
                     [
                         'name' => 'portfolio.banners.index'

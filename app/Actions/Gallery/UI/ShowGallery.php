@@ -9,7 +9,7 @@ namespace App\Actions\Gallery\UI;
 
 use App\Actions\Gallery\UI\UploadedImages\IndexUploadedImages;
 use App\Actions\InertiaAction;
-use App\Actions\UI\Tenant\Dashboard\ShowDashboard;
+use App\Actions\UI\Tenant\Portfolio\ShowPortfolioDashboard;
 use App\Enums\UI\GalleryTabsEnum;
 use App\Http\Resources\Gallery\ImageResource;
 use Inertia\Inertia;
@@ -135,7 +135,7 @@ class ShowGallery extends InertiaAction
         return match ($routeName) {
             'portfolio.gallery' =>
             array_merge(
-                ShowDashboard::make()->getBreadcrumbs(),
+                ShowPortfolioDashboard::make()->getBreadcrumbs(),
                 $headCrumb(
                     [
                         'name' => 'portfolio.gallery',
