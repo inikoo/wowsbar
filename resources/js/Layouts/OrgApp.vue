@@ -5,19 +5,9 @@
   -->
 
 <script setup lang="ts">
-import { ref, watchEffect } from "vue";
-import {
-    Menu,
-    MenuButton,
-    MenuItem,
-    MenuItems
-} from "@headlessui/vue";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
-import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/vue"
-import Button from "@/Components/Elements/Buttons/Button.vue"
-import SearchBar from "@/Components/SearchBar.vue"
+import { ref, watchEffect } from "vue"
 import AppFooter from "@/Layouts/AppFooter.vue"
-import { usePage, router } from "@inertiajs/vue3"
+import { usePage } from "@inertiajs/vue3"
 
 import { useOrgLayoutStore } from "@/Stores/org-layout"
 import { useLocaleStore } from "@/Stores/locale"
@@ -27,10 +17,8 @@ import AppRightSideBar from "@/Layouts/AppRightSideBar.vue"
 import AppTopBar from "@/Layouts/TopBar/AppTopBar.vue"
 import Breadcrumbs from "@/Components/Navigation/Breadcrumbs.vue"
 
-import { loadLanguageAsync, trans } from "laravel-vue-i18n"
-import { Link } from "@inertiajs/vue3"
+import { loadLanguageAsync } from "laravel-vue-i18n"
 import { library } from "@fortawesome/fontawesome-svg-core"
-import { useAppearanceStore } from "@/Stores/appearance";
 
 import {
     faHome,
@@ -52,9 +40,8 @@ import {
     faLanguage
 } from "../../private/pro-light-svg-icons"
 import { faSearch, faBell} from "../../private/pro-regular-svg-icons"
-import { onMounted } from "vue";
-import {useFirestore} from "vuefire";
-import {useFirebaseStore} from "@/Stores/firebase";
+import { onMounted } from "vue"
+import {useFirebaseStore} from "@/Stores/firebase"
 
 
 library.add(
@@ -119,42 +106,8 @@ const initialiseApp = () => {
     return layout
 }
 
-
-
-
 const layout = initialiseApp()
 const sidebarOpen = ref(false)
-const showSearchDialog = ref(false)
-const user = ref(usePage().props.auth.user)
-
-const changeColorMode = (mode: boolean | string) => {
-    // If browsers not support matchMedia
-    if (!window.matchMedia) {
-        return
-    }
-
-    let query: boolean | string = false
-
-    if (mode == "system") {
-        // If browsers prefers dark-mode then true
-        query = window.matchMedia('(prefers-color-scheme: dark)').matches
-    } else {
-        query = mode
-    }
-
-    if(query) {
-        document.documentElement.classList.add('dark')
-        localStorage.setItem('darkMode', `${query}`)
-    } else {
-        document.documentElement.classList.remove('dark')
-        localStorage.setItem('darkMode', `${query}`)
-    }
-}
-
-onMounted(() => {
-    useAppearanceStore().darkMode ? document.documentElement.classList.add('dark') : ''
-})
-
 </script>
 
 <template>

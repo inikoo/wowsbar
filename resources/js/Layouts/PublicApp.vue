@@ -39,8 +39,6 @@ import {
     faLanguage
 } from "@/../private/pro-light-svg-icons"
 import { faSearch, faBell } from "@/../private/pro-regular-svg-icons"
-import { onMounted } from "vue"
-import { useFirestore } from "vuefire"
 import { useFirebaseStore } from "@/Stores/firebase"
 import AppPublicFooter from "@/Layouts/AppPublicFooter.vue"
 
@@ -176,8 +174,6 @@ router.on('navigate', () => {
 
 const layout = initialiseApp()
 const sidebarOpen = ref(false)
-
-
 
 </script>
 

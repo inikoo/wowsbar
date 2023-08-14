@@ -5,7 +5,7 @@
   -->
 
 <script setup lang="ts">
-import { usePage, Link } from "@inertiajs/vue3"
+import { Link } from "@inertiajs/vue3"
 import { useLayoutStore } from "@/Stores/layout"
 import AppTopBarNavs from "@/Layouts/TopBar/AppTopBarNavs.vue"
 import { ref, onMounted } from "vue"
@@ -17,7 +17,7 @@ import {
     MenuItems
 } from "@headlessui/vue";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
-import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/vue"
+import { Disclosure } from "@headlessui/vue"
 import Button from "@/Components/Elements/Buttons/Button.vue"
 import SearchBar from "@/Components/SearchBar.vue"
 import { trans } from "laravel-vue-i18n"
@@ -31,7 +31,6 @@ defineProps<{
 const layout = useLayoutStore()
 
 const showSearchDialog = ref(false)
-const user = ref(usePage().props.auth.user)
 
 const changeColorMode = (mode: boolean | string) => {
     // If browsers not support matchMedia
