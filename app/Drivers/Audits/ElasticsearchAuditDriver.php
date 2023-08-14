@@ -129,7 +129,7 @@ class ElasticsearchAuditDriver implements AuditDriver
 
         try {
             return IndexElasticsearchDocument::dispatch(
-                config('elasticsearch.index_prefix').$index,
+                config('elasticsearch.index_prefix').'audit_'.$index,
                 $this->body($model),
                 $this->type);
         } catch (Exception) {
