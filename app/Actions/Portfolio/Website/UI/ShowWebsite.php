@@ -11,7 +11,7 @@ use App\Actions\Helpers\History\IndexHistories;
 use App\Actions\InertiaAction;
 use App\Actions\Portfolio\ContentBlock\Banners\UI\IndexBanners;
 use App\Actions\Portfolio\ContentBlock\UI\IndexContentBlocks;
-use App\Actions\UI\Tenant\Dashboard\ShowDashboard;
+use App\Actions\UI\Tenant\Portfolio\ShowPortfolioDashboard;
 use App\Actions\UI\WithInertia;
 use App\Enums\UI\WebsiteTabsEnum;
 use App\Http\Resources\History\HistoryResource;
@@ -183,7 +183,7 @@ class ShowWebsite extends InertiaAction
             'portfolio.websites.edit' =>
 
             array_merge(
-                ShowDashboard::make()->getBreadcrumbs(),
+                ShowPortfolioDashboard::make()->getBreadcrumbs(),
                 $headCrumb(
                     'modelWithIndex',
                     $routeParameters['website'],

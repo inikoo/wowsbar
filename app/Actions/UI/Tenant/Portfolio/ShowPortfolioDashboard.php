@@ -47,9 +47,9 @@ class ShowPortfolioDashboard
                 'breadcrumbs'  => $this->getBreadcrumbs(),
                 'title'        => __('portfolio'),
                 'pageHead'     => [
-                    'title'             => __('web blocks'),
+                    'title'             => __('portfolio'),
                     'icon'              => [
-                        'icon'    => ['fal', 'fa-puzzle-piece'],
+                        'icon'    => ['fal', 'fa-suitcase'],
                         'tooltip' => __('portfolio')
                     ],
                 ],
@@ -88,7 +88,7 @@ class ShowPortfolioDashboard
                             'route' => [
                                 'name' => 'portfolio.dashboard'
                             ],
-                            'label' => __('web blocks'),
+                            'label' => __('portfolio'),
                         ]
                     ]
                 ]

@@ -69,7 +69,7 @@ test('create websites', function () {
 
 
 test('create banners', function ($website) {
-    $tenant = app('currentTenant');
+    $tenant       = app('currentTenant');
     $webBlockType = WebBlockType::where('slug', 'banner')->first();
     $webBlock     = $webBlockType->webBlocks[0];
     $modelData    = ContentBlock::factory()->definition();
