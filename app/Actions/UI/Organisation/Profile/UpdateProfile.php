@@ -9,7 +9,7 @@ namespace App\Actions\UI\Organisation\Profile;
 
 use App\Actions\Auth\User\UI\SetUserAvatarFromImage;
 use App\Actions\Traits\WithActionUpdate;
-use App\Models\Auth\User;
+use App\Models\Organisation\OrganisationUser;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Arr;
@@ -25,19 +25,19 @@ class UpdateProfile
     private bool $asAction = false;
 
 
-    public function handle(User $user, array $modelData, ?UploadedFile $avatar): User
+    public function handle(OrganisationUser $organisationUser, array $modelData, ?UploadedFile $avatar): OrganisationUser
     {
 
         if ($avatar) {
             SetUserAvatarFromImage::run(
-                user: $user,
+                organisationUser: $organisationUser,
                 imagePath: $avatar->getPathName(),
                 originalFilename: $avatar->getClientOriginalName(),
                 extension: $avatar->getClientOriginalExtension()
             );
         }
 
-        return $this->update($user, $modelData, ['profile', 'settings']);
+        return $this->update($organisationUser, $modelData, ['profile', 'settings']);
     }
 
 
@@ -45,7 +45,7 @@ class UpdateProfile
     {
         return [
             'password'    => ['sometimes', 'required', app()->isLocal() || app()->environment('testing') ? null : Password::min(8)->uncompromised()],
-            'email'       => 'sometimes|required|email|unique:users,email',
+            //'email'       => 'sometimes|required|email|unique:organisationUsers,email',
             'about'       => 'sometimes|nullable|string|max:255',
             'language_id' => ['sometimes', 'required', 'exists:central.languages,id'],
             'avatar'      => [
@@ -61,21 +61,17 @@ class UpdateProfile
 
 
 
-    public function asController(ActionRequest $request): User
+    public function asController(ActionRequest $request): OrganisationUser
     {
         $this->fillFromRequest($request);
-
         $validated = $this->validateAttributes();
-
-
-
         return $this->handle($request->user(), Arr::except($validated, 'avatar'), Arr::get($validated, 'avatar'));
     }
 
 
 
-    public function htmlResponse(User $user): RedirectResponse
+    public function htmlResponse(OrganisationUser $organisationUser): RedirectResponse
     {
-        return Redirect::route('profile.show');
+        return Redirect::route('org.profile.show');
     }
 }

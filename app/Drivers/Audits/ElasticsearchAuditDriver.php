@@ -12,11 +12,13 @@ use App\Actions\Elasticsearch\BuildElasticsearchClient;
 use App\Actions\Elasticsearch\IndexElasticsearchDocument;
 use App\Enums\Elasticsearch\ElasticsearchTypeEnum;
 use App\Models\Auth\User;
+use App\Models\Tenancy\Tenant;
 use Carbon\Carbon;
 use Elastic\Elasticsearch\Client;
 use Elastic\Transport\Exception\NoNodeAvailableException;
 use Exception;
 use hisorange\BrowserDetect\Parser as Browser;
+use Illuminate\Foundation\Bus\PendingDispatch;
 use Illuminate\Support\Facades\Config;
 use OwenIt\Auditing\Contracts\Audit;
 use OwenIt\Auditing\Contracts\Auditable;
@@ -45,8 +47,9 @@ class ElasticsearchAuditDriver implements AuditDriver
      */
     public function __construct()
     {
+
+
         $this->client = BuildElasticsearchClient::run();
-        $this->index  =  config('elasticsearch.index_prefix') . 'user_requests_'.app('currentTenant')->slug;
         $this->type   = Config::get('audit.drivers.es.type', ElasticsearchTypeEnum::ACTION->value);
     }
 
@@ -69,12 +72,10 @@ class ElasticsearchAuditDriver implements AuditDriver
         return new $implementation();
     }
 
+
     /**
-     * Remove older audits that go over the threshold.
-     *
-     * @param \OwenIt\Auditing\Contracts\Auditable $model
-     *
-     * @return bool
+     * @throws \Elastic\Elasticsearch\Exception\ServerResponseException
+     * @throws \Elastic\Elasticsearch\Exception\ClientResponseException
      */
     public function prune(Auditable $model): bool
     {
@@ -85,23 +86,23 @@ class ElasticsearchAuditDriver implements AuditDriver
         return false;
     }
 
-    public function storeAudit($model)
+    public function storeAudit($model): ?PendingDispatch
     {
         $model['created_at'] = Carbon::now()->toDateTimeString();
 
         return $this->indexAuditDocument($model);
     }
 
+    /**
+     * @throws \Elastic\Elasticsearch\Exception\ClientResponseException
+     * @throws \Elastic\Elasticsearch\Exception\ServerResponseException
+     */
     public function destroyAudit($model): bool
     {
         return $this->deleteAuditDocument($model);
     }
 
-    /**
-     * Get the queue that should be used with syncing
-     *
-     * @return  string
-     */
+
     public function syncWithSearchUsingQueue(): string
     {
         return config('audit.queue.queue');
@@ -119,9 +120,20 @@ class ElasticsearchAuditDriver implements AuditDriver
 
     public function indexAuditDocument($model)
     {
+        $index=match($model['user_type']){
+            'OrganisationUser'=>'_org',
+            'PublicUser'=>'_public',
+            'User'=>'_tenant_'.app('currentTenant')->slug
+        };
+
+
         try {
-            return IndexElasticsearchDocument::dispatch($this->index, $this->body($model), $this->type);
-        } catch (\Exception $e) {
+            return IndexElasticsearchDocument::dispatch(
+                config('elasticsearch.index_prefix').$index,
+                $this->body($model),
+                $this->type);
+        } catch (Exception) {
+
         }
     }
 
@@ -130,10 +142,15 @@ class ElasticsearchAuditDriver implements AuditDriver
         $parsedUserAgent = (new Browser())->parse($model['user_agent']);
         $user            = User::find($model['user_id']);
 
+        $tenantSlug=null;
+        if(Tenant::checkCurrent()){
+            $tenantSlug=app('currentTenant')->slug;
+        }
+
         return [
                 'type'           => $this->type,
                 'datetime'       => now(),
-                'tenant'         => app('currentTenant')->slug,
+                'tenant'         => $tenantSlug,
                 'route'          => $this->routes(),
                 'module'         => explode('.', $this->routes()['name'])[0],
                 'ip_address'     => request()->ip(),
@@ -165,6 +182,10 @@ class ElasticsearchAuditDriver implements AuditDriver
         ];
     }
 
+    /**
+     * @throws \Elastic\Elasticsearch\Exception\ServerResponseException
+     * @throws \Elastic\Elasticsearch\Exception\ClientResponseException
+     */
     public function searchAuditDocument($model)
     {
         $skip = $model->getAuditThreshold() - 1;
@@ -202,12 +223,19 @@ class ElasticsearchAuditDriver implements AuditDriver
         return $this->client->search($params);
     }
 
+    /**
+     * @throws \Elastic\Elasticsearch\Exception\ClientResponseException
+     * @throws \Elastic\Elasticsearch\Exception\ServerResponseException
+     */
     public function deleteAuditDocument($model): bool
     {
         $audits = $this->searchAuditDocument($model);
         $audits = $audits['hits']['hits'];
 
         if (count($audits)) {
+
+            $params['body']=[];
+
             $audit_ids = array_column($audits, '_id');
 
             foreach ($audit_ids as $audit_id) {
@@ -227,6 +255,11 @@ class ElasticsearchAuditDriver implements AuditDriver
         return false;
     }
 
+    /**
+     * @throws \Elastic\Elasticsearch\Exception\ClientResponseException
+     * @throws \Elastic\Elasticsearch\Exception\ServerResponseException
+     * @throws \Elastic\Elasticsearch\Exception\MissingParameterException
+     */
     public function createIndex()
     {
         $params = [
@@ -242,6 +275,10 @@ class ElasticsearchAuditDriver implements AuditDriver
         return $this->client->indices()->create($params);
     }
 
+    /**
+     * @throws \Elastic\Elasticsearch\Exception\ClientResponseException
+     * @throws \Elastic\Elasticsearch\Exception\ServerResponseException
+     */
     public function updateAliases()
     {
         $params['body'] = [
@@ -258,6 +295,11 @@ class ElasticsearchAuditDriver implements AuditDriver
         return $this->client->indices()->updateAliases($params);
     }
 
+    /**
+     * @throws \Elastic\Elasticsearch\Exception\ServerResponseException
+     * @throws \Elastic\Elasticsearch\Exception\ClientResponseException
+     * @throws \Elastic\Elasticsearch\Exception\MissingParameterException
+     */
     public function deleteIndex()
     {
         $deleteParams = [
@@ -267,6 +309,11 @@ class ElasticsearchAuditDriver implements AuditDriver
         return $this->client->indices()->delete($deleteParams);
     }
 
+    /**
+     * @throws \Elastic\Elasticsearch\Exception\ClientResponseException
+     * @throws \Elastic\Elasticsearch\Exception\ServerResponseException
+     * @throws \Elastic\Elasticsearch\Exception\MissingParameterException
+     */
     public function existsIndex()
     {
         $params = [
@@ -276,6 +323,11 @@ class ElasticsearchAuditDriver implements AuditDriver
         return $this->client->indices()->exists($params);
     }
 
+    /**
+     * @throws \Elastic\Elasticsearch\Exception\ServerResponseException
+     * @throws \Elastic\Elasticsearch\Exception\ClientResponseException
+     * @throws \Elastic\Elasticsearch\Exception\MissingParameterException
+     */
     public function putMapping()
     {
         $params = [
