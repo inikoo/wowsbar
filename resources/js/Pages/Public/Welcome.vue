@@ -9,35 +9,12 @@ import Hero from '@/Components/Marketing/Hero.vue';
 import { Hero as heroType } from "@/types/hero";
 import { ref } from 'vue'
 import {
-  Dialog,
-  DialogPanel,
-  Popover,
-  PopoverButton,
-  PopoverGroup,
-  PopoverPanel,
-  Tab,
-  TabGroup,
-  TabList,
-  TabPanel,
-  TabPanels,
-} from '@headlessui/vue'
-import {
-  Bars3Icon,
-  MagnifyingGlassIcon,
-
-  ShoppingBagIcon,
-
-} from '@heroicons/vue/24/outline'
-
-import {
   Disclosure,
   DisclosureButton,
   DisclosurePanel,
-
-
 } from '@headlessui/vue'
-
 import { MinusIcon, PlusIcon } from '@heroicons/vue/24/outline'
+import SideImage from './PageComponents/SideImage.vue'
 
 const product = {
   name: 'Zip Tote Basket',
@@ -203,6 +180,46 @@ const footerNavigation = {
 
 
 
+const setRowData = [
+  {
+    type : 'image',
+    src : 'https://tailwindui.com/img/ecommerce-images/product-page-03-product-01.jpg',
+    alt : 'test'
+  },
+  {
+    type : 'text',
+    title : 'title',
+    subtitle : 'subtitle',
+    description : 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.'
+  },
+  {
+    type : 'accordion',
+    title : 'title',
+    subtitle : 'subtitle',
+    details: [
+    {
+      name: 'SEO',
+      items: [
+        'As PPC specialists, our proven PPC system allows you to put your products and services in front of your potential customer at the time they are making a buying decision. We work with you to create high performing results-driven campaigns focused on delivering conversions, not just clicks',
+      ],
+    },
+    {
+      name: 'PPC',
+      items: [
+        'As PPC specialists, our proven PPC system allows you to put your products and services in front of your potential customer at the time they are making a buying decision. We work with you to create high performing results-driven campaigns focused on delivering conversions, not just clicks',
+      ],
+    },
+    {
+      name: 'SSM',
+      items: [
+        'As PPC specialists, our proven PPC system allows you to put your products and services in front of your potential customer at the time they are making a buying decision. We work with you to create high performing results-driven campaigns focused on delivering conversions, not just clicks',
+      ],
+    },
+  ],
+  }
+]
+
+
 const props = defineProps<{
   hero: heroType
 }>()
@@ -319,27 +336,7 @@ const props = defineProps<{
           </a>
         </div>
       </section>
-
-
-      <section aria-labelledby="category-heading" class="pt-5">
-        <div class="lg:grid lg:grid-cols-2 lg:items-start lg:gap-x-8">
-          <div class="min-h-300 max-h-[32rem] overflow-hidden">
-            <img :src="product.images.src" :alt="product.images.alt"
-              class="h-full w-full object-cover object-center sm:rounded-lg" />
-          </div>
-
-          <div class="mt-10 px-4 sm:mt-16 lg:mt-0 p-5">
-            <section aria-labelledby="details-heading" class="mt-10">
-              <div class="sm:max-w-lg">
-                <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">Summer styles are finally here
-                </h1>
-                <p class="mt-4 text-xl text-gray-500">This year, our new summer collection will shelter you from the harsh
-                  elements of a world that doesn't care if you live or die.</p>
-              </div>
-            </section>
-          </div>
-        </div>
-      </section>
+      <SideImage :data="setRowData" />
     </main>
 
     <footer aria-labelledby="footer-heading" class="bg-gray-900">
