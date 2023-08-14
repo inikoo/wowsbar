@@ -7,6 +7,7 @@
 
 namespace App\Actions\UI\Common\Auth;
 
+use Cache;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
@@ -24,6 +25,7 @@ class Login
     private string $credentialHandler = 'username';
     private string $home              = '/dashboard';
     private string $gate              = 'web';
+    private string $customTokenFirebasePrefix = 'web';
 
 
     public function __construct(ActionRequest $request)
@@ -49,7 +51,6 @@ class Login
     public function handle(ActionRequest $request): void
     {
         $this->ensureIsNotRateLimited($request);
-        $auth = app('firebase.auth');
 
         if (!Auth::guard($this->gate)->attempt(
             array_merge($request->validated(), ['status' => true]),
@@ -75,9 +76,6 @@ class Login
         if ($language) {
             app()->setLocale($language);
         };
-
-        $customToken = $auth->createCustomToken(Str::uuid());
-        $auth->signInWithCustomToken($customToken);
     }
 
     public function rules(): array
