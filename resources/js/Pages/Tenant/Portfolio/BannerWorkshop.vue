@@ -18,7 +18,7 @@ import { getDatabase, ref as dbRef, set, onValue, get } from "firebase/database"
 import { initializeApp } from "firebase/app"
 import { useFirebaseStore } from "@/Stores/firebase"
 
-//import serviceAccount from "@/../private/firebase/wowsbar-firebase.json"
+import serviceAccount from "@/../private/firebase/wowsbar-firebase.json"
 import { usePage, router } from "@inertiajs/vue3"
 import { faUser, faUserFriends } from "@/../private/pro-light-svg-icons"
 import { library } from "@fortawesome/fontawesome-svg-core"

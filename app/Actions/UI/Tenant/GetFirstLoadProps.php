@@ -13,8 +13,10 @@ use App\Helpers\ImgProxy\Image;
 use App\Http\Resources\Assets\LanguageResource;
 use App\Models\Assets\Language;
 use App\Models\Auth\User;
+use Cache;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 use Lorisleiva\Actions\Concerns\AsObject;
 
 class GetFirstLoadProps
@@ -35,6 +37,16 @@ class GetFirstLoadProps
             $language = Language::where('code', 'en')->first();
         }
 
+        $auth = app('firebase.auth');
+
+        if($user) {
+            $customTokenFirebasePrefix = app('currentTenant')->slug . '_tenant_user_' . $user->username . '_token_' . $user->id;
+
+            $customToken = $auth->createCustomToken(Str::uuid());
+            $auth->signInWithCustomToken($customToken);
+
+            Cache::put($customTokenFirebasePrefix, $customToken);
+        }
 
         return [
             'tenant'     => app('currentTenant') ? app('currentTenant')->only('name', 'code', 'logo_id') : null,
