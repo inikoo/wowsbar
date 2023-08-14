@@ -5,8 +5,9 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Landlord\LandlordUser;
+namespace App\Actions\Organisation\OrganisationUser;
 
+use App\Actions\Organisation\OrganisationUser\UI\SetOrganisationUserAvatar;
 use App\Models\Organisation\OrganisationUser;
 use App\Rules\AlphaDashDot;
 use Illuminate\Validation\Rule;
@@ -15,7 +16,7 @@ use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
 
-class StoreLandlordUser
+class StoreOrganisationUser
 {
     use AsAction;
     use WithAttributes;
@@ -25,14 +26,14 @@ class StoreLandlordUser
 
     public function handle(array $objectData = []): OrganisationUser
     {
-        /** @var \App\Models\Organisation\OrganisationUser $landlordUser */
-        $landlordUser = OrganisationUser::create($objectData);
-        $landlordUser->stats()->create();
-        //SetUserAvatar::run($orgUser);
+        /** @var \App\Models\Organisation\OrganisationUser $organisationUser */
+        $organisationUser = OrganisationUser::create($objectData);
+        $organisationUser->stats()->create();
+        SetOrganisationUserAvatar::run($organisationUser);
 
-        // UserHydrateUniversalSearch::dispatch($orgUser);
-        // TenantHydrateUsers::dispatch(app('currentTenant'));
-        return $landlordUser;
+        // UserHydrateUniversalSearch::dispatch($organisationUser);
+        // OrganisationHydrateUsers::dispatch();
+        return $organisationUser;
     }
 
     public function authorize(ActionRequest $request): bool

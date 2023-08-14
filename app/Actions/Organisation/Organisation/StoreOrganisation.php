@@ -5,9 +5,9 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Landlord\Landlord;
+namespace App\Actions\Organisation\Organisation;
 
-use App\Actions\Landlord\LandlordUser\StoreLandlordUser;
+use App\Actions\Organisation\OrganisationUser\StoreOrganisationUser;
 use App\Models\Assets\Country;
 use App\Models\Assets\Currency;
 use App\Models\Assets\Language;
@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Artisan;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
 
-class StoreLandlord
+class StoreOrganisation
 {
     use AsAction;
     use WithAttributes;
@@ -36,7 +36,7 @@ class StoreLandlord
         $landlord->stats()->create();
 
 
-        $landlordUser   = StoreLandlordUser::run($landlordUserData);
+        $landlordUser   = StoreOrganisationUser::run($landlordUserData);
         $superAdminRole = Role::where('guard_name', 'org')->where('name', 'super-admin')->firstOrFail();
         $landlordUser->assignRole($superAdminRole);
 
@@ -159,7 +159,7 @@ class StoreLandlord
             ]),
         );
 
-        $command->info("Landlord $landlord->slug created successfully 🎉");
+        $command->info("Organisation $landlord->slug created successfully 🎉");
 
         return 0;
     }

@@ -28,7 +28,7 @@ class AppServiceProvider extends ServiceProvider
         }
         Relation::morphMap(
             [
-                'Landlord'         => 'App\Models\Organisation\Organisation',
+                'Organisation'         => 'App\Models\Organisation\Organisation',
                 'Tenant'           => 'App\Models\Tenancy\Tenant',
                 'User'             => 'App\Models\Auth\User',
                 'Website'          => 'App\Models\Portfolio\Website',
