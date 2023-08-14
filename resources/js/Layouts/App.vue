@@ -19,7 +19,7 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/vue"
 import Button from "@/Components/Elements/Buttons/Button.vue"
 import SearchBar from "@/Components/SearchBar.vue"
-import AppFooter from "@/Layouts/AppFooter.vue"
+import AppFooter from "@/Layouts/Footer/AppFooter.vue"
 import { usePage, router } from "@inertiajs/vue3"
 
 import { useLayoutStore } from "@/Stores/layout"
@@ -395,12 +395,11 @@ onMounted(() => {
 
 <style lang="scss">
 .tabNavigationActive {
-    // Current active state to have consistent style. Use for: AppLeftSideBar, CreateModel
+    // Indicate current active state to have consistent style. Use for: AppLeftSideBar, CreateModel
     @apply bg-gray-200/80 border-orange-500 text-gray-700 dark:text-gray-300
 }
 
 .tabNavigation {
-    // Current active state to have consistent style. Use for: AppLeftSideBar, CreateModel
     @apply border-transparent hover:bg-gray-200/30 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-400
 }
 </style>
