@@ -1,6 +1,6 @@
 <!--
   - Author: Raul Perusquia <raul@inikoo.com>
-  - Created: Sat, 12 Aug 2023 14:00:02 Malaysia Time, Pantai Lembeng, Bali
+  - Created: Mon, 14 Aug 2023 10:29:40 Malaysia Time, Pantai Lembeng, Bali
   - Copyright (c) 2023, Raul A Perusquia Flores
   -->
 
@@ -14,11 +14,11 @@ const props = defineProps<{
 }>()
 
 const fieldData = {
-    type: "input", 
-        label: "google redirect URI", 
-        value: "test", 
+    type: "input",
+        label: "google redirect URI",
+        value: "test",
         readonly: true,
-        copyButton: true 
+        copyButton: true
 }
 </script>
 
