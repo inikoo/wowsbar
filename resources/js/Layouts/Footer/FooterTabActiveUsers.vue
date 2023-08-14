@@ -28,7 +28,6 @@ defineEmits<{
     (e: 'isTabActive'): void
 }>()
 
-
 </script>
 
 <template>
