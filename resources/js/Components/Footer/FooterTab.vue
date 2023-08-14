@@ -11,7 +11,7 @@
             </div>
         </div>
         <div class="w-full bg-gray-700 shadow-lg flex-row items-start text-gray-100 text-[11px] leading-none" >
-            <div class="flex flex-col justify-center text-center pb-3 gap-y-1">
+            <div class="flex flex-col justify-center text-center pt-0.5 pb-3 gap-y-1">
                 <slot />
             </div>
         </div>
@@ -36,8 +36,4 @@ library.add(faThumbtack)
 
 const layout = useLayoutStore()
 
-
-
 </script>
-
-<style lang="scss" scoped></style>

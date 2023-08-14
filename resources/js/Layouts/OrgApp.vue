@@ -323,15 +323,3 @@ onMounted(() => {
     <AppFooter />
 
 </template>
-
-<style lang="scss">
-.tabNavigationActive {
-    // Current active state
-    @apply bg-gray-200/80 border-gray-500 text-gray-700 dark:text-gray-300
-}
-
-.tabNavigation {
-    // State not active
-    @apply border-transparent hover:bg-white dark:hover:bg-gray-600 text-gray-700 dark:text-gray-400
-}
-</style>
