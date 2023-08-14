@@ -24,7 +24,7 @@ use App\Actions\Portfolio\Website\UI\EditWebsite;
 use App\Actions\Portfolio\Website\UI\IndexWebsites;
 use App\Actions\Portfolio\Website\UI\RemoveWebsite;
 use App\Actions\Portfolio\Website\UI\ShowWebsite;
-use App\Actions\Portfolio\UI\ShowPortfolioDashboard;
+use App\Actions\UI\Tenant\Portfolio\ShowPortfolioDashboard;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/dashboard', ShowPortfolioDashboard::class)->name('dashboard');

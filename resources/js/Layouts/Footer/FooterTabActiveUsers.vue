@@ -8,13 +8,12 @@ import { useFirebaseStore } from "@/Stores/firebase"
 import FooterTab from '@/Components/Footer/FooterTab.vue';
 const firebase = useFirebaseStore()
 const activities = ref()
-
-const firebaseApp = initializeApp(firebase.credential)
+console.log(firebase)
+const firebaseApp = initializeApp(firebase)
 const db = getDatabase(firebaseApp)
 const layout = useLayoutStore()
 
 try {
-    // const activitiesRef = dbRef(db, layout.tenant.code)
     activities.value = useDatabaseList(dbRef(db, layout.tenant.code))
 } catch (error) {
     console.error("An error occurred while fetching data from Firebase:", error)
