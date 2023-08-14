@@ -63,13 +63,13 @@ const handleKey = (event: any) => {
                         :href="route(item.route)"
                         :class="[
 							itemKey === layout.currentModule
-								? 'tabNavigationActive dark:border-gray-100 dark:bg-gray-600 '
-								: 'tabNavigation dark:hover:bg-dark-700',
-							'group flex items-center border-l-4 text-sm font-medium px-0 xl:px-3 py-2',
+								? 'tabNavigationActive border-l-4 dark:border-gray-100 dark:bg-gray-600 px-0.5'
+								: 'tabNavigation border-l-0 dark:hover:bg-dark-700 px-1',
+							'group flex items-center text-sm font-medium xl:px-3 py-2 transition-all duration-150 ease-in-out',
 						]"
                         :aria-current="itemKey === layout.currentModule ? 'page' : undefined"
                     >
-                        <div>
+                        <div class="flex items-center">
                             <img v-if="item.name == 'dashboard'" src="@/../art/logo/png/logo-no-background.png" alt="" class="h-4 aspect-square"
 								:class="[ itemKey === layout.currentModule
 											? 'text-orange-500'

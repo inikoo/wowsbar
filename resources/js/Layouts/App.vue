@@ -405,6 +405,6 @@ onMounted(() => {
 }
 
 .tabNavigation {
-    @apply border-transparent hover:bg-gray-200/30 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-400
+    @apply hover:bg-gray-200/30 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-400
 }
 </style>
