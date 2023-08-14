@@ -108,8 +108,7 @@ class IndexBanners extends InertiaAction
                                 ]
                             ],
                             default => [
-                                'type' => 'modal',
-                                'component' => 'chooseWebsite',
+                                'type'  => 'modal',
                                 'style' => 'create',
                                 'label' => 'create banner',
                                 'route' => [

@@ -9,10 +9,10 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 library.add(faSpinnerThird, faExclamationCircle, faCheckCircle, faSpinnerThird)
 
 const props = defineProps(['form', 'fieldName', 'options'])
-const temporaryAvatar = ref(props.form.avatar)
+const temporaryAvatar = ref(`/media/${props.form[props.fieldName]}`)
 
 const avatarUploaded = (file) => {
-    props.form.avatar = file
+    props.form[props.fieldName] = file
     const reader = new FileReader()
     reader.readAsDataURL(file)
     reader.onload = (e) => {
@@ -63,8 +63,8 @@ const avatarUploaded = (file) => {
             <FontAwesomeIcon v-if="form.processing" icon="fad fa-spinner-third" class="h-5 w-5 animate-spin dark:text-gray-200"/>
         </div>
         
-        <div v-if="props.form.errors.avatar" class="text-red-700">
-            {{ props.form.errors.avatar }}
+        <div v-if="props.form.errors[props.fieldName]" class="text-red-700">
+            {{ props.form.errors[props.fieldName] }}
         </div>
     </div>
 </template>

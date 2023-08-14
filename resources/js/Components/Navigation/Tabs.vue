@@ -9,7 +9,8 @@ import { ref } from "vue"
 import { capitalize } from "@/Composables/capitalize"
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faInfoCircle } from "@/../private/pro-solid-svg-icons"
-import { faRoad, faClock, faDatabase } from "@/../private/pro-light-svg-icons"
+import { faClock, faDatabase } from "@/../private/pro-light-svg-icons"
+import { faRoad } from "@/../private/pro-solid-svg-icons"
 import { library } from '@fortawesome/fontawesome-svg-core'
 
 library.add(faInfoCircle, faRoad, faClock, faDatabase)
@@ -17,7 +18,7 @@ library.add(faInfoCircle, faRoad, faClock, faDatabase)
 const props = defineProps<{
     navigation: any
     current: string
-    selectedRow?: any // dynamic key-value object
+    selectedRow?: any // Because dynamic key-value object
 }>()
 
 defineEmits(['update:tab']);
@@ -62,7 +63,7 @@ const tabIconClass = (current: string, type: string, align: string, extraClass: 
                                 <FontAwesomeIcon v-if="tab.icon" :icon="tab.icon" :class="tabIconClass(tabSlug === currentTab, tab.type, tab.align, tab.iconClass ?? '')" aria-hidden="true"/>
                                 <span v-if="tab.type !== 'icon'" class="capitalize">{{ tab.title }} {{ selectedRow?.[tabSlug] ? `(${selectedRow[tabSlug]?.length})` : '' }}</span>
                             </button>
-                            <div class="absolute h-0.5 rounded-full bottom0 xl:bottom-0 left-[50%] translate-x-[-50%] mx-auto transition-all duration-200 ease-in-out"
+                            <div class="absolute h-0.5 rounded-full bottom-0 left-[50%] translate-x-[-50%] mx-auto transition-all duration-200 ease-in-out"
                                 :class="[tabSlug === currentTab ? 'bg-orange-500 dark:bg-gray-300 w-full' : 'bg-gray-400 w-0 group-hover:w-3/6']"
                             />
                         </div>
@@ -81,7 +82,7 @@ const tabIconClass = (current: string, type: string, align: string, extraClass: 
                                 <FontAwesomeIcon :title="capitalize(tab.title)" v-if="tab.icon" :icon="tab.icon" class="h-5 w-5" aria-hidden="true"/>
                                 <span v-if="tab.type!=='icon'" class="capitalize">{{ tab.title }}</span>
                             </button>
-                            <div class="absolute h-0.5 rounded-full -bottom-2 xl:bottom-0 left-[50%] translate-x-[-50%] mx-auto transition-all duration-200 ease-in-out"
+                            <div class="absolute h-0.5 rounded-full bottom-0 left-[50%] translate-x-[-50%] mx-auto transition-all duration-200 ease-in-out"
                                 :class="[tabSlug === currentTab ? 'bg-orange-500 dark:bg-gray-300 w-full' : 'bg-gray-400 w-0 group-hover:w-3/6']"
                             />
                         </div>
