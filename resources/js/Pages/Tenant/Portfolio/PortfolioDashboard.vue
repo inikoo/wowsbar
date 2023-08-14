@@ -5,25 +5,18 @@
   -->
 
 <script setup>
-import {Head} from '@inertiajs/vue3';
-import PageHeading from '@/Components/Headings/PageHeading.vue';
-import FlatTreeMap from '@/Components/Navigation/FlatTreeMap.vue';
-import { capitalize } from "@/Composables/capitalize.js"
+import { Head } from '@inertiajs/vue3'
+import PageHeading from '@/Components/Headings/PageHeading.vue'
+import FlatTreeMap from '@/Components/Navigation/FlatTreeMap.vue'
+import { capitalize } from "@/Composables/capitalize.ts"
 
-defineProps(['title', 'pageHead', 'flatTreeMaps']);
-
-import {library} from '@fortawesome/fontawesome-svg-core';
-import {
-    faGlobe
-} from '../../../../private/pro-light-svg-icons/index.js';
-
-library.add(faGlobe);
+defineProps(['title', 'pageHead', 'flatTreeMaps'])
 
 </script>
 
 <template layout="App">
-    <Head :title="capitalize(title)"/>
+    <Head :title="capitalize(title)" />
     <PageHeading :data="pageHead"></PageHeading>
-    <FlatTreeMap class="mx-4 mt-4" v-for="(treeMap,idx) in flatTreeMaps" :key="idx" :nodes="treeMap"/>
+    <FlatTreeMap class="mx-4 mt-4" v-for="(treeMap, idx) in flatTreeMaps" :key="idx" :nodes="treeMap" />
 </template>
 
