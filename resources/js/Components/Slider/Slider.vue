@@ -76,17 +76,6 @@ const props = defineProps<{
 
 }>()
 
-const generateThumbnail = (file) => {
-    if (file.imageFile && file.imageFile instanceof File) {
-        let fileSrc = URL.createObjectURL(file.imageFile)
-        setTimeout(() => {
-            URL.revokeObjectURL(fileSrc)
-        }, 1000)
-        return fileSrc
-    } else {
-        return file.image_source
-    }
-}
 
 const swiperRef = ref()
 
@@ -102,25 +91,6 @@ watch(() => props.jumpToIndex, (newVal) => {
     swiperRef.value.$el.swiper.slideToLoop(newVal, 0, false)
 })
 
-const getImageStyle=(component)=> {
-    const x = get(component,['imagePosition','left'])
-    const y = get(component,['imagePosition','top'])
-    const style = {
-        transform: `translateX(-${x}px) translateY(-${y}px)`
-    }
-    return style
-}
-
-
-// const getResult =  (component: Object) => {
-//     if (component.imagePosition) {
-//         const base64 =  component.imagePosition?.canvas.toDataURL();
-//         return base64
-//     } else {
-//         return generateThumbnail(component);
-//     }
-// }
-
 </script>
 
 <template>
@@ -128,7 +98,7 @@ const getImageStyle=(component)=> {
         :class="[$props.view
             ? { 'aspect-[2/1] w-1/2' : $props.view == 'mobile',
                 'aspect-[3/1] w-3/4' : $props.view == 'tablet',
-                'aspect-[4/1]' : $props.view == 'desktop'}
+                'aspect-[4/1] w-full' : $props.view == 'desktop'}
             : 'w-full aspect-[2/1] md:aspect-[3/1] lg:aspect-[4/1]']"
     >
         <Swiper ref="swiperRef"
