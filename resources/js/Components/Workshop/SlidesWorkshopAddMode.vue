@@ -95,7 +95,7 @@ const uploadImageRespone = (res) => {
 };
 </script>
 
-<template layout="App">
+<template layout="TenantApp">
   <Modal :isOpen="isOpen" @onClose="closeModal">
     <div>
       <CropImage

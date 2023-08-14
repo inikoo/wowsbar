@@ -5,9 +5,7 @@
   -->
 
 <script setup lang="ts">
-import { useLayoutStore } from "@/Stores/layout";
-import AppTopBarNavItems from "@/Layouts/TopBar/AppTopBarNavItems.vue";
-const layout = useLayoutStore();
+import AppTopBarNavItems from "@/Layouts/TopBar/AppTopBarNavItems.vue"
 
 </script>
 

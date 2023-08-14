@@ -17,7 +17,6 @@ import TableHistories from "@/Pages/Tables/TableHistories.vue";
 import TableBanners from "@/Pages/Tables/TableBanners.vue";
 
 import {faWindowMaximize, faGlobe} from "../../../../private/pro-light-svg-icons"
-import {useLayoutStore} from "@/Stores/layout";
 
 library.add(faWindowMaximize, faGlobe)
 
@@ -45,9 +44,11 @@ const component = computed(() => {
     return components[currentTab.value];
 
 });
+
 </script>
 
-<template layout="App">
+
+<template layout="TenantApp">
     <Head :title="capitalize(title)"/>
     <PageHeading :data="pageHead"></PageHeading>
     <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate"/>

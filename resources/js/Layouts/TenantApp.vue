@@ -1,11 +1,15 @@
 <!--
-  - Author: Raul Perusquia <raul@inikoo.com>
-  - Created: Mon, 14 Aug 2023 08:45:47 Malaysia Time, Sanur, Bali
-  - Copyright (c) 2023, Raul A Perusquia Flores
+  -  Author: Raul Perusquia <raul@inikoo.com>
+  -  Created: Thu, 11 Aug 2022 11:08:49 Malaysia Time, Kuala Lumpur, Malaysia
+  -  Reformatted: Fri, 03 Mar 2023 12:40:58 Malaysia Time, Kuala Lumpur, Malaysia
+  -  Copyright (c) 2022, Inikoo
+  -  Version 4.0
   -->
 
+
 <script setup lang="ts">
-import { ref, watchEffect } from "vue";
+import { ref, watchEffect } from "vue"
+import AppFooter from "@/Layouts/Footer/AppFooter.vue"
 import { usePage, router } from "@inertiajs/vue3"
 
 import { useLayoutStore } from "@/Stores/layout"
@@ -16,7 +20,7 @@ import AppRightSideBar from "@/Layouts/AppRightSideBar.vue"
 import AppTopBar from "@/Layouts/TopBar/AppTopBar.vue"
 import Breadcrumbs from "@/Components/Navigation/Breadcrumbs.vue"
 
-import { loadLanguageAsync } from "laravel-vue-i18n"
+import { loadLanguageAsync, trans } from "laravel-vue-i18n"
 import { library } from "@fortawesome/fontawesome-svg-core"
 
 import {
@@ -38,9 +42,8 @@ import {
     faGlobe,
     faLanguage
 } from "@/../private/pro-light-svg-icons"
-import { faSearch, faBell } from "@/../private/pro-regular-svg-icons"
-import { useFirebaseStore } from "@/Stores/firebase"
-import AppPublicFooter from "@/Layouts/AppPublicFooter.vue"
+import { faSearch, faBell} from "@/../private/pro-regular-svg-icons"
+import {useFirebaseStore} from "@/Stores/firebase"
 
 
 library.add(
@@ -71,6 +74,10 @@ const initialiseApp = () => {
     const locale = useLocaleStore();
     const firebase = useFirebaseStore();
 
+    if (usePage().props.firebase) {
+        firebase.credential=JSON.parse(usePage().props.firebase.credential);
+        firebase.databaseURL=usePage().props.firebase.databaseURL;
+    }
 
     if (usePage().props.localeData) {
         loadLanguageAsync(usePage().props.localeData.language.code);
@@ -183,10 +190,10 @@ const sidebarOpen = ref(false)
         :class="[Object.values(layout.rightSidebar).some(value => value === true) ? 'mr-44' : 'mr-0']"
     >
         <!-- TopBar -->
-        <AppTopBar :sidebarOpen="sidebarOpen" :logoRoute="`public.dashboard.show`">
-            <img v-if="layout.organisation.logo_id" class="h-7 md:h-5 shadow" :src="`/media/${layout.organisation.logo_id}`" :alt="layout.organisation.code" />
+        <AppTopBar :sidebarOpen="sidebarOpen" :logoRoute="`dashboard.show`">
+            <img v-if="layout.tenant.logo_id" class="h-7 md:h-5 shadow" :src="`/media/${layout.tenant.logo_id}`" :alt="layout.tenant.code" />
             <span class="hidden leading-none md:inline font-bold  xl:truncate text-gray-800 dark:text-gray-300">
-                {{ layout.organisation.name}}
+                {{ layout.tenant.name}}
             </span>
         </AppTopBar>
 
@@ -216,7 +223,17 @@ const sidebarOpen = ref(false)
     </div>
 
     <!-- Footer -->
-    <AppPublicFooter />
+    <AppFooter />
 
 </template>
 
+<style lang="scss">
+.tabNavigationActive {
+    // Indicate current active state to have consistent style. Use for: AppLeftSideBar, CreateModel
+    @apply bg-gray-200/80 border-orange-500 text-gray-700 dark:text-gray-300
+}
+
+.tabNavigation {
+    @apply hover:bg-gray-200/30 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-400
+}
+</style>

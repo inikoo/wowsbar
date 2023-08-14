@@ -52,7 +52,7 @@ const props = defineProps<{
 
 </script>
 
-<template layout="App">
+<template layout="TenantApp">
     <Head :title="capitalize(title)" />
     <PageHeading :data="pageHead"></PageHeading>
     <Edit :form-data="formData" />

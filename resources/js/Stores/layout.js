@@ -44,7 +44,9 @@ export const useLayoutStore = defineStore("layout", {
                 activeUsers: false,
                 language: false,
             },
-            avatar_id:null
+            avatar_id: null,
+            organisation: {
+            }
         }
     )
 

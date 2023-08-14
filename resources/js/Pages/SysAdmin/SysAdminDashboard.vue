@@ -14,7 +14,7 @@ defineProps(['title', 'pageHead', 'stats']);
 
 </script>
 
-<template layout="App">
+<template layout="TenantApp">
     <Head :title="capitalize(title)"/>
     <PageHeading :data="pageHead"></PageHeading>
     <stats class="m-4" :stats="stats"/>

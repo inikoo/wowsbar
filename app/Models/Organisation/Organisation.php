@@ -1,7 +1,7 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Mon, 14 Aug 2023 09:23:22 Malaysia Time, Pantai Lembeng, Bali
+ * Created: Mon, 14 Aug 2023 12:10:13 Malaysia Time, Pantai Lembeng, Bali
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
@@ -28,6 +28,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property int $language_id
  * @property int $timezone_id
  * @property int $currency_id tenant accounting currency
+ * @property int|null $logo_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read Currency $currency
@@ -46,6 +47,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @method static Builder|Organisation whereData($value)
  * @method static Builder|Organisation whereId($value)
  * @method static Builder|Organisation whereLanguageId($value)
+ * @method static Builder|Organisation whereLogoId($value)
  * @method static Builder|Organisation whereName($value)
  * @method static Builder|Organisation whereSettings($value)
  * @method static Builder|Organisation whereTimezoneId($value)
