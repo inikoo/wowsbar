@@ -50,7 +50,7 @@ const handleKey = (event: any) => {
 
 <template>
 	<div class="w-8/12 mt-11 fixed md:flex md:flex-col md:inset-y-0 md:w-10 lg:mt-10 xl:w-56
-		bg-gray-50 dark:bg-gray-800 dark:text-gray-100"
+		bg-gray-50 dark:bg-gray-800 dark:text-gray-100 h-full"
 		@mouseenter="isHover = true" @mouseleave="isHover = false"
 	>
 		<div class="flex flex-grow flex-col h-full overflow-y-auto custom-hide-scrollbar border-r border-gray-200 dark:border-gray-500 pb-4">
