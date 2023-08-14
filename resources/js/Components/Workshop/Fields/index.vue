@@ -75,7 +75,7 @@
   const current = null
   </script>
 
-  <template layout="App">
+  <template layout="TenantApp">
       <Head :title="capitalize(title)"/>
       <PageHeading :data="pageHead"></PageHeading>
       <div class="rounded-lg bg-white shadow">

@@ -152,7 +152,7 @@ window.addEventListener('beforeunload', function (event) {
 </script>
 
 
-<template layout="App">
+<template layout="TenantApp">
   <Head :title="capitalize(title)" />
   <PageHeading :data="pageHead" :dataToSubmit="data"></PageHeading>
 

@@ -44,7 +44,7 @@ const component = computed(() => {
 const selectedRow = ref([])
 </script>
 
-<template layout="App">
+<template layout="TenantApp">
     <!--suppress HtmlRequiredTitleElement -->
     <Head :title="capitalize(title)"/>
     <PageHeading :data="pageHead">
