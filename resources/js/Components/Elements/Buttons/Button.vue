@@ -67,7 +67,8 @@ switch (props.size) {
 
 <template>
     <button type="button" :class="[
-        'pl-2 pr-3 sm:pl-4 sm:pr-5 min-w-max inline-flex items-center font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-500 dark:focus:ring-gray-400 focus:ring-offset-2',
+        'min-w-max inline-flex items-center font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-500 dark:focus:ring-gray-400 focus:ring-offset-2',
+        icon ? 'pl-2 pr-3 sm:pl-4 sm:pr-5 ' : 'px-3 sm:pl-4 sm:pr-5 ',
         styleClass,
         sizeClass
     ]">
