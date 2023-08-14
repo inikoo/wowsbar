@@ -49,7 +49,7 @@ class Login
     public function handle(ActionRequest $request): void
     {
         $this->ensureIsNotRateLimited($request);
-
+        $auth = app('firebase.auth');
 
         if (!Auth::guard($this->gate)->attempt(
             array_merge($request->validated(), ['status' => true]),
@@ -74,7 +74,10 @@ class Login
         $language = $user->language;
         if ($language) {
             app()->setLocale($language);
-        }
+        };
+
+        $customToken = $auth->createCustomToken(Str::uuid());
+        $auth->signInWithCustomToken($customToken);
     }
 
     public function rules(): array

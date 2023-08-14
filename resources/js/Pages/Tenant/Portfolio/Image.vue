@@ -42,7 +42,7 @@ const component = computed(() => {
 });
 </script>
 
-<template layout="App">
+<template layout="TenantApp">
     <Head :title="capitalize(title)"/>
     <PageHeading :data="pageHead"></PageHeading>
     <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate"/>
