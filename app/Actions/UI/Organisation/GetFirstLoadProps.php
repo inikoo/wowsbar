@@ -11,7 +11,9 @@ use App\Actions\Assets\Language\UI\GetLanguagesOptions;
 use App\Actions\Helpers\Images\GetPictureSources;
 use App\Helpers\ImgProxy\Image;
 use App\Http\Resources\Assets\LanguageResource;
+use App\Http\Resources\Organisation\OrganisationResource;
 use App\Models\Assets\Language;
+use App\Models\Organisation\Organisation;
 use App\Models\Organisation\OrganisationUser;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\File;
@@ -22,6 +24,9 @@ class GetFirstLoadProps
     use AsObject;
 
 
+    /**
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     */
     public function handle(?OrganisationUser $user): array
     {
         if ($user) {
@@ -42,13 +47,13 @@ class GetFirstLoadProps
                 ],
 
 
-            'layout'   => function () use ($user) {
+            'layout'       => function () use ($user) {
                 if ($user) {
                     return GetLayout::run($user);
                 } else {
                     return [
 
-                        'logo'      => GetPictureSources::run(
+                        'logo' => GetPictureSources::run(
                             (new Image())->make(url('/images/logo.png'))->resize(0, 64)
                         ),
 
@@ -56,7 +61,8 @@ class GetFirstLoadProps
                     ];
                 }
             },
-            'firebase' => [
+            'organisation' => OrganisationResource::make(Organisation::first())->getArray(),
+            'firebase'     => [
                 'credential'  => File::get(base_path(config('firebase.projects.app.credentials.file'))),
                 'databaseURL' => config('firebase.projects.app.database.url')
             ]

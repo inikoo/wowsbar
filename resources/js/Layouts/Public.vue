@@ -10,6 +10,7 @@ import Cookies from '@/Components/Cookies.vue'
 import Image from "@/Components/Image.vue"
 import { ref, Ref } from 'vue'
 import FooterTabLanguage from '@/Layouts/Footer/FooterTabLanguage.vue'
+import Button from '@/Components/Elements/Buttons/Button.vue'
 const isTabActive: Ref<boolean | string> = ref(false)
 
 const logo = usePage().props.art.logo
@@ -24,11 +25,11 @@ const logo = usePage().props.art.logo
                 <Image class="h-6 select-none" :src="logo" alt="Wowsbar" />
             </Link>
             <div class="flex justify-end gap-x-4 text-sm font-medium">
-                <Link :href="route('public.register')" class="bg-gray-100/30 border-2 border-gray-600 cursor-pointer text-gray-600 py-0.5 flex place-items-center px-4 rounded-md hover:bg-gray-200/70 active:bg-gray-300 select-none">
-                    Register
+                <Link :href="route('public.register')" class="">
+                    <Button :style="`tertiary`" size="xs">Register</Button>
                 </Link>
-                <Link :href="route('public.login')" class="bg-gray-600 text-gray-100 py-0.5 flex place-items-center cursor-pointer px-4 rounded-md hover:bg-gray-700 active:bg-gray-800 select-none">
-                    Login
+                <Link :href="route('public.login')" class="">
+                    <Button :style="`primary`" size="xs">Login</Button>
                 </Link>
             </div>
         </div>

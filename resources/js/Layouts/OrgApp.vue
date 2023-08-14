@@ -19,7 +19,7 @@ import SearchBar from "@/Components/SearchBar.vue"
 import AppFooter from "@/Layouts/AppFooter.vue"
 import { usePage, router } from "@inertiajs/vue3"
 
-import { useLayoutStore } from "@/Stores/layout"
+import { useOrgLayoutStore } from "@/Stores/org-layout"
 import { useLocaleStore } from "@/Stores/locale"
 
 import AppLeftSideBar from "@/Layouts/AppLeftSideBar.vue"
@@ -81,7 +81,7 @@ library.add(
 );
 
 const initialiseApp = () => {
-    const layout = useLayoutStore();
+    const layout = useOrgLayoutStore();
     const locale = useLocaleStore();
     const firebase = useFirebaseStore();
 
@@ -104,8 +104,8 @@ const initialiseApp = () => {
             locale.languageOptions = usePage().props.localeData.languageOptions;
         }
 
-        if (usePage().props.tenant) {
-            layout.tenant = usePage().props.tenant ?? null;
+        if (usePage().props.organisation) {
+            layout.organisation = usePage().props.organisation ?? null;
         }
 
         layout.currentRouteParameters=route().params;
@@ -183,7 +183,10 @@ onMounted(() => {
                             <!-- Menu -->
 
                             <AppTopBar :dashboardRoute="'org.dashboard.show'">
-                                hello
+                                <img v-if="layout.organisation.logo_id" class="h-7 md:h-5 shadow" :src="`/media/${layout.organisation.logo_id}`" :alt="layout.organisation.code" />
+                                <span class="hidden leading-none md:inline font-bold  xl:truncate text-gray-800 dark:text-gray-300">
+                                    {{ layout.organisation.name}}
+                                </span>
                             </AppTopBar>
 
                         </div>
@@ -323,15 +326,3 @@ onMounted(() => {
     <AppFooter />
 
 </template>
-
-<style lang="scss">
-.tabNavigationActive {
-    // Current active state
-    @apply bg-gray-200/80 border-gray-500 text-gray-700 dark:text-gray-300
-}
-
-.tabNavigation {
-    // State not active
-    @apply border-transparent hover:bg-white dark:hover:bg-gray-600 text-gray-700 dark:text-gray-400
-}
-</style>

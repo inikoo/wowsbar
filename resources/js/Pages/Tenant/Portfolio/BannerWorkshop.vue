@@ -5,149 +5,153 @@
   -->
 
 <script setup lang="ts">
-import { Head } from "@inertiajs/vue3";
-import { ref, reactive, onBeforeMount, watch, onBeforeUnmount } from "vue";
-import PageHeading from "@/Components/Headings/PageHeading.vue";
-import { capitalize } from "@/Composables/capitalize";
-import SlidesWorkshop from "@/Components/Workshop/SlidesWorkshop.vue";
-import Slider from "@/Components/Slider/Slider.vue";
-import SlidesWorkshopAddMode from "@/Components/Workshop/SlidesWorkshopAddMode.vue";
-import { cloneDeep, set as setData, isEqual } from "lodash";
-import ScreenView from "@/Components/ScreenView.vue";
-import { getDatabase, ref as dbRef, set, onValue, get } from "firebase/database";
-import { initializeApp } from "firebase/app";
-//import serviceAccount from "@/../private/firebase/wowsbar-firebase.json";
-import { usePage, router } from "@inertiajs/vue3";
-import { faUser, faUserFriends  } from "../../../../private/pro-light-svg-icons";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-library.add(faUser, faUserFriends);
+import { Head } from "@inertiajs/vue3"
+import { ref, reactive, onBeforeMount, watch, onBeforeUnmount } from "vue"
+import PageHeading from "@/Components/Headings/PageHeading.vue"
+import { capitalize } from "@/Composables/capitalize"
+import SlidesWorkshop from "@/Components/Workshop/SlidesWorkshop.vue"
+import Slider from "@/Components/Slider/Slider.vue"
+import SlidesWorkshopAddMode from "@/Components/Workshop/SlidesWorkshopAddMode.vue"
+import { cloneDeep, set as setData, isEqual } from "lodash"
+import ScreenView from "@/Components/ScreenView.vue"
+import { getDatabase, ref as dbRef, set, onValue, get } from "firebase/database"
+import { initializeApp } from "firebase/app"
+import { useFirebaseStore } from "@/Stores/firebase"
+
+//import serviceAccount from "@/../private/firebase/wowsbar-firebase.json"
+import { usePage, router } from "@inertiajs/vue3"
+import { faUser, faUserFriends } from "@/../private/pro-light-svg-icons"
+import { library } from "@fortawesome/fontawesome-svg-core"
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
+library.add(faUser, faUserFriends)
 const props = defineProps<{
-  title: string;
-  pageHead: object;
-  firebase : Boolean;
-  bannerLayout: {
-    delay: number;
-    common: {
-      centralStage: string;
-      corners: object;
-    };
-    components: Array<{
-      id: number;
-      ulid: string;
-      layout: {
-        link: null | string;
-        corners: {
-          bottomRight: {
-            data: {
-              text: string;
-              target: string;
-            };
-            type: string;
-          };
-        };
-        imageAlt: string;
-        centralStage: {
-          title: string;
-          subtitle: string;
-        };
-      };
-      visibility: boolean;
-      image_id: number;
-      image_source: string;
-    }>;
-  };
-  imagesUploadRoute: {
-    name: string;
-    parameters?: Array<string>;
-  };
-}>();
+    title: string
+    pageHead: object
+    firebase: Boolean
+    bannerLayout: {
+        delay: number
+        common: {
+            centralStage: string
+            corners: object
+        }
+        components: Array<{
+            id: number
+            ulid: string
+            layout: {
+                link: null | string
+                corners: {
+                    bottomRight: {
+                        data: {
+                            text: string
+                            target: string
+                        }
+                        type: string
+                    }
+                }
+                imageAlt: string
+                centralStage: {
+                    title: string
+                    subtitle: string
+                }
+            }
+            visibility: boolean
+            image_id: number
+            image_source: string
+        }>
+    }
+    imagesUploadRoute: {
+        name: string
+        parameters?: Array<string>
+    }
+}>()
 
-console.log(props);
+console.log(props)
 
-import {useFirebaseStore} from "@/Stores/firebase";
 
-const firebaseCredentials = useFirebaseStore();
-const firebaseApp = initializeApp(firebaseCredentials);
-const db = getDatabase(firebaseApp);
-const user = ref(usePage().props.auth.user);
-const jumpToIndex = ref(0);
-const screenView = ref("");
-const data = reactive(cloneDeep(props.bannerLayout));
-const setData = ref(false);
+const firebaseCredentials: any = useFirebaseStore()
+console.log(firebaseCredentials)
+const firebaseApp = initializeApp(firebaseCredentials)
+const db = getDatabase(firebaseApp)
+const user = ref(usePage().props.auth.user)
+const jumpToIndex = ref(0)
+const screenView = ref("")
+const data = reactive(cloneDeep(props.bannerLayout))
+const setData = ref(false)
 const firebase = ref(cloneDeep(props.firebase))
 const fetchInitialData = async () => {
-  try {
-    setData.value =  true
-    const snapshot = await get(dbRef(db, 'Banner'));
-    if (snapshot.exists()) {
-      const firebaseData = snapshot.val();
-      if (firebaseData[props.imagesUploadRoute.arguments.banner]) {
-        Object.assign(data,{...firebaseData,...firebaseData[props.imagesUploadRoute.arguments.banner]});
-      } else {
-        Object.assign(data,{...data,...cloneDeep(props.bannerLayout)});
-        await set(dbRef(db, 'Banner'),{...firebaseData,[props.imagesUploadRoute.arguments.banner] : data});
-        return;
-      }
-    } else {
-      Object.assign(data,{...data,...cloneDeep(props.bannerLayout)});
+    try {
+        setData.value = true
+        const snapshot = await get(dbRef(db, 'Banner'))
+        if (snapshot.exists()) {
+            const firebaseData = snapshot.val()
+            if (firebaseData[props.imagesUploadRoute.arguments.banner]) {
+                Object.assign(data, { ...firebaseData, ...firebaseData[props.imagesUploadRoute.arguments.banner] })
+            } else {
+                Object.assign(data, { ...data, ...cloneDeep(props.bannerLayout) })
+                await set(dbRef(db, 'Banner'), { ...firebaseData, [props.imagesUploadRoute.arguments.banner]: data })
+                return
+            }
+        } else {
+            Object.assign(data, { ...data, ...cloneDeep(props.bannerLayout) })
+        }
+        setData.value = false
+    } catch (error) {
+        setData.value = false
+        Object.assign(data, { ...data, ...cloneDeep(props.bannerLayout) })
     }
-    setData.value =  false
-  } catch (error) {
-    setData.value =  false
-    Object.assign(data,{...data,...cloneDeep(props.bannerLayout)});
-  }
-};
+}
 
 onValue(dbRef(db, 'Banner'), (snapshot) => {
-  if (snapshot.exists()) {
-    const firebaseData = snapshot.val();
-    if(firebaseData[props.imagesUploadRoute.arguments.banner]){
-        Object.assign(data,{...data,...firebaseData[props.imagesUploadRoute.arguments.banner]});
-      }
-  }
-});
+    if (snapshot.exists()) {
+        const firebaseData = snapshot.val()
+        if (firebaseData[props.imagesUploadRoute.arguments.banner]) {
+            Object.assign(data, { ...data, ...firebaseData[props.imagesUploadRoute.arguments.banner] })
+        }
+    }
+})
 
 const updateData = async () => {
-  if(firebase.value){
-    try {
-        if (data && setData.value == false) {
-            const snapshot = await get(dbRef(db, 'Banner'));
-            if (snapshot.exists()) {
-                const firebaseData = snapshot.val();
-                await set(dbRef(db, 'Banner'), { ...firebaseData, [props.imagesUploadRoute.arguments.banner]: data });
+    if (firebase.value) {
+        try {
+            if (data && setData.value == false) {
+                const snapshot = await get(dbRef(db, 'Banner'))
+                if (snapshot.exists()) {
+                    const firebaseData = snapshot.val()
+                    await set(dbRef(db, 'Banner'), { ...firebaseData, [props.imagesUploadRoute.arguments.banner]: data })
+                }
             }
+        } catch (error) {
+            console.error('Error updating data:', error)
         }
-    } catch (error) {
-        console.error('Error updating data:', error);
     }
-  }
-};
+}
 
-watch(data, updateData, { deep: true });
-onBeforeMount(()=>{
-  if(firebase.value)fetchInitialData
+watch(data, updateData, { deep: true })
+onBeforeMount(() => {
+    if (firebase.value) fetchInitialData
 })
 
 const setDataBeforeLeave = () => {
-  const set = { ...data };  // Creating a copy of the data object
-  for (const index in set.components) {
-    if (set.components[index].user == user.value.username) {
-      delete set.components[index].user;  // Removing the 'user' property from components
+    const set = { ...data }  // Creating a copy of the data object
+    for (const index in set.components) {
+        if (set.components[index].user == user.value.username) {
+            delete set.components[index].user  // Removing the 'user' property from components
+        }
     }
-  }
-  Object.assign(data, set);  // Assigning the modified 'set' object back to 'data'
-  updateData();  // This line should help you see the modified 'data' object
-};
+    Object.assign(data, set)  // Assigning the modified 'set' object back to 'data'
+    updateData()  // This line should help you see the modified 'data' object
+}
 
 onBeforeUnmount(() => {
-  setDataBeforeLeave()
-});
+    setDataBeforeLeave()
+})
 
 window.addEventListener('beforeunload', function (event) {
-  event.returnValue = setDataBeforeLeave(); // This message will be shown to the user
-});
+    event.returnValue = setDataBeforeLeave() // This message will be shown to the user
+})
 </script>
+
+
 <template layout="App">
   <Head :title="capitalize(title)" />
   <PageHeading :data="pageHead" :dataToSubmit="data"></PageHeading>
@@ -192,7 +196,7 @@ window.addEventListener('beforeunload', function (event) {
   <div
     @click="
       () => {
-        (jumpToIndex = 3), console.log(data);
+        (jumpToIndex = 3), console.log(data)
       }
     "
   >
