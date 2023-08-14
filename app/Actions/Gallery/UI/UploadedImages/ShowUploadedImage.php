@@ -10,7 +10,6 @@ namespace App\Actions\Gallery\UI\UploadedImages;
 use App\Actions\InertiaAction;
 use App\Actions\UI\Tenant\Portfolio\ShowPortfolioDashboard;
 use App\Models\Media\Media;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -36,11 +35,6 @@ class ShowUploadedImage extends InertiaAction
     public function handle(Media $media): Media
     {
         return $media;
-    }
-
-    public function jsonResponse(): AnonymousResourceCollection
-    {
-        //        return ImageResource::collection($this->handle());
     }
 
     public function htmlResponse(Media $media, ActionRequest $request): Response
