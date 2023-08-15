@@ -74,7 +74,7 @@ const sidebarOpen = ref(false)
     >
 
         <!-- TopBar -->
-        <AppTopBar :sidebarOpen="sidebarOpen" :logoRoute="`org.dashboard.show`">
+        <AppTopBar @sidebarOpen="(value: boolean) => sidebarOpen = value" :sidebarOpen="sidebarOpen" :logoRoute="`org.dashboard.show`">
             <img v-if="layout.organisation.logo_id" class="h-7 md:h-5 shadow" :src="`/media/${layout.organisation.logo_id}`" :alt="layout.organisation.code" />
             <span class="hidden leading-none md:inline font-bold  xl:truncate text-gray-800 dark:text-gray-300">
                 {{ layout.organisation.name}}
@@ -89,9 +89,8 @@ const sidebarOpen = ref(false)
 
         <!-- Sidebar: Left -->
         <div>
-            <div class="bg-gray-100/80 fixed top-0 w-screen h-screen z-10" v-if="sidebarOpen" @click="sidebarOpen = !sidebarOpen" />
-            <AppLeftSideBar v-if="!sidebarOpen" class="hidden md:block" />
-            <AppLeftSideBar  class="-left-2/3 transition-all duration-100 ease-in-out z-20 block md:hidden" :class="{'left-[0]': sidebarOpen }" @click="sidebarOpen = !sidebarOpen" />
+            <div class="bg-gray-200/80 fixed top-0 w-screen h-screen z-10 md:hidden" v-if="sidebarOpen" @click="sidebarOpen = !sidebarOpen" />
+            <AppLeftSideBar class="-left-2/3 transition-all duration-100 ease-in-out z-20 block md:left-[0]" :class="{'left-[0]': sidebarOpen }" @click="sidebarOpen = !sidebarOpen" />
         </div>
 
         <!-- Main Content -->

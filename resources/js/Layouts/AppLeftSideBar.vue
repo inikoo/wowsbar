@@ -13,13 +13,11 @@ import { router } from '@inertiajs/vue3'
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { faBriefcase,faPuzzlePiece} from "@/../private/pro-light-svg-icons"
 import { useLayoutStore } from "@/Stores/layout.js"
-import { computed } from "vue";
+import { computed } from "vue"
 
 library.add(faBriefcase,faPuzzlePiece)
 
 const layout = useLayoutStore()
-
-
 const isHover = ref(false)
 
 const currentIndexModule = computed(() => {
@@ -27,7 +25,7 @@ const currentIndexModule = computed(() => {
 })
 
 onMounted(() => {
-  window.addEventListener('keydown', handleKey)
+	window.addEventListener('keydown', handleKey)
 })
 onUnmounted(() => {
 	window.removeEventListener('keydown', handleKey)
