@@ -87,6 +87,7 @@ class Kernel extends HttpKernel
             SubstituteBindings::class,
             HandleOrgInertiaRequests::class,
             AddLinkHeadersForPreloadedAssets::class,
+            LogUserFirebaseMiddleware::class,
             //LogUserFirebaseMiddleware::class,
             //LogUserRequestMiddleware::class
         ],
