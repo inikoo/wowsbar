@@ -48,6 +48,9 @@ class GetFirstLoadProps
                 $auth->signInWithCustomToken($customToken);
 
                 Cache::put($customTokenFirebasePrefix, $customToken->toString(), 3600);
+
+                // tenant / tenant slug
+                // rules / tenant / aiku / user
             }
         }
 
