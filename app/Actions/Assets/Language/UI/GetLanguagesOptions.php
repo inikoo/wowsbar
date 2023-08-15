@@ -21,7 +21,9 @@ class GetLanguagesOptions
         foreach ($languages as $language) {
             $selectOptions[$language->id] =
                 [
-                    'label' => $language->name,
+                    'code' => $language->code,
+                    'id' => $language->id,
+                    'name' => $language->name,
                 ];
         }
 
