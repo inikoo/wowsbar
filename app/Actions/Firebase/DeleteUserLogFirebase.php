@@ -20,7 +20,7 @@ class DeleteUserLogFirebase
     public function handle(User $user, Tenant $tenant): void
     {
         $database  = app('firebase.database');
-        $reference = $database->getReference($tenant->slug . '/' . $user->username);
+        $reference = $database->getReference('tenants/' . $tenant->slug . '/active_users/' . $user->username);
 
         $reference->remove();
     }
