@@ -7,7 +7,6 @@
 
 namespace App\Actions\Organisation\Organisation\Hydrators;
 
-
 use App\Enums\HumanResources\Employee\EmployeeStateEnum;
 use App\Models\HumanResources\Employee;
 use Illuminate\Support\Arr;

@@ -25,7 +25,6 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
-
 /**
  * App\Models\HumanResources\Employee
  *

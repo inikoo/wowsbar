@@ -11,7 +11,6 @@ use App\Enums\HumanResources\TimeTracking\TimeTrackingStatusEnum;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Spatie\Multitenancy\Models\Concerns\UsesTenantConnection;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 

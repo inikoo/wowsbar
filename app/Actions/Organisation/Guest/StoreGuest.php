@@ -32,7 +32,7 @@ class StoreGuest
 
     public function handle(array $modelData): Guest
     {
-        $guest = Guest::create(Arr::except($modelData,[
+        $guest = Guest::create(Arr::except($modelData, [
             'username'
         ]));
         OrganisationHydrateGuests::dispatch();

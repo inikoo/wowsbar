@@ -99,9 +99,9 @@ class MakeQueueTenantAwareAction extends BaseMakeQueueTenantAwareAction
     protected function getEventPayload($event): ?array
     {
         return match (true) {
-            $event instanceof JobProcessing => $event->job->payload(),
+            $event instanceof JobProcessing     => $event->job->payload(),
             $event instanceof JobRetryRequested => $event->payload(),
-            default => null,
+            default                             => null,
         };
     }
 

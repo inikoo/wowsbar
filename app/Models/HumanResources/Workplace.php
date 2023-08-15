@@ -19,7 +19,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
-
 /**
  * App\Models\HumanResources\Workplace
  *

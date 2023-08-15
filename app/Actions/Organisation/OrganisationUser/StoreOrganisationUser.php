@@ -33,7 +33,7 @@ class StoreOrganisationUser
         SetOrganisationUserAvatar::run($organisationUser);
 
         // UserHydrateUniversalSearch::dispatch($organisationUser);
-         //OrganisationHydrateUsers::dispatch();
+        //OrganisationHydrateUsers::dispatch();
         return $organisationUser;
     }
 

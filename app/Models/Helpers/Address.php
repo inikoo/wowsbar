@@ -16,7 +16,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 use Spatie\Multitenancy\Models\Concerns\UsesTenantConnection;
 
-
 /**
  * App\Models\Helpers\Address
  *

@@ -17,7 +17,6 @@ use Illuminate\Support\Carbon;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
-
 /**
  * App\Models\HumanResources\Clocking
  *

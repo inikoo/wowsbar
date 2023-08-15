@@ -21,7 +21,6 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
-
 /**
  * App\Models\Organisation\Guest
  *

@@ -27,6 +27,6 @@ class StoreUserLogFirebase
             'route'       => $route
         ]);
 
-//        CheckUserStatusFirebase::dispatch($tenant);
+        //        CheckUserStatusFirebase::dispatch($tenant);
     }
 }

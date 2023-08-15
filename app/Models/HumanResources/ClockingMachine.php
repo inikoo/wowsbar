@@ -23,7 +23,6 @@ use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
-
 /**
  * App\Models\HumanResources\ClockingMachine
  *
