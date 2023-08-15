@@ -18,7 +18,5 @@ defineProps(['title', 'pageHead', 'stats']);
     <Head :title="capitalize(title)"/>
     <PageHeading :data="pageHead"></PageHeading>
     <stats class="m-4" :stats="stats"/>
-
-
 </template>
 

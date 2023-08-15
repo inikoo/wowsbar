@@ -28,7 +28,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property int $id
  * @property string $slug
  * @property bool $status
- * @property mixed $type
+ * @property GuestTypeEnum $type
  * @property string|null $contact_name
  * @property string|null $company_name
  * @property string|null $email
@@ -46,8 +46,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read array $es_audits
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \App\Models\Media\Media> $media
  * @property-read int|null $media_count
+ * @property-read \App\Models\Organisation\OrganisationUser|null $organisationUser
  * @property-read \App\Models\Search\UniversalSearch|null $universalSearch
- * @property-read \App\Models\Organisation\OrganisationUser|null $user
  * @method static Builder|Guest newModelQuery()
  * @method static Builder|Guest newQuery()
  * @method static Builder|Guest onlyTrashed()
