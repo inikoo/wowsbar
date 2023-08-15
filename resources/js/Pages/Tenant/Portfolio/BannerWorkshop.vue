@@ -97,7 +97,7 @@ const fetchInitialData = async () => {
             }
         } else {
             Object.assign(data, { ...data, ...cloneDeep(props.bannerLayout) })
-            await set(getDbReff('Banner'), { ...firebaseData, [props.imagesUploadRoute.arguments.banner]: data })
+            await set(getDbReff('Banner'), { [props.imagesUploadRoute.arguments.banner]: data })
         }
         setData.value = false
     } catch (error) {
