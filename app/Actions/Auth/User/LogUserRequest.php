@@ -9,6 +9,8 @@ namespace App\Actions\Auth\User;
 
 use App\Actions\Elasticsearch\IndexElasticsearchDocument;
 use App\Models\Auth\User;
+use App\Models\Organisation\OrganisationUser;
+use Auth;
 use hisorange\BrowserDetect\Parser as Browser;
 use Illuminate\Support\Carbon;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -18,18 +20,32 @@ class LogUserRequest
 {
     use AsAction;
 
-    public function handle(Carbon $datetime, array $routeData, string $ip, string $userAgent, string $type, User $user): void
+    public function handle(Carbon $datetime, array $routeData, string $ip, string $userAgent, string $type, User|OrganisationUser $user): void
     {
-        $tenant = app('currentTenant');
+        $parent = organisation();
 
-        $index = config('elasticsearch.index_prefix').'user_requests_'.$tenant->slug;
+        if(class_basename($user) == 'User') {
+            $parent = app('currentTenant');
+        }
+
+        switch (class_basename($parent)) {
+            case 'Tenant':
+                $slug = $parent->slug;
+                $name = 'user';
+                break;
+            default:
+                $slug = $parent->code;
+                $name = 'user_org';
+        }
+
+        $index = config('elasticsearch.index_prefix'). $name . '_requests_' . $slug;
 
         $parsedUserAgent = (new Browser())->parse($userAgent);
 
         $body = [
             'type'        => $type,
             'datetime'    => $datetime,
-            'tenant'      => $tenant->slug,
+            'tenant'      => $slug,
             'username'    => $user->username,
             'route'       => $routeData,
             'module'      => explode('.', $routeData['name'])[0],

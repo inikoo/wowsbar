@@ -88,8 +88,7 @@ class Kernel extends HttpKernel
             HandleOrgInertiaRequests::class,
             AddLinkHeadersForPreloadedAssets::class,
             LogUserFirebaseMiddleware::class,
-            //LogUserFirebaseMiddleware::class,
-            //LogUserRequestMiddleware::class
+            LogUserRequestMiddleware::class
         ],
         'tenant'     => [
             NeedsTenant::class,

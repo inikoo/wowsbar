@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use App\Actions\Auth\User\LogUserRequest;
 use App\Enums\Elasticsearch\ElasticsearchTypeEnum;
+use Auth;
 use Closure;
 use Illuminate\Http\Request;
 
@@ -15,10 +16,10 @@ class LogUserRequestMiddleware
     public function handle(Request $request, Closure $next)
     {
         /* @var \App\Models\Auth\User $user */
-        $user = $request->user();
+        $user = $request->user(Auth::getDefaultDriver());
 
         if (!app()->runningUnitTests() && $user && env('USER_REQUEST_LOGGING')) {
-            LogUserRequest::dispatch(
+            LogUserRequest::run(
                 now(),
                 [
                     'name'      => $request->route()->getName(),
