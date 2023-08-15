@@ -8,7 +8,6 @@
 namespace App\Actions\Organisation\Organisation;
 
 use App\Actions\Organisation\Guest\StoreGuest;
-use App\Actions\Organisation\OrganisationUser\StoreOrganisationUser;
 use App\Enums\Organisation\Guest\GuestTypeEnum;
 use App\Models\Assets\Country;
 use App\Models\Assets\Currency;
@@ -40,10 +39,10 @@ class StoreOrganisation
 
         $guest = StoreGuest::run(
             [
-                'type' => GuestTypeEnum::EXTERNAL_ADMINISTRATOR,
-                'company_name'=>Arr::get($organisationUserData,'company_name'),
-                'contact_name'=>Arr::get($organisationUserData,'contact_name'),
-                'username'=>Arr::get($organisationUserData,'username')
+                'type'        => GuestTypeEnum::EXTERNAL_ADMINISTRATOR,
+                'company_name'=> Arr::get($organisationUserData, 'company_name'),
+                'contact_name'=> Arr::get($organisationUserData, 'contact_name'),
+                'username'    => Arr::get($organisationUserData, 'username')
 
             ]
         );

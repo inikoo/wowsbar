@@ -120,10 +120,10 @@ class ElasticsearchAuditDriver implements AuditDriver
 
     public function indexAuditDocument($model)
     {
-        $index=match($model['user_type']){
-            'OrganisationUser'=>'_org',
-            'PublicUser'=>'_public',
-            'User'=>'_tenant_'.app('currentTenant')->slug
+        $index=match($model['user_type']) {
+            'OrganisationUser'=> '_org',
+            'PublicUser'      => '_public',
+            'User'            => '_tenant_'.app('currentTenant')->slug
         };
 
 
@@ -131,7 +131,8 @@ class ElasticsearchAuditDriver implements AuditDriver
             return IndexElasticsearchDocument::dispatch(
                 config('elasticsearch.index_prefix').'audit_'.$index,
                 $this->body($model),
-                $this->type);
+                $this->type
+            );
         } catch (Exception) {
 
         }
@@ -143,7 +144,7 @@ class ElasticsearchAuditDriver implements AuditDriver
         $user            = User::find($model['user_id']);
 
         $tenantSlug=null;
-        if(Tenant::checkCurrent()){
+        if(Tenant::checkCurrent()) {
             $tenantSlug=app('currentTenant')->slug;
         }
 
