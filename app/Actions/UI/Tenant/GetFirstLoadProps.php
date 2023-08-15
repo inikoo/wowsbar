@@ -62,6 +62,7 @@ class GetFirstLoadProps
                 ],
 
 
+
             'layout'   => function () use ($user) {
                 if ($user) {
                     return GetLayout::run($user);

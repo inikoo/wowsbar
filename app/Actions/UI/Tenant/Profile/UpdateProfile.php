@@ -27,7 +27,6 @@ class UpdateProfile
 
     public function handle(User $user, array $modelData, ?UploadedFile $avatar): User
     {
-
         if ($avatar) {
             SetUserAvatarFromImage::run(
                 user: $user,
@@ -47,7 +46,7 @@ class UpdateProfile
             'password'    => ['sometimes', 'required', app()->isLocal() || app()->environment('testing') ? null : Password::min(8)->uncompromised()],
             'email'       => 'sometimes|required|email|unique:users,email',
             'about'       => 'sometimes|nullable|string|max:255',
-            'language_id' => ['sometimes', 'required', 'exists:central.languages,id'],
+            'language_id' => ['sometimes', 'required', 'exists:languages,id'],
             'avatar'      => [
                 'sometimes',
                 'nullable',
@@ -64,10 +63,7 @@ class UpdateProfile
     public function asController(ActionRequest $request): User
     {
         $this->fillFromRequest($request);
-
         $validated = $this->validateAttributes();
-
-
 
         return $this->handle($request->user(), Arr::except($validated, 'avatar'), Arr::get($validated, 'avatar'));
     }
