@@ -40,12 +40,12 @@ class GetFirstLoadProps
         $auth = app('firebase.auth');
 
         if($user) {
-            $customTokenFirebasePrefix = app('currentTenant')->slug . '_tenant_user_' . $user->username . '_token_' . $user->id;
+            $customTokenFirebasePrefix = 'tenant_' . app('currentTenant')->slug . '_user_' . $user->username . '_token_' . $user->id;
 
             $customToken = $auth->createCustomToken(Str::uuid());
             $auth->signInWithCustomToken($customToken);
 
-            Cache::put($customTokenFirebasePrefix, $customToken);
+            Cache::put($customTokenFirebasePrefix, $customToken->toString());
         }
 
         return [
