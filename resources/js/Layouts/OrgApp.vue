@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 import { ref } from "vue"
-import AppFooter from "@/Layouts/AppFooter.vue"
+import AppFooter from "@/Layouts/Footer/AppFooter.vue"
 import { usePage } from "@inertiajs/vue3"
 
 import AppLeftSideBar from "@/Layouts/AppLeftSideBar.vue"
