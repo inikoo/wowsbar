@@ -96,48 +96,28 @@ const uploadImageRespone = (res) => {
 </script>
 
 <template layout="TenantApp">
-  <Modal :isOpen="isOpen" @onClose="closeModal">
-    <div>
-      <CropImage
-        :data="addFiles"
-        :imagesUploadRoute="props.imagesUploadRoute"
-        :respone="uploadImageRespone"
-      />
-    </div>
-  </Modal>
-  <div class="col-span-full p-3" @dragover="dragover" @dragleave="dragleave" @drop="drop">
-    <div
-      class="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10"
-    >
-      <div class="text-center">
-        <font-awesome-icon
-          :icon="['fal', 'image']"
-          class="mx-auto h-12 w-12 text-gray-300"
-          aria-hidden="true"
-        />
-        <div class="mt-4 flex text-sm leading-6 text-gray-600">
-          <label
-            for="fileInput"
-            class="relative cursor-pointer rounded-md bg-white font-semibold text-orange-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-orange-500 focus-within:ring-offset-2 hover:text-orange-500"
-          >
-            <span>{{ trans("Click") }}</span>
-            <input
-              type="file"
-              multiple
-              name="file"
-              id="fileInput"
-              class="sr-only"
-              @change="onChange"
-              ref="fileInput"
-            />
-          </label>
-          <p class="pl-1">{{ trans("or drag and drop") }}</p>
+    <Modal :isOpen="isOpen" @onClose="closeModal">
+        <div>
+            <CropImage :data="addFiles" :imagesUploadRoute="props.imagesUploadRoute" :respone="uploadImageRespone" />
         </div>
-        <p class="text-xs leading-5 text-gray-600">
-          {{ trans("PNG, JPG, GIF up to 10MB") }}
-        </p>
-      </div>
+    </Modal>
+    <div class="col-span-full p-3" @dragover="dragover" @dragleave="dragleave" @drop="drop">
+        <div class="relative mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10 bg-gray-400/10 hover:bg-gray-400/20">
+            <label for="fileInput"
+                class="absolute cursor-pointer rounded-md inset-0 focus-within:outline-none focus-within:ring-2 focus-within:ring-gray-400 focus-within:ring-offset-0">
+                <!-- <span>{{ trans("Click") }}</span> -->
+                <input type="file" multiple name="file" id="fileInput" class="sr-only" @change="onChange" ref="fileInput" />
+            </label>
+            <div class="text-center text-gray-500">
+                <FontAwesomeIcon :icon="['fal', 'image']" class="mx-auto h-12 w-12 text-gray-300" aria-hidden="true" />
+                <div class="mt-2 flex text-sm leading-6 ">
+                    <p class="pl-1">{{ trans("Click or drag & drop") }}</p>
+                </div>
+                <p class="text-[0.7rem]">
+                    {{ trans("PNG, JPG, GIF up to 10MB") }}
+                </p>
+            </div>
+        </div>
+        <div class="text-xs text-gray-400 py-1">{{ trans("The recommended image size is 1800 x 450") }}</div>
     </div>
-    <div class="text-xs text-gray-400 py-1">The recommended image size is 1800 x 450</div>
-  </div>
 </template>

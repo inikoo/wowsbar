@@ -9,28 +9,8 @@ import { useDatabaseList } from "vuefire"
 import { getDatabase, ref as dbRef } from "firebase/database"
 import { initializeApp } from "firebase/app"
 
+import {useFirebaseStore} from "@/Stores/firebase"
 
-
-import {useFirebaseStore} from "@/Stores/firebase";
-
-const firebase = useFirebaseStore();
-
-const activities = ref()
-
-const locale = useLocaleStore()
-const layout = useLayoutStore()
-const firebaseApp = initializeApp(firebase);
-
-
-const db = getDatabase(firebaseApp)
-// const activities = useDatabaseList(dbRef(db, layout.tenant.code))
-
-try {
-    // const activitiesRef = dbRef(db, layout.tenant.code)
-    activities.value = useDatabaseList(dbRef(db, layout.tenant.code))
-} catch (error) {
-    console.error("An error occurred while fetching data from Firebase:", error)
-}
 
 const isTabActive: Ref<boolean | string> = ref(false)
 

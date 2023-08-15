@@ -1,23 +1,14 @@
 <script setup lang="ts">
 import { ref, Ref } from 'vue'
 import { useLayoutStore } from "@/Stores/layout"
-import { useDatabaseList } from "vuefire"
-import { getDatabase, ref as dbRef } from "firebase/database"
-import { initializeApp } from "firebase/app"
-import { useFirebaseStore } from "@/Stores/firebase"
-import FooterTab from '@/Components/Footer/FooterTab.vue';
-const firebase = useFirebaseStore()
-const activities = ref()
-console.log(firebase)
-const firebaseApp = initializeApp(firebase)
-const db = getDatabase(firebaseApp)
+import FooterTab from '@/Components/Footer/FooterTab.vue'
+
+import { getDataFirebase } from '@/Composables/firebase'
+
 const layout = useLayoutStore()
 
-try {
-    activities.value = useDatabaseList(dbRef(db, layout.tenant.code))
-} catch (error) {
-    console.error("An error occurred while fetching data from Firebase:", error)
-}
+console.log(getDataFirebase(layout.tenant.code))
+const activities = ref(getDataFirebase(layout.tenant.code))
 
 defineProps<{
     isTabActive: string | boolean
@@ -35,13 +26,13 @@ defineEmits<{
         @click="isTabActive == 'activeUsers' ? $emit('isTabActive', !isTabActive) : $emit('isTabActive', 'activeUsers')"
     >
         <div class="relative text-xs flex items-center gap-x-1">
-            <div class="animate-pulse ring-1 h-2 aspect-square rounded-full" :class="[activities.value.length > 0 ? 'bg-green-400 ring-green-600' : 'bg-gray-400 ring-gray-600']" />
-            <span class="">Active Users ({{ activities.value.length ?? 0 }})</span>
+            <div class="animate-pulse ring-1 h-2 aspect-square rounded-full" :class="[activities.length > 0 ? 'bg-green-400 ring-green-600' : 'bg-gray-400 ring-gray-600']" />
+            <span class="">Active Users ({{ activities.length ?? 0 }})</span>
         </div>
 
         <FooterTab @pinTab="() => $emit('isTabActive', false)" v-if="isTabActive == 'activeUsers'" :tabName="`activeUsers`">
             <template #default>
-                <div v-if="activities.value.length > 0" v-for="(option, index) in activities.value" class="flex justify-start py-1 px-2 gap-x-1.5 hover:bg-gray-700 cursor-default">
+                <div v-if="activities.length > 0" v-for="(option, index) in activities" class="flex justify-start py-1 px-2 gap-x-1.5 hover:bg-gray-700 cursor-default">
                     <img :src="`/media/${option.user.avatar_id}`" :alt="option.user.contact_name" srcset="" class="h-4 rounded-full shadow">
                     <p class="text-left text-gray-100">
                         <!-- <span class="font-semibold">{{ option.user.contact_name }}</span>  -->
