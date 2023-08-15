@@ -12,30 +12,6 @@ export const useLayoutStore = defineStore("layout", {
         {
             booted:  false,
             navigation            : [],
-            shopsInDropDown       : {},
-            shops                 : {},
-            currentShopSlug       : null,
-            currentShopData       : {
-                slug: null,
-                name: trans("All shops"),
-                code: trans("All")
-            },
-            websitesInDropDown       : {},
-            websites                 : {},
-            currentWebsiteSlug       : null,
-            currentWebsiteData       : {
-                slug: null,
-                name: trans("All websites"),
-                code: trans("All")
-            },
-            warehousesInDropDown       : {},
-            warehouses                 : {},
-            currentWarehouseSlug       : null,
-            currentWarehouseData       : {
-                slug: null,
-                name: trans("All warehouses"),
-                code: trans("All")
-            },
             tenant                : {},
             currentRoute          : "",
             currentRouteParameters: {},
@@ -44,7 +20,7 @@ export const useLayoutStore = defineStore("layout", {
                 activeUsers: false,
                 language: false,
             },
-            avatar_id: null,
+            avatar_thumbnail: null,
             organisation: {
             }
         }
