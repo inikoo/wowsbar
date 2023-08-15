@@ -33,7 +33,7 @@ class AttachContentBlockToPortfolioWebsite
         return $request->user()->can("portfolio.edit");
     }
 
-    public function asController(PortfolioWebsite $portfolioWebsite,  ContentBlock $contentBlock, ActionRequest $request): Model
+    public function asController(PortfolioWebsite $portfolioWebsite, ContentBlock $contentBlock, ActionRequest $request): Model
     {
         $request->validate();
 

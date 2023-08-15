@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $portfolio_website_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Models\Portfolio\PortfolioWebsite|null $website
+ * @property-read \App\Models\Portfolio\PortfolioWebsite $website
  * @method static Builder|PortfolioWebsiteStats newModelQuery()
  * @method static Builder|PortfolioWebsiteStats newQuery()
  * @method static Builder|PortfolioWebsiteStats query()

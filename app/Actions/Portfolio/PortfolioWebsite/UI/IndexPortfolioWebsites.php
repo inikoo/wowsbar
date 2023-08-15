@@ -1,7 +1,7 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Mon, 29 May 2023 12:18:36 Malaysia Time, Kuala Lumpur, Malaysia
+ * Created: Tue, 15 Aug 2023 17:15:39 Malaysia Time, Pantai Lembeng, Bali
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
@@ -53,9 +53,9 @@ class IndexPortfolioWebsites extends InertiaAction
     {
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
             $query->where(function ($query) use ($value) {
-                $query->whereAnyWordStartWith('websites.name', $value)
-                    ->orWhere('websites.domain', 'ilike', "%$value%")
-                    ->orWhere('websites.code', 'ilike', "$value%");
+                $query->whereAnyWordStartWith('portfolio_websites.name', $value)
+                    ->orWhere('portfolio_websites.domain', 'ilike', "%$value%")
+                    ->orWhere('portfolio_websites.code', 'ilike', "$value%");
             });
         });
         if ($prefix) {
@@ -74,8 +74,8 @@ class IndexPortfolioWebsites extends InertiaAction
 
 
         return $queryBuilder
-            ->defaultSort('websites.code')
-            ->select(['websites.code', 'websites.name', 'websites.slug', 'websites.domain'])
+            ->defaultSort('portfolio_websites.code')
+            ->select(['portfolio_websites.code', 'portfolio_websites.name', 'portfolio_websites.slug', 'portfolio_websites.domain'])
             ->allowedSorts(['slug', 'code', 'name'])
             ->allowedFilters([$globalSearch])
             ->withPaginator($prefix)
@@ -124,7 +124,7 @@ class IndexPortfolioWebsites extends InertiaAction
     public function htmlResponse(LengthAwarePaginator $websites, ActionRequest $request): Response
     {
         return Inertia::render(
-            'Tenant/Portfolio/Websites',
+            'Tenant/Portfolio/PortfolioWebsites',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->getName(),
@@ -172,12 +172,12 @@ class IndexPortfolioWebsites extends InertiaAction
         };
 
         return match ($routeName) {
-            'portfolio.websites.index' =>
+            'portfolio.portfolio_websites.index' =>
             array_merge(
                 ShowPortfolioDashboard::make()->getBreadcrumbs(),
                 $headCrumb(
                     [
-                        'name' => 'portfolio.websites.index',
+                        'name' => 'portfolio.portfolio_websites.index',
                         null
                     ]
                 ),
