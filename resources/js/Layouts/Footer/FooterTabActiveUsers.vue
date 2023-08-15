@@ -4,33 +4,37 @@ import { useLayoutStore } from "@/Stores/layout"
 import FooterTab from '@/Components/Footer/FooterTab.vue'
 
 import { getDataFirebase, getDbReff } from '@/Composables/firebase'
-import { watchEffect } from 'vue';
+import { watchEffect } from 'vue'
 
-const layout = useLayoutStore()
-
-// console.log(layout.tenant.code)
-const getDataTenants = ref(getDataFirebase('tenants'))
-const dataTenants = ref()
-const dataTenant = ref()
-const dataTenantLength = ref()
-
-watchEffect(() => {
-    dataTenants.value = getDataTenants.value
-    dataTenant.value = dataTenants.value.find(obj => obj.id === layout.tenant.code)
-    dataTenantLength.value = dataTenant.value ? Object.keys(dataTenant.value).length : 0
-})
-
-defineProps<{
+const props = defineProps<{
     isTabActive: string | boolean
+    appName: string
 }>()
 
 defineEmits<{
     (e: 'isTabActive'): void
 }>()
 
+const layout = useLayoutStore()
+
+// console.log(layout.tenant.code)
+const getDataTenants = ref(getDataFirebase(props.appName))
+const dataTenants = ref()
+const dataTenant = ref()
+const dataTenantLength = ref()
+
+watchEffect(() => {
+    dataTenants.value = getDataTenants.value
+    // console.log(dataTenants.value[0])
+    dataTenant.value = dataTenants.value.find(obj => obj.id === layout.tenant.code) ?? dataTenants.value[0] 
+    // console.log(dataTenant.value)
+    dataTenantLength.value = dataTenant.value ? Object.keys(dataTenant.value).length : 0
+})
+
 </script>
 
 <template>
+    <!-- {{ dataTenant }} -->
     <div class="relative h-full flex z-50 select-none justify-center items-center px-8 gap-x-1 cursor-pointer text-gray-300"
         :class="[isTabActive == 'activeUsers' ? 'bg-gray-700' : '']"
         @click="isTabActive == 'activeUsers' ? $emit('isTabActive', !isTabActive) : $emit('isTabActive', 'activeUsers')"
@@ -42,7 +46,7 @@ defineEmits<{
 
         <FooterTab @pinTab="() => $emit('isTabActive', false)" v-if="isTabActive == 'activeUsers'" :tabName="`activeUsers`">
             <template #default>
-                <div v-if="dataTenantLength" v-for="(dataUser, userName) in dataTenant.active_users" class="flex justify-start py-1 px-2 gap-x-1.5 hover:bg-gray-700 cursor-default">
+                <div v-if="dataTenantLength" v-for="(dataUser, userName) in dataTenant.active_users ?? dataTenant" class="flex justify-start py-1 px-2 gap-x-1.5 hover:bg-gray-700 cursor-default">
                     <!-- <img :src="`/media/${user.user.avatar_thumbnail}`" :alt="user.user.contact_name" srcset="" class="h-4 rounded-full shadow"> -->
                     <p class="text-left text-gray-100">
                         <span class="font-semibold text-gray-100">{{ userName }}</span> -
