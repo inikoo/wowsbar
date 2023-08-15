@@ -9,7 +9,6 @@ import { ref, watchEffect } from "vue"
 import AppFooter from "@/Layouts/AppFooter.vue"
 import { usePage } from "@inertiajs/vue3"
 
-import { useOrgLayoutStore } from "@/Stores/org-layout"
 import { useLocaleStore } from "@/Stores/locale"
 
 import AppLeftSideBar from "@/Layouts/AppLeftSideBar.vue"
@@ -42,6 +41,7 @@ import {
 import { faSearch, faBell} from "../../private/pro-regular-svg-icons"
 import { onMounted } from "vue"
 import {useFirebaseStore} from "@/Stores/firebase"
+import {useLayoutStore} from "@/Stores/layout";
 
 
 library.add(
@@ -68,7 +68,8 @@ library.add(
 );
 
 const initialiseApp = () => {
-    const layout = useOrgLayoutStore();
+
+    const layout = useLayoutStore();
     const locale = useLocaleStore();
     const firebase = useFirebaseStore();
 
@@ -99,8 +100,8 @@ const initialiseApp = () => {
         layout.currentRoute=route().current();
         layout.currentModule = layout.currentRoute?.substring(0, layout.currentRoute?.indexOf("."));
 
-        if (usePage().props.auth.user.avatar_id) {
-            layout.avatar_id=usePage().props.auth.user.avatar_id;
+        if (usePage().props.auth.user.avatar_thumbnail) {
+            layout.avatar_thumbnail=usePage().props.auth.user.avatar_thumbnail;
         }
     })
     return layout
