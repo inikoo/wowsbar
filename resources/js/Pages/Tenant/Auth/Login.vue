@@ -4,23 +4,12 @@ import Password from '@/Components/Auth/LoginPassword.vue'
 import Checkbox from '@/Components/Checkbox.vue'
 import ValidationErrors from '@/Components/ValidationErrors.vue'
 import { trans } from 'laravel-vue-i18n'
-import { initializeApp } from "firebase/app";
-import { initializeAppCheck, ReCaptchaEnterpriseProvider } from "firebase/app-check";
 
 const form = useForm({
     username: '',
     password: '',
     remember: false,
 })
-import firebaseCredential from "../../../../private/firebase/wowsbar-firebase.json";
-
-const app = initializeApp(firebaseCredential);
-
-// Create a ReCaptchaEnterpriseProvider instance using your reCAPTCHA Enterprise
-// site key and pass it to initializeAppCheck().
-const appCheck = initializeAppCheck(app, {
-    provider: new ReCaptchaEnterpriseProvider(import.meta.env.VITE_RECAPTCHA_APP_KEY),
-});
 
 const submit = () => {
     form.post(route('login'), {

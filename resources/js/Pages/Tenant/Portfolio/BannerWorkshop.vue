@@ -13,13 +13,10 @@ import SlidesWorkshop from "@/Components/Workshop/SlidesWorkshop.vue"
 import Slider from "@/Components/Slider/Slider.vue"
 import SlidesWorkshopAddMode from "@/Components/Workshop/SlidesWorkshopAddMode.vue"
 import { cloneDeep, set as setData, isEqual } from "lodash"
-import ScreenView from "@/Components/ScreenView.vue"
-import { getDatabase, ref as dbRef, set, onValue, get } from "firebase/database"
-import { initializeApp } from "firebase/app"
-import { useFirebaseStore } from "@/Stores/firebase"
+import { set, onValue, get } from "firebase/database"
 
-import serviceAccount from "@/../private/firebase/wowsbar-firebase.json"
-import { usePage, router } from "@inertiajs/vue3"
+
+import { usePage } from "@inertiajs/vue3"
 import { faUser, faUserFriends } from "@/../private/pro-light-svg-icons"
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
@@ -66,15 +63,9 @@ const props = defineProps<{
 }>()
 
 
-import { getDataFirebase, getDbReff } from '@/Composables/firebase'
-console.log(getDataFirebase('Banner'))
+import { getDbReff } from '@/Composables/firebase'
 
-// console.log(props)
 
-// const firebaseCredentials: any = useFirebaseStore()
-// console.log(firebaseCredentials)
-// const firebaseApp = initializeApp(firebaseCredentials)
-// const db = getDatabase(firebaseApp)
 const user = ref(usePage().props.auth.user)
 const jumpToIndex = ref(0)
 const screenView = ref("")

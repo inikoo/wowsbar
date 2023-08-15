@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { ref, Ref, computed } from 'vue'
+import { ref } from 'vue'
 import { useLayoutStore } from "@/Stores/layout"
 import FooterTab from '@/Components/Footer/FooterTab.vue'
 
-import { getDataFirebase, getDbReff } from '@/Composables/firebase'
+import { getDataFirebase } from '@/Composables/firebase'
 import { watchEffect } from 'vue'
 
 const props = defineProps<{
@@ -26,7 +26,7 @@ const dataTenantLength = ref()
 watchEffect(() => {
     dataTenants.value = getDataTenants.value
     // console.log(dataTenants.value[0])
-    dataTenant.value = dataTenants.value.find(obj => obj.id === layout.tenant.code) ?? dataTenants.value[0] 
+    dataTenant.value = dataTenants.value.find(obj => obj.id === layout.tenant.code) ?? dataTenants.value[0]
     // console.log(dataTenant.value)
     dataTenantLength.value = dataTenant.value ? Object.keys(dataTenant.value).length : 0
 })
