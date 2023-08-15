@@ -4,17 +4,17 @@ import firebaseConfig from "@/../private/firebase/wowsbar-firebase.json"
 import { useDatabaseList } from "vuefire"
 
 let init = initializeApp(firebaseConfig)
-export let getDb = getDatabase(init)
+let getDb = getDatabase(init)
 
 export const getDbReff = (tenant) => {
     return dbRef(getDb, tenant)
 }
 
-export const getDataFirebase = (tenant) => {
+export const getDataFirebase = (column) => {
     let getData = null
-    // let dbRef = dbRef(getDb, tenant)
+    
     try {
-        getData = useDatabaseList(getDbReff(tenant))
+        getData = useDatabaseList(getDbReff(column))
     } catch (error) {
         console.error("An error occurred while fetching data from Firebase:", error)
     }

@@ -3,6 +3,10 @@ import { ref, Ref } from 'vue'
 import FooterTabActiveUsers from '@/Layouts/Footer/FooterTabActiveUsers.vue'
 import FooterTabLanguage from '@/Layouts/Footer/FooterTabLanguage.vue'
 
+const props = defineProps<{
+    appName: string
+}>()
+
 const isTabActive: Ref<boolean | string> = ref(false)
 
 </script>
@@ -22,7 +26,7 @@ const isTabActive: Ref<boolean | string> = ref(false)
 
             <!-- Right: Tab Section -->
             <div class="flex items-end flex-row-reverse text-sm">
-                <FooterTabActiveUsers :isTabActive="isTabActive" @isTabActive="(value: any) => isTabActive = value" />
+                <FooterTabActiveUsers :isTabActive="isTabActive" @isTabActive="(value: any) => isTabActive = value" :appName="props.appName"/>
                 <FooterTabLanguage :isTabActive="isTabActive" @isTabActive="(value: any) => isTabActive = value" />
             </div>
         </div>
