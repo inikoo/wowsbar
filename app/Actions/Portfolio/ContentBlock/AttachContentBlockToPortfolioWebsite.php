@@ -14,20 +14,18 @@ use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
 
-class AttachContentBlockToWebsite
+class AttachContentBlockToPortfolioWebsite
 {
     use AsAction;
     use WithAttributes;
 
-    /**
-     * @var true
-     */
-    private bool $asAction = false;
-    public function handle(PortfolioWebsite $website, ContentBlock $contentBlock): Model
-    {
-        $website->website()->attach([$contentBlock->id]);
 
-        return $website;
+    private bool $asAction = false;
+    public function handle(PortfolioWebsite $portfolioWebsite, ContentBlock $contentBlock): Model
+    {
+        $portfolioWebsite->contentBlocks()->attach([$contentBlock->id]);
+
+        return $portfolioWebsite;
     }
 
     public function authorize(ActionRequest $request): bool
@@ -35,18 +33,16 @@ class AttachContentBlockToWebsite
         return $request->user()->can("portfolio.edit");
     }
 
-    public function asController(PortfolioWebsite $website, ActionRequest $request): Model
+    public function asController(PortfolioWebsite $portfolioWebsite,  ContentBlock $contentBlock, ActionRequest $request): Model
     {
         $request->validate();
 
-        return $this->handle($website, $request->validated());
+        return $this->handle($portfolioWebsite, $contentBlock);
     }
-    public function action(PortfolioWebsite $website, array $objectData): Model
+    public function action(PortfolioWebsite $portfolioWebsite, ContentBlock $contentBlock): Model
     {
-        $this->asAction = true;
-        $this->setRawAttributes($objectData);
-        $validatedData = $this->validateAttributes();
 
-        return $this->handle($website, $validatedData);
+
+        return $this->handle($portfolioWebsite, $contentBlock);
     }
 }
