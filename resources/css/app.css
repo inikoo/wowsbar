@@ -20,3 +20,7 @@
 .button-wowsbar {
     @apply bg-gray-600 hover:bg-gray-700 active:bg-gray-800 select-none
 }
+
+* {
+    @apply focus-visible:outline focus-visible:outline-2 focus-visible:outline-gray-500
+}
