@@ -8,9 +8,10 @@
 namespace App\Models\Organisation\Website;
 
 use App\Enums\Organisation\Website\Website\WebsiteEngineEnum;
-use App\Enums\Web\Website\WebsiteStateEnum;
+use App\Enums\Organisation\Website\Website\WebsiteStateEnum;
 use App\Models\Traits\HasHistory;
 use App\Models\Traits\HasUniversalSearch;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -23,8 +24,24 @@ use Spatie\Sluggable\SlugOptions;
 /**
  * App\Models\Organisation\Website\Website
  *
+ * @property int $id
+ * @property string $slug
+ * @property string $type
  * @property mixed $state
  * @property WebsiteEngineEnum $engine
+ * @property string $code
+ * @property string $domain
+ * @property string $name
+ * @property array $settings
+ * @property array $data
+ * @property array $structure
+ * @property bool $in_maintenance
+ * @property int|null $current_layout_id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string|null $launched_at
+ * @property string|null $closed_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \OwenIt\Auditing\Models\Audit> $audits
  * @property-read int|null $audits_count
  * @property-read array $es_audits
@@ -32,12 +49,30 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read \App\Models\Organisation\Website\WebsiteStats|null $webStats
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Organisation\Website\Webpage> $webpages
  * @property-read int|null $webpages_count
- * @method static \Illuminate\Database\Eloquent\Builder|Website newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Website newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Website onlyTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder|Website query()
- * @method static \Illuminate\Database\Eloquent\Builder|Website withTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder|Website withoutTrashed()
+ * @method static Builder|Website newModelQuery()
+ * @method static Builder|Website newQuery()
+ * @method static Builder|Website onlyTrashed()
+ * @method static Builder|Website query()
+ * @method static Builder|Website whereClosedAt($value)
+ * @method static Builder|Website whereCode($value)
+ * @method static Builder|Website whereCreatedAt($value)
+ * @method static Builder|Website whereCurrentLayoutId($value)
+ * @method static Builder|Website whereData($value)
+ * @method static Builder|Website whereDeletedAt($value)
+ * @method static Builder|Website whereDomain($value)
+ * @method static Builder|Website whereEngine($value)
+ * @method static Builder|Website whereId($value)
+ * @method static Builder|Website whereInMaintenance($value)
+ * @method static Builder|Website whereLaunchedAt($value)
+ * @method static Builder|Website whereName($value)
+ * @method static Builder|Website whereSettings($value)
+ * @method static Builder|Website whereSlug($value)
+ * @method static Builder|Website whereState($value)
+ * @method static Builder|Website whereStructure($value)
+ * @method static Builder|Website whereType($value)
+ * @method static Builder|Website whereUpdatedAt($value)
+ * @method static Builder|Website withTrashed()
+ * @method static Builder|Website withoutTrashed()
  * @mixin \Eloquent
  */
 class Website extends Model implements Auditable

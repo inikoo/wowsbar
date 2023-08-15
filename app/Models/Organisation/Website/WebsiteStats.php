@@ -14,10 +14,20 @@ use Spatie\Multitenancy\Models\Concerns\UsesTenantConnection;
 /**
  * App\Models\Organisation\Website\WebsiteStats
  *
- * @property-read \App\Models\Organisation\Website\Website|null $website
+ * @property int $id
+ * @property int $website_id
+ * @property int $number_webpages
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\Organisation\Website\Website $website
  * @method static \Illuminate\Database\Eloquent\Builder|WebsiteStats newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|WebsiteStats newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|WebsiteStats query()
+ * @method static \Illuminate\Database\Eloquent\Builder|WebsiteStats whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|WebsiteStats whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|WebsiteStats whereNumberWebpages($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|WebsiteStats whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|WebsiteStats whereWebsiteId($value)
  * @mixin \Eloquent
  */
 class WebsiteStats extends Model

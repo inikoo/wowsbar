@@ -11,16 +11,23 @@ use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Support\Carbon;
 use Spatie\Multitenancy\Models\Concerns\UsesTenantConnection;
 
 /**
  * App\Models\PortfolioWebsite\WebpageVariantStats
  *
- * @property-read \App\Models\Organisation\Website\WebpageVariant|null $webpageVariant
+ * @property int $id
+ * @property int $webpage_variant_id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\Organisation\Website\WebpageVariant $webpageVariant
  * @method static Builder|WebpageVariantStats newModelQuery()
  * @method static Builder|WebpageVariantStats newQuery()
  * @method static Builder|WebpageVariantStats query()
+ * @method static Builder|WebpageVariantStats whereCreatedAt($value)
+ * @method static Builder|WebpageVariantStats whereId($value)
+ * @method static Builder|WebpageVariantStats whereUpdatedAt($value)
+ * @method static Builder|WebpageVariantStats whereWebpageVariantId($value)
  * @mixin Eloquent
  */
 class WebpageVariantStats extends Model

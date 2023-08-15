@@ -1,0 +1,44 @@
+<?php
+/*
+ * Author: Raul Perusquia <raul@inikoo.com>
+ * Created: Tue, 15 Aug 2023 16:42:25 Malaysia Time, Pantai Lembeng, Bali
+ * Copyright (c) 2023, Raul A Perusquia Flores
+ */
+
+
+use App\Enums\Organisation\Website\Website\WebsiteEngineEnum;
+use App\Enums\Organisation\Website\Website\WebsiteStateEnum;
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class () extends Migration {
+    public function up(): void
+    {
+        Schema::create('websites', function (Blueprint $table) {
+            $table->smallIncrements('id');
+            $table->string('slug')->unique()->collation('und_ns');
+            $table->string('type');
+            $table->string('state')->default(WebsiteStateEnum::IN_PROCESS->value)->index();
+            $table->string('engine')->default(WebsiteEngineEnum::IRIS->value)->index();
+            $table->string('code')->unique()->collation('und_ns');
+            $table->string('domain')->unique()->collation('und_ns');
+            $table->string('name')->unique()->collation('und_ns');
+            $table->jsonb('settings');
+            $table->jsonb('data');
+            $table->jsonb('structure');
+            $table->boolean('in_maintenance')->default(false);
+            $table->unsignedSmallInteger('current_layout_id')->index()->nullable();
+            $table->timestampsTz();
+            $table->timestampTz('launched_at')->nullable();
+            $table->timestampTz('closed_at')->nullable();
+            $table->softDeletesTz();
+        });
+    }
+
+
+    public function down(): void
+    {
+        Schema::dropIfExists('websites');
+    }
+};

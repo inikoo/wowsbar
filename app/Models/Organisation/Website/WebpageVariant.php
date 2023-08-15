@@ -16,7 +16,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Support\Carbon;
 use Spatie\Multitenancy\Models\Concerns\UsesTenantConnection;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
@@ -24,10 +23,24 @@ use Spatie\Sluggable\SlugOptions;
 /**
  * App\Models\PortfolioWebsite\WebpageVariant
  *
+ * @property int $id
+ * @property string $slug
+ * @property string $code
+ * @property int $webpage_id
+ * @property array $components
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Organisation\Website\WebpageStats|null $stats
  * @method static Builder|WebpageVariant newModelQuery()
  * @method static Builder|WebpageVariant newQuery()
  * @method static Builder|WebpageVariant query()
+ * @method static Builder|WebpageVariant whereCode($value)
+ * @method static Builder|WebpageVariant whereComponents($value)
+ * @method static Builder|WebpageVariant whereCreatedAt($value)
+ * @method static Builder|WebpageVariant whereId($value)
+ * @method static Builder|WebpageVariant whereSlug($value)
+ * @method static Builder|WebpageVariant whereUpdatedAt($value)
+ * @method static Builder|WebpageVariant whereWebpageId($value)
  * @mixin Eloquent
  */
 class WebpageVariant extends Model
