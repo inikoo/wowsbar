@@ -7,7 +7,7 @@ import { getDataFirebase } from '@/Composables/firebase'
 
 const layout = useLayoutStore()
 
-console.log(getDataFirebase(layout.tenant.code))
+// console.log(getDataFirebase(layout.tenant.code))
 const activities = ref(getDataFirebase(layout.tenant.code))
 
 defineProps<{

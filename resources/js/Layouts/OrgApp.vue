@@ -5,19 +5,17 @@
   -->
 
 <script setup lang="ts">
-import { ref, watchEffect } from "vue"
+import { ref } from "vue"
 import AppFooter from "@/Layouts/AppFooter.vue"
 import { usePage } from "@inertiajs/vue3"
-
-import { useLocaleStore } from "@/Stores/locale"
 
 import AppLeftSideBar from "@/Layouts/AppLeftSideBar.vue"
 import AppRightSideBar from "@/Layouts/AppRightSideBar.vue"
 import AppTopBar from "@/Layouts/TopBar/AppTopBar.vue"
 import Breadcrumbs from "@/Components/Navigation/Breadcrumbs.vue"
 
-import { loadLanguageAsync } from "laravel-vue-i18n"
 import { library } from "@fortawesome/fontawesome-svg-core"
+import { initialiseApp } from "@/Composables/initialiseApp"
 
 import {
     faHome,
@@ -37,11 +35,8 @@ import {
     faChevronDown,
     faGlobe,
     faLanguage
-} from "../../private/pro-light-svg-icons"
+} from "@/../private/pro-light-svg-icons"
 import { faSearch, faBell} from "../../private/pro-regular-svg-icons"
-import { onMounted } from "vue"
-import {useFirebaseStore} from "@/Stores/firebase"
-import {useLayoutStore} from "@/Stores/layout";
 
 
 library.add(
@@ -65,50 +60,11 @@ library.add(
     faLanguage,
     faSearch,
     faBell
-);
-
-const initialiseApp = () => {
-
-    const layout = useLayoutStore();
-    const locale = useLocaleStore();
-    const firebase = useFirebaseStore();
-
-    if (usePage().props.firebase) {
-        firebase.credential=JSON.parse(usePage().props.firebase.credential);
-        firebase.databaseURL=usePage().props.firebase.databaseURL;
-    }
-
-    if (usePage().props.localeData) {
-        loadLanguageAsync(usePage().props.localeData.language.code);
-    }
-    watchEffect(() => {
-        if (usePage().props.layout) {
-            layout.navigation = usePage().props.layout.navigation ?? null;
-            //layout.secondaryNavigation = usePage().props.layout.secondaryNavigation ?? null;
-        }
-
-        if (usePage().props.localeData) {
-            locale.language = usePage().props.localeData.language;
-            locale.languageOptions = usePage().props.localeData.languageOptions;
-        }
-
-        if (usePage().props.organisation) {
-            layout.organisation = usePage().props.organisation ?? null;
-        }
-
-        layout.currentRouteParameters=route().params;
-        layout.currentRoute=route().current();
-        layout.currentModule = layout.currentRoute?.substring(0, layout.currentRoute?.indexOf("."));
-
-        if (usePage().props.auth.user.avatar_thumbnail) {
-            layout.avatar_thumbnail=usePage().props.auth.user.avatar_thumbnail;
-        }
-    })
-    return layout
-}
+)
 
 const layout = initialiseApp()
 const sidebarOpen = ref(false)
+
 </script>
 
 <template>
