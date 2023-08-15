@@ -89,7 +89,7 @@ const fetchInitialData = async () => {
         if (snapshot.exists()) {
             const firebaseData = snapshot.val()
             if (firebaseData[props.imagesUploadRoute.arguments.banner]) {
-                Object.assign(data, { ...firebaseData, ...firebaseData[props.imagesUploadRoute.arguments.banner] })
+                Object.assign(data, { ...firebaseData[props.imagesUploadRoute.arguments.banner] })
             } else {
                 Object.assign(data, { ...data, ...cloneDeep(props.bannerLayout) })
                 await set(getDbReff('Banner'), { ...firebaseData, [props.imagesUploadRoute.arguments.banner]: data })
@@ -97,6 +97,7 @@ const fetchInitialData = async () => {
             }
         } else {
             Object.assign(data, { ...data, ...cloneDeep(props.bannerLayout) })
+            await set(getDbReff('Banner'), { ...firebaseData, [props.imagesUploadRoute.arguments.banner]: data })
         }
         setData.value = false
     } catch (error) {
@@ -131,9 +132,7 @@ const updateData = async () => {
 }
 
 watch(data, updateData, { deep: true })
-onBeforeMount(() => {
-    if (firebase.value) fetchInitialData
-})
+onBeforeMount(fetchInitialData)
 
 const setDataBeforeLeave = () => {
     const set = { ...data }  // Creating a copy of the data object
