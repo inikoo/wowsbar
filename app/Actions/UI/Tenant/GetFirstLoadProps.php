@@ -16,7 +16,6 @@ use App\Models\Auth\User;
 use Cache;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Str;
 use Lorisleiva\Actions\Concerns\AsObject;
 
 class GetFirstLoadProps
@@ -41,13 +40,16 @@ class GetFirstLoadProps
 
         if($user) {
             $customTokenFirebasePrefix = 'tenant_' . app('currentTenant')->slug . '_user_' . $user->username . '_token_' . $user->id;
-            $cache = Cache::get($customTokenFirebasePrefix);
+            $cache                     = Cache::get($customTokenFirebasePrefix);
 
             if(blank($cache)) {
                 $customToken = $auth->createCustomToken($customTokenFirebasePrefix);
                 $auth->signInWithCustomToken($customToken);
 
                 Cache::put($customTokenFirebasePrefix, $customToken->toString(), 3600);
+
+                // tenant / tenant slug
+                // rules / tenant / aiku / user
             }
         }
 

@@ -23,6 +23,7 @@ echo "Public assets link 🔗"
 php artisan storage:link
 echo "Clear horizon 🧼"
 php artisan horizon:clear
+php artisan horizon:terminate
 echo "🌱 Migrating and seeding database"
 php artisan migrate --database=backup --path=database/migrations/backup
 php artisan migrate --path=database/migrations/landlord
@@ -30,8 +31,8 @@ php artisan migrate --path=database/migrations/tenant
 php artisan db:seed
 php artisan telescope:clear
 pg_dump -Fc -f "devops/devel/snapshots/fresh.dump" ${DB}
-echo "🌱 create devel landlord"
-php artisan landlord:create wowsbar wowsbar@inikoo.com Wowsbar aiku hello GB GBP
+echo "🏢 create organisation"
+php artisan org:create wowsbar wowsbar@inikoo.com Wowsbar 'Alejandro X' aiku hello GB GBP
 echo "🌱 create devel tenant"
 php artisan tenant:create aiku devels@aw-advantage.com Devs aiku hello GB GBP
 php artisan tenant:create test1 dev@aw-advantage.com Devs test1 hello GB GBP

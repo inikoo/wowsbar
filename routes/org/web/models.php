@@ -9,5 +9,3 @@
 use App\Actions\UI\Organisation\Profile\UpdateProfile;
 
 Route::patch('/profile', UpdateProfile::class)->name('profile.update');
-
-

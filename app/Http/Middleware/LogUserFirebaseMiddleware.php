@@ -15,7 +15,10 @@ class LogUserFirebaseMiddleware
     public function handle(Request $request, Closure $next)
     {
         $user   = $request->user();
-        $parent = app('currentTenant');
+
+        if(!$parent = app('currentTenant')) {
+            $parent = organisation();
+        }
 
         $route = [
             'module'    => explode('.', request()->route()->getName())[0],

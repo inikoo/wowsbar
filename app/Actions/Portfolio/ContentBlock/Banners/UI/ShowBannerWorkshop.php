@@ -95,7 +95,7 @@ class ShowBannerWorkshop extends InertiaAction
                         ]
                     ],
                 ],
-                'firebase'          => false,
+                'firebase'          => true,
                 'bannerLayout'      => $banner->compiledLayout(),
                 'imagesUploadRoute' => [
                     'name'      => $request->route()->getName().'.images.store',

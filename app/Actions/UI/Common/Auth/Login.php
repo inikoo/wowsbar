@@ -7,7 +7,6 @@
 
 namespace App\Actions\UI\Common\Auth;
 
-use Cache;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
@@ -22,9 +21,9 @@ class Login
 {
     use AsController;
 
-    private string $credentialHandler = 'username';
-    private string $home              = '/dashboard';
-    private string $gate              = 'web';
+    private string $credentialHandler         = 'username';
+    private string $home                      = '/dashboard';
+    private string $gate                      = 'web';
     private string $customTokenFirebasePrefix = 'web';
 
 

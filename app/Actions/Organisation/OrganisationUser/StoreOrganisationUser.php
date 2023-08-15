@@ -8,6 +8,7 @@
 namespace App\Actions\Organisation\OrganisationUser;
 
 use App\Actions\Organisation\OrganisationUser\UI\SetOrganisationUserAvatar;
+use App\Models\Organisation\Guest;
 use App\Models\Organisation\OrganisationUser;
 use App\Rules\AlphaDashDot;
 use Illuminate\Validation\Rule;
@@ -24,15 +25,15 @@ class StoreOrganisationUser
     private bool $asAction = false;
 
 
-    public function handle(array $objectData = []): OrganisationUser
+    public function handle(Guest $parent, array $objectData = []): OrganisationUser
     {
         /** @var \App\Models\Organisation\OrganisationUser $organisationUser */
-        $organisationUser = OrganisationUser::create($objectData);
+        $organisationUser =$parent->organisationUser()->create($objectData);
         $organisationUser->stats()->create();
         SetOrganisationUserAvatar::run($organisationUser);
 
         // UserHydrateUniversalSearch::dispatch($organisationUser);
-        // OrganisationHydrateUsers::dispatch();
+        //OrganisationHydrateUsers::dispatch();
         return $organisationUser;
     }
 

@@ -6,6 +6,17 @@
 <script setup lang="ts">
 import { Hero as heroType } from "@/types/hero";
 import SideImage from "./PageComponents/SideImage.vue";
+import { ref } from 'vue'
+import {
+    Disclosure,
+    DisclosureButton,
+    DisclosurePanel,
+    RadioGroup,
+    RadioGroupLabel,
+    RadioGroupOption,
+} from '@headlessui/vue'
+import { MinusSmallIcon, PlusSmallIcon } from '@heroicons/vue/24/outline'
+import { CheckIcon } from '@heroicons/vue/20/solid'
 
 const footerNavigation = {
     shop: [
@@ -56,7 +67,7 @@ const data = [
         ],
     },
     {
-      
+
         dataRow: [
             {
                 type: "colllection",
@@ -139,8 +150,127 @@ const data = [
             },
         ],
     },
+    {
+        dataRow: [
+            {
+                type: "image",
+                src: "https://tailwindui.com/img/ecommerce-images/product-page-03-product-01.jpg",
+                alt: "test",
+            },
+            {
+                type: "text",
+                title: "title",
+                subtitle: "subtitle",
+                description:
+                    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+            },
+        ]
+    },
+    {
+        dataRow: [
+            {
+                type: 'pricing',
+                frequencies: [
+                    { value: 'monthly', label: 'Monthly', priceSuffix: '/month' },
+                    { value: 'annually', label: 'Annually', priceSuffix: '/year' },
+                ],
+                tiers: [
+                    {
+                        name: 'Hobby',
+                        id: 'tier-hobby',
+                        href: '#',
+                        price: { monthly: '$15', annually: '$144' },
+                        description: 'The essentials to provide your best work for clients.',
+                        features: ['5 products', 'Up to 1,000 subscribers', 'Basic analytics'],
+                        mostPopular: false,
+                    },
+                    {
+                        name: 'Freelancer',
+                        id: 'tier-freelancer',
+                        href: '#',
+                        price: { monthly: '$30', annually: '$288' },
+                        description: 'The essentials to provide your best work for clients.',
+                        features: ['5 products', 'Up to 1,000 subscribers', 'Basic analytics', '48-hour support response time'],
+                        mostPopular: false,
+                    },
+                    {
+                        name: 'Startup',
+                        id: 'tier-startup',
+                        href: '#',
+                        price: { monthly: '$60', annually: '$576' },
+                        description: 'A plan that scales with your rapidly growing business.',
+                        features: [
+                            '25 products',
+                            'Up to 10,000 subscribers',
+                            'Advanced analytics',
+                            '24-hour support response time',
+                            'Marketing automations',
+                        ],
+                        mostPopular: true,
+                    },
+                    {
+                        name: 'Enterprise',
+                        id: 'tier-enterprise',
+                        href: '#',
+                        price: { monthly: '$90', annually: '$864' },
+                        description: 'Dedicated support and infrastructure for your company.',
+                        features: [
+                            'Unlimited products',
+                            'Unlimited subscribers',
+                            'Advanced analytics',
+                            '1-hour, dedicated support response time',
+                            'Marketing automations',
+                            'Custom reporting tools',
+                        ],
+                        mostPopular: false,
+                    },
+                ],
+
+            }
+        ]
+    },
+    {
+        dataRow: [
+            {
+                type: "footer",
+                collumn : [
+                   {
+                    type : 'description',
+                    title : 'Description',
+                    text : 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.'
+                   },
+                   {
+                    type : 'link',
+                    title : 'Link',
+                    data : [
+                        {label : 'test', link:'', icon : ''},
+                        {label : 'test1', link:'', icon : ''},
+                        {label : 'test2', link:'',  icon : ''},
+                        {label : 'test3', link:'',  icon : ''},
+                        {label : 'test4', link:'',  icon : ''},
+                    ]
+                   },
+                   {
+                    type : 'link',
+                    title : 'Link',
+                    data : [
+                        {label : 'test', link:'', icon : ''},
+                        {label : 'test1', link:'', icon : ''},
+                        {label : 'test2', link:'',  icon : ''},
+                        {label : 'test3', link:'',  icon : ''},
+                        {label : 'test4', link:'',  icon : ''},
+                    ]
+                   }
+                ]
+            },
+        ],
+    },
+
 ];
-console.log(data);
+
+
+
+
 
 const props = defineProps<{
     hero: heroType
@@ -154,36 +284,6 @@ const props = defineProps<{
     <div class="bg-white">
         <div v-for="(item, index) of data" :key="index">
             <SideImage :data="item" />
-        </div>
-
-        <footer aria-labelledby="footer-heading" class="bg-gray-100 grid grid-cols-3 items-start pb-10 px-10 gap-x-16 text-gray-700">
-            <div class="flex flex-col justify-center gap-y-6">
-                <h3 class="text-3xl font-semibold text-center text-green-600">Company</h3>
-                <div class="text-lg">
-                    <p>AW Advantage</p>
-                    <p>Trading brand of: Ancient Wisdom s.r.o.,</p>
-                    <p>Zavarska 10/G, 917 01 Trnava, Slovakia, EU</p>
-                    <p>VAT: SK2120525440 Company</p>
-                    <p>Reg: 50920600</p>
-                </div>
-            </div>
-            <div class="flex flex-col justify-center gap-y-6">
-                <h3 class="text-3xl font-semibold text-center text-green-600">Offices</h3>
-                <div class="">
-                    <p class="font-semibold text-xl">Europe</p>
-                    <span>Ancient Wisdom s.r.o.,<br>CTPark Trnava, Prilohy 57, Zavar, Slovakia, EU</span>
-                </div>
-            </div>
-            <div class="flex flex-col justify-center gap-y-6">
-                <h3 class="text-3xl font-semibold text-center text-green-600">Contact</h3>
-                <div class="text-lg">
-                    <p>AW Advantage</p>
-                    <p>Trading brand of: Ancient Wisdom s.r.o.,</p>
-                    <p>Zavarska 10/G, 917 01 Trnava, Slovakia, EU</p>
-                    <p>VAT: SK2120525440 Company</p>
-                    <p>Reg: 50920600</p>
-                </div>
-            </div>
-        </footer>
+        </div>      
     </div>
 </template>
