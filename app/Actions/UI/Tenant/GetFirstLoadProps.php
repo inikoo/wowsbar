@@ -41,11 +41,14 @@ class GetFirstLoadProps
 
         if($user) {
             $customTokenFirebasePrefix = 'tenant_' . app('currentTenant')->slug . '_user_' . $user->username . '_token_' . $user->id;
+            $cache = Cache::get($customTokenFirebasePrefix);
 
-            $customToken = $auth->createCustomToken(Str::uuid());
-            $auth->signInWithCustomToken($customToken);
+            if(blank($cache)) {
+                $customToken = $auth->createCustomToken($customTokenFirebasePrefix);
+                $auth->signInWithCustomToken($customToken);
 
-            Cache::put($customTokenFirebasePrefix, $customToken->toString());
+                Cache::put($customTokenFirebasePrefix, $customToken->toString(), 3600);
+            }
         }
 
         return [

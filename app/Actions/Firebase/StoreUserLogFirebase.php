@@ -20,17 +20,11 @@ class StoreUserLogFirebase
     public function handle(User $user, Tenant $tenant, array $route): void
     {
         $database  = app('firebase.database');
-        $reference = $database->getReference($tenant->slug . '/' . $user->username);
+        $reference = $database->getReference('tenants/' . $tenant->slug . '/active_users/' . $user->username);
 
         $reference->set([
-            'user' => [
-                'username'     => $user->username,
-                'contact_name' => $user->contact_name,
-                'avatar_id'    => $user->avatar_id
-            ],
-            'is_active'   => true,
-            'route'       => $route,
-            'last_active' => now()
+            'last_active' => now(),
+            'route'       => $route
         ]);
 
         CheckUserStatusFirebase::dispatch($tenant);
