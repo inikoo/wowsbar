@@ -1,11 +1,11 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Sat, 12 Aug 2023 20:03:50 Malaysia Time, Sanur, Bali
+ * Created: Tue, 15 Aug 2023 13:13:12 Malaysia Time, Pantai Lembeng, Bali
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\UI\Common\SysAdmin;
+namespace App\Actions\UI\Tenant\SysAdmin;
 
 use App\Actions\UI\Tenant\Dashboard\ShowDashboard;
 use App\Actions\UI\WithInertia;

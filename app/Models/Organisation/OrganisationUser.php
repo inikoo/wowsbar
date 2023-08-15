@@ -24,6 +24,8 @@ use Spatie\Permission\Traits\HasRoles;
  *
  * @property int $id
  * @property string $username
+ * @property int|null $parent_id
+ * @property string|null $parent_type
  * @property bool $status
  * @property string|null $contact_name
  * @property string|null $email
@@ -67,6 +69,8 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static Builder|OrganisationUser whereEmailVerifiedAt($value)
  * @method static Builder|OrganisationUser whereId($value)
  * @method static Builder|OrganisationUser whereLanguageId($value)
+ * @method static Builder|OrganisationUser whereParentId($value)
+ * @method static Builder|OrganisationUser whereParentType($value)
  * @method static Builder|OrganisationUser wherePassword($value)
  * @method static Builder|OrganisationUser whereRememberToken($value)
  * @method static Builder|OrganisationUser whereSettings($value)
