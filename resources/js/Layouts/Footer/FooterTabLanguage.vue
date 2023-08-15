@@ -7,7 +7,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 library.add(faLanguage)
 import { useLocaleStore } from "@/Stores/locale"
 import FooterTab from '@/Components/Footer/FooterTab.vue'
-import { trans } from 'laravel-vue-i18n'
+import { trans, loadLanguageAsync } from 'laravel-vue-i18n'
 
 const locale = useLocaleStore()
 
@@ -34,9 +34,9 @@ defineEmits<{
             <template #default>
                 <div v-if="Object.keys(locale.languageOptions).length > 0" v-for="(option, index) in locale.languageOptions"
                     :class="[ locale.language.id == index ? 'bg-gray-400 text-gray-100' : 'text-gray-100 hover:bg-gray-500', 'grid py-1.5']"
-                    @click="locale.language.id = Number(index), locale.language.name = option.label"
+                    @click="locale.language = option, loadLanguageAsync(option.code)"
                 >
-                    {{ option.label }}
+                    {{ option.name }}
                 </div>
                 <div v-else class="grid pt-2.5 pb-1.5">{{ trans('Nothing to show here') }}</div>
             </template>
