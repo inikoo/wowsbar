@@ -7,7 +7,8 @@
 
 namespace App\Actions\Organisation\Organisation;
 
-use App\Actions\Organisation\OrganisationUser\StoreOrganisationUser;
+use App\Actions\Organisation\Guest\StoreGuest;
+use App\Enums\Organisation\Guest\GuestTypeEnum;
 use App\Models\Assets\Country;
 use App\Models\Assets\Currency;
 use App\Models\Assets\Language;
@@ -26,37 +27,49 @@ class StoreOrganisation
     use AsAction;
     use WithAttributes;
 
-    public function handle(array $modelData, array $landlordUserData): Organisation
+    public function handle(array $modelData, array $organisationUserData): Organisation
     {
         if (Organisation::count() > 0) {
-            abort(419, 'Can not create more than one landlord');
+            abort(419, 'Can not create more than one organisation');
         }
 
-        $landlord = Organisation::create($modelData);
-        $landlord->stats()->create();
+        $organisation = Organisation::create($modelData);
+        $organisation->stats()->create();
 
 
-        $landlordUser   = StoreOrganisationUser::run($landlordUserData);
-        $superAdminRole = Role::where('guard_name', 'org')->where('name', 'super-admin')->firstOrFail();
-        $landlordUser->assignRole($superAdminRole);
+        $guest = StoreGuest::run(
+            [
+                'type'        => GuestTypeEnum::EXTERNAL_ADMINISTRATOR,
+                'company_name'=> Arr::get($organisationUserData, 'company_name'),
+                'contact_name'=> Arr::get($organisationUserData, 'contact_name'),
+                'username'    => Arr::get($organisationUserData, 'username')
+
+            ]
+        );
+
+
+        $superAdminRole   = Role::where('guard_name', 'org')->where('name', 'super-admin')->firstOrFail();
+        $guest->organisationUser->assignRole($superAdminRole);
 
         Artisan::call("db:seed --force --class=StockImageSeeder");
 
 
-        return $landlord;
+        return $organisation;
     }
 
     public function rules(): array
     {
         return [
-            'code'        => ['required', 'unique:organisations', 'between:1,16', 'alpha_dash'],
-            'name'        => ['required', 'max:64'],
-            'currency_id' => ['required', 'exists:currencies,id'],
-            'country_id'  => ['required', 'exists:countries,id'],
-            'language_id' => ['required', 'exists:languages,id'],
-            'timezone_id' => ['required', 'exists:timezones,id'],
-            'username'    => ['sometimes', 'string'],
-            'password'    => ['sometimes', 'string'],
+            'code'         => ['required', 'unique:organisations', 'between:1,16', 'alpha_dash'],
+            'name'         => ['required', 'max:64'],
+            'currency_id'  => ['required', 'exists:currencies,id'],
+            'country_id'   => ['required', 'exists:countries,id'],
+            'language_id'  => ['required', 'exists:languages,id'],
+            'timezone_id'  => ['required', 'exists:timezones,id'],
+            'company_name' => ['nullable', 'string', 'max:255'],
+            'contact_name' => ['required', 'string', 'max:255'],
+            'username'     => ['sometimes', 'string'],
+            'password'     => ['sometimes', 'string'],
 
         ];
     }
@@ -79,13 +92,13 @@ class StoreOrganisation
 
     public function getCommandSignature(): string
     {
-        return 'landlord:create {code} {email} {name} {username} {password} {country_code} {currency_code} {--l|language_code= : Language code} {--tz|timezone= : Timezone}';
+        return 'org:create {code} {email} {name} {contact_name} {username} {password} {country_code} {currency_code} {--l|language_code= : Language code} {--tz|timezone= : Timezone}';
     }
 
     public function asCommand(Command $command): int
     {
         if (Organisation::count() > 0) {
-            $command->error('There is already one landlord (You can only have one 😝)');
+            $command->error('There is already one organisation (You can only have one 😝)');
             exit;
         }
 
@@ -131,15 +144,17 @@ class StoreOrganisation
 
 
         $this->setRawAttributes([
-            'code'        => $command->argument('code'),
-            'name'        => $command->argument('name'),
-            'email'       => $command->argument('email'),
-            'username'    => $command->argument('username'),
-            'password'    => $command->argument('password'),
-            'country_id'  => $country->id,
-            'currency_id' => $currency->id,
-            'language_id' => $language->id,
-            'timezone_id' => $timezone->id,
+            'code'         => $command->argument('code'),
+            'name'         => $command->argument('name'),
+            'email'        => $command->argument('email'),
+            'username'     => $command->argument('username'),
+            'password'     => $command->argument('password'),
+            'company_name' => $command->argument('name'),
+            'contact_name' => $command->argument('contact_name'),
+            'country_id'   => $country->id,
+            'currency_id'  => $currency->id,
+            'language_id'  => $language->id,
+            'timezone_id'  => $timezone->id,
         ]);
 
         try {
@@ -150,16 +165,23 @@ class StoreOrganisation
             return 1;
         }
 
-        $landlord = $this->handle(
-            Arr::except($validatedData, ['username', 'password']),
+        $organisation = $this->handle(
+            Arr::except($validatedData, [
+                'username',
+                'password',
+                'contact_name',
+                'company_name',
+            ]),
             Arr::only($validatedData, [
                 'username',
                 'password',
+                'contact_name',
+                'company_name',
                 'email'
             ]),
         );
 
-        $command->info("Organisation $landlord->slug created successfully 🎉");
+        $command->info("Organisation $organisation->code created successfully 🎉");
 
         return 0;
     }

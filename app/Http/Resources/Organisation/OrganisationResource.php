@@ -11,7 +11,6 @@ use App\Http\Resources\HasSelfCall;
 use App\Models\Organisation\Organisation;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-
 class OrganisationResource extends JsonResource
 {
     use HasSelfCall;

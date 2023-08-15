@@ -15,7 +15,6 @@ use App\Models\Auth\User;
 use App\Models\Organisation\OrganisationUser;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-
 class LoggedUserResource extends JsonResource
 {
     use HasSelfCall;
@@ -29,7 +28,7 @@ class LoggedUserResource extends JsonResource
         $avatarThumbnail = (new Image())->make($user->avatar->getLocalImgProxyFilename())->resize(0, 48);
 
         return [
-            'username'    => $user->username,
+            'username'           => $user->username,
             'avatar_thumbnail'   => GetPictureSources::run($avatarThumbnail)
         ];
     }
