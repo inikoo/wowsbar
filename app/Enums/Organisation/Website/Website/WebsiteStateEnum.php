@@ -5,7 +5,7 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Enums\Web\Website;
+namespace App\Enums\Organisation\Website\Website;
 
 use App\Enums\EnumHelperTrait;
 
