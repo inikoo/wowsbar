@@ -5,6 +5,7 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
+use App\Actions\MakeQueueTenantAwareAction;
 use App\Models\Tenancy\Tenant;
 use App\Resolvers\TenantResolver;
 use Illuminate\Broadcasting\BroadcastEvent;
@@ -12,7 +13,6 @@ use Illuminate\Events\CallQueuedListener;
 use Illuminate\Mail\SendQueuedMailable;
 use Illuminate\Notifications\SendQueuedNotifications;
 use Spatie\Multitenancy\Actions\ForgetCurrentTenantAction;
-use Spatie\Multitenancy\Actions\MakeQueueTenantAwareAction;
 use Spatie\Multitenancy\Actions\MakeTenantCurrentAction;
 use Spatie\Multitenancy\Actions\MigrateTenantAction;
 use Spatie\Multitenancy\Tasks\PrefixCacheTask;

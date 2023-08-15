@@ -28,13 +28,14 @@ class AppServiceProvider extends ServiceProvider
         }
         Relation::morphMap(
             [
-                'Organisation'         => 'App\Models\Organisation\Organisation',
+                'Organisation'     => 'App\Models\Organisation\Organisation',
                 'Tenant'           => 'App\Models\Tenancy\Tenant',
                 'User'             => 'App\Models\Auth\User',
                 'Website'          => 'App\Models\Portfolio\Website',
                 'ContentBlock'     => 'App\Models\Portfolio\ContentBlock',
                 'OrganisationUser' => 'App\Models\Organisation\OrganisationUser',
                 'PublicUser'       => 'App\Models\Auth\OrganisationUser',
+                'Guest'            => 'App\Models\Organisation\Guest',
 
             ]
         );
