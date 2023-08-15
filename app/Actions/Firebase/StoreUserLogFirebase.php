@@ -29,7 +29,7 @@ class StoreUserLogFirebase
                 $name = 'tenants';
                 break;
             default:
-                $slug = $parent->code;
+                $slug = null;
                 $name = 'organisations';
         }
 
