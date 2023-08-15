@@ -5,19 +5,19 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Portfolio\Website\UI;
+namespace App\Actions\Portfolio\PortfolioWebsite\UI;
 
 use App\Actions\InertiaAction;
-use App\Models\Portfolio\Website;
+use App\Models\Portfolio\PortfolioWebsite;
 use Exception;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
 
-class EditWebsite extends InertiaAction
+class EditPortfolioWebsite extends InertiaAction
 {
-    public function handle(Website $website): Website
+    public function handle(PortfolioWebsite $website): PortfolioWebsite
     {
         return $website;
     }
@@ -29,7 +29,7 @@ class EditWebsite extends InertiaAction
 
     }
 
-    public function asController(Website $website, ActionRequest $request): Website
+    public function asController(PortfolioWebsite $website, ActionRequest $request): PortfolioWebsite
     {
         $this->initialisation($request);
         return $this->handle($website);
@@ -38,12 +38,12 @@ class EditWebsite extends InertiaAction
     /**
      * @throws Exception
      */
-    public function htmlResponse(Website $website, ActionRequest $request): Response
+    public function htmlResponse(PortfolioWebsite $website, ActionRequest $request): Response
     {
         return Inertia::render(
             'Tenant/EditModel',
             [
-                    'title'       => __("Website's settings"),
+                    'title'       => __("PortfolioWebsite's settings"),
                     'breadcrumbs' => $this->getBreadcrumbs(
                         $request->route()->getName(),
                         $request->route()->parameters()
@@ -56,7 +56,7 @@ class EditWebsite extends InertiaAction
                         'title'     => __('Edit website'),
                         'container' => [
                             'icon'    => ['fal', 'fa-globe'],
-                            'tooltip' => __('Website'),
+                            'tooltip' => __('PortfolioWebsite'),
                             'label'   => Str::possessive($website->name)
                         ],
 
@@ -124,28 +124,28 @@ class EditWebsite extends InertiaAction
 
     public function getBreadcrumbs(string $routeName, array $routeParameters): array
     {
-        return ShowWebsite::make()->getBreadcrumbs(
+        return ShowPortfolioWebsite::make()->getBreadcrumbs(
             $routeName,
             $routeParameters,
             suffix: '('.__('editing').')'
         );
     }
 
-    public function getPrevious(Website $website, ActionRequest $request): ?array
+    public function getPrevious(PortfolioWebsite $website, ActionRequest $request): ?array
     {
-        $previous = Website::where('code', '<', $website->code)->orderBy('code', 'desc')->first();
+        $previous = PortfolioWebsite::where('code', '<', $website->code)->orderBy('code', 'desc')->first();
 
         return $this->getNavigation($previous, $request->route()->getName());
     }
 
-    public function getNext(Website $website, ActionRequest $request): ?array
+    public function getNext(PortfolioWebsite $website, ActionRequest $request): ?array
     {
-        $next = Website::where('code', '>', $website->code)->orderBy('code')->first();
+        $next = PortfolioWebsite::where('code', '>', $website->code)->orderBy('code')->first();
 
         return $this->getNavigation($next, $request->route()->getName());
     }
 
-    private function getNavigation(?Website $website, string $routeName): ?array
+    private function getNavigation(?PortfolioWebsite $website, string $routeName): ?array
     {
         if (!$website) {
             return null;

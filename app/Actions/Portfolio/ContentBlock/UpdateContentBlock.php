@@ -81,7 +81,7 @@ class UpdateContentBlock
     public function rules(): array
     {
         return [
-            'code'   => ['sometimes', 'required', 'unique:tenant.websites', 'max:8'],
+            'code'   => ['sometimes', 'required', 'unique:tenant.portfolio_websites', 'max:8'],
             'name'   => ['sometimes', 'required'],
             'layout' => ['sometimes', 'required','array:delay,common,components']
         ];

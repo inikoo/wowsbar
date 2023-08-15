@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Schema;
 return new class () extends Migration {
     public function up(): void
     {
-        Schema::create('websites', function (Blueprint $table) {
+        Schema::create('portfolio_websites', function (Blueprint $table) {
             $table->smallIncrements('id');
             $table->unsignedSmallInteger('tenant_id')->index();
             $table->foreign('tenant_id')->references('id')->on('tenants');
@@ -33,6 +33,6 @@ return new class () extends Migration {
 
     public function down(): void
     {
-        Schema::dropIfExists('websites');
+        Schema::dropIfExists('portfolio_websites');
     }
 };

@@ -5,13 +5,13 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Portfolio\Website\UI;
+namespace App\Actions\Portfolio\PortfolioWebsite\UI;
 
 use App\Actions\InertiaAction;
 use App\Actions\UI\Tenant\Portfolio\ShowPortfolioDashboard;
-use App\Http\Resources\Portfolio\WebsiteResource;
+use App\Http\Resources\Portfolio\PortfolioWebsiteResource;
 use App\InertiaTable\InertiaTable;
-use App\Models\Portfolio\Website;
+use App\Models\Portfolio\PortfolioWebsite;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -21,7 +21,7 @@ use Lorisleiva\Actions\ActionRequest;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
-class IndexWebsites extends InertiaAction
+class IndexPortfolioWebsites extends InertiaAction
 {
     public function authorize(ActionRequest $request): bool
     {
@@ -62,7 +62,7 @@ class IndexWebsites extends InertiaAction
             InertiaTable::updateQueryBuilderParameters($prefix);
         }
 
-        $queryBuilder = QueryBuilder::for(Website::class);
+        $queryBuilder = QueryBuilder::for(PortfolioWebsite::class);
         foreach ($this->elementGroups as $key => $elementGroup) {
             $queryBuilder->whereElementGroup(
                 prefix: $prefix,
@@ -118,7 +118,7 @@ class IndexWebsites extends InertiaAction
 
     public function jsonResponse(): AnonymousResourceCollection
     {
-        return WebsiteResource::collection($this->handle());
+        return PortfolioWebsiteResource::collection($this->handle());
     }
 
     public function htmlResponse(LengthAwarePaginator $websites, ActionRequest $request): Response
@@ -149,7 +149,7 @@ class IndexWebsites extends InertiaAction
                         ]
                     ]
                 ],
-                'data' => WebsiteResource::collection($websites),
+                'data' => PortfolioWebsiteResource::collection($websites),
 
             ]
         )->table($this->tableStructure());

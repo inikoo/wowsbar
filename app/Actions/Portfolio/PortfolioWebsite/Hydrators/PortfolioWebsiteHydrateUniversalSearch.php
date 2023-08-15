@@ -5,16 +5,16 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Portfolio\Website\Hydrators;
+namespace App\Actions\Portfolio\PortfolioWebsite\Hydrators;
 
-use App\Models\Portfolio\Website;
+use App\Models\Portfolio\PortfolioWebsite;
 use Lorisleiva\Actions\Concerns\AsAction;
 
-class WebsiteHydrateUniversalSearch
+class PortfolioWebsiteHydrateUniversalSearch
 {
     use AsAction;
 
-    public function handle(Website $website): void
+    public function handle(PortfolioWebsite $website): void
     {
         $website->universalSearch()->create(
             [

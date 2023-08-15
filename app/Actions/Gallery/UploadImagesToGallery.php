@@ -9,7 +9,7 @@ namespace App\Actions\Gallery;
 
 use App\Actions\Auth\User\UI\AttachImageToTenant;
 use App\Http\Resources\Gallery\ImageResource;
-use App\Models\Portfolio\Website;
+use App\Models\Portfolio\PortfolioWebsite;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Collection;
 use Lorisleiva\Actions\ActionRequest;
@@ -21,7 +21,7 @@ class UploadImagesToGallery
     use AsAction;
     use WithAttributes;
 
-    private Website|null $website = null;
+    private PortfolioWebsite|null $website = null;
 
     public function handle(array $imageFiles): Collection
     {

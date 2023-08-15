@@ -9,13 +9,13 @@ namespace App\Actions\Portfolio\ContentBlock\Banners\UI;
 
 use App\Actions\Helpers\History\IndexHistories;
 use App\Actions\InertiaAction;
-use App\Actions\Portfolio\Website\UI\ShowWebsite;
+use App\Actions\Portfolio\PortfolioWebsite\UI\ShowPortfolioWebsite;
 use App\Actions\UI\Tenant\Portfolio\ShowPortfolioDashboard;
 use App\Enums\UI\BannerTabsEnum;
 use App\Enums\UI\WebsiteTabsEnum;
 use App\Http\Resources\History\HistoryResource;
 use App\Models\Portfolio\ContentBlock;
-use App\Models\Portfolio\Website;
+use App\Models\Portfolio\PortfolioWebsite;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -40,7 +40,7 @@ class ShowDeletedBanner extends InertiaAction
         return $banner;
     }
 
-    public function inWebsite(Website $website, ContentBlock $banner, ActionRequest $request): ContentBlock
+    public function inWebsite(PortfolioWebsite $website, ContentBlock $banner, ActionRequest $request): ContentBlock
     {
         $this->initialisation($request)->withTab(BannerTabsEnum::values());
 
@@ -142,7 +142,7 @@ class ShowDeletedBanner extends InertiaAction
             ),
             'portfolio.websites.show.banners.deleted' =>
             array_merge(
-                ShowWebsite::make()->getBreadcrumbs(
+                ShowPortfolioWebsite::make()->getBreadcrumbs(
                     'portfolio.websites.show',
                     ['website' => $routeParameters['website']]
                 ),

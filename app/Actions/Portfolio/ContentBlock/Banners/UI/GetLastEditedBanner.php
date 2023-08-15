@@ -9,13 +9,13 @@ namespace App\Actions\Portfolio\ContentBlock\Banners\UI;
 
 use App\Actions\InertiaAction;
 use App\Http\Resources\Portfolio\ContentBlockResource;
-use App\Models\Portfolio\Website;
+use App\Models\Portfolio\PortfolioWebsite;
 use App\Models\Tenancy\Tenant;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class GetLastEditedBanner extends InertiaAction
 {
-    public function handle(Tenant|Website $parent, $prefix = null): AnonymousResourceCollection
+    public function handle(Tenant|PortfolioWebsite $parent, $prefix = null): AnonymousResourceCollection
     {
         $responses = $parent->contentBlocks()->limit(3)->latest('updated_at')->get();
 

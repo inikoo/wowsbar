@@ -8,7 +8,7 @@
 namespace App\Actions\Portfolio\ContentBlock\Banners\UI;
 
 use App\Actions\InertiaAction;
-use App\Models\Portfolio\Website;
+use App\Models\Portfolio\PortfolioWebsite;
 use App\Models\Web\WebBlockType;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
@@ -23,7 +23,7 @@ class CreateBanner extends InertiaAction
     }
 
 
-    public function inWebsite(Website $website, ActionRequest $request): Response|RedirectResponse
+    public function inWebsite(PortfolioWebsite $website, ActionRequest $request): Response|RedirectResponse
     {
         $this->initialisation($request);
 
@@ -31,7 +31,7 @@ class CreateBanner extends InertiaAction
     }
 
 
-    public function handle(Website $website, ActionRequest $request): Response
+    public function handle(PortfolioWebsite $website, ActionRequest $request): Response
     {
         return Inertia::render(
             'Tenant/CreateModel',

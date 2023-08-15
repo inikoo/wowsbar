@@ -15,7 +15,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property string $code
  * @property string $domain
  */
-class WebsiteResource extends JsonResource
+class PortfolioWebsiteResource extends JsonResource
 {
     public function toArray($request): array
     {

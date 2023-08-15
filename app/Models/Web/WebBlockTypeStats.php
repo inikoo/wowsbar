@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * App\Models\Web\WebBlockTypeStats
+ * App\Models\PortfolioWebsite\WebBlockTypeStats
  *
  * @property int $id
  * @property int $web_block_type_id

@@ -20,7 +20,7 @@ use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
 /**
- * App\Models\Portfolio\Website
+ * App\Models\Portfolio\PortfolioWebsite
  *
  * @property int $id
  * @property int $tenant_id
@@ -34,29 +34,29 @@ use Spatie\Sluggable\SlugOptions;
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Portfolio\ContentBlock> $contentBlocks
  * @property-read int|null $content_blocks_count
- * @property-read \App\Models\Portfolio\WebsiteStats|null $stats
+ * @property-read \App\Models\Portfolio\PortfolioWebsiteStats|null $stats
  * @property-read Tenant $tenant
  * @property-read \App\Models\Search\UniversalSearch|null $universalSearch
- * @method static \Database\Factories\Portfolio\WebsiteFactory factory($count = null, $state = [])
- * @method static Builder|Website newModelQuery()
- * @method static Builder|Website newQuery()
- * @method static Builder|Website onlyTrashed()
- * @method static Builder|Website query()
- * @method static Builder|Website whereCode($value)
- * @method static Builder|Website whereCreatedAt($value)
- * @method static Builder|Website whereData($value)
- * @method static Builder|Website whereDeletedAt($value)
- * @method static Builder|Website whereDomain($value)
- * @method static Builder|Website whereId($value)
- * @method static Builder|Website whereName($value)
- * @method static Builder|Website whereSlug($value)
- * @method static Builder|Website whereTenantId($value)
- * @method static Builder|Website whereUpdatedAt($value)
- * @method static Builder|Website withTrashed()
- * @method static Builder|Website withoutTrashed()
+ * @method static \Database\Factories\Portfolio\PortfolioWebsiteFactory factory($count = null, $state = [])
+ * @method static Builder|PortfolioWebsite newModelQuery()
+ * @method static Builder|PortfolioWebsite newQuery()
+ * @method static Builder|PortfolioWebsite onlyTrashed()
+ * @method static Builder|PortfolioWebsite query()
+ * @method static Builder|PortfolioWebsite whereCode($value)
+ * @method static Builder|PortfolioWebsite whereCreatedAt($value)
+ * @method static Builder|PortfolioWebsite whereData($value)
+ * @method static Builder|PortfolioWebsite whereDeletedAt($value)
+ * @method static Builder|PortfolioWebsite whereDomain($value)
+ * @method static Builder|PortfolioWebsite whereId($value)
+ * @method static Builder|PortfolioWebsite whereName($value)
+ * @method static Builder|PortfolioWebsite whereSlug($value)
+ * @method static Builder|PortfolioWebsite whereTenantId($value)
+ * @method static Builder|PortfolioWebsite whereUpdatedAt($value)
+ * @method static Builder|PortfolioWebsite withTrashed()
+ * @method static Builder|PortfolioWebsite withoutTrashed()
  * @mixin \Eloquent
  */
-class Website extends Model
+class PortfolioWebsite extends Model
 {
     use HasSlug;
     use SoftDeletes;
@@ -89,12 +89,12 @@ class Website extends Model
 
     public function stats(): HasOne
     {
-        return $this->hasOne(WebsiteStats::class);
+        return $this->hasOne(PortfolioWebsiteStats::class);
     }
 
     public function contentBlocks(): BelongsToMany
     {
-        return $this->belongsToMany(ContentBlock::class)->using(ContentBlockWebsite::class)
+        return $this->belongsToMany(ContentBlock::class)->using(ContentBlockPortfolioWebsite::class)
             ->withTimestamps();
     }
 

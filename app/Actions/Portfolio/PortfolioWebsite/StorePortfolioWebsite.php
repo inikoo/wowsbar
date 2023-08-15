@@ -1,15 +1,15 @@
 <?php
 /*
- *  Author: Raul Perusquia <raul@inikoo.com>
- *  Created: Tue, 18 Oct 2022 11:30:40 British Summer Time, Sheffield, UK
- *  Copyright (c) 2022, Raul A Perusquia Flores
+ * Author: Raul Perusquia <raul@inikoo.com>
+ * Created: Tue, 15 Aug 2023 16:08:38 Malaysia Time, Pantai Lembeng, Bali
+ * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Portfolio\Website;
+namespace App\Actions\Portfolio\PortfolioWebsite;
 
-use App\Actions\Portfolio\Website\Hydrators\WebsiteHydrateUniversalSearch;
-use App\Actions\Tenancy\Tenant\Hydrators\TenantHydrateWebsites;
-use App\Models\Portfolio\Website;
+use App\Actions\Portfolio\PortfolioWebsite\Hydrators\PortfolioWebsiteHydrateUniversalSearch;
+use App\Actions\Tenancy\Tenant\Hydrators\TenantHydratePortfolioWebsites;
+use App\Models\Portfolio\PortfolioWebsite;
 use App\Models\Tenancy\Tenant;
 use App\Rules\CaseSensitive;
 use Illuminate\Console\Command;
@@ -19,7 +19,7 @@ use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
 
-class StoreWebsite
+class StorePortfolioWebsite
 {
     use AsAction;
     use WithAttributes;
@@ -31,13 +31,13 @@ class StoreWebsite
     private bool $asAction = false;
 
 
-    public function handle(array $modelData): Website
+    public function handle(array $modelData): PortfolioWebsite
     {
 
-        $website = Website::create($modelData);
+        $website = PortfolioWebsite::create($modelData);
         $website->stats()->create();
-        TenantHydrateWebsites::dispatch(app('currentTenant'));
-        WebsiteHydrateUniversalSearch::dispatch($website);
+        TenantHydratePortfolioWebsites::dispatch(app('currentTenant'));
+        PortfolioWebsiteHydrateUniversalSearch::dispatch($website);
 
         return $website;
     }
@@ -54,27 +54,27 @@ class StoreWebsite
     public function rules(): array
     {
         return [
-            'domain' => ['required', new CaseSensitive('websites')],
-            'code'   => ['required', 'unique:tenant.websites', 'max:8'],
+            'domain' => ['required', new CaseSensitive('portfolio_websites')],
+            'code'   => ['required', 'unique:tenant.portfolio_websites', 'max:8'],
             'name'   => ['required']
         ];
     }
 
-    public function asController(ActionRequest $request): Website
+    public function asController(ActionRequest $request): PortfolioWebsite
     {
         $request->validate();
 
         return $this->handle($request->validated());
     }
 
-    public function htmlResponse(Website $website): RedirectResponse
+    public function htmlResponse(PortfolioWebsite $website): RedirectResponse
     {
         return Redirect::route('portfolio.websites.show', [
             $website->slug
         ]);
     }
 
-    public function action(array $objectData): Website
+    public function action(array $objectData): PortfolioWebsite
     {
         $this->asAction = true;
         $this->setRawAttributes($objectData);

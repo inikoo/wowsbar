@@ -11,7 +11,7 @@ use App\Enums\Portfolio\ContentBlock\ContentBlockStateEnum;
 use App\Enums\Web\WebBlockType\WebBlockTypeSlugEnum;
 use App\InertiaTable\InertiaTable;
 use App\Models\Portfolio\ContentBlock;
-use App\Models\Portfolio\Website;
+use App\Models\Portfolio\PortfolioWebsite;
 use App\Models\Tenancy\Tenant;
 use App\Models\Web\WebBlockType;
 use Closure;
@@ -60,7 +60,7 @@ class IndexContentBlocks
     }
 
     /** @noinspection PhpUndefinedMethodInspection */
-    public function handle(Tenant|Website $parent, $prefix = null, WebBlockType $webBlockType = null): LengthAwarePaginator
+    public function handle(Tenant|PortfolioWebsite $parent, $prefix = null, WebBlockType $webBlockType = null): LengthAwarePaginator
     {
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
             $query->where(function ($query) use ($value) {
@@ -98,7 +98,7 @@ class IndexContentBlocks
     }
 
     public function tableStructure(
-        Tenant|Website $parent,
+        Tenant|PortfolioWebsite $parent,
         ?array $modelOperations = null,
         $prefix = null,
         WebBlockType $webBlockType = null,
@@ -155,7 +155,7 @@ class IndexContentBlocks
                         'description' => $description,
                         'action'      => $action
                         /*
-                        'action' => $canEdit && class_basename($parent) == 'Website' ? [
+                        'action' => $canEdit && class_basename($parent) == 'PortfolioWebsite' ? [
                             'type'    => 'button',
                             'style'   => 'primary',
                             'tooltip' => __('new banner'),

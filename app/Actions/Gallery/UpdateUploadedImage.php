@@ -10,14 +10,14 @@ namespace App\Actions\Gallery;
 use App\Actions\Auth\User\UI\AttachImageToTenant;
 use App\Actions\Traits\WithActionUpdate;
 use App\Models\Media\Media;
-use App\Models\Portfolio\Website;
+use App\Models\Portfolio\PortfolioWebsite;
 use Lorisleiva\Actions\ActionRequest;
 
 class UpdateUploadedImage
 {
     use WithActionUpdate;
 
-    private Website|null $website = null;
+    private PortfolioWebsite|null $website = null;
 
     public function handle(Media $media, ?array $modelData): Media
     {

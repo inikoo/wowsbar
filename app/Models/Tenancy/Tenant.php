@@ -12,7 +12,7 @@ use App\Models\Auth\PublicUser;
 use App\Models\Auth\User;
 use App\Models\Media\Media;
 use App\Models\Portfolio\ContentBlock;
-use App\Models\Portfolio\Website;
+use App\Models\Portfolio\PortfolioWebsite;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -50,13 +50,13 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read Media|null $logo
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, Media> $media
  * @property-read int|null $media_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, PortfolioWebsite> $portfolioWebsites
+ * @property-read int|null $portfolio_websites_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, PublicUser> $publicUsers
  * @property-read int|null $public_users_count
  * @property-read \App\Models\Tenancy\TenantStats|null $stats
  * @property-read \Illuminate\Database\Eloquent\Collection<int, User> $users
  * @property-read int|null $users_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, Website> $websites
- * @property-read int|null $websites_count
  * @method static \Spatie\Multitenancy\TenantCollection<int, static> all($columns = ['*'])
  * @method static \Database\Factories\Tenancy\TenantFactory factory($count = null, $state = [])
  * @method static \Spatie\Multitenancy\TenantCollection<int, static> get($columns = ['*'])
@@ -140,9 +140,9 @@ class Tenant extends SpatieTenant implements HasMedia
         return $this->hasMany(PublicUser::class);
     }
 
-    public function websites(): HasMany
+    public function portfolioWebsites(): HasMany
     {
-        return $this->hasMany(Website::class);
+        return $this->hasMany(PortfolioWebsite::class);
     }
 
     public function contentBlocks(): HasMany

@@ -5,7 +5,7 @@
  * Copyright (c) 2023, Inikoo LTD
  */
 
-namespace App\Actions\Portfolio\Website\UI;
+namespace App\Actions\Portfolio\PortfolioWebsite\UI;
 
 use App\Actions\InertiaAction;
 use Illuminate\Http\RedirectResponse;
@@ -13,7 +13,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
 
-class CreateWebsite extends InertiaAction
+class CreatePortfolioWebsite extends InertiaAction
 {
     public function authorize(ActionRequest $request): bool
     {
@@ -101,7 +101,7 @@ class CreateWebsite extends InertiaAction
     public function getBreadcrumbs(): array
     {
         return array_merge(
-            IndexWebsites::make()->getBreadcrumbs(
+            IndexPortfolioWebsites::make()->getBreadcrumbs(
                 'portfolio.websites.index',
                 []
             ),

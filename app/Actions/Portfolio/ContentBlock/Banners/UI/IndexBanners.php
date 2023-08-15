@@ -9,10 +9,10 @@ namespace App\Actions\Portfolio\ContentBlock\Banners\UI;
 
 use App\Actions\InertiaAction;
 use App\Actions\Portfolio\ContentBlock\UI\IndexContentBlocks;
-use App\Actions\Portfolio\Website\UI\ShowWebsite;
+use App\Actions\Portfolio\PortfolioWebsite\UI\ShowPortfolioWebsite;
 use App\Actions\UI\Tenant\Portfolio\ShowPortfolioDashboard;
 use App\Http\Resources\Portfolio\ContentBlockResource;
-use App\Models\Portfolio\Website;
+use App\Models\Portfolio\PortfolioWebsite;
 use App\Models\Tenancy\Tenant;
 use App\Models\Web\WebBlockType;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -23,7 +23,7 @@ use Lorisleiva\Actions\ActionRequest;
 
 class IndexBanners extends InertiaAction
 {
-    private Tenant|Website $parent;
+    private Tenant|PortfolioWebsite $parent;
 
     private WebBlockType $webBlockType;
 
@@ -46,7 +46,7 @@ class IndexBanners extends InertiaAction
         return $this->handle($this->parent);
     }
 
-    public function inWebsite(Website $website, ActionRequest $request): LengthAwarePaginator
+    public function inWebsite(PortfolioWebsite $website, ActionRequest $request): LengthAwarePaginator
     {
         $this->initialisation($request);
         $this->parent = $website;
@@ -55,7 +55,7 @@ class IndexBanners extends InertiaAction
     }
 
 
-    public function handle(Tenant|Website $parent, $prefix = null): LengthAwarePaginator
+    public function handle(Tenant|PortfolioWebsite $parent, $prefix = null): LengthAwarePaginator
     {
         $this->webBlockType = WebBlockType::where('slug', 'banner')->first();
 
@@ -71,7 +71,7 @@ class IndexBanners extends InertiaAction
     {
         $scope     = $this->parent;
         $container = null;
-        if (class_basename($scope) == 'Website') {
+        if (class_basename($scope) == 'PortfolioWebsite') {
             $container = [
                 'icon'    => ['fal', 'fa-globe'],
                 'tooltip' => __('website'),
@@ -171,7 +171,7 @@ class IndexBanners extends InertiaAction
             ),
             'portfolio.websites.show.banners.index' =>
             array_merge(
-                ShowWebsite::make()->getBreadcrumbs(
+                ShowPortfolioWebsite::make()->getBreadcrumbs(
                     'portfolio.websites.show',
                     $routeParameters
                 ),

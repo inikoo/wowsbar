@@ -10,7 +10,7 @@ namespace App\Actions\Tenancy\Tenant\Hydrators;
 use App\Models\Tenancy\Tenant;
 use Lorisleiva\Actions\Concerns\AsAction;
 
-class TenantHydrateWebsites
+class TenantHydratePortfolioWebsites
 {
     use AsAction;
     use HasTenantHydrate;
@@ -19,7 +19,7 @@ class TenantHydrateWebsites
     {
 
         $stats = [
-            'number_websites'       => $tenant->websites()->count(),
+            'number_websites'       => $tenant->portfolioWebsites()->count(),
         ];
         $tenant->stats()->update($stats);
     }

@@ -10,7 +10,7 @@ namespace App\Actions\Portfolio\ContentBlock;
 use App\Actions\Portfolio\ContentBlock\Elasticsearch\DeleteContentBlockElasticsearch;
 use App\Actions\Tenancy\Tenant\Hydrators\TenantHydrateContentBlocks;
 use App\Models\Portfolio\ContentBlock;
-use App\Models\Portfolio\Website;
+use App\Models\Portfolio\PortfolioWebsite;
 use Illuminate\Http\RedirectResponse;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -23,8 +23,8 @@ class DeleteContentBlock
     use AsController;
     use WithAttributes;
 
-    public bool $isAction        = false;
-    public Website|null $website = null;
+    public bool $isAction                 = false;
+    public PortfolioWebsite|null $website = null;
 
     public function handle(ContentBlock $contentBlock): ContentBlock
     {

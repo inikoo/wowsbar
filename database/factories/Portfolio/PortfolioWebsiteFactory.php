@@ -9,7 +9,7 @@ namespace Database\Factories\Portfolio;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class WebsiteFactory extends Factory
+class PortfolioWebsiteFactory extends Factory
 {
     public function definition(): array
     {

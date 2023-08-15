@@ -12,11 +12,11 @@ use Illuminate\Support\Facades\Schema;
 return new class () extends Migration {
     public function up(): void
     {
-        Schema::create('content_block_website', function (Blueprint $table) {
+        Schema::create('content_block_portfolio_website', function (Blueprint $table) {
             $table->integerIncrements('id');
             $table->ulid()->index();
-            $table->unsignedInteger('website_id')->index();
-            $table->foreign('website_id')->references('id')->on('websites')->onUpdate('cascade')->onDelete('cascade');
+            $table->unsignedInteger('portfolio_website_id')->index()->nullable();
+            $table->foreign('portfolio_website_id')->references('id')->on('portfolio_websites')->onUpdate('cascade')->onDelete('cascade');
 
             $table->unsignedSmallInteger('tenant_id');
             $table->foreign('tenant_id')->references('id')->on('tenants')->onUpdate('cascade')->onDelete('cascade');
@@ -30,6 +30,6 @@ return new class () extends Migration {
 
     public function down(): void
     {
-        Schema::dropIfExists('content_block_website');
+        Schema::dropIfExists('content_block_portfolio_website');
     }
 };

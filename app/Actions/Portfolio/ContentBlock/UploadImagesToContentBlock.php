@@ -9,7 +9,7 @@ namespace App\Actions\Portfolio\ContentBlock;
 
 use App\Http\Resources\Gallery\ImageResource;
 use App\Models\Portfolio\ContentBlock;
-use App\Models\Portfolio\Website;
+use App\Models\Portfolio\PortfolioWebsite;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Collection;
 use Lorisleiva\Actions\ActionRequest;
@@ -22,7 +22,7 @@ class UploadImagesToContentBlock
     use WithAttributes;
 
 
-    private Website|null $website = null;
+    private PortfolioWebsite|null $website = null;
 
 
     public function handle(ContentBlock $contentBlock, array $imageFiles): Collection
@@ -51,7 +51,7 @@ class UploadImagesToContentBlock
         ];
     }
 
-    public function inBannerInWebsite(Website $website, ContentBlock $banner, ActionRequest $request): Collection
+    public function inBannerInWebsite(PortfolioWebsite $website, ContentBlock $banner, ActionRequest $request): Collection
     {
         $request->validate();
         return $this->handle($banner, $request->validated('images'));

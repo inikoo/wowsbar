@@ -8,7 +8,7 @@
 namespace App\Actions\Portfolio\ContentBlock\Banners\UI;
 
 use App\Actions\InertiaAction;
-use App\Actions\Portfolio\Website\UI\ShowWebsite;
+use App\Actions\Portfolio\PortfolioWebsite\UI\ShowPortfolioWebsite;
 use App\Models\Portfolio\ContentBlock;
 use Exception;
 use Illuminate\Support\Str;
@@ -44,7 +44,7 @@ class EditBanner extends InertiaAction
         return Inertia::render(
             'Tenant/EditModel',
             [
-                    'title'       => __("Website's settings"),
+                    'title'       => __("PortfolioWebsite's settings"),
                     'breadcrumbs' => $this->getBreadcrumbs(
                         $request->route()->getName(),
                         $request->route()->parameters()
@@ -57,7 +57,7 @@ class EditBanner extends InertiaAction
                         'title'     => __('Edit banner'),
                         'container' => [
                             'icon'    => ['fal', 'fa-globe'],
-                            'tooltip' => __('Website'),
+                            'tooltip' => __('PortfolioWebsite'),
                             'label'   => Str::possessive($banner->name)
                         ],
 
@@ -116,7 +116,7 @@ class EditBanner extends InertiaAction
 
     public function getBreadcrumbs(string $routeName, array $routeParameters): array
     {
-        return ShowWebsite::make()->getBreadcrumbs(
+        return ShowPortfolioWebsite::make()->getBreadcrumbs(
             $routeName,
             $routeParameters,
             suffix: '('.__('editing').')'

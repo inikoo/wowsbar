@@ -9,7 +9,7 @@ namespace App\Actions\Gallery;
 
 use App\Actions\Traits\WithActionUpdate;
 use App\Models\Media\Media;
-use App\Models\Portfolio\Website;
+use App\Models\Portfolio\PortfolioWebsite;
 use Illuminate\Http\RedirectResponse;
 use Lorisleiva\Actions\ActionRequest;
 
@@ -17,7 +17,7 @@ class DeleteUploadedImage
 {
     use WithActionUpdate;
 
-    private Website|null $website = null;
+    private PortfolioWebsite|null $website = null;
 
     public function handle(Media $media): bool
     {

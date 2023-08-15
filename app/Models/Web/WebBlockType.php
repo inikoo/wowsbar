@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * App\Models\Web\WebBlockType
+ * App\Models\PortfolioWebsite\WebBlockType
  *
  * @property int $id
  * @property WebBlockTypeScopeEnum $scope

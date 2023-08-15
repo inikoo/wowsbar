@@ -11,10 +11,10 @@
 use App\Actions\Portfolio\ContentBlock\DeleteContentBlock;
 use App\Actions\Portfolio\ContentBlock\StoreContentBlock;
 use App\Actions\Portfolio\ContentBlock\UpdateContentBlock;
-use App\Actions\Portfolio\Website\StoreWebsite;
+use App\Actions\Portfolio\PortfolioWebsite\StorePortfolioWebsite;
 use App\Actions\Tenancy\Tenant\StoreTenant;
 use App\Models\Portfolio\ContentBlock;
-use App\Models\Portfolio\Website;
+use App\Models\Portfolio\PortfolioWebsite;
 use App\Models\Tenancy\Tenant;
 use App\Models\Web\WebBlockType;
 
@@ -41,8 +41,8 @@ beforeEach(function () {
 
 test('create websites', function () {
     $tenant    = app('currentTenant');
-    $modelData = Website::factory()->definition();
-    $website   = StoreWebsite::make()->action(
+    $modelData = PortfolioWebsite::factory()->definition();
+    $website   = StorePortfolioWebsite::make()->action(
         array_merge(
             $modelData,
             [
@@ -51,13 +51,13 @@ test('create websites', function () {
         )
     );
     $tenant->refresh();
-    expect($website)->toBeInstanceOf(Website::class)
+    expect($website)->toBeInstanceOf(PortfolioWebsite::class)
         ->and($website->slug)->toBe('web1')
         ->and($tenant->stats->number_websites)->toBe(1);
-    $modelData = Website::factory()->definition();
-    $website2  = StoreWebsite::make()->action($modelData);
+    $modelData = PortfolioWebsite::factory()->definition();
+    $website2  = StorePortfolioWebsite::make()->action($modelData);
     $tenant->refresh();
-    expect($website2)->toBeInstanceOf(Website::class)
+    expect($website2)->toBeInstanceOf(PortfolioWebsite::class)
         ->and($tenant->stats->number_websites)->toBe(2);
 
     $this->artisan('website:create abc hello.com HI Hello')->assertExitCode(0);

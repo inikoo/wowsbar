@@ -8,7 +8,7 @@
 namespace App\Actions\Portfolio\ContentBlock;
 
 use App\Models\Portfolio\ContentBlock;
-use App\Models\Portfolio\Website;
+use App\Models\Portfolio\PortfolioWebsite;
 use Illuminate\Database\Eloquent\Model;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -23,7 +23,7 @@ class AttachContentBlockToWebsite
      * @var true
      */
     private bool $asAction = false;
-    public function handle(Website $website, ContentBlock $contentBlock): Model
+    public function handle(PortfolioWebsite $website, ContentBlock $contentBlock): Model
     {
         $website->website()->attach([$contentBlock->id]);
 
@@ -35,13 +35,13 @@ class AttachContentBlockToWebsite
         return $request->user()->can("portfolio.edit");
     }
 
-    public function asController(Website $website, ActionRequest $request): Model
+    public function asController(PortfolioWebsite $website, ActionRequest $request): Model
     {
         $request->validate();
 
         return $this->handle($website, $request->validated());
     }
-    public function action(Website $website, array $objectData): Model
+    public function action(PortfolioWebsite $website, array $objectData): Model
     {
         $this->asAction = true;
         $this->setRawAttributes($objectData);

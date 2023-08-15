@@ -19,7 +19,33 @@ class GetLayout
         $navigation = [];
 
 
+        if ($user->can('website')) {
+            $navigation['website'] = [
+                'label'   => __('website'),
+                'icon'    => ['fal', 'fa-globe'],
+                'route'   => 'org.website.dashboard',
+                'topMenu' => [
+                    'subSections' => [
+                        [
+                            'label' => __('website'),
+                            'icon'  => ['fal', 'fa-globe'],
+                            'route' => [
+                                'name' => 'org.website.dashboard',
 
+                            ]
+                        ],
+                        [
+                            'label' => __('webpages'),
+                            'icon'  => ['fal', 'fa-globe'],
+                            'route' => [
+                                'name' => 'org.website.webpages.index',
+
+                            ]
+                        ],
+                    ]
+                ]
+            ];
+        }
 
         if ($user->can('sysadmin')) {
             $navigation['sysadmin'] = [

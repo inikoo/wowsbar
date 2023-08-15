@@ -13,7 +13,7 @@ use App\Actions\Portfolio\ContentBlock\Hydrators\ContentBlockHydrateUniversalSea
 use App\Actions\Portfolio\ContentBlockComponent\StoreContentBlockComponent;
 use App\Actions\Tenancy\Tenant\Hydrators\TenantHydrateContentBlocks;
 use App\Models\Portfolio\ContentBlock;
-use App\Models\Portfolio\Website;
+use App\Models\Portfolio\PortfolioWebsite;
 use App\Models\Tenancy\Tenant;
 use App\Models\Web\WebBlock;
 use App\Models\Web\WebBlockType;
@@ -30,11 +30,11 @@ class StoreContentBlock
     use WithAttributes;
 
 
-    private bool $asAction        = false;
-    private Website|null $website = null;
+    private bool $asAction                 = false;
+    private PortfolioWebsite|null $website = null;
 
 
-    public function handle(Website $website, WebBlock $webBlock, array $modelData): ContentBlock
+    public function handle(PortfolioWebsite $website, WebBlock $webBlock, array $modelData): ContentBlock
     {
         $this->website = $website;
         $layout        = $webBlock->blueprint;
@@ -87,7 +87,7 @@ class StoreContentBlock
         ];
     }
 
-    public function inWebsiteInWebBlockType(Website $website, WebBlockType $webBlockType, ActionRequest $request): ContentBlock
+    public function inWebsiteInWebBlockType(PortfolioWebsite $website, WebBlockType $webBlockType, ActionRequest $request): ContentBlock
     {
         $request->validate();
         $webBlock = $webBlockType->webBlocks[0];
@@ -95,7 +95,7 @@ class StoreContentBlock
         return $this->handle($website, $webBlock, $request->validated());
     }
 
-    public function action(Website $website, WebBlock $webBlock, array $objectData): ContentBlock
+    public function action(PortfolioWebsite $website, WebBlock $webBlock, array $objectData): ContentBlock
     {
         $this->asAction = true;
         $this->setRawAttributes($objectData);
@@ -114,7 +114,7 @@ class StoreContentBlock
         $tenant = Tenant::where('slug', $command->argument('tenant'))->firstOrFail();
         $tenant->makeCurrent();
 
-        $website  = Website::where('slug', $command->argument('website'))->firstOrFail();
+        $website  = PortfolioWebsite::where('slug', $command->argument('website'))->firstOrFail();
         $webBlock = WebBlock::where('slug', $command->argument('web-block'))->firstOrFail();
 
 

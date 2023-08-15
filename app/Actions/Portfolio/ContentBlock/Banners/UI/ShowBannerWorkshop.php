@@ -9,7 +9,7 @@ namespace App\Actions\Portfolio\ContentBlock\Banners\UI;
 
 use App\Actions\InertiaAction;
 use App\Models\Portfolio\ContentBlock;
-use App\Models\Portfolio\Website;
+use App\Models\Portfolio\PortfolioWebsite;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -33,7 +33,7 @@ class ShowBannerWorkshop extends InertiaAction
     }
 
     /** @noinspection PhpUnusedParameterInspection */
-    public function inWebsite(Website $website, ContentBlock $banner, ActionRequest $request): ContentBlock
+    public function inWebsite(PortfolioWebsite $website, ContentBlock $banner, ActionRequest $request): ContentBlock
     {
         $this->initialisation($request);
 

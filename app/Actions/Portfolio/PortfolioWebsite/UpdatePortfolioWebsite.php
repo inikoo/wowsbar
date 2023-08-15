@@ -5,24 +5,24 @@
  *  Copyright (c) 2022, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Portfolio\Website;
+namespace App\Actions\Portfolio\PortfolioWebsite;
 
-use App\Actions\Portfolio\Website\Hydrators\WebsiteHydrateUniversalSearch;
+use App\Actions\Portfolio\PortfolioWebsite\Hydrators\PortfolioWebsiteHydrateUniversalSearch;
 use App\Actions\Traits\WithActionUpdate;
-use App\Http\Resources\Portfolio\WebsiteResource;
-use App\Models\Portfolio\Website;
+use App\Http\Resources\Portfolio\PortfolioWebsiteResource;
+use App\Models\Portfolio\PortfolioWebsite;
 use Lorisleiva\Actions\ActionRequest;
 
-class UpdateWebsite
+class UpdatePortfolioWebsite
 {
     use WithActionUpdate;
 
 
-    public function handle(Website $website, array $modelData): Website
+    public function handle(PortfolioWebsite $website, array $modelData): PortfolioWebsite
     {
         $this->update($website, $modelData, ['data']);
 
-        WebsiteHydrateUniversalSearch::dispatch($website);
+        PortfolioWebsiteHydrateUniversalSearch::dispatch($website);
 
         return $website;
     }
@@ -38,12 +38,12 @@ class UpdateWebsite
     {
         return [
             'domain' => ['sometimes','required'],
-            'code'   => ['sometimes','required', 'unique:tenant.websites','max:8'],
+            'code'   => ['sometimes','required', 'unique:tenant.portfolio_websites','max:8'],
             'name'   => ['sometimes','required']
         ];
     }
 
-    public function asController(Website $website, ActionRequest $request): Website
+    public function asController(PortfolioWebsite $website, ActionRequest $request): PortfolioWebsite
     {
         $request->validate();
 
@@ -52,8 +52,8 @@ class UpdateWebsite
 
 
 
-    public function jsonResponse(Website $website): WebsiteResource
+    public function jsonResponse(PortfolioWebsite $website): PortfolioWebsiteResource
     {
-        return new WebsiteResource($website);
+        return new PortfolioWebsiteResource($website);
     }
 }

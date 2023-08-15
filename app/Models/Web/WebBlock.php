@@ -19,7 +19,7 @@ use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
 /**
- * App\Models\Web\WebBlock
+ * App\Models\PortfolioWebsite\WebBlock
  *
  * @property int $id
  * @property string $slug

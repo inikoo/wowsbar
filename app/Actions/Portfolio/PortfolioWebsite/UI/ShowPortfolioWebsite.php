@@ -5,7 +5,7 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Portfolio\Website\UI;
+namespace App\Actions\Portfolio\PortfolioWebsite\UI;
 
 use App\Actions\Helpers\History\IndexHistories;
 use App\Actions\InertiaAction;
@@ -16,15 +16,15 @@ use App\Actions\UI\WithInertia;
 use App\Enums\UI\WebsiteTabsEnum;
 use App\Http\Resources\History\HistoryResource;
 use App\Http\Resources\Portfolio\ContentBlockResource;
-use App\Http\Resources\Portfolio\WebsiteResource;
-use App\Models\Portfolio\Website;
+use App\Http\Resources\Portfolio\PortfolioWebsiteResource;
+use App\Models\Portfolio\PortfolioWebsite;
 use App\Models\Web\WebBlockType;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 
-class ShowWebsite extends InertiaAction
+class ShowPortfolioWebsite extends InertiaAction
 {
     use AsAction;
     use WithInertia;
@@ -38,7 +38,7 @@ class ShowWebsite extends InertiaAction
         return $request->user()->can('portfolio.view');
     }
 
-    public function asController(Website $website, ActionRequest $request): Website
+    public function asController(PortfolioWebsite $website, ActionRequest $request): PortfolioWebsite
     {
         $this->initialisation($request)->withTab(WebsiteTabsEnum::values());
 
@@ -46,12 +46,12 @@ class ShowWebsite extends InertiaAction
     }
 
 
-    public function htmlResponse(Website $website, ActionRequest $request): Response
+    public function htmlResponse(PortfolioWebsite $website, ActionRequest $request): Response
     {
         return Inertia::render(
-            'Tenant/Portfolio/Website',
+            'Tenant/Portfolio/PortfolioWebsite',
             [
-                'title'       => __('Website'),
+                'title'       => __('PortfolioWebsite'),
                 'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->getName(),
                     $request->route()->parameters
@@ -146,14 +146,14 @@ class ShowWebsite extends InertiaAction
     }
 
 
-    public function jsonResponse(Website $website): WebsiteResource
+    public function jsonResponse(PortfolioWebsite $website): PortfolioWebsiteResource
     {
-        return new WebsiteResource($website);
+        return new PortfolioWebsiteResource($website);
     }
 
     public function getBreadcrumbs(string $routeName, array $routeParameters, string $suffix = ''): array
     {
-        $headCrumb = function (string $type, Website $website, array $routeParameters, string $suffix) {
+        $headCrumb = function (string $type, PortfolioWebsite $website, array $routeParameters, string $suffix) {
             return [
                 [
                     'type'           => $type,
@@ -205,21 +205,21 @@ class ShowWebsite extends InertiaAction
         };
     }
 
-    public function getPrevious(Website $website, ActionRequest $request): ?array
+    public function getPrevious(PortfolioWebsite $website, ActionRequest $request): ?array
     {
-        $previous = Website::where('code', '<', $website->code)->orderBy('code', 'desc')->first();
+        $previous = PortfolioWebsite::where('code', '<', $website->code)->orderBy('code', 'desc')->first();
 
         return $this->getNavigation($previous, $request->route()->getName());
     }
 
-    public function getNext(Website $website, ActionRequest $request): ?array
+    public function getNext(PortfolioWebsite $website, ActionRequest $request): ?array
     {
-        $next = Website::where('code', '>', $website->code)->orderBy('code')->first();
+        $next = PortfolioWebsite::where('code', '>', $website->code)->orderBy('code')->first();
 
         return $this->getNavigation($next, $request->route()->getName());
     }
 
-    private function getNavigation(?Website $website, string $routeName): ?array
+    private function getNavigation(?PortfolioWebsite $website, string $routeName): ?array
     {
         if (!$website) {
             return null;

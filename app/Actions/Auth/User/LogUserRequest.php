@@ -10,7 +10,6 @@ namespace App\Actions\Auth\User;
 use App\Actions\Elasticsearch\IndexElasticsearchDocument;
 use App\Models\Auth\User;
 use App\Models\Organisation\OrganisationUser;
-use Auth;
 use hisorange\BrowserDetect\Parser as Browser;
 use Illuminate\Support\Carbon;
 use Lorisleiva\Actions\Concerns\AsAction;

@@ -12,10 +12,10 @@ use Illuminate\Support\Facades\Schema;
 return new class () extends Migration {
     public function up(): void
     {
-        Schema::create('website_stats', function (Blueprint $table) {
+        Schema::create('portfolio_website_stats', function (Blueprint $table) {
             $table->smallIncrements('id');
-            $table->unsignedSmallInteger('website_id')->index();
-            $table->foreign('website_id')->references('id')->on('websites');
+            $table->unsignedSmallInteger('portfolio_website_id')->index();
+            $table->foreign('portfolio_website_id')->references('id')->on('portfolio_websites');
             $table->timestampsTz();
 
         });
@@ -24,6 +24,6 @@ return new class () extends Migration {
 
     public function down(): void
     {
-        Schema::dropIfExists('website_stats');
+        Schema::dropIfExists('portfolio_website_stats');
     }
 };

@@ -51,7 +51,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read \App\Models\Tenancy\Tenant $tenant
  * @property-read \App\Models\Search\UniversalSearch|null $universalSearch
  * @property-read WebBlock $webBlock
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Portfolio\Website> $website
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Portfolio\PortfolioWebsite> $website
  * @property-read int|null $website_count
  * @method static \Database\Factories\Portfolio\ContentBlockFactory factory($count = null, $state = [])
  * @method static Builder|ContentBlock newModelQuery()
@@ -130,7 +130,7 @@ class ContentBlock extends Model implements HasMedia
 
     public function website(): BelongsToMany
     {
-        return $this->belongsToMany(Website::class)->using(ContentBlockWebsite::class)
+        return $this->belongsToMany(PortfolioWebsite::class)->using(ContentBlockPortfolioWebsite::class)
             ->withTimestamps();
     }
 

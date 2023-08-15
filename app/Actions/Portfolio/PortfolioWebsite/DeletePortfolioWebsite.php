@@ -5,21 +5,21 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Portfolio\Website;
+namespace App\Actions\Portfolio\PortfolioWebsite;
 
-use App\Models\Portfolio\Website;
+use App\Models\Portfolio\PortfolioWebsite;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsController;
 use Lorisleiva\Actions\Concerns\WithAttributes;
 
-class DeleteWebsite
+class DeletePortfolioWebsite
 {
     use AsController;
     use WithAttributes;
 
-    public function handle(Website $website): Website
+    public function handle(PortfolioWebsite $website): PortfolioWebsite
     {
         $website->delete();
 
@@ -31,7 +31,7 @@ class DeleteWebsite
         return $request->user()->can("portfolio.edit");
     }
 
-    public function asController(Website $website, ActionRequest $request): Website
+    public function asController(PortfolioWebsite $website, ActionRequest $request): PortfolioWebsite
     {
         $request->validate();
         return $this->handle($website);

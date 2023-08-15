@@ -5,17 +5,17 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Portfolio\Website\UI;
+namespace App\Actions\Portfolio\PortfolioWebsite\UI;
 
 use App\Actions\InertiaAction;
-use App\Models\Portfolio\Website;
+use App\Models\Portfolio\PortfolioWebsite;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
 
-class RemoveWebsite extends InertiaAction
+class RemovePortfolioWebsite extends InertiaAction
 {
-    public function handle(Website $website): Website
+    public function handle(PortfolioWebsite $website): PortfolioWebsite
     {
         return $website;
     }
@@ -25,7 +25,7 @@ class RemoveWebsite extends InertiaAction
         return $request->user()->can("inventory.edit");
     }
 
-    public function asController(Website $website, ActionRequest $request): Website
+    public function asController(PortfolioWebsite $website, ActionRequest $request): PortfolioWebsite
     {
         $this->initialisation($request);
 
@@ -37,13 +37,13 @@ class RemoveWebsite extends InertiaAction
     {
         return  [
             'buttonLabel' => __('Delete'),
-            'title'       => __('Delete Website'),
-            'text'        => __("This action will delete this Website and its dependent"),
+            'title'       => __('Delete PortfolioWebsite'),
+            'text'        => __("This action will delete this PortfolioWebsite and its dependent"),
             'route'       => $route
         ];
     }
 
-    public function htmlResponse(Website $website, ActionRequest $request): Response
+    public function htmlResponse(PortfolioWebsite $website, ActionRequest $request): Response
     {
         return Inertia::render(
             'RemoveModel',
@@ -84,6 +84,6 @@ class RemoveWebsite extends InertiaAction
 
     public function getBreadcrumbs(string $routeName, array $routeParameters): array
     {
-        return ShowWebsite::make()->getBreadcrumbs($routeName, $routeParameters, suffix: '('.__('deleting').')');
+        return ShowPortfolioWebsite::make()->getBreadcrumbs($routeName, $routeParameters, suffix: '('.__('deleting').')');
     }
 }

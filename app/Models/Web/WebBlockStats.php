@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * App\Models\Web\WebBlockStats
+ * App\Models\PortfolioWebsite\WebBlockStats
  *
  * @property int $id
  * @property int $web_block_id
