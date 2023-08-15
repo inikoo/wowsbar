@@ -1,7 +1,8 @@
 import { initializeApp } from "firebase/app"
 import { getDatabase, ref as dbRef } from "firebase/database"
-import firebaseConfig from "@/../private/firebase/wowsbar-firebase.json"
 import { useDatabaseList } from "vuefire"
+
+const firebaseConfig = await import('/' + import.meta.env.VITE_FIREBASE_CREDENTIALS)
 
 let init = initializeApp(firebaseConfig)
 let getDb = getDatabase(init)
