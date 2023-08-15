@@ -20,8 +20,8 @@ console.log('sideImage', props)
 </script>
   
 <template>
-  <div :class="`lg:grid lg:grid-cols-${data.length} lg:items-start lg:gap-x-8`">
-    <div v-for="(item, index) of data" :key="index">
+  <div :class="`lg:grid lg:grid-cols-${data.dataRow.length} lg:items-start lg:gap-x-8`">
+    <div v-for="(item, index) of data.dataRow" :key="index">
       <div v-if="item.type === 'image'" class="min-h-300 max-h-[32rem] overflow-hidden">
         <img :src="item.src" :alt="item.alt" class="h-full w-full object-cover object-center sm:rounded-lg" />
       </div>
