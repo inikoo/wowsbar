@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use App\Actions\Firebase\DeleteUserLogFirebase;
 use App\Actions\Firebase\StoreUserLogFirebase;
+use Auth;
 use Closure;
 use Illuminate\Http\Request;
 
@@ -15,9 +16,10 @@ class LogUserFirebaseMiddleware
     public function handle(Request $request, Closure $next)
     {
         $user   = $request->user();
+        $parent = organisation();
 
-        if(!$parent = app('currentTenant')) {
-            $parent = organisation();
+        if(Auth::getDefaultDriver() == 'web') {
+            $parent = app('currentTenant');
         }
 
         $route = [

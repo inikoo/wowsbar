@@ -9,6 +9,7 @@ namespace App\Actions\Firebase;
 
 use App\Models\Auth\User;
 use App\Models\Organisation\Organisation;
+use App\Models\Organisation\OrganisationUser;
 use App\Models\Tenancy\Tenant;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\AsObject;
@@ -18,7 +19,7 @@ class StoreUserLogFirebase
     use AsObject;
     use AsAction;
 
-    public function handle(User $user, Tenant|Organisation $parent, array $route): void
+    public function handle(User|OrganisationUser $user, Tenant|Organisation $parent, array $route): void
     {
         $database  = app('firebase.database');
 
