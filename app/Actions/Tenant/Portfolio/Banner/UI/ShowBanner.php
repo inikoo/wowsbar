@@ -1,7 +1,7 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Wed, 16 Aug 2023 08:17:02 Malaysia Time, Pantai Lembeng, Bali
+ * Created: Wed, 16 Aug 2023 11:21:24 Malaysia Time, Pantai Lembeng, Bali
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
@@ -41,8 +41,9 @@ class ShowBanner extends InertiaAction
         return $banner;
     }
 
-    public function inWebsite(PortfolioWebsite $website, Banner $banner, ActionRequest $request): Banner
+    public function inPortfolioWebsite(PortfolioWebsite $portfolioWebsite, Banner $banner, ActionRequest $request): Banner
     {
+
         $this->initialisation($request)->withTab(BannerTabsEnum::values());
 
         return $banner;

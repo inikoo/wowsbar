@@ -1,7 +1,7 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Wed, 16 Aug 2023 08:17:02 Malaysia Time, Pantai Lembeng, Bali
+ * Created: Wed, 16 Aug 2023 11:21:24 Malaysia Time, Pantai Lembeng, Bali
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
@@ -33,7 +33,7 @@ class RemoveBanner extends InertiaAction
         return $this->handle($banner);
     }
 
-    public function inWebsite(PortfolioWebsite $website, Banner $banner, ActionRequest $request): Banner
+    public function inPortfolioWebsite(PortfolioWebsite $portfolioWebsite, Banner $banner, ActionRequest $request): Banner
     {
         $this->initialisation($request);
 
@@ -82,9 +82,9 @@ class RemoveBanner extends InertiaAction
                 ],
                 'data'        => $this->getAction(
                     route: [
-                        'name'       => 'models.content-block.delete',
+                        'name'       => 'models.banner.delete',
                         'parameters' => [
-                            'contentBlock' => $request->route()->originalParameters()['banner']
+                            'banner' => $request->route()->originalParameters()['banner']
                         ]
                     ]
                 )
