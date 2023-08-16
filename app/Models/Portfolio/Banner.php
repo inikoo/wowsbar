@@ -10,11 +10,9 @@ namespace App\Models\Portfolio;
 use App\Concerns\BelongsToTenant;
 use App\Http\Resources\Portfolio\ContentBlockComponentResource;
 use App\Models\Traits\HasUniversalSearch;
-use App\Models\Web\WebBlock;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -22,7 +20,6 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
-
 
 /**
  * App\Models\Portfolio\Banner
@@ -50,6 +47,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read int|null $portfolio_website_count
  * @property-read \App\Models\Tenancy\Tenant $tenant
  * @property-read \App\Models\Search\UniversalSearch|null $universalSearch
+ * @method static \Database\Factories\Portfolio\BannerFactory factory($count = null, $state = [])
  * @method static Builder|Banner newModelQuery()
  * @method static Builder|Banner newQuery()
  * @method static Builder|Banner onlyTrashed()

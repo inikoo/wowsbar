@@ -7,7 +7,6 @@
 
 namespace App\Actions\Tenant\Portfolio\Banner\UI;
 
-
 use Illuminate\Support\Arr;
 use Lorisleiva\Actions\Concerns\AsAction;
 

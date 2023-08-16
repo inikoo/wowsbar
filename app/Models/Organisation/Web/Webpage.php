@@ -5,9 +5,8 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Models\Organisation\Website;
+namespace App\Models\Organisation\Web;
 
-use App\Models\Organisation\Website;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -33,10 +32,11 @@ use Spatie\Sluggable\SlugOptions;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string|null $deleted_at
- * @property-read \App\Models\Organisation\Website\WebpageVariant|null $mainVariant
- * @property-read \App\Models\Organisation\Website\WebpageStats|null $stats
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Organisation\Website\WebpageVariant> $variants
+ * @property-read \App\Models\Organisation\Web\WebpageVariant|null $mainVariant
+ * @property-read \App\Models\Organisation\Web\WebpageStats|null $stats
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Organisation\Web\WebpageVariant> $variants
  * @property-read int|null $variants_count
+ * @property-read \App\Models\Organisation\Web\Website $website
  * @method static Builder|Webpage newModelQuery()
  * @method static Builder|Webpage newQuery()
  * @method static Builder|Webpage query()

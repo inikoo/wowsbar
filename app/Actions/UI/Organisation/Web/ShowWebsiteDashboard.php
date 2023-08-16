@@ -5,7 +5,7 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\UI\Organisation\Website;
+namespace App\Actions\UI\Organisation\Web;
 
 use App\Actions\UI\Tenant\Dashboard\ShowDashboard;
 use App\Actions\UI\WithInertia;
@@ -35,7 +35,7 @@ class ShowWebsiteDashboard
     {
 
         return Inertia::render(
-            'Organisation/PortfolioWebsite/WebsiteDashboard',
+            'Organisation/Website/WebsiteDashboard',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(),
                 'title'       => __('website'),

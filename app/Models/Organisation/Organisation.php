@@ -8,6 +8,7 @@
 namespace App\Models\Organisation;
 
 use App\Models\Assets\Currency;
+use App\Models\Organisation\Web\Website;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -37,6 +38,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property-read \App\Models\Organisation\OrganisationStats|null $stats
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Organisation\OrganisationUser> $users
  * @property-read int|null $users_count
+ * @property-read Website|null $website
  * @method static Builder|Organisation newModelQuery()
  * @method static Builder|Organisation newQuery()
  * @method static Builder|Organisation query()
@@ -75,6 +77,11 @@ class Organisation extends Model implements HasMedia
     public function stats(): HasOne
     {
         return $this->hasOne(OrganisationStats::class);
+    }
+
+    public function website(): HasOne
+    {
+        return $this->hasOne(Website::class);
     }
 
     public function currency(): BelongsTo

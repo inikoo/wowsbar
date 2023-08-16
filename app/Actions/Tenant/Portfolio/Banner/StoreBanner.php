@@ -1,7 +1,7 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Wed, 16 Aug 2023 08:09:28 Malaysia Time, Pantai Lembeng, Bali
+ * Created: Wed, 16 Aug 2023 14:12:03 Malaysia Time, Pantai Lembeng, Bali
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
@@ -28,7 +28,7 @@ class StoreBanner
     use WithAttributes;
 
 
-    private bool $asAction = false;
+    private bool $asAction                          = false;
     private PortfolioWebsite|null $portfolioWebsite = null;
 
 

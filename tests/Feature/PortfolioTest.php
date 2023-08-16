@@ -16,7 +16,6 @@ use App\Actions\Tenant\Portfolio\PortfolioWebsite\StorePortfolioWebsite;
 use App\Models\Portfolio\Banner;
 use App\Models\Portfolio\PortfolioWebsite;
 use App\Models\Tenancy\Tenant;
-use App\Models\Web\WebBlockType;
 
 beforeAll(function () {
     loadDB('test_base_database.dump');
@@ -87,7 +86,7 @@ test('create banners', function ($website) {
 
 test('update banner', function ($banner) {
     $modelData    = Banner::factory()->definition();
-    $banner = UpdateBanner::make()->action($banner, $modelData);
+    $banner       = UpdateBanner::make()->action($banner, $modelData);
     expect($banner)->toBeInstanceOf(Banner::class);
 })->depends('create banners');
 
