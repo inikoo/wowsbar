@@ -97,7 +97,8 @@ const addComponent = async () => {
         props.respone(response.data)
     } catch (error) {
         console.error("===========================")
-        console.error(error)
+        console.log(error)
+        form.value = new FormData()
         catchError.value = error
         // props.respone(error.response)
     }
