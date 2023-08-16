@@ -116,7 +116,7 @@ const footerNavigation = {
         <h2 id="footer-heading" class="sr-only">Footer</h2>
         <div class="w-full px-10">
             <div class="border-t border-white/10 pt-16 sm:pt-24">
-                <div :class="`grid grid-cols-${data.collumn.length} gap-8 xl:col-span-2`">
+                <div :class="`grid lg:grid-cols-${data.collumn.length} xs:grid-cols-${data.collumn.length} gap-8`">
                     <div v-for="(item,index) of data.collumn" >
                     <div v-if="item.type == 'link'">
                         <h3 class="text-sm font-semibold leading-6 text-white">{{ item.title }}</h3>

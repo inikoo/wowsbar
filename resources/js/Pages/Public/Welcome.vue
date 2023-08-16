@@ -6,46 +6,7 @@
 <script setup lang="ts">
 import { Hero as heroType } from "@/types/hero";
 import SideImage from "./PageComponents/SideImage.vue";
-import { ref } from 'vue'
-import {
-    Disclosure,
-    DisclosureButton,
-    DisclosurePanel,
-    RadioGroup,
-    RadioGroupLabel,
-    RadioGroupOption,
-} from '@headlessui/vue'
-import { MinusSmallIcon, PlusSmallIcon } from '@heroicons/vue/24/outline'
-import { CheckIcon } from '@heroicons/vue/20/solid'
 
-const footerNavigation = {
-    shop: [
-        { name: 'Bags', href: '#' },
-        { name: 'Tees', href: '#' },
-        { name: 'Objects', href: '#' },
-        { name: 'Home Goods', href: '#' },
-        { name: 'Accessories', href: '#' },
-    ],
-    company: [
-        { name: 'Who we are', href: '#' },
-        { name: 'Sustainability', href: '#' },
-        { name: 'Press', href: '#' },
-        { name: 'Careers', href: '#' },
-        { name: 'Terms & Conditions', href: '#' },
-        { name: 'Privacy', href: '#' },
-    ],
-    account: [
-        { name: 'Manage Account', href: '#' },
-        { name: 'Returns & Exchanges', href: '#' },
-        { name: 'Redeem a Gift Card', href: '#' },
-    ],
-    connect: [
-        { name: 'Contact Us', href: '#' },
-        { name: 'Twitter', href: '#' },
-        { name: 'Instagram', href: '#' },
-        { name: 'Pinterest', href: '#' },
-    ],
-}
 
 const data = [
     {
@@ -163,6 +124,27 @@ const data = [
                 subtitle: "subtitle",
                 description:
                     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+            },
+        ]
+    },
+    {
+        dataRow: [
+            {
+                type: "image",
+                src: "https://tailwindui.com/img/ecommerce-images/product-page-03-product-01.jpg",
+                alt: "test",
+            },
+            {
+                type: "text",
+                title: "title",
+                subtitle: "subtitle",
+                description:
+                    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+            },
+            {
+                type: "image",
+                src: "https://tailwindui.com/img/ecommerce-images/product-page-03-product-01.jpg",
+                alt: "test",
             },
         ]
     },
