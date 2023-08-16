@@ -33,6 +33,10 @@ return new class () extends Migration {
             $table->unsignedSmallInteger('number_attachments')->default(0);
             $table->unsignedBigInteger('filesize_attachments')->default(0);
 
+            $table->unsignedInteger('number_webpages')->default(0);
+
+
+
             $table->timestamps();
         });
     }

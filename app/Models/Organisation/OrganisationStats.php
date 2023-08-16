@@ -28,6 +28,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $filesize_images
  * @property int $number_attachments
  * @property int $filesize_attachments
+ * @property int $number_webpages
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Organisation\Organisation $organisation
@@ -48,6 +49,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static Builder|OrganisationStats whereNumberOrganisationUsersStatusInactive($value)
  * @method static Builder|OrganisationStats whereNumberOrganisationUsersTypeEmployee($value)
  * @method static Builder|OrganisationStats whereNumberOrganisationUsersTypeGuest($value)
+ * @method static Builder|OrganisationStats whereNumberWebpages($value)
  * @method static Builder|OrganisationStats whereOrganisationId($value)
  * @method static Builder|OrganisationStats whereUpdatedAt($value)
  * @mixin \Eloquent

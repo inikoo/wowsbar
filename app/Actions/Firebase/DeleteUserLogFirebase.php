@@ -20,9 +20,9 @@ class DeleteUserLogFirebase
     public function handle(User|OrganisationUser $user, string $parent_type, ?string $slug): void
     {
         $database  = app('firebase.database');
-        $path     = match ($parent_type) {
+        $path      = match ($parent_type) {
             'Tenant' => 'tenants',
-            default => 'organisations',
+            default  => 'organisations',
         };
 
         if ($slug) {

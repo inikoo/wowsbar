@@ -20,19 +20,14 @@ use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
-
 /**
  * App\Models\Organisation\Web\Website
  *
  * @property int $id
  * @property int $organisation_id
  * @property string $slug
- * @property string $type
  * @property WebsiteStateEnum $state
- * @property WebsiteEngineEnum $engine
- * @property string $code
  * @property string $domain
- * @property string $name
  * @property array $settings
  * @property array $data
  * @property array $structure
@@ -43,6 +38,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property string|null $launched_at
  * @property string|null $closed_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property WebsiteEngineEnum $engine
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \OwenIt\Auditing\Models\Audit> $audits
  * @property-read int|null $audits_count
  * @property-read array $es_audits
@@ -55,23 +51,19 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Website onlyTrashed()
  * @method static Builder|Website query()
  * @method static Builder|Website whereClosedAt($value)
- * @method static Builder|Website whereCode($value)
  * @method static Builder|Website whereCreatedAt($value)
  * @method static Builder|Website whereCurrentLayoutId($value)
  * @method static Builder|Website whereData($value)
  * @method static Builder|Website whereDeletedAt($value)
  * @method static Builder|Website whereDomain($value)
- * @method static Builder|Website whereEngine($value)
  * @method static Builder|Website whereId($value)
  * @method static Builder|Website whereInMaintenance($value)
  * @method static Builder|Website whereLaunchedAt($value)
- * @method static Builder|Website whereName($value)
  * @method static Builder|Website whereOrganisationId($value)
  * @method static Builder|Website whereSettings($value)
  * @method static Builder|Website whereSlug($value)
  * @method static Builder|Website whereState($value)
  * @method static Builder|Website whereStructure($value)
- * @method static Builder|Website whereType($value)
  * @method static Builder|Website whereUpdatedAt($value)
  * @method static Builder|Website withTrashed()
  * @method static Builder|Website withoutTrashed()

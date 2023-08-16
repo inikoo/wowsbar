@@ -7,7 +7,6 @@
 
 namespace App\Actions\Organisation\Web\Website;
 
-
 use App\Models\Organisation\Web\Website;
 use App\Rules\CaseSensitive;
 use Lorisleiva\Actions\ActionRequest;
@@ -26,7 +25,7 @@ class StoreWebsite
 
     public function handle(array $modelData): Website
     {
-        data_set($modelData,'domain',config('app.domain'));
+        data_set($modelData, 'domain', config('app.domain'));
 
         /** @var Website $website */
         $website = organisation()->website()->create($modelData);
