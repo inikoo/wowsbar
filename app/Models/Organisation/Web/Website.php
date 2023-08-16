@@ -10,6 +10,7 @@ namespace App\Models\Organisation\Web;
 use App\Enums\Organisation\Website\Website\WebsiteEngineEnum;
 use App\Enums\Organisation\Website\Website\WebsiteStateEnum;
 use App\Models\Traits\HasHistory;
+use App\Models\Traits\HasOrganisationUniversalSearch;
 use App\Models\Traits\HasUniversalSearch;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -74,7 +75,7 @@ class Website extends Model implements Auditable
     use HasSlug;
     use SoftDeletes;
     use HasHistory;
-    use HasUniversalSearch;
+    use HasOrganisationUniversalSearch;
 
     protected $casts = [
         'data'      => 'array',

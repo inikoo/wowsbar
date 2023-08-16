@@ -9,6 +9,7 @@ namespace App\Models\Organisation;
 
 use App\Enums\Organisation\Guest\GuestTypeEnum;
 use App\Models\Traits\HasHistory;
+use App\Models\Traits\HasOrganisationUniversalSearch;
 use App\Models\Traits\HasUniversalSearch;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -78,7 +79,7 @@ class Guest extends Model implements HasMedia, Auditable
     use SoftDeletes;
     use HasFactory;
     use HasHistory;
-    use HasUniversalSearch;
+    use HasOrganisationUniversalSearch;
 
 
     protected $casts = [
