@@ -1,4 +1,5 @@
 <script setup>
+import { trans } from 'laravel-vue-i18n'
 import ButtonWithDropdown from "./ButtonWithDropdown.vue"
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faYinYang, faUserCircle, } from "@/../private/pro-light-svg-icons"
@@ -39,7 +40,7 @@ const props = defineProps({
                     <li v-for="(column, key) in props.columns" v-show="column.can_be_hidden" :key="key"
                         class="py-2 flex items-center justify-between">
                         <p class="text-sm text-gray-800 dark:text-gray-300 capitalize">
-                            {{ typeof column.label == 'string' ? column.label : '' }}
+                            {{ typeof column.label == 'string' ? trans(column.label) : '' }}
                             <FontAwesomeIcon v-if="(typeof column.label != 'string')" class="text-gray-700"
                                 :icon="column.label" aria-hidden="true" />
                         </p>

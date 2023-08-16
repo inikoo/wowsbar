@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { trans } from 'laravel-vue-i18n'
 import { faYinYang } from "@/../private/pro-light-svg-icons";
 import { capitalize } from "@/Composables/capitalize"
 
@@ -42,7 +43,7 @@ function onClick() {
                             aria-hidden="true" :icon="cell.label.data" size="lg" />
                         <FontAwesomeIcon v-else :title="'icon'" aria-hidden="true" :icon="cell.label" size="lg" />
                     </div>
-                    <span v-else class="capitalize">{{ cell.label }}</span>
+                    <span v-else class="capitalize">{{ cell.label ? trans(cell.label) : ''}}</span>
                 </slot>
 
                 <slot name="sort">

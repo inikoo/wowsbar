@@ -5,6 +5,7 @@
   -->
 
 <script setup lang="ts">
+import { trans } from 'laravel-vue-i18n'
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { Link } from "@inertiajs/vue3"
 import { ref, onMounted, onUnmounted } from 'vue'
@@ -80,7 +81,7 @@ const handleKey = (event: any) => {
                                 class="text-gray-400 dark:text-gray-200 ml-2 mr-3 flex-shrink-0 h-4 w-4"
                                 :icon="item.icon" />
                         </div>
-                        <span class="md:hidden xl:block capitalize">{{ item.label }}</span>
+                        <span class="md:hidden xl:block capitalize">{{ trans(item.label) }}</span>
                     </Link>
 				</nav>
 			</div>

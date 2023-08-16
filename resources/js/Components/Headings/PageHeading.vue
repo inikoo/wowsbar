@@ -85,12 +85,12 @@ const getActionIcon = (action) => {
                 <span v-if="data.container" class="text-orange-500 font-medium mr-2">
                     <FontAwesomeIcon v-if="data.container.icon" :title="capitalize(data.container.tooltip)"
                         aria-hidden="true" :icon="data.container.icon" size="xs" />
-                    {{ data.container.label }}
+                    {{ trans(data.container.label) }}
                 </span>
 
                 <FontAwesomeIcon v-if="data.icon" :title="capitalize(data.icon.tooltip ?? '')" aria-hidden="true"
                     :icon="data.icon.icon" size="sm" class="pr-2 text-gray-400" />
-                <span>{{ data.title }}</span>
+                <span>{{ trans(data.title) }}</span>
                 <FontAwesomeIcon v-if="data.iconRight" :title="capitalize(data.iconRight.tooltip ?? '')" aria-hidden="true"
                     :icon="data.iconRight.icon" class="pl-1 h-4 mb-0.5" />
             </h2>
@@ -102,15 +102,15 @@ const getActionIcon = (action) => {
                         <Link v-if="item.href" :href="route(item.href[0], item.href[1])">
                         <span v-if="item.number">{{ locale.number(item.number) }}</span>
                         <FontAwesomeIcon v-else icon="fal fa-empty-set" />
-                        {{ item.name }}
+                        {{ item.name ? trans(item.name) : '' }}
                         </Link>
                         <template v-else-if="item['emptyWithCreateAction']">
                             <FontAwesomeIcon icon="fal fa-empty-set" class="mr-2" />
                             <Button type="submit" size="xs" action="create">
-                                {{ item["emptyWithCreateAction"]["label"] }}
+                                {{ trans(item["emptyWithCreateAction"]["label"]) }}
                             </Button>
                         </template>
-                        <span v-else><span v-if="item.number">{{ locale.number(item.number) }}</span> {{ item.name }}
+                        <span v-else><span v-if="item.number">{{ locale.number(item.number) }}</span> {{ item.name ? trans(item.name) : '' }}
                         </span>
                     </div>
                 </div>
@@ -138,7 +138,7 @@ const getActionIcon = (action) => {
                             -->
                             <FontAwesomeIcon  :icon="getActionIcon(action)"
                                 aria-hidden="true" />
-                            {{ getActionLabel(action) }}
+                            {{ trans(getActionLabel(action)) }}
                         </Button>
                     </Link>
 

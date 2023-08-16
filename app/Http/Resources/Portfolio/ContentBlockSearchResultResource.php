@@ -7,7 +7,7 @@
 
 namespace App\Http\Resources\Portfolio;
 
-use App\Models\Portfolio\ContentBlock;
+use App\Models\Portfolio\Banner;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
@@ -19,13 +19,13 @@ class ContentBlockSearchResultResource extends JsonResource
 {
     public function toArray($request): array
     {
-        /** @var ContentBlock $contentBlock */
+        /** @var Banner $contentBlock */
         $contentBlock=$this;
         return [
             'code'           => $contentBlock->code,
             'name'           => $contentBlock->name,
             'route'          => [
-                'name'       => 'portfolio.websites.show.banners.show',
+                'name'       => 'portfolio.portfolio-websites.show.banners.show',
                 'parameters' => [
                     $contentBlock->data['website_slug'],
                     $contentBlock->slug
