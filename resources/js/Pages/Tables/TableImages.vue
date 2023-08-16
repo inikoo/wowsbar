@@ -17,7 +17,7 @@ import { trans } from 'laravel-vue-i18n'
 import { ulid } from 'ulid'
 
 const props = defineProps<{
-    data: object
+    data: any
     tab?: string
 }>()
 
@@ -45,29 +45,30 @@ watch(selectedRow, () => {
 
 const isOpen = ref(false)
 const addFiles = ref([])
+
 const closeModal = () => {
     addFiles.value.files = null
     isOpen.value = false
 }
 
-const addComponent = async (element) => {
+const addComponent = async (element: any) => {
     addFiles.value = element.target.files
     isOpen.value = true
 }
 
-const uploadImageRespone=(res)=>{
-    console.log(res)
+const uploadImageRespone = (res: any) => {
+    props.data.data = [...props.data.data, ...res.data]
     let setData = []
     for (const set of res.data) {
-            setData.push({
-                id: null,
-                ulid: ulid(),
-                layout: {
-                    imageAlt: set.name,
-                },
-                image : set,
-                visibility : true
-            })
+        setData.push({
+            id: null,
+            ulid: ulid(),
+            layout: {
+                imageAlt: set.name,
+            },
+            image: set,
+            visibility: true
+        })
     }
     const newFiles = [...setData]
     isOpen.value = false
@@ -75,7 +76,7 @@ const uploadImageRespone=(res)=>{
 </script>
 
 <template>
-    <Table :resource="data" :name="tab" class="mt-5" :selectedRow="selectedRow">
+    <Table :resource="data" :name="tab" class="mt-5" :selectedRow="selectedRow" >
         <!-- Button Upload Files -->
         <template #uploadFile="{item}">
             <Button :style="`primary`" icon="fas fa-plus" class="relative">
