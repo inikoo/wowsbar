@@ -31,7 +31,6 @@ class GetLayout
                             'icon'  => ['fal', 'fa-globe'],
                             'route' => [
                                 'name' => 'org.website.dashboard',
-
                             ]
                         ],
                         [
@@ -39,7 +38,6 @@ class GetLayout
                             'icon'  => ['fal', 'fa-globe'],
                             'route' => [
                                 'name' => 'org.website.webpages.index',
-
                             ]
                         ],
                     ]

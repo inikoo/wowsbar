@@ -22,6 +22,7 @@ const layout = useLayoutStore()
 </script>
 
 <template>
+    <!-- <div class="fixed top-10 bg-blue-300">{{ layout.currentModule }}<pre>{{ layout.navigation }}</pre></div> -->
     <Link
         v-for="menu in layout.navigation?.[layout.currentModule]?.topMenu.subSections" :href="route(menu.route.name)"
         class="group relative text-gray-700 dark:text-gray-400 group text-sm flex justify-end items-center cursor-pointer py-1 gap-x-2 px-4 md:px-4 lg:px-4"
