@@ -1,11 +1,11 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Tue, 15 Aug 2023 16:06:13 Malaysia Time, Pantai Lembeng, Bali
+ * Created: Wed, 16 Aug 2023 16:47:20 Malaysia Time, Pantai Lembeng, Bali
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\UI\Organisation\Web;
+namespace App\Actions\Organisation\Web\Website\UI;
 
 use App\Actions\UI\Tenant\Dashboard\ShowDashboard;
 use App\Actions\UI\WithInertia;
@@ -14,7 +14,7 @@ use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 
-class ShowWebsiteDashboard
+class ShowWebsite
 {
     use AsAction;
     use WithInertia;
@@ -35,7 +35,7 @@ class ShowWebsiteDashboard
     {
 
         return Inertia::render(
-            'Organisation/Website/WebsiteDashboard',
+            'Organisation/Web/Website',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(),
                 'title'       => __('website'),
@@ -48,8 +48,6 @@ class ShowWebsiteDashboard
         );
     }
 
-
-
     public function getBreadcrumbs(): array
     {
         return
@@ -60,7 +58,7 @@ class ShowWebsiteDashboard
                         'type'   => 'simple',
                         'simple' => [
                             'route' => [
-                                'name' => 'org.website.dashboard'
+                                'name' => 'org.website.show'
                             ],
                             'label'  => __('website'),
                         ]

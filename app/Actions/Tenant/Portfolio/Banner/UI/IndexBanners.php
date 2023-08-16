@@ -11,7 +11,7 @@ use App\Actions\InertiaAction;
 use App\Actions\Tenant\Portfolio\PortfolioWebsite\UI\ShowPortfolioWebsite;
 use App\Actions\UI\Tenant\Portfolio\ShowPortfolioDashboard;
 use App\Enums\Portfolio\Banner\BannerStateEnum;
-use App\Http\Resources\Portfolio\ContentBlockResource;
+use App\Http\Resources\Portfolio\BannerResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\Portfolio\Banner;
 use App\Models\Portfolio\PortfolioWebsite;
@@ -257,7 +257,7 @@ class IndexBanners extends InertiaAction
 
 
                 ],
-                'data'        => ContentBlockResource::collection($banners),
+                'data'        => BannerResource::collection($banners),
 
             ]
         )->table(

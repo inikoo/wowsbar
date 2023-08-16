@@ -8,7 +8,7 @@
 namespace App\Models\Portfolio;
 
 use App\Concerns\BelongsToTenant;
-use App\Http\Resources\Portfolio\ContentBlockComponentResource;
+use App\Http\Resources\Portfolio\SlideResource;
 use App\Models\Traits\HasUniversalSearch;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -39,7 +39,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Portfolio\Slide> $contentBlockComponents
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Portfolio\Slide> $slides
  * @property-read int|null $content_block_components_count
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \App\Models\Media\Media> $media
  * @property-read int|null $media_count
@@ -109,7 +109,7 @@ class Banner extends Model implements HasMedia
     }
 
 
-    public function contentBlockComponents(): HasMany
+    public function slides(): HasMany
     {
         return $this->hasMany(Slide::class);
     }
@@ -123,7 +123,7 @@ class Banner extends Model implements HasMedia
     public function compiledLayout(): array
     {
         $compiledLayout=$this->layout;
-        data_set($compiledLayout, 'components', json_decode(ContentBlockComponentResource::collection($this->contentBlockComponents)->toJson(), true));
+        data_set($compiledLayout, 'components', json_decode(SlideResource::collection($this->contentBlockComponents)->toJson(), true));
         return $compiledLayout;
 
     }

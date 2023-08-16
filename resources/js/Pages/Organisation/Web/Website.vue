@@ -18,6 +18,6 @@ const props = defineProps<{
 
 <template layout="OrgApp">
     <Head :title="capitalize(title)" />
-
+    hello 👋
 
 </template>

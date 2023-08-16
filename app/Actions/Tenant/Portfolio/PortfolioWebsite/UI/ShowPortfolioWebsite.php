@@ -1,7 +1,7 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Wed, 16 Aug 2023 08:09:28 Malaysia Time, Pantai Lembeng, Bali
+ * Created: Wed, 16 Aug 2023 17:01:05 Malaysia Time, Pantai Lembeng, Bali
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
@@ -14,7 +14,7 @@ use App\Actions\UI\Tenant\Portfolio\ShowPortfolioDashboard;
 use App\Actions\UI\WithInertia;
 use App\Enums\UI\WebsiteTabsEnum;
 use App\Http\Resources\History\HistoryResource;
-use App\Http\Resources\Portfolio\ContentBlockResource;
+use App\Http\Resources\Portfolio\BannerResource;
 use App\Http\Resources\Portfolio\PortfolioWebsiteResource;
 use App\Models\Portfolio\PortfolioWebsite;
 use Inertia\Inertia;
@@ -103,13 +103,13 @@ class ShowPortfolioWebsite extends InertiaAction
 
                 WebsiteTabsEnum::BANNERS->value => $this->tab == WebsiteTabsEnum::BANNERS->value
                     ?
-                    fn () => ContentBlockResource::collection(
+                    fn () => BannerResource::collection(
                         IndexBanners::run(
                             parent: $portfolioWebsite,
                             prefix: 'banners'
                         )
                     )
-                    : Inertia::lazy(fn () => ContentBlockResource::collection(
+                    : Inertia::lazy(fn () => BannerResource::collection(
                         IndexBanners::run(
                             parent: $portfolioWebsite,
                             prefix: 'banners'

@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\Multitenancy\Models\Concerns\UsesTenantConnection;
 
 /**
- * App\Models\Organisation\Website\WebsiteStats
+ * App\Models\Organisation\Web\WebsiteStats
  *
  * @property int $id
  * @property int $website_id

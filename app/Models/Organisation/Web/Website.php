@@ -22,7 +22,7 @@ use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
 /**
- * App\Models\Organisation\Web\Website
+ * App\Models\Organisation\Web\Web
  *
  * @property int $id
  * @property int $organisation_id
