@@ -26,6 +26,7 @@ import { useAppearanceStore } from "@/Stores/appearance"
 defineProps<{
     sidebarOpen: boolean
     logoRoute: string
+    logoutRoute: string
 }>()
 
 defineEmits<{
@@ -145,8 +146,9 @@ onMounted(() => {
 
                                     <div class="py-1">
                                         <MenuItem v-slot="{ active }">
-                                            <Link as="ul" type="button" method="post" :href="route('logout')"
-                                                :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm cursor-pointer']">Logout
+                                            <Link as="ul" type="button" method="post" :href="route(logoutRoute)"
+                                                :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm cursor-pointer']">
+                                                {{ trans('Logout') }}
                                             </Link>
                                         </MenuItem>
                                     </div>
