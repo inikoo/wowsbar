@@ -39,7 +39,7 @@ const getComponent = (componentName: string) => {
 </script>
   
 <template>
-  <div :class="`grid grid-cols-${data.dataRow.length} items-start lg:gap-x-8`">
+  <div :class="`grid sm:grid-cols-1 md:grid-cols-${data.dataRow.length} lg:grid-cols-${data.dataRow.length} xl:grid-cols-${data.dataRow.length} items-start gap-x-8`">
     <div v-for="(item, index) of data.dataRow" :key="index">
       <component :is="getComponent(item['type'])" :data="item"></component>
     </div>
