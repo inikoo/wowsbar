@@ -27,7 +27,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property int $id
  * @property string $slug
  * @property string $type
- * @property mixed $state
+ * @property WebsiteStateEnum $state
  * @property WebsiteEngineEnum $engine
  * @property string $code
  * @property string $domain

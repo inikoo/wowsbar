@@ -39,5 +39,5 @@ php artisan tenant:create test1 dev@aw-advantage.com Devs test1 hello GB GBP
 pg_dump -Fc -f "devops/devel/snapshots/tenant.dump" ${DB}
 echo "🌱 create test website with a banner"
 php artisan website:create aiku hello.com hello 'My website 😸'
-php artisan content-block:create aiku hello banner test1 'My first banner 🫡'
+php artisan banner:create aiku hello test1 'My first banner 🫡'
 pg_dump -Fc -f "devops/devel/snapshots/portfolio.dump" ${DB}

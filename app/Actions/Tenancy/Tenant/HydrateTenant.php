@@ -8,7 +8,7 @@
 namespace App\Actions\Tenancy\Tenant;
 
 use App\Actions\HydrateModel;
-use App\Actions\Tenancy\Tenant\Hydrators\TenantHydrateContentBlocks;
+use App\Actions\Tenancy\Tenant\Hydrators\TenantHydrateBanners;
 use App\Actions\Tenancy\Tenant\Hydrators\TenantHydrateUsers;
 use App\Actions\Tenancy\Tenant\Hydrators\TenantHydratePortfolioWebsites;
 use App\Actions\Traits\WithNormalise;
@@ -29,7 +29,7 @@ class HydrateTenant extends HydrateModel
         $tenant = app('currentTenant');
         TenantHydrateUsers::run($tenant);
         TenantHydratePortfolioWebsites::run($tenant);
-        TenantHydrateContentBlocks::run($tenant);
+        TenantHydrateBanners::run($tenant);
 
     }
 

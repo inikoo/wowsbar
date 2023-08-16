@@ -8,12 +8,12 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-use App\Actions\Portfolio\ContentBlock\DeleteContentBlock;
-use App\Actions\Portfolio\ContentBlock\StoreContentBlock;
-use App\Actions\Portfolio\ContentBlock\UpdateContentBlock;
-use App\Actions\Portfolio\PortfolioWebsite\StorePortfolioWebsite;
 use App\Actions\Tenancy\Tenant\StoreTenant;
-use App\Models\Portfolio\ContentBlock;
+use App\Actions\Tenant\Portfolio\Banner\DeleteBanner;
+use App\Actions\Tenant\Portfolio\Banner\StoreBanner;
+use App\Actions\Tenant\Portfolio\Banner\UpdateBanner;
+use App\Actions\Tenant\Portfolio\PortfolioWebsite\StorePortfolioWebsite;
+use App\Models\Portfolio\Banner;
 use App\Models\Portfolio\PortfolioWebsite;
 use App\Models\Tenancy\Tenant;
 use App\Models\Web\WebBlockType;
@@ -70,32 +70,29 @@ test('create websites', function () {
 
 test('create banners', function ($website) {
     $tenant       = app('currentTenant');
-    $webBlockType = WebBlockType::where('slug', 'banner')->first();
-    $webBlock     = $webBlockType->webBlocks[0];
-    $modelData    = ContentBlock::factory()->definition();
 
-    $contentBlock = StoreContentBlock::make()->action($website, $webBlock, $modelData);
+    $modelData    = Banner::factory()->definition();
+
+    $banner = StoreBanner::make()->action($website, $modelData);
     $tenant->refresh();
-    expect($contentBlock)->toBeInstanceOf(ContentBlock::class)
-        ->and($tenant->contentBlockStats->number_content_blocks)->toBe(1);
+    expect($banner)->toBeInstanceOf(Banner::class)
+        ->and($tenant->portfolioStats->number_banners)->toBe(1);
 
-    $this->artisan("content-block:create abc web1 banner test1 'My first banner' ")->assertExitCode(0);
+    $this->artisan("banner:create abc web1 test1 'My first banner' ")->assertExitCode(0);
     $tenant->refresh();
-    expect($tenant->contentBlockStats->number_content_blocks)->toBe(2);
+    expect($tenant->portfolioStats->number_banners)->toBe(2);
 
-    return $contentBlock;
+    return $banner;
 })->depends('create websites');
 
-test('update banner', function ($contentBlock) {
-    $modelData    = ContentBlock::factory()->definition();
-
-    $contentBlock = UpdateContentBlock::make()->action($contentBlock, $modelData);
-    expect($contentBlock)->toBeInstanceOf(ContentBlock::class);
+test('update banner', function ($banner) {
+    $modelData    = Banner::factory()->definition();
+    $banner = UpdateBanner::make()->action($banner, $modelData);
+    expect($banner)->toBeInstanceOf(Banner::class);
 })->depends('create banners');
 
-test('delete banner', function ($contentBlock) {
+test('delete banner', function ($banner) {
     $tenant = app('currentTenant');
-
-    DeleteContentBlock::make()->action($contentBlock);
-    expect($tenant->contentBlockStats->number_content_blocks)->toBe(1);
+    DeleteBanner::make()->action($banner);
+    expect($tenant->portfolioStats->number_banners)->toBe(1);
 })->depends('create banners');

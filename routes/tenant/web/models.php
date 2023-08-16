@@ -7,24 +7,24 @@
 
 
 use App\Actions\Auth\User\UpdateUser;
-use App\Actions\Gallery\UpdateUploadedImage;
-use App\Actions\Portfolio\ContentBlock\DeleteContentBlock;
-use App\Actions\Portfolio\ContentBlock\StoreContentBlock;
-use App\Actions\Portfolio\ContentBlock\UpdateContentBlock;
-use App\Actions\Portfolio\ContentBlock\UpdateStateContentBlock;
-use App\Actions\Portfolio\PortfolioWebsite\DeletePortfolioWebsite;
-use App\Actions\Portfolio\PortfolioWebsite\StorePortfolioWebsite;
-use App\Actions\Portfolio\PortfolioWebsite\UpdatePortfolioWebsite;
 use App\Actions\Tenancy\Tenant\UpdateSystemSettings;
+use App\Actions\Tenant\Portfolio\Banner\DeleteBanner;
+use App\Actions\Tenant\Portfolio\Banner\StoreBanner;
+use App\Actions\Tenant\Portfolio\Banner\UpdateBanner;
+use App\Actions\Tenant\Portfolio\Banner\UpdateBannerState;
+use App\Actions\Tenant\Portfolio\Gallery\UpdateUploadedImage;
+use App\Actions\Tenant\Portfolio\PortfolioWebsite\DeletePortfolioWebsite;
+use App\Actions\Tenant\Portfolio\PortfolioWebsite\StorePortfolioWebsite;
+use App\Actions\Tenant\Portfolio\PortfolioWebsite\UpdatePortfolioWebsite;
 use App\Actions\UI\Tenant\Profile\UpdateProfile;
 
-Route::post('/website/', StorePortfolioWebsite::class)->name('website.store');
-Route::patch('/website/{website}', UpdatePortfolioWebsite::class)->name('website.update');
-Route::delete('/website/{website}', DeletePortfolioWebsite::class)->name('website.delete');
-Route::post('/website/{website}/web-block-type/{webBlockType}/banners', [StoreContentBlock::class,'inWebsiteInWebBlockType'])->name('website.web-block-type.banner.store');
-Route::patch('/content-block/{contentBlock}', UpdateContentBlock::class)->name('content-block.update');
-Route::patch('/content-block/{contentBlock}/state/{state}', UpdateStateContentBlock::class)->name('content-block.updateState');
-Route::delete('/content-block/{contentBlock}', DeleteContentBlock::class)->name('content-block.delete');
+Route::post('/portfolio-website/', StorePortfolioWebsite::class)->name('portfolio-website.store');
+Route::patch('/portfolio-website/{portfolioWebsite}', UpdatePortfolioWebsite::class)->name('portfolio-website.update');
+Route::delete('/portfolio-website/{portfolioWebsite}', DeletePortfolioWebsite::class)->name('portfolio-website.delete');
+Route::post('/portfolio-website/{portfolioWebsite}/banners', [StoreBanner::class, 'inPortfolioWebsite'])->name('portfolio-website.banner.store');
+Route::patch('/banner/{banner}', UpdateBanner::class)->name('banner.update');
+Route::patch('/banner/{banner}/state/{state}', UpdateBannerState::class)->name('banner.update-state');
+Route::delete('/banner/{banner}', DeleteBanner::class)->name('content-block.delete');
 
 Route::patch('/images/{media}', UpdateUploadedImage::class)->name('images.update');
 

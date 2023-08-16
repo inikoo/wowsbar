@@ -8,14 +8,14 @@
 namespace App\Http\Resources\Portfolio;
 
 use App\Http\Resources\Gallery\ImageResource;
-use App\Models\Portfolio\ContentBlockComponent;
+use App\Models\Portfolio\Slide;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ContentBlockComponentResource extends JsonResource
 {
     public function toArray($request): array
     {
-        /** @var ContentBlockComponent $contentBlockComponent */
+        /** @var Slide $contentBlockComponent */
         $contentBlockComponent = $this;
 
         return [

@@ -59,7 +59,7 @@ class ShowPortfolioDashboard
                         [
                             'name'  => __('websites'),
                             'icon'  => ['fal', 'fa-globe'],
-                            'href'  => ['portfolio.websites.index'],
+                            'href'  => ['portfolio.portfolio-websites.index'],
                             'index' => [
                                 'number' => $tenant->stats->number_websites
                             ]

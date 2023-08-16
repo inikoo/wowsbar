@@ -24,6 +24,6 @@ class TenantScope implements Scope
             throw new NoCurrentTenant();
         }
 
-        $builder->where('tenant_id', $tenant->id);
+        $builder->where($model->getTable().'.tenant_id', $tenant->id);
     }
 }

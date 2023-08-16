@@ -21,14 +21,14 @@ function bannerRoute(banner: Banner) {
             return route(
                 'portfolio.banners.show',
                 [banner.slug]);
-        case 'portfolio.websites.show':
+        case 'portfolio.portfolio-websites.show':
             return route(
-                'portfolio.websites.show.banners.show',
-                [route().params['website'],banner.slug]);
-        case 'portfolio.websites.show.banners.index':
+                'portfolio.portfolio-websites.show.banners.show',
+                [route().params['portfolioWebsite'],banner.slug]);
+        case 'portfolio.portfolio-websites.show.banners.index':
             return route(
-                'portfolio.websites.show.banners.show',
-                [route().params['website'],banner.slug]);
+                'portfolio.portfolio-websites.show.banners.show',
+                [route().params['portfolioWebsite'],banner.slug]);
     }
 }
 

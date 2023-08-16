@@ -8,7 +8,7 @@
 namespace App\Models\Web;
 
 use App\Enums\Web\WebBlock\WebBlockScopeEnum;
-use App\Models\Portfolio\ContentBlock;
+use App\Models\Portfolio\Banner;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -33,7 +33,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, ContentBlock> $contentBlocks
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Banner> $contentBlocks
  * @property-read int|null $content_blocks_count
  * @property-read \App\Models\Web\WebBlockStats|null $stats
  * @property-read \App\Models\Web\WebBlockType $webBlockType
@@ -95,7 +95,7 @@ class WebBlock extends Model
 
     public function contentBlocks(): HasMany
     {
-        return $this->hasMany(ContentBlock::class);
+        return $this->hasMany(Banner::class);
     }
 
 

@@ -32,8 +32,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Portfolio\ContentBlock> $contentBlocks
- * @property-read int|null $content_blocks_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Portfolio\Banner> $banners
+ * @property-read int|null $banners_count
  * @property-read \App\Models\Portfolio\PortfolioWebsiteStats|null $stats
  * @property-read Tenant $tenant
  * @property-read \App\Models\Search\UniversalSearch|null $universalSearch
@@ -92,9 +92,9 @@ class PortfolioWebsite extends Model
         return $this->hasOne(PortfolioWebsiteStats::class);
     }
 
-    public function contentBlocks(): BelongsToMany
+    public function banners(): BelongsToMany
     {
-        return $this->belongsToMany(ContentBlock::class)->using(ContentBlockPortfolioWebsite::class)
+        return $this->belongsToMany(Banner::class)->using(BannerPortfolioWebsite::class)
             ->withTimestamps();
     }
 

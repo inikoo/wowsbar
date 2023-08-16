@@ -11,7 +11,7 @@ use App\Models\Assets\Currency;
 use App\Models\Auth\PublicUser;
 use App\Models\Auth\User;
 use App\Models\Media\Media;
-use App\Models\Portfolio\ContentBlock;
+use App\Models\Portfolio\Banner;
 use App\Models\Portfolio\PortfolioWebsite;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -43,13 +43,13 @@ use Spatie\Sluggable\SlugOptions;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string|null $deleted_at
- * @property-read \App\Models\Tenancy\TenantContentBlockStats|null $contentBlockStats
- * @property-read \Illuminate\Database\Eloquent\Collection<int, ContentBlock> $contentBlocks
- * @property-read int|null $content_blocks_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Banner> $banners
+ * @property-read int|null $banners_count
  * @property-read Currency $currency
  * @property-read Media|null $logo
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, Media> $media
  * @property-read int|null $media_count
+ * @property-read \App\Models\Tenancy\TenantPortfolioStats|null $portfolioStats
  * @property-read \Illuminate\Database\Eloquent\Collection<int, PortfolioWebsite> $portfolioWebsites
  * @property-read int|null $portfolio_websites_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, PublicUser> $publicUsers
@@ -119,9 +119,9 @@ class Tenant extends SpatieTenant implements HasMedia
         return $this->hasOne(TenantStats::class);
     }
 
-    public function contentBlockStats(): HasOne
+    public function portfolioStats(): HasOne
     {
-        return $this->hasOne(TenantContentBlockStats::class);
+        return $this->hasOne(TenantPortfolioStats::class);
     }
 
 
@@ -145,9 +145,9 @@ class Tenant extends SpatieTenant implements HasMedia
         return $this->hasMany(PortfolioWebsite::class);
     }
 
-    public function contentBlocks(): HasMany
+    public function banners(): HasMany
     {
-        return $this->hasMany(ContentBlock::class);
+        return $this->hasMany(Banner::class);
     }
 
     public function logo(): HasOne
