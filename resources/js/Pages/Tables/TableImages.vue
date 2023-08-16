@@ -57,7 +57,7 @@ const addComponent = async (element: any) => {
 }
 
 const uploadImageRespone = (res: any) => {
-    props.data.data = [...props.data.data, ...res.data]
+    props.data.data.push(...res.data)
     let setData = []
     for (const set of res.data) {
         setData.push({
@@ -76,7 +76,7 @@ const uploadImageRespone = (res: any) => {
 </script>
 
 <template>
-    <Table :resource="data" :name="tab" class="mt-5" :selectedRow="selectedRow" >
+    <Table :resource="data" :name="tab" class="mt-5" :selectedRow="selectedRow" :key="props.data.data.length">
         <!-- Button Upload Files -->
         <template #uploadFile="{item}">
             <Button :style="`primary`" icon="fas fa-plus" class="relative">
