@@ -5,7 +5,7 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Models\Organisation\Website;
+namespace App\Models\Organisation\Web;
 
 use App\Enums\Organisation\Website\Website\WebsiteEngineEnum;
 use App\Enums\Organisation\Website\Website\WebsiteStateEnum;
@@ -17,14 +17,15 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
-use Spatie\Multitenancy\Models\Concerns\UsesTenantConnection;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
+
 /**
- * App\Models\Organisation\Website\Website
+ * App\Models\Organisation\Web\Website
  *
  * @property int $id
+ * @property int $organisation_id
  * @property string $slug
  * @property string $type
  * @property WebsiteStateEnum $state
@@ -46,8 +47,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read int|null $audits_count
  * @property-read array $es_audits
  * @property-read \App\Models\Search\UniversalSearch|null $universalSearch
- * @property-read \App\Models\Organisation\Website\WebsiteStats|null $webStats
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Organisation\Website\Webpage> $webpages
+ * @property-read \App\Models\Organisation\Web\WebsiteStats|null $webStats
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Organisation\Web\Webpage> $webpages
  * @property-read int|null $webpages_count
  * @method static Builder|Website newModelQuery()
  * @method static Builder|Website newQuery()
@@ -65,6 +66,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Website whereInMaintenance($value)
  * @method static Builder|Website whereLaunchedAt($value)
  * @method static Builder|Website whereName($value)
+ * @method static Builder|Website whereOrganisationId($value)
  * @method static Builder|Website whereSettings($value)
  * @method static Builder|Website whereSlug($value)
  * @method static Builder|Website whereState($value)
@@ -77,7 +79,6 @@ use Spatie\Sluggable\SlugOptions;
  */
 class Website extends Model implements Auditable
 {
-    use UsesTenantConnection;
     use HasSlug;
     use SoftDeletes;
     use HasHistory;
@@ -107,7 +108,7 @@ class Website extends Model implements Auditable
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
-            ->generateSlugsFrom('code')
+            ->generateSlugsFrom('domain')
             ->doNotGenerateSlugsOnUpdate()
             ->saveSlugsTo('slug');
     }

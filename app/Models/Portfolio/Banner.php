@@ -50,6 +50,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read int|null $portfolio_website_count
  * @property-read \App\Models\Tenancy\Tenant $tenant
  * @property-read \App\Models\Search\UniversalSearch|null $universalSearch
+ * @method static \Database\Factories\Portfolio\BannerFactory factory($count = null, $state = [])
  * @method static Builder|Banner newModelQuery()
  * @method static Builder|Banner newQuery()
  * @method static Builder|Banner onlyTrashed()

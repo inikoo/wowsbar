@@ -17,13 +17,11 @@ return new class () extends Migration {
     {
         Schema::create('websites', function (Blueprint $table) {
             $table->smallIncrements('id');
+            $table->unsignedSmallInteger('organisation_id');
+            $table->foreign('organisation_id')->references('id')->on('organisations')->onUpdate('cascade')->onDelete('cascade');
             $table->string('slug')->unique()->collation('und_ns');
-            $table->string('type');
             $table->string('state')->default(WebsiteStateEnum::IN_PROCESS->value)->index();
-            $table->string('engine')->default(WebsiteEngineEnum::IRIS->value)->index();
-            $table->string('code')->unique()->collation('und_ns');
             $table->string('domain')->unique()->collation('und_ns');
-            $table->string('name')->unique()->collation('und_ns');
             $table->jsonb('settings');
             $table->jsonb('data');
             $table->jsonb('structure');

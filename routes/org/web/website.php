@@ -6,8 +6,9 @@
  */
 
 
-use App\Actions\UI\Organisation\Website\ShowWebsiteDashboard;
+use App\Actions\UI\Organisation\Web\ShowWebsiteDashboard;
 
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', ShowWebsiteDashboard::class)->name('dashboard');
+Route::get('/webpages', [IndexWebpages::class, 'inTenant'])->name('webpages.index');

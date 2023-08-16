@@ -5,7 +5,7 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Models\Organisation\Website;
+namespace App\Models\Organisation\Web;
 
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
@@ -20,7 +20,7 @@ use Spatie\Multitenancy\Models\Concerns\UsesTenantConnection;
  * @property int $webpage_variant_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Models\Organisation\Website\WebpageVariant $webpageVariant
+ * @property-read \App\Models\Organisation\Web\WebpageVariant $webpageVariant
  * @method static Builder|WebpageVariantStats newModelQuery()
  * @method static Builder|WebpageVariantStats newQuery()
  * @method static Builder|WebpageVariantStats query()

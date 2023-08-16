@@ -5,7 +5,7 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Models\Organisation\Website;
+namespace App\Models\Organisation\Web;
 
 use App\Models\Web\ContentBlock;
 use App\Models\Web\ContentBlockWebpageVariant;
@@ -30,7 +30,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property array $components
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Models\Organisation\Website\WebpageStats|null $stats
+ * @property-read \App\Models\Organisation\Web\WebpageStats|null $stats
  * @method static Builder|WebpageVariant newModelQuery()
  * @method static Builder|WebpageVariant newQuery()
  * @method static Builder|WebpageVariant query()
