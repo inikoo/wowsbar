@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { trans } from 'laravel-vue-i18n'
+import { ref } from 'vue'
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faChevronDown, faCheckSquare, faSquare } from "@/../private/pro-regular-svg-icons"
@@ -53,7 +54,7 @@ const doubleClick = (key: string, element: string) => {
     <div class="px-4 py-2 -mt-2 flex items-center text-xs justify-between border-b border-gray-200">
         <div class="text-2xl flex items-center py-1 gap-x-2">
             <FontAwesomeIcon v-if="title.leftIcon" :icon="title.leftIcon" aria-hidden="true" />
-            <p class="inline font-semibold leading-none">{{ title.title }}</p>
+            <p class="inline font-semibold leading-none capitalize">{{ trans(title.title) }}</p>
         </div>
         <div class="flex items-center justify-end border border-gray-200 divide-x divide-gray-200 rounded">
             <!-- List of element (checkbox) -->
@@ -71,7 +72,7 @@ const doubleClick = (key: string, element: string) => {
                         :class="[
                             isChecked[props.elements.find(obj => obj.key === selectedElement).key].includes(key) ? 'text-gray-800' : 'text-gray-400',
                             'grid justify-center grid-flow-col items-center capitalize hover:text-gray-600']">
-                        {{ typeof value == 'string' ? value : `${value[0]} (${value[1]})` }}
+                        {{ typeof value == 'string' ? trans(value) : `${trans(value[0])} (${value[1]})` }}
                     </div>
                 </div>
             </div>

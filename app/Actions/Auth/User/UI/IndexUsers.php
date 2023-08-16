@@ -106,7 +106,7 @@ class IndexUsers extends InertiaAction
 
 
             $table
-                ->withTitle(title: __('Users'))
+                ->withTitle(title: __('users'))
                 ->withGlobalSearch()
                 ->withModelOperations($modelOperations)
                 ->column(key: 'avatar', label: ['fal', 'fa-user-circle'])

@@ -144,8 +144,8 @@ router.on('navigate', (event) => {
                                 icon="fas fa-sparkles"
                                 aria-hidden="true" />
                             <span class="capitalize text-yellow-600 opacity-75">
-								{{ breadcrumb.creatingModel.label }}</span
-                            >
+								{{ breadcrumb.creatingModel.label }}
+                            </span>
                         </template>
                         <template v-else-if="breadcrumb.type === 'modelWithIndex'">
                             <div class="hidden md:inline-flex">
