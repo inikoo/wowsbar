@@ -17,6 +17,7 @@ import {
 } from '@headlessui/vue'
 import { Link, usePage } from '@inertiajs/vue3'
 import { router } from "@inertiajs/vue3"
+import { trans } from 'laravel-vue-i18n'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faSpinnerThird } from '@/../private/pro-duotone-svg-icons'
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -101,10 +102,10 @@ function handleKeyDown() {
                                         <div v-else class="">
                                             <div v-if="loadingState" class="flex gap-x-2 items-center">
                                                 <FontAwesomeIcon icon='fad fa-spinner-third' class='animate-spin' aria-hidden='true' />
-                                                <span>Looking for data..</span>
+                                                <span>{{ trans('Looking for data..') }}</span>
                                             </div>
                                             <div v-else>
-                                                Nothing to show
+                                                {{ trans('Nothing to show') }}
                                             </div>
                                         </div>
                                     </div>

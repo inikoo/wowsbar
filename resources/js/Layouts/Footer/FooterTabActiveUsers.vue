@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { trans } from 'laravel-vue-i18n'
 import { ref } from 'vue'
 import { useLayoutStore } from "@/Stores/layout"
 import FooterTab from '@/Components/Footer/FooterTab.vue'
@@ -41,7 +42,7 @@ watchEffect(() => {
     >
         <div class="relative text-xs flex items-center gap-x-1">
             <div class="ring-1 h-2 aspect-square rounded-full" :class="[dataTenantLength > 0 ? 'animate-pulse bg-green-400 ring-green-600' : 'bg-gray-400 ring-gray-600']" />
-            <span class="">Active Users ({{ dataTenantLength ?? 0 }})</span>
+            <span class="">{{ trans('Active Users') }} ({{ dataTenantLength ?? 0 }})</span>
         </div>
 
         <FooterTab @pinTab="() => $emit('isTabActive', false)" v-if="isTabActive == 'activeUsers'" :tabName="`activeUsers`">

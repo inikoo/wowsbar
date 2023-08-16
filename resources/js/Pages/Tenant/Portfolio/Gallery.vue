@@ -11,6 +11,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { faImagePolaroid, faCloudUpload } from '../../../../private/pro-light-svg-icons'
 import Tabs from "@/Components/Navigation/Tabs.vue"
 import { computed, ref } from "vue"
+import { trans } from 'laravel-vue-i18n'
 
 import { useTabChange } from "@/Composables/tab-change"
 import { capitalize } from "@/Composables/capitalize"
@@ -58,13 +59,13 @@ const selectedRow = ref([])
                     :style="selectedRow.length > 0 ? 'primary' : 'tertiary'"
                     class="capitalize inline-flex items-center rounded-md text-sm font-medium shadow-sm gap-x-2"
                 >
-                    {{ selectedRow.length > 0 ? `Create Banner (${selectedRow.length})` : 'Select images' }}
+                    {{ selectedRow.length > 0 ? trans(`Create Banner (${selectedRow.length})`) : trans('Select images') }}
                 </Button>
             </Link>
         </template>
     </PageHeading>
     <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate" :selectedRow="selectedRow"/>
-    <component :is="component" @selected-row="(value: any) => selectedRow = value" :tab="currentTab" :data="props[currentTab]"></component>
+    <component :is="component" @selected-row="(value: any) => selectedRow = value" :tab="currentTab" :data="props[currentTab]" />
 </template>
 
 

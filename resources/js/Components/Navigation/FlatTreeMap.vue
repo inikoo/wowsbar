@@ -4,17 +4,18 @@
   -  Copyright (c) 2022, Raul A Perusquia Flores
   -->
 <script setup>
-import { Link } from '@inertiajs/vue3';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { faEmptySet, faStar, faWrench, faWarehouse, faStore, faCashRegister, faMoneyCheckAlt } from '@/../private/pro-light-svg-icons';
-library.add(faEmptySet, faStar, faWrench, faWarehouse, faStore, faCashRegister, faMoneyCheckAlt);
-import { useLocaleStore } from '@/Stores/locale.js';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { trans } from 'laravel-vue-i18n'
+import { Link } from '@inertiajs/vue3'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faEmptySet, faStar, faWrench, faWarehouse, faStore, faCashRegister, faMoneyCheckAlt } from '@/../private/pro-light-svg-icons'
+library.add(faEmptySet, faStar, faWrench, faWarehouse, faStore, faCashRegister, faMoneyCheckAlt)
+import { useLocaleStore } from '@/Stores/locale.js'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { capitalize } from "@/Composables/capitalize"
 
-const props = defineProps(['nodes']);
+const props = defineProps(['nodes'])
 
-const locale = useLocaleStore();
+const locale = useLocaleStore()
 </script>
 
 <template>
@@ -27,21 +28,21 @@ const locale = useLocaleStore();
                     <div class="flex items-center px-4 text-lg xl:px-6 py-4 font-medium gap-x-4">
                             <FontAwesomeIcon size="lg" :icon="node.icon" class="flex-shrink-0 text-gray-400 dark:text-gray-500" aria-hidden="true" />
                             <p class="md:leading-none md:text-sm lg:text-base inline capitalize font-medium text-gray-500 group-hover:text-gray-600 dark:text-gray-400 dark:group-hover:text-gray-300">
-                                <span class="hidden lg:inline">{{ node.name }}</span>
-                                <span class="inline lg:hidden">{{ node.shortName ?? node.name }}</span>
+                                <span class="hidden lg:inline">{{ trans(node.name) }}</span>
+                                <span class="inline lg:hidden">{{ node.shortName ? trans(node.shortName) : trans(node.name) }}</span>
                             </p>
                             
                             <!-- Bars and count -->
                             <span v-if="node.index" class="font-medium whitespace-nowrap text-gray-400">
                                 <FontAwesomeIcon icon="fal fa-bars" class="mr-1" />
-                                <span v-if="node.index.number">{{ locale.number(node.index.number) }}</span>
+                                <span v-if="node.index.number">{{ trans(locale.number(node.index.number)) }}</span>
                                 <FontAwesomeIcon v-else icon="fal fa-empty-set" />
                             </span>
                     </div>
                 </Link>
 
                 <!-- Sublink on right each section (Marketplace) -->
-                <div v-if="node.rightSubLink" class="pr-4 " :title="capitalize(node.rightSubLink.tooltip)">
+                <div v-if="node.rightSubLink" class="pr-4 " :title="trans(capitalize(node.rightSubLink.tooltip))">
                     <!-- {{ importIcon(node.rightSubLink.icon) }} -->
                     <Link :href="route(node.rightSubLink.href[0])"
                         class="w-9 h-9 flex flex-0 justify-center items-center border-2 text-orange-500 border-orange-500 rounded-lg cursor-pointer hover:bg-orange-500 hover:text-white transition-all duration-75 ease-in-out">
