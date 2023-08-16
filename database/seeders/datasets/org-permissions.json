@@ -1,4 +1,7 @@
 [
+    "website",
+    "website.view",
+    "website.edit",
     "sysadmin",
     "sysadmin.view",
     "sysadmin.create",

@@ -14,7 +14,7 @@ const closeModal = () => {
 
 <template>
   <TransitionRoot appear :show="props.isOpen" as="template">
-    <Dialog as="div" @close="closeModal" class="relative z-10">
+    <Dialog as="div" @close="closeModal" class="relative z-20">
       <TransitionChild
         as="template"
         enter="duration-300 ease-out"

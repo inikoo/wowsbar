@@ -12,6 +12,28 @@ use App\Actions\HumanResources\JobPosition\HydrateJobPosition;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
+/**
+ * App\Models\HumanResources\EmployeeJobPosition
+ *
+ * @property int $id
+ * @property int $job_position_id
+ * @property int $employee_id
+ * @property float|null $share
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\HumanResources\Employee $employee
+ * @property-read \App\Models\HumanResources\JobPosition $jobPosition
+ * @method static \Illuminate\Database\Eloquent\Builder|EmployeeJobPosition newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|EmployeeJobPosition newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|EmployeeJobPosition query()
+ * @method static \Illuminate\Database\Eloquent\Builder|EmployeeJobPosition whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EmployeeJobPosition whereEmployeeId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EmployeeJobPosition whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EmployeeJobPosition whereJobPositionId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EmployeeJobPosition whereShare($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EmployeeJobPosition whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
 class EmployeeJobPosition extends Pivot
 {
     public $incrementing = true;

@@ -183,7 +183,7 @@ const resourceData = computed(() => {
 });
 
 // Meta Page (Previous/next link, current page, data per page)
-const resourceMeta = computed(() => {
+const compResourceMeta = computed(() => {
     if (Object.keys(props.resource).length === 0) {
         return props.meta;
     }
@@ -214,7 +214,7 @@ const hasData = computed(() => {
         return true;
     }
 
-    return resourceMeta.value.total > 0;
+    return compResourceMeta.value.total > 0;
 });
 
 //
@@ -555,9 +555,10 @@ const handleElementsChange = (data) => {
 </script>
 
 <template>
+    {{ props.resource.length }}
     <Transition>
         <!--suppress JSValidateTypes -->
-        <EmptyState :data="queryBuilderProps.emptyState" v-if="queryBuilderProps.emptyState?.count === 0 && resourceMeta.total === 0" />
+        <EmptyState :data="queryBuilderProps.emptyState" v-if="queryBuilderProps.emptyState?.count === 0 && compResourceMeta.total === 0" />
         <!--suppress HtmlUnknownAttribute -->
         <fieldset v-else ref="tableFieldset" :key="`table-${name}`" :dusk="`table-${name}`" class="min-w-0" :class="{ 'opacity-75': isVisiting }">
             <div class="my-2">
@@ -574,7 +575,7 @@ const handleElementsChange = (data) => {
                         <div class="flex border outline-red-500 rounded-md border-gray-300 dark:border-gray-500">
                             <div class="grid justify-end items-center text-base font-normal text-gray-700 dark:text-gray-400"
                                 title="Results">
-                                <div v-if="resourceMeta.total" class="px-2 py-1.5 ">{{ locale.number(resourceMeta.total) }} {{ resourceMeta.total > 1 ? trans('records') : trans('record') }}</div>
+                                <div v-if="compResourceMeta.total" class="px-2 py-1.5 ">{{ locale.number(compResourceMeta.total) }} {{ compResourceMeta.total > 1 ? trans('records') : trans('record') }}</div>
                                 <div v-else class="px-2 py-1.5">{{ locale.number(0) }} {{ trans('record') }}</div>
                             </div>
                             <!-- Button -->
@@ -659,8 +660,8 @@ const handleElementsChange = (data) => {
             </div>
 
             <!-- The Main Table -->
-            <slot name="tableWrapper" :meta="resourceMeta">
-                <TableWrapper :result="resourceMeta.total === 0" :class="{ 'mt-0': !hasOnlyData }">
+            <slot name="tableWrapper" :meta="compResourceMeta">
+                <TableWrapper :result="compResourceMeta.total === 0" :class="{ 'mt-0': !hasOnlyData }">
                     <slot name="table">
                         <table class="divide-y divide-gray-200 dark:divide-gray-500 bg-white dark:bg-gray-700 w-full">
                             <thead class="bg-gray-50 dark:bg-gray-800">
@@ -700,10 +701,10 @@ const handleElementsChange = (data) => {
                     </slot>
 
                     <!-- Pagination -->
-                    <slot name="pagination" :on-click="visit" :has-data="hasData" :meta="resourceMeta"
-                        v-if="resourceMeta.total > 15" :per-page-options="queryBuilderProps.perPageOptions"
+                    <slot name="pagination" :on-click="visit" :has-data="hasData" :meta="compResourceMeta"
+                        v-if="compResourceMeta.total > 15" :per-page-options="queryBuilderProps.perPageOptions"
                         :on-per-page-change="onPerPageChange">
-                        <Pagination :on-click="visit" :has-data="hasData" :meta="resourceMeta"
+                        <Pagination :on-click="visit" :has-data="hasData" :meta="compResourceMeta"
                             :per-page-options="queryBuilderProps.perPageOptions" :on-per-page-change="onPerPageChange" />
                     </slot>
                 </TableWrapper>

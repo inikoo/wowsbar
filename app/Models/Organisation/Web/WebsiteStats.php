@@ -5,7 +5,7 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Models\Organisation\Website;
+namespace App\Models\Organisation\Web;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -19,7 +19,7 @@ use Spatie\Multitenancy\Models\Concerns\UsesTenantConnection;
  * @property int $number_webpages
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Models\Organisation\Website\Website $website
+ * @property-read \App\Models\Organisation\Web\Website $website
  * @method static \Illuminate\Database\Eloquent\Builder|WebsiteStats newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|WebsiteStats newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|WebsiteStats query()

@@ -32,7 +32,7 @@ class AppServiceProvider extends ServiceProvider
                 'Tenant'                    => 'App\Models\Tenancy\Tenant',
                 'User'                      => 'App\Models\Auth\User',
                 'PortfolioWebsite'          => 'App\Models\Portfolio\PortfolioWebsite',
-                'Banner'              => 'App\Models\Portfolio\Banner',
+                'Banner'                    => 'App\Models\Portfolio\Banner',
                 'OrganisationUser'          => 'App\Models\Organisation\OrganisationUser',
                 'PublicUser'                => 'App\Models\Auth\OrganisationUser',
                 'Guest'                     => 'App\Models\Organisation\Guest',

@@ -8,6 +8,7 @@
 namespace App\Actions\Organisation\Organisation;
 
 use App\Actions\Organisation\Guest\StoreGuest;
+use App\Actions\Organisation\Web\Website\StoreWebsite;
 use App\Enums\Organisation\Guest\GuestTypeEnum;
 use App\Models\Assets\Country;
 use App\Models\Assets\Currency;
@@ -53,6 +54,7 @@ class StoreOrganisation
 
         Artisan::call("db:seed --force --class=StockImageSeeder");
 
+        StoreWebsite::run([]);
 
         return $organisation;
     }
