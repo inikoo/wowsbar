@@ -8,9 +8,7 @@
 namespace App\Actions\Firebase;
 
 use App\Models\Auth\User;
-use App\Models\Organisation\Organisation;
 use App\Models\Organisation\OrganisationUser;
-use App\Models\Tenancy\Tenant;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\AsObject;
 
@@ -19,27 +17,25 @@ class StoreUserLogFirebase
     use AsObject;
     use AsAction;
 
-    public function handle(User|OrganisationUser $user, Tenant|Organisation $parent, array $route): void
+    public function handle(User|OrganisationUser $user, string $parent_type, ?string $slug, array $route): void
     {
-        $database  = app('firebase.database');
+        $database = app('firebase.database');
+        $path     = match ($parent_type) {
+            'Tenant' => 'tenants',
+            default => 'organisations',
+        };
 
-        switch (class_basename($parent)) {
-            case 'Tenant':
-                $slug = $parent->slug;
-                $name = 'tenants';
-                break;
-            default:
-                $slug = null;
-                $name = 'organisations';
+        if ($slug) {
+            $path .= "/$slug";
         }
+        $path .= '/active_users/'.$user->username;
 
-        $reference = $database->getReference($name . '/' . $slug . '/active_users/' . $user->username);
+        $reference = $database->getReference($path);
 
         $reference->set([
             'last_active' => now(),
             'route'       => $route
         ]);
-
         //        CheckUserStatusFirebase::dispatch($tenant);
     }
 }

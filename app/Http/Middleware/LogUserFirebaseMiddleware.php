@@ -16,23 +16,35 @@ class LogUserFirebaseMiddleware
     public function handle(Request $request, Closure $next)
     {
         $user   = $request->user();
-        $parent = organisation();
+
+        if($user && env('LIVE_USERS_LIST')) {
 
         if(Auth::getDefaultDriver() == 'web') {
-            $parent = app('currentTenant');
+            $parent_type = 'Tenant';
+            $parent_slug= app('currentTenant')->slug;
+        }else{
+            $parent_type='Organisation';
+            $parent_slug=null;
         }
-
         $route = [
             'module'    => explode('.', request()->route()->getName())[0],
             'name'      => request()->route()->getName(),
             'arguments' => request()->route()->originalParameters()
         ];
 
-        if($user && env('LIVE_USERS_LIST')) {
-            StoreUserLogFirebase::dispatch($user, $parent, $route);
+
+            StoreUserLogFirebase::dispatch(
+                $user,
+                $parent_type,
+                $parent_slug,
+                $route);
 
             if($request->route()->getName() == 'logout') {
-                DeleteUserLogFirebase::dispatch($user, $parent);
+                DeleteUserLogFirebase::dispatch(
+                    $user,
+                    $parent_type,
+                    $parent_slug,
+                );
             }
         }
 
