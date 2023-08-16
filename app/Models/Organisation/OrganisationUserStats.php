@@ -7,6 +7,7 @@
 
 namespace App\Models\Organisation;
 
+use App\Models\Traits\HasOrganisationUniversalSearch;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -44,6 +45,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class OrganisationUserStats extends Model
 {
+    use HasOrganisationUniversalSearch;
+
     protected $table = 'organisation_user_stats';
 
     protected $guarded = [];
