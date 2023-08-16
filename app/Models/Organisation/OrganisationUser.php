@@ -8,6 +8,7 @@
 namespace App\Models\Organisation;
 
 use App\Models\Traits\HasHistory;
+use App\Models\Traits\HasOrganisationUniversalSearch;
 use App\Models\Traits\IsUser;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -87,6 +88,7 @@ class OrganisationUser extends Authenticatable implements HasMedia, Auditable
     use HasRoles;
     use InteractsWithMedia;
     use HasHistory;
+    use HasOrganisationUniversalSearch;
 
 
     protected string $guard_name = 'org';

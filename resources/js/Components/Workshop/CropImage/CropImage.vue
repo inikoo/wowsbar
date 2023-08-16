@@ -12,9 +12,10 @@ import "swiper/css"
 import "swiper/css/navigation"
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { faSpinnerThird } from '@/../private/pro-duotone-svg-icons'
 import { faExclamation } from '@/../private/pro-solid-svg-icons'
 import { library } from '@fortawesome/fontawesome-svg-core'
-library.add(faExclamation)
+library.add(faExclamation, faSpinnerThird)
 
 import { trans } from "laravel-vue-i18n"
 import Button from "@/Components/Elements/Buttons/Button.vue"
@@ -58,11 +59,11 @@ const generateThumbnail = (file) => {
 };
 
 const form = ref(new FormData())
-
 const catchError = ref()
-
+const loadingState = ref(false)
 
 const addComponent = async () => {
+    loadingState.value = true
     const SendData = []
     const processItem = async (item) => {
         return new Promise((resolve, reject) => {
@@ -82,6 +83,7 @@ const addComponent = async () => {
     for (const [key, value] of form.value.entries()) {
         SendData.push(value)
     }
+
     try {
         const response = await axios.post(
             route(
@@ -95,19 +97,18 @@ const addComponent = async () => {
         );
         form.value = new FormData()
         props.respone(response.data)
+        loadingState.value = false
     } catch (error) {
         console.error("===========================")
         console.log(error)
         form.value = new FormData()
         catchError.value = error
         // props.respone(error.response)
+        loadingState.value = false
     }
 }
 
-const swiperRef = ref(null)
-
-
-
+const swiperRef = ref()
 const current = ref(0)
 
 watch(current, (newVal) => {
@@ -167,15 +168,19 @@ watch(current, (newVal) => {
             {{ catchError.response.statusText}}
         </div>
     </div>
-    <Button
-        :style="`primary`"
-        icon="fas fa-upload"
-        class="relative"
-        size="xs"
-        @click="addComponent"
-    >
-        {{ trans("Save Image") }}
-    </Button>
+    <div class="">
+        <Button
+            :style="`primary`"
+            icon="fas fa-upload"
+            class="relative"
+            :disabled="loadingState"
+            size="xs"
+            @click="addComponent"
+        >
+            {{ trans("Save Image") }}
+        </Button>
+        <FontAwesomeIcon v-if="loadingState" icon='fad fa-spinner-third' class='animate-spin ml-2' aria-hidden='true' />
+    </div>
 </template>
 
 <style lang="scss">
