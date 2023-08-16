@@ -1,7 +1,7 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Wed, 16 Aug 2023 08:17:02 Malaysia Time, Pantai Lembeng, Bali
+ * Created: Wed, 16 Aug 2023 11:21:24 Malaysia Time, Pantai Lembeng, Bali
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
@@ -22,7 +22,7 @@ class CreateBanner extends InertiaAction
     }
 
 
-    public function inWebsite(PortfolioWebsite $portfolioWebsite, ActionRequest $request): Response|RedirectResponse
+    public function inPortfolioWebsite(PortfolioWebsite $portfolioWebsite, ActionRequest $request): Response|RedirectResponse
     {
         $this->initialisation($request);
 
