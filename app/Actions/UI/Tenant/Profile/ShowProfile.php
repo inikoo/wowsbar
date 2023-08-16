@@ -24,8 +24,6 @@ class ShowProfile
 
     public function asController(ActionRequest $request): User
     {
-
-
         return $request->user();
     }
 
@@ -38,8 +36,7 @@ class ShowProfile
     {
         $this->validateAttributes();
 
-
-        return Inertia::render("EditModel", [
+        return Inertia::render("Tenant/EditModel", [
             "title"       => __("Profile"),
             "breadcrumbs" => $this->getBreadcrumbs(),
             "pageHead"    => [

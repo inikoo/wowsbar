@@ -8,6 +8,7 @@
 namespace App\Models\Organisation;
 
 use App\Models\Assets\Currency;
+use App\Models\Traits\HasOrganisationUniversalSearch;
 use App\Models\Organisation\Web\Website;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -59,6 +60,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 class Organisation extends Model implements HasMedia
 {
     use InteractsWithMedia;
+    use HasOrganisationUniversalSearch;
 
 
     protected $casts = [

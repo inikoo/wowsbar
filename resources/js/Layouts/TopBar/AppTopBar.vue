@@ -22,11 +22,12 @@ import Button from "@/Components/Elements/Buttons/Button.vue"
 import SearchBar from "@/Components/SearchBar.vue"
 import { trans } from "laravel-vue-i18n"
 import { useAppearanceStore } from "@/Stores/appearance"
+import Image from "@/Components/Image.vue";
 
 defineProps<{
     sidebarOpen: boolean
     logoRoute: string
-    logoutRoute: string
+    urlPrefix: string
 }>()
 
 defineEmits<{
@@ -64,6 +65,7 @@ const changeColorMode = (mode: boolean | string) => {
 onMounted(() => {
     useAppearanceStore().darkMode ? document.documentElement.classList.add('dark') : ''
 })
+
 </script>
 
 <template>
@@ -123,12 +125,10 @@ onMounted(() => {
                             <MenuButton
                                 class="flex max-w-xs items-center rounded-full bg-gray-100 text-sm focus:outline-none focus:ring-2 focus:ring-gray-500">
                                 <span class="sr-only">{{ trans("Open user menu") }}</span>
-                                <img v-if="layout.avatar_id" class="h-8 w-8 rounded-full"
-                                    :src="route('media.show',layout.avatar_id)"
+                                <Image  class="h-8 w-8 rounded-full"
+                                    :src="layout.avatar_thumbnail"
                                     alt="" />
-                                <img v-else class="h-8 w-8 rounded-full"
-                                        src="https://ui-avatars.com/api/?background=random"
-                                        alt="" />
+
                             </MenuButton>
 
                             <transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100"
@@ -136,7 +136,7 @@ onMounted(() => {
                                 <MenuItems class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-200 focus:outline-none">
                                     <div class="py-1">
                                         <MenuItem v-slot="{ active,close }">
-                                            <Link as="ul" type="button" :href="route('profile.show')" @click="close"
+                                            <Link as="ul" type="button" :href="route(urlPrefix+'profile.show')" @click="close"
                                                 :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm cursor-pointer']">
                                                 {{ trans("View profile") }}
                                             </Link>
@@ -146,7 +146,7 @@ onMounted(() => {
 
                                     <div class="py-1">
                                         <MenuItem v-slot="{ active }">
-                                            <Link as="ul" type="button" method="post" :href="route(logoutRoute)"
+                                            <Link as="ul" type="button" method="post" :href="route(urlPrefix+'logout')"
                                                 :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm cursor-pointer']">
                                                 {{ trans('Logout') }}
                                             </Link>

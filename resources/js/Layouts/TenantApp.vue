@@ -79,7 +79,7 @@ const sidebarOpen = ref(false)
         :class="[Object.values(layout.rightSidebar).some(value => value === true) ? 'mr-44' : 'mr-0']"
     >
         <!-- TopBar -->
-        <AppTopBar @sidebarOpen="(value: boolean) => sidebarOpen = value" :sidebarOpen="sidebarOpen" :logoRoute="`dashboard.show`" logoutRoute="logout">
+        <AppTopBar @sidebarOpen="(value: boolean) => sidebarOpen = value" :sidebarOpen="sidebarOpen" :logoRoute="`dashboard.show`" urlPrefix="">
             <img v-if="layout.tenant.logo_id" class="h-7 md:h-5 shadow" :src="`/media/${layout.tenant.logo_id}`" :alt="layout.tenant.code" />
             <span class="hidden leading-none md:inline font-bold  xl:truncate text-gray-800 dark:text-gray-300">
                 {{ layout.tenant.name}}
