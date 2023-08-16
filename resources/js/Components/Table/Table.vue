@@ -574,7 +574,7 @@ const handleElementsChange = (data) => {
                         <div class="flex border outline-red-500 rounded-md border-gray-300 dark:border-gray-500">
                             <div class="grid justify-end items-center text-base font-normal text-gray-700 dark:text-gray-400"
                                 title="Results">
-                                <div v-if="resourceMeta.total" class="px-2 py-1.5 ">{{ locale.number(resourceMeta.total) }} {{ trans(resourceMeta.total > 1 ? 'records' : 'record') }}</div>
+                                <div v-if="resourceMeta.total" class="px-2 py-1.5 ">{{ locale.number(resourceMeta.total) }} {{ resourceMeta.total > 1 ? trans('records') : trans('record') }}</div>
                                 <div v-else class="px-2 py-1.5">{{ locale.number(0) }} {{ trans('record') }}</div>
                             </div>
                             <!-- Button -->

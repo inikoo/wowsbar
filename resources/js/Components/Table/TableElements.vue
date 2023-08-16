@@ -54,7 +54,7 @@ const doubleClick = (key: string, element: string) => {
     <div class="px-4 py-2 -mt-2 flex items-center text-xs justify-between border-b border-gray-200">
         <div class="text-2xl flex items-center py-1 gap-x-2">
             <FontAwesomeIcon v-if="title.leftIcon" :icon="title.leftIcon" aria-hidden="true" />
-            <p class="inline font-semibold leading-none capitalize">{{ trans(title.title) }}</p>
+            <p class="inline font-semibold leading-none capitalize">{{ title.title ? trans(title.title) : '' }}</p>
         </div>
         <div class="flex items-center justify-end border border-gray-200 divide-x divide-gray-200 rounded">
             <!-- List of element (checkbox) -->
