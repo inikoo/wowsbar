@@ -11,8 +11,8 @@ use App\Actions\Helpers\History\IndexHistories;
 use App\Actions\InertiaAction;
 use App\Actions\Tenant\Portfolio\PortfolioWebsite\UI\ShowPortfolioWebsite;
 use App\Actions\UI\Tenant\Portfolio\ShowPortfolioDashboard;
-use App\Enums\UI\BannerTabsEnum;
-use App\Enums\UI\WebsiteTabsEnum;
+use App\Enums\UI\Tenant\BannerTabsEnum;
+use App\Enums\UI\Tenant\PortfolioWebsiteTabsEnum;
 use App\Http\Resources\History\HistoryResource;
 use App\Models\Portfolio\Banner;
 use App\Models\Portfolio\PortfolioWebsite;
@@ -42,7 +42,7 @@ class ShowDeletedBanner extends InertiaAction
 
     public function inPortfolioWebsite(PortfolioWebsite $website, Banner $banner, ActionRequest $request): Banner
     {
-        $this->initialisation($request)->withTab(BannerTabsEnum::values());
+        $this->initialisation($request)->withTab(\App\Enums\UI\Tenant\BannerTabsEnum::values());
 
         return $banner;
     }
@@ -82,11 +82,11 @@ class ShowDeletedBanner extends InertiaAction
                     'current'    => $this->tab,
                     'navigation' => BannerTabsEnum::navigation()
                 ],
-                WebsiteTabsEnum::SHOWCASE->value => $this->tab == WebsiteTabsEnum::SHOWCASE->value ?
+                \App\Enums\UI\Tenant\PortfolioWebsiteTabsEnum::SHOWCASE->value => $this->tab == PortfolioWebsiteTabsEnum::SHOWCASE->value ?
                     fn () => $banner->compiledLayout()
                     : Inertia::lazy(fn () => $banner->compiledLayout()),
 
-                WebsiteTabsEnum::CHANGELOG->value => $this->tab == WebsiteTabsEnum::CHANGELOG->value ?
+                PortfolioWebsiteTabsEnum::CHANGELOG->value => $this->tab == PortfolioWebsiteTabsEnum::CHANGELOG->value ?
                     fn () => HistoryResource::collection(IndexHistories::run($banner))
                     : Inertia::lazy(fn () => HistoryResource::collection(IndexHistories::run($banner)))
 

@@ -1,16 +1,16 @@
 <?php
 /*
- * Author: Jonathan Lopez Sanchez <jonathan@ancientwisdom.biz>
- * Created: Mon, 20 Mar 2023 14:46:07 Central European Standard Time, Malaga, Spain
- * Copyright (c) 2023, Inikoo LTD
+ * Author: Raul Perusquia <raul@inikoo.com>
+ * Created: Wed, 16 Aug 2023 17:47:30 Malaysia Time, Pantai Lembeng, Bali
+ * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Enums\UI;
+namespace App\Enums\UI\Tenant;
 
 use App\Enums\EnumHelperTrait;
 use App\Enums\HasTabs;
 
-enum WebsiteTabsEnum: string
+enum PortfolioWebsiteTabsEnum: string
 {
     use EnumHelperTrait;
     use HasTabs;
@@ -27,21 +27,21 @@ enum WebsiteTabsEnum: string
     public function blueprint(): array
     {
         return match ($this) {
-            WebsiteTabsEnum::SHOWCASE => [
+            PortfolioWebsiteTabsEnum::SHOWCASE => [
                 'title' => __('website'),
                 'icon'  => 'fas fa-info-circle',
             ],
-            WebsiteTabsEnum::BANNERS => [
+            PortfolioWebsiteTabsEnum::BANNERS => [
                 'title' => __('banners'),
                 'icon'  => 'fal fa-window-maximize',
             ],
-            WebsiteTabsEnum::DATA => [
+            PortfolioWebsiteTabsEnum::DATA => [
                 'title' => __('data'),
                 'icon'  => 'fal fa-database',
                 'type'  => 'icon',
                 'align' => 'right',
             ],
-            WebsiteTabsEnum::CHANGELOG => [
+            PortfolioWebsiteTabsEnum::CHANGELOG => [
                 'title' => __('changelog'),
                 'icon'  => 'fal fa-clock',
                 'type'  => 'icon',

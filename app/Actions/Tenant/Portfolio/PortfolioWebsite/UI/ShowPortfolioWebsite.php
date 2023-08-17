@@ -12,7 +12,7 @@ use App\Actions\InertiaAction;
 use App\Actions\Tenant\Portfolio\Banner\UI\IndexBanners;
 use App\Actions\UI\Tenant\Portfolio\ShowPortfolioDashboard;
 use App\Actions\UI\WithInertia;
-use App\Enums\UI\WebsiteTabsEnum;
+use App\Enums\UI\Tenant\PortfolioWebsiteTabsEnum;
 use App\Http\Resources\History\HistoryResource;
 use App\Http\Resources\Portfolio\BannerResource;
 use App\Http\Resources\Portfolio\PortfolioWebsiteResource;
@@ -38,7 +38,7 @@ class ShowPortfolioWebsite extends InertiaAction
 
     public function asController(PortfolioWebsite $portfolioWebsite, ActionRequest $request): PortfolioWebsite
     {
-        $this->initialisation($request)->withTab(WebsiteTabsEnum::values());
+        $this->initialisation($request)->withTab(\App\Enums\UI\Tenant\PortfolioWebsiteTabsEnum::values());
 
         return $portfolioWebsite;
     }
@@ -98,10 +98,10 @@ class ShowPortfolioWebsite extends InertiaAction
                 ],
                 'tabs'        => [
                     'current'    => $this->tab,
-                    'navigation' => WebsiteTabsEnum::navigation()
+                    'navigation' => \App\Enums\UI\Tenant\PortfolioWebsiteTabsEnum::navigation()
                 ],
 
-                WebsiteTabsEnum::BANNERS->value => $this->tab == WebsiteTabsEnum::BANNERS->value
+                \App\Enums\UI\Tenant\PortfolioWebsiteTabsEnum::BANNERS->value => $this->tab == PortfolioWebsiteTabsEnum::BANNERS->value
                     ?
                     fn () => BannerResource::collection(
                         IndexBanners::run(
@@ -117,7 +117,7 @@ class ShowPortfolioWebsite extends InertiaAction
                     )),
 
 
-                WebsiteTabsEnum::CHANGELOG->value => $this->tab == WebsiteTabsEnum::CHANGELOG->value ?
+                \App\Enums\UI\Tenant\PortfolioWebsiteTabsEnum::CHANGELOG->value => $this->tab == \App\Enums\UI\Tenant\PortfolioWebsiteTabsEnum::CHANGELOG->value ?
                     fn () => HistoryResource::collection(IndexHistories::run($portfolioWebsite))
                     : Inertia::lazy(fn () => HistoryResource::collection(IndexHistories::run($portfolioWebsite)))
             ]

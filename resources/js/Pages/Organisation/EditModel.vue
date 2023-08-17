@@ -9,6 +9,16 @@ import { Head } from '@inertiajs/vue3';
 import { capitalize } from "@/Composables/capitalize"
 import PageHeading from '@/Components/Headings/PageHeading.vue';
 import Edit from '@/Components/Edit.vue';
+import {library} from '@fortawesome/fontawesome-svg-core';
+
+import {
+    faGlobe, faUserPlus,
+} from "@/../private/pro-light-svg-icons";
+
+library.add(
+    faGlobe, faUserPlus,
+
+);
 
 const props = defineProps<{
     title: string,

@@ -1,7 +1,7 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Wed, 16 Aug 2023 08:09:58 Malaysia Time, Pantai Lembeng, Bali
+ * Created: Wed, 16 Aug 2023 17:47:30 Malaysia Time, Pantai Lembeng, Bali
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
@@ -10,7 +10,7 @@ namespace App\Actions\Tenant\Portfolio\Gallery\UI;
 use App\Actions\InertiaAction;
 use App\Actions\Tenant\Portfolio\Gallery\UI\UploadedImages\IndexUploadedImages;
 use App\Actions\UI\Tenant\Portfolio\ShowPortfolioDashboard;
-use App\Enums\UI\GalleryTabsEnum;
+use App\Enums\UI\Tenant\GalleryTabsEnum;
 use App\Http\Resources\Gallery\ImageResource;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -82,7 +82,7 @@ class ShowGallery extends InertiaAction
                             prefix: 'uploaded_images'
                         )
                     )),
-                GalleryTabsEnum::STOCK_IMAGES->value => $this->tab == GalleryTabsEnum::STOCK_IMAGES->value
+                \App\Enums\UI\Tenant\GalleryTabsEnum::STOCK_IMAGES->value => $this->tab == GalleryTabsEnum::STOCK_IMAGES->value
                     ?
                     fn () => ImageResource::collection(
                         IndexStockImages::run(

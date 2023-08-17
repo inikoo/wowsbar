@@ -124,6 +124,7 @@ const getActionIcon = (action) => {
                     {{ action.final }}
 
                     <!-- Button -->
+
                     <Link v-if="action.type === 'button'"
                         :href="route(action['route']['name'], action['route']['parameters'])"
                         :method="action.method ?? 'get'"
@@ -157,7 +158,7 @@ const getActionIcon = (action) => {
                             </Button>
                         </Link>
                     </div>
-                    
+
                     <slot v-if="action.type === 'modal'" name="modal" :data="action" />
                 </span>
             </div>
