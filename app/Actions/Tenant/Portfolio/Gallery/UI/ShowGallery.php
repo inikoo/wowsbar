@@ -60,7 +60,7 @@ class ShowGallery extends InertiaAction
                             'label' => 'create Banner',
                             'route' => [
                                 'name'       => preg_replace('/index$/', 'create', $request->route()->getName()),
-                                'parameters' => array_values($this->originalParameters)
+                                'parameters' => array_values($request->route()->originalParameters())
                             ]
                         ]
                     ]

@@ -77,7 +77,7 @@ class ShowBannerWorkshop extends InertiaAction
                             'label' => __('Exit workshop'),
                             'route' => [
                                 'name'       => preg_replace('/workshop$/', 'show', $request->route()->getName()),
-                                'parameters' => array_values($this->originalParameters),
+                                'parameters' => array_values($request->route()->originalParameters()),
                             ]
                         ],
                         [

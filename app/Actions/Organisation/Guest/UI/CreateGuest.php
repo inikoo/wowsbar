@@ -8,7 +8,7 @@
 namespace App\Actions\Organisation\Guest\UI;
 
 use App\Actions\InertiaAction;
-use App\Enums\Auth\Guest\GuestTypeEnum;
+use App\Enums\Organisation\Guest\GuestTypeEnum;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -16,10 +16,11 @@ use Spatie\LaravelOptions\Options;
 
 class CreateGuest extends InertiaAction
 {
+
     /**
      * @throws \Exception
      */
-    public function handle(): Response
+    public function htmlResponse(ActionRequest $request): Response
     {
         return Inertia::render(
             'CreateModel',
@@ -35,7 +36,7 @@ class CreateGuest extends InertiaAction
                             'label' => __('cancel'),
                             'route' => [
                                 'name'       => 'sysadmin.guests.index',
-                                'parameters' => array_values($this->originalParameters)
+                                'parameters' => array_values($request->route()->originalParameters())
                             ],
                         ]
                     ]
@@ -146,14 +147,11 @@ class CreateGuest extends InertiaAction
     }
 
 
-    /**
-     * @throws \Exception
-     */
-    public function asController(ActionRequest $request): Response
+    public function asController(ActionRequest $request): ActionRequest
     {
         $this->initialisation($request);
+        return $request;
 
-        return $this->handle();
     }
 
     public function getBreadcrumbs(): array

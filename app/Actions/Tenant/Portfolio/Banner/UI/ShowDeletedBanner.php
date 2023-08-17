@@ -73,7 +73,7 @@ class ShowDeletedBanner extends InertiaAction
                             'icon'  => ["fal", "fa-trash-restore-alt"],
                             'route' => [
                                 'name'       => preg_replace('/show$/', 'workshop', $request->route()->getName()),
-                                'parameters' => array_values($this->originalParameters)
+                                'parameters' => array_values($request->route()->originalParameters())
                             ]
                         ] : false,
                     ],

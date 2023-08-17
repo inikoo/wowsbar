@@ -71,7 +71,7 @@ class ShowPortfolioWebsite extends InertiaAction
                             'label' => __('new banner'),
                             'route' => [
                                 'name'       => $request->route()->getName().'.banners.create',
-                                'parameters' => array_values($this->originalParameters)
+                                'parameters' => array_values($request->route()->originalParameters())
                             ]
                         ] : false,
 
@@ -81,7 +81,7 @@ class ShowPortfolioWebsite extends InertiaAction
                             'label' => __('edit'),
                             'route' => [
                                 'name'       => preg_replace('/show$/', 'edit', $request->route()->getName()),
-                                'parameters' => array_values($this->originalParameters)
+                                'parameters' => array_values($request->route()->originalParameters())
                             ]
                         ] : false,
 
@@ -90,7 +90,7 @@ class ShowPortfolioWebsite extends InertiaAction
                             'style' => 'delete',
                             'route' => [
                                 'name'       => 'portfolio.portfolio-websites.remove',
-                                'parameters' => array_values($this->originalParameters)
+                                'parameters' => array_values($request->route()->originalParameters())
                             ]
                         ] : false
                     ],

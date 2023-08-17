@@ -142,7 +142,7 @@ class IndexGuest extends InertiaAction
     }
 
 
-    public function htmlResponse(LengthAwarePaginator $guests): Response
+    public function htmlResponse(LengthAwarePaginator $guests, ActionRequest $request): Response
     {
         return Inertia::render(
             'SysAdmin/Guests',
@@ -152,14 +152,14 @@ class IndexGuest extends InertiaAction
                 'pageHead'    => [
                     'title'  => __('guests'),
                     'actions'=> [
-                        $this->canEdit && $this->routeName == 'sysadmin.guests.index' ? [
+                        $this->canEdit && $request->route()->getName() == 'sysadmin.guests.index' ? [
                             'type'  => 'button',
                             'style' => 'create',
                             'label' => __('guest'),
                             'route' => [
 
                                 'name'       => 'sysadmin.guests.create',
-                                'parameters' => array_values($this->originalParameters)
+                                'parameters' => array_values($request->route()->originalParameters())
                             ]
 
                         ] : false

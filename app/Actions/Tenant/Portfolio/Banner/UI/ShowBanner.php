@@ -75,7 +75,7 @@ class ShowBanner extends InertiaAction
                             'icon'  => ["fal", "fa-drafting-compass"],
                             'route' => [
                                 'name'       => preg_replace('/show$/', 'workshop', $request->route()->getName()),
-                                'parameters' => array_values($this->originalParameters)
+                                'parameters' => array_values($request->route()->originalParameters())
                             ]
                         ] : false,
                         $this->canDelete ? [
@@ -83,7 +83,7 @@ class ShowBanner extends InertiaAction
                             'style' => 'delete',
                             'route' => [
                                 'name'       => preg_replace('/show$/', 'remove', $request->route()->getName()),
-                                'parameters' => array_values($this->originalParameters)
+                                'parameters' => array_values($request->route()->originalParameters())
                             ]
                         ] : false
                     ],

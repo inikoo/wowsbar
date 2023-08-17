@@ -144,7 +144,7 @@ class IndexPortfolioWebsites extends InertiaAction
                             'label' => 'create website',
                             'route' => [
                                 'name'       => preg_replace('/index$/', 'create', $request->route()->getName()),
-                                'parameters' => array_values($this->originalParameters)
+                                'parameters' => array_values($request->route()->originalParameters())
                             ]
                         ]
                     ]
