@@ -134,7 +134,6 @@ class IndexUploadedImages extends InertiaAction
                     ],
                 ],
                 'data' => ImageResource::collection($websites),
-
             ]
         )->table($this->tableStructure());
     }

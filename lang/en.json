@@ -93,7 +93,7 @@
     "address": "address",
     "analytics": "analytics",
     "appearance": "appearance",
-    "auth.password": "auth.password",
+    "auth.password": "The provided password is incorrect.",
     "banner": "banner",
     "banners": "banners",
     "branding": "branding",
