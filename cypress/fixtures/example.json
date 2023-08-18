@@ -1,5 +1,7 @@
 {
   "name": "Using fixtures to represent data",
   "email": "hello@cypress.io",
-  "body": "Fixtures are a great way to mock data for responses to routes"
+  "body": "Fixtures are a great way to mock data for responses to routes",
+  "cookieName" : "wowsbar_session",
+  "cookie" : "eyJpdiI6IkN5OUdEVXd6bkw3Sy9UYVQzd00vZlE9PSIsInZhbHVlIjoib1J1cEc1VTRHTFlXbHVraEw0WmZPaVV5dFd0NTR0S21odkkyU2I4NDJocVN0TmdyRmQ5WXBvMEhuQWJaMmhtWU0yNTMyRDZWL1g2VXFhVk90eGNQTTJRU2xqay8zNVVIdHN6UHQrcU42cEtwT2xkY0pmZy9DRVZGYjRzRHV3QnAiLCJtYWMiOiJjYzZkOGNiMzQyMWY3NmIzNTJhNmI3NGQ5ODE0N2JiZjhjZjVmYWYzOTE1ZWUyNDE4ZjczZmRmZGNmNTYyZDEyIiwidGFnIjoiIn0"
 }
