@@ -10,26 +10,33 @@
 // what makes it such an awesome testing tool,
 // please read our getting started guide:
 // https://on.cypress.io/introduction-to-cypress
-
-describe('register', () => {
+describe("register", () => {
     beforeEach(() => {
-      cy.visit('http://wowsbar.test/register')
-    })
-  
-    it('.type() - type into a DOM element', () => {
-      cy.get('#name')
-        .type('aiku').should('have.value', 'aiku')
-  
-        cy.get('#email')
-        .type('hello').should('have.value', 'hello')
+        cy.visit("http://wowsbar.test/register");
+    });
 
-        cy.get('#password')
-        .type('hello').should('have.value', 'hello')
+    it("registers a user", () => {
+        cy.get("#name").type("aiku");
+        cy.get("#email").type("test2@gmail.com");
+        cy.get("#password").type("securepassword");
+        cy.get("#password_confirmation").type("securepassword");
+        cy.get("#show-password-password").click();
+        cy.get("#show-password-password_confirmation").click();
+        cy.get("#submit").click();
+        cy.intercept("POST", "http://wowsbar.test/register");
+        cy.intercept("GET", "http://wowsbar.test/dashboard", (req) => {
+            cy.url("http://wowsbar.test/dashboard");
+        });
+    });
 
-        cy.get('#password_confirmation')
-        .type('hello').should('have.value', 'hello')
+    it("prevents registration with mismatched passwords", () => {
+        cy.get("#name").type("aiku");
+        cy.get("#email").type("test@gmail.com");
+        cy.get("#password").type("securepassword");
+        cy.get("#password_confirmation").type("differentpassword"); // Mismatched password
 
-    })
-     
-  })
-  
+        cy.get("#submit").click();
+        cy.intercept("POST", "http://wowsbar.test/register");
+        cy.intercept("GET", "http://wowsbar.test/register");
+    });
+});

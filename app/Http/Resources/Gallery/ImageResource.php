@@ -35,8 +35,7 @@ class ImageResource extends JsonResource
             'size'      => NaturalLanguage::make()->fileSize($media->size),
             'thumbnail' => GetPictureSources::run($imageThumbnail),
             'source'    => GetPictureSources::run($image),
-
-
+            'created_at' => $media->created_at,
         ];
     }
 }

@@ -39,7 +39,7 @@ class Register
         return [
             'contact_name'     => 'required|string|max:255',
             'email'            => 'required|string|email|max:255|unique:'.PublicUser::class,
-            'password'         => ['required', 'confirmed', Rules\Password::defaults()],
+            'password'         => ['required', 'confirmed', Rules\Password::defaults(), 'min:8'],
         ];
     }
 
