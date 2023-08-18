@@ -10,13 +10,14 @@ import PageHeading from '@/Components/Headings/PageHeading.vue'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faImagePolaroid, faCloudUpload } from '../../../../private/pro-light-svg-icons'
 import Tabs from "@/Components/Navigation/Tabs.vue"
-import { computed, ref } from "vue"
+import { computed, ref, Ref } from "vue"
 import { trans } from 'laravel-vue-i18n'
 
 import { useTabChange } from "@/Composables/tab-change"
 import { capitalize } from "@/Composables/capitalize"
 import Button from '@/Components/Elements/Buttons/Button.vue';
 import TableImages from "@/Pages/Tables/TableImages.vue"
+import { watch } from 'vue'
 
 library.add(faImagePolaroid,faCloudUpload)
 
@@ -32,7 +33,7 @@ const props = defineProps<{
 }>()
 
 let currentTab = ref(props.tabs.current)
-const handleTabUpdate = (tabSlug) => useTabChange(tabSlug, currentTab)
+const handleTabUpdate = (tabSlug: string) => useTabChange(tabSlug, currentTab)
 
 const component = computed(() => {
     const components = {
@@ -42,7 +43,19 @@ const component = computed(() => {
     return components[currentTab.value]
 })
 
-const selectedRow = ref([])
+const selectedRow: Ref<any> = ref({})
+const isSelectImage = ref(false)
+
+const combinedImages: Ref<any> = computed(() => {
+    return Object.values(selectedRow.value).reduce((accumulator: any, currentValue) => {
+    if (Array.isArray(currentValue)) {
+        return accumulator.concat(currentValue)
+    } else {
+        return accumulator
+    }
+}, [])
+})
+
 </script>
 
 <template layout="TenantApp">
@@ -50,22 +63,43 @@ const selectedRow = ref([])
     <Head :title="capitalize(title)"/>
     <PageHeading :data="pageHead">
         <template #button>
-            <Link
-                href="d"
-                :method="'post'"
-                as="button"
+            <!-- Button: Initial state -->
+            <Button
+                v-if="!isSelectImage"
+                @click="isSelectImage = true"
+                size="xs"
+                :style="`tertiary`"
             >
-                <Button :key="selectedRow.length" size="xs"
-                    :style="selectedRow.length > 0 ? 'primary' : 'tertiary'"
-                    class="capitalize inline-flex items-center rounded-md text-sm font-medium shadow-sm gap-x-2"
-                >
-                    {{ selectedRow.length > 0 ? trans(`Create Banner (${selectedRow.length})`) : trans('Select images') }}
+                Select images
+            </Button>
+
+            <!-- Button: Create Banner -->
+            <div v-if="isSelectImage" class="flex gap-x-2">
+                <Button :style="'delete'" @click="isSelectImage = false" size="xs">
+                    Cancel select
                 </Button>
-            </Link>
+                <Link
+                    href="d"
+                    :method="'post'"
+                >
+                    <Button :key="combinedImages.length" size="xs"
+                        :style="combinedImages.length > 0 ? 'primary' : 'tertiary'"
+                        :class="[combinedImages.length > 0 ? '' : 'cursor-not-allowed']"
+                    >
+                        Create Banner ({{ combinedImages.length }})
+                    </Button>
+                    
+                    <!-- <Button v-else :style="`tertiary`" :key="selectedRow?.[currentTab]?.length">
+                        None is selected
+                    </Button> -->
+                </Link>
+            </div>
         </template>
     </PageHeading>
-    <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate" :selectedRow="selectedRow"/>
-    <component :is="component" @selected-row="(value: any) => selectedRow = value" :tab="currentTab" :data="props[currentTab]" />
+    <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate" :selectedRow="selectedRow" :isSelectImage="isSelectImage"/>
+    <KeepAlive>
+        <component :isSelectImage="isSelectImage" :is="component" :key="currentTab" @selected-row="(value: any) => selectedRow[currentTab] = value[currentTab]" :tab="currentTab" :data="props[currentTab]"></component>
+    </KeepAlive>
 </template>
 
 

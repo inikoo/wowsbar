@@ -48,6 +48,8 @@ const doubleClick = (key: string, element: string) => {
     emits('changed', isChecked.value[element])
 }
 
+console.log(props.elements)
+
 </script>
 
 <template>
