@@ -10,6 +10,7 @@ namespace App\Models\Portfolio;
 use App\Concerns\BelongsToTenant;
 use App\Http\Resources\Portfolio\SlideResource;
 use App\Models\Traits\HasUniversalSearch;
+use Database\Factories\Portfolio\BannerFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -47,7 +48,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read int|null $portfolio_website_count
  * @property-read \App\Models\Tenancy\Tenant $tenant
  * @property-read \App\Models\Search\UniversalSearch|null $universalSearch
- * @method static \Database\Factories\Portfolio\BannerFactory factory($count = null, $state = [])
+ * @method static BannerFactory factory($count = null, $state = [])
  * @method static Builder|Banner newModelQuery()
  * @method static Builder|Banner newQuery()
  * @method static Builder|Banner onlyTrashed()
@@ -123,7 +124,7 @@ class Banner extends Model implements HasMedia
     public function compiledLayout(): array
     {
         $compiledLayout=$this->layout;
-        data_set($compiledLayout, 'components', json_decode(SlideResource::collection($this->contentBlockComponents)->toJson(), true));
+        data_set($compiledLayout, 'components', json_decode(SlideResource::collection($this->slides)->toJson(), true));
         return $compiledLayout;
 
     }

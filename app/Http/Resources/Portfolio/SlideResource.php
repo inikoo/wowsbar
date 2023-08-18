@@ -15,15 +15,15 @@ class SlideResource extends JsonResource
 {
     public function toArray($request): array
     {
-        /** @var Slide $contentBlockComponent */
-        $contentBlockComponent = $this;
+        /** @var Slide $slide */
+        $slide = $this;
 
         return [
-            'id'         => $contentBlockComponent->id,
-            'ulid'       => $contentBlockComponent->ulid,
-            'layout'     => $contentBlockComponent->layout,
-            'visibility' => $contentBlockComponent->visibility,
-            'image'      => ImageResource::make($contentBlockComponent->image)->getArray(),
+            'id'         => $slide->id,
+            'ulid'       => $slide->ulid,
+            'layout'     => $slide->layout,
+            'visibility' => $slide->visibility,
+            'image'      => ImageResource::make($slide->image)->getArray(),
 
         ];
     }
