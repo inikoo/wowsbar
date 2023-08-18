@@ -89,10 +89,10 @@ const current = ref(0)
                         </p>
                     </div> -->
                     <FieldForm class=" pt-4 sm:pt-5 px-6 " v-for="(fieldData, field ) in formData.blueprint[current].fields"
-                        :key="field" :field="field" :fieldData="fieldData" :args="formData.args" />
+                        :key="field" :field="field" :fieldData="fieldData" :args="formData.args" :id="fieldData.name"/>
 
                     <!-- Button for Authorize Google Drive -->
-                    <div class="py-2 px-3 flex justify-end max-w-2xl" v-if="formData.blueprint[current].button">
+                    <div class="py-2 px-3 flex justify-end max-w-2xl" v-if="formData.blueprint[current].button"  :id="formData.title">
                         <component :is="formData.blueprint[current].button.disable ? 'div' : 'a'"
                             :href="formData.blueprint[current].button.route" target="_blank" rel="noopener noreferrer"
                             class="px-3 py-1.5 rounded"

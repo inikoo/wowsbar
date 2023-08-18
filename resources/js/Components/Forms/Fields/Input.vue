@@ -73,6 +73,7 @@ const updateFormValue = (newValue) => {
         <div class="relative">
             <input
                 v-model.trim="value"
+                :id="fieldName"
                 :readonly="fieldData?.readonly"
                 :type="props.options?.type ?? 'text'" @input="form.errors[fieldName] = ''"
                 :placeholder="fieldData?.placeholder"
