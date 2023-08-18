@@ -1,3 +1,7 @@
+import { faker } from '@faker-js/faker';
+
+const name = faker.person.fullName(); 
+const email = faker.internet.email();
 /// <reference types="cypress" />
 
 // Welcome to Cypress!
@@ -16,8 +20,8 @@ describe("register", () => {
     });
 
     it("registers a user", () => {
-        cy.get("#name").type("aiku");
-        cy.get("#email").type("test2@gmail.com");
+        cy.get("#name").type(name);
+        cy.get("#email").type(email);
         cy.get("#password").type("securepassword");
         cy.get("#password_confirmation").type("securepassword");
         cy.get("#show-password-password").click();
@@ -33,7 +37,7 @@ describe("register", () => {
         cy.get("#name").type("aiku");
         cy.get("#email").type("test@gmail.com");
         cy.get("#password").type("securepassword");
-        cy.get("#password_confirmation").type("differentpassword"); // Mismatched password
+        cy.get("#password_confirmation").type("differentpassword"); 
 
         cy.get("#submit").click();
         cy.intercept("POST", "http://wowsbar.test/register");

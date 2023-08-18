@@ -31,6 +31,7 @@
         "spatie/laravel-sluggable": "^3.5",
         "stevebauman/location": "^7.0",
         "tightenco/ziggy": "^1.0",
+        "vemcogroup/laravel-translation": "^3.0",
         "vlucas/phpdotenv": "^5.5"
     },
     "require-dev": {

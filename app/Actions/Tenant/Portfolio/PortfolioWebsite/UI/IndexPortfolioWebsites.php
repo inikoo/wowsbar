@@ -172,12 +172,12 @@ class IndexPortfolioWebsites extends InertiaAction
         };
 
         return match ($routeName) {
-            'portfolio.portfolio_websites.index' =>
+            'portfolio.portfolio-websites.index' =>
             array_merge(
                 ShowPortfolioDashboard::make()->getBreadcrumbs(),
                 $headCrumb(
                     [
-                        'name' => 'portfolio.portfolio_websites.index',
+                        'name' => 'portfolio.portfolio-websites.index',
                         null
                     ]
                 ),
