@@ -125,6 +125,7 @@ class ShowPortfolioWebsite extends InertiaAction
             ->table(
                 IndexBanners::make()->tableStructure(
                     parent: $portfolioWebsite,
+                    /*
                     modelOperations: [
                         'createLink' => $this->canEdit ? [
                             'route' => [
@@ -136,6 +137,7 @@ class ShowPortfolioWebsite extends InertiaAction
                             'icon'  => 'fas fa-plus'
                         ] : false
                     ],
+                    */
                     prefix: 'banners',
                     canEdit: $this->canEdit
                 )

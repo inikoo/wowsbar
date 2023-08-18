@@ -9,6 +9,7 @@ import {Link} from '@inertiajs/vue3';
 import Table from '@/Components/Table/Table.vue';
 import {User} from "@/types/user";
 import {trans} from "laravel-vue-i18n";
+import Image from "@/Components/Image.vue";
 
 
 const props = defineProps<{
@@ -41,9 +42,8 @@ function userRoute(user: User) {
         </template>
 
         <template #cell(avatar)="{ item: user }">
-            <!-- {{ user  }} -->
             <div class="flex justify-center">
-                <img :src="`/media/${user['avatar']}`" class="w-6 aspect-square rounded-full" :alt="user.contact_name"/>
+                <Image :src="user['avatar']" class="w-6 aspect-square rounded-full" :alt="user.contact_name"/>
             </div>
         </template>
     </Table>

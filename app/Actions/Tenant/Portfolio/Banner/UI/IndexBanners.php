@@ -38,26 +38,13 @@ class IndexBanners extends InertiaAction
             [
                 'state' => [
                     'label'    => __('State'),
-                    'elements' => [
-                        BannerStateEnum::IN_PROCESS->value => [
-                            __('In Process'),
-                            app('currentTenant')->portfolioStats->number_banners_in_process
-                        ],
-                        BannerStateEnum::READY->value      => [
-                            __('Ready'),
-                            app('currentTenant')->portfolioStats->number_banners_ready
-                        ],
-                        BannerStateEnum::LIVE->value       => [
-                            __('Live'),
-                            app('currentTenant')->portfolioStats->number_banners_live
-                        ],
-                        BannerStateEnum::RETIRED->value    => [
-                            __('Retired'),
-                            app('currentTenant')->portfolioStats->number_banners_retired
-                        ]
-                    ],
-                    'engine'   => function ($query, $elements) {
-                        $query->where('state', array_pop($elements) === 'number_banners_in_process');
+                    'elements' => array_merge_recursive(
+                        BannerStateEnum::labels(),
+                        BannerStateEnum::count()
+                    ),
+
+                    'engine' => function ($query, $elements) {
+                        $query->whereIn('banners.state', $elements);
                     }
                 ]
             ];

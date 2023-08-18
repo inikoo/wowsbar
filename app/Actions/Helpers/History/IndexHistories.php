@@ -7,8 +7,8 @@
 
 namespace App\Actions\Helpers\History;
 
-use App\Actions\Auth\User\Traits\WithFormattedUserHistories;
 use App\Actions\Elasticsearch\BuildElasticsearchClient;
+use App\Actions\Tenant\Auth\User\Traits\WithFormattedUserHistories;
 use App\Enums\Elasticsearch\ElasticsearchTypeEnum;
 use App\InertiaTable\InertiaTable;
 use Closure;

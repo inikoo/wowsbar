@@ -7,7 +7,7 @@
 
 namespace App\Actions\Tenant\Portfolio\Slide;
 
-use App\Actions\Auth\User\UI\AttachImageToTenant;
+use App\Actions\Tenant\Auth\User\UI\AttachImageToTenant;
 use App\Models\Portfolio\Slide;
 use Illuminate\Support\Arr;
 use Lorisleiva\Actions\Concerns\AsAction;

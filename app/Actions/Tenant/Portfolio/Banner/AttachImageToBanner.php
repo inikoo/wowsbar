@@ -7,7 +7,7 @@
 
 namespace App\Actions\Tenant\Portfolio\Banner;
 
-use App\Actions\Auth\User\UI\AttachImageToTenant;
+use App\Actions\Tenant\Auth\User\UI\AttachImageToTenant;
 use App\Models\Media\Media;
 use App\Models\Portfolio\Banner;
 use Illuminate\Http\UploadedFile;

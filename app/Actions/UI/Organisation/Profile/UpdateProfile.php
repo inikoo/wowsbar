@@ -7,7 +7,7 @@
 
 namespace App\Actions\UI\Organisation\Profile;
 
-use App\Actions\Auth\User\UI\SetUserAvatarFromImage;
+use App\Actions\Tenant\Auth\User\UI\SetUserAvatarFromImage;
 use App\Actions\Traits\WithActionUpdate;
 use App\Models\Organisation\OrganisationUser;
 use Illuminate\Http\RedirectResponse;

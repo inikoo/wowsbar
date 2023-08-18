@@ -6,8 +6,8 @@
  */
 
 
-use App\Actions\Auth\User\UpdateUser;
 use App\Actions\Tenancy\Tenant\UpdateSystemSettings;
+use App\Actions\Tenant\Auth\User\UpdateUser;
 use App\Actions\Tenant\Portfolio\Banner\DeleteBanner;
 use App\Actions\Tenant\Portfolio\Banner\StoreBanner;
 use App\Actions\Tenant\Portfolio\Banner\UpdateBanner;

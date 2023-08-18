@@ -7,7 +7,7 @@
 
 namespace App\Actions\Tenant\Portfolio\Gallery;
 
-use App\Actions\Auth\User\UI\AttachImageToTenant;
+use App\Actions\Tenant\Auth\User\UI\AttachImageToTenant;
 use App\Actions\Traits\WithActionUpdate;
 use App\Models\Media\Media;
 use App\Models\Portfolio\PortfolioWebsite;
