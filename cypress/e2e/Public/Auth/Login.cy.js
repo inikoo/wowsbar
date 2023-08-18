@@ -11,25 +11,40 @@
 // please read our getting started guide:
 // https://on.cypress.io/introduction-to-cypress
 
-describe('login', () => {
+describe("login", () => {
     beforeEach(() => {
-      cy.visit('http://wowsbar.test/login')
-    })
-  
-    
-    it('.type() - type into a DOM element', () => {
-      cy.get('#email')
-        .type('aiku').should('have.value', 'aiku')
-  
-        cy.get('#password')
-        .type('hello').should('have.value', 'hello')
-  
-        cy.get('#showPassword').click()
-  
-        cy.get('#remember-me').click()
-  
-        cy.get('#submit').click()
-    })
-     
-  })
-  
+        cy.visit("http://wowsbar.test/login");
+    });
+
+    it("false password", () => {
+        cy.get("#email").type("test2@gmail.com");
+        cy.get("#password").type("123");
+        cy.get("#showPassword").click();
+        cy.get("#remember-me").click();
+        cy.get("#submit").click();
+        cy.intercept("POST", "http://wowsbar.test/login")
+        cy.intercept("GET", "http://wowsbar.test/login");
+    });
+
+    it("false email", () => {
+        cy.get("#email").type("tesddt2@gmail.com");
+        cy.get("#password").type("securepassword");
+        cy.get("#showPassword").click();
+        cy.get("#remember-me").click();
+        cy.get("#submit").click();
+        cy.intercept("POST", "http://wowsbar.test/login")
+        cy.intercept("GET", "http://wowsbar.test/login")
+    });
+
+    it("login", () => {
+        cy.get("#email").type("test2@gmail.com");
+        cy.get("#password").type("securepassword");
+        cy.get("#showPassword").click();
+        cy.get("#remember-me").click();
+        cy.get("#submit").click();
+        cy.intercept("POST", "http://wowsbar.test/login")
+        cy.intercept("GET", "http://wowsbar.test/dashboard", (req) => {
+            cy.url("http://wowsbar.test/dashboard");
+        });
+    });
+});
