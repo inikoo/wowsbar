@@ -30,7 +30,7 @@ const avatarUploaded = (file) => {
         <div class="mt-1 lg:hidden">
             <div class="flex items-center">
                 <div class="inline-block h-12 w-12 flex-shrink-0 overflow-hidden rounded-full" aria-hidden="true">
-                    <Image id="avatar_mobile" class="h-full w-full rounded-full" :src="temporaryAvatar" alt="" />
+                    <img id="avatar_mobile" class="h-full w-full rounded-full" :src="temporaryAvatar" alt="" />
                 </div>
                 <div class="ml-5 rounded-md shadow-sm">
                     <div
@@ -49,7 +49,9 @@ const avatarUploaded = (file) => {
 
         <!-- Avatar Button: Large view -->
         <div class="relative hidden overflow-hidden rounded-full lg:block">
-            <Image class="relative h-40 w-40 rounded-full" :src="temporaryAvatar" alt="" />
+            <img class="relative h-40 w-40 rounded-full" :src="temporaryAvatar" alt="" />
+        <!-- <div class="relative hidden h-40 w-40 overflow-hidden rounded-full lg:flex lg:items-center lg:justify-center">
+            <img class="relative min-h-full min-w-max" :src="temporaryAvatar" alt="" /> -->
             <label id="input-avatar-large-mask" for="input-avatar-large"
                 class="absolute inset-0 flex h-full w-full items-center justify-center bg-black bg-opacity-50 text-sm font-medium text-white opacity-0 hover:opacity-100">
                 <span>{{ trans("Change") }}</span>
