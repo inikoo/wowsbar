@@ -25,32 +25,30 @@ class UpdateBanner
 
     public bool $isAction = false;
 
-    public function handle(Banner $contentBlock, array $modelData): Banner
+    public function handle(Banner $banner, array $modelData): Banner
     {
 
 
         if(Arr::has($modelData, 'layout')) {
             $layout                                =Arr::pull($modelData, 'layout');
-            list($layout, $contentBlockComponents) = ParseBannerLayout::run($layout, $contentBlock->webBlock);
+            list($layout, $slides) = ParseBannerLayout::run($layout);
             data_set($modelData, 'layout', $layout);
 
-            if ($contentBlockComponents) {
-                foreach ($contentBlockComponents as $ulid=>$contentBlockComponentData) {
+            if ($slides) {
+                foreach ($slides as $ulid=>$slideData) {
 
-                    $contentBlockComponent=Slide::where('ulid', $ulid)->first();
-                    if($contentBlockComponent) {
-
-
+                    $bannerComponent=Slide::where('ulid', $ulid)->first();
+                    if($bannerComponent) {
 
                         UpdateSlide::run(
-                            $contentBlockComponent,
-                            Arr::only($contentBlockComponentData, ['layout','imageData'])
+                            $bannerComponent,
+                            Arr::only($slideData, ['layout','imageData'])
                         );
                     } else {
-                        data_set($contentBlockComponent, 'ulid', $ulid);
+                        data_set($bannerComponent, 'ulid', $ulid);
                         StoreSlide::run(
-                            contentBlock: $contentBlock,
-                            modelData: $contentBlockComponentData,
+                            banner: $banner,
+                            modelData: $slideData,
                         );
                     }
                     /*
@@ -61,12 +59,12 @@ class UpdateBanner
 
         }
 
-        $this->update($contentBlock, $modelData, ['data','layout']);
+        $this->update($banner, $modelData, ['data','layout']);
 
-        BannerHydrateUniversalSearch::dispatch($contentBlock);
+        BannerHydrateUniversalSearch::dispatch($banner);
         TenantHydrateBanners::dispatch(app('currentTenant'));
 
-        return $contentBlock;
+        return $banner;
     }
 
     public function authorize(ActionRequest $request): bool
@@ -104,13 +102,13 @@ class UpdateBanner
         return $this->handle($banner, $request->validated());
     }
 
-    public function action(Banner $contentBlock, $modelData): Banner
+    public function action(Banner $banner, $modelData): Banner
     {
         $this->isAction = true;
         $this->setRawAttributes($modelData);
         $validatedData = $this->validateAttributes();
 
-        return $this->handle($contentBlock, $validatedData);
+        return $this->handle($banner, $validatedData);
     }
 
     public function jsonResponse(Banner $website): BannerResource

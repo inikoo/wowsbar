@@ -6,19 +6,19 @@
  */
 
 
-use App\Actions\Auth\User\ExportUsers;
-use App\Actions\Auth\User\UI\CreateUser;
-use App\Actions\Auth\User\UI\EditUser;
-use App\Actions\Auth\User\UI\IndexUsers;
-use App\Actions\Auth\User\UI\ShowUser;
-use App\Actions\UI\Tenant\SysAdmin\EditSystemSettings;
+use App\Actions\Organisation\Auth\OrganisationUser\UI\IndexOrganisationUsers;
+use App\Actions\Tenant\Auth\User\ExportUsers;
+use App\Actions\Tenant\Auth\User\UI\CreateUser;
+use App\Actions\Tenant\Auth\User\UI\EditUser;
+use App\Actions\Tenant\Auth\User\UI\ShowUser;
 use App\Actions\UI\Organisation\SysAdmin\SysAdminDashboard;
+use App\Actions\UI\Tenant\SysAdmin\EditSystemSettings;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', SysAdminDashboard::class)->name('dashboard');
 Route::get('/settings', EditSystemSettings::class)->name('settings.edit');
 
-Route::get('/users', IndexUsers::class)->name('users.index');
+Route::get('/users', IndexOrganisationUsers::class)->name('users.index');
 Route::get('/users/export', ExportUsers::class)->name('users.export');
 
 Route::get('/users/create', CreateUser::class)->name('users.create');

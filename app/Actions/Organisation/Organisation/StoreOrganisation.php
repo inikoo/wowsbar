@@ -7,7 +7,7 @@
 
 namespace App\Actions\Organisation\Organisation;
 
-use App\Actions\Organisation\Guest\StoreGuest;
+use App\Actions\Organisation\Auth\Guest\StoreGuest;
 use App\Actions\Organisation\Web\Website\StoreWebsite;
 use App\Enums\Organisation\Guest\GuestTypeEnum;
 use App\Models\Assets\Country;

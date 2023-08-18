@@ -7,13 +7,11 @@
 
 namespace App\Actions\UI\Tenant\Profile;
 
-use App\Actions\Auth\User\UI\SetUserAvatarFromImage;
+use App\Actions\Tenant\Auth\User\UI\SetUserAvatarFromImage;
 use App\Actions\Traits\WithActionUpdate;
 use App\Models\Auth\User;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Validation\Rules\File;
 use Illuminate\Validation\Rules\Password;
 use Lorisleiva\Actions\ActionRequest;

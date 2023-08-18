@@ -2,7 +2,7 @@
 
 namespace App\Http\Middleware;
 
-use App\Actions\Auth\User\LogUserRequest;
+use App\Actions\Tenant\Auth\User\LogUserRequest;
 use App\Enums\Elasticsearch\ElasticsearchTypeEnum;
 use Auth;
 use Closure;

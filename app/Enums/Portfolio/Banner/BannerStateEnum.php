@@ -12,8 +12,35 @@ use App\Enums\EnumHelperTrait;
 enum BannerStateEnum: string
 {
     use EnumHelperTrait;
+
     case IN_PROCESS = 'in-process';
-    case READY      = 'ready';
-    case LIVE       = 'live';
-    case RETIRED    = 'retired';
+    case READY = 'ready';
+    case LIVE = 'live';
+    case RETIRED = 'retired';
+
+    public static function labels(): array
+    {
+        return [
+            'in-process' => __('In process'),
+            'ready'      => __('Ready'),
+            'live'       => __('Live'),
+            'retired'    => __('Retired'),
+
+        ];
+    }
+
+    public static function count(): array
+    {
+        $stats = app('currentTenant')->portfolioStats;
+
+        return [
+            'in-process' => $stats->number_banners_in_process,
+            'ready'      => $stats->number_banners_ready,
+            'live'       => $stats->number_banners_live,
+            'retired'    => $stats->number_banners_retired,
+        ];
+    }
+
+
 }
+

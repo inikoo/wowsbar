@@ -7,8 +7,8 @@
 
 namespace App\Actions\Tenancy\Tenant;
 
-use App\Actions\Auth\User\StoreUser;
 use App\Actions\Elasticsearch\CreateElasticSearchTenantAlias;
+use App\Actions\Tenant\Auth\User\StoreUser;
 use App\Models\Assets\Country;
 use App\Models\Assets\Currency;
 use App\Models\Assets\Language;

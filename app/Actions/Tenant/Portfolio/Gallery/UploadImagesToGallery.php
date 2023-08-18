@@ -7,7 +7,7 @@
 
 namespace App\Actions\Tenant\Portfolio\Gallery;
 
-use App\Actions\Auth\User\UI\AttachImageToTenant;
+use App\Actions\Tenant\Auth\User\UI\AttachImageToTenant;
 use App\Http\Resources\Gallery\ImageResource;
 use App\Models\Portfolio\PortfolioWebsite;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;

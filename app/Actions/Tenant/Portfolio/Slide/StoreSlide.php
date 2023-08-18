@@ -18,19 +18,19 @@ class StoreSlide
     use AsAction;
 
 
-    public function handle(Banner $contentBlock, array $modelData): Slide
+    public function handle(Banner $banner, array $modelData): Slide
     {
 
         $imageData=Arr::pull($modelData, 'imageData');
 
         data_fill($modelData, 'ulid', Str::ulid());
-        /** @var Slide $contentBlockComponent */
-        $contentBlockComponent= $contentBlock->slides()->create($modelData);
+        /** @var Slide $slide */
+        $slide= $banner->slides()->create($modelData);
 
         if($imageData) {
-            AttachImageToSlide::run($contentBlockComponent, $imageData);
+            AttachImageToSlide::run($slide, $imageData);
         }
-        return $contentBlockComponent;
+        return $slide;
     }
 
 
