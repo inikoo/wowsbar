@@ -7,6 +7,8 @@
 
 namespace App\Models\Traits;
 
+use App\Actions\Helpers\Images\GetPictureSources;
+use App\Helpers\ImgProxy\Image;
 use App\Models\Assets\Language;
 use App\Models\Media\Media;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -24,5 +26,11 @@ trait IsUser
         return $this->belongsTo(Language::class);
     }
 
+    public function avatarImageSources($width = 0, $height = 0)
+    {
+        $avatarThumbnail = (new Image())->make($this->avatar->getLocalImgProxyFilename())->resize($width, $height);
+
+        return GetPictureSources::run($avatarThumbnail);
+    }
 
 }

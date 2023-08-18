@@ -8,7 +8,6 @@
 namespace App\Actions\Tenant\Portfolio\PortfolioWebsite\UI;
 
 use App\Actions\InertiaAction;
-use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -21,15 +20,15 @@ class CreatePortfolioWebsite extends InertiaAction
     }
 
 
-    public function asController(ActionRequest $request): Response|RedirectResponse
+    public function asController(ActionRequest $request): ActionRequest
     {
         $this->initialisation($request);
+        return $request;
 
-        return $this->handle();
     }
 
 
-    public function handle(): Response
+    public function htmlResponse(ActionRequest $request): Response
     {
         return Inertia::render(
             'Tenant/CreateModel',
@@ -41,7 +40,7 @@ class CreatePortfolioWebsite extends InertiaAction
                     'cancelCreate' => [
                         'route' => [
                             'name'       => 'portfolio.portfolio-websites.index',
-                            'parameters' => array_values($this->originalParameters)
+                            'parameters' => array_values($request->route()->originalParameters())
                         ],
                     ]
 
@@ -56,7 +55,7 @@ class CreatePortfolioWebsite extends InertiaAction
                                     'type'      => 'inputWithAddOn',
                                     'label'     => __('domain'),
                                     'leftAddOn' => [
-                                        'label' => 'http://'
+                                        'label' => 'https://'
                                     ],
                                     'required'  => true,
                                 ],

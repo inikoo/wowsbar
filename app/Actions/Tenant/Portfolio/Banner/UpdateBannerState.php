@@ -1,7 +1,7 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Wed, 16 Aug 2023 08:09:28 Malaysia Time, Pantai Lembeng, Bali
+ * Created: Wed, 16 Aug 2023 17:01:05 Malaysia Time, Pantai Lembeng, Bali
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
@@ -9,7 +9,7 @@ namespace App\Actions\Tenant\Portfolio\Banner;
 
 use App\Actions\Traits\WithActionUpdate;
 use App\Enums\Portfolio\Banner\BannerStateEnum;
-use App\Http\Resources\Portfolio\ContentBlockResource;
+use App\Http\Resources\Portfolio\BannerResource;
 use App\Models\Portfolio\Banner;
 use Illuminate\Validation\Rule;
 use Lorisleiva\Actions\ActionRequest;
@@ -73,8 +73,8 @@ class UpdateBannerState
         return $this->handle($contentBlock, $validatedData);
     }
 
-    public function jsonResponse(Banner $website): ContentBlockResource
+    public function jsonResponse(Banner $website): BannerResource
     {
-        return new ContentBlockResource($website);
+        return new BannerResource($website);
     }
 }

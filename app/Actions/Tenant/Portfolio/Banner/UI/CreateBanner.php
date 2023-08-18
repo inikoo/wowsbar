@@ -50,11 +50,11 @@ class CreateBanner extends InertiaAction
                                     'portfolio.portfolio-websites.show.banners.create' =>
                                     [
                                         'name'       => 'portfolio.portfolio-websites.show',
-                                        'parameters' => array_values($this->originalParameters)
+                                        'parameters' => array_values($request->route()->originalParameters())
                                     ],
                                     default => [
                                         'name'       => preg_replace('/create$/', 'index', $request->route()->getName()),
-                                        'parameters' => array_values($this->originalParameters)
+                                        'parameters' => array_values($request->route()->originalParameters())
                                     ]
                                 }
 

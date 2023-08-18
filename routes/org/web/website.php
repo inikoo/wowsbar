@@ -6,9 +6,14 @@
  */
 
 
-use App\Actions\UI\Organisation\Web\ShowWebsiteDashboard;
-
+use App\Actions\Organisation\Web\Webpage\IndexWebpages;
+use App\Actions\Organisation\Web\Website\UI\EditWebsite;
+use App\Actions\Organisation\Web\Website\UI\ShowWebsite;
+use App\Actions\Organisation\Web\Website\UI\ShowWebsiteWorkshop;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', ShowWebsiteDashboard::class)->name('dashboard');
-Route::get('/webpages', [IndexWebpages::class, 'inTenant'])->name('webpages.index');
+Route::get('/', ShowWebsite::class)->name('show');
+Route::get('/edit', EditWebsite::class)->name('edit');
+Route::get('/workshop', ShowWebsiteWorkshop::class)->name('workshop');
+Route::get('/webpages', IndexWebpages::class)->name('webpages.index');
+Route::get('/webpages/{webpage}', IndexWebpages::class)->name('webpages.show');

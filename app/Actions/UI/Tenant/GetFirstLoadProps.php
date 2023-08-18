@@ -42,6 +42,7 @@ class GetFirstLoadProps
             $customTokenFirebasePrefix = 'tenant_' . app('currentTenant')->slug . '_user_' . $user->username . '_token_' . $user->id;
             $cache                     = Cache::get($customTokenFirebasePrefix);
 
+
             if(blank($cache)) {
                 $customToken = $auth->createCustomToken($customTokenFirebasePrefix);
                 $auth->signInWithCustomToken($customToken);

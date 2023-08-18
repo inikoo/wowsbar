@@ -23,19 +23,19 @@ class GetLayout
             $navigation['website'] = [
                 'label'   => __('website'),
                 'icon'    => ['fal', 'fa-globe'],
-                'route'   => 'org.website.dashboard',
+                'route'   => 'org.website.show',
                 'topMenu' => [
                     'subSections' => [
                         [
                             'label' => __('website'),
                             'icon'  => ['fal', 'fa-globe'],
                             'route' => [
-                                'name' => 'org.website.dashboard',
+                                'name' => 'org.website.show',
                             ]
                         ],
                         [
                             'label' => __('webpages'),
-                            'icon'  => ['fal', 'fa-globe'],
+                            'icon'  => ['fal', 'fa-browser'],
                             'route' => [
                                 'name' => 'org.website.webpages.index',
                             ]

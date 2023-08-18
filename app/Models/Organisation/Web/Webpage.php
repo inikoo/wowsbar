@@ -17,7 +17,7 @@ use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
 /**
- * App\Models\Organisation\Website\Webpage
+ * App\Models\Organisation\Web\Webpage
  *
  * @property int $id
  * @property string $slug

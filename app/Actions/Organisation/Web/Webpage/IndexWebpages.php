@@ -29,7 +29,7 @@ class IndexWebpages extends InertiaAction
         return
             (
                 $request->user()->tokenCan('root') or
-                $request->user()->hasPermissionTo('websites.view')
+                $request->user()->hasPermissionTo('website.view')
             );
     }
 
@@ -107,7 +107,7 @@ class IndexWebpages extends InertiaAction
         $container = null;
 
         return Inertia::render(
-            'Web/Webpages',
+            'Organisation/Web/Webpages',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->getName(),
@@ -144,27 +144,27 @@ class IndexWebpages extends InertiaAction
         };
 
         return match ($routeName) {
-            'web.webpages.index' =>
+            'org.website.webpages.index' =>
             array_merge(
                 ShowDashboard::make()->getBreadcrumbs(),
                 $headCrumb(
                     [
-                        'name' => 'web.webpages.index',
+                        'name' => 'org.website.webpages.index',
                         null
                     ]
                 ),
             ),
 
 
-            'web.websites.show.webpages.index' =>
+            'org.website.websites.show.webpages.index' =>
             array_merge(
                 (new ShowWebsite())->getBreadcrumbs(
-                    'web.websites.show',
+                    'org.website.websites.show',
                     $routeParameters
                 ),
                 $headCrumb(
                     [
-                        'name'       => 'web.websites.show.webpages.index',
+                        'name'       => 'org.website.websites.show.webpages.index',
                         'parameters' => $routeParameters
                     ]
                 )

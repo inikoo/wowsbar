@@ -32,11 +32,11 @@ const submit = () => {
     <form @submit.prevent="submit" class="space-y-6">
         <!-- Field: Name -->
         <div>
-            <InputLabel for="name" value="Name" />
+            <InputLabel for="name" value="Name"  />
             <TextInput id="name" type="text" class="mt-1 block w-full" v-model="form.contact_name" required autofocus
-                autocomplete="name" placeholder="John Doe"/>
+               autocomplete="name" placeholder="John Doe"/>
 
-            <InputError class="mt-2" :message="form.errors.contact_name" />
+            <InputError  class="mt-2" :message="form.errors.contact_name" />
         </div>
 
         <!-- Field: Email -->

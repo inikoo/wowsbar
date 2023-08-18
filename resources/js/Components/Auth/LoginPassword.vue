@@ -31,8 +31,9 @@ onMounted(() => {
             class="focus:ring-gray-500 focus:border-gray-500 block w-full rounded-none rounded-l-md border-gray-300"/>
     </div>
     <button
-        @click="showPassword = !showPassword"
+        @click="showPassword = !showPassword" 
         type="button"
+        name="showPassword" id="showPassword"
         class="-ml-px relative inline-flex items-center  px-4 py-2 border border-gray-300 text-sm font-medium rounded-r-md text-gray-700 bg-gray-50 hover:bg-gray-100 focus:outline-none focus:ring-1 focus:ring-gray-500 focus:border-gray-500">
         <FontAwesomeIcon v-show="showPassword" aria-hidden="true" class="h-5 w-5 text-gray-400" icon="fa-regular fa-eye"/>
         <FontAwesomeIcon v-show="!showPassword" aria-hidden="true" class="h-5 w-5 text-gray-400" icon="fa-regular fa-eye-slash"/>

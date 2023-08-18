@@ -76,7 +76,7 @@ const sidebarOpen = ref(false)
 <template>
     <div class="fixed top-0 left-0 w-screen h-screen dark:bg-gray-700 bg-gray-50" />
     <div class="relative min-h-full transition-all duration-200 ease-in-out"
-        :class="[Object.values(layout.rightSidebar).some(value => value === true) ? 'mr-44' : 'mr-0']"
+        :class="[Object.values(layout.rightSidebar).some(value => value) ? 'mr-44' : 'mr-0']"
     >
         <!-- TopBar -->
         <AppTopBar @sidebarOpen="(value: boolean) => sidebarOpen = value" :sidebarOpen="sidebarOpen" :logoRoute="`dashboard.show`" urlPrefix="">

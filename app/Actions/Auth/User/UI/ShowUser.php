@@ -66,7 +66,7 @@ class ShowUser extends InertiaAction
                             'style' => 'tertiary',
                             'route' => [
                                 'name'       => preg_replace('/show$/', 'edit', $request->route()->getName()),
-                                'parameters' => array_values($this->originalParameters)
+                                'parameters' => array_values($request->route()->originalParameters())
                             ]
                         ] : false,
                     ]

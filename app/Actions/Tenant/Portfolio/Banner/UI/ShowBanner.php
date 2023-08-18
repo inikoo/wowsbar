@@ -11,8 +11,8 @@ use App\Actions\Helpers\History\IndexHistories;
 use App\Actions\InertiaAction;
 use App\Actions\Tenant\Portfolio\PortfolioWebsite\UI\ShowPortfolioWebsite;
 use App\Actions\UI\Tenant\Portfolio\ShowPortfolioDashboard;
-use App\Enums\UI\BannerTabsEnum;
-use App\Enums\UI\WebsiteTabsEnum;
+use App\Enums\UI\Tenant\BannerTabsEnum;
+use App\Enums\UI\Tenant\PortfolioWebsiteTabsEnum;
 use App\Http\Resources\History\HistoryResource;
 use App\Models\Portfolio\Banner;
 use App\Models\Portfolio\PortfolioWebsite;
@@ -36,7 +36,7 @@ class ShowBanner extends InertiaAction
 
     public function inTenant(Banner $banner, ActionRequest $request): Banner
     {
-        $this->initialisation($request)->withTab(BannerTabsEnum::values());
+        $this->initialisation($request)->withTab(\App\Enums\UI\Tenant\BannerTabsEnum::values());
 
         return $banner;
     }
@@ -75,7 +75,7 @@ class ShowBanner extends InertiaAction
                             'icon'  => ["fal", "fa-drafting-compass"],
                             'route' => [
                                 'name'       => preg_replace('/show$/', 'workshop', $request->route()->getName()),
-                                'parameters' => array_values($this->originalParameters)
+                                'parameters' => array_values($request->route()->originalParameters())
                             ]
                         ] : false,
                         $this->canDelete ? [
@@ -83,20 +83,20 @@ class ShowBanner extends InertiaAction
                             'style' => 'delete',
                             'route' => [
                                 'name'       => preg_replace('/show$/', 'remove', $request->route()->getName()),
-                                'parameters' => array_values($this->originalParameters)
+                                'parameters' => array_values($request->route()->originalParameters())
                             ]
                         ] : false
                     ],
                 ],
-                'tabs'                           => [
+                'tabs'                                                         => [
                     'current'    => $this->tab,
-                    'navigation' => BannerTabsEnum::navigation()
+                    'navigation' => \App\Enums\UI\Tenant\BannerTabsEnum::navigation()
                 ],
-                WebsiteTabsEnum::SHOWCASE->value => $this->tab == WebsiteTabsEnum::SHOWCASE->value ?
+                \App\Enums\UI\Tenant\PortfolioWebsiteTabsEnum::SHOWCASE->value => $this->tab == \App\Enums\UI\Tenant\PortfolioWebsiteTabsEnum::SHOWCASE->value ?
                     fn () => $banner->compiledLayout()
                     : Inertia::lazy(fn () => $banner->compiledLayout()),
 
-                WebsiteTabsEnum::CHANGELOG->value => $this->tab == WebsiteTabsEnum::CHANGELOG->value ?
+                \App\Enums\UI\Tenant\PortfolioWebsiteTabsEnum::CHANGELOG->value => $this->tab == PortfolioWebsiteTabsEnum::CHANGELOG->value ?
                     fn () => HistoryResource::collection(IndexHistories::run($banner))
                     : Inertia::lazy(fn () => HistoryResource::collection(IndexHistories::run($banner)))
 

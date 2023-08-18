@@ -11,7 +11,7 @@ use App\Http\Resources\Gallery\ImageResource;
 use App\Models\Portfolio\Slide;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ContentBlockComponentResource extends JsonResource
+class SlideResource extends JsonResource
 {
     public function toArray($request): array
     {

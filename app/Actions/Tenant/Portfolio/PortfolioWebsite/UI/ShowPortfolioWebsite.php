@@ -1,7 +1,7 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Wed, 16 Aug 2023 08:09:28 Malaysia Time, Pantai Lembeng, Bali
+ * Created: Wed, 16 Aug 2023 17:01:05 Malaysia Time, Pantai Lembeng, Bali
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
@@ -12,9 +12,9 @@ use App\Actions\InertiaAction;
 use App\Actions\Tenant\Portfolio\Banner\UI\IndexBanners;
 use App\Actions\UI\Tenant\Portfolio\ShowPortfolioDashboard;
 use App\Actions\UI\WithInertia;
-use App\Enums\UI\WebsiteTabsEnum;
+use App\Enums\UI\Tenant\PortfolioWebsiteTabsEnum;
 use App\Http\Resources\History\HistoryResource;
-use App\Http\Resources\Portfolio\ContentBlockResource;
+use App\Http\Resources\Portfolio\BannerResource;
 use App\Http\Resources\Portfolio\PortfolioWebsiteResource;
 use App\Models\Portfolio\PortfolioWebsite;
 use Inertia\Inertia;
@@ -38,7 +38,7 @@ class ShowPortfolioWebsite extends InertiaAction
 
     public function asController(PortfolioWebsite $portfolioWebsite, ActionRequest $request): PortfolioWebsite
     {
-        $this->initialisation($request)->withTab(WebsiteTabsEnum::values());
+        $this->initialisation($request)->withTab(\App\Enums\UI\Tenant\PortfolioWebsiteTabsEnum::values());
 
         return $portfolioWebsite;
     }
@@ -71,7 +71,7 @@ class ShowPortfolioWebsite extends InertiaAction
                             'label' => __('new banner'),
                             'route' => [
                                 'name'       => $request->route()->getName().'.banners.create',
-                                'parameters' => array_values($this->originalParameters)
+                                'parameters' => array_values($request->route()->originalParameters())
                             ]
                         ] : false,
 
@@ -81,7 +81,7 @@ class ShowPortfolioWebsite extends InertiaAction
                             'label' => __('edit'),
                             'route' => [
                                 'name'       => preg_replace('/show$/', 'edit', $request->route()->getName()),
-                                'parameters' => array_values($this->originalParameters)
+                                'parameters' => array_values($request->route()->originalParameters())
                             ]
                         ] : false,
 
@@ -90,7 +90,7 @@ class ShowPortfolioWebsite extends InertiaAction
                             'style' => 'delete',
                             'route' => [
                                 'name'       => 'portfolio.portfolio-websites.remove',
-                                'parameters' => array_values($this->originalParameters)
+                                'parameters' => array_values($request->route()->originalParameters())
                             ]
                         ] : false
                     ],
@@ -98,18 +98,18 @@ class ShowPortfolioWebsite extends InertiaAction
                 ],
                 'tabs'        => [
                     'current'    => $this->tab,
-                    'navigation' => WebsiteTabsEnum::navigation()
+                    'navigation' => \App\Enums\UI\Tenant\PortfolioWebsiteTabsEnum::navigation()
                 ],
 
-                WebsiteTabsEnum::BANNERS->value => $this->tab == WebsiteTabsEnum::BANNERS->value
+                \App\Enums\UI\Tenant\PortfolioWebsiteTabsEnum::BANNERS->value => $this->tab == PortfolioWebsiteTabsEnum::BANNERS->value
                     ?
-                    fn () => ContentBlockResource::collection(
+                    fn () => BannerResource::collection(
                         IndexBanners::run(
                             parent: $portfolioWebsite,
                             prefix: 'banners'
                         )
                     )
-                    : Inertia::lazy(fn () => ContentBlockResource::collection(
+                    : Inertia::lazy(fn () => BannerResource::collection(
                         IndexBanners::run(
                             parent: $portfolioWebsite,
                             prefix: 'banners'
@@ -117,7 +117,7 @@ class ShowPortfolioWebsite extends InertiaAction
                     )),
 
 
-                WebsiteTabsEnum::CHANGELOG->value => $this->tab == WebsiteTabsEnum::CHANGELOG->value ?
+                \App\Enums\UI\Tenant\PortfolioWebsiteTabsEnum::CHANGELOG->value => $this->tab == \App\Enums\UI\Tenant\PortfolioWebsiteTabsEnum::CHANGELOG->value ?
                     fn () => HistoryResource::collection(IndexHistories::run($portfolioWebsite))
                     : Inertia::lazy(fn () => HistoryResource::collection(IndexHistories::run($portfolioWebsite)))
             ]

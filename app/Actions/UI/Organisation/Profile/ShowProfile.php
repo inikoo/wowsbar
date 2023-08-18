@@ -62,7 +62,7 @@ class ShowProfile
                             "avatar" => [
                                 "type"  => "avatar",
                                 "label" => __("photo"),
-                                "value" => $user->avatar_id ? route('media.show', $user->avatar_id) : null,
+                                "value" => $user->avatarImageSources(320,320)
                             ],
 
                         ],

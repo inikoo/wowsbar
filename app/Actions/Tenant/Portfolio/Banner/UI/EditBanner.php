@@ -73,7 +73,7 @@ class EditBanner extends InertiaAction
                                 'label' => __('Exit edit'),
                                 'route' => [
                                     'name'       => preg_replace('/edit$/', 'show', $request->route()->getName()),
-                                    'parameters' => array_values($this->originalParameters)
+                                    'parameters' => array_values($request->route()->originalParameters())
                                 ]
                             ]
                         ],
