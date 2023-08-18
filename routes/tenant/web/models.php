@@ -6,6 +6,7 @@
  */
 
 
+use App\Actions\Media\ImageGenerator;
 use App\Actions\Tenancy\Tenant\UpdateSystemSettings;
 use App\Actions\Tenant\Auth\User\UpdateUser;
 use App\Actions\Tenant\Portfolio\Banner\DeleteBanner;
@@ -33,3 +34,4 @@ Route::patch('/profile', UpdateProfile::class)->name('profile.update');
 
 
 Route::patch('/system-settings', UpdateSystemSettings::class)->name('system-settings.update');
+Route::post('/generator', ImageGenerator::class)->name('image.generate');

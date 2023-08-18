@@ -170,7 +170,7 @@ const hasOnlyData = computed(() => {
 });
 
 // Data of list users
-const resourceData = computed(() => {
+const compResourceData = computed(() => {
     if (Object.keys(props.resource).length === 0) {
         return props.data;
     }
@@ -210,7 +210,7 @@ const compResourceMeta = computed(() => {
 });
 
 const hasData = computed(() => {
-    if (resourceData.value.length > 0) {
+    if (compResourceData.value.length > 0) {
         return true;
     }
 
@@ -555,7 +555,6 @@ const handleElementsChange = (data) => {
 </script>
 
 <template>
-    {{ props.resource.length }}
     <Transition>
         <!--suppress JSValidateTypes -->
         <EmptyState :data="queryBuilderProps.emptyState" v-if="queryBuilderProps.emptyState?.count === 0 && compResourceMeta.total === 0" />
@@ -674,7 +673,7 @@ const handleElementsChange = (data) => {
 
                             <tbody class="bg-white dark:bg-gray-600 dark:text-gray-400 divide-y divide-gray-200 dark:divide-gray-500">
                                 <slot name="body" :show="show">
-                                    <tr v-for="(item, key) in resourceData" :key="`table-${name}-row-${key}`"
+                                    <tr v-for="(item, key) in compResourceData" :key="`table-${name}-row-${key}`"
                                         class=""
                                         :class="{
                                             'bg-gray-50': striped && key % 2,

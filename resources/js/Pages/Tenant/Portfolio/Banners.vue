@@ -12,7 +12,7 @@ import { capitalize } from "@/Composables/capitalize"
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { faGlobe } from "@/../private/pro-light-svg-icons"
 import TableBanners from "@/Pages/Tables/TableBanners.vue"
-import Modal from '@/Components/Workshop/Modal/Modal.vue'
+import Modal from '@/Components/Utils/Modal.vue'
 import Button from '@/Components/Elements/Buttons/Button.vue'
 import { trans } from 'laravel-vue-i18n'
 

@@ -155,7 +155,7 @@
     "attachments": "Anhänge",
     "auth.failed": "Authentifizierung fehlgeschlagen",
     "auth.password": "Authentifizierungspasswort",
-    "auth.throttle": "auth.throttle",
+    "auth.throttle": "Zu viele Anmeldeversuche. Bitte versuchen Sie es in :seconds Sekunden erneut.",
     "avatar": "Benutzerbild",
     "billing address": "Rechnungsadresse",
     "calendar": "Kalender",

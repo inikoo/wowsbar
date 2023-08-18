@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { faImage } from "@/../private/pro-light-svg-icons"
 import { ulid } from "ulid"
 import { trans } from "laravel-vue-i18n"
-import Modal from "./Modal/Modal.vue"
+import Modal from '@/Components/Utils/Modal.vue'
 import CropImage from "./CropImage/CropImage.vue"
 
 library.add(faImage)
