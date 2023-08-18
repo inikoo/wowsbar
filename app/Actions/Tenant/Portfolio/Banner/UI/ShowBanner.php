@@ -149,10 +149,10 @@ class ShowBanner extends InertiaAction
                     $suffix
                 ),
             ),
-            'portfolio.portfolio-websites.show.banners.show' =>
+            'portfolio.websites.show.banners.show' =>
             array_merge(
                 ShowPortfolioWebsite::make()->getBreadcrumbs(
-                    'portfolio.portfolio-websites.show',
+                    'portfolio.websites.show',
                     ['portfolioWebsite' => $routeParameters['portfolioWebsite']]
                 ),
                 $headCrumb(
@@ -160,11 +160,11 @@ class ShowBanner extends InertiaAction
                     $routeParameters['banner'],
                     [
                         'index' => [
-                            'name'       => 'portfolio.portfolio-websites.show.banners.index',
+                            'name'       => 'portfolio.websites.show.banners.index',
                             'parameters' => [$routeParameters['portfolioWebsite']->slug]
                         ],
                         'model' => [
-                            'name'       => 'portfolio.portfolio-websites.show.banners.show',
+                            'name'       => 'portfolio.websites.show.banners.show',
                             'parameters' => $routeParameters
                         ]
                     ],

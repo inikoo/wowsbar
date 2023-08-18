@@ -89,7 +89,7 @@ class ShowPortfolioWebsite extends InertiaAction
                             'type'  => 'button',
                             'style' => 'delete',
                             'route' => [
-                                'name'       => 'portfolio.portfolio-websites.remove',
+                                'name'       => 'portfolio.websites.remove',
                                 'parameters' => array_values($request->route()->originalParameters())
                             ]
                         ] : false
@@ -129,7 +129,7 @@ class ShowPortfolioWebsite extends InertiaAction
                     modelOperations: [
                         'createLink' => $this->canEdit ? [
                             'route' => [
-                                'name'       => 'portfolio.portfolio-websites.show.banners.create',
+                                'name'       => 'portfolio.websites.show.banners.create',
                                 'parameters' => array_values([$portfolioWebsite->slug])
                             ],
                             'label' => __('banner'),
@@ -177,8 +177,8 @@ class ShowPortfolioWebsite extends InertiaAction
         };
 
         return match ($routeName) {
-            'portfolio.portfolio-websites.show',
-            'portfolio.portfolio-websites.edit' =>
+            'portfolio.websites.show',
+            'portfolio.websites.edit' =>
 
             array_merge(
                 ShowPortfolioDashboard::make()->getBreadcrumbs(),
@@ -187,11 +187,11 @@ class ShowPortfolioWebsite extends InertiaAction
                     $routeParameters['portfolioWebsite'],
                     [
                         'index' => [
-                            'name'       => 'portfolio.portfolio-websites.index',
+                            'name'       => 'portfolio.websites.index',
                             'parameters' => []
                         ],
                         'model' => [
-                            'name'       => 'portfolio.portfolio-websites.show',
+                            'name'       => 'portfolio.websites.show',
                             'parameters' => [$routeParameters['portfolioWebsite']->slug]
                         ]
                     ],
@@ -224,7 +224,7 @@ class ShowPortfolioWebsite extends InertiaAction
         }
 
         return match ($routeName) {
-            'portfolio.portfolio-websites.show' => [
+            'portfolio.websites.show' => [
                 'label' => $portfolioWebsite->name,
                 'route' => [
                     'name'       => $routeName,

@@ -69,7 +69,7 @@ class StorePortfolioWebsite
 
     public function htmlResponse(PortfolioWebsite $website): RedirectResponse
     {
-        return Redirect::route('portfolio.portfolio-websites.show', [
+        return Redirect::route('portfolio.websites.show', [
             $website->slug
         ]);
     }

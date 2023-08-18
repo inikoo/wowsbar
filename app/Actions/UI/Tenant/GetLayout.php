@@ -36,7 +36,7 @@ class GetLayout
                             'icon'  => ['fal', 'fa-globe'],
                             'label' => __('websites'),
                             'route' => [
-                                'name' => 'portfolio.portfolio-websites.index',
+                                'name' => 'portfolio.websites.index',
                             ]
                         ],
                         [

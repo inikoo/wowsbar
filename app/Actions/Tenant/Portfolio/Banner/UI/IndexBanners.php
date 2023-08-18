@@ -127,7 +127,7 @@ class IndexBanners extends InertiaAction
                         'tooltip' => __('new website'),
                         'label'   => __('website'),
                         'route'   => [
-                            'name' => 'portfolio.portfolio-websites.create',
+                            'name' => 'portfolio.websites.create',
                         ]
                     ];
                 }
@@ -145,7 +145,7 @@ class IndexBanners extends InertiaAction
                     'tooltip' => __('new banner'),
                     'label'   => __('banner'),
                     'route'   => [
-                        'name'       => 'portfolio.portfolio-websites.show.banners.create',
+                        'name'       => 'portfolio.websites.show.banners.create',
                         'parameters' => ['website' => $parent->slug]
                     ]
                 ] : null
@@ -227,7 +227,7 @@ class IndexBanners extends InertiaAction
                                 'style' => 'create',
                                 'label' => 'create banner',
                                 'route' => [
-                                    'name'       => 'portfolio.portfolio-websites.show.banners.create',
+                                    'name'       => 'portfolio.websites.show.banners.create',
                                     'parameters' => app('currentTenant')->portfolioWebsites()->first()->slug
                                 ]
                             ],
@@ -254,7 +254,7 @@ class IndexBanners extends InertiaAction
                 modelOperations: [
                     'createLink' => $this->canEdit ? [
                         'route' => [
-                            'name'       => 'portfolio.portfolio-websites.show.banners.create',
+                            'name'       => 'portfolio.websites.show.banners.create',
                             'parameters' => array_values([$this->parent->slug])
                         ],
                         'label' => __('banner'),
@@ -293,15 +293,15 @@ class IndexBanners extends InertiaAction
                     ]
                 ),
             ),
-            'portfolio.portfolio-websites.show.banners.index' =>
+            'portfolio.websites.show.banners.index' =>
             array_merge(
                 ShowPortfolioWebsite::make()->getBreadcrumbs(
-                    'portfolio.portfolio-websites.show',
+                    'portfolio.websites.show',
                     $routeParameters
                 ),
                 $headCrumb(
                     [
-                        'name'       => 'portfolio.portfolio-websites.show.banners.index',
+                        'name'       => 'portfolio.websites.show.banners.index',
                         'parameters' => $routeParameters
                     ]
                 ),

@@ -47,9 +47,9 @@ class CreateBanner extends InertiaAction
                             'style' => 'cancel',
                             'route' =>
                                 match ($request->route()->getName()) {
-                                    'portfolio.portfolio-websites.show.banners.create' =>
+                                    'portfolio.websites.show.banners.create' =>
                                     [
-                                        'name'       => 'portfolio.portfolio-websites.show',
+                                        'name'       => 'portfolio.websites.show',
                                         'parameters' => array_values($request->route()->originalParameters())
                                     ],
                                     default => [
@@ -105,7 +105,7 @@ class CreateBanner extends InertiaAction
     {
         return array_merge(
             IndexBanners::make()->getBreadcrumbs(
-                'portfolio.portfolio-websites.show.banners.index',
+                'portfolio.websites.show.banners.index',
                 $routeParameters
             ),
             [

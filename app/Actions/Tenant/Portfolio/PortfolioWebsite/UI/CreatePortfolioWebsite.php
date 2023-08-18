@@ -39,7 +39,7 @@ class CreatePortfolioWebsite extends InertiaAction
                     'title'        => __('website'),
                     'cancelCreate' => [
                         'route' => [
-                            'name'       => 'portfolio.portfolio-websites.index',
+                            'name'       => 'portfolio.websites.index',
                             'parameters' => array_values($request->route()->originalParameters())
                         ],
                     ]
@@ -101,7 +101,7 @@ class CreatePortfolioWebsite extends InertiaAction
     {
         return array_merge(
             IndexPortfolioWebsites::make()->getBreadcrumbs(
-                'portfolio.portfolio-websites.index',
+                'portfolio.websites.index',
                 []
             ),
             [

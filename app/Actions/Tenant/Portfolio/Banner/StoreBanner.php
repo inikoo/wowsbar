@@ -150,14 +150,14 @@ class StoreBanner
 
         return match ($request->route()->getName()) {
             'models.portfolio-website.banner.store' => redirect()->route(
-                'portfolio.portfolio-websites.show.banners.workshop',
+                'portfolio.websites.show.banners.workshop',
                 [
                     $this->portfolioWebsite->slug,
                     $banner->slug
                 ]
             ),
             default => redirect()->route(
-                'portfolio.portfolio-websites.show.banners.index',
+                'portfolio.websites.show.banners.index',
                 $this->portfolioWebsite->slug,
             ),
         };
