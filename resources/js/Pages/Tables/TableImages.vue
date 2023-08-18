@@ -10,7 +10,7 @@ import Table from '@/Components/Table/Table.vue'
 import Image from "@/Components/Image.vue"
 import { ref, watch, reactive } from 'vue'
 import Checkbox from '@/Components/Checkbox.vue'
-import Modal from '@/Components/Workshop/Modal/Modal.vue'
+import Modal from '@/Components/Utils/Modal.vue'
 import CropImage from '@/Components/Workshop/CropImage/CropImage.vue'
 import Button from '@/Components/Elements/Buttons/Button.vue'
 import { trans } from 'laravel-vue-i18n'

@@ -4,7 +4,7 @@ import Button from "@/Components/Elements/Buttons/Button.vue";
 import { ref, toRefs, watch, defineEmits } from "vue";
 import 'vue-advanced-cropper/dist/style.css';
 import 'vue-advanced-cropper/dist/theme.compact.css';
-import Modal from "../Modal/Modal.vue";
+import Modal from '@/Components/Utils/Modal.vue'
 import CropImage from '../CropImage/CropImage.vue'
 import LibrariesImage from "../LibrariesImage.vue";
 import Image from '@/Components/Image.vue'
