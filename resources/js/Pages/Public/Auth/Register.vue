@@ -65,7 +65,7 @@ const submit = () => {
 
         <!-- Button: Submit register -->
         <div class="">
-            <button type="submit"
+            <button type="submit"  id="submit"
                 class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
                 :class="{ 'opacity-50 cursor-not-allowed': form.processing }" :disabled="form.processing">
                 <div class="pl-3">{{ trans('Register') }}</div>
@@ -76,7 +76,7 @@ const submit = () => {
         <div class="">
             <div class="text-sm font-light text-gray-500 dark:text-gray-400">
                 {{ trans('Already registered?') }}
-                <Link :href="route('public.login')"
+                <Link :href="route('public.login')" id="login-link"
                     class="font-bold text-primary-700 hover:underline dark:text-primary-500">{{ trans('Login') }}</Link>
             </div>
         </div>

@@ -15,7 +15,7 @@ library.add(faPlus, faCactus, faIslandTropical, faSkullCow, faFish)
 import { trans } from 'laravel-vue-i18n'
 
 const props = defineProps<{
-    data: {
+    data?: {
         action: {
             label: string
             route: {
@@ -48,18 +48,18 @@ const randomIndex = Math.floor(Math.random() * randomIcon.length)
 <template>
     <div class="text-center border-gray-200 pt-14">
         <div class="mb-6">
-            <FontAwesomeIcon :icon="randomIcon[randomIndex].secondIcon" class="mx-auto h-9 text-gray-200" aria-hidden="true" />
-            <FontAwesomeIcon :icon="randomIcon[randomIndex].firstIcon" class="mx-7 h-12 w-12 text-gray-300" aria-hidden="true" />
-            <FontAwesomeIcon :icon="randomIcon[randomIndex].secondIcon" class="mx-auto h-8  text-gray-200" aria-hidden="true" />
+            <FontAwesomeIcon :icon="randomIcon[randomIndex].secondIcon" class="mx-auto h-9 text-gray-300" aria-hidden="true" />
+            <FontAwesomeIcon :icon="randomIcon[randomIndex].firstIcon" class="mx-7 h-12 w-12 text-gray-400" aria-hidden="true" />
+            <FontAwesomeIcon :icon="randomIcon[randomIndex].secondIcon" class="mx-auto h-8  text-gray-300" aria-hidden="true" />
         </div>
 
-        <h3 class="font-logo text-lg font-bold text-gray-700">{{ data.title ?? trans('No records found') }}</h3>
-        <p v-if="data.description" class="text-sm mt-2 text-gray-500 mb-4">{{ data.description }}</p>
-        <Link v-if="data.action" :href="route(data.action.route.name, data.action.route.parameters)" class="">
-            <Button size="xs" :style="data.action.style"
-                class="capitalize">
+        <h3 class="font-logo text-lg font-bold text-gray-600">{{ data?.title ?? trans('No records found') }}</h3>
+        <p v-if="data?.description" class="text-sm mt-2 text-gray-500 mb-4">{{ data?.description }}</p>
+        <Link v-if="data?.action" :href="route(data?.action.route.name, data?.action.route.parameters)" class="">
+            <Button size="xs" :style="data?.action.style"
+                class="capitalize text-gray-600">
                 <FontAwesomeIcon icon="far fa-plus" class="-ml-0.5 mr-1.5 h-5 w-5" aria-hidden="true" />
-                {{ trans(data.action.tooltip) }}
+                {{ trans(data?.action.tooltip) }}
             </Button>
         </Link>
     </div>

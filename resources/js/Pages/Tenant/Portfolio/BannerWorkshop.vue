@@ -140,9 +140,9 @@ onBeforeUnmount(() => {
     setDataBeforeLeave()
 })
 
-window.addEventListener('beforeunload', function (event) {
-    event.returnValue = setDataBeforeLeave() // This message will be shown to the user
-})
+// window.addEventListener('beforeunload', function (event) {
+//     event.returnValue = setDataBeforeLeave() // This message will be shown to the user
+// })
 </script>
 
 

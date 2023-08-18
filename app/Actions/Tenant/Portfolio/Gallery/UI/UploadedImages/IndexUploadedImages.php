@@ -76,7 +76,7 @@ class IndexUploadedImages extends InertiaAction
             ->defaultSort('media.name')
             ->where('collection_name', 'content_block')
             ->select(['media.name','media.id','size','mime_type','file_name','disk','media.slug'])
-            ->allowedSorts(['name','size'])
+            ->allowedSorts(['name','size', 'created_at'])
             ->allowedFilters([$globalSearch])
             ->withPaginator($prefix)
             ->withQueryString();
@@ -105,8 +105,8 @@ class IndexUploadedImages extends InertiaAction
                 ->column(key: 'name', label: __('name'), sortable: true)
                 ->column(key: 'thumbnail', label: __('image'))
                 ->column(key: 'size', label: __('size'), sortable: true)
-                ->column(key: 'select', label: __(' '))
                 ->column(key: 'created_at', label: __('uploaded at'), sortable: true)
+                ->column(key: 'select', label: __(' '))
                 ->defaultSort('name');
         };
     }

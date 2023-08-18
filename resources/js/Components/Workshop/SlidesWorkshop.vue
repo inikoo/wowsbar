@@ -27,7 +27,7 @@ import Button from "../Elements/Buttons/Button.vue";
 import { get, isNull } from "lodash";
 import { router } from "@inertiajs/vue3";
 import SliderCommonWorkshop from "./SliderCommonWorkshop.vue";
-import Modal from "./Modal/Modal.vue";
+import Modal from '@/Components/Utils/Modal.vue'
 import LibrariesImage from "./LibrariesImage.vue";
 import CropImage from "./CropImage/CropImage.vue";
 import Image from "@/Components/Image.vue";
