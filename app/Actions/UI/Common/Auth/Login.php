@@ -47,7 +47,7 @@ class Login
     /**
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function handle(ActionRequest $request): void
+    public function handle(ActionRequest $request): RedirectResponse
     {
         $this->ensureIsNotRateLimited($request);
 
@@ -75,6 +75,8 @@ class Login
         if ($language) {
             app()->setLocale($language);
         };
+
+        return back();
     }
 
     public function rules(): array
