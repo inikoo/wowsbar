@@ -10,7 +10,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import Slider from "@/Components/Slider/Slider.vue";
 
 
-import { faWindowMaximize, faGlobe } from "../../../../private/pro-light-svg-icons"
+import { faWindowMaximize, faGlobe } from "@/../private/pro-light-svg-icons"
 
 library.add(faWindowMaximize, faGlobe)
 
@@ -33,6 +33,7 @@ const props = defineProps<{
             }
         }
     }
+    tab?: string
 }>()
 </script>
 
