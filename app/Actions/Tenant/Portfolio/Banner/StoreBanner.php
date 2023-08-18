@@ -52,7 +52,7 @@ class StoreBanner
             "components" => [
             ]
         ];
-        list($layout, $bannerComponents) = ParseBannerLayout::run($layout);
+        list($layout, $slides) = ParseBannerLayout::run($layout);
 
         data_set($modelData, 'tenant_id', app('currentTenant')->id);
         data_set($modelData, 'layout', $layout);
@@ -61,8 +61,8 @@ class StoreBanner
 
         /** @var Banner $banner */
         $banner = Banner::create($modelData);
-        if ($bannerComponents) {
-            foreach ($bannerComponents as $bannerComponentData) {
+        if ($slides) {
+            foreach ($slides as $bannerComponentData) {
                 StoreSlide::run(
                     contentBlock: $banner,
                     modelData: $bannerComponentData,

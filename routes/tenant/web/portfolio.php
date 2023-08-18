@@ -39,7 +39,7 @@ Route::get('/portfolio-websites/{portfolioWebsite}/banners', [IndexBanners::clas
 Route::get('/portfolio-websites/{portfolioWebsite}/banners/{banner}', [ShowBanner::class,'inPortfolioWebsite'])->name('portfolio-websites.show.banners.show');
 Route::get('/portfolio-websites/{portfolioWebsite}/banners/{banner}/edit', [EditBanner::class,'inPortfolioWebsite'])->name('portfolio-websites.show.banners.edit');
 Route::get('/portfolio-websites/{portfolioWebsite}/banners/{banner}/workshop', [ShowBannerWorkshop::class, 'inPortfolioWebsite'])->name('portfolio-websites.show.banners.workshop');
-Route::post('/portfolio-websites/{portfolioWebsite}/banners/{banner}/workshop/images', [UploadImagesToBanner::class, 'inBannerInWebsite'])->name('portfolio-websites.show.banners.workshop.images.store');
+Route::post('/portfolio-websites/{portfolioWebsite}/banners/{banner}/workshop/images', [UploadImagesToBanner::class, 'inBannerInPortfolioWebsite'])->name('portfolio-websites.show.banners.workshop.images.store');
 Route::get('/portfolio-websites/{portfolioWebsite}/banners/{banner}/delete', [RemoveBanner::class,'inPortfolioWebsite'])->withTrashed()->name('portfolio-websites.show.banners.remove');
 Route::get('/banners', [IndexBanners::class,'inTenant'])->name('banners.index');
 Route::get('/banners/create', [CreateBanner::class,'inTenant'])->name('banners.create');
