@@ -14,6 +14,7 @@ import {
 } from "@/../private/pro-light-svg-icons"
 import { useLayoutStore } from "@/Stores/layout"
 import { capitalize } from "@/Composables/capitalize"
+import { get } from 'lodash'
 
 library.add(
     faTerminal, faUserAlien, faCog, faGlobe, faWindowMaximize, faBriefcase, faPhotoVideo,
@@ -28,6 +29,7 @@ const layout = useLayoutStore()
     <!-- <div class="fixed top-10 bg-blue-300">{{ layout.currentModule }}<pre>{{ layout.navigation }}</pre></div> -->
     <Link
         v-for="menu in layout.navigation?.[layout.currentModule]?.topMenu.subSections" :href="route(menu.route.name)"
+        :id="get(menu,'label',menu.route.name)"
         class="group relative text-gray-700 dark:text-gray-400 group text-sm flex justify-end items-center cursor-pointer py-1 gap-x-2 px-4 md:px-4 lg:px-4"
         :title="capitalize(menu.tooltip??menu.label??'')">
         <div class="absolute h-0.5 rounded-full -bottom-2 xl:-bottom-1.5 left-[50%] translate-x-[-50%] mx-auto transition-all duration-200 ease-in-out"
