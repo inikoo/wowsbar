@@ -57,6 +57,7 @@ const tabIconClass = (current: string, type: string, align: string, extraClass: 
                     <template v-for="(tab, tabSlug) in navigation" :key="tabSlug">
                         <div class="relative group">
                             <button
+                                :id="tab.title"
                                 v-if="tab.align !== 'right'"
                                 @click="[$emit('update:tab', tabSlug), changeTab(tabSlug)]"
                                 :class="[
@@ -86,6 +87,7 @@ const tabIconClass = (current: string, type: string, align: string, extraClass: 
                     <template v-for="(tab, tabSlug, index) in navigation" :key="tabSlug">
                         <div class="relative group">
                             <button
+                                :id="tab.title"
                                 v-if="tab.align === 'right'"
                                 @click="[$emit('update:tab', tabSlug), changeTab(tabSlug)]"
                                 :class="['group inline-flex justify-center items-center py-2 px-2 font-medium text-sm']"
