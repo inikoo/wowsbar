@@ -37,20 +37,21 @@ class GetFirstLoadProps
         }
 
         $auth = app('firebase.auth');
+        $tenant = app('currentTenant');
 
         if($user) {
-            $customTokenFirebasePrefix = 'tenant_' . app('currentTenant')->slug . '_user_' . $user->username . '_token_' . $user->id;
+            $customTokenFirebasePrefix = $tenant->slug;
             $cache                     = Cache::get($customTokenFirebasePrefix);
 
-
             if(blank($cache)) {
-                $customToken = $auth->createCustomToken($customTokenFirebasePrefix);
+                $customToken = $auth
+                    ->createCustomToken($tenant->slug, [
+                        'tenant' => $tenant->slug
+                    ]);
+
                 $auth->signInWithCustomToken($customToken);
 
                 Cache::put($customTokenFirebasePrefix, $customToken->toString(), 3600);
-
-                // tenant / tenant slug
-                // rules / tenant / aiku / user
             }
         }
 
