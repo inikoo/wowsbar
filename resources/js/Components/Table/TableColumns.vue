@@ -26,7 +26,7 @@ const props = defineProps({
 </script>
 
 <template>
-    <ButtonWithDropdown placement="bottom-end" dusk="columns-dropdown" :active="hasHiddenColumns">
+    <ButtonWithDropdown placement="bottom-end" dusk="columns-dropdown" :active="hasHiddenColumns" id="filter-colums">
         <!-- Buttons beside of Search Table (Filter column, etc.) -->
         <template #button>
             <FontAwesomeIcon icon="fas fa-eye" aria-hidden="true"
@@ -47,6 +47,7 @@ const props = defineProps({
 
                         <!-- Switch Toggle -->
                         <button type="button"
+                            :id="column.label"
                             class="ml-4 relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-1 focus:ring-offset-2 dark:focus:ring-offset-1 dark:focus:ring-offset-gray-500 focus:ring-gray-600 dark:focus:ring-gray-500"
                             :class="[column.hidden ? 'bg-gray-200 dark:bg-gray-500' : 'bg-gray-700']"
                             :aria-pressed="!column.hidden" :aria-labelledby="`toggle-column-${column.key}`"
