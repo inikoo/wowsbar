@@ -17,4 +17,10 @@ trait HasTenantHydrate
     }
 
 
+    public function getJobUniqueFor(): int
+    {
+        return 3600;
+    }
+
+
 }

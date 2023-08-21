@@ -17,6 +17,7 @@ class TenantHydrateBanners implements ShouldBeUnique
     use AsAction;
     use HasTenantHydrate;
 
+
     public function handle(Tenant $tenant): void
     {
         $stats = [
@@ -30,4 +31,5 @@ class TenantHydrateBanners implements ShouldBeUnique
 
         $tenant->portfolioStats->update($stats);
     }
+
 }
