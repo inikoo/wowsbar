@@ -15,9 +15,9 @@ use Lorisleiva\Actions\ActionRequest;
 
 class RemovePortfolioWebsite extends InertiaAction
 {
-    public function handle(PortfolioWebsite $website): PortfolioWebsite
+    public function handle(PortfolioWebsite $portfolioWebsite): PortfolioWebsite
     {
-        return $website;
+        return $portfolioWebsite;
     }
 
     public function authorize(ActionRequest $request): bool
@@ -25,11 +25,11 @@ class RemovePortfolioWebsite extends InertiaAction
         return $request->user()->can("inventory.edit");
     }
 
-    public function asController(PortfolioWebsite $website, ActionRequest $request): PortfolioWebsite
+    public function asController(PortfolioWebsite $portfolioWebsite, ActionRequest $request): PortfolioWebsite
     {
         $this->initialisation($request);
 
-        return $this->handle($website);
+        return $this->handle($portfolioWebsite);
     }
 
 
@@ -43,7 +43,7 @@ class RemovePortfolioWebsite extends InertiaAction
         ];
     }
 
-    public function htmlResponse(PortfolioWebsite $website, ActionRequest $request): Response
+    public function htmlResponse(PortfolioWebsite $portfolioWebsite, ActionRequest $request): Response
     {
         return Inertia::render(
             'RemoveModel',
@@ -59,14 +59,14 @@ class RemovePortfolioWebsite extends InertiaAction
                             'icon'  => ['fal', 'fa-inventory'],
                             'title' => __('employee')
                         ],
-                    'title'  => $website->slug,
+                    'title'  => $portfolioWebsite->slug,
                     'actions'=> [
                         [
                             'type'  => 'button',
                             'style' => 'cancel',
                             'route' => [
                                 'name'       => preg_replace('/remove$/', 'show', $request->route()->getName()),
-                                'parameters' => $website->slug
+                                'parameters' => $portfolioWebsite->slug
                             ]
                         ]
                     ]

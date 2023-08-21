@@ -34,12 +34,12 @@ class StorePortfolioWebsite
     public function handle(array $modelData): PortfolioWebsite
     {
 
-        $website = PortfolioWebsite::create($modelData);
-        $website->stats()->create();
+        $portfolioWebsite = PortfolioWebsite::create($modelData);
+        $portfolioWebsite->stats()->create();
         TenantHydratePortfolioWebsites::dispatch(app('currentTenant'));
-        PortfolioWebsiteHydrateUniversalSearch::dispatch($website);
+        PortfolioWebsiteHydrateUniversalSearch::dispatch($portfolioWebsite);
 
-        return $website;
+        return $portfolioWebsite;
     }
 
     public function authorize(ActionRequest $request): bool
@@ -67,10 +67,10 @@ class StorePortfolioWebsite
         return $this->handle($request->validated());
     }
 
-    public function htmlResponse(PortfolioWebsite $website): RedirectResponse
+    public function htmlResponse(PortfolioWebsite $portfolioWebsite): RedirectResponse
     {
         return Redirect::route('portfolio.websites.show', [
-            $website->slug
+            $portfolioWebsite->slug
         ]);
     }
 
@@ -103,8 +103,8 @@ class StorePortfolioWebsite
         );
         $validatedData = $this->validateAttributes();
 
-        $website=$this->handle($validatedData);
+        $portfolioWebsite=$this->handle($validatedData);
 
-        $command->info("Done! website $website->code created  🥳");
+        $command->info("Done! website $portfolioWebsite->code created  🥳");
     }
 }

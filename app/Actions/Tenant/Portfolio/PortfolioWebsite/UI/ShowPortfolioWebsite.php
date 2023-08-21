@@ -38,7 +38,7 @@ class ShowPortfolioWebsite extends InertiaAction
 
     public function asController(PortfolioWebsite $portfolioWebsite, ActionRequest $request): PortfolioWebsite
     {
-        $this->initialisation($request)->withTab(\App\Enums\UI\Tenant\PortfolioWebsiteTabsEnum::values());
+        $this->initialisation($request)->withTab(PortfolioWebsiteTabsEnum::values());
 
         return $portfolioWebsite;
     }
@@ -98,10 +98,10 @@ class ShowPortfolioWebsite extends InertiaAction
                 ],
                 'tabs'        => [
                     'current'    => $this->tab,
-                    'navigation' => \App\Enums\UI\Tenant\PortfolioWebsiteTabsEnum::navigation()
+                    'navigation' => PortfolioWebsiteTabsEnum::navigation()
                 ],
 
-                \App\Enums\UI\Tenant\PortfolioWebsiteTabsEnum::BANNERS->value => $this->tab == PortfolioWebsiteTabsEnum::BANNERS->value
+                PortfolioWebsiteTabsEnum::BANNERS->value => $this->tab == PortfolioWebsiteTabsEnum::BANNERS->value
                     ?
                     fn () => BannerResource::collection(
                         IndexBanners::run(
@@ -117,7 +117,7 @@ class ShowPortfolioWebsite extends InertiaAction
                     )),
 
 
-                \App\Enums\UI\Tenant\PortfolioWebsiteTabsEnum::CHANGELOG->value => $this->tab == \App\Enums\UI\Tenant\PortfolioWebsiteTabsEnum::CHANGELOG->value ?
+                PortfolioWebsiteTabsEnum::CHANGELOG->value => $this->tab == PortfolioWebsiteTabsEnum::CHANGELOG->value ?
                     fn () => HistoryResource::collection(IndexHistories::run($portfolioWebsite))
                     : Inertia::lazy(fn () => HistoryResource::collection(IndexHistories::run($portfolioWebsite)))
             ]
