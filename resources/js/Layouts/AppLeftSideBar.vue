@@ -62,9 +62,9 @@ const handleKey = (event: any) => {
                         :href="route(item.route)"
                         :class="[
 							itemKey === layout.currentModule
-								? 'tabNavigationActive border-l-4 dark:border-gray-100 dark:bg-gray-600 px-0.5'
-								: 'tabNavigation border-l-0 dark:hover:bg-dark-700 px-1',
-							'group flex items-center text-sm font-medium xl:px-3 py-2 transition-all duration-150 ease-in-out',
+								? 'tabNavigationActive dark:border-gray-100 dark:bg-gray-600 px-0.5'
+								: 'tabNavigation dark:hover:bg-dark-700 px-1',
+							'group flex items-center text-sm font-medium xl:px-3 py-2',
 						]"
                         :aria-current="itemKey === layout.currentModule ? 'page' : undefined"
                     >

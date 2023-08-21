@@ -5,8 +5,8 @@ import { ref, toRefs, watch, defineEmits } from "vue";
 import 'vue-advanced-cropper/dist/style.css';
 import 'vue-advanced-cropper/dist/theme.compact.css';
 import Modal from '@/Components/Utils/Modal.vue'
-import CropImage from '../CropImage/CropImage.vue'
-import LibrariesImage from "../LibrariesImage.vue";
+import CropImage from '@/Components/Workshop/CropImage/CropImage.vue'
+import GalleryImages from "@/Components/Workshop/GalleryImages.vue";
 import Image from '@/Components/Image.vue'
 import { set } from 'lodash'
 
@@ -14,7 +14,6 @@ const props = defineProps(["data", 'fieldName','fieldData']);
 const { data, fieldName } = toRefs(props);
 const isOpen = ref(false)
 const fileInput = ref(null)
-const emits = defineEmits()
 const closeModal = () => {
     isOpen.value = false
 }
@@ -78,7 +77,7 @@ const uploadImageRespone=(res)=>{
     <div class="block w-full">
         <Modal :show="isOpen" @onClose="closeModal">
             <div>
-                <LibrariesImage />
+                <GalleryImages />
             </div>
         </Modal>
         <Modal :isOpen="isOpenCropModal" @onClose="closeModalisOpenCropModal">
