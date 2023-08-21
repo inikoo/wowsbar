@@ -183,10 +183,10 @@ class IndexBanners extends InertiaAction
         return $this->handle($this->parent);
     }
 
-    public function inPortfolioWebsite(PortfolioWebsite $website, ActionRequest $request): LengthAwarePaginator
+    public function inPortfolioWebsite(PortfolioWebsite $portfolioWebsite, ActionRequest $request): LengthAwarePaginator
     {
         $this->initialisation($request);
-        $this->parent = $website;
+        $this->parent = $portfolioWebsite;
 
         return $this->handle($this->parent);
     }

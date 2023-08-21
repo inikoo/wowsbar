@@ -18,13 +18,13 @@ class UpdatePortfolioWebsite
     use WithActionUpdate;
 
 
-    public function handle(PortfolioWebsite $website, array $modelData): PortfolioWebsite
+    public function handle(PortfolioWebsite $portfolioWebsite, array $modelData): PortfolioWebsite
     {
-        $this->update($website, $modelData, ['data']);
+        $this->update($portfolioWebsite, $modelData, ['data']);
 
-        PortfolioWebsiteHydrateUniversalSearch::dispatch($website);
+        PortfolioWebsiteHydrateUniversalSearch::dispatch($portfolioWebsite);
 
-        return $website;
+        return $portfolioWebsite;
     }
 
 
@@ -43,17 +43,16 @@ class UpdatePortfolioWebsite
         ];
     }
 
-    public function asController(PortfolioWebsite $website, ActionRequest $request): PortfolioWebsite
+    public function asController(PortfolioWebsite $portfolioWebsite, ActionRequest $request): PortfolioWebsite
     {
         $request->validate();
 
-        return $this->handle($website, $request->all());
+        return $this->handle($portfolioWebsite, $request->all());
     }
 
 
-
-    public function jsonResponse(PortfolioWebsite $website): PortfolioWebsiteResource
+    public function jsonResponse(PortfolioWebsite $portfolioWebsite): PortfolioWebsiteResource
     {
-        return new PortfolioWebsiteResource($website);
+        return new PortfolioWebsiteResource($portfolioWebsite);
     }
 }
