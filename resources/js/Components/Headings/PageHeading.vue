@@ -133,6 +133,7 @@ const getActionIcon = (action) => {
                     >
                         <Button size="xs"
                             :style="action.style"
+                            :id="getActionLabel(action).replace(' ', '-')"
                             class="capitalize inline-flex items-center rounded-md text-sm font-medium shadow-sm gap-x-2">
                             <!--
                             <FontAwesomeIcon v-if="action.icon && action.icon == 'fad fa-save'" aria-hidden="true" :icon="['fad', 'save']" style="--fa-primary-color: #f3f3f3; --fa-secondary-color: #ff6600; --fa-secondary-opacity: 1;" size="sm" :class="[iconClass]" />

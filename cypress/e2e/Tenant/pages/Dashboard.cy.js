@@ -1,6 +1,7 @@
 
+import data from '@/../../cypress/fixtures/example.json'
 /// <reference types="cypress" />
-
+console.log(data)
 // Welcome to Cypress!
 //
 // This spec file contains a variety of sample tests
@@ -14,7 +15,7 @@
 
 describe("Navigation", () => {
     beforeEach(() => {
-        cy.setCookie("wowsbar_session", "eyJpdiI6InRqYnJZWGo4L2RwaTZYd0R0ZDdIckE9PSIsInZhbHVlIjoiSVQyMVRxL003cUN3eWFLS2NRaHZxYi8rb0J4U0N4MW1EYmV3WmJXR3VUY3YyemkrNzJaYnZlTHdzbHhHV1ZWYTV4bDl4VkdRcVNDTjRmdExndmlsU0hFc0pjTG9RYWlibWhhcWYxT3U4ZXpnM1BlcnpPbnlMRUV5ZnQzdXJLWUYiLCJtYWMiOiI5ZWUxYmM2Mjc4N2FmNjhkNjgyODJkZWM2ZjhkYzU5NjU1Y2M5M2Y3NTJkYmZmMmVkNTg0MTk4ZjQ2NGJkMmMxIiwidGFnIjoiIn0%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D");
+        cy.setCookie(data.cookieName,data.cookieSession);
         cy.visit("http://aiku.wowsbar.test/dashboard");
     });
 
@@ -44,6 +45,12 @@ describe("Navigation", () => {
         cy.get('#avatar-thumbnail').click();
         cy.get('ul[role*=menuitem]').first().click();
         cy.url().should("include", "/profile");
+    });
+
+
+    it("search", () => {
+        cy.get('#search').click();
+        // cy.get('input[placeholder*=Search...]').type('test');
     });
 
 
