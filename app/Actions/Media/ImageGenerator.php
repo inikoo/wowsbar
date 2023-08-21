@@ -19,7 +19,7 @@ class ImageGenerator
     public function handle(ActionRequest $request): array
     {
         return [
-            'source' => GetPictureSources::run((new Image())->make($request->file('image')->getPath()))
+            'source' => GetPictureSources::run((new Image())->make($request->file('image')))
         ];
     }
 }
