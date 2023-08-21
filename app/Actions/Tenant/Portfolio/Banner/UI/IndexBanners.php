@@ -32,9 +32,9 @@ class IndexBanners extends InertiaAction
 
     protected array $elementGroups = [];
 
-    protected function getElementGroups(): void
+    protected function getElementGroups(): array
     {
-        $this->elementGroups =
+        return
             [
                 'state' => [
                     'label'    => __('State'),
@@ -69,7 +69,7 @@ class IndexBanners extends InertiaAction
         }
 
 
-        foreach ($this->elementGroups as $key => $elementGroup) {
+        foreach ($this->getElementGroups() as $key => $elementGroup) {
             $queryBuilder->whereElementGroup(
                 prefix: $prefix,
                 key: $key,
@@ -94,7 +94,6 @@ class IndexBanners extends InertiaAction
         $prefix = null,
         $canEdit = false
     ): Closure {
-        $this->getElementGroups();
 
         return function (InertiaTable $table) use ($modelOperations, $parent, $prefix, $canEdit) {
             if ($prefix) {
@@ -103,7 +102,7 @@ class IndexBanners extends InertiaAction
                     ->pageName($prefix.'Page');
             }
 
-            foreach ($this->elementGroups as $key => $elementGroup) {
+            foreach ($this->getElementGroups() as $key => $elementGroup) {
                 $table->elementGroup(
                     key: $key,
                     label: $elementGroup['label'],

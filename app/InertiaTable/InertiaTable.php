@@ -191,7 +191,6 @@ class InertiaTable
             if (array_key_exists($elementGroup->key, $queryElements)) {
                 $elementGroup->values = explode(',', $queryElements[$elementGroup->key]);
             }
-
             return $elementGroup;
         });
     }
@@ -225,15 +224,15 @@ class InertiaTable
         }
 
 
-        $this->elementGroups = $this->elementGroups->reject(function (ElementGroup $column) use ($key) {
-            return $column->key === $key;
-        })->push(
+
+        $this->elementGroups ->put($key,
             new ElementGroup(
                 key: $key,
                 label: $label,
                 elements: $elements
             )
-        )->values();
+        );
+
 
 
         return $this;

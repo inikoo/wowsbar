@@ -10,7 +10,7 @@ namespace App\InertiaTable;
 use AllowDynamicProperties;
 use Illuminate\Contracts\Support\Arrayable;
 
-#[AllowDynamicProperties] class ElementGroup implements Arrayable
+class ElementGroup implements Arrayable
 {
     public function __construct(
         public string $key,

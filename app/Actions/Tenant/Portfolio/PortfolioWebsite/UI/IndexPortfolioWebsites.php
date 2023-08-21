@@ -40,13 +40,7 @@ class IndexPortfolioWebsites extends InertiaAction
         return $this->handle();
     }
 
-    protected function getElementGroups(): void
-    {
-        $this->elementGroups =
-            [
 
-            ];
-    }
 
     /** @noinspection PhpUndefinedMethodInspection */
     public function handle($prefix = null): LengthAwarePaginator
@@ -63,6 +57,7 @@ class IndexPortfolioWebsites extends InertiaAction
         }
 
         $queryBuilder = QueryBuilder::for(PortfolioWebsite::class);
+        /*
         foreach ($this->elementGroups as $key => $elementGroup) {
             $queryBuilder->whereElementGroup(
                 prefix: $prefix,
@@ -70,7 +65,9 @@ class IndexPortfolioWebsites extends InertiaAction
                 allowedElements: array_keys($elementGroup['elements']),
                 engine: $elementGroup['engine']
             );
+            );
         }
+        */
 
 
         return $queryBuilder
