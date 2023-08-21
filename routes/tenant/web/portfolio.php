@@ -15,8 +15,10 @@ use App\Actions\Tenant\Portfolio\Banner\UI\ShowBannerWorkshop;
 use App\Actions\Tenant\Portfolio\Banner\UI\ShowDeletedBanner;
 use App\Actions\Tenant\Portfolio\Banner\UploadImagesToBanner;
 use App\Actions\Tenant\Portfolio\Gallery\DeleteUploadedImage;
+use App\Actions\Tenant\Portfolio\Gallery\UI\IndexStockImages;
 use App\Actions\Tenant\Portfolio\Gallery\UI\ShowGallery;
 use App\Actions\Tenant\Portfolio\Gallery\UI\UploadedImages\EditUploadedImage;
+use App\Actions\Tenant\Portfolio\Gallery\UI\UploadedImages\IndexUploadedImages;
 use App\Actions\Tenant\Portfolio\Gallery\UI\UploadedImages\ShowUploadedImage;
 use App\Actions\Tenant\Portfolio\Gallery\UploadImagesToGallery;
 use App\Actions\Tenant\Portfolio\PortfolioWebsite\UI\CreatePortfolioWebsite;
@@ -61,6 +63,10 @@ Route::prefix('gallery')->group(function () {
     Route::get('/images/{media}/edit', EditUploadedImage::class)->name('images.edit');
     Route::get('/images/{media}/delete', DeleteUploadedImage::class)->name('images.remove');
     Route::post('/images', UploadImagesToGallery::class)->name('images.upload');
+
+
+    Route::get('/uploaded/images', IndexUploadedImages::class)->name('uploaded.images');
+    Route::get('/stock/images', IndexStockImages::class)->name('stock.images');
 });
 
 //Route::get('/images', IndexImages::class)->name('images.index');

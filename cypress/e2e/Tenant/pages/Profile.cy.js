@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker';
-
+import data from '@/../../cypress/fixtures/example.json'
 const about = faker.lorem.paragraph()
 const email = faker.internet.email();
 
@@ -19,7 +19,7 @@ const email = faker.internet.email();
 
 describe("Navigation", () => {
     beforeEach(() => {
-        cy.setCookie("wowsbar_session", "eyJpdiI6InRqYnJZWGo4L2RwaTZYd0R0ZDdIckE9PSIsInZhbHVlIjoiSVQyMVRxL003cUN3eWFLS2NRaHZxYi8rb0J4U0N4MW1EYmV3WmJXR3VUY3YyemkrNzJaYnZlTHdzbHhHV1ZWYTV4bDl4VkdRcVNDTjRmdExndmlsU0hFc0pjTG9RYWlibWhhcWYxT3U4ZXpnM1BlcnpPbnlMRUV5ZnQzdXJLWUYiLCJtYWMiOiI5ZWUxYmM2Mjc4N2FmNjhkNjgyODJkZWM2ZjhkYzU5NjU1Y2M5M2Y3NTJkYmZmMmVkNTg0MTk4ZjQ2NGJkMmMxIiwidGFnIjoiIn0%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D%3D");
+        cy.setCookie(data.cookieName,data.cookieSession);
         cy.visit("http://aiku.wowsbar.test/profile");
     });
 

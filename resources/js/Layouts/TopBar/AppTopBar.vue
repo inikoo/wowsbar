@@ -105,7 +105,7 @@ onMounted(() => {
                             <div class="cursor-pointer text-white bg-indigo-500 px-2 py-0.5 rounded-md select-none" @click="changeColorMode('system')">Dark mode: OS System</div> -->
 
                             <!-- Button: Search -->
-                            <button @click="showSearchDialog = !showSearchDialog"
+                            <button @click="showSearchDialog = !showSearchDialog" id="search"
                                     class="h-8 w-8 grid items-center justify-center rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500">
                                 <span class="sr-only">{{ trans("Search") }}</span>
                                 <font-awesome-icon aria-hidden="true" icon="fa-regular fa-search" size="lg" />

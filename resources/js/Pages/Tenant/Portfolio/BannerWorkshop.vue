@@ -14,6 +14,7 @@ import Slider from "@/Components/Slider/Slider.vue"
 import SlidesWorkshopAddMode from "@/Components/Workshop/SlidesWorkshopAddMode.vue"
 import { cloneDeep, set as setData, isEqual } from "lodash"
 import { set, onValue, get } from "firebase/database"
+ScreenView
 
 
 import { usePage } from "@inertiajs/vue3"
@@ -64,6 +65,7 @@ const props = defineProps<{
 
 
 import { getDbReff } from '@/Composables/firebase'
+import ScreenView from "@/Components/ScreenView.vue"
 
 
 const user = ref(usePage().props.auth.user)
