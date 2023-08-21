@@ -57,17 +57,6 @@ class IndexPortfolioWebsites extends InertiaAction
         }
 
         $queryBuilder = QueryBuilder::for(PortfolioWebsite::class);
-        /*
-        foreach ($this->elementGroups as $key => $elementGroup) {
-            $queryBuilder->whereElementGroup(
-                prefix: $prefix,
-                key: $key,
-                allowedElements: array_keys($elementGroup['elements']),
-                engine: $elementGroup['engine']
-            );
-            );
-        }
-        */
 
 
         return $queryBuilder
@@ -86,14 +75,6 @@ class IndexPortfolioWebsites extends InertiaAction
                 $table
                     ->name($prefix)
                     ->pageName($prefix . 'Page');
-            }
-
-            foreach ($this->elementGroups as $key => $elementGroup) {
-                $table->elementGroup(
-                    key: $key,
-                    label: $elementGroup['label'],
-                    elements: $elementGroup['elements']
-                );
             }
 
             $table

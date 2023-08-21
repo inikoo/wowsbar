@@ -9,6 +9,7 @@ namespace App\Actions\Organisation\Web\Webpage;
 
 use App\Actions\InertiaAction;
 
+use App\Actions\Organisation\Web\Website\UI\ShowWebsite;
 use App\Actions\UI\Organisation\Dashboard\ShowDashboard;
 use App\Http\Resources\Web\WebpageResource;
 use App\InertiaTable\InertiaTable;
@@ -56,14 +57,7 @@ class IndexWebpages extends InertiaAction
         }
 
         $queryBuilder = QueryBuilder::for(Webpage::class);
-        foreach ($this->elementGroups as $key => $elementGroup) {
-            $queryBuilder->whereElementGroup(
-                prefix: $prefix,
-                key: $key,
-                allowedElements: array_keys($elementGroup['elements']),
-                engine: $elementGroup['engine']
-            );
-        }
+
 
         return $queryBuilder
             ->defaultSort('webpages.code')
@@ -158,10 +152,7 @@ class IndexWebpages extends InertiaAction
 
             'org.website.websites.show.webpages.index' =>
             array_merge(
-                (new ShowWebsite())->getBreadcrumbs(
-                    'org.website.websites.show',
-                    $routeParameters
-                ),
+                (new ShowWebsite())->getBreadcrumbs(),
                 $headCrumb(
                     [
                         'name'       => 'org.website.websites.show.webpages.index',

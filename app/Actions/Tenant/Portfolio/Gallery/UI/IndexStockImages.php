@@ -76,13 +76,7 @@ class IndexStockImages extends InertiaAction
                     ->pageName($prefix . 'Page');
             }
 
-            foreach ($this->elementGroups as $key => $elementGroup) {
-                $table->elementGroup(
-                    key: $key,
-                    label: $elementGroup['label'],
-                    elements: $elementGroup['elements']
-                );
-            }
+
 
             $table
                 ->withModelOperations($modelOperations)

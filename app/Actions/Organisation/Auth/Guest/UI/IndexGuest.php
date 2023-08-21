@@ -97,6 +97,15 @@ class IndexGuest extends InertiaAction
                     ->name($prefix)
                     ->pageName($prefix.'Page');
             }
+
+            foreach ($this->getElementGroups() as $key => $elementGroup) {
+                $table->elementGroup(
+                    key: $key,
+                    label: $elementGroup['label'],
+                    elements: $elementGroup['elements']
+                );
+            }
+
             $table
                 ->withGlobalSearch()
                 ->withEmptyState(

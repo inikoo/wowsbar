@@ -26,9 +26,9 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class IndexUsers extends InertiaAction
 {
-    protected function getElementGroups(): void
+    protected function getElementGroups(): array
     {
-        $this->elementGroups =
+        return
             [
                 'status' => [
                     'label'    => __('Status'),
@@ -68,7 +68,7 @@ class IndexUsers extends InertiaAction
 
 
         $queryBuilder = QueryBuilder::for(User::class);
-        foreach ($this->elementGroups as $key => $elementGroup) {
+        foreach ($this->getElementGroups() as $key => $elementGroup) {
             $queryBuilder->whereElementGroup(
                 prefix: $prefix,
                 key: $key,
@@ -96,7 +96,7 @@ class IndexUsers extends InertiaAction
                     ->pageName($prefix.'Page');
             }
 
-            foreach ($this->elementGroups as $key => $elementGroup) {
+            foreach ($this->getElementGroups() as $key => $elementGroup) {
                 $table->elementGroup(
                     key: $key,
                     label: $elementGroup['label'],

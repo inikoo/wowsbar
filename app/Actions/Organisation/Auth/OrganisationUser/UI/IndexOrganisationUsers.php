@@ -10,7 +10,6 @@ namespace App\Actions\Organisation\Auth\OrganisationUser\UI;
 use App\Actions\InertiaAction;
 use App\Actions\UI\Organisation\SysAdmin\SysAdminDashboard;
 use App\Enums\UI\UsersTabsEnum;
-use App\Http\Resources\Auth\UserRequestLogsResource;
 use App\Http\Resources\Auth\UserResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\Organisation\OrganisationUser;
@@ -25,9 +24,9 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class IndexOrganisationUsers extends InertiaAction
 {
-    protected function getElementGroups(): void
+    protected function getElementGroups(): array
     {
-        $this->elementGroups =
+       return
             [
                 'status' => [
                     'label'    => __('Status'),
@@ -67,7 +66,7 @@ class IndexOrganisationUsers extends InertiaAction
 
 
         $queryBuilder = QueryBuilder::for(OrganisationUser::class);
-        foreach ($this->elementGroups as $key => $elementGroup) {
+        foreach ($this->getElementGroups() as $key => $elementGroup) {
             $queryBuilder->whereElementGroup(
                 prefix: $prefix,
                 key: $key,
@@ -95,7 +94,7 @@ class IndexOrganisationUsers extends InertiaAction
                     ->pageName($prefix.'Page');
             }
 
-            foreach ($this->elementGroups as $key => $elementGroup) {
+            foreach ($this->getElementGroups() as $key => $elementGroup) {
                 $table->elementGroup(
                     key: $key,
                     label: $elementGroup['label'],
