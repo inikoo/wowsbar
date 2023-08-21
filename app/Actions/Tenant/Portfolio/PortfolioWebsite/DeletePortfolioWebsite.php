@@ -19,11 +19,11 @@ class DeletePortfolioWebsite
     use AsController;
     use WithAttributes;
 
-    public function handle(PortfolioWebsite $website): PortfolioWebsite
+    public function handle(PortfolioWebsite $portfolioWebsite): PortfolioWebsite
     {
-        $website->delete();
+        $portfolioWebsite->delete();
 
-        return $website;
+        return $portfolioWebsite;
     }
 
     public function authorize(ActionRequest $request): bool
@@ -31,10 +31,10 @@ class DeletePortfolioWebsite
         return $request->user()->can("portfolio.edit");
     }
 
-    public function asController(PortfolioWebsite $website, ActionRequest $request): PortfolioWebsite
+    public function asController(PortfolioWebsite $portfolioWebsite, ActionRequest $request): PortfolioWebsite
     {
         $request->validate();
-        return $this->handle($website);
+        return $this->handle($portfolioWebsite);
     }
 
 
