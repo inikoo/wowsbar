@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { toRefs, watch, ref, onBeforeMount } from 'vue'
-import { cloneDeep } from 'lodash';
+import { cloneDeep } from 'lodash'
 const props = defineProps<{
     src: {
         original: string
@@ -14,12 +14,12 @@ const props = defineProps<{
     class?: string
 }>()
 
-const { src } = toRefs(props);
+const { src } = toRefs(props)
 
 const imageSrc = ref(cloneDeep(src))
-const avif =  ref(imageSrc.value.avif);
-const webp = ref(imageSrc.value.webp);
-const original = ref(imageSrc.value.original);
+const avif =  ref(imageSrc.value.avif)
+const webp = ref(imageSrc.value.webp)
+const original = ref(imageSrc.value.original)
 
 watch(src, (newValue) => {
     imageSrc.value = newValue
@@ -27,7 +27,7 @@ watch(src, (newValue) => {
     webp.value = newValue.webp
     original.value = newValue.original
     setImage()
-  });
+})
 
 const setImage = () => {
     if (imageSrc.value.avif_2x) {

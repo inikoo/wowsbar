@@ -5,10 +5,12 @@ import Password from '@/Components/Auth/LoginPassword.vue'
 import Checkbox from '@/Components/Checkbox.vue'
 import ValidationErrors from '@/Components/ValidationErrors.vue'
 import { trans } from 'laravel-vue-i18n'
+
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faArrowLeft } from '@/../private/pro-light-svg-icons'
+import { faSpinnerThird } from '@/../private/pro-duotone-svg-icons'
 import { library } from '@fortawesome/fontawesome-svg-core'
-library.add(faArrowLeft)
+library.add(faArrowLeft, faSpinnerThird)
 
 const form = useForm({
     email: '',
@@ -68,6 +70,7 @@ const condition: Ref<string | boolean> = ref(false)
             <button type="submit" id="submit"
                     class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
                 {{ trans('Login') }}
+                <FontAwesomeIcon icon="fad fa-spinner-third" class="ml-2 h-5 w-5 animate-spin dark:text-gray-200 opacity-0" :class="{'opacity-100': form.processing}"/>
             </button>
         </div>
 

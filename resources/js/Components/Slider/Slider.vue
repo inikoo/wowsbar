@@ -147,10 +147,8 @@ watch(() => props.jumpToIndex, (newVal) => {
         <SlideCorner class="z-10" v-for="(corner, position) in filteredNulls(data.common.corners)" :position="position" :corner="corner"   :swiperRef="swiperRef"/>
     </div>
 
-    
-    <EmptyState>
-    
-    </EmptyState>
+    <!-- If slide is not exist -->
+    <EmptyState v-else />
 </template>
 
 <style lang="scss">
