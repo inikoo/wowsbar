@@ -122,6 +122,6 @@ const sidebarOpen = ref(false)
 }
 
 .tabNavigation {
-    @apply hover:bg-gray-200/30 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-400
+    @apply hover:bg-gray-200/30 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-400 transition-all duration-100 ease-in-out
 }
 </style>

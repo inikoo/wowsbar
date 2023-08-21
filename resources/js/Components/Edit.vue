@@ -62,9 +62,9 @@ const current = ref(0)
                     <ul>
                         <li v-for="(item, key) in formData['blueprint']" @click="current = key" :class="[
                             key == current
-                                ? 'bg-gray-200 dark:bg-gray-500 border-orange-500 text-gray-800 dark:text-gray-300'
-                                : 'border-transparent text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-gray-700',
-                            'cursor-pointer group border-l-4 px-3 py-2 flex items-center text-sm font-medium',
+                                ? 'tabNavigationActive dark:text-gray-300'
+                                : 'tabNavigation dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-gray-700',
+                            'cursor-pointer group px-3 py-2 flex items-center text-sm font-medium',
                             ]" :aria-current="key === current ? 'page' : undefined">
                             <FontAwesomeIcon v-if="item.icon" aria-hidden="true" :class="[
                                 key === current ? 'text-gray-400' : 'text-gray-500',
