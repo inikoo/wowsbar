@@ -54,11 +54,9 @@ class IndexBanners extends InertiaAction
     public function handle(Tenant|PortfolioWebsite $parent, $prefix = null): LengthAwarePaginator
     {
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
-            $query->where(function ($query) use ($value) {
-                $query->whereAnyWordStartWith('banners.name', $value)
-                    ->orWhere('banners.code', 'ilike', "$value%");
-            });
+            $query->where('banners.code', "%$value%");
         });
+
         if ($prefix) {
             InertiaTable::updateQueryBuilderParameters($prefix);
         }
