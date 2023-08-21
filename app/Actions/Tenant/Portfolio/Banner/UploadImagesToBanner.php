@@ -22,7 +22,7 @@ class UploadImagesToBanner
     use WithAttributes;
 
 
-    private PortfolioWebsite|null $website = null;
+    private PortfolioWebsite|null $portfolioWebsite = null;
 
 
     public function handle(Banner $contentBlock, array $imageFiles): Collection
@@ -51,7 +51,8 @@ class UploadImagesToBanner
         ];
     }
 
-    public function inBannerInWebsite(PortfolioWebsite $website, Banner $banner, ActionRequest $request): Collection
+    /** @noinspection PhpUnusedParameterInspection */
+    public function inBannerInPortfolioWebsite(PortfolioWebsite $portfolioWebsite, Banner $banner, ActionRequest $request): Collection
     {
         $request->validate();
         return $this->handle($banner, $request->validated('images'));

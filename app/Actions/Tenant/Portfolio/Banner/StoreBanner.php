@@ -52,7 +52,7 @@ class StoreBanner
             "components" => [
             ]
         ];
-        list($layout, $bannerComponents) = ParseBannerLayout::run($layout);
+        list($layout, $slides) = ParseBannerLayout::run($layout);
 
         data_set($modelData, 'tenant_id', app('currentTenant')->id);
         data_set($modelData, 'layout', $layout);
@@ -61,8 +61,8 @@ class StoreBanner
 
         /** @var Banner $banner */
         $banner = Banner::create($modelData);
-        if ($bannerComponents) {
-            foreach ($bannerComponents as $bannerComponentData) {
+        if ($slides) {
+            foreach ($slides as $bannerComponentData) {
                 StoreSlide::run(
                     contentBlock: $banner,
                     modelData: $bannerComponentData,
@@ -150,14 +150,14 @@ class StoreBanner
 
         return match ($request->route()->getName()) {
             'models.portfolio-website.banner.store' => redirect()->route(
-                'portfolio.portfolio-websites.show.banners.workshop',
+                'portfolio.websites.show.banners.workshop',
                 [
                     $this->portfolioWebsite->slug,
                     $banner->slug
                 ]
             ),
             default => redirect()->route(
-                'portfolio.portfolio-websites.show.banners.index',
+                'portfolio.websites.show.banners.index',
                 $this->portfolioWebsite->slug,
             ),
         };

@@ -140,10 +140,10 @@ class ShowDeletedBanner extends InertiaAction
                     $suffix
                 ),
             ),
-            'portfolio.portfolio-websites.show.banners.deleted' =>
+            'portfolio.websites.show.banners.deleted' =>
             array_merge(
                 ShowPortfolioWebsite::make()->getBreadcrumbs(
-                    'portfolio.portfolio-websites.show',
+                    'portfolio.websites.show',
                     ['website' => $routeParameters['portfolioWebsite']]
                 ),
                 $headCrumb(
@@ -151,11 +151,11 @@ class ShowDeletedBanner extends InertiaAction
                     $routeParameters['banner'],
                     [
                         'index' => [
-                            'name'       => 'portfolio.portfolio-websites.show.banners.index',
+                            'name'       => 'portfolio.websites.show.banners.index',
                             'parameters' => [$routeParameters['portfolioWebsite']->slug]
                         ],
                         'model' => [
-                            'name'       => 'portfolio.portfolio-websites.show.banners.deleted',
+                            'name'       => 'portfolio.websites.show.banners.deleted',
                             'parameters' => $routeParameters
                         ]
                     ],

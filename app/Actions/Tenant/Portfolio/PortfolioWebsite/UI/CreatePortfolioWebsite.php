@@ -30,6 +30,8 @@ class CreatePortfolioWebsite extends InertiaAction
 
     public function htmlResponse(ActionRequest $request): Response
     {
+        $request->route()->getName();
+
         return Inertia::render(
             'Tenant/CreateModel',
             [
@@ -37,12 +39,18 @@ class CreatePortfolioWebsite extends InertiaAction
                 'title'       => __('new website'),
                 'pageHead'    => [
                     'title'        => __('website'),
-                    'cancelCreate' => [
-                        'route' => [
-                            'name'       => 'portfolio.portfolio-websites.index',
-                            'parameters' => array_values($request->route()->originalParameters())
-                        ],
+                    'actions'      => [
+                        [
+                            'type'  => 'button',
+                            'style' => 'cancel',
+                            'label' => __('cancel'),
+                            'route' => [
+                                'name'       => preg_replace('/create$/', 'index', $request->route()->getName()),
+                                'parameters' => array_values($request->route()->originalParameters())
+                            ],
+                        ]
                     ]
+
 
                 ],
                 'formData'    => [
@@ -101,7 +109,7 @@ class CreatePortfolioWebsite extends InertiaAction
     {
         return array_merge(
             IndexPortfolioWebsites::make()->getBreadcrumbs(
-                'portfolio.portfolio-websites.index',
+                'portfolio.websites.index',
                 []
             ),
             [

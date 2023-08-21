@@ -132,7 +132,7 @@ class IndexStockImages extends InertiaAction
             modelOperations: [
                 'createLink' => [
                     'route' => [
-                        'name'       => 'portfolio.portfolio-websites.create',
+                        'name'       => 'portfolio.websites.create',
                         'parameters' => array_values([])
                     ],
                     'type'    => 'button',

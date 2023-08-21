@@ -36,16 +36,15 @@ class ShowBanner extends InertiaAction
 
     public function inTenant(Banner $banner, ActionRequest $request): Banner
     {
-        $this->initialisation($request)->withTab(\App\Enums\UI\Tenant\BannerTabsEnum::values());
+        $this->initialisation($request)->withTab(BannerTabsEnum::values());
 
         return $banner;
     }
 
+    /** @noinspection PhpUnusedParameterInspection */
     public function inPortfolioWebsite(PortfolioWebsite $portfolioWebsite, Banner $banner, ActionRequest $request): Banner
     {
-
         $this->initialisation($request)->withTab(BannerTabsEnum::values());
-
         return $banner;
     }
 
@@ -90,13 +89,13 @@ class ShowBanner extends InertiaAction
                 ],
                 'tabs'                                                         => [
                     'current'    => $this->tab,
-                    'navigation' => \App\Enums\UI\Tenant\BannerTabsEnum::navigation()
+                    'navigation' => BannerTabsEnum::navigation()
                 ],
-                \App\Enums\UI\Tenant\PortfolioWebsiteTabsEnum::SHOWCASE->value => $this->tab == \App\Enums\UI\Tenant\PortfolioWebsiteTabsEnum::SHOWCASE->value ?
+                PortfolioWebsiteTabsEnum::SHOWCASE->value => $this->tab == PortfolioWebsiteTabsEnum::SHOWCASE->value ?
                     fn () => $banner->compiledLayout()
                     : Inertia::lazy(fn () => $banner->compiledLayout()),
 
-                \App\Enums\UI\Tenant\PortfolioWebsiteTabsEnum::CHANGELOG->value => $this->tab == PortfolioWebsiteTabsEnum::CHANGELOG->value ?
+                PortfolioWebsiteTabsEnum::CHANGELOG->value => $this->tab == PortfolioWebsiteTabsEnum::CHANGELOG->value ?
                     fn () => HistoryResource::collection(IndexHistories::run($banner))
                     : Inertia::lazy(fn () => HistoryResource::collection(IndexHistories::run($banner)))
 
@@ -150,10 +149,10 @@ class ShowBanner extends InertiaAction
                     $suffix
                 ),
             ),
-            'portfolio.portfolio-websites.show.banners.show' =>
+            'portfolio.websites.show.banners.show' =>
             array_merge(
                 ShowPortfolioWebsite::make()->getBreadcrumbs(
-                    'portfolio.portfolio-websites.show',
+                    'portfolio.websites.show',
                     ['portfolioWebsite' => $routeParameters['portfolioWebsite']]
                 ),
                 $headCrumb(
@@ -161,11 +160,11 @@ class ShowBanner extends InertiaAction
                     $routeParameters['banner'],
                     [
                         'index' => [
-                            'name'       => 'portfolio.portfolio-websites.show.banners.index',
+                            'name'       => 'portfolio.websites.show.banners.index',
                             'parameters' => [$routeParameters['portfolioWebsite']->slug]
                         ],
                         'model' => [
-                            'name'       => 'portfolio.portfolio-websites.show.banners.show',
+                            'name'       => 'portfolio.websites.show.banners.show',
                             'parameters' => $routeParameters
                         ]
                     ],
