@@ -1,7 +1,6 @@
 
 import { faker } from '@faker-js/faker';
 import data from '@/../../cypress/fixtures/example.json'
-import { eq } from 'lodash';
 const code = faker.random.words({ min: 1, max: 1 })
 const fakeName = faker.commerce.productName();
 const fakeDomain = faker.internet.domainName();
@@ -21,17 +20,17 @@ const fakeDomain = faker.internet.domainName();
 describe("Websites", () => {
     beforeEach(() => {
         cy.setCookie(data.cookieName,data.cookieSession);
-        cy.visit("http://aiku.wowsbar.test/portfolio/websites");
+        cy.visit("http://aiku.wowsbar.test/portfolio/portfolio-websites");
     });
 
     it("website navigation", () => {
-        cy.get('a[href*="/websites"]').eq(0).click()
+        cy.get('a[href*="/portfolio-websites"]').click({ multiple: true });
     });
 
 
     it("website create", () => {
         cy.get('#create-website').click();
-        cy.url().should("include", "/websites/create");
+        cy.url().should("include", "/portfolio-websites/create");
         cy.go('back')
         cy.go('forward')
         cy.get('#domain').type(fakeDomain)
@@ -43,11 +42,11 @@ describe("Websites", () => {
 
     it("website create wrong", () => {
         cy.get('#create-website').click();
-        cy.url().should("include", "/websites/create");
+        cy.url().should("include", "/portfolio-websites/create");
         cy.go('back')
         cy.go('forward')
         cy.get('#domain').clear();
-        cy.get('#code').type(faker.random.words({ min: 8, max: 8 }))
+        cy.get('#code').type(faker.random.words({ min: 1, max: 1 }))
         cy.get('#name').type(fakeName)
         cy.get('button[type*=submit]').click()
     });

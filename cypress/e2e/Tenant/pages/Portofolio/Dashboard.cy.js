@@ -21,6 +21,6 @@ describe("Portofolio", () => {
     });
 
     it("Navigation portofolio", () => {
-        cy.get('a[href*="/portfolio-websites"]').click({ multiple: true });
+        cy.get('a[href*="/websites"]').click({ multiple: true });
     });
 });
