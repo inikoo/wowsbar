@@ -68,14 +68,18 @@ test('create websites', function () {
 
 
 test('create banners', function ($website) {
-    $tenant       = app('currentTenant');
+    $tenant = app('currentTenant');
 
-    $modelData    = Banner::factory()->definition();
+    $modelData = Banner::factory()->definition();
 
     $banner = StoreBanner::make()->action($website, $modelData);
     $tenant->refresh();
     expect($banner)->toBeInstanceOf(Banner::class)
-        ->and($tenant->portfolioStats->number_banners)->toBe(1);
+        ->and($tenant->portfolioStats->number_banners)->toBe(1)
+        ->and($tenant->portfolioStats->number_banners_state_in_process)->toBe(1)
+        ->and($tenant->portfolioStats->number_banners_state_ready)->toBe(0)
+        ->and($tenant->portfolioStats->number_banners_state_live)->toBe(0)
+        ->and($tenant->portfolioStats->number_banners_state_retired)->toBe(0);
 
     $this->artisan("banner:create abc web1 test1 'My first banner' ")->assertExitCode(0);
     $tenant->refresh();
@@ -85,8 +89,8 @@ test('create banners', function ($website) {
 })->depends('create websites');
 
 test('update banner', function ($banner) {
-    $modelData    = Banner::factory()->definition();
-    $banner       = UpdateBanner::make()->action($banner, $modelData);
+    $modelData = Banner::factory()->definition();
+    $banner    = UpdateBanner::make()->action($banner, $modelData);
     expect($banner)->toBeInstanceOf(Banner::class);
 })->depends('create banners');
 

@@ -14,13 +14,13 @@ class PortfolioWebsiteHydrateUniversalSearch
 {
     use AsAction;
 
-    public function handle(PortfolioWebsite $website): void
+    public function handle(PortfolioWebsite $portfolioWebsite): void
     {
-        $website->universalSearch()->create(
+        $portfolioWebsite->universalSearch()->create(
             [
                 'section'     => 'portfolio',
-                'title'       => trim($website->code.' '.$website->name),
-                'description' => $website->domain
+                'title'       => trim($portfolioWebsite->code.' '.$portfolioWebsite->name),
+                'description' => $portfolioWebsite->domain
             ]
         );
     }

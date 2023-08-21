@@ -37,7 +37,7 @@ function bannerRoute(banner: Banner) {
 <template>
     <Table :resource="data" :name="tab" class="mt-5">
         <template #cell(slug)="{ item: banner }">
-            <Link :href="bannerRoute(banner)">
+            <Link :href="bannerRoute(banner)" :id="banner['slug']">
                 {{ banner['slug'] }}
             </Link>
         </template>

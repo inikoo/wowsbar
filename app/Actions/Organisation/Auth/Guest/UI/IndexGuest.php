@@ -8,8 +8,8 @@
 namespace App\Actions\Organisation\Auth\Guest\UI;
 
 use App\Actions\InertiaAction;
-use App\Actions\UI\SysAdmin\SysAdminDashboard;
-use App\Enums\Auth\Guest\GuestTypeEnum;
+use App\Actions\UI\Organisation\SysAdmin\SysAdminDashboard;
+use App\Enums\Organisation\Guest\GuestTypeEnum;
 use App\Http\Resources\SysAdmin\GuestResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\Organisation\Guest;
@@ -24,9 +24,9 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class IndexGuest extends InertiaAction
 {
-    protected function getElementGroups(): void
+    protected function getElementGroups(): array
     {
-        $this->elementGroups =
+        return
             [
                 'status' => [
                     'label'    => __('Status'),
@@ -71,7 +71,7 @@ class IndexGuest extends InertiaAction
                         ->where('users.parent_type', '=', 'Guest');
                 }
             )->leftJoin('user_stats', 'user_stats.user_id', 'users.id');
-        foreach ($this->elementGroups as $key => $elementGroup) {
+        foreach ($this->getElementGroups() as $key => $elementGroup) {
             $queryBuilder->whereElementGroup(
                 prefix: $prefix,
                 key: $key,

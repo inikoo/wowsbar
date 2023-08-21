@@ -34,10 +34,10 @@ enum BannerStateEnum: string
         $stats = app('currentTenant')->portfolioStats;
 
         return [
-            'in-process' => $stats->number_banners_in_process,
-            'ready'      => $stats->number_banners_ready,
-            'live'       => $stats->number_banners_live,
-            'retired'    => $stats->number_banners_retired,
+            'in-process' => $stats->number_banners_state_in_process,
+            'ready'      => $stats->number_banners_state_ready,
+            'live'       => $stats->number_banners_state_live,
+            'retired'    => $stats->number_banners_state_retired,
         ];
     }
 

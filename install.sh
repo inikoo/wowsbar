@@ -24,6 +24,9 @@ php artisan storage:link
 echo "Clear horizon 🧼"
 php artisan horizon:clear
 php artisan horizon:terminate
+echo "Clear cache 🧼"
+php artisan cache:clear
+redis-cli KEYS "wowsbar_database_*" | xargs redis-cli DEL
 echo "🌱 Migrating and seeding database"
 php artisan migrate --database=backup --path=database/migrations/backup
 php artisan migrate --path=database/migrations/landlord

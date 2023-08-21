@@ -1,22 +1,13 @@
 
 import { faker } from '@faker-js/faker';
 import data from '@/../../cypress/fixtures/example.json'
-import { eq } from 'lodash';
+import Banner from '@/../../cypress/e2e/Tenant/pages/Portofolio/Banners.cy'
 const code = faker.random.words({ min: 1, max: 1 })
 const fakeName = faker.commerce.productName();
 const fakeDomain = faker.internet.domainName();
 /// <reference types="cypress" />
 
-// Welcome to Cypress!
-//
-// This spec file contains a variety of sample tests
-// for a todo list app that are designed to demonstrate
-// the power of writing tests in Cypress.
-//
-// To learn more about how Cypress works and
-// what makes it such an awesome testing tool,
-// please read our getting started guide:
-// https://on.cypress.io/introduction-to-cypress
+
 
 describe("Websites", () => {
     beforeEach(() => {
@@ -24,9 +15,16 @@ describe("Websites", () => {
         cy.visit("http://aiku.wowsbar.test/portfolio/websites");
     });
 
-    it("website navigation", () => {
-        cy.get('a[href*="/websites"]').eq(0).click()
-    });
+    it("website table navigation", () => {
+        cy.get("td").eq(0).then(($cell) => { // Use .then() instead of (.)
+          if ($cell[0].lastElementChild.tagName === 'A') {
+            cy.get($cell[0].lastElementChild).click();
+            cy.url().should('eq', `http://aiku.wowsbar.test/portfolio/websites/${$cell[0].lastElementChild.id}`);
+            Banner($cell[0].lastElementChild.id)
+          }
+        });
+      });
+
 
 
     it("website create", () => {

@@ -40,9 +40,9 @@ class ShowDeletedBanner extends InertiaAction
         return $banner;
     }
 
-    public function inPortfolioWebsite(PortfolioWebsite $website, Banner $banner, ActionRequest $request): Banner
+    public function inPortfolioWebsite(PortfolioWebsite $portfolioWebsite, Banner $banner, ActionRequest $request): Banner
     {
-        $this->initialisation($request)->withTab(\App\Enums\UI\Tenant\BannerTabsEnum::values());
+        $this->initialisation($request)->withTab(BannerTabsEnum::values());
 
         return $banner;
     }

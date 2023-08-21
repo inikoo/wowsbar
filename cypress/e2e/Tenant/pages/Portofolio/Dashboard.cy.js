@@ -21,6 +21,14 @@ describe("Portofolio", () => {
     });
 
     it("Navigation portofolio", () => {
-        cy.get('a[href*="/websites"]').click({ multiple: true });
+        cy.get('a.group').each(($link) => {
+            if($link[0].id){
+                cy.wrap($link).click();
+            
+                if(!$link[0].id.includes('.')) cy.url().should('include', `http://aiku.wowsbar.test/portfolio/${$link[0].id}`);
+            } 
+          });
+        });
+        
     });
-});
+

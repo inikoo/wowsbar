@@ -24,5 +24,4 @@ class TenantHydratePortfolioWebsites
         $tenant->stats()->update($stats);
     }
 
-
 }

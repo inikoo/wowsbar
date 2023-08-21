@@ -32,9 +32,9 @@ class IndexBanners extends InertiaAction
 
     protected array $elementGroups = [];
 
-    protected function getElementGroups(): void
+    protected function getElementGroups(): array
     {
-        $this->elementGroups =
+        return
             [
                 'state' => [
                     'label'    => __('State'),
@@ -54,11 +54,9 @@ class IndexBanners extends InertiaAction
     public function handle(Tenant|PortfolioWebsite $parent, $prefix = null): LengthAwarePaginator
     {
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
-            $query->where(function ($query) use ($value) {
-                $query->whereAnyWordStartWith('banners.name', $value)
-                    ->orWhere('banners.code', 'ilike', "$value%");
-            });
+            $query->where('banners.code', "%$value%");
         });
+
         if ($prefix) {
             InertiaTable::updateQueryBuilderParameters($prefix);
         }
@@ -71,7 +69,7 @@ class IndexBanners extends InertiaAction
         }
 
 
-        foreach ($this->elementGroups as $key => $elementGroup) {
+        foreach ($this->getElementGroups() as $key => $elementGroup) {
             $queryBuilder->whereElementGroup(
                 prefix: $prefix,
                 key: $key,
@@ -96,7 +94,6 @@ class IndexBanners extends InertiaAction
         $prefix = null,
         $canEdit = false
     ): Closure {
-        $this->getElementGroups();
 
         return function (InertiaTable $table) use ($modelOperations, $parent, $prefix, $canEdit) {
             if ($prefix) {
@@ -105,7 +102,7 @@ class IndexBanners extends InertiaAction
                     ->pageName($prefix.'Page');
             }
 
-            foreach ($this->elementGroups as $key => $elementGroup) {
+            foreach ($this->getElementGroups() as $key => $elementGroup) {
                 $table->elementGroup(
                     key: $key,
                     label: $elementGroup['label'],
@@ -183,10 +180,10 @@ class IndexBanners extends InertiaAction
         return $this->handle($this->parent);
     }
 
-    public function inPortfolioWebsite(PortfolioWebsite $website, ActionRequest $request): LengthAwarePaginator
+    public function inPortfolioWebsite(PortfolioWebsite $portfolioWebsite, ActionRequest $request): LengthAwarePaginator
     {
         $this->initialisation($request);
-        $this->parent = $website;
+        $this->parent = $portfolioWebsite;
 
         return $this->handle($this->parent);
     }
