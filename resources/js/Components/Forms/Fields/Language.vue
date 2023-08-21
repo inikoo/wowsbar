@@ -5,10 +5,10 @@
                 v-model="form[fieldName]"
                 :options="props.options"
                 :class="{ 'pr-8': form.errors[fieldName] || form.recentlySuccessful }"
-                :placeholder="props.fieldData.placeholder ?? 'Select your language'"
+                :placeholder="props.fieldData?.placeholder ?? 'Select your language'"
                 :searchable="true"
-                :canClear="!props.fieldData.required"
-                :canDeselect="!props.fieldData.required"
+                :canClear="props.fieldData?.canClear ?? !props.fieldData?.required"
+                :canDeselect="!props.fieldData?.required"
             />
             <div v-if="form.errors[fieldName] || form.recentlySuccessful"
                 class="absolute inset-y-2/4 right-0 pr-3 flex items-center pointer-events-none bg-red-500">
@@ -21,27 +21,26 @@
         <p v-if="form.errors[fieldName]" class="mt-2 text-sm text-red-600" id="email-error">{{ form.errors[fieldName] }}</p>
     </div>
 </template>
-  
+
 <script setup lang="ts">
 import Multiselect from '@vueform/multiselect'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faExclamationCircle, faCheckCircle } from "@/../private/pro-solid-svg-icons"
 import { library } from '@fortawesome/fontawesome-svg-core'
-library.add(faExclamationCircle, faCheckCircle);
+library.add(faExclamationCircle, faCheckCircle)
 
 const props = defineProps<{
-    'form',
-    'fieldName',
-    'options',
+    'form': any
+    'fieldName': any
+    'options': any
     fieldData?: {
-        placeholder: string,
-        required: boolean,
+        placeholder: string
+        required: boolean
+        canClear?: boolean
 } }>()
 
 // Note:
 // Value of the language (form[fieldName]) is a number
 // The value of option Abkhazian is 1
 </script>
-  
-<style src="@vueform/multiselect/themes/default.css"></style>
-  
+
