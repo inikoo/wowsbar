@@ -8,8 +8,8 @@ const fakeDomain = faker.internet.domainName();
 /// <reference types="cypress" />
 
 
-
-describe("Websites", () => {
+const websites = (websites = 'hello') => {
+  describe("Websites", () => {
     beforeEach(() => {
         cy.setCookie(data.cookieName,data.cookieSession);
         cy.visit("http://aiku.wowsbar.test/portfolio/websites");
@@ -50,4 +50,12 @@ describe("Websites", () => {
         cy.get('button[type*=submit]').click()
     });
 
+
+  
+
 });
+}
+
+export default websites
+
+websites()
