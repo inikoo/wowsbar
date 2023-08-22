@@ -14,6 +14,21 @@ const Banner = (id = "hello") => {
             cy.get("#banners").click();
         });
 
+        it("Edit Website", () => {
+            cy.get('#edit').click();
+            cy.url().should("include", `/websites/${id}/edit`);
+            cy.go('back')
+            cy.go('forward')
+            cy.get('#domain').clear();
+            cy.get('button[type="submit"]').not('[disabled]').click();
+            cy.get('#code').type(faker.random.words({ min: 1, max: 1 }))
+            cy.get('button[type="submit"]').not('[disabled]').click();
+            cy.get('#name').type(fakeName)
+            cy.get('button[type="submit"]').not('[disabled]').click();
+        });
+        
+
+
         it("creates a new banner", () => {
             // Click on "New Banner"
             cy.get("#new-banner").click();
@@ -82,7 +97,6 @@ const SearchTable = (id) => {
         "GET",
         `http://aiku.wowsbar.test/portfolio/websites/${id}`,
         (req) => {
-            console.log("Intercepted request:", req);
             req.body = {
                 tab: "banners",
                 banners_filter: "azure",

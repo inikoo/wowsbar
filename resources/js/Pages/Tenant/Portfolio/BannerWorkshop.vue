@@ -74,7 +74,6 @@ const data = reactive(cloneDeep(props.bannerLayout))
 const setData = ref(false)
 const firebase = ref(cloneDeep(props.firebase))
 const tenant = useLayoutStore().tenant
-console.log(layout)
 const dbPath =  'tenants' +'/'+ tenant.code +'/banner_workshop/'+ props.imagesUploadRoute.arguments.banner
 
 const fetchInitialData = async () => {
@@ -189,15 +188,5 @@ onBeforeUnmount(() => {
     <div v-if="data.components.filter((item) => item.ulid != null).length == 0">
       <SlidesWorkshopAddMode :data="data" :imagesUploadRoute="imagesUploadRoute" />
     </div>
-  </div>
-
-  <div
-    @click="
-      () => {
-        (jumpToIndex = 3), console.log(data)
-      }
-    "
-  >
-    Check data
   </div>
 </template>
