@@ -1,8 +1,8 @@
 import:
   - recipe/laravel.php
-  - deploy/common.php
-  - deploy/supervisor.php
-  - deploy/nginx.php
+  - deploy/lib/common.php
+  - deploy/lib/supervisor.php
+  - deploy/lib/nginx.php
   - deploy/install.php
   - contrib/npm.php
 

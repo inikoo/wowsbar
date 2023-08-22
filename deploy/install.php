@@ -22,6 +22,8 @@ task('install:reset-db', function () {
     run('createdb --template=template0 --lc-collate={{db_collate}} --lc-ctype={{db_collate}} {{db}}');
     run('dropdb --force --if-exists {{db_backup}}');
     run('createdb --template=template0 --lc-collate={{db_collate}} --lc-ctype={{db_collate}} {{db_backup}}');
+    run('redis-cli KEYS "wowsbar_database_*" | xargs redis-cli DEL');
+
 });
 
 desc('🌱 Copy artifacts no present in repo');
@@ -69,6 +71,7 @@ task('install', [
     'install:reset-db',
     'deploy:prepare',
     'artisan:key:generate',
+    'artisan:es:refresh',
     'artisan:storage:link',
     'artisan:config:cache',
     'artisan:route:cache',
