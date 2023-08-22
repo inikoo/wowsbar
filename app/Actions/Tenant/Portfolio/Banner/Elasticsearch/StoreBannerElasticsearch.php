@@ -21,18 +21,20 @@ class StoreBannerElasticsearch
 
     private bool $asAction = false;
 
-    public function handle(Banner $contentBlock): Elasticsearch
+    public function handle(Banner $banner): Elasticsearch
     {
         $client = BuildElasticsearchClient::run();
 
         $params = [
-            'id'     => $contentBlock->id,
-            'index'  => strtolower($contentBlock->ulid),
-            'body'   => json_encode([
-                'name'   => $contentBlock->name,
-                'slug'   => $contentBlock->slug,
-                'layout' => $contentBlock->layout,
-                'data'   => $contentBlock->data
+            'id'    => 'banner_'.$banner->ulid,
+            'index' => config('app.name').'_'.config('app.env').'_content_blocks',
+            'body'  => json_encode([
+                'id'     => $banner->id,
+                'type'   => 'banner',
+                'name'   => $banner->name,
+                'slug'   => $banner->slug,
+                'layout' => $banner->layout,
+                'data'   => $banner->data
             ])
         ];
 
