@@ -67,30 +67,31 @@ import { getDbRef } from '@/Composables/firebase'
 
 
 const user = ref(usePage().props.auth.user)
+const tenant = ref(usePage().props.tenant)
 const jumpToIndex = ref(0)
 const screenView = ref("")
 const data = reactive(cloneDeep(props.bannerLayout))
 const setData = ref(false)
 const firebase = ref(cloneDeep(props.firebase))
 
-const dbPath=props.appScope+'/'+layout.tenant.code+'/banner_workshop/'+'put_banner_unique_id_here'
+const dbPath = 'tenants' +'/'+ tenant.value.code +'/banner_workshop/'+ props.imagesUploadRoute.arguments.banner
 
 const fetchInitialData = async () => {
     try {
         setData.value = true
-        const snapshot = await get(getDbRef('Banner'))//<--dbPath
+        const snapshot = await get(getDbRef(dbPath))//<--dbPath
         if (snapshot.exists()) {
             const firebaseData = snapshot.val()
-            if (firebaseData[props.imagesUploadRoute.arguments.banner]) {
-                Object.assign(data, { ...firebaseData[props.imagesUploadRoute.arguments.banner] })
+            if (firebaseData) {
+                Object.assign(data, { ...firebaseData })
             } else {
                 Object.assign(data, { ...data, ...cloneDeep(props.bannerLayout) })
-                await set(getDbRef('Banner'), { ...firebaseData, [props.imagesUploadRoute.arguments.banner]: data })
+                await set(getDbRef(dbPath), { ...firebaseData, data })
                 return
             }
         } else {
             Object.assign(data, { ...data, ...cloneDeep(props.bannerLayout) })
-            await set(getDbRef('Banner'), { [props.imagesUploadRoute.arguments.banner]: data })
+            await set(getDbRef(dbPath),  data)
         }
         setData.value = false
     } catch (error) {
@@ -99,11 +100,11 @@ const fetchInitialData = async () => {
     }
 }
 
-onValue(getDbRef('Banner'), (snapshot) => {
+onValue(getDbRef(dbPath), (snapshot) => {
     if (snapshot.exists()) {
         const firebaseData = snapshot.val()
-        if (firebaseData[props.imagesUploadRoute.arguments.banner]) {
-            Object.assign(data, { ...data, ...firebaseData[props.imagesUploadRoute.arguments.banner] })
+        if (firebaseData) {
+            Object.assign(data, { ...data, ...firebaseData})
         }
     }
 })
@@ -112,10 +113,10 @@ const updateData = async () => {
     if (firebase.value) {
         try {
             if (data && setData.value == false) {
-                const snapshot = await get(getDbRef('Banner'))
+                const snapshot = await get(getDbRef(dbPath))
                 if (snapshot.exists()) {
                     const firebaseData = snapshot.val()
-                    await set(getDbRef('Banner'), { ...firebaseData, [props.imagesUploadRoute.arguments.banner]: data })
+                    await set(getDbRef(dbPath), { ...firebaseData, data })
                 }
             }
         } catch (error) {
