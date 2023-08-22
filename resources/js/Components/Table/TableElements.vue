@@ -83,6 +83,8 @@ const onDoubleClickCheckbox = (element: any, group: string) => {
                     class="flex items-center gap-x-1 w-full px-3 cursor-pointer py-2 select-none "
                     @click="onClickCheckbox(element, selectedGroup)"
                     @dblclick="onDoubleClickCheckbox(element, selectedGroup)"
+                    role="filter"
+                    :id="value[0].replace(' ','-')"
                 >
                     <FontAwesomeIcon v-if="selectedElement[selectedGroup]?.includes(element)" icon="far fa-check-square" aria-hidden="true" />
                     <FontAwesomeIcon v-else icon="far fa-square" aria-hidden="true" />

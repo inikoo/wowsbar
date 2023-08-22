@@ -24,15 +24,24 @@ const Users = () => {
     });
 };
 
-// const tabsUsers = () => {
-//     cy.get("td")
-//     .eq(1)
-//     .then(($cell) => {
-//         console.log('sssssss',$cell)
-//         if ($cell[0].lastElementChild.tagName === "A") {
-           
-//         }
-//     });
+const tabsUsers = () => {
+    // SearchTable()
+    cy.get("td")
+    .eq(1)
+    .then(($cell) => {
+        if ($cell[0].lastElementChild.tagName === "A") {
+            cy.get($cell[0].lastElementChild).click();
+            cy.url().should(
+                "eq",
+                `http://aiku.wowsbar.test/sysadmin/users/${$cell[0].lastElementChild.id}`
+            );
+        }
+    });
+
+}
+
+
+// SearchTable=()=>{
 
 // }
 

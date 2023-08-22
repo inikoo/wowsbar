@@ -8,6 +8,7 @@
 namespace App\Actions\UI\Tenant;
 
 use App\Actions\Assets\Language\UI\GetLanguagesOptions;
+use App\Actions\Firebase\ChangeRulesFirebase;
 use App\Actions\Helpers\Images\GetPictureSources;
 use App\Helpers\ImgProxy\Image;
 use App\Http\Resources\Assets\LanguageResource;
@@ -42,6 +43,8 @@ class GetFirstLoadProps
         if($user) {
             $customTokenFirebasePrefix = $tenant->slug;
             $cache                     = Cache::get($customTokenFirebasePrefix);
+
+//            ChangeRulesFirebase::run(app('currentTenant'));
 
             if(blank($cache)) {
                 $customToken = $auth
@@ -81,6 +84,7 @@ class GetFirstLoadProps
                 }
             },
             'firebase' => [
+                'auth_token'  => $cache ?? null,
                 'credential'  => File::get(base_path(config('firebase.projects.app.credentials.file'))),
                 'databaseURL' => config('firebase.projects.app.database.url')
             ]
