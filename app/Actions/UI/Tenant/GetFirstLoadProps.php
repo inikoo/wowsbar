@@ -44,7 +44,7 @@ class GetFirstLoadProps
             $customTokenFirebasePrefix = $tenant->slug;
             $cache                     = Cache::get($customTokenFirebasePrefix);
 
-            ChangeRulesFirebase::run(app('currentTenant'));
+//            ChangeRulesFirebase::run(app('currentTenant'));
 
             if(blank($cache)) {
                 $customToken = $auth
