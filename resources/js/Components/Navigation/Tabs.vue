@@ -57,7 +57,7 @@ const tabIconClass = (current: string, type: string, align: string, extraClass: 
                     <template v-for="(tab, tabSlug) in navigation" :key="tabSlug">
                         <div class="relative group">
                             <button
-                                :id="tab.title"
+                                :id="tab.title.replace(' ','-')"
                                 v-if="tab.align !== 'right'"
                                 @click="[$emit('update:tab', tabSlug), changeTab(tabSlug)]"
                                 :class="[
