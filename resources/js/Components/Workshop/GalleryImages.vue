@@ -9,6 +9,7 @@ import { faCloudUpload, faImagePolaroid } from '@/../private/pro-light-svg-icons
 import { faSpinnerThird } from '@/../private/pro-duotone-svg-icons'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { useGalleryStore } from '@/Stores/gallery.js'
+import { useTruncate } from '@/Composables/useTruncate.js'
 
 library.add(faCloudUpload, faImagePolaroid, faSpinnerThird)
 
@@ -35,7 +36,7 @@ const getData = async (tabName: string, routeUrl: string) => {
             route(routeUrl)
         )
         galleryStore[tabName].push(...response.data.data)
-        console.log(galleryStore[tabName])
+        // console.log(galleryStore[tabName])
         loadingState.value = false
     } catch (error) {
         console.log(error)
@@ -46,24 +47,11 @@ const getData = async (tabName: string, routeUrl: string) => {
 // Use watch to fetch at first load
 watch(activeSidebar, (newSidebar: string) => {
     if(newSidebar == 'uploaded_images') {
-        console.log("pppppppppppp")
         galleryStore[newSidebar].length === 0 ? getData(newSidebar, 'portfolio.uploaded.images') : false
-        console.log("ppppppspppppp")
     } else if (newSidebar == 'stock_images') {
         galleryStore[newSidebar].length === 0 ? getData(newSidebar, 'portfolio.stock.images') : false
     }
 }, { immediate: true })
-
-
-const truncate = (string: string, length: number, different: number) => {
-    if (string && string.length > length) {
-        if(string.length > length + different) {
-            return `${string.substring(0, length)}...`
-        }
-        return string
-    }
-    return string
-}
 
 </script>
 
@@ -115,7 +103,7 @@ const truncate = (string: string, length: number, different: number) => {
                         <Image :src="imageData.source" :alt="imageData.imageAlt" class="h-full w-full object-cover object-center" />
                     </div>
                     <h3 class="overflow-hidden text-xs text-gray-700 flex justify-start items-center">
-                        {{ truncate(imageData.name, 17, 4) }}
+                        {{ useTruncate(imageData.name, 17, 4) }}
                     </h3>
                 </div>
             </div>
