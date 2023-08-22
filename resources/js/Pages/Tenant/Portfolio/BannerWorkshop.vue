@@ -14,12 +14,12 @@ import Slider from "@/Components/Slider/Slider.vue"
 import SlidesWorkshopAddMode from "@/Components/Workshop/SlidesWorkshopAddMode.vue"
 import { cloneDeep, set as setData, isEqual } from "lodash"
 import { set, onValue, get } from "firebase/database"
-
-
+import { useLayoutStore } from "@/Stores/layout"
 import { usePage } from "@inertiajs/vue3"
 import { faUser, faUserFriends } from "@/../private/pro-light-svg-icons"
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
+import { getDbRef } from '@/Composables/firebase'
 library.add(faUser, faUserFriends)
 const props = defineProps<{
     title: string
@@ -63,18 +63,17 @@ const props = defineProps<{
 }>()
 
 
-import { getDbRef } from '@/Composables/firebase'
 
 
 const user = ref(usePage().props.auth.user)
-const tenant = ref(usePage().props.tenant)
 const jumpToIndex = ref(0)
 const screenView = ref("")
 const data = reactive(cloneDeep(props.bannerLayout))
 const setData = ref(false)
 const firebase = ref(cloneDeep(props.firebase))
-
-const dbPath = 'tenants' +'/'+ tenant.value.code +'/banner_workshop/'+ props.imagesUploadRoute.arguments.banner
+const tenant = useLayoutStore().tenant
+console.log(layout)
+const dbPath =  'tenants' +'/'+ tenant.code +'/banner_workshop/'+ props.imagesUploadRoute.arguments.banner
 
 const fetchInitialData = async () => {
     try {
@@ -116,7 +115,7 @@ const updateData = async () => {
                 const snapshot = await get(getDbRef(dbPath))
                 if (snapshot.exists()) {
                     const firebaseData = snapshot.val()
-                    await set(getDbRef(dbPath), { ...firebaseData, data })
+                    await set(getDbRef(dbPath), { ...firebaseData, ...data })
                 }
             }
         } catch (error) {
