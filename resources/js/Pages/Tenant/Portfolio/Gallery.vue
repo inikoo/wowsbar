@@ -21,7 +21,7 @@ import { watch } from 'vue'
 
 library.add(faImagePolaroid,faCloudUpload)
 
-const props = defineProps<{
+const props: any = defineProps<{
     pageHead: object
     tabs: {
         current: string
@@ -36,7 +36,7 @@ let currentTab = ref(props.tabs.current)
 const handleTabUpdate = (tabSlug: string) => useTabChange(tabSlug, currentTab)
 
 const component = computed(() => {
-    const components = {
+    const components: any = {
         uploaded_images: TableImages,
         stock_images: TableImages,
     }
