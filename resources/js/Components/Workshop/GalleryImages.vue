@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, reactive, watch } from 'vue'
+import { ref, watch } from 'vue'
 import axios from 'axios'
 
 import Image from '@/Components/Image.vue'
@@ -8,13 +8,16 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faCloudUpload, faImagePolaroid } from '@/../private/pro-light-svg-icons'
 import { faSpinnerThird } from '@/../private/pro-duotone-svg-icons'
 import { library } from '@fortawesome/fontawesome-svg-core'
+import { useGalleryStore } from '@/Stores/gallery.js'
 
 library.add(faCloudUpload, faImagePolaroid, faSpinnerThird)
 
-const galleryData: any = reactive({
-    'uploaded_images': [],
-    'stock_images': []
-})
+const galleryStore = useGalleryStore()
+
+// const galleryData: any = reactive({
+//     'uploaded_images': [],
+//     'stock_images': []
+// })
 
 const activeTab = ref(0)
 const activeSidebar = ref('uploaded_images')
@@ -24,17 +27,17 @@ const changeTab = (index: number) => {
     activeTab.value = index
 }
 
+// Fetch images from API
 const getData = async (tabName: string, routeUrl: string) => {
     loadingState.value = true
     try {
         const response = await axios.get(
             route(routeUrl)
         )
-        console.log(response.data.data)
-        galleryData[tabName].push(...response.data.data)
+        galleryStore[tabName].push(...response.data.data)
+        console.log(galleryStore[tabName])
         loadingState.value = false
     } catch (error) {
-        console.log("===========================")
         console.log(error)
         loadingState.value = false
     }
@@ -43,14 +46,17 @@ const getData = async (tabName: string, routeUrl: string) => {
 // Use watch to fetch at first load
 watch(activeSidebar, (newSidebar: string) => {
     if(newSidebar == 'uploaded_images') {
-        galleryData[newSidebar].length === 0 ? getData(newSidebar, 'portfolio.uploaded.images') : false
+        console.log("pppppppppppp")
+        galleryStore[newSidebar].length === 0 ? getData(newSidebar, 'portfolio.uploaded.images') : false
+        console.log("ppppppspppppp")
     } else if (newSidebar == 'stock_images') {
-        galleryData[newSidebar].length === 0 ? getData(newSidebar, 'portfolio.stock.images') : false
+        galleryStore[newSidebar].length === 0 ? getData(newSidebar, 'portfolio.stock.images') : false
     }
 }, { immediate: true })
 
+
 const truncate = (string: string, length: number, different: number) => {
-    if (string.length > length) {
+    if (string && string.length > length) {
         if(string.length > length + different) {
             return `${string.substring(0, length)}...`
         }
@@ -90,7 +96,7 @@ const truncate = (string: string, length: number, different: number) => {
             <!-- <div class="md:flex md:items-center md:justify-between">
                 <div class="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
                     <ul class="flex flex-wrap -mb-px">
-                        <li v-for="(tab, index) in galleryData[activeSidebar]" :key="tab" class="mr-2">
+                        <li v-for="(tab, index) in galleryStore[activeSidebar]" :key="tab" class="mr-2">
                             <a href="#" :class="{
                                 'inline-block py-2 px-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300': index !== activeTab,
                                 'inline-block py-2 px-4 text-orange-500 border-b-2 border-orange-500 rounded-t-lg dark:text-orange-500 dark:border-orange-500': index === activeTab
@@ -104,7 +110,7 @@ const truncate = (string: string, length: number, different: number) => {
 
             <!-- Images list -->
             <div v-else class="pt-6 pl-4 grid grid-cols-4 gap-x-3 gap-y-6">
-                <div v-for="imageData in galleryData[activeSidebar]" :key="imageData.id" class="group opacity-75 hover:opacity-100 cursor-pointer relative flex flex-col gap-y-1">
+                <div v-for="imageData in galleryStore?.[activeSidebar]" :key="imageData.id" class="group opacity-75 hover:opacity-100 cursor-pointer relative flex flex-col gap-y-1">
                     <div class="flex-none aspect-[4/1] bg-white overflow-hidden rounded group-hover:ring-2 group-hover:ring-gray-500">
                         <Image :src="imageData.source" :alt="imageData.imageAlt" class="h-full w-full object-cover object-center" />
                     </div>
