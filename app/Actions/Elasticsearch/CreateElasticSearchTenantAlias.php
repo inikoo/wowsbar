@@ -31,8 +31,8 @@ class CreateElasticSearchTenantAlias
             'actions' => array(
                 array(
                     'add' => array(
-                        'index'   => config('app.universal_search_index'),
-                        'alias'   => config('app.universal_search_index').'_'.$tenant->slug,
+                        'index'   => config('elasticsearch.index_prefix') . config('app.env').'_search',
+                        'alias'   => config('elasticsearch.index_prefix') . config('app.env').'_search'.'_'.$tenant->slug,
                         'routing' => $tenant->slug,
                         'filter'  => [
                             'term' => [

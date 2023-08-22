@@ -21,12 +21,12 @@ class DeleteBannerElasticsearch
 
     private bool $asAction = false;
 
-    public function handle(Banner $contentBlock): Elasticsearch
+    public function handle(Banner $banner): Elasticsearch
     {
         $client = BuildElasticsearchClient::run();
 
         $params = [
-            'id'     => $contentBlock->id,
+            'id'     => 'banner_'.$banner->ulid,
             'index'  => config('elasticsearch.index_prefix') . config('app.env').'_content_blocks',
         ];
 
