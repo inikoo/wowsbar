@@ -4,7 +4,7 @@ import FooterTabActiveUsers from '@/Layouts/Footer/FooterTabActiveUsers.vue'
 import FooterTabLanguage from '@/Layouts/Footer/FooterTabLanguage.vue'
 
 const props = defineProps<{
-    appName: string
+    appScope: string
 }>()
 
 const isTabActive: Ref<boolean | string> = ref(false)
@@ -17,7 +17,7 @@ const isTabActive: Ref<boolean | string> = ref(false)
         <div class="fixed z-40 right-0 top-0 bg-transparent w-screen h-screen"
             @click="isTabActive = !isTabActive"
             :class="[isTabActive ? '' : 'hidden']" />
-        
+
         <div class="flex justify-between">
             <!-- Left: Logo Section -->
             <div class="pl-4 flex items-center gap-x-1.5 py-1">
@@ -26,7 +26,7 @@ const isTabActive: Ref<boolean | string> = ref(false)
 
             <!-- Right: Tab Section -->
             <div class="flex items-end flex-row-reverse text-sm">
-                <FooterTabActiveUsers :isTabActive="isTabActive" @isTabActive="(value: any) => isTabActive = value" :appName="props.appName"/>
+                <FooterTabActiveUsers :isTabActive="isTabActive" @isTabActive="(value: any) => isTabActive = value" :appScope="appScope"/>
                 <FooterTabLanguage :isTabActive="isTabActive" @isTabActive="(value: any) => isTabActive = value" />
             </div>
         </div>

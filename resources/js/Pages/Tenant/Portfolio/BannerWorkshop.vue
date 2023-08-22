@@ -14,7 +14,6 @@ import Slider from "@/Components/Slider/Slider.vue"
 import SlidesWorkshopAddMode from "@/Components/Workshop/SlidesWorkshopAddMode.vue"
 import { cloneDeep, set as setData, isEqual } from "lodash"
 import { set, onValue, get } from "firebase/database"
-ScreenView
 
 
 import { usePage } from "@inertiajs/vue3"
@@ -64,8 +63,7 @@ const props = defineProps<{
 }>()
 
 
-import { getDbReff } from '@/Composables/firebase'
-import ScreenView from "@/Components/ScreenView.vue"
+import { getDbRef } from '@/Composables/firebase'
 
 
 const user = ref(usePage().props.auth.user)
@@ -75,22 +73,24 @@ const data = reactive(cloneDeep(props.bannerLayout))
 const setData = ref(false)
 const firebase = ref(cloneDeep(props.firebase))
 
+const dbPath=props.appScope+'/'+layout.tenant.code+'/banner_workshop/'+'put_banner_unique_id_here'
+
 const fetchInitialData = async () => {
     try {
         setData.value = true
-        const snapshot = await get(getDbReff('Banner'))
+        const snapshot = await get(getDbRef('Banner'))//<--dbPath
         if (snapshot.exists()) {
             const firebaseData = snapshot.val()
             if (firebaseData[props.imagesUploadRoute.arguments.banner]) {
                 Object.assign(data, { ...firebaseData[props.imagesUploadRoute.arguments.banner] })
             } else {
                 Object.assign(data, { ...data, ...cloneDeep(props.bannerLayout) })
-                await set(getDbReff('Banner'), { ...firebaseData, [props.imagesUploadRoute.arguments.banner]: data })
+                await set(getDbRef('Banner'), { ...firebaseData, [props.imagesUploadRoute.arguments.banner]: data })
                 return
             }
         } else {
             Object.assign(data, { ...data, ...cloneDeep(props.bannerLayout) })
-            await set(getDbReff('Banner'), { [props.imagesUploadRoute.arguments.banner]: data })
+            await set(getDbRef('Banner'), { [props.imagesUploadRoute.arguments.banner]: data })
         }
         setData.value = false
     } catch (error) {
@@ -99,7 +99,7 @@ const fetchInitialData = async () => {
     }
 }
 
-onValue(getDbReff('Banner'), (snapshot) => {
+onValue(getDbRef('Banner'), (snapshot) => {
     if (snapshot.exists()) {
         const firebaseData = snapshot.val()
         if (firebaseData[props.imagesUploadRoute.arguments.banner]) {
@@ -112,10 +112,10 @@ const updateData = async () => {
     if (firebase.value) {
         try {
             if (data && setData.value == false) {
-                const snapshot = await get(getDbReff('Banner'))
+                const snapshot = await get(getDbRef('Banner'))
                 if (snapshot.exists()) {
                     const firebaseData = snapshot.val()
-                    await set(getDbReff('Banner'), { ...firebaseData, [props.imagesUploadRoute.arguments.banner]: data })
+                    await set(getDbRef('Banner'), { ...firebaseData, [props.imagesUploadRoute.arguments.banner]: data })
                 }
             }
         } catch (error) {
