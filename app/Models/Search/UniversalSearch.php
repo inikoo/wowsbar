@@ -51,7 +51,7 @@ class UniversalSearch extends Model
 
     public function searchableAs(): string
     {
-        return config('app.universal_search_index');
+        return config('elasticsearch.index_prefix') . config('app.env').'_search';
     }
 
     public function toSearchableArray(): array
