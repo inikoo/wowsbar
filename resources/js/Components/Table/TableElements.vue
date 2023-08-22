@@ -32,22 +32,30 @@ const selectedElement: any = reactive({
 //     isChecked.value[key] = values;
 // });
 
+
+let timeout: any = null
 const onClickCheckbox = (element: any, group: string) => {
-    if(!selectedElement[group]) selectedElement[group] = []
+    // Set timeout to prevent single on running twice on doubleclick
+    clearTimeout(timeout)
+    timeout = setTimeout(() => {
+        if(!selectedElement[group]) selectedElement[group] = []
 
-    if (selectedElement[group].includes(element)) {
-        if(selectedElement[group].length > 1) {
-            // Can't deselect if current active is one
-            selectedElement[group] = selectedElement[group].filter((item: string) => item !== element)
+        if (selectedElement[group].includes(element)) {
+            if(selectedElement[group].length > 1) {
+                // Can't deselect if current active is one
+                selectedElement[group] = selectedElement[group].filter((item: string) => item !== element)
+            }
+        } else {
+            selectedElement[group].push(element);
         }
-    } else {
-        selectedElement[group].push(element);
-    }
 
-    emits('checkboxChanged', selectedElement)
+        emits('checkboxChanged', selectedElement)
+    }, 200)
 }
 
 const onDoubleClickCheckbox = (element: any, group: string) => {
+    console.log('double')
+    clearTimeout(timeout)
     if(!selectedElement[group]) selectedElement[group] = []
 
     if (selectedElement[group].includes(element)) {
@@ -75,6 +83,8 @@ const onDoubleClickCheckbox = (element: any, group: string) => {
                     class="flex items-center gap-x-1 w-full px-3 cursor-pointer py-2 select-none "
                     @click="onClickCheckbox(element, selectedGroup)"
                     @dblclick="onDoubleClickCheckbox(element, selectedGroup)"
+                    role="filter"
+                    :id="value[0].replace(' ','-')"
                 >
                     <FontAwesomeIcon v-if="selectedElement[selectedGroup]?.includes(element)" icon="far fa-check-square" aria-hidden="true" />
                     <FontAwesomeIcon v-else icon="far fa-square" aria-hidden="true" />
