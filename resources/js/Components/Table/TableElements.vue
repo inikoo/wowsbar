@@ -32,22 +32,30 @@ const selectedElement: any = reactive({
 //     isChecked.value[key] = values;
 // });
 
+
+let timeout: any = null
 const onClickCheckbox = (element: any, group: string) => {
-    if(!selectedElement[group]) selectedElement[group] = []
+    // Set timeout to prevent single on running twice on doubleclick
+    clearTimeout(timeout)
+    timeout = setTimeout(() => {
+        if(!selectedElement[group]) selectedElement[group] = []
 
-    if (selectedElement[group].includes(element)) {
-        if(selectedElement[group].length > 1) {
-            // Can't deselect if current active is one
-            selectedElement[group] = selectedElement[group].filter((item: string) => item !== element)
+        if (selectedElement[group].includes(element)) {
+            if(selectedElement[group].length > 1) {
+                // Can't deselect if current active is one
+                selectedElement[group] = selectedElement[group].filter((item: string) => item !== element)
+            }
+        } else {
+            selectedElement[group].push(element);
         }
-    } else {
-        selectedElement[group].push(element);
-    }
 
-    emits('checkboxChanged', selectedElement)
+        emits('checkboxChanged', selectedElement)
+    }, 200)
 }
 
 const onDoubleClickCheckbox = (element: any, group: string) => {
+    console.log('double')
+    clearTimeout(timeout)
     if(!selectedElement[group]) selectedElement[group] = []
 
     if (selectedElement[group].includes(element)) {
