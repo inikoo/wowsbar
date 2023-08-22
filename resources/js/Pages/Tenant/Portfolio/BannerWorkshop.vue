@@ -20,6 +20,8 @@ import { faUser, faUserFriends } from "@/../private/pro-light-svg-icons"
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { getDbRef } from '@/Composables/firebase'
+import ScreenView from "@/Components/ScreenView.vue"
+
 library.add(faUser, faUserFriends)
 const props = defineProps<{
     title: string
