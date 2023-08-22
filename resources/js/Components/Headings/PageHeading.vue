@@ -17,6 +17,7 @@ import Button from "@/Components/Elements/Buttons/Button.vue"
 import { capitalize } from "@/Composables/capitalize"
 import { useLocaleStore } from "@/Stores/locale.js"
 import { trans } from "laravel-vue-i18n"
+import { get } from 'lodash'
 
 library.add(faDraftingCompass,faEmptySet, faMoneyCheckAlt, faPeopleArrows, faSlidersH, faPlus, faPencil, faArrowLeft, faBorderAll, faTrashAlt,faSave, faSuitcase);
 const props = defineProps(["data", "dataToSubmit","dataToSubmitIsDirty"])
@@ -27,6 +28,7 @@ if(props.dataToSubmit && props.data.actionActualMethod ) {
     props.dataToSubmit['_method'] = props.data.actionActualMethod
     // console.log(props.dataToSubmit)
 }
+
 const getActionLabel = function (action) {
     if (action.hasOwnProperty("label")) {
         return action.label
@@ -128,7 +130,7 @@ const getActionIcon = (action) => {
                     <Link v-if="action.type === 'button'"
                         :href="route(action['route']['name'], action['route']['parameters'])"
                         :method="action.method ?? 'get'"
-                        :data="dataToSubmit"
+                        :data="action.method !== 'get' ? dataToSubmit : null"
                         as="button"
                     >
                         <Button size="xs"

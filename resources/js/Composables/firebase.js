@@ -6,7 +6,6 @@ import {
     ReCaptchaEnterpriseProvider,
 } from 'firebase/app-check';
 
-
 const firebaseConfig = {
     apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
     authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
@@ -18,26 +17,26 @@ const firebaseConfig = {
     measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
 };
 
+// Init Firebase with config
 const firebaseApp = initializeApp(firebaseConfig);
 initializeAppCheck(firebaseApp, {
     provider: new ReCaptchaEnterpriseProvider(import.meta.env.VITE_RECAPTCHA_APP_KEY),
 });
 
-let getDb = getDatabase(firebaseApp);
+let db = getDatabase(firebaseApp);
 
-export const getDbRef = (tenant) => {
-    return dbRef(getDb, tenant);
+export const getDbRef = (column) => {
+    return dbRef(db, column);
 };
 
+// Get the data
 export const getDataFirebase = (column) => {
-    let getData = null;
 
     try {
-        getData = useDatabaseList(getDbRef(column));
+        return useDatabaseList(getDbRef(column));
     } catch (error) {
-        console.error('An error occurred while fetching data from Firebase:',
-                      error);
+        console.error('An error occurred while fetching data from Firebase:', error);
+        return [];
     }
 
-    return getData;
 };
