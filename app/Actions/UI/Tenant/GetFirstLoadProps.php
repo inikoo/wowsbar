@@ -8,6 +8,7 @@
 namespace App\Actions\UI\Tenant;
 
 use App\Actions\Assets\Language\UI\GetLanguagesOptions;
+use App\Actions\Firebase\ChangeRulesFirebase;
 use App\Actions\Helpers\Images\GetPictureSources;
 use App\Helpers\ImgProxy\Image;
 use App\Http\Resources\Assets\LanguageResource;
@@ -39,39 +40,38 @@ class GetFirstLoadProps
         $auth = app('firebase.auth');
         $tenant = app('currentTenant');
 
-        if($user) {
+        if ($user) {
             $customTokenFirebasePrefix = $tenant->slug;
-            $cache                     = Cache::get($customTokenFirebasePrefix);
+            $cache = Cache::get($customTokenFirebasePrefix);
 
-            if(blank($cache)) {
-                $customToken = $auth
-                    ->createCustomToken($tenant->slug, [
-                        'tenant' => $tenant->slug
-                    ]);
+//            ChangeRulesFirebase::run(app('currentTenant'));
 
-                $auth->signInWithCustomToken($customToken);
+            $customToken = $auth
+                ->createCustomToken($tenant->slug, [
+                    'tenant' => $tenant->slug
+                ]);
 
-                Cache::put($customTokenFirebasePrefix, $customToken->toString(), 3600);
-            }
+            $auth->signInWithCustomToken($customToken);
+
+            Cache::put($customTokenFirebasePrefix, $customToken->toString(), 3600);
         }
 
         return [
-            'tenant'     => app('currentTenant') ? app('currentTenant')->only('name', 'code', 'logo_id') : null,
+            'tenant' => app('currentTenant') ? app('currentTenant')->only('name', 'code', 'logo_id') : null,
             'localeData' =>
                 [
-                    'language'        => LanguageResource::make($language)->getArray(),
+                    'language' => LanguageResource::make($language)->getArray(),
                     'languageOptions' => GetLanguagesOptions::make()->translated(),
                 ],
 
 
-
-            'layout'   => function () use ($user) {
+            'layout' => function () use ($user) {
                 if ($user) {
                     return GetLayout::run($user);
                 } else {
                     return [
 
-                        'logo'      => GetPictureSources::run(
+                        'logo' => GetPictureSources::run(
                             (new Image())->make(url('/images/logo.png'))->resize(0, 64)
                         ),
                         'publicUrl' => config('app.url')
@@ -81,7 +81,8 @@ class GetFirstLoadProps
                 }
             },
             'firebase' => [
-                'credential'  => File::get(base_path(config('firebase.projects.app.credentials.file'))),
+                'auth_token' => $customToken ?? null,
+                'credential' => File::get(base_path(config('firebase.projects.app.credentials.file'))),
                 'databaseURL' => config('firebase.projects.app.database.url')
             ]
         ];
