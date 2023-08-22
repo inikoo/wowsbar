@@ -111,7 +111,7 @@ const sidebarOpen = ref(false)
     </div>
 
     <!-- Footer -->
-    <AppFooter appName="tenants" />
+    <AppFooter appScope="tenants" />
 
 </template>
 

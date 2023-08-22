@@ -14,7 +14,6 @@ import Slider from "@/Components/Slider/Slider.vue"
 import SlidesWorkshopAddMode from "@/Components/Workshop/SlidesWorkshopAddMode.vue"
 import { cloneDeep, set as setData, isEqual } from "lodash"
 import { set, onValue, get } from "firebase/database"
-ScreenView
 
 
 import { usePage } from "@inertiajs/vue3"
@@ -65,7 +64,6 @@ const props = defineProps<{
 
 
 import { getDbRef } from '@/Composables/firebase'
-import ScreenView from "@/Components/ScreenView.vue"
 
 
 const user = ref(usePage().props.auth.user)
@@ -75,10 +73,12 @@ const data = reactive(cloneDeep(props.bannerLayout))
 const setData = ref(false)
 const firebase = ref(cloneDeep(props.firebase))
 
+const dbPath=props.appScope+'/'+layout.tenant.code+'/banner_workshop/'+'put_banner_unique_id_here'
+
 const fetchInitialData = async () => {
     try {
         setData.value = true
-        const snapshot = await get(getDbRef('Banner'))
+        const snapshot = await get(getDbRef('Banner'))//<--dbPath
         if (snapshot.exists()) {
             const firebaseData = snapshot.val()
             if (firebaseData[props.imagesUploadRoute.arguments.banner]) {

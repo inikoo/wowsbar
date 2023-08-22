@@ -106,6 +106,6 @@ const sidebarOpen = ref(false)
     </div>
 
     <!-- Footer -->
-    <AppFooter appName="organisations" />
+    <AppFooter appScope="organisations" />
 
 </template>
