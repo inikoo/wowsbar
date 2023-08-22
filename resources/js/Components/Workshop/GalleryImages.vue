@@ -103,7 +103,7 @@ const truncate = (string: string, length: number, different: number) => {
             </div> -->
 
             <!-- Images list -->
-            <div v-else class="pt-6 pl-4 grid grid-cols-4 gap-x-3 gap-y-6">
+            <div v-else class="pt-6 pl-4 grid grid-cols-4 gap-x-3 gap-y-6 max-h-96 overflow-auto">
                 <div v-for="imageData in galleryData[activeSidebar]" :key="imageData.id" class="group opacity-75 hover:opacity-100 cursor-pointer relative flex flex-col gap-y-1">
                     <div class="flex-none aspect-[4/1] bg-white overflow-hidden rounded group-hover:ring-2 group-hover:ring-gray-500">
                         <Image :src="imageData.source" :alt="imageData.imageAlt" class="h-full w-full object-cover object-center" />
