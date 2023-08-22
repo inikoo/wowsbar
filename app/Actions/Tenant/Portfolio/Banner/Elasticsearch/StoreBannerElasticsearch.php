@@ -27,7 +27,7 @@ class StoreBannerElasticsearch
 
         $params = [
             'id'    => 'banner_'.$banner->ulid,
-            'index' => config('elasticsearch.index_prefix') . '_'.config('app.env').'_content_blocks',
+            'index' => config('elasticsearch.index_prefix') . config('app.env').'_content_blocks',
             'body'  => json_encode([
                 'id'     => $banner->id,
                 'type'   => 'banner',
