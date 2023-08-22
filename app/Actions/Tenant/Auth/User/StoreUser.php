@@ -13,6 +13,7 @@ use App\Actions\Tenant\Auth\User\UI\SetUserAvatar;
 use App\Models\Auth\User;
 use App\Models\Tenancy\Tenant;
 use App\Rules\AlphaDashDot;
+use Illuminate\Console\Command;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
 use Lorisleiva\Actions\ActionRequest;
@@ -26,6 +27,7 @@ class StoreUser
 
     private bool $asAction = false;
 
+    public string $commandSignature = 'user:create {tenant} {username} {password}';
 
     public function handle(Tenant $tenant, array $objectData = []): User
     {
@@ -66,5 +68,17 @@ class StoreUser
         return $this->handle($tenant, $validatedData);
     }
 
+    public function asCommand(Command $command): void
+    {
+        $tenant = Tenant::where('slug', $command->argument('tenant'))->first();
+        $tenant->makeCurrent();
+
+        $this->handle($tenant, [
+            'username' => $command->argument('username'),
+            'password' => $command->argument('password')
+        ]);
+
+        echo "Damn! 🥳 u successfully add 1 user to " . $tenant->slug . "\n";
+    }
 
 }
