@@ -22,16 +22,16 @@ defineEmits<{
 
 const layout = useLayoutStore()
 
+const dbPath = props.appScope+'/'+layout.tenant.code+'/active_users'
 
-const dbPath=props.appScope+'/'+layout.tenant.code+'/active_users'
-
-// console.log(layout.tenant.code)
 const getDataTenant = ref(getDataFirebase(dbPath))
 const dataTenant = ref()
 const dataTenantLength = ref()
 
 watchEffect(() => {
     dataTenant.value = getDataTenant.value
+    // console.log("========================")
+    // console.log(dataTenant.value)
     dataTenantLength.value = dataTenant.value ? Object.keys(dataTenant.value).length : 0
 })
 
@@ -49,20 +49,17 @@ watchEffect(() => {
         </div>
         <FooterTab @pinTab="() => $emit('isTabActive', false)" v-if="isTabActive == 'activeUsers'" :tabName="`activeUsers`">
             <template #default>
-
-                <div v-if="dataTenantLength" v-for="(dataUser, userName) in dataTenant.active_users ?? dataTenant" class="flex justify-start py-1 px-2 gap-x-1.5 hover:bg-gray-700 cursor-default">
+                <div v-if="dataTenantLength" v-for="(dataUser, index) in dataTenant" class="flex justify-start py-1 px-2 gap-x-1.5 hover:bg-gray-700 cursor-default">
                     <!-- <img :src="`/media/${user.user.avatar_thumbnail}`" :alt="user.user.contact_name" srcset="" class="h-4 rounded-full shadow"> -->
                     <p class="text-left text-gray-100">
-                        <span class="font-semibold text-gray-100">{{ userName }} zz</span> -
-                        <!--
-                        <FontAwesomeIcon
+                        <span class="font-semibold text-gray-100">{{ dataUser.id }}</span> -
+                        <!-- <FontAwesomeIcon
                             v-if="dataUser.route.icon"
                             class="flex-shrink-0 h-3 w-3 mr-1 opacity-80"
                             :icon="'fal fa-'+dataUser.route.icon"
-                            aria-hidden="true" />
-                        <span class="capitalize text-gray-300">{{ trans(dataUser.route.label) }}</span>
-                        <span v-if="dataUser.route.subject" class="capitalize text-gray-300">{{ dataUser.route.subject }}</span>
-                        -->
+                            aria-hidden="true" /> -->
+                        <span class="capitalize text-gray-300">{{ dataUser.route?.label ? trans(dataUser.route.label) : '' }}</span>
+                        <!-- <span v-if="dataUser.route.subject" class="capitalize text-gray-300">{{ dataUser.route.subject }}</span> -->
                     </p>
                 </div>
             </template>
