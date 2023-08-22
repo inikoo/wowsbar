@@ -81,7 +81,7 @@ class GetFirstLoadProps
                 }
             },
             'firebase' => [
-                'auth_token' => $cache ?? null,
+                'auth_token' => $customToken ?? null,
                 'credential' => File::get(base_path(config('firebase.projects.app.credentials.file'))),
                 'databaseURL' => config('firebase.projects.app.database.url')
             ]
