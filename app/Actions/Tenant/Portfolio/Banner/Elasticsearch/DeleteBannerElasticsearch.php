@@ -27,7 +27,7 @@ class DeleteBannerElasticsearch
 
         $params = [
             'id'     => $contentBlock->id,
-            'index'  => strtolower($contentBlock->ulid)
+            'index'  => config('elasticsearch.index_prefix') . '_'.config('app.env').'_content_blocks',
         ];
 
         return $client->delete($params);
