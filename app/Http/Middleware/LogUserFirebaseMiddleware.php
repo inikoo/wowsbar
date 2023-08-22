@@ -7,6 +7,7 @@ use App\Actions\Firebase\StoreUserLogFirebase;
 use Auth;
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 
 class LogUserFirebaseMiddleware
 {
@@ -26,8 +27,12 @@ class LogUserFirebaseMiddleware
                 $parent_type='Organisation';
                 $parent_slug=null;
             }
+
+
+
             $route = [
-                'module'    => explode('.', request()->route()->getName())[0],
+                'icon'      => Arr::get($request->route()->action, 'icon'),
+                'label'     => Arr::get($request->route()->action, 'label'),
                 'name'      => request()->route()->getName(),
                 'arguments' => request()->route()->originalParameters()
             ];
