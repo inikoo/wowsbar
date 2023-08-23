@@ -5,17 +5,20 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
+use App\Stubs\Migrations\HasPortfolioStats;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class () extends Migration {
+    use HasPortfolioStats;
     public function up(): void
     {
         Schema::create('portfolio_website_stats', function (Blueprint $table) {
             $table->smallIncrements('id');
             $table->unsignedSmallInteger('portfolio_website_id')->index();
             $table->foreign('portfolio_website_id')->references('id')->on('portfolio_websites');
+            $table=$this->portfolioStats($table);
             $table->timestampsTz();
 
         });
