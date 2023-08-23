@@ -88,6 +88,7 @@ if (props['fieldData']['hasOther']) {
     formFields[props['fieldData']['hasOther']['name']] = props['fieldData']['hasOther']['value'];
 }
 formFields['_method'] = 'patch';
+console.log(formFields)
 const form = useForm(formFields);
 form['fieldType'] = 'edit';
 
