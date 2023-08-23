@@ -69,20 +69,21 @@ const combinedImages: Ref<any> = computed(() => {
                 @click="isSelectImage = true"
                 size="xs"
                 :style="`tertiary`"
+                id="select-images"
             >
                 Select images
             </Button>
 
             <!-- Button: Create Banner -->
             <div v-if="isSelectImage" class="flex gap-x-2">
-                <Button :style="'delete'" @click="isSelectImage = false" size="xs">
+                <Button :style="'delete'" @click="isSelectImage = false" size="xs"  id="cancel-select">
                     Cancel select
                 </Button>
                 <Link
                     href="d"
                     :method="'post'"
                 >
-                    <Button :key="combinedImages.length" size="xs"
+                    <Button :key="combinedImages.length" size="xs"  id="create-banner"
                         :style="combinedImages.length > 0 ? 'primary' : 'tertiary'"
                         :class="[combinedImages.length > 0 ? '' : 'cursor-not-allowed']"
                     >

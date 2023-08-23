@@ -587,7 +587,7 @@ const handleElementsChange = (data) => {
                                     </Button>
                                 </Link>
                             </div>
-                            <slot v-if="queryBuilderProps.modelOperations?.uploadFile" name="uploadFile" :item="queryBuilderProps.modelOperations?.uploadFile"/>
+                            <slot v-if="queryBuilderProps.modelOperations?.uploadFile" name="uploadFile"  id="uploadFile" :item="queryBuilderProps.modelOperations?.uploadFile"/>
                         </div>
                     </div>
 
