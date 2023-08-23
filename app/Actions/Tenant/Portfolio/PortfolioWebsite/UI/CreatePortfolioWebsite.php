@@ -76,15 +76,16 @@ class CreatePortfolioWebsite extends InertiaAction
                             'fields' => [
 
                                 'code' => [
-                                    'type'     => 'input',
-                                    'label'    => __('code'),
-                                    'required' => true,
+                                    'type'      => 'input',
+                                    'label'     => __('code'),
+                                    'required'  => true,
+                                    'maxLength' => 8
                                 ],
                                 'name' => [
-                                    'type'     => 'input',
-                                    'label'    => __('name'),
-                                    'required' => true,
-                                    'value'    => '',
+                                    'type'      => 'input',
+                                    'label'     => __('name'),
+                                    'required'  => true,
+                                    'value'     => '',
                                 ],
 
 
