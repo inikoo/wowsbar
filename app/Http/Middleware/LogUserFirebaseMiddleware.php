@@ -17,6 +17,7 @@ class LogUserFirebaseMiddleware
     public function handle(Request $request, Closure $next)
     {
         $user   = $request->user();
+        $action = $request->route()->getAction();
 
         if($user && env('LIVE_USERS_LIST')) {
 
