@@ -166,8 +166,7 @@ watch(() => props.jumpToIndex, (newVal) => {
 }
 
 .swiper-slide img {
-    @apply w-full h-auto;
-    display: block;
+    @apply w-full h-full;
     object-fit: cover;
 }
 </style>
