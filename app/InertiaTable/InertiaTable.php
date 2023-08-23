@@ -144,7 +144,7 @@ class InertiaTable
         return $this->columns->map(function (Column $column) use ($columns, $sort) {
             $key = $column->key;
 
-            if (!empty($columns)) {
+            if (!empty($columns) && is_array($columns)) {
                 $column->hidden = !in_array($key, $columns);
             }
 
