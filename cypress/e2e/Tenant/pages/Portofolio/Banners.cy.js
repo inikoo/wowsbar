@@ -41,17 +41,17 @@ const Banner = (id = "hello") => {
             cy.url().should("include", "banners/create");
         });
 
-        // it("fails to create a banner with wrong data", () => {
-        //     cy.get("#new-banner").click();
+        it("fails to create a banner with wrong data", () => {
+            cy.get("#new-banner").click();
 
-        //     // Clear fields and submit
-        //     cy.get("#code").clear();
-        //     cy.get("#name").clear();
-        //     cy.get('button[type="submit"]').click();
+            // Clear fields and submit
+            cy.get("#code").clear();
+            cy.get("#name").clear();
+            cy.get('button[type="submit"]').click();
 
-        //     // Assert the URL after submitting (should stay on the create banner page)
-        //     cy.url().should("include", "banners/create");
-        // });
+            // Assert the URL after submitting (should stay on the create banner page)
+            cy.url().should("include", "banners/create");
+        });
 
         it("websites", () => {
             // Click on the link of the first banner in the list
@@ -67,62 +67,62 @@ const Banner = (id = "hello") => {
             cy.url().should("include", "?tab=banners");
 
             // search
-            // SearchTable(id);
+            SearchTable(id);
 
-            // // filter colums
-            // FilterColums(id);
+            // filter colums
+            FilterColums(id);
 
-            // filterByStatus(id);
+            filterByStatus(id);
 
-            // // table
-            // Table();
+            // table
+            Table();
         });
     });
 };
 
-// const filterByStatus = (id) => {
-//     cy.get("div[role*=filter]").each((role) => {
-//         cy.get(role[0]).click();
-//         const filterData = ["In-Process", "Ready", "Live", "Retired"];
-//         const data = filterData.filter((item) => item !== role[0].id);
-//         const lowercaseData = data.map((item) => item.toLowerCase());
-//         const url = `http://aiku.wowsbar.test/portfolio/websites/hello?tab=banners&banners_elements[state]=${lowercaseData.join()}&banners_sort=slug`;
-//         cy.url().should("eq", url);
-//     });
-// };
+const filterByStatus = (id) => {
+    cy.get("div[role*=filter]").each((role) => {
+        cy.get(role[0]).click();
+        const filterData = ["In-Process", "Ready", "Live", "Retired"];
+        const data = filterData.filter((item) => item !== role[0].id);
+        const lowercaseData = data.map((item) => item.toLowerCase());
+        const url = `http://aiku.wowsbar.test/portfolio/websites/hello?tab=banners&banners_elements[state]=${lowercaseData.join()}&banners_sort=slug`;
+        cy.url().should("eq", url);
+    });
+};
 
-// const SearchTable = (id) => {
-//     cy.get("input").type("azure{enter}");
-//     cy.intercept(
-//         "GET",
-//         `http://aiku.wowsbar.test/portfolio/websites/${id}`,
-//         (req) => {
-//             req.body = {
-//                 tab: "banners",
-//                 banners_filter: "azure",
-//             };
-//         }
-//     ).as("interceptedRequest");
-// };
+const SearchTable = (id) => {
+    cy.get("input").type("azure{enter}");
+    cy.intercept(
+        "GET",
+        `http://aiku.wowsbar.test/portfolio/websites/${id}`,
+        (req) => {
+            req.body = {
+                tab: "banners",
+                banners_filter: "azure",
+            };
+        }
+    ).as("interceptedRequest");
+};
 
-// const FilterColums = (id) => {
-//     cy.get("#filter-colums")
-//         .click({ multiple: true })
-//         .then(() => {
-//             cy.get("li").each((test) => {
-//                 if (test[0].lastChild.id) cy.get(test[0].lastChild).click();
-//                 const data = ["code", "name", "banner"];
-//                 const index = data.findIndex(
-//                     (item) => item == test[0].lastChild.id
-//                 );
-//                 data.splice(index, 1);
-//                 cy.intercept(
-//                     "GET",
-//                     `http://aiku.wowsbar.test/portfolio/websites/hello?tab=banners&banners_columns=${data.toString()}&banners_sort=slug`
-//                 );
-//             });
-//         });
-// };
+const FilterColums = (id) => {
+    cy.get("#filter-colums")
+        .click({ multiple: true })
+        .then(() => {
+            cy.get("li").each((test) => {
+                if (test[0].lastChild.id) cy.get(test[0].lastChild).click();
+                const data = ["code", "name", "banner"];
+                const index = data.findIndex(
+                    (item) => item == test[0].lastChild.id
+                );
+                data.splice(index, 1);
+                cy.intercept(
+                    "GET",
+                    `http://aiku.wowsbar.test/portfolio/websites/hello?tab=banners&banners_columns=${data.toString()}&banners_sort=slug`
+                );
+            });
+        });
+};
 
 const Table = (id) => {
     cy.get("td")
