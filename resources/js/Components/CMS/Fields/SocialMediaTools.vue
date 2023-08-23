@@ -1,10 +1,10 @@
 <script setup>
 import { ref, computed } from 'vue'
 import fontLibrary from './IconPicker/Components/fonts.js'
-import { fab } from "@fortawesome/free-brands-svg-icons"
+// import { fab } from "@fortawesome/free-brands-svg-icons"
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-library.add(fab)
+// library.add(fab)
 const props = defineProps({
   label: {
     type: String,
