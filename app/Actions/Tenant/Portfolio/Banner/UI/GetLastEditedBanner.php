@@ -17,7 +17,7 @@ class GetLastEditedBanner extends InertiaAction
 {
     public function handle(Tenant|PortfolioWebsite $parent, $prefix = null): AnonymousResourceCollection
     {
-        $responses = $parent->contentBlocks()->limit(3)->latest('updated_at')->get();
+        $responses = $parent->banners()->limit(3)->latest('updated_at')->get();
 
         return BannerResource::collection($responses);
     }
