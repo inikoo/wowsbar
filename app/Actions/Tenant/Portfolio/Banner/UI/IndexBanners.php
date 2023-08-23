@@ -65,7 +65,7 @@ class IndexBanners extends InertiaAction
 
         if (class_basename($parent) == 'PortfolioWebsite') {
             $queryBuilder->leftJoin('banner_portfolio_website', 'banner_id', 'banners.id')
-                ->where('portfolio_website_id', $parent->id);
+                ->where('banner_portfolio_website.portfolio_website_id', $parent->id);
         }
 
 
@@ -156,7 +156,7 @@ class IndexBanners extends InertiaAction
                 ->withEmptyState($emptyState)
                 ->column(key: 'slug', label: __('code'), sortable: true)
                 ->column(key: 'name', label: __('name'), sortable: true)
-                ->column(key: 'banner', label: __('banner'), sortable: false)
+                ->column(key: 'banner', label: __('banner'))
                 ->defaultSort('slug');
         };
     }
@@ -201,6 +201,7 @@ class IndexBanners extends InertiaAction
             ];
         }
 
+
         return Inertia::render(
             'Tenant/Portfolio/Banners',
             [
@@ -216,29 +217,27 @@ class IndexBanners extends InertiaAction
                         'title' => __('banner'),
                         'icon'  => 'fal fa-window-maximize'
                     ],
-                    'actions'   =>
+                    'actions'   =>[
                         match (app('currentTenant')->stats->number_websites) {
-                            0 => [],
                             1 => [
                                 'type'  => 'button',
                                 'style' => 'create',
-                                'label' => 'create banner',
+                                'label' => __('create banner'),
                                 'route' => [
                                     'name'       => 'portfolio.websites.show.banners.create',
                                     'parameters' => app('currentTenant')->portfolioWebsites()->first()->slug
                                 ]
                             ],
                             default => [
-                                'type'      => 'modal',
-                                'component' => 'chooseWebsite',
+                                'type'      => 'button',
                                 'style'     => 'create',
-                                'label'     => 'create banner',
+                                'label'     => __('create banner'),
                                 'route'     => [
                                     'name' => 'portfolio.banners.create',
                                 ]
                             ]
                         }
-
+]
 
                 ],
                 'data'        => BannerResource::collection($banners),

@@ -19,10 +19,11 @@ use App\Actions\Tenant\Portfolio\PortfolioWebsite\StorePortfolioWebsite;
 use App\Actions\Tenant\Portfolio\PortfolioWebsite\UpdatePortfolioWebsite;
 use App\Actions\UI\Tenant\Profile\UpdateProfile;
 
-Route::post('/portfolio-website/', StorePortfolioWebsite::class)->name('portfolio-website.store');
+Route::post('/portfolio-website', StorePortfolioWebsite::class)->name('portfolio-website.store');
 Route::patch('/portfolio-website/{portfolioWebsite}', UpdatePortfolioWebsite::class)->name('portfolio-website.update');
 Route::delete('/portfolio-website/{portfolioWebsite}', DeletePortfolioWebsite::class)->name('portfolio-website.delete');
 Route::post('/portfolio-website/{portfolioWebsite}/banners', [StoreBanner::class, 'inPortfolioWebsite'])->name('portfolio-website.banner.store');
+Route::post('/banner', [StoreBanner::class, 'inTenant'])->name('banner.store');
 Route::patch('/banner/{banner}', UpdateBanner::class)->name('banner.update');
 Route::patch('/banner/{banner}/state/{state}', UpdateBannerState::class)->name('banner.update-state');
 Route::delete('/banner/{banner}', DeleteBanner::class)->name('content-block.delete');

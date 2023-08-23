@@ -18,6 +18,8 @@ return new class () extends Migration {
             $table->ulid()->index();
             $table->unsignedSmallInteger('tenant_id')->index();
             $table->foreign('tenant_id')->references('id')->on('tenants');
+            $table->unsignedSmallInteger('portfolio_website_id')->nullable()->index();
+            $table->foreign('portfolio_website_id')->references('id')->on('portfolio_websites');
             $table->string('slug')->collation('und_ns');
             $table->string('code')->collation('und_ns_ci');
             $table->string('name')->collation('und_ns_ci');

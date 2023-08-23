@@ -12,9 +12,6 @@ import { capitalize } from "@/Composables/capitalize"
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { faGlobe } from "@/../private/pro-light-svg-icons"
 import TableBanners from "@/Pages/Tables/TableBanners.vue"
-import Modal from '@/Components/Utils/Modal.vue'
-import Button from '@/Components/Elements/Buttons/Button.vue'
-import { trans } from 'laravel-vue-i18n'
 
 library.add(faGlobe)
 
@@ -29,14 +26,7 @@ const isOpen = ref(false)
 
 <template layout="TenantApp">
     <Head :title="capitalize(title)" />
-    <PageHeading :data="pageHead">
-        <template #modal="{ data: item }">
-            <Button :style="item.style" @click="isOpen = true" class="capitalize" size="xs">{{ trans(item.label)}}</Button>
-            <Modal :isOpen="isOpen" @onClose="() => isOpen = false">
-                List of Websites
-            </Modal>
-        </template>
-    </PageHeading>
+    <PageHeading :data="pageHead"></PageHeading>
     <TableBanners :data="data" />
 </template>
 
