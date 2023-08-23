@@ -11,6 +11,7 @@ use App\Actions\Tenancy\Tenant\Hydrators\TenantHydrateBanners;
 use App\Actions\Tenant\Portfolio\Banner\Elasticsearch\StoreBannerElasticsearch;
 use App\Actions\Tenant\Portfolio\Banner\Hydrators\BannerHydrateUniversalSearch;
 use App\Actions\Tenant\Portfolio\Banner\UI\ParseBannerLayout;
+use App\Actions\Tenant\Portfolio\PortfolioWebsite\Hydrators\PortfolioWebsiteHydrateBanners;
 use App\Actions\Tenant\Portfolio\Slide\StoreSlide;
 use App\Models\Portfolio\Banner;
 use App\Models\Portfolio\PortfolioWebsite;
@@ -78,6 +79,7 @@ class StoreBannerFromGallery
         );
 
         TenantHydrateBanners::dispatch(app('currentTenant'));
+        PortfolioWebsiteHydrateBanners::dispatch($portfolioWebsite);
         BannerHydrateUniversalSearch::dispatch($banner);
         StoreBannerElasticsearch::run($banner);
 

@@ -10,6 +10,7 @@ namespace App\Actions\Tenant\Portfolio\Banner;
 use App\Actions\Tenancy\Tenant\Hydrators\TenantHydrateBanners;
 use App\Actions\Tenant\Portfolio\Banner\Hydrators\BannerHydrateUniversalSearch;
 use App\Actions\Tenant\Portfolio\Banner\UI\ParseBannerLayout;
+use App\Actions\Tenant\Portfolio\PortfolioWebsite\Hydrators\PortfolioWebsiteHydrateBanners;
 use App\Actions\Tenant\Portfolio\Slide\StoreSlide;
 use App\Actions\Tenant\Portfolio\Slide\UpdateSlide;
 use App\Actions\Traits\WithActionUpdate;
@@ -63,6 +64,10 @@ class UpdateBanner
 
         BannerHydrateUniversalSearch::dispatch($banner);
         TenantHydrateBanners::dispatch(app('currentTenant'));
+
+        if(class_basename($banner->portfolioWebsite) == 'PortfolioWebsite') {
+            PortfolioWebsiteHydrateBanners::dispatch($banner->portfolioWebsite);
+        }
 
         return $banner;
     }
