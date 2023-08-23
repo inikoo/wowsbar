@@ -8,14 +8,9 @@ const props = defineProps<{
     tabName: string
 }>()
 
-const emits = defineEmits<{
-    
-}>()
-
 library.add(faThumbtack)
 
 const layout = useLayoutStore()
-
 </script>
 
 <template>

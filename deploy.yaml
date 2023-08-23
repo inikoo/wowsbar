@@ -1,6 +1,6 @@
 import:
   - recipe/laravel.php
-  - deploy/common.php
+  - deploy/lib/common.php
   - deploy/supervisor.php
   - deploy/nginx.php
   - deploy/install.php

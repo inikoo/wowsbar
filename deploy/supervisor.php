@@ -1,7 +1,7 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Wed, 02 Aug 2023 17:02:45 Malaysia Time, Kuala Lumpur, Malaysia
+ * Created: Tue, 22 Aug 2023 10:04:02 Malaysia Time, Kuala Lumpur, Malaysia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace Deployer;
 
-require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__.'/../vendor/autoload.php';
 
 use Webmozart\Assert\Assert;
 use Symfony\Component\Finder\Finder;

@@ -18,7 +18,9 @@ import AppTopBar from "@/Layouts/TopBar/AppTopBar.vue"
 import Breadcrumbs from "@/Components/Navigation/Breadcrumbs.vue"
 
 import { library } from "@fortawesome/fontawesome-svg-core"
-import { initialiseApp } from "@/Composables/initialiseApp"
+import { useFirebaseStore } from "@/Stores/firebase"
+
+import { initialiseApp, authFirebase } from "@/Composables/initialiseApp"
 
 import {
     faHome,
@@ -67,8 +69,9 @@ library.add(
 
 
 
-
 const layout = initialiseApp()
+const firebaseStore = useFirebaseStore()
+// authFirebase(firebaseStore.auth_token)  
 const sidebarOpen = ref(false)
 
 </script>
