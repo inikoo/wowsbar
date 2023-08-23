@@ -64,7 +64,6 @@ class StoreBanner
         data_set($modelData, 'ulid', Str::ulid());
         if (class_basename($parent) == 'PortfolioWebsite') {
             data_set($modelData, 'portfolio_website_id', $parent->id);
-
         }
 
         /** @var Banner $banner */
@@ -155,7 +154,7 @@ class StoreBanner
 
     public function getCommandSignature(): string
     {
-        return 'banner:create {tenant} {portfolio-website} {code} {name}';
+        return 'banner:create {tenant} {code} {name} {portfolio-website?}';
     }
 
     public function asCommand(Command $command): void
@@ -163,7 +162,9 @@ class StoreBanner
         $tenant = Tenant::where('slug', $command->argument('tenant'))->firstOrFail();
         $tenant->makeCurrent();
 
-        $portfolioWebsite = PortfolioWebsite::where('slug', $command->argument('portfolio-website'))->firstOrFail();
+        if($website = $command->argument('portfolio-website')) {
+            $portfolioWebsite = PortfolioWebsite::where('slug', $website)->firstOrFail();
+        }
 
 
         $this->asAction = true;
@@ -171,12 +172,12 @@ class StoreBanner
             [
                 'code'                 => $command->argument('code'),
                 'name'                 => $command->argument('name'),
-                'portfolio_website_id' => $portfolioWebsite->id
+                'portfolio_website_id' => $portfolioWebsite->id ?? null
             ]
         );
         $validatedData = $this->validateAttributes();
 
-        $banner = $this->handle($portfolioWebsite, $validatedData);
+        $banner = $this->handle($portfolioWebsite ?? $tenant, $validatedData);
 
         $command->info("Done! Content block $banner->code created 🎉");
     }
