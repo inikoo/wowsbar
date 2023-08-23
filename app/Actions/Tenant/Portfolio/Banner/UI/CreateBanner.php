@@ -8,7 +8,9 @@
 namespace App\Actions\Tenant\Portfolio\Banner\UI;
 
 use App\Actions\InertiaAction;
+use App\Actions\Portfolio\PortfolioWebsite\UI\GetPortfolioWebsitesOptions;
 use App\Models\Portfolio\PortfolioWebsite;
+use App\Models\Tenancy\Tenant;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -21,6 +23,12 @@ class CreateBanner extends InertiaAction
         return $request->user()->can('portfolio.edit');
     }
 
+    public function inTenant(ActionRequest $request): Response|RedirectResponse
+    {
+        $this->initialisation($request);
+
+        return $this->handle(app('currentTenant'), $request);
+    }
 
     public function inPortfolioWebsite(PortfolioWebsite $portfolioWebsite, ActionRequest $request): Response|RedirectResponse
     {
@@ -30,12 +38,51 @@ class CreateBanner extends InertiaAction
     }
 
 
-    public function handle(PortfolioWebsite $portfolioWebsite, ActionRequest $request): Response
+    public function handle(Tenant|PortfolioWebsite $parent, ActionRequest $request): Response
     {
+
+        $fields=[];
+        if(class_basename($parent)=='Tenant'){
+            $fields[]= [
+                'title'  => __('Website'),
+                'fields' => [
+                    'portfolio_website_id'  => [
+                        'type'        => 'select',
+                        'label'       => __('website'),
+                        'placeholder' => __('Select a website'),
+                        'options'     => GetPortfolioWebsitesOptions::run(),
+                        'value'       => null,
+                        'required'    => false,
+                        'mode'        => 'single'
+                    ],
+
+                ]
+            ];
+        }
+
+        $fields[]= [
+            'title'  => __('ID/name'),
+            'fields' => [
+
+                'code' => [
+                    'type'     => 'input',
+                    'label'    => __('code'),
+                    'required' => true,
+                ],
+                'name' => [
+                    'type'     => 'input',
+                    'label'    => __('name'),
+                    'required' => true,
+                    'value'    => '',
+                ],
+            ]
+        ];
+
         return Inertia::render(
             'Tenant/CreateModel',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(
+                    $request->route()->getName(),
                     $request->route()->parameters()
                 ),
                 'title'       => __('new banner'),
@@ -65,33 +112,20 @@ class CreateBanner extends InertiaAction
 
                 ],
                 'formData'    => [
-                    'blueprint' => [
-                        [
-                            'title'  => __('ID/name'),
-                            'fields' => [
+                    'blueprint' => $fields,
+                    'route'     =>
 
-                                'code' => [
-                                    'type'     => 'input',
-                                    'label'    => __('code'),
-                                    'required' => true,
-                                ],
-                                'name' => [
-                                    'type'     => 'input',
-                                    'label'    => __('name'),
-                                    'required' => true,
-                                    'value'    => '',
-                                ],
-                            ]
-                        ],
-
-
-                    ],
-                    'route'     => [
-                        'name'      => 'models.portfolio-website.banner.store',
-                        'arguments' => [
-                            'portfolioWebsite'      => $portfolioWebsite->slug,
-                        ]
-                    ],
+                        match (class_basename($parent)) {
+                            'Tenant' => [
+                                'name' => 'models.banner.store',
+                            ],
+                            default => [
+                                'name'      => 'models.portfolio-website.banner.store',
+                                'arguments' => [
+                                    'portfolioWebsite' => $parent->slug,
+                                ]
+                            ],
+                        }
 
 
                 ],
@@ -101,13 +135,22 @@ class CreateBanner extends InertiaAction
     }
 
 
-    public function getBreadcrumbs($routeParameters): array
+    public function getBreadcrumbs(string $routeName, array $routeParameters): array
     {
         return array_merge(
-            IndexBanners::make()->getBreadcrumbs(
-                'portfolio.websites.show.banners.index',
-                $routeParameters
-            ),
+
+            match ($routeName) {
+                'portfolio.banners.create' => IndexBanners::make()->getBreadcrumbs(
+                    'portfolio.banners.index',
+                    $routeParameters
+                ),
+                default => IndexBanners::make()->getBreadcrumbs(
+                    'portfolio.websites.show.banners.index',
+                    $routeParameters
+                )
+            },
+
+
             [
                 [
                     'type'          => 'creatingModel',

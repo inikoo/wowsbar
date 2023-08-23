@@ -126,13 +126,13 @@ const getActionIcon = (action) => {
                     {{ action.final }}
 
                     <!-- Button -->
-
                     <Link v-if="action.type === 'button'"
                         :href="route(action['route']['name'], action['route']['parameters'])"
                         :method="action.method ?? 'get'"
                         :data="action.method !== 'get' ? dataToSubmit : null"
                         as="button"
                     >
+
                         <Button size="xs"
                             :style="action.style"
                             :id="getActionLabel(action).replace(' ', '-')"

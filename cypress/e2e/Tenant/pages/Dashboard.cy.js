@@ -1,7 +1,6 @@
 
 import data from '@/../../cypress/fixtures/example.json'
 /// <reference types="cypress" />
-console.log(data)
 // Welcome to Cypress!
 //
 // This spec file contains a variety of sample tests

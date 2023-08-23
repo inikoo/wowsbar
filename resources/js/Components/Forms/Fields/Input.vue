@@ -27,7 +27,6 @@ const props = defineProps<{
 }>();
 
 const emits = defineEmits();
-console.log('props',props)
 const copyText = (text: string) => {
   const textarea = document.createElement("textarea");
   textarea.value = text;

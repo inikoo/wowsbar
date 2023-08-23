@@ -17,6 +17,7 @@ use App\Models\Portfolio\PortfolioWebsite;
 use App\Models\Tenancy\Tenant;
 use Illuminate\Console\Command;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -28,14 +29,16 @@ class StoreBanner
     use WithAttributes;
 
 
-    private bool $asAction                          = false;
-    private PortfolioWebsite|null $portfolioWebsite = null;
+    private bool $asAction = false;
+
+    private Tenant|PortfolioWebsite $parent;
 
 
-    public function handle(PortfolioWebsite $portfolioWebsite, array $modelData): Banner
+    public function handle(Tenant|PortfolioWebsite $parent, array $modelData): Banner
     {
-        $this->portfolioWebsite = $portfolioWebsite;
-        $layout                 = [
+        $this->parent = $parent;
+
+        $layout = [
             "delay"      => 5000,
             "common"     => [
                 "corners"      => [
@@ -56,8 +59,12 @@ class StoreBanner
 
         data_set($modelData, 'tenant_id', app('currentTenant')->id);
         data_set($modelData, 'layout', $layout);
-        data_set($modelData, 'data.website_slug', $portfolioWebsite->slug);
+        data_set($modelData, 'data.website_slug', $parent->slug);
         data_set($modelData, 'ulid', Str::ulid());
+        if (class_basename($parent) == 'PortfolioWebsite') {
+            data_set($modelData, 'portfolio_website_id', $parent->id);
+
+        }
 
         /** @var Banner $banner */
         $banner = Banner::create($modelData);
@@ -69,13 +76,18 @@ class StoreBanner
                 );
             }
         }
-        $portfolioWebsite->banners()->attach(
-            $banner->id,
-            [
-                'tenant_id' => app('currentTenant')->id,
-                'ulid'      => Str::ulid()
-            ]
-        );
+
+        if (class_basename($parent) == 'PortfolioWebsite') {
+            $parent->banners()->attach(
+                $banner->id,
+                [
+                    'tenant_id' => app('currentTenant')->id,
+                    'ulid'      => Str::ulid()
+                ]
+            );
+
+        }
+
 
         TenantHydrateBanners::dispatch(app('currentTenant'));
         BannerHydrateUniversalSearch::dispatch($banner);
@@ -96,9 +108,27 @@ class StoreBanner
     public function rules(): array
     {
         return [
-            'code' => ['required', 'unique:tenant.banners', 'max:8'],
-            'name' => ['required']
+            'portfolio_website_id' => ['sometimes', 'nullable', 'exists:tenant.portfolio_websites,id'],
+            'code'                 => ['required', 'unique:tenant.banners', 'max:8'],
+            'name'                 => ['required']
         ];
+    }
+
+
+    public function inTenant(ActionRequest $request): Banner
+    {
+        //dd( $request->input());
+
+        $parent = app('currentTenant');
+        $request->validate();
+
+        $validatedData=$request->validated();
+
+        if($portfolioWebsiteId=Arr::get($validatedData,'portfolio_website_id')){
+            $parent=PortfolioWebsite::find($portfolioWebsiteId);
+        }
+
+        return $this->handle($parent, $request->validated());
     }
 
     public function inPortfolioWebsite(PortfolioWebsite $portfolioWebsite, ActionRequest $request): Banner
@@ -133,8 +163,9 @@ class StoreBanner
         $this->asAction = true;
         $this->setRawAttributes(
             [
-                'code' => $command->argument('code'),
-                'name' => $command->argument('name')
+                'code'                 => $command->argument('code'),
+                'name'                 => $command->argument('name'),
+                'portfolio_website_id' => $portfolioWebsite->id
             ]
         );
         $validatedData = $this->validateAttributes();
@@ -144,22 +175,23 @@ class StoreBanner
         $command->info("Done! Content block $banner->code created 🎉");
     }
 
-    public function htmlResponse(Banner $banner, ActionRequest $request): RedirectResponse
+    public function htmlResponse(Banner $banner): RedirectResponse
     {
-
-
-        return match ($request->route()->getName()) {
-            'models.portfolio-website.banner.store' => redirect()->route(
+        if (class_basename($this->parent) == 'PortfolioWebsite') {
+            return redirect()->route(
                 'portfolio.websites.show.banners.workshop',
                 [
-                    $this->portfolioWebsite->slug,
+                    $this->parent->slug,
                     $banner->slug
                 ]
-            ),
-            default => redirect()->route(
-                'portfolio.websites.show.banners.index',
-                $this->portfolioWebsite->slug,
-            ),
-        };
+            );
+        }
+
+        return redirect()->route(
+            'portfolio.banners.workshop',
+            [
+                $banner->slug
+            ]
+        );
     }
 }
