@@ -7,6 +7,7 @@
 
 namespace App\Actions\UI\Tenant\Dashboard;
 
+use App\Actions\Tenant\Portfolio\Banner\UI\GetLastEditedBanner;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -22,7 +23,7 @@ class ShowDashboard
             [
                 'title'       => __('dashboard'),
                 'breadcrumbs' => $this->getBreadcrumbs(__('dashboard')),
-               // 'banners' => GetLastEditedBanner::run(app('currentTenant'))
+                'banners' => GetLastEditedBanner::run(app('currentTenant'))
             ]
         );
     }
