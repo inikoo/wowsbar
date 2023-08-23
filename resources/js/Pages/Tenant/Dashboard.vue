@@ -44,12 +44,14 @@ console.log(props.banners.data)
         <div v-if="banners" class="max-w-2xl lg:mx-0 lg:max-w-none">
             <div class="flex items-center justify-between">
                 <h2 class="text-base text-gray-700">{{ trans('Recently edited banner') }}</h2>
-                <!-- <a href="#" class="text-sm font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+                &lt;!&ndash; <a href="#" class="text-sm font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
                     View all<span class="sr-only">, banner</span>
-                </a> -->
+                </a> &ndash;&gt;
             </div>
 
-            <!-- Looping: Last Edited Banners -->
+            &lt;!&ndash; Looping: Last Edited Banners &ndash;&gt;
+
+
             <ul  role="list" class="mt-3 grid grid-cols-1 gap-x-6 gap-y-8 lg:grid-cols-3 xl:gap-x-8">
                 <Link :href="`route(lastEditedBanner.route?.name, lastEditedBanner.route?.parameters)`" v-for="lastEditedBanner in banners.data" :key="lastEditedBanner.id" class="overflow-hidden rounded-md ring-1 ring-gray-300 transition-all duration-200 ease-in-out hover:ring-2 hover:ring-gray-400">
                     <div class="flex items-center gap-x-4 border-b border-gray-700/5 bg-gray-200">
@@ -57,7 +59,7 @@ console.log(props.banners.data)
                     </div>
                     <dl class="divide-y divide-transparent px-4 py-3 text-sm">
                         <div class="flex justify-between items-center gap-x-4">
-                            <!-- <dt class="text-gray-500 text-sm">{{ trans('Name') }}</dt> -->
+                            &lt;!&ndash; <dt class="text-gray-500 text-sm">{{ trans('Name') }}</dt> &ndash;&gt;
                             <dd class="flex items-start gap-x-2">
                                 <div class="text-lg font-semibold text-gray-600">{{ lastEditedBanner?.name }}</div>
                             </dd>
@@ -73,6 +75,7 @@ console.log(props.banners.data)
                 </Link>
             </ul>
         </div>
-    </div>
+    </div>-->
+
 
 </template>
