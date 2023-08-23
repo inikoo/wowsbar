@@ -11,6 +11,7 @@ use App\Actions\Tenancy\Tenant\UpdateSystemSettings;
 use App\Actions\Tenant\Auth\User\UpdateUser;
 use App\Actions\Tenant\Portfolio\Banner\DeleteBanner;
 use App\Actions\Tenant\Portfolio\Banner\StoreBanner;
+use App\Actions\Tenant\Portfolio\Banner\StoreBannerFromGallery;
 use App\Actions\Tenant\Portfolio\Banner\UpdateBanner;
 use App\Actions\Tenant\Portfolio\Banner\UpdateBannerState;
 use App\Actions\Tenant\Portfolio\Gallery\UpdateUploadedImage;
@@ -22,7 +23,10 @@ use App\Actions\UI\Tenant\Profile\UpdateProfile;
 Route::post('/portfolio-website/', StorePortfolioWebsite::class)->name('portfolio-website.store');
 Route::patch('/portfolio-website/{portfolioWebsite}', UpdatePortfolioWebsite::class)->name('portfolio-website.update');
 Route::delete('/portfolio-website/{portfolioWebsite}', DeletePortfolioWebsite::class)->name('portfolio-website.delete');
+
 Route::post('/portfolio-website/{portfolioWebsite}/banners', [StoreBanner::class, 'inPortfolioWebsite'])->name('portfolio-website.banner.store');
+Route::post('/portfolio-website/{portfolioWebsite}/banners/gallery', [StoreBannerFromGallery::class, 'inPortfolioWebsite'])->name('portfolio-website.banner.gallery.store');
+
 Route::patch('/banner/{banner}', UpdateBanner::class)->name('banner.update');
 Route::patch('/banner/{banner}/state/{state}', UpdateBannerState::class)->name('banner.update-state');
 Route::delete('/banner/{banner}', DeleteBanner::class)->name('content-block.delete');

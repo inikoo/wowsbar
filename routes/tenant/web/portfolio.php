@@ -36,7 +36,7 @@ Route::get('/dashboard', [
 ])->name('dashboard');
 
 Route::get('/websites', [
-    'uses'=>IndexPortfolioWebsites::class,
+    'uses'  => IndexPortfolioWebsites::class,
     'icon'  => 'globe',
     'label' => 'websites'
 ])->name('websites.index');
