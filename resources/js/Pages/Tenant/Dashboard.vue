@@ -44,12 +44,12 @@ console.log(props.banners.data)
         <div v-if="banners" class="max-w-2xl lg:mx-0 lg:max-w-none">
             <div class="flex items-center justify-between">
                 <h2 class="text-base text-gray-700">{{ trans('Recently edited banner') }}</h2>
-                &lt;!&ndash; <a href="#" class="text-sm font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+                <!-- <a href="#" class="text-sm font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
                     View all<span class="sr-only">, banner</span>
-                </a> &ndash;&gt;
+                </a> -->
             </div>
 
-            &lt;!&ndash; Looping: Last Edited Banners &ndash;&gt;
+            <!-- Looping: Last Edited Banners -->
 
 
             <ul  role="list" class="mt-3 grid grid-cols-1 gap-x-6 gap-y-8 lg:grid-cols-3 xl:gap-x-8">
@@ -59,7 +59,7 @@ console.log(props.banners.data)
                     </div>
                     <dl class="divide-y divide-transparent px-4 py-3 text-sm">
                         <div class="flex justify-between items-center gap-x-4">
-                            &lt;!&ndash; <dt class="text-gray-500 text-sm">{{ trans('Name') }}</dt> &ndash;&gt;
+                            <!-- <dt class="text-gray-500 text-sm">{{ trans('Name') }}</dt> -->
                             <dd class="flex items-start gap-x-2">
                                 <div class="text-lg font-semibold text-gray-600">{{ lastEditedBanner?.name }}</div>
                             </dd>
@@ -75,7 +75,7 @@ console.log(props.banners.data)
                 </Link>
             </ul>
         </div>
-    </div>-->
+    </div>
 
 
 </template>
