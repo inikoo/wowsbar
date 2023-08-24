@@ -21,15 +21,11 @@ class StoreSlide
     public function handle(Banner $banner, array $modelData): Slide
     {
 
-        $imageData=Arr::pull($modelData, 'imageData');
 
         data_fill($modelData, 'ulid', Str::ulid());
         /** @var Slide $slide */
         $slide= $banner->slides()->create($modelData);
 
-        if($imageData) {
-            AttachImageToSlide::run($slide, $imageData);
-        }
         return $slide;
     }
 
