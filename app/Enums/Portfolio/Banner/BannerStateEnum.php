@@ -14,16 +14,15 @@ enum BannerStateEnum: string
     use EnumHelperTrait;
 
     case UNPUBLISHED = 'unpublished';
-    case LIVE        = 'live';
-    case RETIRED     = 'retired';
+    case LIVE = 'live';
+    case RETIRED = 'retired';
 
     public static function labels(): array
     {
         return [
-            'in-process' => __('In process'),
-            'ready'      => __('Ready'),
-            'live'       => __('Live'),
-            'retired'    => __('Retired'),
+            'unpublished' => __('In process'),
+            'live'        => __('Live'),
+            'retired'     => __('Retired'),
 
         ];
     }
@@ -33,10 +32,9 @@ enum BannerStateEnum: string
         $stats = app('currentTenant')->portfolioStats;
 
         return [
-            'in-process' => $stats->number_banners_state_in_process,
-            'ready'      => $stats->number_banners_state_ready,
-            'live'       => $stats->number_banners_state_live,
-            'retired'    => $stats->number_banners_state_retired,
+            'unpublished' => $stats->number_banners_state_unpublished,
+            'live'        => $stats->number_banners_state_live,
+            'retired'     => $stats->number_banners_state_retired,
         ];
     }
 
