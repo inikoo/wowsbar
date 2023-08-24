@@ -1,7 +1,8 @@
-import { getAuth, signInWithCustomToken } from "firebase/auth"
+import { getAuth, signInWithCustomToken, signOut } from "firebase/auth"
 
-const auth = getAuth();
+const auth = getAuth()
 
+// Sign in
 export const useAuthFirebase = (tokenBackend: string) => {
     signInWithCustomToken(auth, tokenBackend)
         .then((userCredential) => {
@@ -16,4 +17,13 @@ export const useAuthFirebase = (tokenBackend: string) => {
 
             // ...
     });
+}
+
+// Sign out
+export const useSignoutFirebase = () => {
+    signOut(auth).then(() => {
+        console.log("Logged out from Firebase")
+    }).catch((error) => {
+        console.error(error.message)
+    })
 }
