@@ -1,7 +1,6 @@
 // Used for OrgApp, PublicApp, TenantApp
 import { useLayoutStore } from "@/Stores/layout"
 import { useLocaleStore } from "@/Stores/locale"
-import { useFirebaseStore } from "@/Stores/firebase"
 import { usePage } from "@inertiajs/vue3"
 import { loadLanguageAsync } from "laravel-vue-i18n"
 import { watchEffect } from "vue"
@@ -27,7 +26,6 @@ export const authFirebase = (tokenBackend) => {
 export const initialiseApp = () => {
     const layout = useLayoutStore()
     const locale = useLocaleStore()
-    const firebaseStore = useFirebaseStore()
 
     if (usePage().props.localeData) {
         loadLanguageAsync(usePage().props.localeData.language.code)

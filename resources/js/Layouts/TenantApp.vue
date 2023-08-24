@@ -18,7 +18,6 @@ import AppTopBar from "@/Layouts/TopBar/AppTopBar.vue"
 import Breadcrumbs from "@/Components/Navigation/Breadcrumbs.vue"
 
 import { library } from "@fortawesome/fontawesome-svg-core"
-import { useFirebaseStore } from "@/Stores/firebase"
 
 import { initialiseApp, authFirebase } from "@/Composables/initialiseApp"
 
