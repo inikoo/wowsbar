@@ -29,6 +29,7 @@ return new class () extends Migration {
             $table->dateTimeTz('retired_at')->nullable();
             $table->jsonb('layout');
             $table->jsonb('data');
+            $table->string('checksum')->index()->nullable();
             $table->timestampsTz();
             $table->softDeletesTz();
             $table->unique(['tenant_id','slug']);

@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 import { library } from '@fortawesome/fontawesome-svg-core'
-
+import Input from '@/Components/Forms/Fields/Input.vue';
 import Slider from "@/Components/Slider/Slider.vue"
 
 
@@ -17,7 +17,7 @@ library.add(faWindowMaximize, faGlobe)
 
 const props = defineProps<{
     data: {
-        layout: {
+        banner: {
             parameters: {}
             data: {
                 delay: number,
@@ -32,17 +32,32 @@ const props = defineProps<{
                     }
                 ]
             }
-        }
+        },
+        url: String
     }
     tab?: string
+    pageHead: Object
 }>()
 
-console.log()
+console.log(props)
+
+
 </script>
 
 
 <template>
-    <Slider v-if="data.components.length" :data="data" />
-    <EmptyState v-else /> <!-- If slide is not exist -->
+    <Slider v-if="data.banner.components.length" :data="data.banner" />
+    <EmptyState v-else :data="{
+        title: 'You don\'t have slides to show',
+        description: 'Create new slides in the workshop to get started',
+        action: {
+            label: 'Workshop',
+            route: props.pageHead.route,
+            tooltip: 'Workshop'
+        }
+    }" />
+    <div :class="['p-2.5', !data.banner.components.length ?  'flex justify-center' : '' ]">
+        <Input :fieldData="{ copyButton: true, readonly: true }" fieldName='url' :form="{ url: data.url }" />
+    </div>
 </template>
 

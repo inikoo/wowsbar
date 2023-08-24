@@ -5,10 +5,11 @@
   -->
 
 <script setup lang="ts">
-import { Link } from "@inertiajs/vue3"
+import { Link, router } from "@inertiajs/vue3"
 import { useLayoutStore } from "@/Stores/layout"
 import AppTopBarNavs from "@/Layouts/TopBar/AppTopBarNavs.vue"
 import { ref, onMounted } from "vue"
+import { useSignoutFirebase } from "@/Composables/firebaseAuth"
 
 import {
     Menu,
@@ -22,9 +23,9 @@ import Button from "@/Components/Elements/Buttons/Button.vue"
 import SearchBar from "@/Components/SearchBar.vue"
 import { trans } from "laravel-vue-i18n"
 import { useAppearanceStore } from "@/Stores/appearance"
-import Image from "@/Components/Image.vue";
+import Image from "@/Components/Image.vue"
 
-defineProps<{
+const props = defineProps<{
     sidebarOpen: boolean
     logoRoute: string
     urlPrefix: string
@@ -65,6 +66,12 @@ const changeColorMode = (mode: boolean | string) => {
 onMounted(() => {
     useAppearanceStore().darkMode ? document.documentElement.classList.add('dark') : ''
 })
+
+const logoutAuth = () => {
+    // Signout from app and Firebase
+    router.post(route(props.urlPrefix + 'logout'))
+    useSignoutFirebase()
+}
 
 </script>
 
@@ -146,10 +153,11 @@ onMounted(() => {
 
                                     <div class="py-1">
                                         <MenuItem v-slot="{ active }">
-                                            <Link as="ul" type="button" method="post" :href="route(urlPrefix+'logout')"
-                                                :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm cursor-pointer']">
+                                            <div @click="logoutAuth()"
+                                                :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm cursor-pointer']"
+                                            >
                                                 {{ trans('Logout') }}
-                                            </Link>
+                                            </div>
                                         </MenuItem>
                                     </div>
                                 </MenuItems>

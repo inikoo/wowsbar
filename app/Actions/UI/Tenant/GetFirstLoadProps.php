@@ -8,14 +8,13 @@
 namespace App\Actions\UI\Tenant;
 
 use App\Actions\Assets\Language\UI\GetLanguagesOptions;
-use App\Actions\Firebase\ChangeRulesFirebase;
 use App\Actions\Helpers\Images\GetPictureSources;
 use App\Helpers\ImgProxy\Image;
 use App\Http\Resources\Assets\LanguageResource;
 use App\Models\Assets\Language;
 use App\Models\Auth\User;
-use Cache;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
 use Lorisleiva\Actions\Concerns\AsObject;
 
@@ -37,26 +36,6 @@ class GetFirstLoadProps
             $language = Language::where('code', 'en')->first();
         }
 
-        $auth = app('firebase.auth');
-        $tenant = app('currentTenant');
-
-        if($user) {
-            $customTokenFirebasePrefix = $tenant->slug;
-            $cache                     = Cache::get($customTokenFirebasePrefix);
-
-//            ChangeRulesFirebase::run(app('currentTenant'));
-
-            if(blank($cache)) {
-                $customToken = $auth
-                    ->createCustomToken($tenant->slug, [
-                        'tenant' => $tenant->slug
-                    ]);
-
-                $auth->signInWithCustomToken($customToken);
-
-                Cache::put($customTokenFirebasePrefix, $customToken->toString(), 3600);
-            }
-        }
 
         return [
             'tenant'     => app('currentTenant') ? app('currentTenant')->only('name', 'code', 'logo_id','slug') : null,
@@ -83,11 +62,11 @@ class GetFirstLoadProps
                     ];
                 }
             },
-            'firebase' => [
-                'auth_token'  => $cache ?? null,
-                'credential'  => File::get(base_path(config('firebase.projects.app.credentials.file'))),
-                'databaseURL' => config('firebase.projects.app.database.url')
-            ]
+
+            'firebaseAuthToken'  => $user?Cache::get('auth_tenants_firebase_token_'.$user->id):null,
+
+
+
         ];
     }
 }
