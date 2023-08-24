@@ -70,7 +70,8 @@ class StoreBannerFromGallery
         $banner = Banner::create(\Arr::except($modelData, ['images']));
         foreach ($modelData['images'] as $image) {
             data_set($modelData, 'image_id', $image);
-            $banner->slides()->create(\Arr::except($modelData, ['images', 'ulid', 'layout', 'data', 'code', 'name']));
+            data_set($modelData, 'ulid', Str::ulid());
+            $banner->slides()->create(\Arr::except($modelData, ['images', 'layout', 'data', 'code', 'name']));
         }
 
         if(class_basename($parent) == 'PortfolioWebsite') {
