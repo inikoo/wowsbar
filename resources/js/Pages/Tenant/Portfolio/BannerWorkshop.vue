@@ -188,4 +188,5 @@ onBeforeUnmount(() => {
             <SlidesWorkshopAddMode :data="data" :imagesUploadRoute="imagesUploadRoute" />
         </div>
     </div>
+  <div @click="()=>{console.log(data)}">show add</div>
 </template>
