@@ -136,7 +136,7 @@ watch(() => props.jumpToIndex, (newVal) => {
                 <FontAwesomeIcon v-if="!!component?.layout?.link" icon='far fa-external-link' class='text-gray-300/50 text-xl absolute top-2 right-2' aria-hidden='true' />
                 <Link v-if="!!component?.layout?.link" :href="component?.layout?.link" class="absolute bg-transparent w-full h-full" />
                 <SlideCorner v-for="(slideCorner, position) in filteredNulls(component?.layout?.corners)" :position="position" :corner="slideCorner" :commonCorner="data.common.corners" />
-                
+
                 <!-- CentralStage: common.centralStage (prioritize) and layout.centralstage -->
                 <CentralStage v-if="data.common?.centralStage?.title?.length > 0 || data.common?.centralStage?.subtitle?.length > 0" :data="data.common?.centralStage" />
                 <CentralStage v-else="component?.layout?.centralStage" :data="component?.layout?.centralStage" />

@@ -8,11 +8,11 @@
 
 namespace App\Resolvers;
 
+use App\Models\Tenancy\Tenant;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Cookie;
 use Spatie\Multitenancy\Models\Concerns\UsesTenantModel;
-use Spatie\Multitenancy\Models\Tenant;
 use Spatie\Multitenancy\TenantFinder\TenantFinder;
 
 class TenantResolver extends TenantFinder
@@ -25,18 +25,11 @@ class TenantResolver extends TenantFinder
         if ($subdomain=='www') {
             return null;
         }
-        if ($subdomain=='app') {
-            if ($request->hasCookie('tenant')) {
-                $tenant = $this->getTenantModel()->find(decrypt($request->cookie('tenant')));
+        if ($subdomain=='assets') {
 
-                if (!empty($tenant)) {
-                    return $tenant;
-                }
-                Cookie::forget('tenant');
-            }
             return null;
         }
 
-        return $this->getTenantModel()->where('slug', $subdomain)->first();
+        return  Tenant::where('slug', $subdomain)->first();
     }
 }
