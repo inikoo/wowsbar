@@ -69,7 +69,7 @@ onMounted(() => {
 
 const logoutAuth = () => {
     // Signout from app and Firebase
-    router.post(props.urlPrefix + 'logout')
+    router.post(route(props.urlPrefix + 'logout'))
     useSignoutFirebase()
 }
 
