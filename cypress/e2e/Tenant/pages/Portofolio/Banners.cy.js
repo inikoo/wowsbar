@@ -3,6 +3,7 @@ import data from "@/../../cypress/fixtures/example.json";
 import BannerShowcase from "@/../../cypress/e2e/Tenant/pages/Portofolio/BannerShowcase.cy";
 const code = faker.random.words({ min: 1, max: 1 });
 const fakeName = faker.commerce.productName();
+const domain = faker.internet.url()
 /// <reference types="cypress" />
 
 const Banner = (id = "hello") => {
@@ -19,12 +20,12 @@ const Banner = (id = "hello") => {
             cy.url().should("include", `/websites/${id}/edit`);
             cy.go('back')
             cy.go('forward')
-            cy.get('#domain').clear();
-            cy.get('button[type="submit"]').not('[disabled]').click();
+            cy.get('#domain').type(domain);
+            cy.get('button[type="submit"]').not('[disabled]').click({ multiple: true });
             cy.get('#code').type(faker.random.words({ min: 1, max: 1 }))
-            cy.get('button[type="submit"]').not('[disabled]').click();
+            cy.get('button[type="submit"]').not('[disabled]').click({ multiple: true });
             cy.get('#name').type(fakeName)
-            cy.get('button[type="submit"]').not('[disabled]').click();
+            cy.get('button[type="submit"]').not('[disabled]').click({ multiple: true });
         });
         
 

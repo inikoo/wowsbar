@@ -120,7 +120,7 @@ const getActionIcon = (action) => {
         </div>
 
         <!-- To replace the Button, call template in Parent -->
-        <slot name="button">
+        <slot name="button" :dataPageHead="{...props, getActionLabel, getActionIcon }">
             <div class="flex items-center gap-2">
                 <span v-for="action in data.actions">
                     {{ action.final }}
@@ -162,7 +162,7 @@ const getActionIcon = (action) => {
                         </Link>
                     </div>
 
-                    <slot v-if="action.type === 'modal'" name="modal" :data="action" />
+                    <slot v-if="action.type === 'modal'" name="modal" :data="{...props, getActionLabel, getActionIcon }" />
                 </span>
             </div>
         </slot>

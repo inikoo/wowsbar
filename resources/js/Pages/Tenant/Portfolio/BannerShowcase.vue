@@ -39,9 +39,6 @@ const props = defineProps<{
     pageHead: Object
 }>()
 
-console.log(props)
-
-
 </script>
 
 
