@@ -7,6 +7,7 @@
 
 namespace App\Models\Organisation\Web;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\Multitenancy\Models\Concerns\UsesTenantConnection;
@@ -20,14 +21,14 @@ use Spatie\Multitenancy\Models\Concerns\UsesTenantConnection;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Organisation\Web\Website $website
- * @method static \Illuminate\Database\Eloquent\Builder|WebsiteStats newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|WebsiteStats newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|WebsiteStats query()
- * @method static \Illuminate\Database\Eloquent\Builder|WebsiteStats whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|WebsiteStats whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|WebsiteStats whereNumberWebpages($value)
- * @method static \Illuminate\Database\Eloquent\Builder|WebsiteStats whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|WebsiteStats whereWebsiteId($value)
+ * @method static Builder|WebsiteStats newModelQuery()
+ * @method static Builder|WebsiteStats newQuery()
+ * @method static Builder|WebsiteStats query()
+ * @method static Builder|WebsiteStats whereCreatedAt($value)
+ * @method static Builder|WebsiteStats whereId($value)
+ * @method static Builder|WebsiteStats whereNumberWebpages($value)
+ * @method static Builder|WebsiteStats whereUpdatedAt($value)
+ * @method static Builder|WebsiteStats whereWebsiteId($value)
  * @mixin \Eloquent
  */
 class WebsiteStats extends Model

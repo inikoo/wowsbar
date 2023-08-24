@@ -11,7 +11,6 @@ namespace App\Resolvers;
 use App\Models\Tenancy\Tenant;
 use Illuminate\Http\Request;
 
-use Illuminate\Support\Facades\Cookie;
 use Spatie\Multitenancy\Models\Concerns\UsesTenantModel;
 use Spatie\Multitenancy\TenantFinder\TenantFinder;
 

@@ -195,7 +195,7 @@ return [
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
 
-    'domain'                 => env('APP_DOMAIN'),
-    'universal_search_index' => env('APP_NAME', 'wowsbar').(env('APP_ENV') == 'testing' ? '_testing' : env('APP_ENV')).'_search',
+    'domain'                              => env('APP_DOMAIN'),
+    'universal_search_index'              => env('APP_NAME', 'wowsbar').(env('APP_ENV') == 'testing' ? '_testing' : env('APP_ENV')).'_search',
     'organisation_universal_search_index' => 'organisation_' . env('APP_NAME', 'wowsbar').(env('APP_ENV') == 'testing' ? '_testing' : env('APP_ENV')).'_search',
 ];

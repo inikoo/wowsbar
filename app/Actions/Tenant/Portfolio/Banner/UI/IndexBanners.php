@@ -217,7 +217,7 @@ class IndexBanners extends InertiaAction
                         'title' => __('banner'),
                         'icon'  => 'fal fa-window-maximize'
                     ],
-                    'actions'   =>[
+                    'actions'   => [
                         match (app('currentTenant')->stats->number_websites) {
                             1 => [
                                 'type'  => 'button',

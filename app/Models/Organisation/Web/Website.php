@@ -11,7 +11,6 @@ use App\Enums\Organisation\Website\Website\WebsiteEngineEnum;
 use App\Enums\Organisation\Website\Website\WebsiteStateEnum;
 use App\Models\Traits\HasHistory;
 use App\Models\Traits\HasOrganisationUniversalSearch;
-use App\Models\Traits\HasUniversalSearch;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -43,7 +42,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \OwenIt\Auditing\Models\Audit> $audits
  * @property-read int|null $audits_count
  * @property-read array $es_audits
- * @property-read \App\Models\Search\UniversalSearch|null $universalSearch
+ * @property-read \App\Models\Search\OrganisationUniversalSearch|null $universalSearch
  * @property-read \App\Models\Organisation\Web\WebsiteStats|null $webStats
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Organisation\Web\Webpage> $webpages
  * @property-read int|null $webpages_count

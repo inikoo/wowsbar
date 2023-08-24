@@ -26,27 +26,27 @@ class IndexOrganisationUsers extends InertiaAction
 {
     protected function getElementGroups(): array
     {
-       return
-            [
-                'status' => [
-                    'label'    => __('Status'),
-                    'elements' => [
-                        'active'    =>
-                            [
-                                __('Active'),
-                                organisation()->stats->number_organisation_users_status_active
-                            ],
-                        'suspended' => [
-                            __('Suspended'),
-                            organisation()->stats->number_organisation_users_status_inactive
-                        ]
-                    ],
-                    'engine'   => function ($query, $elements) {
-                        $query->where('status', array_pop($elements) === 'active');
-                    }
+        return
+             [
+                 'status' => [
+                     'label'    => __('Status'),
+                     'elements' => [
+                         'active'    =>
+                             [
+                                 __('Active'),
+                                 organisation()->stats->number_organisation_users_status_active
+                             ],
+                         'suspended' => [
+                             __('Suspended'),
+                             organisation()->stats->number_organisation_users_status_inactive
+                         ]
+                     ],
+                     'engine'   => function ($query, $elements) {
+                         $query->where('status', array_pop($elements) === 'active');
+                     }
 
-                ]
-            ];
+                 ]
+             ];
     }
 
 
@@ -171,7 +171,7 @@ class IndexOrganisationUsers extends InertiaAction
             )
         )
             //  ->table(IndexUserRequestLogs::make()->tableStructure())
-            ;
+        ;
     }
 
     public function asController(ActionRequest $request): LengthAwarePaginator

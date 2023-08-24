@@ -27,7 +27,7 @@ class StoreBannerFromGallery
     use WithAttributes;
 
 
-    private bool $asAction = false;
+    private bool $asAction                          = false;
     private PortfolioWebsite|null $portfolioWebsite = null;
 
 
@@ -38,7 +38,7 @@ class StoreBannerFromGallery
         }
 
         $layout = [
-            "delay" => 5000,
+            "delay"  => 5000,
             "common" => [
                 "corners" => [
                     "bottomLeft" => [
@@ -46,9 +46,9 @@ class StoreBannerFromGallery
                     ]
                 ],
                 "centralStage" => [
-                    "title" => null,
+                    "title"    => null,
                     "subtitle" => null,
-                    "text" => null
+                    "text"     => null
                 ]
             ],
             "components" => [
@@ -79,7 +79,7 @@ class StoreBannerFromGallery
                 $banner->id,
                 [
                     'tenant_id' => app('currentTenant')->id,
-                    'ulid' => Str::ulid()
+                    'ulid'      => Str::ulid()
                 ]
             );
         }
@@ -132,7 +132,7 @@ class StoreBannerFromGallery
         $this->asAction = true;
         $this->setRawAttributes(
             [
-                'name'  => $command->argument('name'),
+                'name'   => $command->argument('name'),
                 'images' => [$command->argument('images')]
             ]
         );

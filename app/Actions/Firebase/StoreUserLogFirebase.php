@@ -17,7 +17,7 @@ class StoreUserLogFirebase
     use AsObject;
     use AsAction;
 
-    public function handle(User|OrganisationUser $user, string $parentTpe, ?string $parentSlug,bool $loggedIn, ?array $route): void
+    public function handle(User|OrganisationUser $user, string $parentTpe, ?string $parentSlug, bool $loggedIn, ?array $route): void
     {
         $database = app('firebase.database');
         $path     = match ($parentTpe) {
@@ -33,10 +33,10 @@ class StoreUserLogFirebase
         $reference = $database->getReference($path);
 
         $data=[
-            'loggedIn'=>$loggedIn,
+            'loggedIn'    => $loggedIn,
             'last_active' => now(),
         ];
-        if($route){
+        if($route) {
             $data['route']=$route;
         }
 

@@ -7,7 +7,6 @@
 
 namespace App\Actions\Tenancy\Tenant\Hydrators;
 
-use App\Enums\Portfolio\Banner\BannerStateEnum;
 use App\Enums\Portfolio\Snapshot\SnapshotStateEnum;
 use App\Models\Tenancy\Tenant;
 use Illuminate\Contracts\Queue\ShouldBeUnique;

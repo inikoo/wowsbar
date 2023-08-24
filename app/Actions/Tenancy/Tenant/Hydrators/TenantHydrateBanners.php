@@ -22,7 +22,7 @@ class TenantHydrateBanners implements ShouldBeUnique
     public function handle(Tenant $tenant): void
     {
         $stats = [
-            'number_banners' => $tenant->banners()->count(),
+            'number_banners'            => $tenant->banners()->count(),
             'number_historic_snapshots' => $tenant->snapshots()->where('state', SnapshotStateEnum::HISTORIC)->count()
         ];
 

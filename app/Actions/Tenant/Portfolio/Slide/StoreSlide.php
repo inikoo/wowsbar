@@ -9,7 +9,6 @@ namespace App\Actions\Tenant\Portfolio\Slide;
 
 use App\Models\Portfolio\Banner;
 use App\Models\Portfolio\Slide;
-use Arr;
 use Illuminate\Support\Str;
 use Lorisleiva\Actions\Concerns\AsAction;
 
