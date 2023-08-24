@@ -15,14 +15,12 @@ trait HasPortfolioStats
 {
     public function portfolioStats(Blueprint $table): Blueprint
     {
-
-
         $table->unsignedSmallInteger('number_banners')->default(0);
+        $table->unsignedSmallInteger('number_historic_snapshots')->default(0);
 
         foreach (BannerStateEnum::cases() as $state) {
             $table->unsignedSmallInteger('number_banners_state_' . Str::replace('-', '_', $state->snake()))->default(0);
         }
-
 
         return $table;
     }

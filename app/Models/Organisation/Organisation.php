@@ -37,6 +37,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \App\Models\Media\Media> $media
  * @property-read int|null $media_count
  * @property-read \App\Models\Organisation\OrganisationStats|null $stats
+ * @property-read \App\Models\Search\OrganisationUniversalSearch|null $universalSearch
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Organisation\OrganisationUser> $users
  * @property-read int|null $users_count
  * @property-read Website|null $website

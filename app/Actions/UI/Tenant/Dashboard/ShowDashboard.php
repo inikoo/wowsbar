@@ -23,7 +23,7 @@ class ShowDashboard
             [
                 'title'       => __('dashboard'),
                 'breadcrumbs' => $this->getBreadcrumbs(__('dashboard')),
-                'banners' => GetLastEditedBanner::run(app('currentTenant'))
+                'banners'     => GetLastEditedBanner::run(app('currentTenant'))
             ]
         );
     }

@@ -29,7 +29,7 @@ class UpdateBanner
     public function handle(Banner $banner, array $modelData): Banner
     {
         if (Arr::has($modelData, 'layout')) {
-            $layout = Arr::pull($modelData, 'layout');
+            $layout                = Arr::pull($modelData, 'layout');
             list($layout, $slides) = ParseBannerLayout::run($layout);
             data_set($modelData, 'layout', $layout);
 

@@ -9,7 +9,7 @@ import { Link } from "@inertiajs/vue3"
 
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { faDraftingCompass,faEmptySet, faMoneyCheckAlt, faPeopleArrows, faSlidersH, faSave, faSuitcase} from "@/../private/pro-light-svg-icons"
-import { faPencil, faArrowLeft, faBorderAll, faTrashAlt } from "@/../private/pro-regular-svg-icons"
+import { faRocketLaunch, faPencil, faArrowLeft, faBorderAll, faTrashAlt } from "@/../private/pro-regular-svg-icons"
 import { faPlus } from "@/../private/pro-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 
@@ -19,7 +19,7 @@ import { useLocaleStore } from "@/Stores/locale.js"
 import { trans } from "laravel-vue-i18n"
 
 
-library.add(faDraftingCompass,faEmptySet, faMoneyCheckAlt, faPeopleArrows, faSlidersH, faPlus, faPencil, faArrowLeft, faBorderAll, faTrashAlt,faSave, faSuitcase);
+library.add(faRocketLaunch,faDraftingCompass,faEmptySet, faMoneyCheckAlt, faPeopleArrows, faSlidersH, faPlus, faPencil, faArrowLeft, faBorderAll, faTrashAlt,faSave, faSuitcase);
 const props = defineProps(["data", "dataToSubmit","dataToSubmitIsDirty"])
 const locale = useLocaleStore()
 

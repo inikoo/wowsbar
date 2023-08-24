@@ -13,9 +13,9 @@ enum BannerStateEnum: string
 {
     use EnumHelperTrait;
 
-    case IN_PROCESS = 'in-process';
-    case LIVE = 'live';
-    case RETIRED = 'retired';
+    case UNPUBLISHED = 'unpublished';
+    case LIVE        = 'live';
+    case RETIRED     = 'retired';
 
     public static function labels(): array
     {
@@ -42,4 +42,3 @@ enum BannerStateEnum: string
 
 
 }
-

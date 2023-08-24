@@ -8,7 +8,6 @@
 namespace App\Actions\Tenant\Portfolio\Banner\UI;
 
 use App\Actions\Elasticsearch\BuildElasticsearchClient;
-use App\Models\Portfolio\Banner;
 use Illuminate\Support\Arr;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -30,7 +29,7 @@ class DeliverBanner
 
         $response = $client->get($params)->asString();
 
-        return Arr::get(json_decode($response,true),'_source');
+        return Arr::get(json_decode($response, true), '_source');
 
     }
 

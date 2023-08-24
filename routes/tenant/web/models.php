@@ -31,6 +31,8 @@ Route::post('/tenant/banners/gallery', [StoreBannerFromGallery::class, 'inTenant
 
 Route::post('/banner', [StoreBanner::class, 'inTenant'])->name('banner.store');
 Route::patch('/banner/{banner}', UpdateBanner::class)->name('banner.update');
+Route::patch('/banner/{banner}/publish', UpdateBanner::class)->name('banner.publish');
+
 Route::patch('/banner/{banner}/state/{state}', UpdateBannerState::class)->name('banner.update-state');
 Route::delete('/banner/{banner}', DeleteBanner::class)->name('content-block.delete');
 

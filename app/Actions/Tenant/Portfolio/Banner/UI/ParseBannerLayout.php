@@ -22,7 +22,7 @@ class ParseBannerLayout
             $slides[Arr::get($slideData, 'ulid', $key)] = [
                 'layout'        => Arr::get($slideData, 'layout'),
                 'visibility'    => Arr::get($slideData, 'visibility'),
-                'image_id'     => Arr::get($slideData, 'image.id')
+                'image_id'      => Arr::get($slideData, 'image.id')
             ];
         }
 

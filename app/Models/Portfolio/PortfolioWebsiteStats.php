@@ -16,6 +16,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  *
  * @property int $id
  * @property int $portfolio_website_id
+ * @property int $number_banners
+ * @property int $number_historic_snapshots
+ * @property int $number_banners_state_unpublished
+ * @property int $number_banners_state_live
+ * @property int $number_banners_state_retired
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Portfolio\PortfolioWebsite $website
@@ -24,6 +29,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static Builder|PortfolioWebsiteStats query()
  * @method static Builder|PortfolioWebsiteStats whereCreatedAt($value)
  * @method static Builder|PortfolioWebsiteStats whereId($value)
+ * @method static Builder|PortfolioWebsiteStats whereNumberBanners($value)
+ * @method static Builder|PortfolioWebsiteStats whereNumberBannersStateLive($value)
+ * @method static Builder|PortfolioWebsiteStats whereNumberBannersStateRetired($value)
+ * @method static Builder|PortfolioWebsiteStats whereNumberBannersStateUnpublished($value)
+ * @method static Builder|PortfolioWebsiteStats whereNumberHistoricSnapshots($value)
  * @method static Builder|PortfolioWebsiteStats wherePortfolioWebsiteId($value)
  * @method static Builder|PortfolioWebsiteStats whereUpdatedAt($value)
  * @mixin \Eloquent

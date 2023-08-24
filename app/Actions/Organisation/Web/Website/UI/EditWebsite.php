@@ -29,7 +29,7 @@ class EditWebsite extends InertiaAction
 
     }
 
-    public function asController( ActionRequest $request): Website
+    public function asController(ActionRequest $request): Website
     {
         $website=organisation()->website;
         $this->initialisation($request);
@@ -39,7 +39,7 @@ class EditWebsite extends InertiaAction
     /**
      * @throws Exception
      */
-    public function htmlResponse(Website $website,ActionRequest $request): Response
+    public function htmlResponse(Website $website, ActionRequest $request): Response
     {
 
         return Inertia::render(

@@ -33,6 +33,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Organisation\Organisation $organisation
+ * @property-read \App\Models\Search\OrganisationUniversalSearch|null $universalSearch
  * @method static Builder|OrganisationStats newModelQuery()
  * @method static Builder|OrganisationStats newQuery()
  * @method static Builder|OrganisationStats query()
