@@ -21,6 +21,16 @@ import { library } from "@fortawesome/fontawesome-svg-core"
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { getDbRef } from '@/Composables/firebase'
 import ScreenView from "@/Components/ScreenView.vue"
+import { trans } from "laravel-vue-i18n"
+import { router } from '@inertiajs/vue3'
+import { faDraftingCompass,faEmptySet, faMoneyCheckAlt, faPeopleArrows, faSlidersH, faSave, faSuitcase} from "@/../private/pro-light-svg-icons"
+import { faPencil, faArrowLeft, faBorderAll, faTrashAlt } from "@/../private/pro-regular-svg-icons"
+import { faPlus } from "@/../private/pro-solid-svg-icons"
+import Button from "@/Components/Elements/Buttons/Button.vue"
+import Modal from '@/Components/Utils/Modal.vue'
+
+library.add(faDraftingCompass,faEmptySet, faMoneyCheckAlt, faPeopleArrows, faSlidersH, faPlus, faPencil, faArrowLeft, faBorderAll, faTrashAlt,faSave, faSuitcase);
+
 
 library.add(faUser, faUserFriends)
 const props = defineProps<{
@@ -153,12 +163,61 @@ onBeforeUnmount(() => {
 // window.addEventListener('beforeunload', function (event) {
 //     event.returnValue = setDataBeforeLeave() // This message will be shown to the user
 // })
+
+const isModalOpen = ref(false)
+const routeSave = ref()
+const routeButton =(action)=>{
+    console.log(action)
+   if(action.style == "exit"){
+    router.visit(route(action['route']['name'],action['route']['parameters']))
+   }if(action.style == "save"){
+    isModalOpen.value = true
+    routeSave.value = action
+    // router.patch(route(action['route']['name'],action['route']['parameters']),data)
+   }
+
+}
+
+const saveData = () => {
+console.log(routeSave.value )
+ router.patch(route(routeSave.value['route']['name'],routeSave.value['route']['parameters']),data)
+}
+
 </script>
 
 
 <template layout="TenantApp">
+
+    <Modal :isOpen="isModalOpen" @onClose="isModalOpen = false">
+           Comment
+           <textarea rows="3" cols=""></textarea>"
+           <Button size="xs" @click="saveData" class="capitalize inline-flex items-center rounded-md text-sm font-medium shadow-sm gap-x-2">
+                 save
+            </Button> 
+
+    </Modal>
+    
     <Head :title="capitalize(title)" />
-    <PageHeading :data="pageHead" :dataToSubmit="data"></PageHeading>
+    <PageHeading :data="pageHead">
+            <template #button="{dataPageHead : head}" >
+                <div class="flex items-center gap-2">
+         
+                <span v-for="action in head.data.actions">
+                         <Button size="xs"
+                            :style="action.style"
+                            @click="routeButton(action)"
+                            :id="head.getActionLabel(action).replace(' ', '-')"
+                            class="capitalize inline-flex items-center rounded-md text-sm font-medium shadow-sm gap-x-2">
+                            <FontAwesomeIcon v-if="action.icon && action.icon == 'fad fa-save'" aria-hidden="true" :icon="['fad', 'save']" style="--fa-primary-color: #f3f3f3; --fa-secondary-color: #ff6600; --fa-secondary-opacity: 1;" size="sm" :class="[iconClass]" />
+                            <FontAwesomeIcon  :icon="head.getActionIcon(action)"
+                                aria-hidden="true" />
+                            {{ trans(head.getActionLabel(action)) }}
+                        </Button> 
+                
+                </span>
+            </div>
+            </template>
+        </PageHeading>
 
     <div>
         <!-- Component: The full Slider -->
