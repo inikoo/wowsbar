@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 import { library } from '@fortawesome/fontawesome-svg-core'
-
+import Input from '@/Components/Forms/Fields/Input.vue';
 import Slider from "@/Components/Slider/Slider.vue"
 
 
@@ -37,11 +37,17 @@ const props = defineProps<{
     tab?: string
 }>()
 
+console.log(props.data)
+
 </script>
 
 
 <template>
-    <Slider v-if="data.components.length" :data="data" />
+    <Slider v-if="data.banner.components.length" :data="data.banner" />
     <EmptyState v-else /> <!-- If slide is not exist -->
+    <div class="p-2.5">
+        <Input :fieldData="{copyButton : true, readonly: true}" fieldName='url' :form="{url: data.url }" />
+    </div>
+    
 </template>
 
