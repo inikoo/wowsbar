@@ -10,7 +10,6 @@ namespace App\Models\Portfolio;
 use App\Concerns\BelongsToTenant;
 use App\Http\Resources\Portfolio\SlideResource;
 use App\Models\Traits\HasUniversalSearch;
-use Database\Factories\Portfolio\BannerFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;

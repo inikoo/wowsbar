@@ -26,11 +26,9 @@ class TenantHydrateBanners implements ShouldBeUnique
             'number_historic_snapshots' => $tenant->snapshots()->where('state', SnapshotStateEnum::HISTORIC)->count()
         ];
 
-
         foreach (BannerStateEnum::cases() as $state) {
             $stats['number_banners_state_'.$state->snake()] = $tenant->banners()->where('state', $state->value)->count();
         }
-
         $tenant->portfolioStats->update($stats);
     }
 

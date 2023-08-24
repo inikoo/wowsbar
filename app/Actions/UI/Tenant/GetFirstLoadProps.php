@@ -15,7 +15,6 @@ use App\Models\Assets\Language;
 use App\Models\Auth\User;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Cache;
 use Lorisleiva\Actions\Concerns\AsObject;
 
 class GetFirstLoadProps
@@ -63,7 +62,7 @@ class GetFirstLoadProps
                 }
             },
 
-            'firebaseAuthToken'  => $user ? Arr::get($user->data,'firebase_auth_token') : null,
+            'firebaseAuthToken'  => $user ? Arr::get($user->data, 'firebase_auth_token') : null,
 
 
 

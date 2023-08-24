@@ -77,8 +77,7 @@ test('create banners', function ($website) {
     expect($banner)->toBeInstanceOf(Banner::class)
         ->and($tenant->portfolioStats->number_banners)->toBe(1)
         ->and($website->stats->number_banners)->toBe(1)
-        ->and($tenant->portfolioStats->number_banners_state_in_process)->toBe(1)
-        ->and($tenant->portfolioStats->number_banners_state_ready)->toBe(0)
+        ->and($tenant->portfolioStats->number_banners_state_unpublished)->toBe(1)
         ->and($tenant->portfolioStats->number_banners_state_live)->toBe(0)
         ->and($tenant->portfolioStats->number_banners_state_retired)->toBe(0);
 

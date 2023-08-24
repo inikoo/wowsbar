@@ -21,9 +21,9 @@ class Login
 {
     use AsController;
 
-    private string $credentialHandler = 'username';
-    private string $home = '/dashboard';
-    private string $gate = 'web';
+    private string $credentialHandler         = 'username';
+    private string $home                      = '/dashboard';
+    private string $gate                      = 'web';
     private string $customTokenFirebasePrefix = 'web';
 
 

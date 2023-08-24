@@ -21,6 +21,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Portfolio\Snapshot $snapshot
+ * @property-read \App\Models\Tenancy\Tenant $tenant
  * @method static Builder|SnapshotStats newModelQuery()
  * @method static Builder|SnapshotStats newQuery()
  * @method static Builder|SnapshotStats query()

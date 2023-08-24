@@ -24,6 +24,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Portfolio\Banner $banner
+ * @property-read \App\Models\Tenancy\Tenant $tenant
  * @method static Builder|BannerStats newModelQuery()
  * @method static Builder|BannerStats newQuery()
  * @method static Builder|BannerStats query()

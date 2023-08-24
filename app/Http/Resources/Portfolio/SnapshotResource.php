@@ -18,13 +18,13 @@ class SnapshotResource extends JsonResource
         $snapshot = $this;
 
         return [
-            'slug' => $snapshot->slug,
-            'current' => $snapshot->current,
-            'published_at' => $snapshot->published_at,
+            'slug'            => $snapshot->slug,
+            'current'         => $snapshot->current,
+            'published_at'    => $snapshot->published_at,
             'published_until' => $snapshot->published_until,
-            'layout' => $snapshot->layout,
-            'state' => $snapshot->state,
-            'comment' => $snapshot->comment,
+            'layout'          => $snapshot->layout,
+            'state'           => $snapshot->state,
+            'comment'         => $snapshot->comment,
         ];
     }
 }

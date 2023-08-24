@@ -9,22 +9,13 @@ namespace App\Actions\Tenant\Portfolio\Snapshot\UI;
 
 use App\Actions\InertiaAction;
 use App\Actions\UI\Tenant\Portfolio\ShowPortfolioDashboard;
-use App\Http\Resources\Gallery\ImageResource;
 use App\Http\Resources\Portfolio\SnapshotResource;
-use App\InertiaTable\InertiaTable;
-use App\Models\Media\LandlordMedia;
-use App\Models\Organisation\Web\Website;
 use App\Models\Portfolio\Banner;
 use App\Models\Portfolio\PortfolioWebsite;
 use App\Models\Portfolio\Snapshot;
-use Closure;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
-use Spatie\QueryBuilder\AllowedFilter;
-use Spatie\QueryBuilder\QueryBuilder;
 
 class ShowSnapshot extends InertiaAction
 {

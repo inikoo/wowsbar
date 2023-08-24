@@ -28,7 +28,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property string|null $published_at
  * @property string|null $published_until
  * @property string $checksum
- * @property array $layout
+ * @property array $compiled_layout
  * @property string|null $comment
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -40,9 +40,9 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Snapshot query()
  * @method static Builder|Snapshot whereChecksum($value)
  * @method static Builder|Snapshot whereComment($value)
+ * @method static Builder|Snapshot whereCompiledLayout($value)
  * @method static Builder|Snapshot whereCreatedAt($value)
  * @method static Builder|Snapshot whereId($value)
- * @method static Builder|Snapshot whereLayout($value)
  * @method static Builder|Snapshot whereParentId($value)
  * @method static Builder|Snapshot whereParentType($value)
  * @method static Builder|Snapshot wherePublishedAt($value)
@@ -60,7 +60,7 @@ class Snapshot extends Model
 
     protected $casts = [
         'compiled_layout'  => 'array',
-        'state'   => SnapshotStateEnum::class
+        'state'            => SnapshotStateEnum::class
     ];
 
     protected $attributes = [
