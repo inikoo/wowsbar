@@ -76,14 +76,20 @@ test('create banners', function ($website) {
     $tenant->refresh();
     expect($banner)->toBeInstanceOf(Banner::class)
         ->and($tenant->portfolioStats->number_banners)->toBe(1)
+        ->and($website->stats->number_banners)->toBe(1)
         ->and($tenant->portfolioStats->number_banners_state_in_process)->toBe(1)
         ->and($tenant->portfolioStats->number_banners_state_ready)->toBe(0)
         ->and($tenant->portfolioStats->number_banners_state_live)->toBe(0)
         ->and($tenant->portfolioStats->number_banners_state_retired)->toBe(0);
 
-    $this->artisan("banner:create abc web1 test1 'My first banner' ")->assertExitCode(0);
+    $this->artisan("banner:create abc test1 'My first banner' web1 ")->assertExitCode(0);
+
+    // without website
+    $this->artisan("banner:create abc test2 'My first banner'")->assertExitCode(0);
+
     $tenant->refresh();
-    expect($tenant->portfolioStats->number_banners)->toBe(2);
+    $website->fresh();
+    expect($tenant->portfolioStats->number_banners)->toBe(3);
 
     return $banner;
 })->depends('create websites');
@@ -97,5 +103,5 @@ test('update banner', function ($banner) {
 test('delete banner', function ($banner) {
     $tenant = app('currentTenant');
     DeleteBanner::make()->action($banner);
-    expect($tenant->portfolioStats->number_banners)->toBe(1);
+    expect($tenant->portfolioStats->number_banners)->toBe(2);
 })->depends('create banners');

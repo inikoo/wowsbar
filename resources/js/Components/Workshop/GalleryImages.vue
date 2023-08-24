@@ -10,8 +10,14 @@ import { faSpinnerThird } from '@/../private/pro-duotone-svg-icons'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { useGalleryStore } from '@/Stores/gallery.js'
 import { useTruncate } from '@/Composables/useTruncate.js'
+import Button from '../Elements/Buttons/Button.vue'
 
 library.add(faCloudUpload, faImagePolaroid, faSpinnerThird)
+
+const props = defineProps<{
+    addImage: Function;
+    closeModal : Function
+}>()
 
 const galleryStore = useGalleryStore()
 
@@ -52,6 +58,16 @@ watch(activeSidebar, (newSidebar: string) => {
         galleryStore[newSidebar].length === 0 ? getData(newSidebar, 'portfolio.stock.images') : false
     }
 }, { immediate: true })
+
+const ImageDataCollect = ref({data : []})
+
+const collectImage = (image) => {
+    const index = ImageDataCollect.value.data.findIndex((item)=>item.id == image.id)
+    if(ImageDataCollect.value.data.length > 0){
+        if(index == -1) ImageDataCollect.value.data.push(image)
+        else ImageDataCollect.value.data.splice(index, 1)
+    }else ImageDataCollect.value.data.push(image)
+}
 
 </script>
 
@@ -94,11 +110,13 @@ watch(activeSidebar, (newSidebar: string) => {
                         </li>
                     </ul>
                 </div>
-            </div> -->
+                    </h3>)
 
-            <!-- Images list -->
+            -->
             <div v-else class="pt-6 pl-4 grid grid-cols-4 gap-x-3 gap-y-6 max-h-96 overflow-auto">
                 <div v-for="imageData in galleryStore?.[activeSidebar]" :key="imageData.id" class="group opacity-75 hover:opacity-100 cursor-pointer relative flex flex-col gap-y-1">
+                    <div @click="() => collectImage(imageData)"
+                            :class="ImageDataCollect.data.find((item) => item.id === imageData.id) ? 'border-solid border-2 border-orange-500 font-medium text-orange-500 px-5' : ''">
                     <div class="flex-none aspect-[4/1] bg-white overflow-hidden rounded group-hover:ring-2 group-hover:ring-gray-500">
                         <Image :src="imageData.source" :alt="imageData.imageAlt" class="h-full w-full object-cover object-center" />
                     </div>
@@ -106,7 +124,15 @@ watch(activeSidebar, (newSidebar: string) => {
                         {{ useTruncate(imageData.name, 17, 4) }}
                     </h3>
                 </div>
+                </div>
             </div>
+            
         </section>
+      
     </div>
+    <div class="flex justify-end p-2.5 gap-3 pb-0">
+        <Button @click="closeModal" :style="'tertiary'">Cancel</Button>
+        <Button @click="addImage(ImageDataCollect)">Add image</Button>
+    </div>
+    
 </template>
