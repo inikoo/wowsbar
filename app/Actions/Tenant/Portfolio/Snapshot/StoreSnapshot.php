@@ -7,16 +7,31 @@
 
 namespace App\Actions\Tenant\Portfolio\Snapshot;
 
+use App\Models\Portfolio\Banner;
 use App\Models\Portfolio\Snapshot;
-use App\Models\Tenancy\Tenant;
+use Illuminate\Support\Arr;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class StoreSnapshot
 {
     use AsAction;
 
-    public function handle(Tenant $tenant, array $modelData): Snapshot
+    public function handle(Banner $parent, array $modelData): Snapshot
     {
-        return $tenant->snapshot->create($modelData);
+        data_set(
+            $modelData,
+            'checksum',
+            md5(
+                json_encode(
+                    Arr::get($modelData, 'layout')
+                )
+            )
+        );
+
+        /** @var Snapshot $snapshot */
+        $snapshot = $parent->snapshots()->create($modelData);
+        $snapshot->stats()->create();
+
+        return $snapshot;
     }
 }

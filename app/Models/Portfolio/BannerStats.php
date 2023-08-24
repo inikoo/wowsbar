@@ -7,10 +7,10 @@
 
 namespace App\Models\Portfolio;
 
+use App\Concerns\BelongsToTenant;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Spatie\Multitenancy\Models\Concerns\UsesTenantConnection;
 
 /**
  * App\Models\Portfolio\BannerStats
@@ -39,7 +39,7 @@ use Spatie\Multitenancy\Models\Concerns\UsesTenantConnection;
  */
 class BannerStats extends Model
 {
-    use UsesTenantConnection;
+    use BelongsToTenant;
     protected $table = 'banner_stats';
 
     protected $guarded = [];

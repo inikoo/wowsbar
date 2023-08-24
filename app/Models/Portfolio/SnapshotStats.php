@@ -7,9 +7,10 @@
 
 namespace App\Models\Portfolio;
 
+use App\Concerns\BelongsToTenant;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Spatie\Multitenancy\Models\Concerns\UsesTenantConnection;
 
 /**
  * App\Models\Portfolio\SnapshotStats
@@ -20,19 +21,20 @@ use Spatie\Multitenancy\Models\Concerns\UsesTenantConnection;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Portfolio\Snapshot $snapshot
- * @method static \Illuminate\Database\Eloquent\Builder|SnapshotStats newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|SnapshotStats newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|SnapshotStats query()
- * @method static \Illuminate\Database\Eloquent\Builder|SnapshotStats whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|SnapshotStats whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|SnapshotStats whereSnapshotId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|SnapshotStats whereTenantId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|SnapshotStats whereUpdatedAt($value)
+ * @method static Builder|SnapshotStats newModelQuery()
+ * @method static Builder|SnapshotStats newQuery()
+ * @method static Builder|SnapshotStats query()
+ * @method static Builder|SnapshotStats whereCreatedAt($value)
+ * @method static Builder|SnapshotStats whereId($value)
+ * @method static Builder|SnapshotStats whereSnapshotId($value)
+ * @method static Builder|SnapshotStats whereTenantId($value)
+ * @method static Builder|SnapshotStats whereUpdatedAt($value)
  * @mixin \Eloquent
  */
 class SnapshotStats extends Model
 {
-    use UsesTenantConnection;
+    use BelongsToTenant;
+
     protected $table   = 'snapshot_stats';
     protected $guarded = [];
 

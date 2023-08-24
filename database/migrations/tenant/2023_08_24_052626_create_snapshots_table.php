@@ -24,7 +24,7 @@ return new class () extends Migration {
             $table->dateTimeTz('published_at')->nullable();
             $table->dateTimeTz('published_until')->nullable();
             $table->string('checksum');
-            $table->jsonb('layout');
+            $table->jsonb('compiled_layout');
             $table->string('comment')->nullable();
             $table->timestamps();
             $table->index(['parent_type','parent_id']);

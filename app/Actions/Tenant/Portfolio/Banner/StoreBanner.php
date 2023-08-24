@@ -13,6 +13,7 @@ use App\Actions\Tenant\Portfolio\Banner\Hydrators\BannerHydrateUniversalSearch;
 use App\Actions\Tenant\Portfolio\Banner\UI\ParseBannerLayout;
 use App\Actions\Tenant\Portfolio\PortfolioWebsite\Hydrators\PortfolioWebsiteHydrateBanners;
 use App\Actions\Tenant\Portfolio\Slide\StoreSlide;
+use App\Actions\Tenant\Portfolio\Snapshot\StoreSnapshot;
 use App\Models\Portfolio\Banner;
 use App\Models\Portfolio\PortfolioWebsite;
 use App\Models\Tenancy\Tenant;
@@ -76,6 +77,14 @@ class StoreBanner
                 );
             }
         }
+        $banner->stats()->create();
+
+        StoreSnapshot::run(
+            $banner,
+            [
+                'compiled_layout'=> $banner->compiledLayout()
+            ]
+        );
 
         if (class_basename($parent) == 'PortfolioWebsite') {
             $parent->banners()->attach(

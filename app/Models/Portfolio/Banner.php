@@ -50,8 +50,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read int|null $portfolio_website_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Portfolio\Slide> $slides
  * @property-read int|null $slides_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Portfolio\Snapshot> $snapshot
- * @property-read int|null $snapshot_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Portfolio\Snapshot> $snapshots
+ * @property-read int|null $snapshots_count
  * @property-read \App\Models\Portfolio\BannerStats|null $stats
  * @property-read \App\Models\Tenancy\Tenant $tenant
  * @property-read \App\Models\Search\UniversalSearch|null $universalSearch
@@ -118,7 +118,7 @@ class Banner extends Model implements HasMedia
             ->slugsShouldBeNoLongerThan(64);
     }
 
-    public function snapshot(): MorphMany
+    public function snapshots(): MorphMany
     {
         return $this->morphMany(Snapshot::class, 'parent');
     }

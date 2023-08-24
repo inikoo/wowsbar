@@ -55,17 +55,16 @@ use Spatie\Sluggable\SlugOptions;
  */
 class Snapshot extends Model
 {
-
     use HasSlug;
     use BelongsToTenant;
 
     protected $casts = [
-        'layout'  => 'array',
+        'compiled_layout'  => 'array',
         'state'   => SnapshotStateEnum::class
     ];
 
     protected $attributes = [
-        'layout' => '{}'
+        'compiled_layout' => '{}'
     ];
 
     protected $guarded = [];
@@ -74,7 +73,7 @@ class Snapshot extends Model
     {
         return SlugOptions::create()
             ->generateSlugsFrom(function () {
-                return $this->created_at->isoFormat('DDMMYYYY');
+                return $this->parent->slug.'-'.now()->isoFormat('YYMMDD');
             })
             ->saveSlugsTo('slug')
             ->doNotGenerateSlugsOnUpdate();
