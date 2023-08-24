@@ -8,8 +8,6 @@
 return [
     'groups' => [
         'delivery' => ['delivery.*'],
-        'org' => ['org.*'],
+        'org'      => ['org.*'],
     ],
 ];
-
-

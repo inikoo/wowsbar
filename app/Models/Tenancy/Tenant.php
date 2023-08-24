@@ -56,9 +56,11 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read int|null $portfolio_websites_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, PublicUser> $publicUsers
  * @property-read int|null $public_users_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, SnapshotStats> $snapshotStats
+ * @property-read int|null $snapshot_stats_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Snapshot> $snapshots
+ * @property-read int|null $snapshots_count
  * @property-read \App\Models\Tenancy\TenantStats|null $stats
- * @property-read \App\Models\Portfolio\Snapshot|null $snapshot
- * @property-read \App\Models\Portfolio\SnapshotStats|null snapshotStats
  * @property-read \Illuminate\Database\Eloquent\Collection<int, User> $users
  * @property-read int|null $users_count
  * @method static \Spatie\Multitenancy\TenantCollection<int, static> all($columns = ['*'])

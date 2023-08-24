@@ -225,7 +225,8 @@ class InertiaTable
 
 
 
-        $this->elementGroups ->put($key,
+        $this->elementGroups ->put(
+            $key,
             new ElementGroup(
                 key: $key,
                 label: $label,

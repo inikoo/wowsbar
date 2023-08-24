@@ -25,10 +25,10 @@ class LogUserFirebaseMiddleware
         if($user && env('LIVE_USERS_LIST')) {
 
             if(Auth::getDefaultDriver() == 'web') {
-                $parentTpe = 'Tenant';
+                $parentTpe  = 'Tenant';
                 $parentSlug = app('currentTenant')->slug;
             } else {
-                $parentTpe='Organisation';
+                $parentTpe ='Organisation';
                 $parentSlug=null;
             }
 
@@ -36,10 +36,10 @@ class LogUserFirebaseMiddleware
 
             if($request->route()->getName() == 'logout') {
                 $loggedIn=false;
-                $route=null;
-            }else{
+                $route   =null;
+            } else {
                 $loggedIn=true;
-                $route = [
+                $route   = [
                     'icon'      => Arr::get($request->route()->action, 'icon'),
                     'label'     => Arr::get($request->route()->action, 'label'),
                     'name'      => request()->route()->getName(),

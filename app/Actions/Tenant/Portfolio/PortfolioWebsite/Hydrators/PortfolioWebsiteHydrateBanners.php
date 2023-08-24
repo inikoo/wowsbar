@@ -10,7 +10,6 @@ namespace App\Actions\Tenant\Portfolio\PortfolioWebsite\Hydrators;
 use App\Actions\Tenancy\Tenant\Hydrators\HasTenantHydrate;
 use App\Enums\Portfolio\Banner\BannerStateEnum;
 use App\Models\Portfolio\PortfolioWebsite;
-use App\Models\Tenancy\Tenant;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Lorisleiva\Actions\Concerns\AsAction;
 

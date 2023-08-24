@@ -56,13 +56,13 @@ Route::get('/websites/{portfolioWebsite}/banners', [IndexBanners::class, 'inPort
 
 
 Route::get('/websites/{portfolioWebsite}/banners/{banner}', [
-    'uses' => ShowBanner::class . '@inPortfolioWebsite',
+    'uses'  => ShowBanner::class . '@inPortfolioWebsite',
     'icon'  => 'globe',
     'label' => 'banner'
 ])->name('websites.show.banners.show');
 
 Route::get('/websites/{portfolioWebsite}/banners/{banner}/edit', [
-    'uses' => EditBanner::class . '@inPortfolioWebsite',
+    'uses'  => EditBanner::class . '@inPortfolioWebsite',
     'icon'  => 'globe',
     'label' => 'banner'
 ])->name('websites.show.banners.edit');

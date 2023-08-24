@@ -11,9 +11,10 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property int $id
  * @property int $tenant_id
+ * @property int $number_banners_no_website
  * @property int $number_banners
- * @property int $number_banners_state_in_process
- * @property int $number_banners_state_ready
+ * @property int $number_historic_snapshots
+ * @property int $number_banners_state_unpublished
  * @property int $number_banners_state_live
  * @property int $number_banners_state_retired
  * @property \Illuminate\Support\Carbon|null $created_at
@@ -24,10 +25,11 @@ use Illuminate\Database\Eloquent\Model;
  * @method static Builder|TenantPortfolioStats whereCreatedAt($value)
  * @method static Builder|TenantPortfolioStats whereId($value)
  * @method static Builder|TenantPortfolioStats whereNumberBanners($value)
- * @method static Builder|TenantPortfolioStats whereNumberBannersStateInProcess($value)
+ * @method static Builder|TenantPortfolioStats whereNumberBannersNoWebsite($value)
  * @method static Builder|TenantPortfolioStats whereNumberBannersStateLive($value)
- * @method static Builder|TenantPortfolioStats whereNumberBannersStateReady($value)
  * @method static Builder|TenantPortfolioStats whereNumberBannersStateRetired($value)
+ * @method static Builder|TenantPortfolioStats whereNumberBannersStateUnpublished($value)
+ * @method static Builder|TenantPortfolioStats whereNumberHistoricSnapshots($value)
  * @method static Builder|TenantPortfolioStats whereTenantId($value)
  * @method static Builder|TenantPortfolioStats whereUpdatedAt($value)
  * @mixin \Eloquent

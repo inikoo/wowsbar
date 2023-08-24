@@ -9,7 +9,6 @@ namespace App\Actions\Tenant\Portfolio\Slide;
 
 use App\Actions\Traits\WithActionUpdate;
 use App\Models\Portfolio\Slide;
-use Arr;
 
 class UpdateSlide
 {

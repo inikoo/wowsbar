@@ -55,6 +55,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read \App\Models\Organisation\OrganisationUserStats|null $stats
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Laravel\Sanctum\PersonalAccessToken> $tokens
  * @property-read int|null $tokens_count
+ * @property-read \App\Models\Search\OrganisationUniversalSearch|null $universalSearch
  * @method static Builder|OrganisationUser newModelQuery()
  * @method static Builder|OrganisationUser newQuery()
  * @method static Builder|OrganisationUser permission($permissions)

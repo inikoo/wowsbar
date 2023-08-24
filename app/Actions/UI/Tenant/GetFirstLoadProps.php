@@ -15,7 +15,6 @@ use App\Models\Assets\Language;
 use App\Models\Auth\User;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\File;
 use Lorisleiva\Actions\Concerns\AsObject;
 
 class GetFirstLoadProps
@@ -38,7 +37,7 @@ class GetFirstLoadProps
 
 
         return [
-            'tenant'     => app('currentTenant') ? app('currentTenant')->only('name', 'code', 'logo_id','slug') : null,
+            'tenant'     => app('currentTenant') ? app('currentTenant')->only('name', 'code', 'logo_id', 'slug') : null,
             'localeData' =>
                 [
                     'language'        => LanguageResource::make($language)->getArray(),
@@ -63,7 +62,7 @@ class GetFirstLoadProps
                 }
             },
 
-            'firebaseAuthToken'  => $user?Cache::get('auth_tenants_firebase_token_'.$user->id):null,
+            'firebaseAuthToken'  => $user ? Cache::get('auth_tenants_firebase_token_'.$user->id) : null,
 
 
 

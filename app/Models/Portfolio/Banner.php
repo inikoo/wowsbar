@@ -16,6 +16,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -28,6 +30,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property int $id
  * @property string $ulid
  * @property int $tenant_id
+ * @property int|null $portfolio_website_id
  * @property string $slug
  * @property string $code
  * @property string $name
@@ -37,22 +40,27 @@ use Spatie\Sluggable\SlugOptions;
  * @property string|null $retired_at
  * @property array $layout
  * @property array $data
+ * @property string|null $checksum
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Portfolio\Slide> $slides
- * @property-read int|null $content_block_components_count
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \App\Models\Media\Media> $media
  * @property-read int|null $media_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Portfolio\PortfolioWebsite> $portfolioWebsite
  * @property-read int|null $portfolio_website_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Portfolio\Slide> $slides
+ * @property-read int|null $slides_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Portfolio\Snapshot> $snapshot
+ * @property-read int|null $snapshot_count
+ * @property-read \App\Models\Portfolio\BannerStats|null $stats
  * @property-read \App\Models\Tenancy\Tenant $tenant
  * @property-read \App\Models\Search\UniversalSearch|null $universalSearch
- * @method static BannerFactory factory($count = null, $state = [])
+ * @method static \Database\Factories\Portfolio\BannerFactory factory($count = null, $state = [])
  * @method static Builder|Banner newModelQuery()
  * @method static Builder|Banner newQuery()
  * @method static Builder|Banner onlyTrashed()
  * @method static Builder|Banner query()
+ * @method static Builder|Banner whereChecksum($value)
  * @method static Builder|Banner whereCode($value)
  * @method static Builder|Banner whereCreatedAt($value)
  * @method static Builder|Banner whereData($value)
@@ -61,6 +69,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Banner whereLayout($value)
  * @method static Builder|Banner whereLiveAt($value)
  * @method static Builder|Banner whereName($value)
+ * @method static Builder|Banner wherePortfolioWebsiteId($value)
  * @method static Builder|Banner whereReadyAt($value)
  * @method static Builder|Banner whereRetiredAt($value)
  * @method static Builder|Banner whereSlug($value)
@@ -109,6 +118,11 @@ class Banner extends Model implements HasMedia
             ->slugsShouldBeNoLongerThan(64);
     }
 
+    public function snapshot(): MorphMany
+    {
+        return $this->morphMany(Snapshot::class, 'parent');
+    }
+
 
     public function slides(): HasMany
     {
@@ -127,5 +141,10 @@ class Banner extends Model implements HasMedia
         data_set($compiledLayout, 'components', json_decode(SlideResource::collection($this->slides)->toJson(), true));
         return $compiledLayout;
 
+    }
+
+    public function stats(): HasOne
+    {
+        return $this->hasOne(BannerStats::class);
     }
 }
