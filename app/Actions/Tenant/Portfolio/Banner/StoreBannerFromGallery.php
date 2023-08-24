@@ -12,12 +12,10 @@ use App\Actions\Tenant\Portfolio\Banner\Elasticsearch\StoreBannerElasticsearch;
 use App\Actions\Tenant\Portfolio\Banner\Hydrators\BannerHydrateUniversalSearch;
 use App\Actions\Tenant\Portfolio\Banner\UI\ParseBannerLayout;
 use App\Actions\Tenant\Portfolio\PortfolioWebsite\Hydrators\PortfolioWebsiteHydrateBanners;
-use App\Actions\Tenant\Portfolio\Slide\StoreSlide;
 use App\Models\Portfolio\Banner;
 use App\Models\Portfolio\PortfolioWebsite;
 use App\Models\Tenancy\Tenant;
 use Illuminate\Console\Command;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Str;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -33,9 +31,12 @@ class StoreBannerFromGallery
     private PortfolioWebsite|null $portfolioWebsite = null;
 
 
-    public function handle(PortfolioWebsite $portfolioWebsite, array $modelData): Banner
+    public function handle(Tenant|PortfolioWebsite $parent, array $modelData): Banner
     {
-        $this->portfolioWebsite = $portfolioWebsite;
+        if(class_basename($parent) == 'PortfolioWebsite') {
+            $this->portfolioWebsite = $parent;
+        }
+
         $layout = [
             "delay" => 5000,
             "common" => [
@@ -57,11 +58,13 @@ class StoreBannerFromGallery
 
         data_set($modelData, 'tenant_id', app('currentTenant')->id);
         data_set($modelData, 'layout', $layout);
-        data_set($modelData, 'data.website_slug', $portfolioWebsite->slug);
-        data_set($modelData, 'ulid', Str::ulid());
 
+        if(class_basename($parent) == 'PortfolioWebsite') {
+            data_set($modelData, 'data.website_slug', $parent->slug);
+        }
+
+        data_set($modelData, 'ulid', Str::ulid());
         data_set($modelData, 'code', Str::random(3));
-        data_set($modelData, 'name', 'default');
 
         /** @var Banner $banner */
         $banner = Banner::create(\Arr::except($modelData, ['images']));
@@ -70,16 +73,22 @@ class StoreBannerFromGallery
             $banner->slides()->create(\Arr::except($modelData, ['images', 'ulid', 'layout', 'data', 'code', 'name']));
         }
 
-        $portfolioWebsite->banners()->attach(
-            $banner->id,
-            [
-                'tenant_id' => app('currentTenant')->id,
-                'ulid' => Str::ulid()
-            ]
-        );
+        if(class_basename($parent) == 'PortfolioWebsite') {
+            $parent->banners()->attach(
+                $banner->id,
+                [
+                    'tenant_id' => app('currentTenant')->id,
+                    'ulid' => Str::ulid()
+                ]
+            );
+        }
 
         TenantHydrateBanners::dispatch(app('currentTenant'));
-        PortfolioWebsiteHydrateBanners::dispatch($portfolioWebsite);
+
+        if(class_basename($parent) == 'PortfolioWebsite') {
+            PortfolioWebsiteHydrateBanners::dispatch($parent);
+        }
+
         BannerHydrateUniversalSearch::dispatch($banner);
         StoreBannerElasticsearch::run($banner);
 
@@ -97,14 +106,17 @@ class StoreBannerFromGallery
 
     public function inPortfolioWebsite(PortfolioWebsite $portfolioWebsite, ActionRequest $request): Banner
     {
-//        $request->validate();
-
         return $this->handle($portfolioWebsite, $request->all());
+    }
+
+    public function inTenant(ActionRequest $request): Banner
+    {
+        return $this->handle(app('currentTenant'), $request->all());
     }
 
     public function getCommandSignature(): string
     {
-        return 'banner:gallery-create {tenant} {website} {images}';
+        return 'banner:gallery-create {name} {tenant} {images} {website?}';
     }
 
     public function asCommand(Command $command): void
@@ -112,17 +124,19 @@ class StoreBannerFromGallery
         $tenant = Tenant::where('slug', $command->argument('tenant'))->firstOrFail();
         $tenant->makeCurrent();
 
-        $portfolioWebsite = PortfolioWebsite::where('slug', $command->argument('website'))->firstOrFail();
-
+        if($website = $command->argument('website')) {
+            $portfolioWebsite = PortfolioWebsite::where('slug', $website)->firstOrFail();
+        }
 
         $this->asAction = true;
         $this->setRawAttributes(
             [
+                'name'  => $command->argument('name'),
                 'images' => [$command->argument('images')]
             ]
         );
 
-        $banner = $this->handle($portfolioWebsite, $this->attributes);
+        $banner = $this->handle($portfolioWebsite ?? $tenant, $this->attributes);
 
         $command->info("Done! Content block $banner->code created 🎉");
     }
