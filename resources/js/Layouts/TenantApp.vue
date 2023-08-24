@@ -20,7 +20,8 @@ import Breadcrumbs from "@/Components/Navigation/Breadcrumbs.vue"
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { useFirebaseStore } from "@/Stores/firebase"
 
-import { initialiseApp, authFirebase } from "@/Composables/initialiseApp"
+import { useAuthFirebase } from "@/Composables/firebaseAuth"
+import { initialiseApp } from "@/Composables/initialiseApp"
 
 import {
     faHome,
@@ -71,7 +72,7 @@ library.add(
 
 const layout = initialiseApp()
 const firebaseStore = useFirebaseStore()
-// authFirebase(firebaseStore.auth_token)  
+// useAuthFirebase(firebaseStore.auth_token)  
 const sidebarOpen = ref(false)
 
 </script>
