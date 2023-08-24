@@ -12,8 +12,10 @@ use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\AsObject;
 use Lorisleiva\Actions\Concerns\WithAttributes;
 
+//todo delete this
 class ChangeRulesFirebase
 {
+
     use AsObject;
     use AsAction;
     use WithAttributes;

@@ -31,10 +31,7 @@ export const initialiseApp = () => {
             layout.tenant = usePage().props.tenant ?? null
         }
 
-        // Init data from GetFirstLoadProps to firebase.js
-        if (usePage().props.firebase) {
-            firebaseStore.auth_token = usePage().props.firebase.auth_token ?? null
-        }
+
 
         layout.currentRouteParameters = route().params
         layout.currentRoute = route().current()
@@ -42,7 +39,7 @@ export const initialiseApp = () => {
             0,
             layout.currentRoute?.indexOf(".")
         )
-        
+
         if (substring == "org" || substring == "public") {
             let moduleName = layout.currentRoute.split(".")
             layout.currentModule = moduleName[1]

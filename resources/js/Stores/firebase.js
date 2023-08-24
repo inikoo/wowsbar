@@ -8,8 +8,6 @@ import { defineStore } from 'pinia'
 
 export const useFirebaseStore = defineStore('firebase', {
     state: () => ({
-        credential: null,
-        databaseURL: null,
         auth_token: null
     }),
 
