@@ -13,6 +13,8 @@ use App\Models\Auth\User;
 use App\Models\Media\Media;
 use App\Models\Portfolio\Banner;
 use App\Models\Portfolio\PortfolioWebsite;
+use App\Models\Portfolio\Snapshot;
+use App\Models\Portfolio\SnapshotStats;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -55,6 +57,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, PublicUser> $publicUsers
  * @property-read int|null $public_users_count
  * @property-read \App\Models\Tenancy\TenantStats|null $stats
+ * @property-read \App\Models\Portfolio\Snapshot|null $snapshot
+ * @property-read \App\Models\Portfolio\SnapshotStats|null snapshotStats
  * @property-read \Illuminate\Database\Eloquent\Collection<int, User> $users
  * @property-read int|null $users_count
  * @method static \Spatie\Multitenancy\TenantCollection<int, static> all($columns = ['*'])
@@ -153,6 +157,16 @@ class Tenant extends SpatieTenant implements HasMedia
     public function logo(): HasOne
     {
         return $this->hasOne(Media::class, 'id', 'logo_id');
+    }
+
+    public function snapshots(): HasMany
+    {
+        return $this->hasMany(Snapshot::class);
+    }
+
+    public function snapshotStats(): HasMany
+    {
+        return $this->hasMany(SnapshotStats::class);
     }
 
     public function registerMediaCollections(): void
