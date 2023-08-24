@@ -1,19 +1,11 @@
 <!--
   - Author: Raul Perusquia <raul@inikoo.com>
-  - Created: Fri, 14 Jul 2023 15:19:45 Malaysia Time, Kuala Lumpur, Malaysia
+  - Created: Thu, 24 Aug 2023 09:33:07 Malaysia Time, Kuala Lumpur, Malaysia
   - Copyright (c) 2023, Raul A Perusquia Flores
   -->
 
 <script setup lang="ts">
-import { library } from '@fortawesome/fontawesome-svg-core'
-
-import Slider from "@/Components/Slider/Slider.vue"
-
-
-import { faWindowMaximize, faGlobe } from "@/../private/pro-light-svg-icons"
-import EmptyState from '@/Components/Utils/EmptyState.vue';
-
-library.add(faWindowMaximize, faGlobe)
+import Slider from "@/Components/Slider/Slider.vue";
 
 const props = defineProps<{
     data: {
@@ -38,9 +30,7 @@ const props = defineProps<{
 }>()
 </script>
 
-
-<template>
-    <Slider v-if="data.components.length" :data="data" />
-    <EmptyState v-else /> <!-- If slide is not exist -->
+<template >
+    <Slider :data="data" />
 </template>
 

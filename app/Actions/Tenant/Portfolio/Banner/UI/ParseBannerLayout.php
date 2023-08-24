@@ -22,9 +22,10 @@ class ParseBannerLayout
             $slides[Arr::get($slideData, 'ulid', $key)] = [
                 'layout'        => Arr::get($slideData, 'layout'),
                 'visibility'    => Arr::get($slideData, 'visibility'),
-                'imageData'     => Arr::get($layout, 'images.'.$key)
+                'image_id'     => Arr::get($slideData, 'image.id')
             ];
         }
+
         return [
             Arr::except($layout, ['components', 'images']),
             $slides

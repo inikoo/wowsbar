@@ -52,6 +52,7 @@ Route::get('/websites/{portfolioWebsite}/delete', RemovePortfolioWebsite::class)
 Route::get('/websites/{portfolioWebsite}/banners/create', [CreateBanner::class, 'inPortfolioWebsite'])->name('websites.show.banners.create');
 Route::get('/websites/{portfolioWebsite}/banners', [IndexBanners::class, 'inPortfolioWebsite'])->name('websites.show.banners.index');
 
+
 Route::get('/websites/{portfolioWebsite}/banners/{banner}', [
     'uses' => ShowBanner::class . '@inPortfolioWebsite',
     'icon'  => 'globe',

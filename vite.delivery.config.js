@@ -1,3 +1,9 @@
+/*
+ * Author: Raul Perusquia <raul@inikoo.com>
+ * Created: Thu, 24 Aug 2023 09:33:07 Malaysia Time, Kuala Lumpur, Malaysia
+ * Copyright (c) 2023, Raul A Perusquia Flores
+ */
+
 import {defineConfig} from 'vite';
 import laravel from 'laravel-vite-plugin';
 import vue from '@vitejs/plugin-vue';
@@ -9,8 +15,10 @@ export default defineConfig(
         plugins: [
             inertia(),
             laravel({
-                        input  : 'resources/js/app.js',
-                        ssr    : 'resources/js/ssr.js',
+                        hotFile: 'public/delivery.hot',
+                        buildDirectory: 'delivery',
+                        input  : 'resources/js/app-delivery.js',
+                        ssr    : 'resources/js/ssr-delivery.js',
                         refresh: true,
                     }),
             vue({
@@ -28,7 +36,9 @@ export default defineConfig(
                 output: {
                     manualChunks(id) {
                         if (id.includes('node_modules')) {
-                            return id.toString().split('node_modules/')[1].split('/')[0].toString();
+                            return id.toString().
+                                split('node_modules/')[1].split(
+                                '/')[0].toString();
                         }
                     },
                 },

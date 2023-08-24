@@ -22,7 +22,6 @@ import Image from "@/Components/Image.vue"
 import CentralStage from "@/Components/Slider/CentralStage.vue"
 import { Link } from '@inertiajs/vue3'
 import { watch } from 'vue'
-import EmptyState from '../Utils/EmptyState.vue'
 
 interface CornersPositionData {
     data: {
@@ -98,7 +97,7 @@ watch(() => props.jumpToIndex, (newVal) => {
 </script>
 
 <template>
-    <div v-if="data.components.length" class=" overflow-hidden relative border border-gray-300 shadow-md"
+    <div class=" overflow-hidden relative border border-gray-300 shadow-md"
         :class="[$props.view
             ? { 'aspect-[2/1] w-1/2' : $props.view == 'mobile',
                 'aspect-[3/1] w-3/4' : $props.view == 'tablet',
@@ -136,19 +135,16 @@ watch(() => props.jumpToIndex, (newVal) => {
                 <FontAwesomeIcon v-if="!!component?.layout?.link" icon='far fa-external-link' class='text-gray-300/50 text-xl absolute top-2 right-2' aria-hidden='true' />
                 <Link v-if="!!component?.layout?.link" :href="component?.layout?.link" class="absolute bg-transparent w-full h-full" />
                 <SlideCorner v-for="(slideCorner, position) in filteredNulls(component?.layout?.corners)" :position="position" :corner="slideCorner" :commonCorner="data.common.corners" />
-                
+
                 <!-- CentralStage: common.centralStage (prioritize) and layout.centralstage -->
                 <CentralStage v-if="data.common?.centralStage?.title?.length > 0 || data.common?.centralStage?.subtitle?.length > 0" :data="data.common?.centralStage" />
-                <CentralStage v-else="component?.layout?.centralStage" :data="component?.layout?.centralStage" />
+                <CentralStage v-else-if="component?.layout?.centralStage" :data="component?.layout?.centralStage" />
             </SwiperSlide>
         </Swiper>
 
         <!-- Reserved Corner: Button Controls -->
         <SlideCorner class="z-10" v-for="(corner, position) in filteredNulls(data.common.corners)" :position="position" :corner="corner"   :swiperRef="swiperRef"/>
     </div>
-
-    <!-- If slide is not exist -->
-    <EmptyState v-else />
 </template>
 
 <style lang="scss">

@@ -18,13 +18,10 @@ class UpdateSlide
 
     public function handle(Slide $contentBlockComponent, array $modelData): Slide
     {
-        $imageData=Arr::pull($modelData, 'imageData');
 
         $this->update($contentBlockComponent, $modelData, ['layout']);
 
-        if($imageData) {
-            AttachImageToSlide::run($contentBlockComponent, $imageData);
-        }
+
         return $contentBlockComponent;
     }
 

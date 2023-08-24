@@ -37,13 +37,13 @@ class ShowBanner extends InertiaAction
     public function inTenant(Banner $banner, ActionRequest $request): Banner
     {
         $this->initialisation($request)->withTab(BannerTabsEnum::values());
-
         return $banner;
     }
 
     /** @noinspection PhpUnusedParameterInspection */
     public function inPortfolioWebsite(PortfolioWebsite $portfolioWebsite, Banner $banner, ActionRequest $request): Banner
     {
+
         $this->initialisation($request)->withTab(BannerTabsEnum::values());
         return $banner;
     }

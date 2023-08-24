@@ -19,6 +19,8 @@ const props = defineProps<{
     'fieldName': string
     'showProcessing'?: boolean
     'placeholder'?: string
+    'options'?: {} | []
+    'fieldData'?: {} | []
 }>()
 
 const handleChange = (form) => {

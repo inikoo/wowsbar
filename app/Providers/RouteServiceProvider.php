@@ -21,7 +21,13 @@ class RouteServiceProvider extends ServiceProvider
     {
         $this->configureRateLimiting();
 
+
         $this->routes(function () {
+
+            Route::domain('delivery.'.config('app.domain'))
+                ->name('delivery.')
+                ->group(base_path('routes/delivery/app.php'));
+
             Route::middleware('org-web')
                 ->prefix('org')
                 ->domain(config('app.domain'))

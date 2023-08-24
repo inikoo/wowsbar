@@ -87,10 +87,9 @@ let formFields = {
 if (props['fieldData']['hasOther']) {
     formFields[props['fieldData']['hasOther']['name']] = props['fieldData']['hasOther']['value'];
 }
-formFields['_method'] = 'patch';
-console.log(formFields)
-const form = useForm(formFields);
-form['fieldType'] = 'edit';
+formFields['_method'] = 'patch'
+const form = useForm(formFields)
+form['fieldType'] = 'edit'
 
 function submit() {
     form.post(route(updateRoute.name, updateRoute.parameters))

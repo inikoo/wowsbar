@@ -28,22 +28,18 @@ class UpdateBanner
 
     public function handle(Banner $banner, array $modelData): Banner
     {
-
-
-        if(Arr::has($modelData, 'layout')) {
-            $layout                                =Arr::pull($modelData, 'layout');
+        if (Arr::has($modelData, 'layout')) {
+            $layout = Arr::pull($modelData, 'layout');
             list($layout, $slides) = ParseBannerLayout::run($layout);
             data_set($modelData, 'layout', $layout);
 
             if ($slides) {
-                foreach ($slides as $ulid=>$slideData) {
-
-                    $bannerComponent=Slide::where('ulid', $ulid)->first();
-                    if($bannerComponent) {
-
+                foreach ($slides as $ulid => $slideData) {
+                    $bannerComponent = Slide::where('ulid', $ulid)->first();
+                    if ($bannerComponent) {
                         UpdateSlide::run(
                             $bannerComponent,
-                            Arr::only($slideData, ['layout','imageData'])
+                            Arr::only($slideData, ['layout', 'imageData'])
                         );
                     } else {
                         data_set($bannerComponent, 'ulid', $ulid);
@@ -52,20 +48,17 @@ class UpdateBanner
                             modelData: $slideData,
                         );
                     }
-                    /*
 
-                    */
                 }
             }
-
         }
 
-        $this->update($banner, $modelData, ['data','layout']);
+        $this->update($banner, $modelData, ['data', 'layout']);
 
         BannerHydrateUniversalSearch::dispatch($banner);
         TenantHydrateBanners::dispatch(app('currentTenant'));
 
-        if(class_basename($banner->portfolioWebsite) == 'PortfolioWebsite') {
+        if (class_basename($banner->portfolioWebsite) == 'PortfolioWebsite') {
             PortfolioWebsiteHydrateBanners::dispatch($banner->portfolioWebsite);
         }
 
@@ -86,24 +79,25 @@ class UpdateBanner
         return [
             'code'   => ['sometimes', 'required', 'unique:tenant.portfolio_websites', 'max:8'],
             'name'   => ['sometimes', 'required'],
-            'layout' => ['sometimes', 'required','array:delay,common,components']
+            'layout' => ['sometimes', 'required', 'array:delay,common,components']
         ];
     }
 
     public function prepareForValidation(ActionRequest $request): void
     {
 
+
         $request->merge(
             [
                 'layout' => $request->only(['delay', 'common', 'components'])
             ]
         );
-
     }
 
     public function asController(Banner $banner, ActionRequest $request): Banner
     {
         $request->validate();
+
         return $this->handle($banner, $request->validated());
     }
 
