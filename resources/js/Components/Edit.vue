@@ -5,11 +5,11 @@
   -->
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 
-import FieldForm from '@/Components/Forms/FieldForm.vue';
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import FieldForm from '@/Components/Forms/FieldForm.vue'
+import { library } from "@fortawesome/fontawesome-svg-core"
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { faGoogle} from "@fortawesome/free-brands-svg-icons"
 
 import { faEdit,faUserLock,faBell,faCopyright, faUserCircle, faKey, faClone, faPaintBrush, faMoonStars, faLightbulbOn, faCheck, faPhone, faIdCard, faFingerprint,faLanguage,faAddressBook,faTrashAlt } from "@/../private/pro-light-svg-icons"
@@ -48,15 +48,31 @@ const props = defineProps<{
 
 
 const current = ref(0)
+
+const isMobile = ref(false)
+
+const updateViewportWidth = () => {
+    isMobile.value = window.innerWidth <= 768
+}
+
+onMounted(() => {
+    updateViewportWidth()
+    window.addEventListener('resize', updateViewportWidth)
+})
+
+onBeforeUnmount(() => {
+    window.removeEventListener('resize', updateViewportWidth)
+})
+
 </script>
 
 
 <template>
     <!-- If overflow-hidden, affect to Multiselect on Address -->
     <div class="rounded-lg shadow">
-        <div class="divide-y divide-gray-200 dark:divide-gray-500 lg:grid grid-flow-col lg:grid-cols-12 lg:divide-y-0 lg:divide-x">
+        <div v-if="!isMobile" class="divide-y divide-gray-200 dark:divide-gray-500 lg:grid grid-flow-col lg:grid-cols-12 lg:divide-y-0 lg:divide-x">
 
-            <!-- Left Tab: Navigation -->
+            <!-- Tab: Navigation -->
             <aside class="py-0 lg:col-span-3 lg:h-full">
                 <nav role="navigation" class="space-y-1">
                     <ul>
@@ -103,6 +119,26 @@ const current = ref(0)
                     </div>
                 </div>
             </div>
+        </div>
+
+        <div v-else class="">
+            <ul class="space-y-8">
+                <li v-for="(item, key) in formData['blueprint']" class="group font-medium" :aria-current="key === current ? 'page' : undefined">
+                    <div class="bg-gray-200 py-2 pl-5 flex items-center">
+                        <FontAwesomeIcon v-if="item.icon" aria-hidden="true" :icon="item.icon"
+                            :class="[
+                                key === current ? 'text-gray-400' : 'text-gray-500',
+                                'flex-shrink-0 mr-3 h-5 w-5',
+                            ]" />
+                        <span class="capitalize truncate">{{ item.title }}</span>
+                    </div>
+                    <div class="pl-5">
+                        <FieldForm class=" pt-4 sm:pt-5 px-6 " v-for="(fieldData, field ) in formData.blueprint[key].fields"
+                        :key="field" :field="field" :fieldData="fieldData" :args="formData.args" :id="fieldData.name"/>
+                    </div>
+                </li>
+            </ul>
+        
         </div>
     </div>
 </template>
