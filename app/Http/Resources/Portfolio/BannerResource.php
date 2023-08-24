@@ -10,7 +10,6 @@ namespace App\Http\Resources\Portfolio;
 use App\Models\Portfolio\Banner;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-
 class BannerResource extends JsonResource
 {
     public function toArray($request): array

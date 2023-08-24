@@ -23,7 +23,7 @@ class UserResource extends JsonResource
         return [
             'id'                 => $user->id,
             'username'           => $user->username,
-            'avatar'             => $user->avatarImageSources(48,48),
+            'avatar'             => $user->avatarImageSources(48, 48),
             'email'              => $user->email,
             'contact_name'       => $user->contact_name,
             'roles'              => $user->getRoleNames(),

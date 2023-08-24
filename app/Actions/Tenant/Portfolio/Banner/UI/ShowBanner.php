@@ -93,13 +93,14 @@ class ShowBanner extends InertiaAction
                 ],
                 PortfolioWebsiteTabsEnum::SHOWCASE->value => $this->tab == PortfolioWebsiteTabsEnum::SHOWCASE->value ?
                     fn () => [
-                        'banner'=>$banner->compiledLayout(),
-                        'url'=>'xxx'
+                        'banner'=> $banner->compiledLayout(),
+                        'url'   => 'xxx'
                     ]
-                    : Inertia::lazy(fn () =>
+                    : Inertia::lazy(
+                        fn () =>
                     [
-                        'banner'=>$banner->compiledLayout(),
-                        'url'=>'xxx'
+                        'banner'=> $banner->compiledLayout(),
+                        'url'   => 'xxx'
                     ]
                     ),
 

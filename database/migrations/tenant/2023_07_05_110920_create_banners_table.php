@@ -23,7 +23,7 @@ return new class () extends Migration {
             $table->string('slug')->collation('und_ns');
             $table->string('code')->collation('und_ns_ci');
             $table->string('name')->collation('und_ns_ci');
-            $table->string('state')->default(BannerStateEnum::IN_PROCESS->value);
+            $table->string('state')->default(BannerStateEnum::UNPUBLISHED->value);
             $table->dateTimeTz('ready_at')->nullable();
             $table->dateTimeTz('live_at')->nullable();
             $table->dateTimeTz('retired_at')->nullable();

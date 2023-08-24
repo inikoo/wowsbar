@@ -42,7 +42,7 @@ class CreateBanner extends InertiaAction
     {
 
         $fields=[];
-        if(class_basename($parent)=='Tenant'){
+        if(class_basename($parent)=='Tenant') {
             $fields[]= [
                 'title'  => __('Website'),
                 'fields' => [
@@ -138,7 +138,6 @@ class CreateBanner extends InertiaAction
     public function getBreadcrumbs(string $routeName, array $routeParameters): array
     {
         return array_merge(
-
             match ($routeName) {
                 'portfolio.banners.create' => IndexBanners::make()->getBreadcrumbs(
                     'portfolio.banners.index',
@@ -149,8 +148,6 @@ class CreateBanner extends InertiaAction
                     $routeParameters
                 )
             },
-
-
             [
                 [
                     'type'          => 'creatingModel',

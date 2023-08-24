@@ -27,13 +27,13 @@ class ImageResource extends JsonResource
         $imageThumbnail = (new Image())->make($media->getLocalImgProxyFilename())->resize(0, 48);
 
         return [
-            'id'        => $media->id,
-            'slug'      => $media->slug,
-            'name'      => $media->name,
-            'mime_type' => $media->mime_type,
-            'size'      => NaturalLanguage::make()->fileSize($media->size),
-            'thumbnail' => GetPictureSources::run($imageThumbnail),
-            'source'    => GetPictureSources::run($image),
+            'id'         => $media->id,
+            'slug'       => $media->slug,
+            'name'       => $media->name,
+            'mime_type'  => $media->mime_type,
+            'size'       => NaturalLanguage::make()->fileSize($media->size),
+            'thumbnail'  => GetPictureSources::run($imageThumbnail),
+            'source'     => GetPictureSources::run($image),
             'created_at' => $media->created_at,
         ];
 

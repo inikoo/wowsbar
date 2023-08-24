@@ -22,9 +22,9 @@ class Login
 {
     use AsController;
 
-    private string $credentialHandler = 'username';
-    private string $home = '/dashboard';
-    private string $gate = 'web';
+    private string $credentialHandler         = 'username';
+    private string $home                      = '/dashboard';
+    private string $gate                      = 'web';
     private string $customTokenFirebasePrefix = 'web';
 
 
@@ -86,7 +86,7 @@ class Login
 
             $customToken = $auth
                 ->createCustomToken($tenant->slug, [
-                    'scope'   => 'tenant',
+                    'scope'       => 'tenant',
                     'tenant_slug' => $tenant->slug
                 ]);
 

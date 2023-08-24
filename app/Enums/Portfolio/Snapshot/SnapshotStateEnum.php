@@ -13,15 +13,15 @@ enum SnapshotStateEnum: string
 {
     use EnumHelperTrait;
 
-    case ON_PUBLISHED = 'on-published';
-    case ONLINE = 'online';
-    case HISTORIC = 'historic';
+    case UNPUBLISHED = 'unpublished';
+    case LIVE        = 'live';
+    case HISTORIC    = 'historic';
 
     public static function labels(): array
     {
         return [
-            'on-published' => __('On Published'),
-            'online'       => __('Online'),
+            'unpublished'  => __('Unpublished'),
+            'live'         => __('Live'),
             'historic'     => __('Historic')
         ];
     }

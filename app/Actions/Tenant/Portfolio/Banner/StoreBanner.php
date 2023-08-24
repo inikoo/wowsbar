@@ -129,7 +129,7 @@ class StoreBanner
 
         $validatedData=$request->validated();
 
-        if($portfolioWebsiteId=Arr::get($validatedData,'portfolio_website_id')){
+        if($portfolioWebsiteId=Arr::get($validatedData, 'portfolio_website_id')) {
             $parent=PortfolioWebsite::find($portfolioWebsiteId);
         }
 

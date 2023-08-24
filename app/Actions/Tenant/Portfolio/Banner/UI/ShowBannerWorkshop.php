@@ -83,8 +83,10 @@ class ShowBannerWorkshop extends InertiaAction
                         [
                             'type'   => 'button',
                             'style'  => 'save',
+                            'label'  => __('Publish'),
+                            'icon'   => 'far fa-rocket-launch',
                             'route'  => [
-                                'name'       => 'models.banner.update',
+                                'name'       => 'models.banner.publish',
                                 'parameters' => [
                                     'banner' => $banner->slug
                                 ]
@@ -97,6 +99,12 @@ class ShowBannerWorkshop extends InertiaAction
                 'firebase'          => true,
                 'bannerLayout'      => $banner->compiledLayout(),
                 'banner'            => $banner->only(['slug', 'ulid', 'id', 'code', 'name','state']),
+                'autoSaveRoute'     => [
+                    'name'       => 'models.banner.update',
+                    'parameters' => [
+                        'banner' => $banner->slug
+                    ]
+                ],
                 'imagesUploadRoute' => [
                     'name'      => $request->route()->getName().'.images.store',
                     'arguments' => $request->route()->originalParameters()

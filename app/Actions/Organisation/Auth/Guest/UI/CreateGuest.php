@@ -16,7 +16,6 @@ use Spatie\LaravelOptions\Options;
 
 class CreateGuest extends InertiaAction
 {
-
     /**
      * @throws \Exception
      */

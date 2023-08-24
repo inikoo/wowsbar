@@ -27,6 +27,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Organisation\OrganisationUser $organisationUser
+ * @property-read \App\Models\Search\OrganisationUniversalSearch|null $universalSearch
  * @method static Builder|OrganisationUserStats newModelQuery()
  * @method static Builder|OrganisationUserStats newQuery()
  * @method static Builder|OrganisationUserStats query()
