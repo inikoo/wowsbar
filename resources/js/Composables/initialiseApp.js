@@ -1,33 +1,14 @@
 // Used for OrgApp, PublicApp, TenantApp
 import { useLayoutStore } from "@/Stores/layout"
 import { useLocaleStore } from "@/Stores/locale"
-import { useFirebaseStore } from "@/Stores/firebase"
 import { usePage } from "@inertiajs/vue3"
 import { loadLanguageAsync } from "laravel-vue-i18n"
 import { watchEffect } from "vue"
-import { getAuth, signInWithCustomToken } from "firebase/auth";
 
-const auth = getAuth();
-export const authFirebase = (tokenBackend) => {
-    signInWithCustomToken(auth, tokenBackend)
-        .then((userCredential) => {
-            console.log("Successfully login to Firebase")
-            // console.log(userCredential)
-        })
-        .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            console.log("Error login to Firebase")
-            console.error(error)
-
-            // ...
-    });
-}
 
 export const initialiseApp = () => {
     const layout = useLayoutStore()
     const locale = useLocaleStore()
-    const firebaseStore = useFirebaseStore()
 
     if (usePage().props.localeData) {
         loadLanguageAsync(usePage().props.localeData.language.code)

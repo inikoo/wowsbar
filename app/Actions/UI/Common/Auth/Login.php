@@ -86,8 +86,8 @@ class Login
 
             $customToken = $auth
                 ->createCustomToken($tenant->slug, [
-                    'type'   => 'tenant',
-                    'tenant' => $tenant->slug
+                    'scope'   => 'tenant',
+                    'tenant_slug' => $tenant->slug
                 ]);
 
             $auth->signInWithCustomToken($customToken);

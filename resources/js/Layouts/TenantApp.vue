@@ -18,9 +18,9 @@ import AppTopBar from "@/Layouts/TopBar/AppTopBar.vue"
 import Breadcrumbs from "@/Components/Navigation/Breadcrumbs.vue"
 
 import { library } from "@fortawesome/fontawesome-svg-core"
-import { useFirebaseStore } from "@/Stores/firebase"
 
-import { initialiseApp, authFirebase } from "@/Composables/initialiseApp"
+import { useAuthFirebase } from "@/Composables/firebaseAuth"
+import { initialiseApp } from "@/Composables/initialiseApp"
 
 import {
     faHome,
@@ -73,7 +73,7 @@ const layout = initialiseApp()
 
 
 if (usePage().props.firebaseAuthToken) {
-    authFirebase(usePage().props.firebaseAuthToken)
+    useAuthFirebase(usePage().props.firebaseAuthToken)
 }
 
 
