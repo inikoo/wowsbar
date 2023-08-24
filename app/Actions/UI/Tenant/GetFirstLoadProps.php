@@ -13,6 +13,7 @@ use App\Helpers\ImgProxy\Image;
 use App\Http\Resources\Assets\LanguageResource;
 use App\Models\Assets\Language;
 use App\Models\Auth\User;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cache;
 use Lorisleiva\Actions\Concerns\AsObject;
@@ -62,7 +63,7 @@ class GetFirstLoadProps
                 }
             },
 
-            'firebaseAuthToken'  => $user ? Cache::get('auth_tenants_firebase_token_'.$user->id) : null,
+            'firebaseAuthToken'  => $user ? Arr::get($user->data,'firebase_auth_token') : null,
 
 
 

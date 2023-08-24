@@ -10,7 +10,6 @@ namespace App\Actions\UI\Common\Auth;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
@@ -22,9 +21,9 @@ class Login
 {
     use AsController;
 
-    private string $credentialHandler         = 'username';
-    private string $home                      = '/dashboard';
-    private string $gate                      = 'web';
+    private string $credentialHandler = 'username';
+    private string $home = '/dashboard';
+    private string $gate = 'web';
     private string $customTokenFirebasePrefix = 'web';
 
 
@@ -82,8 +81,6 @@ class Login
         $tenant = app('currentTenant');
 
         if ($this->gate == 'web') {
-            $customTokenFirebaseKey = 'auth_tenants_firebase_token_'.$user->id;
-
             $customToken = $auth
                 ->createCustomToken($tenant->slug, [
                     'scope'       => 'tenant',
@@ -92,7 +89,9 @@ class Login
 
             $auth->signInWithCustomToken($customToken);
 
-            Cache::put($customTokenFirebaseKey, $customToken->toString(), 3600);
+            $user->update([
+                'data->firebase_auth_token' => $customToken->toString()
+            ]);
         }
 
 
