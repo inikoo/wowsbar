@@ -26,7 +26,14 @@ library.add(faUser, faUserFriends)
 const props = defineProps<{
     title: string
     pageHead: object
-    firebase: Boolean
+    firebase: Boolean,
+    banner: {
+        'slug':string,
+        'ulid':string,
+        'id': number,
+        'code': string,
+        'name':string
+    }
     bannerLayout: {
         delay: number
         common: {
@@ -74,7 +81,7 @@ const data = reactive(cloneDeep(props.bannerLayout))
 const setData = ref(false)
 const firebase = ref(cloneDeep(props.firebase))
 const tenant = useLayoutStore().tenant
-const dbPath =  'tenants' +'/'+ tenant.code +'/banner_workshop/'+ props.imagesUploadRoute.arguments.banner
+const dbPath =  'tenants' +'/'+ tenant.slug +'/banner_workshop/'+ props.banner.slug
 
 const fetchInitialData = async () => {
     try {

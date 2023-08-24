@@ -59,7 +59,7 @@ class GetFirstLoadProps
         }
 
         return [
-            'tenant'     => app('currentTenant') ? app('currentTenant')->only('name', 'code', 'logo_id') : null,
+            'tenant'     => app('currentTenant') ? app('currentTenant')->only('name', 'code', 'logo_id','slug') : null,
             'localeData' =>
                 [
                     'language'        => LanguageResource::make($language)->getArray(),
