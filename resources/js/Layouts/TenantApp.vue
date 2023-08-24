@@ -102,7 +102,7 @@ const sidebarOpen = ref(false)
         </div>
 
         <!-- Main Content -->
-        <main class="relative flex flex-col pt-16 pb-5 ml-0 md:ml-10 xl:ml-56 bg-gray-50 text-gray-700 dark:bg-gray-700 dark:text-gray-400">
+        <main class="relative flex flex-col pt-20 pb-5 ml-0 md:pt-16 md:ml-10 xl:ml-56 bg-gray-50 text-gray-700 dark:bg-gray-700 dark:text-gray-400">
             <slot />
         </main>
 

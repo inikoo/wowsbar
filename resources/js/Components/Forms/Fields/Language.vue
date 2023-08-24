@@ -37,7 +37,8 @@ const props = defineProps<{
         placeholder: string
         required: boolean
         canClear?: boolean
-} }>()
+    }
+}>()
 
 // Note:
 // Value of the language (form[fieldName]) is a number
