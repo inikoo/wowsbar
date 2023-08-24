@@ -14,7 +14,6 @@ enum BannerStateEnum: string
     use EnumHelperTrait;
 
     case IN_PROCESS = 'in-process';
-    case READY = 'ready';
     case LIVE = 'live';
     case RETIRED = 'retired';
 
