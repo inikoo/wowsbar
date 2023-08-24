@@ -17,25 +17,29 @@ class StoreUserLogFirebase
     use AsObject;
     use AsAction;
 
-    public function handle(User|OrganisationUser $user, string $parent_type, ?string $slug, array $route): void
+    public function handle(User|OrganisationUser $user, string $parentTpe, ?string $parentSlug,bool $loggedIn, ?array $route): void
     {
         $database = app('firebase.database');
-        $path     = match ($parent_type) {
+        $path     = match ($parentTpe) {
             'Tenant' => 'tenants',
             default  => 'organisations',
         };
 
-        if ($slug) {
-            $path .= "/$slug";
+        if ($parentSlug) {
+            $path .= "/$parentSlug";
         }
         $path .= '/active_users/'.$user->username;
 
         $reference = $database->getReference($path);
 
-        $reference->set([
+        $data=[
+            'loggedIn'=>$loggedIn,
             'last_active' => now(),
-            'route'       => $route
-        ]);
-        //        CheckUserStatusFirebase::dispatch($tenant);
+        ];
+        if($route){
+            $data['route']=$route;
+        }
+
+        $reference->set($data);
     }
 }
