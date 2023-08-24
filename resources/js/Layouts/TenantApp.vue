@@ -70,8 +70,13 @@ library.add(
 
 
 const layout = initialiseApp()
-const firebaseStore = useFirebaseStore()
-// authFirebase(firebaseStore.auth_token)  
+
+
+if (usePage().props.firebaseAuthToken) {
+    authFirebase(usePage().props.firebaseAuthToken)
+}
+
+
 const sidebarOpen = ref(false)
 
 </script>
