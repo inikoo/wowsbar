@@ -76,7 +76,6 @@ const drop = (e) => {
 }
 
 const uploadImageRespone = (res) => {
-    console.log(res)
     let setData = []
     for (const set of res.data) {
         setData.push({

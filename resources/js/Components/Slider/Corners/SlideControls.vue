@@ -34,19 +34,19 @@ const toggleAutoplay = (swiper: any) => {
 
         <div @click="toggleAutoplay(props.swiperRef.$el.swiper)"
             class="flex items-center justify-center cursor-pointer w-9 aspect-square bg-gray-300/50 rounded-full hover:text-gray-800/60 hover:ring-1 hover:ring-gray-400 active:bg-gray-300/80"
-            title="Pause/resume autoplay">
+            title="Pause/resume autoplay" id="autoplay">
             <FontAwesomeIcon v-if="swiperAutoplayPause" icon="fas fa-play" class='text-xl ml-1' aria-hidden='true' />
             <FontAwesomeIcon v-if="!swiperAutoplayPause" icon="fas fa-pause" class='text-xl' aria-hidden='true' />
         </div>
 
         <div v-if="swiperAutoplayPause" @click="() => props.swiperRef.$el.swiper.slidePrev()"
              class="flex items-center justify-center cursor-pointer w-8 h-fit aspect-square bg-gray-300/50 rounded-full hover:text-gray-800/60 hover:ring-1 hover:ring-gray-400 active:bg-gray-300/80"
-             title="Go to previous banner">
+             title="Go to previous banner" id="previous">
             <FontAwesomeIcon icon='fas fa-chevron-left' class='text-xl mr-0.5' aria-hidden='true' />
         </div>
         <div v-if="swiperAutoplayPause" @click="() => props.swiperRef.$el.swiper.slideNext()"
             class="flex items-center justify-center cursor-pointer w-8 h-fit aspect-square bg-gray-300/50 rounded-full hover:text-gray-800/60 hover:ring-1 hover:ring-gray-400 active:bg-gray-300/80"
-            title="Go to next banner">
+            title="Go to next banner" id="next">
             <FontAwesomeIcon icon='fas fa-chevron-right' class='text-xl ml-0.5' aria-hidden='true' />
         </div>
     </div></template>
