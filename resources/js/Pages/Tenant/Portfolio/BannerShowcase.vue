@@ -17,7 +17,7 @@ library.add(faWindowMaximize, faGlobe)
 
 const props = defineProps<{
     data: {
-        layout: {
+        banner: {
             parameters: {}
             data: {
                 delay: number,
@@ -32,22 +32,32 @@ const props = defineProps<{
                     }
                 ]
             }
-        }
+        },
+        url: String
     }
     tab?: string
+    pageHead: Object
 }>()
 
-console.log(props.data)
+console.log(props)
+
 
 </script>
 
 
 <template>
     <Slider v-if="data.banner.components.length" :data="data.banner" />
-    <EmptyState v-else /> <!-- If slide is not exist -->
-    <div class="p-2.5">
-        <Input :fieldData="{copyButton : true, readonly: true}" fieldName='url' :form="{url: data.url }" />
+    <EmptyState v-else :data="{
+        title: 'You don\'t have slides to show',
+        description: 'Create new slides in the workshop to get started',
+        action: {
+            label: 'Workshop',
+            route: props.pageHead.route,
+            tooltip: 'Workshop'
+        }
+    }" />
+    <div :class="['p-2.5', !data.banner.components.length ?  'flex justify-center' : '' ]">
+        <Input :fieldData="{ copyButton: true, readonly: true }" fieldName='url' :form="{ url: data.url }" />
     </div>
-    
 </template>
 

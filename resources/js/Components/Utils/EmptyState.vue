@@ -25,6 +25,7 @@ const props = defineProps<{
             style: string
             tooltip: string
             type: string
+            icon: Boolean
         }
         description: string
         title: string
@@ -58,7 +59,7 @@ const randomIndex = Math.floor(Math.random() * randomIcon.length)
         <Link v-if="data?.action" :href="route(data?.action.route.name, data?.action.route.parameters)" class="">
             <Button size="xs" :style="data?.action.style"
                 class="capitalize text-gray-600">
-                <FontAwesomeIcon icon="far fa-plus" class="-ml-0.5 mr-1.5 h-5 w-5" aria-hidden="true" />
+                <FontAwesomeIcon v-if="data?.action.icon" icon="far fa-plus" class="-ml-0.5 mr-1.5 h-5 w-5" aria-hidden="true" />
                 {{ trans(data?.action.tooltip) }}
             </Button>
         </Link>
