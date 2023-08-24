@@ -6,7 +6,6 @@
  */
 
 use Illuminate\Support\Facades\Route;
-
 Route::middleware(["org-web"])->group(function () {
 
 

@@ -9,6 +9,7 @@ namespace App\Http;
 
 use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\EncryptCookies;
+use App\Http\Middleware\HandleDeliveryInertiaRequests;
 use App\Http\Middleware\HandleInertiaRequests;
 use App\Http\Middleware\HandleOrgInertiaRequests;
 use App\Http\Middleware\HandlePublicInertiaRequests;
@@ -67,6 +68,16 @@ class Kernel extends HttpKernel
             AddLinkHeadersForPreloadedAssets::class,
             LogUserFirebaseMiddleware::class,
             LogUserRequestMiddleware::class
+        ],
+        'delivery' => [
+            EncryptCookies::class,
+            AddQueuedCookiesToResponse::class,
+            StartSession::class,
+            ShareErrorsFromSession::class,
+            VerifyCsrfToken::class,
+            SubstituteBindings::class,
+            HandleDeliveryInertiaRequests::class,
+            AddLinkHeadersForPreloadedAssets::class,
         ],
         'public-web' => [
             EncryptCookies::class,
