@@ -150,43 +150,42 @@ onBeforeUnmount(() => {
 
 
 <template layout="TenantApp">
-  <Head :title="capitalize(title)" />
-  <PageHeading :data="pageHead" :dataToSubmit="data"></PageHeading>
+    <Head :title="capitalize(title)" />
+    <PageHeading :data="pageHead" :dataToSubmit="data"></PageHeading>
 
-  <div>
-    <!-- First set of components -->
-    <div v-if="data.components.filter((item) => item.ulid != null).length > 0">
-    <div class="flex w-full">
-    <div class="isolate inline-flex shadow-sm w-3/6" >
-      <button type="button"  @click="firebase = true" :class="[
-    'relative inline-flex items-center bg-white px-3 py-2 text-xs font-semibold border-r hover:bg-gray-50 focus:z-10',
-    firebase ? 'text-orange-500' : 'text-gray-900'
-  ]"><font-awesome-icon :icon="['fal', 'user']" class="p-1"/> Collaborative Work</button>
-      <button type="button" @click="firebase = false" :class="[
-    'relative inline-flex items-center bg-white px-3 py-2 text-xs font-semibold border-r hover:bg-gray-50 focus:z-10',
-    !firebase ? 'text-orange-500' : 'text-gray-900'
-  ]"><font-awesome-icon :icon="['fal', 'user-friends']" class="p-1"/> Individual Work</button>
-    </div>
-        <div class="flex justify-end pr-2 w-3/6">
-          <ScreenView @screenView="(val) => (screenView = val)" />
+    <div>
+        <!-- Component: The full Slider -->
+        <div v-if="data.components.filter((item) => item.ulid != null).length > 0">
+            <div class="flex w-full">
+                <div class="isolate inline-flex shadow-sm w-3/6">
+                    <button type="button" @click="firebase = true" :class="[
+                        'relative inline-flex items-center bg-white px-3 py-2 text-xs font-semibold border-r hover:bg-gray-50 focus:z-10',
+                        firebase ? 'text-orange-500' : 'text-gray-900'
+                    ]">
+                        <font-awesome-icon :icon="['fal', 'user']" class="p-1" /> Collaborative Work
+                    </button>
+                    <button type="button" @click="firebase = false" :class="[
+                        'relative inline-flex items-center bg-white px-3 py-2 text-xs font-semibold border-r hover:bg-gray-50 focus:z-10',
+                        !firebase ? 'text-orange-500' : 'text-gray-900'
+                    ]">
+                        <font-awesome-icon :icon="['fal', 'user-friends']" class="p-1" /> Individual Work
+                    </button>
+                </div>
+                <div class="flex justify-end pr-2 w-3/6">
+                    <ScreenView @screenView="(val) => (screenView = val)" />
+                </div>
+            </div>
+
+            <div class="flex justify-center pr-0.5">
+                <Slider :data="data" :jumpToIndex="jumpToIndex" :view="screenView" />
+            </div>
+            <SlidesWorkshop class="clear-both mt-2 p-2.5" :data="data" @jumpToIndex="(val) => (jumpToIndex = val)"
+                :imagesUploadRoute="imagesUploadRoute" :user="user" />
+        </div>
+
+        <!-- Component: Add slide if there is not exist -->
+        <div v-if="data.components.filter((item) => item.ulid != null).length == 0">
+            <SlidesWorkshopAddMode :data="data" :imagesUploadRoute="imagesUploadRoute" />
         </div>
     </div>
-
-      <div class="flex justify-center pr-0.5">
-        <Slider :data="data" :jumpToIndex="jumpToIndex" :view="screenView" />
-      </div>
-      <SlidesWorkshop
-        class="clear-both mt-2 p-2.5"
-        :data="data"
-        @jumpToIndex="(val) => (jumpToIndex = val)"
-        :imagesUploadRoute="imagesUploadRoute"
-        :user="user"
-      />
-    </div>
-
-    <!-- Second set of components -->
-    <div v-if="data.components.filter((item) => item.ulid != null).length == 0">
-      <SlidesWorkshopAddMode :data="data" :imagesUploadRoute="imagesUploadRoute" />
-    </div>
-  </div>
 </template>

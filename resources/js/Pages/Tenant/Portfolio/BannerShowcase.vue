@@ -5,12 +5,13 @@
   -->
 
 <script setup lang="ts">
-import { library } from '@fortawesome/fontawesome-svg-core';
+import { library } from '@fortawesome/fontawesome-svg-core'
 
-import Slider from "@/Components/Slider/Slider.vue";
+import Slider from "@/Components/Slider/Slider.vue"
 
 
 import { faWindowMaximize, faGlobe } from "@/../private/pro-light-svg-icons"
+import EmptyState from '@/Components/Utils/EmptyState.vue';
 
 library.add(faWindowMaximize, faGlobe)
 
@@ -39,6 +40,7 @@ const props = defineProps<{
 
 
 <template>
-    <Slider :data="data" />
+    <Slider v-if="data.components.length" :data="data" />
+    <EmptyState v-else /> <!-- If slide is not exist -->
 </template>
 
