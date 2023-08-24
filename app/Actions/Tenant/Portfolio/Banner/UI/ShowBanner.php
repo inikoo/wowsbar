@@ -92,8 +92,16 @@ class ShowBanner extends InertiaAction
                     'navigation' => BannerTabsEnum::navigation()
                 ],
                 PortfolioWebsiteTabsEnum::SHOWCASE->value => $this->tab == PortfolioWebsiteTabsEnum::SHOWCASE->value ?
-                    fn () => $banner->compiledLayout()
-                    : Inertia::lazy(fn () => $banner->compiledLayout()),
+                    fn () => [
+                        'banner'=>$banner->compiledLayout(),
+                        'url'=>'xxx'
+                    ]
+                    : Inertia::lazy(fn () =>
+                    [
+                        'banner'=>$banner->compiledLayout(),
+                        'url'=>'xxx'
+                    ]
+                    ),
 
                 PortfolioWebsiteTabsEnum::CHANGELOG->value => $this->tab == PortfolioWebsiteTabsEnum::CHANGELOG->value ?
                     fn () => HistoryResource::collection(IndexHistories::run($banner))
