@@ -429,10 +429,11 @@ const setCommonEdit = () => {
 };
 
 const uploadImageRespone = (res) => {
+    console.log('tambah',res)
     let setData = [];
     for (const set of res.data) {
         setData.push({
-            id: null,
+            id:  null,
             ulid: ulid(),
             layout: {
                 imageAlt: set.name,
@@ -444,6 +445,7 @@ const uploadImageRespone = (res) => {
     const newFiles = [...setData];
     props.data.components = [...props.data.components, ...newFiles];
     isOpenCropModal.value = false;
+    isOpenGalleryImages.value = false
 };
 </script>
 
@@ -451,7 +453,8 @@ const uploadImageRespone = (res) => {
     <div class="flex flex-grow gap-2.5">
         <Modal :isOpen="isOpenGalleryImages" @onClose="closeModalisOpenGalleryImages">
             <div>
-                <GalleryImages />
+                <GalleryImages :addImage="uploadImageRespone" :closeModal="()=>isOpenGalleryImages = false"/>
+                
             </div>
         </Modal>
 
