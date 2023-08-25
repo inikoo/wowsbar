@@ -12,7 +12,7 @@ import { capitalize } from "@/Composables/capitalize"
 import SlidesWorkshop from "@/Components/Workshop/SlidesWorkshop.vue"
 import Slider from "@/Components/Slider/Slider.vue"
 import SlidesWorkshopAddMode from "@/Components/Workshop/SlidesWorkshopAddMode.vue"
-import { cloneDeep, set as setData  } from "lodash"
+import { cloneDeep} from "lodash"
 import { set, onValue, get } from "firebase/database"
 import { useLayoutStore } from "@/Stores/layout"
 import { usePage } from "@inertiajs/vue3"
@@ -20,7 +20,6 @@ import { faUser, faUserFriends } from "@/../private/pro-light-svg-icons"
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { getDbRef } from '@/Composables/firebase'
-import ScreenView from "@/Components/ScreenView.vue"
 import { trans } from "laravel-vue-i18n"
 import { router } from '@inertiajs/vue3'
 import { faAsterisk } from "@/../private/pro-solid-svg-icons"
@@ -182,7 +181,7 @@ const saveRouteValue=(action)=>{
 
 const routeButton = (action) => {
     if (action.style == "exit") {
-       
+
         router.visit(route(action['route']['name'], action['route']['parameters']))
     } if (action.style == "save") {
         isModalOpen.value = true
@@ -194,12 +193,11 @@ const saveData = async () => {
     form.patch(
         route(routeSave.value['route']['name'], routeSave.value['route']['parameters'])
         , {
-        onSuccess: (res) => {
-            console.log(res)
+        onSuccess: () => {
             isModalOpen.value =  false
             router.visit(route(routeExit.value['route']['name'], routeExit.value['route']['parameters']))
         },
-            onError: errors => { 
+            onError: errors => {
                 alert(JSON.stringify(errors))
             },
     })
