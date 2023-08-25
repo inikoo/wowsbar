@@ -272,7 +272,7 @@ console.log('prop',props)
             <div class="flex justify-center pr-0.5">
                 <Slider :data="data" :jumpToIndex="jumpToIndex" :view="screenView" />
             </div>
-            <SlidesWorkshop class="clear-both mt-2 p-2.5" :data="data" @jumpToIndex="(val) => (jumpToIndex = val)"
+            <SlidesWorkshop class="clear-both mt-2 p-2.5" :data="data" @jumpToIndex="(val) => jumpToIndex = val"
                 :imagesUploadRoute="imagesUploadRoute" :user="user" />
         </div>
 
@@ -281,5 +281,5 @@ console.log('prop',props)
             <SlidesWorkshopAddMode :data="data" :imagesUploadRoute="imagesUploadRoute" />
         </div>
     </div>
-    <div @click="() => { console.log(data) }">show add</div>
+    <!-- <div @click="() => { console.log(data) }">show add</div> -->
 </template>

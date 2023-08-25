@@ -491,11 +491,9 @@ const uploadImageRespone = (res) => {
                         selectComponentForEdition(slide),
                         emits(
                             'jumpToIndex',
-                            data.components.findIndex((component) => {
-                                return component.id == slide.id;
-                            })
-                        )
-                        " v-if="slide.ulid" :class="[
+                            data.components.findIndex(obj => obj.ulid === slide.ulid)
+                        )"
+                        v-if="slide.ulid" :class="[
                             'grid grid-flow-col relative sm:py-1 border mb-2 items-center justify-between hover:cursor-pointer',
                             slide.ulid == get(currentComponentBeenEdited, 'ulid')
                                 ? 'border-l-orange-500 border-l-4 bg-gray-200/60 text-gray-600 font-medium'
