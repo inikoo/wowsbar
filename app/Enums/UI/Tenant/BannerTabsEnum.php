@@ -15,7 +15,7 @@ enum BannerTabsEnum: string
     use EnumHelperTrait;
     use HasTabs;
 
-    case SHOWCASE             = 'showcase';
+    case SHOWCASE              = 'showcase';
     case SNAPSHOTS             = 'snapshots';
 
 
