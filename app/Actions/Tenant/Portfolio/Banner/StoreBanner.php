@@ -8,11 +8,9 @@
 namespace App\Actions\Tenant\Portfolio\Banner;
 
 use App\Actions\Tenancy\Tenant\Hydrators\TenantHydrateBanners;
-use App\Actions\Tenant\Portfolio\Banner\Elasticsearch\StoreBannerElasticsearch;
 use App\Actions\Tenant\Portfolio\Banner\Hydrators\BannerHydrateUniversalSearch;
 use App\Actions\Tenant\Portfolio\Banner\UI\ParseBannerLayout;
 use App\Actions\Tenant\Portfolio\PortfolioWebsite\Hydrators\PortfolioWebsiteHydrateBanners;
-use App\Actions\Tenant\Portfolio\Slide\StoreSlide;
 use App\Actions\Tenant\Portfolio\Snapshot\StoreSnapshot;
 use App\Models\Portfolio\Banner;
 use App\Models\Portfolio\PortfolioWebsite;
@@ -60,7 +58,6 @@ class StoreBanner
         list($layout, $slides) = ParseBannerLayout::run($layout);
 
         data_set($modelData, 'tenant_id', app('currentTenant')->id);
-        data_set($modelData, 'layout', $layout);
         data_set($modelData, 'data.website_slug', $parent->slug);
         data_set($modelData, 'ulid', Str::ulid());
         if (class_basename($parent) == 'PortfolioWebsite') {
@@ -69,22 +66,21 @@ class StoreBanner
 
         /** @var Banner $banner */
         $banner = Banner::create($modelData);
-        if ($slides) {
-            foreach ($slides as $bannerComponentData) {
-                StoreSlide::run(
-                    contentBlock: $banner,
-                    modelData: $bannerComponentData,
-                );
-            }
-        }
-        $banner->stats()->create();
-
-        StoreSnapshot::run(
+        $snapshot=StoreSnapshot::run(
             $banner,
             [
-                'compiled_layout'=> $banner->compiledLayout()
-            ]
-        );
+                'layout'=>$layout
+            ],
+            $slides);
+
+        $banner->update(
+            [
+                'unpublished_snapshot_id'=>$snapshot->id,
+                'compiled_layout'=>$snapshot->compiledLayout()
+            ]);
+        $banner->stats()->create();
+
+
 
         if (class_basename($parent) == 'PortfolioWebsite') {
             $parent->banners()->attach(
@@ -105,7 +101,7 @@ class StoreBanner
         }
 
         BannerHydrateUniversalSearch::dispatch($banner);
-        StoreBannerElasticsearch::run($banner);
+      //  StoreBannerElasticsearch::run($banner);
 
         return $banner;
     }

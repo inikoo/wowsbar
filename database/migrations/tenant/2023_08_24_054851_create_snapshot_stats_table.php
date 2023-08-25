@@ -11,9 +11,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class () extends Migration {
-    /**
-     * Run the migrations.
-     */
+
     public function up(): void
     {
         Schema::create('snapshot_stats', function (Blueprint $table) {
@@ -24,10 +22,13 @@ return new class () extends Migration {
             $table->foreign('snapshot_id')->references('id')->on('snapshots')->onUpdate('cascade')->onDelete('cascade');
             $table->timestampsTz();
         });
+
+
     }
 
     public function down(): void
     {
+
         Schema::dropIfExists('snapshot_stats');
     }
 };

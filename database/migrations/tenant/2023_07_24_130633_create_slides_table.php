@@ -17,8 +17,7 @@ return new class () extends Migration {
             $table->ulid()->index()->nullable();
             $table->unsignedSmallInteger('tenant_id')->index();
             $table->foreign('tenant_id')->references('id')->on('tenants');
-            $table->unsignedSmallInteger('banner_id');
-            $table->foreign('banner_id')->references('id')->on('banners')->onUpdate('cascade')->onDelete('cascade');
+            $table->unsignedSmallInteger('snapshot_id');
             $table->boolean('visibility')->default(true)->index();
             $table->jsonb('layout')->nullable();
             $table->unsignedInteger('image_id')->nullable();

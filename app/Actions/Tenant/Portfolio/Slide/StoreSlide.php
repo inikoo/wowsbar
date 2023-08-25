@@ -9,6 +9,7 @@ namespace App\Actions\Tenant\Portfolio\Slide;
 
 use App\Models\Portfolio\Banner;
 use App\Models\Portfolio\Slide;
+use App\Models\Portfolio\Snapshot;
 use Illuminate\Support\Str;
 use Lorisleiva\Actions\Concerns\AsAction;
 
@@ -17,13 +18,13 @@ class StoreSlide
     use AsAction;
 
 
-    public function handle(Banner $banner, array $modelData): Slide
+    public function handle(Snapshot $snapshot, array $modelData): Slide
     {
 
 
         data_fill($modelData, 'ulid', Str::ulid());
         /** @var Slide $slide */
-        $slide= $banner->slides()->create($modelData);
+        $slide= $snapshot->slides()->create($modelData);
 
         return $slide;
     }
