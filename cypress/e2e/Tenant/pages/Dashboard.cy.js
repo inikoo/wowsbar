@@ -49,7 +49,8 @@ describe("Navigation", () => {
 
     it("search", () => {
         cy.get('#search').click();
-        // cy.get('input[placeholder*=Search...]').type('test');
+        cy.get('input[type*=text]').type('My{enter}');
+        cy.intercept('http://aiku.wowsbar.test/search/?q=My%20&route_src=dashboard.show')
     });
 
 

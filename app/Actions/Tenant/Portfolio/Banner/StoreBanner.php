@@ -65,19 +65,21 @@ class StoreBanner
         }
 
         /** @var Banner $banner */
-        $banner = Banner::create($modelData);
+        $banner  = Banner::create($modelData);
         $snapshot=StoreSnapshot::run(
             $banner,
             [
-                'layout'=>$layout
+                'layout'=> $layout
             ],
-            $slides);
+            $slides
+        );
 
         $banner->update(
             [
-                'unpublished_snapshot_id'=>$snapshot->id,
-                'compiled_layout'=>$snapshot->compiledLayout()
-            ]);
+                'unpublished_snapshot_id'=> $snapshot->id,
+                'compiled_layout'        => $snapshot->compiledLayout()
+            ]
+        );
         $banner->stats()->create();
 
 
@@ -101,7 +103,7 @@ class StoreBanner
         }
 
         BannerHydrateUniversalSearch::dispatch($banner);
-      //  StoreBannerElasticsearch::run($banner);
+        //  StoreBannerElasticsearch::run($banner);
 
         return $banner;
     }

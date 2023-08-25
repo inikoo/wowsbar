@@ -61,7 +61,8 @@ class IndexPortfolioWebsites extends InertiaAction
 
         return $queryBuilder
             ->defaultSort('portfolio_websites.code')
-            ->select(['portfolio_websites.code', 'portfolio_websites.name', 'portfolio_websites.slug', 'portfolio_websites.domain'])
+            ->with('stats')
+//            ->select(['portfolio_websites.code', 'portfolio_websites.name', 'portfolio_websites.slug', 'portfolio_websites.domain', 'portfolio_websites.stats'])
             ->allowedSorts(['slug', 'code', 'name'])
             ->allowedFilters([$globalSearch])
             ->withPaginator($prefix)
@@ -90,6 +91,7 @@ class IndexPortfolioWebsites extends InertiaAction
                 ->column(key: 'slug', label: __('code'), sortable: true)
                 ->column(key: 'name', label: __('name'), sortable: true)
                 ->column(key: 'domain', label: __('domain'), sortable: true)
+                ->column(key: 'banners', label: __('banners'), sortable: true)
                 ->defaultSort('slug');
         };
     }

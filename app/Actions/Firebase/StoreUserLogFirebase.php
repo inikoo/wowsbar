@@ -17,10 +17,10 @@ class StoreUserLogFirebase
     use AsObject;
     use AsAction;
 
-    public function handle(User|OrganisationUser $user, string $parentTpe, ?string $parentSlug, bool $loggedIn, ?array $route): void
+    public function handle(User|OrganisationUser $user, string $parentType, ?string $parentSlug, bool $loggedIn, ?array $route): void
     {
         $database = app('firebase.database');
-        $path     = match ($parentTpe) {
+        $path     = match ($parentType) {
             'Tenant' => 'tenants',
             default  => 'organisations',
         };

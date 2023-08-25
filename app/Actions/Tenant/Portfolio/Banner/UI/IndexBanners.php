@@ -81,7 +81,7 @@ class IndexBanners extends InertiaAction
 
         return $queryBuilder
             ->defaultSort('banners.code')
-            ->select(['banners.code', 'banners.name', 'banners.slug'])
+//            ->select(['banners.code', 'banners.name', 'banners.slug'])
             ->allowedSorts(['slug', 'code', 'name'])
             ->allowedFilters([$globalSearch])
             ->withPaginator($prefix)
@@ -157,6 +157,7 @@ class IndexBanners extends InertiaAction
                 ->column(key: 'slug', label: __('code'), sortable: true)
                 ->column(key: 'name', label: __('name'), sortable: true)
                 ->column(key: 'banner', label: __('banner'))
+                ->column(key: 'websites', label: __('websites'))
                 ->defaultSort('slug');
         };
     }
@@ -241,7 +242,6 @@ class IndexBanners extends InertiaAction
 
                 ],
                 'data'        => BannerResource::collection($banners),
-
             ]
         )->table(
             $this->tableStructure(
