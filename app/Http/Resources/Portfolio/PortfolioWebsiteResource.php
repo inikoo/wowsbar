@@ -25,7 +25,7 @@ class PortfolioWebsiteResource extends JsonResource
             'code'           => $this->code,
             'name'           => $this->name,
             'domain'         => $this->domain,
-            'banners'        => $this->stats->number_banners,
+            'banners'        => $this->stats->number_banners
         ];
     }
 }
