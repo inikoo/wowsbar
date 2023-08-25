@@ -92,6 +92,7 @@ const setData = ref(false)
 const firebase = ref(cloneDeep(props.firebase))
 const tenant = useLayoutStore().tenant
 const dbPath = 'tenants' + '/' + tenant.slug + '/banner_workshop/' + props.banner.slug
+const comment = ref('')
 
 const fetchInitialData = async () => {
     try {
@@ -164,37 +165,44 @@ onBeforeUnmount(() => {
 //     event.returnValue = setDataBeforeLeave() // This message will be shown to the user
 // })
 
+
+
+
 const isModalOpen = ref(false)
+const routeExit = ref()
 const routeSave = ref()
+
+const saveRouteValue=(action)=>{
+    if (action.style == "exit") {
+        routeExit.value = action
+   } if (action.style == "save") {
+       routeSave.value = action
+   }
+}
+
 const routeButton = (action) => {
     if (action.style == "exit") {
+       
         router.visit(route(action['route']['name'], action['route']['parameters']))
     } if (action.style == "save") {
         isModalOpen.value = true
-        routeSave.value = action
-        // router.patch(route(action['route']['name'],action['route']['parameters']),data)
     }
 }
 
 const saveData = async () => {
-     const form = useForm( data )
-
+     const form = useForm({ ...data, comment : comment.value })
     form.patch(
         route(routeSave.value['route']['name'], routeSave.value['route']['parameters'])
         , {
-        onSuccess: () => alert('test'),
-            onError: errors => { console.log(errors)  },
+        onSuccess: (res) => {
+            console.log(res)
+            isModalOpen.value =  false
+            router.visit(route(routeExit.value['route']['name'], routeExit.value['route']['parameters']))
+        },
+            onError: errors => { 
+                alert(JSON.stringify(errors))
+            },
     })
-
-/*
-    try {
-        await router.patch(route(routeSave.value['route']['name'], routeSave.value['route']['parameters']),data);
-    } catch (error) {
-        console.error("An error occurred:", error);
-        alert("An error occurred. Please try again.");
-    }
-
- */
 };
 
 console.log('prop',props)
@@ -210,7 +218,7 @@ console.log('prop',props)
                 <span>{{ trans('Comment') }}</span>
             </div>
             <div class="py-2.5">
-                <textarea rows="3"
+                <textarea rows="3" v-model="comment"
                     class="block w-full rounded-md shadow-sm dark:bg-gray-600 dark:text-gray-400 border-gray-300 dark:border-gray-500 focus:border-gray-500 focus:ring-gray-500 sm:text-sm" />
             </div>
             <div class="flex justify-end">
@@ -239,7 +247,7 @@ console.log('prop',props)
                         <FontAwesomeIcon :icon="head.getActionIcon(action)" aria-hidden="true" />
                         {{ trans(head.getActionLabel(action)) }}
                     </Button>
-
+                        {{ saveRouteValue(action) }}
                 </span>
             </div>
         </template>

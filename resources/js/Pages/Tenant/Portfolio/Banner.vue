@@ -28,7 +28,8 @@ const props = defineProps<{
         navigation: object;
     }
     changelog?: object,
-    showcase?: object
+    showcase?: object,
+    snapshots?: object,
 }>()
 
 let currentTab = ref(props.tabs.current);
@@ -40,6 +41,7 @@ const component = computed(() => {
         showcase: BannerShowcase,
         details: ModelDetails,
         changelog: TableHistories,
+        snapshots: TableHistories
     };
     return components[currentTab.value];
 

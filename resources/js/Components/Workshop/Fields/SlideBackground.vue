@@ -69,6 +69,7 @@ const updateLocalFormValue = (newValue) => {
 const uploadImageRespone=(res)=>{
     value.value = {...res.data[0]}
     isOpenCropModal.value = false
+    isOpen.value =  false
 }
 
 </script>
@@ -77,7 +78,7 @@ const uploadImageRespone=(res)=>{
     <div class="block w-full">
         <Modal :show="isOpen" @onClose="closeModal">
             <div>
-                <GalleryImages />
+                <GalleryImages :addImage="uploadImageRespone" :closeModal="()=>isOpen = false" :multiple="false" />
             </div>
         </Modal>
         <Modal :isOpen="isOpenCropModal" @onClose="closeModalisOpenCropModal">

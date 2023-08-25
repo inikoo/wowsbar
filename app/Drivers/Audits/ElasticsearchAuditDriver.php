@@ -20,6 +20,7 @@ use Exception;
 use hisorange\BrowserDetect\Parser as Browser;
 use Illuminate\Foundation\Bus\PendingDispatch;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Str;
 use OwenIt\Auditing\Contracts\Audit;
 use OwenIt\Auditing\Contracts\Auditable;
 use OwenIt\Auditing\Contracts\AuditDriver;
@@ -120,16 +121,9 @@ class ElasticsearchAuditDriver implements AuditDriver
 
     public function indexAuditDocument($model)
     {
-        $index=match($model['user_type']) {
-            'OrganisationUser'=> '_org',
-            'PublicUser'      => '_public',
-            'User'            => '_tenant_'.app('currentTenant')->slug
-        };
-
-
         try {
             return IndexElasticsearchDocument::dispatch(
-                config('elasticsearch.index_prefix').'audit_'.$index,
+                config('elasticsearch.index_prefix').'audit_'.Str::snake(class_basename($model)),
                 $this->body($model),
                 $this->type
             );
