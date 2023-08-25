@@ -17,7 +17,7 @@ const formatDate = (dateIso: Date) => {
         // const hours = date.getHours().toString()
         // const minutes = date.getMinutes().toString()
 
-        return date.toString()
+        return dateIso.toString()
     }
     return ''
 }
@@ -36,8 +36,8 @@ console.log(props)
 
         <!-- Looping: Last Edited Banners -->
         <ul  role="list" class="mt-3 grid grid-cols-1 gap-x-6 gap-y-8 lg:grid-cols-3 xl:gap-x-8">
-            <Link :href="route(lastEditedBanner.route?.name, lastEditedBanner.route?.parameters)" v-for="lastEditedBanner in banners.data" :key="lastEditedBanner.id" class="overflow-hidden rounded-md ring-1 ring-gray-300 hover:ring-2 hover:ring-gray-400">
-                <div v-if="lastEditedBanner.image" class="h-auto aspect-[4/1] flex items-center justify-center gap-x-4 border-b border-gray-700/5 bg-gray-200">
+            <Link :href="`${route(lastEditedBanner.route?.name, lastEditedBanner.route?.parameters)}`" v-for="lastEditedBanner in banners.data" :key="lastEditedBanner.id" class="overflow-hidden rounded-md ring-1 ring-gray-300 hover:ring-2 hover:ring-gray-400">
+                <div class="h-auto aspect-[4/1] flex items-center justify-center gap-x-4 border-b border-gray-700/5 bg-gray-200 overflow-hidden">
                     <Image :src="lastEditedBanner.image" :alt="lastEditedBanner?.name" class="" />
                 </div>
                 <dl class="divide-y divide-transparent px-4 pt-1 pb-3 text-sm">
