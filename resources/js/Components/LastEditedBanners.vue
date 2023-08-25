@@ -2,6 +2,8 @@
 import Image from '@/Components/Image.vue'
 import { Link } from '@inertiajs/vue3'
 import { trans } from 'laravel-vue-i18n'
+import moment from 'moment-timezone'
+const userTimezone = moment.tz.guess(true)
 
 const props = defineProps<{
     banners?: any
@@ -51,7 +53,7 @@ console.log(props)
                         <!-- <dt class="text-gray-500 text-sm">{{ trans('Last edit') }}</dt> -->
                         <dd class="text-gray-600 text-xs italic tracking-wide space-x-1">
                             <span class="text-gray-500">{{ trans('Last edited on') }}</span>
-                            <time :datetime="lastEditedBanner.updated_at">{{  formatDate(lastEditedBanner.updated_at) }}</time>
+                            <time :datetime="lastEditedBanner.updated_at">{{  moment.utc(lastEditedBanner.updated_at).tz(userTimezone) }}</time>
                         </dd>
                     </div>
                 </dl>
