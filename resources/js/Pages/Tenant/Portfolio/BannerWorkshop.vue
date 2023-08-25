@@ -12,7 +12,7 @@ import { capitalize } from "@/Composables/capitalize"
 import SlidesWorkshop from "@/Components/Workshop/SlidesWorkshop.vue"
 import Slider from "@/Components/Slider/Slider.vue"
 import SlidesWorkshopAddMode from "@/Components/Workshop/SlidesWorkshopAddMode.vue"
-import { cloneDeep, set as setData, isEqual } from "lodash"
+import { cloneDeep, set as setData  } from "lodash"
 import { set, onValue, get } from "firebase/database"
 import { useLayoutStore } from "@/Stores/layout"
 import { usePage } from "@inertiajs/vue3"
@@ -23,26 +23,26 @@ import { getDbRef } from '@/Composables/firebase'
 import ScreenView from "@/Components/ScreenView.vue"
 import { trans } from "laravel-vue-i18n"
 import { router } from '@inertiajs/vue3'
-import { faDraftingCompass,faEmptySet, faMoneyCheckAlt, faPeopleArrows, faSlidersH, faSave, faSuitcase} from "@/../private/pro-light-svg-icons"
-import { faPencil, faArrowLeft, faBorderAll, faTrashAlt } from "@/../private/pro-regular-svg-icons"
-import { faPlus } from "@/../private/pro-solid-svg-icons"
+import { faAsterisk } from "@/../private/pro-solid-svg-icons"
 import Button from "@/Components/Elements/Buttons/Button.vue"
 import Modal from '@/Components/Utils/Modal.vue'
+import { faRocketLaunch } from "@/../private/pro-regular-svg-icons"
+import {  useForm } from '@inertiajs/vue3'
 
-library.add(faDraftingCompass,faEmptySet, faMoneyCheckAlt, faPeopleArrows, faSlidersH, faPlus, faPencil, faArrowLeft, faBorderAll, faTrashAlt,faSave, faSuitcase);
+library.add( faAsterisk, faRocketLaunch, faUser, faUserFriends );
 
 
-library.add(faUser, faUserFriends)
+
 const props = defineProps<{
     title: string
     pageHead: object
     firebase: Boolean,
     banner: {
-        'slug':string,
-        'ulid':string,
+        'slug': string,
+        'ulid': string,
         'id': number,
         'code': string,
-        'name':string
+        'name': string
     }
     bannerLayout: {
         delay: number
@@ -91,7 +91,7 @@ const data = reactive(cloneDeep(props.bannerLayout))
 const setData = ref(false)
 const firebase = ref(cloneDeep(props.firebase))
 const tenant = useLayoutStore().tenant
-const dbPath =  'tenants' +'/'+ tenant.slug +'/banner_workshop/'+ props.banner.slug
+const dbPath = 'tenants' + '/' + tenant.slug + '/banner_workshop/' + props.banner.slug
 
 const fetchInitialData = async () => {
     try {
@@ -108,7 +108,7 @@ const fetchInitialData = async () => {
             }
         } else {
             Object.assign(data, { ...data, ...cloneDeep(props.bannerLayout) })
-            await set(getDbRef(dbPath),  data)
+            await set(getDbRef(dbPath), data)
         }
         setData.value = false
     } catch (error) {
@@ -121,7 +121,7 @@ onValue(getDbRef(dbPath), (snapshot) => {
     if (snapshot.exists()) {
         const firebaseData = snapshot.val()
         if (firebaseData) {
-            Object.assign(data, { ...data, ...firebaseData})
+            Object.assign(data, { ...data, ...firebaseData })
         }
     }
 })
@@ -166,58 +166,75 @@ onBeforeUnmount(() => {
 
 const isModalOpen = ref(false)
 const routeSave = ref()
-const routeButton =(action)=>{
+const routeButton = (action) => {
     console.log(action)
-   if(action.style == "exit"){
-    router.visit(route(action['route']['name'],action['route']['parameters']))
-   }if(action.style == "save"){
-    isModalOpen.value = true
-    routeSave.value = action
-    // router.patch(route(action['route']['name'],action['route']['parameters']),data)
-   }
-
+    if (action.style == "exit") {
+        router.visit(route(action['route']['name'], action['route']['parameters']))
+    } if (action.style == "save") {
+        isModalOpen.value = true
+        routeSave.value = action
+        // router.patch(route(action['route']['name'],action['route']['parameters']),data)
+    }
 }
 
-const saveData = () => {
-console.log(routeSave.value )
- router.patch(route(routeSave.value['route']['name'],routeSave.value['route']['parameters']),data)
-}
+const saveData = async () => {
+    // const setDatatoForm = useForm({data : {}}) 
+    
+    try {
+        await router.patch(route(routeSave.value['route']['name'], routeSave.value['route']['parameters']),data);
+    } catch (error) {
+        console.error("An error occurred:", error);
+        alert("An error occurred. Please try again.");
+    }
+};
+
+console.log('prop',props)
 
 </script>
 
 
 <template layout="TenantApp">
-
     <Modal :isOpen="isModalOpen" @onClose="isModalOpen = false">
-           Comment
-           <textarea rows="3" cols=""></textarea>"
-           <Button size="xs" @click="saveData" class="capitalize inline-flex items-center rounded-md text-sm font-medium shadow-sm gap-x-2">
-                 save
-            </Button> 
-
+        <div>
+            <div class="inline-flex items-start leading-none">
+                <FontAwesomeIcon :icon="['fas', 'asterisk']" class="font-light text-[12px] text-red-400 mr-1" />
+                <span>Comment</span>
+            </div>
+            <div class="py-2.5">
+                <textarea rows="3"
+                    class="block w-full rounded-md shadow-sm dark:bg-gray-600 dark:text-gray-400 border-gray-300 dark:border-gray-500 focus:border-gray-500 focus:ring-gray-500 sm:text-sm" />
+            </div>
+            <div class="flex justify-end">
+                <Button size="xs" @click="saveData"
+                    class="capitalize inline-flex items-center rounded-md text-sm font-medium shadow-sm gap-x-2">
+                    <FontAwesomeIcon :icon="['far', 'fa-rocket-launch']" />
+                    Publish
+                </Button>
+            </div>
+        </div>
     </Modal>
-    
+
     <Head :title="capitalize(title)" />
     <PageHeading :data="pageHead">
-            <template #button="{dataPageHead : head}" >
-                <div class="flex items-center gap-2">
-         
+        <template #button="{ dataPageHead: head }">
+            <div class="flex items-center gap-2">
+
                 <span v-for="action in head.data.actions">
-                         <Button size="xs"
-                            :style="action.style"
-                            @click="routeButton(action)"
-                            :id="head.getActionLabel(action).replace(' ', '-')"
-                            class="capitalize inline-flex items-center rounded-md text-sm font-medium shadow-sm gap-x-2">
-                            <FontAwesomeIcon v-if="action.icon && action.icon == 'fad fa-save'" aria-hidden="true" :icon="['fad', 'save']" style="--fa-primary-color: #f3f3f3; --fa-secondary-color: #ff6600; --fa-secondary-opacity: 1;" size="sm" :class="[iconClass]" />
-                            <FontAwesomeIcon  :icon="head.getActionIcon(action)"
-                                aria-hidden="true" />
-                            {{ trans(head.getActionLabel(action)) }}
-                        </Button> 
-                
+                    <Button size="xs" :style="action.style" @click="routeButton(action)"
+                        :id="head.getActionLabel(action).replace(' ', '-')"
+                        class="capitalize inline-flex items-center rounded-md text-sm font-medium shadow-sm gap-x-2">
+                        <FontAwesomeIcon v-if="action.icon && action.icon == 'fad fa-save'" aria-hidden="true"
+                            :icon="['fad', 'save']"
+                            style="--fa-primary-color: #f3f3f3; --fa-secondary-color: #ff6600; --fa-secondary-opacity: 1;"
+                            size="sm" :class="[iconClass]" />
+                        <FontAwesomeIcon :icon="head.getActionIcon(action)" aria-hidden="true" />
+                        {{ trans(head.getActionLabel(action)) }}
+                    </Button>
+
                 </span>
             </div>
-            </template>
-        </PageHeading>
+        </template>
+    </PageHeading>
 
     <div>
         <!-- Component: The full Slider -->
@@ -254,5 +271,5 @@ console.log(routeSave.value )
             <SlidesWorkshopAddMode :data="data" :imagesUploadRoute="imagesUploadRoute" />
         </div>
     </div>
-  <div @click="()=>{console.log(data)}">show add</div>
+    <div @click="() => { console.log(data) }">show add</div>
 </template>
