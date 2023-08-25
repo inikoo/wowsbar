@@ -166,7 +166,9 @@ const fieldName = ref()
                 </Button>
                 <Button :key="combinedImages.length" size="xs" :style="combinedImages.length > 0 ? 'primary' : 'disabled'"
                     :class="[combinedImages.length > 0 ? '' : 'cursor-not-allowed']"
-                    @click="combinedImages.length > 0 ? isModalOpen = true : false">
+                    @click="combinedImages.length > 0 ? isModalOpen = true : false"
+                    id="create-banner"
+                    >
                     Create Banner ({{ combinedImages.length }})
                 </Button>
             </div>

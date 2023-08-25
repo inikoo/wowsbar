@@ -198,7 +198,7 @@ console.log('prop',props)
         <div>
             <div class="inline-flex items-start leading-none">
                 <FontAwesomeIcon :icon="['fas', 'asterisk']" class="font-light text-[12px] text-red-400 mr-1" />
-                <span>Comment</span>
+                <span>{{ trans('Comment') }}</span>
             </div>
             <div class="py-2.5">
                 <textarea rows="3"
@@ -208,7 +208,7 @@ console.log('prop',props)
                 <Button size="xs" @click="saveData"
                     class="capitalize inline-flex items-center rounded-md text-sm font-medium shadow-sm gap-x-2">
                     <FontAwesomeIcon :icon="['far', 'fa-rocket-launch']" />
-                    Publish
+                    {{ trans('Publish') }}
                 </Button>
             </div>
         </div>
