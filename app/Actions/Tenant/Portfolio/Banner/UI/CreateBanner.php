@@ -12,6 +12,7 @@ use App\Actions\Portfolio\PortfolioWebsite\UI\GetPortfolioWebsitesOptions;
 use App\Models\Portfolio\PortfolioWebsite;
 use App\Models\Tenancy\Tenant;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -68,6 +69,7 @@ class CreateBanner extends InertiaAction
                     'type'     => 'input',
                     'label'    => __('code'),
                     'required' => true,
+                    'value'    => Str::random(3)
                 ],
                 'name' => [
                     'type'     => 'input',

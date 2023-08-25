@@ -7,10 +7,13 @@
 
 namespace App\Actions\Tenant\Portfolio\Banner\UI;
 
+use App\Actions\Helpers\History\IndexHistories;
 use App\Actions\InertiaAction;
 use App\Actions\Tenant\Portfolio\PortfolioWebsite\UI\ShowPortfolioWebsite;
 use App\Actions\UI\Tenant\Portfolio\ShowPortfolioDashboard;
 use App\Enums\Portfolio\Banner\BannerStateEnum;
+use App\Enums\UI\Tenant\BannerTabsEnum;
+use App\Http\Resources\History\HistoryResource;
 use App\Http\Resources\Portfolio\BannerResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\Portfolio\Banner;
@@ -241,6 +244,7 @@ class IndexBanners extends InertiaAction
 ]
 
                 ],
+
                 'data'        => BannerResource::collection($banners),
             ]
         )->table(

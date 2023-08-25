@@ -24,7 +24,7 @@ class BannerResource extends JsonResource
                 'name'       => 'portfolio.banners.show',
                 'parameters' => [$banner->slug]
             ],
-            'websites'       => $banner->portfolioWebsite->pluck('name'),
+            'websites'       => implode(', ', $banner->portfolioWebsite->pluck('name')->toArray()),
             'updated_at'     => $banner->updated_at
         ];
     }

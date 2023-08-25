@@ -16,7 +16,8 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
 
-class ShowGallery extends InertiaAction
+class
+ShowGallery extends InertiaAction
 {
     public function authorize(ActionRequest $request): bool
     {

@@ -17,6 +17,7 @@ use Elastic\Elasticsearch\Exception\ClientResponseException;
 use Elastic\Elasticsearch\Exception\ServerResponseException;
 use Exception;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Str;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
 use Psr\Container\ContainerExceptionInterface;
@@ -38,7 +39,7 @@ class IndexHistories
         if ($client instanceof Client) {
             try {
                 $params  = [
-                    'index' => config('elasticsearch.index_prefix') . 'user_requests_' . app('currentTenant')->slug,
+                    'index' => config('elasticsearch.index_prefix').'audit_'.Str::snake($auditableType),
                     'size'  => 10000,
                     'body'  => [
                         'query' => [
