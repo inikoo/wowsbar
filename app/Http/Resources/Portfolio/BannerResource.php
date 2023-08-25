@@ -25,7 +25,6 @@ class BannerResource extends JsonResource
                 'parameters' => [$banner->slug]
             ],
             'websites'       => implode(', ', $banner->portfolioWebsite->pluck('name')->toArray()),
-            // 'components'     => SlideResource::collection($banner->slides),
             'updated_at'     => $banner->updated_at
         ];
     }

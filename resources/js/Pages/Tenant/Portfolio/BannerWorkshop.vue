@@ -92,6 +92,7 @@ const setData = ref(false)
 const firebase = ref(cloneDeep(props.firebase))
 const tenant = useLayoutStore().tenant
 const dbPath = 'tenants' + '/' + tenant.slug + '/banner_workshop/' + props.banner.slug
+const comment = ref('')
 
 const fetchInitialData = async () => {
     try {
@@ -167,7 +168,6 @@ onBeforeUnmount(() => {
 const isModalOpen = ref(false)
 const routeSave = ref()
 const routeButton = (action) => {
-    console.log(action)
     if (action.style == "exit") {
         router.visit(route(action['route']['name'], action['route']['parameters']))
     } if (action.style == "save") {
@@ -178,14 +178,26 @@ const routeButton = (action) => {
 }
 
 const saveData = async () => {
-    // const setDatatoForm = useForm({data : {}}) 
-    
+     const form = useForm( {...data, comment : comment.value })
+    form.patch(
+        route(routeSave.value['route']['name'], routeSave.value['route']['parameters'])
+        , {
+        onSuccess: (res) => {
+            console.log(res)
+            isModalOpen.value =  false
+        },
+            onError: errors => { console.log(errors)  },
+    })
+
+/*
     try {
         await router.patch(route(routeSave.value['route']['name'], routeSave.value['route']['parameters']),data);
     } catch (error) {
         console.error("An error occurred:", error);
         alert("An error occurred. Please try again.");
     }
+
+ */
 };
 
 console.log('prop',props)
@@ -201,7 +213,7 @@ console.log('prop',props)
                 <span>{{ trans('Comment') }}</span>
             </div>
             <div class="py-2.5">
-                <textarea rows="3"
+                <textarea rows="3" v-model="comment"
                     class="block w-full rounded-md shadow-sm dark:bg-gray-600 dark:text-gray-400 border-gray-300 dark:border-gray-500 focus:border-gray-500 focus:ring-gray-500 sm:text-sm" />
             </div>
             <div class="flex justify-end">
@@ -262,7 +274,7 @@ console.log('prop',props)
             <div class="flex justify-center pr-0.5">
                 <Slider :data="data" :jumpToIndex="jumpToIndex" :view="screenView" />
             </div>
-            <SlidesWorkshop class="clear-both mt-2 p-2.5" :data="data" @jumpToIndex="(val) => (jumpToIndex = val)"
+            <SlidesWorkshop class="clear-both mt-2 p-2.5" :data="data" @jumpToIndex="(val) => jumpToIndex = val"
                 :imagesUploadRoute="imagesUploadRoute" :user="user" />
         </div>
 
@@ -271,5 +283,5 @@ console.log('prop',props)
             <SlidesWorkshopAddMode :data="data" :imagesUploadRoute="imagesUploadRoute" />
         </div>
     </div>
-    <div @click="() => { console.log(data) }">show add</div>
+    <!-- <div @click="() => { console.log(data) }">show add</div> -->
 </template>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { toRefs, watch, ref, onBeforeMount } from 'vue'
 import { cloneDeep } from 'lodash'
-const props = defineProps<{
+const props = withDefaults(defineProps<{
     src: {
         original: string
         original_2x?: string
@@ -12,12 +12,16 @@ const props = defineProps<{
     }
     alt?: string,
     class?: string
-}>()
+}>(), {
+    src: {
+        original: '/fallback/fallback.svg'
+    }
+})
 
 const { src } = toRefs(props)
 
 const imageSrc = ref(cloneDeep(src))
-const avif =  ref(imageSrc.value.avif)
+const avif = ref(imageSrc.value.avif)
 const webp = ref(imageSrc.value.webp)
 const original = ref(imageSrc.value.original)
 
@@ -44,12 +48,13 @@ const setImage = () => {
 }
 
 onBeforeMount(setImage)
+
 </script>
 
 <template>
-    <picture>
+    <picture :class="[props.class ?? 'w-full h-full']">
         <source v-if="src.avif" type="image/avif" :srcset="avif">
         <source v-if="src.webp" type="image/webp" :srcset="webp">
-        <img :class="class" :srcset="original" :src="src.original" :alt="alt">
+        <img :srcset="original" :src="src.original" :alt="alt">
     </picture>
 </template>

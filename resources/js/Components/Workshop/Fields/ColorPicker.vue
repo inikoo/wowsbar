@@ -22,6 +22,7 @@ const emit = defineEmits()
 
 const changeColor = (value) => {
     const { r, g, b, a } = value.rgba
+    console.log(r,g,b,a)
     color.value = `rgba(${r}, ${g}, ${b}, ${a})`
 }
 
@@ -37,7 +38,7 @@ const setFormValue = (data: Object, fieldName: String) => {
 const getNestedValue = (obj: Object, keys: Array) => {
     return keys.reduce((acc, key) => {
         if (acc && typeof acc === 'object' && key in acc) return acc[key];
-        return '#f3f4f6';
+        return 'green';
     }, obj);
 }
 
@@ -51,13 +52,11 @@ watch(color, (newValue) => {
 
 const updateFormValue = (newValue) => {
     let target = { ...props.data };
-
     if (Array.isArray(props.fieldName)) {
         set(target, props.fieldName, newValue);
     } else {
         target[props.fieldName] = newValue;
     }
-
     // Emit an event to notify the parent component
     emit('input', target);
 };
@@ -65,7 +64,9 @@ const updateFormValue = (newValue) => {
 </script>
 
 <template>
-    <div>
+    <div class="flex gap-3">
+        <div class="bg-gray-950 border-black rounded-full w-10 h-10 justify-center" :style="`border: 1px solid`" @click="()=>changeColor({ rgba : { r: 0, g: 0,b: 0,a: 1} })"/>
+        <div class="bg-white border-black rounded-full w-10 h-10 justify-center" :style="`border: 1px solid`" @click="()=>changeColor({ rgba : { r: 255, g: 255,b: 255,a: 255} })"/>
         <Popover v-slot="{ open }" class="relative">
             <div>
                 <PopoverButton :class="{

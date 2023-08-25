@@ -62,6 +62,11 @@ const component = computed(() => {
 
 const selectedImages: Ref<any> = ref({})
 const isSelectImage = ref(false)
+const loadingState = ref(false)
+const websitesList = ref([])
+const isModalOpen = ref(false)
+const fieldWebsite = ref()
+const fieldName = ref()
 
 const combinedImages: Ref<any> = computed(() => {
     return Object.values(selectedImages.value).reduce((accumulator: any, currentValue) => {
@@ -73,15 +78,12 @@ const combinedImages: Ref<any> = computed(() => {
     }, [])
 })
 
-const isModalOpen = ref(false)
-const websitesList = ref([])
 const compWebsitesList = computed(() => {
     return websitesList.value.map(obj => { return obj.slug })
 })
-const loadingState = ref(false)
 
 const compselectedImagesFlat = computed(() => {
-    // To return the double array is flat
+    // To return the double array to flat
     return [].concat(...(Object.values(selectedImages.value)))
 })
 
@@ -123,7 +125,7 @@ const createBanner = async () => {
                 isModalOpen.value = false
             }, 1000)
         }
-    } catch (error) {
+    } catch (error: any) {
         // console.error("===========================")
         console.error(error.message)
         loadingState.value = false
@@ -142,9 +144,6 @@ watch(isModalOpen, async () => {
         loadingState.value = false
     }
 })
-
-const fieldWebsite = ref()
-const fieldName = ref()
 
 </script>
 

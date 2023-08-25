@@ -93,8 +93,8 @@ const emits = defineEmits<{
 
 const isDragging = ref(false);
 const fileInput = ref(null);
-const currentComponentBeenEdited = ref(null);
-const commonEditActive = ref(false);
+const currentComponentBeenEdited = ref();
+const commonEditActive = ref(true);
 const isOpenGalleryImages = ref(false);
 const addFiles = ref([]);
 const closeModalisOpenGalleryImages = () => {
@@ -117,7 +117,6 @@ const addComponent = async (element) => {
 const removeComponent = (file) => {
     const index = props.data.components.findIndex((item) => item.ulid === file.ulid);
     if (index !== -1) {
-        console.log(currentComponentBeenEdited.value);
         if (
             currentComponentBeenEdited.value &&
             currentComponentBeenEdited.value.ulid === props.data.components[index].ulid
@@ -147,7 +146,7 @@ const dragleave = () => {
 const drop = (e) => {
     e.preventDefault();
     addFiles.value = e.dataTransfer.files;
-    isOpenCropModal.value = true;
+    if( e.dataTransfer.files.length > 0 ) isOpenCropModal.value = true;
     isDragging.value = false;
 };
 
@@ -286,7 +285,7 @@ const ComponentsBlueprint = ref([
                     { label: "Extra large", value: { fontTitle: "42px", fontSubtitle: "19px" } },
                     {
                         label: "Double extra large",
-                        value: { fontTitle: "70px", fontSubtitle: "25px" },
+                        value: { fontTitle: "300px", fontSubtitle: "25px" },
                     },
                 ],
             },
@@ -298,18 +297,18 @@ const ComponentsBlueprint = ref([
             },
         ],
     },
-    {
-        title: "delete",
-        icon: ["fal", "fa-trash-alt"],
-        fields: [
-            {
-                name: ["layout", "centralStage", "title"],
-                type: "delete",
-                label: trans("Title"),
-                value: ["layout", "centralStage", "title"],
-            },
-        ],
-    },
+    // {
+    //     title: "delete",
+    //     icon: ["fal", "fa-trash-alt"],
+    //     fields: [
+    //         {
+    //             name: ["layout", "centralStage", "title"],
+    //             type: "delete",
+    //             label: trans("Title"),
+    //             value: ["layout", "centralStage", "title"],
+    //         },
+    //     ],
+    // },
 ]);
 
 const CommonBlueprint = ref([
@@ -429,7 +428,6 @@ const setCommonEdit = () => {
 };
 
 const uploadImageRespone = (res) => {
-    console.log('tambah',res)
     let setData = [];
     for (const set of res.data) {
         setData.push({
@@ -446,7 +444,9 @@ const uploadImageRespone = (res) => {
     props.data.components = [...props.data.components, ...newFiles];
     isOpenCropModal.value = false;
     isOpenGalleryImages.value = false
+    currentComponentBeenEdited.value = props.data.components[ props.data.components.length - 1 ]
 };
+console.log(currentComponentBeenEdited.value)
 </script>
 
 <template>
@@ -491,11 +491,9 @@ const uploadImageRespone = (res) => {
                         selectComponentForEdition(slide),
                         emits(
                             'jumpToIndex',
-                            data.components.findIndex((component) => {
-                                return component.id == slide.id;
-                            })
-                        )
-                        " v-if="slide.ulid" :class="[
+                            data.components.findIndex(obj => obj.ulid === slide.ulid)
+                        )"
+                        v-if="slide.ulid" :class="[
                             'grid grid-flow-col relative sm:py-1 border mb-2 items-center justify-between hover:cursor-pointer',
                             slide.ulid == get(currentComponentBeenEdited, 'ulid')
                                 ? 'border-l-orange-500 border-l-4 bg-gray-200/60 text-gray-600 font-medium'
@@ -533,8 +531,13 @@ const uploadImageRespone = (res) => {
                                 <FontAwesomeIcon v-else icon="fas fa-eye-slash"
                                     class="text-xs sm:text-sm text-gray-300 hover:text-gray-400/70" />
                             </button>
+                            <button class="px-2 py-1" type="button" v-if="slide.user == props.user.username || !slide.user"
+                                @click="(e)=>{ e.stopPropagation()
+                                    removeComponent(slide)}" title="Show/hide the slide">
+                                <font-awesome-icon :icon="['fal', 'fa-trash-alt']"  class="text-xs sm:text-sm text-red-500 hover:text-gray-400/70" />
+                            </button>
                             <button class="px-2 py-1" type="button" v-else>
-                                <font-awesome-icon :icon="['fal', 'lock']"
+                                <font-awesome-icon :icon="['fal', 'lock']" 
                                     class="text-xs sm:text-sm text-gray-300 hover:text-gray-400/70" />
                             </button>
                         </div>
