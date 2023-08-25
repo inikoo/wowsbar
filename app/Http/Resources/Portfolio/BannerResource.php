@@ -21,9 +21,7 @@ class BannerResource extends JsonResource
             'code'           => $banner->code,
             'name'           => $banner->name,
             'components'     => SlideResource::collection($banner->slides),
-            'updated_at'     => $banner->updated_at,
-
-
+            'updated_at'     => $banner->updated_at
         ];
     }
 }
