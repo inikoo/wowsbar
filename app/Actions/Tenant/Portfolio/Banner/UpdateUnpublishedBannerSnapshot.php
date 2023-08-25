@@ -1,74 +1,60 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Fri, 25 Aug 2023 11:43:50 Malaysia Time, Kuala Lumpur, Malaysia
+ * Created: Fri, 25 Aug 2023 14:17:52 Malaysia Time, Kuala Lumpur, Malaysia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
 namespace App\Actions\Tenant\Portfolio\Banner;
 
 use App\Actions\Tenancy\Tenant\Hydrators\TenantHydrateBanners;
-use App\Actions\Tenant\Portfolio\Banner\Elasticsearch\StoreBannerElasticsearch;
 use App\Actions\Tenant\Portfolio\Banner\Hydrators\BannerHydrateUniversalSearch;
 use App\Actions\Tenant\Portfolio\Banner\UI\ParseBannerLayout;
 use App\Actions\Tenant\Portfolio\PortfolioWebsite\Hydrators\PortfolioWebsiteHydrateBanners;
-use App\Actions\Tenant\Portfolio\Snapshot\StoreSnapshot;
-use App\Actions\Tenant\Portfolio\Snapshot\UpdateSnapshot;
+use App\Actions\Tenant\Portfolio\Slide\StoreSlide;
+use App\Actions\Tenant\Portfolio\Slide\UpdateSlide;
 use App\Actions\Traits\WithActionUpdate;
-use App\Enums\Portfolio\Banner\BannerStateEnum;
-use App\Enums\Portfolio\Snapshot\SnapshotStateEnum;
 use App\Http\Resources\Portfolio\BannerResource;
 use App\Models\Portfolio\Banner;
-use Illuminate\Http\RedirectResponse;
+use App\Models\Portfolio\Slide;
+use App\Models\Portfolio\Snapshot;
 use Illuminate\Support\Arr;
 use Lorisleiva\Actions\ActionRequest;
 
-class PublishBanner
+class UpdateUnpublishedBannerSnapshot
 {
     use WithActionUpdate;
 
     public bool $isAction = false;
 
-    public function handle(Banner $banner, array $modelData): Banner
+    public function handle(Snapshot $snapshot, array $modelData): Banner
     {
-
-
-
-        foreach($banner->snapshots()->where('state',SnapshotStateEnum::LIVE)->get() as $liveSnapshot){
-            UpdateSnapshot::run($liveSnapshot,[
-                'state'=>SnapshotStateEnum::HISTORIC,
-                'published_until'=>now()
-            ]);
-        }
-
-
-        $layout                = Arr::pull($modelData, 'layout');
+        $layout = Arr::pull($modelData, 'layout');
         list($layout, $slides) = ParseBannerLayout::run($layout);
-
-        $snapshot=StoreSnapshot::run(
-            $banner,
-            [
-                'state'=>SnapshotStateEnum::LIVE,
-                'published_at'=>now(),
-                'layout'=>$layout
-            ],
-            $slides);
-
-
-        $compiledLayout=$snapshot->compiledLayout();
-        $updateData=[
-            'live_snapshot_id'=>$snapshot->id,
-            'compiled_layout'=>$compiledLayout,
-            'state'=>BannerStateEnum::LIVE,
-            'checksum'=>md5(json_encode($compiledLayout))
-        ];
-
-        if($banner->state==BannerStateEnum::UNPUBLISHED){
-            $updateData['live_at']=now();
+        data_set($modelData,'layout',$layout);
+        if ($slides) {
+            foreach ($slides as $ulid => $slideData) {
+                $slide = Slide::where('ulid', $ulid)->first();
+                if ($slide) {
+                    UpdateSlide::run(
+                        $slide,
+                        Arr::only($slideData, ['layout', 'imageData'])
+                    );
+                } else {
+                    data_set($slide, 'ulid', $ulid);
+                    StoreSlide::run(
+                        snapshot: $snapshot,
+                        modelData: $slideData,
+                    );
+                }
+            }
         }
 
-        $banner->update($updateData);
-        StoreBannerElasticsearch::run($banner);
+
+        $this->update($snapshot, $modelData, ['layout']);
+
+        /** @var Banner $banner */
+        $banner = $snapshot->parent;
         BannerHydrateUniversalSearch::dispatch($banner);
         TenantHydrateBanners::dispatch(app('currentTenant'));
 
@@ -91,7 +77,7 @@ class PublishBanner
     public function rules(): array
     {
         return [
-            'layout' => ['required', 'array:delay,common,components']
+            'layout' => ['sometimes', 'required', 'array:delay,common,components']
         ];
     }
 
@@ -107,7 +93,8 @@ class PublishBanner
     public function asController(Banner $banner, ActionRequest $request): Banner
     {
         $request->validate();
-        return $this->handle($banner, $request->validated());
+
+        return $this->handle($banner->unpublishedSnapshot, $request->validated());
     }
 
     public function action(Banner $banner, $modelData): Banner
@@ -116,16 +103,11 @@ class PublishBanner
         $this->setRawAttributes($modelData);
         $validatedData = $this->validateAttributes();
 
-        return $this->handle($banner, $validatedData);
+        return $this->handle($banner->unpublishedSnapshot, $validatedData);
     }
 
-    public function jsonResponse(Banner $website): BannerResource
+    public function jsonResponse(Banner $banner): BannerResource
     {
-        return new BannerResource($website);
-    }
-
-    public function htmlResponse(): RedirectResponse
-    {
-        return back();
+        return new BannerResource($banner);
     }
 }

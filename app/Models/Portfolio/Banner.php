@@ -14,6 +14,7 @@ use App\Models\Traits\HasUniversalSearch;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -54,6 +55,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read \App\Models\Portfolio\BannerStats|null $stats
  * @property-read \App\Models\Tenancy\Tenant $tenant
  * @property-read \App\Models\Search\UniversalSearch|null $universalSearch
+ * @property-read \App\Models\Portfolio\Snapshot|null $unpublishedSnapshot
  * @method static \Database\Factories\Portfolio\BannerFactory factory($count = null, $state = [])
  * @method static Builder|Banner newModelQuery()
  * @method static Builder|Banner newQuery()
@@ -122,6 +124,12 @@ class Banner extends Model implements HasMedia
     public function snapshots(): MorphMany
     {
         return $this->morphMany(Snapshot::class, 'parent');
+    }
+
+
+    public function unpublishedSnapshot(): BelongsTo
+    {
+        return $this->belongsTo(Snapshot::class, 'unpublished_snapshot_id');
     }
 
 
