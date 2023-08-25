@@ -165,39 +165,44 @@ onBeforeUnmount(() => {
 //     event.returnValue = setDataBeforeLeave() // This message will be shown to the user
 // })
 
+
+
+
 const isModalOpen = ref(false)
+const routeExit = ref()
 const routeSave = ref()
+
+const saveRouteValue=(action)=>{
+    if (action.style == "exit") {
+        routeExit.value = action
+   } if (action.style == "save") {
+       routeSave.value = action
+   }
+}
+
 const routeButton = (action) => {
     if (action.style == "exit") {
+       
         router.visit(route(action['route']['name'], action['route']['parameters']))
     } if (action.style == "save") {
         isModalOpen.value = true
-        routeSave.value = action
-        // router.patch(route(action['route']['name'],action['route']['parameters']),data)
     }
 }
 
 const saveData = async () => {
-     const form = useForm( {...data, comment : comment.value })
+     const form = useForm({ ...data, comment : comment.value })
     form.patch(
         route(routeSave.value['route']['name'], routeSave.value['route']['parameters'])
         , {
         onSuccess: (res) => {
             console.log(res)
             isModalOpen.value =  false
+            router.visit(route(routeExit.value['route']['name'], routeExit.value['route']['parameters']))
         },
-            onError: errors => { console.log(errors)  },
+            onError: errors => { 
+                alert(JSON.stringify(errors))
+            },
     })
-
-/*
-    try {
-        await router.patch(route(routeSave.value['route']['name'], routeSave.value['route']['parameters']),data);
-    } catch (error) {
-        console.error("An error occurred:", error);
-        alert("An error occurred. Please try again.");
-    }
-
- */
 };
 
 console.log('prop',props)
@@ -242,7 +247,7 @@ console.log('prop',props)
                         <FontAwesomeIcon :icon="head.getActionIcon(action)" aria-hidden="true" />
                         {{ trans(head.getActionLabel(action)) }}
                     </Button>
-
+                        {{ saveRouteValue(action) }}
                 </span>
             </div>
         </template>
