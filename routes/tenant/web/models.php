@@ -27,9 +27,9 @@ Route::patch('/portfolio-website/{portfolioWebsite}', UpdatePortfolioWebsite::cl
 Route::delete('/portfolio-website/{portfolioWebsite}', DeletePortfolioWebsite::class)->name('portfolio-website.delete');
 
 Route::post('/portfolio-website/{portfolioWebsite}/banners', [StoreBanner::class, 'inPortfolioWebsite'])->name('portfolio-website.banner.store');
-Route::post('/portfolio-website/{portfolioWebsite}/banners/gallery', [StoreBannerFromGallery::class, 'inPortfolioWebsite'])->name('portfolio-website.banner.gallery.store');
+Route::post('/portfolio-website/{portfolioWebsite}/banners/gallery', [StoreBanner::class, 'inPortfolioWebsiteFromGallery'])->name('portfolio-website.banner.gallery.store');
 
-Route::post('/tenant/banners/gallery', [StoreBannerFromGallery::class, 'inTenant'])->name('tenant.banner.gallery.store');
+Route::post('/tenant/banners/gallery', [StoreBanner::class, 'inTenantFromGallery'])->name('tenant.banner.gallery.store');
 
 Route::post('/banner', [StoreBanner::class, 'inTenant'])->name('banner.store');
 Route::patch('/banner/{banner}', UpdateBanner::class)->name('banner.update');
