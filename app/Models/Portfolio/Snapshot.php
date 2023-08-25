@@ -14,11 +14,9 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
-
 
 /**
  * App\Models\Portfolio\Snapshot
@@ -65,7 +63,7 @@ class Snapshot extends Model
     use BelongsToTenant;
 
     protected $casts = [
-        'layout'  => 'array',
+        'layout'           => 'array',
         'state'            => SnapshotStateEnum::class
     ];
 
