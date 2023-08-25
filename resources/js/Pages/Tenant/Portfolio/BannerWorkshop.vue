@@ -182,7 +182,10 @@ const saveData = async () => {
     form.patch(
         route(routeSave.value['route']['name'], routeSave.value['route']['parameters'])
         , {
-        onSuccess: () => alert('test'),
+        onSuccess: (res) => {
+            console.log(res)
+            isModalOpen.value =  false
+        },
             onError: errors => { console.log(errors)  },
     })
 

@@ -93,8 +93,8 @@ const emits = defineEmits<{
 
 const isDragging = ref(false);
 const fileInput = ref(null);
-const currentComponentBeenEdited = ref(null);
-const commonEditActive = ref(false);
+const currentComponentBeenEdited = ref();
+const commonEditActive = ref(true);
 const isOpenGalleryImages = ref(false);
 const addFiles = ref([]);
 const closeModalisOpenGalleryImages = () => {
@@ -297,18 +297,18 @@ const ComponentsBlueprint = ref([
             },
         ],
     },
-    {
-        title: "delete",
-        icon: ["fal", "fa-trash-alt"],
-        fields: [
-            {
-                name: ["layout", "centralStage", "title"],
-                type: "delete",
-                label: trans("Title"),
-                value: ["layout", "centralStage", "title"],
-            },
-        ],
-    },
+    // {
+    //     title: "delete",
+    //     icon: ["fal", "fa-trash-alt"],
+    //     fields: [
+    //         {
+    //             name: ["layout", "centralStage", "title"],
+    //             type: "delete",
+    //             label: trans("Title"),
+    //             value: ["layout", "centralStage", "title"],
+    //         },
+    //     ],
+    // },
 ]);
 
 const CommonBlueprint = ref([
@@ -446,6 +446,7 @@ const uploadImageRespone = (res) => {
     isOpenGalleryImages.value = false
     currentComponentBeenEdited.value = props.data.components[ props.data.components.length - 1 ]
 };
+console.log(currentComponentBeenEdited.value)
 </script>
 
 <template>
@@ -530,8 +531,13 @@ const uploadImageRespone = (res) => {
                                 <FontAwesomeIcon v-else icon="fas fa-eye-slash"
                                     class="text-xs sm:text-sm text-gray-300 hover:text-gray-400/70" />
                             </button>
+                            <button class="px-2 py-1" type="button" v-if="slide.user == props.user.username || !slide.user"
+                                @click="(e)=>{ e.stopPropagation()
+                                    removeComponent(slide)}" title="Show/hide the slide">
+                                <font-awesome-icon :icon="['fal', 'fa-trash-alt']"  class="text-xs sm:text-sm text-red-500 hover:text-gray-400/70" />
+                            </button>
                             <button class="px-2 py-1" type="button" v-else>
-                                <font-awesome-icon :icon="['fal', 'lock']"
+                                <font-awesome-icon :icon="['fal', 'lock']" 
                                     class="text-xs sm:text-sm text-gray-300 hover:text-gray-400/70" />
                             </button>
                         </div>
