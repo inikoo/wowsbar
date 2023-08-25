@@ -89,6 +89,7 @@ class Banner extends Model implements HasMedia
     use HasUniversalSearch;
     use InteractsWithMedia;
 
+    protected $dateFormat = 'Y-m-d H:i:s P';
 
     protected $casts = [
         'layout' => 'array',
