@@ -28,7 +28,6 @@ class StoreBanner
     use AsAction;
     use WithAttributes;
 
-
     private bool $asAction = false;
 
     private Tenant|PortfolioWebsite $parent;
