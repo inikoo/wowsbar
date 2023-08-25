@@ -8,6 +8,7 @@
 namespace App\Models\Portfolio;
 
 use App\Concerns\BelongsToTenant;
+use App\Models\Traits\HasHistory;
 use App\Models\Traits\HasUniversalSearch;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -17,6 +18,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Sluggable\HasSlug;
@@ -80,7 +82,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Banner withoutTrashed()
  * @mixin \Eloquent
  */
-class Banner extends Model implements HasMedia
+class Banner extends Model implements HasMedia, Auditable
 {
     use SoftDeletes;
     use HasSlug;
@@ -88,6 +90,7 @@ class Banner extends Model implements HasMedia
     use BelongsToTenant;
     use HasUniversalSearch;
     use InteractsWithMedia;
+    use HasHistory;
 
     protected $dateFormat = 'Y-m-d H:i:s P';
 
