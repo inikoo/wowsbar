@@ -43,7 +43,7 @@ const props = defineProps<{
 
 
 <template>
-    <Slider v-if="data.banner.components.length" :data="data.banner" />
+    <Slider v-if="data.banner?.components?.length" :data="data.banner" />
     <EmptyState v-else :data="{
         title: 'You don\'t have slides to show',
         description: 'Create new slides in the workshop to get started',
@@ -53,7 +53,7 @@ const props = defineProps<{
             tooltip: 'Workshop'
         }
     }" />
-    <div :class="['p-2.5', !data.banner.components.length ?  'flex justify-center' : '' ]">
+    <div :class="['p-2.5', !data.banner?.components?.length ?  'flex justify-center' : '' ]">
         <Input :fieldData="{ copyButton: true, readonly: true }" fieldName='url' :form="{ url: data.url }" />
     </div>
 </template>
