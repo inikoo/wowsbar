@@ -21,6 +21,7 @@ const emit = defineEmits()
 
 
 const changeColor = (value) => {
+    console.log(value)
     const { r, g, b, a } = value.rgba
     color.value = `rgba(${r}, ${g}, ${b}, ${a})`
 }
@@ -37,7 +38,7 @@ const setFormValue = (data: Object, fieldName: String) => {
 const getNestedValue = (obj: Object, keys: Array) => {
     return keys.reduce((acc, key) => {
         if (acc && typeof acc === 'object' && key in acc) return acc[key];
-        return '#f3f4f6';
+        return 'green';
     }, obj);
 }
 
@@ -65,7 +66,9 @@ const updateFormValue = (newValue) => {
 </script>
 
 <template>
-    <div>
+    <div class="flex gap-3">
+        <div class="bg-gray-950 border-black rounded-full w-10 h-10 justify-center" :style="`border: 1px solid`" @click="changeColor({rgba : { r : 0 , g : 0 , b : 0 , a: 0}})"/>
+        <div class="bg-white border-black rounded-full w-10 h-10 justify-center" :style="`border: 1px solid`"/>
         <Popover v-slot="{ open }" class="relative">
             <div>
                 <PopoverButton :class="{

@@ -167,7 +167,6 @@ onBeforeUnmount(() => {
 const isModalOpen = ref(false)
 const routeSave = ref()
 const routeButton = (action) => {
-    console.log(action)
     if (action.style == "exit") {
         router.visit(route(action['route']['name'], action['route']['parameters']))
     } if (action.style == "save") {
@@ -178,7 +177,7 @@ const routeButton = (action) => {
 }
 
 const saveData = async () => {
-     const form = useForm({data : data })
+     const form = useForm( data )
 
     form.patch(
         route(routeSave.value['route']['name'], routeSave.value['route']['parameters'])

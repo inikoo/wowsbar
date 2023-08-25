@@ -117,7 +117,6 @@ const addComponent = async (element) => {
 const removeComponent = (file) => {
     const index = props.data.components.findIndex((item) => item.ulid === file.ulid);
     if (index !== -1) {
-        console.log(currentComponentBeenEdited.value);
         if (
             currentComponentBeenEdited.value &&
             currentComponentBeenEdited.value.ulid === props.data.components[index].ulid
@@ -147,7 +146,7 @@ const dragleave = () => {
 const drop = (e) => {
     e.preventDefault();
     addFiles.value = e.dataTransfer.files;
-    isOpenCropModal.value = true;
+    if( e.dataTransfer.files.length > 0 ) isOpenCropModal.value = true;
     isDragging.value = false;
 };
 
@@ -286,7 +285,7 @@ const ComponentsBlueprint = ref([
                     { label: "Extra large", value: { fontTitle: "42px", fontSubtitle: "19px" } },
                     {
                         label: "Double extra large",
-                        value: { fontTitle: "70px", fontSubtitle: "25px" },
+                        value: { fontTitle: "300px", fontSubtitle: "25px" },
                     },
                 ],
             },
@@ -429,7 +428,6 @@ const setCommonEdit = () => {
 };
 
 const uploadImageRespone = (res) => {
-    console.log('tambah',res)
     let setData = [];
     for (const set of res.data) {
         setData.push({
@@ -446,6 +444,7 @@ const uploadImageRespone = (res) => {
     props.data.components = [...props.data.components, ...newFiles];
     isOpenCropModal.value = false;
     isOpenGalleryImages.value = false
+    currentComponentBeenEdited.value = props.data.components[ props.data.components.length - 1 ]
 };
 </script>
 
