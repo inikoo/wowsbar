@@ -14,6 +14,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property string $name
  * @property string $code
  * @property string $domain
+ * @property \App\Models\Portfolio\PortfolioWebsiteStats $stats
  */
 class PortfolioWebsiteResource extends JsonResource
 {
@@ -24,8 +25,7 @@ class PortfolioWebsiteResource extends JsonResource
             'code'           => $this->code,
             'name'           => $this->name,
             'domain'         => $this->domain,
-
-
+            'banners'        => $this->stats->number_banners,
         ];
     }
 }
