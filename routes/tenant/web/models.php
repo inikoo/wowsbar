@@ -12,7 +12,6 @@ use App\Actions\Tenant\Auth\User\UpdateUser;
 use App\Actions\Tenant\Portfolio\Banner\DeleteBanner;
 use App\Actions\Tenant\Portfolio\Banner\PublishBanner;
 use App\Actions\Tenant\Portfolio\Banner\StoreBanner;
-use App\Actions\Tenant\Portfolio\Banner\StoreBannerFromGallery;
 use App\Actions\Tenant\Portfolio\Banner\UpdateBanner;
 use App\Actions\Tenant\Portfolio\Banner\UpdateBannerState;
 use App\Actions\Tenant\Portfolio\Banner\UpdateUnpublishedBannerSnapshot;
