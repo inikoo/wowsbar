@@ -21,27 +21,27 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property int $id
  * @property string|null $ulid
  * @property int $tenant_id
- * @property int $banner_id
+ * @property int $snapshot_id
  * @property bool $visibility
  * @property array|null $layout
  * @property int|null $image_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string|null $deleted_at
- * @property-read \App\Models\Portfolio\Banner $banner
  * @property-read Media|null $image
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, Media> $media
  * @property-read int|null $media_count
+ * @property-read \App\Models\Portfolio\Snapshot $snapshot
  * @property-read \App\Models\Tenancy\Tenant $tenant
  * @method static Builder|Slide newModelQuery()
  * @method static Builder|Slide newQuery()
  * @method static Builder|Slide query()
- * @method static Builder|Slide whereBannerId($value)
  * @method static Builder|Slide whereCreatedAt($value)
  * @method static Builder|Slide whereDeletedAt($value)
  * @method static Builder|Slide whereId($value)
  * @method static Builder|Slide whereImageId($value)
  * @method static Builder|Slide whereLayout($value)
+ * @method static Builder|Slide whereSnapshotId($value)
  * @method static Builder|Slide whereTenantId($value)
  * @method static Builder|Slide whereUlid($value)
  * @method static Builder|Slide whereUpdatedAt($value)
@@ -64,9 +64,9 @@ class Slide extends Model implements HasMedia
 
     protected $guarded=[];
 
-    public function banner(): BelongsTo
+    public function snapshot(): BelongsTo
     {
-        return $this->belongsTo(Banner::class);
+        return $this->belongsTo(Snapshot::class);
     }
 
     public function image(): BelongsTo

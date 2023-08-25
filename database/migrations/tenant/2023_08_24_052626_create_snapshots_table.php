@@ -15,7 +15,7 @@ return new class () extends Migration {
     {
         Schema::create('snapshots', function (Blueprint $table) {
             $table->mediumIncrements('id');
-            $table->string('slug')->collation('und_ns');
+            $table->string('slug')->nullable()->collation('und_ns');
             $table->unsignedSmallInteger('tenant_id');
             $table->string('parent_type')->nullable();
             $table->unsignedInteger('parent_id')->nullable();
@@ -24,17 +24,29 @@ return new class () extends Migration {
             $table->dateTimeTz('published_at')->nullable();
             $table->dateTimeTz('published_until')->nullable();
             $table->string('checksum');
-            $table->jsonb('compiled_layout');
+            $table->jsonb('layout');
             $table->string('comment')->nullable();
             $table->timestamps();
-            $table->index(['parent_type','parent_id']);
-
+            $table->index(['parent_type', 'parent_id']);
+        });
+        Schema::table('banners', function (Blueprint $table) {
+            $table->foreign('unpublished_snapshot_id')->references('id')->on('snapshots');
+            $table->foreign('live_snapshot_id')->references('id')->on('snapshots');
+        });
+        Schema::table('slides', function (Blueprint $table) {
+            $table->foreign('snapshot_id')->references('id')->on('snapshots')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
 
     public function down(): void
     {
+        Schema::table('slides', function (Blueprint $table) {
+            $table->dropForeign(['snapshot_id']);
+        });
+        Schema::table('banners', function (Blueprint $table) {
+            $table->dropForeign(['live_snapshot_id', 'unpublished_snapshot_id']);
+        });
         Schema::dropIfExists('snapshots');
     }
 };

@@ -8,6 +8,7 @@
 namespace App\Models\Portfolio;
 
 use App\Concerns\BelongsToTenant;
+use App\Enums\Portfolio\Snapshot\SnapshotStateEnum;
 use App\Http\Resources\Portfolio\SlideResource;
 use App\Models\Traits\HasUniversalSearch;
 use Illuminate\Database\Eloquent\Builder;
@@ -34,10 +35,11 @@ use Spatie\Sluggable\SlugOptions;
  * @property string $code
  * @property string $name
  * @property string $state
- * @property string|null $ready_at
+ * @property int|null $unpublished_snapshot_id
+ * @property int|null $live_snapshot_id
  * @property string|null $live_at
  * @property string|null $retired_at
- * @property array $layout
+ * @property array $compiled_layout
  * @property array $data
  * @property string|null $checksum
  * @property \Illuminate\Support\Carbon|null $created_at
@@ -47,8 +49,6 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read int|null $media_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Portfolio\PortfolioWebsite> $portfolioWebsite
  * @property-read int|null $portfolio_website_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Portfolio\Slide> $slides
- * @property-read int|null $slides_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Portfolio\Snapshot> $snapshots
  * @property-read int|null $snapshots_count
  * @property-read \App\Models\Portfolio\BannerStats|null $stats
@@ -61,20 +61,21 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Banner query()
  * @method static Builder|Banner whereChecksum($value)
  * @method static Builder|Banner whereCode($value)
+ * @method static Builder|Banner whereCompiledLayout($value)
  * @method static Builder|Banner whereCreatedAt($value)
  * @method static Builder|Banner whereData($value)
  * @method static Builder|Banner whereDeletedAt($value)
  * @method static Builder|Banner whereId($value)
- * @method static Builder|Banner whereLayout($value)
  * @method static Builder|Banner whereLiveAt($value)
+ * @method static Builder|Banner whereLiveSnapshotId($value)
  * @method static Builder|Banner whereName($value)
  * @method static Builder|Banner wherePortfolioWebsiteId($value)
- * @method static Builder|Banner whereReadyAt($value)
  * @method static Builder|Banner whereRetiredAt($value)
  * @method static Builder|Banner whereSlug($value)
  * @method static Builder|Banner whereState($value)
  * @method static Builder|Banner whereTenantId($value)
  * @method static Builder|Banner whereUlid($value)
+ * @method static Builder|Banner whereUnpublishedSnapshotId($value)
  * @method static Builder|Banner whereUpdatedAt($value)
  * @method static Builder|Banner withTrashed()
  * @method static Builder|Banner withoutTrashed()
@@ -92,13 +93,13 @@ class Banner extends Model implements HasMedia
     protected $dateFormat = 'Y-m-d H:i:s P';
 
     protected $casts = [
-        'layout' => 'array',
-        'data'   => 'array',
+        'compiled_layout' => 'array',
+        'data'            => 'array',
     ];
 
     protected $attributes = [
-        'layout' => '{}',
-        'data'   => '{}',
+        'compiled_layout' => '{}',
+        'data'          => '{}',
     ];
 
     protected $guarded = [];
@@ -124,24 +125,12 @@ class Banner extends Model implements HasMedia
     }
 
 
-    public function slides(): HasMany
-    {
-        return $this->hasMany(Slide::class);
-    }
-
     public function portfolioWebsite(): BelongsToMany
     {
         return $this->belongsToMany(PortfolioWebsite::class)->using(BannerPortfolioWebsite::class)
             ->withTimestamps();
     }
 
-    public function compiledLayout(): array
-    {
-        $compiledLayout=$this->layout;
-        data_set($compiledLayout, 'components', json_decode(SlideResource::collection($this->slides)->toJson(), true));
-        return $compiledLayout;
-
-    }
 
     public function stats(): HasOne
     {

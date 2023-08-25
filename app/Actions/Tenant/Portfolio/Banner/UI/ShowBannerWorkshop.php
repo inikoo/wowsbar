@@ -97,7 +97,7 @@ class ShowBannerWorkshop extends InertiaAction
                     ],
                 ],
                 'firebase'          => true,
-                'bannerLayout'      => $banner->compiledLayout(),
+                'bannerLayout'      => $banner->compiled_layout,
                 'banner'            => $banner->only(['slug', 'ulid', 'id', 'code', 'name','state']),
                 'autoSaveRoute'     => [
                     'name'       => 'models.banner.update',
