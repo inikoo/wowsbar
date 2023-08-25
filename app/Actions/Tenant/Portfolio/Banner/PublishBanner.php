@@ -19,7 +19,6 @@ use App\Enums\Portfolio\Banner\BannerStateEnum;
 use App\Enums\Portfolio\Snapshot\SnapshotStateEnum;
 use App\Http\Resources\Portfolio\BannerResource;
 use App\Models\Portfolio\Banner;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Arr;
 use Lorisleiva\Actions\ActionRequest;
 
@@ -34,10 +33,10 @@ class PublishBanner
 
 
 
-        foreach($banner->snapshots()->where('state',SnapshotStateEnum::LIVE)->get() as $liveSnapshot){
-            UpdateSnapshot::run($liveSnapshot,[
-                'state'=>SnapshotStateEnum::HISTORIC,
-                'published_until'=>now()
+        foreach($banner->snapshots()->where('state', SnapshotStateEnum::LIVE)->get() as $liveSnapshot) {
+            UpdateSnapshot::run($liveSnapshot, [
+                'state'          => SnapshotStateEnum::HISTORIC,
+                'published_until'=> now()
             ]);
         }
 
@@ -48,22 +47,23 @@ class PublishBanner
         $snapshot=StoreSnapshot::run(
             $banner,
             [
-                'state'=>SnapshotStateEnum::LIVE,
-                'published_at'=>now(),
-                'layout'=>$layout
+                'state'       => SnapshotStateEnum::LIVE,
+                'published_at'=> now(),
+                'layout'      => $layout
             ],
-            $slides);
+            $slides
+        );
 
 
         $compiledLayout=$snapshot->compiledLayout();
-        $updateData=[
-            'live_snapshot_id'=>$snapshot->id,
-            'compiled_layout'=>$compiledLayout,
-            'state'=>BannerStateEnum::LIVE,
-            'checksum'=>md5(json_encode($compiledLayout))
+        $updateData    =[
+            'live_snapshot_id'=> $snapshot->id,
+            'compiled_layout' => $compiledLayout,
+            'state'           => BannerStateEnum::LIVE,
+            'checksum'        => md5(json_encode($compiledLayout))
         ];
 
-        if($banner->state==BannerStateEnum::UNPUBLISHED){
+        if($banner->state==BannerStateEnum::UNPUBLISHED) {
             $updateData['live_at']=now();
         }
 
@@ -119,13 +119,9 @@ class PublishBanner
         return $this->handle($banner, $validatedData);
     }
 
-    public function jsonResponse(Banner $website): BannerResource
+    public function jsonResponse(Banner $banner): BannerResource
     {
-        return new BannerResource($website);
+        return new BannerResource($banner);
     }
 
-    public function htmlResponse(): RedirectResponse
-    {
-        return back();
-    }
 }

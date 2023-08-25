@@ -17,7 +17,7 @@ class StoreSnapshot
 {
     use AsAction;
 
-    public function handle(Banner $banner,  array $modelData, ?array $slides): Snapshot
+    public function handle(Banner $banner, array $modelData, ?array $slides): Snapshot
     {
 
 

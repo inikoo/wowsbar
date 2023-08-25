@@ -7,7 +7,6 @@
 
 namespace App\Actions\Tenant\Portfolio\Slide;
 
-use App\Models\Portfolio\Banner;
 use App\Models\Portfolio\Slide;
 use App\Models\Portfolio\Snapshot;
 use Illuminate\Support\Str;

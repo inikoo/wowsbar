@@ -21,7 +21,7 @@ class BannerResource extends JsonResource
             'code'           => $banner->code,
             'name'           => $banner->name,
             'route'          => [
-                'name' => 'portfolio.banners.show',
+                'name'       => 'portfolio.banners.show',
                 'parameters' => [$banner->slug]
             ],
          //   'components'     => SlideResource::collection($banner->slides),
