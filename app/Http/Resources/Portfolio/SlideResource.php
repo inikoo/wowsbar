@@ -24,7 +24,6 @@ class SlideResource extends JsonResource
             'layout'     => $slide->layout,
             'visibility' => $slide->visibility,
             'image'      => ImageResource::make($slide->image)->getArray(),
-
         ];
     }
 }
