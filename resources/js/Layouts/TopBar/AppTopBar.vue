@@ -130,7 +130,7 @@ const logoutAuth = () => {
                         <!-- Avatar Button -->
                         <Menu as="div" class="relative">
                             <MenuButton id="avatar-thumbnail"
-                                class="flex max-w-xs items-center rounded-full bg-gray-100 text-sm focus:outline-none focus:ring-2 focus:ring-gray-500">
+                                class="flex max-w-xs overflow-hidden items-center rounded-full bg-gray-100 text-sm focus:outline-none focus:ring-2 focus:ring-gray-500">
                                 <span class="sr-only">{{ trans("Open user menu") }}</span>
                                 <Image  class="h-8 w-8 rounded-full"
                                     :src="layout.avatar_thumbnail"
