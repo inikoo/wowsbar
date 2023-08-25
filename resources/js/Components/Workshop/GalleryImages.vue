@@ -14,10 +14,14 @@ import Button from '../Elements/Buttons/Button.vue'
 
 library.add(faCloudUpload, faImagePolaroid, faSpinnerThird)
 
-const props = defineProps<{
-    addImage: Function;
-    closeModal : Function
-}>()
+const props = defineProps({
+    addImage: Function,
+    closeModal: Function,
+    multiple: {
+        type: Boolean,
+        default: true
+    }
+});
 
 const galleryStore = useGalleryStore()
 
@@ -62,11 +66,17 @@ watch(activeSidebar, (newSidebar: string) => {
 const ImageDataCollect = ref({data : []})
 
 const collectImage = (image) => {
+    console.log(image)
     const index = ImageDataCollect.value.data.findIndex((item)=>item.id == image.id)
-    if(ImageDataCollect.value.data.length > 0){
+    if(props.multiple){
+        if(ImageDataCollect.value.data.length > 0){
         if(index == -1) ImageDataCollect.value.data.push(image)
         else ImageDataCollect.value.data.splice(index, 1)
     }else ImageDataCollect.value.data.push(image)
+    }else{
+        ImageDataCollect.value.data = [{...image}]
+    }
+  
 }
 
 </script>
