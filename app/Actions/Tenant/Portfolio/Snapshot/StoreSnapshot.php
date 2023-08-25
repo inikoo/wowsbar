@@ -7,6 +7,7 @@
 
 namespace App\Actions\Tenant\Portfolio\Snapshot;
 
+use App\Actions\Tenant\Portfolio\Slide\StoreSlide;
 use App\Models\Portfolio\Banner;
 use App\Models\Portfolio\Snapshot;
 use Illuminate\Support\Arr;
@@ -16,8 +17,11 @@ class StoreSnapshot
 {
     use AsAction;
 
-    public function handle(Banner $parent, array $modelData): Snapshot
+    public function handle(Banner $banner,  array $modelData, ?array $slides): Snapshot
     {
+
+
+
         data_set(
             $modelData,
             'checksum',
@@ -28,8 +32,21 @@ class StoreSnapshot
             )
         );
 
-        /** @var Snapshot $snapshot */
-        $snapshot = $parent->snapshots()->create($modelData);
+
+        $snapshot=Snapshot::create($modelData);
+
+
+        $banner->snapshots()->save($snapshot);
+        $banner->generateSlug();
+        if ($slides) {
+            foreach ($slides as $slide) {
+                StoreSlide::run(
+                    snapshot: $snapshot,
+                    modelData: $slide,
+                );
+            }
+        }
+
         $snapshot->stats()->create();
 
         return $snapshot;

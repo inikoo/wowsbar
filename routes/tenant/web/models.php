@@ -10,6 +10,7 @@ use App\Actions\Media\ImageGenerator;
 use App\Actions\Tenancy\Tenant\UpdateSystemSettings;
 use App\Actions\Tenant\Auth\User\UpdateUser;
 use App\Actions\Tenant\Portfolio\Banner\DeleteBanner;
+use App\Actions\Tenant\Portfolio\Banner\PublishBanner;
 use App\Actions\Tenant\Portfolio\Banner\StoreBanner;
 use App\Actions\Tenant\Portfolio\Banner\StoreBannerFromGallery;
 use App\Actions\Tenant\Portfolio\Banner\UpdateBanner;
@@ -31,7 +32,7 @@ Route::post('/tenant/banners/gallery', [StoreBannerFromGallery::class, 'inTenant
 
 Route::post('/banner', [StoreBanner::class, 'inTenant'])->name('banner.store');
 Route::patch('/banner/{banner}', UpdateBanner::class)->name('banner.update');
-Route::patch('/banner/{banner}/publish', UpdateBanner::class)->name('banner.publish');
+Route::patch('/banner/{banner}/publish', PublishBanner::class)->name('banner.publish');
 
 Route::patch('/banner/{banner}/state/{state}', UpdateBannerState::class)->name('banner.update-state');
 Route::delete('/banner/{banner}', DeleteBanner::class)->name('content-block.delete');

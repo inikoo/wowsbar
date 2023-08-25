@@ -83,8 +83,8 @@ class ShowDeletedBanner extends InertiaAction
                     'navigation' => BannerTabsEnum::navigation()
                 ],
                 \App\Enums\UI\Tenant\PortfolioWebsiteTabsEnum::SHOWCASE->value => $this->tab == PortfolioWebsiteTabsEnum::SHOWCASE->value ?
-                    fn () => $banner->compiledLayout()
-                    : Inertia::lazy(fn () => $banner->compiledLayout()),
+                    fn () => $banner->compiled_layout
+                    : Inertia::lazy(fn () => $banner->compiled_layout),
 
                 PortfolioWebsiteTabsEnum::CHANGELOG->value => $this->tab == PortfolioWebsiteTabsEnum::CHANGELOG->value ?
                     fn () => HistoryResource::collection(IndexHistories::run($banner))

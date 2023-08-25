@@ -8,6 +8,7 @@
 import { library } from '@fortawesome/fontawesome-svg-core'
 import Input from '@/Components/Forms/Fields/Input.vue';
 import Slider from "@/Components/Slider/Slider.vue"
+import { trans } from "laravel-vue-i18n"
 
 
 import { faWindowMaximize, faGlobe } from "@/../private/pro-light-svg-icons"
@@ -45,12 +46,12 @@ const props = defineProps<{
 <template>
     <Slider v-if="data.banner.components.length" :data="data.banner" />
     <EmptyState v-else :data="{
-        title: 'You don\'t have slides to show',
-        description: 'Create new slides in the workshop to get started',
+        title: trans('You don\'t have slides to show'),
+        description: trans('Create new slides in the workshop to get started'),
         action: {
-            label: 'Workshop',
+            label: trans('Workshop'),
             route: props.pageHead.route,
-            tooltip: 'Workshop'
+            tooltip: trans('Workshop')
         }
     }" />
     <div :class="['p-2.5', !data.banner.components.length ?  'flex justify-center' : '' ]">

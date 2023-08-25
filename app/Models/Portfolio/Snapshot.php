@@ -9,18 +9,22 @@ namespace App\Models\Portfolio;
 
 use App\Concerns\BelongsToTenant;
 use App\Enums\Portfolio\Snapshot\SnapshotStateEnum;
+use App\Http\Resources\Portfolio\SlideResource;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
+
 
 /**
  * App\Models\Portfolio\Snapshot
  *
  * @property int $id
- * @property string $slug
+ * @property string|null $slug
  * @property int $tenant_id
  * @property string|null $parent_type
  * @property int|null $parent_id
@@ -28,11 +32,13 @@ use Spatie\Sluggable\SlugOptions;
  * @property string|null $published_at
  * @property string|null $published_until
  * @property string $checksum
- * @property array $compiled_layout
+ * @property array $layout
  * @property string|null $comment
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read Model|\Eloquent $parent
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Portfolio\Slide> $slides
+ * @property-read int|null $slides_count
  * @property-read \App\Models\Portfolio\SnapshotStats|null $stats
  * @property-read \App\Models\Tenancy\Tenant $tenant
  * @method static Builder|Snapshot newModelQuery()
@@ -40,9 +46,9 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Snapshot query()
  * @method static Builder|Snapshot whereChecksum($value)
  * @method static Builder|Snapshot whereComment($value)
- * @method static Builder|Snapshot whereCompiledLayout($value)
  * @method static Builder|Snapshot whereCreatedAt($value)
  * @method static Builder|Snapshot whereId($value)
+ * @method static Builder|Snapshot whereLayout($value)
  * @method static Builder|Snapshot whereParentId($value)
  * @method static Builder|Snapshot whereParentType($value)
  * @method static Builder|Snapshot wherePublishedAt($value)
@@ -59,12 +65,12 @@ class Snapshot extends Model
     use BelongsToTenant;
 
     protected $casts = [
-        'compiled_layout'  => 'array',
+        'layout'  => 'array',
         'state'            => SnapshotStateEnum::class
     ];
 
     protected $attributes = [
-        'compiled_layout' => '{}'
+        'layout' => '{}'
     ];
 
     protected $guarded = [];
@@ -76,6 +82,7 @@ class Snapshot extends Model
                 return $this->parent->slug.'-'.now()->isoFormat('YYMMDD');
             })
             ->saveSlugsTo('slug')
+            ->doNotGenerateSlugsOnCreate()
             ->doNotGenerateSlugsOnUpdate();
     }
 
@@ -94,5 +101,20 @@ class Snapshot extends Model
     {
         return $this->hasOne(SnapshotStats::class);
     }
+
+    public function slides(): HasMany
+    {
+        return $this->hasMany(Slide::class);
+    }
+
+    public function compiledLayout(): array
+    {
+        $compiledLayout = $this->layout;
+        data_set($compiledLayout, 'components', json_decode(SlideResource::collection($this->slides)->toJson(), true));
+
+        return $compiledLayout;
+    }
+
+
 
 }
