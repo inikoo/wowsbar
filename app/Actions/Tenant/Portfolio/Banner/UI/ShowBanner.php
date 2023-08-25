@@ -10,10 +10,12 @@ namespace App\Actions\Tenant\Portfolio\Banner\UI;
 use App\Actions\Helpers\History\IndexHistories;
 use App\Actions\InertiaAction;
 use App\Actions\Tenant\Portfolio\PortfolioWebsite\UI\ShowPortfolioWebsite;
+use App\Actions\Tenant\Portfolio\Snapshot\UI\IndexSnapshots;
 use App\Actions\UI\Tenant\Portfolio\ShowPortfolioDashboard;
 use App\Enums\UI\Tenant\BannerTabsEnum;
 use App\Enums\UI\Tenant\PortfolioWebsiteTabsEnum;
 use App\Http\Resources\History\HistoryResource;
+use App\Http\Resources\Portfolio\SnapshotResource;
 use App\Models\Portfolio\Banner;
 use App\Models\Portfolio\PortfolioWebsite;
 use Inertia\Inertia;
@@ -87,7 +89,7 @@ class ShowBanner extends InertiaAction
                         ] : false
                     ],
                 ],
-                'tabs'                                                         => [
+                'tabs' => [
                     'current'    => $this->tab,
                     'navigation' => BannerTabsEnum::navigation()
                 ],
@@ -103,6 +105,14 @@ class ShowBanner extends InertiaAction
                         'url'   => 'xxx'
                     ]
                     ),
+
+                BannerTabsEnum::SNAPSHOTS->value => $this->tab == BannerTabsEnum::SNAPSHOTS->value ?
+                    fn () => SnapshotResource::collection(IndexSnapshots::run($banner))
+                    : Inertia::lazy(fn () => SnapshotResource::collection(IndexSnapshots::run($banner))),
+
+                BannerTabsEnum::CHANGELOG->value => $this->tab == BannerTabsEnum::CHANGELOG->value ?
+                    fn () => HistoryResource::collection(IndexHistories::run($banner))
+                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistories::run($banner))),
 
                 PortfolioWebsiteTabsEnum::CHANGELOG->value => $this->tab == PortfolioWebsiteTabsEnum::CHANGELOG->value ?
                     fn () => HistoryResource::collection(IndexHistories::run($banner))

@@ -16,6 +16,7 @@ enum BannerTabsEnum: string
     use HasTabs;
 
     case SHOWCASE             = 'showcase';
+    case SNAPSHOTS             = 'snapshots';
 
 
     case CHANGELOG            = 'changelog';
@@ -29,6 +30,10 @@ enum BannerTabsEnum: string
             BannerTabsEnum::SHOWCASE => [
                 'title' => __('banner'),
                 'icon'  => 'fas fa-info-circle',
+            ],
+            BannerTabsEnum::SNAPSHOTS => [
+                'title' => __('snapshots'),
+                'icon'  => 'fab fa-wallet',
             ],
             BannerTabsEnum::DATA => [
                 'title' => __('data'),
