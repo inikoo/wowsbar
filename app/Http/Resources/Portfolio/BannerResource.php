@@ -20,10 +20,12 @@ class BannerResource extends JsonResource
             'slug'           => $banner->slug,
             'code'           => $banner->code,
             'name'           => $banner->name,
+            'route'          => [
+                'name' => 'portfolio.banners.show',
+                'parameters' => [$banner->slug]
+            ],
             'components'     => SlideResource::collection($banner->slides),
-            'updated_at'     => $banner->updated_at,
-
-
+            'updated_at'     => $banner->updated_at
         ];
     }
 }
