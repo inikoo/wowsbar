@@ -178,14 +178,24 @@ const routeButton = (action) => {
 }
 
 const saveData = async () => {
-    // const setDatatoForm = useForm({data : {}}) 
-    
+     const form = useForm({data : data })
+
+    form.patch(
+        route(routeSave.value['route']['name'], routeSave.value['route']['parameters'])
+        , {
+        onSuccess: () => alert('test'),
+            onError: errors => { console.log(errors)  },
+    })
+
+/*
     try {
         await router.patch(route(routeSave.value['route']['name'], routeSave.value['route']['parameters']),data);
     } catch (error) {
         console.error("An error occurred:", error);
         alert("An error occurred. Please try again.");
     }
+
+ */
 };
 
 console.log('prop',props)
