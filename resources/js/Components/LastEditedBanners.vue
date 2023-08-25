@@ -53,7 +53,7 @@ console.log(props)
                         <!-- <dt class="text-gray-500 text-sm">{{ trans('Last edit') }}</dt> -->
                         <dd class="text-gray-600 text-xs italic tracking-wide space-x-1">
                             <span class="text-gray-500">{{ trans('Last edited on') }}</span>
-                            <time :datetime="lastEditedBanner.updated_at">{{  moment.utc(lastEditedBanner.updated_at).tz(userTimezone) }}</time>
+                            <time :datetime="lastEditedBanner.updated_at">{{  moment.utc(lastEditedBanner.updated_at).tz(userTimezone).fromNow() }}</time>
                         </dd>
                     </div>
                 </dl>
