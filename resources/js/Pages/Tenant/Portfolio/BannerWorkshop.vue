@@ -27,6 +27,7 @@ import Button from "@/Components/Elements/Buttons/Button.vue"
 import Modal from '@/Components/Utils/Modal.vue'
 import { faRocketLaunch } from "@/../private/pro-regular-svg-icons"
 import {  useForm } from '@inertiajs/vue3'
+import ScreenView from "@/Components/ScreenView.vue"
 
 library.add( faAsterisk, faRocketLaunch, faUser, faUserFriends );
 
@@ -260,13 +261,13 @@ console.log('prop',props)
                         'relative inline-flex items-center bg-white px-3 py-2 text-xs font-semibold border-r hover:bg-gray-50 focus:z-10',
                         firebase ? 'text-orange-500' : 'text-gray-900'
                     ]">
-                        <font-awesome-icon :icon="['fal', 'user']" class="p-1" /> Collaborative Work
+                        <font-awesome-icon :icon="['fal', 'user-friends']" class="p-1" /> Collaborative Work
                     </button>
                     <button type="button" @click="firebase = false" :class="[
                         'relative inline-flex items-center bg-white px-3 py-2 text-xs font-semibold border-r hover:bg-gray-50 focus:z-10',
                         !firebase ? 'text-orange-500' : 'text-gray-900'
                     ]">
-                        <font-awesome-icon :icon="['fal', 'user-friends']" class="p-1" /> Individual Work
+                        <font-awesome-icon :icon="['fal', 'user']" class="p-1" /> Individual Work
                     </button>
                 </div>
                 <div class="flex justify-end pr-2 w-3/6">
