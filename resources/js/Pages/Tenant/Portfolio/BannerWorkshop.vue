@@ -186,7 +186,8 @@ const routeButton = (action) => {
 
         router.visit(route(action['route']['name'], action['route']['parameters']))
     } if (action.style == "save") {
-        isModalOpen.value = true
+        if(props.banner.state != 'unpublished')isModalOpen.value = true
+        else sendDataToServer()
     }
 }
 
@@ -214,6 +215,15 @@ const sendDataToServer = async () => {
         })
 };
 
+const ceknotif = () => {
+    notify({
+        title: "Failed to Update Banner",
+        text: 'test',
+        type: "error",
+    });
+}
+
+console.log(props)
 
 </script>
 
