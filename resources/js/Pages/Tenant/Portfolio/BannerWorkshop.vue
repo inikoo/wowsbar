@@ -193,7 +193,12 @@ const routeButton = (action) => {
 
 
 const sendDataToServer = async () => {
-    const form = useForm({ ...data, comment : comment.value})
+    const formValues = {
+        ...data,
+        ...(props.banner.state !== 'unpublished' && { comment: comment.value }),
+    };
+
+    const form = useForm(formValues);
     form.patch(
         route(routeSave.value['route']['name'], routeSave.value['route']['parameters'])
         , {
@@ -201,8 +206,9 @@ const sendDataToServer = async () => {
                 isModalOpen.value = false
                 router.visit(route(routeExit.value['route']['name'], routeExit.value['route']['parameters']))
                 notify({
-                    title: "success Update Banner",
-                    type: "success"
+                    title: "success Update",
+                    type: "success",
+                    text: "Banner already update and publish",
                 });
             },
             onError: errors => {
