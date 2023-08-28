@@ -36,7 +36,7 @@ const handleSearchInput = () => {
     clearTimeout(timeoutId)
     timeoutId = setTimeout(() => {
         fetchApi(searchInput.value)
-    }, 700)
+    }, 400)
 }
 
 const loadingState = ref(false)
@@ -47,8 +47,8 @@ const paramsToString = computed(() => {
 })
 
 const fetchApi = async (query: string) => {
-    loadingState.value = true
     if (query !== '') {
+        loadingState.value = true
         await fetch(`http://aiku.wowsbar.test/search/?q=${query}&route_src=${route().current()}${paramsToString.value}`)
             .then(response => {
                 response.json().then((data: Object) => {

@@ -252,7 +252,7 @@ defineExpose({
                 ]"
                 @click="cornerClick(corner)"
             >
-                <span v-if="common && common.corners?.hasOwnProperty(corner.id)" class="text-sm italic font-normal text-gray-300">Reserved in Common</span>
+                <span v-if="common && common.corners?.hasOwnProperty(corner.id)" class="text-sm italic font-normal text-gray-300">{{ trans('Reserved') }}</span>
                 <span v-else>{{ corner.label }}</span>
             </div>
         </div>
