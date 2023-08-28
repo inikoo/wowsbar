@@ -34,7 +34,6 @@ trait IsMedia
     }
 
 
-
     public function getLocalImgProxyFilename(): string
     {
         $rootPath='/'.config('app.name').Str::after(Storage::disk($this->disk)->path(''), storage_path());
@@ -45,5 +44,7 @@ trait IsMedia
 
         return 'local://'.$rootPath.$mediaPath;
     }
+
+
 
 }

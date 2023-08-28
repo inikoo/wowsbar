@@ -25,7 +25,7 @@ class IndexUserRequestLogs
     use AsObject;
     use WithFormattedRequestLogs;
 
-    public function handle($filter = 'VISIT'): LengthAwarePaginator|bool|array
+    public function handle($sort = null, $filter = 'VISIT'): LengthAwarePaginator|bool|array
     {
         $client = BuildElasticsearchClient::run();
 

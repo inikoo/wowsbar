@@ -7,6 +7,8 @@ import { ulid } from "ulid"
 import { trans } from "laravel-vue-i18n"
 import Modal from '@/Components/Utils/Modal.vue'
 import CropImage from "./CropImage/CropImage.vue"
+import Button from "../Elements/Buttons/Button.vue"
+import GalleryImages from "@/Components/Workshop/GalleryImages.vue"
 
 library.add(faImage)
 const props = defineProps<{
@@ -44,7 +46,7 @@ const props = defineProps<{
 
 const isOpen = ref(false)
 const addFiles = ref([])
-
+const isOpenGalleryImages = ref(false)
 const closeModal = () => {
     addFiles.value.files = null
     isOpen.value = false
@@ -100,6 +102,11 @@ const uploadImageRespone = (res) => {
             <CropImage :data="addFiles" :imagesUploadRoute="props.imagesUploadRoute" :respone="uploadImageRespone" />
         </div>
     </Modal>
+    <Modal :isOpen="isOpenGalleryImages" @onClose="()=>isOpenGalleryImages = false">
+            <div>
+                <GalleryImages :addImage="uploadImageRespone" :closeModal="()=>isOpenGalleryImages = false"/>
+            </div>
+        </Modal>
     <div class="col-span-full p-3" @dragover="dragover" @dragleave="dragleave" @drop="drop">
         <div class="relative mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10 bg-gray-400/10 hover:bg-gray-400/20">
             <label for="fileInput"
@@ -115,6 +122,10 @@ const uploadImageRespone = (res) => {
                 <p class="text-[0.7rem]">
                     {{ trans("PNG, JPG, GIF up to 10MB") }}
                 </p>
+                <Button :style="`primary`" icon="fal fa-photo-video" size="xs" class="relative m-2.5"
+                    @click="()=>isOpenGalleryImages=true">
+                    {{ trans("Gallery") }}
+                </Button>
             </div>
         </div>
         <div class="text-xs text-gray-400 py-1">{{ trans("The recommended image size is 1800 x 450") }}</div>

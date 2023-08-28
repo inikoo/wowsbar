@@ -62,7 +62,7 @@ Route::get('/websites/{portfolioWebsite}/banners/{banner}', [
 ])->name('websites.show.banners.show');
 
 Route::get('/websites/{portfolioWebsite}/banners/{banner}/edit', [
-    'uses'  => EditBanner::class . '@inPortfolioWebsite',
+    'uses'  => EditBanner::class,
     'icon'  => 'globe',
     'label' => 'banner'
 ])->name('websites.show.banners.edit');

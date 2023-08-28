@@ -8,7 +8,9 @@
 namespace App\Actions\Tenant\Portfolio\Banner\UI;
 
 use App\Actions\InertiaAction;
+use App\Actions\Tenant\Portfolio\PortfolioWebsite\UI\IndexPortfolioWebsites;
 use App\Models\Portfolio\Banner;
+use App\Models\Portfolio\PortfolioWebsite;
 use Exception;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
@@ -29,7 +31,7 @@ class EditBanner extends InertiaAction
 
     }
 
-    public function asController(Banner $banner, ActionRequest $request): Banner
+    public function asController(PortfolioWebsite $portfolioWebsite, Banner $banner, ActionRequest $request): Banner
     {
         $this->initialisation($request);
         return $this->handle($banner);
@@ -96,6 +98,13 @@ class EditBanner extends InertiaAction
                                         'value'    => $banner->name,
                                         'required' => true,
                                     ],
+                                    'websites' => [
+                                        'type'     => 'select',
+                                        'label'    => __('website'),
+                                        'value'    => $banner->portfolio_website_id,
+                                        'required' => true,
+                                        'options'  => IndexPortfolioWebsites::run()
+                                    ],
                                 ]
                             ],
 
@@ -143,7 +152,7 @@ class EditBanner extends InertiaAction
         }
 
         return match ($routeName) {
-            'portfolio.banners.edit' => [
+            'portfolio.websites.show.banners.edit' => [
                 'label' => $banner->name,
                 'route' => [
                     'name'       => $routeName,

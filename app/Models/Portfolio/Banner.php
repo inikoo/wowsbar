@@ -8,6 +8,7 @@
 namespace App\Models\Portfolio;
 
 use App\Concerns\BelongsToTenant;
+use App\Models\Media\Media;
 use App\Models\Traits\HasHistory;
 use App\Models\Traits\HasUniversalSearch;
 use Illuminate\Database\Eloquent\Builder;
@@ -42,10 +43,15 @@ use Spatie\Sluggable\SlugOptions;
  * @property array $compiled_layout
  * @property array $data
  * @property string|null $checksum
+ * @property int|null $image_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
- * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \App\Models\Media\Media> $media
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \OwenIt\Auditing\Models\Audit> $audits
+ * @property-read int|null $audits_count
+ * @property-read array $es_audits
+ * @property-read Media|null $image
+ * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, Media> $media
  * @property-read int|null $media_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Portfolio\PortfolioWebsite> $portfolioWebsite
  * @property-read int|null $portfolio_website_count
@@ -67,6 +73,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Banner whereData($value)
  * @method static Builder|Banner whereDeletedAt($value)
  * @method static Builder|Banner whereId($value)
+ * @method static Builder|Banner whereImageId($value)
  * @method static Builder|Banner whereLiveAt($value)
  * @method static Builder|Banner whereLiveSnapshotId($value)
  * @method static Builder|Banner whereName($value)
@@ -126,12 +133,10 @@ class Banner extends Model implements HasMedia, Auditable
         return $this->morphMany(Snapshot::class, 'parent');
     }
 
-
     public function unpublishedSnapshot(): BelongsTo
     {
         return $this->belongsTo(Snapshot::class, 'unpublished_snapshot_id');
     }
-
 
     public function portfolioWebsite(): BelongsToMany
     {
@@ -139,9 +144,17 @@ class Banner extends Model implements HasMedia, Auditable
             ->withTimestamps();
     }
 
-
     public function stats(): HasOne
     {
         return $this->hasOne(BannerStats::class);
     }
+
+    public function image(): BelongsTo
+    {
+        return $this->belongsTo(Media::class, 'image_id');
+    }
+
+
+
+
 }
