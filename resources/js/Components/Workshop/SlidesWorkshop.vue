@@ -451,8 +451,20 @@ console.log(currentComponentBeenEdited.value)
 
 <template>
     <div class="flex flex-grow gap-2.5">
+        <Modal :isOpen="isOpenGalleryImages" @onClose="closeModalisOpenGalleryImages">
+            <div>
+                <GalleryImages :addImage="uploadImageRespone" :closeModal="()=>isOpenGalleryImages = false"/>
+                
+            </div>
+        </Modal>
 
-        <div class="p-2.5 border rounded h-fit shadow" :class="['w-[30%] lg:w-2/4']"
+        <Modal :isOpen="isOpenCropModal" @onClose="closeModalisOpenCropModal">
+            <div>
+                <CropImage :data="addFiles" :imagesUploadRoute="props.imagesUploadRoute" :respone="uploadImageRespone" />
+            </div>
+        </Modal>
+
+        <div class="p-2.5 border rounded h-fit shadow w-[25%]"
             v-if="data.components" @dragover="dragover" @dragleave="dragleave" @drop="drop">
             <!-- Common Properties -->
             <div :class="[
@@ -498,8 +510,8 @@ console.log(currentComponentBeenEdited.value)
                                 class="handle p-1 text-xs sm:text-base sm:p-2.5 text-gray-700 cursor-grab place-self-center" />
 
                             <!-- Image slide -->
-                            <div class="h-10 w-10 sm:w-10 flex items-center justify-center py-1">
-                                <Image :src="slide.image.thumbnail" />
+                            <div>
+                                <Image :src="slide.image.thumbnail" class="h-full w-10 sm:w-10 flex items-center justify-center py-1"/>
                             </div>
 
                             <!-- Label slide -->
@@ -554,13 +566,13 @@ console.log(currentComponentBeenEdited.value)
         </div>
 
         <!-- The Editor: Common -->
-        <div class="w-full border border-gray-300" v-if="commonEditActive">
+        <div class="border border-gray-300 w-[75%]" v-if="commonEditActive">
             <SliderCommonWorkshop :currentComponentBeenEdited="props.data" :blueprint="CommonBlueprint"
                 ref="_SlideWorkshop" />
         </div>
 
         <!-- The Editor: Slide -->
-        <div class="w-full border border-gray-300" v-if="currentComponentBeenEdited != null">
+        <div class="border border-gray-300 w-[75%]" v-if="currentComponentBeenEdited != null">
             <SlideWorkshop :common="data.common" :currentComponentBeenEdited="currentComponentBeenEdited"
                 :blueprint="ComponentsBlueprint" ref="_SlideWorkshop" :remove="removeComponent" />
         </div>

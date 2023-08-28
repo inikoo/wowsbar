@@ -31,7 +31,7 @@ class ContentBlockSearchResultResource extends JsonResource
                     $contentBlock->slug
                 ]
             ],
-            'icon'   => ['fal', 'fa-terminal']
+            'icon'   => ['fal', 'fa-window-maximize']
         ];
     }
 }
