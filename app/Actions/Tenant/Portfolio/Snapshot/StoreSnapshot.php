@@ -20,8 +20,6 @@ class StoreSnapshot
     public function handle(Banner $banner, array $modelData, ?array $slides): Snapshot
     {
 
-
-
         data_set(
             $modelData,
             'checksum',
@@ -32,9 +30,7 @@ class StoreSnapshot
             )
         );
 
-
         $snapshot=Snapshot::create($modelData);
-
 
         $banner->snapshots()->save($snapshot);
         $banner->generateSlug();

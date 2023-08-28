@@ -20,7 +20,6 @@ class StoreSlide
     public function handle(Snapshot $snapshot, array $modelData): Slide
     {
 
-
         data_fill($modelData, 'ulid', Str::ulid());
         /** @var Slide $slide */
         $slide= $snapshot->slides()->create($modelData);

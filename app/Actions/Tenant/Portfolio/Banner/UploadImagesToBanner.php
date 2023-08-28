@@ -25,13 +25,13 @@ class UploadImagesToBanner
     private PortfolioWebsite|null $portfolioWebsite = null;
 
 
-    public function handle(Banner $contentBlock, array $imageFiles): Collection
+    public function handle(Banner $banner, array $imageFiles): Collection
     {
 
         $medias=[];
         foreach ($imageFiles as $imageFile) {
             $medias[]=AttachImageToBanner::run(
-                contentBlock:$contentBlock,
+                banner:$banner,
                 file:$imageFile
             );
         }
