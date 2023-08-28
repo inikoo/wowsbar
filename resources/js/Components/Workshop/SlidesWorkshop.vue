@@ -471,7 +471,7 @@ console.log(currentComponentBeenEdited.value)
 
             <!-- Slides/Drag area -->
             <div class="mb-2 text-lg font-medium">{{ trans("Slides") }}</div>
-            <draggable :list="data.components" group="slide " item-key="ulid" handle=".handle"
+            <draggable :list="data.components" group="slide " item-key="ulid" handle=".handle" class="max-h-96 overflow-auto p-2"
                 :onChange="(e: any) => emits('jumpToIndex', e.moved.newIndex)">
                 <template #item="{ element: slide }">
                     <div @mousedown="
