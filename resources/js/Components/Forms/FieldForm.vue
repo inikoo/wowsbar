@@ -28,10 +28,11 @@ import Permissions from "@/Components/Forms/Fields/Permissions.vue"
 import InputWithAddOn from '@/Components/Forms/Fields/InputWithAddOn.vue'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faSave } from '@/../private/pro-light-svg-icons'
+import { faSave as fadSave } from '@/../private/pro-duotone-svg-icons'
+import { faSave as falSave } from '@/../private/pro-light-svg-icons'
 import { faAsterisk } from '@/../private/pro-solid-svg-icons'
 import { library } from '@fortawesome/fontawesome-svg-core'
-library.add(faSave, faAsterisk)
+library.add(fadSave, falSave, faAsterisk)
 
 const props = defineProps<{
     field: string,
@@ -115,8 +116,8 @@ function submit() {
                         <!-- Button: Save -->
                         <span class="ml-2 flex-shrink-0">
                             <button class="align-bottom" :disabled="form.processing || !form.isDirty" type="submit">
-                                <FontAwesomeIcon icon="fal fa-save" class="h-8 "
-                                    :class="form.isDirty ? 'text-orange-500' : 'text-gray-200 dark:text-gray-500'" aria-hidden="true" />
+                                <FontAwesomeIcon v-if="form.isDirty" icon="fad fa-save" class="h-8 text-gray-500" style="--fa-secondary-color: rgb(255, 0, 0);" aria-hidden="true" />
+                                <FontAwesomeIcon v-else icon="fal fa-save" class="h-8 text-gray-300 dark:text-gray-500" aria-hidden="true" />
                             </button>
                         </span>
                     </div>
