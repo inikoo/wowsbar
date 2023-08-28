@@ -451,8 +451,7 @@ console.log(currentComponentBeenEdited.value)
 
 <template>
     <div class="flex flex-grow gap-2.5">
-
-        <div class="p-2.5 border rounded h-fit shadow" :class="['w-[30%] lg:w-2/4']"
+        <div class="p-2.5 border rounded h-fit shadow w-[25%]"
             v-if="data.components" @dragover="dragover" @dragleave="dragleave" @drop="drop">
             <!-- Common Properties -->
             <div :class="[
@@ -472,7 +471,7 @@ console.log(currentComponentBeenEdited.value)
 
             <!-- Slides/Drag area -->
             <div class="mb-2 text-lg font-medium">{{ trans("Slides") }}</div>
-            <draggable :list="data.components" group="slide " item-key="ulid" handle=".handle"
+            <draggable :list="data.components" group="slide " item-key="ulid" handle=".handle" class="max-h-96 overflow-auto p-2"
                 :onChange="(e: any) => emits('jumpToIndex', e.moved.newIndex)">
                 <template #item="{ element: slide }">
                     <div @mousedown="
@@ -498,8 +497,8 @@ console.log(currentComponentBeenEdited.value)
                                 class="handle p-1 text-xs sm:text-base sm:p-2.5 text-gray-700 cursor-grab place-self-center" />
 
                             <!-- Image slide -->
-                            <div class="h-10 w-10 sm:w-10 flex items-center justify-center py-1">
-                                <Image :src="slide.image.thumbnail" />
+                            <div>
+                                <Image :src="slide.image.thumbnail" class="h-full w-10 sm:w-10 flex items-center justify-center py-1"/>
                             </div>
 
                             <!-- Label slide -->
@@ -513,21 +512,20 @@ console.log(currentComponentBeenEdited.value)
 
                         <!-- Button: Show/hide, delete slide -->
                         <div class="flex justify-center items-center pr-2 justify-self-end">
-                            <button class="px-2 py-1" type="button" v-if="slide.user == props.user.username || !slide.user"
+                            <button class="px-2 py-1 text-gray-400 hover:text-gray-500" type="button" v-if="slide.user == props.user.username || !slide.user"
                                 @click="changeVisibility(slide)" title="Show/hide the slide">
                                 <FontAwesomeIcon v-if="slide.hasOwnProperty('visibility') ? slide.visibility : true"
-                                    icon="fas fa-eye" class="text-xs sm:text-sm text-gray-400 hover:text-gray-500" />
-                                <FontAwesomeIcon v-else icon="fas fa-eye-slash"
-                                    class="text-xs sm:text-sm text-gray-300 hover:text-gray-400/70" />
+                                    icon="fas fa-eye" class="text-xs sm:text-sm " />
+                                <FontAwesomeIcon v-else icon="fas fa-eye-slash" class="text-xs sm:text-sm" />
                             </button>
-                            <button class="px-2 py-1" type="button" v-if="slide.user == props.user.username || !slide.user"
-                                @click="(e)=>{ e.stopPropagation()
-                                    removeComponent(slide)}" title="Show/hide the slide">
-                                <font-awesome-icon :icon="['fal', 'fa-trash-alt']"  class="text-xs sm:text-sm text-red-500 hover:text-gray-400/70" />
+                            <button class="px-2 py-1 bg-grays-500 text-red-500/60 hover:text-red-500" type="button" v-if="slide.user == props.user.username || !slide.user"
+                                @click="(e)=>{ e.stopPropagation() 
+                                    removeComponent(slide)}"
+                                title="Delete the slide">
+                                <FontAwesomeIcon :icon="['fal', 'fa-trash-alt']"  class="text-xs sm:text-sm" />
                             </button>
                             <button class="px-2 py-1" type="button" v-else>
-                                <font-awesome-icon :icon="['fal', 'lock']" 
-                                    class="text-xs sm:text-sm text-gray-300 hover:text-gray-400/70" />
+                                <FontAwesomeIcon :icon="['fal', 'lock']" class="text-xs sm:text-sm text-gray-300 hover:text-gray-400/70" />
                             </button>
                         </div>
                     </div>
@@ -555,13 +553,13 @@ console.log(currentComponentBeenEdited.value)
         </div>
 
         <!-- The Editor: Common -->
-        <div class="w-full border border-gray-300" v-if="commonEditActive">
+        <div class="border border-gray-300 w-[75%]" v-if="commonEditActive">
             <SliderCommonWorkshop :currentComponentBeenEdited="props.data" :blueprint="CommonBlueprint"
                 ref="_SlideWorkshop" />
         </div>
 
         <!-- The Editor: Slide -->
-        <div class="w-full border border-gray-300" v-if="currentComponentBeenEdited != null">
+        <div class="border border-gray-300 w-[75%]" v-if="currentComponentBeenEdited != null">
             <SlideWorkshop :common="data.common" :currentComponentBeenEdited="currentComponentBeenEdited"
                 :blueprint="ComponentsBlueprint" ref="_SlideWorkshop" :remove="removeComponent" />
         </div>

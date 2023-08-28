@@ -22,7 +22,6 @@ const emit = defineEmits()
 
 const changeColor = (value) => {
     const { r, g, b, a } = value.rgba
-    console.log(r,g,b,a)
     color.value = `rgba(${r}, ${g}, ${b}, ${a})`
 }
 
@@ -64,21 +63,31 @@ const updateFormValue = (newValue) => {
 </script>
 
 <template>
-    <div class="flex gap-3">
-        <div class="bg-gray-950 border-black rounded-full w-10 h-10 justify-center" :style="`border: 1px solid`" @click="()=>changeColor({ rgba : { r: 0, g: 0,b: 0,a: 1} })"/>
-        <div class="bg-white border-black rounded-full w-10 h-10 justify-center" :style="`border: 1px solid`" @click="()=>changeColor({ rgba : { r: 255, g: 255,b: 255,a: 255} })"/>
-        <Popover v-slot="{ open }" class="relative">
-            <div>
-                <PopoverButton :class="{
-                    'bg-black bg-opacity-20 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2  focus-visible:ring-opacity-75': true,
-                    'rounded-full w-10 h-10 justify-center ': true
-                }" :style="`background-color: ${color}; border: 1px solid`" />
+    <div class="flex gap-5">
+        <div>
+            <div class="bg-gray-950 border-black rounded-full w-10 h-10 justify-center" :style="`border: 1px solid`"
+                @click="() => changeColor({ rgba: { r: 0, g: 0, b: 0, a: 1 } })" />
+            <div class="flex items-center justify-center text-sm font-semibold">Black</div>
+        </div>
+        <div>
+            <div class="bg-white border-black rounded-full w-10 h-10 justify-center" :style="`border: 1px solid`"
+                @click="() => changeColor({ rgba: { r: 255, g: 255, b: 255, a: 255 } })" />
+            <div class="flex items-center justify-center text-sm font-semibold">White</div>
+        </div>
+
+        <Popover v-slot="{ open }">
+            <div class="relative">
+                <PopoverButton>
+                    <div class="bg-gray-950 border-black rounded-full w-10 h-10 justify-center"
+                        :style="`background-color: ${color}; border: 1px solid`" />
+                    <div class="flex items-center justify-center text-sm font-semibold">Custom</div>
+                </PopoverButton>
 
                 <Transition enter-active-class="transition duration-200 ease-out" enter-from-class="translate-y-1 opacity-0"
                     enter-to-class="translate-y-0 opacity-100" leave-active-class="transition duration-150 ease-in"
                     leave-from-class="translate-y-0 opacity-100" leave-to-class="translate-y-1 opacity-0">
                     <PopoverPanel v-show="open"
-                        class="absolute left-0 mt-2 w-56 origin-top-left divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                        class="absolute bottom-full left-1/2 z-10 mb-3 -translate-x-1/2 transform px-4 sm:px-0">
                         <div :style="{ background: color }">
                             <ColorPicker theme="light" v-model="color" :sucker-hide="false" @changeColor="changeColor"
                                 style="width: 225px;" />
@@ -87,6 +96,7 @@ const updateFormValue = (newValue) => {
                 </Transition>
             </div>
         </Popover>
-    </div>
-</template>
+
+
+</div></template>
   
