@@ -61,9 +61,9 @@ const setCurrent=(key)=>{
                 <ul>
                     <li v-for="(item, key) in blueprint" @click="setCurrent(key)" :class="[
                         key == current
-                            ? 'bg-gray-100 border-orange-500 hover:bg-gray-100 text-gray-600'
-                            : 'border-transparent hover:bg-gray-50 text-gray-500 hover:text-gray-700',
-                        'group cursor-pointer border-l-4 px-3 py-2 flex items-center text-sm font-medium',
+                            ? 'tabNavigationActive'
+                            : 'tabNavigation',
+                        'group cursor-pointer px-3 py-2 flex items-center text-sm font-medium',
                     ]" :aria-current="key === current ? 'page' : undefined">
                         <FontAwesomeIcon v-if="item.icon" aria-hidden="true" class="flex-shrink-0 -ml-1 mr-3 h-6 w-6 text-gray-400 group-hover:text-gray-500" :icon="item.icon" />
 
