@@ -28,6 +28,7 @@ import Modal from '@/Components/Utils/Modal.vue'
 import { faRocketLaunch } from "@/../private/pro-regular-svg-icons"
 import {  useForm } from '@inertiajs/vue3'
 import ScreenView from "@/Components/ScreenView.vue"
+import { notify } from "@kyvg/vue3-notification";
 
 library.add( faAsterisk, faRocketLaunch, faUser, faUserFriends );
 
@@ -190,24 +191,29 @@ const routeButton = (action) => {
 }
 
 
-const saveData = async () => {
-     const form = useForm({ })
+const sendDataToServer = async () => {
+    const form = useForm({ ...data, comment : comment.value})
     form.patch(
         route(routeSave.value['route']['name'], routeSave.value['route']['parameters'])
         , {
-        onSuccess: (res) => {
-            console.log(res)
-            isModalOpen.value =  false
-            router.visit(route(routeExit.value['route']['name'], routeExit.value['route']['parameters']))
-        },
-            onError: errors => {
-                console.log('masukkkk')
-                // alert(JSON.stringify(errors))
+            onSuccess: (res) => {
+                isModalOpen.value = false
+                router.visit(route(routeExit.value['route']['name'], routeExit.value['route']['parameters']))
+                notify({
+                    title: "success Update Banner",
+                    type: "success"
+                });
             },
-    })
+            onError: errors => {
+                notify({
+                    title: "Failed to Update Banner",
+                    text: errors,
+                    type: "error"
+                });
+            },
+        })
 };
 
-console.log('prop',props)
 
 </script>
 
@@ -224,7 +230,7 @@ console.log('prop',props)
                     class="block w-full rounded-md shadow-sm dark:bg-gray-600 dark:text-gray-400 border-gray-300 dark:border-gray-500 focus:border-gray-500 focus:ring-gray-500 sm:text-sm" />
             </div>
             <div class="flex justify-end">
-                <Button size="xs" @click="saveData"
+                <Button size="xs" @click="sendDataToServer"
                     class="capitalize inline-flex items-center rounded-md text-sm font-medium shadow-sm gap-x-2">
                     <FontAwesomeIcon :icon="['far', 'fa-rocket-launch']" />
                     {{ trans('Publish') }}
@@ -290,5 +296,5 @@ console.log('prop',props)
             <SlidesWorkshopAddMode :data="data" :imagesUploadRoute="imagesUploadRoute" />
         </div>
     </div>
-    <div @click="() => { ceknotif }">show add</div>
+    <div @click="ceknotif">show add</div>
 </template>
