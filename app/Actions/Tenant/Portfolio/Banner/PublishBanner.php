@@ -91,7 +91,8 @@ class PublishBanner
     public function rules(): array
     {
         return [
-            'layout' => ['required', 'array:delay,common,components']
+            'layout' => ['required', 'array:delay,common,components'],
+            'comment'=>['sometimes','required','string','max:1024']
         ];
     }
 
@@ -99,7 +100,7 @@ class PublishBanner
     {
         $request->merge(
             [
-                'layout' => $request->only(['delay', 'common', 'components'])
+                'layout' => $request->only(['delay', 'common', 'components']),
             ]
         );
     }
