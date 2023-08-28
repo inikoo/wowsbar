@@ -38,6 +38,7 @@
         "@fortawesome/vue-fontawesome": "^3.0.1",
         "@headlessui/vue": "^1.7.14",
         "@heroicons/vue": "^2.0.18",
+        "@kyvg/vue3-notification": "^3.0.1",
         "@sentry/vue": "^7.40.0",
         "@tiptap/extension-character-count": "^2.0.3",
         "@tiptap/extension-list-item": "^2.0.3",

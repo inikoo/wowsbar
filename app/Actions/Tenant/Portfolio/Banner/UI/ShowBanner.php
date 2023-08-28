@@ -53,7 +53,6 @@ class ShowBanner extends InertiaAction
 
     public function htmlResponse(Banner $banner, ActionRequest $request): Response
     {
-
         return Inertia::render(
             'Tenant/Portfolio/Banner',
             [
@@ -69,6 +68,16 @@ class ShowBanner extends InertiaAction
                         'icon'  => 'fal fa-window-maximize'
                     ],
                     'actions' => [
+                        $this->canEdit ? [
+                            'type'  => 'button',
+                            'style' => 'edit',
+                            'label' => __('banner'),
+                            'icon'  => ["fal", "fa-pencil"],
+                            'route' => [
+                                'name'       => preg_replace('/show$/', 'edit', $request->route()->getName()),
+                                'parameters' => array_values($request->route()->originalParameters())
+                            ]
+                        ] : false,
                         $this->canEdit ? [
                             'type'  => 'button',
                             'style' => 'edit',

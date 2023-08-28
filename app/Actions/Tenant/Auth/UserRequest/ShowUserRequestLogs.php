@@ -25,7 +25,7 @@ class ShowUserRequestLogs
     use AsObject;
     use WithFormattedRequestLogs;
 
-    public function handle(string $query = null, $filter = 'VISIT'): LengthAwarePaginator|array|bool
+    public function handle(string $query = null, $sort = null, $filter = 'VISIT'): LengthAwarePaginator|array|bool
     {
         $client = BuildElasticsearchClient::run();
 
@@ -44,6 +44,9 @@ class ShowUserRequestLogs
                             ],
                         ],
                     ],
+                    'sort' => [
+                        $sort
+                    ]
                 ];
 
                 return $this->format($client, $params);

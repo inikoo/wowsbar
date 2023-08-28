@@ -120,6 +120,7 @@ const sidebarOpen = ref(false)
 
     <!-- Footer -->
     <AppFooter appScope="tenants" />
+    <notifications />
 
 </template>
 

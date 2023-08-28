@@ -16,6 +16,7 @@ import {
     TransitionRoot,
 } from '@headlessui/vue'
 import { Link, usePage } from '@inertiajs/vue3'
+import { Ref } from 'vue'
 import { router } from "@inertiajs/vue3"
 import { trans } from 'laravel-vue-i18n'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -23,20 +24,22 @@ import { faSpinnerThird } from '@/../private/pro-duotone-svg-icons'
 import { library } from '@fortawesome/fontawesome-svg-core'
 library.add(faSpinnerThird)
 
-const searchResults = ref('')
-
 const open = ref(true)
 const query = ref('')
-
-const searchInput = ref('')
+const searchInput: Ref<string> = ref('')
 
 let timeoutId: any
 
 const handleSearchInput = () => {
-    clearTimeout(timeoutId)
-    timeoutId = setTimeout(() => {
+    if(searchInput.value.length === 1) {
         fetchApi(searchInput.value)
-    }, 400)
+    }
+    else {
+        clearTimeout(timeoutId)
+        timeoutId = setTimeout(() => {
+            fetchApi(searchInput.value)
+        }, 400)
+    }
 }
 
 const loadingState = ref(false)
@@ -72,7 +75,7 @@ function handleKeyDown() {
 
 <template>
     <TransitionRoot :show="open" as="template" @after-leave="query = ''" appear>
-        <Dialog as="div" class="relative z-[19]" @close="open = false">
+        <Dialog as="div" class="relative z-[29]" @close="open = false">
             <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0" enter-to="opacity-100" leave="ease-in duration-200" leave-from="opacity-100" leave-to="opacity-0">
                 <div class="fixed inset-0 bg-gray-500 bg-opacity-25 transition-opacity" />
             </TransitionChild>
@@ -83,7 +86,7 @@ function handleKeyDown() {
                             <div class="relative">
                                 <FontAwesomeIcon class="pointer-events-none absolute top-3.5 left-4 h-5 w-5 text-gray-400" aria-hidden="true" icon="fa-regular fa-search" size="lg"/>
                                 <input type="text" v-model="searchInput" @input="handleSearchInput" @keydown="handleKeyDown"
-                                class="h-12 w-full border-0 bg-transparent pl-11 pr-4 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm" placeholder="Search..." @change="query = $event.target.value">
+                                class="h-12 w-full border-0 bg-transparent pl-11 pr-4 text-gray-700 placeholder:text-gray-400 focus:ring-0 sm:text-sm" placeholder="Search..." @change="query = $event.target.value">
                             </div>
                             <ComboboxOptions  class="flex divide-x divide-gray-100" as="div" static hold>
 
