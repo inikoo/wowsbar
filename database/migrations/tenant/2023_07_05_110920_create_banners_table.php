@@ -24,17 +24,15 @@ return new class () extends Migration {
             $table->string('code')->collation('und_ns_ci');
             $table->string('name')->collation('und_ns_ci');
             $table->string('state')->default(BannerStateEnum::UNPUBLISHED->value);
-
             $table->unsignedSmallInteger('unpublished_snapshot_id')->nullable()->index();
-
             $table->unsignedSmallInteger('live_snapshot_id')->nullable()->index();
-
-
             $table->dateTimeTz('live_at')->nullable();
             $table->dateTimeTz('retired_at')->nullable();
             $table->jsonb('compiled_layout');
             $table->jsonb('data');
             $table->string('checksum')->index()->nullable();
+            $table->unsignedInteger('image_id')->nullable();
+            $table->foreign('image_id')->references('id')->on('media');
             $table->timestampsTz();
             $table->softDeletesTz();
             $table->unique(['tenant_id', 'slug']);

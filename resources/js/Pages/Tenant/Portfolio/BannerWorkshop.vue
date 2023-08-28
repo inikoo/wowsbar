@@ -27,6 +27,7 @@ import Button from "@/Components/Elements/Buttons/Button.vue"
 import Modal from '@/Components/Utils/Modal.vue'
 import { faRocketLaunch } from "@/../private/pro-regular-svg-icons"
 import {  useForm } from '@inertiajs/vue3'
+import ScreenView from "@/Components/ScreenView.vue"
 
 library.add( faAsterisk, faRocketLaunch, faUser, faUserFriends );
 

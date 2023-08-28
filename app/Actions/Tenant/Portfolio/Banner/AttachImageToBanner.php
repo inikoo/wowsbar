@@ -17,7 +17,7 @@ class AttachImageToBanner
 {
     use AsAction;
 
-    public function handle(Banner $contentBlock, UploadedFile $file): Media
+    public function handle(Banner $banner, UploadedFile $file): Media
     {
         /** @var Media $media */
         $media = AttachImageToTenant::run(
@@ -27,6 +27,13 @@ class AttachImageToBanner
             originalFilename: $file->getClientOriginalName(),
             extension: $file->guessClientExtension()
         );
+        if(!$banner->image_id) {
+            $banner->update(
+                [
+                    'image_id',$media->id
+                ]
+            );
+        }
 
         return $media;
     }
