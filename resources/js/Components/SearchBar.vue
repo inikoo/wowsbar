@@ -16,6 +16,7 @@ import {
     TransitionRoot,
 } from '@headlessui/vue'
 import { Link, usePage } from '@inertiajs/vue3'
+import { Ref } from 'vue'
 import { router } from "@inertiajs/vue3"
 import { trans } from 'laravel-vue-i18n'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -23,20 +24,22 @@ import { faSpinnerThird } from '@/../private/pro-duotone-svg-icons'
 import { library } from '@fortawesome/fontawesome-svg-core'
 library.add(faSpinnerThird)
 
-const searchResults = ref('')
-
 const open = ref(true)
 const query = ref('')
-
-const searchInput = ref('')
+const searchInput: Ref<string> = ref('')
 
 let timeoutId: any
 
 const handleSearchInput = () => {
-    clearTimeout(timeoutId)
-    timeoutId = setTimeout(() => {
+    if(searchInput.value.length === 1) {
         fetchApi(searchInput.value)
-    }, 400)
+    }
+    else {
+        clearTimeout(timeoutId)
+        timeoutId = setTimeout(() => {
+            fetchApi(searchInput.value)
+        }, 400)
+    }
 }
 
 const loadingState = ref(false)
