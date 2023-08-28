@@ -78,7 +78,7 @@ Route::get('websites/{portfolioWebsite}/banners/{banner}/snapshots/{snapshot}', 
 Route::get('/banners/create', [CreateBanner::class, 'inTenant'])->name('banners.create');
 
 Route::get('/banners/{banner}', [ShowBanner::class, 'inTenant'])->name('banners.show');
-Route::get('/banners/{banner}/edit', [EditBanner::class, 'inTenant'])->name('banners.edit');
+Route::get('/banners/{banner}/edit', EditBanner::class)->name('banners.edit');
 Route::get('/banners/{banner}/workshop', [ShowBannerWorkshop::class, 'inTenant'])->name('banners.workshop');
 Route::post('/banners/{banner}/workshop/images', [UploadImagesToBanner::class, 'inBanner'])->name('banners.workshop.images.store');
 
