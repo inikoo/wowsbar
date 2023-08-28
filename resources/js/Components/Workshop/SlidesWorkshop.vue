@@ -451,19 +451,6 @@ console.log(currentComponentBeenEdited.value)
 
 <template>
     <div class="flex flex-grow gap-2.5">
-        <Modal :isOpen="isOpenGalleryImages" @onClose="closeModalisOpenGalleryImages">
-            <div>
-                <GalleryImages :addImage="uploadImageRespone" :closeModal="()=>isOpenGalleryImages = false"/>
-                
-            </div>
-        </Modal>
-
-        <Modal :isOpen="isOpenCropModal" @onClose="closeModalisOpenCropModal">
-            <div>
-                <CropImage :data="addFiles" :imagesUploadRoute="props.imagesUploadRoute" :respone="uploadImageRespone" />
-            </div>
-        </Modal>
-
         <div class="p-2.5 border rounded h-fit shadow w-[25%]"
             v-if="data.components" @dragover="dragover" @dragleave="dragleave" @drop="drop">
             <!-- Common Properties -->
