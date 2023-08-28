@@ -161,7 +161,7 @@ class IndexUsers extends InertiaAction
                     : Inertia::lazy(fn () => UserResource::collection($users)),
 
                 UsersTabsEnum::USERS_REQUESTS->value => $this->tab == UsersTabsEnum::USERS_REQUESTS->value ?
-                    fn () => UserRequestLogsResource::collection(IndexUserRequestLogs::run())
+                    fn () => UserRequestLogsResource::collection(IndexUserRequestLogs::run($request->get('sort')))
                     : Inertia::lazy(fn () => UserRequestLogsResource::collection(IndexUserRequestLogs::run()))
 
             ]
