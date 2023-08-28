@@ -451,27 +451,15 @@ console.log(currentComponentBeenEdited.value)
 
 <template>
     <div class="flex flex-grow gap-2.5">
-        <Modal :isOpen="isOpenGalleryImages" @onClose="closeModalisOpenGalleryImages">
-            <div>
-                <GalleryImages :addImage="uploadImageRespone" :closeModal="()=>isOpenGalleryImages = false"/>
-                
-            </div>
-        </Modal>
 
-        <Modal :isOpen="isOpenCropModal" @onClose="closeModalisOpenCropModal">
-            <div>
-                <CropImage :data="addFiles" :imagesUploadRoute="props.imagesUploadRoute" :respone="uploadImageRespone" />
-            </div>
-        </Modal>
-
-        <div class="p-2.5 border rounded h-fit shadow" :class="[commonEditActive ? 'w-[30%] lg:w-2/4' : 'w-[100%]']"
+        <div class="p-2.5 border rounded h-fit shadow" :class="['w-[30%] lg:w-2/4']"
             v-if="data.components" @dragover="dragover" @dragleave="dragleave" @drop="drop">
             <!-- Common Properties -->
             <div :class="[
-                'p-2 mb-2 md:pl-3 cursor-pointer space-x-3 md:space-x-2 border flex flex-row items-center md:block',
+                'p-2 mb-2 md:pl-3 cursor-pointer space-x-3 md:space-x-2 ring-1 ring-gray-300 flex flex-row items-center md:block',
                 commonEditActive
-                    ? 'bg-gray-200/60 font-medium border-l-4 border-l-orange-500'
-                    : 'hover:bg-gray-100 border-gray-300',
+                    ? 'tabNavigationActive bg-gray-200/60 font-medium'
+                    : 'tabNavigation hover:bg-gray-100 border-gray-300',
                 ]" @click="setCommonEdit"
             >
                 <FontAwesomeIcon v-if="props.data.common.user == props.user.username || !props.data.common.user"
@@ -494,15 +482,16 @@ console.log(currentComponentBeenEdited.value)
                             data.components.findIndex(obj => obj.ulid === slide.ulid)
                         )"
                         v-if="slide.ulid" :class="[
-                            'grid grid-flow-col relative sm:py-1 border mb-2 items-center justify-between hover:cursor-pointer',
+                            'grid grid-flow-col relative sm:py-1 mb-2 items-center justify-between ring-1 ring-gray-300 hover:cursor-pointer',
                             slide.ulid == get(currentComponentBeenEdited, 'ulid')
-                                ? 'border-l-orange-500 border-l-4 bg-gray-200/60 text-gray-600 font-medium'
-                                : 'border-gray-300',
+                                ? 'tabNavigationActive font-medium'
+                                : 'tabNavigation',
                             slide.user != props.user.username && slide.user
                                 ? 'border-l-red-500 border-l-4 bg-gray-200/60 text-gray-600 font-medium'
                                 : 'border-gray-300',
                         ]"
                     >
+                        <!-- Slide -->
                         <div class="grid grid-flow-col gap-x-1 lg:gap-x-0 ssm:py-1 lg:py-0">
                             <!-- Icon: Bars, class 'handle' to grabable -->
                             <FontAwesomeIcon icon="fal fa-bars"
@@ -576,5 +565,20 @@ console.log(currentComponentBeenEdited.value)
             <SlideWorkshop :common="data.common" :currentComponentBeenEdited="currentComponentBeenEdited"
                 :blueprint="ComponentsBlueprint" ref="_SlideWorkshop" :remove="removeComponent" />
         </div>
+        
+        <!-- Modal: Gallery -->
+        <Modal :isOpen="isOpenGalleryImages" @onClose="closeModalisOpenGalleryImages">
+            <div>
+                <GalleryImages :addImage="uploadImageRespone" :closeModal="()=>isOpenGalleryImages = false"/>
+                
+            </div>
+        </Modal>
+
+        <!-- Modal: Crop (add slide) -->
+        <Modal :isOpen="isOpenCropModal" @onClose="closeModalisOpenCropModal">
+            <div>
+                <CropImage :data="addFiles" :imagesUploadRoute="props.imagesUploadRoute" :respone="uploadImageRespone" />
+            </div>
+        </Modal>
     </div>
 </template>

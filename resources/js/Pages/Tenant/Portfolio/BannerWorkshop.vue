@@ -27,6 +27,7 @@ import Button from "@/Components/Elements/Buttons/Button.vue"
 import Modal from '@/Components/Utils/Modal.vue'
 import { faRocketLaunch } from "@/../private/pro-regular-svg-icons"
 import {  useForm } from '@inertiajs/vue3'
+import ScreenView from "@/Components/ScreenView.vue"
 
 library.add( faAsterisk, faRocketLaunch, faUser, faUserFriends );
 
@@ -257,16 +258,16 @@ console.log('prop',props)
             <div class="flex w-full">
                 <div class="isolate inline-flex shadow-sm w-3/6">
                     <button type="button" @click="firebase = true" :class="[
-                        'relative inline-flex items-center bg-white px-3 py-2 text-xs font-semibold border-r hover:bg-gray-50 focus:z-10',
-                        firebase ? 'text-orange-500' : 'text-gray-900'
+                        'relative inline-flex items-center px-3 py-2 text-xs border-r focus:z-10',
+                        firebase ? 'bg-gray-200 font-semibold text-gray-700' : 'text-gray-500 hover:bg-gray-100'
                     ]">
-                        <font-awesome-icon :icon="['fal', 'user']" class="p-1" /> Collaborative Work
+                        <FontAwesomeIcon :icon="['fal', 'user-friends']" class="p-1" :class="[firebase ? 'text-orange-500' : 'text-gray-500']"/> Collaborative Work
                     </button>
                     <button type="button" @click="firebase = false" :class="[
-                        'relative inline-flex items-center bg-white px-3 py-2 text-xs font-semibold border-r hover:bg-gray-50 focus:z-10',
-                        !firebase ? 'text-orange-500' : 'text-gray-900'
+                        'relative inline-flex items-center px-3 py-2 text-xs border-r focus:z-10',
+                        !firebase ? 'bg-gray-200 font-semibold text-gray-700' : 'text-gray-600 hover:bg-gray-100'
                     ]">
-                        <font-awesome-icon :icon="['fal', 'user-friends']" class="p-1" /> Individual Work
+                        <FontAwesomeIcon :icon="['fal', 'user']" class="p-1" :class="[firebase ? 'text-gray-500' : 'text-orange-500']"/> Individual Work
                     </button>
                 </div>
                 <div class="flex justify-end pr-2 w-3/6">
