@@ -66,7 +66,7 @@ watch(activeSidebar, (newSidebar: string) => {
 const ImageDataCollect = ref({data : []})
 
 const collectImage = (image) => {
-    console.log(image)
+    // console.log(image)
     const index = ImageDataCollect.value.data.findIndex((item)=>item.id == image.id)
     if(props.multiple){
         if(ImageDataCollect.value.data.length > 0){
@@ -102,47 +102,35 @@ const collectImage = (image) => {
         </section>
 
         <!-- Main content -->
-        <section class="bg-gray-50 w-full rounded-r-md">
+        <section class="bg-gray-50 h-96 w-full rounded-r-md">
             <div v-if="loadingState" class="w-full h-full flex justify-center items-center">
-                <FontAwesomeIcon icon='fad fa-spinner-third' class='animate-spin h-1/6' aria-hidden='true' />
+                <FontAwesomeIcon icon='fad fa-spinner-third' class='animate-spin h-12' aria-hidden='true' />
             </div>
-            <!-- Tab -->    
-            <!-- <div class="md:flex md:items-center md:justify-between">
-                <div class="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
-                    <ul class="flex flex-wrap -mb-px">
-                        <li v-for="(tab, index) in galleryStore[activeSidebar]" :key="tab" class="mr-2">
-                            <a href="#" :class="{
-                                'inline-block py-2 px-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300': index !== activeTab,
-                                'inline-block py-2 px-4 text-orange-500 border-b-2 border-orange-500 rounded-t-lg dark:text-orange-500 dark:border-orange-500': index === activeTab
-                            }" @click="changeTab(index)">
-                                {{ tab.name }}
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                    </h3>)
 
-            -->
+            <!-- Content -->
             <div v-else class="pt-6 pl-4 grid grid-cols-4 gap-x-3 gap-y-6 max-h-96 overflow-auto">
-                <div v-for="imageData in galleryStore?.[activeSidebar]" :key="imageData.id" class="group opacity-75 hover:opacity-100 cursor-pointer relative flex flex-col gap-y-1">
-                    <div @click="() => collectImage(imageData)"
-                            :class="ImageDataCollect.data.find((item) => item.id === imageData.id) ? 'border-solid border-2 border-orange-500 font-medium text-orange-500 p-1 rounded-md' : ''">
-                    <div class="flex-none aspect-[4/1] bg-white overflow-hidden rounded group-hover:ring-2 group-hover:ring-gray-500">
+                <div v-for="imageData in galleryStore?.[activeSidebar]" :key="imageData.id"
+                    @click="() => collectImage(imageData)"
+                    class="group cursor-pointer relative flex flex-col gap-y-1"
+                    :class="ImageDataCollect.data.find((item) => item.id === imageData.id) ? 'font-bold text-gray-500 rounded-md' : 'text-gray-500 opacity-70 hover:opacity-100'"
+                >
+                    <div class="flex-none aspect-[4/1] bg-white overflow-hidden rounded"
+                        :class="ImageDataCollect.data.find((item) => item.id === imageData.id) ? 'ring-2 ring-orange-500 ring-offset-2' : 'ring-offset-2 group-hover:ring-2 group-hover:ring-gray-300'"
+                    >
                         <Image :src="imageData.source" :alt="imageData.imageAlt" class="h-full w-full object-cover object-center" />
                     </div>
-                    <h3 class="overflow-hidden text-xs text-gray-700 flex justify-start items-center">
+                    <h3 class="overflow-hidden text-xs flex justify-start items-center">
                         {{ useTruncate(imageData.name, 17, 4) }}
                     </h3>
-                </div>
                 </div>
             </div>
             
         </section>
-      
+    
     </div>
     <div class="flex justify-end p-2.5 gap-3 pb-0">
         <Button @click="closeModal" :style="'tertiary'">Cancel</Button>
-        <Button @click="addImage(ImageDataCollect)">Add image</Button>
+        <Button @click="addImage(ImageDataCollect)">Add image ({{ ImageDataCollect.data.length }})</Button>
     </div>
     
 </template>
