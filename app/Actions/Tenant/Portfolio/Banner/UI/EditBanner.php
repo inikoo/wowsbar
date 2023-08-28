@@ -152,7 +152,7 @@ class EditBanner extends InertiaAction
         }
 
         return match ($routeName) {
-            'portfolio.websites.show.banners.edit' => [
+            'portfolio.banners.edit' => [
                 'label' => $banner->name,
                 'route' => [
                     'name'       => $routeName,
