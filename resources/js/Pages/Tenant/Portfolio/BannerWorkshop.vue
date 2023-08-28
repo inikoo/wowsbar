@@ -189,17 +189,20 @@ const routeButton = (action) => {
     }
 }
 
+
 const saveData = async () => {
-     const form = useForm({ ...data, comment : comment.value })
+     const form = useForm({ })
     form.patch(
         route(routeSave.value['route']['name'], routeSave.value['route']['parameters'])
         , {
-        onSuccess: () => {
+        onSuccess: (res) => {
+            console.log(res)
             isModalOpen.value =  false
             router.visit(route(routeExit.value['route']['name'], routeExit.value['route']['parameters']))
         },
             onError: errors => {
-                alert(JSON.stringify(errors))
+                console.log('masukkkk')
+                // alert(JSON.stringify(errors))
             },
     })
 };
@@ -287,5 +290,5 @@ console.log('prop',props)
             <SlidesWorkshopAddMode :data="data" :imagesUploadRoute="imagesUploadRoute" />
         </div>
     </div>
-    <!-- <div @click="() => { console.log(data) }">show add</div> -->
+    <div @click="() => { ceknotif }">show add</div>
 </template>
