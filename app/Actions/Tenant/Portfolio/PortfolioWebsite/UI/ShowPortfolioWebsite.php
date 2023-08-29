@@ -65,12 +65,11 @@ class ShowPortfolioWebsite extends InertiaAction
                         'icon'  => 'fal fa-globe'
                     ],
                     'actions' => [
-                        $this->canEdit ? [
+                        $this->canDelete ? [
                             'type'  => 'button',
-                            'style' => 'create',
-                            'label' => __('new banner'),
+                            'style' => 'delete',
                             'route' => [
-                                'name'       => $request->route()->getName().'.banners.create',
+                                'name'       => 'portfolio.websites.remove',
                                 'parameters' => array_values($request->route()->originalParameters())
                             ]
                         ] : false,
@@ -85,14 +84,15 @@ class ShowPortfolioWebsite extends InertiaAction
                             ]
                         ] : false,
 
-                        $this->canDelete ? [
+                        $this->canEdit ? [
                             'type'  => 'button',
-                            'style' => 'delete',
+                            'style' => 'create',
+                            'label' => __('new banner'),
                             'route' => [
-                                'name'       => 'portfolio.websites.remove',
+                                'name'       => $request->route()->getName().'.banners.create',
                                 'parameters' => array_values($request->route()->originalParameters())
                             ]
-                        ] : false
+                        ] : false,
                     ],
 
                 ],
