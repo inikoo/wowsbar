@@ -104,7 +104,7 @@ const collectImage = (image) => {
         <!-- Main content -->
         <section class="bg-gray-50 h-96 w-full rounded-r-md">
             <div v-if="loadingState" class="w-full h-full flex justify-center items-center">
-                <FontAwesomeIcon icon='fad fa-spinner-third' class='animate-spin h-12' aria-hidden='true' />
+                <FontAwesomeIcon icon='fad fa-spinner-third' class='animate-spin h-12  text-orange-500' aria-hidden='true' />
             </div>
 
             <!-- Content -->

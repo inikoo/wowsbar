@@ -28,7 +28,7 @@ const formatDate = (dateIso: Date) => {
     const hours = date.getHours().toString()
     const minutes = date.getMinutes().toString()
 
-    return `${year}-${month}-${day} ${hours}:${minutes}`
+    return date
 }
 </script>
 

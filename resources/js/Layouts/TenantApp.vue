@@ -120,7 +120,11 @@ const sidebarOpen = ref(false)
 
     <!-- Footer -->
     <AppFooter appScope="tenants" />
-    <notifications />
+    <notifications
+      dangerously-set-inner-html
+      :max="3"
+      :width="500"
+    />
 
 </template>
 
