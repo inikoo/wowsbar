@@ -18,9 +18,9 @@ const layout = useLayoutStore()
         <!-- Header of Tab Footer (Pin button) -->
         <div class="flex justify-end items-center pr-1.5 bg-gray-200 border border-gray-300">
             <div
-                @click="layout.rightSidebar[tabName] = !layout.rightSidebar[tabName]"
+                @click="layout.rightSidebar[tabName].show = !layout.rightSidebar[tabName]?.show"
                 class="px-1.5 py-1 hover:text-gray-500 flex items-center leading-none"
-                :class="[layout.rightSidebar[tabName] ? 'text-gray-800' : 'text-gray-400']"
+                :class="[layout.rightSidebar[tabName]?.show ? 'text-gray-800' : 'text-gray-400']"
             >
                 <FontAwesomeIcon icon="fas fa-thumbtack" class="h-3" title="Pin tab to right side layout" aria-hidden="true" />
             </div>
