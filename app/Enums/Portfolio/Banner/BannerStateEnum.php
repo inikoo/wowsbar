@@ -20,7 +20,7 @@ enum BannerStateEnum: string
     public static function labels(): array
     {
         return [
-            'unpublished' => __('In process'),
+            'unpublished' => __('Unpublished'),
             'live'        => __('Live'),
             'retired'     => __('Retired'),
 
