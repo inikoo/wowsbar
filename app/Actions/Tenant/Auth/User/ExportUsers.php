@@ -8,7 +8,7 @@
 namespace App\Actions\Tenant\Auth\User;
 
 use App\Actions\Traits\WithExportData;
-use App\Exports\User\UsersExport;
+use App\Exports\Auth\UsersExport;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
