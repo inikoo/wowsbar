@@ -9,7 +9,18 @@
                 :searchable="true"
                 :canClear="props.fieldData?.canClear ?? !props.fieldData?.required"
                 :canDeselect="!props.fieldData?.required"
-            />
+                label="data"
+            >
+                <template #singlelabel="{ value }">
+                    <div class="multiselect-single-label">
+                        {{ value.data.name }}
+                    </div>
+                </template>
+
+                <template #option="{ option }">
+                    {{ option.data.name }}
+                </template>
+            </Multiselect>
             <div v-if="form.errors[fieldName] || form.recentlySuccessful"
                 class="absolute inset-y-2/4 right-0 pr-3 flex items-center pointer-events-none bg-red-500">
                 <FontAwesomeIcon icon="fas fa-exclamation-circle" v-if="form.errors[fieldName]" class="h-5 w-5 text-red-500"
