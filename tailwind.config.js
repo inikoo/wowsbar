@@ -28,6 +28,13 @@ export default {
                 'light4': '#9ca3af',
             },
         },
+        "keyframes": {
+            "shimmer": {
+                "100%": {
+                "transform": "translateX(100%)",
+                },
+            },
+        }
     },
 
     plugins: [forms],
