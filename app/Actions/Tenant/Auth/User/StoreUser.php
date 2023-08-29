@@ -34,14 +34,9 @@ class StoreUser
     public function handle(Tenant $tenant, array $objectData = []): User
     {
         /** @var User $user */
-        $user = $tenant->users()->create(Arr::except($objectData, ['role']));
+        $user = $tenant->users()->create($objectData);
         $user->stats()->create();
         SetUserAvatar::run($user);
-
-        if($objectData['role']) {
-            $superAdminRole = Role::where('guard_name', 'web')->where('name', 'super-admin')->firstOrFail();
-            $user->assignRole($superAdminRole);
-        }
 
         UserHydrateUniversalSearch::dispatch($user);
         TenantHydrateUsers::dispatch(app('currentTenant'));
@@ -62,7 +57,7 @@ class StoreUser
         return [
             'username' => ['required', new AlphaDashDot(), 'unique:users,username', Rule::notIn(['export', 'create'])],
             'password' => ['required', app()->isLocal() || app()->environment('testing') ? null : Password::min(8)->uncompromised()],
-            'email'    => ['required', 'email', 'unique:users,email']
+            'email' => ['required', 'email', 'unique:users,email']
         ];
     }
 
@@ -80,13 +75,14 @@ class StoreUser
         $tenant = Tenant::where('slug', $command->argument('tenant'))->first();
         $tenant->makeCurrent();
 
-        $this->handle($tenant, [
+        $user = $this->handle($tenant, [
             'username' => $command->argument('username'),
-            'password' => $command->argument('password'),
-            'role'     => $command->argument('role')
+            'password' => $command->argument('password')
         ]);
+
+        $superAdminRole = Role::where('guard_name', 'web')->where('name', 'super-admin')->firstOrFail();
+        $user->assignRole($superAdminRole);
 
         echo "Damn! 🥳 u successfully add 1 user to " . $tenant->slug . "\n";
     }
-
 }
