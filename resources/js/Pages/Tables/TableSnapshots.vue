@@ -5,15 +5,12 @@
   -->
 
 <script setup lang="ts">
-import { Link } from '@inertiajs/vue3';
-import Table from '@/Components/Table/Table.vue';
-import { User } from "@/types/user";
-import { trans } from "laravel-vue-i18n";
-import AddressLocation from "@/Components/Elements/Info/AddressLocation.vue";
-import UserAgent from "@/Components/Elements/Info/UserAgent.vue";
-// import {ref,computed} from 'vue'
-
-// import TableElements from '@/Components/Table/TableElements.vue'
+import { Link } from '@inertiajs/vue3'
+import Table from '@/Components/Table/Table.vue'
+import { User } from "@/types/user"
+import { trans } from "laravel-vue-i18n"
+import AddressLocation from "@/Components/Elements/Info/AddressLocation.vue"
+import UserAgent from "@/Components/Elements/Info/UserAgent.vue"
 
 const props = defineProps<{
     data: object
@@ -28,14 +25,14 @@ const formatDate = (dateIso: Date) => {
     const hours = date.getHours().toString()
     const minutes = date.getMinutes().toString()
 
-    return `${year}-${month}-${day} ${hours}:${minutes}`
+    return date
 }
 </script>
 
 <template>
-    <Table :resource="data" class="mt-5" name="snap">
-        <template #cell(published_at)="{ item: user }">
-            {{ formatDate(user.published_at) }}
+    <Table :resource="data" class="mt-5" name="hst">
+        <template #cell(datetime)="{ item: user }">
+            {{ (user.published_at) }}
         </template>
         <template #cell(published_until)="{ item: user }">
             {{ formatDate(user.published_until) }}

@@ -114,80 +114,64 @@
   </nav>
 </template>
 
-<script setup>
-import PerPageSelector from "./PerPageSelector.vue";
-import { computed } from "vue";
+<script setup lang="ts">
+import PerPageSelector from "./PerPageSelector.vue"
+import { computed } from "vue"
 import TableDownload from '@/Components/Table/TableDownload.vue'
-import { getTranslations } from "./translations.js";
+import { getTranslations } from "./translations.js"
 
-const translations = getTranslations();
+const translations = getTranslations()
 
-const props = defineProps({
-  onClick: {
-    type: Function,
-    required: false,
-  },
-  perPageOptions: {
-    type: Array,
-    default() {
-      return () => [10, 15, 30, 50, 100, 500, 1000];
-    },
-    required: false
-  },
-  onPerPageChange: {
-    type: Function,
-    default() {
-      return () => { };
-    },
-    required: false,
-  },
-  hasData: {
-    type: Boolean,
-    required: true,
-  },
-  meta: {
-    type: Object,
-    required: false,
-  }
-});
+const props = withDefaults(defineProps<{
+  onClick?: Function
+  perPageOptions: number[]
+  onPerPageChange?: Function
+  hasData: Boolean
+  meta?: Object
+}>(), {
+  perPageOptions: [10, 15, 30, 50, 100, 500, 1000],
+  onPerPageChange: {}
+})
 
+console.log("00000000000000")
+console.log(props.meta)
 const hasLinks = computed(() => {
   if (!("links" in pagination.value)) {
-    return false;
+    return false
   }
 
-  return pagination.value.links.length > 0;
-});
+  return pagination.value.links.length > 0
+})
 
 const hasPagination = computed(() => {
-  return Object.keys(pagination.value).length > 0;
-});
+  return Object.keys(pagination.value).length > 0
+})
 
 const HideButton = computed(() => {
   return pagination.value.total > pagination.value.per_page
-});
+})
 
 const pagination = computed(() => {
-  return props.meta;
-});
+  return props.meta
+})
 
 const previousPageUrl = computed(() => {
   if ("prev_page_url" in pagination.value) {
-    return pagination.value.prev_page_url;
+    return pagination.value.prev_page_url
   }
 
-  return null;
-});
+  return null
+})
 
 const nextPageUrl = computed(() => {
   if ("next_page_url" in pagination.value) {
-    return pagination.value.next_page_url;
+    return pagination.value.next_page_url
   }
 
-  return null;
-});
+  return null
+})
 
 const perPage = computed(() => {
-  return parseInt(pagination.value.per_page);
-});
+  return parseInt(pagination.value.per_page)
+})
 </script>

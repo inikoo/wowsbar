@@ -17,6 +17,7 @@ import TableHistories from "@/Pages/Tables/TableHistories.vue";
 import BannerShowcase from "@/Pages/Tenant/Portfolio/BannerShowcase.vue";
 
 import {faWindowMaximize, faGlobe, faPencil} from "../../../../private/pro-light-svg-icons"
+import TableSnapshots from '@/Pages/Tables/TableSnapshots.vue';
 
 library.add(faWindowMaximize, faGlobe, faPencil)
 
@@ -41,7 +42,7 @@ const component = computed(() => {
         showcase: BannerShowcase,
         details: ModelDetails,
         changelog: TableHistories,
-        snapshots: TableHistories
+        snapshots: TableSnapshots
     };
     return components[currentTab.value];
 
