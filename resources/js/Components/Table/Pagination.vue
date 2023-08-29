@@ -129,12 +129,10 @@ const props = withDefaults(defineProps<{
   hasData: Boolean
   meta?: Object
 }>(), {
-  perPageOptions: [10, 15, 30, 50, 100, 500, 1000],
+  perPageOptions: [10, 25, 50, 100, 250],
   onPerPageChange: {}
 })
 
-console.log("00000000000000")
-console.log(props.meta)
 const hasLinks = computed(() => {
   if (!("links" in pagination.value)) {
     return false

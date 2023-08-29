@@ -8,6 +8,7 @@
 import {Link} from '@inertiajs/vue3';
 import Table from '@/Components/Table/Table.vue';
 import {Banner} from "@/types/banner";
+import Tag from '@/Components/Tag.vue'
 
 const props = defineProps<{
     data: object,
@@ -32,6 +33,17 @@ function bannerRoute(banner: Banner) {
     }
 }
 
+function setColor(state: state) {
+    switch (state) {
+        case 'unpublished':
+            return '#108ee9';
+        case 'live':
+            return '#87d068';
+        case 'retired':
+            return '#ff5500';
+    }
+}
+
 </script>
 
 <template>
@@ -40,6 +52,12 @@ function bannerRoute(banner: Banner) {
             <Link :href="bannerRoute(banner)" :id="banner['slug']">
                 {{ banner['slug'] }}
             </Link>
+        </template>
+
+        <template #cell(state)="{ item: banner }">
+            <Tag :color="setColor(banner['state'])" :id="banner['state']">
+                {{ banner['state'] }}
+            </Tag>
         </template>
     </Table>
 

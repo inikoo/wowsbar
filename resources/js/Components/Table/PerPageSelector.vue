@@ -1,6 +1,6 @@
 <template>
     <select name="per_page" :dusk="dusk" :value="value"
-        class="block focus:ring-orange-500 focus:border-orange-500 min-w-max shadow-sm text-sm border-gray-300 rounded-md"
+        class="block focus:ring-gray-500 focus:border-gray-500 min-w-max shadow-sm text-sm border-gray-300 rounded-md"
         @change="onChange($event.target.value)">
         <option v-for="option in perPageOptions" :key="option" :value="option">
             {{ option }} {{ translations.per_page }}
@@ -21,7 +21,7 @@ const props = withDefaults(defineProps<{
     options: number[]
     onChange: Function
 }>(), {
-    dusk: null,
+    dusk: '',
     value: 15,
     options: [10, 50, 100, 500, 1000],
 })
