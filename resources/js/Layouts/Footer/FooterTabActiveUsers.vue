@@ -34,7 +34,6 @@ watchEffect(() => {
     // console.log(dataTenant.value)
     dataTenantLength.value = dataTenant.value ? Object.keys(dataTenant.value).length : 0
 })
-
 </script>
 
 <template>
@@ -58,7 +57,8 @@ watchEffect(() => {
                             class="flex-shrink-0 h-3 w-3 mr-1 opacity-80"
                             :icon="'fal fa-'+dataUser.route.icon"
                             aria-hidden="true" /> -->
-                        <span class="capitalize text-gray-300">{{ dataUser.route?.label ? trans(dataUser.route.label) : '' }}</span>
+                        <span v-if="dataUser.loggedIn" class="text-gray-300">{{ dataUser.route?.name ? trans(dataUser.route.name) : '' }}</span>
+                        <span v-else class="text-gray-300">Logged Out</span>
                         <!-- <span v-if="dataUser.route.subject" class="capitalize text-gray-300">{{ dataUser.route.subject }}</span> -->
                     </p>
                 </div>

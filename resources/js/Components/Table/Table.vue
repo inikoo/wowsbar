@@ -318,9 +318,9 @@ function changeFilterValue(key, value) {
 }
 
 function onPerPageChange(value) {
-    queryBuilderData.value.cursor = null;
-    queryBuilderData.value.perPage = value;
-    queryBuilderData.value.page = 1;
+    queryBuilderData.value.cursor = null
+    queryBuilderData.value.perPage = value
+    queryBuilderData.value.page = 1
 }
 
 function findDataKey(dataKey, key) {
@@ -412,21 +412,24 @@ function dataForNewQueryString() {
 }
 
 function generateNewQueryString() {
-    const queryStringData = qs.parse(location.search.substring(1));
+    // Get data from URL
+    const queryStringData = qs.parse(location.search.substring(1))
+    const prefix = props.name === 'default' ? '' : props.name + '_'
 
-    const prefix = props.name === 'default' ? '' : props.name + '_';
-
+    // To exclude filter, columns, cursor, and sort that received from the URL
     forEach(['filter', 'columns', 'cursor', 'sort'], (key) => {
         delete queryStringData[prefix + key];
     });
 
+    // To exclude page number from pagination
     delete queryStringData[pageName.value];
 
     forEach(dataForNewQueryString(), (value, key) => {
         if (key === 'page') {
             queryStringData[pageName.value] = value;
-        } else if (key === 'perPage') {
-            queryStringData.perPage[prefix + key] = value;
+        // } else if (key === 'perPage') {
+            // This line make pagination error
+        //     queryStringData.perPage[prefix + key] = value;
         } else {
             queryStringData[prefix + key] = value;
         }
@@ -455,11 +458,13 @@ function generateNewQueryString() {
 const isVisiting = ref(false);
 const visitCancelToken = ref(null);
 
-function visit(url) {
+const visit = (url) => {
+    // Visit new generate URL, run on watch queryBuilderData
+    
     if (!url) {
         return;
     }
-
+    
     $inertia.get(
         url,
         {},
@@ -498,10 +503,12 @@ function visit(url) {
     );
 }
 
-watch(
-    queryBuilderData,
-    () => {
-        visit(location.pathname + '?' + generateNewQueryString());
+watch(queryBuilderData, async () => {
+        try {
+            visit(location.pathname + '?' + generateNewQueryString())
+        } catch {
+            console.error("Can't visit expected path")
+        }
     },
     { deep: true },
 );
