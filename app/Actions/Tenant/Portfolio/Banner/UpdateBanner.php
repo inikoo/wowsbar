@@ -51,6 +51,7 @@ class UpdateBanner
         return [
             'code'   => ['sometimes', 'required', 'unique:tenant.portfolio_websites', 'max:8'],
             'name'   => ['sometimes', 'required'],
+            'portfolio_website_id' => ['nullable']
         ];
     }
 
