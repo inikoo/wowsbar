@@ -9,6 +9,7 @@ namespace App\Actions\Tenant\Portfolio\Banner\UI;
 
 use App\Actions\InertiaAction;
 use App\Actions\Tenant\Portfolio\PortfolioWebsite\UI\IndexPortfolioWebsites;
+use App\Actions\Portfolio\PortfolioWebsite\UI\GetPortfolioWebsitesOptions;
 use App\Models\Portfolio\Banner;
 use App\Models\Portfolio\PortfolioWebsite;
 use Exception;
@@ -98,12 +99,11 @@ class EditBanner extends InertiaAction
                                         'value'    => $banner->name,
                                         'required' => true,
                                     ],
-                                    'websites' => [
+                                    'portfolio_website_id' => [
                                         'type'     => 'select',
                                         'label'    => __('website'),
                                         'value'    => $banner->portfolio_website_id,
-                                        'required' => true,
-                                        'options'  => IndexPortfolioWebsites::run()
+                                        'options'  => GetPortfolioWebsitesOptions::run()
                                     ],
                                 ]
                             ],
