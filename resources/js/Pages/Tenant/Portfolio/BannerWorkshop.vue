@@ -29,10 +29,8 @@ import { faRocketLaunch } from "@/../private/pro-regular-svg-icons"
 import {  useForm } from '@inertiajs/vue3'
 import ScreenView from "@/Components/ScreenView.vue"
 import { notify } from "@kyvg/vue3-notification";
-
-library.add( faAsterisk, faRocketLaunch, faUser, faUserFriends );
-
-
+import { faSpinnerThird } from '@/../private/pro-duotone-svg-icons'
+library.add( faAsterisk, faRocketLaunch, faUser, faUserFriends, faSpinnerThird );
 
 const props = defineProps<{
     title: string
@@ -94,30 +92,41 @@ const firebase = ref(cloneDeep(props.firebase))
 const tenant = useLayoutStore().tenant
 const dbPath = 'tenants' + '/' + tenant.slug + '/banner_workshop/' + props.banner.slug
 const comment = ref('')
+const loadingState = ref(false)
+const isModalOpen = ref(false)
+const routeExit = ref()
+const routeSave = ref()
+
 
 const fetchInitialData = async () => {
     try {
-        setData.value = true
-        const snapshot = await get(getDbRef(dbPath))//<--dbPath
-        if (snapshot.exists()) {
-            const firebaseData = snapshot.val()
-            if (firebaseData) {
-                Object.assign(data, { ...firebaseData })
-            } else {
-                Object.assign(data, { ...data, ...cloneDeep(props.bannerLayout) })
-                await set(getDbRef(dbPath), { ...firebaseData, data })
-                return
-            }
-        } else {
-            Object.assign(data, { ...data, ...cloneDeep(props.bannerLayout) })
-            await set(getDbRef(dbPath), data)
+        setData.value = true;
+        loadingState.value = true;
+
+        const snapshot = await get(getDbRef(dbPath));
+        const firebaseData = snapshot.exists() ? snapshot.val() : null;
+
+        const newData = { ...(firebaseData || cloneDeep(props.bannerLayout)) };
+        Object.assign(data, newData);
+
+        if (firebaseData) {
+            await set(getDbRef(dbPath), { ...firebaseData, data: newData });
         }
-        setData.value = false
+
     } catch (error) {
-        setData.value = false
-        Object.assign(data, { ...data, ...cloneDeep(props.bannerLayout) })
+        Object.assign(data, cloneDeep(props.bannerLayout));
+        notify({
+            title: "Failed to get realtime data",
+            text: 'please reload and make sure your internet connection is stable',
+            type: "error"
+        });
+    } finally {
+        setData.value = false;
+        loadingState.value = false;
     }
-}
+};
+
+
 
 onValue(getDbRef(dbPath), (snapshot) => {
     if (snapshot.exists()) {
@@ -162,16 +171,7 @@ onBeforeUnmount(() => {
     setDataBeforeLeave()
 })
 
-// window.addEventListener('beforeunload', function (event) {
-//     event.returnValue = setDataBeforeLeave() // This message will be shown to the user
-// })
-
-
-
-
-const isModalOpen = ref(false)
-const routeExit = ref()
-const routeSave = ref()
+window.addEventListener('beforeunload',setDataBeforeLeave)// when user leave the page
 
 const saveRouteValue=(action)=>{
     if (action.style == "exit") {
@@ -183,7 +183,6 @@ const saveRouteValue=(action)=>{
 
 const routeButton = (action) => {
     if (action.style == "exit") {
-
         router.visit(route(action['route']['name'], action['route']['parameters']))
     } if (action.style == "save") {
         if(props.banner.state != 'unpublished')isModalOpen.value = true
@@ -221,40 +220,20 @@ const sendDataToServer = async () => {
         })
 };
 
-const ceknotif = () => {
+
+const ceknotif=()=>{
     notify({
-        title: "Failed to Update Banner",
-        text: 'test',
-        type: "error",
-    });
+            title: "Failed to get realtime data",
+            text: 'please reload and make sure your internet connection is stable',
+            type: "error"
+        });
 }
 
-console.log(props)
 
 </script>
 
 
 <template layout="TenantApp">
-    <Modal :isOpen="isModalOpen" @onClose="isModalOpen = false">
-        <div>
-            <div class="inline-flex items-start leading-none">
-                <FontAwesomeIcon :icon="['fas', 'asterisk']" class="font-light text-[12px] text-red-400 mr-1" />
-                <span>{{ trans('Comment') }}</span>
-            </div>
-            <div class="py-2.5">
-                <textarea rows="3" v-model="comment"
-                    class="block w-full rounded-md shadow-sm dark:bg-gray-600 dark:text-gray-400 border-gray-300 dark:border-gray-500 focus:border-gray-500 focus:ring-gray-500 sm:text-sm" />
-            </div>
-            <div class="flex justify-end">
-                <Button size="xs" @click="sendDataToServer"
-                    class="capitalize inline-flex items-center rounded-md text-sm font-medium shadow-sm gap-x-2">
-                    <FontAwesomeIcon :icon="['far', 'fa-rocket-launch']" />
-                    {{ trans('Publish') }}
-                </Button>
-            </div>
-        </div>
-    </Modal>
-
     <Head :title="capitalize(title)" />
     <PageHeading :data="pageHead">
         <template #button="{ dataPageHead: head }">
@@ -277,40 +256,75 @@ console.log(props)
         </template>
     </PageHeading>
 
-    <div>
-        <!-- Component: The full Slider -->
-        <div v-if="data.components.filter((item) => item.ulid != null).length > 0">
-            <div class="flex w-full">
-                <div class="isolate inline-flex shadow-sm w-3/6">
-                    <button type="button" @click="firebase = true" :class="[
-                        'relative inline-flex items-center px-3 py-2 text-xs border-r focus:z-10',
-                        firebase ? 'bg-gray-200 font-semibold text-gray-700' : 'text-gray-500 hover:bg-gray-100'
-                    ]">
-                        <FontAwesomeIcon :icon="['fal', 'user-friends']" class="p-1" :class="[firebase ? 'text-orange-500' : 'text-gray-500']"/> Collaborative Work
-                    </button>
-                    <button type="button" @click="firebase = false" :class="[
-                        'relative inline-flex items-center px-3 py-2 text-xs border-r focus:z-10',
-                        !firebase ? 'bg-gray-200 font-semibold text-gray-700' : 'text-gray-600 hover:bg-gray-100'
-                    ]">
-                        <FontAwesomeIcon :icon="['fal', 'user']" class="p-1" :class="[firebase ? 'text-gray-500' : 'text-orange-500']"/> Individual Work
-                    </button>
-                </div>
-                <div class="flex justify-end pr-2 w-3/6">
-                    <ScreenView @screenView="(val) => (screenView = val)" />
-                </div>
-            </div>
+    <notifications
+      group="custom-style"
+      position="top center"
+      classes="n-light"
+      dangerously-set-inner-html
+      :max="3"
+      :width="400"
+    />
 
-            <div class="flex justify-center pr-0.5">
-                <Slider :data="data" :jumpToIndex="jumpToIndex" :view="screenView" />
-            </div>
-            <SlidesWorkshop class="clear-both mt-2 p-2.5" :data="data" @jumpToIndex="(val) => jumpToIndex = val"
-                :imagesUploadRoute="imagesUploadRoute" :user="user" />
+    <section>
+        <div v-if="loadingState" class="w-full min-h-screen flex justify-center items-center">
+            <FontAwesomeIcon icon='fad fa-spinner-third' class='animate-spin h-12  text-orange-500' aria-hidden='true' />
         </div>
 
-        <!-- Component: Add slide if there is not exist -->
-        <div v-if="data.components.filter((item) => item.ulid != null).length == 0">
-            <SlidesWorkshopAddMode :data="data" :imagesUploadRoute="imagesUploadRoute" />
+        <div v-else>
+            <div v-if="data.components.filter((item) => item.ulid != null).length > 0">
+                <div class="flex w-full">
+                    <div class="isolate inline-flex shadow-sm w-3/6">
+                        <button type="button" @click="firebase = true" :class="[
+                            'relative inline-flex items-center px-3 py-2 text-xs border-r focus:z-10',
+                            firebase ? 'bg-gray-200 font-semibold text-gray-700' : 'text-gray-500 hover:bg-gray-100'
+                        ]">
+                            <FontAwesomeIcon :icon="['fal', 'user-friends']" class="p-1" :class="[firebase ? 'text-orange-500' : 'text-gray-500']"/> Collaborative Work
+                        </button>
+                        <button type="button" @click="firebase = false" :class="[
+                            'relative inline-flex items-center px-3 py-2 text-xs border-r focus:z-10',
+                            !firebase ? 'bg-gray-200 font-semibold text-gray-700' : 'text-gray-600 hover:bg-gray-100'
+                        ]">
+                            <FontAwesomeIcon :icon="['fal', 'user']" class="p-1" :class="[firebase ? 'text-gray-500' : 'text-orange-500']"/> Individual Work
+                        </button>
+                    </div>
+                    <div class="flex justify-end pr-2 w-3/6">
+                        <ScreenView @screenView="(val) => (screenView = val)" />
+                    </div>
+                </div>
+
+                <div class="flex justify-center pr-0.5">
+                    <Slider :data="data" :jumpToIndex="jumpToIndex" :view="screenView" />
+                </div>
+                <SlidesWorkshop class="clear-both mt-2 p-2.5" :data="data" @jumpToIndex="(val) => jumpToIndex = val"
+                    :imagesUploadRoute="imagesUploadRoute" :user="user" />
+            </div>
+
+            <!-- Component: Add slide if there is not exist -->
+            <div v-if="data.components.filter((item) => item.ulid != null).length == 0">
+                <SlidesWorkshopAddMode :data="data" :imagesUploadRoute="imagesUploadRoute" />
+            </div>
+
+            <Modal :isOpen="isModalOpen" @onClose="isModalOpen = false">
+            <div>
+                <div class="inline-flex items-start leading-none">
+                    <FontAwesomeIcon :icon="['fas', 'asterisk']" class="font-light text-[12px] text-red-400 mr-1" />
+                    <span>{{ trans('Comment') }}</span>
+                </div>
+                <div class="py-2.5">
+                    <textarea rows="3" v-model="comment"
+                        class="block w-full rounded-md shadow-sm dark:bg-gray-600 dark:text-gray-400 border-gray-300 dark:border-gray-500 focus:border-gray-500 focus:ring-gray-500 sm:text-sm" />
+                </div>
+                <div class="flex justify-end">
+                    <Button size="xs" @click="sendDataToServer"
+                        class="capitalize inline-flex items-center rounded-md text-sm font-medium shadow-sm gap-x-2">
+                        <FontAwesomeIcon :icon="['far', 'fa-rocket-launch']" />
+                        {{ trans('Publish') }}
+                    </Button>
+                </div>
+            </div>
+        </Modal>
         </div>
-    </div>
+    </section>
+    
     <div @click="ceknotif">show add</div>
 </template>
