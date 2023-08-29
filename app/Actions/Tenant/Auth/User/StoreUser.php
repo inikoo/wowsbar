@@ -10,10 +10,12 @@ namespace App\Actions\Tenant\Auth\User;
 use App\Actions\Tenancy\Tenant\Hydrators\TenantHydrateUsers;
 use App\Actions\Tenant\Auth\User\Hydrators\UserHydrateUniversalSearch;
 use App\Actions\Tenant\Auth\User\UI\SetUserAvatar;
+use App\Models\Auth\Role;
 use App\Models\Auth\User;
 use App\Models\Tenancy\Tenant;
 use App\Rules\AlphaDashDot;
 use Illuminate\Console\Command;
+use Illuminate\Support\Arr;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
 use Lorisleiva\Actions\ActionRequest;
@@ -27,14 +29,19 @@ class StoreUser
 
     private bool $asAction = false;
 
-    public string $commandSignature = 'user:create {tenant} {username} {password}';
+    public string $commandSignature = 'user:create {tenant} {username} {password} {role?}';
 
     public function handle(Tenant $tenant, array $objectData = []): User
     {
         /** @var User $user */
-        $user = $tenant->users()->create($objectData);
+        $user = $tenant->users()->create(Arr::except($objectData, ['role']));
         $user->stats()->create();
         SetUserAvatar::run($user);
+
+        if($objectData['role']) {
+            $superAdminRole = Role::where('guard_name', 'web')->where('name', 'super-admin')->firstOrFail();
+            $user->assignRole($superAdminRole);
+        }
 
         UserHydrateUniversalSearch::dispatch($user);
         TenantHydrateUsers::dispatch(app('currentTenant'));
@@ -75,7 +82,8 @@ class StoreUser
 
         $this->handle($tenant, [
             'username' => $command->argument('username'),
-            'password' => $command->argument('password')
+            'password' => $command->argument('password'),
+            'role'     => $command->argument('role')
         ]);
 
         echo "Damn! 🥳 u successfully add 1 user to " . $tenant->slug . "\n";
