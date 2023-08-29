@@ -9,6 +9,7 @@ namespace App\Http\Resources\Auth;
 
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Arr;
 use JsonSerializable;
 
 /**
@@ -26,9 +27,9 @@ class UserResource extends JsonResource
             'avatar'             => $user->avatarImageSources(48, 48),
             'email'              => $user->email,
             'contact_name'       => $user->contact_name,
-            'roles'              => $user->getRoleNames(),
+            'roles'              => Arr::join($user->getRoleNames()->toArray(), ', '),
             'direct-permissions' => $user->getDirectPermissions(),
-            'permissions'        => $user->getAllPermissions()->pluck('name'),
+            'permissions'        => Arr::join($user->getAllPermissions()->pluck('name')->toArray(), ', '),
             'created_at'         => $user->created_at,
             'updated_at'         => $user->updated_at,
         ];
