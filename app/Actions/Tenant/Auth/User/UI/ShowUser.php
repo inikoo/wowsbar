@@ -63,7 +63,7 @@ class ShowUser extends InertiaAction
                     'actions' => [
                         $this->canEdit ? [
                             'type'  => 'button',
-                            'style' => 'tertiary',
+                            'style' => 'edit',
                             'route' => [
                                 'name'       => preg_replace('/show$/', 'edit', $request->route()->getName()),
                                 'parameters' => array_values($request->route()->originalParameters())

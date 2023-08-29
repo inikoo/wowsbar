@@ -38,6 +38,7 @@ class UpdateUser
     public function rules(): array
     {
         return [
+            'contact_name' => ['sometimes', 'required'],
             'username' => ['sometimes', 'required', new AlphaDashDot(), 'unique:users,username'],
             'password' => ['sometimes', 'required', app()->isLocal()  || app()->environment('testing') ? null : Password::min(8)->uncompromised()],
             'email'    => 'sometimes|required|email|unique:users,email'

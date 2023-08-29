@@ -65,6 +65,11 @@ class EditUser extends InertiaAction
                              'icon'    => 'fa-light fa-user',
                              'current' => true,
                             'fields'   => [
+                                'contact_name' => [
+                                    'type'  => 'input',
+                                    'label' => __('name'),
+                                    'value' => $user->contact_name
+                                ],
                                 'username' => [
                                     'type'  => 'input',
                                     'label' => __('username'),
