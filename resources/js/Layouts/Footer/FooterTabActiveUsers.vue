@@ -8,6 +8,7 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { getDataFirebase } from '@/Composables/firebase'
 import { watchEffect } from 'vue'
+import moment from "moment";
 
 library.add(faBriefcase);
 
@@ -36,6 +37,15 @@ watchEffect(() => {
     layout.rightSidebar.activeUsers.users = dataTenant.value
     layout.rightSidebar.activeUsers.count = dataTenantLength.value
 })
+
+function getAwayStatus(lastActive)
+{
+    lastActive = moment(lastActive);
+    let now = moment();
+
+    return Boolean(now.diff(lastActive));
+}
+
 </script>
 
 <template>
@@ -60,7 +70,7 @@ watchEffect(() => {
                             :icon="'fal fa-'+dataUser.route.icon"
                             aria-hidden="true" /> -->
                         <span v-if="dataUser.loggedIn" class="text-gray-300">{{ dataUser.route?.name ? trans(dataUser.route.name) : '' }}</span>
-                        <span v-else class="text-gray-300">Logged Out</span>
+                        <span v-else-if="getAwayStatus(dataUser.last_active)" class="text-gray-300">{{ getAwayStatus(dataUser.last_active) ? 'Away' : '' }}</span>
                         <!-- <span v-if="dataUser.route.subject" class="capitalize text-gray-300">{{ dataUser.route.subject }}</span> -->
                     </p>
                 </div>

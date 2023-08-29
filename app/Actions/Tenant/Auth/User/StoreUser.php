@@ -10,10 +10,12 @@ namespace App\Actions\Tenant\Auth\User;
 use App\Actions\Tenancy\Tenant\Hydrators\TenantHydrateUsers;
 use App\Actions\Tenant\Auth\User\Hydrators\UserHydrateUniversalSearch;
 use App\Actions\Tenant\Auth\User\UI\SetUserAvatar;
+use App\Models\Auth\Role;
 use App\Models\Auth\User;
 use App\Models\Tenancy\Tenant;
 use App\Rules\AlphaDashDot;
 use Illuminate\Console\Command;
+use Illuminate\Support\Arr;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
 use Lorisleiva\Actions\ActionRequest;
@@ -27,7 +29,7 @@ class StoreUser
 
     private bool $asAction = false;
 
-    public string $commandSignature = 'user:create {tenant} {username} {password}';
+    public string $commandSignature = 'user:create {tenant} {username} {password} {role?}';
 
     public function handle(Tenant $tenant, array $objectData = []): User
     {
@@ -55,7 +57,7 @@ class StoreUser
         return [
             'username' => ['required', new AlphaDashDot(), 'unique:users,username', Rule::notIn(['export', 'create'])],
             'password' => ['required', app()->isLocal() || app()->environment('testing') ? null : Password::min(8)->uncompromised()],
-            'email'    => ['required', 'email', 'unique:users,email']
+            'email' => ['required', 'email', 'unique:users,email']
         ];
     }
 
@@ -73,12 +75,14 @@ class StoreUser
         $tenant = Tenant::where('slug', $command->argument('tenant'))->first();
         $tenant->makeCurrent();
 
-        $this->handle($tenant, [
+        $user = $this->handle($tenant, [
             'username' => $command->argument('username'),
             'password' => $command->argument('password')
         ]);
 
+        $superAdminRole = Role::where('guard_name', 'web')->where('name', 'super-admin')->firstOrFail();
+        $user->assignRole($superAdminRole);
+
         echo "Damn! 🥳 u successfully add 1 user to " . $tenant->slug . "\n";
     }
-
 }
