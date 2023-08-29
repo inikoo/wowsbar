@@ -88,23 +88,21 @@ function handleKeyDown() {
                             <div class="relative">
                                 <FontAwesomeIcon class="pointer-events-none absolute top-3.5 left-4 h-5 w-5 text-gray-400" aria-hidden="true" icon="fa-regular fa-search" size="lg"/>
                                 <input type="text" v-model="searchInput" @input="handleSearchInput" @keydown="handleKeyDown"
-                                class="h-12 w-full border-0 bg-transparent pl-11 pr-4 text-gray-700 placeholder:text-gray-400 focus:ring-0 sm:text-sm" placeholder="Search..." @change="query = $event.target.value">
+                                class="h-12 w-full border-0 bg-transparent pl-11 pr-4 text-gray-600 placeholder:text-gray-400 focus:ring-0 sm:text-sm" placeholder="Search..." @change="query = $event.target.value">
                             </div>
                             <ComboboxOptions  class="flex divide-x divide-gray-100" as="div" static hold>
 
                                 <!-- Left: Result Panel -->
                                 <div :class="['h-fit min-w-0 flex-auto scroll-py-4 overflow-y-auto px-6 py-4 transition-all duration-500 ease-in-out', {'sm:h-96': false}]">
-                                    <div hold class="-mx-2 text-sm text-gray-700">
+                                    <div hold class="-mx-2 text-sm text-gray-600">
                                         <!-- Looping: Results -->
                                         <ComboboxOption v-if="resultsSearch?.data.length > 0" v-for="item in resultsSearch?.data" :key="item.id" :value="item" as="template" v-slot="{ active }">
-                                            <div>
-                                                <Link :href="`${route(item.model.route.name, item.model.route.parameters)}`" :class="['group flex cursor-pointer select-none items-center rounded-md p-2', active && 'bg-gray-100 text-gray-700']">
-                                                    <!-- <img :src="item.imageUrl" alt="" class="h-6 w-6 flex-none rounded-full" /> -->
-                                                    <FontAwesomeIcon :icon='item.model.icon' class='' aria-hidden='true' />
-                                                    <span class="ml-3 flex-auto truncate">{{ item.model.name }}</span>
-                                                    <FontAwesomeIcon icon="fa-regular fa-chevron-right" v-if="active" class="ml-3 h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
-                                                </Link>
-                                            </div>
+                                            <Link :href="`${route(item.model.route.name, item.model.route.parameters)}`" :class="['group flex cursor-pointer select-none items-center rounded-md p-2', active && 'bg-gray-100 text-gray-600']">
+                                                <!-- <img :src="item.imageUrl" alt="" class="h-6 w-6 flex-none rounded-full" /> -->
+                                                <FontAwesomeIcon :icon='item.model.icon' class='' aria-hidden='true' />
+                                                <span class="ml-3 flex-auto truncate">{{ item.model.name }}</span>
+                                                <FontAwesomeIcon icon="fa-regular fa-chevron-right" v-if="active" class="ml-3 h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
+                                            </Link>
                                         </ComboboxOption>
 
                                         <!-- Loading: fetching -->
@@ -123,7 +121,7 @@ function handleKeyDown() {
                                         </div>
 
                                         <!-- Initial state or no result -->
-                                        <div v-else class="">
+                                        <div v-else class="p-2">
                                             {{ trans('Nothing to show') }}
                                         </div>
                                     </div>
@@ -149,30 +147,27 @@ function handleKeyDown() {
                                     <!-- Hover the result -->
                                     <div v-else-if="activeOption">
                                         <div class="flex-none p-6 text-center">
-                                            <img :src="activeOption.imageUrl" :alt="activeOption.model.code" class="bg-gray-400 mx-auto h-16 w-16 rounded-full" />
-                                            <h2 class="mt-3 font-semibold text-gray-700">
-                                                {{ activeOption.model_type }}
+                                            <FontAwesomeIcon :icon='activeOption.model.icon' class='mx-auto h-16 w-16 text-gray-500' aria-hidden='true' />
+                                            <!-- <img :src="activeOption.imageUrl" :alt="activeOption.model.code" class="bg-gray-400 mx-auto h-16 w-16 rounded-full" /> -->
+                                            <h2 class="mt-3 font-semibold text-gray-600">
+                                                {{ activeOption.model.name }}
                                             </h2>
                                             <p class="text-sm leading-6 text-gray-500">{{ activeOption.role }}</p>
                                         </div>
                                         <div class="flex flex-auto flex-col justify-between p-6">
-                                            <dl class="grid grid-cols-1 gap-x-6 gap-y-3 text-sm text-gray-700">
-                                                <dt class="col-end-1 font-semibold text-gray-700">Domain</dt>
+                                            <dl v-if="activeOption.model_type == 'PortfolioWebsite'" class="grid grid-cols-1 gap-x-6 gap-y-3 text-sm text-gray-600">
+                                                <dt class="col-end-1 font-semibold text-gray-600">Domain</dt>
                                                 <dd>{{ activeOption.model.domain }}</dd>
-                                                <dt class="col-end-1 font-semibold text-gray-700">Code</dt>
+                                                <dt class="col-end-1 font-semibold text-gray-600">Code</dt>
                                                 <dd class="truncate">
                                                     {{ activeOption.model.code }}
                                                 </dd>
-                                                <!-- <dt class="col-end-1 font-semibold text-gray-700">Icon</dt>
-                                                <dd class="truncate">
-                                                    {{ activeOption.model.icon }}
-                                                </dd> -->
                                             </dl>
-                                            <!-- <button type="button" class="mt-6 w-full rounded-md bg-gray-700 py-2 px-3 text-sm font-semibold text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600">Send message</button> -->
+                                            <!-- <button type="button" class="mt-6 w-full rounded-md bg-gray-600 py-2 px-3 text-sm font-semibold text-white shadow-sm hover:bg-gray-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600">Send message</button> -->
                                         </div>
                                     </div>
+                                <pre>{{ activeOption }}</pre>
                                 </div>
-                                <!-- <pre>{{ activeOption }}</pre> -->
                             </ComboboxOptions>
                         </Combobox>
                     </DialogPanel>
