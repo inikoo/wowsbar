@@ -616,7 +616,7 @@ const handleElementsChange = (data) => {
                                 :label="queryBuilderProps.globalSearch ? queryBuilderProps.globalSearch.label : null"
                                 :value="queryBuilderProps.globalSearch ? queryBuilderProps.globalSearch.value : null"
                                 :on-change="changeGlobalSearchValue">
-                                <TableGlobalSearch v-if="queryBuilderProps.globalSearch" class="flex-grow"
+                                <TableGlobalSearch v-if="queryBuilderProps.globalSearch" class="flex-grow"  @resetSearch="() => resetQuery()"
                                     :label="queryBuilderProps.globalSearch.label" :value="queryBuilderProps.globalSearch.value"
                                     :on-change="changeGlobalSearchValue" />
                             </slot>
@@ -624,11 +624,11 @@ const handleElementsChange = (data) => {
 
                         <!-- Button: Reset -->
                         <!--suppress HtmlUnknownAttribute -->
-                        <slot name="searchReset" can-be-reset="canBeReset" @resetSearch="() => resetQuery()">
+                        <!-- <slot name="searchReset" can-be-reset="canBeReset" @resetSearch="() => resetQuery()">
                             <div v-if="canBeReset" class="order-3">
                                 <SearchReset @resetSearch="() => resetQuery()" />
                             </div>
-                        </slot>
+                        </slot> -->
 
                         <!-- Button: Filter table -->
                         <slot name="tableAddSearchRow" :has-search-inputs="queryBuilderProps.hasSearchInputs"
