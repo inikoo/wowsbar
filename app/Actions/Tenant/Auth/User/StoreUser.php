@@ -15,7 +15,6 @@ use App\Models\Auth\User;
 use App\Models\Tenancy\Tenant;
 use App\Rules\AlphaDashDot;
 use Illuminate\Console\Command;
-use Illuminate\Support\Arr;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
 use Lorisleiva\Actions\ActionRequest;
@@ -57,7 +56,7 @@ class StoreUser
         return [
             'username' => ['required', new AlphaDashDot(), 'unique:users,username', Rule::notIn(['export', 'create'])],
             'password' => ['required', app()->isLocal() || app()->environment('testing') ? null : Password::min(8)->uncompromised()],
-            'email' => ['required', 'email', 'unique:users,email']
+            'email'    => ['required', 'email', 'unique:users,email']
         ];
     }
 

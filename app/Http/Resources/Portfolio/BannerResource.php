@@ -7,7 +7,6 @@
 
 namespace App\Http\Resources\Portfolio;
 
-use App\Http\Resources\Gallery\ImageResource;
 use App\Models\Portfolio\Banner;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -18,11 +17,11 @@ class BannerResource extends JsonResource
         /** @var Banner $banner */
         $banner=$this;
         return [
-            'slug'           => $banner->slug,
-            'code'           => $banner->code,
-            'name'           => $banner->name,
+            'slug'            => $banner->slug,
+            'code'            => $banner->code,
+            'name'            => $banner->name,
             'state'           => $banner->state,
-            'route'          => [
+            'route'           => [
                 'name'       => 'portfolio.banners.show',
                 'parameters' => [$banner->slug]
             ],

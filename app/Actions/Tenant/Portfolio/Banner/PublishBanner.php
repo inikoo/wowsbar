@@ -92,7 +92,7 @@ class PublishBanner
     {
         return [
             'layout' => ['required', 'array:delay,common,components'],
-            'comment'=>['sometimes','required','string','max:1024']
+            'comment'=> ['sometimes','required','string','max:1024']
         ];
     }
 

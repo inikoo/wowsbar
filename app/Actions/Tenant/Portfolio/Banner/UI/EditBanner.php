@@ -8,7 +8,6 @@
 namespace App\Actions\Tenant\Portfolio\Banner\UI;
 
 use App\Actions\InertiaAction;
-use App\Actions\Tenant\Portfolio\PortfolioWebsite\UI\IndexPortfolioWebsites;
 use App\Actions\Portfolio\PortfolioWebsite\UI\GetPortfolioWebsitesOptions;
 use App\Models\Portfolio\Banner;
 use App\Models\Portfolio\PortfolioWebsite;
