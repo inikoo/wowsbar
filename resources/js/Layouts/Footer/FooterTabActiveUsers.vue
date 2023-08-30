@@ -34,7 +34,8 @@ watchEffect(() => {
     // console.log("========================")
     // console.log(dataTenant.value)
     dataTenantLength.value = dataTenant.value ? Object.keys(dataTenant.value).length : 0
-
+    layout.rightSidebar.activeUsers.users = dataTenant.value
+    layout.rightSidebar.activeUsers.count = dataTenantLength.value
 })
 
 function getAwayStatus(lastActive)
