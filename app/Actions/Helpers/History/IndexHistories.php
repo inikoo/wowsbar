@@ -20,9 +20,16 @@ class IndexHistories
     use WithAttributes;
     use WithFormattedUserHistories;
 
-    public function handle($model): LengthAwarePaginator|array|bool
+    public function handle($model = null): LengthAwarePaginator|array|bool
     {
-        return $model->audits()->with('user')->paginate();
+        $histories = [];
+        if($model) {
+            return $model->audits()->with('user')->paginate();
+        }
+
+         foreach ($model->audits as $history) {
+             //
+         }
     }
 
     public function tableStructure(?array $modelOperations = null): Closure

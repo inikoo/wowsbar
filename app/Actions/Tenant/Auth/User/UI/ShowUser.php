@@ -76,6 +76,10 @@ class ShowUser extends InertiaAction
                     'navigation' => UserTabsEnum::navigation()
                 ],
 
+                UserTabsEnum::SHOWCASE->value => $this->tab == UserTabsEnum::SHOWCASE->value ?
+                    fn () => new UserResource($user)
+                    : Inertia::lazy(fn () => new UserResource($user)),
+
                 UserTabsEnum::REQUEST_LOGS->value => $this->tab == UserTabsEnum::REQUEST_LOGS->value ?
                     fn () => UserRequestLogsResource::collection(ShowUserRequestLogs::run($user->username))
                     : Inertia::lazy(fn () => UserRequestLogsResource::collection(ShowUserRequestLogs::run($user->username))),

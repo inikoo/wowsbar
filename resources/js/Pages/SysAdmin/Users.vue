@@ -15,6 +15,7 @@ import TableUserRequestLogs from "@/Pages/Tables/TableUserRequestLogs.vue";
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { capitalize } from "@/Composables/capitalize"
 import PageHeading from "@/Components/Headings/PageHeading.vue";
+import TableHistories from "@/Pages/Tables/TableHistories.vue";
 
 library.add(faRoad,faTerminal)
 const props = defineProps <{
@@ -26,6 +27,7 @@ const props = defineProps <{
     title: string
     users?: object
     users_requests?: object,
+    history?: object
 }>()
 
 
@@ -36,7 +38,8 @@ const component = computed(() => {
 
     const components = {
         users: TableUsers,
-        users_requests: TableUserRequestLogs
+        users_requests: TableUserRequestLogs,
+        history: TableHistories
     };
     return components[currentTab.value];
 

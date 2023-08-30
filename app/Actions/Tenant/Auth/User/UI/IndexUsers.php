@@ -7,12 +7,14 @@
 
 namespace App\Actions\Tenant\Auth\User\UI;
 
+use App\Actions\Helpers\History\IndexHistories;
 use App\Actions\InertiaAction;
 use App\Actions\Tenant\Auth\UserRequest\IndexUserRequestLogs;
 use App\Actions\UI\Tenant\SysAdmin\SysAdminDashboard;
 use App\Enums\UI\UsersTabsEnum;
 use App\Http\Resources\Auth\UserRequestLogsResource;
 use App\Http\Resources\Auth\UserResource;
+use App\Http\Resources\History\HistoryResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\Auth\User;
 use Closure;
@@ -182,7 +184,11 @@ class IndexUsers extends InertiaAction
 
                 UsersTabsEnum::USERS_REQUESTS->value => $this->tab == UsersTabsEnum::USERS_REQUESTS->value ?
                     fn () => UserRequestLogsResource::collection(IndexUserRequestLogs::run($request->get('sort')))
-                    : Inertia::lazy(fn () => UserRequestLogsResource::collection(IndexUserRequestLogs::run()))
+                    : Inertia::lazy(fn () => UserRequestLogsResource::collection(IndexUserRequestLogs::run())),
+
+                UsersTabsEnum::USERS_HISTORIES->value => $this->tab == UsersTabsEnum::USERS_HISTORIES->value ?
+                    fn () => HistoryResource::collection(IndexHistories::run($users))
+                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistories::run($users)))
 
             ]
         )->table(
