@@ -5,18 +5,18 @@
   -->
 
 <script setup lang="ts">
-import {Head} from '@inertiajs/vue3';
-import TableUsers from "@/Pages/Tables/TableUsers.vue";
-import Tabs from "@/Components/Navigation/Tabs.vue";
-import {computed, ref} from "vue";
-import {useTabChange} from "@/Composables/tab-change";
-import { faRoad,faTerminal } from "@/../private/pro-light-svg-icons"
-import TableUserRequestLogs from "@/Pages/Tables/TableUserRequestLogs.vue";
+import { Head } from '@inertiajs/vue3'
+import TableUsers from "@/Pages/Tables/TableUsers.vue"
+import Tabs from "@/Components/Navigation/Tabs.vue"
+import { computed, ref } from "vue"
+import { useTabChange } from "@/Composables/tab-change"
+import { faRoad, faTerminal, faUserCircle } from "@/../private/pro-light-svg-icons"
+import TableUserRequestLogs from "@/Pages/Tables/TableUserRequestLogs.vue"
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { capitalize } from "@/Composables/capitalize"
-import PageHeading from "@/Components/Headings/PageHeading.vue";
+import PageHeading from "@/Components/Headings/PageHeading.vue"
 
-library.add(faRoad,faTerminal)
+library.add(faRoad, faTerminal, faUserCircle)
 const props = defineProps <{
     pageHead: object
     tabs: {
