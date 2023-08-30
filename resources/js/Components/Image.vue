@@ -59,6 +59,7 @@ onBeforeMount(setImage)
 </script>
 
 <template>
+
     <picture :class="[props.class ?? 'w-full h-full flex justify-center items-center']">
         <source v-if="get(src, 'avif')" type="image/avif" :srcset="avif">
         <source v-if="get(src, 'webp')" type="image/webp" :srcset="webp">
