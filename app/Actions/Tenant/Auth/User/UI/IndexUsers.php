@@ -113,9 +113,9 @@ class IndexUsers extends InertiaAction
                 ->column(key: 'username', label: __('username'), canBeHidden: false, sortable: true, searchable: true)
                 ->column(key: 'contact_name', label: __('name'), canBeHidden: false, sortable: true, searchable: true)
                 ->column(key: 'email', label: __('email'), canBeHidden: false, sortable: true, searchable: true)
-                ->column(key: 'status', label: __('status'), canBeHidden: false, sortable: true, searchable: true)
-                ->column(key: 'roles', label: __('roles'), canBeHidden: false, sortable: true, searchable: true)
-                ->column(key: 'permissions', label: __('permissions'), canBeHidden: false, sortable: true, searchable: true)
+                ->column(key: 'status', label: __('status'), canBeHidden: false, sortable: true)
+                ->column(key: 'roles', label: __('roles'), canBeHidden: false, sortable: true )
+                ->column(key: 'permissions', label: __('permissions'), canBeHidden: false, sortable: true)
                 ->defaultSort('username');
         };
     }
