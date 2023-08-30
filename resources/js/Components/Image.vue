@@ -1,6 +1,9 @@
 <script setup lang="ts">
-import { toRefs, watch, ref, onBeforeMount } from 'vue'
+import { toRefs, watch, ref, onBeforeMount, Ref } from 'vue'
 import { cloneDeep, get, isNull } from 'lodash'
+
+const fallbackPath = '/fallback/fallback.svg'
+
 const props = withDefaults(defineProps<{
     src: {
         original: string
@@ -14,7 +17,7 @@ const props = withDefaults(defineProps<{
     class?: string
 }>(), {
     src: {
-        original: '/fallback/fallback.svg'
+        original: fallbackPath
     }
 })
 
@@ -22,9 +25,9 @@ const { src } = toRefs(props)
 
 
 const imageSrc = ref(cloneDeep(src))
-const avif = ref(get(imageSrc,['value','avif'],'/fallback/fallback.svg'))
-const webp = ref(get(imageSrc,['value','webp'],'/fallback/fallback.svg'))
-const original = ref(get(imageSrc,['value','original'],'/fallback/fallback.svg'))
+const avif: Ref<string | undefined> = ref(get(imageSrc, ['value', 'avif'], fallbackPath))
+const webp: Ref<string | undefined> = ref(get(imageSrc, ['value', 'webp'], fallbackPath))
+const original = ref(get(imageSrc, ['value', 'original'], fallbackPath))
 
 watch(src, (newValue) => {
     imageSrc.value = newValue
@@ -48,7 +51,7 @@ const setImage = () => {
         original.value += ' 1x, ' + imageSrc.value.original_2x + ' 2x'
     }
     }
-  
+
 }
 
 onBeforeMount(setImage)
@@ -57,8 +60,8 @@ onBeforeMount(setImage)
 
 <template>
     <picture :class="[props.class ?? 'w-full h-full flex justify-center items-center']">
-        <source v-if="get(src,'avif')" type="image/avif" :srcset="avif">
-        <source v-if="get(src,'webp')" type="image/webp" :srcset="webp">
-        <img :srcset="original" :src="get(src,'original')" :alt="alt">
+        <source v-if="get(src, 'avif')" type="image/avif" :srcset="avif">
+        <source v-if="get(src, 'webp')" type="image/webp" :srcset="webp">
+        <img :srcset="original" :src="get(src, 'original')" :alt="alt">
     </picture>
 </template>
