@@ -83,6 +83,18 @@ class EditUser extends InertiaAction
 
                             ]
                         ],
+                        [
+                            'title'    => __('Status'),
+                            'icon'    => 'fal fa-user-lock',
+                            'current' => true,
+                            'fields'   => [
+                                'status' => [
+                                    'type'  => 'radio',
+                                    'label' => __('Status'),
+                                    'value' => $user->status
+                                ],
+                            ]
+                        ],
                         'password'   => [
                             'title'   => __('Password'),
                             'icon'    => 'fal fa-key',
