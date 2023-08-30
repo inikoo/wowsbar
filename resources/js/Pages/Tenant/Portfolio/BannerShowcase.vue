@@ -62,7 +62,7 @@ const props = defineProps<{
             tooltip: trans('Workshop')
         }
     }" />
-    <div v-if="banner !== 'unpublished'" :class="['p-2.5', !data.banner?.components?.length ?  'flex justify-center' : '' ]">
+    <div v-if="banner.state !== 'unpublished'" :class="['p-2.5', !data.banner?.components?.length ?  'flex justify-center' : '' ]">
         <Input :fieldData="{ copyButton: true, readonly: true }" fieldName='url' :form="{ url: data.url }" />
     </div>
 </template>
