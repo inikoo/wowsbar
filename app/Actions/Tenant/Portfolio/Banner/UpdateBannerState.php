@@ -20,7 +20,7 @@ class UpdateBannerState
 
     public bool $isAction = false;
 
-    public function handle(Banner $contentBlock, array $modelData): Banner
+    public function handle(Banner $banner, array $modelData): Banner
     {
         switch ($modelData['state']) {
             case BannerStateEnum::LIVE->value:
@@ -31,9 +31,9 @@ class UpdateBannerState
                 break;
         }
 
-        $this->update($contentBlock, $modelData, ['data','layout']);
+        $this->update($banner, $modelData, ['data','layout']);
 
-        return $contentBlock;
+        return $banner;
     }
 
     public function authorize(ActionRequest $request): bool
@@ -61,13 +61,13 @@ class UpdateBannerState
         return $this->handle($banner, $this->validateAttributes());
     }
 
-    public function action(Banner $contentBlock, $modelData): Banner
+    public function action(Banner $banner, $modelData): Banner
     {
         $this->isAction = true;
         $this->setRawAttributes($modelData);
         $validatedData = $this->validateAttributes();
 
-        return $this->handle($contentBlock, $validatedData);
+        return $this->handle($banner, $validatedData);
     }
 
     public function jsonResponse(Banner $website): BannerResource
