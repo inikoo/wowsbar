@@ -30,7 +30,7 @@ class AttachImageToBanner
         if(!$banner->image_id) {
             $banner->update(
                 [
-                    'image_id',$media->id
+                    'data->unpublished_image_id',$media->id
                 ]
             );
         }
