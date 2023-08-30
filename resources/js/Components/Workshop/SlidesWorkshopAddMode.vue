@@ -116,13 +116,16 @@ const uploadImageRespone = (res) => {
             </label>
             <div class="text-center text-gray-500">
                 <FontAwesomeIcon :icon="['fal', 'image']" class="mx-auto h-12 w-12 text-gray-300" aria-hidden="true" />
-                <div class="mt-2 flex text-sm leading-6 ">
+                <div class="mt-2 flex  justify-center text-lg font-medium leading-6 ">
+                    <p class="pl-1">{{ trans("Upload Image") }}</p>
+                </div>
+                <div class="flex text-sm leading-6 ">
                     <p class="pl-1">{{ trans("Click or drag & drop") }}</p>
                 </div>
                 <p class="text-[0.7rem]">
                     {{ trans("PNG, JPG, GIF up to 10MB") }}
                 </p>
-                <Button :style="`primary`" icon="fal fa-photo-video" size="xs" class="relative m-2.5"
+                <Button id="gallery" :style="`primary`" icon="fal fa-photo-video" size="xs" class="relative m-2.5"
                     @click="()=>isOpenGalleryImages=true">
                     {{ trans("Gallery") }}
                 </Button>
