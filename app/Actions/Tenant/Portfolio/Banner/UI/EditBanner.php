@@ -152,7 +152,7 @@ class EditBanner extends InertiaAction
         }
 
         return match ($routeName) {
-            'portfolio.banners.edit' => [
+            'portfolio.websites.show.banners.edit' => [
                 'label' => $banner->name,
                 'route' => [
                     'name'       => $routeName,
@@ -160,7 +160,8 @@ class EditBanner extends InertiaAction
                         'banner' => $banner->slug
                     ]
                 ]
-            ]
+            ],
+            default => null
         };
     }
 }
