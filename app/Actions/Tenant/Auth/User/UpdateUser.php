@@ -7,6 +7,7 @@
 
 namespace App\Actions\Tenant\Auth\User;
 
+use App\Actions\Tenancy\Tenant\Hydrators\TenantHydrateUsers;
 use App\Actions\Traits\WithActionUpdate;
 use App\Http\Resources\Auth\UserResource;
 use App\Models\Auth\User;
@@ -23,7 +24,13 @@ class UpdateUser
 
     public function handle(User $user, array $modelData): User
     {
-        return $this->update($user, $modelData, 'settings');
+        $user = $this->update($user, $modelData, 'settings');
+
+        if ($user->wasChanged('status')) {
+            TenantHydrateUsers::run(app('currentTenant'));
+        }
+
+        return $user;
     }
 
     public function authorize(ActionRequest $request): bool
@@ -31,7 +38,7 @@ class UpdateUser
         if ($this->asAction) {
             return true;
         }
-        return  $request->user()->can('sysadmin.edit');
+        return $request->user()->can('sysadmin.edit');
 
     }
 
@@ -39,9 +46,10 @@ class UpdateUser
     {
         return [
             'contact_name' => ['sometimes', 'required'],
-            'username'     => ['sometimes', 'required', new AlphaDashDot(), 'unique:users,username'],
-            'password'     => ['sometimes', 'required', app()->isLocal()  || app()->environment('testing') ? null : Password::min(8)->uncompromised()],
-            'email'        => 'sometimes|required|email|unique:users,email'
+            'username' => ['sometimes', 'required', new AlphaDashDot(), 'unique:users,username'],
+            'password' => ['sometimes', 'required', app()->isLocal() || app()->environment('testing') ? null : Password::min(8)->uncompromised()],
+            'email' => 'sometimes|required|email|unique:users,email',
+            'status' => 'sometimes|required|boolean'
         ];
     }
 
