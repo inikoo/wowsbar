@@ -81,7 +81,7 @@ class IndexBanners extends InertiaAction
 
         return $queryBuilder
             ->defaultSort('banners.code')
-//            ->select(['banners.code', 'banners.name', 'banners.slug'])
+            //            ->select(['banners.code', 'banners.name', 'banners.slug'])
             ->allowedSorts(['slug', 'code', 'name'])
             ->allowedFilters([$globalSearch])
             ->withPaginator($prefix)
@@ -94,7 +94,6 @@ class IndexBanners extends InertiaAction
         $prefix = null,
         $canEdit = false
     ): Closure {
-
         return function (InertiaTable $table) use ($modelOperations, $parent, $prefix, $canEdit) {
             if ($prefix) {
                 $table
@@ -154,10 +153,10 @@ class IndexBanners extends InertiaAction
                 ->withModelOperations($modelOperations)
                 ->withGlobalSearch()
                 ->withEmptyState($emptyState)
+                ->column(key: 'state', label: ['fal', 'fa-yin-yang'])
                 ->column(key: 'slug', label: __('code'), sortable: true)
                 ->column(key: 'name', label: __('name'), sortable: true)
-                ->column(key: 'banner', label: __('banner'))
-                ->column(key: 'state', label: __('state'))
+                ->column(key: 'banner', label: ['fal', 'fa-image'])
                 ->column(key: 'websites', label: __('websites'))
                 ->defaultSort('slug');
         };
@@ -231,19 +230,19 @@ class IndexBanners extends InertiaAction
                                 ]
                             ],
                             default => [
-                                'type'      => 'button',
-                                'style'     => 'create',
-                                'label'     => __('create banner'),
-                                'route'     => [
+                                'type'  => 'button',
+                                'style' => 'create',
+                                'label' => __('create banner'),
+                                'route' => [
                                     'name' => 'portfolio.banners.create',
                                 ]
                             ]
                         }
-]
+                    ]
 
                 ],
 
-                'data'        => BannerResource::collection($banners),
+                'data' => BannerResource::collection($banners),
             ]
         )->table(
             $this->tableStructure(
