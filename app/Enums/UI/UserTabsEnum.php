@@ -43,7 +43,7 @@ enum UserTabsEnum: string
             ],
             UserTabsEnum::REQUEST_LOGS => [
                 'title' => __('Visit Logs'),
-                'icon'  => 'fas fa-road',
+                'icon'  => 'fal fa-road',
             ],
         };
     }

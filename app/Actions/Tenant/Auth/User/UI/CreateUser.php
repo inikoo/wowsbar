@@ -38,7 +38,7 @@ class CreateUser extends InertiaAction
                 'formData' => [
                     'blueprint' => [
                         [
-                            'title'  => __('create marketplace agent'),
+                            'title'  => __('create user'),
                             'fields' => [
 
                                 'username' => [
@@ -46,21 +46,26 @@ class CreateUser extends InertiaAction
                                     'label' => __('username'),
                                     'value' => ''
                                 ],
-                                'name' => [
+                                'password' => [
+                                    'type'  => 'password',
+                                    'label' => __('password'),
+                                    'value' => ''
+                                ],
+                                'contact_name' => [
                                     'type'  => 'input',
                                     'label' => __('name'),
                                     'value' => ''
                                 ],
-                                'type' => [
+                                'email' => [
                                     'type'  => 'input',
-                                    'label' => __('type'),
+                                    'label' => __('email'),
                                     'value' => ''
                                 ],
                             ]
                         ]
                     ],
                     'route'      => [
-                        'name'       => 'models.user.update',
+                        'name'       => 'models.user.store',
                     ]
                 ],
 

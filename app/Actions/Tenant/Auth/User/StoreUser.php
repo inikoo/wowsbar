@@ -12,9 +12,12 @@ use App\Actions\Tenant\Auth\User\Hydrators\UserHydrateUniversalSearch;
 use App\Actions\Tenant\Auth\User\UI\SetUserAvatar;
 use App\Models\Auth\Role;
 use App\Models\Auth\User;
+use App\Models\Portfolio\PortfolioWebsite;
 use App\Models\Tenancy\Tenant;
 use App\Rules\AlphaDashDot;
 use Illuminate\Console\Command;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
 use Lorisleiva\Actions\ActionRequest;
@@ -39,6 +42,7 @@ class StoreUser
 
         UserHydrateUniversalSearch::dispatch($user);
         TenantHydrateUsers::dispatch(app('currentTenant'));
+
         return $user;
     }
 
@@ -54,10 +58,26 @@ class StoreUser
     public function rules(): array
     {
         return [
-            'username' => ['required', new AlphaDashDot(), 'unique:users,username', Rule::notIn(['export', 'create'])],
-            'password' => ['required', app()->isLocal() || app()->environment('testing') ? null : Password::min(8)->uncompromised()],
-            'email'    => ['required', 'email', 'unique:users,email']
+            'username'     => ['required', new AlphaDashDot(), 'unique:users,username', Rule::notIn(['export', 'create'])],
+            'password'     => ['sometimes', 'required', app()->isLocal() || app()->environment('testing') ? null : Password::min(8)->uncompromised()],
+            'contact_name' => ['required', 'string', 'max:255'],
+            'email'        => ['required', 'email']
+
         ];
+    }
+
+    public function asController(ActionRequest $request): User
+    {
+        $request->validate();
+
+        return $this->handle(app('currentTenant'), $request->validated());
+    }
+
+    public function htmlResponse(User $user): RedirectResponse
+    {
+        return Redirect::route('sysadmin.users.show', [
+            $user->username
+        ]);
     }
 
     public function action(Tenant $tenant, ?array $objectData = []): User
@@ -82,6 +102,6 @@ class StoreUser
         $superAdminRole = Role::where('guard_name', 'web')->where('name', 'super-admin')->firstOrFail();
         $user->assignRole($superAdminRole);
 
-        echo "Damn! 🥳 u successfully add 1 user to " . $tenant->slug . "\n";
+        echo "Damn! 🥳 u successfully add 1 user to ".$tenant->slug."\n";
     }
 }

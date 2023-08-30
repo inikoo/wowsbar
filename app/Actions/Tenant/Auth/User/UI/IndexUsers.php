@@ -82,7 +82,7 @@ class IndexUsers extends InertiaAction
             ->defaultSort('username')
             ->select(['username', 'email', 'contact_name', 'avatar_id'])
             ->allowedSorts(['username', 'email', 'contact_name'])
-            ->allowedFilters([$globalSearch])
+            ->allowedFilters([$globalSearch,'email','contact_name','username'])
             ->withPaginator($prefix)
             ->withQueryString();
     }
@@ -147,6 +147,25 @@ class IndexUsers extends InertiaAction
                     $request->route()->getName(),
                 ),
                 'title'       => __('users'),
+                'pageHead' => [
+                    'title'     => __('users'),
+                    'iconRight' => [
+                        'title' => __('users'),
+                        'icon'  => 'fal fa-user'
+                    ],
+                    'actions'   => [
+                        [
+                            'type'  => 'button',
+                            'style' => 'create',
+                            'label' => 'create user',
+                            'route' => [
+                                'name'       => preg_replace('/index$/', 'create', $request->route()->getName()),
+                                'parameters' => array_values($request->route()->originalParameters())
+                            ]
+                        ]
+                    ]
+                ],
+
 
                 'labels' => [
                     'usernameNoSet' => __('username no set')

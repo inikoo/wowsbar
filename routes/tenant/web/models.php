@@ -8,6 +8,7 @@
 
 use App\Actions\Media\ImageGenerator;
 use App\Actions\Tenancy\Tenant\UpdateSystemSettings;
+use App\Actions\Tenant\Auth\User\StoreUser;
 use App\Actions\Tenant\Auth\User\UpdateUser;
 use App\Actions\Tenant\Portfolio\Banner\DeleteBanner;
 use App\Actions\Tenant\Portfolio\Banner\PublishBanner;
@@ -39,6 +40,8 @@ Route::patch('/banner/{banner}/state/{state}', UpdateBannerState::class)->name('
 Route::delete('/banner/{banner}', DeleteBanner::class)->name('content-block.delete');
 
 Route::patch('/images/{media}', UpdateUploadedImage::class)->name('images.update');
+
+Route::post('/user', StoreUser::class)->name('user.store');
 
 Route::patch('/user/{user:username}', UpdateUser::class)->name('user.update');
 Route::patch('/profile', UpdateProfile::class)->name('profile.update');
