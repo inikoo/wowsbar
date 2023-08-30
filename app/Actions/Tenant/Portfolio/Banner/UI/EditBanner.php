@@ -10,6 +10,7 @@ namespace App\Actions\Tenant\Portfolio\Banner\UI;
 use App\Actions\InertiaAction;
 use App\Actions\Tenant\Portfolio\PortfolioWebsite\UI\IndexPortfolioWebsites;
 use App\Actions\Portfolio\PortfolioWebsite\UI\GetPortfolioWebsitesOptions;
+use App\Actions\Tenant\Portfolio\PortfolioWebsite\UI\ShowPortfolioWebsite;
 use App\Models\Portfolio\Banner;
 use App\Models\Portfolio\PortfolioWebsite;
 use Exception;
@@ -124,7 +125,7 @@ class EditBanner extends InertiaAction
 
     public function getBreadcrumbs(string $routeName, array $routeParameters): array
     {
-        return \App\Actions\Tenant\Portfolio\PortfolioWebsite\UI\ShowPortfolioWebsite::make()->getBreadcrumbs(
+        return ShowBanner::make()->getBreadcrumbs(
             $routeName,
             $routeParameters,
             suffix: '('.__('editing').')'
