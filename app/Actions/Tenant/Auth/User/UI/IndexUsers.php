@@ -82,7 +82,7 @@ class IndexUsers extends InertiaAction
             ->defaultSort('username')
             ->select(['username', 'email', 'contact_name', 'avatar_id'])
             ->allowedSorts(['username', 'email', 'contact_name'])
-            ->allowedFilters([$globalSearch])
+            ->allowedFilters([$globalSearch,'email','contact_name','username'])
             ->withPaginator($prefix)
             ->withQueryString();
     }
@@ -113,9 +113,9 @@ class IndexUsers extends InertiaAction
                 ->column(key: 'username', label: __('username'), canBeHidden: false, sortable: true, searchable: true)
                 ->column(key: 'contact_name', label: __('name'), canBeHidden: false, sortable: true, searchable: true)
                 ->column(key: 'email', label: __('email'), canBeHidden: false, sortable: true, searchable: true)
-                ->column(key: 'status', label: __('status'), canBeHidden: false, sortable: true, searchable: true)
-                ->column(key: 'roles', label: __('roles'), canBeHidden: false, sortable: true, searchable: true)
-                ->column(key: 'permissions', label: __('permissions'), canBeHidden: false, sortable: true, searchable: true)
+                ->column(key: 'status', label: __('status'), canBeHidden: false, sortable: true)
+                ->column(key: 'roles', label: __('roles'), canBeHidden: false, sortable: true )
+                ->column(key: 'permissions', label: __('permissions'), canBeHidden: false, sortable: true)
                 ->defaultSort('username');
         };
     }
@@ -147,6 +147,25 @@ class IndexUsers extends InertiaAction
                     $request->route()->getName(),
                 ),
                 'title'       => __('users'),
+                'pageHead' => [
+                    'title'     => __('users'),
+                    'iconRight' => [
+                        'title' => __('users'),
+                        'icon'  => 'fal fa-user'
+                    ],
+                    'actions'   => [
+                        [
+                            'type'  => 'button',
+                            'style' => 'create',
+                            'label' => 'create user',
+                            'route' => [
+                                'name'       => preg_replace('/index$/', 'create', $request->route()->getName()),
+                                'parameters' => array_values($request->route()->originalParameters())
+                            ]
+                        ]
+                    ]
+                ],
+
 
                 'labels' => [
                     'usernameNoSet' => __('username no set')

@@ -158,7 +158,8 @@ class ShowBanner extends InertiaAction
 
         };
         return match ($routeName) {
-            'portfolio.banners.show' =>
+            'portfolio.banners.show',
+            'portfolio.banners.edit' =>
             array_merge(
                 ShowPortfolioDashboard::make()->getBreadcrumbs(),
                 $headCrumb(

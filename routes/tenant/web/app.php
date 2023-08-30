@@ -42,6 +42,9 @@ Route::middleware([
         Route::prefix("search")
             ->name("search.")
             ->group(__DIR__."/search.php");
+        Route::prefix("export")
+            ->name("export.")
+            ->group(__DIR__."/export.php");
 
     });
 

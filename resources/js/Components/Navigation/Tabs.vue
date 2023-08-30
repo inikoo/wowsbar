@@ -9,8 +9,8 @@ import { ref, Ref } from "vue"
 import { capitalize } from "@/Composables/capitalize"
 import { trans } from 'laravel-vue-i18n'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faInfoCircle, faRoad, faWallet } from "@/../private/pro-solid-svg-icons"
-import { faClock, faDatabase } from "@/../private/pro-light-svg-icons"
+import { faInfoCircle } from "@/../private/pro-solid-svg-icons"
+import { faClock, faDatabase,faRoad,faWallet } from "@/../private/pro-light-svg-icons"
 import { library } from '@fortawesome/fontawesome-svg-core'
 
 library.add(faInfoCircle, faRoad, faWallet, faClock, faDatabase)

@@ -22,10 +22,7 @@ class UpdateBannerState
 
     public function handle(Banner $contentBlock, array $modelData): Banner
     {
-        switch ($modelData[BannerStateEnum::READY->value]) {
-            case BannerStateEnum::READY->value:
-                $modelData['ready_at'] = now();
-                break;
+        switch ($modelData['state']) {
             case BannerStateEnum::LIVE->value:
                 $modelData['live_at'] = now();
                 break;
