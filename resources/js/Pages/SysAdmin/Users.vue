@@ -14,16 +14,18 @@ import { faRoad,faTerminal } from "@/../private/pro-light-svg-icons"
 import TableUserRequestLogs from "@/Pages/Tables/TableUserRequestLogs.vue";
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { capitalize } from "@/Composables/capitalize"
+import PageHeading from "@/Components/Headings/PageHeading.vue";
 
 library.add(faRoad,faTerminal)
 const props = defineProps <{
+    pageHead: object
     tabs: {
         current: string;
         navigation: object;
     },
     title: string
     users?: object
-    users_requests?: object
+    users_requests?: object,
 }>()
 
 
@@ -44,6 +46,7 @@ const component = computed(() => {
 
 <template layout="TenantApp">
     <Head :title="capitalize(title)"/>
+    <PageHeading :data="pageHead"></PageHeading>
     <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate"/>
     <component :is="component" :tab="currentTab"  :data="props[currentTab]"></component>
 </template>

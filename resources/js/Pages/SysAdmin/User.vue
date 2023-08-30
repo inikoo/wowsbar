@@ -5,18 +5,18 @@
   -->
 
 <script setup lang="ts">
-import { Head } from '@inertiajs/vue3'
+import {Head} from '@inertiajs/vue3'
 
 import PageHeading from '@/Components/Headings/PageHeading.vue'
-import { computed, defineAsyncComponent, ref } from "vue"
-import { useTabChange } from "@/Composables/tab-change"
+import {computed, ref} from "vue"
+import {useTabChange} from "@/Composables/tab-change"
 import ModelDetails from "@/Pages/ModelDetails.vue"
 import TableUserRequestLogs from "@/Pages/Tables/TableUserRequestLogs.vue"
 import TableHistories from "@/Pages/Tables/TableHistories.vue"
 import Tabs from "@/Components/Navigation/Tabs.vue"
-import { faIdCard, faUser, faClock, faDatabase, faEnvelope, faHexagon, faFile } from "@/../private/pro-light-svg-icons"
-import { library } from "@fortawesome/fontawesome-svg-core"
-import { capitalize } from "@/Composables/capitalize"
+import {faIdCard, faUser, faClock, faDatabase, faEnvelope, faHexagon, faFile} from "@/../private/pro-light-svg-icons"
+import {library} from "@fortawesome/fontawesome-svg-core"
+import {capitalize} from "@/Composables/capitalize"
 import UsersShowcaseVue from '../UsersShowcase.vue'
 
 library.add(
@@ -27,10 +27,8 @@ library.add(
     faEnvelope,
     faHexagon,
     faFile,
-
 )
 
-const ModelChangelog = defineAsyncComponent(() => import('@/Pages/ModelChangelog.vue'))
 
 const props = defineProps<{
     title: string,
@@ -39,9 +37,9 @@ const props = defineProps<{
         current: string
         navigation: object
     },
-    request_logs: object
-    history: object
-
+    request_logs?: object
+    history?: object
+    details?: object
 }>()
 
 let currentTab = ref(props.tabs.current);
@@ -61,7 +59,7 @@ const component = computed(() => {
 </script>
 
 <template layout="TenantApp">
-    <Head :title="capitalize(title)" />
+    <Head :title="capitalize(title)"/>
     <PageHeading :data="pageHead"></PageHeading>
     <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate"/>
     <component :is="component" :data="props[currentTab]"></component>

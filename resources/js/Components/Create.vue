@@ -34,6 +34,7 @@ import Country from "@/Components/Forms/Fields/Country.vue"
 import Currency from "@/Components/Forms/Fields/Currency.vue"
 import InputWithAddOn from '@/Components/Forms/Fields/InputWithAddOn.vue'
 import { ref, onMounted } from 'vue';
+import Password from "@/Components/Forms/Fields/Password.vue";
 
 const getComponent = (componentName: string) => {
     const components = {
@@ -46,6 +47,7 @@ const getComponent = (componentName: string) => {
         'radio': Radio,
         'country': Country,
         'currency': Currency,
+        'password': Password
     };
     return components[componentName] ?? null;
 

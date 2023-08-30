@@ -20,13 +20,13 @@ class CheckUserStatusFirebase
 
     public function handle(): void
     {
-        $database = app('firebase.database');
+        $database  = app('firebase.database');
         $reference = $database->getReference('tenants');
-        $values = $reference->getValue();
+        $values    = $reference->getValue();
 
         foreach ($values as $key => $tenant) {
             $reference = $database->getReference('tenants/' . $key . '/active_users');
-            $values = $reference->getValue();
+            $values    = $reference->getValue();
 
             foreach ($values as $user => $value) {
                 if (Carbon::make($value['last_active'])->timestamp <= now()->subMinutes(15)->timestamp) {

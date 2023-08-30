@@ -49,7 +49,7 @@ class EditUser extends InertiaAction
                     'actions'   => [
                       [
                           'type'  => 'button',
-                          'style' => 'tertiary',
+                          'style' => 'exit',
                           'route' => [
                               'name'       => preg_replace('/edit$/', 'show', $request->route()->getName()),
                               'parameters' => array_values($request->route()->originalParameters())
@@ -62,7 +62,7 @@ class EditUser extends InertiaAction
                     'blueprint' => [
                         [
                             'title'    => __('id'),
-                             'icon'    => 'fa-light fa-user',
+                             'icon'    => 'fal fa-user',
                              'current' => true,
                             'fields'   => [
                                 'contact_name' => [
@@ -85,7 +85,7 @@ class EditUser extends InertiaAction
                         ],
                         'password'   => [
                             'title'   => __('Password'),
-                            'icon'    => 'fa-light fa-key',
+                            'icon'    => 'fal fa-key',
                             'current' => false,
                             'fields'  => [
                                 'password' => [
@@ -97,7 +97,7 @@ class EditUser extends InertiaAction
                         ],
                         'permissions'   => [
                             'title'   => __('Permissions'),
-                            'icon'    => 'fa-light fa-user-lock',
+                            'icon'    => 'fal fa-user-lock',
                             'current' => false,
                             'fields'  => [
                                 'permissions' => [
