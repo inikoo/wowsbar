@@ -13,8 +13,8 @@ use App\Helpers\ImgProxy\Image;
 use App\Http\Resources\Assets\LanguageResource;
 use App\Models\Assets\Language;
 use App\Models\Auth\User;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Cache;
 use Lorisleiva\Actions\Concerns\AsObject;
 
 class GetFirstLoadProps
@@ -33,6 +33,24 @@ class GetFirstLoadProps
         }
         if (!$language) {
             $language = Language::where('code', 'en')->first();
+        }
+
+        $firebaseAuthToken=null;
+
+        if ($user) {
+            $firebaseAuthToken = Cache::remember('tenant_firebase_auth_token_'.$user->id, 3600, function () {
+                $auth        = app('firebase.auth');
+                $tenant      = app('currentTenant');
+                $customToken = $auth
+                    ->createCustomToken($tenant->slug, [
+                        'scope'       => 'tenant',
+                        'tenant_slug' => $tenant->slug
+                    ]);
+
+                $auth->signInWithCustomToken($customToken);
+
+                return $customToken->toString();
+            });
         }
 
 
@@ -62,7 +80,7 @@ class GetFirstLoadProps
                 }
             },
 
-            'firebaseAuthToken'  => $user ? Arr::get($user->data, 'firebase_auth_token') : null,
+            'firebaseAuthToken'  => $firebaseAuthToken,
 
 
 

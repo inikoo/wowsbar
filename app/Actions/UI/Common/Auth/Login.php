@@ -77,22 +77,9 @@ class Login
         }
 
 
-        $auth   = app('firebase.auth');
-        $tenant = app('currentTenant');
 
-        if ($this->gate == 'web') {
-            $customToken = $auth
-                ->createCustomToken($tenant->slug, [
-                    'scope'       => 'tenant',
-                    'tenant_slug' => $tenant->slug
-                ]);
 
-            $auth->signInWithCustomToken($customToken);
 
-            $user->update([
-                'data->firebase_auth_token' => $customToken->toString()
-            ]);
-        }
 
 
         return back();
