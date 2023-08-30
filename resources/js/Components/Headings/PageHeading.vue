@@ -4,7 +4,7 @@
   -  Copyright (c) 2022, Raul A Perusquia Flores
   -->
 
-<script setup>
+<script setup lang="ts">
 import { Link } from "@inertiajs/vue3"
 
 import { library } from "@fortawesome/fontawesome-svg-core"
@@ -18,9 +18,44 @@ import { capitalize } from "@/Composables/capitalize"
 import { useLocaleStore } from "@/Stores/locale.js"
 import { trans } from "laravel-vue-i18n"
 
+interface Icon {
+    icon: string[] | string
+}
+
+interface Action {
+    label: string
+    style: string
+    icon: Icon
+}
+
 
 library.add(faRocketLaunch,faDraftingCompass,faEmptySet, faMoneyCheckAlt, faPeopleArrows, faSlidersH, faPlus, faPencil, faArrowLeft, faBorderAll, faTrashAlt,faSave, faSuitcase);
-const props = defineProps(["data", "dataToSubmit","dataToSubmitIsDirty"])
+
+const props = defineProps<{
+    data: {
+        title: string
+        icon: {
+            icon: Icon
+            tooltip: string
+        }
+        actionActualMethod?: string
+        meta?: any
+        actions?: any
+        iconRight?: {
+            title: string
+            icon: string
+            tooltip?: string
+        }
+        container: {
+            tooltip: any
+            icon: Icon
+            label: string
+        }
+    },
+    dataToSubmit?: any
+    dataToSubmitIsDirty?: any
+}>()
+
 const locale = useLocaleStore()
 
 
@@ -29,7 +64,7 @@ if(props.dataToSubmit && props.data.actionActualMethod ) {
     // console.log(props.dataToSubmit)
 }
 
-const getActionLabel = function (action) {
+const getActionLabel = (action: Action) => {
     if (action.hasOwnProperty("label")) {
         return action.label
     } else {
@@ -53,20 +88,20 @@ const getActionLabel = function (action) {
 };
 
 
-const getActionIcon = (action) => {
+const getActionIcon = (action: any) => {
     if (action.hasOwnProperty("icon")) {
         return action.icon
     } else {
         switch (action.style) {
             case "edit":
-                 return ["far", "fa-pencil"]
-             case "save":
+                return ["far", "fa-pencil"]
+            case "save":
                 return ["fa", "fa-save"]
             case "cancel":
             case "exit":
                 return ["far", "fa-arrow-left"]
              case "create":
-                 return ["fas", "fa-plus"]
+                return ["fas", "fa-plus"]
             case "delete":
                 return ["far", "fa-trash-alt"]
             case "withMulti":
@@ -94,14 +129,14 @@ const getActionIcon = (action) => {
                     :icon="data.icon.icon" size="sm" class="pr-2 text-gray-400" />
                 <span>{{ trans(data.title) }}</span>
                 <FontAwesomeIcon v-if="data.iconRight" :title="capitalize(data.iconRight.tooltip ?? '')" aria-hidden="true"
-                    :icon="data.iconRight.icon" class="pl-1 h-4 mb-0.5" />
+                    :icon="data.iconRight.icon" class="pl-1 h-4 mb-0.5 text-gray-400" />
             </h2>
             <div class="mt-1 flex flex-col sm:mt-0 sm:flex-row sm:flex-wrap sm:space-x-6">
                 <div class="mt-1 flex flex-col sm:mt-0 sm:flex-row sm:flex-wrap sm:space-x-6">
                     <div v-for="item in data.meta" :key="item.name" class="mt-2 flex items-center text-sm text-gray-500">
                         <FontAwesomeIcon v-if="item['leftIcon']" :title="capitalize(item['leftIcon']['tooltip'])"
                             aria-hidden="true" :icon="item['leftIcon']['icon']" size="lg" class="text-gray-400 pr-2" />
-                        <Link v-if="item.href" :href="route(item.href[0], item.href[1])">
+                        <Link v-if="item.href" :href="`${route(item.href[0], item.href[1])}`">
                         <span v-if="item.number">{{ locale.number(item.number) }}</span>
                         <FontAwesomeIcon v-else icon="fal fa-empty-set" />
                         {{ item.name ? trans(item.name) : '' }}
@@ -126,22 +161,17 @@ const getActionIcon = (action) => {
                     {{ action.final }}
 
                     <!-- Button -->
-                    <Link v-if="action.type === 'button'"
-                        :href="route(action['route']['name'], action['route']['parameters'])"
+                    <Link v-if="action.type === 'button'" as="button"
+                        :href="`${route(action['route']['name'], action['route']['parameters'])}`"
                         :method="action.method ?? 'get'"
                         :data="action.method !== 'get' ? dataToSubmit : null"
-                        as="button"
                     >
 
-                        <Button size="xs"
-                            :style="action.style"
+                        <Button size="xs" :style="action.style"
                             :id="getActionLabel(action).replace(' ', '-')"
-                            class="capitalize inline-flex items-center rounded-md text-sm font-medium shadow-sm gap-x-2">
-                            <!--
-                            <FontAwesomeIcon v-if="action.icon && action.icon == 'fad fa-save'" aria-hidden="true" :icon="['fad', 'save']" style="--fa-primary-color: #f3f3f3; --fa-secondary-color: #ff6600; --fa-secondary-opacity: 1;" size="sm" :class="[iconClass]" />
-                            -->
-                            <FontAwesomeIcon  :icon="getActionIcon(action)"
-                                aria-hidden="true" />
+                            class="capitalize inline-flex items-center rounded-md text-sm font-medium shadow-sm gap-x-2"
+                        >
+                            <FontAwesomeIcon :icon="getActionIcon(action)" aria-hidden="true" />
                             {{ trans(getActionLabel(action)) }}
                         </Button>
                     </Link>
@@ -150,12 +180,10 @@ const getActionIcon = (action) => {
                     <!--suppress HtmlUnknownTag -->
                     <div v-if="action.type === 'buttonGroup'" class="first:rounded-l-md overflow-hidden last:rounded-r-md">
                         <Link v-for="button in action.buttons"
-                            :href="route(button['route']['name'], button['route']['parameters'])" class="">
-                            <Button size="xs" :style="button.style"
-                                class="capitalize inline-flex items-center rounded-none  text-sm font-medium shadow-sm ">
+                            :href="`${route(button['route']['name'], button['route']['parameters'])}`" class="">
+                            <Button size="xs" :style="button.style" class="capitalize inline-flex items-center rounded-none  text-sm font-medium shadow-sm ">
                                 <div class="">
-                                    <FontAwesomeIcon v-if="getActionIcon(button)" :icon="getActionIcon(button)" class=""
-                                        aria-hidden="true" />
+                                    <FontAwesomeIcon v-if="getActionIcon(button)" :icon="getActionIcon(button)" class="" aria-hidden="true" />
                                     <span v-if="button.label" class="ml-2">{{ getActionLabel(button) }}</span>
                                 </div>
                             </Button>
