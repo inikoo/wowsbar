@@ -187,16 +187,16 @@ class IndexUsers extends InertiaAction
                     : Inertia::lazy(fn () => UserRequestLogsResource::collection(IndexUserRequestLogs::run())),
 
                 UsersTabsEnum::USERS_HISTORIES->value => $this->tab == UsersTabsEnum::USERS_HISTORIES->value ?
-                    fn () => HistoryResource::collection(IndexHistories::run($users))
-                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistories::run($users)))
+                    fn () => HistoryResource::collection(IndexHistories::run())
+                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistories::run()))
 
             ]
         )->table(
             $this->tableStructure(
                 prefix: 'users'
             )
-        )
-            ->table(IndexUserRequestLogs::make()->tableStructure());
+        )->table(IndexUserRequestLogs::make()->tableStructure())
+            ->table(IndexHistories::make()->tableStructure());
     }
 
     public function asController(ActionRequest $request): LengthAwarePaginator

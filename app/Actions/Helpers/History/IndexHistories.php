@@ -9,10 +9,14 @@ namespace App\Actions\Helpers\History;
 
 use App\Actions\Tenant\Auth\User\Traits\WithFormattedUserHistories;
 use App\InertiaTable\InertiaTable;
+use App\Models\Auth\User;
 use Closure;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
+use OwenIt\Auditing\Models\Audit;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class IndexHistories
 {
@@ -20,16 +24,24 @@ class IndexHistories
     use WithAttributes;
     use WithFormattedUserHistories;
 
-    public function handle($model = null): LengthAwarePaginator|array|bool
+    public function handle($prefix = null): LengthAwarePaginator|array|bool
     {
-        $histories = [];
-        if($model) {
-            return $model->audits()->with('user')->paginate();
-        }
+        $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
+            $query->where(function ($query) use ($value) {
+                $query->whereAnyWordStartWith('user_type', $value)
+                    ->orWhere('user_type', 'ILIKE', "$value%")
+                    ->orWhere('url', 'ILIKE', "$value%");
+            });
+        });
 
-         foreach ($model->audits as $history) {
-             //
-         }
+        $queryBuilder = QueryBuilder::for(Audit::class);
+
+        return $queryBuilder
+            ->defaultSort('user_type')
+            ->allowedSorts(['auditable_id', 'auditable_type', 'user_type', 'url'])
+            ->allowedFilters([$globalSearch,'auditable_id','auditable_type'])
+            ->withPaginator($prefix)
+            ->withQueryString();
     }
 
     public function tableStructure(?array $modelOperations = null): Closure
@@ -40,9 +52,7 @@ class IndexHistories
                 ->pageName('historyPage')
                 ->column(key: 'ip_address', label: __('IP Address'), canBeHidden: false, sortable: true, searchable: true)
                 ->column(key: 'user_id', label: __('User ID'), canBeHidden: false, sortable: true)
-//                ->column(key: 'slug', label: __('Slug'), canBeHidden: false, sortable: true)
-//                ->column(key: 'user_name', label: __('User Name'), canBeHidden: false, sortable: true)
-                ->column(key: 'url', label: __('URL'), canBeHidden: false, sortable: true)
+                ->column(key: 'url', label: __('URL'), canBeHidden: false, sortable: true, searchable: true)
                 ->column(key: 'old_values', label: __('Old Values'), canBeHidden: false, sortable: true)
                 ->column(key: 'new_values', label: __('New Values'), canBeHidden: false, sortable: true)
                 ->column(key: 'event', label: __('Event'), canBeHidden: false, sortable: true)
