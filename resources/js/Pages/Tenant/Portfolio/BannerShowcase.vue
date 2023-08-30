@@ -38,6 +38,14 @@ const props = defineProps<{
     }
     tab?: string
     pageHead: Object
+    banner: {
+        'slug': string,
+        'ulid': string,
+        'id': number,
+        'code': string,
+        'name': string,
+        'state' : String
+    }
 }>()
 
 </script>
@@ -54,7 +62,7 @@ const props = defineProps<{
             tooltip: trans('Workshop')
         }
     }" />
-    <div :class="['p-2.5', !data.banner?.components?.length ?  'flex justify-center' : '' ]">
+    <div v-if="banner.state !== 'unpublished'" :class="['p-2.5', !data.banner?.components?.length ?  'flex justify-center' : '' ]">
         <Input :fieldData="{ copyButton: true, readonly: true }" fieldName='url' :form="{ url: data.url }" />
     </div>
 </template>
