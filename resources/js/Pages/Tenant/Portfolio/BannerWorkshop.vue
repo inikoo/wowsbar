@@ -88,7 +88,6 @@ const jumpToIndex = ref(0)
 const screenView = ref("")
 const data = reactive(cloneDeep(props.bannerLayout))
 const setData = ref(false)
-const firebase = ref(cloneDeep(props.firebase))
 const tenant = useLayoutStore().tenant
 const dbPath = 'tenants' + '/' + tenant.slug + '/banner_workshop/' + props.banner.slug
 const comment = ref('')
@@ -109,9 +108,8 @@ const fetchInitialData = async () => {
         const newData = { ...(firebaseData || cloneDeep(props.bannerLayout)) };
         Object.assign(data, newData);
 
-        if (firebaseData) {
             await set(getDbRef(dbPath), { ...firebaseData, data: newData });
-        }
+    
 
     } catch (error) {
         Object.assign(data, cloneDeep(props.bannerLayout));
@@ -131,14 +129,11 @@ const fetchInitialData = async () => {
 onValue(getDbRef(dbPath), (snapshot) => {
     if (snapshot.exists()) {
         const firebaseData = snapshot.val()
-        if (firebaseData) {
             Object.assign(data, { ...data, ...firebaseData })
-        }
     }
 })
 
 const updateData = async () => {
-    if (firebase.value) {
         try {
             if (data && setData.value == false) {
                 const snapshot = await get(getDbRef(dbPath))
@@ -150,7 +145,6 @@ const updateData = async () => {
         } catch (error) {
             console.error('Error updating data:', error)
         }
-    }
 }
 
 watch(data, updateData, { deep: true })
@@ -222,6 +216,7 @@ const sendDataToServer = async () => {
 
 
 const ceknotif=()=>{
+    console.log(data)
     notify({
             title: "Failed to get realtime data",
             text: 'please reload and make sure your internet connection is stable',
@@ -273,21 +268,7 @@ const ceknotif=()=>{
         <div v-else>
             <div v-if="data.components.filter((item) => item.ulid != null).length > 0">
                 <div class="flex w-full">
-                    <div class="isolate inline-flex shadow-sm w-3/6">
-                        <button type="button" @click="firebase = true" :class="[
-                            'relative inline-flex items-center px-3 py-2 text-xs border-r focus:z-10',
-                            firebase ? 'bg-gray-200 font-semibold text-gray-700' : 'text-gray-500 hover:bg-gray-100'
-                        ]">
-                            <FontAwesomeIcon :icon="['fal', 'user-friends']" class="p-1" :class="[firebase ? 'text-orange-500' : 'text-gray-500']"/> Collaborative Work
-                        </button>
-                        <button type="button" @click="firebase = false" :class="[
-                            'relative inline-flex items-center px-3 py-2 text-xs border-r focus:z-10',
-                            !firebase ? 'bg-gray-200 font-semibold text-gray-700' : 'text-gray-600 hover:bg-gray-100'
-                        ]">
-                            <FontAwesomeIcon :icon="['fal', 'user']" class="p-1" :class="[firebase ? 'text-gray-500' : 'text-orange-500']"/> Individual Work
-                        </button>
-                    </div>
-                    <div class="flex justify-end pr-2 w-3/6">
+                    <div class="flex justify-end pr-2 w w-full">
                         <ScreenView @screenView="(val) => (screenView = val)" />
                     </div>
                 </div>
