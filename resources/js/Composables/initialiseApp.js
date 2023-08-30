@@ -14,19 +14,27 @@ export const initialiseApp = () => {
         loadLanguageAsync(usePage().props.localeData.language.code)
     }
     watchEffect(() => {
+        // Set data of Navigation
         if (usePage().props.layout) {
             layout.navigation = usePage().props.layout.navigation ?? null
             layout.secondaryNavigation =
                 usePage().props.layout.secondaryNavigation ?? null
         }
 
+        // Set data of Locale (Language)
         if (usePage().props.localeData) {
             locale.language = usePage().props.localeData.language
             locale.languageOptions = usePage().props.localeData.languageOptions
         }
 
+        // Set data of Tenant
         if (usePage().props.tenant) {
             layout.tenant = usePage().props.tenant ?? null
+        }
+        
+        // Set data of User
+        if (usePage().props.user) {
+            layout.user = usePage().props.user ?? null
         }
 
 

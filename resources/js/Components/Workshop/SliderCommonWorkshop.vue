@@ -64,7 +64,7 @@ const setCurrent=(key)=>{
                             ? 'tabNavigationActive'
                             : 'tabNavigation',
                         'group cursor-pointer px-3 py-2 flex items-center text-sm font-medium',
-                    ]" :aria-current="key === current ? 'page' : undefined">
+                    ]" :aria-current="key === current ? 'page' : undefined" id="tab-nav">
                         <FontAwesomeIcon v-if="item.icon" aria-hidden="true" class="flex-shrink-0 -ml-1 mr-3 h-6 w-6 text-gray-400 group-hover:text-gray-500" :icon="item.icon" />
 
                         <span class="capitalize truncate">{{trans(item.title)}}</span>

@@ -89,7 +89,8 @@ class EditUser extends InertiaAction
                             'current' => true,
                             'fields'   => [
                                 'status' => [
-                                    'type'  => 'radio',
+                                    'type'  => 'toggleSquare',
+                                    'typeLabel' => ['suspended', 'active'],
                                     'label' => __('Status'),
                                     'value' => $user->status
                                 ],

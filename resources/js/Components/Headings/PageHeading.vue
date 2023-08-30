@@ -8,7 +8,7 @@
 import { Link } from "@inertiajs/vue3"
 
 import { library } from "@fortawesome/fontawesome-svg-core"
-import { faDraftingCompass,faEmptySet, faMoneyCheckAlt, faPeopleArrows, faSlidersH, faSave, faSuitcase} from "@/../private/pro-light-svg-icons"
+import { faDraftingCompass,faEmptySet, faMoneyCheckAlt, faPeopleArrows, faSlidersH, faSave, faSuitcase, faBroadcastTower} from "@/../private/pro-light-svg-icons"
 import { faRocketLaunch, faPencil, faArrowLeft, faBorderAll, faTrashAlt } from "@/../private/pro-regular-svg-icons"
 import { faPlus } from "@/../private/pro-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
@@ -29,7 +29,10 @@ interface Action {
 }
 
 
-library.add(faRocketLaunch,faDraftingCompass,faEmptySet, faMoneyCheckAlt, faPeopleArrows, faSlidersH, faPlus, faPencil, faArrowLeft, faBorderAll, faTrashAlt,faSave, faSuitcase);
+library.add(faRocketLaunch,faDraftingCompass,faEmptySet, faMoneyCheckAlt, faPeopleArrows, faSlidersH, faPlus,
+            faPencil, faArrowLeft, faBorderAll, faTrashAlt,faSave, faSuitcase,
+            faBroadcastTower
+);
 
 const props = defineProps<{
     data: {
@@ -125,11 +128,16 @@ const getActionIcon = (action: any) => {
                     {{ trans(data.container.label) }}
                 </span>
 
+                <span class="text-gray-400">
                 <FontAwesomeIcon v-if="data.icon" :title="capitalize(data.icon.tooltip ?? '')" aria-hidden="true"
-                    :icon="data.icon.icon" size="sm" class="pr-2 text-gray-400" />
+                    :icon="data.icon.icon" size="sm" class="pr-2" />
+                <FontAwesomeIcon v-if="data.iconBis" :title="capitalize(data.iconBis.tooltip ?? '')" aria-hidden="true"
+                                 :icon="data.iconBis.icon" size="sm" class="pr-2" :class="data.iconBis.class" />
+                </span>
+
                 <span>{{ trans(data.title) }}</span>
                 <FontAwesomeIcon v-if="data.iconRight" :title="capitalize(data.iconRight.tooltip ?? '')" aria-hidden="true"
-                    :icon="data.iconRight.icon" class="pl-1 h-4 mb-0.5 text-gray-400" />
+                    :icon="data.iconRight.icon" class="pl-1 h-4 mb-0.5" :class="data.iconRight.class" />
             </h2>
             <div class="mt-1 flex flex-col sm:mt-0 sm:flex-row sm:flex-wrap sm:space-x-6">
                 <div class="mt-1 flex flex-col sm:mt-0 sm:flex-row sm:flex-wrap sm:space-x-6">

@@ -62,17 +62,15 @@ function getAwayStatus(lastActive)
             <template #default>
                 <div v-if="dataTenantLength" v-for="(dataUser, index) in dataTenant" class="flex justify-start py-1 px-2 gap-x-1.5 hover:bg-gray-700 cursor-default">
                     <!-- <img :src="`/media/${user.user.avatar_thumbnail}`" :alt="user.user.contact_name" srcset="" class="h-4 rounded-full shadow"> -->
-                    <p class="text-left text-gray-100">
-                        <span class="font-semibold text-gray-100">{{ dataUser.id }}</span> -
-                        <!-- <FontAwesomeIcon
-                            v-if="dataUser.route.icon"
-                            class="flex-shrink-0 h-3 w-3 mr-1 opacity-80"
-                            :icon="'fal fa-'+dataUser.route.icon"
-                            aria-hidden="true" /> -->
-                        <span v-if="dataUser.loggedIn" class="text-gray-300">{{ dataUser.route?.name ? trans(dataUser.route.name) : '' }}</span>
-                        <span v-else-if="getAwayStatus(dataUser.last_active)" class="text-gray-300">{{ getAwayStatus(dataUser.last_active) ? 'Away' : '' }}</span>
-                        <!-- <span v-if="dataUser.route.subject" class="capitalize text-gray-300">{{ dataUser.route.subject }}</span> -->
-                    </p>
+                    <span class="font-semibold text-gray-100">{{ dataUser.id }}</span> -
+                    <!-- <FontAwesomeIcon
+                        v-if="dataUser.route.icon"
+                        class="flex-shrink-0 h-3 w-3 mr-1 opacity-80"
+                        :icon="'fal fa-'+dataUser.route.icon"
+                        aria-hidden="true" /> -->
+                    <span v-if="dataUser.loggedIn" class="text-gray-300">{{ dataUser.route?.name ? trans(dataUser.route.name) : '' }}</span>
+                    <span v-else-if="getAwayStatus(dataUser.last_active)" class="text-gray-300">{{ getAwayStatus(dataUser.last_active) ? 'Away' : '' }}</span>
+                    <!-- <span v-if="dataUser.route.subject" class="capitalize text-gray-300">{{ dataUser.route.subject }}</span> -->
                 </div>
             </template>
         </FooterTab>
