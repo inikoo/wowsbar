@@ -61,6 +61,7 @@ class ShowBanner extends InertiaAction
                     $request->route()->parameters
                 ),
                 'title'                          => $banner->code,
+                'banner'            => $banner->only(['slug', 'ulid', 'id', 'code', 'name','state']),
                 'pageHead'                       => [
                     'title'   => $banner->name,
                     'icon'    => [
