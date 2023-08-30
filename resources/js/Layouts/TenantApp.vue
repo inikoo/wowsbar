@@ -95,7 +95,7 @@ const sidebarOpen = ref(false)
         </AppTopBar>
 
         <!-- Breedcrumbs -->
-        <Breadcrumbs class="fixed md:left-10 xl:left-56 top-11 lg:top-10 z-[19] w-full"
+        <Breadcrumbs class="fixed top-11 z-[19] w-full md:left-10 md:top-11 lg:top-10 xl:left-56"
             :breadcrumbs="usePage().props.breadcrumbs??[]"
             :navigation="usePage().props.navigation??[]"
         />
@@ -107,7 +107,7 @@ const sidebarOpen = ref(false)
         </div>
 
         <!-- Main Content -->
-        <main class="relative flex flex-col pt-20 pb-5 ml-0 md:pt-16 md:ml-10 xl:ml-56 bg-gray-50 text-gray-700 dark:bg-gray-700 dark:text-gray-400">
+        <main class="relative flex flex-col pt-20 pb-5 ml-0 md:pt-[68px] md:ml-10 lg:pt-16 xl:ml-56 bg-gray-50 text-gray-700 dark:bg-gray-700 dark:text-gray-400">
             <slot />
         </main>
 

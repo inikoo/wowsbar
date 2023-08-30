@@ -6,7 +6,7 @@ import TableGlobalSearch from '@/Components/Table/TableGlobalSearch.vue';
 import TableElements from '@/Components/Table/TableElements.vue';
 import TableWrapper from '@/Components/Table/TableWrapper.vue';
 import TableAddSearchRow from '@/Components/Table/TableAddSearchRow.vue';
-import TableColumns from '@/Components/Table/TableColumns.vue';
+// import TableColumns from '@/Components/Table/TableColumns.vue';
 import TableFilter from '@/Components/Table/TableFilter.vue';
 import TableSearchRows from '@/Components/Table/TableSearchRows.vue';
 import SearchReset from '@/Components/Table/SearchReset.vue';
@@ -642,13 +642,13 @@ const handleElementsChange = (data) => {
 
 
                         <!-- Button: Switch toggle search the column of table -->
-                        <slot name="tableColumns" :has-columns="queryBuilderProps.hasToggleableColumns"
+                        <!-- <slot name="tableColumns" :has-columns="queryBuilderProps.hasToggleableColumns"
                             :columns="queryBuilderProps.columns" :has-hidden-columns="queryBuilderProps.hasHiddenColumns"
                             :on-change="changeColumnStatus">
                             <TableColumns v-if="queryBuilderProps.hasToggleableColumns" class="order-4 mr-4 sm:mr-0 sm:order-5"
                                 :columns="queryBuilderProps.columns" :has-hidden-columns="queryBuilderProps.hasHiddenColumns"
                                 :on-change="changeColumnStatus" />
-                        </slot>
+                        </slot> -->
                     </div>
                 </div>
 
