@@ -1,4 +1,4 @@
-import data from "@/../../cypress/fixtures/example.json";
+import data from '@/../../cypress/fixtures/data.json'
 
 /// <reference types="cypress" />
 

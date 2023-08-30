@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import data from "@/../../cypress/fixtures/example.json";
+import data from '@/../../cypress/fixtures/data.json'
 const code = faker.random.words({ min: 1, max: 1 });
 const fakeName = faker.commerce.productName();
 /// <reference types="cypress" />
@@ -23,4 +23,3 @@ const BannerShowcase = (param = { websites : 'hello', banner: 'test1'}) => {
 
 export default BannerShowcase;
 
-BannerShowcase();

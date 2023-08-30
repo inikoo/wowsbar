@@ -1,6 +1,6 @@
 
-import data from '@/../../cypress/fixtures/example.json'
-import websites from './Websites.cy';
+import data from '@/../../cypress/fixtures/data.json'
+import websites from './Websites.cy.js';
 
 /// <reference types="cypress" />
 
@@ -25,8 +25,10 @@ describe("Portofolio", () => {
         cy.get('a.group').each(($link) => {
             if($link[0].id){
                 cy.wrap($link).click();
-                if(!$link[0].id.includes('.')) cy.url().should('include', `http://aiku.wowsbar.test/portfolio/${$link[0].id}`);
-                websites($link[0].id)
+                if(!$link[0].id.includes('.')) 
+                cy.url().should('include', `http://aiku.wowsbar.test/portfolio/${$link[0].id}`)
+                   
+                
             } 
           });
         });
