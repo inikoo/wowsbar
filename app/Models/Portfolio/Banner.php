@@ -8,6 +8,7 @@
 namespace App\Models\Portfolio;
 
 use App\Concerns\BelongsToTenant;
+use App\Enums\Portfolio\Banner\BannerStateEnum;
 use App\Models\Media\Media;
 use App\Models\Traits\HasHistory;
 use App\Models\Traits\HasUniversalSearch;
@@ -35,7 +36,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property string $slug
  * @property string $code
  * @property string $name
- * @property string $state
+ * @property BannerStateEnum $state
  * @property int|null $unpublished_snapshot_id
  * @property int|null $live_snapshot_id
  * @property string|null $live_at
@@ -51,6 +52,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read int|null $audits_count
  * @property-read array $es_audits
  * @property-read Media|null $image
+ * @property-read \App\Models\Portfolio\Snapshot|null $liveSnapshot
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, Media> $media
  * @property-read int|null $media_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Portfolio\PortfolioWebsite> $portfolioWebsite
@@ -104,6 +106,7 @@ class Banner extends Model implements HasMedia, Auditable
     protected $casts = [
         'compiled_layout' => 'array',
         'data'            => 'array',
+        'state'           => BannerStateEnum::class
     ];
 
     protected $attributes = [
@@ -138,6 +141,11 @@ class Banner extends Model implements HasMedia, Auditable
         return $this->belongsTo(Snapshot::class, 'unpublished_snapshot_id');
     }
 
+    public function liveSnapshot(): BelongsTo
+    {
+        return $this->belongsTo(Snapshot::class, 'live_snapshot_id');
+    }
+
     public function portfolioWebsite(): BelongsToMany
     {
         return $this->belongsToMany(PortfolioWebsite::class)->using(BannerPortfolioWebsite::class)
@@ -153,8 +161,6 @@ class Banner extends Model implements HasMedia, Auditable
     {
         return $this->belongsTo(Media::class, 'image_id');
     }
-
-
 
 
 }
