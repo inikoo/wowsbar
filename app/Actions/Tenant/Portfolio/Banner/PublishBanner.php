@@ -75,6 +75,7 @@ class PublishBanner
         if (class_basename($banner->portfolioWebsite) == 'PortfolioWebsite') {
             PortfolioWebsiteHydrateBanners::dispatch($banner->portfolioWebsite);
         }
+        UpdateBannerImage::dispatch($banner);
 
         return $banner;
     }

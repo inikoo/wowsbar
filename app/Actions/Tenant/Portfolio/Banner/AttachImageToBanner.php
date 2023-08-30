@@ -34,6 +34,7 @@ class AttachImageToBanner
                     'data->unpublished_image_id'=>$media->id
                 ]
             );
+            UpdateBannerImage::dispatch($banner);
         }
 
         return $media;
