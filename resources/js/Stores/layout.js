@@ -5,7 +5,6 @@
  */
 
 import { defineStore } from "pinia";
-import { trans } from "laravel-vue-i18n";
 
 export const useLayoutStore = defineStore("layout", {
     state: () => (
@@ -28,6 +27,14 @@ export const useLayoutStore = defineStore("layout", {
             },
             avatar_thumbnail: null,
             organisation: {
+            },
+            user: {
+                username: '',
+                name: '',
+                avatar: {
+                    id: ''
+                }
+
             }
         }
     )

@@ -8,6 +8,7 @@
 namespace App\Http\Resources\Portfolio;
 
 use App\Actions\Helpers\Images\GetPictureSources;
+use App\Enums\Portfolio\Banner\BannerStateEnum;
 use App\Helpers\ImgProxy\Image;
 use App\Models\Portfolio\Banner;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -30,7 +31,7 @@ class BannerResource extends JsonResource
             'slug'            => $banner->slug,
             'code'            => $banner->code,
             'name'            => $banner->name,
-            'state'           => $banner->state,
+            'state'           => $banner->state->labels()[$banner->state->value],
             'image_thumbnail' => $imageThumbnail ? GetPictureSources::run($imageThumbnail) : null,
             'image'           => $image ? GetPictureSources::run($image) : null,
             'route'           => [
@@ -38,7 +39,28 @@ class BannerResource extends JsonResource
                 'parameters' => [$banner->slug]
             ],
             'websites'        => implode(', ', $banner->portfolioWebsite->pluck('name')->toArray()),
-            'updated_at'      => $banner->updated_at
+            'updated_at'      => $banner->updated_at,
+            'state_icon'=>match($banner->state){
+                BannerStateEnum::LIVE=>[
+
+                    'tooltip' => __('live'),
+                    'icon'  => 'fal fa-broadcast-tower',
+                    'class'=>'text-green-600'
+
+                ],
+                BannerStateEnum::UNPUBLISHED=>[
+
+                    'tooltip' => __('unpublished'),
+                    'icon'  => 'fal fa-seedling'
+
+                ],
+                BannerStateEnum::RETIRED=>[
+
+                    'tooltip' => __('retired'),
+                    'icon'  => 'fal fa-eye-slash'
+
+                ]
+            }
         ];
     }
 }

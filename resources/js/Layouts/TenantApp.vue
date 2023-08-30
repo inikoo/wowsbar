@@ -112,7 +112,7 @@ const sidebarOpen = ref(false)
         </main>
 
         <!-- Sidebar: Right -->
-        <AppRightSideBar class="fixed top-16 w-44 transition-all duration-200 ease-in-out"
+        <AppRightSideBar class="fixed top-[76px] md:top-[68px] lg:top-16 w-44 transition-all duration-200 ease-in-out"
             :class="[Object.values(layout.rightSidebar).some(value => value.show === true) ? 'right-0' : '-right-44']"
         />
 

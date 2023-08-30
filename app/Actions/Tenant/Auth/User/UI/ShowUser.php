@@ -8,6 +8,7 @@
 namespace App\Actions\Tenant\Auth\User\UI;
 
 use App\Actions\Helpers\History\IndexHistories;
+use App\Actions\Helpers\History\ShowHistories;
 use App\Actions\InertiaAction;
 use App\Actions\Tenant\Auth\UserRequest\ShowUserRequestLogs;
 use App\Actions\Traits\WithElasticsearch;
@@ -76,14 +77,17 @@ class ShowUser extends InertiaAction
                     'navigation' => UserTabsEnum::navigation()
                 ],
 
+                UserTabsEnum::SHOWCASE->value => $this->tab == UserTabsEnum::SHOWCASE->value ?
+                    fn () => new UserResource($user)
+                    : Inertia::lazy(fn () => new UserResource($user)),
+
                 UserTabsEnum::REQUEST_LOGS->value => $this->tab == UserTabsEnum::REQUEST_LOGS->value ?
                     fn () => UserRequestLogsResource::collection(ShowUserRequestLogs::run($user->username))
                     : Inertia::lazy(fn () => UserRequestLogsResource::collection(ShowUserRequestLogs::run($user->username))),
 
-
                 UserTabsEnum::HISTORY->value => $this->tab == UserTabsEnum::HISTORY->value ?
-                    fn () => HistoryResource::collection(IndexHistories::run($user))
-                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistories::run($user)))
+                    fn () => HistoryResource::collection(ShowHistories::run($user))
+                    : Inertia::lazy(fn () => HistoryResource::collection(ShowHistories::run($user)))
 
             ]
         )->table(ShowUserRequestLogs::make()->tableStructure())

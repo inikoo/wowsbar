@@ -12,6 +12,7 @@ use App\Actions\InertiaAction;
 use App\Actions\Tenant\Portfolio\PortfolioWebsite\UI\ShowPortfolioWebsite;
 use App\Actions\Tenant\Portfolio\Snapshot\UI\IndexSnapshots;
 use App\Actions\UI\Tenant\Portfolio\ShowPortfolioDashboard;
+use App\Enums\Portfolio\Banner\BannerStateEnum;
 use App\Enums\UI\Tenant\BannerTabsEnum;
 use App\Enums\UI\Tenant\PortfolioWebsiteTabsEnum;
 use App\Http\Resources\History\HistoryResource;
@@ -65,9 +66,33 @@ class ShowBanner extends InertiaAction
                 'pageHead'                       => [
                     'title'   => $banner->name,
                     'icon'    => [
-                        'title' => __('banner'),
+                        'tooltip' => __('banner'),
                         'icon'  => 'fal fa-window-maximize'
                     ],
+                    'iconRight'    =>
+                        match($banner->state){
+                            BannerStateEnum::LIVE=>[
+
+                                    'tooltip' => __('live'),
+                                    'icon'  => 'fal fa-broadcast-tower',
+                                    'class'=>'text-green-600'
+
+                            ],
+                            BannerStateEnum::UNPUBLISHED=>[
+
+                                    'tooltip' => __('unpublished'),
+                                    'icon'  => 'fal fa-seedling'
+
+                            ],
+                            BannerStateEnum::RETIRED=>[
+
+                                    'tooltip' => __('retired'),
+                                    'icon'  => 'fal fa-eye-slash'
+
+                            ]
+                        }
+
+                       ,
                     'actions' => [
                         $this->canEdit ? [
                             'type'  => 'button',

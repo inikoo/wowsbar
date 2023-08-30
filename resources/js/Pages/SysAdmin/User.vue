@@ -31,8 +31,8 @@ library.add(
 
 
 const props = defineProps<{
-    title: string,
-    pageHead: object,
+    title: string
+    pageHead: object
     tabs: {
         current: string
         navigation: object
@@ -40,6 +40,7 @@ const props = defineProps<{
     request_logs?: object
     history?: object
     details?: object
+    showcase?: object
 }>()
 
 let currentTab = ref(props.tabs.current);
@@ -56,6 +57,7 @@ const component = computed(() => {
     return components[currentTab.value]
 
 })
+
 </script>
 
 <template layout="TenantApp">
