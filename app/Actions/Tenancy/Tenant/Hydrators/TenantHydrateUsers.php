@@ -22,14 +22,11 @@ class TenantHydrateUsers implements ShouldBeUnique
         $numberUsers       = User::count();
         $numberActiveUsers = User::where('status', true)->count();
 
-
         $stats = [
             'number_users'                 => $numberUsers,
             'number_users_status_active'   => $numberActiveUsers,
             'number_users_status_inactive' => $numberUsers - $numberActiveUsers
-
         ];
-
 
         $tenant->stats->update($stats);
     }

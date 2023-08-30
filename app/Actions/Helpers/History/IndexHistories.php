@@ -7,21 +7,12 @@
 
 namespace App\Actions\Helpers\History;
 
-use App\Actions\Elasticsearch\BuildElasticsearchClient;
 use App\Actions\Tenant\Auth\User\Traits\WithFormattedUserHistories;
-use App\Enums\Elasticsearch\ElasticsearchTypeEnum;
 use App\InertiaTable\InertiaTable;
 use Closure;
-use Elastic\Elasticsearch\Client;
-use Elastic\Elasticsearch\Exception\ClientResponseException;
-use Elastic\Elasticsearch\Exception\ServerResponseException;
-use Exception;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Str;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
-use Psr\Container\ContainerExceptionInterface;
-use Psr\Container\NotFoundExceptionInterface;
 
 class IndexHistories
 {
@@ -31,51 +22,7 @@ class IndexHistories
 
     public function handle($model): LengthAwarePaginator|array|bool
     {
-        $client = BuildElasticsearchClient::run();
-
-        $auditableId   = $model->id;
-        $auditableType = class_basename($model);
-
-        if ($client instanceof Client) {
-            try {
-                $params  = [
-                    'index' => config('elasticsearch.index_prefix').'audit_'.Str::snake($auditableType),
-                    'size'  => 10000,
-                    'body'  => [
-                        'query' => [
-                            'bool' => [
-                                'must' => [
-                                    ['match' => ['auditable_type' => $auditableType]],
-                                    ['match' => ['auditable_id' => $auditableId]],
-                                    ['match' => ['type' => ElasticsearchTypeEnum::ACTION->value]],
-                                ],
-                                'should' => [
-                                    ['match' => ['user_id' => auth()->user()->id]],
-                                ]
-                            ],
-                        ],
-                    ],
-                ];
-
-                return $this->format($client, $params);
-
-            } catch (ClientResponseException $e) {
-                //dd($e->getMessage());
-                // manage the 4xx error
-                return false;
-            } catch (ServerResponseException $e) {
-                //dd($e->getMessage());
-                // manage the 5xx error
-                return false;
-            } catch (Exception $e) {
-                //dd($e->getMessage());
-                // eg. network error like NoNodeAvailableException
-                return false;
-            } catch (NotFoundExceptionInterface|ContainerExceptionInterface $e) {
-            }
-        }
-
-        return [];
+        return $model->audits()->with('user')->paginate();
     }
 
     public function tableStructure(?array $modelOperations = null): Closure
@@ -86,8 +33,8 @@ class IndexHistories
                 ->pageName('historyPage')
                 ->column(key: 'ip_address', label: __('IP Address'), canBeHidden: false, sortable: true, searchable: true)
                 ->column(key: 'user_id', label: __('User ID'), canBeHidden: false, sortable: true)
-                ->column(key: 'slug', label: __('Slug'), canBeHidden: false, sortable: true)
-                ->column(key: 'user_name', label: __('User Name'), canBeHidden: false, sortable: true)
+//                ->column(key: 'slug', label: __('Slug'), canBeHidden: false, sortable: true)
+//                ->column(key: 'user_name', label: __('User Name'), canBeHidden: false, sortable: true)
                 ->column(key: 'url', label: __('URL'), canBeHidden: false, sortable: true)
                 ->column(key: 'old_values', label: __('Old Values'), canBeHidden: false, sortable: true)
                 ->column(key: 'new_values', label: __('New Values'), canBeHidden: false, sortable: true)

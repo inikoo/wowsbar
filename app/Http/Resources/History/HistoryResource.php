@@ -17,7 +17,7 @@ class HistoryResource extends JsonResource
     {
         return [
             'ip_address'     => $this['ip_address'],
-            'datetime'       => $this['datetime'],
+            'datetime'       => $this['created_at'],
             'url'            => $this['url'],
             'type'           => $this['type'],
             'tenant'         => app('currentTenant')->slug,
