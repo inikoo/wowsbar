@@ -54,10 +54,9 @@ const tabIconClass = (current: string, type: string, align: string, extraClass: 
                 <!-- Left section -->
                 <nav class="-mb-px flex grow space-x-6 ml-4" aria-label="Tabs">
                     <template v-for="(tab, tabSlug) in navigation" :key="tabSlug">
-                        <div class="relative group">
+                        <div v-if="tab.align !== 'right'" class="relative group">
                             <button
                                 :id="tab.title.replace(' ','-')"
-                                v-if="tab.align !== 'right'"
                                 @click="[$emit('update:tab', tabSlug), changeTab(tabSlug)]"
                                 :class="[
                                     'group inline-flex items-center py-2 px-1 font-medium text-sm']"
