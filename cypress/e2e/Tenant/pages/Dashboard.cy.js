@@ -1,5 +1,5 @@
 
-import data from '@/../../cypress/fixtures/example.json'
+import data from '@/../../cypress/fixtures/data.json'
 /// <reference types="cypress" />
 // Welcome to Cypress!
 //
@@ -42,14 +42,14 @@ describe("Navigation", () => {
 
       it("Profile", () => {
         cy.get('#avatar-thumbnail').click();
-        cy.get('ul[role*=menuitem]').first().click();
-        cy.url().should("include", "/profile");
+        cy.get('div[role*=menuitem]').first().click();
+        cy.url().should("include", "http://aiku.wowsbar.test/profile");
     });
 
 
     it("search", () => {
         cy.get('#search').click();
-        cy.get('input[type*=text]').type('My{enter}');
+        cy.get('input[type*=text]').type('websites');
         cy.intercept('http://aiku.wowsbar.test/search/?q=My%20&route_src=dashboard.show')
     });
 

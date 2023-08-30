@@ -7,7 +7,7 @@
 
 namespace App\Actions\Organisation\Auth\Guest\UI;
 
-use App\Actions\Helpers\History\IndexHistories;
+use App\Actions\Elasticsearch\History\IndexHistories;
 use App\Actions\InertiaAction;
 use App\Actions\UI\SysAdmin\SysAdminDashboard;
 use App\Enums\UI\GuestTabsEnum;
