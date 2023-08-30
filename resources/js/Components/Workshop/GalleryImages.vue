@@ -87,14 +87,14 @@ const collectImage = (image) => {
         <section class="bg-gray-50 w-64">
             <div class="py-2 px-2 cursor-pointer hover:bg-gray-200 text-sm flex gap-x-1 items-center text-gray-600 hover:text-gray-700"
                 :class="[activeSidebar == 'uploaded_images' ? 'tabNavigationActive' : 'tabNavigation']"
-                @click="activeSidebar = 'uploaded_images'"
+                @click="activeSidebar = 'uploaded_images'" id="uploaded_images"
             >
                 <FontAwesomeIcon icon='fal fa-cloud-upload' class='w-4 h-4 text-gray-400' aria-hidden='true' />
                 <span>Uploaded Images</span>
             </div>
             <div class="py-2 px-2 cursor-pointer hover:bg-gray-200 text-sm flex gap-x-1 items-center text-gray-600 hover:text-gray-700"
                 :class="[activeSidebar == 'stock_images' ? 'tabNavigationActive' : 'tabNavigation']"
-                @click="activeSidebar = 'stock_images'"
+                @click="activeSidebar = 'stock_images'" id="stock_images"
             >
                 <FontAwesomeIcon icon='fal fa-image-polaroid' class='w-4 h-4 text-gray-400' aria-hidden='true' />
                 <span>Stock Images</span>
@@ -114,7 +114,7 @@ const collectImage = (image) => {
                     class="group cursor-pointer relative flex flex-col gap-y-1"
                     :class="ImageDataCollect.data.find((item) => item.id === imageData.id) ? 'font-bold text-gray-500 rounded-md' : 'text-gray-500 opacity-70 hover:opacity-100'"
                 >
-                    <div class="flex-none aspect-[4/1] bg-white overflow-hidden rounded"
+                    <div class="flex-none aspect-[4/1] bg-white overflow-hidden rounded" :id="imageData.id"
                         :class="ImageDataCollect.data.find((item) => item.id === imageData.id) ? 'ring-2 ring-orange-500 ring-offset-2' : 'ring-offset-2 group-hover:ring-2 group-hover:ring-gray-300'"
                     >
                         <Image :src="imageData.source" :alt="imageData.imageAlt" class="h-full w-full object-cover object-center" />
@@ -130,7 +130,7 @@ const collectImage = (image) => {
     </div>
     <div class="flex justify-end p-2.5 gap-3 pb-0">
         <Button @click="closeModal" :style="'tertiary'">Cancel</Button>
-        <Button @click="addImage(ImageDataCollect)">Add image ({{ ImageDataCollect.data.length }})</Button>
+        <Button @click="addImage(ImageDataCollect)" id="add-image" >Add image ({{ ImageDataCollect.data.length }})</Button>
     </div>
     
 </template>

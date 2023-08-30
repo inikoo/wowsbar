@@ -28,11 +28,13 @@ class AttachImageToBanner
             extension: $file->guessClientExtension()
         );
         if(!$banner->image_id) {
+
             $banner->update(
                 [
-                    'data->unpublished_image_id',$media->id
+                    'data->unpublished_image_id'=>$media->id
                 ]
             );
+            UpdateBannerImage::dispatch($banner);
         }
 
         return $media;

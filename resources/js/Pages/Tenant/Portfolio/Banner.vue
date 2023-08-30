@@ -24,6 +24,14 @@ library.add(faWindowMaximize, faGlobe, faPencil)
 const props = defineProps<{
     title: string,
     pageHead: object,
+    banner: {
+        'slug': string,
+        'ulid': string,
+        'id': number,
+        'code': string,
+        'name': string,
+        'state' : String
+    }
     tabs: {
         current: string;
         navigation: object;
@@ -48,6 +56,11 @@ const component = computed(() => {
 
 });
 
+const findRoute=()=>{
+    return props.pageHead.actions.find((item) => item.label == "workshop")
+}
+
+console.log(props)
 </script>
 
 
@@ -55,6 +68,6 @@ const component = computed(() => {
     <Head :title="capitalize(title)"/>
     <PageHeading :data="pageHead"></PageHeading>
     <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate"/>
-    <component :is="component" :tab="currentTab" :data="props[currentTab]" :pageHead="pageHead.actions[0]"></component>
+    <component :is="component" :tab="currentTab" :data="props[currentTab]" :pageHead="findRoute()" :banner="banner"></component>
 </template>
 

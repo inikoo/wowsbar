@@ -542,7 +542,7 @@ console.log(currentComponentBeenEdited.value)
                         accept="image/*" class="absolute cursor-pointer rounded-md border-gray-300 sr-only" />
                 </Button>
 
-                <Button :style="`tertiary`" icon="fal fa-photo-video" size="xs" class="relative"
+                <Button :style="`tertiary`" icon="fal fa-photo-video" size="xs" class="relative" id="gallery"
                     @click="isOpenGalleryImages = !isOpen">
                     {{ trans("Gallery") }}
                 </Button>
