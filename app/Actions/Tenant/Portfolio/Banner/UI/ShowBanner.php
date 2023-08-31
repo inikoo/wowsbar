@@ -11,7 +11,7 @@ use App\Actions\Elasticsearch\History\IndexHistories;
 use App\Actions\InertiaAction;
 use App\Actions\Tenant\Portfolio\PortfolioWebsite\UI\ShowPortfolioWebsite;
 use App\Actions\Tenant\Portfolio\Snapshot\UI\IndexSnapshots;
-use App\Actions\UI\Tenant\Portfolio\ShowPortfolioDashboard;
+use App\Actions\UI\Tenant\Portfolio\ShowPortfolio;
 use App\Enums\Portfolio\Banner\BannerStateEnum;
 use App\Enums\UI\Tenant\BannerTabsEnum;
 use App\Enums\UI\Tenant\PortfolioWebsiteTabsEnum;
@@ -187,7 +187,7 @@ class ShowBanner extends InertiaAction
             'portfolio.banners.show',
             'portfolio.banners.edit' =>
             array_merge(
-                ShowPortfolioDashboard::make()->getBreadcrumbs(),
+                ShowPortfolio::make()->getBreadcrumbs(),
                 $headCrumb(
                     'modelWithIndex',
                     $routeParameters['banner'],

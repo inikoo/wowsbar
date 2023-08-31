@@ -10,7 +10,7 @@ namespace App\Actions\Tenant\Portfolio\PortfolioWebsite\UI;
 use App\Actions\Elasticsearch\History\IndexHistories;
 use App\Actions\InertiaAction;
 use App\Actions\Tenant\Portfolio\Banner\UI\IndexBanners;
-use App\Actions\UI\Tenant\Portfolio\ShowPortfolioDashboard;
+use App\Actions\UI\Tenant\Portfolio\ShowPortfolio;
 use App\Actions\UI\WithInertia;
 use App\Enums\UI\Tenant\PortfolioWebsiteTabsEnum;
 use App\Http\Resources\History\HistoryResource;
@@ -181,7 +181,7 @@ class ShowPortfolioWebsite extends InertiaAction
             'portfolio.websites.edit' =>
 
             array_merge(
-                ShowPortfolioDashboard::make()->getBreadcrumbs(),
+                ShowPortfolio::make()->getBreadcrumbs(),
                 $headCrumb(
                     'modelWithIndex',
                     $routeParameters['portfolioWebsite'],

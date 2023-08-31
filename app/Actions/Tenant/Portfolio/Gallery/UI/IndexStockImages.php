@@ -8,7 +8,7 @@
 namespace App\Actions\Tenant\Portfolio\Gallery\UI;
 
 use App\Actions\InertiaAction;
-use App\Actions\UI\Tenant\Portfolio\ShowPortfolioDashboard;
+use App\Actions\UI\Tenant\Portfolio\ShowPortfolio;
 use App\Http\Resources\Gallery\ImageResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\Media\LandlordMedia;
@@ -158,7 +158,7 @@ class IndexStockImages extends InertiaAction
         return match ($routeName) {
             'portfolio.images.index' =>
             array_merge(
-                ShowPortfolioDashboard::make()->getBreadcrumbs(),
+                ShowPortfolio::make()->getBreadcrumbs(),
                 $headCrumb(
                     [
                         'name' => 'portfolio.images.index',

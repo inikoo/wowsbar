@@ -25,10 +25,14 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property bool $visibility
  * @property array|null $layout
  * @property int|null $image_id
+ * @property int|null $mobile_image_id
+ * @property int|null $tablet_image_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string|null $deleted_at
  * @property-read Media|null $image
+ * @property-read Media|null $imageMobile
+ * @property-read Media|null $imageTablet
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, Media> $media
  * @property-read int|null $media_count
  * @property-read \App\Models\Portfolio\Snapshot $snapshot
@@ -41,7 +45,9 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @method static Builder|Slide whereId($value)
  * @method static Builder|Slide whereImageId($value)
  * @method static Builder|Slide whereLayout($value)
+ * @method static Builder|Slide whereMobileImageId($value)
  * @method static Builder|Slide whereSnapshotId($value)
+ * @method static Builder|Slide whereTabletImageId($value)
  * @method static Builder|Slide whereTenantId($value)
  * @method static Builder|Slide whereUlid($value)
  * @method static Builder|Slide whereUpdatedAt($value)
@@ -72,6 +78,16 @@ class Slide extends Model implements HasMedia
     public function image(): BelongsTo
     {
         return $this->belongsTo(Media::class, 'image_id');
+    }
+
+    public function imageMobile(): BelongsTo
+    {
+        return $this->belongsTo(Media::class, 'mobile_image_id');
+    }
+
+    public function imageTablet(): BelongsTo
+    {
+        return $this->belongsTo(Media::class, 'tablet_image_id');
     }
 
 }

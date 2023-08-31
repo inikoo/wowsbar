@@ -23,7 +23,11 @@ class SlideResource extends JsonResource
             'ulid'       => $slide->ulid,
             'layout'     => $slide->layout,
             'visibility' => $slide->visibility,
-            'image'      => ImageResource::make($slide->image)->getArray(),
+            'image'      => [
+                'desktop'=>ImageResource::make($slide->image)->getArray(),
+                'mobile'=>$slide->mobile_image_id?ImageResource::make($slide->imageMobile)->getArray():null,
+                'tablet'=>$slide->tablet_image_id?ImageResource::make($slide->imageTablet)->getArray():null
+            ]
         ];
     }
 }

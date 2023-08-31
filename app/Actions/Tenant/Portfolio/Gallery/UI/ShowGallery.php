@@ -9,7 +9,7 @@ namespace App\Actions\Tenant\Portfolio\Gallery\UI;
 
 use App\Actions\InertiaAction;
 use App\Actions\Tenant\Portfolio\Gallery\UI\UploadedImages\IndexUploadedImages;
-use App\Actions\UI\Tenant\Portfolio\ShowPortfolioDashboard;
+use App\Actions\UI\Tenant\Portfolio\ShowPortfolio;
 use App\Enums\UI\Tenant\GalleryTabsEnum;
 use App\Http\Resources\Gallery\ImageResource;
 use Inertia\Inertia;
@@ -82,7 +82,7 @@ class ShowGallery extends InertiaAction
                             prefix: 'uploaded_images'
                         )
                     )),
-                \App\Enums\UI\Tenant\GalleryTabsEnum::STOCK_IMAGES->value => $this->tab == GalleryTabsEnum::STOCK_IMAGES->value
+                GalleryTabsEnum::STOCK_IMAGES->value => $this->tab == GalleryTabsEnum::STOCK_IMAGES->value
                     ?
                     fn () => ImageResource::collection(
                         IndexStockImages::run(
@@ -135,7 +135,7 @@ class ShowGallery extends InertiaAction
         return match ($routeName) {
             'portfolio.gallery' =>
             array_merge(
-                ShowPortfolioDashboard::make()->getBreadcrumbs(),
+                ShowPortfolio::make()->getBreadcrumbs(),
                 $headCrumb(
                     [
                         'name' => 'portfolio.gallery',
