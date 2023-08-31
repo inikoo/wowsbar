@@ -32,24 +32,16 @@ class UploadImagesToBanner
         $medias=[];
         foreach ($imageFiles as $imageFile) {
 
-            $media = AttachImageToTenant::run(
+            $medias[] = AttachImageToTenant::run(
                 tenant: app('currentTenant'),
                 collection: 'content_block',
                 imagePath: $imageFile->getPathName(),
                 originalFilename: $imageFile->getClientOriginalName(),
                 extension: $imageFile->guessClientExtension()
             );
-            if(!$banner->image_id) {
-                $banner->update(
-                    [
-                        'data->unpublished_image_id'=>$media->id
-                    ]
-                );
-            }
+
         }
 
-        //FetchFirebaseSnapshot::run($banner);
-        //UpdateBannerImage::run($banner);
         return collect($medias);
     }
 
