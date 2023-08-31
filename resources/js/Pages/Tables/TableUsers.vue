@@ -55,7 +55,7 @@ function setColor(status: status) {
         </template>
 
         <template #cell(status)="{ item: user }">
-            <Tag :color="setColor(user['status'])">{{ user['status'] }}</Tag>
+            <Tag :color="setColor(user['status'])">{{ user.status }}</Tag>
         </template>
     </Table>
 </template>

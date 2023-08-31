@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import { trans } from 'laravel-vue-i18n'
 import { faYinYang } from "@/../private/pro-light-svg-icons";
 import { capitalize } from "@/Composables/capitalize"
@@ -22,7 +23,10 @@ const props = defineProps<{
         sorted: string
         onSort: any
     }
-    abc: {}
+    column: {
+        key: string
+    }
+    resource: any
 }>();
 
 function onClick() {
@@ -30,13 +34,17 @@ function onClick() {
         props.cell.onSort(props.cell.key);
     }
 }
+
+const isCellNumber = computed(() => {
+    return props.resource.some((aaa: any) => typeof aaa[props.column.key] === 'number')
+})
 </script>
 
 <template>
     <th v-show="!cell.hidden" class="font-normal">
         <component :is="cell.sortable ? 'button' : 'div'" class="py-1 w-full" :class="[cell.key == 'avatar' ? 'px-3' : 'px-6']"
             :dusk="cell.sortable ? `sort-${cell.key}` : null" @click.prevent="onClick">
-            <span class="flex flex-row items-center" :class="{'justify-center': cell.key == 'avatar'}">
+            <span class="flex flex-row items-center" :class="{'justify-center': cell.key == 'avatar', 'justify-end': isCellNumber}">
                 <slot name="label">
                     <div v-if="typeof cell.label === 'object'">
                         <FontAwesomeIcon v-if="cell.label.type === 'icon'" :title="capitalize(cell.label.tooltip)"

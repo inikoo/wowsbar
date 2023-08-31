@@ -674,7 +674,7 @@ const handleElementsChange = (data) => {
                                 <tr class="border-t border-gray-200 dark:border-gray-500">
                                     <HeaderCell v-for="column in queryBuilderProps.columns"
                                         :key="`table-${name}-header-${column.key}`" :cell="header(column.key)"
-                                        :type="columnsType[column.key]" :abc="column"/>
+                                        :type="columnsType[column.key]" :column="column" :resource="compResourceData"/>
                                 </tr>
                             </thead>
 
