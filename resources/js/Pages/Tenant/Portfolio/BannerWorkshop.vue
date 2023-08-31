@@ -209,7 +209,7 @@ const sendDataToServer = async () => {
     form.patch(
         route(routeSave.value['route']['name'], routeSave.value['route']['parameters']), {
             onSuccess: async (res) => {
-                await set(getDbRef(dbPath), { publishHash: data.hash })
+                await set(getDbRef(dbPath), { publishedHash: data.hash })
                 isModalOpen.value = false
                 router.visit(route(routeExit.value['route']['name'], routeExit.value['route']['parameters']))
                 notify({
