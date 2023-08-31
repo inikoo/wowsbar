@@ -141,8 +141,16 @@ onValue(getDbRef(dbPath), (snapshot) => {
     }
 })
 
+
+function handleKeyDown() {
+    clearTimeout(timeoutId)
+}
+
+let timeoutId: any
+
 const updateData = async () => {
         try {
+            handleKeyDown()
             if (data && setData.value == false) {
                 // console.log("Update setLodash")
                 setLodash(data, 'hash', useBannerHash(data)) // Generate new hash based on data page
@@ -151,7 +159,12 @@ const updateData = async () => {
                     const firebaseData = snapshot.val()
                 // console.log("Update Firebase")
                     await set(getDbRef(dbPath), { ...firebaseData, ...data })
-                    if(props.banner.state == 'unpublished') autoSave()
+                    if (props.banner.state == 'unpublished') {
+                    clearTimeout(timeoutId)
+                    timeoutId = setTimeout(() => {
+                        autoSave()
+                    }, 5000)
+                }
                 }
             }
         } catch (error) {
@@ -240,15 +253,11 @@ const autoSave=()=>{
     form.patch(
         route(props.autoSaveRoute.name,props.autoSaveRoute.parameters), {
             onSuccess: async (res) => {
-                notify({
-                    title: "success Update",
-                    type: "success",
-                    text: "test aoutosave",
-                });
+               console.log('autosave succesc')
             },
             onError: errors => {
                 notify({
-                    title: "Failed to Update Banner",
+                    title: "Failed to autosave",
                     text: errors,
                     type: "error"
                 });
