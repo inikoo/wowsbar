@@ -5,7 +5,7 @@ import { cloneDeep, get, isNull } from 'lodash'
 const fallbackPath = '/fallback/fallback.svg'
 
 const props = withDefaults(defineProps<{
-    src: {
+    src?: {
         original: string
         original_2x?: string
         avif?: string,
