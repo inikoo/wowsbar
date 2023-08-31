@@ -24,8 +24,13 @@ class FetchFirebaseSnapshot
         $reference = $database->getReference('tenants/' . $tenant->slug . '/banner_workshop/' . $banner->slug);
         $value     = $reference->getValue();
         if($value){
-          //  dd($value);
-            UpdateUnpublishedBannerSnapshot::run($banner->unpublishedSnapshot, $value);
+
+
+            $modelData=[
+                'layout'=>$value
+            ];
+
+            UpdateUnpublishedBannerSnapshot::run($banner->unpublishedSnapshot, $modelData);
             return true;
         }
 
