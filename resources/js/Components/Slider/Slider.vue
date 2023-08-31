@@ -10,7 +10,7 @@ import { Swiper, SwiperSlide } from 'swiper/vue'
 import { Autoplay, Pagination, Navigation } from 'swiper/modules'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faEyeSlash } from '@/../private/pro-solid-svg-icons'
-import { get } from 'lodash'
+import { get, isNull } from 'lodash'
 import { faExternalLink, faExclamationTriangle } from '@/../private/pro-regular-svg-icons'
 import { library } from '@fortawesome/fontawesome-svg-core'
 library.add(faExternalLink, faEyeSlash, faExclamationTriangle)
@@ -119,10 +119,11 @@ watch(() => props.jumpToIndex, (newVal) => {
             }"
             :navigation="false"
             :modules="[Autoplay, Pagination, Navigation]" class="mySwiper">
-            <SwiperSlide v-for="component in data.components" :key="component.id">
+            <SwiperSlide v-for="component in data.components.filter((item)=>item.ulid)" :key="component.id">
+          
                 <div class="relative w-full h-full overflow-hidden">
                     <!-- <img :src="" :alt="component.layout?.imageAlt" class="absolute" :style="getImageStyle(component)"> -->
-                    <Image :src="component.image.source" alt="Wowsbar" />
+                    <Image :src="get(component,['image',`${$props.view}`,'source'],component.image.dekstop.source)" alt="Wowsbar" />
                 </div>
                 <div v-if="get(component, ['visibility'], true) === false" class="absolute h-full w-full bg-gray-800/50 z-10 " />
                 <div class="z-[11] absolute left-7 flex flex-col gap-y-2">
