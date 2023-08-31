@@ -22,11 +22,14 @@ import Button from "@/Components/Elements/Buttons/Button.vue"
 import CropComponents from "@/Components/Workshop/CropImage/CropComponents.vue"
 
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
     data: FileList;
     imagesUploadRoute: object;
     respone : Function
-}>()
+    ratio?:  object, 
+}>(), {
+    ratio: { w : 4, h : 1 } 
+})
 
 const setData2 = () => {
     const data = []
@@ -151,7 +154,7 @@ watch(current, (newVal) => {
             >
                 <li v-for="(item, index) in setData" :key="index">
                     <div @click="current = index" :class="['p-2.5 border border-solid rounded-lg cursor-pointer ', setData[current] == item ?  'border-gray-400 bg-gray-200'  : 'border-gray-300']">
-                        <CropComponents :data="item" />
+                        <CropComponents :data="item"  :ratio="ratio"/>
                         <div class="flex justify-center align-middle">
                             <h3
                                 :class="['leading-4 tracking-tight', setData[current] == item ? 'text-orange-500 font-semibold' : 'text-gray-500']"

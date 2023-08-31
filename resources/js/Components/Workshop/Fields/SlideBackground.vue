@@ -76,11 +76,26 @@ const uploadImageRespone = (res) => {
     isOpen.value = false
 }
 
+const ratio = ref({ w : 4 , h : 1})
+
 const screenViewChange = (value) => {
     screenView.value = value
-}
+    switch (value) {
+        case 'mobile':
+            ratio.value = { w : 2 , h : 1};
+            break;
+        case 'tablet':
+            ratio.value = { w : 3 , h : 1};
+            break;
+        case 'desktop':
+            ratio.value = { w : 4 , h : 1};
+            break;
+        default:
+            ratio.value = { w : 4 , h : 1}; // Default ratio value if none of the cases match
+            break;
+    }
+};
 
-console.log(value.value)
 
 </script>
 
@@ -94,7 +109,7 @@ console.log(value.value)
         <Modal :isOpen="isOpenCropModal" @onClose="closeModalisOpenCropModal">
             <div>
                 <CropImage :data="addFiles" :imagesUploadRoute="props.fieldData.uploadRoute"
-                    :respone="uploadImageRespone" />
+                    :respone="uploadImageRespone" :ratio="ratio"/>
             </div>
         </Modal>
         <div class="flex justify-end pr-2 w-3/6">

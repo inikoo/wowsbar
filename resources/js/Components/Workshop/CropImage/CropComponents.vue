@@ -5,7 +5,7 @@ import { Cropper } from 'vue-advanced-cropper'
 import 'vue-advanced-cropper/dist/style.css';
 import 'vue-advanced-cropper/dist/theme.compact.css';
 
-const props = defineProps(["data"]);
+const props = defineProps(["data","ratio"]);
 const _cropper = ref()
 
 const cropOnChange = ({ coordinates, image, visibleArea, canvas }) => {
@@ -32,14 +32,13 @@ const generateThumbnail = (fileOrUrl) => {
         }
 };
 
-
 </script>
 
 <template>
     <div class="block w-full">
         <div class="w-full overflow-hidden relative">
             <Cropper ref="_cropper" class="w-[400px] md:w-[440px] h-[200px] rounded-2xl object-cover" :src="generateThumbnail(props.data)" :stencil-props="{
-                aspectRatio: 4 / 1,
+                aspectRatio:  props.ratio.w / props.ratio.h,
                 movable: true,
                 resizable: false,
             }" :auto-zoom="true"  @ready="onReady" @change="cropOnChange" >
