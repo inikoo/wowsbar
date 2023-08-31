@@ -71,7 +71,9 @@ const updateLocalFormValue = (newValue) => {
 }
 
 const uploadImageRespone = (res) => {
-    value.value[screenView.value] = { ...res.data[0] }
+    const set =  {...value.value}
+    set[screenView.value] = { ...res.data[0] }
+    value.value = set
     isOpenCropModal.value = false
     isOpen.value = false
 }

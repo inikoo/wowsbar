@@ -11,6 +11,7 @@ import { User } from "@/types/user";
 import { trans } from "laravel-vue-i18n";
 import AddressLocation from "@/Components/Elements/Info/AddressLocation.vue";
 import UserAgent from "@/Components/Elements/Info/UserAgent.vue";
+import JsonViewer from 'vue-json-viewer'
 // import {ref,computed} from 'vue'
 
 // import TableElements from '@/Components/Table/TableElements.vue'
@@ -30,10 +31,27 @@ const formatDate = (dateIso: Date) => {
 
     return date
 }
+console.log('dddd',props.data)
 </script>
 
 <template>
     <Table :resource="data" class="mt-5" name="hst">
+        <template #cell(old_values)="{ item: user }">
+        <JsonViewer
+          :value="user['old_values']"
+          copyable
+          boxed
+          sort>
+        </JsonViewer>
+        </template>
+        <template #cell(new_values)="{ item: user }">
+        <JsonViewer
+          :value="user['new_values']"
+          copyable
+          boxed
+          sort>
+        </JsonViewer>
+        </template>
         <template #cell(datetime)="{ item: user }">
             {{ formatDate(user.datetime) }}
         </template>
