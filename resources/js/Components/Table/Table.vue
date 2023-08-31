@@ -608,9 +608,9 @@ const handleElementsChange = (data) => {
                                     :filters="queryBuilderProps.filters" :on-filter-change="changeFilterValue" />
                             </slot>
                         </div>
-
+                        
                         <!-- Search Input Button -->
-                        <div v-if="queryBuilderProps.globalSearch"
+                        <div v-if="queryBuilderProps.globalSearch && compResourceMeta.total >= 5"
                             class="flex flex-row w-64 order-1 md:order-2 transition-all ease-in-out duration-100">
                             <slot name="tableGlobalSearch" :has-global-search="queryBuilderProps.globalSearch"
                                 :label="queryBuilderProps.globalSearch ? queryBuilderProps.globalSearch.label : null"
