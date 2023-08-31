@@ -120,10 +120,10 @@ watch(() => props.jumpToIndex, (newVal) => {
             :navigation="false"
             :modules="[Autoplay, Pagination, Navigation]" class="mySwiper">
             <SwiperSlide v-for="component in data.components.filter((item)=>item.ulid)" :key="component.id">
-          
+
                 <div class="relative w-full h-full overflow-hidden">
                     <!-- <img :src="" :alt="component.layout?.imageAlt" class="absolute" :style="getImageStyle(component)"> -->
-                    <Image :src="get(component,['image',`${$props.view}`,'source'],component.image.dekstop.source)" alt="Wowsbar" />
+                    <Image :src="get(component,['image',`${$props.view}`,'source'],component.image.desktop.source)" alt="Wowsbar" />
                 </div>
                 <div v-if="get(component, ['visibility'], true) === false" class="absolute h-full w-full bg-gray-800/50 z-10 " />
                 <div class="z-[11] absolute left-7 flex flex-col gap-y-2">
