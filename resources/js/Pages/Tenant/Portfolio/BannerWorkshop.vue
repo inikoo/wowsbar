@@ -12,7 +12,7 @@ import { capitalize } from "@/Composables/capitalize"
 import SlidesWorkshop from "@/Components/Workshop/SlidesWorkshop.vue"
 import Slider from "@/Components/Slider/Slider.vue"
 import SlidesWorkshopAddMode from "@/Components/Workshop/SlidesWorkshopAddMode.vue"
-import { cloneDeep, set as setLodash } from "lodash"
+import { cloneDeep, isEqual, set as setLodash } from "lodash"
 import { set, onValue, get } from "firebase/database"
 import { useLayoutStore } from "@/Stores/layout"
 import { usePage } from "@inertiajs/vue3"
@@ -80,6 +80,10 @@ const props = defineProps<{
     imagesUploadRoute: {
         name: string
         parameters?: Array<string>
+    },
+    autoSaveRoute : {
+        name: string
+        parameters?: Array<string>
     }
 }>()
 
@@ -138,7 +142,6 @@ onValue(getDbRef(dbPath), (snapshot) => {
 })
 
 const updateData = async () => {
-    console.log("update Data")
         try {
             if (data && setData.value == false) {
                 // console.log("Update setLodash")
@@ -148,6 +151,7 @@ const updateData = async () => {
                     const firebaseData = snapshot.val()
                 // console.log("Update Firebase")
                     await set(getDbRef(dbPath), { ...firebaseData, ...data })
+                    if(props.banner.state == 'unpublished') autoSave()
                 }
             }
         } catch (error) {
@@ -158,15 +162,22 @@ const updateData = async () => {
 watch(data, updateData, { deep: true })
 onBeforeMount(fetchInitialData)
 
-const setDataBeforeLeave = () => {
+const deleteUser=()=>{
     const set = { ...data }  // Creating a copy of the data object
     for (const index in set.components) {
         if (set.components[index].user == user.value.username) {
             delete set.components[index].user  // Removing the 'user' property from components
         }
     }
+    if(set.common.user)   delete set.common.user
+    return set
+}
+
+const setDataBeforeLeave = () => {
+    const set = deleteUser()
     Object.assign(data, set)  // Assigning the modified 'set' object back to 'data'
     updateData()  // This line should help you see the modified 'data' object
+    autoSave()
 }
 
 onBeforeUnmount(() => {
@@ -195,13 +206,8 @@ const routeButton = (action) => {
 
 const sendDataToServer = async () => {
     // When click 'Publish'
-    const snapshot = await get(getDbRef(dbPath))
-    
-    const firebaseData = snapshot.exists() ? snapshot.val() : null
-
-    // Firebase: Publish Hash
     const formValues = {
-        ...data,
+        ...deleteUser(),
         ...(props.banner.state !== 'unpublished' && { comment: comment.value }),
     };
 
@@ -229,6 +235,28 @@ const sendDataToServer = async () => {
 };
 
 
+const autoSave=()=>{
+    const form = useForm(deleteUser());
+    form.patch(
+        route(props.autoSaveRoute.name,props.autoSaveRoute.parameters), {
+            onSuccess: async (res) => {
+                notify({
+                    title: "success Update",
+                    type: "success",
+                    text: "test aoutosave",
+                });
+            },
+            onError: errors => {
+                notify({
+                    title: "Failed to Update Banner",
+                    text: errors,
+                    type: "error"
+                });
+            },
+        })
+}
+
+
 const ceknotif=()=>{
     console.log(data)
     notify({
@@ -238,6 +266,7 @@ const ceknotif=()=>{
         });
 }
 
+console.log(props.autoSaveRoute)
 
 </script>
 
