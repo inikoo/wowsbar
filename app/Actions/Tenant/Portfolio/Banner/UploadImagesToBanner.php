@@ -32,13 +32,20 @@ class UploadImagesToBanner
         $medias=[];
         foreach ($imageFiles as $imageFile) {
 
-            $medias[] = AttachImageToTenant::run(
+            $media =AttachImageToTenant::run(
                 tenant: app('currentTenant'),
                 collection: 'content_block',
                 imagePath: $imageFile->getPathName(),
                 originalFilename: $imageFile->getClientOriginalName(),
                 extension: $imageFile->guessClientExtension()
             );
+
+            $medias[]=$media;
+
+            $banner->images()->attach($media->id,
+                [
+                    'scope'=>'tmp'
+                ]);
 
         }
 

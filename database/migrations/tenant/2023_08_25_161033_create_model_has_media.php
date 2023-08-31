@@ -18,18 +18,15 @@ return new class () extends Migration {
             $table->unsignedInteger('model_id');
             $table->unsignedMediumInteger('media_id')->index();
             $table->foreign('media_id')->references('id')->on('media')->onUpdate('cascade')->onDelete('cascade');
-            $table->smallInteger('position');
-            $table->string('type')->nullable()->index();
+            $table->smallInteger('position')->default(1);
+            $table->string('scope')->index();
             $table->timestampsTz();
-            $table->unique(['model_type','model_id','media_id']);
+            $table->unique(['model_type','model_id','media_id','scope']);
         });
-
-
     }
 
     public function down(): void
     {
-
         Schema::dropIfExists('snapshot_stats');
     }
 };

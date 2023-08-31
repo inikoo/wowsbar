@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\MediaLibrary\HasMedia;
@@ -162,5 +163,9 @@ class Banner extends Model implements HasMedia, Auditable
         return $this->belongsTo(Media::class, 'image_id');
     }
 
+    public function images(): MorphToMany
+    {
+        return $this->morphToMany(Media::class, 'model','model_has_media');
+    }
 
 }

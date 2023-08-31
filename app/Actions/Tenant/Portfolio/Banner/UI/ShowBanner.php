@@ -43,7 +43,6 @@ class ShowBanner extends InertiaAction
         return $banner;
     }
 
-    /** @noinspection PhpUnusedParameterInspection */
     public function inPortfolioWebsite(PortfolioWebsite $portfolioWebsite, Banner $banner, ActionRequest $request): Banner
     {
 
