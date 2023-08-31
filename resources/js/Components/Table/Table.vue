@@ -608,9 +608,9 @@ const handleElementsChange = (data) => {
                                     :filters="queryBuilderProps.filters" :on-filter-change="changeFilterValue" />
                             </slot>
                         </div>
-
+                        
                         <!-- Search Input Button -->
-                        <div v-if="queryBuilderProps.globalSearch"
+                        <div v-if="queryBuilderProps.globalSearch && compResourceMeta.total >= 5"
                             class="flex flex-row w-64 order-1 md:order-2 transition-all ease-in-out duration-100">
                             <slot name="tableGlobalSearch" :has-global-search="queryBuilderProps.globalSearch"
                                 :label="queryBuilderProps.globalSearch ? queryBuilderProps.globalSearch.label : null"
@@ -674,7 +674,7 @@ const handleElementsChange = (data) => {
                                 <tr class="border-t border-gray-200 dark:border-gray-500">
                                     <HeaderCell v-for="column in queryBuilderProps.columns"
                                         :key="`table-${name}-header-${column.key}`" :cell="header(column.key)"
-                                        :type="columnsType[column.key]" :abc="column"/>
+                                        :type="columnsType[column.key]" :column="column" :resource="compResourceData"/>
                                 </tr>
                             </thead>
 

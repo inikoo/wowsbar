@@ -50,8 +50,11 @@ function bannerRoute(banner: Banner) {
         <template #cell(state)="{ item: banner }">
             <Icon :data="banner['state_icon']"/>
         </template>
+        
         <template #cell(image_thumbnail)="{ item: banner }">
-            <Image  :class="'h-7  flex '"  :src="banner['image_thumbnail']"/>
+            <div class="h-11 overflow-hidden aspect-[4/1]">
+                <Image :src="banner['image_thumbnail']"/>
+            </div>
         </template>
     </Table>
 
