@@ -52,6 +52,7 @@
         "firebase": "^9.23.0",
         "laravel-vue-i18n": "^2.7.1",
         "lodash-es": "^4.17.21",
+        "md5": "^2.3.0",
         "moment": "^2.29.4",
         "moment-timezone": "^0.5.43",
         "pinia": "^2.1.4",
