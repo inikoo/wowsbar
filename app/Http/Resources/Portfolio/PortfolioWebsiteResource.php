@@ -7,25 +7,26 @@
 
 namespace App\Http\Resources\Portfolio;
 
+use App\Models\Portfolio\PortfolioWebsite;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+
 /**
- * @property string $slug
- * @property string $name
- * @property string $code
- * @property string $domain
- * @property \App\Models\Portfolio\PortfolioWebsiteStats $stats
+ * @property numeric $number_banners
  */
 class PortfolioWebsiteResource extends JsonResource
 {
     public function toArray($request): array
     {
+        /** @var PortfolioWebsite $websitePortfolio */
+        $websitePortfolio = $this;
+
         return [
-            'slug'           => $this->slug,
-            'code'           => $this->code,
-            'name'           => $this->name,
-            'domain'         => $this->domain,
-            'banners'        => $this->stats->number_banners
+            'slug'           => $websitePortfolio->slug,
+            'code'           => $websitePortfolio->code,
+            'name'           => $websitePortfolio->name,
+            'domain'         => $websitePortfolio->domain,
+            'number_banners' => $this->number_banners
         ];
     }
 }

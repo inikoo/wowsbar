@@ -37,9 +37,9 @@ class IndexPortfolioWebsites extends InertiaAction
     public function asController(ActionRequest $request): LengthAwarePaginator
     {
         $this->initialisation($request);
+
         return $this->handle();
     }
-
 
 
     /** @noinspection PhpUndefinedMethodInspection */
@@ -61,9 +61,9 @@ class IndexPortfolioWebsites extends InertiaAction
 
         return $queryBuilder
             ->defaultSort('portfolio_websites.code')
-            ->with('stats')
-//            ->select(['portfolio_websites.code', 'portfolio_websites.name', 'portfolio_websites.slug', 'portfolio_websites.domain', 'portfolio_websites.stats'])
-            ->allowedSorts(['slug', 'code', 'name'])
+            ->leftJoin('portfolio_website_stats','portfolio_website_id','portfolio_websites.id')
+            ->select(['portfolio_websites.code', 'portfolio_websites.name', 'portfolio_websites.slug', 'portfolio_websites.domain', 'portfolio_website_stats.number_banners'])
+            ->allowedSorts(['slug', 'code', 'name','number_banners','domain'])
             ->allowedFilters([$globalSearch])
             ->withPaginator($prefix)
             ->withQueryString();
@@ -75,7 +75,7 @@ class IndexPortfolioWebsites extends InertiaAction
             if ($prefix) {
                 $table
                     ->name($prefix)
-                    ->pageName($prefix . 'Page');
+                    ->pageName($prefix.'Page');
             }
 
             $table
@@ -91,7 +91,7 @@ class IndexPortfolioWebsites extends InertiaAction
                 ->column(key: 'slug', label: __('code'), sortable: true)
                 ->column(key: 'name', label: __('name'), sortable: true)
                 ->column(key: 'domain', label: __('domain'), sortable: true)
-                ->column(key: 'banners', label: __('banners'), sortable: true)
+                ->column(key: 'number_banners', label: __('banners'), sortable: true)
                 ->defaultSort('slug');
         };
     }
@@ -110,8 +110,8 @@ class IndexPortfolioWebsites extends InertiaAction
                     $request->route()->getName(),
                     $request->route()->parameters
                 ),
-                'title'    => __('websites'),
-                'pageHead' => [
+                'title'       => __('websites'),
+                'pageHead'    => [
                     'title'     => __('websites'),
                     'iconRight' => [
                         'title' => __('website'),
@@ -129,7 +129,7 @@ class IndexPortfolioWebsites extends InertiaAction
                         ]
                     ]
                 ],
-                'data' => PortfolioWebsiteResource::collection($websites),
+                'data'        => PortfolioWebsiteResource::collection($websites),
 
             ]
         )->table($this->tableStructure());

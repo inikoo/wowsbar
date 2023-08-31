@@ -7,7 +7,7 @@
 <script setup lang="ts">
 import {Head} from '@inertiajs/vue3';
 import PageHeading from '@/Components/Headings/PageHeading.vue';
-import TableWebsites from "@/Pages/Tables/TableWebsites.vue";
+import TablePortfolioWebsites from "@/Pages/Tables/TablePortfolioWebsites.vue";
 import { capitalize } from "@/Composables/capitalize"
 import {faWindowMaximize} from "../../../../private/pro-light-svg-icons"
 import {library} from "@fortawesome/fontawesome-svg-core";
@@ -23,6 +23,6 @@ const props = defineProps <{
 <template layout="TenantApp">
     <Head :title="capitalize(title)"/>
     <PageHeading :data="pageHead"></PageHeading>
-    <TableWebsites :data="data" />
+    <TablePortfolioWebsites :data="data" />
 </template>
 

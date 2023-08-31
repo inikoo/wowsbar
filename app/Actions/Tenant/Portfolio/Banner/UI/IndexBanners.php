@@ -156,7 +156,7 @@ class IndexBanners extends InertiaAction
                 ->column(key: 'state', label: ['fal', 'fa-yin-yang'])
                 ->column(key: 'slug', label: __('code'), sortable: true)
                 ->column(key: 'name', label: __('name'), sortable: true)
-                ->column(key: 'banner', label: ['fal', 'fa-image'])
+                ->column(key: 'image_thumbnail', label: ['fal', 'fa-image'])
                 ->column(key: 'websites', label: __('websites'))
                 ->defaultSort('slug');
         };
