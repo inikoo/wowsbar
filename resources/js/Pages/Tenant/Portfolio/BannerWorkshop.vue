@@ -130,7 +130,6 @@ onValue(getDbRef(dbPath), (snapshot) => {
     if (snapshot.exists()) {
         const firebaseData = snapshot.val()
             Object.assign(data, { ...data, ...firebaseData })
-            console.log()
     }
 })
 
@@ -140,7 +139,6 @@ const updateData = async () => {
                 const snapshot = await get(getDbRef(dbPath))
                 if (snapshot.exists()) {
                     const firebaseData = snapshot.val()
-                    console.log('iniiii',{...firebaseData, ...data })
                     await set(getDbRef(dbPath), { ...firebaseData, ...data })
                 }
             }
