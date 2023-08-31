@@ -87,7 +87,7 @@ const uploadImageRespone = (res) => {
                 imageAlt: set.name,
             },
             image: {
-                dekstop : set
+                desktop : set
             },
             visibility: true,
         })

@@ -438,7 +438,7 @@ const uploadImageRespone = (res) => {
                 imageAlt: set.name,
             },
             image: {
-                dekstop : set
+                desktop : set
             },
             visibility: true,
         });
@@ -501,7 +501,7 @@ console.log(currentComponentBeenEdited.value)
 
                             <!-- Image slide -->
                             <div>
-                                <Image :src="get(slide,['image',`${screenView}`,'thumbnail'],slide.image.dekstop.thumbnail)" class="h-full w-10 sm:w-10 flex items-center justify-center py-1"/>
+                                <Image :src="get(slide,['image',`${screenView}`,'thumbnail'],slide.image.desktop.thumbnail)" class="h-full w-10 sm:w-10 flex items-center justify-center py-1"/>
                             </div>
 
                             <!-- Label slide -->
@@ -522,7 +522,7 @@ console.log(currentComponentBeenEdited.value)
                                 <FontAwesomeIcon v-else icon="fas fa-eye-slash" class="text-xs sm:text-sm" />
                             </button>
                             <button  class="px-2 py-1 bg-grays-500 text-red-500/60 hover:text-red-500" type="button" v-if="!slide.visibility"
-                                @click="(e)=>{ e.stopPropagation() 
+                                @click="(e)=>{ e.stopPropagation()
                                     removeComponent(slide)}"
                                 title="Delete the slide">
                                 <FontAwesomeIcon :icon="['fal', 'fa-trash-alt']"  class="text-xs sm:text-sm" />
@@ -570,12 +570,12 @@ console.log(currentComponentBeenEdited.value)
             <SlideWorkshop :common="data.common" :currentComponentBeenEdited="currentComponentBeenEdited"
                 :blueprint="ComponentsBlueprint" ref="_SlideWorkshop" :remove="removeComponent" />
         </div>
-        
+
         <!-- Modal: Gallery -->
         <Modal :isOpen="isOpenGalleryImages" @onClose="closeModalisOpenGalleryImages">
             <div>
                 <GalleryImages :addImage="uploadImageRespone" :closeModal="()=>isOpenGalleryImages = false"/>
-                
+
             </div>
         </Modal>
 
