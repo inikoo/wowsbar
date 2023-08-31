@@ -16,7 +16,6 @@ use App\Actions\Tenant\Portfolio\Banner\StoreBanner;
 use App\Actions\Tenant\Portfolio\Banner\UpdateBanner;
 use App\Actions\Tenant\Portfolio\Banner\UpdateBannerState;
 use App\Actions\Tenant\Portfolio\Banner\FetchFirebaseSnapshot;
-use App\Actions\Tenant\Portfolio\Banner\UpdateUnpublishedBannerSnapshot;
 use App\Actions\Tenant\Portfolio\Gallery\UpdateUploadedImage;
 use App\Actions\Tenant\Portfolio\PortfolioWebsite\DeletePortfolioWebsite;
 use App\Actions\Tenant\Portfolio\PortfolioWebsite\StorePortfolioWebsite;

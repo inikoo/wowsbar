@@ -29,9 +29,13 @@ class UpdateUnpublishedBannerSnapshot
 
     public function handle(Snapshot $snapshot, array $modelData): Banner
     {
+
+
         $layout                = Arr::pull($modelData, 'layout');
-        list($layout, $slides) = ParseBannerLayout::run($layout);
+        list($layout, $slides,$hash) = ParseBannerLayout::run($layout);
         data_set($modelData, 'layout', $layout);
+        data_set($modelData, 'checksum', $hash);
+
         if ($slides) {
             foreach ($slides as $ulid => $slideData) {
                 $slide = Slide::where('ulid', $ulid)->first();

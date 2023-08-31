@@ -42,7 +42,7 @@ class PublishBanner
 
 
         $layout                = Arr::pull($modelData, 'layout');
-        list($layout, $slides) = ParseBannerLayout::run($layout);
+        list($layout, $slides,$hash) = ParseBannerLayout::run($layout);
 
         $snapshot=StoreSnapshot::run(
             $banner,
