@@ -86,7 +86,9 @@ const uploadImageRespone = (res) => {
             layout: {
                 imageAlt: set.name,
             },
-            image: set,
+            image: {
+                dekstop : set
+            },
             visibility: true,
         })
     }
