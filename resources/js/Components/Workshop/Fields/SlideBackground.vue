@@ -57,6 +57,7 @@ const onFileChange = (event) => {
 watch(value, (newValue) => {
     console.log(value,newValue)
     updateLocalFormValue({ ...newValue })
+    console.log('test',newValue)
 })
 
 const updateLocalFormValue = (newValue) => {

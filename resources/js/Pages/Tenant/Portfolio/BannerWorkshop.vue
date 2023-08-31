@@ -108,7 +108,7 @@ const fetchInitialData = async () => {
         const newData = { ...(firebaseData || cloneDeep(props.bannerLayout)) };
         Object.assign(data, newData);
 
-            await set(getDbRef(dbPath), { ...firebaseData, data: newData });
+            await set(getDbRef(dbPath), { ...firebaseData, ...newData });
     
 
     } catch (error) {
@@ -130,6 +130,7 @@ onValue(getDbRef(dbPath), (snapshot) => {
     if (snapshot.exists()) {
         const firebaseData = snapshot.val()
             Object.assign(data, { ...data, ...firebaseData })
+            console.log()
     }
 })
 
@@ -139,6 +140,7 @@ const updateData = async () => {
                 const snapshot = await get(getDbRef(dbPath))
                 if (snapshot.exists()) {
                     const firebaseData = snapshot.val()
+                    console.log('iniiii',{...firebaseData, ...data })
                     await set(getDbRef(dbPath), { ...firebaseData, ...data })
                 }
             }
@@ -277,7 +279,7 @@ const ceknotif=()=>{
                     <Slider :data="data" :jumpToIndex="jumpToIndex" :view="screenView" />
                 </div>
                 <SlidesWorkshop class="clear-both mt-2 p-2.5" :data="data" @jumpToIndex="(val) => jumpToIndex = val"
-                    :imagesUploadRoute="imagesUploadRoute" :user="user" />
+                    :imagesUploadRoute="imagesUploadRoute" :user="user" :screenView="screenView"/>
             </div>
 
             <!-- Component: Add slide if there is not exist -->

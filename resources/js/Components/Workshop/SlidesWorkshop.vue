@@ -85,6 +85,7 @@ const props = defineProps<{
         arguments: string;
     };
     user: Object;
+    screenView : String
 }>();
 
 const emits = defineEmits<{
@@ -436,7 +437,9 @@ const uploadImageRespone = (res) => {
             layout: {
                 imageAlt: set.name,
             },
-            image: set,
+            image: {
+                dekstop : set
+            },
             visibility: true,
         });
     }
@@ -498,7 +501,7 @@ console.log(currentComponentBeenEdited.value)
 
                             <!-- Image slide -->
                             <div>
-                                <Image :src="slide.image.thumbnail" class="h-full w-10 sm:w-10 flex items-center justify-center py-1"/>
+                                <Image :src="get(slide,['image',`${screenView}`,'thumbnail'],slide.image.dekstop.thumbnail)" class="h-full w-10 sm:w-10 flex items-center justify-center py-1"/>
                             </div>
 
                             <!-- Label slide -->
