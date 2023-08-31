@@ -15,7 +15,7 @@ const props = defineProps(["data", 'fieldName', 'fieldData'])
 const { data, fieldName } = toRefs(props)
 const isOpen = ref(false)
 const fileInput = ref(null)
-const screenView = ref('dekstop')
+const screenView = ref('desktop')
 const closeModal = () => {
     isOpen.value = false
 }
@@ -125,7 +125,7 @@ const screenViewChange = (value) => {
                     }
                     : 'w-full aspect-[2/1] md:aspect-[3/1] lg:aspect-[4/1]'
             ], 'overflow-hidden border border-gray-300 shadow'">
-                <Image class="object-cover" :src="get(value, [`${screenView}`, 'source'], value.dekstop.source)"
+                <Image class="object-cover" :src="get(value, [`${screenView}`, 'source'], value.desktop.source)"
                     :alt="value.name" />
             </div>
         </div>
