@@ -484,13 +484,13 @@ console.log(currentComponentBeenEdited.value)
                             data.components.findIndex(obj => obj.ulid === slide.ulid)
                         )"
                         v-if="slide.ulid" :class="[
-                            'grid grid-flow-col relative sm:py-1 mb-2 items-center justify-between ring-1 ring-gray-300 hover:cursor-pointer',
+                            'grid grid-flow-col relative sm:py-1 mb-2 items-center justify-between ring-1 ring-gray-300',
                             slide.ulid == get(currentComponentBeenEdited, 'ulid')
                                 ? 'tabNavigationActive font-medium'
                                 : 'tabNavigation',
                             slide.user != props.user.username && slide.user
-                                ? 'border-l-red-500 border-l-4 bg-gray-200/60 text-gray-600 font-medium'
-                                : 'border-gray-300',
+                                ? 'border-l-gray-500 border-l-4 bg-gray-200/60 text-gray-600 font-medium cursor-not-allowed'
+                                : 'cursor-pointer',
                         ]"
                     >
                         <!-- Slide -->
@@ -530,9 +530,9 @@ console.log(currentComponentBeenEdited.value)
                         </div>
 
                         <div v-else class="flex justify-center items-center pr-2 justify-self-end">
-                            <button class="px-2 py-1" type="button">
-                                <FontAwesomeIcon :icon="['fal', 'lock']" class="text-xs sm:text-sm text-gray-300 hover:text-gray-400/70" />
-                            </button>
+                            <div class="px-2 py-1" type="button" title="Edited by other user">
+                                <FontAwesomeIcon :icon="['fal', 'lock']" class="text-xs sm:text-sm text-gray-600" />
+                            </div>
                         </div>
 
                     </div>
