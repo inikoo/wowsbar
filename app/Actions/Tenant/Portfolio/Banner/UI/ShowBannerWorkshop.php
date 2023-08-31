@@ -102,7 +102,7 @@ class ShowBannerWorkshop extends InertiaAction
                 'bannerLayout'      => $banner->compiled_layout,
                 'banner'            => BannerResource::make($banner)->getArray(),
                 'autoSaveRoute'     => [
-                    'name'       => 'models.banner.update-unpublished-snapshot',
+                    'name'       => 'models.banner.fetch-firebase',
                     'parameters' => [
                         'banner' => $banner->slug
                     ]

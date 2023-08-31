@@ -7,6 +7,7 @@
 
 namespace App\Actions\Tenant\Portfolio\Banner;
 
+use App\Actions\Tenant\Auth\User\UI\AttachImageToTenant;
 use App\Http\Resources\Gallery\ImageResource;
 use App\Models\Portfolio\Banner;
 use App\Models\Portfolio\PortfolioWebsite;
@@ -30,11 +31,25 @@ class UploadImagesToBanner
 
         $medias=[];
         foreach ($imageFiles as $imageFile) {
-            $medias[]=AttachImageToBanner::run(
-                banner:$banner,
-                file:$imageFile
+
+            $media = AttachImageToTenant::run(
+                tenant: app('currentTenant'),
+                collection: 'content_block',
+                imagePath: $imageFile->getPathName(),
+                originalFilename: $imageFile->getClientOriginalName(),
+                extension: $imageFile->guessClientExtension()
             );
+            if(!$banner->image_id) {
+                $banner->update(
+                    [
+                        'data->unpublished_image_id'=>$media->id
+                    ]
+                );
+            }
         }
+
+        //FetchFirebaseSnapshot::run($banner);
+        //UpdateBannerImage::run($banner);
         return collect($medias);
     }
 

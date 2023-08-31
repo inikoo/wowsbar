@@ -22,6 +22,10 @@ return new class () extends Migration {
             $table->jsonb('layout')->nullable();
             $table->unsignedInteger('image_id')->nullable();
             $table->foreign('image_id')->references('id')->on('media');
+            $table->unsignedInteger('mobile_image_id')->nullable();
+            $table->foreign('mobile_image_id')->references('id')->on('media');
+            $table->unsignedInteger('tablet_image_id')->nullable();
+            $table->foreign('tablet_image_id')->references('id')->on('media');
             $table->timestampsTz();
             $table->softDeletesTz();
         });
