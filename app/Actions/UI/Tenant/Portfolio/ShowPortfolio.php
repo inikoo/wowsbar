@@ -18,8 +18,6 @@ use Lorisleiva\Actions\ActionRequest;
 
 class ShowPortfolio extends InertiaAction
 {
-
-
     public function authorize(ActionRequest $request): bool
     {
         return $request->user()->can("portfolio.view");

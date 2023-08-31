@@ -46,10 +46,10 @@ class UpdateUser
     {
         return [
             'contact_name' => ['sometimes', 'required'],
-            'username' => ['sometimes', 'required', new AlphaDashDot(), 'unique:users,username'],
-            'password' => ['sometimes', 'required', app()->isLocal() || app()->environment('testing') ? null : Password::min(8)->uncompromised()],
-            'email' => 'sometimes|required|email|unique:users,email',
-            'status' => 'sometimes|required|boolean'
+            'username'     => ['sometimes', 'required', new AlphaDashDot(), 'unique:users,username'],
+            'password'     => ['sometimes', 'required', app()->isLocal() || app()->environment('testing') ? null : Password::min(8)->uncompromised()],
+            'email'        => 'sometimes|required|email|unique:users,email',
+            'status'       => 'sometimes|required|boolean'
         ];
     }
 

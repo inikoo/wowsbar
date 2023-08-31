@@ -23,11 +23,11 @@ class FetchFirebaseSnapshot
         $database  = app('firebase.database');
         $reference = $database->getReference('tenants/' . $tenant->slug . '/banner_workshop/' . $banner->slug);
         $value     = $reference->getValue();
-        if($value){
+        if($value) {
 
 
             $modelData=[
-                'layout'=>$value
+                'layout'=> $value
             ];
 
             UpdateUnpublishedBannerSnapshot::run($banner->unpublishedSnapshot, $modelData);
@@ -57,9 +57,9 @@ class FetchFirebaseSnapshot
         $banner = Banner::where('slug', $command->argument('slug'))->firstOrFail();
 
         $result=$this->handle($banner);
-        if($result){
+        if($result) {
             $command->info("Done! banner  $banner->code unpublished slide from 🔥 updated 🥳");
-        } else{
+        } else {
             $command->error("Banner $banner->code not found in firebase 😱");
 
         }

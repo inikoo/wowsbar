@@ -85,14 +85,14 @@ class EditUser extends InertiaAction
                         ],
                         [
                             'title'    => __('Status'),
-                            'icon'    => 'fal fa-user-lock',
-                            'current' => true,
+                            'icon'     => 'fal fa-user-lock',
+                            'current'  => true,
                             'fields'   => [
                                 'status' => [
-                                    'type'  => 'toggleSquare',
+                                    'type'      => 'toggleSquare',
                                     'typeLabel' => ['suspended', 'active'],
-                                    'label' => __('Status'),
-                                    'value' => $user->status
+                                    'label'     => __('Status'),
+                                    'value'     => $user->status
                                 ],
                             ]
                         ],
