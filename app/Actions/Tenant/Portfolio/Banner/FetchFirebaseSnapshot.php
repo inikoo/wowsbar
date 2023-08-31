@@ -24,7 +24,7 @@ class FetchFirebaseSnapshot
         $reference = $database->getReference('tenants/' . $tenant->slug . '/banner_workshop/' . $banner->slug);
         $value     = $reference->getValue();
         if($value){
-            dd($value);
+          //  dd($value);
             UpdateUnpublishedBannerSnapshot::run($banner->unpublishedSnapshot, $value);
             return true;
         }
@@ -33,7 +33,7 @@ class FetchFirebaseSnapshot
     }
 
 
-    public function asController(Banner $banner, ActionRequest $request): Banner
+    public function asController(Banner $banner, ActionRequest $request): bool
     {
         $request->validate();
         return $this->handle($banner);
