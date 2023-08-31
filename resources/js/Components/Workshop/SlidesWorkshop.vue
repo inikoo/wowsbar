@@ -514,23 +514,27 @@ console.log(currentComponentBeenEdited.value)
                         </div>
 
                         <!-- Button: Show/hide, delete slide -->
-                        <div class="flex justify-center items-center pr-2 justify-self-end">
-                            <button class="px-2 py-1 text-gray-400 hover:text-gray-500" type="button" v-if="slide.user == props.user.username || !slide.user"
+                        <div class="flex justify-center items-center pr-2 justify-self-end"  v-if="slide.user == props.user.username || !slide.user">
+                            <button class="px-2 py-1 text-gray-400 hover:text-gray-500" type="button"
                                 @click="changeVisibility(slide)" title="Show/hide the slide">
                                 <FontAwesomeIcon v-if="slide.hasOwnProperty('visibility') ? slide.visibility : true"
                                     icon="fas fa-eye" class="text-xs sm:text-sm " />
                                 <FontAwesomeIcon v-else icon="fas fa-eye-slash" class="text-xs sm:text-sm" />
                             </button>
-                            <button class="px-2 py-1 bg-grays-500 text-red-500/60 hover:text-red-500" type="button" v-if="slide.user == props.user.username || !slide.user"
+                            <button  class="px-2 py-1 bg-grays-500 text-red-500/60 hover:text-red-500" type="button" v-if="!slide.visibility"
                                 @click="(e)=>{ e.stopPropagation() 
                                     removeComponent(slide)}"
                                 title="Delete the slide">
                                 <FontAwesomeIcon :icon="['fal', 'fa-trash-alt']"  class="text-xs sm:text-sm" />
                             </button>
-                            <button class="px-2 py-1" type="button" v-else>
+                        </div>
+
+                        <div v-else class="flex justify-center items-center pr-2 justify-self-end">
+                            <button class="px-2 py-1" type="button">
                                 <FontAwesomeIcon :icon="['fal', 'lock']" class="text-xs sm:text-sm text-gray-300 hover:text-gray-400/70" />
                             </button>
                         </div>
+
                     </div>
                 </template>
             </draggable>
