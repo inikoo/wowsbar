@@ -42,10 +42,12 @@ class UploadImagesToBanner
 
             $medias[]=$media;
 
-            $banner->images()->attach($media->id,
+            $banner->images()->attach(
+                $media->id,
                 [
-                    'scope'=>'tmp'
-                ]);
+                    'scope'=> 'tmp'
+                ]
+            );
 
         }
 

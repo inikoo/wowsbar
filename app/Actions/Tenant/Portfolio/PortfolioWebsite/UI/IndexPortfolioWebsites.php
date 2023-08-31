@@ -61,7 +61,7 @@ class IndexPortfolioWebsites extends InertiaAction
 
         return $queryBuilder
             ->defaultSort('portfolio_websites.code')
-            ->leftJoin('portfolio_website_stats','portfolio_website_id','portfolio_websites.id')
+            ->leftJoin('portfolio_website_stats', 'portfolio_website_id', 'portfolio_websites.id')
             ->select(['portfolio_websites.code', 'portfolio_websites.name', 'portfolio_websites.slug', 'portfolio_websites.domain', 'portfolio_website_stats.number_banners'])
             ->allowedSorts(['slug', 'code', 'name','number_banners','domain'])
             ->allowedFilters([$globalSearch])

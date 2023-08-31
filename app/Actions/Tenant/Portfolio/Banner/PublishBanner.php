@@ -19,6 +19,7 @@ use App\Enums\Portfolio\Banner\BannerStateEnum;
 use App\Enums\Portfolio\Snapshot\SnapshotStateEnum;
 use App\Http\Resources\Portfolio\BannerResource;
 use App\Models\Portfolio\Banner;
+use App\Models\Portfolio\Snapshot;
 use Illuminate\Support\Arr;
 use Lorisleiva\Actions\ActionRequest;
 
@@ -30,43 +31,42 @@ class PublishBanner
 
     public function handle(Banner $banner, array $modelData): Banner
     {
-
-
-
-        foreach($banner->snapshots()->where('state', SnapshotStateEnum::LIVE)->get() as $liveSnapshot) {
+        foreach ($banner->snapshots()->where('state', SnapshotStateEnum::LIVE)->get() as $liveSnapshot) {
             UpdateSnapshot::run($liveSnapshot, [
-                'state'          => SnapshotStateEnum::HISTORIC,
-                'published_until'=> now()
+                'state'           => SnapshotStateEnum::HISTORIC,
+                'published_until' => now()
             ]);
         }
 
 
-        $layout                = Arr::pull($modelData, 'layout');
-        list($layout, $slides,$hash) = ParseBannerLayout::run($layout);
+        $layout                       = Arr::pull($modelData, 'layout');
+        list($layout, $slides, $hash) = ParseBannerLayout::run($layout);
 
-        $snapshot=StoreSnapshot::run(
+        /** @var Snapshot $snapshot */
+        $snapshot = StoreSnapshot::run(
             $banner,
             [
-                'state'       => SnapshotStateEnum::LIVE,
-                'published_at'=> now(),
-                'layout'      => $layout
+                'state'        => SnapshotStateEnum::LIVE,
+                'published_at' => now(),
+                'layout'       => $layout
             ],
             $slides
         );
 
 
-        $compiledLayout=$snapshot->compiledLayout();
+        $compiledLayout = $snapshot->compiledLayout();
 
 
-        $updateData    =[
-            'live_snapshot_id'=> $snapshot->id,
-            'compiled_layout' => $compiledLayout,
-            'state'           => BannerStateEnum::LIVE,
-            'checksum'        => md5(json_encode($compiledLayout))
+
+        $updateData = [
+            'live_snapshot_id' => $snapshot->id,
+            'compiled_layout'  => $compiledLayout,
+            'state'            => BannerStateEnum::LIVE,
+            'checksum'         => $hash
         ];
 
-        if($banner->state==BannerStateEnum::UNPUBLISHED) {
-            $updateData['live_at']=now();
+        if ($banner->state == BannerStateEnum::UNPUBLISHED) {
+            $updateData['live_at'] = now();
         }
 
         $banner->update($updateData);
@@ -94,8 +94,8 @@ class PublishBanner
     public function rules(): array
     {
         return [
-            'layout' => ['required', 'array:delay,common,components'],
-            'comment'=> ['sometimes','required','string','max:1024']
+            'layout'  => ['required', 'array:delay,common,components'],
+            'comment' => ['sometimes', 'required', 'string', 'max:1024']
         ];
     }
 
@@ -111,6 +111,7 @@ class PublishBanner
     public function asController(Banner $banner, ActionRequest $request): Banner
     {
         $request->validate();
+
         return $this->handle($banner, $request->validated());
     }
 

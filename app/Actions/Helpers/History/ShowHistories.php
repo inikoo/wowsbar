@@ -8,7 +8,6 @@
 namespace App\Actions\Helpers\History;
 
 use App\Actions\Tenant\Auth\User\Traits\WithFormattedUserHistories;
-use Closure;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;

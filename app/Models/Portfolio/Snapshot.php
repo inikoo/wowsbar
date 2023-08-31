@@ -107,8 +107,11 @@ class Snapshot extends Model
 
     public function compiledLayout(): array
     {
+
+        $slides=$this->slides()->where('visibility', true)->get();
+
         $compiledLayout = $this->layout;
-        data_set($compiledLayout, 'components', json_decode(SlideResource::collection($this->slides)->toJson(), true));
+        data_set($compiledLayout, 'components', json_decode(SlideResource::collection($slides)->toJson(), true));
 
         return $compiledLayout;
     }

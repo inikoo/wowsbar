@@ -10,7 +10,6 @@ namespace App\Http\Resources\Portfolio;
 use App\Models\Portfolio\PortfolioWebsite;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-
 /**
  * @property numeric $number_banners
  */
