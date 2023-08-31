@@ -6,13 +6,13 @@
 
 <script setup lang="ts">
 import { Head } from "@inertiajs/vue3"
-import { ref, reactive, onBeforeMount, watch, onBeforeUnmount } from "vue"
+import { ref, reactive, onBeforeMount, watch, onBeforeUnmount, computed } from "vue"
 import PageHeading from "@/Components/Headings/PageHeading.vue"
 import { capitalize } from "@/Composables/capitalize"
 import SlidesWorkshop from "@/Components/Workshop/SlidesWorkshop.vue"
 import Slider from "@/Components/Slider/Slider.vue"
 import SlidesWorkshopAddMode from "@/Components/Workshop/SlidesWorkshopAddMode.vue"
-import { cloneDeep} from "lodash"
+import { cloneDeep, set as setLodash } from "lodash"
 import { set, onValue, get } from "firebase/database"
 import { useLayoutStore } from "@/Stores/layout"
 import { usePage } from "@inertiajs/vue3"
@@ -22,13 +22,15 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { getDbRef } from '@/Composables/firebase'
 import { trans } from "laravel-vue-i18n"
 import { router } from '@inertiajs/vue3'
-import { faAsterisk } from "@/../private/pro-solid-svg-icons"
 import Button from "@/Components/Elements/Buttons/Button.vue"
 import Modal from '@/Components/Utils/Modal.vue'
-import { faRocketLaunch } from "@/../private/pro-regular-svg-icons"
 import {  useForm } from '@inertiajs/vue3'
 import ScreenView from "@/Components/ScreenView.vue"
-import { notify } from "@kyvg/vue3-notification";
+import { notify } from "@kyvg/vue3-notification"
+import { useBannerHash } from "@/Composables/useBannerHash"
+
+import { faRocketLaunch } from "@/../private/pro-regular-svg-icons"
+import { faAsterisk } from "@/../private/pro-solid-svg-icons"
 import { faSpinnerThird } from '@/../private/pro-duotone-svg-icons'
 library.add( faAsterisk, faRocketLaunch, faUser, faUserFriends, faSpinnerThird );
 
@@ -73,6 +75,7 @@ const props = defineProps<{
             image_id: number
             image_source: string
         }>
+        hash: number
     }
     imagesUploadRoute: {
         name: string
@@ -98,6 +101,7 @@ const routeSave = ref()
 
 
 const fetchInitialData = async () => {
+    console.log("Fetch initial Data")
     try {
         setData.value = true;
         loadingState.value = true;
@@ -134,11 +138,15 @@ onValue(getDbRef(dbPath), (snapshot) => {
 })
 
 const updateData = async () => {
+    console.log("update Data")
         try {
             if (data && setData.value == false) {
+                // console.log("Update setLodash")
+                setLodash(data, 'hash', useBannerHash(data)) // Generate new hash based on data page
                 const snapshot = await get(getDbRef(dbPath))
                 if (snapshot.exists()) {
                     const firebaseData = snapshot.val()
+                // console.log("Update Firebase")
                     await set(getDbRef(dbPath), { ...firebaseData, ...data })
                 }
             }
@@ -186,6 +194,12 @@ const routeButton = (action) => {
 
 
 const sendDataToServer = async () => {
+    // When click 'Publish'
+    const snapshot = await get(getDbRef(dbPath))
+    
+    const firebaseData = snapshot.exists() ? snapshot.val() : null
+
+    // Firebase: Publish Hash
     const formValues = {
         ...data,
         ...(props.banner.state !== 'unpublished' && { comment: comment.value }),
@@ -193,9 +207,9 @@ const sendDataToServer = async () => {
 
     const form = useForm(formValues);
     form.patch(
-        route(routeSave.value['route']['name'], routeSave.value['route']['parameters'])
-        , {
-            onSuccess: (res) => {
+        route(routeSave.value['route']['name'], routeSave.value['route']['parameters']), {
+            onSuccess: async (res) => {
+                await set(getDbRef(dbPath), { publishHash: data.hash })
                 isModalOpen.value = false
                 router.visit(route(routeExit.value['route']['name'], routeExit.value['route']['parameters']))
                 notify({
@@ -247,6 +261,9 @@ const ceknotif=()=>{
                     </Button>
                         {{ saveRouteValue(action) }}
                 </span>
+                <div @click="useBannerHash(data)">
+                    dddddddddd
+                </div>
             </div>
         </template>
     </PageHeading>
