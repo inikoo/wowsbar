@@ -93,10 +93,18 @@ class ShowBanner extends InertiaAction
 
                        ,
                     'actions' => [
+                        $this->canDelete ? [
+                            'type'  => 'button',
+                            'style' => 'delete',
+                            'route' => [
+                                'name'       => preg_replace('/show$/', 'remove', $request->route()->getName()),
+                                'parameters' => array_values($request->route()->originalParameters())
+                            ]
+                        ] : false,
                         $this->canEdit ? [
                             'type'  => 'button',
-                            'style' => 'edit',
-                            'label' => __('banner'),
+                            'style' => 'tertiary',
+                            'label' => __('edit'),
                             'icon'  => ["fal", "fa-pencil"],
                             'route' => [
                                 'name'       => preg_replace('/show$/', 'edit', $request->route()->getName()),
@@ -113,14 +121,6 @@ class ShowBanner extends InertiaAction
                                 'parameters' => array_values($request->route()->originalParameters())
                             ]
                         ] : false,
-                        $this->canDelete ? [
-                            'type'  => 'button',
-                            'style' => 'delete',
-                            'route' => [
-                                'name'       => preg_replace('/show$/', 'remove', $request->route()->getName()),
-                                'parameters' => array_values($request->route()->originalParameters())
-                            ]
-                        ] : false
                     ],
                 ],
                 'tabs' => [

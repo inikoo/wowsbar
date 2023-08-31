@@ -102,7 +102,6 @@ const addComponent = async () => {
         props.respone(response.data)
         loadingState.value = false
     } catch (error) {
-        console.error("===========================")
         console.log(error)
         form.value = new FormData()
         catchError.value = error

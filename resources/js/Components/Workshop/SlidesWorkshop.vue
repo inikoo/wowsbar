@@ -112,6 +112,7 @@ const closeModalisOpenCropModal = () => {
 
 const addComponent = async (element) => {
     addFiles.value = element.target.files;
+    console.log(addFiles.value)
     isOpenCropModal.value = true;
 };
 
