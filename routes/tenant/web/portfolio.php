@@ -28,11 +28,11 @@ use App\Actions\Tenant\Portfolio\PortfolioWebsite\UI\RemovePortfolioWebsite;
 use App\Actions\Tenant\Portfolio\PortfolioWebsite\UI\ShowPortfolioWebsite;
 use App\Actions\Tenant\Portfolio\Snapshot\UI\IndexSnapshots;
 use App\Actions\Tenant\Portfolio\Snapshot\UI\ShowSnapshot;
-use App\Actions\UI\Tenant\Portfolio\ShowPortfolioDashboard;
+use App\Actions\UI\Tenant\Portfolio\ShowPortfolio;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/dashboard', [
-    'uses'  => ShowPortfolioDashboard::class,
+    'uses'  => ShowPortfolio::class,
     'icon'  => 'briefcase',
     'label' => 'portfolio'
 ])->name('dashboard');

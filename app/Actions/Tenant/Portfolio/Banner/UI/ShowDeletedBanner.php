@@ -10,7 +10,7 @@ namespace App\Actions\Tenant\Portfolio\Banner\UI;
 use App\Actions\Elasticsearch\History\IndexHistories;
 use App\Actions\InertiaAction;
 use App\Actions\Tenant\Portfolio\PortfolioWebsite\UI\ShowPortfolioWebsite;
-use App\Actions\UI\Tenant\Portfolio\ShowPortfolioDashboard;
+use App\Actions\UI\Tenant\Portfolio\ShowPortfolio;
 use App\Enums\UI\Tenant\BannerTabsEnum;
 use App\Enums\UI\Tenant\PortfolioWebsiteTabsEnum;
 use App\Http\Resources\History\HistoryResource;
@@ -123,7 +123,7 @@ class ShowDeletedBanner extends InertiaAction
         return match ($routeName) {
             'portfolio.banners.deleted' =>
             array_merge(
-                ShowPortfolioDashboard::make()->getBreadcrumbs(),
+                ShowPortfolio::make()->getBreadcrumbs(),
                 $headCrumb(
                     'modelWithIndex',
                     $routeParameters['banner'],
