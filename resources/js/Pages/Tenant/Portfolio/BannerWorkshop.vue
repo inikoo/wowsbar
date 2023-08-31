@@ -80,6 +80,10 @@ const props = defineProps<{
     imagesUploadRoute: {
         name: string
         parameters?: Array<string>
+    },
+    autoSaveRoute : {
+        name: string
+        parameters?: Array<string>
     }
 }>()
 
@@ -148,6 +152,7 @@ const updateData = async () => {
                     const firebaseData = snapshot.val()
                 // console.log("Update Firebase")
                     await set(getDbRef(dbPath), { ...firebaseData, ...data })
+                    if(props.banner.state == 'unpublished') autoSave()
                 }
             }
         } catch (error) {
@@ -167,6 +172,7 @@ const setDataBeforeLeave = () => {
     }
     Object.assign(data, set)  // Assigning the modified 'set' object back to 'data'
     updateData()  // This line should help you see the modified 'data' object
+    autoSave()
 }
 
 onBeforeUnmount(() => {
@@ -195,11 +201,6 @@ const routeButton = (action) => {
 
 const sendDataToServer = async () => {
     // When click 'Publish'
-    const snapshot = await get(getDbRef(dbPath))
-    
-    const firebaseData = snapshot.exists() ? snapshot.val() : null
-
-    // Firebase: Publish Hash
     const formValues = {
         ...data,
         ...(props.banner.state !== 'unpublished' && { comment: comment.value }),
@@ -229,6 +230,28 @@ const sendDataToServer = async () => {
 };
 
 
+const autoSave=()=>{
+    const form = useForm(data);
+    form.patch(
+        route(props.autoSaveRoute.name,props.autoSaveRoute.parameters), {
+            onSuccess: async (res) => {
+                notify({
+                    title: "success Update",
+                    type: "success",
+                    text: "Banner already update and publish",
+                });
+            },
+            onError: errors => {
+                notify({
+                    title: "Failed to Update Banner",
+                    text: errors,
+                    type: "error"
+                });
+            },
+        })
+}
+
+
 const ceknotif=()=>{
     console.log(data)
     notify({
@@ -238,6 +261,7 @@ const ceknotif=()=>{
         });
 }
 
+console.log(props.autoSaveRoute)
 
 </script>
 
@@ -261,9 +285,6 @@ const ceknotif=()=>{
                     </Button>
                         {{ saveRouteValue(action) }}
                 </span>
-                <div @click="useBannerHash(data)">
-                    dddddddddd
-                </div>
             </div>
         </template>
     </PageHeading>
