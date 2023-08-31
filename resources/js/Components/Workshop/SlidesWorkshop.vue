@@ -118,17 +118,18 @@ const addComponent = async (element) => {
 const removeComponent = (file) => {
     const index = props.data.components.findIndex((item) => item.ulid === file.ulid);
     if (index !== -1) {
-        if (
-            currentComponentBeenEdited.value &&
-            currentComponentBeenEdited.value.ulid === props.data.components[index].ulid
-        ) {
-            const nextIndex = index + 1;
-            selectComponentForEdition(
-                nextIndex < props.data.components.length
-                    ? props.data.components[nextIndex]
-                    : props.data.components.filter((item) => item.ulid !== null)[0]
-            );
-        }
+        // if (
+        //     currentComponentBeenEdited.value &&
+        //     currentComponentBeenEdited.value.ulid === props.data.components[index].ulid
+        // ) {
+        //     const nextIndex = index + 1;
+        //     selectComponentForEdition(
+        //         nextIndex < props.data.components.length
+        //             ? props.data.components[nextIndex]
+        //             : props.data.components.filter((item) => item.ulid !== null)[0]
+        //     );
+        // }
+        props.data.components.splice(index,1)
         props.data.components[index].ulid = null;
     } else {
         console.log("Index not found");
