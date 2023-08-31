@@ -17,15 +17,6 @@ export default {
             },
             colors: {
                 'regal-pink': '#EDBBBA',
-                'dark1': '#111827',
-                'dark2': '#1f2937',
-                'dark3': '#374151',
-                'dark4': '#4b5563',
-                'darklight': '#6b7280',
-                'light1': '#f9fafb',
-                'light2': '#f3f4f6',
-                'light3': '#e5e7eb',
-                'light4': '#9ca3af',
             },
             keyframes: {
                 shimmer: {

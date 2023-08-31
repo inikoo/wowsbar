@@ -261,9 +261,6 @@ const ceknotif=()=>{
                     </Button>
                         {{ saveRouteValue(action) }}
                 </span>
-                <div @click="useBannerHash(data)">
-                    dddddddddd
-                </div>
             </div>
         </template>
     </PageHeading>
@@ -279,7 +276,7 @@ const ceknotif=()=>{
 
     <section>
         <div v-if="loadingState" class="w-full min-h-screen flex justify-center items-center">
-            <FontAwesomeIcon icon='fad fa-spinner-third' class='animate-spin h-12  text-orange-500' aria-hidden='true' />
+            <FontAwesomeIcon icon='fad fa-spinner-third' class='animate-spin h-12  text-gray-600' aria-hidden='true' />
         </div>
 
         <div v-else>
