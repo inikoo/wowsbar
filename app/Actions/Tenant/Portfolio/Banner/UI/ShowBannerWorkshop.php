@@ -8,6 +8,7 @@
 namespace App\Actions\Tenant\Portfolio\Banner\UI;
 
 use App\Actions\InertiaAction;
+use App\Http\Resources\Portfolio\BannerResource;
 use App\Models\Portfolio\Banner;
 use App\Models\Portfolio\PortfolioWebsite;
 use Illuminate\Support\Str;
@@ -43,6 +44,7 @@ class ShowBannerWorkshop extends InertiaAction
 
     public function htmlResponse(Banner $banner, ActionRequest $request): Response
     {
+
         return Inertia::render(
             'Tenant/Portfolio/BannerWorkshop',
             [
@@ -98,7 +100,7 @@ class ShowBannerWorkshop extends InertiaAction
                 ],
                 'firebase'          => true,
                 'bannerLayout'      => $banner->compiled_layout,
-                'banner'            => $banner->only(['slug', 'ulid', 'id', 'code', 'name','state']),
+                'banner'            => BannerResource::make($banner)->getArray(),
                 'autoSaveRoute'     => [
                     'name'       => 'models.banner.update-unpublished-snapshot',
                     'parameters' => [

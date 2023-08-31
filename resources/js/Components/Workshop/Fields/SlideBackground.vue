@@ -65,7 +65,7 @@ const updateLocalFormValue = (newValue) => {
     if (Array.isArray(props.fieldName)) {
         set(localData, props.fieldName,newValue )
     } else {
-        localData[props.fieldName] = newValue 
+        localData[props.fieldName] = newValue
     }
     set(props.data, [props.fieldName], newValue )
 }

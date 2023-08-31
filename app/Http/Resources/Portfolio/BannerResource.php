@@ -10,11 +10,15 @@ namespace App\Http\Resources\Portfolio;
 use App\Actions\Helpers\Images\GetPictureSources;
 use App\Enums\Portfolio\Banner\BannerStateEnum;
 use App\Helpers\ImgProxy\Image;
+use App\Http\Resources\HasSelfCall;
 use App\Models\Portfolio\Banner;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class BannerResource extends JsonResource
 {
+    use HasSelfCall;
+
+
     public function toArray($request): array
     {
         /** @var Banner $banner */
@@ -28,11 +32,13 @@ class BannerResource extends JsonResource
         }
 
         return [
-            'slug'        => $banner->slug,
-            'code'        => $banner->code,
-            'name'        => $banner->name,
-            'state'       => $banner->state,
-            'state_label' => $banner->state->labels()[$banner->state->value],
+            'id'              => $banner->id,
+            'ulid'            => $banner->ulid,
+            'slug'            => $banner->slug,
+            'code'            => $banner->code,
+            'name'            => $banner->name,
+            'state'           => $banner->state,
+            'state_label'     => $banner->state->labels()[$banner->state->value],
             'state_icon'      => match ($banner->state) {
                 BannerStateEnum::LIVE => [
 
