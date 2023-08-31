@@ -54,7 +54,7 @@ class StoreBanner
             "components" => [
             ]
         ];
-        list($layout, $slides,$hash) = ParseBannerLayout::run($layout);
+        list($layout, $slides, $hash) = ParseBannerLayout::run($layout);
 
         data_set($modelData, 'tenant_id', app('currentTenant')->id);
         data_set($modelData, 'data.website_slug', $parent->slug);

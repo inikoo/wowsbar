@@ -119,18 +119,18 @@ const addComponent = async (element) => {
 const removeComponent = (file) => {
     const index = props.data.components.findIndex((item) => item.ulid === file.ulid);
     if (index !== -1) {
-        if (
-            currentComponentBeenEdited.value &&
-            currentComponentBeenEdited.value.ulid === props.data.components[index].ulid
-        ) {
-            const nextIndex = index + 1;
-            selectComponentForEdition(
-                nextIndex < props.data.components.length
-                    ? props.data.components[nextIndex]
-                    : props.data.components.filter((item) => item.ulid !== null)[0]
-            );
-        }
-        props.data.components[index].ulid = null;
+        // if (
+        //     currentComponentBeenEdited.value &&
+        //     currentComponentBeenEdited.value.ulid === props.data.components[index].ulid
+        // ) {
+        //     const nextIndex = index + 1;
+        //     selectComponentForEdition(
+        //         nextIndex < props.data.components.length
+        //             ? props.data.components[nextIndex]
+        //             : props.data.components.filter((item) => item.ulid !== null)[0]
+        //     );
+        // }
+        props.data.components.splice(index,1)
     } else {
         console.log("Index not found");
     }
@@ -516,17 +516,17 @@ console.log(currentComponentBeenEdited.value)
 
                         <!-- Button: Show/hide, delete slide -->
                         <div class="flex justify-center items-center pr-2 justify-self-end"  v-if="slide.user == props.user.username || !slide.user">
-                            <button class="px-2 py-1 text-gray-400 hover:text-gray-500" type="button"
-                                @click="changeVisibility(slide)" title="Show/hide the slide">
-                                <FontAwesomeIcon v-if="slide.hasOwnProperty('visibility') ? slide.visibility : true"
-                                    icon="fas fa-eye" class="text-xs sm:text-sm " />
-                                <FontAwesomeIcon v-else icon="fas fa-eye-slash" class="text-xs sm:text-sm" />
-                            </button>
                             <button  class="px-2 py-1 bg-grays-500 text-red-500/60 hover:text-red-500" type="button" v-if="!slide.visibility"
                                 @click="(e)=>{ e.stopPropagation()
                                     removeComponent(slide)}"
                                 title="Delete the slide">
                                 <FontAwesomeIcon :icon="['fal', 'fa-trash-alt']"  class="text-xs sm:text-sm" />
+                            </button>
+                            <button class="px-2 py-1 text-gray-400 hover:text-gray-500" type="button"
+                                @click="changeVisibility(slide)" title="Show/hide the slide">
+                                <FontAwesomeIcon v-if="slide.hasOwnProperty('visibility') ? slide.visibility : true"
+                                    icon="fas fa-eye" class="text-xs sm:text-sm " />
+                                <FontAwesomeIcon v-else icon="fas fa-eye-slash" class="text-xs sm:text-sm" />
                             </button>
                         </div>
 

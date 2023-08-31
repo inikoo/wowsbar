@@ -9,7 +9,6 @@ namespace App\Actions\Helpers\History;
 
 use App\Actions\Tenant\Auth\User\Traits\WithFormattedUserHistories;
 use App\InertiaTable\InertiaTable;
-use App\Models\Auth\User;
 use Closure;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Lorisleiva\Actions\Concerns\AsAction;

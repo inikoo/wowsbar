@@ -53,6 +53,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read int|null $audits_count
  * @property-read array $es_audits
  * @property-read Media|null $image
+ * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, Media> $images
+ * @property-read int|null $images_count
  * @property-read \App\Models\Portfolio\Snapshot|null $liveSnapshot
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, Media> $media
  * @property-read int|null $media_count
@@ -165,7 +167,7 @@ class Banner extends Model implements HasMedia, Auditable
 
     public function images(): MorphToMany
     {
-        return $this->morphToMany(Media::class, 'model','model_has_media');
+        return $this->morphToMany(Media::class, 'model', 'model_has_media');
     }
 
 }

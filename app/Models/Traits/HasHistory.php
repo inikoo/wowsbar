@@ -15,5 +15,5 @@ trait HasHistory
     use Auditable;
     use ElasticSearchAuditable;
 
-//    protected string $auditDriver = ElasticsearchAuditDriver::class;
+    //    protected string $auditDriver = ElasticsearchAuditDriver::class;
 }

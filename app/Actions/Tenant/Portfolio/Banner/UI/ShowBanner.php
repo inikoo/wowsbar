@@ -61,32 +61,32 @@ class ShowBanner extends InertiaAction
                     $request->route()->parameters
                 ),
                 'title'                          => $banner->code,
-                'banner'            => $banner->only(['slug', 'ulid', 'id', 'code', 'name','state']),
+                'banner'                         => $banner->only(['slug', 'ulid', 'id', 'code', 'name','state']),
                 'pageHead'                       => [
                     'title'   => $banner->name,
                     'icon'    => [
                         'tooltip' => __('banner'),
-                        'icon'  => 'fal fa-window-maximize'
+                        'icon'    => 'fal fa-window-maximize'
                     ],
                     'iconRight'    =>
-                        match($banner->state){
-                            BannerStateEnum::LIVE=>[
+                        match($banner->state) {
+                            BannerStateEnum::LIVE=> [
 
                                     'tooltip' => __('live'),
-                                    'icon'  => 'fal fa-broadcast-tower',
-                                    'class'=>'text-green-600'
+                                    'icon'    => 'fal fa-broadcast-tower',
+                                    'class'   => 'text-green-600'
 
                             ],
-                            BannerStateEnum::UNPUBLISHED=>[
+                            BannerStateEnum::UNPUBLISHED=> [
 
                                     'tooltip' => __('unpublished'),
-                                    'icon'  => 'fal fa-seedling'
+                                    'icon'    => 'fal fa-seedling'
 
                             ],
-                            BannerStateEnum::RETIRED=>[
+                            BannerStateEnum::RETIRED=> [
 
                                     'tooltip' => __('retired'),
-                                    'icon'  => 'fal fa-eye-slash'
+                                    'icon'    => 'fal fa-eye-slash'
 
                             ]
                         }
