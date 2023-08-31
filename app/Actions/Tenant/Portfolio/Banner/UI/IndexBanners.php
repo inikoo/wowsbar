@@ -9,7 +9,7 @@ namespace App\Actions\Tenant\Portfolio\Banner\UI;
 
 use App\Actions\InertiaAction;
 use App\Actions\Tenant\Portfolio\PortfolioWebsite\UI\ShowPortfolioWebsite;
-use App\Actions\UI\Tenant\Portfolio\ShowPortfolioDashboard;
+use App\Actions\UI\Tenant\Portfolio\ShowPortfolio;
 use App\Enums\Portfolio\Banner\BannerStateEnum;
 use App\Http\Resources\Portfolio\BannerResource;
 use App\InertiaTable\InertiaTable;
@@ -283,7 +283,7 @@ class IndexBanners extends InertiaAction
         return match ($routeName) {
             'portfolio.banners.index' =>
             array_merge(
-                ShowPortfolioDashboard::make()->getBreadcrumbs(),
+                ShowPortfolio::make()->getBreadcrumbs(),
                 $headCrumb(
                     [
                         'name' => 'portfolio.banners.index'

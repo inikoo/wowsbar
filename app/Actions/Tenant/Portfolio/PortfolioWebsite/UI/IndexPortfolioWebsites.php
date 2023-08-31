@@ -8,7 +8,7 @@
 namespace App\Actions\Tenant\Portfolio\PortfolioWebsite\UI;
 
 use App\Actions\InertiaAction;
-use App\Actions\UI\Tenant\Portfolio\ShowPortfolioDashboard;
+use App\Actions\UI\Tenant\Portfolio\ShowPortfolio;
 use App\Http\Resources\Portfolio\PortfolioWebsiteResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\Portfolio\PortfolioWebsite;
@@ -154,7 +154,7 @@ class IndexPortfolioWebsites extends InertiaAction
         return match ($routeName) {
             'portfolio.websites.index' =>
             array_merge(
-                ShowPortfolioDashboard::make()->getBreadcrumbs(),
+                ShowPortfolio::make()->getBreadcrumbs(),
                 $headCrumb(
                     [
                         'name' => 'portfolio.websites.index',

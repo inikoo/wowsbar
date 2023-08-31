@@ -8,7 +8,7 @@
 namespace App\Actions\Tenant\Portfolio\Gallery\UI\UploadedImages;
 
 use App\Actions\InertiaAction;
-use App\Actions\UI\Tenant\Portfolio\ShowPortfolioDashboard;
+use App\Actions\UI\Tenant\Portfolio\ShowPortfolio;
 use App\Models\Media\Media;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -100,7 +100,7 @@ class ShowUploadedImage extends InertiaAction
         return match ($routeName) {
             'portfolio.images.index' =>
             array_merge(
-                ShowPortfolioDashboard::make()->getBreadcrumbs(),
+                ShowPortfolio::make()->getBreadcrumbs(),
                 $headCrumb(
                     [
                         'name' => 'portfolio.images.index',
