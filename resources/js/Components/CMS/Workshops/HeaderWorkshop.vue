@@ -164,7 +164,7 @@ const Uploadimage = () => {
                                             class='relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-none'>
                                             <div
                                                 :class="['flex items-center justify-center rounded-md border py-3 px-3 text-sm font-medium uppercase sm:flex-1']">
-                                                <input type="file" multiple name="file" id="fileInput" class="hidden-input"
+                                                <input type="file" multiple name="file" id="fileInput" class="sr-only"
                                                     @change="Uploadimage" ref="fileInput" accept=".jpg,.jpeg,.png" />
                                                 <label for="fileInput" as="span">Add Image</label>
                                             </div>
@@ -209,12 +209,3 @@ const Uploadimage = () => {
         </div>
     </div>
 </template>
-
-
-<style>.hidden-input {
-    opacity: 0;
-    overflow: hidden;
-    position: absolute;
-    width: 1px;
-    height: 1px;
-}</style>

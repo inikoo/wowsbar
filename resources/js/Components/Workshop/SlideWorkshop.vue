@@ -5,7 +5,7 @@
   -->
 
 <script setup lang="ts">
-import { ref, watch, toRefs } from 'vue'
+import { ref } from 'vue'
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { faImage, faExpandArrows, faAlignCenter, faTrash, faStopwatch } from "../../../private/pro-light-svg-icons"
 import PrimitiveInput from '@/Components/Forms/Fields/Primitive/PrimitiveInput.vue'
@@ -15,6 +15,7 @@ import SlideBackground from "@/Components/Workshop/Fields/SlideBackground.vue"
 import Corners from "@/Components/Workshop/Fields/Corners.vue"
 import Colorpicker from '@/Components/Workshop/Fields/ColorPicker.vue'
 import SelectFont from '@/Components/Workshop/Fields/SelectFont.vue'
+import TextAlign from './Fields/TextAlign.vue'
 
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { trans } from "laravel-vue-i18n"
@@ -40,6 +41,7 @@ const getComponent = (componentName: string) => {
         'colorpicker' : Colorpicker,
         'select': Select,
         'selectFont': SelectFont,
+        'textAlign': TextAlign
     };
     return components[componentName]
 };
