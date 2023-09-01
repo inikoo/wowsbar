@@ -2,6 +2,8 @@
 import { trans } from "laravel-vue-i18n"
 import { ref, watch, computed, defineEmits  } from 'vue'
 import Input from '@/Components/Forms/Fields/Input.vue'
+import ColorPicker from "./ColorPicker.vue"
+import Radio from '@/Components/Forms/Fields/Primitive/PrimitiveRadio.vue'
 import { get, cloneDeep, set } from 'lodash'
 
 const props = defineProps<{
@@ -56,6 +58,53 @@ const optionType = [
                 label: trans('Text'),
                 value: null
             },
+            {
+                name: "color",
+                type: 'colorPicker',
+                label: trans('color'),
+                value: null
+            },
+            {
+                name: "fontSize",
+                type: "radio",
+                label: trans("Font Size"),
+                value: null,
+                defaultValue: { fontTitle: "text-[25px] lg:text-[44px]", fontSubtitle: "text-[12px] lg:text-[20px]" },
+                options: [
+                    { label: "Extra Small", value: {
+                            fontTitle: "text-[13px] lg:text-[21px]",
+                            fontSubtitle: "text-[8px] lg:text-[12px]"
+                        }
+                    },
+                    {
+                        label: "Small",
+                        value: {
+                            fontTitle: "text-[18px] lg:text-[32px]",
+                            fontSubtitle: "text-[10px] lg:text-[15px]"
+                        }
+                    },
+                    {
+                        label: "Normal",
+                        value: {
+                            fontTitle: "text-[25px] lg:text-[44px]",
+                            fontSubtitle: "text-[12px] lg:text-[20px]"
+                        }
+                    },
+                    {
+                        label: "Large", value: {
+                            fontTitle: "text-[30px] lg:text-[60px]",
+                            fontSubtitle: "text-[15px] lg:text-[25px]"
+                        }
+                    },
+                    {
+                        label: "Extra Large",
+                        value: {
+                            fontTitle: "text-[40px] lg:text-[70px]",
+                            fontSubtitle: "text-[20px] lg:text-[30px]"
+                        },
+                    },
+                ],
+            },
         ]
     },
     {
@@ -72,6 +121,12 @@ const optionType = [
                 name: 'subtitle',
                 type: 'input',
                 label: trans('subtitle'),
+                value: null
+            },
+            {
+                name: ['style','color'],
+                type: 'colorPicker',
+                label: trans('color'),
                 value: null
             },
         ]
@@ -151,7 +206,8 @@ const setUpData = () => {
     const currentType = Type[current.value];
     let data = {};
     for (const s of currentTypeFields.value) {
-        data[s.name] = s.value;
+        set(data,s.name,get(s,'value',null))
+        // data[s.name] = s.value;
     }
 
     if (!value.value) {
@@ -186,8 +242,9 @@ const setUpData = () => {
             }
         }
     }
-    
 
+    console.log('iniiiii',value.value)
+    
     updateFormValue(value.value)
 };
 
@@ -230,9 +287,14 @@ const updateFormValue = (newValue) => {
     }
 
     // Step 7: Update props.data with the new object
+    console.log('target',target)
     emits("update:data", target);
 };
 
+const OnchangeFields=(field,value)=>{
+    field.value = value
+    setUpData()
+}
 
 defineExpose({
     setUpData,
@@ -273,18 +335,24 @@ defineExpose({
 
             <!-- Field -->
             <div class="mt-6">
-                <div v-for="(fieldData, index ) in currentTypeFields" :key="index">
+                <div v-for="(field, index ) in currentTypeFields" :key="index">
                     <dl class="pb-4 flex flex-col max-w-lg gap-1">
                         <dt class="text-sm font-medium text-gray-500 capitalize">
                             <div class="inline-flex items-start leading-none">
-                                <span>{{ fieldData.label }}</span>
+                                <span>{{ field.label }}</span>
                             </div>
                         </dt>
                         <dd class="sm:col-span-2">
                             <div class="mt-1 flex text-sm text-gray-700 sm:mt-0">
-                                <div class="relative flex-grow">
-                                    <input v-model=fieldData.value @input="setUpData"
+                                <div class="relative flex-grow" v-if="field.type == 'input'">
+                                    <input v-model=field.value @input="setUpData"
                                         class="block w-full shadow-sm rounded-md dark:bg-gray-600 dark:text-gray-400 focus:ring-gray-500 focus:border-gray-500 sm:text-sm border-gray-300 dark:border-gray-500 read-only:bg-gray-100 read-only:ring-0 read-only:ring-transparent read-only:text-gray-500" />
+                                </div>
+                                <div class="relative flex-grow" v-if="field.type == 'colorPicker'">
+                                    <ColorPicker :color=field.value @changeColor="(color)=>OnchangeFields(field,color)"/>
+                                </div>
+                                <div class="relative flex-grow" v-if="field.type == 'radio'">
+                                    <Radio :radioValue="field.value" :fieldData="field" @onChange="(color)=>OnchangeFields(field,color)"/>
                                 </div>
                             </div>
                         </dd>

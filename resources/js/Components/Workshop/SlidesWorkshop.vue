@@ -5,8 +5,7 @@
   -->
 
 <script setup lang="ts">
-import { ref, onMounted, watch, computed } from "vue"
-import axios from "axios"
+import { ref, watch, } from "vue"
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import {
     faTrashAlt,
@@ -25,7 +24,6 @@ import { trans } from "laravel-vue-i18n"
 import SlideWorkshop from "@/Components/Workshop/SlideWorkshop.vue"
 import Button from "../Elements/Buttons/Button.vue"
 import { get, isNull } from "lodash"
-import { router } from "@inertiajs/vue3"
 import SliderCommonWorkshop from "./SliderCommonWorkshop.vue"
 import Modal from '@/Components/Utils/Modal.vue'
 import GalleryImages from "@/Components/Workshop/GalleryImages.vue"
@@ -320,6 +318,29 @@ const ComponentsBlueprint = ref([
                 type: "colorpicker",
                 label: trans("color"),
                 value: ["layout", "centralStage", "style", "color"],
+            },
+            {
+                name: ["layout", "centralStage", "style", "textAlign"],
+                type: "textAlign",
+                label: trans("Text Align"),
+                value: ["layout", "centralStage", "style", "textAlign"],
+                options: [
+                    {
+                        label: "Align left",
+                        value: "left",
+                        icon: 'fal fa-align-left'
+                    },
+                    {
+                        label: "Align center",
+                        value: "center",
+                        icon: 'fal fa-align-center'
+                    },
+                    {
+                        label: "Align right",
+                        value: "right",
+                        icon: 'fal fa-align-right'
+                    },
+                ],
             },
         ],
     },
