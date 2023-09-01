@@ -23,8 +23,12 @@ class IndexHistories
     use WithAttributes;
     use WithFormattedUserHistories;
 
-    public function handle($prefix = null): LengthAwarePaginator|array|bool
+    public string $model;
+
+    public function handle($model, $prefix = null): LengthAwarePaginator|array|bool
     {
+        $this->model = class_basename($model);
+
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
             $query->where(function ($query) use ($value) {
                 $query->whereAnyWordStartWith('user_type', $value)
@@ -35,10 +39,12 @@ class IndexHistories
 
         $queryBuilder = QueryBuilder::for(Audit::class);
 
+        $queryBuilder->where('auditable_type', $this->model);
+
         return $queryBuilder
             ->defaultSort('user_type')
             ->allowedSorts(['auditable_id', 'auditable_type', 'user_type', 'url'])
-            ->allowedFilters([$globalSearch,'auditable_id','auditable_type'])
+            ->allowedFilters([$globalSearch,'auditable_id', 'auditable_type'])
             ->withPaginator($prefix)
             ->withQueryString();
     }
@@ -54,9 +60,8 @@ class IndexHistories
                 ->column(key: 'url', label: __('URL'), canBeHidden: false, sortable: true, searchable: true)
                 ->column(key: 'old_values', label: __('Old Values'), canBeHidden: false, sortable: true)
                 ->column(key: 'new_values', label: __('New Values'), canBeHidden: false, sortable: true)
-                ->column(key: 'event', label: __('Event'), canBeHidden: false, sortable: true)
-                ->column(key: 'auditable_type', label: __('Auditable Type'), canBeHidden: false)
-                ->column(key: 'auditable_id', label: __('Auditable ID'), canBeHidden: false)
+                ->column(key: 'event', label: __('Action'), canBeHidden: false, sortable: true)
+                ->column(key: 'auditable_type', label: __('Module'), canBeHidden: false)
                 ->column(key: 'datetime', label: __('Date & Time'), canBeHidden: false, sortable: true)
                 ->defaultSort('ip_address');
         };
