@@ -117,6 +117,16 @@ watch(current, (newVal) => {
     swiperRef.value.$el.swiper.slideToLoop(newVal, 0, false)
 })
 
+const generateGif = (file) => {
+		let fileSrc = URL.createObjectURL(file)
+		setTimeout(() => {
+			URL.revokeObjectURL(fileSrc)
+		}, 1000)
+		return fileSrc
+	} 
+
+console.log('sssss',setData)
+
 </script>
 
 <template>
@@ -153,7 +163,8 @@ watch(current, (newVal) => {
             >
                 <li v-for="(item, index) in setData" :key="index">
                     <div @click="current = index" :class="['p-2.5 border border-solid rounded-lg cursor-pointer ', setData[current] == item ?  'border-gray-400 bg-gray-200'  : 'border-gray-300']">
-                        <CropComponents :data="item"  :ratio="ratio"/>
+                        <CropComponents v-if="item.originalFile.type !== 'image/gif'" :data="item"  :ratio="ratio"/>
+                        <div v-else> <img :src="generateGif(item.originalFile)" :alt="item.originalFile.name"></div>
                         <div class="flex justify-center align-middle">
                             <h3
                                 :class="['leading-4 tracking-tight', setData[current] == item ? 'text-orange-500 font-semibold' : 'text-gray-500']"
