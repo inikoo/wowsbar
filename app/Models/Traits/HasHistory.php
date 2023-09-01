@@ -15,5 +15,12 @@ trait HasHistory
     use Auditable;
     use ElasticSearchAuditable;
 
+    protected array $auditEvents = [
+        'created',
+        'updated',
+        'deleted',
+        'restored',
+    ];
+
     //    protected string $auditDriver = ElasticsearchAuditDriver::class;
 }

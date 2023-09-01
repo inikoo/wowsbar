@@ -320,10 +320,10 @@ const ComponentsBlueprint = ref([
                 value: ["layout", "centralStage", "style", "color"],
             },
             {
-                name: ["layout", "centralStage", "style", "textAlign"],
+                name: ["layout", "centralStage", "textAlign"],
                 type: "textAlign",
                 label: trans("Text Align"),
-                value: ["layout", "centralStage", "style", "textAlign"],
+                value: ["layout", "centralStage", "textAlign"],
                 options: [
                     {
                         label: "Align left",
@@ -469,6 +469,29 @@ const CommonBlueprint = ref([
                 type: "colorpicker",
                 label: trans("color"),
                 value: ["common", "centralStage", "style", "color"],
+            },
+            {
+                name: ["common", "centralStage", "textAlign"],
+                type: "textAlign",
+                label: trans("Text Align"),
+                value: ["common", "centralStage", "textAlign"],
+                options: [
+                    {
+                        label: "Align left",
+                        value: "left",
+                        icon: 'fal fa-align-left'
+                    },
+                    {
+                        label: "Align center",
+                        value: "center",
+                        icon: 'fal fa-align-center'
+                    },
+                    {
+                        label: "Align right",
+                        value: "right",
+                        icon: 'fal fa-align-right'
+                    },
+                ],
             },
         ],
     },

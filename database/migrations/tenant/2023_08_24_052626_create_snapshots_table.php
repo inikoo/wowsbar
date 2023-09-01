@@ -17,6 +17,8 @@ return new class () extends Migration {
             $table->mediumIncrements('id');
             $table->string('slug')->nullable()->collation('und_ns');
             $table->unsignedSmallInteger('tenant_id');
+            $table->string('user_type')->nullable();
+            $table->unsignedSmallInteger( 'user_id')->nullable();
             $table->string('parent_type')->nullable();
             $table->unsignedInteger('parent_id')->nullable();
             $table->foreign('tenant_id')->references('id')->on('tenants')->onUpdate('cascade')->onDelete('cascade');
@@ -28,6 +30,8 @@ return new class () extends Migration {
             $table->string('comment')->nullable();
             $table->timestamps();
             $table->index(['parent_type', 'parent_id']);
+            $table->index(['user_id', 'user_type']);
+
         });
         Schema::table('banners', function (Blueprint $table) {
             $table->foreign('unpublished_snapshot_id')->references('id')->on('snapshots');
