@@ -37,7 +37,10 @@ class StoreUser
         /** @var User $user */
         $user = $tenant->users()->create($objectData);
         $user->stats()->create();
-        SetUserAvatar::run($user);
+
+        if(!$user->wasRecentlyCreated){
+            SetUserAvatar::run($user);
+        }
 
         UserHydrateUniversalSearch::dispatch($user);
         TenantHydrateUsers::dispatch(app('currentTenant'));
@@ -61,7 +64,6 @@ class StoreUser
             'password'     => ['sometimes', 'required', app()->isLocal() || app()->environment('testing') ? null : Password::min(8)->uncompromised()],
             'contact_name' => ['required', 'string', 'max:255'],
             'email'        => ['required', 'email']
-
         ];
     }
 

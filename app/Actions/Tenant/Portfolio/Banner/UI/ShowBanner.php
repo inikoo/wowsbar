@@ -153,7 +153,8 @@ class ShowBanner extends InertiaAction
                     : Inertia::lazy(fn () => HistoryResource::collection(IndexHistories::run($banner)))
 
             ]
-        )->table(IndexHistories::make()->tableStructure());
+        )->table(IndexHistories::make()->tableStructure())
+            ->table(IndexSnapshots::make()->tableStructure(null, 'sht'));
     }
 
     public function getBreadcrumbs(string $routeName, array $routeParameters, string $suffix = null): array
