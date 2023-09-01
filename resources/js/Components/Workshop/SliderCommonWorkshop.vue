@@ -30,7 +30,7 @@ const getComponent = (componentName: string) => {
         'text': PrimitiveInput,
         'corners': Corners,
         'range': Range,
-        'colorpicker' : Colorpicker,
+        'colorpicker': Colorpicker,
         'select': Select,
         'radio': Radio,
     };
@@ -45,9 +45,8 @@ defineExpose({
 });
 
 
-const setCurrent=(key)=>{
-    if(props.blueprint[key].title == 'delete') props.remove(props.currentComponentBeenEdited)
-    else current.value = key
+const setCurrent = (key) => {
+    current.value = key
 }
 
 </script>
@@ -58,50 +57,45 @@ const setCurrent=(key)=>{
         <!-- Left Tab: Navigation -->
         <aside class="py-0 lg:col-span-3 lg:h-full">
             <nav role="navigation" class="space-y-1">
-                <ul>
+                <ul class="flex sm:block">
                     <li v-for="(item, key) in blueprint" @click="setCurrent(key)" :class="[
+                        'group cursor-pointer px-6 sm:px-3 py-2 flex items-center justify-center sm:justify-start text-sm font-medium',
                         key == current
                             ? 'tabNavigationActive'
                             : 'tabNavigation',
-                        'group cursor-pointer px-3 py-2 flex items-center text-sm font-medium',
-                    ]" :aria-current="key === current ? 'page' : undefined" id="tab-nav">
-                        <FontAwesomeIcon v-if="item.icon" aria-hidden="true" class="flex-shrink-0 -ml-1 mr-3 h-6 w-6 text-gray-400 group-hover:text-gray-500" :icon="item.icon" />
-
-                        <span class="capitalize truncate">{{trans(item.title)}}</span>
+                    ]" :aria-current="key === current ? 'page' : undefined">
+                        <FontAwesomeIcon v-if="item.icon" aria-hidden="true"
+                            class="flex-shrink-0 sm:-ml-1 sm:mr-3 h-6 w-6 text-gray-500 sm:text-gray-400 sm:group-hover:text-gray-500"
+                            :icon="item.icon" />
+                        <span class="hidden sm:inline capitalize truncate">{{ trans(item.title) }}</span>
                     </li>
                 </ul>
             </nav>
         </aside>
 
         <!-- Content of forms -->
-        <div class="px-4 sm:px-6 md:px-4 col-span-9">
-            <div class="divide-y divide-grey-200 flex flex-col">
-                <div class="mt-2 pt-3">
-                    <div v-for="(fieldData, index ) in blueprint[current].fields" :key="index" class="">
-                        <dl class="divide-y divide-green-200  ">
-                            <div class="pb-4 sm:pb-5 sm:gap-4 max-w-2xl ">
+        <div class="px-4 sm:px-6 md:px-4 pt-6 xl:pt-4 col-span-9 flex flex-grow justify-center overflow-auto">
+            <div class="flex flex-col w-full ">
+                <dl v-for="(fieldData, index ) in blueprint[current].fields" :key="index"
+                    class="pb-4 sm:pb-5 sm:gap-4 w-full">
+                    <!-- Title -->
+                    <dt v-if="fieldData.name != 'image_source' && fieldData.label"
+                        class="text-sm font-medium text-gray-500 capitalize">
+                        <div class="inline-flex items-start leading-none">
+                            <span>{{ fieldData.label }}</span>
+                        </div>
+                    </dt>
 
-                                <!-- Title -->
-                                <dt class="text-sm font-medium text-gray-500 capitalize">
-                                    <div class="inline-flex items-start leading-none">
-                                        <span>{{ fieldData.label }}</span>
-                                    </div>
-                                </dt>
-
-                                <!-- Fields -->
-                                <dd class="">
-                                    <div class="mt-1 flex text-sm text-gray-700 sm:mt-0">
-                                        <div class="relative flex-grow">
-                                            <component :is="getComponent(fieldData['type'])" :data="currentComponentBeenEdited"
-                                                :fieldName="fieldData.name" :fieldData="fieldData" :key="index" :counter="false">
-                                            </component>
-                                        </div>
-                                    </div>
-                                </dd>
-                            </div>
-                        </dl>
-                    </div>
-                </div>
+                    <!-- Fields -->
+                    <dd class="flex text-sm text-gray-700 sm:mt-0 w-full">
+                        <div class="relative flex-grow">
+                            <component :is="getComponent(fieldData['type'])" :data="currentComponentBeenEdited"
+                                :fieldName="fieldData.name" :fieldData="fieldData" :key="index" :counter="false"
+                                :common="common">
+                            </component>
+                        </div>
+                    </dd>
+                </dl>
             </div>
         </div>
     </div>

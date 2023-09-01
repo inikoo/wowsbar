@@ -14,6 +14,7 @@ import Radio from '@/Components/Forms/Fields/Primitive/PrimitiveRadio.vue'
 import SlideBackground from "@/Components/Workshop/Fields/SlideBackground.vue"
 import Corners from "@/Components/Workshop/Fields/Corners.vue"
 import Colorpicker from '@/Components/Workshop/Fields/ColorPicker.vue'
+import SelectFont from '@/Components/Workshop/Fields/SelectFont.vue'
 
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { trans } from "laravel-vue-i18n"
@@ -38,6 +39,7 @@ const getComponent = (componentName: string) => {
         'corners': Corners,
         'colorpicker' : Colorpicker,
         'select': Select,
+        'selectFont': SelectFont,
     };
     return components[componentName]
 };
@@ -81,7 +83,7 @@ const setCurrent=(key)=>{
         </aside>
 
         <!-- Content of forms -->
-        <div class="px-4 sm:px-6 md:px-4 pt-6 xl:pt-4 col-span-9 flex flex-grow justify-center">
+        <div class="px-4 sm:px-6 md:px-4 pt-6 xl:pt-4 col-span-9 flex flex-grow justify-center overflow-auto">
             <div class="flex flex-col w-full ">
                 <dl v-for="(fieldData, index ) in blueprint[current].fields" :key="index" class="pb-4 sm:pb-5 sm:gap-4 w-full">
                     <!-- Title -->
