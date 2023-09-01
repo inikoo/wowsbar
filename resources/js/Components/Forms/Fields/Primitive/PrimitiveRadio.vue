@@ -2,9 +2,14 @@
 
 import { RadioGroup, RadioGroupLabel, RadioGroupOption, RadioGroupDescription } from '@headlessui/vue'
 import { ref, watch, defineEmits } from 'vue'
-import { set , isEqual } from 'lodash'
+import { set , isEqual, get } from 'lodash'
 
-const props = defineProps(['data', 'fieldName', 'fieldData'])
+const props = defineProps<{
+    fieldName?: string | [];
+    fieldData?:Object
+    data?: Object;
+    radioValue?: Object | String;
+}>()
 const emit = defineEmits()
 
 const setFormValue = (data: Object, fieldName: String) => {
@@ -23,10 +28,11 @@ const getNestedValue = (obj: Object, keys: Array) => {
 }
 
 
-const value = ref(setFormValue(props.data, props.fieldName))
+const value = ref(props.data ? setFormValue(props.data, props.fieldName) : get(props,'radioValue',null))
 
 watch(value, (newValue) => {
-    // Update the form field value when the value ref changes
+    console.log('ddddd',emit)
+    emit('onChange', newValue);
     updateFormValue(newValue);
 });
 
