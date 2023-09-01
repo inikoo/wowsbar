@@ -19,7 +19,7 @@ const props = defineProps<{
     }
     data: Object
 }>()
-
+console.log(props)
 
 const emit = defineEmits()
 
@@ -32,17 +32,17 @@ const changeColor = (value) => {
 
 const setFormValue = (data: Object, fieldName: String) => {
     if (Array.isArray(fieldName)) {
-        return getNestedValue(data, fieldName);
+        return getNestedValue(data, fieldName)
     } else {
-        return data[fieldName];
+        return data[fieldName]
     }
 }
 
-const getNestedValue = (obj: Object, keys: Array) => {
+const getNestedValue = (obj: Object, keys: string[]) => {
     return keys.reduce((acc, key) => {
-        if (acc && typeof acc === 'object' && key in acc) return acc[key];
-        return 'green';
-    }, obj);
+        if (acc && typeof acc === 'object' && key in acc) return acc[key]
+        return 'rgb(55 65 81)'
+    }, obj)
 }
 
 
@@ -50,19 +50,19 @@ const color = ref(setFormValue(props.data, props.fieldName))
 
 watch(color, (newValue) => {
     // Update the form field value when the value ref changes
-    updateFormValue(newValue);
-});
+    updateFormValue(newValue)
+})
 
 const updateFormValue = (newValue) => {
-    let target = { ...props.data };
+    let target = { ...props.data }
     if (Array.isArray(props.fieldName)) {
-        set(target, props.fieldName, newValue);
+        set(target, props.fieldName, newValue)
     } else {
-        target[props.fieldName] = newValue;
+        target[props.fieldName] = newValue
     }
     // Emit an event to notify the parent component
-    emit('input', target);
-};
+    emit('input', target)
+}
 
 </script>
 
@@ -81,10 +81,7 @@ const updateFormValue = (newValue) => {
                     enter-to-class="translate-y-0 opacity-100" leave-active-class="transition duration-150 ease-in"
                     leave-from-class="translate-y-0 opacity-100" leave-to-class="translate-y-1 opacity-0">
                     <PopoverPanel v-show="open" class="absolute bottom-full left-1/2 z-10 mb-3 -translate-x-1/2 transform px-4 sm:px-0">
-                        <div :style="{ background: color }">
-                            <ColorPicker theme="light" v-model="color" @changeColor="changeColor"
-                                style="width: 225px;" />
-                        </div>
+                        <ColorPicker theme="light" v-model="color" @changeColor="changeColor" style="width: 225px;" />
                     </PopoverPanel>
                 </Transition>
             </div>
