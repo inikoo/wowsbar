@@ -44,7 +44,7 @@ class BannerResource extends JsonResource
 
                     'tooltip' => __('live'),
                     'icon'    => 'fal fa-broadcast-tower',
-                    'class'   => 'text-green-600'
+                    'class'   => 'text-green-600 animate-pulse'
 
                 ],
                 BannerStateEnum::UNPUBLISHED => [
