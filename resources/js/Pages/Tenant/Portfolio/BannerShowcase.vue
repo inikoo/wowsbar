@@ -5,14 +5,16 @@
   -->
 
 <script setup lang="ts">
+import { computed, onMounted } from 'vue'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import Input from '@/Components/Forms/Fields/Input.vue';
+import Input from '@/Components/Forms/Fields/Input.vue'
 import Slider from "@/Components/Slider/Slider.vue"
 import { trans } from "laravel-vue-i18n"
 
 
 import { faWindowMaximize, faGlobe } from "@/../private/pro-light-svg-icons"
-import EmptyState from '@/Components/Utils/EmptyState.vue';
+import EmptyState from '@/Components/Utils/EmptyState.vue'
+import { cloneDeep } from 'lodash'
 
 library.add(faWindowMaximize, faGlobe)
 
@@ -47,6 +49,10 @@ const props = defineProps<{
         'state' : String
     }
 }>()
+
+onMounted(() => {
+    props.data.banner.components = cloneDeep(props.data.banner.components).filter(item => item.visibility === true)
+})
 
 </script>
 
