@@ -3,7 +3,7 @@
 import { ColorPicker } from 'vue-color-kit'
 import 'vue-color-kit/dist/vue-color-kit.css'
 import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue'
-import { set,get } from 'lodash'
+import { set } from 'lodash'
 import { ref, watch } from 'vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faPaintBrushAlt } from '@/../private/pro-regular-svg-icons'
@@ -11,14 +11,13 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 library.add(faPaintBrushAlt)
 
 const props = defineProps<{
-    fieldName?: string | []
+    fieldName: string | []
     fieldData?: {
         placeholder: string
         readonly: boolean
         copyButton: boolean
     }
-    data?: Object
-    color?:String
+    data: Object
 }>()
 console.log(props)
 
@@ -28,7 +27,6 @@ const emit = defineEmits()
 const changeColor = (value) => {
     const { r, g, b, a } = value.rgba
     color.value = `rgba(${r}, ${g}, ${b}, ${a})`
-    emit('changeColor',color.value)
 }
 
 
@@ -48,7 +46,7 @@ const getNestedValue = (obj: Object, keys: string[]) => {
 }
 
 
-const color = ref(props.data ? setFormValue(props.data, props.fieldName) : get(props,'color',null))
+const color = ref(setFormValue(props.data, props.fieldName))
 
 watch(color, (newValue) => {
     // Update the form field value when the value ref changes
@@ -62,7 +60,6 @@ const updateFormValue = (newValue) => {
     } else {
         target[props.fieldName] = newValue
     }
-    console.log(target)
     // Emit an event to notify the parent component
     emit('input', target)
 }

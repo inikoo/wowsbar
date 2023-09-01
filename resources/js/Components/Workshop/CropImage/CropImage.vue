@@ -5,9 +5,9 @@
   -->
 
 <script setup lang="ts">
-import { ref, watch } from "vue"
-import { Swiper, SwiperSlide } from "swiper/vue"
-import { Pagination, Navigation } from "swiper/modules"
+import { ref } from "vue"
+// import { Swiper, SwiperSlide } from "swiper/vue"
+// import { Pagination, Navigation } from "swiper/modules"
 import "swiper/css"
 import "swiper/css/navigation"
 
@@ -26,7 +26,10 @@ const props = withDefaults(defineProps<{
     data: FileList;
     imagesUploadRoute: object;
     respone : Function
-    ratio?:  object, 
+    ratio?:  {
+        w: number
+        h: number
+    }, 
 }>(), {
     ratio: { w : 4, h : 1 } 
 })
@@ -52,7 +55,7 @@ const generateThumbnail = (file) => {
         let fileSrc = URL.createObjectURL(file.originalFile);
         setTimeout(() => {
             URL.revokeObjectURL(fileSrc);
-        }, 1000)
+        }, 200)
         return fileSrc
     } else if (file.imagePosition) {
         return file.imagePosition.canvas.toDataURL()
@@ -110,20 +113,20 @@ const addComponent = async () => {
     }
 }
 
-const swiperRef = ref()
+// const swiperRef = ref()
 const current = ref(0)
 
-watch(current, (newVal) => {
-    swiperRef.value.$el.swiper.slideToLoop(newVal, 0, false)
-})
+// watch(current, (newVal) => {
+//     console.log(current)
+//     swiperRef.value.$el.swiper.slideToLoop(newVal, 0, false)
+// })
 
 </script>
 
 <template>
-    <div
-        class="mb-6 overflow-hidden relative border border-gray-300 shadow-md w-full aspect-[2/1] md:aspect-[3/1] lg:aspect-[4/1]"
-    >
-        <Swiper
+    <!-- Preview cropped image -->
+    <div class="mb-6 relative w-full flex justify-center">
+        <!-- <Swiper
             ref="swiperRef"
             :slideToClickedSlide="true"
             :spaceBetween="-1"
@@ -143,8 +146,18 @@ watch(current, (newVal) => {
                     />
                 </div>
             </SwiperSlide>
-        </Swiper>
+        </Swiper> -->
+        <div class="flex items-center border-2 border-gray-500 shadow-md"
+            :class="[
+                ratio ? `aspect-[${ratio.w}/${ratio.h}]` : 'aspect-[2/1] md:aspect-[3/1] lg:aspect-[4/1]',
+                ratio.w == 4 ? 'w-full' : `w-${ratio.w}/4`
+            ]"
+        >
+            <img :src="generateThumbnail(setData[current])" alt="" class="w-full h-full object-fit" />
+        </div>
     </div>
+
+    <!-- List: the uploaded images -->
     <div class="mb-6 space-y-3">
         <div class="max-w-full py-5 px-6 h-96 overflow-y-auto border border-solid border-gray-300 rounded-lg">
             <ul
@@ -155,9 +168,7 @@ watch(current, (newVal) => {
                     <div @click="current = index" :class="['p-2.5 border border-solid rounded-lg cursor-pointer ', setData[current] == item ?  'border-gray-400 bg-gray-200'  : 'border-gray-300']">
                         <CropComponents :data="item"  :ratio="ratio"/>
                         <div class="flex justify-center align-middle">
-                            <h3
-                                :class="['leading-4 tracking-tight', setData[current] == item ? 'text-orange-500 font-semibold' : 'text-gray-500']"
-                            >
+                            <h3 :class="['leading-4 tracking-tight', setData[current] == item ? 'text-orange-500 font-semibold' : 'text-gray-500']">
                                 {{ item.originalFile.name }}
                             </h3>
                         </div>

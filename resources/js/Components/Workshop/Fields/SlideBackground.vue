@@ -103,20 +103,25 @@ const screenViewChange = (value) => {
 
 <template>
     <div class="block w-full">
+        <!-- Popup: add image from Gallery -->
         <Modal :show="isOpen" @onClose="closeModal">
             <div>
                 <GalleryImages :addImage="uploadImageRespone" :closeModal="() => isOpen = false" :multiple="false" />
             </div>
         </Modal>
+
+        <!-- Popup: Crop when add image -->
         <Modal :isOpen="isOpenCropModal" @onClose="closeModalisOpenCropModal">
             <div>
                 <CropImage :data="addFiles" :imagesUploadRoute="props.fieldData.uploadRoute"
                     :respone="uploadImageRespone" :ratio="ratio"/>
             </div>
         </Modal>
+
         <div class="flex justify-end">
             <ScreenView @screenView="screenViewChange" />
         </div>
+        
         <div class="flex justify-center">
             <div :class="[
                 screenView
@@ -126,12 +131,13 @@ const screenViewChange = (value) => {
                         'aspect-[4/1] w-full': screenView === 'desktop'
                     }
                     : 'w-full aspect-[2/1] md:aspect-[3/1] lg:aspect-[4/1]'
-            ], 'overflow-hidden border border-gray-300 shadow'">
-                <Image class="object-cover" :src="get(value, [`${screenView}`, 'source'], value.desktop.source)"
-                    :alt="value.name" />
+            , 'overflow-hidden border border-gray-300 shadow']">
+                <div class="relative w-full h-full flex items-center bg-red-500">
+                    <Image class="h-full flex" :src="get(value, [`${screenView}`, 'source'], value.desktop.source)"
+                        :alt="value.name" :imageCover="true"/>
+                </div>
             </div>
         </div>
-
 
         <div class="w-full relative space-y-4 mt-2.5">
             <div class="flex gap-x-2">
@@ -152,3 +158,6 @@ const screenViewChange = (value) => {
     </div>
 </template>
 
+<style lang="scss">
+
+</style>

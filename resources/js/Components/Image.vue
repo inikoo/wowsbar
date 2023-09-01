@@ -13,6 +13,7 @@ const props = withDefaults(defineProps<{
         webp?: string,
         webp_2x?: string,
     }
+    imageCover?: boolean
     alt?: string,
     class?: string
 }>(), {
@@ -63,6 +64,6 @@ onBeforeMount(setImage)
     <picture :class="[props.class ?? 'w-full h-full flex justify-center items-center']">
         <source v-if="get(src, 'avif')" type="image/avif" :srcset="avif">
         <source v-if="get(src, 'webp')" type="image/webp" :srcset="webp">
-        <img :srcset="original" :src="get(src, 'original')" :alt="alt">
+        <img :class="[imageCover ? 'w-full h-full object-cover' : '']" :srcset="original" :src="get(src, 'original')" :alt="alt">
     </picture>
 </template>
