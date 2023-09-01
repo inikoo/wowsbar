@@ -30,9 +30,9 @@ const formatDate = (dateIso: Date) => {
 </script>
 
 <template>
-    <Table :resource="data" class="mt-5" name="hst">
-        <template #cell(datetime)="{ item: user }">
-            {{ (user.published_at) }}
+    <Table :resource="data" class="mt-5" name="sht">
+        <template #cell(published_at)="{ item: user }">
+            {{ formatDate(user.published_at) }}
         </template>
         <template #cell(published_until)="{ item: user }">
             {{ formatDate(user.published_until) }}

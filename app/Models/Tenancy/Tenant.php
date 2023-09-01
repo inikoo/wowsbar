@@ -15,11 +15,13 @@ use App\Models\Portfolio\Banner;
 use App\Models\Portfolio\PortfolioWebsite;
 use App\Models\Portfolio\Snapshot;
 use App\Models\Portfolio\SnapshotStats;
+use App\Models\Traits\HasHistory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Multitenancy\Models\Tenant as SpatieTenant;
@@ -87,10 +89,11 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Tenant whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-class Tenant extends SpatieTenant implements HasMedia
+class Tenant extends SpatieTenant implements HasMedia, Auditable
 {
     use HasFactory;
     use HasSlug;
+    use HasHistory;
     use InteractsWithMedia;
 
 

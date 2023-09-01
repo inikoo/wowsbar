@@ -19,6 +19,9 @@ return new class () extends Migration {
             $table->foreign('tenant_id')->references('id')->on('tenants')->onUpdate('cascade')->onDelete('cascade');
             $table->unsignedMediumInteger('snapshot_id');
             $table->foreign('snapshot_id')->references('id')->on('snapshots')->onUpdate('cascade')->onDelete('cascade');
+
+            $table->unsignedSmallInteger('number_snapshots')->default(0);
+
             $table->timestampsTz();
         });
 
