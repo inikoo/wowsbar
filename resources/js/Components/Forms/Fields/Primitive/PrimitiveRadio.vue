@@ -50,25 +50,22 @@ const updateFormValue = (newValue) => {
 
 <template>
     <div>
-        <!-- <label class="text-base font-semibold text-gray-800 capitalize">{{ fieldName }}</label> -->
-        <!-- <p class="text-xs text-gray-500 capitalize italic">{{ data[fieldName] }}</p> -->
         <fieldset class="select-none">
             <legend class="sr-only"></legend>
             <div class="flex items-center gap-x-8 gap-y-1 flex-wrap ">
 
                 <!-- Radio: Default -->
-                <div v-for="(option, index) in fieldData.options"
-                    :key="option.label + index" class="inline-flex gap-x-2.5 items-center">
+                <label :for="option.label + index" v-for="(option, index) in fieldData.options"
+                    :key="option.label + index" class="inline-flex items-center gap-x-2.5 cursor-pointer py-1">
                     <input v-model="value" :id="option.label + index" :key="option.label + index"
                         :name="option.value" type="radio" :value="option.value" :checked="isEqual(value,option.value)"
-                        class="h-4 w-4 border-gray-300 text-orange-600 focus:ring-0 focus:outline-none focus:ring-transparent cursor-pointer" />
-                    <label :for="option.label + index" class="flex items-center gap-x-1.5 cursor-pointer">
+                        class="h-4 w-4 border-gray-300 text-gray-600 focus:ring-0 focus:outline-none focus:ring-transparent cursor-pointer" />
+                    <div class="flex items-center gap-x-1.5">
                         <span v-if="option.label" class="font-light text-sm text-gray-400 capitalize">
                             {{ option.label }}
-                            <!-- d -->
                         </span>
-                    </label>
-                </div>
+                    </div>
+                </label>
             </div>
         </fieldset>
     </div>

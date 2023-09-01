@@ -5,23 +5,27 @@
   -->
 
 <script setup lang="ts">
-import { get } from 'lodash'
 const props = defineProps<{
     data?: {
         title?: string
         subtitle?: string
         text?: string
-        style?: Object
+        style?: {
+            fontSize: {
+                fontTitle: string
+                fontSubtitle: string
+            }
+        }
     }
-  
+
 }>()
 
 </script>
 
 <template>
     <div class="absolute">
-        <div v-if="data?.title" :style="{...data.style, fontSize : get(data,['style','fontSize','fontTitle'],'27px') }" class="text-gray-100 drop-shadow-md  font-bold">{{ data.title }}</div>
-        <div v-if="data?.subtitle" :style="{...data.style, fontSize : get(data,['style','fontSize','fontSubtitle'],'14px') }" class="text-gray-300 drop-shadow  tracking-widest">{{ data.subtitle }}</div>
+        <div v-if="data?.title" :style="{...data.style }" :class="[data?.style?.fontSize.fontTitle ? data.style.fontSize.fontTitle : '']" class="text-gray-100 drop-shadow-md leading-none font-bold">{{ data.title }}</div>
+        <div v-if="data?.subtitle" :style="{...data.style}" :class="[data?.style?.fontSize.fontSubtitle ? data.style.fontSize.fontSubtitle : '']" class="text-gray-300 drop-shadow leading-none tracking-widest">{{ data.subtitle }}</div>
     </div>
 </template>
 
