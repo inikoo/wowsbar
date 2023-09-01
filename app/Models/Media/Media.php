@@ -36,6 +36,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media as BaseMedia;
  * @property array $generated_conversions
  * @property array $responsive_images
  * @property string|null $checksum
+ * @property bool $is_animated
  * @property int|null $order_column
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -57,6 +58,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media as BaseMedia;
  * @method static Builder|Media whereFileName($value)
  * @method static Builder|Media whereGeneratedConversions($value)
  * @method static Builder|Media whereId($value)
+ * @method static Builder|Media whereIsAnimated($value)
  * @method static Builder|Media whereManipulations($value)
  * @method static Builder|Media whereMimeType($value)
  * @method static Builder|Media whereModelId($value)
