@@ -23,8 +23,8 @@ class ImageResource extends JsonResource
         $media = $this;
 
 
-        $image          = (new Image())->make($media->getLocalImgProxyFilename());
-        $imageThumbnail = (new Image())->make($media->getLocalImgProxyFilename())->resize(0, 48);
+        $image          = (new Image())->make($media->getLocalImgProxyFilename(), $media->is_animated);
+        $imageThumbnail = (new Image())->make($media->getLocalImgProxyFilename(), $media->is_animated)->resize(0, 48);
 
         return [
             'id'         => $media->id,
@@ -36,6 +36,5 @@ class ImageResource extends JsonResource
             'source'     => GetPictureSources::run($image),
             'created_at' => $media->created_at,
         ];
-
     }
 }

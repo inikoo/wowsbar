@@ -32,6 +32,7 @@ return new class () extends Migration {
             $table->json('generated_conversions');
             $table->json('responsive_images');
             $table->string('checksum')->index()->nullable();
+            $table->boolean('is_animated')->default(false);
             $table->unsignedInteger('order_column')->nullable()->index();
             $table->nullableTimestamps();
             $table->index(['model_type','model_id']);

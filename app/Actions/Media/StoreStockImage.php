@@ -8,7 +8,6 @@
 namespace App\Actions\Media;
 
 use App\Models\Media\LandlordMedia;
-use App\Models\Media\Media;
 use App\Models\Organisation\Organisation;
 use Lorisleiva\Actions\Concerns\AsAction;
 
@@ -26,7 +25,7 @@ class StoreStockImage
         string $imagePath,
         string $originalFilename,
         string $extension=null
-    ): LandlordMedia|Media {
+    ): \Spatie\MediaLibrary\MediaCollections\Models\Media {
 
         $organisation =Organisation::find(1);
         $checksum     = md5_file($imagePath);
@@ -34,14 +33,29 @@ class StoreStockImage
         $organisationMedia = LandlordMedia::where('checksum', $checksum)->first();
         if (!$organisationMedia) {
             $filename=dechex(crc32($checksum)).'.';
-            $filename.=empty($extension) ? pathinfo($imagePath, PATHINFO_EXTENSION) : $extension;
+
+            if(empty($extension)) {
+                $extension=pathinfo($imagePath, PATHINFO_EXTENSION);
+            }
+
+            $filename.=$extension;
+
+            $animated=false;
+            if($extension and strtolower($extension)=='gif') {
+                $animated=IsAnimatedGif::run($imagePath);
+            }
 
 
             $name=preg_replace('/\..*$/', '', $originalFilename);
             $name=preg_replace('/_/', ' ', $name);
             return $organisation->addMedia($imagePath)
                 ->preservingOriginal()
-                ->withProperties(['checksum' => $checksum])
+                ->withProperties(
+                    [
+                        'checksum'   => $checksum,
+                        'is_animated'=> $animated
+                    ]
+                )
                 ->usingName($name)
                 ->usingFileName($filename)
                 ->toMediaCollection($collection);

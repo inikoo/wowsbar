@@ -60,7 +60,7 @@ class IndexStockImages extends InertiaAction
         return $queryBuilder
             ->defaultSort('media.name')
             ->where('collection_name', 'stock_images')
-            ->select(['media.name','media.id','size','mime_type','file_name','disk','media.slug'])
+            ->select(['media.name','media.id','size','mime_type','file_name','disk','media.slug','is_animated'])
             ->allowedSorts(['name','size'])
             ->allowedFilters([$globalSearch])
             ->withPaginator($prefix)
