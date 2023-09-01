@@ -321,6 +321,29 @@ const ComponentsBlueprint = ref([
                 label: trans("color"),
                 value: ["layout", "centralStage", "style", "color"],
             },
+            {
+                name: ["layout", "centralStage", "style", "textAlign"],
+                type: "textAlign",
+                label: trans("Text Align"),
+                value: ["layout", "centralStage", "style", "textAlign"],
+                options: [
+                    {
+                        label: "Align left",
+                        value: "left",
+                        icon: 'fal fa-align-left'
+                    },
+                    {
+                        label: "Align center",
+                        value: "center",
+                        icon: 'fal fa-align-center'
+                    },
+                    {
+                        label: "Align right",
+                        value: "right",
+                        icon: 'fal fa-align-right'
+                    },
+                ],
+            },
         ],
     },
     // {

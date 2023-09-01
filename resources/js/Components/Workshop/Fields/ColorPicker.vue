@@ -60,6 +60,7 @@ const updateFormValue = (newValue) => {
     } else {
         target[props.fieldName] = newValue
     }
+    console.log(target)
     // Emit an event to notify the parent component
     emit('input', target)
 }

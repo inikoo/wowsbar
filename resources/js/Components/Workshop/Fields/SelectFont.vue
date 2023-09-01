@@ -7,7 +7,7 @@
 <script setup lang="ts">
 import Multiselect from "@vueform/multiselect"
 import { set, lowerCase, snakeCase } from 'lodash'
-import { ref, watch, defineEmits } from 'vue'
+import { ref, watch } from 'vue'
 const props = defineProps<{
     data: any
     fieldName: any
@@ -60,7 +60,7 @@ const updateFormValue = (newValue) => {
     <div class="">
         <div class="relative">
             <Multiselect v-model="value" :options="props.fieldData.options"
-                :placeholder="props.fieldData.placeholder ?? 'Select your option'" :canClear="!props.fieldData.required"
+                :placeholder="props.fieldData.placeholder ?? 'Select your option'" :canClear="false"
                 :closeOnSelect="props.fieldData.mode == 'multiple' ? false : true" :canDeselect="!props.fieldData.required"
                 :hideSelected="false" :searchable="!!props.fieldData.searchable">
                 <template #option="{ option }">
