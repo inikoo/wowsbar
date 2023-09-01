@@ -259,7 +259,7 @@ const ComponentsBlueprint = ref([
             },
             {
                 name: ["layout", "centralStage", "style", "fontFamily"],
-                type: "select",
+                type: "selectFont",
                 label: trans("Font Family"),
                 value: ["layout", "centralStage", "style", "fontFamily"],
                 options: [

@@ -186,8 +186,8 @@ class IndexUsers extends InertiaAction
                     : Inertia::lazy(fn () => UserRequestLogsResource::collection(IndexUserRequestLogs::run())),
 
                 UsersTabsEnum::USERS_HISTORIES->value => $this->tab == UsersTabsEnum::USERS_HISTORIES->value ?
-                    fn () => HistoryResource::collection(IndexHistories::run())
-                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistories::run()))
+                    fn () => HistoryResource::collection(IndexHistories::run(User::class))
+                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistories::run(User::class)))
 
             ]
         )->table(

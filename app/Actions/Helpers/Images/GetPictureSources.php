@@ -23,7 +23,7 @@ class GetPictureSources
         ];
 
 
-        if (in_array('avif', config('img-proxy.formats'))) {
+        if (in_array('avif', config('img-proxy.formats')) and !$image->is_animated) {
             $sources['avif'] = GetImgProxyUrl::run($image->extension('avif'));
         }
 

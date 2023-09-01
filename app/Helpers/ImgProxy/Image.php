@@ -22,7 +22,7 @@ class Image
     public const MIN_ENLARGE     = 0;
 
 
-    protected ?string $sizeProcessOption=null;
+    protected ?string $sizeProcessOption = null;
 
     protected ?array $resize = null;
 
@@ -38,10 +38,14 @@ class Image
 
     protected ?string $preset = null;
 
+    public bool $is_animated = false;
 
-    public function make(string $path): static
+
+    public function make(string $path, $is_animated = false): static
     {
         $this->setOriginalPictureUrl($path);
+
+        $this->is_animated = $is_animated;
 
         return $this;
     }
@@ -75,15 +79,13 @@ class Image
 
     public function resize($width = null, $height = null, $type = null, $enlarge = null, $extend = null): static
     {
-
-
-        $this->sizeProcessOption='resize';
-        $this->resize           =[
-            'type'   => null,
-            'width'  => null,
-            'height' => null,
-            'enlarge'=> null,
-            'extend' => null,
+        $this->sizeProcessOption = 'resize';
+        $this->resize            = [
+            'type'    => null,
+            'width'   => null,
+            'height'  => null,
+            'enlarge' => null,
+            'extend'  => null,
 
 
         ];
@@ -93,12 +95,11 @@ class Image
         }
 
         if (!is_null($width)) {
-            $this->width           =$this->parseDimension($width);
+            $this->width           = $this->parseDimension($width);
             $this->resize['width'] = $this->width;
-
         }
         if (!is_null($height)) {
-            $this->height           =$this->parseDimension($height);
+            $this->height           = $this->parseDimension($height);
             $this->resize['height'] = $this->height;
         }
 

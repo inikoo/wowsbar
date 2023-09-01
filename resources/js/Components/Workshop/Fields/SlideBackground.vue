@@ -114,7 +114,7 @@ const screenViewChange = (value) => {
                     :respone="uploadImageRespone" :ratio="ratio"/>
             </div>
         </Modal>
-        <div class="flex justify-end pr-2 w-3/6">
+        <div class="flex justify-end">
             <ScreenView @screenView="screenViewChange" />
         </div>
         <div class="flex justify-center">

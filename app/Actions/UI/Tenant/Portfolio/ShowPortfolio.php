@@ -12,6 +12,7 @@ use App\Actions\InertiaAction;
 use App\Actions\UI\Tenant\Dashboard\ShowDashboard;
 use App\Enums\UI\Tenant\PortfolioDashboardTabsEnum;
 use App\Http\Resources\History\HistoryResource;
+use App\Models\Portfolio\PortfolioWebsite;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -58,11 +59,11 @@ class ShowPortfolio extends InertiaAction
                     : Inertia::lazy(fn () =>  $this->getDashboard()),
 
                 PortfolioDashboardTabsEnum::PORTFOLIO_CHANGELOG->value => $this->tab == PortfolioDashboardTabsEnum::PORTFOLIO_CHANGELOG->value ?
-                    fn () => HistoryResource::collection(IndexHistories::run())
-                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistories::run()))
+                    fn () => HistoryResource::collection(IndexHistories::run(PortfolioWebsite::class))
+                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistories::run(PortfolioWebsite::class)))
 
             ]
-        );
+        )->table(IndexHistories::make()->tableStructure());
     }
 
     private function getDashboard(): array
