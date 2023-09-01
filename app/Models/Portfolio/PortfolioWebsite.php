@@ -9,6 +9,7 @@ namespace App\Models\Portfolio;
 
 use App\Concerns\BelongsToTenant;
 use App\Models\Tenancy\Tenant;
+use App\Models\Traits\HasHistory;
 use App\Models\Traits\HasUniversalSearch;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -16,6 +17,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
@@ -56,13 +58,14 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|PortfolioWebsite withoutTrashed()
  * @mixin \Eloquent
  */
-class PortfolioWebsite extends Model
+class PortfolioWebsite extends Model implements Auditable
 {
     use HasSlug;
     use SoftDeletes;
     use HasUniversalSearch;
     use HasFactory;
     use BelongsToTenant;
+    use HasHistory;
 
     protected $casts = [
         'data' => 'array',
