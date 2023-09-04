@@ -15,7 +15,7 @@ import AppTopBar from "@/Layouts/TopBar/AppTopBar.vue"
 import Breadcrumbs from "@/Components/Navigation/Breadcrumbs.vue"
 
 import { library } from "@fortawesome/fontawesome-svg-core"
-import { initialiseApp } from "@/Composables/initialiseApp"
+import { initialiseOrgApp } from "@/Composables/initialiseOrgApp"
 
 import {
     faHome,
@@ -63,7 +63,7 @@ library.add(
     faBell
 )
 
-const layout = initialiseApp()
+const layout = initialiseOrgApp()
 if (usePage().props.firebaseAuthToken) {
     useAuthFirebase(usePage().props.firebaseAuthToken)
 }
