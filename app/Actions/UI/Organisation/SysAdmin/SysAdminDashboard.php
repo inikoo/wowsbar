@@ -35,7 +35,7 @@ class SysAdminDashboard
     {
 
         return Inertia::render(
-            'Organisation/SysAdmin/SysAdminDashboard',
+            'SysAdmin/SysAdminDashboard',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(),
                 'title'       => __('system administration'),
