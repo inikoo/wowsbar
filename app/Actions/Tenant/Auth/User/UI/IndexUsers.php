@@ -88,9 +88,9 @@ class IndexUsers extends InertiaAction
             ->withQueryString();
     }
 
-    public function tableStructure(?array $modelOperations = null, $prefix = null): Closure
+    public function tableStructure(?array $modelOperations = null, $prefix = null, ?array $exportLinks = null): Closure
     {
-        return function (InertiaTable $table) use ($modelOperations, $prefix) {
+        return function (InertiaTable $table) use ($modelOperations, $prefix, $exportLinks) {
             if ($prefix) {
                 $table
                     ->name($prefix)
@@ -105,10 +105,10 @@ class IndexUsers extends InertiaAction
                 );
             }
 
-
             $table
                 ->withGlobalSearch()
                 ->withModelOperations($modelOperations)
+                ->withExportLinks($exportLinks)
                 ->column(key: 'avatar', label: ['fal', 'fa-user-circle'])
                 ->column(key: 'username', label: __('username'), canBeHidden: false, sortable: true, searchable: true)
                 ->column(key: 'contact_name', label: __('name'), canBeHidden: false, sortable: true, searchable: true)
@@ -192,13 +192,20 @@ class IndexUsers extends InertiaAction
         )->table(
             $this->tableStructure(
                 prefix: 'users',
+                exportLinks: [
+                    'export' => [
+                        'route' => [
+                            'name' => 'export.users.index'
+                        ]
+                    ]
+                ]
             )
         )->table(IndexUserRequestLogs::make()->tableStructure())
             ->table(IndexHistories::make()->tableStructure(
                 exportLinks: [
                 'export' => [
                     'route' => [
-                        'name' => '...'
+                        'name' => 'export.histories.index'
                     ]
                 ]
             ]
