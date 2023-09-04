@@ -82,7 +82,6 @@ class IndexUsers extends InertiaAction
 
         return $queryBuilder
             ->defaultSort('username')
-            ->select(['username', 'email', 'contact_name', 'avatar_id'])
             ->allowedSorts(['username', 'email', 'contact_name'])
             ->allowedFilters([$globalSearch,'email','contact_name','username'])
             ->withPaginator($prefix)
@@ -192,10 +191,18 @@ class IndexUsers extends InertiaAction
             ]
         )->table(
             $this->tableStructure(
-                prefix: 'users'
+                prefix: 'users',
             )
         )->table(IndexUserRequestLogs::make()->tableStructure())
-            ->table(IndexHistories::make()->tableStructure());
+            ->table(IndexHistories::make()->tableStructure(
+                exportLinks: [
+                'export' => [
+                    'route' => [
+                        'name' => '...'
+                    ]
+                ]
+            ]
+            ));
     }
 
     public function asController(ActionRequest $request): LengthAwarePaginator
