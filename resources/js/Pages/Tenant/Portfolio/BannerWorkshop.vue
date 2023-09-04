@@ -265,18 +265,6 @@ const autoSave=()=>{
         })
 }
 
-
-const ceknotif=()=>{
-    console.log(data)
-    notify({
-            title: "Failed to get realtime data",
-            text: 'please reload and make sure your internet connection is stable',
-            type: "error"
-        });
-}
-
-console.log(props.autoSaveRoute)
-
 </script>
 
 
@@ -358,6 +346,4 @@ console.log(props.autoSaveRoute)
         </Modal>
         </div>
     </section>
-    
-    <div @click="ceknotif">show add</div>
 </template>
