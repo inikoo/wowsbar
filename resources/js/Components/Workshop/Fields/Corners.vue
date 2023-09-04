@@ -129,6 +129,47 @@ const optionType = [
                 label: trans('color'),
                 value: null
             },
+            {
+                name: "fontSize",
+                type: "radio",
+                label: trans("Font Size"),
+                value: null,
+                defaultValue: { fontTitle: "text-[25px] lg:text-[44px]", fontSubtitle: "text-[12px] lg:text-[20px]" },
+                options: [
+                    { label: "Extra Small", value: {
+                            fontTitle: "text-[13px] lg:text-[21px]",
+                            fontSubtitle: "text-[8px] lg:text-[12px]"
+                        }
+                    },
+                    {
+                        label: "Small",
+                        value: {
+                            fontTitle: "text-[18px] lg:text-[32px]",
+                            fontSubtitle: "text-[10px] lg:text-[15px]"
+                        }
+                    },
+                    {
+                        label: "Normal",
+                        value: {
+                            fontTitle: "text-[25px] lg:text-[44px]",
+                            fontSubtitle: "text-[12px] lg:text-[20px]"
+                        }
+                    },
+                    {
+                        label: "Large", value: {
+                            fontTitle: "text-[30px] lg:text-[60px]",
+                            fontSubtitle: "text-[15px] lg:text-[25px]"
+                        }
+                    },
+                    {
+                        label: "Extra Large",
+                        value: {
+                            fontTitle: "text-[40px] lg:text-[70px]",
+                            fontSubtitle: "text-[20px] lg:text-[30px]"
+                        },
+                    },
+                ],
+            },
         ]
     },
     {
