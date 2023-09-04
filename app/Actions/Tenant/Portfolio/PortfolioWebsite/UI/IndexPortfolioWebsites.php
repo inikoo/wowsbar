@@ -69,9 +69,9 @@ class IndexPortfolioWebsites extends InertiaAction
             ->withQueryString();
     }
 
-    public function tableStructure(?array $modelOperations = null, $prefix = null): Closure
+    public function tableStructure(?array $modelOperations = null, $prefix = null, ?array $exportLinks = null): Closure
     {
-        return function (InertiaTable $table) use ($modelOperations, $prefix) {
+        return function (InertiaTable $table) use ($modelOperations, $prefix, $exportLinks) {
             if ($prefix) {
                 $table
                     ->name($prefix)
@@ -88,6 +88,7 @@ class IndexPortfolioWebsites extends InertiaAction
 
                     ]
                 )
+                ->withExportLinks($exportLinks)
                 ->column(key: 'slug', label: __('code'), sortable: true)
                 ->column(key: 'name', label: __('name'), sortable: true)
                 ->column(key: 'domain', label: __('domain'), sortable: true)
@@ -132,7 +133,15 @@ class IndexPortfolioWebsites extends InertiaAction
                 'data'        => PortfolioWebsiteResource::collection($websites),
 
             ]
-        )->table($this->tableStructure());
+        )->table($this->tableStructure(
+            exportLinks: [
+                'export' => [
+                    'route' => [
+                        'name' => 'export.histories.index'
+                    ]
+                ]
+            ]
+        ));
     }
 
     /** @noinspection PhpUnusedParameterInspection */

@@ -567,7 +567,7 @@ const handleElementsChange = (data) => {
         <EmptyState :data="queryBuilderProps.emptyState" v-if="queryBuilderProps.emptyState?.count === 0 && compResourceMeta.total === 0" />
         <!--suppress HtmlUnknownAttribute -->
         <fieldset v-else ref="tableFieldset" :key="`table-${name}`" :dusk="`table-${name}`" class="min-w-0" :class="{ 'opacity-75': isVisiting }">
-            <div class="my-2">
+            {{ queryBuilderProps.exportLinks }}<div class="my-2">
             <!-- Wrapper -->
 
                 <div class="mb-2" @checkboxChanged="handleElementsChange">
