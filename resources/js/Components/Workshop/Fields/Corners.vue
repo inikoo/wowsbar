@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { trans } from "laravel-vue-i18n"
 import { ref, watch, computed } from 'vue'
-import Input from '@/Components/Forms/Fields/Input.vue'
+import Input from '@/Components/Forms/Fields/Primitive/PrimitiveInput.vue'
 import ColorPicker from "@/Components/Workshop/Fields/ColorPicker.vue"
 import Radio from '@/Components/Forms/Fields/Primitive/PrimitiveRadio.vue'
 import { get, cloneDeep, set } from 'lodash'
@@ -56,7 +56,7 @@ const optionType = [
                 name: 'text',
                 type: 'input',
                 label: trans('Text'),
-                value: null
+                value: null,
             },
             {
                 name: "color",
@@ -186,7 +186,8 @@ const optionType = [
                 name: 'target',
                 type: 'input',
                 label: trans('Link'),
-                value: null
+                value: null,
+                prefix: "https://",
             },
         ]
     },
@@ -386,14 +387,13 @@ defineExpose({
                         <dd class="sm:col-span-2">
                             <div class="mt-1 flex text-sm text-gray-700 sm:mt-0">
                                 <div class="relative flex-grow" v-if="field.type == 'input'">
-                                    <input v-model=field.value @input="setUpData"
-                                        class="block w-full shadow-sm rounded-md dark:bg-gray-600 dark:text-gray-400 focus:ring-gray-500 focus:border-gray-500 sm:text-sm border-gray-300 dark:border-gray-500 read-only:bg-gray-100 read-only:ring-0 read-only:ring-transparent read-only:text-gray-500" />
+                                    <Input :value="field.value" @onChange="(newValue)=>OnchangeFields(field,newValue)" :fieldData="field"/>
                                 </div>
                                 <div class="relative flex-grow" v-if="field.type == 'colorPicker'">
-                                    <ColorPicker :color=field.value @changeColor="(color)=>OnchangeFields(field,color)"/>
+                                    <ColorPicker :color=field.value @onChange="(newValue)=>OnchangeFields(field,newValue)" :fieldData="field"/>
                                 </div>
                                 <div class="relative flex-grow" v-if="field.type == 'radio'">
-                                    <Radio :radioValue="field.value" :fieldData="field" @onChange="(color)=>OnchangeFields(field,color)"/>
+                                    <Radio :radioValue="field.value" :fieldData="field" @onChange="(newValue)=>OnchangeFields(field,newValue)"/>
                                 </div>
                             </div>
                         </dd>

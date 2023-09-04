@@ -66,11 +66,12 @@ class IndexUserRequestLogs
         return [];
     }
 
-    public function tableStructure(): Closure
+    public function tableStructure(?array $exportLinks = null): Closure
     {
-        return function (InertiaTable $table) {
+        return function (InertiaTable $table) use ($exportLinks) {
             $table
                 ->withGlobalSearch()
+                ->withExportLinks($exportLinks)
                 ->column(key: 'username', label: __('Username'), canBeHidden: false, sortable: true, searchable: true)
                 ->column(key: 'ip_address', label: __('IP Address'), canBeHidden: false, sortable: true, searchable: true)
                 ->column(key: 'url', label: __('URL'), canBeHidden: false, sortable: true)

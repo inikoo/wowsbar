@@ -82,16 +82,15 @@ class IndexUsers extends InertiaAction
 
         return $queryBuilder
             ->defaultSort('username')
-            ->select(['username', 'email', 'contact_name', 'avatar_id'])
             ->allowedSorts(['username', 'email', 'contact_name'])
             ->allowedFilters([$globalSearch,'email','contact_name','username'])
             ->withPaginator($prefix)
             ->withQueryString();
     }
 
-    public function tableStructure(?array $modelOperations = null, $prefix = null): Closure
+    public function tableStructure(?array $modelOperations = null, $prefix = null, ?array $exportLinks = null): Closure
     {
-        return function (InertiaTable $table) use ($modelOperations, $prefix) {
+        return function (InertiaTable $table) use ($modelOperations, $prefix, $exportLinks) {
             if ($prefix) {
                 $table
                     ->name($prefix)
@@ -106,10 +105,10 @@ class IndexUsers extends InertiaAction
                 );
             }
 
-
             $table
                 ->withGlobalSearch()
                 ->withModelOperations($modelOperations)
+                ->withExportLinks($exportLinks)
                 ->column(key: 'avatar', label: ['fal', 'fa-user-circle'])
                 ->column(key: 'username', label: __('username'), canBeHidden: false, sortable: true, searchable: true)
                 ->column(key: 'contact_name', label: __('name'), canBeHidden: false, sortable: true, searchable: true)
@@ -192,10 +191,25 @@ class IndexUsers extends InertiaAction
             ]
         )->table(
             $this->tableStructure(
-                prefix: 'users'
+                prefix: 'users',
+                exportLinks: [
+                    'export' => [
+                        'route' => [
+                            'name' => 'export.users.index'
+                        ]
+                    ]
+                ]
             )
         )->table(IndexUserRequestLogs::make()->tableStructure())
-            ->table(IndexHistories::make()->tableStructure());
+            ->table(IndexHistories::make()->tableStructure(
+                exportLinks: [
+                'export' => [
+                    'route' => [
+                        'name' => 'export.histories.index'
+                    ]
+                ]
+            ]
+            ));
     }
 
     public function asController(ActionRequest $request): LengthAwarePaginator

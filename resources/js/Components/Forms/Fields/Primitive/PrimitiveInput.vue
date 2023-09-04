@@ -5,11 +5,11 @@
   -->
 
 <script setup lang="ts">
-import { set } from "lodash";
+import { set, get } from "lodash";
 import { ref, watch, toRefs } from "vue";
 
 const props = defineProps<{
-    fieldName: string | [];
+    fieldName?: string | [];
     fieldData?: {
         placeholder: string;
         readonly: boolean;
@@ -17,8 +17,9 @@ const props = defineProps<{
         prefix?: string
         type?: string
     };
-    data: Object;
-    counter: boolean;
+    data?: Object;
+    counter?: boolean;
+    value?: String;
 }>();
 
 const { data, fieldName } = toRefs(props);
@@ -39,10 +40,11 @@ const getNestedValue = (obj: Object, keys: string[]) => {
     }, obj);
 };
 
-const value = ref(setFormValue(props.data, props.fieldName));
+const value = ref(props.data ? setFormValue(props.data, props.fieldName) : get(props,'value',null));
 
 watch(value, (newValue) => {
     // Update the local form value when the value ref changes
+    emits('onChange', newValue);
     updateLocalFormValue(newValue);
 });
 
@@ -60,6 +62,8 @@ const updateLocalFormValue = (newValue) => {
     emits("update:data", localData); // Emit event to update parent component's data
 };
 
+console.log('aaaa',props)
+
 </script>
 
 <template>
@@ -69,10 +73,9 @@ const updateLocalFormValue = (newValue) => {
                 class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-gray-500">
                 <span v-if="fieldData?.prefix" class="flex select-none items-center pl-3 text-gray-400 sm:text-sm">{{
                     fieldData?.prefix }}</span>
-                <input v-if="fieldData" v-model.trim="value" :readonly="fieldData?.readonly"
+                <input v-model.trim="value" :readonly="fieldData?.readonly"
                     :type="props.fieldData?.type ?? 'text'" :placeholder="fieldData?.placeholder"
                     class="block flex-1 border-0 bg-transparent py-1.5 pl-3 text-gray-600 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" />
-                <div v-else>No field data passed</div>
             </div>
         </div>
 

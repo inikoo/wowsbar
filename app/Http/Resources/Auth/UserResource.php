@@ -27,7 +27,7 @@ class UserResource extends JsonResource
             'avatar'             => $user->avatarImageSources(48, 48),
             'email'              => $user->email,
             'contact_name'       => $user->contact_name,
-            'status'             => !$user->status ? 'Active' : 'Suspended',
+            'status'             => $user->status ? 'Active' : 'Suspended',
             'roles'              => Arr::join($user->getRoleNames()->toArray(), ', '),
             'direct-permissions' => $user->getDirectPermissions(),
             'permissions'        => Arr::join($user->getAllPermissions()->pluck('name')->toArray(), ', '),

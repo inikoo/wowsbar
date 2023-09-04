@@ -9,7 +9,7 @@
     <slot name="tableDownload" class="">
       <TableDownload />
     </slot>
-    
+
     <!-- simple and mobile -->
     <div v-if="hasData" class="flex-1 flex justify-between" :class="{ 'sm:hidden': hasLinks }">
       <component :is="previousPageUrl ? 'a' : 'div'" :class="{
@@ -128,10 +128,13 @@ const props = withDefaults(defineProps<{
   onPerPageChange?: Function
   hasData: Boolean
   meta?: Object
+  modelOperations?: object
 }>(), {
   perPageOptions: [10, 25, 50, 100, 250],
   onPerPageChange: {}
 })
+
+console.log(props.modelOperations)
 
 const hasLinks = computed(() => {
   if (!("links" in pagination.value)) {
