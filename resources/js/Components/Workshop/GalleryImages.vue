@@ -106,10 +106,10 @@ const collectImage = (image) => {
         <!-- Main content -->
         <section class="bg-gray-50 h-96 w-full rounded-r-md">
             <div v-if="loadingState" class="w-full h-full flex justify-center items-start">
-                <div class="pt-6 px-4 grid grid-cols-4 gap-x-3 gap-y-6 max-h-96">
+                <div class="pt-6 px-4 grid grid-cols-4 gap-x-3 gap-y-6 max-h-96 w-full overflow-auto">
                     <div v-for="imageData in 7" class="relative flex flex-col gap-y-1">
-                        <div class="skeleton h-10 aspect-[4/1] rounded" />
-                        <div class="skeleton w-2/3 h-4" />
+                        <div class="skeleton w-full aspect-[4/1] rounded" />
+                        <div class="skeleton w-2/3 h-5" />
                     </div>
                 </div>
             </div>
@@ -122,6 +122,7 @@ const collectImage = (image) => {
                         description: trans('Create new slides in the workshop to get started.'),
                     }" />
                 </div>
+                
                 <div v-else class="pt-6 px-4 grid grid-cols-4 gap-x-3 gap-y-6 max-h-96 overflow-auto">
                     <div  v-for="imageData in galleryStore?.[activeSidebar]" :key="imageData.id"
                         @click="() => collectImage(imageData)"
