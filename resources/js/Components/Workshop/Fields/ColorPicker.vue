@@ -28,7 +28,7 @@ const emit = defineEmits()
 const changeColor = (value) => {
     const { r, g, b, a } = value.rgba
     color.value = `rgba(${r}, ${g}, ${b}, ${a})`
-    emit('changeColor',color.value)
+    emit('onChange',color.value)
 }
 
 
