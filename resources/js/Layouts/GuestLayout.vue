@@ -22,7 +22,7 @@ watchEffect(() => {
     }
 })
 
-const logoSrc=usePage().props.layout.logo;
+const logoSrc=usePage().props.art.logo;
 const publicUrl=usePage().props.layout.publicUrl;
 </script>
 

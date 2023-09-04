@@ -10,7 +10,7 @@ namespace App\Actions\UI\Public;
 use App\Models\Auth\PublicUser;
 use Lorisleiva\Actions\Concerns\AsAction;
 
-class GetPublicLayout
+class GetLayout
 {
     use AsAction;
 

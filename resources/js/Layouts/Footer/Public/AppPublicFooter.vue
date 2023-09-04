@@ -1,7 +1,7 @@
 
 <!--
   - Author: Raul Perusquia <raul@inikoo.com>
-  - Created: Mon, 14 Aug 2023 08:45:47 Malaysia Time, Sanur, Bali
+  - Created: Mon, 04 Sep 2023 10:59:25 Malaysia Time, Kuala Lumpur, Malaysia
   - Copyright (c) 2023, Raul A Perusquia Flores
   -->
 
@@ -10,10 +10,13 @@ import { ref, Ref } from 'vue'
 import FooterTab from '@/Components/Footer/FooterTab.vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import {useLocaleStore} from "@/Stores/locale";
+import Image from "@/Components/Image.vue";
+import {usePage} from "@inertiajs/vue3";
 
 const locale = useLocaleStore()
 
 const isTabActive: Ref<boolean | string> = ref(false)
+const logoSrc=usePage().props.art.footer_logo;
 
 </script>
 
@@ -25,7 +28,8 @@ const isTabActive: Ref<boolean | string> = ref(false)
         <div class="flex justify-between">
             <!-- Left Section -->
             <div class="pl-4 flex items-center gap-x-1.5 py-1">
-                <img src="@/../art/logo/png/2.png" alt="Wowsbar" class="h-4">
+                <Image class="h-4 select-none"  :src="logoSrc" alt="Wowsbar" />
+
             </div>
 
             <!-- Tab Section -->

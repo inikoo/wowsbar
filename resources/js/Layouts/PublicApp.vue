@@ -13,7 +13,7 @@ import AppLeftSideBar from "@/Layouts/AppLeftSideBar.vue"
 import AppRightSideBar from "@/Layouts/AppRightSideBar.vue"
 import AppTopBar from "@/Layouts/TopBar/AppTopBar.vue"
 import Breadcrumbs from "@/Components/Navigation/Breadcrumbs.vue"
-import AppPublicFooter from "@/Layouts/AppPublicFooter.vue"
+import AppPublicFooter from "@/Layouts/Footer/Public/AppPublicFooter.vue"
 
 import { library } from "@fortawesome/fontawesome-svg-core"
 import {

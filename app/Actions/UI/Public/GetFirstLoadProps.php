@@ -16,7 +16,7 @@ use App\Models\Auth\PublicUser;
 use Illuminate\Support\Facades\App;
 use Lorisleiva\Actions\Concerns\AsObject;
 
-class GetPublicFirstLoadProps
+class GetFirstLoadProps
 {
     use AsObject;
 
@@ -39,19 +39,18 @@ class GetPublicFirstLoadProps
                     'languageOptions' => GetLanguagesOptions::make()->translated(),
                 ],
 
+            'art' => [
+                'logo' => GetPictureSources::run(
+                    (new Image())->make(url('/images/logo.png'))->resize(0, 64)
+                ),
+                'footer_logo' => GetPictureSources::run(
+                    (new Image())->make(url('/images/logo_white.png'))->resize(0, 16)
+                ),
+            ],
 
-
-            'layout' => function () use ($user) {
-                if ($user) {
-                    return GetPublicLayout::run($user);
-                } else {
-                    return [
-                        'logo' => GetPictureSources::run(
-                            (new Image())->make(url('/images/logo.png'))->resize(0, 64)
-                        ),
-                    ];
-                }
-            }
+            'layout'       => function () use ($user) {
+                return $user ? GetLayout::run($user) : null;
+            },
         ];
     }
 }

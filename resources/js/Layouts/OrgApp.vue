@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 import { ref } from "vue"
-import AppFooter from "@/Layouts/Footer/AppFooter.vue"
+import Footer from "@/Layouts/Footer/Organisation/Footer.vue"
 import { usePage } from "@inertiajs/vue3"
 
 import AppLeftSideBar from "@/Layouts/AppLeftSideBar.vue"
@@ -105,7 +105,6 @@ const sidebarOpen = ref(false)
 
     </div>
 
-    <!-- Footer -->
-    <AppFooter appScope="organisations" />
+    <Footer />
 
 </template>

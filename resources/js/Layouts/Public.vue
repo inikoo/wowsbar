@@ -9,7 +9,7 @@ import { Link, usePage } from '@inertiajs/vue3'
 import Cookies from '@/Components/Cookies.vue'
 import Image from "@/Components/Image.vue"
 import { ref, Ref } from 'vue'
-import FooterTabLanguage from '@/Layouts/Footer/FooterTabLanguage.vue'
+import FooterTabLanguage from '@/Components/Footer/FooterLanguage.vue'
 import Button from '@/Components/Elements/Buttons/Button.vue'
 const isTabActive: Ref<boolean | string> = ref(false)
 
@@ -47,14 +47,14 @@ const logo = usePage().props.art.logo
 
             <slot />
         </section>
-        
+
         <!-- Footer -->
         <footer class="z-20 fixed w-screen bottom-0 right-0  text-white bg-black">
             <!-- Helper: Outer background (close popup purpose) -->
             <div class="fixed z-40 right-0 top-0 bg-transparent w-screen h-screen"
                 @click="isTabActive = !isTabActive"
                 :class="[isTabActive ? '' : 'hidden']" />
-            
+
             <div class="flex justify-between">
                 <!-- Left: Logo Section -->
                 <div class="pl-4 flex items-center gap-x-1.5 py-1">
