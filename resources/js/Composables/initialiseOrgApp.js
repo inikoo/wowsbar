@@ -1,4 +1,3 @@
-// Used for  PublicApp, TenantApp
 import { useLayoutStore } from "@/Stores/layout"
 import { useLocaleStore } from "@/Stores/locale"
 import { usePage } from "@inertiajs/vue3"
@@ -6,7 +5,7 @@ import { loadLanguageAsync } from "laravel-vue-i18n"
 import { watchEffect } from "vue"
 
 
-export const initialiseApp = () => {
+export const initialiseOrgApp = () => {
     const layout = useLayoutStore()
     const locale = useLocaleStore()
 
@@ -27,9 +26,8 @@ export const initialiseApp = () => {
             locale.languageOptions = usePage().props.localeData.languageOptions
         }
 
-        // Set data of Tenant
-        if (usePage().props.tenant) {
-            layout.tenant = usePage().props.tenant ?? null
+        if (usePage().props.organisation) {
+            layout.organisation = usePage().props.organisation ?? null
         }
 
         // Set data of User
@@ -41,20 +39,10 @@ export const initialiseApp = () => {
 
         layout.currentRouteParameters = route().params
         layout.currentRoute = route().current()
-        let substring = layout.currentRoute?.substring(
-            0,
-            layout.currentRoute?.indexOf(".")
-        )
 
-        if (substring === "org" || substring === "public") {
             let moduleName = layout.currentRoute.split(".")
             layout.currentModule = moduleName[1]
-        } else {
-            layout.currentModule = layout.currentRoute?.substring(
-                0,
-                layout.currentRoute?.indexOf(".")
-            );
-        }
+
 
         layout.booted = true
 

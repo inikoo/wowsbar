@@ -36,7 +36,8 @@ class UpdateBannerImage
         }
 
 
-        $banner->update(['image_id' => $image_id]);
+        $banner->image_id = $image_id;
+        $banner->saveQuietly();
 
         return $banner;
     }

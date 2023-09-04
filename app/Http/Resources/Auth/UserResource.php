@@ -21,6 +21,7 @@ class UserResource extends JsonResource
     {
         /** @var \App\Models\Auth\User $user */
         $user = $this;
+
         return [
             'id'                 => $user->id,
             'username'           => $user->username,

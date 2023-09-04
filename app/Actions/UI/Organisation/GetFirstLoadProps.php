@@ -16,6 +16,7 @@ use App\Models\Assets\Language;
 use App\Models\Organisation\Organisation;
 use App\Models\Organisation\OrganisationUser;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
 use Lorisleiva\Actions\Concerns\AsObject;
 
@@ -29,8 +30,22 @@ class GetFirstLoadProps
      */
     public function handle(?OrganisationUser $user): array
     {
+        $firebaseAuthToken = null;
+
         if ($user) {
             $language = $user->language;
+
+            $firebaseAuthToken = Cache::remember('org_firebase_auth_token_'.$user->id, 3600, function () use ($user) {
+                $auth        = app('firebase.auth');
+                $customToken = $auth
+                    ->createCustomToken('org-'.$user->id, [
+                        'scope' => 'organisation',
+                    ]);
+
+                $auth->signInWithCustomToken($customToken);
+
+                return $customToken->toString();
+            });
         } else {
             $language = Language::where('code', App::currentLocale())->first();
         }
@@ -47,7 +62,7 @@ class GetFirstLoadProps
                 ],
 
             'art' => [
-                'logo' => GetPictureSources::run(
+                'logo'        => GetPictureSources::run(
                     (new Image())->make(url('/images/logo.png'))->resize(0, 64)
                 ),
                 'footer_logo' => GetPictureSources::run(
@@ -56,14 +71,12 @@ class GetFirstLoadProps
             ],
 
 
-            'layout'       => function () use ($user) {
+            'layout'            => function () use ($user) {
                 return $user ? GetLayout::run($user) : null;
             },
-            'organisation' => OrganisationResource::make(Organisation::first())->getArray(),
-            'firebase'     => [
-                'credential'  => File::get(base_path(config('firebase.projects.app.credentials.file'))),
-                'databaseURL' => config('firebase.projects.app.database.url')
-            ]
+            'organisation'      => OrganisationResource::make(Organisation::first())->getArray(),
+            'firebaseAuthToken' => $firebaseAuthToken,
+
         ];
     }
 }

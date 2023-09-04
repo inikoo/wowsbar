@@ -37,7 +37,7 @@ class DeleteBanner
             PortfolioWebsiteHydrateBanners::dispatch($contentBlock->portfolioWebsite);
         }
 
-        DeleteBannerElasticsearch::run($contentBlock);
+        // DeleteBannerElasticsearch::run($contentBlock);
 
         return $contentBlock;
     }

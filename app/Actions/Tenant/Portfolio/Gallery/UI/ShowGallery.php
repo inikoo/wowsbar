@@ -107,11 +107,25 @@ class ShowGallery extends InertiaAction
                         'style' => 'create'
                     ] : false,
                 ],
-                prefix: 'uploaded_images'
+                prefix: 'uploaded_images',
+                exportLinks: [
+                    'export' => [
+                        'route' => [
+                            'name' => 'export.uploaded.images.index'
+                        ]
+                    ]
+                ]
             )
         )->table(
             IndexStockImages::make()->tableStructure(
-                prefix: 'stock_images'
+                prefix: 'stock_images',
+                exportLinks: [
+                    'export' => [
+                        'route' => [
+                            'name' => 'export.stock.images.index'
+                        ]
+                    ]
+                ]
             )
         );
     }

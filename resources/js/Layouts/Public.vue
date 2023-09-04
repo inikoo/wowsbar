@@ -14,6 +14,7 @@ import Button from '@/Components/Elements/Buttons/Button.vue'
 const isTabActive: Ref<boolean | string> = ref(false)
 
 const logo = usePage().props.art.logo
+const footerLogo = usePage().props.art.footer_logo
 
 </script>
 
@@ -58,7 +59,7 @@ const logo = usePage().props.art.logo
             <div class="flex justify-between">
                 <!-- Left: Logo Section -->
                 <div class="pl-4 flex items-center gap-x-1.5 py-1">
-                    <img src="@/../art/logo/png/2.png" alt="Wowsbar" class="h-4 select-none">
+                    <Image class="h-4 select-none" :src="footerLogo" alt="Wowsbar" />
                 </div>
 
                 <!-- Right: Tab Section -->

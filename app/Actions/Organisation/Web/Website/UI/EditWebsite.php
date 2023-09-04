@@ -43,7 +43,7 @@ class EditWebsite extends InertiaAction
     {
 
         return Inertia::render(
-            'Organisation/EditModel',
+            'EditModel',
             [
                     'title'       => __("Website's settings"),
                     'breadcrumbs' => $this->getBreadcrumbs(

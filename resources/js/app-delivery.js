@@ -18,7 +18,7 @@ createInertiaApp(
     title: (title) => `${title}`,
     resolve: (name) =>
         resolvePageComponent(
-            `./Pages/${name}.vue`,
+            `./Pages/Delivery/${name}.vue`,
             import.meta.glob("./Pages/Delivery/**/*.vue")
         ),
     setup({ el, App, props, plugin }) {
