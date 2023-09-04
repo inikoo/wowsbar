@@ -46,7 +46,7 @@ export const initialiseApp = () => {
             layout.currentRoute?.indexOf(".")
         )
 
-        if (substring == "org" || substring == "public") {
+        if (substring === "org" || substring === "public") {
             let moduleName = layout.currentRoute.split(".")
             layout.currentModule = moduleName[1]
         } else {
