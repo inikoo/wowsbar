@@ -7,7 +7,7 @@
 
 namespace App\Actions\Tenant\Portfolio\PortfolioWebsite\UI;
 
-use App\Actions\Elasticsearch\History\IndexHistories;
+use App\Actions\Helpers\History\IndexHistories;
 use App\Actions\InertiaAction;
 use App\Actions\Tenant\Portfolio\Banner\UI\IndexBanners;
 use App\Actions\UI\Tenant\Portfolio\ShowPortfolio;

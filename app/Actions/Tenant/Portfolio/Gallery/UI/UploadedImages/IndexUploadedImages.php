@@ -67,9 +67,9 @@ class IndexUploadedImages extends InertiaAction
             ->withQueryString();
     }
 
-    public function tableStructure(?array $modelOperations = null, $prefix = null): Closure
+    public function tableStructure(?array $modelOperations = null, $prefix = null, ?array $exportLinks = null): Closure
     {
-        return function (InertiaTable $table) use ($modelOperations, $prefix) {
+        return function (InertiaTable $table) use ($modelOperations, $prefix, $exportLinks) {
             if ($prefix) {
                 $table
                     ->name($prefix)
@@ -79,6 +79,7 @@ class IndexUploadedImages extends InertiaAction
             $table
                 ->withModelOperations($modelOperations)
                 ->withGlobalSearch()
+                ->withExportLinks($exportLinks)
                 ->column(key: 'name', label: __('name'), sortable: true)
                 ->column(key: 'thumbnail', label: __('image'))
                 ->column(key: 'size', label: __('size'), sortable: true)
@@ -112,7 +113,14 @@ class IndexUploadedImages extends InertiaAction
                 ],
                 'data' => ImageResource::collection($websites),
             ]
-        )->table($this->tableStructure());
+        )->table($this->tableStructure(
+            exportLinks: [
+            'export' => [
+                'route' => [
+                    'name' => 'export.stock.images.index'
+                ]
+            ]
+        ]));
     }
 
     /** @noinspection PhpUnusedParameterInspection */

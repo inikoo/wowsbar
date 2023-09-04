@@ -35,7 +35,8 @@ class SetUserAvatar
 
             $avatarID = $media->id;
 
-            $user->update(['avatar_id' => $avatarID]);
+            $user->avatar_id = $avatarID;
+            $user->saveQuietly();
         } catch(Exception) {
             //
         }

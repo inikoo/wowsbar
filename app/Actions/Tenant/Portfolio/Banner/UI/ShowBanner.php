@@ -7,7 +7,7 @@
 
 namespace App\Actions\Tenant\Portfolio\Banner\UI;
 
-use App\Actions\Elasticsearch\History\IndexHistories;
+use App\Actions\Helpers\History\IndexHistories;
 use App\Actions\InertiaAction;
 use App\Actions\Tenant\Portfolio\PortfolioWebsite\UI\ShowPortfolioWebsite;
 use App\Actions\Tenant\Portfolio\Snapshot\UI\IndexSnapshots;
@@ -148,13 +148,17 @@ class ShowBanner extends InertiaAction
                     fn () => HistoryResource::collection(IndexHistories::run($banner))
                     : Inertia::lazy(fn () => HistoryResource::collection(IndexHistories::run($banner))),
 
-                PortfolioWebsiteTabsEnum::CHANGELOG->value => $this->tab == PortfolioWebsiteTabsEnum::CHANGELOG->value ?
-                    fn () => HistoryResource::collection(IndexHistories::run($banner))
-                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistories::run($banner)))
-
             ]
         )->table(IndexHistories::make()->tableStructure())
-            ->table(IndexSnapshots::make()->tableStructure(null, 'sht'));
+            ->table(IndexSnapshots::make()->tableStructure(null, 'sht',
+                exportLinks: [
+                'export' => [
+                    'route' => [
+                        'name' => 'export.snapshots.index'
+                    ]
+                ]
+            ]
+        ));
     }
 
     public function getBreadcrumbs(string $routeName, array $routeParameters, string $suffix = null): array

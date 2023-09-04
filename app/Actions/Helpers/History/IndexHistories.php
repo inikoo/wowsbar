@@ -40,11 +40,14 @@ class IndexHistories
         $queryBuilder = QueryBuilder::for(Audit::class);
 
         $queryBuilder->where('auditable_type', $this->model);
+        if (isset($model->id)) {
+            $queryBuilder->where('auditable_id', $model->id);
+        }
 
         return $queryBuilder
             ->defaultSort('user_type')
             ->allowedSorts(['auditable_id', 'auditable_type', 'user_type', 'url'])
-            ->allowedFilters([$globalSearch,'auditable_id', 'auditable_type'])
+            ->allowedFilters([$globalSearch, 'auditable_id', 'auditable_type'])
             ->withPaginator($prefix)
             ->withQueryString();
     }
@@ -57,7 +60,7 @@ class IndexHistories
                 ->pageName('historyPage')
                 ->withExportLinks($exportLinks)
                 ->column(key: 'ip_address', label: __('IP Address'), canBeHidden: false, sortable: true, searchable: true)
-                ->column(key: 'user_id', label: __('User ID'), canBeHidden: false, sortable: true)
+                ->column(key: 'user_id', label: __('Updated By'), canBeHidden: false, sortable: true)
                 ->column(key: 'url', label: __('URL'), canBeHidden: false, sortable: true, searchable: true)
                 ->column(key: 'old_values', label: __('Old Values'), canBeHidden: false, sortable: true)
                 ->column(key: 'new_values', label: __('New Values'), canBeHidden: false, sortable: true)
