@@ -137,7 +137,7 @@ class IndexPortfolioWebsites extends InertiaAction
             exportLinks: [
                 'export' => [
                     'route' => [
-                        'name' => 'export.histories.index'
+                        'name' => 'export.websites.index'
                     ]
                 ]
             ]

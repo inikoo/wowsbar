@@ -92,9 +92,10 @@ class IndexBanners extends InertiaAction
         Tenant|PortfolioWebsite $parent,
         ?array $modelOperations = null,
         $prefix = null,
-        $canEdit = false
+        $canEdit = false,
+        ?array $exportLinks = null
     ): Closure {
-        return function (InertiaTable $table) use ($modelOperations, $parent, $prefix, $canEdit) {
+        return function (InertiaTable $table) use ($modelOperations, $parent, $prefix, $canEdit, $exportLinks) {
             if ($prefix) {
                 $table
                     ->name($prefix)
@@ -153,6 +154,7 @@ class IndexBanners extends InertiaAction
                 ->withModelOperations($modelOperations)
                 ->withGlobalSearch()
                 ->withEmptyState($emptyState)
+                ->withExportLinks($exportLinks)
                 ->column(key: 'state', label: ['fal', 'fa-yin-yang'])
                 ->column(key: 'slug', label: __('code'), sortable: true)
                 ->column(key: 'name', label: __('name'), sortable: true)
@@ -260,7 +262,14 @@ class IndexBanners extends InertiaAction
                     ] : false
                 ],
                 */
-                canEdit: $this->canEdit
+                canEdit: $this->canEdit,
+                exportLinks: [
+                    'export' => [
+                        'route' => [
+                            'name' => 'export.banners.index'
+                        ]
+                    ]
+                ]
             )
         );
     }
