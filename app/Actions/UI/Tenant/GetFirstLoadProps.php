@@ -38,11 +38,11 @@ class GetFirstLoadProps
         $firebaseAuthToken=null;
 
         if ($user) {
-            $firebaseAuthToken = Cache::remember('tenant_firebase_auth_token_'.$user->id, 3600, function () {
+            $firebaseAuthToken = Cache::remember('tenant_firebase_auth_token_'.$user->id, 3600, function () use ($user) {
                 $auth        = app('firebase.auth');
                 $tenant      = app('currentTenant');
                 $customToken = $auth
-                    ->createCustomToken($tenant->slug, [
+                    ->createCustomToken('tenant-'.$user->id, [
                         'scope'       => 'tenant',
                         'tenant_slug' => $tenant->slug
                     ]);

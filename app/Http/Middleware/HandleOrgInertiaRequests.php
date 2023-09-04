@@ -16,6 +16,9 @@ use Tightenco\Ziggy\Ziggy;
 
 class HandleOrgInertiaRequests extends Middleware
 {
+
+    protected $rootView = 'app-organisation';
+
     public function share(Request $request): array
     {
         $user = $request->user();

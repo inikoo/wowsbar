@@ -15,7 +15,6 @@ class HandleDeliveryInertiaRequests extends Middleware
 {
     protected $rootView = 'app-delivery';
 
-
     public function share(Request $request): array
     {
         $firstLoadOnlyProps = [];

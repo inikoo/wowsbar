@@ -28,7 +28,7 @@ const logoSrc=usePage().props.art.footer_logo;
         <div class="flex justify-between">
             <!-- Left: Logo Section -->
             <div class="pl-4 flex items-center gap-x-1.5 py-1">
-                <Image class="h-4 select-none" :src="logoSrc" alt="Org-Wowsbar" />
+                <Image class="h-auto w-14 select-none" :src="logoSrc" alt="Org-Wowsbar" />
             </div>
 
             <!-- Right: Tab Section -->

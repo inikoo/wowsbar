@@ -21,7 +21,7 @@ class ShowLogin
     {
         return Inertia::render(
             match ($request->route()->getName()) {
-                'org.login'    => 'Organisation/Auth/Login',
+                'org.login'    => 'Auth/Login',
                 'public.login' => 'Public/Auth/Login',
                 default        => 'Tenant/Auth/Login'
             },

@@ -5,7 +5,10 @@
 /public/hot
 /public/storage
 /public/images
-/public/delivery/*
+/public/delivery/
+/public/organisation/
+/public/public/
+/public/tenant/
 /storage/*.key
 /vendor
 .env
@@ -24,3 +27,4 @@ yarn-error.log
 /load_my_snapshot.sh
 /resources/private/
 lang/php_*.json
+/public/organisation.hot

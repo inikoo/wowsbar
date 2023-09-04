@@ -42,7 +42,7 @@ class ShowWebsite extends InertiaAction
     public function htmlResponse(Website $website, ActionRequest $request): Response
     {
         return Inertia::render(
-            'Organisation/Web/Website',
+            'Web/Website',
             [
                 'breadcrumbs'                    => $this->getBreadcrumbs(),
                 'title'                          => __('website'),

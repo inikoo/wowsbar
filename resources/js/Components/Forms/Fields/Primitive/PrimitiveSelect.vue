@@ -6,15 +6,17 @@
 
 <script setup lang="ts">
 import Multiselect from "@vueform/multiselect"
-import { set } from 'lodash'
+import { set, get } from 'lodash'
 import { ref, watch, defineEmits } from 'vue'
 const props = defineProps<{
-    data: any
-    fieldName: any
-    fieldData: {
-        placeholder: string
-        searchable: boolean
+    data?: any
+    fieldName?: any
+    fieldData?: {
+        placeholder: string,
+        searchable: boolean,
+        options : Array,
     }
+    value?: any
 }>()
 const emit = defineEmits()
 const setFormValue = (data: Object, fieldName: String) => {
@@ -33,11 +35,12 @@ const getNestedValue = (obj: Object, keys: Array) => {
 }
 
 
-const value = ref(setFormValue(props.data, props.fieldName))
+const value = ref(props.data ? setFormValue(props.data, props.fieldName) : get(props,'value',null))
 
 watch(value, (newValue) => {
     // Update the form field value when the value ref changes
     updateFormValue(newValue);
+    emit('onChange', newValue);
 });
 
 
