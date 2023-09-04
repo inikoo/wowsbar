@@ -7,7 +7,7 @@
 
     <!-- Button: Download Table -->
     <slot name="tableDownload" class="">
-      <TableDownload />
+      <TableDownload :exportLinks="exportLinks"/>
     </slot>
 
     <!-- simple and mobile -->
@@ -128,7 +128,7 @@ const props = withDefaults(defineProps<{
   onPerPageChange?: Function
   hasData: Boolean
   meta?: Object
-  modelOperations?: object
+  exportLinks?: {}
 }>(), {
   perPageOptions: [10, 25, 50, 100, 250],
   onPerPageChange: {}
