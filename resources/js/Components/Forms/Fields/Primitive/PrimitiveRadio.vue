@@ -31,7 +31,6 @@ const getNestedValue = (obj: Object, keys: Array) => {
 const value = ref(props.data ? setFormValue(props.data, props.fieldName) : get(props,'radioValue',null))
 
 watch(value, (newValue) => {
-    console.log('ddddd',emit)
     emit('onChange', newValue);
     updateFormValue(newValue);
 });

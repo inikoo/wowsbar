@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { trans } from "laravel-vue-i18n"
-import { ref, watch, computed, defineEmits  } from 'vue'
+import { ref, watch, computed } from 'vue'
 import Input from '@/Components/Forms/Fields/Input.vue'
-import ColorPicker from "./ColorPicker.vue"
+import ColorPicker from "@/Components/Workshop/Fields/ColorPicker.vue"
 import Radio from '@/Components/Forms/Fields/Primitive/PrimitiveRadio.vue'
 import { get, cloneDeep, set } from 'lodash'
 
@@ -124,10 +124,51 @@ const optionType = [
                 value: null
             },
             {
-                name: ['style','color'],
+                name: 'color',
                 type: 'colorPicker',
                 label: trans('color'),
                 value: null
+            },
+            {
+                name: "fontSize",
+                type: "radio",
+                label: trans("Font Size"),
+                value: null,
+                defaultValue: { fontTitle: "text-[25px] lg:text-[44px]", fontSubtitle: "text-[12px] lg:text-[20px]" },
+                options: [
+                    { label: "Extra Small", value: {
+                            fontTitle: "text-[13px] lg:text-[21px]",
+                            fontSubtitle: "text-[8px] lg:text-[12px]"
+                        }
+                    },
+                    {
+                        label: "Small",
+                        value: {
+                            fontTitle: "text-[18px] lg:text-[32px]",
+                            fontSubtitle: "text-[10px] lg:text-[15px]"
+                        }
+                    },
+                    {
+                        label: "Normal",
+                        value: {
+                            fontTitle: "text-[25px] lg:text-[44px]",
+                            fontSubtitle: "text-[12px] lg:text-[20px]"
+                        }
+                    },
+                    {
+                        label: "Large", value: {
+                            fontTitle: "text-[30px] lg:text-[60px]",
+                            fontSubtitle: "text-[15px] lg:text-[25px]"
+                        }
+                    },
+                    {
+                        label: "Extra Large",
+                        value: {
+                            fontTitle: "text-[40px] lg:text-[70px]",
+                            fontSubtitle: "text-[20px] lg:text-[30px]"
+                        },
+                    },
+                ],
             },
         ]
     },
@@ -243,7 +284,7 @@ const setUpData = () => {
         }
     }
 
-    console.log('iniiiii',value.value)
+    // console.log('iniiiii',value.value)
     
     updateFormValue(value.value)
 };
@@ -287,7 +328,7 @@ const updateFormValue = (newValue) => {
     }
 
     // Step 7: Update props.data with the new object
-    console.log('target',target)
+    // console.log('target',target)
     emits("update:data", target);
 };
 

@@ -21,11 +21,11 @@ const logoSrc=usePage().props.layout.logo;
 
 <template>
     <div class="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8 ">
-        <div class="sm:mx-auto sm:w-full sm:max-w-md">
-            <Image :class="'mx-auto h-16 -mb-3 w-auto'" :src="logoSrc" alt="Wowsbar" />
+        <div class="sm:mx-auto sm:w-full sm:max-w-md flex justify-center">
+            <Image :class="'mx-auto h-16 -mb-3 w-auto '" :src="logoSrc" alt="Wowsbar" />
         </div>
         <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-            <h2 class="font-logo mt-4 mb-4 text-center text-3xl text-gray-600"> 💼 </h2>
+            <h2 class="font-logo mt-2 mb-4 text-center text-3xl text-gray-600"> 💼 </h2>
             <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
                 <slot />
             </div>

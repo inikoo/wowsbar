@@ -11,6 +11,8 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { useGalleryStore } from '@/Stores/gallery.js'
 import { useTruncate } from '@/Composables/useTruncate.js'
 import Button from '../Elements/Buttons/Button.vue'
+import EmptyState from '@/Components/Utils/EmptyState.vue'
+import { trans } from "laravel-vue-i18n"
 
 library.add(faCloudUpload, faImagePolaroid, faSpinnerThird)
 
@@ -103,27 +105,41 @@ const collectImage = (image) => {
 
         <!-- Main content -->
         <section class="bg-gray-50 h-96 w-full rounded-r-md">
-            <div v-if="loadingState" class="w-full h-full flex justify-center items-center">
-                <FontAwesomeIcon icon='fad fa-spinner-third' class='animate-spin h-12  text-orange-500' aria-hidden='true' />
+            <div v-if="loadingState" class="w-full h-full flex justify-center items-start">
+                <div class="pt-6 px-4 grid grid-cols-4 gap-x-3 gap-y-6 max-h-96">
+                    <div v-for="imageData in 7" class="relative flex flex-col gap-y-1">
+                        <div class="skeleton h-10 aspect-[4/1] rounded" />
+                        <div class="skeleton w-2/3 h-4" />
+                    </div>
+                </div>
             </div>
 
             <!-- Content -->
-            <div v-else class="pt-6 pl-4 grid grid-cols-4 gap-x-3 gap-y-6 max-h-96 overflow-auto">
-                <div v-for="imageData in galleryStore?.[activeSidebar]" :key="imageData.id"
-                    @click="() => collectImage(imageData)"
-                    class="group cursor-pointer relative flex flex-col gap-y-1"
-                    :class="ImageDataCollect.data.find((item) => item.id === imageData.id) ? 'font-bold text-gray-500 rounded-md' : 'text-gray-500 opacity-70 hover:opacity-100'"
-                >
-                    <div class="flex-none aspect-[4/1] bg-white overflow-hidden rounded" :id="imageData.id"
-                        :class="ImageDataCollect.data.find((item) => item.id === imageData.id) ? 'ring-2 ring-orange-500 ring-offset-2' : 'ring-offset-2 group-hover:ring-2 group-hover:ring-gray-300'"
+            <div v-else>
+                <div v-if="galleryStore?.[activeSidebar].length == 0" class="h-full flex justify-center items-center">
+                    <EmptyState :data="{
+                        title: trans('You haven\'t uploaded any images yet.'),
+                        description: trans('Create new slides in the workshop to get started.'),
+                    }" />
+                </div>
+                <div v-else class="pt-6 px-4 grid grid-cols-4 gap-x-3 gap-y-6 max-h-96 overflow-auto">
+                    <div  v-for="imageData in galleryStore?.[activeSidebar]" :key="imageData.id"
+                        @click="() => collectImage(imageData)"
+                        class="group cursor-pointer relative flex flex-col gap-y-1"
+                        :class="ImageDataCollect.data.find((item: any) => item.id === imageData.id) ? 'font-bold text-gray-500 rounded-md' : 'text-gray-500 opacity-70 hover:opacity-100'"
                     >
-                        <Image :src="imageData.source" :alt="imageData.imageAlt" class="h-full w-full object-cover object-center" />
+                        <div class="flex-none aspect-[4/1] bg-white overflow-hidden rounded" :id="imageData.id"
+                            :class="ImageDataCollect.data.find((item: any) => item.id === imageData.id) ? 'ring-2 ring-orange-500 ring-offset-2' : 'ring-offset-2 group-hover:ring-2 group-hover:ring-gray-300'"
+                        >
+                            <Image :src="imageData.source" :alt="imageData.imageAlt" class="h-full w-full object-cover object-center" />
+                        </div>
+                        <h3 class="overflow-hidden text-xs flex justify-start items-center">
+                            {{ useTruncate(imageData.name, 17, 4) }}
+                        </h3>
                     </div>
-                    <h3 class="overflow-hidden text-xs flex justify-start items-center">
-                        {{ useTruncate(imageData.name, 17, 4) }}
-                    </h3>
                 </div>
             </div>
+            
             
         </section>
     

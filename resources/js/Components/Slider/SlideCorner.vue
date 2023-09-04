@@ -40,7 +40,6 @@ const positionClasses = computed(() => {
         case 'bottomLeft':
             classes = 'bottom-6 left-8 text-left';
             break;
-
     }
 
     return classes;

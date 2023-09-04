@@ -132,7 +132,7 @@ const screenViewChange = (value) => {
                     }
                     : 'w-full aspect-[2/1] md:aspect-[3/1] lg:aspect-[4/1]'
             , 'overflow-hidden border border-gray-300 shadow']">
-                <div class="relative w-full h-full flex items-center bg-red-500">
+                <div class="relative w-full h-full flex items-center bg-gray-100">
                     <Image class="h-full flex" :src="get(value, [`${screenView}`, 'source'], value.desktop.source)"
                         :alt="value.name" :imageCover="true"/>
                 </div>

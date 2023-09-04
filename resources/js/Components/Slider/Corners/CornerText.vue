@@ -7,9 +7,14 @@
 <script setup lang="ts">
 
 const props = defineProps<{
-    data: {
+    data?: {
         title?: string
         subtitle?: string
+        fontSize?: {
+            fontSubtitle?: string
+            fontTitle?: string
+        }
+        color?: string
     }
     swiperRef?: Element 
 }>()
@@ -17,7 +22,6 @@ const props = defineProps<{
 </script>
 
 <template>
-    <div v-if="data.title" class="text-gray-100 drop-shadow-md text-5xl font-bold">{{ data.title }}</div>
-    <div v-if="data.subtitle" class="text-gray-300 drop-shadow text-base italic tracking-widest">{{ data.subtitle }}</div>
-
+    <div v-if="data?.title" class="text-gray-100 drop-shadow-md text-5xl font-bold" :class="data?.fontSize?.fontTitle" :style="`color: ${data?.color}`">{{ data?.title }}</div>
+    <div v-if="data?.subtitle" class="text-gray-300 drop-shadow text-base italic tracking-widest" :class="data?.fontSize?.fontSubtitle" :style="`color: ${data?.color}`">{{ data?.subtitle }}</div>
 </template>
