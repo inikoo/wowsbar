@@ -124,7 +124,7 @@ const optionType = [
                 value: null
             },
             {
-                name: ['style','color'],
+                name: 'color',
                 type: 'colorPicker',
                 label: trans('color'),
                 value: null

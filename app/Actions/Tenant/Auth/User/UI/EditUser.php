@@ -116,7 +116,8 @@ class EditUser extends InertiaAction
                                 'permissions' => [
                                     'type'              => 'select',
                                     'label'             => __('permissions'),
-                                    'options'           => ['tenant','public','pricing'],
+                                    'options'           => $user->getRoleNames(),
+                                    'value'             => $user->getRoleNames(),
                                     // 'fullComponentArea' => true,
                                 ],
                             ]
