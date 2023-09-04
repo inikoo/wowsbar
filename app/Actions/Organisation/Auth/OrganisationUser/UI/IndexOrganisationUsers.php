@@ -138,7 +138,7 @@ class IndexOrganisationUsers extends InertiaAction
     public function htmlResponse(LengthAwarePaginator $organisationUsers, ActionRequest $request): Response
     {
         return Inertia::render(
-            'Organisation/SysAdmin/OrganisationUsers',
+            'SysAdmin/OrganisationUsers',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->getName(),
