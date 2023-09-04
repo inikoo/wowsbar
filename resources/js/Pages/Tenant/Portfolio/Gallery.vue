@@ -83,7 +83,6 @@ const compselectedImagesFlat = computed(() => {
 
 const createBanner = async () => {
     loadingState.value = true
-    console.log(fieldWebsite.value,fieldName.value,compselectedImagesFlat.value)
     try {
         if(fieldWebsite.value){
             await axios.post(
@@ -134,10 +133,8 @@ const selectedImage = () => {
 
 const deleteImageSelected = (image) => {
     const index =  selectedImages.value.stock_images.findIndex((item) => item == image);
-
     if (index !== -1) {
         selectedImages.value.stock_images.splice(index, 1);
-        selectedImages.value
         allImageFlat.value = selectedImage(); 
     }
 };
