@@ -8,7 +8,7 @@
 namespace App\Http\Middleware;
 
 use App\Actions\Helpers\Images\GetPictureSources;
-use App\Actions\UI\Public\GetPublicFirstLoadProps;
+use App\Actions\UI\Public\GetFirstLoadProps;
 use App\Helpers\ImgProxy\Image;
 use App\Http\Resources\UI\LoggedUserResource;
 use Illuminate\Http\Request;
@@ -28,7 +28,7 @@ class HandlePublicInertiaRequests extends Middleware
         $firstLoadOnlyProps = [];
 
         if (!$request->inertia() or Session::get('reloadLayout')) {
-            $firstLoadOnlyProps          = GetPublicFirstLoadProps::run($user);
+            $firstLoadOnlyProps          = GetFirstLoadProps::run($user);
             $firstLoadOnlyProps['ziggy'] = function () use ($request) {
                 return array_merge((new Ziggy())->toArray(), [
                     'location' => $request->url(),

@@ -16,7 +16,7 @@ if (usePage().props.language) {
     loadLanguageAsync(usePage().props.language)
 }
 
-const logoSrc=usePage().props.layout.logo;
+const logoSrc=usePage().props.art.logo;
 </script>
 
 <template>

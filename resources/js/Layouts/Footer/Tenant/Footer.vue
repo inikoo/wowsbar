@@ -1,14 +1,18 @@
+<!--
+  - Author: Raul Perusquia <raul@inikoo.com>
+  - Created: Mon, 04 Sep 2023 10:37:14 Malaysia Time, Kuala Lumpur, Malaysia
+  - Copyright (c) 2023, Raul A Perusquia Flores
+  -->
+
 <script setup lang="ts">
 import { ref, Ref } from 'vue'
-import FooterTabActiveUsers from '@/Layouts/Footer/FooterTabActiveUsers.vue'
-import FooterTabLanguage from '@/Layouts/Footer/FooterTabLanguage.vue'
-
-const props = defineProps<{
-    appScope: string
-}>()
+import FooterTabActiveUsers from '@/Components/Footer/Tenant/FooterActiveUsers.vue'
+import FooterLanguage from '@/Components/Footer/FooterLanguage.vue'
+import {usePage} from "@inertiajs/vue3";
+import Image from "@/Components/Image.vue";
 
 const isTabActive: Ref<boolean | string> = ref(false)
-
+const logoSrc=usePage().props.art.footer_logo;
 </script>
 
 <template>
@@ -21,13 +25,13 @@ const isTabActive: Ref<boolean | string> = ref(false)
         <div class="flex justify-between">
             <!-- Left: Logo Section -->
             <div class="pl-4 flex items-center gap-x-1.5 py-1">
-                <img src="@/../art/logo/png/2.png" alt="Wowsbar" class="h-4 select-none">
+                <Image class="h-4 select-none"  :src="logoSrc" alt="T-Wowsbar" />
             </div>
 
             <!-- Right: Tab Section -->
             <div class="flex items-end flex-row-reverse text-sm">
-                <FooterTabActiveUsers :isTabActive="isTabActive" @isTabActive="(value: any) => isTabActive = value" :appScope="appScope"/>
-                <FooterTabLanguage :isTabActive="isTabActive" @isTabActive="(value: any) => isTabActive = value" />
+                <FooterTabActiveUsers :isTabActive="isTabActive" @isTabActive="(value: any) => isTabActive = value" />
+                <FooterLanguage :isTabActive="isTabActive" @isTabActive="(value: any) => isTabActive = value" />
             </div>
         </div>
     </footer>

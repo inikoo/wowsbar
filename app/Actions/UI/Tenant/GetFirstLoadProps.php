@@ -63,6 +63,14 @@ class GetFirstLoadProps
                     'languageOptions' => GetLanguagesOptions::make()->translated(),
                 ],
 
+            'art' => [
+                'logo' => GetPictureSources::run(
+                    (new Image())->make(url('/images/logo.png'))->resize(0, 64)
+                ),
+                'footer_logo' => GetPictureSources::run(
+                    (new Image())->make(url('/images/logo_white.png'))->resize(0, 16)
+                ),
+            ],
 
 
             'layout'   => function () use ($user) {
@@ -70,13 +78,7 @@ class GetFirstLoadProps
                     return GetLayout::run($user);
                 } else {
                     return [
-
-                        'logo'      => GetPictureSources::run(
-                            (new Image())->make(url('/images/logo.png'))->resize(0, 64)
-                        ),
                         'publicUrl' => config('app.url')
-
-
                     ];
                 }
             },

@@ -46,20 +46,18 @@ class GetFirstLoadProps
                     'languageOptions' => GetLanguagesOptions::make()->translated(),
                 ],
 
+            'art' => [
+                'logo' => GetPictureSources::run(
+                    (new Image())->make(url('/images/logo.png'))->resize(0, 64)
+                ),
+                'footer_logo' => GetPictureSources::run(
+                    (new Image())->make(url('/images/logo_white.png'))->resize(0, 16)
+                ),
+            ],
+
 
             'layout'       => function () use ($user) {
-                if ($user) {
-                    return GetLayout::run($user);
-                } else {
-                    return [
-
-                        'logo' => GetPictureSources::run(
-                            (new Image())->make(url('/images/logo.png'))->resize(0, 64)
-                        ),
-
-
-                    ];
-                }
+                return $user ? GetLayout::run($user) : null;
             },
             'organisation' => OrganisationResource::make(Organisation::first())->getArray(),
             'firebase'     => [
