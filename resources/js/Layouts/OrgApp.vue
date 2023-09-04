@@ -37,6 +37,7 @@ import {
     faLanguage
 } from "@/../private/pro-light-svg-icons"
 import { faSearch, faBell} from "../../private/pro-regular-svg-icons"
+import {useAuthFirebase} from "@/Composables/firebaseAuth";
 
 
 library.add(
@@ -63,6 +64,11 @@ library.add(
 )
 
 const layout = initialiseApp()
+if (usePage().props.firebaseAuthToken) {
+    useAuthFirebase(usePage().props.firebaseAuthToken)
+}
+
+
 const sidebarOpen = ref(false)
 
 </script>
