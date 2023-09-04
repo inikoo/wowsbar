@@ -49,12 +49,13 @@ class IndexHistories
             ->withQueryString();
     }
 
-    public function tableStructure(?array $modelOperations = null): Closure
+    public function tableStructure(?array $exportLinks = null): Closure
     {
-        return function (InertiaTable $table) {
+        return function (InertiaTable $table) use ($exportLinks) {
             $table
                 ->name('hst')
                 ->pageName('historyPage')
+                ->withExportLinks($exportLinks)
                 ->column(key: 'ip_address', label: __('IP Address'), canBeHidden: false, sortable: true, searchable: true)
                 ->column(key: 'user_id', label: __('User ID'), canBeHidden: false, sortable: true)
                 ->column(key: 'url', label: __('URL'), canBeHidden: false, sortable: true, searchable: true)

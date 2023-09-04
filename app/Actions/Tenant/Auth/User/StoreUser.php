@@ -38,9 +38,7 @@ class StoreUser
         $user = $tenant->users()->create($objectData);
         $user->stats()->create();
 
-        if(!$user->wasRecentlyCreated){
-            SetUserAvatar::run($user);
-        }
+        SetUserAvatar::run($user);
 
         UserHydrateUniversalSearch::dispatch($user);
         TenantHydrateUsers::dispatch(app('currentTenant'));

@@ -24,6 +24,7 @@ class InertiaTable
 
     private Collection $emptyState;
     private Collection $modelOperations;
+    private Collection $exportLinks;
 
     private static bool|string $defaultGlobalSearch = false;
     private static array $defaultQueryBuilderConfig = [];
@@ -36,6 +37,7 @@ class InertiaTable
         $this->elementGroups   = new Collection();
         $this->filters         = new Collection();
         $this->modelOperations = new Collection();
+        $this->exportLinks     = new Collection();
         $this->emptyState      = new Collection();
 
         if (static::$defaultGlobalSearch !== false) {
@@ -129,6 +131,7 @@ class InertiaTable
             'perPageOptions'                  => $this->perPageOptions,
             'elementGroups'                   => $this->transformElementGroups(),
             'modelOperations'                 => $this->modelOperations,
+            'exportLinks'                     => $this->exportLinks,
             'emptyState'                      => $this->emptyState,
             'title'                           => $this->title
         ];
@@ -280,6 +283,14 @@ class InertiaTable
     {
 
         $this->modelOperations = collect($modelOperations);
+
+        return $this;
+    }
+
+    public function withExportLinks(array $exportLinks = null): self
+    {
+
+        $this->exportLinks = collect($exportLinks);
 
         return $this;
     }

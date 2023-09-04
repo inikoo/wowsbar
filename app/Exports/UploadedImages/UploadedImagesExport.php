@@ -5,35 +5,34 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Exports\Changelog;
+namespace App\Exports\UploadedImages;
 
+use App\Helpers\ImgProxy\Image;
+use App\Models\Media\Media;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Database\Query\Builder;
 use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
-use OwenIt\Auditing\Models\Audit;
 
-class ChangelogExport implements FromQuery, WithMapping, ShouldAutoSize, WithHeadings
+class UploadedImagesExport implements FromQuery, WithMapping, ShouldAutoSize, WithHeadings
 {
-    public function query(): Relation|\Illuminate\Database\Eloquent\Builder|Audit|Builder
+    public function query(): Relation|\Illuminate\Database\Eloquent\Builder|Media|Builder
     {
-        return Audit::query();
+        return Media::query();
     }
 
-    /** @var Audit $row */
+    /** @var Media $row */
     public function map($row): array
     {
+        $imageThumbnail = (new Image())->make($row->getLocalImgProxyFilename(), $row->is_animated)->resize(0, 48);
+
         return [
             $row->id,
-            $row->ip_address,
-            $row->user_id,
-            $row->url,
-            $row->old_values,
-            $row->new_values,
-            $row->event,
-            $row->auditable_type,
+            $row->name,
+            json_encode($imageThumbnail),
+            $row->size,
             $row->created_at
         ];
     }
@@ -42,14 +41,10 @@ class ChangelogExport implements FromQuery, WithMapping, ShouldAutoSize, WithHea
     {
         return [
             '#',
-            'IP Address',
-            'User',
-            'URL',
-            'Old Values',
-            'New Values',
-            'Action',
-            'Module',
-            'Date & Time'
+            'Name',
+            'Image',
+            'Size',
+            'Uploaded At'
         ];
     }
 }

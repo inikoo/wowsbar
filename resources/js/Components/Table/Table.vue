@@ -460,11 +460,11 @@ const visitCancelToken = ref(null);
 
 const visit = (url) => {
     // Visit new generate URL, run on watch queryBuilderData
-    
+
     if (!url) {
         return;
     }
-    
+
     $inertia.get(
         url,
         {},
@@ -608,7 +608,7 @@ const handleElementsChange = (data) => {
                                     :filters="queryBuilderProps.filters" :on-filter-change="changeFilterValue" />
                             </slot>
                         </div>
-                        
+
                         <!-- Search Input Button -->
                         <div v-if="queryBuilderProps.globalSearch && compResourceMeta.total >= 5"
                             class="flex flex-row w-64 order-1 md:order-2 transition-all ease-in-out duration-100">
@@ -710,7 +710,7 @@ const handleElementsChange = (data) => {
                     <slot name="pagination" :on-click="visit" :has-data="hasData" :meta="compResourceMeta"
                         v-if="compResourceMeta.total > 15" :per-page-options="queryBuilderProps.perPageOptions"
                         :on-per-page-change="onPerPageChange">
-                        <Pagination :on-click="visit" :has-data="hasData" :meta="compResourceMeta"
+                        <Pagination :modelOperations="queryBuilderProps.modelOperations" :on-click="visit" :has-data="hasData" :meta="compResourceMeta"
                             :per-page-options="queryBuilderProps.perPageOptions" :on-per-page-change="onPerPageChange" />
                     </slot>
                 </TableWrapper>
