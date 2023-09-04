@@ -11,6 +11,7 @@ import SlideControls from "@/Components/Slider/Corners/SlideControls.vue";
 import LinkButton from "@/Components/Slider/Corners/LinkButton.vue";
 import CornerText from "@/Components/Slider/Corners/CornerText.vue";
 import CornerFooter from "@/Components/Slider/Corners/CornerFooter.vue";
+import Ribbon from "@/Components/Slider/Corners/Ribbon.vue";
 
 const props = defineProps<{
     position: string,
@@ -27,19 +28,36 @@ const props = defineProps<{
 
 const positionClasses = computed(() => {
     let classes;
-    switch (props.position) {
-        case 'topRight':
-            classes = 'top-6 right-7 text-right';
-            break;
-        case 'topLeft':
-            classes = 'top-6 left-7 text-left';
-            break;
-        case 'bottomRight':
-            classes = 'bottom-6 right-8 text-right';
-            break;
-        case 'bottomLeft':
-            classes = 'bottom-6 left-8 text-left';
-            break;
+    if(props.corner.type != 'ribbon') {
+        switch (props.position) {
+            case 'topRight':
+                classes = 'top-0 right-7 text-right';
+                break;
+            case 'topLeft':
+                classes = 'top-6 left-7 text-left';
+                break;
+            case 'bottomRight':
+                classes = 'bottom-6 right-8 text-right';
+                break;
+            case 'bottomLeft':
+                classes = 'bottom-6 left-8 text-left';
+                break;
+        }
+    } else {
+        switch (props.position) {
+            case 'topRight':
+                classes = 'top-0 right-0 text-right';
+                break;
+            case 'topLeft':
+                classes = 'top-0 left-0 text-left';
+                break;
+            case 'bottomRight':
+                classes = 'bottom-0 right-0 text-right';
+                break;
+            case 'bottomLeft':
+                classes = 'bottom-0 left-0 text-left';
+                break;
+        }
     }
 
     return classes;
@@ -50,18 +68,20 @@ const components = {
     'linkButton': LinkButton,
     'cornerText': CornerText,
     'cornerFooter': CornerFooter,
+    'ribbon': Ribbon
 }
 
 const getComponent = (componentName: any) => {
     return components[componentName] ?? null;
 };
 
+console.log(props.corner)
 </script>
 
 <template>
     <div :class="positionClasses" class="absolute">
     <!-- {{ positionClasses }} -->
-        <component :is="getComponent(corner.type)" :data="corner.data" :swiperRef="props.swiperRef" />
+        <component :is="getComponent(corner.type)" :data="corner.data" :swiperRef="props.swiperRef" :position="position"/>
     </div>
 
 </template>

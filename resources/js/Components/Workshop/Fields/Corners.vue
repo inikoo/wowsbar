@@ -196,18 +196,37 @@ const optionType = [
         value: "slideControls",
         fields: [],
     },
+    {
+        label: 'Ribbon',
+        value: "ribbon",
+        fields: [
+            {
+                name: 'text',
+                type: 'input',
+                label: trans('Text'),
+                value: null,
+                placeholder: 'Holiday Sales!'
+            },
+            {
+                name: 'color',
+                type: 'colorPicker',
+                label: trans('Ribbon color'),
+                value: 'rgb(244, 63, 94)'
+            },
+        ]
+    },
 ]
 
 
 const filterType = () => {
-  if (props.fieldData.optionType) {
-    const data = optionType.filter((item) => {
-      // Check if the item's value is present in the optionType array
-      return props.fieldData.optionType.includes(item.value);
-    });
-    return data;
-  }
-  return optionType
+    if (props.fieldData?.optionType) {
+        const data = optionType.filter((item) => {
+            // Check if the item's value is present in the optionType array
+            return props.fieldData?.optionType.includes(item.value);
+        });
+        return data;
+    }
+    return optionType
 }
 
 const Type = filterType()

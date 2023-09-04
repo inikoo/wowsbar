@@ -97,7 +97,7 @@ watch(() => props.jumpToIndex, (newVal) => {
 </script>
 
 <template>
-    <div class=" overflow-hidden relative border border-gray-300 shadow-md"
+    <div class="relative border border-gray-300 shadow-md" 
         :class="[$props.view
             ? { 'aspect-[2/1] w-1/2' : $props.view == 'mobile',
                 'aspect-[3/1] w-3/4' : $props.view == 'tablet',
@@ -120,8 +120,8 @@ watch(() => props.jumpToIndex, (newVal) => {
             :navigation="false"
             :modules="[Autoplay, Pagination, Navigation]" class="mySwiper">
             <SwiperSlide v-for="component in data.components.filter((item)=>item.ulid)" :key="component.id">
-
-                <div class="relative w-full h-full overflow-hidden">
+                <!-- {{ data.common }} -->
+                <div class="relative w-full h-full">
                     <Image :src="get(component, ['image', `${$props.view}`, 'source'], component.image.desktop?.source)" alt="Wowsbar" />
                 </div>
                 <div v-if="get(component, ['visibility'], true) === false" class="absolute h-full w-full bg-gray-800/50 z-10 " />
@@ -165,4 +165,5 @@ watch(() => props.jumpToIndex, (newVal) => {
     @apply w-full h-full;
     object-fit: cover;
 }
+
 </style>
