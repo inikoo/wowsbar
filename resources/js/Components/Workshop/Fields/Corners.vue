@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { trans } from "laravel-vue-i18n"
-import { ref, watch, computed, defineEmits  } from 'vue'
+import { ref, watch, computed } from 'vue'
 import Input from '@/Components/Forms/Fields/Input.vue'
-import ColorPicker from "./ColorPicker.vue"
+import ColorPicker from "@/Components/Workshop/Fields/ColorPicker.vue"
 import Radio from '@/Components/Forms/Fields/Primitive/PrimitiveRadio.vue'
 import { get, cloneDeep, set } from 'lodash'
 
@@ -243,7 +243,7 @@ const setUpData = () => {
         }
     }
 
-    console.log('iniiiii',value.value)
+    // console.log('iniiiii',value.value)
     
     updateFormValue(value.value)
 };
@@ -287,7 +287,7 @@ const updateFormValue = (newValue) => {
     }
 
     // Step 7: Update props.data with the new object
-    console.log('target',target)
+    // console.log('target',target)
     emits("update:data", target);
 };
 

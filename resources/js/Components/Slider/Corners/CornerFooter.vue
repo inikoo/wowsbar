@@ -9,6 +9,10 @@
 const props = defineProps<{
     data: {
         text?: string
+        fontSize?: {
+            fontSubtitle?: string
+            fontTitle?: string
+        }
     }
     swiperRef?: Element 
 }>()
@@ -16,7 +20,8 @@ const props = defineProps<{
 </script>
 
 <template>
-    <div v-if="data.text" class="text-gray-400 text-xs">
+    {{ data }}
+    <div v-if="data.text" class="text-gray-400 text-xs" :class="data.fontSize.fontSubtitle" :style="`color: ${data.color}`">
         {{ data.text }}
     </div>
 </template>
