@@ -542,7 +542,7 @@ const uploadImageRespone = (res) => {
     isOpenGalleryImages.value = false
     currentComponentBeenEdited.value = props.data.components[ props.data.components.length - 1 ]
 };
-console.log(currentComponentBeenEdited.value)
+
 </script>
 
 <template>

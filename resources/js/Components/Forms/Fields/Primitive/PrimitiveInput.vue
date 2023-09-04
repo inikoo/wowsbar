@@ -62,7 +62,6 @@ const updateLocalFormValue = (newValue) => {
     emits("update:data", localData); // Emit event to update parent component's data
 };
 
-console.log('aaaa',props)
 
 </script>
 

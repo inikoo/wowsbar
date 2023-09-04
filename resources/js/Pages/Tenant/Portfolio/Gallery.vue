@@ -11,18 +11,9 @@ import Tabs from "@/Components/Navigation/Tabs.vue"
 import Input from '@/Components/Forms/Fields/Input.vue'
 import { computed, ref, Ref } from "vue"
 import { trans } from 'laravel-vue-i18n'
-
-import {
-    Listbox,
-    ListboxLabel,
-    ListboxButton,
-    ListboxOptions,
-    ListboxOption,
-} from '@headlessui/vue'
-import { CheckIcon, ChevronUpDownIcon } from '@heroicons/vue/20/solid'
-
+import Select from '@/Components/Forms/Fields/Primitive/PrimitiveSelect.vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faImagePolaroid, faCloudUpload } from '@/../private/pro-light-svg-icons'
+import { faImagePolaroid, faCloudUpload, faTimes } from '@/../private/pro-light-svg-icons'
 import { faSpinnerThird } from '@/../private/pro-duotone-svg-icons'
 import { library } from '@fortawesome/fontawesome-svg-core'
 
@@ -30,13 +21,15 @@ import { useTabChange } from "@/Composables/tab-change"
 import { capitalize } from "@/Composables/capitalize"
 import Button from '@/Components/Elements/Buttons/Button.vue'
 import TableImages from "@/Pages/Tables/TableImages.vue"
-import Select from '@/Components/Forms/Fields/Select.vue'
+import { get } from 'lodash'
+import Image from '@/Components/Image.vue'
+
 
 import { watch } from 'vue'
 import Modal from '@/Components/Utils/Modal.vue'
 import axios from 'axios'
 
-library.add(faImagePolaroid, faCloudUpload, faSpinnerThird)
+library.add(faImagePolaroid, faCloudUpload, faSpinnerThird, faTimes)
 
 const props: any = defineProps<{
     pageHead: object
@@ -67,6 +60,7 @@ const websitesList = ref([])
 const isModalOpen = ref(false)
 const fieldWebsite = ref()
 const fieldName = ref()
+const fieldCode = ref()
 
 const combinedImages: Ref<any> = computed(() => {
     return Object.values(selectedImages.value).reduce((accumulator: any, currentValue) => {
@@ -89,6 +83,7 @@ const compselectedImagesFlat = computed(() => {
 
 const createBanner = async () => {
     loadingState.value = true
+    console.log(fieldWebsite.value,fieldName.value,compselectedImagesFlat.value)
     try {
         if(fieldWebsite.value){
             await axios.post(
@@ -132,11 +127,28 @@ const createBanner = async () => {
     }
 }
 
+const selectedImage = () => {
+    const allImage = [...get(props, "uploaded_images", []), ...props.stock_images.data];
+    return allImage.filter((item) => get(selectedImages,['value','stock_images'],[]).includes(item.id));
+};
+
+const deleteImageSelected = (image) => {
+    const index =  selectedImages.value.stock_images.findIndex((item) => item == image);
+
+    if (index !== -1) {
+        selectedImages.value.stock_images.splice(index, 1);
+        selectedImages.value
+        allImageFlat.value = selectedImage(); 
+    }
+};
+
+
 // Fetch website list
 watch(isModalOpen, async () => {
     try {
         const response = await axios.get(route('portfolio.websites.index'))
         websitesList.value = response.data.data
+        allImageFlat.value = selectedImage();
         // fieldWebsite.value = websitesList.value[0].slug
         loadingState.value = false
     } catch (error) {
@@ -144,6 +156,10 @@ watch(isModalOpen, async () => {
         loadingState.value = false
     }
 })
+
+const allImageFlat = ref(selectedImage());
+
+console.log('sssss',selectedImages.value)
 
 </script>
 
@@ -178,6 +194,7 @@ watch(isModalOpen, async () => {
         :isSelectImage="isSelectImage" />
 
     <!-- Content: Table from the Tab -->
+    {{ selectedImages }}
     <KeepAlive>
         <component :isSelectImage="isSelectImage" :is="component" :key="currentTab"
             @selected-row="(value: any) => selectedImages[currentTab] = value[currentTab]" :tab="currentTab"
@@ -185,55 +202,37 @@ watch(isModalOpen, async () => {
     </KeepAlive>
 
     <!-- Popup: select Website to create Banner -->
-    <Modal :isOpen="isModalOpen" @onClose="isModalOpen = false">
+    <Modal :isOpen="isModalOpen" @onClose="isModalOpen = false" width="w-2/5">
         <div class="flex flex-col gap-y-4">
             <!-- Field -->
             <div class="flex flex-col gap-y-4">
-                <div class="max-w-md">
+                <div class="max-w-full">
                     <!-- Field: Website -->
                     <div>Select website</div>
-                    <Listbox v-model="fieldWebsite">
-                        <div class="relative mt-1">
-                            <ListboxButton
-                                class="relative w-full rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
-                                <span class="block truncate">{{ fieldWebsite ?? 'Select website'}}</span>
-                                <span class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-                                    <ChevronUpDownIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
-                                </span>
-                            </ListboxButton>
+                    <Select :value="fieldWebsite" :fieldData="{options : compWebsitesList}" @onChange="(newValue)=>fieldWebsite = newValue"/>
+                </div>
 
-                            <transition leave-active-class="transition duration-100 ease-in" leave-from-class="opacity-100"
-                                leave-to-class="opacity-0">
-                                <ListboxOptions
-                                    class="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                                    <ListboxOption v-slot="{ active, selected }" v-for="person in compWebsitesList" :key="person.name"
-                                        :value="person" as="template">
-                                        <li :class="[
-                                            selected ? 'bg-gray-500 text-white' : 'text-gray-700',
-                                            active ? 'bg-gray-300 text-gray-100 cursor-pointer' : 'text-gray-700',
-                                            'relative select-none py-2 pl-10 pr-4',
-                                        ]">
-                                            <span :class="[
-                                                selected ? 'font-medium' : 'font-normal',
-                                                'block truncate',
-                                            ]">{{ person }}</span>
-                                            <span v-if="selected"
-                                                class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-100">
-                                                <CheckIcon class="h-5 w-5" aria-hidden="true" />
-                                            </span>
-                                        </li>
-                                    </ListboxOption>
-                                </ListboxOptions>
-                            </transition>
-                        </div>
-                    </Listbox>
+                 <!-- Field: code -->
+                 <div class="max-w-full">
+                    <div>Code</div>
+                    <input v-model.trim="fieldCode" placeholder="Enter name for new banner"
+                        class="block w-full shadow-sm rounded-md text-gray-600 dark:bg-gray-600 dark:text-gray-400 focus:ring-gray-500 focus:border-gray-500 sm:text-sm border-gray-300 dark:border-gray-500 read-only:bg-gray-100 read-only:ring-0 read-only:ring-transparent read-only:text-gray-500" />
                 </div>
 
                 <!-- Field: Name -->
-                <div class="max-w-md">
+                <div class="max-w-full">
                     <div>Name</div>
                     <input v-model.trim="fieldName" placeholder="Enter name for new banner"
                         class="block w-full shadow-sm rounded-md text-gray-600 dark:bg-gray-600 dark:text-gray-400 focus:ring-gray-500 focus:border-gray-500 sm:text-sm border-gray-300 dark:border-gray-500 read-only:bg-gray-100 read-only:ring-0 read-only:ring-transparent read-only:text-gray-500" />
+                </div>
+            </div>
+
+            <div class="max-w-full">Images Banner
+                <div class="flex">
+                    <div v-for="image in allImageFlat" :key="image.id" class="relative">
+                        <Image :src="image.thumbnail" class="flex items-center justify-center py-1 h-12 w-20 border border-solid border-gray-300 p-1 m-2" />
+                        <button class="absolute top-0 text-xs right-0 px-1 bg-gray-500 text-white rounded-full h-[20px] w-[20px]" @click="()=>deleteImageSelected(image.id)"><font-awesome-icon :icon="['fal', 'times']" /></button>
+                    </div>
                 </div>
             </div>
 
