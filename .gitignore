@@ -6,6 +6,9 @@
 /public/storage
 /public/images
 /public/delivery/*
+/public/organiastion/
+/public/public/
+/public/tenant/
 /storage/*.key
 /vendor
 .env

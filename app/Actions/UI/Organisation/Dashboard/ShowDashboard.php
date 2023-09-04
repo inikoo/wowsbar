@@ -18,7 +18,7 @@ class ShowDashboard
     public function handle(): Response
     {
         return Inertia::render(
-            'Organisation/Dashboard',
+            'Dashboard',
             [
                 'title'       => __('dashboard'),
                 'breadcrumbs' => $this->getBreadcrumbs(__('dashboard')),
