@@ -43,6 +43,28 @@ class CreateBanner extends InertiaAction
     {
 
         $fields=[];
+
+        $fields[]= [
+            'title'  => __('ID/name'),
+            'fields' => [
+
+                'code' => [
+                    'type'          => 'input',
+                    'label'         => __('code'),
+                    'placeholder'   => __('Input unique code'),
+                    'required'      => true,
+                    'value'         => Str::random(3)
+                ],
+                'name' => [
+                    'type'          => 'input',
+                    'label'         => __('name'),
+                    'placeholder'   => __('Name for new banner'),
+                    'required'      => true,
+                    'value'         => '',
+                ],
+            ]
+        ];
+
         if(class_basename($parent)=='Tenant') {
             $fields[]= [
                 'title'  => __('Website'),
@@ -60,25 +82,6 @@ class CreateBanner extends InertiaAction
                 ]
             ];
         }
-
-        $fields[]= [
-            'title'  => __('ID/name'),
-            'fields' => [
-
-                'code' => [
-                    'type'     => 'input',
-                    'label'    => __('code'),
-                    'required' => true,
-                    'value'    => Str::random(3)
-                ],
-                'name' => [
-                    'type'     => 'input',
-                    'label'    => __('name'),
-                    'required' => true,
-                    'value'    => '',
-                ],
-            ]
-        ];
 
         return Inertia::render(
             'Tenant/CreateModel',
