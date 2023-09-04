@@ -16,6 +16,7 @@ const props = defineProps<{
                 fontSubtitle: string
             }
         }
+        textAlign: string
     }
 
 }>()
@@ -23,10 +24,10 @@ const props = defineProps<{
 </script>
 
 <template>
-    <div class="absolute" :class="[{ 'left-0': true, 'right-0': true }]">
+    <div class="absolute px-4 lg:px-6" :class="[{ 'left-0 text-left': data?.textAlign == 'left', 'right-0 text-right': data?.textAlign == 'right' }]">
         <!-- Fallback for FontSize is normal size -->
-        <div v-if="data?.title" :style="{...data.style }" :class="[data?.style?.fontSize?.fontTitle ? data.style.fontSize?.fontTitle : 'text-[25px] lg:text-[44px]']" class="text-gray-100 drop-shadow-md leading-none font-bold">{{ data.title }}</div>
-        <div v-if="data?.subtitle" :style="{...data.style}" :class="[data?.style?.fontSize?.fontSubtitle ? data.style.fontSize?.fontSubtitle : 'text-[12px] lg:text-[20px]']" class="text-gray-300 drop-shadow leading-none tracking-widest">{{ data.subtitle }}</div>
+        <div v-if="data?.title" :style="{...data?.style }" :class="[data?.style?.fontSize?.fontTitle ?? 'text-[25px] lg:text-[44px]']" class="text-gray-100 drop-shadow-md leading-none font-bold">{{ data?.title }}</div>
+        <div v-if="data?.subtitle" :style="{...data?.style}" :class="[data?.style?.fontSize?.fontSubtitle ?? 'text-[12px] lg:text-[20px]']" class="text-gray-300 drop-shadow leading-none tracking-widest">{{ data?.subtitle }}</div>
     </div>
 </template>
 
