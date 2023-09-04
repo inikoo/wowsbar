@@ -11,6 +11,8 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { useGalleryStore } from '@/Stores/gallery.js'
 import { useTruncate } from '@/Composables/useTruncate.js'
 import Button from '../Elements/Buttons/Button.vue'
+import EmptyState from '@/Components/Utils/EmptyState.vue'
+import { trans } from "laravel-vue-i18n"
 
 library.add(faCloudUpload, faImagePolaroid, faSpinnerThird)
 
@@ -108,8 +110,15 @@ const collectImage = (image) => {
             </div>
 
             <!-- Content -->
+            <div v-else>
+                <div v-if="galleryStore?.[activeSidebar].length == 0" class="h-full flex justify-center items-center">
+                    <EmptyState :data="{
+                        title: trans('You haven\'t uploaded any images yet'),
+                        description: trans('Create new slides in the workshop to get started'),
+                    }" />
+             </div>
             <div v-else class="pt-6 pl-4 grid grid-cols-4 gap-x-3 gap-y-6 max-h-96 overflow-auto">
-                <div v-for="imageData in galleryStore?.[activeSidebar]" :key="imageData.id"
+                <div  v-for="imageData in galleryStore?.[activeSidebar]" :key="imageData.id"
                     @click="() => collectImage(imageData)"
                     class="group cursor-pointer relative flex flex-col gap-y-1"
                     :class="ImageDataCollect.data.find((item) => item.id === imageData.id) ? 'font-bold text-gray-500 rounded-md' : 'text-gray-500 opacity-70 hover:opacity-100'"
@@ -124,6 +133,8 @@ const collectImage = (image) => {
                     </h3>
                 </div>
             </div>
+            </div>
+            
             
         </section>
     
