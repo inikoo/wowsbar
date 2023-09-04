@@ -16,7 +16,7 @@ import { trans } from 'laravel-vue-i18n'
 
 const props = defineProps<{
     data?: {
-        action: {
+        action?: {
             label: string
             route: {
                 name: string
