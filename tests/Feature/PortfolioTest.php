@@ -99,9 +99,8 @@ test('update banner', function ($banner) {
     expect($banner)->toBeInstanceOf(Banner::class);
 })->depends('create banners');
 
-// TODO check next week why this error
-//test('delete banner', function ($banner) {
-//    $tenant = app('currentTenant');
-//    DeleteBanner::make()->action($banner);
-//    expect($tenant->portfolioStats->number_banners)->toBe(2);
-//})->depends('create banners');
+test('delete banner', function ($banner) {
+    $tenant = app('currentTenant');
+    DeleteBanner::make()->action($banner);
+    expect($tenant->portfolioStats->number_banners)->toBe(2);
+})->depends('create banners');
