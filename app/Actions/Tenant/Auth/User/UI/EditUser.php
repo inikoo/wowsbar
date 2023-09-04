@@ -114,10 +114,10 @@ class EditUser extends InertiaAction
                             'current' => false,
                             'fields'  => [
                                 'permissions' => [
-                                    'type'              => 'permissions',
+                                    'type'              => 'select',
                                     'label'             => __('permissions'),
-                                    'value'             => [],
-                                    'fullComponentArea' => true,
+                                    'options'           => ['tenant','public','pricing'],
+                                    // 'fullComponentArea' => true,
                                 ],
                             ]
                         ],
