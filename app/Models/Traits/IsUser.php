@@ -28,9 +28,13 @@ trait IsUser
 
     public function avatarImageSources($width = 0, $height = 0)
     {
-        $avatarThumbnail = (new Image())->make($this->avatar->getLocalImgProxyFilename())->resize($width, $height);
+        if($this->avatar){
+            $avatarThumbnail = (new Image())->make($this->avatar->getLocalImgProxyFilename())->resize($width, $height);
 
-        return GetPictureSources::run($avatarThumbnail);
+            return GetPictureSources::run($avatarThumbnail);
+        }
+        return null;
+
     }
 
 }
