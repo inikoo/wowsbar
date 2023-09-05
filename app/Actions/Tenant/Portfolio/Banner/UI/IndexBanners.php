@@ -82,7 +82,7 @@ class IndexBanners extends InertiaAction
         return $queryBuilder
             ->defaultSort('banners.code')
             //            ->select(['banners.code', 'banners.name', 'banners.slug'])
-            ->allowedSorts(['slug', 'code', 'name'])
+            ->allowedSorts(['slug', 'code', 'name', 'created_at', 'updated_at'])
             ->allowedFilters([$globalSearch])
             ->withPaginator($prefix)
             ->withQueryString();
@@ -160,6 +160,8 @@ class IndexBanners extends InertiaAction
                 ->column(key: 'name', label: __('name'), sortable: true)
                 ->column(key: 'image_thumbnail', label: ['fal', 'fa-image'])
                 ->column(key: 'websites', label: __('websites'))
+                ->column(key: 'created_at', label: __('Date Created'), sortable: true)
+                ->column(key: 'updated_at', label: __('Date Updated'), sortable: true)
                 ->defaultSort('slug');
         };
     }

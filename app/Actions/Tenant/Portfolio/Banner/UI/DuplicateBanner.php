@@ -21,7 +21,7 @@ class DuplicateBanner
     {
         $banner->load('images', 'portfolioWebsite');
         $newBanner = $banner->replicate();
-        $newBanner->name = $banner->name . ' ' . Banner::whereName($banner->name)->count();
+        $newBanner->name = $banner->name . '[Duplicated]';
         $newBanner->live_at = $newBanner->live_snapshot_id = null;
         $newBanner->state = BannerStateEnum::UNPUBLISHED;
         $newBanner->push();
@@ -53,7 +53,7 @@ class DuplicateBanner
     public function htmlResponse(Banner $banner): RedirectResponse
     {
         return redirect()->route(
-            'portfolio.banners.workshop',
+            'portfolio.banners.show',
             [
                 $banner->slug
             ]
