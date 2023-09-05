@@ -9,6 +9,7 @@ namespace App\Http\Resources\History;
 
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Arr;
 use JsonSerializable;
 
 class HistoryResource extends JsonResource
@@ -26,7 +27,7 @@ class HistoryResource extends JsonResource
             'event'          => $this['event'],
             'auditable_id'   => $this['auditable_id'],
             'auditable_type' => $this['auditable_type'],
-            'user_id'        => $this['user']['username'],
+            'user_id'        => Arr::get($this['user'], 'username') ?? __('Command Line'),
             'user_type'      => $this['user_type'],
             'slug'           => $this['slug'],
             'user_name'      => $this['user_name'],

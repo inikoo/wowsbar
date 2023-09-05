@@ -7,6 +7,7 @@
 
 
 use App\Actions\Tenant\Portfolio\Banner\UI\CreateBanner;
+use App\Actions\Tenant\Portfolio\Banner\UI\DuplicateBanner;
 use App\Actions\Tenant\Portfolio\Banner\UI\EditBanner;
 use App\Actions\Tenant\Portfolio\Banner\UI\IndexBanners;
 use App\Actions\Tenant\Portfolio\Banner\UI\RemoveBanner;
@@ -84,6 +85,8 @@ Route::post('/banners/{banner}/workshop/images', [UploadImagesToBanner::class, '
 
 Route::get('/banners/{banner}/delete', [RemoveBanner::class, 'inTenant'])->name('banners.remove');
 Route::get('/banners/{banner}/deleted', [ShowDeletedBanner::class, 'inTenant'])->withTrashed()->name('banners.deleted');
+
+Route::get('/banners/{banner}/duplicate', DuplicateBanner::class)->name('banners.duplicate');
 
 Route::get('/banners/{banner}/snapshots', [IndexSnapshots::class, 'inBanner'])->name('banners.snapshots.index');
 Route::get('/banners/{banner}/snapshots/{snapshot}', [ShowSnapshot::class, 'inBanner'])->name('banners.snapshots.show');
