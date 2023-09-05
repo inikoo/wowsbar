@@ -408,7 +408,7 @@ const CommonBlueprint = ref([
             },
             {
                 name: ["common", "centralStage", "style", "fontFamily"],
-                type: "select",
+                type: "selectFont",
                 label: trans("Font Family"),
                 value: ["common", "centralStage", "style", "fontFamily"],
                 options: [
