@@ -62,6 +62,8 @@ class Snapshot extends Model
     use HasSlug;
     use BelongsToTenant;
 
+    protected $dateFormat = 'Y-m-d H:i:s P';
+
     protected $casts = [
         'layout'           => 'array',
         'state'            => SnapshotStateEnum::class
