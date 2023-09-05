@@ -26,7 +26,7 @@ const positionRibbon = computed(() => {
             classes = 'corner-ribbon-bottom';
             break;
         case 'bottomLeft':
-            classes = 'corner-ribbon-bottom';
+            classes = 'corner-ribbon-bottom ribbon-bottomleft';
             break;
     }
 
@@ -69,6 +69,13 @@ const positionRibbon = computed(() => {
     mask-composite: intersect;
 }
 
+.ribbon-topleft::before {
+    left: 0;
+    right: auto;
+    transform: translate(-29.29%, -100%) rotate(-45deg);
+    transform-origin: bottom right;
+}
+
 
 /* Ribbon bottom */
 .corner-ribbon-bottom {
@@ -84,26 +91,33 @@ const positionRibbon = computed(() => {
     position: absolute;
     top: 0;
     right: 0;
-    transform: translate(29.29%, -100%) rotate(-45deg);
-    transform-origin: bottom left;
+    transform: translate(29.29%, 0%) rotate(-45deg);
+    transform-origin: top left;
     padding: 5px 35px calc(var(--folded) + 5px);
     background: linear-gradient(rgba(0,0,0,0.5) 0 0) bottom/100% var(--folded) no-repeat var(--ribbon-color);
     /* II : clipping */
-    clip-path: polygon(0 0, 100% 0, 100% 100%, calc(100% - var(--folded)) calc(100% - var(--folded)), var(--folded) calc(100% - var(--folded)) , 0 100%);
+    clip-path: polygon(
+        0 0,
+        100% 0,
+        100% 100%,
+        calc(100% - var(--folded)) calc(100% - var(--folded)),
+        var(--folded) calc(100% - var(--folded)),
+        0 100%);
     /* III : masking */
     -webkit-mask: 
-        linear-gradient( 135deg, transparent calc(50% - var(--folded)*0.707),#fff 0) bottom left,
-        linear-gradient(-135deg, transparent calc(50% - var(--folded)*0.707),#fff 0) bottom right;
+        linear-gradient( 45deg, transparent calc(50% - var(--folded)*0.707),#fff 0) top left,
+        linear-gradient(-45deg, transparent calc(50% - var(--folded)*0.707),#fff 0) top right;
     -webkit-mask-size:300vmax 300vmax;
     -webkit-mask-composite: destination-in;
     mask-composite: intersect;
 }
 
-.ribbon-topleft::before {
+.ribbon-bottomleft::before {
     left: 0;
     right: auto;
-    transform: translate(-29.29%, -100%) rotate(-45deg);
-    transform-origin: bottom right;
+    transform: translate(-29.29%, -0%) rotate(45deg);
+    transform-origin: top right;
 }
+
 
 </style>
