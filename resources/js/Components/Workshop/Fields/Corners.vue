@@ -2,6 +2,7 @@
 import { trans } from "laravel-vue-i18n"
 import { ref, watch, computed } from 'vue'
 import Input from '@/Components/Forms/Fields/Primitive/PrimitiveInput.vue'
+// import InputForm from '@/Components/Forms/Fields/Input.vue'
 import ColorPicker from "@/Components/Workshop/Fields/ColorPicker.vue"
 import Radio from '@/Components/Forms/Fields/Primitive/PrimitiveRadio.vue'
 import { get, cloneDeep, set } from 'lodash'
@@ -267,8 +268,8 @@ const setUpData = () => {
     const currentType = Type[current.value];
     let data = {};
     for (const s of currentTypeFields.value) {
-        set(data,s.name,get(s,'value',null))
-        // data[s.name] = s.value;
+        // set(data,s.name,get(s,'value',null))
+        data[s.name] = s.value;
     }
 
     if (!value.value) {
@@ -373,7 +374,9 @@ defineExpose({
                 :class="[
                     common && common.corners?.hasOwnProperty(corner.id) ? 'cursor-not-allowed bg-gray-500 text-gray-300' : get(area, 'id') == corner.id ? 'bg-gray-300 hover:bg-gray-300 text-gray-600 cursor-pointer' : 'bg-gray-100 hover:bg-gray-200 text-gray-500 cursor-pointer'
                 ]"
-                @click="cornerClick(corner)"
+                @click="()=>{
+                    common && common.corners?.hasOwnProperty(corner.id) ?  null : cornerClick(corner)
+                    }"
             >
                 <span v-if="common && common.corners?.hasOwnProperty(corner.id)" class="text-sm italic font-normal text-gray-300">{{ trans('Reserved') }}</span>
                 <span v-else>{{ corner.label }}</span>
@@ -406,13 +409,13 @@ defineExpose({
                         <dd class="sm:col-span-2">
                             <div class="mt-1 flex text-sm text-gray-700 sm:mt-0">
                                 <div class="relative flex-grow" v-if="field.type == 'input'">
-                                    <Input :value="field.value" @onChange="(newValue)=>OnchangeFields(field,newValue)" :fieldData="field"/>
+                                    <Input :key="field.label + index" :value="field.value" @input="setUpData"  @onChange="(newValue)=>OnchangeFields(field,newValue)" :fieldData="field" />
                                 </div>
                                 <div class="relative flex-grow" v-if="field.type == 'colorPicker'">
-                                    <ColorPicker :color=field.value @onChange="(newValue)=>OnchangeFields(field,newValue)" :fieldData="field"/>
+                                    <ColorPicker  :key="field.label + index" :color=field.value @onChange="(newValue)=>OnchangeFields(field,newValue)" :fieldData="field"/>
                                 </div>
                                 <div class="relative flex-grow" v-if="field.type == 'radio'">
-                                    <Radio :radioValue="field.value" :fieldData="field" @onChange="(newValue)=>OnchangeFields(field,newValue)"/>
+                                    <Radio :key="field.label + index" :radioValue="field.value" :fieldData="field" @onChange="(newValue)=>OnchangeFields(field,newValue)"/>
                                 </div>
                             </div>
                         </dd>

@@ -22,10 +22,9 @@ const props = defineProps<{
                 name: string
                 parameters: []
             }
-            style: string
+            style?: string
             tooltip: string
-            type: string
-            icon: Boolean
+            icon?: Boolean
         }
         description: string
         title: string

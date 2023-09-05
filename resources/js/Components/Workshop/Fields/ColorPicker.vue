@@ -20,7 +20,7 @@ const props = defineProps<{
     data?: Object
     color?:String
 }>()
-console.log(props)
+
 
 const emit = defineEmits()
 

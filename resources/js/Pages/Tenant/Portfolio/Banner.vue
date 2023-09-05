@@ -60,7 +60,6 @@ const findRoute=()=>{
     return props.pageHead.actions.find((item) => item.label == "workshop")
 }
 
-console.log(props)
 </script>
 
 

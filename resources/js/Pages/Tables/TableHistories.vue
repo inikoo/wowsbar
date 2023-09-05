@@ -5,13 +5,14 @@
   -->
 
 <script setup lang="ts">
-import { Link } from '@inertiajs/vue3';
+// import { Link } from '@inertiajs/vue3';
 import Table from '@/Components/Table/Table.vue';
-import { User } from "@/types/user";
-import { trans } from "laravel-vue-i18n";
-import AddressLocation from "@/Components/Elements/Info/AddressLocation.vue";
-import UserAgent from "@/Components/Elements/Info/UserAgent.vue";
+// import { User } from "@/types/user";
+// import { trans } from "laravel-vue-i18n";
+// import AddressLocation from "@/Components/Elements/Info/AddressLocation.vue";
+// import UserAgent from "@/Components/Elements/Info/UserAgent.vue";
 import JsonViewer from 'vue-json-viewer'
+import { useFormatTime } from '@/Composables/useFormatTime'
 // import {ref,computed} from 'vue'
 
 // import TableElements from '@/Components/Table/TableElements.vue'
@@ -20,40 +21,23 @@ const props = defineProps<{
     data: object
 }>()
 
-const formatDate = (dateIso: Date) => {
-    const date = new Date(dateIso)
-    const year = date.getFullYear()
-    const month = (date.getMonth() + 1).toString().padStart(2, '0')
-    const day = date.getDate().toString().padStart(2, '0')
-
-    const hours = date.getHours().toString()
-    const minutes = date.getMinutes().toString()
-
-    return date
-}
-console.log('dddd',props.data)
+// console.log('dddd', props.data)
 </script>
 
 <template>
     <Table :resource="data" class="mt-5" name="hst">
         <template #cell(old_values)="{ item: user }">
-        <JsonViewer
-          :value="user['old_values']"
-          copyable
-          boxed
-          sort>
-        </JsonViewer>
+            <JsonViewer :value="user['old_values']" copyable sort>
+            </JsonViewer>
         </template>
+        
         <template #cell(new_values)="{ item: user }">
-        <JsonViewer
-          :value="user['new_values']"
-          copyable
-          boxed
-          sort>
-        </JsonViewer>
+            <JsonViewer :value="user['new_values']" copyable sort>
+            </JsonViewer>
         </template>
+
         <template #cell(datetime)="{ item: user }">
-            {{ formatDate(user.datetime) }}
+            {{ useFormatTime(user.datetime) }}
         </template>
     </Table>
 </template>

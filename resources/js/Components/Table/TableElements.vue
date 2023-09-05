@@ -5,6 +5,7 @@ import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faChevronDown, faCheckSquare, faSquare } from "@/../private/pro-regular-svg-icons"
 import { library } from '@fortawesome/fontawesome-svg-core'
+import { onMounted } from 'vue'
 library.add(faChevronDown, faCheckSquare, faSquare)
 
 
@@ -65,6 +66,13 @@ const onDoubleClickCheckbox = (element: any, group: string) => {
     }
     emits('checkboxChanged', selectedElement)
 }
+
+onMounted(() => {
+    // To handle selected checkbox on load
+    const searchParams = new URLSearchParams(window.location.search)
+    const stateParam = searchParams.get(`elements[${selectedGroup.value}]`)
+    selectedElement[selectedGroup.value] = stateParam ? stateParam.split(",") : []
+})
 
 </script>
 

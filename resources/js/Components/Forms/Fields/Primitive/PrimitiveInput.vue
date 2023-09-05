@@ -22,7 +22,7 @@ const props = defineProps<{
     value?: String;
 }>();
 
-const { data, fieldName } = toRefs(props);
+const { data, fieldName, value } = toRefs(props);
 const emits = defineEmits();
 
 const setFormValue = (data: Object, fieldName: string | []) => {
@@ -40,16 +40,21 @@ const getNestedValue = (obj: Object, keys: string[]) => {
     }, obj);
 };
 
-const value = ref(props.data ? setFormValue(props.data, props.fieldName) : get(props,'value',null));
+const valued = ref(props.data ? setFormValue(props.data, props.fieldName) : get(props,'value',null));
 
-watch(value, (newValue) => {
+watch(valued, (newValue) => {
     // Update the local form value when the value ref changes
     emits('onChange', newValue);
     updateLocalFormValue(newValue);
 });
 
 watch(data, (newValue) => {
-    value.value = setFormValue(newValue, props.fieldName);
+    valued.value = setFormValue(newValue, props.fieldName);
+});
+
+watch(props.value, (newValue) => {
+    console.log('xxxxxx',newValue)
+    valued.value = newValue
 });
 
 const updateLocalFormValue = (newValue) => {
@@ -67,17 +72,20 @@ const updateLocalFormValue = (newValue) => {
 
 <template>
     <div class="relative">
-        <div class="relative">
-            <div
-                class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-gray-500">
-                <span v-if="fieldData?.prefix" class="flex select-none items-center pl-3 text-gray-400 sm:text-sm">
-                    {{ fieldData?.prefix }}
-                </span>
-                <input v-model.trim="value" :readonly="fieldData?.readonly"
-                    :type="props.fieldData?.type ?? 'text'" :placeholder="fieldData?.placeholder"
-                    class="block flex-1 border-0 bg-transparent py-1.5 pl-3 text-gray-600 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" />
-            </div>
+        <div class="flex rounded-md shadow-sm ring-2 ring-gray-200 focus-within:ring-gray-500 bg-transparent">
+            <span v-if="fieldData?.prefix" class="flex select-none items-center pl-3 text-gray-400 sm:text-sm">
+                {{ fieldData?.prefix }}
+            </span>
+            <input
+                v-model.trim="valued"
+                :readonly="fieldData?.readonly"
+                :type="props.fieldData?.type ?? 'text'"
+                :placeholder="fieldData?.placeholder"
+                style="border: 2px solid transparent; outline: none;" 
+                class="block flex-1 py-1.5 pl-3 rounded-md focus:outline-none focus:border-none focus:ring-0"
+            />
         </div>
+
 
         <!-- Counter: Letters and Words -->
         <div v-if="counter && fieldData?.[fieldName]"
@@ -89,3 +97,21 @@ const updateLocalFormValue = (newValue) => {
         </div>
     </div>
 </template>
+
+
+<style scoped>
+/* Add this style to remove the focus styles */
+.focus:outline-none:focus,
+.focus:border-none:focus,
+.focus:ring-0:focus {
+  outline: none;
+  border: none;
+  ring: none;
+}
+</style>
+
+
+
+
+
+
