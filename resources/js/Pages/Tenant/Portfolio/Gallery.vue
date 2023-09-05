@@ -127,7 +127,7 @@ const createBanner = async () => {
 }
 
 const selectedImage = () => {
-    const allImage = [...get(props, "uploaded_images", []), ...props.stock_images.data];
+    const allImage = [...get(props,["uploaded_images",'data'], []), ...get(props,['stock_images','data'],[])];
     return allImage.filter((item) => get(selectedImages,['value','stock_images'],[]).includes(item.id));
 };
 
@@ -156,7 +156,7 @@ watch(isModalOpen, async () => {
 
 const allImageFlat = ref(selectedImage());
 
-console.log('sssss',selectedImages.value)
+console.log('sssss',props.uploaded_images,props.stock_images)
 
 </script>
 
