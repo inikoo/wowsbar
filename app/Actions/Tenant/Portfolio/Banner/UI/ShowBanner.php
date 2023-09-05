@@ -111,9 +111,19 @@ class ShowBanner extends InertiaAction
                                 'parameters' => array_values($request->route()->originalParameters())
                             ]
                         ] : false,
+                        [
+                            'type'  => 'button',
+                            'style' => 'tertiary',
+                            'label' => __('clone this banner'),
+                            'icon'  => ["fal", "fa-paste"],
+                            'route' => [
+                                'name'       => 'portfolio.banners.duplicate',
+                                'parameters' => array_values($request->route()->originalParameters())
+                            ]
+                        ],
                         $this->canEdit ? [
                             'type'  => 'button',
-                            'style' => 'edit',
+                            'style' => 'primary',
                             'label' => __('workshop'),
                             'icon'  => ["fal", "fa-drafting-compass"],
                             'route' => [
@@ -149,8 +159,15 @@ class ShowBanner extends InertiaAction
                     : Inertia::lazy(fn () => HistoryResource::collection(IndexHistories::run($banner))),
 
             ]
-        )->table(IndexHistories::make()->tableStructure())
-            ->table(IndexSnapshots::make()->tableStructure(null, 'sht',
+        )->table(IndexHistories::make()->tableStructure(
+            exportLinks: [
+                'export' => [
+                    'route' => [
+                        'name' => 'export.histories.index'
+                    ]
+                ]
+            ]
+        ))->table(IndexSnapshots::make()->tableStructure(null, 'sht',
                 exportLinks: [
                 'export' => [
                     'route' => [

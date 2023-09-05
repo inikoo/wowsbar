@@ -2,34 +2,19 @@
 import Image from '@/Components/Image.vue'
 import { Link } from '@inertiajs/vue3'
 import { trans } from 'laravel-vue-i18n'
-import moment from 'moment-timezone'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faBroadcastTower, faSeedling } from '@/../private/pro-light-svg-icons'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { useTruncate } from '@/Composables/useTruncate';
-library.add(faBroadcastTower, faSeedling)
+import { useTruncate } from '@/Composables/useTruncate'
+import { useFromNow } from '@/Composables/useFormatTime'
 
-const userTimezone = moment.tz.guess(true)
+
+library.add(faBroadcastTower, faSeedling)
 
 const props = defineProps<{
     banners?: any
 }>()
-
-const formatDate = (dateIso: Date) => {
-    if(dateIso){
-        const date = new Date(dateIso)
-        // const year = date.getFullYear()
-        // const month = (date.getMonth() + 1).toString().padStart(2, '0')
-        // const day = date.getDate().toString().padStart(2, '0')
-
-        // const hours = date.getHours().toString()
-        // const minutes = date.getMinutes().toString()
-
-        return dateIso.toString()
-    }
-    return ''
-}
 
 </script>
 
@@ -59,7 +44,7 @@ const formatDate = (dateIso: Date) => {
                         <!-- <dt class="text-gray-500 text-sm">{{ trans('Last edit') }}</dt> -->
                         <dd class="text-gray-600 text-xs italic tracking-wide space-x-1">
                             <span class="text-gray-500">{{ trans('Last edited on') }}</span>
-                            <time :datetime="lastEditedBanner.updated_at">{{  moment.utc(lastEditedBanner.updated_at).tz(userTimezone).fromNow() }}</time>
+                            <time :datetime="lastEditedBanner.updated_at">{{  useFromNow(lastEditedBanner.updated_at) }}</time>
                         </dd>
                         <div>
                             <FontAwesomeIcon :icon='lastEditedBanner.state_icon?.icon' :class='lastEditedBanner.state_icon?.class' class="" aria-hidden='true' :alt="lastEditedBanner.state_icon?.tooltip"/>

@@ -46,7 +46,7 @@ class IndexHistories
 
         return $queryBuilder
             ->defaultSort('user_type')
-            ->allowedSorts(['auditable_id', 'auditable_type', 'user_type', 'url'])
+            ->allowedSorts(['auditable_id', 'auditable_type', 'user_type', 'url', 'datetime'])
             ->allowedFilters([$globalSearch, 'auditable_id', 'auditable_type'])
             ->withPaginator($prefix)
             ->withQueryString();

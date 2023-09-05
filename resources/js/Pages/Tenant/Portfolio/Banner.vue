@@ -16,10 +16,10 @@ import {capitalize} from "@/Composables/capitalize"
 import TableHistories from "@/Pages/Tables/TableHistories.vue";
 import BannerShowcase from "@/Pages/Tenant/Portfolio/BannerShowcase.vue";
 
-import {faWindowMaximize, faGlobe, faPencil, faSeedling} from "../../../../private/pro-light-svg-icons"
+import {faWindowMaximize, faGlobe, faPencil, faSeedling, faPaste} from "../../../../private/pro-light-svg-icons"
 import TableSnapshots from '@/Pages/Tables/TableSnapshots.vue';
 
-library.add(faWindowMaximize, faGlobe, faPencil,faSeedling)
+library.add(faWindowMaximize, faGlobe, faPencil,faSeedling, faPaste)
 
 const props = defineProps<{
     title: string,
@@ -60,7 +60,6 @@ const findRoute=()=>{
     return props.pageHead.actions.find((item) => item.label == "workshop")
 }
 
-console.log(props)
 </script>
 
 
