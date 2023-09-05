@@ -70,6 +70,7 @@ class BannerResource extends JsonResource
             ],
             'websites'        => implode(', ', $banner->portfolioWebsite->pluck('name')->toArray()),
             'updated_at'      => $banner->updated_at,
+            'created_at'      => $banner->created_at
         ];
     }
 }

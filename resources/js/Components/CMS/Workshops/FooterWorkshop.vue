@@ -107,7 +107,7 @@ const DummyColums = [
             },
             {
                 title: 'email',
-                value: '<a href=mailto:contact@awgifts.eu>contact@awgifts.eu</a>',
+                value: '<a link=mailto:contact@awgifts.eu>contact@awgifts.eu</a>',
                 icon: 'fas fa-envelope',
                 id: uuidv4(),
             },
@@ -253,7 +253,7 @@ const saveLink = (value) => {
     const indexNavigation = data.value.column.findIndex((item) => item.id == value.parentId)
     const indexChildData = data.value.column[indexNavigation].data.findIndex((item) => item.id == value.column.id)
     if (value.type !== 'delete') {
-        let set = value.type == 'name' ? { name: value.value } : { href: value.value }
+        let set = value.type == 'name' ? { name: value.value } : { link: value.value }
         const setData = { ...data.value.column[indexNavigation].data[indexChildData], ...set }
         data.value.column[indexNavigation].data[indexChildData] = setData
         selectedColums(data)
@@ -263,6 +263,7 @@ const saveLink = (value) => {
 }
 
 const saveInfo = (value) => {
+    console.log(value)
     const indexNavigation = data.value.column.findIndex((item) => item.id == value.parentId)
     const indexChildData = data.value.column[indexNavigation].data.findIndex((item) => item.id == value.column.id)
     let set = value.type == 'value' ? { value: value.value } : { icon: value.value }
@@ -276,7 +277,7 @@ const columItemLinkChange = (value) => {
     const set = data.value.column
     if (value.value == 'add') {
         const index = set.findIndex((item) => item.id == columSelected.value.id)
-        if (columSelected.value.type == 'list') set[index].data.push({ name: 'dummy', href: '#' })
+        if (columSelected.value.type == 'list') set[index].data.push({ name: 'dummy', link: '#' })
         else if (columSelected.value.type == 'info') set[index].data.push({
             title: 'location',
             value: 'new item',
@@ -288,7 +289,7 @@ const columItemLinkChange = (value) => {
 }
 
 const copyRightSave = (value) => {
-    let set = value.type == 'name' ? { label: value.value } : { href: value.value }
+    let set = value.type == 'name' ? { label: value.value } : { link: value.value }
     data.value.copyRight = { ...data.value.copyRight, ...set }
 }
 
@@ -304,10 +305,10 @@ const saveSocialmedia = (value) => {
 
 }
 const addSocial = () => {
-    socials.value.push(
+    data.value.social.push(
         {
             label: "new",
-            href: '#',
+            link: '#',
             icon: 'far fa-dot-circle',
             id: uuidv4()
         },
@@ -433,7 +434,7 @@ const EditItemLinkInTools = (value, type) => {
 
                         <div v-for="set in columSelected.data" :key="set.id">
                             <HyperlinkTools :data="set" :save="EditItemLinkInTools" modelLabel="name"
-                                modelLink="href" />
+                                modelLink="link" />
                         </div>
                     </div>
 
