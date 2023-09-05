@@ -108,9 +108,6 @@ const childLog = (a, b, c) => {
 																...value,
 															})
 														" />
-												<!-- <a :href="child.href"
-                                                    class="space-y-3 text-sm leading-6 text-gray-600 hover:text-indigo-500">
-                                                    {{ child.name }}</a> -->
 											</li>
 										</ul>
 									</template>
