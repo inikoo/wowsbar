@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Portfolio;
 
+use App\Enums\Portfolio\Snapshot\SnapshotStateEnum;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -23,7 +24,29 @@ class SnapshotResource extends JsonResource
             'published_at'    => $snapshot->published_at,
             'published_until' => $snapshot->published_until,
             'layout'          => $snapshot->layout,
-            'state'           => $snapshot->state,
+            'state'           => match ($snapshot->state) {
+                SnapshotStateEnum::LIVE => [
+
+                    'tooltip' => __('live'),
+                    'icon'    => 'fal fa-broadcast-tower',
+                    'class'   => 'text-green-600 animate-pulse'
+
+                ],
+                SnapshotStateEnum::UNPUBLISHED => [
+
+                    'tooltip' => __('unpublished'),
+                    'icon'    => 'fal fa-seedling',
+                    'class'   => 'text-indigo-500'
+
+
+                ],
+                SnapshotStateEnum::RETIRED => [
+
+                    'tooltip' => __('retired'),
+                    'icon'    => 'fal fa-eye-slash'
+
+                ]
+            },
             'comment'         => $snapshot->comment,
         ];
     }
