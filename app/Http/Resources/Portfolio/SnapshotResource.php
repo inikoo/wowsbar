@@ -26,25 +26,18 @@ class SnapshotResource extends JsonResource
             'layout'          => $snapshot->layout,
             'state'           => match ($snapshot->state) {
                 SnapshotStateEnum::LIVE => [
-
                     'tooltip' => __('live'),
                     'icon'    => 'fal fa-broadcast-tower',
                     'class'   => 'text-green-600 animate-pulse'
-
                 ],
                 SnapshotStateEnum::UNPUBLISHED => [
-
                     'tooltip' => __('unpublished'),
                     'icon'    => 'fal fa-seedling',
                     'class'   => 'text-indigo-500'
-
-
                 ],
-                SnapshotStateEnum::RETIRED => [
-
+                SnapshotStateEnum::HISTORIC => [
                     'tooltip' => __('retired'),
                     'icon'    => 'fal fa-eye-slash'
-
                 ]
             },
             'comment'         => $snapshot->comment,
