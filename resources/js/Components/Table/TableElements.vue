@@ -15,6 +15,7 @@ const props = defineProps<{
         title: string
         leftIcon: any
     }
+    name: string
 }>()
 // console.log(props.elements)
 
@@ -55,7 +56,6 @@ const onClickCheckbox = (element: any, group: string) => {
 }
 
 const onDoubleClickCheckbox = (element: any, group: string) => {
-    console.log('double')
     clearTimeout(timeout)
     if(!selectedElement[group]) selectedElement[group] = []
 
@@ -68,10 +68,11 @@ const onDoubleClickCheckbox = (element: any, group: string) => {
 }
 
 onMounted(() => {
-    // To handle selected checkbox on load
+    // To handle selected checkbox on hard-refresh
+    const prefix = props.name === 'default' ? 'elements' : props.name + '_' + 'elements'  // To handle banners_elements, users_elements, etc
     const searchParams = new URLSearchParams(window.location.search)
-    const stateParam = searchParams.get(`elements[${selectedGroup.value}]`)
-    selectedElement[selectedGroup.value] = stateParam ? stateParam.split(",") : []
+    const stateParam = searchParams.get(`${prefix}[${selectedGroup.value}]`)
+    stateParam ? selectedElement[selectedGroup.value] = stateParam.split(",") : false
 })
 
 </script>
