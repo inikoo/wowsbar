@@ -209,7 +209,7 @@ class IndexUsers extends InertiaAction
                     ]
                 ]
             ]
-            ));
+        ));
     }
 
     public function asController(ActionRequest $request): LengthAwarePaginator
