@@ -59,10 +59,10 @@ class IndexSnapshots extends InertiaAction
                     ]
                 )
                 ->withExportLinks($exportLinks)
+                ->column(key: 'state', label: ['fal', 'fa-yin-yang'])
                 ->column(key: 'published_at', label: __('date published'), sortable: true)
                 ->column(key: 'published_until', label: __('published until'))
                 ->column(key: 'comment', label: __('comment'))
-                ->column(key: 'state', label: __('type'))
                 ->defaultSort('published_at');
         };
     }

@@ -5,13 +5,12 @@
   -->
 
 <script setup lang="ts">
-import { Link } from '@inertiajs/vue3'
 import Table from '@/Components/Table/Table.vue'
-import { User } from "@/types/user"
-import { trans } from "laravel-vue-i18n"
-import AddressLocation from "@/Components/Elements/Info/AddressLocation.vue"
-import UserAgent from "@/Components/Elements/Info/UserAgent.vue"
+import Icon from "@/Components/Icon.vue";
+import {library} from "@fortawesome/fontawesome-svg-core";
+import {faBroadcastTower, faSeedling} from "../../../private/pro-light-svg-icons";
 
+library.add(faSeedling, faBroadcastTower);
 const props = defineProps<{
     data: object
 }>()
@@ -36,6 +35,9 @@ const formatDate = (dateIso: Date) => {
         </template>
         <template #cell(published_until)="{ item: user }">
             {{ formatDate(user.published_until) }}
+        </template>
+        <template #cell(state)="{ item: user }">
+            <Icon :data="user.state"/>
         </template>
     </Table>
 </template>
