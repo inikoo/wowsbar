@@ -111,6 +111,8 @@ const updateFormValue = (newValue) => {
     @apply hidden
 }
 
-
+.hu-color-picker {
+    @apply absolute left-0 bottom-0
+}
 </style>
 
