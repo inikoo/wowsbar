@@ -191,7 +191,6 @@ console.log('sssss',props.uploaded_images,props.stock_images)
         :isSelectImage="isSelectImage" />
 
     <!-- Content: Table from the Tab -->
-    {{ selectedImages }}
     <KeepAlive>
         <component :isSelectImage="isSelectImage" :is="component" :key="currentTab"
             @selected-row="(value: any) => selectedImages[currentTab] = value[currentTab]" :tab="currentTab"
