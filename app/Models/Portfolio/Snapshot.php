@@ -63,6 +63,7 @@ class Snapshot extends Model
     use BelongsToTenant;
 
     protected $dateFormat = 'Y-m-d H:i:s P';
+    protected $dates = ['published_at', 'published_until'];
 
     protected $casts = [
         'layout'           => 'array',
