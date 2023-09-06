@@ -28,9 +28,9 @@ class ShowEmployee extends InertiaAction
 
     public function authorize(ActionRequest $request): bool
     {
-        $this->canEdit   = $request->user()->can('hr.edit');
-        $this->canDelete = $request->user()->can('hr.edit');
-        return $request->user()->hasPermissionTo("hr.view");
+        $this->canEdit   = !$request->user()->can('hr.edit');
+        $this->canDelete = !$request->user()->can('hr.edit');
+        return !$request->user()->hasPermissionTo("hr.view");
     }
 
     public function asController(Employee $employee, ActionRequest $request): Employee
@@ -62,14 +62,14 @@ class ShowEmployee extends InertiaAction
                             ]
                         ],
 
-                        $employee->user ?
+                        /* $employee->user ?
                             [
                                 'name'     => $employee->user->username,
                                 'leftIcon' => [
                                     'icon'    => 'fal fa-user',
                                     'tooltip' => __('User')
                                 ]
-                            ] : []
+                            ] : [] */
                     ],
                     'actions' => [
                         $this->canEdit ? [
@@ -84,7 +84,7 @@ class ShowEmployee extends InertiaAction
                             'type'  => 'button',
                             'style' => 'delete',
                             'route' => [
-                                'name'       => 'hr.employees.remove',
+                                'name'       => 'org.hr.employees.remove',
                                 'parameters' => $request->route()->originalParameters()
                             ]
 
@@ -127,13 +127,13 @@ class ShowEmployee extends InertiaAction
                     'modelWithIndex' => [
                         'index' => [
                             'route' => [
-                                'name' => 'hr.employees.index',
+                                'name' => 'org.hr.employees.index',
                             ],
                             'label' => __('employees')
                         ],
                         'model' => [
                             'route' => [
-                                'name'       => 'hr.employees.show',
+                                'name'       => 'org.hr.employees.show',
                                 'parameters' => [$employee->slug]
                             ],
                             'label' => $employee->slug,
@@ -167,7 +167,7 @@ class ShowEmployee extends InertiaAction
         }
 
         return match ($routeName) {
-            'hr.employees.show' => [
+            'org.hr.employees.show' => [
                 'label' => $employee->contact_name,
                 'route' => [
                     'name'       => $routeName,

@@ -25,13 +25,13 @@ class StoreEmployee
     {
         $employee = Employee::create($modelData);
         EmployeeHydrateWeekWorkingHours::run($employee);
-        EmployeeHydrateUniversalSearch::dispatch($employee);
+//        EmployeeHydrateUniversalSearch::dispatch($employee);
         return $employee;
     }
 
     public function authorize(ActionRequest $request): bool
     {
-        return $request->user()->hasPermissionTo("hr.edit");
+        return !$request->user()->hasPermissionTo("hr.edit");
     }
 
 
@@ -55,6 +55,6 @@ class StoreEmployee
 
     public function htmlResponse(Employee $employee): RedirectResponse
     {
-        return Redirect::route('hr.employees.show', $employee->slug);
+        return Redirect::route('org.hr.employees.show', $employee->slug);
     }
 }

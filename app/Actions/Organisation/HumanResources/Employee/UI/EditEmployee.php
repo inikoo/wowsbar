@@ -26,7 +26,7 @@ class EditEmployee extends InertiaAction
 
     public function authorize(ActionRequest $request): bool
     {
-        return $request->user()->hasPermissionTo("hr.edit");
+        return !$request->user()->hasPermissionTo("hr.edit");
     }
 
     public function asController(Employee $employee, ActionRequest $request): Employee
@@ -55,7 +55,7 @@ class EditEmployee extends InertiaAction
                             'style' => 'exitEdit',
                             'route' => [
                                 'name'       => preg_replace('/edit$/', 'show', $request->route()->getName()),
-                                'parameters' => array_values($this->originalParameters)
+                                'parameters' => array_values($request->route()->parameters)
                             ]
                         ]
                     ]
@@ -102,7 +102,7 @@ class EditEmployee extends InertiaAction
                     ],
                     'args'      => [
                         'updateRoute' => [
-                            'name'       => 'models.employee.update',
+                            'name'       => 'org.models.employee.update',
                             'parameters' => $employee->slug
 
                         ],

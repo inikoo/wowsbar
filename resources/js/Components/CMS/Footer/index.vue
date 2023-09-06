@@ -1,9 +1,7 @@
 <template>
     <div>
-        <component :is="component[theme]" :columSelected="columSelected" :social="props.social" :saveSocialmedia="saveSocialmedia"
-            :navigation="props.navigation" :changeColums="props.changeColums" :copyRight="copyRight" :copyRightSave="copyRightSave"
-            :selectedColums="selectedColums" :saveItemTitle="saveItemTitle" :saveTextArea="saveTextArea" :saveInfo="saveInfo" :data=data
-            :tool="tool" :saveLink="saveLink"/>
+        <component :is="component[theme]" :columSelected="columSelected" :selectedColums="selectedColums" :data=data
+            :tool="tool" />
     </div>
 </template>
 
@@ -13,22 +11,13 @@ import FooterTheme2 from './FooterTheme2.vue'
 import FooterTheme3 from './FooterTheme3.vue'
 
 const props = defineProps<{
-    theme: number,
-    social: Object,
-    navigation: Object,
-    changeColums: Function,
     selectedColums: Function,
     columSelected: Object
-    saveItemTitle: Function
-    saveTextArea:Function
-    tool:Object
-    saveLink:Function
-    saveInfo:Function
-    copyRight : Object
-    copyRightSave : Function
-    saveSocialmedia : Function
-    data : Object
+    theme: number,
+    tool: Object
+    data: Object
 }>()
+
 
 console.log(props)
 

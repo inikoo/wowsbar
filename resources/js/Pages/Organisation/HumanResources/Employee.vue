@@ -79,7 +79,7 @@ const component = computed(() => {
 </script>
 
 
-<template layout="App">
+<template layout="OrgApp">
     <Head :title="capitalize(title)" />
     <PageHeading :data="pageHead"></PageHeading>
 

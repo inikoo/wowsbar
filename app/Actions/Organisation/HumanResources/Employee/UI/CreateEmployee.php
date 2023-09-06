@@ -36,7 +36,7 @@ class CreateEmployee extends InertiaAction
                             'style' => 'cancel',
                             'label' => __('cancel'),
                             'route' => [
-                                'name'       => 'hr.employees.index',
+                                'name'       => 'org.hr.employees.index',
                                 'parameters' => array_values($this->originalParameters)
                             ],
                         ]
@@ -79,7 +79,7 @@ class CreateEmployee extends InertiaAction
 
                     ],
                     'route'      => [
-                            'name'       => 'models.employee.store',
+                            'name'       => 'org.models.employee.store',
 
                     ]
 
@@ -90,7 +90,7 @@ class CreateEmployee extends InertiaAction
 
     public function authorize(ActionRequest $request): bool
     {
-        return $request->user()->can('hr.edit');
+        return !$request->user()->can('hr.edit');
     }
 
 

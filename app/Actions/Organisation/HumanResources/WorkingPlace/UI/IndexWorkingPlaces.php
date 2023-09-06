@@ -75,6 +75,7 @@ class IndexWorkingPlaces extends InertiaAction
                     [
                         'title'       => __('no working places'),
                         'description' => $this->canEdit ? __('Get started by creating a new working place.') : null,
+                        'count'       => 0,
                         'action'      => $this->canEdit ? [
                             'type'    => 'button',
                             'style'   => 'create',
