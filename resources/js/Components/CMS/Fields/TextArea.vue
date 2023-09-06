@@ -39,7 +39,7 @@ onMounted(() => {
   <div>
     <template v-if="!editMode" style="white-space : pre-warp">
         <div class="parent">
-    <div @click="changeEditMode" :class="cssClass">{{ data[dataPath] }}</div>
+    <div @click="changeEditMode" :class="cssClass" class="break-words">{{ data[dataPath] }}</div>
   
 </div>
     </template>
