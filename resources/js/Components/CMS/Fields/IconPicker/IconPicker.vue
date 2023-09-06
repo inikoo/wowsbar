@@ -9,6 +9,7 @@ import { faEnvelope as fadEnvelope, faPhone as fadPhone, faBuilding as fadBuildi
 import { faTiktok, faFacebook, faFacebookF, faSquareFacebook, faInstagram, faSquareInstagram , faWhatsapp, faSquareWhatsapp } from "@fortawesome/free-brands-svg-icons"
 import { library } from '@fortawesome/fontawesome-svg-core'
 import Popover from '@/Components/Utils/Popover.vue'
+import { upperFirst } from 'lodash'
 library.add( 
 faTiktok, faFacebook, faFacebookF, faSquareFacebook, faInstagram, faSquareInstagram , faWhatsapp, faSquareWhatsapp, 
 fasEnvelope, fasPhone, fasBuilding, fasCircle, fasMap, fasUser,
@@ -35,15 +36,7 @@ const props = defineProps({
 
 const filterText = ref('')
 const activeGlyph = ref(props.modelValue)
-const isVisible = ref(false)
 
-const tabs = [
-      {
-        id: 'all',
-        title: 'All Icons',
-        link: 'all'
-      },
-    ]
 
     const allGlyphs = [].concat(
       fontLibrary.fontAwesome.variants.regular.icons,
@@ -69,12 +62,9 @@ const tabs = [
       insert()
     }
 
-    const isActiveGlyph = glyph => {
-      return activeGlyph.value == glyph
-    }
 
     const getGlyphName = glyph =>
-      glyph.replace(/f.. fa-/g, '').replace('-', ' ')
+      upperFirst(glyph.replace(/f.. fa-/g, '').replace('-', ' '))
 
     const insert = () => {
       props.save({column : {...props.data}, value : activeGlyph.value})
@@ -84,62 +74,33 @@ const tabs = [
 
 
 <template>
-  <Popover>
-  <template #button><FontAwesomeIcon :icon="props.modelValue" :class="cssClass" aria-hidden="true" /></template>
+<Popover>
+  <template #button>
+    <!-- Replace with your trigger button/icon -->
+    <FontAwesomeIcon :icon="props.modelValue" :class="cssClass" aria-hidden="true" />
+  </template>
   <template #content>
-  <div class="flex gap-4">
-    <div
-      v-for="glyph in glyphs"
-      :key="glyph"
-      :class="{ 'aesthetic-selected': isActiveGlyph(glyph) }"
-      @click="setActiveGlyph(glyph)"
-    >
-      <div class="aim-icon-item-inner">
-        <FontAwesomeIcon :icon="glyph"/>
+    <div class="p-5">
+      <div class="w-full flex justify-center p-2.5 text-lg font-medium">Icon Picker</div>
+      <div class="flex flex-wrap gap-x-6 gap-y-1 w-80 h-[320px] p-5 overflow-auto">
+        <div
+        v-for="glyph in glyphs"
+        :key="glyph"
+        @click="setActiveGlyph(glyph)"
+        class="flex flex-col items-center w-1/4 mb-4 text-center cursor-pointer p-2.5 "
+        :class="{ 'hover:bg-blue-200 bg-blue-200': activeGlyph === glyph }"
+      >
+        <div class="mb-2 flex justify-center">
+          <!-- Replace with your icon -->
+          <FontAwesomeIcon :icon="glyph" class="text-lg text-indigo-500" />
+        </div>
+        <span class="text-xs">{{ getGlyphName(glyph) }}</span>
       </div>
+      </div>
+     
     </div>
-  </div>
-    </template>
-  </Popover>
-  <!-- <div class="aim-modal aim-open" v-if="isVisible">
-    <div class="aim-modal--content">
-      <div class="aim-modal--header">
-        <div class="aim-modal--header-logo-area">
-          <span class="aim-modal--header-logo-title">
-            {{ label }}
-          </span>
-        </div>
-        <div class="aim-modal--header-close-btn" @click="closePicker">
-          <FontAwesomeIcon icon="fas fa-times"/>
-        </div>
-      </div>
-      <div class="aim-modal--body">
-        <div class="aim-modal--icon-preview-wrap">
-          <div class="aim-modal--icon-search">
-            <input v-model="filterText" placeholder="Filter by name..." />
-          </div>
-          <div class="aim-modal--icon-preview-inner">
-            <div class="aim-modal--icon-preview">
-              <div
-                class="aim-icon-item"
-                v-for="glyph in glyphs"
-                :key="glyph"
-                :class="{ 'aesthetic-selected': isActiveGlyph(glyph) }"
-                @click="setActiveGlyph(glyph)"
-              >
-                <div class="aim-icon-item-inner">
-                  <FontAwesomeIcon :icon="glyph"/>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="aim-modal--footer">
-        <button class="aim-insert-icon-button" @click="insert">Insert</button>
-      </div>
-    </div>
-  </div> -->
+  </template>
+</Popover>
 </template>
 
 

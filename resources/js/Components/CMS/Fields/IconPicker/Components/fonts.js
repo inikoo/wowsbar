@@ -27,7 +27,7 @@ export default {
             'fas fa-building',
             'fas fa-circle',
             'fas fa-map',
-            'fas fa-users'
+            'fas fa-user'
           ]
         },
         brands: {
