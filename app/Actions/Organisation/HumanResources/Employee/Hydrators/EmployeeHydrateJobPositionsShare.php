@@ -8,7 +8,6 @@
 namespace App\Actions\Organisation\HumanResources\Employee\Hydrators;
 
 use App\Actions\Traits\WithNormalise;
-use App\Actions\Traits\WithTenantJob;
 use App\Models\HumanResources\Employee;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -16,7 +15,6 @@ use Lorisleiva\Actions\Concerns\AsAction;
 class EmployeeHydrateJobPositionsShare implements ShouldBeUnique
 {
     use AsAction;
-    use WithTenantJob;
     use WithNormalise;
 
     public function handle(Employee $employee): void

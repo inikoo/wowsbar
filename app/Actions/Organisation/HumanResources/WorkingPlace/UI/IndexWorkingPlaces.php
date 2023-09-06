@@ -8,8 +8,8 @@
 namespace App\Actions\Organisation\HumanResources\WorkingPlace\UI;
 
 use App\Actions\InertiaAction;
-use App\Actions\UI\HumanResources\HumanResourcesDashboard;
-use App\Enums\UI\WorkingPlaceTabsEnum;
+use App\Actions\UI\Organisation\HumanResources\HumanResourcesDashboard;
+use App\Enums\UI\Organisation\WorkingPlaceTabsEnum;
 use App\Http\Resources\HumanResources\WorkPlaceInertiaResource;
 use App\Http\Resources\HumanResources\WorkPlaceResource;
 use App\InertiaTable\InertiaTable;
@@ -81,7 +81,7 @@ class IndexWorkingPlaces extends InertiaAction
                             'tooltip' => __('new working place'),
                             'label'   => __('working place'),
                             'route'   => [
-                                'name'       => 'hr.working-places.create',
+                                'name'       => 'org.hr.working-places.create',
                                 'parameters' => array_values($this->originalParameters)
                             ]
                         ] : null
@@ -99,7 +99,7 @@ class IndexWorkingPlaces extends InertiaAction
         $this->canEdit = $request->user()->can('hr.working-places.edit');
 
         return
-            (
+            !(
                 $request->user()->tokenCan('root') or
                 $request->user()->hasPermissionTo('hr.view')
             );
@@ -128,7 +128,7 @@ class IndexWorkingPlaces extends InertiaAction
                             'style' => 'create',
                             'label' => __('working place'),
                             'route' => [
-                                'name'       => 'hr.working-places.create',
+                                'name'       => 'org.hr.working-places.create',
                                 'parameters' => array_values($this->originalParameters)
                             ]
                         ] : false
@@ -161,7 +161,7 @@ class IndexWorkingPlaces extends InertiaAction
                     'type'   => 'simple',
                     'simple' => [
                         'route' => [
-                            'name' => 'hr.working-places.index'
+                            'name' => 'org.hr.working-places.index'
                         ],
                         'label' => __('working places'),
                         'icon'  => 'fal fa-bars',

@@ -7,14 +7,12 @@
 
 namespace App\Actions\Organisation\HumanResources\ClockingMachine\Hydrators;
 
-use App\Actions\Traits\WithTenantJob;
 use App\Models\HumanResources\ClockingMachine;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class ClockingMachineHydrateUniversalSearch
 {
     use AsAction;
-    use WithTenantJob;
 
     public function handle(ClockingMachine $clockingMachine): void
     {

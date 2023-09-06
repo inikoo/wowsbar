@@ -7,7 +7,6 @@
 
 namespace App\Actions\Organisation\HumanResources\Employee\Hydrators;
 
-use App\Actions\Traits\WithTenantJob;
 use App\Models\HumanResources\Employee;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Support\Arr;
@@ -16,7 +15,6 @@ use Lorisleiva\Actions\Concerns\AsAction;
 class EmployeeHydrateWeekWorkingHours implements ShouldBeUnique
 {
     use AsAction;
-    use WithTenantJob;
 
     public function handle(Employee $employee): void
     {

@@ -11,9 +11,9 @@ const props = defineProps <{
 }>()
 </script>
 
-<template layout="App">
+<template layout="OrgApp">
     <Head :title="capitalize(title)" />
     <PageHeading :data="pageHead"></PageHeading>
-    <TableWorkingPlaces :data="data" />
+<!--    <TableWorkingPlaces :data="data" />-->
 </template>
 

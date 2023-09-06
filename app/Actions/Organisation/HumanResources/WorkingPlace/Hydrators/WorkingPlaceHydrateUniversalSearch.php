@@ -7,14 +7,12 @@
 
 namespace App\Actions\Organisation\HumanResources\WorkingPlace\Hydrators;
 
-use App\Actions\Traits\WithTenantJob;
 use App\Models\HumanResources\Workplace;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class WorkingPlaceHydrateUniversalSearch
 {
     use AsAction;
-    use WithTenantJob;
 
     public function handle(Workplace $workplace): void
     {
