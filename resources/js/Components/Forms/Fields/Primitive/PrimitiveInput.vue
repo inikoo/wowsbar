@@ -81,7 +81,7 @@ const updateLocalFormValue = (newValue) => {
                 :type="props.fieldData?.type ?? 'text'"
                 :placeholder="fieldData?.placeholder"
                 style="border: 2px solid transparent; outline: none;" 
-                class="block flex-1 py-1.5 pl-3 rounded-md focus:outline-none focus:border-none focus:ring-0"
+                class="block flex-1 py-1.5 pl-3 rounded-md focus:outline-none focus:border-none focus:ring-0 placeholder:text-gray-400 placeholder:text-sm"
             />
         </div>
 

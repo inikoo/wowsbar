@@ -44,11 +44,6 @@ const generateThumbnail = (fileOrUrl) => {
             }" :auto-zoom="true"  @ready="onReady" @change="cropOnChange" >
             </Cropper>
         </div>
-        <div class="w-full relative space-y-4 mt-2.5">
-            <!-- Button: Add slide -->
-            <div class="flex gap-x-2">
-            </div>
-        </div>
     </div>
 </template>
 

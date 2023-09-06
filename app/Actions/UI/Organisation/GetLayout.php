@@ -47,6 +47,25 @@ class GetLayout
             ];
         }
 
+        if (!$user->can('hr')) {
+            $navigation['hr'] = [
+                'label'   => __('human resources'),
+                'icon'    => ['fal', 'fa-user-hard-hat'],
+                'route'   => 'org.hr.dashboard',
+                'topMenu' => [
+                    'subSections' => [
+                        [
+                            'label' => __('website'),
+                            'icon'  => ['fal', 'fa-globe'],
+                            'route' => [
+                                'name' => 'org.website.show',
+                            ]
+                        ]
+                    ]
+                ]
+            ];
+        }
+
         if ($user->can('sysadmin')) {
             $navigation['sysadmin'] = [
                 'label'   => __('sysadmin'),

@@ -4,14 +4,16 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-import {router} from "@inertiajs/vue3";
+import { router } from "@inertiajs/vue3"
 
 export function useTabChange(tabSlug, currentTab) {
     router.reload(
-        {data: {tab: tabSlug},
+        {
+            data: { tab: tabSlug },
             only: [tabSlug],
             onSuccess: () => {
                 currentTab.value = tabSlug;
             },
-        })
+        }
+    )
 }

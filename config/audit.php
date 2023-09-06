@@ -167,5 +167,5 @@ return [
     |
     */
 
-    'console' => true,
+    'console' => app()->runningUnitTests(),
 ];

@@ -32,6 +32,9 @@ Route::middleware(["org-web"])->group(function () {
         Route::prefix("models")
             ->name("models.")
             ->group(__DIR__."/models.php");
+        Route::prefix("hr")
+            ->name("hr.")
+            ->group(__DIR__."/hr.php");
 
         /*
 

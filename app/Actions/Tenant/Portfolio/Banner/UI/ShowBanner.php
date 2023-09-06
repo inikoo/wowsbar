@@ -113,7 +113,7 @@ class ShowBanner extends InertiaAction
                         ] : false,
                         [
                             'type'  => 'button',
-                            'style' => 'tertiary',
+                            'style' => 'secondary',
                             'label' => __('clone this banner'),
                             'icon'  => ["fal", "fa-paste"],
                             'route' => [

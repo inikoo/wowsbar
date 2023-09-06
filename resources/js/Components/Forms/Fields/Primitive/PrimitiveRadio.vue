@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
-import { RadioGroup, RadioGroupLabel, RadioGroupOption, RadioGroupDescription } from '@headlessui/vue'
-import { ref, watch, defineEmits } from 'vue'
+// import { RadioGroup, RadioGroupLabel, RadioGroupOption, RadioGroupDescription } from '@headlessui/vue'
+import { ref, watch } from 'vue'
 import { set , isEqual, get } from 'lodash'
 
 const props = defineProps<{
@@ -57,11 +57,11 @@ const updateFormValue = (newValue) => {
     <div>
         <fieldset class="select-none">
             <legend class="sr-only"></legend>
-            <div class="flex items-center gap-x-8 gap-y-1 flex-wrap ">
+            <div class="flex items-center gap-x-5 gap-y-1 flex-wrap">
 
                 <!-- Radio: Default -->
                 <label :for="option.label + index" v-for="(option, index) in fieldData.options"
-                    :key="option.label + index" class="inline-flex items-center gap-x-2.5 cursor-pointer py-1">
+                    :key="option.label + index" class="inline-flex items-center gap-x-1.5 cursor-pointer py-1">
                     <input v-model="value" :id="option.label + index" :key="option.label + index"
                         :name="option.value" type="radio" :value="option.value" :checked="isEqual(value,option.value)"
                         class="h-4 w-4 border-gray-300 text-gray-600 focus:ring-0 focus:outline-none focus:ring-transparent cursor-pointer" />
