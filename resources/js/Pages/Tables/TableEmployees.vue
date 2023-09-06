@@ -12,12 +12,16 @@ const props = defineProps<{
     data: object,
     tab?:string
 }>()
+
+
 </script>
 
 <template>
-    <Table :resource="data" :name="tab" class="mt-5">
+    <Table :resource="data" :name="tab" class="mt-5"   >
         <template #cell(job_positions)="{ item: employee }">
             <job-position-badges :job_positions="employee['job_positions']"/>
         </template>
+
+
     </Table>
 </template>
