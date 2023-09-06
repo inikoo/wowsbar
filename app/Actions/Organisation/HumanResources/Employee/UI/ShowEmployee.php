@@ -9,8 +9,8 @@ namespace App\Actions\Organisation\HumanResources\Employee\UI;
 
 use App\Actions\Helpers\History\IndexHistories;
 use App\Actions\InertiaAction;
-use App\Actions\UI\HumanResources\HumanResourcesDashboard;
-use App\Enums\UI\EmployeeTabsEnum;
+use App\Actions\UI\Organisation\HumanResources\HumanResourcesDashboard;
+use App\Enums\UI\Organisation\EmployeeTabsEnum;
 use App\Http\Resources\History\HistoryResource;
 use App\Http\Resources\HumanResources\EmployeeResource;
 use App\Models\HumanResources\Employee;
@@ -25,7 +25,6 @@ class ShowEmployee extends InertiaAction
     {
         return $employee;
     }
-
 
     public function authorize(ActionRequest $request): bool
     {
