@@ -14,6 +14,12 @@ const props = defineProps<{
     fieldData: {
         placeholder: string
         searchable: boolean
+        options: {
+            value: string
+            label: string
+        }[]
+        mode?: string
+        required?: boolean
     }
 }>()
 const emit = defineEmits()
@@ -42,7 +48,7 @@ watch(value, (newValue) => {
 
 
 
-const updateFormValue = (newValue) => {
+const updateFormValue = (newValue: any) => {
     let target = { ...props.data };
 
     if (Array.isArray(props.fieldName)) {
@@ -55,7 +61,7 @@ const updateFormValue = (newValue) => {
     emit('input', target);
 };
 </script>
-  
+
 <template>
     <div class="">
         <div class="relative">
@@ -63,16 +69,21 @@ const updateFormValue = (newValue) => {
                 :placeholder="props.fieldData.placeholder ?? 'Select your option'" :canClear="false"
                 :closeOnSelect="props.fieldData.mode == 'multiple' ? false : true" :canDeselect="!props.fieldData.required"
                 :hideSelected="false" :searchable="!!props.fieldData.searchable">
+                <template v-slot:singlelabel="{ value }">
+                    <div class="multiselect-single-label text-gray-600">
+                        <span :style="`font-family : ${snakeCase(lowerCase(value.value))}`">
+                            {{ value.value }}
+                        </span>
+                    </div>
+                </template>
                 <template #option="{ option }">
                     <span :style="`font-family : ${snakeCase(lowerCase(option.value))}`">
                         {{ option.label }}
                     </span>
                 </template>
-
             </Multiselect>
         </div>
     </div>
 </template>
-  
+
 <style src="@vueform/multiselect/themes/default.css"></style>
-  

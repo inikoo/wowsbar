@@ -273,6 +273,29 @@ const ComponentsBlueprint = ref([
                 ],
             },
             {
+                name: ["layout", "centralStage", "textAlign"],
+                type: "textAlign",
+                label: trans("Text Align"),
+                value: ["layout", "centralStage", "textAlign"],
+                options: [
+                    {
+                        label: "Align left",
+                        value: "left",
+                        icon: 'fal fa-align-left'
+                    },
+                    {
+                        label: "Align center",
+                        value: "center",
+                        icon: 'fal fa-align-center'
+                    },
+                    {
+                        label: "Align right",
+                        value: "right",
+                        icon: 'fal fa-align-right'
+                    },
+                ],
+            },
+            {
                 name: ["layout", "centralStage", "style", "fontSize"],
                 type: "radio",
                 label: trans("Font Size"),
@@ -319,29 +342,7 @@ const ComponentsBlueprint = ref([
                 label: trans("color"),
                 value: ["layout", "centralStage", "style", "color"],
             },
-            {
-                name: ["layout", "centralStage", "textAlign"],
-                type: "textAlign",
-                label: trans("Text Align"),
-                value: ["layout", "centralStage", "textAlign"],
-                options: [
-                    {
-                        label: "Align left",
-                        value: "left",
-                        icon: 'fal fa-align-left'
-                    },
-                    {
-                        label: "Align center",
-                        value: "center",
-                        icon: 'fal fa-align-center'
-                    },
-                    {
-                        label: "Align right",
-                        value: "right",
-                        icon: 'fal fa-align-right'
-                    },
-                ],
-            },
+            
         ],
     },
     // {
@@ -399,12 +400,14 @@ const CommonBlueprint = ref([
                 type: "text",
                 label: trans("Title"),
                 value: ["common", "centralStage", "title"],
+                placeholder: "Enter title of the slide"
             },
             {
                 name: ["common", "centralStage", "subtitle"],
                 type: "text",
                 label: trans("subtitle"),
                 value: ["common", "centralStage", "subtitle"],
+                placeholder: "Enter subtitle of the slide"
             },
             {
                 name: ["common", "centralStage", "style", "fontFamily"],
@@ -421,6 +424,29 @@ const CommonBlueprint = ref([
                     "Quicksand",
                     "Times New Roman",
                     "Yatra One",
+                ],
+            },
+            {
+                name: ["common", "centralStage", "textAlign"],
+                type: "textAlign",
+                label: trans("Text Align"),
+                value: ["common", "centralStage", "textAlign"],
+                options: [
+                    {
+                        label: "Align left",
+                        value: "left",
+                        icon: 'fal fa-align-left'
+                    },
+                    {
+                        label: "Align center",
+                        value: "center",
+                        icon: 'fal fa-align-center'
+                    },
+                    {
+                        label: "Align right",
+                        value: "right",
+                        icon: 'fal fa-align-right'
+                    },
                 ],
             },
             {
@@ -469,29 +495,6 @@ const CommonBlueprint = ref([
                 type: "colorpicker",
                 label: trans("color"),
                 value: ["common", "centralStage", "style", "color"],
-            },
-            {
-                name: ["common", "centralStage", "textAlign"],
-                type: "textAlign",
-                label: trans("Text Align"),
-                value: ["common", "centralStage", "textAlign"],
-                options: [
-                    {
-                        label: "Align left",
-                        value: "left",
-                        icon: 'fal fa-align-left'
-                    },
-                    {
-                        label: "Align center",
-                        value: "center",
-                        icon: 'fal fa-align-center'
-                    },
-                    {
-                        label: "Align right",
-                        value: "right",
-                        icon: 'fal fa-align-right'
-                    },
-                ],
             },
         ],
     },
@@ -551,7 +554,7 @@ const uploadImageRespone = (res) => {
             v-if="data.components" @dragover="dragover" @dragleave="dragleave" @drop="drop">
             <!-- Common Properties -->
             <div :class="[
-                'p-2 mb-2 md:pl-3 cursor-pointer space-x-3 md:space-x-2 ring-1 ring-gray-300 flex flex-row items-center md:block',
+                'p-2 mb-4 md:pl-3 cursor-pointer space-x-3 md:space-x-2 ring-1 ring-gray-300 flex flex-row items-center md:block',
                 commonEditActive
                     ? 'tabNavigationActive bg-gray-200/60 font-medium'
                     : 'tabNavigation hover:bg-gray-100 border-gray-300',
@@ -566,8 +569,8 @@ const uploadImageRespone = (res) => {
             </div>
 
             <!-- Slides/Drag area -->
-            <div class="mb-2 text-lg font-medium">{{ trans("Slides") }}</div>
-            <draggable :list="data.components" group="slide " item-key="ulid" handle=".handle" class="max-h-96 overflow-auto p-2"
+            <div class="text-lg font-medium leading-none">{{ trans("Slides") }}</div>
+            <draggable :list="data.components" group="slide " item-key="ulid" handle=".handle" class="max-h-96 overflow-auto p-0.5"
                 :onChange="(e: any) => emits('jumpToIndex', e.moved.newIndex)">
                 <template #item="{ element: slide }">
                     <div @mousedown="
