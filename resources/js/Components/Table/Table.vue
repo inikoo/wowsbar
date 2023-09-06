@@ -574,7 +574,7 @@ const handleElementsChange = (data) => {
             <!-- Wrapper -->
 
                 <div class="mb-2" @checkboxChanged="handleElementsChange">
-                    <TableElements v-if="queryBuilderProps.elementGroups" :elements="queryBuilderProps.elementGroups" @checkboxChanged="handleElementsChange" :title="queryBuilderData.title" />
+                    <TableElements v-if="queryBuilderProps.elementGroups" :elements="queryBuilderProps.elementGroups" @checkboxChanged="handleElementsChange" :title="queryBuilderData.title" :name="props.name"/>
                 </div>
                 <div class="grid grid-flow-col justify-between flex-nowrap px-4">
 

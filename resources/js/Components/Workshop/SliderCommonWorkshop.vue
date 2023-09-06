@@ -17,6 +17,7 @@ import Colorpicker from '@/Components/Workshop/Fields/ColorPicker.vue'
 import Select from '@/Components/Forms/Fields/Primitive/PrimitiveSelect.vue'
 import Radio from '@/Components/Forms/Fields/Primitive/PrimitiveRadio.vue'
 import TextAlign from './Fields/TextAlign.vue'
+import SelectFont from './Fields/SelectFont.vue'
 
 library.add(faImage, faExpandArrows, faAlignCenter, faTrash, faStopwatch)
 const props = defineProps<{
@@ -34,7 +35,8 @@ const getComponent = (componentName: string) => {
         'colorpicker': Colorpicker,
         'select': Select,
         'radio': Radio,
-        'textAlign': TextAlign
+        'textAlign': TextAlign,
+        'selectFont': SelectFont
     };
     return components[componentName]
 };
