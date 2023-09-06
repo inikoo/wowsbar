@@ -6,7 +6,7 @@
   -->
 
 <script setup>
-import { ref } from 'vue'
+import { ref, watch, reactive } from 'vue'
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { RadioGroup, RadioGroupLabel, RadioGroupOption } from '@headlessui/vue'
 import Footer from '@/Components/CMS/Footer/index.vue'
@@ -16,7 +16,7 @@ import { v4 as uuidv4 } from 'uuid';
 import HyperlinkTools from '@/Components/CMS/Fields/Hyperlinktools.vue'
 import { get } from 'lodash'
 import HyperInfoTools from '@/Components/CMS/Fields/InfoFieldTools.vue'
-import SocialMediaPicker from "@/Components/CMS/Fields/SocialMediaTools.vue"
+import SocialMediaPicker from "@/Components/CMS/Fields/IconPicker/SocialMediaTools.vue"
 library.add(faHandPointer, faHandRock, faPlus)
 
 const Dummy = {
@@ -78,7 +78,7 @@ const DummyColums = [
             {
                 title: 'location',
                 value: 'Ancient Wisdom s.r.o.',
-                icon: 'fas fa-map-marker-alt',
+                icon: 'fab fa-facebook',
                 id: uuidv4(),
             },
             {
@@ -90,7 +90,7 @@ const DummyColums = [
             {
                 title: 'vat',
                 value: 'VAT: SK2120525440',
-                icon: 'fas fa-balance-scale',
+                icon: 'fab fa-facebook',
                 id: uuidv4(),
             },
             {
@@ -107,7 +107,7 @@ const DummyColums = [
             },
             {
                 title: 'email',
-                value: '<a link=mailto:contact@awgifts.eu>contact@awgifts.eu</a>',
+                value: 'contact@awgifts.eu',
                 icon: 'fas fa-envelope',
                 id: uuidv4(),
             },
@@ -115,8 +115,7 @@ const DummyColums = [
     }
 ]
 
-
-const data = ref({
+const data = reactive({
     column : [
     {
         title: 'company',
@@ -154,7 +153,7 @@ const data = ref({
             {
                 title: 'location',
                 value: 'Ancient Wisdom s.r.o.',
-                icon: 'fas fa-map-marker-alt',
+                icon: 'fab fa-facebook',
                 id: uuidv4()
             },
             {
@@ -166,7 +165,7 @@ const data = ref({
             {
                 title: 'vat',
                 value: 'VAT: SK2120525440',
-                icon: 'fas fa-balance-scale',
+                icon: 'fab fa-facebook',
                 id: uuidv4()
             },
             {
@@ -206,20 +205,20 @@ const data = ref({
     {
         label: "Twitter",
         link: '#twitter',
-        icon: 'fab fa-twitter',
+        icon: 'fab fa-facebook',
         id: uuidv4()
     },
     {
         label: "Github",
         link: '#github',
-        icon: 'fab fa-github',
+        icon: 'fab fa-facebook',
         id: uuidv4()
     },
     ],
     copyRight : { label: 'AW Advantage', link: '*' }
 })
 
-const columSelected = ref(data.value.column[0]);
+const columSelected = ref(null);
 
 const selectedColums = (value) => {
     columSelected.value = {...value}
@@ -228,53 +227,16 @@ const selectedColums = (value) => {
 const handleColumsTypeChange = (value) => {
     if (value.title !== columSelected.value.type) {
         let indexDummy = DummyColums.findIndex((item) => item.type === value.value);
-        let indexColums = data.value.column.findIndex((item) => item.id === columSelected.value.id);
-        const data = { ...DummyColums[indexDummy], id: uuidv4() }
-        data.value.column[indexColums] = data
+        let indexColums = data.column.findIndex((item) => item.id === columSelected.value.id);
+        const set = { ...DummyColums[indexDummy], id: uuidv4() }
+        data.column[indexColums] = set
         selectedColums(data)
     } else { cosnole.log('salah') }
 
 }
 
-const saveItemTitle = (value) => {
-    const indexNavigation = data.value.column.findIndex((item) => item.id == value.column.id)
-    const  set = { ...data.value.column[indexNavigation], title: value.value }
-    data.value.column[indexNavigation] = set
-    selectedColums(set)
-}
-
-const saveTextArea = (value) => {
-    const indexNavigation = data.value.column.findIndex((item) => item.id == value.column.id)
-    const set = { ...data.value.column[indexNavigation], data: value.value }
-    data.value.column[indexNavigation] = set
-}
-
-const saveLink = (value) => {
-    const indexNavigation = data.value.column.findIndex((item) => item.id == value.parentId)
-    const indexChildData = data.value.column[indexNavigation].data.findIndex((item) => item.id == value.column.id)
-    if (value.type !== 'delete') {
-        let set = value.type == 'name' ? { name: value.value } : { link: value.value }
-        const setData = { ...data.value.column[indexNavigation].data[indexChildData], ...set }
-        data.value.column[indexNavigation].data[indexChildData] = setData
-        selectedColums(data)
-    } else if (value.type == 'delete') {
-        data.value.column[indexNavigation].data.splice(indexChildData, 1)
-    }
-}
-
-const saveInfo = (value) => {
-    console.log(value)
-    const indexNavigation = data.value.column.findIndex((item) => item.id == value.parentId)
-    const indexChildData = data.value.column[indexNavigation].data.findIndex((item) => item.id == value.column.id)
-    let set = value.type == 'value' ? { value: value.value } : { icon: value.value }
-    const setDAta = { ...data.value.column[indexNavigation].data[indexChildData], ...set }
-    data.value.column[indexNavigation].data[indexChildData] = setDAta
-    selectedColums(data.value.column[indexNavigation].data[indexChildData])
-}
-
-
 const columItemLinkChange = (value) => {
-    const set = data.value.column
+    const set = data.column
     if (value.value == 'add') {
         const index = set.findIndex((item) => item.id == columSelected.value.id)
         if (columSelected.value.type == 'list') set[index].data.push({ name: 'dummy', link: '#' })
@@ -285,13 +247,10 @@ const columItemLinkChange = (value) => {
             id: uuidv4(),
         })
     }
-    data.value.column = set
+    data.column = set
 }
 
-const copyRightSave = (value) => {
-    let set = value.type == 'name' ? { label: value.value } : { link: value.value }
-    data.value.copyRight = { ...data.value.copyRight, ...set }
-}
+
 
 const saveSocialmedia = (value) => {
     const index = socials.value.findIndex((item) => item.id == value.column.id)
@@ -305,7 +264,7 @@ const saveSocialmedia = (value) => {
 
 }
 const addSocial = () => {
-    data.value.social.push(
+    data.social.push(
         {
             label: "new",
             link: '#',
@@ -315,33 +274,19 @@ const addSocial = () => {
     )
 }
 
-const EditItemLinkInTools = (value, type) => {
-  const set = data.value.column;
-  const index = set.findIndex((item) => item.id === columSelected.value.id);
-
-  // Check if the item was found in the data.value.column array
-  if (index !== -1) {
-    const indexData = set[index].data.findIndex((item) => item.id === value.id);
-
-    // Check if the item was found in the data array of the selected navigation item
-    if (indexData !== -1) {
-      if (type === 'edit') {
-        set[index].data[indexData] = value;
-      } else if (type === 'delete') {
-        set[index].data.splice(indexData, 1);
-      }
-    }
-  }
-  data.value.column = set;
-};
+const changeColumnFromSelectedColumn =()=>{
+    const index = data.column.findIndex((item)=> item.id == columSelected.value.id)
+    if(index >= 0)  data.column[index] = columSelected.value
+}
 
 </script>
 
 <template>
     <div class="bg-white flex">
-        <div class="w-1/10 p-6  overflow-y-auto overflow-x-hidden max-h-[46rem]">
+        <div class="w-1/10 p-6   overflow-y-auto overflow-x-hidden  max-h-[46rem]">
             <form>
                 <div>
+                  <!-- tool picker -->
                     <h2 class="text-sm font-medium text-gray-900">Tools</h2>
                     <RadioGroup v-model="tool" class="mt-2">
                         <RadioGroupLabel class="sr-only">Choose a tool</RadioGroupLabel>
@@ -366,7 +311,7 @@ const EditItemLinkInTools = (value, type) => {
                     </RadioGroup>
                 </div>
                 <hr class="mt-5">
-                <!-- Size picker -->
+                <!-- theme picker -->
                 <div class="mt-8">
                     <div class="flex items-center justify-between">
                         <h2 class="text-sm font-medium text-gray-900">Theme</h2>
@@ -385,7 +330,7 @@ const EditItemLinkInTools = (value, type) => {
                     </RadioGroup>
                 </div>
                 <hr class="mt-5">
-                <!-- theme -->
+                <!-- column type -->
                 <div class="mt-8">
                     <div class="flex items-center justify-between">
                         <h2 class="text-sm font-medium text-gray-900">Colums Type</h2>
@@ -395,12 +340,12 @@ const EditItemLinkInTools = (value, type) => {
                             <RadioGroupOption as="template" v-for="option in Dummy.columsType" :key="option.value"
                                 :value="option" v-slot="{ active, checked }">
                                 <div :class="{
-                                    'cursor-pointer': !columSelected.type == option.value,
-                                    'cursor-not-allowed': columSelected.type == option.value,
-                                    'bg-gray-300 text-gray-600': columSelected.type == option.value, // Apply different class when disabled
+                                    'cursor-pointer': !get(columSelected,'type') == option.value,
+                                    'cursor-not-allowed': get(columSelected,'type') == option.value,
+                                    'bg-gray-300 text-gray-600': get(columSelected,'type') == option.value, // Apply different class when disabled
                                     'ring-2 ring-indigo-500 ring-offset-2': active,
-                                    'border-transparent bg-indigo-600 text-white hover:bg-indigo-700': checked && !columSelected.type == option.value,
-                                    'border-gray-200 bg-white text-gray-900 hover:bg-gray-50': !checked && !columSelected.type == option.value,
+                                    'border-transparent bg-indigo-600 text-white hover:bg-indigo-700': checked && !get(columSelected,'type') == option.value,
+                                    'border-gray-200 bg-white text-gray-900 hover:bg-gray-50': !checked && !get(columSelected,'type') == option.value,
                                     'flex items-center justify-center rounded-md border py-3 px-3 text-sm font-medium uppercase sm:flex-1': true
                                 }" @click="handleColumsTypeChange(option)">
                                     <RadioGroupLabel as="span">{{ option.name }}</RadioGroupLabel>
@@ -409,17 +354,18 @@ const EditItemLinkInTools = (value, type) => {
                         </div>
                     </RadioGroup>
                 </div>
-                <!-- column tools list -->
-                <div class="mt-8" v-if="get(columSelected, 'type') == 'list'">
+                <!-- column tools -->
+                <div v-if="columSelected">
+                 <!-- column tools list -->
+                <div class="mt-8" v-if="columSelected.type == 'list'">
                     <div class="flex items-center justify-between">
-                        <h2 class="text-sm font-medium text-gray-900">{{ `Colums tools ${columSelected.title}`
-                        }}</h2>
+                        <h2 class="text-sm font-medium text-gray-900">{{ `Colums tools ${columSelected.title}`}}</h2>
                     </div>
                     <div>
                         <div class="flex gap-2 mt-2">
-                            <div style="width:87%;"
+                            <div style="width:85%;"
                                 class=" shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                <input type="text" v-model="columSelected.title"
+                                <input type="text" v-model="columSelected.title" @input="changeColumnFromSelectedColumn"
                                     class=" flex-1 border-0 bg-transparent text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                     placeholder="title" />
                             </div>
@@ -427,29 +373,37 @@ const EditItemLinkInTools = (value, type) => {
 
                                 <button type="submit"
                                     @click.prevent="columItemLinkChange({ name: 'Add Item', value: 'add' })"
-                                    class="rounded-md cursor-pointer border ring-gray-300 px-3 py-2 text-sm font-semibold text-black shadow-sm ">+</button>
+                                    class="rounded-md cursor-pointer border ring-gray-300 px-3 py-2 text-sm font-semibold text-black shadow-sm ">
+                                    <font-awesome-icon :icon="['fas', 'plus']" />
+                                    </button>
                             </div>
 
                         </div>
 
-                        <div v-for="set in columSelected.data" :key="set.id">
-                            <HyperlinkTools :data="set" :save="EditItemLinkInTools" modelLabel="name"
-                                modelLink="link" />
+                        <div v-for="(set,index) in columSelected.data" :key="set.id">
+                            <HyperlinkTools 
+                            :data="set"
+                            @OnDelete="()=>columSelected.data.splice(index,1)"
+                            :formList ="{
+                                name: 'name',
+                                link: 'link',
+                            }"
+                            />
                         </div>
                     </div>
 
                 </div>
                 <!-- column tools info-->
-                <div class="mt-8" v-if="get(columSelected, 'type') == 'info'">
+                <div class="mt-8" v-if="columSelected.type == 'info'">
                     <div class="flex items-center justify-between">
                         <h2 class="text-sm font-medium text-gray-900">{{ `Colums tools ${columSelected.title}`
                         }}</h2>
                     </div>
                     <div>
                         <div class="flex gap-2 mt-2">
-                            <div style="width:87%;"
+                            <div style="width:85%;"
                                 class=" shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                <input type="text" v-model="columSelected.title"
+                                <input type="text" v-model="columSelected.title"  @input="changeColumnFromSelectedColumn"
                                     class=" flex-1 border-0 bg-transparent text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                     placeholder="title" />
                             </div>
@@ -457,16 +411,19 @@ const EditItemLinkInTools = (value, type) => {
 
                                 <button type="submit"
                                     @click.prevent="columItemLinkChange({ name: 'Add Item', value: 'add' })"
-                                    class="rounded-md cursor-pointer border ring-gray-300 px-3 py-2 text-sm font-semibold text-black shadow-sm ">+</button>
+                                    class="rounded-md cursor-pointer border ring-gray-300 px-3 py-2 text-sm font-semibold text-black shadow-sm "><font-awesome-icon :icon="['fas', 'plus']" /></button>
                             </div>
 
                         </div>
 
-                        <div v-for="set in columSelected.data" :key="set.id">
-                            <HyperInfoTools :data="set" :save="EditItemLinkInTools" />
+                        <div v-for="(set,index) in columSelected.data" :key="set.id">
+                            <HyperInfoTools :data="set"  @OnDelete="()=>columSelected.data.splice(index,1)" />
                         </div>
                     </div>
                 </div>
+            </div>
+
+
                 <hr class="mt-5">
                 <!-- social Media -->
                 <div class="mt-8">
@@ -475,7 +432,7 @@ const EditItemLinkInTools = (value, type) => {
                     </div>
                     <RadioGroup class="mt-2">
                         <div class="grid grid-cols-3 gap-3 sm:grid-cols-2">
-                            <RadioGroupOption as="template" v-for="option in socials" :key="option.value"
+                            <RadioGroupOption as="template" v-for="option in data.social" :key="option.value"
                                 :value="option" v-slot="{ active, checked }">
                                 <div :class="{
                                     'flex cursor-pointer items-center justify-center rounded-md border py-3 px-3 text-sm font-medium uppercase sm:flex-1': true
@@ -503,12 +460,15 @@ const EditItemLinkInTools = (value, type) => {
 
         <div class="w-[90%] bg-gray-200 flex items-center justify-center">
             <div style="transform: scale(0.8);" class="w-full">
-                <Footer class="lg:col-span-2 lg:row-span-2 rounded-lg" :columSelected="columSelected"
-                    :saveSocialmedia="saveSocialmedia" :theme="selectedTheme.value" :social="data.social"
-                    :saveInfo="saveInfo" :copyRight="data.copyRight" :copyRightSave="copyRightSave" :navigation="data.column"
-                    :selectedColums="selectedColums" :saveItemTitle="saveItemTitle" :saveTextArea="saveTextArea"
-                    :tool="tool" :saveLink="saveLink" />
+                <Footer class="lg:col-span-2 lg:row-span-2 rounded-lg"
+                    :data="data"
+                    :columSelected="columSelected"
+                    :theme="selectedTheme.value" 
+                    :selectedColums="selectedColums" 
+                    :tool="tool"
+                  />
             </div>
         </div>
     </div>
+    <div @click="()=>console.log(data)">checkdata</div>
 </template>

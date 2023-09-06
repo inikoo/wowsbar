@@ -16,7 +16,7 @@ import HyperlinkTools from '@/Components/CMS/Fields/Hyperlinktools.vue'
 import { get } from 'lodash'
 import HyperInfoTools from '@/Components/CMS/Fields/InfoFieldTools.vue'
 import VueResizable from 'vue-resizable'
-import SocialMediaPicker from "@/Components/CMS/Fields/SocialMediaTools.vue"
+import SocialMediaPicker from "@/Components/CMS/Fields/IconPicker/SocialMediaTools.vue"
 library.add(faHandPointer, faHandRock, faPlus)
 
 const Dummy = {

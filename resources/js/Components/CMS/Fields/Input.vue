@@ -2,10 +2,9 @@
 import { ref, onMounted } from 'vue'
 const props = defineProps<{
   data: Object,
-  save : Function
   keyValue:String
-  cssClass:any
 }>()
+
 const editMode = ref(false)
 const inputValue = ref(props.data[props.keyValue])
 const inputRef = ref<HTMLInputElement | null>(null)
@@ -21,7 +20,7 @@ const changeEditMode = () => {
 
 const handleInputBlur = () => {
   editMode.value = false
-  props.save({column : {...props.data}, value :inputValue.value })
+  props.data[props.keyValue] = inputValue.value
 }
 
 onMounted(() => {
@@ -29,19 +28,20 @@ onMounted(() => {
     inputRef.value.focus()
   }
 })
+
 </script>
 
 <template>
   <div>
     <template v-if="!editMode">
-      <div> <h3  @click="changeEditMode" :class="cssClass">{{ data[keyValue] }}</h3></div>
+      <div> <h3  @click="changeEditMode" class="text-sm font-bold leading-6 text-gray-700 capitalize">{{ data[keyValue] }}</h3></div>
     </template>
     <template v-else>
       <input
         ref="inputRef"
         v-model="inputValue"
         @blur="handleInputBlur"
-        class="w-full border"
+        class="w-full"
       />
     </template>
   </div>

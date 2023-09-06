@@ -4,7 +4,7 @@ import fontLibrary from './Components/fonts.js'
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { faEnvelope as fasEnvelope, faPhone as fasPhone, faBuilding as fasBuilding, faCircle as fasCircle, faMap as fasMap, faUser as fasUser } from '../../../../../private/pro-solid-svg-icons';
 import { faEnvelope as falEnvelope, faPhone as falPhone, faBuilding as falBuilding, faCircle as falCircle, faMap as falMap, faUser as falUser } from '../../../../../private/pro-light-svg-icons';
-import { faEnvelope as farEnvelope, faPhone as farPhone, faBuilding as farBuilding, faCircle as farCircle, faMap as farMap, faUser as farUser } from '../../../../../private/pro-regular-svg-icons';
+import { faEnvelope as farEnvelope, faPhone as farPhone, faBuilding as farBuilding, faCircle as farCircle, faMap as farMap, faUser as farUser, faDotCircle } from '../../../../../private/pro-regular-svg-icons';
 import { faEnvelope as fadEnvelope, faPhone as fadPhone, faBuilding as fadBuilding, faCircle as fadCircle, faMap as fadMap, faUser as fadUser } from '../../../../../private/pro-duotone-svg-icons';
 import { faTiktok, faFacebook, faFacebookF, faSquareFacebook, faInstagram, faSquareInstagram , faWhatsapp, faSquareWhatsapp } from "@fortawesome/free-brands-svg-icons"
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -14,28 +14,19 @@ library.add(
 faTiktok, faFacebook, faFacebookF, faSquareFacebook, faInstagram, faSquareInstagram , faWhatsapp, faSquareWhatsapp, 
 fasEnvelope, fasPhone, fasBuilding, fasCircle, fasMap, fasUser,
 falEnvelope, falPhone, falBuilding, falCircle, falMap, falUser,
-farEnvelope, farPhone, farBuilding, farCircle, farMap, farUser,
+farEnvelope, farPhone, farBuilding, farCircle, farMap, farUser, faDotCircle,
 fadEnvelope, fadPhone, fadBuilding, fadCircle, fadMap, fadUser,
 )
 
-console.log('lololo', library)
-
 const props = defineProps({
-  label: {
-    type: String,
-    default: 'Icon Picker'
-  },
-  modelValue: {
-    type: String,
-    default: 'fas fa-circle'
-  },
   cssClass : String,
-  save:Function,
-  data:Object
+  data: {
+    icon : String
+  }
 })
 
 const filterText = ref('')
-const activeGlyph = ref(props.modelValue)
+const activeGlyph = ref(props.data.icon)
 
 
     const allGlyphs = [].concat(
@@ -59,16 +50,12 @@ const activeGlyph = ref(props.modelValue)
 
     const setActiveGlyph = glyph => {
       activeGlyph.value = glyph
-      insert()
+      props.data.icon  = activeGlyph.value
     }
 
 
     const getGlyphName = glyph =>
-      upperFirst(glyph.replace(/f.. fa-/g, '').replace('-', ' '))
-
-    const insert = () => {
-      props.save({column : {...props.data}, value : activeGlyph.value})
-    }   
+      upperFirst(glyph.replace(/f.. fa-/g, '').replace('-', ' ')) 
 
 </script>
 
@@ -76,8 +63,7 @@ const activeGlyph = ref(props.modelValue)
 <template>
 <Popover>
   <template #button>
-    <!-- Replace with your trigger button/icon -->
-    <FontAwesomeIcon :icon="props.modelValue" :class="cssClass" aria-hidden="true" />
+    <FontAwesomeIcon :icon="props.data.icon" :class="cssClass" aria-hidden="true" />
   </template>
   <template #content>
     <div class="p-5">

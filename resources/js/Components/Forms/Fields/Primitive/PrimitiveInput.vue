@@ -52,8 +52,7 @@ watch(data, (newValue) => {
     valued.value = setFormValue(newValue, props.fieldName);
 });
 
-watch(props.value, (newValue) => {
-    console.log('xxxxxx',newValue)
+watch(value, (newValue) => {
     valued.value = newValue
 });
 
