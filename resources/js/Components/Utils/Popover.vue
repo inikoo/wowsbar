@@ -25,7 +25,7 @@ const props = defineProps({
       leave-to-class="translate-y-1 opacity-0"
     >
       <PopoverPanel
-        class="absolute left-[100] z-99 mt-3 -translate-x-1/2 transform px-4 sm:px-0 bg-white"
+        class="absolute left-[100] z-99 mt-3 -translate-x-1/2 transform px-4 sm:px-0 bg-white w-fit"
       >
         <slot name="content"></slot>
       </PopoverPanel>
