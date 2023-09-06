@@ -95,7 +95,7 @@ const fileInput = ref(null);
 const currentComponentBeenEdited = ref();
 const commonEditActive = ref(true);
 const isOpenGalleryImages = ref(false);
-const addFiles = ref([]);
+const uploadedFilesList = ref([]);
 const closeModalisOpenGalleryImages = () => {
     isOpenGalleryImages.value = false;
 };
@@ -103,14 +103,14 @@ const closeModalisOpenGalleryImages = () => {
 const isOpenCropModal = ref(false);
 
 const closeModalisOpenCropModal = () => {
-    addFiles.value = [];
+    uploadedFilesList.value = [];
     isOpenCropModal.value = false;
     fileInput.value.value = "";
 };
 
 const addComponent = async (element) => {
-    addFiles.value = element.target.files;
-    console.log(addFiles.value)
+    uploadedFilesList.value = element.target.files;
+    console.log(uploadedFilesList.value)
     isOpenCropModal.value = true;
 };
 
@@ -145,7 +145,7 @@ const dragleave = () => {
 
 const drop = (e) => {
     e.preventDefault();
-    addFiles.value = e.dataTransfer.files;
+    uploadedFilesList.value = e.dataTransfer.files;
     if( e.dataTransfer.files.length > 0 ) isOpenCropModal.value = true;
     isDragging.value = false;
 };
@@ -635,7 +635,7 @@ const uploadImageRespone = (res) => {
                 </template>
             </draggable>
 
-            <!-- Button: Add slide, Libraries -->
+            <!-- Button: Add slide, Gallery -->
             <div class="flex flex-wrap md:flex-row gap-x-2 gap-y-1 md:gap-y-0 max-w-fit">
                 <Button :style="`secondary`" icon="fas fa-plus" size="xs" class="relative">
                     {{ trans("Add slide") }}
@@ -678,7 +678,7 @@ const uploadImageRespone = (res) => {
         <!-- Modal: Crop (add slide) -->
         <Modal :isOpen="isOpenCropModal" @onClose="closeModalisOpenCropModal">
             <div>
-                <CropImage :data="addFiles" :imagesUploadRoute="props.imagesUploadRoute" :respone="uploadImageRespone" />
+                <CropImage :data="uploadedFilesList" :imagesUploadRoute="props.imagesUploadRoute" :respone="uploadImageRespone" />
             </div>
         </Modal>
     </div>
