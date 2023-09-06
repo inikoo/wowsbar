@@ -37,6 +37,10 @@ class IndexHistories
             });
         });
 
+        if ($prefix) {
+            InertiaTable::updateQueryBuilderParameters($prefix);
+        }
+
         $queryBuilder = QueryBuilder::for(Audit::class);
 
         $queryBuilder->where('auditable_type', $this->model);
@@ -45,9 +49,9 @@ class IndexHistories
         }
 
         return $queryBuilder
-            ->defaultSort('user_type')
-            ->allowedSorts(['auditable_id', 'auditable_type', 'user_type', 'url', 'datetime'])
-            ->allowedFilters([$globalSearch, 'auditable_id', 'auditable_type'])
+            ->defaultSort('audits.created_at')
+            ->allowedSorts(['auditable_id', 'auditable_type', 'user_type', 'url'])
+            ->allowedFilters([$globalSearch])
             ->withPaginator($prefix)
             ->withQueryString();
     }
@@ -58,6 +62,7 @@ class IndexHistories
             $table
                 ->name('hst')
                 ->pageName('historyPage')
+                ->withGlobalSearch()
                 ->withExportLinks($exportLinks)
                 ->column(key: 'ip_address', label: __('IP Address'), canBeHidden: false, sortable: true, searchable: true)
                 ->column(key: 'user_id', label: __('Updated By'), canBeHidden: false, sortable: true)

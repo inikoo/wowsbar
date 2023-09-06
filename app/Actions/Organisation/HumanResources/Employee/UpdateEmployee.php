@@ -21,14 +21,14 @@ class UpdateEmployee
     {
         $employee =  $this->update($employee, $modelData, ['data', 'salary',]);
 
-        EmployeeHydrateUniversalSearch::dispatch($employee);
+//        EmployeeHydrateUniversalSearch::dispatch($employee);
         return $employee;
     }
 
 
     public function authorize(ActionRequest $request): bool
     {
-        return $request->user()->hasPermissionTo("hr.edit");
+        return !$request->user()->hasPermissionTo("hr.edit");
     }
 
     public function rules(): array

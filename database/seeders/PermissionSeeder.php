@@ -43,8 +43,6 @@ class PermissionSeeder extends Seeder
 
     private function storePermissionsRoles($permissions, $roles, $guard): void
     {
-
-
         $currentPermissions = Permission::where('guard_name', $guard)->pluck('name');
         $currentPermissions->diff($permissions)
             ->each(function ($permissionName) use ($guard) {
