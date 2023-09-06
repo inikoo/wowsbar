@@ -6,6 +6,13 @@
  */
 
 
+use App\Actions\Organisation\HumanResources\Employee\DeleteEmployee;
+use App\Actions\Organisation\HumanResources\Employee\StoreEmployee;
+use App\Actions\Organisation\HumanResources\Employee\UpdateEmployee;
 use App\Actions\UI\Organisation\Profile\UpdateProfile;
 
 Route::patch('/profile', UpdateProfile::class)->name('profile.update');
+
+Route::patch('/employee/{employee}', UpdateEmployee::class)->name('employee.update');
+Route::post('/employee/', StoreEmployee::class)->name('employee.store');
+Route::delete('/employee/{employee}', DeleteEmployee::class)->name('employee.delete');
