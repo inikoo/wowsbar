@@ -13,7 +13,8 @@ export default {
             'far fa-building',
             'far fa-circle',
             'far fa-map',
-            'far fa-user'
+            'far fa-user',
+            'far fa-dot-circle'
           ]
         },
         solid: {

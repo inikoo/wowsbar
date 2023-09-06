@@ -2,7 +2,7 @@
     <div>
         <component :is="component[theme]" :columSelected="columSelected" :social="props.social" :saveSocialmedia="saveSocialmedia"
             :navigation="props.navigation" :changeColums="props.changeColums" :copyRight="copyRight" :copyRightSave="copyRightSave"
-            :selectedColums="selectedColums" :saveItemTitle="saveItemTitle" :saveTextArea="saveTextArea" :saveInfo="saveInfo"
+            :selectedColums="selectedColums" :saveItemTitle="saveItemTitle" :saveTextArea="saveTextArea" :saveInfo="saveInfo" :data=data
             :tool="tool" :saveLink="saveLink"/>
     </div>
 </template>
@@ -27,6 +27,7 @@ const props = defineProps<{
     copyRight : Object
     copyRightSave : Function
     saveSocialmedia : Function
+    data : Object
 }>()
 
 console.log(props)
