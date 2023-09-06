@@ -95,7 +95,7 @@ const fileInput = ref(null);
 const currentComponentBeenEdited = ref();
 const commonEditActive = ref(true);
 const isOpenGalleryImages = ref(false);
-const addFiles = ref([]);
+const uploadedFilesList = ref([]);
 const closeModalisOpenGalleryImages = () => {
     isOpenGalleryImages.value = false;
 };
@@ -103,14 +103,14 @@ const closeModalisOpenGalleryImages = () => {
 const isOpenCropModal = ref(false);
 
 const closeModalisOpenCropModal = () => {
-    addFiles.value = [];
+    uploadedFilesList.value = [];
     isOpenCropModal.value = false;
     fileInput.value.value = "";
 };
 
 const addComponent = async (element) => {
-    addFiles.value = element.target.files;
-    console.log(addFiles.value)
+    uploadedFilesList.value = element.target.files;
+    console.log(uploadedFilesList.value)
     isOpenCropModal.value = true;
 };
 
@@ -145,7 +145,7 @@ const dragleave = () => {
 
 const drop = (e) => {
     e.preventDefault();
-    addFiles.value = e.dataTransfer.files;
+    uploadedFilesList.value = e.dataTransfer.files;
     if( e.dataTransfer.files.length > 0 ) isOpenCropModal.value = true;
     isDragging.value = false;
 };
@@ -273,6 +273,29 @@ const ComponentsBlueprint = ref([
                 ],
             },
             {
+                name: ["layout", "centralStage", "textAlign"],
+                type: "textAlign",
+                label: trans("Text Align"),
+                value: ["layout", "centralStage", "textAlign"],
+                options: [
+                    {
+                        label: "Align left",
+                        value: "left",
+                        icon: 'fal fa-align-left'
+                    },
+                    {
+                        label: "Align center",
+                        value: "center",
+                        icon: 'fal fa-align-center'
+                    },
+                    {
+                        label: "Align right",
+                        value: "right",
+                        icon: 'fal fa-align-right'
+                    },
+                ],
+            },
+            {
                 name: ["layout", "centralStage", "style", "fontSize"],
                 type: "radio",
                 label: trans("Font Size"),
@@ -319,29 +342,7 @@ const ComponentsBlueprint = ref([
                 label: trans("color"),
                 value: ["layout", "centralStage", "style", "color"],
             },
-            {
-                name: ["layout", "centralStage", "textAlign"],
-                type: "textAlign",
-                label: trans("Text Align"),
-                value: ["layout", "centralStage", "textAlign"],
-                options: [
-                    {
-                        label: "Align left",
-                        value: "left",
-                        icon: 'fal fa-align-left'
-                    },
-                    {
-                        label: "Align center",
-                        value: "center",
-                        icon: 'fal fa-align-center'
-                    },
-                    {
-                        label: "Align right",
-                        value: "right",
-                        icon: 'fal fa-align-right'
-                    },
-                ],
-            },
+            
         ],
     },
     // {
@@ -399,12 +400,14 @@ const CommonBlueprint = ref([
                 type: "text",
                 label: trans("Title"),
                 value: ["common", "centralStage", "title"],
+                placeholder: "Enter title of the slide"
             },
             {
                 name: ["common", "centralStage", "subtitle"],
                 type: "text",
                 label: trans("subtitle"),
                 value: ["common", "centralStage", "subtitle"],
+                placeholder: "Enter subtitle of the slide"
             },
             {
                 name: ["common", "centralStage", "style", "fontFamily"],
@@ -421,6 +424,29 @@ const CommonBlueprint = ref([
                     "Quicksand",
                     "Times New Roman",
                     "Yatra One",
+                ],
+            },
+            {
+                name: ["common", "centralStage", "textAlign"],
+                type: "textAlign",
+                label: trans("Text Align"),
+                value: ["common", "centralStage", "textAlign"],
+                options: [
+                    {
+                        label: "Align left",
+                        value: "left",
+                        icon: 'fal fa-align-left'
+                    },
+                    {
+                        label: "Align center",
+                        value: "center",
+                        icon: 'fal fa-align-center'
+                    },
+                    {
+                        label: "Align right",
+                        value: "right",
+                        icon: 'fal fa-align-right'
+                    },
                 ],
             },
             {
@@ -469,29 +495,6 @@ const CommonBlueprint = ref([
                 type: "colorpicker",
                 label: trans("color"),
                 value: ["common", "centralStage", "style", "color"],
-            },
-            {
-                name: ["common", "centralStage", "textAlign"],
-                type: "textAlign",
-                label: trans("Text Align"),
-                value: ["common", "centralStage", "textAlign"],
-                options: [
-                    {
-                        label: "Align left",
-                        value: "left",
-                        icon: 'fal fa-align-left'
-                    },
-                    {
-                        label: "Align center",
-                        value: "center",
-                        icon: 'fal fa-align-center'
-                    },
-                    {
-                        label: "Align right",
-                        value: "right",
-                        icon: 'fal fa-align-right'
-                    },
-                ],
             },
         ],
     },
@@ -551,7 +554,7 @@ const uploadImageRespone = (res) => {
             v-if="data.components" @dragover="dragover" @dragleave="dragleave" @drop="drop">
             <!-- Common Properties -->
             <div :class="[
-                'p-2 mb-2 md:pl-3 cursor-pointer space-x-3 md:space-x-2 ring-1 ring-gray-300 flex flex-row items-center md:block',
+                'p-2 mb-4 md:pl-3 cursor-pointer space-x-3 md:space-x-2 ring-1 ring-gray-300 flex flex-row items-center md:block',
                 commonEditActive
                     ? 'tabNavigationActive bg-gray-200/60 font-medium'
                     : 'tabNavigation hover:bg-gray-100 border-gray-300',
@@ -566,8 +569,8 @@ const uploadImageRespone = (res) => {
             </div>
 
             <!-- Slides/Drag area -->
-            <div class="mb-2 text-lg font-medium">{{ trans("Slides") }}</div>
-            <draggable :list="data.components" group="slide " item-key="ulid" handle=".handle" class="max-h-96 overflow-auto p-2"
+            <div class="text-lg font-medium leading-none">{{ trans("Slides") }}</div>
+            <draggable :list="data.components" group="slide " item-key="ulid" handle=".handle" class="max-h-96 overflow-auto p-0.5"
                 :onChange="(e: any) => emits('jumpToIndex', e.moved.newIndex)">
                 <template #item="{ element: slide }">
                     <div @mousedown="
@@ -632,7 +635,7 @@ const uploadImageRespone = (res) => {
                 </template>
             </draggable>
 
-            <!-- Button: Add slide, Libraries -->
+            <!-- Button: Add slide, Gallery -->
             <div class="flex flex-wrap md:flex-row gap-x-2 gap-y-1 md:gap-y-0 max-w-fit">
                 <Button :style="`secondary`" icon="fas fa-plus" size="xs" class="relative">
                     {{ trans("Add slide") }}
@@ -675,7 +678,7 @@ const uploadImageRespone = (res) => {
         <!-- Modal: Crop (add slide) -->
         <Modal :isOpen="isOpenCropModal" @onClose="closeModalisOpenCropModal">
             <div>
-                <CropImage :data="addFiles" :imagesUploadRoute="props.imagesUploadRoute" :respone="uploadImageRespone" />
+                <CropImage :data="uploadedFilesList" :imagesUploadRoute="props.imagesUploadRoute" :respone="uploadImageRespone" />
             </div>
         </Modal>
     </div>

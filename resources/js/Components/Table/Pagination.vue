@@ -134,7 +134,7 @@ const props = withDefaults(defineProps<{
   onPerPageChange: {}
 })
 
-console.log(props.modelOperations)
+// console.log(props.modelOperations)
 
 const hasLinks = computed(() => {
   if (!("links" in pagination.value)) {

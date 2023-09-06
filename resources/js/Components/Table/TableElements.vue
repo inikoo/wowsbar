@@ -104,19 +104,23 @@ onMounted(() => {
                     </div>
                 </div>
             </div>
-            
+
             <!-- Button: Select state -->
             <Menu as="div" class="relative inline-block text-left" v-slot="{ open }">
                 <!-- Initial button -->
-                <div v-if="props.elements" class="w-24 min-w-min bg-gray-300 rounded-r">
-                    <MenuButton class="inline-flex relative w-full justify-end items-center pr-6 py-1 xl:py-2 font-medium text-gray-600 capitalize focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-opacity-75">
-                        {{ selectedGroup }}
-                        <FontAwesomeIcon icon="far fa-chevron-down" class="absolute left-2.5 transition-all duration-200 ease-in-out" :class="[open ? 'rotate-180' : '']" aria-hidden="true" />
+                <div v-if="props.elements" class="w-min bg-gray-200 rounded-r ring-1 ring-gray-400">
+                    <MenuButton class="inline-flex relative w-full justify-start items-center py-1 px-1 xl:py-2 font-medium text-gray-600 capitalize focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-500 focus-visible:ring-opacity-75"
+                        :class="[Object.keys(props.elements).length > 1 ? '' : 'cursor-default']"
+                    >
+                        <span v-if="Object.keys(props.elements).length > 1" class="pl-2 flex items-center justify-center">
+                            <FontAwesomeIcon icon="far fa-chevron-down" class="transition-all duration-200 ease-in-out" :class="[open ? 'rotate-180' : '']" aria-hidden="true" />
+                        </span>
+                        <span class="px-4">{{ selectedGroup }}</span>
                     </MenuButton>
                 </div>
 
                 <!-- List of button -->
-                <transition enter-active-class="transition duration-100 ease-out"
+                <transition v-if="Object.keys(props.elements).length > 1" enter-active-class="transition duration-100 ease-out"
                     enter-from-class="transform scale-95 opacity-0" enter-to-class="transform scale-100 opacity-100"
                     leave-active-class="transition duration-75 ease-in" leave-from-class="transform scale-100 opacity-100"
                     leave-to-class="transform scale-95 opacity-0">

@@ -5,15 +5,17 @@
   -->
 
 <script setup lang="ts">
-import {Link} from '@inertiajs/vue3';
-import { library } from "@fortawesome/fontawesome-svg-core";
-import Table from '@/Components/Table/Table.vue';
-import {Banner} from "@/types/banner";
+import { Link } from '@inertiajs/vue3'
+import { library } from "@fortawesome/fontawesome-svg-core"
+import Table from '@/Components/Table/Table.vue'
+import { Banner } from "@/types/banner"
 import Icon from '@/Components/Icon.vue'
-import { faSeedling, faBroadcastTower} from "@/../private/pro-light-svg-icons"
-import Image from "@/Components/Image.vue";
+import { faSeedling, faBroadcastTower } from "@/../private/pro-light-svg-icons"
+import Image from "@/Components/Image.vue"
+import { useFormatTime } from '@/Composables/useFormatTime'
 
-library.add(faSeedling, faBroadcastTower);
+library.add(faSeedling, faBroadcastTower)
+
 const props = defineProps<{
     data: object,
     tab?:string
@@ -25,15 +27,15 @@ function bannerRoute(banner: Banner) {
         case 'portfolio.banners.index':
             return route(
                 'portfolio.banners.show',
-                [banner.slug]);
+                [banner.slug])
         case 'portfolio.websites.show':
             return route(
                 'portfolio.websites.show.banners.show',
-                [route().params['portfolioWebsite'],banner.slug]);
+                [route().params['portfolioWebsite'],banner.slug])
         case 'portfolio.websites.show.banners.index':
             return route(
                 'portfolio.websites.show.banners.show',
-                [route().params['portfolioWebsite'],banner.slug]);
+                [route().params['portfolioWebsite'],banner.slug])
     }
 }
 
@@ -54,6 +56,18 @@ function bannerRoute(banner: Banner) {
         <template #cell(image_thumbnail)="{ item: banner }">
             <div class="h-11 overflow-hidden aspect-[4/1]">
                 <Image :src="banner['image_thumbnail']"/>
+            </div>
+        </template>
+
+        <template #cell(created_at)="{ item }">
+            <div>
+                {{ useFormatTime(item.created_at) }}
+            </div>
+        </template>
+
+        <template #cell(updated_at)="{ item }">
+            <div>
+                {{ useFormatTime(item.updated_at) }}
             </div>
         </template>
     </Table>

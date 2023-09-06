@@ -558,10 +558,13 @@ function header(key) {
 
 const handleElementsChange = (data) => {
     queryBuilderData.value.elementFilter = data
-    // visit(location.pathname + '?elements[state]=' + data)
-    //queryBuilderData.value.elements[0].checked=true
-
 }
+
+watch(props.name, () => {
+    // To reset the 'sort' on change Tabs
+    queryBuilderData.value.sort = null
+    resetQuery()
+})
 </script>
 
 <template>
