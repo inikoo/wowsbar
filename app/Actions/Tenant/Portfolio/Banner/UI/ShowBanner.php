@@ -101,19 +101,9 @@ class ShowBanner extends InertiaAction
                                 'parameters' => array_values($request->route()->originalParameters())
                             ]
                         ] : false,
-                        $this->canEdit ? [
-                            'type'  => 'button',
-                            'style' => 'tertiary',
-                            'label' => __('edit'),
-                            'icon'  => ["fal", "fa-pencil"],
-                            'route' => [
-                                'name'       => preg_replace('/show$/', 'edit', $request->route()->getName()),
-                                'parameters' => array_values($request->route()->originalParameters())
-                            ]
-                        ] : false,
                         [
                             'type'  => 'button',
-                            'style' => 'secondary',
+                            'style' => 'tertiary',
                             'label' => __('clone this banner'),
                             'icon'  => ["fal", "fa-paste"],
                             'route' => [
@@ -121,6 +111,16 @@ class ShowBanner extends InertiaAction
                                 'parameters' => array_values($request->route()->originalParameters())
                             ]
                         ],
+                        $this->canEdit ? [
+                            'type'  => 'button',
+                            'style' => 'secondary',
+                            'label' => __('edit'),
+                            'icon'  => ["fal", "fa-pencil"],
+                            'route' => [
+                                'name'       => preg_replace('/show$/', 'edit', $request->route()->getName()),
+                                'parameters' => array_values($request->route()->originalParameters())
+                            ]
+                        ] : false,
                         $this->canEdit ? [
                             'type'  => 'button',
                             'style' => 'primary',
