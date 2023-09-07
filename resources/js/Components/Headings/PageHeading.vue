@@ -8,7 +8,7 @@
 import { Link } from "@inertiajs/vue3"
 
 import { library } from "@fortawesome/fontawesome-svg-core"
-import { faDraftingCompass,faEmptySet, faMoneyCheckAlt, faPeopleArrows, faSlidersH, faSave, faSuitcase, faBroadcastTower} from "@/../private/pro-light-svg-icons"
+import { faWindowMaximize, faDraftingCompass,faEmptySet, faMoneyCheckAlt, faPeopleArrows, faSlidersH, faSave, faSuitcase, faBroadcastTower} from "@/../private/pro-light-svg-icons"
 import { faRocketLaunch, faPencil, faArrowLeft, faBorderAll, faTrashAlt } from "@/../private/pro-regular-svg-icons"
 import { faPlus } from "@/../private/pro-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
@@ -29,7 +29,7 @@ interface Action {
 }
 
 
-library.add(faRocketLaunch,faDraftingCompass,faEmptySet, faMoneyCheckAlt, faPeopleArrows, faSlidersH, faPlus,
+library.add(faWindowMaximize, faRocketLaunch,faDraftingCompass,faEmptySet, faMoneyCheckAlt, faPeopleArrows, faSlidersH, faPlus,
             faPencil, faArrowLeft, faBorderAll, faTrashAlt,faSave, faSuitcase,
             faBroadcastTower
 );
