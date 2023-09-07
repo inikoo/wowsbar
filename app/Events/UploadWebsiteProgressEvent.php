@@ -34,7 +34,12 @@ class UploadWebsiteProgressEvent implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel('uploads.' . $this->tenant->slug),
+            new Channel('uploads.' . $this->tenant->slug),
         ];
+    }
+
+    public function broadcastAs(): string
+    {
+        return 'WebsiteUpload';
     }
 }
