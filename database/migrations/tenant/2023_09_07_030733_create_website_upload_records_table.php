@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreign('tenant_id')->references('id')->on('tenants')->onUpdate('cascade')->onDelete('cascade');
 
             $table->jsonb('data');
-            $table->string('status')->default(UploadRecordStatusEnum::QUEUED->value);
+            $table->string('status')->default(UploadRecordStatusEnum::PROCESSING->value);
 
             $table->timestamps();
         });

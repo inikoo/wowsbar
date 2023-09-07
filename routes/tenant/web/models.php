@@ -20,6 +20,7 @@ use App\Actions\Tenant\Portfolio\Gallery\UpdateUploadedImage;
 use App\Actions\Tenant\Portfolio\PortfolioWebsite\DeletePortfolioWebsite;
 use App\Actions\Tenant\Portfolio\PortfolioWebsite\StorePortfolioWebsite;
 use App\Actions\Tenant\Portfolio\PortfolioWebsite\UpdatePortfolioWebsite;
+use App\Actions\Tenant\Portfolio\PortfolioWebsite\UploadPortfolioWebsite;
 use App\Actions\UI\Tenant\Profile\UpdateProfile;
 
 Route::post('/portfolio-website', StorePortfolioWebsite::class)->name('portfolio-website.store');
@@ -46,6 +47,7 @@ Route::post('/user', StoreUser::class)->name('user.store');
 Route::patch('/user/{user:username}', UpdateUser::class)->name('user.update');
 Route::patch('/profile', UpdateProfile::class)->name('profile.update');
 
-
 Route::patch('/system-settings', UpdateSystemSettings::class)->name('system-settings.update');
 Route::post('/generator', ImageGenerator::class)->name('image.generate');
+
+Route::post('/portfolio-websites/imports/upload', UploadPortfolioWebsite::class)->name('websites.upload');

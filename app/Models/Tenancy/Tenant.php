@@ -16,6 +16,7 @@ use App\Models\Portfolio\PortfolioWebsite;
 use App\Models\Portfolio\Snapshot;
 use App\Models\Portfolio\SnapshotStats;
 use App\Models\Traits\HasHistory;
+use App\Models\WebsiteUploadRecord;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -63,6 +64,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Snapshot> $snapshots
  * @property-read int|null $snapshots_count
  * @property-read \App\Models\Tenancy\TenantStats|null $stats
+ * @property-read \App\Models\WebsiteUploadRecord|null $websiteUploadRecords
  * @property-read \Illuminate\Database\Eloquent\Collection<int, User> $users
  * @property-read int|null $users_count
  * @method static \Spatie\Multitenancy\TenantCollection<int, static> all($columns = ['*'])
@@ -172,6 +174,11 @@ class Tenant extends SpatieTenant implements HasMedia, Auditable
     public function snapshotStats(): HasMany
     {
         return $this->hasMany(SnapshotStats::class);
+    }
+
+    public function websiteUploadRecords(): HasMany
+    {
+        return $this->hasMany(WebsiteUploadRecord::class);
     }
 
     public function registerMediaCollections(): void
