@@ -6,7 +6,7 @@
   -->
 
 <script setup>
-import { ref, watch, reactive } from 'vue'
+import { ref, reactive } from 'vue'
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { RadioGroup, RadioGroupLabel, RadioGroupOption } from '@headlessui/vue'
 import Footer from '@/Components/CMS/Footer/index.vue'
