@@ -1,15 +1,14 @@
-import moment from 'moment-timezone'
-
-
 // Basic formating
-export const useFormatTime = (dateIso: string, day?: boolean, time?: boolean) => {
+export const useFormatTime = (dateIso: string, localeCode: string) => {
+
     if (!dateIso) {
         return '-'  // If the provided data is null
     }
-    return moment(dateIso).format("dddd, MMMM Do YYYY, hh:mm:ss A")
+    return new Intl.DateTimeFormat(localeCode).format(new Date(dateIso))
 }
 
 // Relative time range
 export const useFromNow = (dateIso: string) => {
-    return moment.utc(dateIso).tz(moment.tz.guess(true)).fromNow()
+    // return moment.utc(dateIso).tz(moment.tz.guess(true)).fromNow()
+    return 'under maintenance'
 }
