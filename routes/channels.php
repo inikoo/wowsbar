@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Tenancy\Tenant;
+use App\Models\WebsiteUploadRecord;
 use Illuminate\Support\Facades\Broadcast;
 
 /*
@@ -13,6 +15,6 @@ use Illuminate\Support\Facades\Broadcast;
 |
 */
 
-Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
-    return (int) $user->id === (int) $id;
+Broadcast::channel('uploads.{tenantId}', function (Tenant $tenant, int $tenantId) {
+    return $tenant->id === $tenantId;
 });

@@ -10,6 +10,9 @@ import Table from '@/Components/Table/Table.vue'
 import AddressLocation from "@/Components/Elements/Info/AddressLocation.vue"
 import UserAgent from "@/Components/Elements/Info/UserAgent.vue"
 import { useFormatTime } from "@/Composables/useFormatTime"
+import { useLocaleStore } from "@/Stores/locale"
+
+const locale = useLocaleStore()
 
 const props = defineProps<{
     data: object
@@ -32,7 +35,7 @@ const props = defineProps<{
         </template>
 
         <template #cell(datetime)="{ item: user }">
-            {{ useFormatTime(user.datetime) }}
+            {{ useFormatTime(user.datetime, locale.language.code) }}
         </template>
     </Table>
 </template>

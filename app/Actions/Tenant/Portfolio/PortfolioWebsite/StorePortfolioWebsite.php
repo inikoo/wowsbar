@@ -33,7 +33,6 @@ class StorePortfolioWebsite
 
     public function handle(array $modelData): PortfolioWebsite
     {
-
         $portfolioWebsite = PortfolioWebsite::create($modelData);
         $portfolioWebsite->stats()->create();
         TenantHydratePortfolioWebsites::dispatch(app('currentTenant'));

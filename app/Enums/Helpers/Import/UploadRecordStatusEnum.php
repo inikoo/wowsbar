@@ -13,7 +13,7 @@ enum UploadRecordStatusEnum: string
 {
     use EnumHelperTrait;
 
-    case QUEUED = 'queued';
     case PROCESSING = 'processing';
     case COMPLETE  = 'complete';
+    case FAILED  = 'failed';
 }

@@ -15,7 +15,7 @@ import CropImage from '@/Components/Workshop/CropImage/CropImage.vue'
 import Button from '@/Components/Elements/Buttons/Button.vue'
 import { trans } from 'laravel-vue-i18n'
 import { ulid } from 'ulid'
-import moment from 'moment';
+// import moment from 'moment';
 
 const props = defineProps<{
     data: any
@@ -111,7 +111,8 @@ const uploadImageRespone = (res: any) => {
         </template>
 
         <template #cell(created_at)="{ item: image }">
-           {{ moment(image['created_at']).format('MMMM Do YYYY') }}
+           <!-- {{ moment(image['created_at']).format('MMMM Do YYYY') }} -->
+           momentt jss
         </template>
 
         <!-- Column: select item -->
