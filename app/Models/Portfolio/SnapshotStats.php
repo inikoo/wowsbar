@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $id
  * @property int $tenant_id
  * @property int $snapshot_id
+ * @property int $number_snapshots
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Portfolio\Snapshot $snapshot
@@ -27,6 +28,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static Builder|SnapshotStats query()
  * @method static Builder|SnapshotStats whereCreatedAt($value)
  * @method static Builder|SnapshotStats whereId($value)
+ * @method static Builder|SnapshotStats whereNumberSnapshots($value)
  * @method static Builder|SnapshotStats whereSnapshotId($value)
  * @method static Builder|SnapshotStats whereTenantId($value)
  * @method static Builder|SnapshotStats whereUpdatedAt($value)

@@ -44,6 +44,13 @@ task('install:setup', function () {
 
 });
 
+desc('🎨 install artifacts');
+task('install:artifacts', function () {
+    run("cp artifacts/install/* {{deploy_path}}/current ");
+
+
+});
+
 add('crontab:jobs', [
     '* * * * * cd {{current_path}} && {{bin/php}} artisan schedule:run >> /dev/null 2>&1',
 ]);
@@ -85,5 +92,6 @@ task('install', [
     'nginx:upload',
     'nginx:enable-site',
     'nginx:restart',
-    'crontab:sync'
+    'crontab:sync',
+    'install:artifacts'
 ]);

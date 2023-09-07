@@ -7,8 +7,6 @@
 
 namespace App\Actions\UI\Organisation;
 
-use App\Actions\Helpers\Images\GetPictureSources;
-use App\Helpers\ImgProxy\Image;
 use App\Models\Organisation\OrganisationUser;
 use Lorisleiva\Actions\Concerns\AsAction;
 

@@ -8,7 +8,6 @@
 namespace App\Actions\Helpers\History;
 
 use App\Actions\Traits\WithExportData;
-use App\Exports\Auth\UsersExport;
 use App\Exports\Changelog\ChangelogExport;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;

@@ -9,7 +9,6 @@ namespace App\Actions\UI\Organisation\HumanResources;
 
 use App\Actions\UI\Organisation\Dashboard\ShowDashboard;
 use App\Actions\UI\WithInertia;
-use App\Models\Tenancy\Tenant;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -23,7 +22,7 @@ class HumanResourcesDashboard
     public function authorize(ActionRequest $request): bool
     {
         return true;
-//        return $request->user()->hasPermissionTo("hr.view");
+        //        return $request->user()->hasPermissionTo("hr.view");
     }
 
 
