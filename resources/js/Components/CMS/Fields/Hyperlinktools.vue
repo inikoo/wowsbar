@@ -8,7 +8,7 @@ import {
     faCircle as fasCircle,
     faMap as fasMap,
     faUser as fasUser,
-} from "../../../../private/pro-solid-svg-icons";
+} from "@/../private/pro-solid-svg-icons";
 import {
     faEnvelope as falEnvelope,
     faPhone as falPhone,
@@ -16,7 +16,7 @@ import {
     faCircle as falCircle,
     faMap as falMap,
     faUser as falUser,
-} from "../../../../private/pro-light-svg-icons";
+} from "@/../private/pro-light-svg-icons";
 import {
     faEnvelope as farEnvelope,
     faPhone as farPhone,
@@ -24,7 +24,7 @@ import {
     faCircle as farCircle,
     faMap as farMap,
     faUser as farUser,
-} from "../../../../private/pro-regular-svg-icons";
+} from "@/../private/pro-regular-svg-icons";
 import {
     faEnvelope as fadEnvelope,
     faPhone as fadPhone,
@@ -32,7 +32,7 @@ import {
     faCircle as fadCircle,
     faMap as fadMap,
     faUser as fadUser,
-} from "../../../../private/pro-duotone-svg-icons";
+} from "@/../private/pro-duotone-svg-icons";
 import {
     faTiktok,
     faFacebook,

@@ -37,8 +37,8 @@ import { computed, defineAsyncComponent, ref } from "vue";
 import { useTabChange } from "@/Composables/tab-change";
 import ModelDetails from "@/Pages/ModelDetails.vue";
 import Tabs from "@/Components/Navigation/Tabs.vue";
-import TableClockingMachine from "@/Pages/Tables/TableClockingMachines.vue";
-import TableClockings from "@/Pages/Tables/TableClockings.vue";
+// import TableClockingMachine from "@/Pages/Tables/TableClockingMachines.vue";
+// import TableClockings from "@/Pages/Tables/TableClockings.vue";
 
 
 const ModelChangelog = defineAsyncComponent(() => import('@/Pages/ModelChangelog.vue'))
@@ -62,8 +62,8 @@ const handleTabUpdate = (tabSlug) => useTabChange(tabSlug, currentTab);
 const component = computed(() => {
 
     const components = {
-        clocking_machines: TableClockingMachine,
-        clockings: TableClockings,
+        // clocking_machines: TableClockingMachine,
+        // clockings: TableClockings,
         details: ModelDetails,
         history: TableHistories,
     };
@@ -76,7 +76,7 @@ const component = computed(() => {
 </script>
 
 
-<template layout="App">
+<template layout="OrgApp">
     <Head :title="capitalize(title)" />
     <PageHeading :data="pageHead"></PageHeading>
     <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate"/>

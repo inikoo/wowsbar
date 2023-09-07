@@ -6,7 +6,7 @@
 <script setup lang="ts">
 import {Head} from '@inertiajs/vue3';
 import PageHeading from '@/Components/Headings/PageHeading.vue';
-import TableClockings from "@/Pages/Tables/TableClockings.vue";
+// import TableClockings from "@/Pages/Tables/TableClockings.vue";
 import { capitalize } from "@/Composables/capitalize"
 
 const props = defineProps<{
@@ -16,10 +16,10 @@ const props = defineProps<{
 }>()
 </script>
 
-<template layout="App">
+<template layout="OrgApp">
     <Head :title="capitalize(title)"/>
     <PageHeading :data="pageHead"></PageHeading>
-    <TableClockings :data="data"/>
+    <!-- <TableClockings :data="data"/> -->
 </template>
 
 

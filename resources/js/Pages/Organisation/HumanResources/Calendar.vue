@@ -82,7 +82,7 @@ console.log(props.data)
 </script>
 
 
-<template  layout="App">
+<template  layout="OrgApp">
     <div class="lg:flex lg:h-full lg:flex-col">
       <header class="flex items-center justify-between border-b border-gray-200 px-6 py-4 lg:flex-none">
         <h1 class="text-base font-semibold leading-6 text-gray-900">

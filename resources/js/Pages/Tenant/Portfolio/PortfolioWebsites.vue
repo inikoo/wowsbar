@@ -9,7 +9,7 @@ import {Head} from '@inertiajs/vue3';
 import PageHeading from '@/Components/Headings/PageHeading.vue';
 import TablePortfolioWebsites from "@/Pages/Tables/TablePortfolioWebsites.vue";
 import { capitalize } from "@/Composables/capitalize"
-import {faWindowMaximize} from "../../../../private/pro-light-svg-icons"
+import {faWindowMaximize} from "@/../private/pro-light-svg-icons"
 import {library} from "@fortawesome/fontawesome-svg-core";
 library.add(faWindowMaximize)
 
