@@ -11,7 +11,7 @@ import { RadioGroup, RadioGroupLabel, RadioGroupOption } from '@headlessui/vue'
 import Menu from '@/Components/CMS/Menu/index.vue'
 import { faHandPointer, faHandRock, faPlus } from '@/../private/pro-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { v4 as uuidv4 } from 'uuid';
+import { ulid } from "ulid";
 import HyperlinkTools from '@/Components/CMS/Fields/Hyperlinktools.vue'
 import { get } from 'lodash'
 // import HyperInfoTools from '@/Components/CMS/Fields/InfoFieldTools.vue'
@@ -42,201 +42,201 @@ const navigation = ref({
     categories: [
         {
             name: 'Home',
-            id: uuidv4(),
+            id: ulid(),
             type: 'group',
             featured: [
                 {
                     name: 'About us',
-                    id: uuidv4(),
+                    id: ulid(),
                     link: '#',
                 },
                 {
                     name: 'Contact',
-                    id: uuidv4(),
+                    id: ulid(),
                     link: '#',
                 },
                 {
                     name: 'ShowRoom',
-                    id: uuidv4(),
+                    id: ulid(),
                     link: '#',
                 },
                 {
                     name: 'Trems & Conditions',
-                    id: uuidv4(),
+                    id: ulid(),
                     link: '#',
                 },
                 {
                     name: 'Delivery',
-                    id: uuidv4(),
+                    id: ulid(),
                     link: '#',
                 },
                 {
                     name: 'Operation Hours',
-                    id: uuidv4(),
+                    id: ulid(),
                     link: '#',
                 },
                 {
                     name: 'Freedom Fund',
-                    id: uuidv4(),
+                    id: ulid(),
                     link: '#',
                 },
                 {
                     name: 'Business Ethics',
-                    id: uuidv4(),
+                    id: ulid(),
                     link: '#',
                 },
                 {
                     name: 'Catalogue',
-                    id: uuidv4(),
+                    id: ulid(),
                     link: '#',
                 },
                 {
                     name: 'Retruns Policy',
-                    id: uuidv4(),
+                    id: ulid(),
                     link: '#',
                 },
                 {
                     name: 'Dropshiping Sevices',
-                    id: uuidv4(),
+                    id: ulid(),
                     link: '#',
                 },
                 {
                     name: 'Working with local businesses',
-                    id: uuidv4(),
+                    id: ulid(),
                     link: '#',
                 },
                 {
                     name: 'sustainable palm oil',
-                    id: uuidv4(),
+                    id: ulid(),
                     link: '#',
                 },
                 {
                     name: 'Privacy Policy',
-                    id: uuidv4(),
+                    id: ulid(),
                     link: '#',
                 },
                 {
                     name: 'Cookies Policy',
-                    id: uuidv4(),
+                    id: ulid(),
                     link: '#',
                 },
                 {
                     name: 'Travel Blog',
-                    id: uuidv4(),
+                    id: ulid(),
                     link: '#',
                 },
             ],
         },
         {
             name: 'Departements',
-            id: uuidv4(),
+            id: ulid(),
             type: 'group',
             featured: [
                 {
                     name: 'New Arrivals',
-                    id: uuidv4(),
+                    id: ulid(),
                     link: '#',
                 },
                 {
                     name: 'Basic Tees',
-                    id: uuidv4(),
+                    id: ulid(),
                     link: '#',
                 },
                 {
                     name: 'Accessories',
-                    id: uuidv4(),
+                    id: ulid(),
                     link: '#',
                 },
                 {
                     name: 'Carry',
-                    id: uuidv4(),
+                    id: ulid(),
                     link: '#',
                 },
             ],
         },
         {
             name: 'Incentives & Inspiration',
-            id: uuidv4(),
+            id: ulid(),
             type: 'group',
             featured: [
                 {
                     name: 'New Arrivals',
-                    id: uuidv4(),
+                    id: ulid(),
                     link: '#',
                 },
                 {
                     name: 'Basic Tees',
-                    id: uuidv4(),
+                    id: ulid(),
                     link: '#',
                 },
                 {
                     name: 'Accessories',
-                    id: uuidv4(),
+                    id: ulid(),
                     link: '#',
                 },
                 {
                     name: 'Carry',
-                    id: uuidv4(),
+                    id: ulid(),
                     link: '#',
                 },
             ],
         },
         {
             name: 'Delivery',
-            id: uuidv4(),
+            id: ulid(),
             type: 'group',
             featured: [
                 {
                     name: 'New Arrivals',
-                    id: uuidv4(),
+                    id: ulid(),
                     link: '#',
                 },
                 {
                     name: 'Basic Tees',
-                    id: uuidv4(),
+                    id: ulid(),
                     link: '#',
                 },
                 {
                     name: 'Accessories',
-                    id: uuidv4(),
+                    id: ulid(),
                     link: '#',
                 },
                 {
                     name: 'Carry',
-                    id: uuidv4(),
+                    id: ulid(),
                     link: '#',
                 },
             ],
         },
         {
             name: 'New & Notetable',
-            id: uuidv4(),
+            id: ulid(),
             type: 'group',
             featured: [
                 {
                     name: 'New Arrivals',
-                    id: uuidv4(),
+                    id: ulid(),
                     link: '#',
                 },
                 {
                     name: 'Basic Tees',
-                    id: uuidv4(),
+                    id: ulid(),
                     link: '#',
                 },
                 {
                     name: 'Accessories',
-                    id: uuidv4(),
+                    id: ulid(),
                     link: '#',
                 },
                 {
                     name: 'Carry',
-                    id: uuidv4(),
+                    id: ulid(),
                     link: '#',
                 },
             ],
         },
         {
-            name: 'Test', id: uuidv4(),
+            name: 'Test', id: ulid(),
             type: 'link', link: '#',
         },
     ],
@@ -329,7 +329,7 @@ const changeMenuType = (value) => {
             featured: [
                 {
                     name: 'New item',
-                    id: uuidv4(),
+                    id: ulid(),
                     link: '#',
                 },
             ],
@@ -344,7 +344,7 @@ const changeNavActive = (value) => {
 
 const columItemLinkChange = () => {
   const index = navigation.value.categories.findIndex((item) => item.id === selectedNav.value.id);
-  navigation.value.categories[index].featured.push({ name: 'New', id: uuidv4(), link: '' });
+  navigation.value.categories[index].featured.push({ name: 'New', id: ulid(), link: '' });
 };
 
 const EditItemLinkInTools = (value,type) => {

@@ -11,7 +11,7 @@ import { RadioGroup, RadioGroupLabel, RadioGroupOption } from '@headlessui/vue'
 import { faHandPointer, faHandRock, faPlus } from '@/../private/pro-solid-svg-icons';
 // import { fab } from "@fortawesome/free-brands-svg-icons"
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { v4 as uuidv4 } from 'uuid';
+import { ulid } from "ulid";
 import { get } from 'lodash'
 import ColorPicker from '@/Components/CMS/Fields/ColorPicker.vue'
 import FontSize from '@/Components/CMS/Fields/Fontsize.vue'
@@ -32,7 +32,7 @@ const Dummy = {
 const data = ref([
     {
         name: 'AW Gift',
-        id: uuidv4(),
+        id: ulid(),
         type: 'text',
         style: { top: '75px', left: '536px', fontSize: '34px', },
     },
@@ -85,7 +85,7 @@ const changeText = (value) => {
 const createContent = (value) => {
     if (value == 'text') data.value.push({
         name: 'Title',
-        id: uuidv4(),
+        id: ulid(),
         type: 'text',
         style: { top: '75px', left: '536px', fontSize: '34px', },
     })
@@ -98,7 +98,7 @@ const Uploadimage = () => {
     for (const set of fileInput.value.files) {
         data.value.push({
         name: 'image',
-        id: uuidv4(),
+        id: ulid(),
         type: 'image',
         style: { top: '0px', left: '0px' },
         file : set
