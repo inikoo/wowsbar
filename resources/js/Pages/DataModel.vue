@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 import { ref, onBeforeMount } from 'vue';
-import moment from 'moment';
+// import moment from 'moment';
 
 const props = defineProps<{
     data: {
@@ -41,8 +41,9 @@ let newData = ref([])
 
 const setValue = (key) => {
     if (key.endsWith('_at')) {
-        const date = moment(props.data[key]).format('MMMM Do YYYY, h:mm')
-        return date == 'Invalid date' ? '-' : date
+        // const date = moment(props.data[key]).format('MMMM Do YYYY, h:mm')
+        // return date == 'Invalid date' ? '-' : date
+        return 'moment jsss'
     }
     return props.data[key];
 };

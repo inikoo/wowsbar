@@ -14,7 +14,7 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { getDataFirebase } from '@/Composables/firebase'
 import { watchEffect } from 'vue'
-import moment from "moment";
+// import moment from "moment";
 
 library.add(faBriefcase);
 
@@ -43,10 +43,11 @@ watchEffect(() => {
 
 function getAwayStatus(lastActive)
 {
-    lastActive = moment(lastActive);
-    let now = moment();
+    // lastActive = moment(lastActive);
+    // let now = moment();
 
-    return Boolean(now.diff(lastActive));
+    // return Boolean(now.diff(lastActive));
+    return 'moment jsss'
 }
 
 </script>
