@@ -153,7 +153,6 @@ class IndexEmployees extends InertiaAction
         return EmployeeResource::collection($employees);
     }
 
-
     public function htmlResponse(LengthAwarePaginator $employees): Response
     {
         return Inertia::render(
