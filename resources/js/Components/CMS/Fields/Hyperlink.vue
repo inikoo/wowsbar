@@ -24,7 +24,6 @@ const props = defineProps({
 	}
 });
 
-
 const emits = defineEmits();
 
 const value = ref({ ...props.data })
@@ -48,8 +47,8 @@ const handleInputBlur = (path) => {
 			<div class="p-5 w-80">
 				<slot name="content" :onRef="{...props, handleInputBlur, value }">
 					<div v-for="item of formList" class="m-1">
-						<span class="text-sm">{{ upperFirst(item) }}</span>
-						<input v-model="value[item]" class="w-full" @blur="() => handleInputBlur(item)" />
+						<span class="text-sm text-black">{{ upperFirst(item) }}</span>
+						<input v-model="value[item]" class="w-full text-black" @blur="() => handleInputBlur(item)" />
 					</div>
 					<div v-if="useDelete" class="my-2 mx-1">
 						<Button @click="emits('OnDelete')" class="w-full flex justify-center bg-red-500">

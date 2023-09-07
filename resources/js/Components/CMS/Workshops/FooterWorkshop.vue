@@ -12,7 +12,7 @@ import { RadioGroup, RadioGroupLabel, RadioGroupOption } from '@headlessui/vue'
 import Footer from '@/Components/CMS/Footer/index.vue'
 import { faHandPointer, faHandRock, faPlus } from '@/../private/pro-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { v4 as uuidv4 } from 'uuid';
+import { ulid } from "ulid";
 import HyperlinkTools from '@/Components/CMS/Fields/Hyperlinktools.vue'
 import { get } from 'lodash'
 import HyperInfoTools from '@/Components/CMS/Fields/InfoFieldTools.vue'
@@ -58,7 +58,7 @@ const DummyColums = [
     {
         title: 'add list',
         type: "list",
-        id: uuidv4(),
+        id: ulid(),
         data: [
             { name: 'dummy', link: '#' },
             { name: 'dummy2', link: '#' },
@@ -67,49 +67,49 @@ const DummyColums = [
     {
         title: 'add description',
         type: "description",
-        id: uuidv4(),
+        id: ulid(),
         data: "Lorem Ipsum is simply dummy te printernto electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
     },
     {
         title: 'add info',
         type: 'info',
-        id: uuidv4(),
+        id: ulid(),
         data: [
             {
                 title: 'location',
                 value: 'Ancient Wisdom s.r.o.',
                 icon: 'fab fa-facebook',
-                id: uuidv4(),
+                id: ulid(),
             },
             {
                 title: 'billingAddress',
                 value: 'Billin',
                 icon: 'fas fa-map',
-                id: uuidv4(),
+                id: ulid(),
             },
             {
                 title: 'vat',
                 value: 'VAT: SK2120525440',
                 icon: 'fab fa-facebook',
-                id: uuidv4(),
+                id: ulid(),
             },
             {
                 title: 'building',
                 value: 'Reg: 50920600',
                 icon: 'fas fa-building',
-                id: uuidv4(),
+                id: ulid(),
             },
             {
                 title: 'phone',
                 value: '+421 (0)33 558 60 71',
                 icon: 'fas fa-phone',
-                id: uuidv4(),
+                id: ulid(),
             },
             {
                 title: 'email',
                 value: 'contact@awgifts.eu',
                 icon: 'fas fa-envelope',
-                id: uuidv4(),
+                id: ulid(),
             },
         ],
     }
@@ -120,71 +120,71 @@ const data = reactive({
     {
         title: 'company',
         type: "list",
-        id: uuidv4(),
+        id: ulid(),
         data: [
-            { name: 'About', link: '#', id: uuidv4() },
-            { name: 'Blog', link: '#', id: uuidv4() },
-            { name: 'Jobs', link: '#', id: uuidv4() },
-            { name: 'Press', link: '#', id: uuidv4() },
-            { name: 'Partners', link: '#', id: uuidv4() },
+            { name: 'About', link: '#', id: ulid() },
+            { name: 'Blog', link: '#', id: ulid() },
+            { name: 'Jobs', link: '#', id: ulid() },
+            { name: 'Press', link: '#', id: ulid() },
+            { name: 'Partners', link: '#', id: ulid() },
         ],
     },
     {
         title: 'legal',
         type: "list",
-        id: uuidv4(),
+        id: ulid(),
         data: [
-            { name: 'Claim', link: '#', id: uuidv4() },
-            { name: 'Privacy', link: '#', id: uuidv4() },
-            { name: 'Terms', link: '#', id: uuidv4() },
+            { name: 'Claim', link: '#', id: ulid() },
+            { name: 'Privacy', link: '#', id: ulid() },
+            { name: 'Terms', link: '#', id: ulid() },
         ],
     },
     {
         title: 'Description',
         type: "description",
-        id: uuidv4(),
+        id: ulid(),
         data: "Lorem Ipsum is simply dummy te printernto electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
     },
     {
         title: 'Info',
         type: 'info',
-        id: uuidv4(),
+        id: ulid(),
         data: [
             {
                 title: 'location',
                 value: 'Ancient Wisdom s.r.o.',
                 icon: 'fab fa-facebook',
-                id: uuidv4()
+                id: ulid()
             },
             {
                 title: 'billingAddress',
                 value: 'Billin',
                 icon: 'fas fa-map',
-                id: uuidv4()
+                id: ulid()
             },
             {
                 title: 'vat',
                 value: 'VAT: SK2120525440',
                 icon: 'fab fa-facebook',
-                id: uuidv4()
+                id: ulid()
             },
             {
                 title: 'building',
                 value: 'Reg: 50920600',
                 icon: 'fas fa-building',
-                id: uuidv4()
+                id: ulid()
             },
             {
                 title: 'phone',
                 value: '+421 (0)33 558 60 71',
                 icon: 'fas fa-phone',
-                id: uuidv4()
+                id: ulid()
             },
             {
                 title: 'email',
                 value: 'contact@awgifts.eu',
                 icon: 'fas fa-envelope',
-                id: uuidv4(),
+                id: ulid(),
             },
         ],
     }
@@ -194,25 +194,25 @@ const data = reactive({
         label: "Facebook",
         link: '#facebook',
         icon: 'fab fa-facebook',
-        id: uuidv4()
+        id: ulid()
     },
     {
         label: "Instagram",
         link: '#instagram',
         icon: 'fab fa-instagram',
-        id: uuidv4()
+        id: ulid()
     },
     {
         label: "Twitter",
         link: '#twitter',
         icon: 'fab fa-facebook',
-        id: uuidv4()
+        id: ulid()
     },
     {
         label: "Github",
         link: '#github',
         icon: 'fab fa-facebook',
-        id: uuidv4()
+        id: ulid()
     },
     ],
     copyRight : { label: 'AW Advantage', link: '*' }
@@ -228,7 +228,7 @@ const handleColumsTypeChange = (value) => {
     if (value.title !== columSelected.value.type) {
         let indexDummy = DummyColums.findIndex((item) => item.type === value.value);
         let indexColums = data.column.findIndex((item) => item.id === columSelected.value.id);
-        const set = { ...DummyColums[indexDummy], id: uuidv4() }
+        const set = { ...DummyColums[indexDummy], id: ulid() }
         data.column[indexColums] = set
         selectedColums(data)
     } else { cosnole.log('salah') }
@@ -244,7 +244,7 @@ const columItemLinkChange = (value) => {
             title: 'location',
             value: 'new item',
             icon: 'far fa-dot-circle',
-            id: uuidv4(),
+            id: ulid(),
         })
     }
     data.column = set
@@ -269,7 +269,7 @@ const addSocial = () => {
             label: "new",
             link: '#',
             icon: 'far fa-dot-circle',
-            id: uuidv4()
+            id: ulid()
         },
     )
 }

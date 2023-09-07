@@ -1,24 +1,20 @@
 <script setup lang="ts">
-import { ref, watchEffect } from "vue"
-import { router } from "@inertiajs/vue3"
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { faBars, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons"
 import { library } from "@fortawesome/fontawesome-svg-core"
 import draggable from "vuedraggable"
-import Hyperlink from '../../Fields/Hyperlink.vue'
+import HyperLink from '@/Components/CMS/Fields/Hyperlink.vue'
+import IconPicker from '@/Components/CMS/Fields/IconPicker/IconPicker.vue'
 library.add(faBars, faMagnifyingGlass)
-
+const emits = defineEmits();
 const props = defineProps<{
     data: Object
-    saveSubMenu: Function
-    closePopover : Function
     tool: Object
 }>()
 
 </script>
 
 <template>
-    <div class="ml-2 cursor-pointer text-rose-500" @click="closePopover">x</div>
+    <div class="ml-2 cursor-pointer text-rose-500" @click="emits('OnClose')">x</div>
     <div class="absolute inset-x-0 top-full text-sm text-gray-500">
         <div class="absolute inset-0 top-1/2 bg-white shadow" aria-hidden="true"></div>
         <div class="relative bg-white">
@@ -29,8 +25,15 @@ const props = defineProps<{
                             <div class="group relative">
                                 <div :class="['mt-4', 'block', 'font-medium', 'text-gray-900', 'p-2', tool.name !== 'grab' ? 'cursor-pointer' : 'cursor-grab']">
                                     <span class="absolute inset-0 z-10" aria-hidden="true">
-                                        <Hyperlink :data="child" valueKeyLabel="name" valueKeyLink="link" :useDelete="true"
-                                            :save="(value)=>saveSubMenu({...value, parentId : data.id })" />
+                                        <div class="flex gap-3">
+                                            <IconPicker :key="child.id" :data="child"/>
+                                            <HyperLink 
+                                                :formList="{
+                                                name: 'name',
+                                                link: 'link'
+                                                }" :useDelete="true" :data="child" label="name" @OnDelete="()=>{data.featured.splice(index,1)}"
+                                                cssClass="items-center text-sm font-medium text-black" />
+                                        </div>
                                     </span>
                                 </div>
                             </div>
