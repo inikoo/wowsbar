@@ -6,7 +6,6 @@
 
 <script setup>
 import { ref, watchEffect } from 'vue'
-import { ref, watchEffect } from 'vue'
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { RadioGroup, RadioGroupLabel, RadioGroupOption } from '@headlessui/vue'
 import Menu from '@/Components/CMS/Menu/index.vue'
