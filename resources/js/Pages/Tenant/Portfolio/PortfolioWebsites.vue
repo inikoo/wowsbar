@@ -26,7 +26,8 @@ const pusher = new Pusher('3217cf955501353f32b2', {
     cluster: 'ap1'
 });
 
-const asdfg = ref()
+const asdfg = ref({data: {total_uploads: 0,
+total_complete: 0   }})
 
 const channel = pusher.subscribe('uploads.aiku');
     channel.bind('WebsiteUpload', (data: any) => {
@@ -78,7 +79,7 @@ const numberr = ref(0)
 // }, 500)
 
 const compProgressBar = computed(() => {
-    return numberr.value/1000 * 100
+    return asdfg.value?.data.total_complete/asdfg.value?.data.total_uploads * 100
 })
 </script>
 
@@ -96,7 +97,7 @@ const compProgressBar = computed(() => {
     <!-- Progress Bar -->
     <div :class="true ? 'bottom-12' : '-bottom-12'" class="fixed right-1/2 translate-x-1/2 transition-all duration-200 ease-in-out flex gap-x-1">
         <div class="flex justify-center items-center flex-col gap-y-1">
-            <div>Uploading website ({{numberr}}/<span class="font-semibold inline">1000</span>)</div>
+            <div>Uploading website ({{asdfg.data.total_complete}}/<span class="font-semibold inline">{{asdfg.data.total_uploads}}</span>)</div>
             <div class="overflow-hidden rounded-full bg-gray-200 w-64">
                 <div class="h-2 rounded-full bg-slate-600 transition-all duration-100 ease-in-out" :style="`width: ${compProgressBar}%`" />
             </div>
