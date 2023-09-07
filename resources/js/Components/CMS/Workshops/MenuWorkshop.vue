@@ -5,18 +5,18 @@
   -->
 
 <script setup>
-import { ref , watch ,watchEffect } from 'vue'
+import { ref, watchEffect } from 'vue'
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { RadioGroup, RadioGroupLabel, RadioGroupOption } from '@headlessui/vue'
 import Menu from '@/Components/CMS/Menu/index.vue'
-import { faHandPointer, faHandRock, faPlus } from '../../../../private/pro-solid-svg-icons';
+import { faHandPointer, faHandRock, faPlus } from '@/../private/pro-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { v4 as uuidv4 } from 'uuid';
 import HyperlinkTools from '@/Components/CMS/Fields/Hyperlinktools.vue'
 import { get } from 'lodash'
-import HyperInfoTools from '@/Components/CMS/Fields/InfoFieldTools.vue'
-import VueResizable from 'vue-resizable'
-import SocialMediaPicker from "@/Components/CMS/Fields/IconPicker/SocialMediaTools.vue"
+// import HyperInfoTools from '@/Components/CMS/Fields/InfoFieldTools.vue'
+// import VueResizable from 'vue-resizable'
+// import SocialMediaPicker from "@/Components/CMS/Fields/IconPicker/SocialMediaTools.vue"
 library.add(faHandPointer, faHandRock, faPlus)
 
 const Dummy = {

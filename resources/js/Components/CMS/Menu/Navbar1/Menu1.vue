@@ -6,10 +6,10 @@ import draggable from "vuedraggable"
 import Hyperlink from '../../Fields/Hyperlink.vue'
 import SubMenu from "./SubMenu.vue"
 import { get } from 'lodash'
-// import { fas } from '../../../../../private/pro-solid-svg-icons';
-// import { fal } from '../../../../../private/pro-light-svg-icons';
-// import { far } from '../../../../../private/pro-regular-svg-icons';
-// import { fad } from '../../../../../private/pro-duotone-svg-icons';
+// import { fas } from '@/../private/pro-solid-svg-icons';
+// import { fal } from '@/../private/pro-light-svg-icons';
+// import { far } from '@/../private/pro-regular-svg-icons';
+// import { fad } from '@/../private/pro-duotone-svg-icons';
 // import { fab } from "@fortawesome/free-brands-svg-icons"
 import {
 	Dialog,

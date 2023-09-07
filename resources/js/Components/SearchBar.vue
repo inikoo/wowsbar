@@ -15,9 +15,9 @@ import {
     TransitionChild,
     TransitionRoot,
 } from '@headlessui/vue'
-import { Link, usePage } from '@inertiajs/vue3'
+import { Link } from '@inertiajs/vue3'
 import { Ref } from 'vue'
-import { router } from "@inertiajs/vue3"
+// import { router } from "@inertiajs/vue3"
 import { trans } from 'laravel-vue-i18n'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faSpinnerThird } from '@/../private/pro-duotone-svg-icons'

@@ -16,7 +16,7 @@ import {capitalize} from "@/Composables/capitalize"
 import TableHistories from "@/Pages/Tables/TableHistories.vue";
 import TableBanners from "@/Pages/Tables/TableBanners.vue";
 
-import {faWindowMaximize, faGlobe} from "../../../../private/pro-light-svg-icons"
+import {faWindowMaximize, faGlobe} from "@/../private/pro-light-svg-icons"
 
 library.add(faWindowMaximize, faGlobe)
 

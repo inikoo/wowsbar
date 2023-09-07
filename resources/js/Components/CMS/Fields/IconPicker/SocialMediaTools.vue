@@ -1,10 +1,10 @@
 <script setup>
 import Hyperlink from '@/Components/CMS/Fields/Hyperlink.vue';
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
-import { faEnvelope as fasEnvelope, faPhone as fasPhone, faBuilding as fasBuilding, faCircle as fasCircle, faMap as fasMap, faUser as fasUser } from '../../../../../private/pro-solid-svg-icons';
-import { faEnvelope as falEnvelope, faPhone as falPhone, faBuilding as falBuilding, faCircle as falCircle, faMap as falMap, faUser as falUser } from '../../../../../private/pro-light-svg-icons';
-import { faEnvelope as farEnvelope, faPhone as farPhone, faBuilding as farBuilding, faCircle as farCircle, faMap as farMap, faUser as farUser } from '../../../../../private/pro-regular-svg-icons';
-import { faEnvelope as fadEnvelope, faPhone as fadPhone, faBuilding as fadBuilding, faCircle as fadCircle, faMap as fadMap, faUser as fadUser } from '../../../../../private/pro-duotone-svg-icons';
+import { faEnvelope as fasEnvelope, faPhone as fasPhone, faBuilding as fasBuilding, faCircle as fasCircle, faMap as fasMap, faUser as fasUser } from '@/../private/pro-solid-svg-icons';
+import { faEnvelope as falEnvelope, faPhone as falPhone, faBuilding as falBuilding, faCircle as falCircle, faMap as falMap, faUser as falUser } from '@/../private/pro-light-svg-icons';
+import { faEnvelope as farEnvelope, faPhone as farPhone, faBuilding as farBuilding, faCircle as farCircle, faMap as farMap, faUser as farUser } from '@/../private/pro-regular-svg-icons';
+import { faEnvelope as fadEnvelope, faPhone as fadPhone, faBuilding as fadBuilding, faCircle as fadCircle, faMap as fadMap, faUser as fadUser } from '@/../private/pro-duotone-svg-icons';
 import { faTiktok, faFacebook, faFacebookF, faSquareFacebook, faInstagram, faSquareInstagram, faWhatsapp, faSquareWhatsapp } from "@fortawesome/free-brands-svg-icons"
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { upperFirst } from 'lodash'

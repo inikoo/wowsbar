@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { trans } from 'laravel-vue-i18n'
-import { ref, reactive, Ref } from 'vue'
+import { ref, reactive } from 'vue'
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faChevronDown, faCheckSquare, faSquare } from "@/../private/pro-regular-svg-icons"

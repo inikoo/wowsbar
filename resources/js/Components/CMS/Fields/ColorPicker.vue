@@ -2,7 +2,6 @@
 import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue'
 import { ColorPicker } from 'vue-color-kit'
 import 'vue-color-kit/dist/vue-color-kit.css'
-import { ref } from 'vue'
 const props = defineProps({
   color: {
     type: String,
