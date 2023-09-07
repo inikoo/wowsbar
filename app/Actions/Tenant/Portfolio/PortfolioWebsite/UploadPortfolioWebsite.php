@@ -29,10 +29,10 @@ class UploadPortfolioWebsite
         $file = $request->file('file');
         $filename = $file->hashName();
 
-        $path = app('currentTenant')->slug . '/websites/' . $filename;
+        $path = 'tenants/' . app('currentTenant')->slug . '/websites';
         Storage::disk('local')->put($path, $file);
 
-        Excel::import(new WebsiteImport(), $path);
+        Excel::import(new WebsiteImport(), $path . '/' . $filename);
     }
 
     /**

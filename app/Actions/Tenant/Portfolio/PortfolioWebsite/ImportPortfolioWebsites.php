@@ -27,18 +27,17 @@ class ImportPortfolioWebsites
     /**
      * @throws \Throwable
      */
-    public function handle(Tenant $tenant, WebsiteUploadRecord $websiteUploadRecord, $totalUploads): void
+    public function handle(Tenant $tenant, WebsiteUploadRecord $websiteUploadRecord, $totalUploads, $totalImported): void
     {
         try {
-            StorePortfolioWebsite::run(json_decode($websiteUploadRecord->data, true));
-            $websiteUploadRecord->update(['status' => UploadRecordStatusEnum::COMPLETE]);
-
-            $totalProcessing = $tenant->websiteUploadRecords()->where('status', UploadRecordStatusEnum::PROCESSING)->count();
+//            StorePortfolioWebsite::run(json_decode($websiteUploadRecord->data, true));
 
             event(new UploadWebsiteProgressEvent($tenant, [
                 'total_uploads'  => $totalUploads,
-                'total_complete' => $totalUploads - $totalProcessing
+                'total_complete' => $totalImported
             ]));
+            sleep(1);
+            $websiteUploadRecord->update(['status' => UploadRecordStatusEnum::COMPLETE]);
         } catch (\Exception $e) {
             $websiteUploadRecord->update(['status' => UploadRecordStatusEnum::FAILED]);
         }

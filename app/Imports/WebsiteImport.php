@@ -14,13 +14,14 @@ class WebsiteImport implements ToCollection
     */
     public function collection(Collection $collection): void
     {
+        $totalImported = 1;
         foreach ($collection as $website) {
             $website = WebsiteUploadRecord::create([
                 'tenant_id' => app('currentTenant')->id,
                 'data'      => json_encode($website)
             ]);
 
-            ImportPortfolioWebsites::dispatch(app('currentTenant'), $website, count($collection));
+            ImportPortfolioWebsites::dispatch(app('currentTenant'), $website, count($collection), $totalImported++);
         }
     }
 }
