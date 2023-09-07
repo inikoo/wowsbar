@@ -120,12 +120,26 @@ class IndexPortfolioWebsites extends InertiaAction
                     ],
                     'actions'   => [
                         [
-                            'type'  => 'button',
-                            'style' => 'create',
-                            'label' => 'create website',
-                            'route' => [
-                                'name'       => preg_replace('/index$/', 'create', $request->route()->getName()),
-                                'parameters' => array_values($request->route()->originalParameters())
+                            'type'    => 'buttonGroup',
+                            'buttons' => [
+                                [
+                                    'style' => 'secondary',
+                                    'icon'  => ['fal', 'fa-upload'],
+                                    'label' => 'upload',
+                                    'route' => [
+                                        'name'       => preg_replace('/index$/', 'create', $request->route()->getName()),
+                                        'parameters' => array_values($request->route()->originalParameters())
+                                    ],
+                                ],
+                                [
+                                    'type'  => 'button',
+                                    'style' => 'create',
+                                    'label' => 'create website',
+                                    'route' => [
+                                        'name'       => preg_replace('/index$/', 'create', $request->route()->getName()),
+                                        'parameters' => array_values($request->route()->originalParameters())
+                                    ]
+                                ]
                             ]
                         ]
                     ]

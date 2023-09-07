@@ -8,7 +8,7 @@
 import { Link } from "@inertiajs/vue3"
 
 import { library } from "@fortawesome/fontawesome-svg-core"
-import { faWindowMaximize, faDraftingCompass,faEmptySet, faMoneyCheckAlt, faPeopleArrows, faSlidersH, faSave, faSuitcase, faBroadcastTower} from "@/../private/pro-light-svg-icons"
+import { faWindowMaximize, faDraftingCompass,faEmptySet, faMoneyCheckAlt, faPeopleArrows, faSlidersH, faSave, faSuitcase, faBroadcastTower, faUpload} from "@/../private/pro-light-svg-icons"
 import { faRocketLaunch, faPencil, faArrowLeft, faBorderAll, faTrashAlt } from "@/../private/pro-regular-svg-icons"
 import { faPlus } from "@/../private/pro-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
@@ -31,7 +31,7 @@ interface Action {
 
 library.add(faWindowMaximize, faRocketLaunch,faDraftingCompass,faEmptySet, faMoneyCheckAlt, faPeopleArrows, faSlidersH, faPlus,
             faPencil, faArrowLeft, faBorderAll, faTrashAlt,faSave, faSuitcase,
-            faBroadcastTower
+            faBroadcastTower, faUpload
 );
 
 const props = defineProps<{
@@ -165,7 +165,7 @@ const getActionIcon = (action: any) => {
         <!-- To replace the Button, call template in Parent -->
         <slot name="button" :dataPageHead="{...props, getActionLabel, getActionIcon }">
             <div class="flex items-center gap-2">
-                <span v-for="action in data.actions">
+                <div v-for="action in data.actions">
                     {{ action.final }}
 
                     <!-- Button -->
@@ -184,22 +184,24 @@ const getActionIcon = (action: any) => {
                         </Button>
                     </Link>
 
-                    <!-- Button Group () -->
                     <!--suppress HtmlUnknownTag -->
-                    <div v-if="action.type === 'buttonGroup'" class="first:rounded-l-md overflow-hidden last:rounded-r-md">
-                        <Link v-for="button in action.buttons"
-                            :href="`${route(button['route']['name'], button['route']['parameters'])}`" class="">
-                            <Button size="xs" :style="button.style" class="capitalize inline-flex items-center rounded-none  text-sm font-medium shadow-sm ">
-                                <div class="">
-                                    <FontAwesomeIcon v-if="getActionIcon(button)" :icon="getActionIcon(button)" class="" aria-hidden="true" />
-                                    <span v-if="button.label" class="ml-2">{{ getActionLabel(button) }}</span>
-                                </div>
-                            </Button>
-                        </Link>
+                    <!-- Button Group () -->
+                    <div v-if="action.type === 'buttonGroup'" class="first:rounded-l last:rounded-r overflow-hidden ring-1 ring-gray-300 flex">
+                        <slot v-for="(button, index) in action.buttons" :name="'button' + index">
+                            <Link 
+                                :href="`${route(button['route']['name'], button['route']['parameters'])}`" class="">
+                                <Button :style="button.style" class="capitalize inline-flex items-center rounded-none text-sm border-none font-medium shadow-sm focus:ring-transparent focus:ring-offset-transparent focus:ring-0">
+                                    <div class="">
+                                        <FontAwesomeIcon v-if="getActionIcon(button)" :icon="getActionIcon(button)" class="" aria-hidden="true" />
+                                        <span v-if="button.label" class="ml-2">{{ getActionLabel(button) }}</span>
+                                    </div>
+                                </Button>
+                            </Link>
+                        </slot>
                     </div>
 
                     <slot v-if="action.type === 'modal'" name="modal" :data="{...props, getActionLabel, getActionIcon }" />
-                </span>
+                </div>
             </div>
         </slot>
     </div>
