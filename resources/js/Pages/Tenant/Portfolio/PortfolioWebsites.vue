@@ -17,6 +17,8 @@ import { faUpload } from '@/../private/pro-regular-svg-icons'
 import { faFile } from '@/../private/pro-light-svg-icons'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { trans } from 'laravel-vue-i18n'
+import axios from 'axios'
+
 library.add(faUpload, faFile)
 
 const props = defineProps<{
@@ -26,8 +28,24 @@ const props = defineProps<{
 }>()
 
 const isModalOpen = ref(false)
-const onUpload = () => {
-
+const isLoadingFetch = ref(false)
+const onUpload = async (e) => {
+    isLoadingFetch.value = true
+    try {
+        await axios.post(
+            route('models.websites.upload'),
+            {
+                file: e.target.files[0],
+            },
+            {
+                headers: { "Content-Type": "multipart/form-data" },
+            }
+        )
+    } catch (error: any) {
+        // console.error("===========================")
+        console.error(error.message)
+    }
+    isLoadingFetch.value = false
 }
 const uploadHistory = [
     { name: 'dummy.xlsx', date_uploaded: 'August 02 2023'},
@@ -57,7 +75,7 @@ const uploadHistory = [
                 <label for="fileInput"
                     class="absolute cursor-pointer rounded-md inset-0 focus-within:outline-none focus-within:ring-0 focus-within:ring-gray-400 focus-within:ring-offset-0">
                     <input type="file" name="file" id="fileInput" class="sr-only" @change="onUpload"
-                        ref="fileInput" />
+                        ref="fileInput" accept=".xlsx, .xls, .csv"/>
                 </label>
                 <div class="text-center text-gray-500">
                     <FontAwesomeIcon :icon="['fal', 'file']" class="mx-auto h-12 w-12 text-gray-300"
@@ -69,11 +87,13 @@ const uploadHistory = [
                         <p class="pl-1">{{ trans("Click or drag & drop") }}</p>
                     </div>
                     <p class="text-[0.8rem]">
-                        {{ trans(".csv, .xlxs up to 10MB") }}
+                        {{ trans(".csv, .xls, .xlsx") }}
                     </p>
                 </div>
             </div>
-            <div />
+            <div >
+                <FontAwesomeIcon v-if="isLoadingFetch" icon='fad fa-spinner-third' class='animate-spin w-1/4 h-1/4' aria-hidden='true' />
+            </div>
             <div />
             <div class="order-last flex items-end">
                 <table class="flex-none w-full text-left text-gray-500 text-sm rounded overflow-hidden ring-1 ring-gray-300">
