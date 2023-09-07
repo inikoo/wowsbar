@@ -10,16 +10,21 @@ import { faPaintBrushAlt } from '@/../private/pro-regular-svg-icons'
 import { library } from '@fortawesome/fontawesome-svg-core'
 library.add(faPaintBrushAlt)
 
-const props = defineProps<{
-    fieldName?: string | []
-    fieldData?: {
-        placeholder: string
-        readonly: boolean
-        copyButton: boolean
-    }
-    data?: Object
-    color?:String
-}>()
+
+const props = withDefaults(defineProps<{
+    fieldName?: string | [];
+  fieldData?: {
+    placeholder: string;
+    readonly: boolean;
+    copyButton: boolean;
+  };
+  data?: Object;
+  color?: String;
+  colorSuggestions:Boolean
+}>(), {
+    colorSuggestions: true
+})
+
 
 
 const emit = defineEmits()
@@ -90,7 +95,7 @@ const updateFormValue = (newValue) => {
         </Popover>
 
         <!--  -->
-        <div class="flex gap-x-1 items-center">
+        <div class="flex gap-x-1 items-center" v-if="colorSuggestions">
             <div class="bg-gray-700 border border-slate-300 rounded w-6 h-6 shadow cursor-pointer hover:scale-110 transition-transform duration-100 ease-in-out" @click="() => changeColor({ rgba: { r: 55, g: 65, b: 81, a: 1 } })" />
             <div class="bg-white border border-slate-300 rounded w-6 h-6 shadow cursor-pointer hover:scale-110 transition-transform duration-100 ease-in-out" @click="() => changeColor({ rgba: { r: 255, g: 255, b: 255, a: 255 } })" />
             <div class="bg-yellow-300 border border-slate-300 rounded w-6 h-6 shadow cursor-pointer hover:scale-110 transition-transform duration-100 ease-in-out" @click="() => changeColor({ rgba: { r: 253, g: 224, b: 71, a: 255 } })" />

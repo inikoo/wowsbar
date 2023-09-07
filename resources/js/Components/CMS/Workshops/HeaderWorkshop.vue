@@ -13,9 +13,11 @@ import { faHandPointer, faHandRock, faPlus } from '@/../private/pro-solid-svg-ic
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { ulid } from "ulid";
 import { get } from 'lodash'
+import Layout from '../Header/Layout.vue';
 import ColorPicker from '@/Components/CMS/Fields/ColorPicker.vue'
 import FontSize from '@/Components/CMS/Fields/Fontsize.vue'
 import FontDecorator from '@/Components/CMS/Fields/FontDecorator.vue'
+import ToolsTop from '@/Components/CMS/Header/ToolsTop.vue';
 library.add(faHandPointer, faHandRock, faPlus)
 
 const Dummy = {
@@ -176,27 +178,7 @@ const Uploadimage = () => {
                     </div>
                     <!-- Image gallery -->
                     <div style="width: 90%; background: #f2f2f2; border: 1px solid #bfbfbf; overflow:hidden">
-                        <div style="height: 6%; background: #ffffff; padding:5px; width: 100%" class="flex gap-3">
-                            <div>
-                                <span aria-hidden="true">
-                                    <ColorPicker :color="get(data[layerActive], ['style', 'color'], '#000000')"
-                                        :changeColor="changeColor" @click="(e) => e.stopPropagation()" />
-                                </span>
-                            </div>
-                            <div>
-                                <span aria-hidden="true">
-                                    <FontSize :size="get(data[layerActive], ['style', 'fontSize'], '34px')"
-                                        :changesize="changesize" @click="(e) => e.stopPropagation()" />
-                                </span>
-                            </div>
-                            <div>
-                                <span aria-hidden="true">
-                                    <FontDecorator :fontDecorator="get(data[layerActive], ['style'], {})"
-                                        :changeText="changeText" @click="(e) => e.stopPropagation()" />
-                                </span>
-                            </div>
-
-                        </div>
+                        <ToolsTop v-if="data[layerActive]" :data="data" :layerActive="layerActive" />
                         <div class="p-3 relative">
                             <div>
                                 <Layout :data="data" :setPosition="setPosition" :changeName="changeName" :layout="layout"
@@ -208,4 +190,5 @@ const Uploadimage = () => {
             </div>
         </div>
     </div>
+    <div @click="()=>console.log(data)">cekdata</div>
 </template>

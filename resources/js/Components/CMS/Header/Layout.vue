@@ -12,12 +12,13 @@ const props = defineProps<{
 	layerActive: Object
 }>()
 
+console.log('dddd',props)
+
 // defineExpose({
 //   setdragElement,
 // });
 
 function setdragElement(ref, value) {
-  console.log(ref)
 	value.ref = ref
 	dragElement(ref, value)
 }
@@ -118,7 +119,7 @@ const generateThumbnail = (file) => {
         :style="{ ...item.style }"
       >
         <div :class="['draggable-handle', { border: get(data[layerActive], 'id') === item.id }]" @click="(e) => { e.stopPropagation(); props.setActive(index) }">
-          <Input :data="item" :save="changeName" keyValue="name" />
+          <Input :data="item" keyValue="name" :styleCss="item.style"/>
         </div>
       </div>
 

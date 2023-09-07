@@ -3,6 +3,11 @@ import { ref, onMounted } from 'vue'
 const props = defineProps<{
   data: Object,
   keyValue:String
+  classCss?:{
+    type: any,
+    default : "text-sm font-bold leading-6 text-gray-700 capitalize"
+  }
+  styleCss?: any
 }>()
 
 const editMode = ref(false)
@@ -34,14 +39,16 @@ onMounted(() => {
 <template>
   <div>
     <template v-if="!editMode">
-      <div> <h3  @click="changeEditMode" class="text-sm font-bold leading-6 text-gray-700 capitalize">{{ data[keyValue] }}</h3></div>
+      <div @click="changeEditMode" :class="classCss" :style="styleCss" >{{ data[keyValue] }}</div>
     </template>
     <template v-else>
       <input
         ref="inputRef"
         v-model="inputValue"
         @blur="handleInputBlur"
-        class="w-full"
+        class="w-fit h-full"
+        :class="classCss" 
+        :style="styleCss"
       />
     </template>
   </div>
