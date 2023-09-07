@@ -33,7 +33,6 @@ class ImportPortfolioWebsites
                 'total_uploads'  => $totalUploads,
                 'total_complete' => $totalImported
             ]));
-            sleep(1);
             $websiteUploadRecord->update(['status' => UploadRecordStatusEnum::COMPLETE]);
         } catch (\Exception $e) {
             $websiteUploadRecord->update(['status' => UploadRecordStatusEnum::FAILED]);
