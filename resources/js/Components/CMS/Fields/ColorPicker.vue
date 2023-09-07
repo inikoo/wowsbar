@@ -25,7 +25,7 @@ const changeColor = (set) => {
     <Popover v-slot="{ open }" class="relative">
       <PopoverButton>
         <div
-          class="h-8 w-8 rounded-full border border-black bg-color-red border-opacity-10 flex items-center justify-center"
+          class="h-8 w-8 rounded-full border border-black bg-color-red border-opacity-10 flex items-center justify-center z-[99]"
           :style="`background-color: ${color}`" />
       </PopoverButton>
 

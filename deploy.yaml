@@ -23,9 +23,7 @@ hosts:
   prod_helio:
     environment: 'prod'
     deploy_path: '{{root_path}}/prod'
-  staging:
-    environment: 'staging'
-    deploy_path: '{{root_path}}/staging'
+    branch: production
 tasks:
   build:
     - run: uptime

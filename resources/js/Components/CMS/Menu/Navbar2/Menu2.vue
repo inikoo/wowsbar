@@ -1,71 +1,44 @@
 <script setup>
-import { ref } from "vue"
-import {
-  Dialog,
-  DialogPanel,
-  Popover,
-  PopoverButton,
-  PopoverGroup,
-  PopoverPanel,
-  Tab,
-  TabGroup,
-  TabList,
-  TabPanel,
-  TabPanels,
-  TransitionChild,
-  TransitionRoot,
-} from "@headlessui/vue"
-import draggable from "vuedraggable"
-import Hyperlink from "../../Fields/Hyperlink.vue"
-import SubMenu from "./Submenu.vue"
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
-// import { fas } from '@/../private/pro-solid-svg-icons';
-// import { fal } from '@/../private/pro-light-svg-icons';
-// import { far } from '@/../private/pro-regular-svg-icons';
-// import { fad } from '@/../private/pro-duotone-svg-icons';
-// import { fab } from "@fortawesome/free-brands-svg-icons"
-import { library } from "@fortawesome/fontawesome-svg-core"
-import { trans } from "laravel-vue-i18n"
-import { Link } from "@inertiajs/vue3"
-import { usePage } from "@inertiajs/vue3"
-import { get } from 'lodash'
+import { ref } from "vue";
 
-// library.add(fas, fal, fad, fab, far)
-import { defineProps } from "vue"
+import draggable from "vuedraggable";
+import HyperLink from "@/Components/CMS/Fields/Hyperlink.vue";
+import SubMenu from "./Submenu.vue";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faUser, faHeart, faShoppingCart, faSignOut } from '../../../../../private/pro-solid-svg-icons';
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { get } from "lodash";
+import Popover from "@/Components/Utils/Popover.vue";
+import IconPicker from "@/Components/CMS/Fields/IconPicker/IconPicker.vue";
+library.add(faUser, faHeart, faShoppingCart, faSignOut)
+
+import { defineProps } from "vue";
 
 const props = defineProps({
-  navigation: {
-    type: Object,
-    required: true,
-  },
-  saveNav: {
-    type: Function,
-    required: true,
-  },
-  saveSubMenu: {
-    type: Function,
-    required: true,
-  },
-  tool: {
-    type: Object,
-    required: true,
-  },
-  selectedNav: {
-    type: Object,
-    required: true,
-  },
-  changeNavActive: {
-    type: Function,
-    required: true,
-  },
-})
-const openNav = ref(null)
-const mobileMenuOpen = ref(false)
+    navigation: {
+        type: Object,
+        required: true,
+    },
+    tool: {
+        type: Object,
+        required: true,
+    },
+    selectedNav: {
+        type: Object,
+        required: true,
+    },
+    changeNavActive: {
+        type: Function,
+        required: true,
+    },
+});
+const openNav = ref(null);
+const mobileMenuOpen = ref(false);
 </script>
 
 <template>
-  <!-- Mobile -->
-  <TransitionRoot as="template" :show="mobileMenuOpen">
+  <!-- mobile -->
+    <!-- <TransitionRoot as="template" :show="mobileMenuOpen">
     <Dialog as="div" class="relative z-40 lg:hidden" @close="mobileMenuOpen = false">
       <TransitionChild as="template" enter="transition-opacity ease-linear duration-300" enter-from="opacity-0"
         enter-to="opacity-100" leave="transition-opacity ease-linear duration-300" leave-from="opacity-100"
@@ -131,142 +104,136 @@ const mobileMenuOpen = ref(false)
         </TransitionChild>
       </div>
     </Dialog>
-  </TransitionRoot>
+  </TransitionRoot> -->
+  <!-- end mobile -->
 
-  <!-- Desktop -->
-  <div class="relative bg-gray-900">
-    <div aria-hidden="true" class="absolute inset-0 bg-gray-900 opacity-50" />
+    <!-- Desktop -->
+    <div class="relative bg-gray-900">
+        <div aria-hidden="true" class="absolute inset-0 bg-gray-900 opacity-50"/>
+        <header class="relative z-10">
+            <nav aria-label="Top">
+                <!-- navigation -->
+                <div class="bg-gray-600 bg-opacity-10">
+                    <div class="mx-auto px-4 sm:px-6 lg:px-4">
+                            <div class="flex h-16 items-center justify-between">
+                                <div class="hidden h-full lg:flex">
+                                    <draggable
+                                        v-model="navigation.categories"
+                                        group="topMenu"
+                                        options="id"
+                                        :disabled="tool.name !== 'grab'"
+                                        class="flex justify-center space-x-8 h-fit"
+                                    >
+                                        <template v-slot:item="{element: category,index}">
+                                            <div :class="[
+                                                    get(selectedNav,'id') == category.id? 'border': '',
+                                                    tool.name !== 'grab' ? 'cursor-pointer': 'cursor-grab',
+                                                ]"
+                                            >
+                                              <!-- Flyout menus -->
+                                                <div v-if="category.type =='group'" :key="category.id" class="flex">
+                                                    <div @click="() => {(openNav =category.id),changeNavActive(category);}"
+                                                        class="py-5 px-2.5 relative z-10 items-center justify-center text-sm font-medium text-white transition-colors duration-200 ease-out"
+                                                    >
+                                                    <div class="flex gap-3">
+                                                        <IconPicker :key="category.id" :data="category" class="text-white"/>
+                                                        <HyperLink
+                                                            :formList="{
+                                                                name: 'name',
+                                                            }"
+                                                            :useDelete="true"
+                                                            :data="category"
+                                                            label="name"
+                                                            @OnDelete="()=>{navigation.categories.splice(index,1)}"
+                                                            cssClass="items-center text-sm font-medium text-white"
+                                                        />
+                                                      </div>
+                                                    </div>
 
-    <header class="relative z-10">
-      <nav aria-label="Top">
-        <div class="bg-gray-900">
-          <div class="mx-auto flex h-10 px-4 sm:px-6 lg:px-8">
-            <div class="w-1/3 flex items-center space-x-6 justify-start">
-                  <a
-  												href="#"
-  												class="-m-2 p-2 text-gray-400 hover:text-gray-500">
-  												<span class="sr-only">Account</span>
-                          <font-awesome-icon :icon="['fasr', 'fa-arrow-alt-circle-right']" rotation=180 />
-  											</a>
-
-              </div>
-
-            <div class="w-1/3 ">
-              <div class="hidden lg:flex lg:flex-1 lg:items-center justify-center">
-                <a href="#">
-                  <div class="flex">
-                    <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=white" alt="" /><span
-                      class="p-1 text-2xl font-semibold text-white">AW GIFT</span>
-                  </div>
-                </a>
-              </div>
-            </div>
-
-            <div class="w-1/3 flex items-center space-x-6 justify-end">
-                  <a
-  												href="#"
-  												class="-m-2 p-2 text-gray-400 hover:text-gray-500">
-  												<span class="sr-only">Account</span>
-  												<font-awesome-icon :icon="['fas', 'user']" />
-  											</a>
-                        <a
-  												href="#"
-  												class="-m-2 p-2 text-gray-400 hover:text-gray-500">
-  												<span class="sr-only">Account</span>
-  												<font-awesome-icon :icon="['fass', 'heart']" />
-  											</a>
-                        <a href="#" class="group -m-2 flex items-center p-2 -m-2 p-2 text-gray-400 hover:text-gray-500">
-  											<font-awesome-icon :icon="['fas', 'shopping-cart']" />
-  											<span
-  												class="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800"
-  												>0</span
-  											>
-  											<span class="sr-only">items in cart, view bag</span>
-  										</a>
-              </div>
-            </div>
-        </div>
-
-        <!-- Secondary navigation -->
-        <div class="bg-gray-600 bg-opacity-10">
-          <div class="mx-auto px-4 sm:px-6 lg:px-4">
-            <div>
-              <div class="flex h-16 items-center justify-between">
-                <div class="hidden h-full lg:flex">
-                  <!-- Flyout menus -->
-                  <div>
-                    <div>
-                      <draggable v-model="navigation.categories" group="topMenu" options="id"
-                        :disabled="tool.name !== 'grab'" class="flex justify-center space-x-8 h-fit">
-                        <template v-slot:item="{ element: category, index }">
-                          <div :class="[get(selectedNav,'id') == category.id ? 'border' : '', tool.name !== 'grab' ? 'cursor-pointer' : 'cursor-grab']">
-                            <div v-if="category.type == 'group'" :key="category.id" class=" flex">
-
-                                <div @click="() => { openNav = category.id, changeNavActive(category) }"
-                                  class="py-5 px-2.5 relative z-10 items-center justify-center text-sm font-medium text-white transition-colors duration-200 ease-out">
-                                  <Hyperlink :data="category" valueKeyLabel="name" valueKeyLink="link"
-                                    :save="(e) => saveNav({ ...e, menuType: 'group' })" :useLink="false" />
-                                  <span :class="[
-                                    openNav == category.id ? 'bg-white' : '',
-                                    'absolute inset-x-0 -bottom-px h-0.5 transition duration-200 ease-out ',
-                                  ]" aria-hidden="true" />
+                                                    <div v-if="openNav == category.id">
+                                                        <SubMenu 
+                                                            :data="category" 
+                                                            @OnClose="() => {changeNavActive(null),(openNav = null)}"
+                                                            :tool="tool"
+                                                        />
+                                                    </div>
+                                                </div>
+                                                  <!-- Flyout menus -->
+                                                  <!-- menus -->
+                                                <div v-if="category.type == 'link'" class="py-5 px-2.5 leading-4"
+                                                    @click="(e) => {changeNavActive(category),(openNav =null);}"
+                                                >
+                                                <div class="flex gap-3">
+                                                  <IconPicker :key="category.id" :data="category" class="text-white"/>
+                                                <HyperLink
+                                                      :formList="{
+                                                          name: 'name',
+                                                          link: 'link',
+                                                      }"
+                                                      :useDelete="true"
+                                                      :data="category"
+                                                      label="name"
+                                                      @OnDelete="()=>{navigation.categories.splice(index,1)}"
+                                                      cssClass="items-center text-sm font-medium text-white"
+                                                  />
+                                                </div>
+                                                </div>
+                                              
+                                                  <!-- menus -->
+                                            </div>
+                                        </template>
+                                    </draggable>
                                 </div>
 
-                                <div v-if="openNav == category.id">
-                                  <SubMenu :data="category" :saveSubMenu="saveSubMenu"
-                                    :closePopover="() => { changeNavActive(null), openNav = null }"
-                                    :tool="tool" />
-                                </div>
-
+                                <div class="flex flex-1 items-center justify-end">
+                                  <div class="w-1/3 flex items-center space-x-3 justify-end">
+                                  <Popover>
+                                    <template #button>
+                                      <a href="#" class="flex justify-center p-1 text-gray-400">
+                                        <span class="sr-only">Account</span>
+                                        <font-awesome-icon :icon="['fas', 'user']" />
+                                      </a>
+                                    </template>
+                                    <template #content>
+                                      <div class="py-[10px] px-[10px] rounded-lg bg-white">
+                                        <div class="p-1 text-center">
+                                          <div class="flex items-center justify-center mb-2">
+                                            <font-awesome-icon :icon="['fas', 'user']" class="text-base mr-2" />
+                                            <span class="text-lg font-semibold text-gray-800">Profile</span>
+                                          </div>
+                                        </div>
+                                        <div class="p-1 text-center">
+                                          <div class="flex items-center justify-center mb-2">
+                                            <font-awesome-icon :icon="['fas', 'sign-out']"  class="text-base mr-2" />
+                                            <span class="text-lg font-semibold text-gray-800">logout</span>
+                                          </div>
+                                        </div>
+                                     </div>
+                                    </template>
+                                  </Popover>
+                                   
+                                    <a href="#" class="p-1 text-gray-400">
+                                      <span class="sr-only">Account</span>
+                                      <font-awesome-icon :icon="['fas', 'heart']" />
+                                    </a>
+                                    <a href="#" class="group flex items-center p-1   text-gray-400">
+                                      <font-awesome-icon :icon="['fas', 'shopping-cart']" />
+                                      <span class="ml-2 text-sm font-medium text-white ">0</span>
+                                      <span class="sr-only">items in cart, view bag</span>
+                                    </a>
+                                  </div>
+                              </div>
                             </div>
-                            <div v-if="category.type == 'link'" class="py-5 px-2.5 leading-4"  @click="(e)=> {changeNavActive(category), openNav=null}">
-
-                              <Hyperlink :data="category" valueKeyLabel="name" valueKeyLink="link"
-                                :save="(e) => saveNav({ ...e, menuType: 'link' })"
-                                cssClass="items-center text-sm font-medium text-white" />
-
-                            </div>
-                          </div>
-                        </template>
-                      </draggable>
+                      
                     </div>
-                  </div>
                 </div>
-
-                <!-- Mobile menu and search (lg-) -->
-                <div class="flex flex-1 items-center lg:hidden">
-                  <button type="button" class="-ml-2 p-2 text-white" @click="mobileMenuOpen = true">
-                    <span class="sr-only">{{ trans("Open menu") }}</span>
-                    <FontAwesomeIcon icon="fa-solid fa-bars" aria-hidden="true" />
-                  </button>
-
-                  <!-- Search -->
-                  <div class="flex flex-1 items-center justify-end w-full">
-                    <button type="button"
-                      class="w-full bg-white lg:flex items-center text-sm leading-6 text-slate-400 rounded-md ring-1 ring-slate-900/10 shadow-sm py-1.5 pl-2 pr-3 hover:ring-slate-300 dark:bg-slate-800 dark:highlight-white/5 dark:hover:bg-slate-700">
-                      {{ trans("Quick search...") }}
-                    </button>
-                  </div>
-                </div>
-
-                <div class="flex flex-1 items-center justify-end">
-                  <!-- <a href="#" class="hidden text-sm font-medium text-white lg:block">Search</a> -->
-                  <button type="button"
-                    class="hidden w-2/5 bg-white lg:flex items-center text-sm leading-6 text-slate-400 rounded-md ring-1 ring-slate-900/10 shadow-sm py-1.5 pl-2 pr-3 hover:ring-slate-300 dark:bg-slate-800 dark:highlight-white/5 dark:hover:bg-slate-700">
-                    {{ trans("Quick search...") }}
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </nav>
-    </header>
-  </div>
+            </nav>
+        </header>
+    </div>
 </template>
 
 <style>
 :focus-visible {
-  outline: -webkit-focus-ring-color auto 0px;
+    outline: -webkit-focus-ring-color auto 0px;
 }
 </style>
