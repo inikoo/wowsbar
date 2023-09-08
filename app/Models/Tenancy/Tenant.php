@@ -16,6 +16,7 @@ use App\Models\Portfolio\PortfolioWebsite;
 use App\Models\Portfolio\Snapshot;
 use App\Models\Portfolio\SnapshotStats;
 use App\Models\Traits\HasHistory;
+use App\Models\WebsiteUpload;
 use App\Models\WebsiteUploadRecord;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -183,6 +184,11 @@ class Tenant extends SpatieTenant implements HasMedia, Auditable
     public function websiteUploadRecords(): HasMany
     {
         return $this->hasMany(WebsiteUploadRecord::class);
+    }
+
+    public function portfolioWebsiteUploads(): HasMany
+    {
+        return $this->hasMany(WebsiteUpload::class);
     }
 
     public function registerMediaCollections(): void
