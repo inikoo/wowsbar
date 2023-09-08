@@ -21,10 +21,12 @@ class IndexPortfolioWebsiteUploads
 
     public function handle(): Collection
     {
-        return app('currentTenant')->portfolioWebsiteUploads()->limit(5)->get();
+        /** @var \App\Models\Tenancy\Tenant $tenant */
+        $tenant = app('currentTenant');
+        return $tenant->portfolioWebsiteUploads()->limit(5)->get();
     }
 
-    public function jsonResponse(WebsiteUpload $websiteUploads): AnonymousResourceCollection
+    public function jsonResponse(Collection $websiteUploads): AnonymousResourceCollection
     {
         return WebsiteUploadsResource::collection($websiteUploads);
     }
