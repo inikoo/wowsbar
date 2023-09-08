@@ -49,7 +49,7 @@ class StoreTenant
     public function rules(): array
     {
         return [
-            'code'        => ['required', 'unique:tenants', 'between:1,6', 'alpha_dash'],
+            'code'        => ['required', 'unique:tenants', 'between:1,12', 'alpha_dash'],
             'name'        => ['required', 'max:64'],
             'email'       => ['required', 'email', 'unique:tenants'],
             'currency_id' => ['required', 'exists:currencies,id'],
