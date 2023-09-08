@@ -76,14 +76,14 @@ const compProgressBar = computed(() => {
 })
 
 watch(isModalOpen, async () => {
-    if(!dataHistory.value.length) { // If dataHistory empty (not fetched yet) then fetch agains
+    // if(!dataHistory.value.length) { // If dataHistory empty (not fetched yet) then fetch agains
         try {
             const data = await axios.get(route('portfolio.website.uploads.history'))
             dataHistory.value = data.data.data
         } catch (error: any) {
             console.error(error.message)
         }
-    }
+    // }
 })
 
 watch(compProgressBar, () => {
