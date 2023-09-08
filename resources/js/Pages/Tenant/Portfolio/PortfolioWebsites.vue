@@ -5,7 +5,7 @@
   -->
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { Head } from '@inertiajs/vue3'
 import PageHeading from '@/Components/Headings/PageHeading.vue'
 import TablePortfolioWebsites from "@/Pages/Tables/TablePortfolioWebsites.vue"
@@ -14,12 +14,29 @@ import Modal from '@/Components/Utils/Modal.vue'
 import Button from '@/Components/Elements/Buttons/Button.vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faUpload } from '@/../private/pro-regular-svg-icons'
-import { faFile } from '@/../private/pro-light-svg-icons'
+import { faFile, faTimes } from '@/../private/pro-light-svg-icons'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { trans } from 'laravel-vue-i18n'
 import axios from 'axios'
 
-library.add(faUpload, faFile)
+import Pusher from 'pusher-js'
+
+
+const pusher = new Pusher('3217cf955501353f32b2', {
+    cluster: 'ap1'
+});
+
+const asdfg = ref({data: {total_uploads: 0,
+total_complete: 0   }})
+
+const channel = pusher.subscribe('uploads.aiku');
+    channel.bind('WebsiteUpload', (data: any) => {
+        asdfg.value = data
+        console.log("==============")
+        console.log(data)
+    });
+
+library.add(faUpload, faFile, faTimes)
 
 const props = defineProps<{
     pageHead: object
@@ -29,13 +46,13 @@ const props = defineProps<{
 
 const isModalOpen = ref(false)
 const isLoadingFetch = ref(false)
-const onUpload = async (e) => {
+const onUpload = async (fileUploaded: any) => {
     isLoadingFetch.value = true
     try {
         await axios.post(
             route('models.websites.upload'),
             {
-                file: e.target.files[0],
+                file: fileUploaded.target.files[0],
             },
             {
                 headers: { "Content-Type": "multipart/form-data" },
@@ -47,12 +64,23 @@ const onUpload = async (e) => {
     }
     isLoadingFetch.value = false
 }
+
 const uploadHistory = [
     { name: 'dummy.xlsx', date_uploaded: 'August 02 2023'},
     { name: 'default.csv', date_uploaded: 'Sept 05 2023'},
     { name: 'untitled.csv', date_uploaded: 'Oct 03 2023'},
     { name: 'new file.xlsx', date_uploaded: 'August 19 2023'},
 ]
+
+const numberr = ref(0)
+
+// setInterval(() => {
+//     numberr.value = numberr.value + 200
+// }, 500)
+
+const compProgressBar = computed(() => {
+    return asdfg.value?.data.total_complete/asdfg.value?.data.total_uploads * 100
+})
 </script>
 
 <template layout="TenantApp">
@@ -65,21 +93,33 @@ const uploadHistory = [
             </Button>
         </template>
     </PageHeading>
+
+    <!-- Progress Bar -->
+    <div :class="true ? 'bottom-12' : '-bottom-12'" class="fixed right-1/2 translate-x-1/2 transition-all duration-200 ease-in-out flex gap-x-1">
+        <div class="flex justify-center items-center flex-col gap-y-1">
+            <div>Uploading website ({{asdfg.data.total_complete}}/<span class="font-semibold inline">{{asdfg.data.total_uploads}}</span>)</div>
+            <div class="overflow-hidden rounded-full bg-gray-200 w-64">
+                <div class="h-2 rounded-full bg-slate-600 transition-all duration-100 ease-in-out" :style="`width: ${compProgressBar}%`" />
+            </div>
+        </div>
+        <div class="px-2 py-1 cursor-pointer text-gray-400 hover:text-gray-600">
+            <FontAwesomeIcon icon='fal fa-times' class='text-xs' aria-hidden='true' />
+        </div>
+    </div>
+
     <TablePortfolioWebsites :data="data" />
 
     <!-- Modal: Upload -->
     <Modal :isOpen="isModalOpen" @onClose="isModalOpen = false">
         <div class="grid grid-cols-2 grid-rows-2">
-            <div
-                class="relative mt-2 flex justify-center rounded-lg border border-dashed border-gray-700/25 px-6 py-10 bg-gray-400/10 hover:bg-gray-400/20">
-                <label for="fileInput"
+            <div class="relative mt-2 flex justify-center rounded-lg border border-dashed border-gray-700/25 px-6 py-10 bg-gray-400/10 hover:bg-gray-400/20">
+                <label for="fileInput" 
                     class="absolute cursor-pointer rounded-md inset-0 focus-within:outline-none focus-within:ring-0 focus-within:ring-gray-400 focus-within:ring-offset-0">
                     <input type="file" name="file" id="fileInput" class="sr-only" @change="onUpload"
                         ref="fileInput" accept=".xlsx, .xls, .csv"/>
                 </label>
                 <div class="text-center text-gray-500">
-                    <FontAwesomeIcon :icon="['fal', 'file']" class="mx-auto h-12 w-12 text-gray-300"
-                        aria-hidden="true" />
+                    <FontAwesomeIcon :icon="['fal', 'file']" class="mx-auto h-12 w-12 text-gray-300" aria-hidden="true" />
                     <div class="mt-2 flex  justify-center text-lg font-medium leading-6 ">
                         <p class="pl-1">{{ trans("Upload file") }}</p>
                     </div>

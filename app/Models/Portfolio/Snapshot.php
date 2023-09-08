@@ -24,6 +24,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property int $id
  * @property string|null $slug
  * @property int $tenant_id
+ * @property string|null $user_type
+ * @property int|null $user_id
  * @property string|null $parent_type
  * @property int|null $parent_id
  * @property SnapshotStateEnum $state
@@ -55,6 +57,8 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Snapshot whereState($value)
  * @method static Builder|Snapshot whereTenantId($value)
  * @method static Builder|Snapshot whereUpdatedAt($value)
+ * @method static Builder|Snapshot whereUserId($value)
+ * @method static Builder|Snapshot whereUserType($value)
  * @mixin \Eloquent
  */
 class Snapshot extends Model
@@ -62,7 +66,7 @@ class Snapshot extends Model
     use HasSlug;
     use BelongsToTenant;
 
-    protected $dateFormat = 'Y-m-d H:i:s P';
+    protected $dateFormat  = 'Y-m-d H:i:s P';
     protected array $dates = ['published_at', 'published_until'];
 
     protected $casts = [

@@ -15,7 +15,10 @@ import CropImage from '@/Components/Workshop/CropImage/CropImage.vue'
 import Button from '@/Components/Elements/Buttons/Button.vue'
 import { trans } from 'laravel-vue-i18n'
 import { ulid } from 'ulid'
-// import moment from 'moment';
+import { useFormatTime } from '@/Composables/useFormatTime'
+import { useLocaleStore } from '@/Stores/locale'
+
+const locale = useLocaleStore()
 
 const props = defineProps<{
     data: any
@@ -111,8 +114,7 @@ const uploadImageRespone = (res: any) => {
         </template>
 
         <template #cell(created_at)="{ item: image }">
-           <!-- {{ moment(image['created_at']).format('MMMM Do YYYY') }} -->
-           momentt jss
+            {{ useFormatTime(image['created_at'], locale.language.code) }}
         </template>
 
         <!-- Column: select item -->

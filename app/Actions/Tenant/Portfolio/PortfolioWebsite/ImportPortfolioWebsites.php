@@ -30,13 +30,12 @@ class ImportPortfolioWebsites
     public function handle(Tenant $tenant, WebsiteUploadRecord $websiteUploadRecord, $totalUploads, $totalImported): void
     {
         try {
-//            StorePortfolioWebsite::run(json_decode($websiteUploadRecord->data, true));
+            StorePortfolioWebsite::run(json_decode($websiteUploadRecord->data, true));
 
             event(new UploadWebsiteProgressEvent($tenant, [
                 'total_uploads'  => $totalUploads,
                 'total_complete' => $totalImported
             ]));
-            sleep(1);
             $websiteUploadRecord->update(['status' => UploadRecordStatusEnum::COMPLETE]);
         } catch (\Exception $e) {
             $websiteUploadRecord->update(['status' => UploadRecordStatusEnum::FAILED]);

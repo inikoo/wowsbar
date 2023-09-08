@@ -12,6 +12,7 @@ use App\Http\Resources\UI\LoggedUserResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Inertia\Middleware;
+use Spatie\Multitenancy\Models\Tenant;
 use Tightenco\Ziggy\Ziggy;
 
 class HandleInertiaRequests extends Middleware
@@ -25,7 +26,9 @@ class HandleInertiaRequests extends Middleware
 
         $firstLoadOnlyProps = [];
 
-        if (!$request->inertia() or Session::get('reloadLayout')) {
+        ;
+
+        if ((!$request->inertia() or Session::get('reloadLayout')) and Tenant::checkCurrent()) {
             $firstLoadOnlyProps          = GetFirstLoadProps::run($user);
             $firstLoadOnlyProps['ziggy'] = function () use ($request) {
                 return array_merge((new Ziggy())->toArray(), [

@@ -6,7 +6,6 @@
  */
 
 
-use App\Actions\Tenant\Auth\User\ExportUsers;
 use App\Actions\Tenant\Auth\User\UI\CreateUser;
 use App\Actions\Tenant\Auth\User\UI\EditUser;
 use App\Actions\Tenant\Auth\User\UI\IndexUsers;

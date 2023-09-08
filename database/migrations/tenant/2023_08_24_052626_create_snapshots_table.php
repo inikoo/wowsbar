@@ -18,7 +18,7 @@ return new class () extends Migration {
             $table->string('slug')->nullable()->collation('und_ns');
             $table->unsignedSmallInteger('tenant_id');
             $table->string('user_type')->nullable();
-            $table->unsignedSmallInteger( 'user_id')->nullable();
+            $table->unsignedSmallInteger('user_id')->nullable();
             $table->string('parent_type')->nullable();
             $table->unsignedInteger('parent_id')->nullable();
             $table->foreign('tenant_id')->references('id')->on('tenants')->onUpdate('cascade')->onDelete('cascade');
