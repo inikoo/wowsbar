@@ -57,20 +57,23 @@ class Kernel extends HttpKernel
 
 
     protected $middlewareGroups = [
-        /*
+
         'web'        => [
+            NeedsTenant::class,
+
             EncryptCookies::class,
             AddQueuedCookiesToResponse::class,
             StartSession::class,
             ShareErrorsFromSession::class,
             VerifyCsrfToken::class,
+            EnsureValidTenantSession::class,
             SubstituteBindings::class,
             HandleInertiaRequests::class,
             AddLinkHeadersForPreloadedAssets::class,
             LogUserFirebaseMiddleware::class,
-            LogUserRequestMiddleware::class
+            LogUserRequestMiddleware::class,
         ],
-        */
+
         'delivery' => [
             EncryptCookies::class,
             AddQueuedCookiesToResponse::class,
@@ -99,20 +102,6 @@ class Kernel extends HttpKernel
             VerifyCsrfToken::class,
             SubstituteBindings::class,
             HandleOrgInertiaRequests::class,
-            AddLinkHeadersForPreloadedAssets::class,
-            LogUserFirebaseMiddleware::class,
-            LogUserRequestMiddleware::class
-        ],
-        'tenant-web'     => [
-            NeedsTenant::class,
-            EnsureValidTenantSession::class,
-            EncryptCookies::class,
-            AddQueuedCookiesToResponse::class,
-            StartSession::class,
-            ShareErrorsFromSession::class,
-            VerifyCsrfToken::class,
-            SubstituteBindings::class,
-            HandleInertiaRequests::class,
             AddLinkHeadersForPreloadedAssets::class,
             LogUserFirebaseMiddleware::class,
             LogUserRequestMiddleware::class
