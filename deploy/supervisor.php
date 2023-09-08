@@ -72,6 +72,11 @@ task('supervisor:stop', static function (): void {
     }
 })->desc('Stops all services managed by Supervisor');
 
+task('supervisor:remove',static function (): void {
+    run('sudo supervisorctl stop horizon-{{application}}-{{alias}}');
+    run('sudo rm -rf {{supervisor_remote_dir}}/{{supervisor_config_filename}}');
+})->desc('Remove config file');
+
 task('supervisor:upload', static function (): void {
     $sourceDir = get('supervisor_source_dir');
     Assert::string($sourceDir);

@@ -56,7 +56,7 @@ add('crontab:jobs', [
 ]);
 
 desc('Prepares a new release (wowsbar version)');
-task('deploy:prepare', [
+task('install:prepare', [
     'deploy:info',
     'install:setup',
     'deploy:setup',
@@ -74,9 +74,11 @@ task('deploy:prepare', [
 
 desc('Install wowsbar');
 task('install', [
+    'supervisor:remove',
+    'supervisor:reread-update',
     'install:delete_deploy_path',
     'install:reset-db',
-    'deploy:prepare',
+    'install:prepare',
     'artisan:key:generate',
     'deploy:elasticsearch',
     'artisan:storage:link',
