@@ -3,6 +3,8 @@
 namespace App\Imports;
 
 use App\Actions\Tenant\Portfolio\PortfolioWebsite\ImportPortfolioWebsites;
+use App\Actions\Tenant\Portfolio\Uploads\UpdatePortfolioWebsiteUploads;
+use App\Models\WebsiteUpload;
 use App\Models\WebsiteUploadRecord;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\SkipsFailures;
@@ -14,12 +16,22 @@ use Maatwebsite\Excel\Concerns\WithValidation;
 class WebsiteImport implements ToCollection, WithHeadingRow, SkipsOnFailure, WithValidation
 {
     use SkipsFailures;
+
+    public WebsiteUpload $websiteUpload;
+    public function __construct(WebsiteUpload $websiteUpload)
+    {
+        $this->websiteUpload = $websiteUpload;
+    }
+
     /**
     * @param Collection $collection
     */
     public function collection(Collection $collection): void
     {
         $totalImported = 1;
+
+        UpdatePortfolioWebsiteUploads::run($this->websiteUpload, ['number_rows' => count($collection)]);
+
         foreach ($collection as $website) {
             try {
                 $website = WebsiteUploadRecord::create([
