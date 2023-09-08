@@ -19,11 +19,12 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { trans } from 'laravel-vue-i18n'
 import axios from 'axios'
 import Pusher from 'pusher-js'
+import { useFormatTime } from '@/Composables/useFormatTime'
 
 library.add(faUpload, falFile, faTimes, faFileDownload, fasFile)
 
 const props = defineProps<{
-    pageHead: object
+    pageHead: any
     title: string
     data: object
 }>()
@@ -34,6 +35,11 @@ const dataPusher = ref({
         total_complete: 0
     }
 })
+const isModalOpen = ref(false)
+const isLoadingFetch = ref(false)
+const dataHistory: any = ref([])
+const isProgressDone = ref(false)
+
 
 // Pusher: subscribe
 const pusher = new Pusher(import.meta.env.VITE_PUSHER_APP_KEY, {
@@ -46,8 +52,6 @@ channel.bind('WebsiteUpload', (data: any) => {
     // console.log(data)
 })
 
-const isModalOpen = ref(false)
-const isLoadingFetch = ref(false)
 const onUpload = async (fileUploaded: any) => {
     isLoadingFetch.value = true
     try {
@@ -67,38 +71,29 @@ const onUpload = async (fileUploaded: any) => {
     isLoadingFetch.value = false
 }
 
-const uploadHistory = [
-    { name: 'dummy.xlsx', row: 132, date_uploaded: 'August 02 2023'},
-    { name: 'default.csv', row: 15, date_uploaded: 'Sept 05 2023'},
-    { name: 'untitled untitled untitled.csv', row: 47, date_uploaded: 'Oct 03 2023'},
-    { name: 'new file.xlsx', row: 114, date_uploaded: 'August 19 2023'},
-]
-
-const numberr = ref(0)
-
-// setInterval(() => {
-//     numberr.value = numberr.value + 200
-// }, 500)
-
 const compProgressBar = computed(() => {
     return dataPusher.value?.data.total_uploads ? dataPusher.value?.data.total_complete/dataPusher.value?.data.total_uploads * 100 : 0
 })
 
 watch(isModalOpen, async () => {
-    try {
-        const data = await axios.get(route('portfolio.website.uploads.history'))
-        console.log("------------------------")
-        console.log(data)
-    } catch (error: any) {
-        // console.error("===========================")
-        console.error(error.message)
+    if(!dataHistory.value.length) { // If dataHistory empty (not fetched yet) then fetch agains
+        try {
+            const data = await axios.get(route('portfolio.website.uploads.history'))
+            dataHistory.value = data.data.data
+        } catch (error: any) {
+            console.error(error.message)
+        }
     }
 })
-// watch(isModalOpen, (newValue, oldValue) => {
-//   // Check if isOpen changed from false to true
-//   console.log('oldValue', oldValue)
-//   console.log('newValue', newValue)
-// })
+
+watch(compProgressBar, () => {
+    if(compProgressBar.value >= 100){
+        setTimeout(() => {
+            isProgressDone.value = true
+        }, 2000)
+    }
+})
+
 </script>
 
 <template layout="TenantApp">
@@ -150,10 +145,10 @@ watch(isModalOpen, async () => {
             <div class="order-last flex items-start gap-x-2 gap-y-2 flex-col">
                 <div class="text-sm text-gray-600">Recent uploaded website:</div>
                 <div class="flex flex-wrap gap-x-2 gap-y-2">
-                    <div v-for="(person, index) in uploadHistory" :key="index" class="w-36 bg-gray-100 border-t-[3px] border-gray-500 rounded px-2 py-1 flex flex-col justify-start gap-y-1 cursor-pointer hover:bg-gray-200">
-                        <p class="text-lg text-gray-700 font-semibold">{{ person.row }} <span class="text-xs text-gray-500 font-normal">rows</span></p>
-                        <span class="text-gray-600 text-xs leading-none">{{ person.name }}</span>
-                        <span class="text-gray-400 text-xxs">{{ person.date_uploaded }}</span>
+                    <div v-for="(history, index) in dataHistory" :key="index" class="w-36 bg-gray-100 border-t-[3px] border-gray-500 rounded px-2 py-1 flex flex-col justify-start gap-y-1 cursor-pointer hover:bg-gray-200">
+                        <p class="text-lg text-gray-700 font-semibold">{{ history.number_rows }} <span class="text-xs text-gray-500 font-normal">rows</span></p>
+                        <span class="text-gray-600 text-xs leading-none">{{ history.original_filename }}</span>
+                        <span class="text-gray-400 text-xxs">{{ useFormatTime(history.uploaded_at) }}</span>
                     </div>
                 </div>
             </div>
@@ -161,9 +156,10 @@ watch(isModalOpen, async () => {
     </Modal>
 
     <!-- Progress Bar -->
-    <div :class="compProgressBar ? 'bottom-12' : '-bottom-12'" class="z-50 fixed right-1/2 translate-x-1/2 transition-all duration-200 ease-in-out flex gap-x-1">
+    <div :class="compProgressBar && !isProgressDone ? 'bottom-12' : '-bottom-12'" class="z-50 fixed right-1/2 translate-x-1/2 transition-all duration-200 ease-in-out flex gap-x-1">
         <div class="flex justify-center items-center flex-col gap-y-1">
-            <div>Uploading website ({{ dataPusher.data.total_complete }}/<span class="font-semibold inline">{{ dataPusher.data.total_uploads }}</span>)</div>
+            <div v-if="compProgressBar >=100">Finished!!🥳</div>
+            <div v-else>Uploading website ({{ dataPusher.data.total_complete }}/<span class="font-semibold inline">{{ dataPusher.data.total_uploads }}</span>)</div>
             <div class="overflow-hidden rounded-full bg-gray-200 w-64">
                 <div class="h-2 rounded-full bg-slate-600 transition-all duration-100 ease-in-out" :style="`width: ${compProgressBar}%`" />
             </div>
