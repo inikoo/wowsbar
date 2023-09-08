@@ -6,13 +6,16 @@
 
 <script setup lang="ts">
 // import { Link } from '@inertiajs/vue3';
-import Table from '@/Components/Table/Table.vue';
+import Table from '@/Components/Table/Table.vue'
 // import { User } from "@/types/user";
 // import { trans } from "laravel-vue-i18n";
 // import AddressLocation from "@/Components/Elements/Info/AddressLocation.vue";
 // import UserAgent from "@/Components/Elements/Info/UserAgent.vue";
 import JsonViewer from 'vue-json-viewer'
 import { useFormatTime } from '@/Composables/useFormatTime'
+import { useLocaleStore } from '@/Stores/locale'
+const locale = useLocaleStore()
+
 // import {ref,computed} from 'vue'
 
 // import TableElements from '@/Components/Table/TableElements.vue'
@@ -37,7 +40,7 @@ const props = defineProps<{
         </template>
 
         <template #cell(datetime)="{ item: user }">
-            {{ useFormatTime(user.datetime) }}
+            {{ useFormatTime(user.datetime, locale.language.code, true) }}
         </template>
     </Table>
 </template>

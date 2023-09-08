@@ -1,14 +1,23 @@
-// Basic formating
-export const useFormatTime = (dateIso: string, localeCode: string) => {
+import { format } from 'date-fns'
+import formatDistanceToNow from 'date-fns/formatDistanceToNow'
+import { zhCN, enUS, fr, de, id, ja, sk, es } from 'date-fns/locale'
 
-    if (!dateIso) {
-        return '-'  // If the provided data is null
-    }
-    return new Intl.DateTimeFormat(localeCode).format(new Date(dateIso))
+const localesCode = { zhCN, enUS, fr, de, id, ja, sk, es }
+
+// Basic formating
+export const useFormatTime = (dateIso: string, localeCode?: string, time?: boolean) => {
+    let tempLocaleCode = localeCode === 'zh-Hans' ? 'zhCN' : 'localeCode'
+    let tempDateIso = new Date(dateIso)
+
+    if (!dateIso) return '-'  // If the provided data date is null
+    if (time) return format(tempDateIso, 'PPp', { locale: localesCode[tempLocaleCode] }) // Show AM/PM
+
+    return format(tempDateIso, 'PPP', { locale: localesCode[tempLocaleCode] })
 }
 
 // Relative time range
-export const useFromNow = (dateIso: string) => {
-    // return moment.utc(dateIso).tz(moment.tz.guess(true)).fromNow()
-    return 'under maintenance'
+export const useRangeFromNow = (dateIso: string, localeCode?: any) => {
+    let tempLocaleCode = localeCode === 'zh-Hans' ? 'zhCN' : 'localeCode'
+    const datedate = new Date(dateIso)
+    return formatDistanceToNow(datedate, { locale: localesCode[tempLocaleCode] })
 }
