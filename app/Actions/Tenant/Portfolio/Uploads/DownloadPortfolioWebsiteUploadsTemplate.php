@@ -7,22 +7,23 @@
 
 namespace App\Actions\Tenant\Portfolio\Uploads;
 
+use App\Exports\PortfolioWebsite\WebsiteTemplateExport;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
-use Storage;
-use Symfony\Component\HttpFoundation\StreamedResponse;
+use Maatwebsite\Excel\Facades\Excel;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class DownloadPortfolioWebsiteUploadsTemplate
 {
     use AsAction;
     use WithAttributes;
 
-    public function handle(): StreamedResponse
+    public function handle(): BinaryFileResponse
     {
-        return Storage::disk('local')->download('websites/template.xlsx');
+        return Excel::download(new WebsiteTemplateExport(), 'template.xlsx');
     }
 
-    public function asController(): StreamedResponse
+    public function asController(): BinaryFileResponse
     {
         return $this->handle();
     }
