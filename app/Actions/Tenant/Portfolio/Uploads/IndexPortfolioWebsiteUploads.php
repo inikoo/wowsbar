@@ -23,7 +23,7 @@ class IndexPortfolioWebsiteUploads
     {
         /** @var \App\Models\Tenancy\Tenant $tenant */
         $tenant = app('currentTenant');
-        return $tenant->portfolioWebsiteUploads()->limit(4)->get();
+        return $tenant->portfolioWebsiteUploads()->orderByDesc('id')->limit(4)->get();
     }
 
     public function jsonResponse(Collection $websiteUploads): AnonymousResourceCollection
