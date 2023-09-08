@@ -9,6 +9,7 @@ namespace App\Actions\Tenant\Portfolio\Uploads;
 
 use App\Http\Resources\Portfolio\WebsiteUploadsResource;
 use App\Models\WebsiteUpload;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
@@ -18,7 +19,7 @@ class IndexPortfolioWebsiteUploads
     use AsAction;
     use WithAttributes;
 
-    public function handle(): WebsiteUpload
+    public function handle(): Collection
     {
         return app('currentTenant')->portfolioWebsiteUploads()->limit(5)->get();
     }
@@ -28,7 +29,7 @@ class IndexPortfolioWebsiteUploads
         return WebsiteUploadsResource::collection($websiteUploads);
     }
 
-    public function asController(): WebsiteUpload
+    public function asController(): Collection
     {
         return $this->handle();
     }
