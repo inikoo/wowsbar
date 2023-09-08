@@ -24,7 +24,7 @@ class UploadPortfolioWebsite
      */
     private bool $asAction = false;
 
-    public function handle(ActionRequest $request)
+    public function handle(ActionRequest $request): void
     {
         $file = $request->file('file');
         $filename = $file->hashName();
@@ -38,7 +38,7 @@ class UploadPortfolioWebsite
     /**
      * @throws \Throwable
      */
-    public function asController(ActionRequest $request)
+    public function asController(ActionRequest $request): void
     {
         $this->handle($request);
     }
