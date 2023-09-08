@@ -10,6 +10,7 @@ namespace App\Actions\Tenant\Portfolio\Uploads;
 use App\Http\Resources\Portfolio\WebsiteUploadsResource;
 use App\Models\WebsiteUpload;
 use Excel;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Response;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -25,7 +26,7 @@ class IndexPortfolioWebsiteUploads
         return app('currentTenant')->portfolioWebsiteUploads()->limit(5)->get();
     }
 
-    public function jsonResponse(WebsiteUpload $websiteUploads): JsonResource
+    public function jsonResponse(WebsiteUpload $websiteUploads): AnonymousResourceCollection
     {
         return WebsiteUploadsResource::collection($websiteUploads);
     }
