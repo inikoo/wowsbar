@@ -13,30 +13,34 @@ import { capitalize } from "@/Composables/capitalize"
 import Modal from '@/Components/Utils/Modal.vue'
 import Button from '@/Components/Elements/Buttons/Button.vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faUpload } from '@/../private/pro-regular-svg-icons'
-import { faFile, faTimes } from '@/../private/pro-light-svg-icons'
+import { faUpload, faFile as falFile, faTimes } from '@/../private/pro-light-svg-icons'
+import { faFile as fasFile, faFileDownload } from '@/../private/pro-solid-svg-icons'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { trans } from 'laravel-vue-i18n'
 import axios from 'axios'
 
 import Pusher from 'pusher-js'
 
+library.add(faUpload, falFile, faTimes, faFileDownload, fasFile)
 
-const pusher = new Pusher('3217cf955501353f32b2', {
+const pusher = new Pusher(import.meta.env.VITE_PUSHER_APP_KEY, {
     cluster: 'ap1'
 });
 
-const asdfg = ref({data: {total_uploads: 0,
-total_complete: 0   }})
+const dataPusher = ref({
+    data: {
+        total_uploads: 0,
+        total_complete: 0
+    }
+})
 
 const channel = pusher.subscribe('uploads.aiku');
     channel.bind('WebsiteUpload', (data: any) => {
-        asdfg.value = data
+        dataPusher.value = data
         console.log("==============")
         console.log(data)
     });
 
-library.add(faUpload, faFile, faTimes)
 
 const props = defineProps<{
     pageHead: object
@@ -66,10 +70,10 @@ const onUpload = async (fileUploaded: any) => {
 }
 
 const uploadHistory = [
-    { name: 'dummy.xlsx', date_uploaded: 'August 02 2023'},
-    { name: 'default.csv', date_uploaded: 'Sept 05 2023'},
-    { name: 'untitled.csv', date_uploaded: 'Oct 03 2023'},
-    { name: 'new file.xlsx', date_uploaded: 'August 19 2023'},
+    { name: 'dummy.xlsx', row: 132, date_uploaded: 'August 02 2023'},
+    { name: 'default.csv', row: 15, date_uploaded: 'Sept 05 2023'},
+    { name: 'untitled untitled untitled.csv', row: 47, date_uploaded: 'Oct 03 2023'},
+    { name: 'new file.xlsx', row: 114, date_uploaded: 'August 19 2023'},
 ]
 
 const numberr = ref(0)
@@ -79,7 +83,7 @@ const numberr = ref(0)
 // }, 500)
 
 const compProgressBar = computed(() => {
-    return asdfg.value?.data.total_complete/asdfg.value?.data.total_uploads * 100
+    return dataPusher.value?.data.total_uploads ? dataPusher.value?.data.total_complete/dataPusher.value?.data.total_uploads * 100 : 0
 })
 </script>
 
@@ -89,15 +93,61 @@ const compProgressBar = computed(() => {
         <template #button0>
             <!-- Button Upload -->
             <Button @click="isModalOpen = true" :style="'secondary'" class="rounded-l-none border-none rounded-r-none"  alt="Import website via file">
-                <FontAwesomeIcon icon='fal fa-upload' class='' aria-hidden='true' />
+                <FontAwesomeIcon icon='fas fa-upload' class='' aria-hidden='true' />
             </Button>
         </template>
     </PageHeading>
+    <TablePortfolioWebsites :data="data" />
+
+    <!-- Modal: Upload -->
+    <Modal :isOpen="isModalOpen" @onClose="isModalOpen = false">
+        <div class="flex justify-center py-2 text-gray-600 font-medium mb-3">Upload your new website</div>
+        <div class="grid grid-cols-2 gap-x-3">
+            <!-- Column upload -->
+            <div class="space-y-2">
+                <div class="relative flex justify-center rounded-lg border border-dashed border-gray-700/25 px-6 py-10 bg-gray-400/10 hover:bg-gray-400/20">
+                    <label for="fileInput"
+                        class="absolute cursor-pointer rounded-md inset-0 focus-within:outline-none focus-within:ring-0 focus-within:ring-gray-400 focus-within:ring-offset-0">
+                        <input type="file" name="file" id="fileInput" class="sr-only" @change="onUpload"
+                            ref="fileInput" accept=".xlsx, .xls, .csv"/>
+                    </label>
+                    <div class="text-center text-gray-500">
+                        <FontAwesomeIcon icon="fal fa-file" class="mx-auto h-12 w-12 text-gray-300" aria-hidden="true" />
+                        <div class="mt-2 flex  justify-center text-lg font-medium leading-6 ">
+                            <p class="pl-1">{{ trans("Upload file") }}</p>
+                        </div>
+                        <div class="flex text-sm leading-6 ">
+                            <p class="pl-1">{{ trans("Click or drag & drop") }}</p>
+                        </div>
+                        <p class="text-xs">
+                            {{ trans(".csv, .xls, .xlsx") }}
+                        </p>
+                    </div>
+                </div>
+                <div class="group text-xs text-gray-600 cursor-pointer px-2 w-fit">
+                    <FontAwesomeIcon icon='fas fa-file-download' class='text-gray-400 group-hover:text-gray-600' aria-hidden='true' />
+                    Download template .xlsx
+                </div>
+            </div>
+
+            <!-- Table History -->
+            <div class="order-last flex items-start gap-x-2 gap-y-2 flex-col">
+                <div class="text-sm text-gray-600">Recent uploaded website:</div>
+                <div class="flex flex-wrap gap-x-2 gap-y-2">
+                    <div v-for="(person, index) in uploadHistory" :key="index" class="w-36 bg-gray-100 border-t-[3px] border-gray-500 rounded px-2 py-1 flex flex-col justify-start gap-y-1 cursor-pointer hover:bg-gray-200">
+                        <p class="text-lg text-gray-700 font-semibold">{{ person.row }} <span class="text-xs text-gray-500 font-normal">rows</span></p>
+                        <span class="text-gray-600 text-xs leading-none">{{ person.name }}</span>
+                        <span class="text-gray-400 text-xxs">{{ person.date_uploaded }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </Modal>
 
     <!-- Progress Bar -->
-    <div :class="true ? 'bottom-12' : '-bottom-12'" class="fixed right-1/2 translate-x-1/2 transition-all duration-200 ease-in-out flex gap-x-1">
+    <div :class="compProgressBar ? 'bottom-12' : '-bottom-12'" class="z-50 fixed right-1/2 translate-x-1/2 transition-all duration-200 ease-in-out flex gap-x-1">
         <div class="flex justify-center items-center flex-col gap-y-1">
-            <div>Uploading website ({{asdfg.data.total_complete}}/<span class="font-semibold inline">{{asdfg.data.total_uploads}}</span>)</div>
+            <div>Uploading website ({{ dataPusher.data.total_complete }}/<span class="font-semibold inline">{{ dataPusher.data.total_uploads }}</span>)</div>
             <div class="overflow-hidden rounded-full bg-gray-200 w-64">
                 <div class="h-2 rounded-full bg-slate-600 transition-all duration-100 ease-in-out" :style="`width: ${compProgressBar}%`" />
             </div>
@@ -106,66 +156,5 @@ const compProgressBar = computed(() => {
             <FontAwesomeIcon icon='fal fa-times' class='text-xs' aria-hidden='true' />
         </div>
     </div>
-
-    <TablePortfolioWebsites :data="data" />
-
-    <!-- Modal: Upload -->
-    <Modal :isOpen="isModalOpen" @onClose="isModalOpen = false">
-        <div class="grid grid-cols-2 grid-rows-2">
-            <div class="relative mt-2 flex justify-center rounded-lg border border-dashed border-gray-700/25 px-6 py-10 bg-gray-400/10 hover:bg-gray-400/20">
-                <label for="fileInput" 
-                    class="absolute cursor-pointer rounded-md inset-0 focus-within:outline-none focus-within:ring-0 focus-within:ring-gray-400 focus-within:ring-offset-0">
-                    <input type="file" name="file" id="fileInput" class="sr-only" @change="onUpload"
-                        ref="fileInput" accept=".xlsx, .xls, .csv"/>
-                </label>
-                <div class="text-center text-gray-500">
-                    <FontAwesomeIcon :icon="['fal', 'file']" class="mx-auto h-12 w-12 text-gray-300" aria-hidden="true" />
-                    <div class="mt-2 flex  justify-center text-lg font-medium leading-6 ">
-                        <p class="pl-1">{{ trans("Upload file") }}</p>
-                    </div>
-                    <div class="flex text-sm leading-6 ">
-                        <p class="pl-1">{{ trans("Click or drag & drop") }}</p>
-                    </div>
-                    <p class="text-[0.8rem]">
-                        {{ trans(".csv, .xls, .xlsx") }}
-                    </p>
-                </div>
-            </div>
-            <div >
-                <FontAwesomeIcon v-if="isLoadingFetch" icon='fad fa-spinner-third' class='animate-spin w-1/4 h-1/4' aria-hidden='true' />
-            </div>
-            <div />
-            <div class="order-last flex items-end">
-                <table class="flex-none w-full text-left text-gray-500 text-sm rounded overflow-hidden ring-1 ring-gray-300">
-                    <thead class="bg-gray-100">
-                        <tr class="border-b border-gray-300">
-                            <th scope="col" class="px-2 pt-2 pb-1 text-sm font-semibold text-gray-700 text-center">
-                                No.
-                            </th>
-                            <th scope="col" class="px-2 pt-2 pb-1 text-left text-sm font-semibold text-gray-700">
-                                Name
-                            </th>
-                            <th scope="col" class="px-3 pt-2 pb-1 text-left text-sm font-semibold text-gray-700">
-                                Date uploaded
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="(person, index) in uploadHistory" :key="index" class="">
-                            <td class="py-0.5 text-sm text-center">
-                                {{ index+1 }}.
-                            </td>
-                            <td class="px-3 text-gray-600">
-                                {{ person.name }}
-                            </td>
-                            <td class="px-3">
-                                {{ person.date_uploaded }}
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </Modal>
 
 </template>

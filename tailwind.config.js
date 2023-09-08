@@ -15,6 +15,9 @@ export default {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
+            fontSize: {
+                xxs: '0.6rem'
+            },
             colors: {
                 'regal-pink': '#EDBBBA',
             },
