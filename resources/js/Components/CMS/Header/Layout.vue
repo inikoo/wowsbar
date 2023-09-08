@@ -1,29 +1,26 @@
 <script setup lang="ts">
 import VueResizable from "vue-resizable"
-import { ref, onMounted, defineExpose } from "vue"
-import { get } from "lodash"
+import { ref } from "vue"
+import { set, get } from "lodash"
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faHandPointer, faHandRock, faPlus, faText, faSearch, faImage } from '@/../private/pro-solid-svg-icons';
 import Input from "../Fields/Input.vue"
+library.add(faHandPointer, faText, faSearch, faImage)
 const props = defineProps<{
 	data: Array
-	setPosition: Function
-	changeName: Function
 	layout: Object
 	setActive: Function
 	layerActive: Object
 }>()
 
-console.log('dddd',props)
-
-// defineExpose({
-//   setdragElement,
-// });
 
 function setdragElement(ref, value) {
 	value.ref = ref
 	dragElement(ref, value)
 }
 
-function dragElement(elmnt, set) {
+function dragElement(elmnt, dataSet) {
 	let pos3 = 0, pos4 = 0
 
 	const dragMouseDown = (e) => {
@@ -65,14 +62,16 @@ function dragElement(elmnt, set) {
 			elmnt.style.top = newTop + "px"
 			elmnt.style.left = newLeft + "px"
 		}
-		props.setPosition({ top: newTop, left: newLeft }, set)
+		set(dataSet, 'style', { ...dataSet.style, top: `${newTop}px`, left: `${newLeft}px` })
+
+
 	}
 
 	const closeDragElement = () => {
 		document.onmouseup = null
 		document.onmousemove = null
 	}
- 
+
 	if (elmnt) elmnt.querySelector(".draggable-handle").addEventListener("mousedown", dragMouseDown)
 }
 
@@ -95,53 +94,47 @@ const generateThumbnail = (file) => {
 </script>
 
 <template>
-  <vue-resizable
-    class="container bg-white"
-    :minHeight="200"
-    :maxWidth="1233"
-    :minWidth="1233"
-    :height="layout.height"
-    :left="layout.left"
-    :top="layout.top"
-    @mount="eHandler"
-    @resize:move="eHandler"
-    @resize:start="eHandler"
-    @resize:end="eHandler"
-    @drag:move="eHandler"
-    @drag:start="eHandler"
-    @drag:end="eHandler"
-  >
-    <div v-for="(item, index) in props.data" :key="item.id">
-      <div
-        v-if="item.type == 'text'"
-        :ref="(refValue) => setdragElement(refValue, item)"
-        class="col-sm-10 draggable-component"
-        :style="{ ...item.style }"
-      >
-        <div :class="['draggable-handle', { border: get(data[layerActive], 'id') === item.id }]" @click="(e) => { e.stopPropagation(); props.setActive(index) }">
-          <Input :data="item" keyValue="name" :styleCss="item.style"/>
-        </div>
-      </div>
+	<vue-resizable class="container bg-white" :minHeight="200" :maxWidth="1233" :minWidth="1233" :height="layout.height"
+		:left="layout.left" :top="layout.top" @mount="eHandler" @resize:move="eHandler" @resize:start="eHandler"
+		@resize:end="eHandler" @drag:move="eHandler" @drag:start="eHandler" @drag:end="eHandler">
+		<div v-for="(item, index) in props.data.slice().reverse()" :key="item.id">
+			<div v-if="item.type == 'text'" :ref="(refValue) => setdragElement(refValue, item)"
+				class="col-sm-10 draggable-component" :style="{ ...item.style }">
+				<div :class="['draggable-handle', { border: get(data[layerActive], 'id') === item.id }]"
+					@click="(e) => { e.stopPropagation(); props.setActive(item.id) }">
+					<Input :data="item" keyValue="name" :styleCss="item.style" />
+				</div>
+			</div>
 
-     
-        <vue-resizable
-          :key="item.id"
-          :maxWidth="layout.height"
-          :maxHeight="1233"
-          v-if="item.type == 'image'" 
-          :ref="(refValue) => setdragElement(refValue.$el, item)" 
-          class="col-sm-10 draggable-component" 
-          :style="{ ...item.style }"
-        >
-   
-            <img :class="['draggable-handle', { border: get(data[layerActive], 'id') === item.id }]"  @click="(e) => { e.stopPropagation(); props.setActive(index) }" class="preview-img" :src="generateThumbnail(item)" style="width: 100%; height: 100%;"/>
-        
-        </vue-resizable>
-    
-      
-      </div>
+			<div v-if="item.type == 'search'" :ref="(refValue) => setdragElement(refValue, item)"
+				class="col-sm-10 draggable-component" :style="{ ...item.style }">
+				<div :class="['draggable-handle', { border: get(data[layerActive], 'id') === item.id }]"
+					@click="(e) => { e.stopPropagation(); props.setActive(item.id) }">
+					<div class="relative">
+						<input
+							class="dark:bg-gray-600 block w-full pl-9 pr-9 text-sm rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500 dark:focus:border-gray-400 border-gray-300 dark:border-gray-500"
+							placeholder="search" type="text" name="global" :readonly="true">
+						<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+							<FontAwesomeIcon icon="far fa-search" class="h-4 w-4 text-gray-400" aria-hidden="true" />
+						</div>
 
-  </vue-resizable>
+					</div>
+				</div>
+			</div>
+
+
+			<div v-if="item.type == 'image'" :ref="(refValue) => setdragElement(refValue, item)"
+				class="col-sm-10 draggable-component" :style="{ ...item.style }">
+				<div :class="['draggable-handle', { border: get(data[layerActive], 'id') === item.id }]"
+					@click="(e) => { e.stopPropagation(); props.setActive(item.id) }">
+					<img :class="['draggable-handle', { border: get(data[layerActive], 'id') === item.id }]" class="preview-img"
+						:src="generateThumbnail(item)" style="width: 200px; height: 100px;" />
+				</div>
+			</div>
+		</div>
+
+
+	</vue-resizable>
 </template>
 
 

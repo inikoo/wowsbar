@@ -5,20 +5,18 @@
   -->
 
 <script setup>
-import { ref } from 'vue'
+import { ref, reactive } from 'vue'
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { RadioGroup, RadioGroupLabel, RadioGroupOption } from '@headlessui/vue'
-import { faHandPointer, faHandRock, faPlus } from '@/../private/pro-solid-svg-icons';
-// import { fab } from "@fortawesome/free-brands-svg-icons"
+import { faHandPointer, faHandRock, faPlus, faText, faSearch, faImage, faTrash, faBars } from '@/../private/pro-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { ulid } from "ulid";
 import { get } from 'lodash'
+import Input from '@/Components/CMS/Fields/Input.vue';
 import Layout from '../Header/Layout.vue';
-import ColorPicker from '@/Components/CMS/Fields/ColorPicker.vue'
-import FontSize from '@/Components/CMS/Fields/Fontsize.vue'
-import FontDecorator from '@/Components/CMS/Fields/FontDecorator.vue'
 import ToolsTop from '@/Components/CMS/Header/ToolsTop.vue';
-library.add(faHandPointer, faHandRock, faPlus)
+import draggable from "vuedraggable"
+library.add(faHandPointer, faText, faSearch, faImage, faTrash, faBars)
 
 const Dummy = {
     tools: [
@@ -27,20 +25,72 @@ const Dummy = {
         // { name: 'Heather Grey', icon: ['fas', 'fa-hand-pointer']},
     ],
     addContent: [
-        { name: 'Add Text', value: 'text' },
-        { name: 'Add Image', value: 'image' },
+        { name: 'Text', value: 'text', icon: "fas fa-text" },
+        { name: 'Image', value: 'image', icon: "fas fa-image" },
+        { name: 'Search', value: 'search', icon: "fas fa-search" },
     ],
 }
-const data = ref([
-    {
-        name: 'AW Gift',
-        id: ulid(),
-        type: 'text',
-        style: { top: '75px', left: '536px', fontSize: '34px', },
-    },
-])
+
+const data = reactive(
+    [
+        {
+            name: "Tel: +44 (0) 1142729165   info@aw-fulfilment.co.uk",
+            id: ulid(),
+            type: "text",
+            style: {
+                top: '111px',
+                left: '936px',
+                fontSize: "11px"
+            },
+
+        },
+        {
+            name: "We Can Fulfil Your Orders",
+            id: ulid(),
+            type: "text",
+            style: {
+                top: '45px',
+                left: '934px',
+                fontSize: "11px"
+            },
+        },
+        {
+            name: "search",
+            id: ulid(),
+            type: "search",
+            style: {
+                top: '65px',
+                left: '933px',
+                fontSize: "34px"
+            }
+        },
+        {
+            name: "Your UK's Best Fulfilment Warehouse",
+            id: ulid(),
+            type: "text",
+            style: {
+                top: '46px',
+                left: '336px',
+                fontSize: "28px",
+                color: "rgba(255, 128, 0, 1)"
+            }
+        },
+        {
+            name: "Storage - Pick & Pack - Distribution",
+            id: ulid(),
+            type: "text",
+            style: {
+                top: '83px',
+                left: '400px',
+                fontSize: "22px",
+                color: "rgba(255, 218, 0, 1)"
+            },
+        }
+    ]
+)
+
 const layerActive = ref(null)
-const handtools = ref(Dummy.tools[0])
+
 const layout = ref({
     right: 0,
     bottom: 0,
@@ -49,146 +99,142 @@ const layout = ref({
     left: 0,
     top: 0,
 })
-const layoutExpose = ref(null)
 
 
-const setPosition = (value, item) => {
-    const index = data.value.findIndex((i) => i.id == item.id)
-    data.value[index].style = { ...data.value[index].style, ...value }
-}
-
-const changeName = (value) => {
-    const index = data.value.findIndex((i) => i.id == value.column.id)
-    data.value[index].name = value.value
-}
-
-const setActive = (index) => {
-    layerActive.value = index
-}
-
-const changeColor = (color) => {
-    if (data.value[layerActive.value]) {
-        data.value[layerActive.value].style.color = color
-    }
-}
-
-const changesize = (size) => {
-    if (data.value[layerActive.value]) {
-        data.value[layerActive.value].style.fontSize = `${size}px`
-    }
-}
-
-const changeText = (value) => {
-    if (data.value[layerActive.value]) {
-        data.value[layerActive.value].style = value
-    }
+const setActive = (id) => {
+    const index = data.findIndex((item) => item.id == id)
+    if (index >= 0) layerActive.value = index
+    else layerActive.value = null
 }
 
 const createContent = (value) => {
-    if (value == 'text') data.value.push({
-        name: 'Title',
-        id: ulid(),
-        type: 'text',
-        style: { top: '75px', left: '536px', fontSize: '34px', },
-    })
+    if (value == 'text')
+        data.push({
+            name: 'Title',
+            id: ulid(),
 
+            type: 'text',
+            style: { top: '75px', left: '536px', fontSize: '34px', },
+        })
+    if (value == 'search')
+        data.push({
+            name: 'search',
+            id: ulid(),
+            type: 'search',
+            style: { top: '75px', left: '536px', fontSize: '34px', },
+        })
 }
 
 const fileInput = ref(null)
-
 const Uploadimage = () => {
-    for (const set of fileInput.value.files) {
-        data.value.push({
-        name: 'image',
-        id: ulid(),
-        type: 'image',
-        style: { top: '0px', left: '0px' },
-        file : set
-    })
+    for (const set of fileInput.value[0].files) {
+        console.log(set)
+        data.push({
+            name: 'image',
+            id: ulid(),
+            type: 'image',
+            style: { top: '0px', left: '0px' },
+            file: set
+        })
     }
 }
+
+const deleteContent = (index) => [
+    data.splice(index, 1)
+]
 
 </script>
 
 <template>
     <div class="bg-white">
-        <div class="pb-16 pt-6 sm:pb-24">
-            <div class="mt-8 px-4 sm:px-6 lg:px-8">
-                <div class="flex" @click="layerActive = null">
-                    <!-- tools -->
-                    <div class="w-1/4 p-6 overflow-y-auto overflow-x-hidden"
-                        style="border: 1px solid #bfbfbf; height: 46rem">
-                        <form>
-                            <div>
-                                <h2 class="text-sm font-medium text-gray-900">Tools</h2>
-                                <RadioGroup v-model="handtools" class="mt-2">
-                                    <RadioGroupLabel class="sr-only">Choose a tool</RadioGroupLabel>
-                                    <div class="flex items-center space-x-3">
-                                        <RadioGroupOption as="template" v-for="color in Dummy.tools" :key="color.name"
-                                            :value="color" v-slot="{ active, checked }">
-                                            <div :class="[
-                                                color.tools,
-                                                active && checked ? 'ring ring-offset-1' : '',
-                                                !active && checked ? 'ring-2' : '',
-                                                'relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-none',
-                                            ]">
-                                                <RadioGroupLabel as="span" class="sr-only">{{ color.name }}
-                                                </RadioGroupLabel>
-                                                <span aria-hidden="true" class="flex items-center justify-center">
-                                                    <span
-                                                        class="h-8 w-8 rounded-full border border-black border-opacity-10 flex items-center justify-center">
-                                                        <span style="line-height: 1">
-                                                            <FontAwesomeIcon :icon="color.icon" aria-hidden="true" />
-                                                        </span>
-                                                    </span>
-                                                </span>
-                                            </div>
-                                        </RadioGroupOption>
-                                    </div>
-                                </RadioGroup>
-                            </div>
-                            <hr class="mt-5 mb-5" />
-                            <div>
-                                <h2 class="text-sm font-medium text-gray-900">Tools</h2>
-                                <div class="mt-2">
-                                    <div class="sr-only">Choose a tool</div>
-                                    <div class="flex items-center space-x-3">
-                                        <div as="template" v-for="data in Dummy.addContent" :key="data.value">
-                                            <div v-if="data.value !== 'image'"
-                                                class='relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-none'>
-                                                <div @click="createContent(data.value)"
-                                                    :class="['flex items-center justify-center rounded-md border py-3 px-3 text-sm font-medium uppercase sm:flex-1']">
-                                                    <div as="span">{{ data.name }}</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div
-                                            class='relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-none'>
-                                            <div
-                                                :class="['flex items-center justify-center rounded-md border py-3 px-3 text-sm font-medium uppercase sm:flex-1']">
-                                                <input type="file" multiple name="file" id="fileInput" class="sr-only"
-                                                    @change="Uploadimage" ref="fileInput" accept=".jpg,.jpeg,.png" />
-                                                <label for="fileInput" as="span">Add Image</label>
-                                            </div>
+        <div class="flex" @click="layerActive = null">
+            <div class="w-1/4 p-6 overflow-y-auto overflow-x-hidden border border-gray-300 border-1 h-[46rem]">
+
+                <div>
+                    <h2 class="text-sm font-medium text-gray-900">Content</h2>
+                    <div class="mt-2">
+                        <div class="flex items-center space-x-3">
+                            <div as="template" v-for="item in Dummy.addContent">
+                                <div v-if="item.value !== 'image'"
+                                    class='relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-none'>
+                                    <div @click="createContent(item.value)"
+                                        :class="['flex items-center justify-center rounded-md border py-3 px-3 text-sm font-medium uppercase sm:flex-1']">
+                                        <div as="span">
+                                            <FontAwesomeIcon :icon="item.icon" />
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </form>
-                    </div>
-                    <!-- Image gallery -->
-                    <div style="width: 90%; background: #f2f2f2; border: 1px solid #bfbfbf; overflow:hidden">
-                        <ToolsTop v-if="data[layerActive]" :data="data" :layerActive="layerActive" />
-                        <div class="p-3 relative">
-                            <div>
-                                <Layout :data="data" :setPosition="setPosition" :changeName="changeName" :layout="layout"
-                                    :setActive="setActive" :layerActive="layerActive" ref="layoutExpose" />
+                                <div v-if="item.value == 'image'"
+                                    class='relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-none'>
+                                    <div
+                                        :class="['flex items-center justify-center rounded-md border py-3 px-3 text-sm font-medium uppercase sm:flex-1']">
+                                        <input type="file" multiple name="file" id="fileInput" class="sr-only"
+                                            @change="Uploadimage" ref="fileInput" accept=".jpg,.jpeg,.png" />
+                                        <label for="fileInput" as="span">
+                                            <FontAwesomeIcon :icon="item.icon" />
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <!-- list data -->
+                <hr class="my-5" />
+                <div>
+                    <h2 class="text-sm font-medium text-gray-900">Content</h2>
+                    <div class="mt-2 bg-gray-300 py-2.5 rounded-md ring-2 ring-gray-400">
+                        <draggable :list="data" group="content" item-key="id" handle=".handle" class="px-2">
+                            <template #item="{ element: item, index }">
+                                <div
+                                    class="flex gap-3 px-2.5 py-2.5 ring-1 ring-gray-400 rounded-md bg-gray-100 flex-grow h-fit mt-1.5">
+                                    <div class="flex justify-center items-center  text-gray-600 rounded-md h-fit  py-1">
+                                        <font-awesome-icon :icon="['fas', 'bars']" class="handle cursor-grab" />
+                                    </div>
+                                    <div
+                                        class="flex items-center justify-center rounded-md border border-gray-300 py-1 px-3 text-sm w-[15%] h-fit">
+                                        <font-awesome-icon :icon="['fas', 'text']" v-if="item.type == 'text'" />
+                                        <font-awesome-icon :icon="['fas', 'search']" v-if="item.type == 'search'" />
+                                        <font-awesome-icon :icon="['fas', 'image']" v-if="item.type == 'image'" />
+                                    </div>
+                                    <div v-if="item.type == 'text'"
+                                        class="w-full ring-1 ring-gray-300 rounded-md flex justify-center items-center h-fit">
+                                        <Input :data="item" keyValue="name"
+                                            styleCss="font-size: 12px; border:none; padding:0px" />
+                                    </div>
+                                    <div v-if="item.type == 'search'"
+                                        class="w-full ring-1 ring-gray-300 rounded-md flex justify-center items-center h-fit">
+                                        Search
+                                    </div>
+                                    <div v-if="item.type == 'image'"
+                                        class="w-full ring-1 ring-gray-300 rounded-md flex justify-center items-center h-fit">
+                                        Image
+                                    </div>
+                                    <div class="flex justify-center items-center  text-red-600 rounded-md h-fit  py-1">
+                                        <font-awesome-icon :icon="['fas', 'trash']" @click="deleteContent(index)" />
+                                    </div>
+                                </div>
+                            </template>
+                        </draggable>
+                    </div>
+
+                </div>
+
+
             </div>
+
+            <!-- editing area -->
+            <div style="width: 90%; background: #f2f2f2; border: 1px solid #bfbfbf; overflow:hidden">
+                <ToolsTop v-if="data[layerActive]" :data="data" :layerActive="layerActive" />
+                <div class="p-3 relative">
+                    <Layout :data="data" :layout="layout" :setActive="setActive" :layerActive="layerActive" />
+                </div>
+            </div>
+
         </div>
+
     </div>
-    <div @click="()=>console.log(data)">cekdata</div>
+    <div @click="() => console.log(data)">cekdata</div>
 </template>
+
