@@ -108,35 +108,39 @@ const setActive = (id) => {
 }
 
 const createContent = (value) => {
+    let setData = {}
     if (value == 'text')
-        data.push({
+        setData = {
             name: 'Title',
             id: ulid(),
 
             type: 'text',
             style: { top: '75px', left: '536px', fontSize: '34px', },
-        })
+        }
     if (value == 'search')
-        data.push({
+        setData = {
             name: 'search',
             id: ulid(),
             type: 'search',
             style: { top: '75px', left: '536px', fontSize: '34px', },
-        })
+        }
+
+    data.splice(0, 0, setData)
 }
 
 const fileInput = ref(null)
 const Uploadimage = () => {
+    let setData = {}
     for (const set of fileInput.value[0].files) {
-        console.log(set)
-        data.push({
+        setData = {
             name: 'image',
             id: ulid(),
             type: 'image',
             style: { top: '0px', left: '0px' },
             file: set
-        })
+        }
     }
+    data.splice(0, 0, setData)
 }
 
 const deleteContent = (index) => [
@@ -168,7 +172,7 @@ const deleteContent = (index) => [
                                     class='relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-none'>
                                     <div
                                         :class="['flex items-center justify-center rounded-md border py-3 px-3 text-sm font-medium uppercase sm:flex-1']">
-                                        <input type="file" multiple name="file" id="fileInput" class="sr-only"
+                                        <input type="file"  name="file" id="fileInput" class="sr-only"
                                             @change="Uploadimage" ref="fileInput" accept=".jpg,.jpeg,.png" />
                                         <label for="fileInput" as="span">
                                             <FontAwesomeIcon :icon="item.icon" />
@@ -199,7 +203,7 @@ const deleteContent = (index) => [
                                         <font-awesome-icon :icon="['fas', 'image']" v-if="item.type == 'image'" />
                                     </div>
                                     <div v-if="item.type == 'text'"
-                                        class="w-full ring-1 ring-gray-300 rounded-md flex justify-center items-center h-fit">
+                                        class="w-full ring-1 ring-gray-300 rounded-md flex justify-center items-center h-fit whitespace-nowrap overflow-hidden overflow-ellipsis px-2">
                                         <Input :data="item" keyValue="name"
                                             styleCss="font-size: 12px; border:none; padding:0px" />
                                     </div>
@@ -226,7 +230,7 @@ const deleteContent = (index) => [
 
             <!-- editing area -->
             <div style="width: 90%; background: #f2f2f2; border: 1px solid #bfbfbf; overflow:hidden">
-                <ToolsTop v-if="data[layerActive]" :data="data" :layerActive="layerActive" />
+                <ToolsTop  :data="data" :layerActive="layerActive" @click="(e)=>e.stopPropagation()" />
                 <div class="p-3 relative">
                     <Layout :data="data" :layout="layout" :setActive="setActive" :layerActive="layerActive" />
                 </div>
