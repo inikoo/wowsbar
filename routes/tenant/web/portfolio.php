@@ -29,6 +29,8 @@ use App\Actions\Tenant\Portfolio\PortfolioWebsite\UI\RemovePortfolioWebsite;
 use App\Actions\Tenant\Portfolio\PortfolioWebsite\UI\ShowPortfolioWebsite;
 use App\Actions\Tenant\Portfolio\Snapshot\UI\IndexSnapshots;
 use App\Actions\Tenant\Portfolio\Snapshot\UI\ShowSnapshot;
+use App\Actions\Tenant\Portfolio\Uploads\DownloadPortfolioWebsiteUploadsTemplate;
+use App\Actions\Tenant\Portfolio\Uploads\IndexPortfolioWebsiteUploads;
 use App\Actions\UI\Tenant\Portfolio\ShowPortfolio;
 use Illuminate\Support\Facades\Route;
 
@@ -106,3 +108,7 @@ Route::prefix('gallery')->group(function () {
 });
 
 //Route::get('/images', IndexImages::class)->name('images.index');
+
+
+Route::get('/portfolio-websites/uploads/history', IndexPortfolioWebsiteUploads::class)->name('website.uploads.history');
+Route::get('/portfolio-websites/uploads/template/download', DownloadPortfolioWebsiteUploadsTemplate::class)->name('website.uploads.template.download');
