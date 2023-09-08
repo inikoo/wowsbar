@@ -72,10 +72,15 @@ task('install:prepare', [
     'install:seeding',
 ]);
 
-desc('Install wowsbar');
-task('install', [
+
+desc('Clean up supervisor');
+task('install:clean-supervisor', [
     'supervisor:remove',
     'supervisor:reread-update',
+]);
+
+desc('Install wowsbar');
+task('install', [
     'install:delete_deploy_path',
     'install:reset-db',
     'install:prepare',

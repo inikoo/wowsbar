@@ -12,6 +12,7 @@ namespace Deployer;
 
 require_once __DIR__.'/../vendor/autoload.php';
 
+use Exception;
 use Webmozart\Assert\Assert;
 use Symfony\Component\Finder\Finder;
 
@@ -73,8 +74,8 @@ task('supervisor:stop', static function (): void {
 })->desc('Stops all services managed by Supervisor');
 
 task('supervisor:remove',static function (): void {
-    run('sudo supervisorctl stop horizon-{{application}}-{{alias}}');
     run('sudo rm -rf {{supervisor_remote_dir}}/{{supervisor_config_filename}}');
+    run('sudo {{bin/supervisor}} stop horizon-{{application}}-{{alias}}');
 })->desc('Remove config file');
 
 task('supervisor:upload', static function (): void {
