@@ -10,10 +10,10 @@ const props = defineProps<{
 </script>
 
 <template>
-    <div class="h-[6%] bg-white p-[5px] w-full flex gap-3">
+    <div class="h-[6%] bg-white p-[5px] w-full flex gap-3" v-if="data[layerActive].type == 'text'">
         <div>
             <span aria-hidden="true">
-                <ColorPicker :data="data[layerActive]" :fieldName="['style','color']" :colorSuggestions="false"/>
+                <ColorPicker :data="data[layerActive]" :fieldName="['style','color']" :colorSuggestions="false" stylePanel="top:330px" @click="(e)=>e.stopPropagation"/>
             </span>
         </div>
         <div>
@@ -23,13 +23,16 @@ const props = defineProps<{
         </div>
         <div>
             <span aria-hidden="true">
-                <FontDecorator :fontDecorator="get(data[layerActive], ['style'], {})" :changeText="changeText"
+              <FontDecorator :data="data[layerActive]" :fieldName="['style']"
                     @click="(e) => e.stopPropagation()" />
             </span>
         </div>
 
     </div>
 </template>
+
+<style>
+</style>
 
 
 
