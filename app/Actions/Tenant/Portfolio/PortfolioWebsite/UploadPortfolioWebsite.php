@@ -34,12 +34,12 @@ class UploadPortfolioWebsite
         $path = 'tenants/' . app('currentTenant')->slug . '/websites';
         Storage::disk('local')->put($path, $file);
 
-        StorePortfolioWebsiteUploads::run(app('currentTenant'), [
+        $websiteUpload = StorePortfolioWebsiteUploads::run(app('currentTenant'), [
             'original_filename' => $file->getClientOriginalName(),
             'filename' => $filename
         ]);
 
-        Excel::import(new WebsiteImport(), $path . '/' . $filename);
+        Excel::import(new WebsiteImport($websiteUpload), $path . '/' . $filename);
     }
 
     /**
