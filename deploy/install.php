@@ -44,12 +44,19 @@ task('install:setup', function () {
 
 });
 
+desc('🎨 install artifacts');
+task('install:artifacts', function () {
+    run("cp artifacts/install/* {{deploy_path}}/current ");
+
+
+});
+
 add('crontab:jobs', [
     '* * * * * cd {{current_path}} && {{bin/php}} artisan schedule:run >> /dev/null 2>&1',
 ]);
 
 desc('Prepares a new release (wowsbar version)');
-task('deploy:prepare', [
+task('install:prepare', [
     'deploy:info',
     'install:setup',
     'deploy:setup',
@@ -65,11 +72,18 @@ task('deploy:prepare', [
     'install:seeding',
 ]);
 
+
+desc('Clean up supervisor');
+task('install:clean-supervisor', [
+    'supervisor:remove',
+    'supervisor:reread-update',
+]);
+
 desc('Install wowsbar');
 task('install', [
     'install:delete_deploy_path',
     'install:reset-db',
-    'deploy:prepare',
+    'install:prepare',
     'artisan:key:generate',
     'deploy:elasticsearch',
     'artisan:storage:link',
@@ -85,5 +99,6 @@ task('install', [
     'nginx:upload',
     'nginx:enable-site',
     'nginx:restart',
-    'crontab:sync'
+    'crontab:sync',
+    'install:artifacts'
 ]);

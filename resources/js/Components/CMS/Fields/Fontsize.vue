@@ -8,16 +8,14 @@ const props = defineProps<{
     fieldName: any
 }>()
 
-console.log('dfsdfhsfdsfdghgsfdghsfd',props)
 
 const emit = defineEmits()
 
 const setFormValue = (data: Object, fieldName: String) => {
     if (Array.isArray(fieldName)) {
-      console.log('asdfghjkl')
-        return getNestedValue(data, fieldName);
+        return parseInt(getNestedValue(data, fieldName).match(/\d+/)[0], 10)
     } else {
-        return data[fieldName];
+        return parseInt(data[fieldName].match(/\d+/)[0], 10)
     }
 }
 
@@ -29,13 +27,13 @@ const getNestedValue = (obj: Object, keys: Array) => {
 }
 
 
-const value = ref(parseInt(setFormValue(props.data,props.fieldName).match(/\d+/)[0], 10))
+const value = ref(setFormValue(props.data,props.fieldName))
 
 watch(value, (newValue) => {
-    updateFormValue(newValue);
+    updateFormValue(`${newValue}px`);
 });
 
-
+console.log('fontsize',props.data,value)
 
 const updateFormValue = (newValue: any) => {
     let target = { ...props.data };

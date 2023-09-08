@@ -38,7 +38,7 @@ echo "🏢 create organisation"
 php artisan org:create wowsbar wowsbar@inikoo.com Wowsbar 'Alejandro X' aiku hello GB GBP
 echo "🌱 create devel tenant"
 php artisan tenant:create aiku devels@aw-advantage.com Devs aiku hello GB GBP
-php artisan tenant:create test1 dev@aw-advantage.com Devs test1 hello GB GBP
+php artisan tenant:create dev dev@aw-advantage.com Devs dev hello GB GBP
 pg_dump -Fc -f "devops/devel/snapshots/tenant.dump" ${DB}
 echo "🌱 create test website with a banner"
 php artisan website:create aiku hello.com hello 'My website 😸'

@@ -20,10 +20,10 @@ class DuplicateBanner
     public function handle(Banner $banner): Banner
     {
         $banner->load('images', 'portfolioWebsite');
-        $newBanner = $banner->replicate();
-        $newBanner->name = $banner->name . '[Duplicated]';
+        $newBanner          = $banner->replicate();
+        $newBanner->name    = $banner->name . '[Duplicated]';
         $newBanner->live_at = $newBanner->live_snapshot_id = null;
-        $newBanner->state = BannerStateEnum::UNPUBLISHED;
+        $newBanner->state   = BannerStateEnum::UNPUBLISHED;
         $newBanner->push();
 
         $newBanner->stats()->create();
