@@ -18,7 +18,7 @@ class IndexPortfolioWebsiteUploads
     use AsAction;
     use WithAttributes;
 
-    public function handle()
+    public function handle(): WebsiteUpload
     {
         return app('currentTenant')->portfolioWebsiteUploads()->limit(5)->get();
     }
@@ -28,7 +28,7 @@ class IndexPortfolioWebsiteUploads
         return WebsiteUploadsResource::collection($websiteUploads);
     }
 
-    public function asController()
+    public function asController(): WebsiteUpload
     {
         return $this->handle();
     }
