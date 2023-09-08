@@ -13,6 +13,9 @@ import Icon from '@/Components/Icon.vue'
 import { faSeedling, faBroadcastTower } from "@/../private/pro-light-svg-icons"
 import Image from "@/Components/Image.vue"
 import { useFormatTime } from '@/Composables/useFormatTime'
+import { useLocaleStore } from '@/Stores/locale'
+
+const locale = useLocaleStore()
 
 library.add(faSeedling, faBroadcastTower)
 
@@ -61,13 +64,13 @@ function bannerRoute(banner: Banner) {
 
         <template #cell(created_at)="{ item }">
             <div>
-                {{ useFormatTime(item.created_at) }}
+                {{ useFormatTime(item.created_at, locale.language.code) }}
             </div>
         </template>
 
         <template #cell(updated_at)="{ item }">
             <div>
-                {{ useFormatTime(item.updated_at) }}
+                {{ useFormatTime(item.updated_at, locale.language.code) }}
             </div>
         </template>
     </Table>

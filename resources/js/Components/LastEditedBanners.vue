@@ -7,8 +7,14 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faBroadcastTower, faSeedling } from '@/../private/pro-light-svg-icons'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { useTruncate } from '@/Composables/useTruncate'
-import { useFromNow } from '@/Composables/useFormatTime'
+import { useRangeFromNow } from '@/Composables/useFormatTime'
+import { useLocaleStore } from "@/Stores/locale"
+import { format, compareAsc } from 'date-fns'
 
+console.log(format(new Date(2014, 1, 11), 'MM/dd/yyyy'))
+const locale = useLocaleStore()
+
+console.log(locale.language.code)
 
 library.add(faBroadcastTower, faSeedling)
 
@@ -44,7 +50,7 @@ const props = defineProps<{
                         <!-- <dt class="text-gray-500 text-sm">{{ trans('Last edit') }}</dt> -->
                         <dd class="text-gray-600 text-xs italic tracking-wide space-x-1">
                             <span class="text-gray-500">{{ trans('Last edited on') }}</span>
-                            <time :datetime="lastEditedBanner.updated_at">{{  useFromNow(lastEditedBanner.updated_at) }}</time>
+                            <time :datetime="lastEditedBanner.updated_at">{{ useRangeFromNow(lastEditedBanner.updated_at, locale.language.code) }}</time>
                         </dd>
                         <div>
                             <FontAwesomeIcon :icon='lastEditedBanner.state_icon?.icon' :class='lastEditedBanner.state_icon?.class' class="" aria-hidden='true' :alt="lastEditedBanner.state_icon?.tooltip"/>

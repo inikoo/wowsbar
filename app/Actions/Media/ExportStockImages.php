@@ -9,7 +9,6 @@ namespace App\Actions\Media;
 
 use App\Actions\Traits\WithExportData;
 use App\Exports\StockImages\StockImagesExport;
-use App\Exports\UploadedImages\UploadedImagesExport;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;

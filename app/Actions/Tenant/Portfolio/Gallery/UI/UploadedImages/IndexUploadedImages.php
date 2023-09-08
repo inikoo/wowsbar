@@ -120,7 +120,8 @@ class IndexUploadedImages extends InertiaAction
                     'name' => 'export.stock.images.index'
                 ]
             ]
-        ]));
+        ]
+        ));
     }
 
     /** @noinspection PhpUnusedParameterInspection */

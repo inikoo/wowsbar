@@ -167,8 +167,10 @@ class ShowBanner extends InertiaAction
                     ]
                 ]
             ]
-        ))->table(IndexSnapshots::make()->tableStructure(null, 'sht',
-                exportLinks: [
+        ))->table(IndexSnapshots::make()->tableStructure(
+            null,
+            'sht',
+            exportLinks: [
                 'export' => [
                     'route' => [
                         'name' => 'export.snapshots.index'

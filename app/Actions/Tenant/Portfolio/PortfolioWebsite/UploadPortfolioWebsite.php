@@ -26,7 +26,7 @@ class UploadPortfolioWebsite
 
     public function handle(ActionRequest $request): void
     {
-        $file = $request->file('file');
+        $file     = $request->file('file');
         $filename = $file->hashName();
 
         $path = 'tenants/' . app('currentTenant')->slug . '/websites';

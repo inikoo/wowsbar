@@ -20,6 +20,7 @@ class TenantResolver extends TenantFinder
 
     public function findForRequest(Request $request): ?Tenant
     {
+
         $subdomain = current(explode('.', $request->getHost()));
         if ($subdomain=='www') {
             return null;

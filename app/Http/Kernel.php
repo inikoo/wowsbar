@@ -57,18 +57,23 @@ class Kernel extends HttpKernel
 
 
     protected $middlewareGroups = [
+
         'web'        => [
+            NeedsTenant::class,
+
             EncryptCookies::class,
             AddQueuedCookiesToResponse::class,
             StartSession::class,
             ShareErrorsFromSession::class,
             VerifyCsrfToken::class,
+            EnsureValidTenantSession::class,
             SubstituteBindings::class,
             HandleInertiaRequests::class,
             AddLinkHeadersForPreloadedAssets::class,
             LogUserFirebaseMiddleware::class,
-            LogUserRequestMiddleware::class
+            LogUserRequestMiddleware::class,
         ],
+
         'delivery' => [
             EncryptCookies::class,
             AddQueuedCookiesToResponse::class,
@@ -101,23 +106,9 @@ class Kernel extends HttpKernel
             LogUserFirebaseMiddleware::class,
             LogUserRequestMiddleware::class
         ],
-        'tenant'     => [
-            NeedsTenant::class,
-            EnsureValidTenantSession::class,
-            EncryptCookies::class,
-            AddQueuedCookiesToResponse::class,
-            StartSession::class,
-            ShareErrorsFromSession::class,
-            VerifyCsrfToken::class,
-            SubstituteBindings::class,
-            HandleInertiaRequests::class,
-            AddLinkHeadersForPreloadedAssets::class,
-            LogUserFirebaseMiddleware::class,
-            LogUserRequestMiddleware::class
-        ],
 
 
-        'api' => [
+        'tenant-api' => [
             // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
             ThrottleRequests::class.':api',
             SubstituteBindings::class,

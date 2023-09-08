@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateAuditsTable extends Migration
 {
-
     public function up(): void
     {
         $connection = config('audit.drivers.database.connection', config('database.default'));
