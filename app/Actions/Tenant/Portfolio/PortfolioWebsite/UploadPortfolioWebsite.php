@@ -7,7 +7,9 @@
 
 namespace App\Actions\Tenant\Portfolio\PortfolioWebsite;
 
+use App\Actions\Tenant\Portfolio\Uploads\StorePortfolioWebsiteUploads;
 use App\Imports\WebsiteImport;
+use App\Models\WebsiteUpload;
 use Excel;
 use Illuminate\Support\Facades\Storage;
 use Lorisleiva\Actions\ActionRequest;
@@ -31,6 +33,11 @@ class UploadPortfolioWebsite
 
         $path = 'tenants/' . app('currentTenant')->slug . '/websites';
         Storage::disk('local')->put($path, $file);
+
+        StorePortfolioWebsiteUploads::run(app('currentTenant'), [
+            'original_filename' => $file->getClientOriginalName(),
+            'filename' => $filename
+        ]);
 
         Excel::import(new WebsiteImport(), $path . '/' . $filename);
     }
