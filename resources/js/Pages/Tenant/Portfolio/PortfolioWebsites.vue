@@ -5,7 +5,7 @@
   -->
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { Head } from '@inertiajs/vue3'
 import PageHeading from '@/Components/Headings/PageHeading.vue'
 import TablePortfolioWebsites from "@/Pages/Tables/TablePortfolioWebsites.vue"
@@ -18,14 +18,15 @@ import { faFile as fasFile, faFileDownload } from '@/../private/pro-solid-svg-ic
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { trans } from 'laravel-vue-i18n'
 import axios from 'axios'
-
 import Pusher from 'pusher-js'
 
 library.add(faUpload, falFile, faTimes, faFileDownload, fasFile)
 
-const pusher = new Pusher(import.meta.env.VITE_PUSHER_APP_KEY, {
-    cluster: 'ap1'
-});
+const props = defineProps<{
+    pageHead: object
+    title: string
+    data: object
+}>()
 
 const dataPusher = ref({
     data: {
@@ -34,19 +35,16 @@ const dataPusher = ref({
     }
 })
 
-const channel = pusher.subscribe('uploads.aiku');
-    channel.bind('WebsiteUpload', (data: any) => {
-        dataPusher.value = data
-        console.log("==============")
-        console.log(data)
-    });
-
-
-const props = defineProps<{
-    pageHead: object
-    title: string
-    data: object
-}>()
+// Pusher: subscribe
+const pusher = new Pusher(import.meta.env.VITE_PUSHER_APP_KEY, {
+    cluster: 'ap1'
+})
+const channel = pusher.subscribe('uploads.aiku')
+channel.bind('WebsiteUpload', (data: any) => {
+    dataPusher.value = data
+    // console.log("==============")
+    // console.log(data)
+})
 
 const isModalOpen = ref(false)
 const isLoadingFetch = ref(false)
@@ -85,6 +83,22 @@ const numberr = ref(0)
 const compProgressBar = computed(() => {
     return dataPusher.value?.data.total_uploads ? dataPusher.value?.data.total_complete/dataPusher.value?.data.total_uploads * 100 : 0
 })
+
+watch(isModalOpen, async () => {
+    try {
+        const data = await axios.get(route('portfolio.website.uploads.history'))
+        console.log("------------------------")
+        console.log(data)
+    } catch (error: any) {
+        // console.error("===========================")
+        console.error(error.message)
+    }
+})
+// watch(isModalOpen, (newValue, oldValue) => {
+//   // Check if isOpen changed from false to true
+//   console.log('oldValue', oldValue)
+//   console.log('newValue', newValue)
+// })
 </script>
 
 <template layout="TenantApp">
@@ -124,10 +138,12 @@ const compProgressBar = computed(() => {
                         </p>
                     </div>
                 </div>
-                <div class="group text-xs text-gray-600 cursor-pointer px-2 w-fit">
+
+                <!-- Download template -->
+                <a :href="route('portfolio.website.uploads.template.download')" target="_blank" class="group text-xs text-gray-600 cursor-pointer px-2 w-fit" >
                     <FontAwesomeIcon icon='fas fa-file-download' class='text-gray-400 group-hover:text-gray-600' aria-hidden='true' />
                     Download template .xlsx
-                </div>
+                </a>
             </div>
 
             <!-- Table History -->

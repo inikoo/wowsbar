@@ -9,9 +9,9 @@ import { trans } from 'laravel-vue-i18n'
 import { ref, computed } from 'vue'
 import { useLayoutStore } from "@/Stores/layout"
 import FooterTab from '@/Components/Footer/FooterTab.vue'
-import { faBriefcase} from "@/../private/pro-light-svg-icons";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+// import { faBriefcase} from "@/../private/pro-light-svg-icons";
+// import { library } from "@fortawesome/fontawesome-svg-core";
+// import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { getDataFirebase } from '@/Composables/firebase'
 import { watchEffect } from 'vue'
 
@@ -39,7 +39,6 @@ const compUserOnline = computed(() => {
 
 watchEffect(() => {
     dataTenant.value = getDataTenant.value
-    console.log(dataTenant.value)
     dataTenantLength.value = compUserOnline.value ? Object.keys(compUserOnline.value).length : 0
     layout.rightSidebar.activeUsers.users = dataTenant.value
     layout.rightSidebar.activeUsers.count = dataTenantLength.value
