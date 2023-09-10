@@ -61,6 +61,15 @@ return [
             'throw'      => false,
         ],
 
+        'r2' => [
+            'driver' => 's3',
+            'key' => env('CLOUDFLARE_R2_ACCESS_KEY'),
+            'secret' => env('CLOUDFLARE_R2_SECRET_KEY'),
+            'region' => env('CLOUDFLARE_R2_REGION'),
+            'endpoint' => env('CLOUDFLARE_R2_ENDPOINT'),
+            'bucket' => env('CLOUDFLARE_R2_BUCKET_NAME'),
+        ],
+
         's3' => [
             'driver'                  => 's3',
             'key'                     => env('AWS_ACCESS_KEY_ID'),
