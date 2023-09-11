@@ -36,7 +36,7 @@ class ShowWebsiteWorkshopPreview extends InertiaAction
     {
 
         return Inertia::render(
-            'Web/WebsiteWorkshop',
+            'Web/PreviewWorkshop',
             [
                 'title'       => __("Website's workshop"),
                 'breadcrumbs' => $this->getBreadcrumbs(),
