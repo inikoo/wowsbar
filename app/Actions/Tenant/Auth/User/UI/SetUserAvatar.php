@@ -9,6 +9,7 @@ namespace App\Actions\Tenant\Auth\User\UI;
 
 use App\Models\Auth\User;
 use App\Models\Media\Media;
+use App\Models\Tenancy\Tenant;
 use Exception;
 use Illuminate\Console\Command;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -37,25 +38,26 @@ class SetUserAvatar
 
             $user->avatar_id = $avatarID;
             $user->saveQuietly();
-        } catch(Exception) {
+        } catch (Exception) {
             //
         }
+
         return $user;
     }
 
 
-    public string $commandSignature = 'user:reset-avatar {username : User username}';
+    public string $commandSignature = 'user:reset-avatar {tenant} {username : User username}';
 
     public function asCommand(Command $command): int
     {
-
-
+        $tenant = Tenant::where('slug', $command->argument('tenant'))->first();
+        $tenant->makeCurrent();
         $user = User::where('username', $command->argument('username'))->first();
+
         if (!$user) {
             $command->error('User not found');
             return 1;
         } else {
-            $user->tenant->makeCurrent();
             $this->handle($user);
         }
 

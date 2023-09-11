@@ -37,19 +37,33 @@ class StoreOrganisation
         $organisation = Organisation::create($modelData);
         $organisation->stats()->create();
 
+        AttachImageToOrganisation::run(
+            organisation: $organisation,
+            collection: 'logo',
+            imagePath: resource_path('images/logo.png'),
+            originalFilename: 'logo.png'
+        );
+
+        AttachImageToOrganisation::run(
+            organisation: $organisation,
+            collection: 'logo_white',
+            imagePath: resource_path('images/logo.png'),
+            originalFilename: 'logo.png'
+        );
+
 
         $guest = StoreGuest::run(
             [
-                'type'        => GuestTypeEnum::EXTERNAL_ADMINISTRATOR,
-                'company_name'=> Arr::get($organisationUserData, 'company_name'),
-                'contact_name'=> Arr::get($organisationUserData, 'contact_name'),
-                'username'    => Arr::get($organisationUserData, 'username')
+                'type'         => GuestTypeEnum::EXTERNAL_ADMINISTRATOR,
+                'company_name' => Arr::get($organisationUserData, 'company_name'),
+                'contact_name' => Arr::get($organisationUserData, 'contact_name'),
+                'username'     => Arr::get($organisationUserData, 'username')
 
             ]
         );
 
 
-        $superAdminRole   = Role::where('guard_name', 'org')->where('name', 'super-admin')->firstOrFail();
+        $superAdminRole = Role::where('guard_name', 'org')->where('name', 'super-admin')->firstOrFail();
         $guest->organisationUser->assignRole($superAdminRole);
 
         Artisan::call("db:seed --force --class=StockImageSeeder");
@@ -96,6 +110,7 @@ class StoreOrganisation
     {
         return 'org:create {code} {email} {name} {contact_name} {username} {password} {country_code} {currency_code} {--l|language_code= : Language code} {--tz|timezone= : Timezone}';
     }
+
 
     public function asCommand(Command $command): int
     {

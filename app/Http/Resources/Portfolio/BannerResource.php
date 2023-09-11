@@ -27,8 +27,8 @@ class BannerResource extends JsonResource
         $image          = null;
         $imageThumbnail = null;
         if ($banner->image) {
-            $image          = (new Image())->make($banner->image->getLocalImgProxyFilename());
-            $imageThumbnail = (new Image())->make($banner->image->getLocalImgProxyFilename())->resize(0, 48);
+            $image          = (new Image())->make($banner->image->getImgProxyFilename());
+            $imageThumbnail = (new Image())->make($banner->image->getImgProxyFilename())->resize(0, 48);
         }
 
         return [

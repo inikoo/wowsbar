@@ -26,7 +26,7 @@ class StockImagesExport implements FromQuery, WithMapping, ShouldAutoSize, WithH
     /** @var Media $row */
     public function map($row): array
     {
-        $imageThumbnail = (new Image())->make($row->getLocalImgProxyFilename(), $row->is_animated)->resize(0, 48);
+        $imageThumbnail = (new Image())->make($row->getImgProxyFilename(), $row->is_animated)->resize(0, 48);
 
         return [
             $row->id,

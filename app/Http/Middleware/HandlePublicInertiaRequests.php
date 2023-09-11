@@ -7,9 +7,7 @@
 
 namespace App\Http\Middleware;
 
-use App\Actions\Helpers\Images\GetPictureSources;
 use App\Actions\UI\Public\GetFirstLoadProps;
-use App\Helpers\ImgProxy\Image;
 use App\Http\Resources\UI\LoggedUserResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -51,12 +49,7 @@ class HandlePublicInertiaRequests extends Middleware
                 ],
                 'ziggy' => [
                     'location' => $request->url(),
-                ],
-                'art'=> [
-                    'logo'=> GetPictureSources::run(
-                        (new Image())->make(url('/images/logo.png'))->resize(0, 48)
-                    ),
-                ],
+                ]
 
             ],
             parent::share($request),
