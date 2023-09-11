@@ -44,12 +44,10 @@ const props = defineProps<{
 					tool.name !== 'grab' ? 'cursor-pointer' : 'cursor-grab',
 				]">
 					<template #item="{ element, index }">
-						<div :class="[
-							'space-y-3',
-							'w-1/4',
+						<div :class="['space-y-3 min-w-[20%]',
 							get(columSelected,'id') !== element.id ? '' : 'border',
 						]" @click="props.selectedColums(element)">
-							<Input :data="element" keyValue="title" />
+							<Input :data="element" keyValue="title" classCss="font-bold text-gray-700 capitalize"/>
 							<div v-if="element.type == 'list'">
 								<draggable :list="element.data" group="list" itemKey="name"
 									:disabled="tool.name !== 'grab'">
@@ -95,15 +93,14 @@ const props = defineProps<{
 			</div>
 
 			<!-- Social Media -->
-			<div
-				class="border-t border-gray-900/10 pt-8 sm:mt-10 flex flex-col md:flex-row items-center justify-between mt-16 lg:mt-18 xl:px-3">
+			<div class="border-t border-gray-900/10 pt-8 sm:mt-10 flex flex-col md:flex-row items-center justify-between mt-16 lg:mt-18 xl:px-3">
 				<div class="md:order-2">
 					<draggable :list="data.social" group="socialMedia" itemKey="id" :class="[
 						tool.name === 'grab' ? 'cursor-grab' : 'cursor-pointer',
-						'text-gray-400 hover:text-gray-500 flex space-x-6',
+						'text-gray-400 flex space-x-6',
 					]" :disabled="tool.name !== 'grab'">
 						<template #item="{ element: child, index: childIndex }">
-							<div>
+							<div class="hover:text-gray-500 ">
 								<span class="sr-only">{{ child.label }}</span>
 								<SocialMediaPicker :data="child" />
 							</div>
@@ -112,7 +109,7 @@ const props = defineProps<{
 				</div>
 
 				<div class="flex">
-					<div class="mt-4 text-xs flex gap-1 leading-6 text-gray-500 md:order-1 md:mt-0"> &copy; 2023
+					<div class="mt-4 text-xs flex leading-6 text-gray-500 md:order-1 md:mt-0"> &copy; 2023 &nbsp;
 						<span class="font-bold">
 							<HyperLink :useDelete="false" :data="data.copyRight" label="label" 
 							:formList="{
