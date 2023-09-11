@@ -45,6 +45,22 @@ class GetLayout
             ];
         }
 
+        if ($user->can('crm.view')) {
+            $navigation['crm'] = [
+                'label' => __('Customers'),
+                'icon'  => ['fal', 'fa-user'],
+
+                'route'   => 'org.crm.dashboard',
+                'topMenu' => [
+                    'subSections' => [
+
+                    ]
+                ]
+
+            ];
+        }
+
+
         if (!$user->can('hr')) {
             $navigation['hr'] = [
                 'label'   => __('human resources'),

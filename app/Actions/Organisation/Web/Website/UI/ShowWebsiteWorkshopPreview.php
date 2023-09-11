@@ -14,7 +14,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
 
-class ShowWebsiteWorkshop extends InertiaAction
+class ShowWebsiteWorkshopPreview extends InertiaAction
 {
     public function authorize(ActionRequest $request): bool
     {
@@ -36,7 +36,7 @@ class ShowWebsiteWorkshop extends InertiaAction
     {
 
         return Inertia::render(
-            'Web/WebsiteWorkshop',
+            'Web/PreviewWorkshop',
             [
                 'title'       => __("Website's workshop"),
                 'breadcrumbs' => $this->getBreadcrumbs(),
@@ -63,44 +63,14 @@ class ShowWebsiteWorkshop extends InertiaAction
                         [
                             'type'       => 'button',
                             'style'      => 'exitEdit',
-                            'icon'       => 'far fa-desktop',
                             'label'      => __('Preview'),
-                            'route' => [
-                                'name'       => preg_replace('/workshop$/', 'preview', $request->route()->getName()),
-                                'parameters' => array_values($request->route()->originalParameters())
+                            'route'      => [
+                                'name'       => preg_replace('/workshop$/', 'show', $request->route()->getName()),
+                                'parameters' => array_values($request->route()->originalParameters()),
                             ]
                         ]
                     ],
                 ],
-                'tabs'        => [
-                    'current'    => $this->tab,
-                    'navigation' => WebsiteWorkshopTabsEnum::navigation(),
-                ],
-
-                WebsiteWorkshopTabsEnum::COLOR_SCHEME->value => $this->tab == WebsiteWorkshopTabsEnum::COLOR_SCHEME->value
-                    ?
-                    fn () => GetWebsiteWorkshopColorScheme::run($website)
-                    : Inertia::lazy(
-                        fn () => GetWebsiteWorkshopColorScheme::run($website)
-                    ),
-
-                WebsiteWorkshopTabsEnum::HEADER->value => $this->tab == WebsiteWorkshopTabsEnum::HEADER->value
-                    ?
-                    fn () => GetWebsiteWorkshopHeader::run($website)
-                    : Inertia::lazy(
-                        fn () => GetWebsiteWorkshopHeader::run($website)
-                    ),
-                WebsiteWorkshopTabsEnum::MENU->value   => $this->tab == WebsiteWorkshopTabsEnum::MENU->value
-                    ?
-                    fn () => GetWebsiteWorkshopMenu::run($website)
-                    : Inertia::lazy(fn () => GetWebsiteWorkshopMenu::run($website)),
-
-                WebsiteWorkshopTabsEnum::FOOTER->value   => $this->tab == WebsiteWorkshopTabsEnum::FOOTER->value ?
-                    fn () => GetWebsiteWorkshopFooter::run($website)
-                    : Inertia::lazy(fn () => GetWebsiteWorkshopFooter::run($website)),
-
-
-
             ]
         );
     }

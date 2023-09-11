@@ -35,6 +35,7 @@ class UploadFileR2
             $command->line('OK');
             return 0;
         }
+        $command->error('Can not upload file');
         return 1;
     }
 
