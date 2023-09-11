@@ -7,6 +7,7 @@
 
 namespace App\Actions\Tenancy\Tenant;
 
+use App\Actions\CRM\Customer\StoreCustomer;
 use App\Actions\Elasticsearch\CreateElasticSearchTenantAlias;
 use App\Actions\Tenant\Auth\User\StoreUser;
 use App\Models\Assets\Country;
@@ -31,6 +32,8 @@ class StoreTenant
         $tenant = Tenant::create($modelData);
         $tenant->stats()->create();
         $tenant->portfolioStats()->create();
+
+        StoreCustomer::run($tenant);
 
         $tenant->execute(
             function (Tenant $tenant) use ($userData) {
