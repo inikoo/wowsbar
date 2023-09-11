@@ -9,13 +9,9 @@ namespace App\Actions\Tenancy\Tenant;
 
 use App\Actions\Elasticsearch\CreateElasticSearchTenantAlias;
 use App\Actions\Tenant\Auth\User\StoreUser;
-use App\Models\Assets\Country;
-use App\Models\Assets\Currency;
-use App\Models\Assets\Language;
-use App\Models\Assets\Timezone;
 use App\Models\Auth\Role;
+use App\Models\CRM\Customer;
 use App\Models\Tenancy\Tenant;
-use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Arr;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -29,6 +25,7 @@ class StoreTenant
     public function handle(array $modelData, array $userData): Tenant
     {
         $tenant = Tenant::create($modelData);
+
         $tenant->stats()->create();
         $tenant->portfolioStats()->create();
 
@@ -85,71 +82,15 @@ class StoreTenant
 
     public function getCommandSignature(): string
     {
-        return 'tenant:create {code} {email} {name} {username} {password} {country_code} {currency_code} {--l|language_code= : Language code} {--tz|timezone= : Timezone}';
+        return 'tenant:create {code}';
     }
 
     public function asCommand(Command $command): int
     {
-        try {
-            $country = Country::where('code', $command->argument('country_code'))->firstOrFail();
-        } catch (Exception $e) {
-            $command->error($e->getMessage());
+        $customer = Customer::where('slug', $command->argument('code'))->first();
 
-            return 1;
-        }
-
-        try {
-            $currency = Currency::where('code', $command->argument('currency_code'))->firstOrFail();
-        } catch (Exception $e) {
-            $command->error($e->getMessage());
-
-            return 1;
-        }
-
-        if ($command->option('language_code')) {
-            try {
-                $language = Language::where('code', $command->option('language_code'))->firstOrFail();
-            } catch (Exception $e) {
-                $command->error($e->getMessage());
-
-                return 1;
-            }
-        } else {
-            $language = Language::where('code', 'en-gb')->firstOrFail();
-        }
-
-        if ($command->option('timezone')) {
-            try {
-                $timezone = Timezone::where('name', $command->option('timezone'))->firstOrFail();
-            } catch (Exception $e) {
-                $command->error($e->getMessage());
-
-                return 1;
-            }
-        } else {
-            $timezone = Timezone::where('name', 'UTC')->firstOrFail();
-        }
-
-
-        $this->setRawAttributes([
-            'code'        => $command->argument('code'),
-            'name'        => $command->argument('name'),
-            'email'       => $command->argument('email'),
-            'username'    => $command->argument('username'),
-            'password'    => $command->argument('password'),
-            'country_id'  => $country->id,
-            'currency_id' => $currency->id,
-            'language_id' => $language->id,
-            'timezone_id' => $timezone->id,
-        ]);
-
-        try {
-            $validatedData = $this->validateAttributes();
-        } catch (Exception $e) {
-            $command->error($e->getMessage());
-
-            return 1;
-        }
+        $this->setRawAttributes(array_merge($customer->toArray(), ['code' => $customer->slug]));
+        $validatedData = $this->validateAttributes();
 
         $tenant = $this->handle(
             Arr::except($validatedData, ['username', 'password']),

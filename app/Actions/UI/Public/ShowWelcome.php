@@ -23,23 +23,24 @@ class ShowWelcome
             'Public/Welcome',
             [
 
-                'hero' => [
-                    'whatsNew' => [
-                        'label' => __('Just shipped v0.9'),
-                        'route' => [
-                            'name'       => 'public.whats-new',
-                            'parameters' => null
-                        ]
-                    ],
-                    'title'    => 'Your One-Stop Platform Banners Creator',
-                    'text'     => "Create stunning website banners effortlessly! Easy to use, customizable templates, and no design experience required. Elevate your website's appeal today!",
-                    'media'    => [
-                        'logo'          => GetPictureSources::run((new Image())->make(url('/images/logo.png'))),
-                        'appScreenshot' => GetPictureSources::run((new Image())->make(url('/images/marketing/app-screenshot.png'))),
+                // 'hero' => [
+                //     'whatsNew' => [
+                //         'label' => __('Just shipped v0.9'),
+                //         'route' => [
+                //             'name'       => 'public.whats-new',
+                //             'parameters' => null
+                //         ]
+                //     ],
+                //     'title'    => 'Your One-Stop Platform Banners Creator',
+                //     'text'     => "Create stunning website banners effortlessly! Easy to use, customizable templates, and no design experience required. Elevate your website's appeal today!",
+                //     'media'    => [
+                //         'logo'          => GetPictureSources::run((new Image())->make(url('/images/logo.png'))),
+                //         'appScreenshot' => GetPictureSources::run((new Image())->make(url('/images/marketing/app-screenshot.png'))),
 
-                    ]
+                //     ]
 
-                ],
+                // ],
+                'blocks' => []
 
 
             ]

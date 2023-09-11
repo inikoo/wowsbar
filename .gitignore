@@ -29,3 +29,5 @@ yarn-error.log
 lang/php_*.json
 /public/organisation.hot
 /delete-bucket.sh
+/.env.local
+/.env.prod

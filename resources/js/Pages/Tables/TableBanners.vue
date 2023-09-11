@@ -47,7 +47,7 @@ function bannerRoute(banner: Banner) {
 <template>
     <Table :resource="data" :name="tab" class="mt-5">
         <template #cell(slug)="{ item: banner }">
-            <Link :href="bannerRoute(banner)" :id="banner['slug']">
+            <Link :href="bannerRoute(banner)" :id="banner['slug']" class="py-4 px-2">
                 {{ banner['slug'] }}
             </Link>
         </template>
@@ -63,13 +63,13 @@ function bannerRoute(banner: Banner) {
         </template>
 
         <template #cell(created_at)="{ item }">
-            <div>
+            <div class="text-gray-500">
                 {{ useFormatTime(item.created_at, locale.language.code) }}
             </div>
         </template>
 
         <template #cell(updated_at)="{ item }">
-            <div>
+            <div class="text-gray-500">
                 {{ useFormatTime(item.updated_at, locale.language.code) }}
             </div>
         </template>

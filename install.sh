@@ -37,9 +37,12 @@ php artisan telescope:clear
 pg_dump -Fc -f "devops/devel/snapshots/fresh.dump" ${DB}
 echo "🏢 create organisation"
 php artisan org:create wowsbar wowsbar@inikoo.com Wowsbar 'Alejandro X' aiku hello GB GBP
+echo "🌱 create customer"
+php artisan customer:create aiku devels@aw-advantage.com Devs GB GBP aiku hello
+php artisan customer:create dev dev@aw-advantage.com Devs GB GBP dev hello
 echo "🌱 create devel tenant"
-php artisan tenant:create aiku devels@aw-advantage.com Devs aiku hello GB GBP
-php artisan tenant:create dev dev@aw-advantage.com Devs dev hello GB GBP
+php artisan tenant:create aiku
+php artisan tenant:create dev
 pg_dump -Fc -f "devops/devel/snapshots/tenant.dump" ${DB}
 echo "🌱 create test website with a banner"
 php artisan website:create aiku hello.com hello 'My website 😸'
