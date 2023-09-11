@@ -44,7 +44,7 @@ class StoreCustomer
             if ($customer->reference == null) {
                 $customer->update(
                     [
-                        'reference' => rand()
+                        'reference' => null
                     ]
                 );
             }
