@@ -94,47 +94,62 @@ const generateThumbnail = (file) => {
 </script>
 
 <template>
-	<vue-resizable class="container bg-white" :minHeight="200" :maxWidth="1233" :minWidth="1233" :height="layout.height"
-		:left="layout.left" :top="layout.top" @mount="eHandler" @resize:move="eHandler" @resize:start="eHandler"
-		@resize:end="eHandler" @drag:move="eHandler" @drag:start="eHandler" @drag:end="eHandler">
-		<div v-for="(item, index) in props.data.slice().reverse()" :key="item.id">
-			<div v-if="item.type == 'text'" :ref="(refValue) => setdragElement(refValue, item)"
-				class="col-sm-10 draggable-component" :style="{ ...item.style }">
-				<div :class="['draggable-handle', { border: get(data[layerActive], 'id') === item.id }]"
-					@click="(e) => { e.stopPropagation(); props.setActive(item.id) }">
-					<Input :data="item" keyValue="name" :styleCss="item.style" />
+	<div class="container bg-white w-[1233px] h-[200px]">
+		<vue-resizable @mount="eHandler" @resize:move="eHandler" @resize:start="eHandler" @resize:end="eHandler"
+			@drag:move="eHandler" @drag:start="eHandler" @drag:end="eHandler">
+			<div v-for="(item, index) in props.data.slice().reverse()" :key="item.id" :fit-parent="true">
+				<div v-if="item.type == 'text'" :ref="(refValue) => setdragElement(refValue, item)"
+					class="col-sm-10 draggable-component" :style="{ ...item.style }">
+					<div :class="['draggable-handle', { border: get(data[layerActive], 'id') === item.id }]"
+						@click="(e) => { e.stopPropagation(); props.setActive(item.id) }">
+						<Input :data="item" keyValue="name" :styleCss="item.style" />
+					</div>
 				</div>
-			</div>
 
-			<div v-if="item.type == 'search'" :ref="(refValue) => setdragElement(refValue, item)"
-				class="col-sm-10 draggable-component" :style="{ ...item.style }">
-				<div :class="['draggable-handle', { border: get(data[layerActive], 'id') === item.id }]"
-					@click="(e) => { e.stopPropagation(); props.setActive(item.id) }">
-					<div class="relative">
-						<input
-							class="dark:bg-gray-600 block w-full pl-9 pr-9 text-sm rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500 dark:focus:border-gray-400 border-gray-300 dark:border-gray-500"
-							placeholder="search" type="text" name="global" :readonly="true">
-						<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-							<FontAwesomeIcon icon="far fa-search" class="h-4 w-4 text-gray-400" aria-hidden="true" />
+				<div v-if="item.type == 'search'" :ref="(refValue) => setdragElement(refValue, item)"
+					class="col-sm-10 draggable-component" :style="{ ...item.style }">
+					<div :class="['draggable-handle', { border: get(data[layerActive], 'id') === item.id }]"
+						@click="(e) => { e.stopPropagation(); props.setActive(item.id) }">
+						<div class="relative">
+							<input
+								class="dark:bg-gray-600 block w-full pl-9 pr-9 text-sm rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500 dark:focus:border-gray-400 border-gray-300 dark:border-gray-500"
+								placeholder="search" type="text" name="global" :readonly="true">
+							<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+								<FontAwesomeIcon icon="far fa-search" class="h-4 w-4 text-gray-400" aria-hidden="true" />
+							</div>
+
 						</div>
+					</div>
+				</div>
 
+
+				<div v-if="item.type == 'image'" :ref="(refValue) => setdragElement(refValue, item)"
+					class="col-sm-10 draggable-component" :style="{ ...item.style }">
+					<div :class="['draggable-handle', { border: get(data[layerActive], 'id') === item.id }]"
+						@click="(e) => { e.stopPropagation(); props.setActive(item.id) }">
+						<img :class="['draggable-handle', { border: get(data[layerActive], 'id') === item.id }]"
+							class="preview-img" :src="generateThumbnail(item)" :style="`width: ${item.style.width}; height: ${item.style.height};`" />
 					</div>
 				</div>
 			</div>
 
+			<!-- <vue-resizable
+          :key="item.id"
+          :maxWidth="layout.height"
+          :maxHeight="1233"
+          v-if="item.type == 'image'" 
+          :ref="(refValue) => setdragElement(refValue.$el, item)" 
+          class="col-sm-10 draggable-component" 
+          :style="{ ...item.style }"
+        >
 
-			<div v-if="item.type == 'image'" :ref="(refValue) => setdragElement(refValue, item)"
-				class="col-sm-10 draggable-component" :style="{ ...item.style }">
-				<div :class="['draggable-handle', { border: get(data[layerActive], 'id') === item.id }]"
-					@click="(e) => { e.stopPropagation(); props.setActive(item.id) }">
-					<img :class="['draggable-handle', { border: get(data[layerActive], 'id') === item.id }]" class="preview-img"
-						:src="generateThumbnail(item)" style="width: 200px; height: 100px;" />
-				</div>
-			</div>
-		</div>
+            <img :class="['draggable-handle', { border: get(data[layerActive], 'id') === item.id }]"  @click="(e) => { e.stopPropagation(); props.setActive(index) }" class="preview-img" :src="generateThumbnail(item)" style="width: 100%; height: 100%;"/>
+
+        </vue-resizable> -->
 
 
-	</vue-resizable>
+		</vue-resizable>
+	</div>
 </template>
 
 

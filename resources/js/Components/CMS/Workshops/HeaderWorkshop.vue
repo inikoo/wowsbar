@@ -136,7 +136,7 @@ const Uploadimage = () => {
             name: 'image',
             id: ulid(),
             type: 'image',
-            style: { top: '0px', left: '0px' },
+            style: { top: '0px', left: '0px', height : '200px' , width : '200px' },
             file: set
         }
     }
@@ -231,7 +231,7 @@ const deleteContent = (index) => [
             <!-- editing area -->
             <div style="width: 90%; background: #f2f2f2; border: 1px solid #bfbfbf; overflow:hidden">
                 <ToolsTop  :data="data" :layerActive="layerActive" @click="(e)=>e.stopPropagation()" />
-                <div class="p-3 relative">
+                <div class="p-3">
                     <Layout :data="data" :layout="layout" :setActive="setActive" :layerActive="layerActive" />
                 </div>
             </div>
