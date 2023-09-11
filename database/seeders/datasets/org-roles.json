@@ -1,8 +1,14 @@
 [
     {
+        "name":"customer-services",
+        "permissions": [
+            "crm","website.view"
+        ]
+    },
+    {
         "name":"super-admin",
         "permissions": [
-            "sysadmin","website"
+            "sysadmin","website","crm"
         ]
     }
 
