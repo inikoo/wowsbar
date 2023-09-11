@@ -29,6 +29,10 @@ class StoreTenant
         $tenant->stats()->create();
         $tenant->portfolioStats()->create();
 
+        if($customer = Customer::where('slug', $modelData['code'])->first()) {
+            $customer->update(['tenant_id' => $tenant->id]);
+        }
+
         $tenant->execute(
             function (Tenant $tenant) use ($userData) {
                 CreateElasticSearchTenantAlias::run();
