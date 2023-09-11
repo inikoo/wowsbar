@@ -8,8 +8,11 @@
 namespace App\Actions\Tenant\Portfolio\PortfolioWebsite\UI;
 
 use App\Actions\InertiaAction;
+use App\Actions\Tenant\Portfolio\Uploads\IndexPortfolioWebsiteUploads;
 use App\Actions\UI\Tenant\Portfolio\ShowPortfolio;
+use App\Enums\UI\Tenant\PortfolioWebsitesTabsEnum;
 use App\Http\Resources\Portfolio\PortfolioWebsiteResource;
+use App\Http\Resources\Portfolio\WebsiteUploadsResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\Portfolio\PortfolioWebsite;
 use Closure;
@@ -36,7 +39,7 @@ class IndexPortfolioWebsites extends InertiaAction
 
     public function asController(ActionRequest $request): LengthAwarePaginator
     {
-        $this->initialisation($request);
+        $this->initialisation($request)->withTab(PortfolioWebsitesTabsEnum::values());
 
         return $this->handle();
     }
@@ -144,10 +147,21 @@ class IndexPortfolioWebsites extends InertiaAction
                         ]
                     ]
                 ],
-                'data'        => PortfolioWebsiteResource::collection($websites),
+                'tabs' => [
+                    'current'    => $this->tab,
+                    'navigation' => PortfolioWebsitesTabsEnum::navigation()
+                ],
 
+                PortfolioWebsitesTabsEnum::WEBSITES->value => $this->tab == PortfolioWebsitesTabsEnum::WEBSITES->value ?
+                    fn () => PortfolioWebsiteResource::collection($websites)
+                    : Inertia::lazy(fn () => PortfolioWebsiteResource::collection($websites)),
+
+                PortfolioWebsitesTabsEnum::UPLOADED_WEBSITES->value => $this->tab == PortfolioWebsitesTabsEnum::UPLOADED_WEBSITES->value ?
+                    fn () => WebsiteUploadsResource::collection(IndexPortfolioWebsiteUploads::run())
+                    : Inertia::lazy(fn () => WebsiteUploadsResource::collection(IndexPortfolioWebsiteUploads::run()))
             ]
         )->table($this->tableStructure(
+            prefix: 'websites',
             exportLinks: [
                 'export' => [
                     'route' => [

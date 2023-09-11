@@ -94,8 +94,8 @@ const generateThumbnail = (file) => {
 </script>
 
 <template>
-	<div class="container bg-white w-[1233px] h-[200px]">
-		<vue-resizable @mount="eHandler" @resize:move="eHandler" @resize:start="eHandler" @resize:end="eHandler"
+	<div>
+		<vue-resizable class="container bg-white w-[1233px] h-[200px]" @mount="eHandler" @resize:move="eHandler" @resize:start="eHandler" @resize:end="eHandler"
 			@drag:move="eHandler" @drag:start="eHandler" @drag:end="eHandler">
 			<div v-for="(item, index) in props.data.slice().reverse()" :key="item.id" :fit-parent="true">
 				<div v-if="item.type == 'text'" :ref="(refValue) => setdragElement(refValue, item)"

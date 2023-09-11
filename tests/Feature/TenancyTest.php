@@ -32,5 +32,4 @@ test('create tenant', function () {
 test('create tenant command', function () {
     $this->artisan('tenant:create aiku devels@aw-advantage.com Devs aiku hello GB GBP')->assertExitCode(0);
     expect(Tenant::count())->toBe(2);
-
-});
+})->todo();

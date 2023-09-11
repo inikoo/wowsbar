@@ -10,20 +10,22 @@ namespace App\Actions\UI\Tenant\Dashboard;
 use App\Actions\Tenant\Portfolio\Banner\UI\GetLastEditedBanner;
 use Inertia\Inertia;
 use Inertia\Response;
+use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class ShowDashboard
 {
     use AsAction;
 
-    public function handle(): Response
+    public function asController(ActionRequest $request): Response
     {
         return Inertia::render(
             'Tenant/Dashboard',
             [
                 'title'       => __('dashboard'),
                 'breadcrumbs' => $this->getBreadcrumbs(__('dashboard')),
-                'banners'     => GetLastEditedBanner::run(app('currentTenant'))
+                'banners'     => GetLastEditedBanner::run(app('currentTenant')),
+                'userName'    => $request->user()->contact_name??$request->user()->username
             ]
         );
     }

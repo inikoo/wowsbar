@@ -29,6 +29,9 @@ class Register
     public function handle(array $modelData): RedirectResponse
     {
         $user = PublicUser::create($modelData);
+
+        // TODO: Store customer
+
         event(new Registered($user));
         Auth::guard('public')->login($user);
         return redirect(RouteServiceProvider::HOME);

@@ -10,6 +10,7 @@ namespace App\Models\Tenancy;
 use App\Models\Assets\Currency;
 use App\Models\Auth\PublicUser;
 use App\Models\Auth\User;
+use App\Models\CRM\Customer;
 use App\Models\Media\Media;
 use App\Models\Portfolio\Banner;
 use App\Models\Portfolio\PortfolioWebsite;
@@ -68,6 +69,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Snapshot> $snapshots
  * @property-read int|null $snapshots_count
  * @property-read \App\Models\Tenancy\TenantStats|null $stats
+ * @property-read Customer|null $customers
  * @property-read \Illuminate\Database\Eloquent\Collection<int, User> $users
  * @property-read int|null $users_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, WebsiteUploadRecord> $websiteUploadRecords
@@ -189,6 +191,11 @@ class Tenant extends SpatieTenant implements HasMedia, Auditable
     public function portfolioWebsiteUploads(): HasMany
     {
         return $this->hasMany(WebsiteUpload::class);
+    }
+
+    public function customers(): HasMany
+    {
+        return $this->hasMany(Customer::class);
     }
 
     public function registerMediaCollections(): void

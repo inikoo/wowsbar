@@ -20,14 +20,36 @@ import { trans } from 'laravel-vue-i18n'
 import axios from 'axios'
 import Pusher from 'pusher-js'
 import { useFormatTime } from '@/Composables/useFormatTime'
+import Tabs from "@/Components/Navigation/Tabs.vue";
+import {useTabChange} from "@/Composables/tab-change";
+import ModelDetails from "@/Pages/ModelDetails.vue";
+import TableHistories from "@/Pages/Tables/TableHistories.vue";
+import TableBanners from "@/Pages/Tables/TableBanners.vue";
 
 library.add(faUpload, falFile, faTimes, faFileDownload, fasFile)
 
 const props = defineProps<{
     pageHead: any
     title: string
-    data: object
+    websites: object
+    tabs: {
+        current: string;
+        navigation: object;
+    }
 }>()
+
+let currentTab = ref(props.tabs.current);
+const handleTabUpdate = (tabSlug) => useTabChange(tabSlug, currentTab);
+
+const component = computed(() => {
+    const components = {
+        details: ModelDetails,
+        changelog: TableHistories,
+        websites: TablePortfolioWebsites
+    };
+
+    return components[currentTab.value];
+});
 
 const dataPusher = ref({
     data: {
@@ -110,7 +132,8 @@ watch(compProgressBar, () => {
             </Button>
         </template>
     </PageHeading>
-    <TablePortfolioWebsites :data="data" />
+    <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate"/>
+    <component :is="component"  :tab="currentTab" :data="props[currentTab]"></component>
 
     <!-- Modal: Upload -->
     <Modal :isOpen="isModalOpen" @onClose="isModalOpen = false">
