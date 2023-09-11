@@ -8,8 +8,7 @@
 namespace App\Actions\UI\Public;
 
 use App\Actions\Assets\Language\UI\GetLanguagesOptions;
-use App\Actions\Helpers\Images\GetPictureSources;
-use App\Helpers\ImgProxy\Image;
+use App\Actions\UI\WithLogo;
 use App\Http\Resources\Assets\LanguageResource;
 use App\Models\Assets\Language;
 use App\Models\Auth\PublicUser;
@@ -19,6 +18,7 @@ use Lorisleiva\Actions\Concerns\AsObject;
 class GetFirstLoadProps
 {
     use AsObject;
+    use WithLogo;
 
     public function handle(?PublicUser $user): array
     {
@@ -39,15 +39,7 @@ class GetFirstLoadProps
                     'languageOptions' => GetLanguagesOptions::make()->translated(),
                 ],
 
-            'art' => [
-                'logo' => GetPictureSources::run(
-                    (new Image())->make(url('/images/logo.png'))->resize(0, 64)
-                ),
-                'footer_logo' => GetPictureSources::run(
-                    (new Image())->make(url('/images/logo_white.png'))->resize(0, 16)
-                ),
-            ],
-
+            'art'=>$this->getArt(),
             'layout'       => function () use ($user) {
                 return $user ? GetLayout::run($user) : null;
             },
