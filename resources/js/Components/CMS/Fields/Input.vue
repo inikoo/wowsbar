@@ -5,7 +5,7 @@ const props = defineProps<{
   keyValue:String
   classCss?:{
     type: any,
-    default : "text-sm font-bold leading-6 text-gray-700 capitalize"
+    default : "text-sm font-bold leading-none text-gray-700 capitalize"
   }
   styleCss?: any
 }>()
