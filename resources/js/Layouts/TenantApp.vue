@@ -86,7 +86,6 @@ const sidebarOpen = ref(false)
     <div class="relative min-h-full transition-all duration-200 ease-in-out"
         :class="[Object.values(layout.rightSidebar).some(value => value.show) ? 'mr-44' : 'mr-0']"
     >
-        <!-- TopBar -->
         <AppTopBar @sidebarOpen="(value: boolean) => sidebarOpen = value" :sidebarOpen="sidebarOpen" :logoRoute="`dashboard.show`" urlPrefix="">
             <img v-if="layout.tenant.logo_id" class="h-7 md:h-5 shadow" :src="`/media/${layout.tenant.logo_id}`" :alt="layout.tenant.code" />
             <span class="hidden leading-none md:inline font-bold  xl:truncate text-gray-800 dark:text-gray-300">
@@ -94,7 +93,6 @@ const sidebarOpen = ref(false)
             </span>
         </AppTopBar>
 
-        <!-- Breedcrumbs -->
         <Breadcrumbs class="fixed top-11 z-[19] w-full md:left-10 md:top-11 lg:top-10 xl:left-56"
             :breadcrumbs="usePage().props.breadcrumbs??[]"
             :navigation="usePage().props.navigation??[]"

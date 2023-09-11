@@ -26,7 +26,7 @@ class HandleInertiaRequests extends Middleware
 
         $firstLoadOnlyProps = [];
 
-        ;
+
 
         if ((!$request->inertia() or Session::get('reloadLayout')) and Tenant::checkCurrent()) {
             $firstLoadOnlyProps          = GetFirstLoadProps::run($user);
