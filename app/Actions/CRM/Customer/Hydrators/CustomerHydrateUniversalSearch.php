@@ -7,14 +7,12 @@
 
 namespace App\Actions\CRM\Customer\Hydrators;
 
-use App\Actions\Traits\WithTenantJob;
 use App\Models\CRM\Customer;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class CustomerHydrateUniversalSearch
 {
     use AsAction;
-    use WithTenantJob;
 
     public function handle(Customer $customer): void
     {
