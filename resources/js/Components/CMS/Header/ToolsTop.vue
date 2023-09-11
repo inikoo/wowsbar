@@ -32,6 +32,17 @@ const props = defineProps<{
                     </span>
                 </div>
             </div>
+            <div v-if="data[layerActive].type == 'image'" class="flex gap-3 align-middle">
+                <div>
+                    <div aria-hidden="true" class="flex gap-2">
+                        <FontSize :data="data[layerActive]" :fieldName="['style', 'height']"
+                            @click="(e) => e.stopPropagation()" />
+                        x
+                        <FontSize :data="data[layerActive]" :fieldName="['style', 'width']"
+                            @click="(e) => e.stopPropagation()" />
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
