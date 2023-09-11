@@ -34,6 +34,15 @@ trait IsMedia
     }
 
 
+    public function getImgProxyFilename(): string
+    {
+      if(config('media-library.disk_name')=='media-r2'){
+          return 's3://'.config('filesystems.disks.r2.bucket').'/'.$this->getPath();
+      }
+
+        return $this->getLocalImgProxyFilename();
+    }
+
     public function getLocalImgProxyFilename(): string
     {
         $rootPath='/'.config('app.name').Str::after(Storage::disk($this->disk)->path(''), storage_path());

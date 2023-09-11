@@ -30,7 +30,7 @@ return [
 
     'disks' => [
 
-        'local' => [
+        'local'    => [
             'driver' => 'local',
             'root'   => storage_path('app'),
             'throw'  => false,
@@ -48,30 +48,32 @@ return [
             'visibility' => 'public',
             'throw'      => false,
         ],
-        'tenants' => [
-            'driver'     => 'local',
-            'root'       => storage_path('app/tenants'),
-        //    'url'        => env('APP_URL').'/tenants/storage',
-            'throw'      => false,
-        ],
-        'landlord' => [
-            'driver'     => 'local',
-            'root'       => storage_path('app/landlord'),
-         //   'url'        => env('APP_URL').'/tenants/storage',
-            'throw'      => false,
+        'media'  => [
+            'driver' => 'local',
+            'root'   => storage_path('app/media'),
+            //    'url'        => env('APP_URL').'/tenants/storage',
+            'throw'  => false,
         ],
 
-        's3' => [
-            'driver'                  => 's3',
-            'key'                     => env('AWS_ACCESS_KEY_ID'),
-            'secret'                  => env('AWS_SECRET_ACCESS_KEY'),
-            'region'                  => env('AWS_DEFAULT_REGION'),
-            'bucket'                  => env('AWS_BUCKET'),
-            'url'                     => env('AWS_URL'),
-            'endpoint'                => env('AWS_ENDPOINT'),
-            'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
-            'throw'                   => false,
+        'r2' => [
+            'driver'   => 's3',
+            'key'      => env('CLOUDFLARE_R2_ACCESS_KEY'),
+            'secret'   => env('CLOUDFLARE_R2_SECRET_KEY'),
+            'region'   => env('CLOUDFLARE_R2_REGION'),
+            'endpoint' => env('CLOUDFLARE_R2_ENDPOINT'),
+            'bucket'   => env('CLOUDFLARE_R2_BUCKET_NAME'),
         ],
+
+        'media-r2' => [
+            'driver'   => 's3',
+            'key'      => env('CLOUDFLARE_R2_ACCESS_KEY'),
+            'secret'   => env('CLOUDFLARE_R2_SECRET_KEY'),
+            'region'   => env('CLOUDFLARE_R2_REGION'),
+            'endpoint' => env('CLOUDFLARE_R2_ENDPOINT'),
+            'bucket'   => env('CLOUDFLARE_R2_MEDIA_BUCKET_NAME'),
+        ],
+
+
 
     ],
 
