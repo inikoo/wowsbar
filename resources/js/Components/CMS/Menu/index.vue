@@ -5,8 +5,8 @@
 </template>
 
 <script setup lang="ts">
-import Menu1 from './Navbar1/Menu1.vue'
-import Menu2 from './Navbar2/Menu2.vue'
+import Menu1 from './NavbarOneWorkshop/MenuOneWorkshop.vue'
+import Menu2 from './NavbarTwoWorkshop/MenuTwoWorkshop.vue'
 
 
 const props = defineProps<{
@@ -18,7 +18,6 @@ const props = defineProps<{
   
 }>()
 
-console.log(props)
 
 const component = {
     1: Menu1,

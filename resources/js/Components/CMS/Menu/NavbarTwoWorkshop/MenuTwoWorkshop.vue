@@ -116,7 +116,7 @@ const mobileMenuOpen = ref(false);
                 <div class="bg-gray-600 bg-opacity-10">
                     <div class="mx-auto px-4 sm:px-6 lg:px-4">
                             <div class="flex h-16 items-center justify-between">
-                                <div class="hidden h-full lg:flex">
+                                <div class="h-full flex">
                                     <draggable
                                         v-model="navigation.categories"
                                         group="topMenu"
