@@ -19,7 +19,6 @@ const props = defineProps<{
 }>()
 
 
-console.log(props)
 
 const component = {
     1: FooterThemeOne,
