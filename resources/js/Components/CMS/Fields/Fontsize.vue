@@ -22,7 +22,7 @@ const setFormValue = (data: Object, fieldName: String) => {
 const getNestedValue = (obj: Object, keys: Array) => {
     return keys.reduce((acc, key) => {
         if (acc && typeof acc === 'object' && key in acc) return acc[key];
-        return null;
+        return '';
     }, obj);
 }
 
