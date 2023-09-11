@@ -36,7 +36,7 @@ const dataPusher = ref({
     }
 })
 const isModalOpen = ref(false)
-const isLoadingFetch = ref(false)
+const isLoadingUpload = ref(false)
 const dataHistory: any = ref([])
 const isProgressDone = ref(false)
 
@@ -52,8 +52,9 @@ channel.bind('WebsiteUpload', (data: any) => {
     // console.log(data)
 })
 
+// On upload file website
 const onUpload = async (fileUploaded: any) => {
-    isLoadingFetch.value = true
+    isLoadingUpload.value = true
     try {
         await axios.post(
             route('models.websites.upload'),
@@ -68,13 +69,15 @@ const onUpload = async (fileUploaded: any) => {
         // console.error("===========================")
         console.error(error.message)
     }
-    isLoadingFetch.value = false
+    isLoadingUpload.value = false
 }
 
+// Progress bar for adding website
 const compProgressBar = computed(() => {
     return dataPusher.value?.data.total_uploads ? dataPusher.value?.data.total_complete/dataPusher.value?.data.total_uploads * 100 : 0
 })
 
+// Fetch data history when Modal is opened
 watch(isModalOpen, async () => {
     // if(!dataHistory.value.length) { // If dataHistory empty (not fetched yet) then fetch agains
         try {
@@ -86,6 +89,7 @@ watch(isModalOpen, async () => {
     // }
 })
 
+// Close progress bar if 100%
 watch(compProgressBar, () => {
     if(compProgressBar.value >= 100){
         setTimeout(() => {
@@ -114,23 +118,31 @@ watch(compProgressBar, () => {
         <div class="grid grid-cols-2 gap-x-3">
             <!-- Column upload -->
             <div class="space-y-2">
-                <div class="relative flex justify-center rounded-lg border border-dashed border-gray-700/25 px-6 py-10 bg-gray-400/10 hover:bg-gray-400/20">
-                    <label for="fileInput"
-                        class="absolute cursor-pointer rounded-md inset-0 focus-within:outline-none focus-within:ring-0 focus-within:ring-gray-400 focus-within:ring-offset-0">
-                        <input type="file" name="file" id="fileInput" class="sr-only" @change="onUpload"
-                            ref="fileInput" accept=".xlsx, .xls, .csv"/>
-                    </label>
-                    <div class="text-center text-gray-500">
-                        <FontAwesomeIcon icon="fal fa-file" class="mx-auto h-12 w-12 text-gray-300" aria-hidden="true" />
-                        <div class="mt-2 flex  justify-center text-lg font-medium leading-6 ">
-                            <p class="pl-1">{{ trans("Upload file") }}</p>
+                <div class="relative flex items-center justify-center rounded-lg border border-dashed border-gray-700/25 px-6 h-48 bg-gray-400/10 hover:bg-gray-400/20">
+                    <div v-if="!isLoadingUpload">
+                        <label for="fileInput"
+                            class="absolute cursor-pointer rounded-md inset-0 focus-within:outline-none focus-within:ring-0 focus-within:ring-gray-400 focus-within:ring-offset-0">
+                            <input type="file" name="file" id="fileInput" class="sr-only" @change="onUpload"
+                                ref="fileInput" accept=".xlsx, .xls, .csv"/>
+                        </label>
+                        <div class="text-center text-gray-500">
+                            <FontAwesomeIcon icon="fal fa-file" class="mx-auto h-12 w-12 text-gray-300" aria-hidden="true" />
+                            <div class="mt-2 flex justify-center text-lg font-medium leading-6 ">
+                                <p class="pl-1">{{ trans("Upload file") }}</p>
+                            </div>
+                            <div class="flex text-sm leading-6 ">
+                                <p class="pl-1">{{ trans("Click or drag & drop") }}</p>
+                            </div>
+                            <p class="text-xs">
+                                {{ trans(".csv, .xls, .xlsx") }}
+                            </p>
                         </div>
-                        <div class="flex text-sm leading-6 ">
-                            <p class="pl-1">{{ trans("Click or drag & drop") }}</p>
-                        </div>
-                        <p class="text-xs">
-                            {{ trans(".csv, .xls, .xlsx") }}
-                        </p>
+                    </div>
+
+                    <!-- Loading state: if upload progress -->
+                    <div v-else class="text-center">
+                        <FontAwesomeIcon icon='fad fa-spinner-third' class='animate-spin h-8' aria-hidden='true' />
+                        <p class="text-gray-500">Uploading..</p>
                     </div>
                 </div>
 
@@ -144,12 +156,15 @@ watch(compProgressBar, () => {
             <!-- Table History -->
             <div class="order-last flex items-start gap-x-2 gap-y-2 flex-col">
                 <div class="text-sm text-gray-600">Recent uploaded website:</div>
-                <div class="flex flex-wrap gap-x-2 gap-y-2">
+                <div v-if="dataHistory.length" class="flex flex-wrap gap-x-2 gap-y-2">
                     <div v-for="(history, index) in dataHistory" :key="index" class="w-36 bg-gray-100 border-t-[3px] border-gray-500 rounded px-2 py-1 flex flex-col justify-start gap-y-1 cursor-pointer hover:bg-gray-200">
                         <p class="text-lg text-gray-700 font-semibold">{{ history.number_rows }} <span class="text-xs text-gray-500 font-normal">rows</span></p>
                         <span class="text-gray-600 text-xs leading-none">{{ history.original_filename }}</span>
                         <span class="text-gray-400 text-xxs">{{ useFormatTime(history.uploaded_at) }}</span>
                     </div>
+                </div>
+                <div v-else class="flex flex-wrap gap-x-2 gap-y-2">
+                    <div v-for="(history, index) in 4" :key="index" class="w-36 h-20 skeleton rounded" />
                 </div>
             </div>
         </div>
@@ -159,7 +174,7 @@ watch(compProgressBar, () => {
     <div :class="compProgressBar && !isProgressDone ? 'bottom-12' : '-bottom-12'" class="z-50 fixed right-1/2 translate-x-1/2 transition-all duration-200 ease-in-out flex gap-x-1">
         <div class="flex justify-center items-center flex-col gap-y-1">
             <div v-if="compProgressBar >=100">Finished!!🥳</div>
-            <div v-else>Uploading website ({{ dataPusher.data.total_complete }}/<span class="font-semibold inline">{{ dataPusher.data.total_uploads }}</span>)</div>
+            <div v-else>Adding websites ({{ dataPusher.data.total_complete }}/<span class="font-semibold inline">{{ dataPusher.data.total_uploads }}</span>)</div>
             <div class="overflow-hidden rounded-full bg-gray-200 w-64">
                 <div class="h-2 rounded-full bg-slate-600 transition-all duration-100 ease-in-out" :style="`width: ${compProgressBar}%`" />
             </div>

@@ -7,7 +7,7 @@
 
 
 
-test('Can upload file to r2.', function () {
+test('Upload file to r2.', function () {
 
     $path = resource_path('art/logo/png/logo-black.png');
     $content = file_get_contents($path);
@@ -15,6 +15,6 @@ test('Can upload file to r2.', function () {
 
     expect($result)->toBeTrue();
 
-})->skip();
+});
 
 

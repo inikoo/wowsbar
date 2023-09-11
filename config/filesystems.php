@@ -59,7 +59,7 @@ return [
             'driver'   => 's3',
             'key'      => env('CLOUDFLARE_R2_ACCESS_KEY'),
             'secret'   => env('CLOUDFLARE_R2_SECRET_KEY'),
-            'region'   => env('CLOUDFLARE_R2_REGION'),
+            'region'   => env('CLOUDFLARE_R2_REGION', 'auto'),
             'endpoint' => env('CLOUDFLARE_R2_ENDPOINT'),
             'bucket'   => env('CLOUDFLARE_R2_BUCKET_NAME'),
         ],
@@ -68,11 +68,10 @@ return [
             'driver'   => 's3',
             'key'      => env('CLOUDFLARE_R2_ACCESS_KEY'),
             'secret'   => env('CLOUDFLARE_R2_SECRET_KEY'),
-            'region'   => env('CLOUDFLARE_R2_REGION'),
+            'region'   => env('CLOUDFLARE_R2_REGION', 'auto'),
             'endpoint' => env('CLOUDFLARE_R2_ENDPOINT'),
             'bucket'   => env('CLOUDFLARE_R2_MEDIA_BUCKET_NAME'),
         ],
-
 
 
     ],

@@ -41,7 +41,20 @@ class GetFirstLoadProps
 
             'art'=>$this->getArt(),
             'layout'       => function () use ($user) {
-                return $user ? GetLayout::run($user) : null;
+                return $user ? GetLayout::run($user) : [
+                    'header' => [
+                        'component' => 'HeaderThemeOne',
+                        'data'      => []
+                    ],
+                    'menu'   => [
+                        'component' => 'MenuOne',
+                        'data'      => []
+                    ],
+                    'footer' => [
+                        'component' => 'FooterThemeOne',
+                        'data'      => []
+                    ]
+                ];
             },
         ];
     }
