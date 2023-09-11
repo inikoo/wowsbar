@@ -1,5 +1,5 @@
 import {initializeApp} from 'firebase/app';
-import {getDatabase, ref as dbRef} from 'firebase/database';
+import {getDatabase, set, ref as dbRef} from 'firebase/database';
 import {useDatabaseList} from 'vuefire';
 import {
     initializeAppCheck,
@@ -40,3 +40,16 @@ export const getDataFirebase = (column) => {
     }
 
 };
+
+
+export const setDataFirebase = async (column, data) => {
+    const dbReference = getDbRef(column);
+    console.log('vuefire',dbReference)
+    try {
+      await set(dbReference, data);
+      console.log('Data set successfully in Firebase:', data);
+    } catch (error) {
+      console.error('Error setting data in Firebase:', error);
+      throw error; // You can handle the error further as needed
+    }
+  };

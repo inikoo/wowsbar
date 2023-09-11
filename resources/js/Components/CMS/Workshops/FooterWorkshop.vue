@@ -6,7 +6,7 @@
   -->
 
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive, watch } from 'vue'
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { RadioGroup, RadioGroupLabel, RadioGroupOption } from '@headlessui/vue'
 import Footer from '@/Components/CMS/Footer/index.vue'
@@ -17,6 +17,8 @@ import HyperlinkTools from '@/Components/CMS/Fields/Hyperlinktools.vue'
 import { get } from 'lodash'
 import HyperInfoTools from '@/Components/CMS/Fields/InfoFieldTools.vue'
 import SocialMediaPicker from "@/Components/CMS/Fields/IconPicker/SocialMediaTools.vue"
+import { getDbRef, getDataFirebase, setDataFirebase } from '@/Composables/firebase'
+
 library.add(faHandPointer, faHandRock, faPlus)
 
 const Dummy = {
@@ -217,6 +219,19 @@ const data = reactive({
     ],
     copyRight : { label: 'AW Advantage', link: '*' }
 })
+
+async function setToFirebase() {
+  const column = 'org/websites/footer';
+  try {
+    await setDataFirebase(column, { data : data, theme : selectedTheme.value });
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+watch(data, setToFirebase, { deep: true })
+
+setToFirebase()
 
 const columSelected = ref(null);
 
