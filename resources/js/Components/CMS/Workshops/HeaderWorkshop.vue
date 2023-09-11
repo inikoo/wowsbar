@@ -5,7 +5,7 @@
   -->
 
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive, watch } from 'vue'
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { RadioGroup, RadioGroupLabel, RadioGroupOption } from '@headlessui/vue'
 import { faHandPointer, faHandRock, faPlus, faText, faSearch, faImage, faTrash, faBars } from '@/../private/pro-solid-svg-icons';
@@ -16,6 +16,7 @@ import Input from '@/Components/CMS/Fields/Input.vue';
 import Layout from '../Header/Layout.vue';
 import ToolsTop from '@/Components/CMS/Header/ToolsTop.vue';
 import draggable from "vuedraggable"
+import { getDbRef, getDataFirebase, setDataFirebase } from '@/Composables/firebase'
 library.add(faHandPointer, faText, faSearch, faImage, faTrash, faBars)
 
 const Dummy = {
@@ -146,6 +147,19 @@ const Uploadimage = () => {
 const deleteContent = (index) => [
     data.splice(index, 1)
 ]
+
+async function setToFirebase() {
+  const column = 'org/websites/header';
+  try {
+    await setDataFirebase(column, { data : data, layout : layout.value });
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+watch(data, setToFirebase, { deep: true })
+watch(layout, setToFirebase, { deep: true })
+setToFirebase()
 
 </script>
 

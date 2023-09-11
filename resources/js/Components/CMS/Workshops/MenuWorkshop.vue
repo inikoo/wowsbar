@@ -5,7 +5,7 @@
   -->
 
 <script setup>
-import { ref, watchEffect } from 'vue'
+import { ref, watch } from 'vue'
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { RadioGroup, RadioGroupLabel, RadioGroupOption } from '@headlessui/vue'
 import Menu from '@/Components/CMS/Menu/index.vue'
@@ -15,9 +15,10 @@ import { ulid } from 'ulid';
 import HyperlinkTools from '@/Components/CMS/Fields/Hyperlinktools.vue'
 import { get } from 'lodash'
 import IconPicker from '@/Components/CMS/Fields/IconPicker/IconPicker.vue';
+import { getDbRef, getDataFirebase, setDataFirebase } from '@/Composables/firebase'
 library.add(faHandPointer, faHandRock, faPlus)
 
-const Dummy = {
+const toolsData = {
     tools: [
         { name: 'edit', icon: ['fas', 'fa-hand-pointer'] },
         { name: 'grab', icon: ['fas', 'hand-rock'] },
@@ -255,15 +256,9 @@ const navigation = ref({
     ],
 })
 
-const selectedTheme = ref(Dummy.theme[0])
-const handtools = ref(Dummy.tools[0])
+const selectedTheme = ref(toolsData.theme[0])
+const handtools = ref(toolsData.tools[0])
 const selectedNav = ref(null)
-
-
-
-watchEffect(() => {
-    console.log('selectedNav:', selectedNav.value);
-});
 
 
 
@@ -315,6 +310,19 @@ const deleteCategory = () => {
     }
 }
 
+async function setToFirebase() {
+  const column = 'org/websites/menu';
+  try {
+    await setDataFirebase(column, { navigation : navigation, theme : selectedTheme.value });
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+watch(navigation, setToFirebase, { deep: true })
+
+setToFirebase()
+
 </script>
 
 <template>
@@ -329,7 +337,7 @@ const deleteCategory = () => {
                         <RadioGroup v-model="handtools" class="mt-2">
                             <RadioGroupLabel class="sr-only">Choose a tool</RadioGroupLabel>
                             <div class="flex items-center space-x-3">
-                                <RadioGroupOption as="template" v-for="color in Dummy.tools" :key="color.name"
+                                <RadioGroupOption as="template" v-for="color in toolsData.tools" :key="color.name"
                                     :value="color" v-slot="{ active, checked }">
                                     <div :class="[
                                         color.tools,
@@ -362,7 +370,7 @@ const deleteCategory = () => {
 
                         <RadioGroup v-model="selectedTheme" class="mt-2">
                             <div class="grid grid-cols-3 gap-3 sm:grid-cols-2">
-                                <RadioGroupOption as="template" v-for="theme in Dummy.theme" :key="theme.name"
+                                <RadioGroupOption as="template" v-for="theme in toolsData.theme" :key="theme.name"
                                     :value="theme" v-slot="{ active, checked }">
                                     <div :class="[
                                         'cursor-pointer focus:outline-none',
@@ -390,7 +398,7 @@ const deleteCategory = () => {
                         </div>
                         <RadioGroup class="mt-2">
                             <div class="grid grid-cols-3 gap-3 sm:grid-cols-2">
-                                <RadioGroupOption as="template" v-for="option in Dummy.menuType" :key="option.value"
+                                <RadioGroupOption as="template" v-for="option in toolsData.menuType" :key="option.value"
                                     :value="option" v-slot="{ active, checked }">
                                     <div @click="changeMenuType(option)" :class="{
                                         'cursor-pointer': get(selectedNav, 'type') === option.value && selectedNav !== null,
