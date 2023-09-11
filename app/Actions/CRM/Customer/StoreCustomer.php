@@ -7,9 +7,13 @@
 
 namespace App\Actions\CRM\Customer;
 
-use App\Enums\CRM\Customer\CustomerStatusEnum;
+use App\Models\Assets\Country;
+use App\Models\Assets\Currency;
+use App\Models\Assets\Language;
+use App\Models\Assets\Timezone;
 use App\Models\CRM\Customer;
-use App\Models\Tenancy\Tenant;
+use Exception;
+use Illuminate\Console\Command;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
@@ -25,21 +29,16 @@ class StoreCustomer
     use AsAction;
     use WithAttributes;
 
-    private bool $asAction     = false;
-    public int $hydratorsDelay = 0;
+    private bool $asAction = false;
 
+    public string $commandSignature = 'customer:create {code} {email} {name} {country_code} {currency_code} {username?} {password?} {--l|language_code= : Language code} {--tz|timezone= : Timezone}';
 
     /**
      * @throws Throwable
      */
-    public function handle(Tenant|null $parent, array $customerData, array $customerAddressesData = []): Customer
+    public function handle(array $customerData, array $customerAddressesData = []): Customer
     {
-        $customer = DB::transaction(function () use ($customerData, $parent) {
-
-            if($parent) {
-                $customerData['tenant_id'] = $parent->id;
-            }
-
+        return DB::transaction(function () use ($customerData) {
             /** @var Customer $customer */
             $customer = Customer::create($customerData);
             if ($customer->reference == null) {
@@ -51,15 +50,10 @@ class StoreCustomer
             }
             $customer->stats()->create();
 
+            // CustomerHydrateUniversalSearch::dispatch($customer);
+
             return $customer;
         });
-
-        $customer->location = $customer->getLocation();
-        $customer->save();
-
-        //        CustomerHydrateUniversalSearch::dispatch($customer);
-
-        return $customer;
     }
 
     public function authorize(ActionRequest $request): bool
@@ -74,12 +68,19 @@ class StoreCustomer
     public function rules(): array
     {
         return [
+            'slug'                     => ['nullable', 'string'],
             'contact_name'             => ['nullable', 'string', 'max:255'],
             'company_name'             => ['nullable', 'string', 'max:255'],
             'email'                    => ['nullable', 'email'],
+            'username'                 => ['nullable', 'string'],
+            'password'                 => ['nullable', 'string'],
             'phone'                    => ['nullable', 'phone:AUTO'],
             'identity_document_number' => ['nullable', 'string'],
             'contact_website'          => ['nullable', 'active_url'],
+            'currency_id' => ['required', 'exists:currencies,id'],
+            'country_id'  => ['required', 'exists:countries,id'],
+            'language_id' => ['required', 'exists:languages,id'],
+            'timezone_id' => ['required', 'exists:timezones,id'],
         ];
     }
 
@@ -93,41 +94,96 @@ class StoreCustomer
     /**
      * @throws Throwable
      */
-    public function asController(Shop $shop, ActionRequest $request): Customer
+    public function asController(ActionRequest $request): Customer
     {
         $this->fillFromRequest($request);
         $request->validate();
 
-        return $this->handle($shop, $request->validated());
+        return $this->handle($request->validated());
     }
-
-
-
-    public function htmlResponse(Customer $customer): RedirectResponse
-    {
-        return Redirect::route('crm.shops.show.customers.show', [$customer->shop->slug, $customer->slug]);
-    }
-
 
     /**
      * @throws Throwable
      */
-    public function action(Shop $shop, array $objectData, array $customerAddressesData): Customer
+    public function action(array $objectData, array $customerAddressesData): Customer
     {
         $this->asAction = true;
         $this->setRawAttributes($objectData);
         $validatedData = $this->validateAttributes();
 
-        return $this->handle($shop, $validatedData, $customerAddressesData);
+        return $this->handle($validatedData, $customerAddressesData);
     }
 
-    /**
-     * @throws Throwable
-     */
-    public function asFetch(Shop $shop, array $customerData, array $customerAddressesData, int $hydratorsDelay = 60): Customer
-    {
-        $this->hydratorsDelay = $hydratorsDelay;
 
-        return $this->handle($shop, $customerData, $customerAddressesData);
+    public function asCommand(Command $command): int
+    {
+        $this->asAction = true;
+        try {
+            $country = Country::where('code', $command->argument('country_code'))->firstOrFail();
+        } catch (Exception $e) {
+            $command->error($e->getMessage());
+
+            return 1;
+        }
+
+        try {
+            $currency = Currency::where('code', $command->argument('currency_code'))->firstOrFail();
+        } catch (Exception $e) {
+            $command->error($e->getMessage());
+
+            return 1;
+        }
+
+        if ($command->option('language_code')) {
+            try {
+                $language = Language::where('code', $command->option('language_code'))->firstOrFail();
+            } catch (Exception $e) {
+                $command->error($e->getMessage());
+
+                return 1;
+            }
+        } else {
+            $language = Language::where('code', 'en-gb')->firstOrFail();
+        }
+
+        if ($command->option('timezone')) {
+            try {
+                $timezone = Timezone::where('name', $command->option('timezone'))->firstOrFail();
+            } catch (Exception $e) {
+                $command->error($e->getMessage());
+
+                return 1;
+            }
+        } else {
+            $timezone = Timezone::where('name', 'UTC')->firstOrFail();
+        }
+
+        $this->setRawAttributes([
+            'slug'        => $command->argument('code'),
+            'name'        => $command->argument('name'),
+            'contact_name'        => $command->argument('name'),
+            'company_name'        => $command->argument('name'),
+            'email'       => $command->argument('email'),
+            'username'    => $command->argument('username'),
+            'password'    => \Hash::make($command->argument('password')),
+            'country_id'  => $country->id,
+            'currency_id' => $currency->id,
+            'language_id' => $language->id,
+            'timezone_id' => $timezone->id,
+        ]);
+
+        try {
+            $validatedData = $this->validateAttributes();
+        } catch (Exception $e) {
+            $command->error($e->getMessage());
+
+            return 1;
+        }
+
+        $customer = $this->handle($validatedData);
+
+        $command->info("Customer $customer->slug created successfully 🎉");
+
+        return 0;
     }
 }
