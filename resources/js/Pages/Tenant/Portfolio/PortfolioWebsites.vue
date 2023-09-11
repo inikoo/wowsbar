@@ -89,6 +89,7 @@ watch(isModalOpen, async () => {
     // }
 })
 
+// Close progress bar if 100%
 watch(compProgressBar, () => {
     if(compProgressBar.value >= 100){
         setTimeout(() => {
