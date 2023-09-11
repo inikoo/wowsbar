@@ -28,3 +28,4 @@ yarn-error.log
 /resources/private/
 lang/php_*.json
 /public/organisation.hot
+/delete-bucket.sh
