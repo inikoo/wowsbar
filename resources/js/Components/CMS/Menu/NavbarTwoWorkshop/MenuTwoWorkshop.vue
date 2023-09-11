@@ -3,7 +3,7 @@ import { ref } from "vue";
 
 import draggable from "vuedraggable";
 import HyperLink from "@/Components/CMS/Fields/Hyperlink.vue";
-import SubMenu from "./Submenu.vue";
+import SubMenu from "../SubMenu.vue";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faUser, faHeart, faShoppingCart, faSignOut } from '../../../../../private/pro-solid-svg-icons';
 import { library } from "@fortawesome/fontawesome-svg-core";
