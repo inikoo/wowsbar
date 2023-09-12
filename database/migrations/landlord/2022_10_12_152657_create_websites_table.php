@@ -24,7 +24,7 @@ return new class () extends Migration {
             $table->jsonb('settings');
             $table->jsonb('data');
             $table->jsonb('structure');
-            $table->boolean('in_maintenance')->default(false);
+            $table->boolean('status')->default(false);
             $table->unsignedSmallInteger('current_layout_id')->index()->nullable();
             $table->timestampsTz();
             $table->timestampTz('launched_at')->nullable();

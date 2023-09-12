@@ -17,6 +17,11 @@ Route::middleware([
     "public-web",
 ])->group(function () {
     Route::get('/', ShowWelcome::class)->name('welcome');
+
+    Route::prefix("disclosure")
+        ->name("disclosure.")
+        ->group(__DIR__."/disclosure.php");
+
     Route::get('/whats-new', ShowWhatsNew::class)->name('whats-new');
     Route::get('/pricing', ShowPricing::class)->name('pricing');
     Route::middleware(["public-auth:public"])->group(function () {

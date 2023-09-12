@@ -31,7 +31,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property array $settings
  * @property array $data
  * @property array $structure
- * @property bool $in_maintenance
+ * @property bool $status
  * @property int|null $current_layout_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -57,12 +57,12 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Website whereDeletedAt($value)
  * @method static Builder|Website whereDomain($value)
  * @method static Builder|Website whereId($value)
- * @method static Builder|Website whereInMaintenance($value)
  * @method static Builder|Website whereLaunchedAt($value)
  * @method static Builder|Website whereOrganisationId($value)
  * @method static Builder|Website whereSettings($value)
  * @method static Builder|Website whereSlug($value)
  * @method static Builder|Website whereState($value)
+ * @method static Builder|Website whereStatus($value)
  * @method static Builder|Website whereStructure($value)
  * @method static Builder|Website whereUpdatedAt($value)
  * @method static Builder|Website withTrashed()

@@ -71,13 +71,13 @@ class StoreOrganisation
 
         Artisan::call("db:seed --force --class=StockImageSeeder");
 
-        /*
+
         StoreWebsite::run(
             [
-                'domain'=>config('app.domain')
+                'domain'=> config('app.domain')
             ]
         );
-        */
+
 
         return $organisation;
     }

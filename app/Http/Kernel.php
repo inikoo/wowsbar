@@ -8,6 +8,7 @@
 namespace App\Http;
 
 use App\Http\Middleware\Authenticate;
+use App\Http\Middleware\CheckWebsiteState;
 use App\Http\Middleware\EncryptCookies;
 use App\Http\Middleware\HandleDeliveryInertiaRequests;
 use App\Http\Middleware\HandleInertiaRequests;
@@ -85,6 +86,7 @@ class Kernel extends HttpKernel
             AddLinkHeadersForPreloadedAssets::class,
         ],
         'public-web' => [
+            CheckWebsiteState::class,
             EncryptCookies::class,
             AddQueuedCookiesToResponse::class,
             StartSession::class,
