@@ -110,7 +110,7 @@ class IndexPortfolioWebsites extends InertiaAction
     public function htmlResponse(LengthAwarePaginator $websites, ActionRequest $request): Response
     {
         return Inertia::render(
-            'Tenant/Portfolio/PortfolioWebsites',
+            'Portfolio/PortfolioWebsites',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->getName(),
@@ -196,12 +196,12 @@ class IndexPortfolioWebsites extends InertiaAction
         };
 
         return match ($routeName) {
-            'portfolio.websites.index' =>
+            'tenant.portfolio.websites.index' =>
             array_merge(
                 ShowPortfolio::make()->getBreadcrumbs(),
                 $headCrumb(
                     [
-                        'name' => 'portfolio.websites.index',
+                        'name' => 'tenant.portfolio.websites.index',
                         null
                     ]
                 ),

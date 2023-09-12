@@ -41,7 +41,7 @@ class EditPortfolioWebsite extends InertiaAction
     public function htmlResponse(PortfolioWebsite $portfolioWebsite, ActionRequest $request): Response
     {
         return Inertia::render(
-            'Tenant/EditModel',
+            'EditModel',
             [
                     'title'       => __("PortfolioWebsite's settings"),
                     'breadcrumbs' => $this->getBreadcrumbs(
@@ -152,7 +152,7 @@ class EditPortfolioWebsite extends InertiaAction
         }
 
         return match ($routeName) {
-            'portfolio.websites.edit' => [
+            'tenant.portfolio.websites.edit' => [
                 'label' => $portfolioWebsite->name,
                 'route' => [
                     'name'       => $routeName,

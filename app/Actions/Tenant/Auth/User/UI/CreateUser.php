@@ -17,7 +17,7 @@ class CreateUser extends InertiaAction
     public function handle(ActionRequest $request): Response
     {
         return Inertia::render(
-            'Tenant/CreateModel',
+            'CreateModel',
             [
                 'breadcrumbs' => $this->getBreadcrumbs($request->route()->getName()),
                 'title'       => __('new user'),

@@ -192,7 +192,7 @@ class StoreBanner
     {
         if (class_basename($this->parent) == 'PortfolioWebsite') {
             return redirect()->route(
-                'portfolio.websites.show.banners.workshop',
+                'tenant.portfolio.websites.show.banners.workshop',
                 [
                     $this->parent->slug,
                     $banner->slug
@@ -201,7 +201,7 @@ class StoreBanner
         }
 
         return redirect()->route(
-            'portfolio.banners.workshop',
+            'tenant.portfolio.banners.workshop',
             [
                 $banner->slug
             ]

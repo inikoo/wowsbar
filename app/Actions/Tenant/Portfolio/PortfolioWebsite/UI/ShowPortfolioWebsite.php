@@ -47,7 +47,7 @@ class ShowPortfolioWebsite extends InertiaAction
     public function htmlResponse(PortfolioWebsite $portfolioWebsite, ActionRequest $request): Response
     {
         return Inertia::render(
-            'Tenant/Portfolio/PortfolioWebsite',
+            'Portfolio/PortfolioWebsite',
             [
                 'title'       => __('PortfolioWebsite'),
                 'breadcrumbs' => $this->getBreadcrumbs(
@@ -69,7 +69,7 @@ class ShowPortfolioWebsite extends InertiaAction
                             'type'  => 'button',
                             'style' => 'delete',
                             'route' => [
-                                'name'       => 'portfolio.websites.remove',
+                                'name'       => 'tenant.portfolio.websites.remove',
                                 'parameters' => array_values($request->route()->originalParameters())
                             ]
                         ] : false,
@@ -129,7 +129,7 @@ class ShowPortfolioWebsite extends InertiaAction
                     modelOperations: [
                         'createLink' => $this->canEdit ? [
                             'route' => [
-                                'name'       => 'portfolio.websites.show.banners.create',
+                                'name'       => 'tenant.portfolio.websites.show.banners.create',
                                 'parameters' => array_values([$portfolioWebsite->slug])
                             ],
                             'label' => __('banner'),
@@ -177,8 +177,8 @@ class ShowPortfolioWebsite extends InertiaAction
         };
 
         return match ($routeName) {
-            'portfolio.websites.show',
-            'portfolio.websites.edit' =>
+            'tenant.portfolio.websites.show',
+            'tenant.portfolio.websites.edit' =>
 
             array_merge(
                 ShowPortfolio::make()->getBreadcrumbs(),
@@ -187,11 +187,11 @@ class ShowPortfolioWebsite extends InertiaAction
                     $routeParameters['portfolioWebsite'],
                     [
                         'index' => [
-                            'name'       => 'portfolio.websites.index',
+                            'name'       => 'tenant.portfolio.websites.index',
                             'parameters' => []
                         ],
                         'model' => [
-                            'name'       => 'portfolio.websites.show',
+                            'name'       => 'tenant.portfolio.websites.show',
                             'parameters' => [$routeParameters['portfolioWebsite']->slug]
                         ]
                     ],
@@ -224,7 +224,7 @@ class ShowPortfolioWebsite extends InertiaAction
         }
 
         return match ($routeName) {
-            'portfolio.websites.show' => [
+            'tenant.portfolio.websites.show' => [
                 'label' => $portfolioWebsite->name,
                 'route' => [
                     'name'       => $routeName,

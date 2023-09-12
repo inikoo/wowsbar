@@ -42,9 +42,9 @@ class EditBanner extends InertiaAction
     public function htmlResponse(Banner $banner, ActionRequest $request): Response
     {
         return Inertia::render(
-            'Tenant/EditModel',
+            'EditModel',
             [
-                    'title'       => __("PortfolioWebsite's settings"),
+                    'title'       => __("Website's settings"),
                     'breadcrumbs' => $this->getBreadcrumbs(
                         $request->route()->getName(),
                         $request->route()->parameters()
@@ -57,7 +57,7 @@ class EditBanner extends InertiaAction
                         'title'     => __('Edit banner'),
                         'container' => [
                             'icon'    => ['fal', 'fa-globe'],
-                            'tooltip' => __('PortfolioWebsite'),
+                            'tooltip' => __('Website'),
                             'label'   => Str::possessive($banner->name)
                         ],
 
@@ -70,7 +70,7 @@ class EditBanner extends InertiaAction
                         'actions'   => [
                             [
                                 'type'  => 'button',
-                                'style' => 'tertiary',
+                                'style' => 'exit',
                                 'label' => __('Exit edit'),
                                 'route' => [
                                     'name'       => preg_replace('/edit$/', 'show', $request->route()->getName()),
@@ -122,6 +122,7 @@ class EditBanner extends InertiaAction
 
     public function getBreadcrumbs(string $routeName, array $routeParameters): array
     {
+
         return ShowBanner::make()->getBreadcrumbs(
             $routeName,
             $routeParameters,
@@ -133,30 +134,29 @@ class EditBanner extends InertiaAction
     {
         $previous = Banner::where('code', '<', $banner->code)->orderBy('code', 'desc')->first();
 
-        return $this->getNavigation($previous, $request->route()->getName());
+        return $this->getNavigation($previous, $request);
     }
 
     public function getNext(Banner $banner, ActionRequest $request): ?array
     {
         $next = Banner::where('code', '>', $banner->code)->orderBy('code')->first();
 
-        return $this->getNavigation($next, $request->route()->getName());
+        return $this->getNavigation($next, $request);
     }
 
-    private function getNavigation(?Banner $banner, string $routeName): ?array
+    private function getNavigation(?Banner $banner, ActionRequest $request): ?array
     {
         if (!$banner) {
             return null;
         }
 
+        $routeName=$request->route()->getName();
         return match ($routeName) {
-            'portfolio.websites.show.banners.edit' => [
+            'tenant.portfolio.websites.show.banners.edit' => [
                 'label' => $banner->name,
                 'route' => [
                     'name'       => $routeName,
-                    'parameters' => [
-                        'banner' => $banner->slug
-                    ]
+                    'parameters' => $request->route()->originalParameters()
                 ]
             ],
             default => null

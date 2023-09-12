@@ -17,9 +17,9 @@ const props = defineProps<{
 
 function websiteRoute(website: Website) {
     switch (route().current()) {
-        case 'portfolio.websites.index':
+        case 'tenant.portfolio.websites.index':
             return route(
-                'portfolio.websites.show',
+                'tenant.portfolio.websites.show',
                 [website.slug]);
     }
 }

@@ -107,7 +107,7 @@ const compProgressBar = computed(() => {
 watch(isModalOpen, async () => {
     // if(!dataHistory.value.length) { // If dataHistory empty (not fetched yet) then fetch agains
         try {
-            const data = await axios.get(route('portfolio.website.uploads.history'))
+            const data = await axios.get(route('tenant.portfolio.website.uploads.history'))
             dataHistory.value = data.data.data
         } catch (error: any) {
             console.error(error.message)
@@ -174,7 +174,7 @@ watch(compProgressBar, () => {
                 </div>
 
                 <!-- Download template -->
-                <a :href="route('portfolio.website.uploads.template.download')" target="_blank" class="group text-xs text-gray-600 cursor-pointer px-2 w-fit" >
+                <a :href="route('tenant.portfolio.website.uploads.template.download')" target="_blank" class="group text-xs text-gray-600 cursor-pointer px-2 w-fit" >
                     <FontAwesomeIcon icon='fas fa-file-download' class='text-gray-400 group-hover:text-gray-600' aria-hidden='true' />
                     Download template .xlsx
                 </a>

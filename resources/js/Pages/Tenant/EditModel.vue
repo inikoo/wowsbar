@@ -9,7 +9,11 @@ import { Head } from '@inertiajs/vue3';
 import { capitalize } from "@/Composables/capitalize"
 import PageHeading from '@/Components/Headings/PageHeading.vue';
 import Edit from '@/Components/Edit.vue';
-
+import { library } from "@fortawesome/fontawesome-svg-core"
+import {
+    faEdit
+} from "@/../private/pro-light-svg-icons"
+library.add(faEdit);
 const props = defineProps<{
     title: string,
     pageHead: {

@@ -8,7 +8,7 @@
 import {Head} from '@inertiajs/vue3';
 import PageHeading from '@/Components/Headings/PageHeading.vue';
 import Stats from '@/Components/DataDisplay/Stats.vue';
-import { capitalize } from "@/Composables/capitalize"
+import { capitalize } from "@/Composables/capitalize.js"
 
 defineProps(['title', 'pageHead', 'stats']);
 

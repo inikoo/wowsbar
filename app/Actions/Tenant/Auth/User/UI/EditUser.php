@@ -37,7 +37,7 @@ class EditUser extends InertiaAction
     public function htmlResponse(User $user, ActionRequest $request): Response
     {
         return Inertia::render(
-            'Tenant/EditModel',
+            'EditModel',
             [
                 'title'       => __('user'),
                 'breadcrumbs' => $this->getBreadcrumbs(

@@ -9,9 +9,11 @@ export default defineConfig(
         plugins: [
             inertia(),
             laravel({
-                        input  : 'resources/js/app.js',
-                        ssr    : 'resources/js/ssr.js',
-                        refresh: true,
+                      hotFile: 'public/tenant.hot',
+                      buildDirectory: 'tenant',
+                      input  : 'resources/js/app-tenant.js',
+                      ssr    : 'resources/js/ssr-tenant.js',
+                      refresh: true,
                     }),
             vue({
                     template: {

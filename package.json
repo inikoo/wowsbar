@@ -4,8 +4,8 @@
     "scripts": {
         "dev": "npm run dev.tenant && npm run dev.delivery  && npm run dev.organisation && npm run dev.public",
         "build": "npm run build.tenant && npm run build.delivery  && npm run build.organisation && npm run build.public",
-        "dev.tenant": "vite --config vite.config.js",
-        "build.tenant": "vite build --config vite.config.js && vite build --config vite.config.js --ssr",
+        "dev.tenant": "vite --config vite.tenant.config.js",
+        "build.tenant": "vite build --config vite.tenant.config.js && vite build --config vite.tenant.config.js --ssr",
         "dev.organisation": "vite --config vite.organisation.config.js",
         "build.organisation": "vite build --config vite.organisation.config.js && vite build --config vite.organisation.config.js --ssr",
         "dev.public": "vite --config vite.public.config.js",

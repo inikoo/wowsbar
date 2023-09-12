@@ -101,7 +101,7 @@ const createBanner = async () => {
                 isModalOpen.value = false
             }, 1000)
         }
-        
+
         if(!fieldWebsite.value){
             await axios.post(
                 route('models.tenant.banner.gallery.store'),
@@ -135,7 +135,7 @@ const deleteImageSelected = (image) => {
     const index =  selectedImages.value.stock_images.findIndex((item) => item == image);
     if (index !== -1) {
         selectedImages.value.stock_images.splice(index, 1);
-        allImageFlat.value = selectedImage(); 
+        allImageFlat.value = selectedImage();
     }
 };
 
@@ -143,7 +143,7 @@ const deleteImageSelected = (image) => {
 // Fetch website list
 watch(isModalOpen, async () => {
     try {
-        const response = await axios.get(route('portfolio.websites.index'))
+        const response = await axios.get(route('tenant.portfolio.websites.index'))
         websitesList.value = response.data.data
         allImageFlat.value = selectedImage();
         // fieldWebsite.value = websitesList.value[0].slug

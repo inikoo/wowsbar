@@ -97,7 +97,7 @@ class IndexUploadedImages extends InertiaAction
     public function htmlResponse(LengthAwarePaginator $websites, ActionRequest $request): Response
     {
         return Inertia::render(
-            'Tenant/Portfolio/Images',
+            'Portfolio/Images',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->getName(),
@@ -142,12 +142,12 @@ class IndexUploadedImages extends InertiaAction
 
 
         return match ($routeName) {
-            'portfolio.images.index' =>
+            'tenant.portfolio.images.index' =>
             array_merge(
                 ShowPortfolio::make()->getBreadcrumbs(),
                 $headCrumb(
                     [
-                        'name' => 'portfolio.images.index',
+                        'name' => 'tenant.portfolio.images.index',
                         null
                     ]
                 ),

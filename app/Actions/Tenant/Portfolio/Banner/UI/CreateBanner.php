@@ -84,7 +84,7 @@ class CreateBanner extends InertiaAction
         }
 
         return Inertia::render(
-            'Tenant/CreateModel',
+            'CreateModel',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->getName(),
@@ -99,9 +99,9 @@ class CreateBanner extends InertiaAction
                             'style' => 'cancel',
                             'route' =>
                                 match ($request->route()->getName()) {
-                                    'portfolio.websites.show.banners.create' =>
+                                    'tenant.portfolio.websites.show.banners.create' =>
                                     [
-                                        'name'       => 'portfolio.websites.show',
+                                        'name'       => 'tenant.portfolio.websites.show',
                                         'parameters' => array_values($request->route()->originalParameters())
                                     ],
                                     default => [
@@ -144,12 +144,12 @@ class CreateBanner extends InertiaAction
     {
         return array_merge(
             match ($routeName) {
-                'portfolio.banners.create' => IndexBanners::make()->getBreadcrumbs(
-                    'portfolio.banners.index',
+                'tenant.portfolio.banners.create' => IndexBanners::make()->getBreadcrumbs(
+                    'tenant.portfolio.banners.index',
                     $routeParameters
                 ),
                 default => IndexBanners::make()->getBreadcrumbs(
-                    'portfolio.websites.show.banners.index',
+                    'tenant.portfolio.websites.show.banners.index',
                     $routeParameters
                 )
             },

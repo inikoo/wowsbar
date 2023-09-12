@@ -27,17 +27,17 @@ const props = defineProps<{
 
 function bannerRoute(banner: Banner) {
     switch (route().current()) {
-        case 'portfolio.banners.index':
+        case 'tenant.portfolio.banners.index':
             return route(
-                'portfolio.banners.show',
+                'tenant.portfolio.banners.show',
                 [banner.slug])
-        case 'portfolio.websites.show':
+        case 'tenant.portfolio.websites.show':
             return route(
-                'portfolio.websites.show.banners.show',
+                'tenant.portfolio.websites.show.banners.show',
                 [route().params['portfolioWebsite'],banner.slug])
-        case 'portfolio.websites.show.banners.index':
+        case 'tenant.portfolio.websites.show.banners.index':
             return route(
-                'portfolio.websites.show.banners.show',
+                'tenant.portfolio.websites.show.banners.show',
                 [route().params['portfolioWebsite'],banner.slug])
     }
 }
@@ -55,7 +55,7 @@ function bannerRoute(banner: Banner) {
         <template #cell(state)="{ item: banner }">
             <Icon :data="banner['state_icon']"/>
         </template>
-        
+
         <template #cell(image_thumbnail)="{ item: banner }">
             <div class="h-11 overflow-hidden aspect-[4/1]">
                 <Image :src="banner['image_thumbnail']"/>

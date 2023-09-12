@@ -22,7 +22,7 @@ class GetLayout
             'scope' => 'portfolio',
             'icon'  => ['fal', 'fa-home'],
             'label' => __('dashboard'),
-            'route' => 'portfolio.dashboard'
+            'route' => 'tenant.portfolio.dashboard'
         ];
 
         $navigation['banner'] = [

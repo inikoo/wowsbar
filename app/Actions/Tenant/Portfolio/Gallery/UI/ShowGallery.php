@@ -40,7 +40,7 @@ class ShowGallery extends InertiaAction
     public function htmlResponse(ActionRequest $request): Response
     {
         return Inertia::render(
-            'Tenant/Portfolio/Gallery',
+            'Portfolio/Gallery',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->getName(),
@@ -100,7 +100,7 @@ class ShowGallery extends InertiaAction
                 modelOperations: [
                     'uploadFile' => $this->canEdit ? [
                         'route' => [
-                            'name'       => 'portfolio.images.upload',
+                            'name'       => 'tenant.portfolio.images.upload',
                             'parameters' => []
                         ],
                         'label' => __('Upload image'),
@@ -147,12 +147,12 @@ class ShowGallery extends InertiaAction
         };
 
         return match ($routeName) {
-            'portfolio.gallery' =>
+            'tenant.portfolio.gallery' =>
             array_merge(
                 ShowPortfolio::make()->getBreadcrumbs(),
                 $headCrumb(
                     [
-                        'name' => 'portfolio.gallery',
+                        'name' => 'tenant.portfolio.gallery',
                         null
                     ]
                 ),

@@ -67,7 +67,7 @@ class StorePortfolioWebsite
 
     public function htmlResponse(PortfolioWebsite $portfolioWebsite): RedirectResponse
     {
-        return Redirect::route('portfolio.websites.show', [
+        return Redirect::route('tenant.portfolio.websites.show', [
             $portfolioWebsite->slug
         ]);
     }

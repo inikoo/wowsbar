@@ -59,9 +59,9 @@ const getData = async (tabName: string, routeUrl: string) => {
 // Use watch to fetch at first load
 watch(activeSidebar, (newSidebar: string) => {
     if(newSidebar == 'uploaded_images') {
-        galleryStore[newSidebar].length === 0 ? getData(newSidebar, 'portfolio.uploaded.images') : false
+        galleryStore[newSidebar].length === 0 ? getData(newSidebar, 'tenant.portfolio.uploaded.images') : false
     } else if (newSidebar == 'stock_images') {
-        galleryStore[newSidebar].length === 0 ? getData(newSidebar, 'portfolio.stock.images') : false
+        galleryStore[newSidebar].length === 0 ? getData(newSidebar, 'tenant.portfolio.stock.images') : false
     }
 }, { immediate: true })
 
@@ -78,7 +78,7 @@ const collectImage = (image) => {
     }else{
         ImageDataCollect.value.data = [{...image}]
     }
-  
+
 }
 
 </script>
@@ -122,7 +122,7 @@ const collectImage = (image) => {
                         description: trans('Create new slides in the workshop to get started.'),
                     }" />
                 </div>
-                
+
                 <div v-else class="pt-6 px-4 grid grid-cols-4 gap-x-3 gap-y-6 max-h-96 overflow-auto">
                     <div  v-for="imageData in galleryStore?.[activeSidebar]" :key="imageData.id"
                         @click="() => collectImage(imageData)"
@@ -140,14 +140,14 @@ const collectImage = (image) => {
                     </div>
                 </div>
             </div>
-            
-            
+
+
         </section>
-    
+
     </div>
     <div class="flex justify-end p-2.5 gap-3 pb-0">
         <Button @click="closeModal" :style="'tertiary'">Cancel</Button>
         <Button @click="addImage(ImageDataCollect)" id="add-image" >Add image ({{ ImageDataCollect.data.length }})</Button>
     </div>
-    
+
 </template>

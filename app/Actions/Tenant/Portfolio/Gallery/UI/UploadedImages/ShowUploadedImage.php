@@ -40,7 +40,7 @@ class ShowUploadedImage extends InertiaAction
     public function htmlResponse(Media $media, ActionRequest $request): Response
     {
         return Inertia::render(
-            'Tenant/Portfolio/Image',
+            'Portfolio/Image',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->getName(),
@@ -71,7 +71,7 @@ class ShowUploadedImage extends InertiaAction
                             'type'  => 'button',
                             'style' => 'delete',
                             'route' => [
-                                'name'       => 'portfolio.images.remove',
+                                'name'       => 'tenant.portfolio.images.remove',
                                 'parameters' => [$media->slug]
                             ]
                         ]
@@ -98,12 +98,12 @@ class ShowUploadedImage extends InertiaAction
         };
 
         return match ($routeName) {
-            'portfolio.images.index' =>
+            'tenant.portfolio.images.index' =>
             array_merge(
                 ShowPortfolio::make()->getBreadcrumbs(),
                 $headCrumb(
                     [
-                        'name' => 'portfolio.images.index',
+                        'name' => 'tenant.portfolio.images.index',
                         null
                     ]
                 ),

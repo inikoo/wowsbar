@@ -23,34 +23,34 @@ class GetLayout
                 'scope'   => 'portfolio',
                 'icon'    => ['fal', 'fa-briefcase'],
                 'label'   => __('Portfolio'),
-                'route'   => 'portfolio.dashboard',
+                'route'   => 'tenant.portfolio.dashboard',
                 'topMenu' => [
                     'subSections' => [
                         [
                             'icon'  => ['fal', 'fa-briefcase'],
                             'route' => [
-                                'name' => 'portfolio.dashboard',
+                                'name' => 'tenant.portfolio.dashboard',
                             ]
                         ],
                         [
                             'icon'  => ['fal', 'fa-globe'],
                             'label' => __('websites'),
                             'route' => [
-                                'name' => 'portfolio.websites.index',
+                                'name' => 'tenant.portfolio.websites.index',
                             ]
                         ],
                         [
                             'icon'  => ['fal', 'fa-window-maximize'],
                             'label' => __('banners'),
                             'route' => [
-                                'name' => 'portfolio.banners.index',
+                                'name' => 'tenant.portfolio.banners.index',
                             ]
                         ],
                         [
                             'icon'  => ['fal', 'fa-photo-video'],
                             'label' => __('gallery'),
                             'route' => [
-                                'name' => 'portfolio.gallery',
+                                'name' => 'tenant.portfolio.gallery',
                             ]
                         ],
 
@@ -68,14 +68,14 @@ class GetLayout
             $navigation['sysadmin'] = [
                 'label'   => __('sysadmin'),
                 'icon'    => ['fal', 'fa-users-cog'],
-                'route'   => 'sysadmin.dashboard',
+                'route'   => 'tenant.sysadmin.dashboard',
                 'topMenu' => [
                     'subSections' => [
                         [
                             'label' => __('users'),
                             'icon'  => ['fal', 'fa-terminal'],
                             'route' => [
-                                'name' => 'sysadmin.users.index',
+                                'name' => 'tenant.sysadmin.users.index',
 
                             ]
                         ],
@@ -83,7 +83,7 @@ class GetLayout
                             'label' => __('system settings'),
                             'icon'  => ['fal', 'fa-cog'],
                             'route' => [
-                                'name' => 'sysadmin.settings.edit',
+                                'name' => 'tenant.sysadmin.settings.edit',
 
                             ]
                         ],

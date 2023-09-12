@@ -46,7 +46,7 @@ class ShowSnapshot extends InertiaAction
     public function htmlResponse(Snapshot $snapshot, ActionRequest $request): Response
     {
         return Inertia::render(
-            'Tenant/Portfolio/StockImages',
+            'Portfolio/StockImages',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->getName(),
@@ -82,7 +82,7 @@ class ShowSnapshot extends InertiaAction
         };
 
         return match ($routeName) {
-            'portfolio.images.index' =>
+            'tenant.portfolio.images.index' =>
             array_merge(
                 ShowPortfolio::make()->getBreadcrumbs(),
                 $headCrumb(

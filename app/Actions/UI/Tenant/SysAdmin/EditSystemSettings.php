@@ -36,7 +36,7 @@ class EditSystemSettings
 
         $tenant= app('currentTenant');
         return Inertia::render(
-            'Tenant/EditModel',
+            'EditModel',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(),
                 'title'       => __('system settings'),

@@ -106,7 +106,7 @@ class IndexStockImages extends InertiaAction
     public function htmlResponse(LengthAwarePaginator $websites, ActionRequest $request): Response
     {
         return Inertia::render(
-            'Tenant/Portfolio/StockImages',
+            'Portfolio/StockImages',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->getName(),
@@ -127,7 +127,7 @@ class IndexStockImages extends InertiaAction
             modelOperations: [
                 'createLink' => [
                     'route' => [
-                        'name'       => 'portfolio.websites.create',
+                        'name'       => 'tenant.portfolio.websites.create',
                         'parameters' => array_values([])
                     ],
                     'type'    => 'button',
@@ -157,12 +157,12 @@ class IndexStockImages extends InertiaAction
         };
 
         return match ($routeName) {
-            'portfolio.images.index' =>
+            'tenant.portfolio.images.index' =>
             array_merge(
                 ShowPortfolio::make()->getBreadcrumbs(),
                 $headCrumb(
                     [
-                        'name' => 'portfolio.images.index',
+                        'name' => 'tenant.portfolio.images.index',
                         null
                     ]
                 ),

@@ -41,7 +41,7 @@ class DeletePortfolioWebsite
 
     public function htmlResponse(): RedirectResponse
     {
-        return Redirect::route('portfolio.websites.index');
+        return Redirect::route('tenant.portfolio.websites.index');
     }
 
 }

@@ -38,7 +38,7 @@ class ShowPortfolio extends InertiaAction
 
 
         return Inertia::render(
-            'Tenant/Portfolio/Portfolio',
+            'Portfolio/Portfolio',
             [
                 'breadcrumbs'  => $this->getBreadcrumbs(),
                 'title'        => __('portfolio'),
@@ -73,19 +73,14 @@ class ShowPortfolio extends InertiaAction
         return [
             'flatTreeMaps' => [
                 [
-
                     [
                         'name'  => __('websites'),
                         'icon'  => ['fal', 'fa-globe'],
-                        'href'  => ['portfolio.websites.index'],
+                        'href'  => ['tenant.portfolio.websites.index'],
                         'index' => [
                             'number' => $tenant->stats->number_websites
                         ]
-
                     ],
-
-
-
                 ]
             ],
         ];
@@ -101,7 +96,7 @@ class ShowPortfolio extends InertiaAction
                         'type'   => 'simple',
                         'simple' => [
                             'route' => [
-                                'name' => 'portfolio.dashboard'
+                                'name' => 'tenant.portfolio.dashboard'
                             ],
                             'label' => __('portfolio'),
                         ]

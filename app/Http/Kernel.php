@@ -11,7 +11,7 @@ use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\CheckWebsiteState;
 use App\Http\Middleware\EncryptCookies;
 use App\Http\Middleware\HandleDeliveryInertiaRequests;
-use App\Http\Middleware\HandleInertiaRequests;
+use App\Http\Middleware\HandleTenantInertiaRequests;
 use App\Http\Middleware\HandleOrgInertiaRequests;
 use App\Http\Middleware\HandlePublicInertiaRequests;
 use App\Http\Middleware\LogUserFirebaseMiddleware;
@@ -69,7 +69,7 @@ class Kernel extends HttpKernel
             VerifyCsrfToken::class,
             EnsureValidTenantSession::class,
             SubstituteBindings::class,
-            HandleInertiaRequests::class,
+            HandleTenantInertiaRequests::class,
             AddLinkHeadersForPreloadedAssets::class,
             LogUserFirebaseMiddleware::class,
             LogUserRequestMiddleware::class,

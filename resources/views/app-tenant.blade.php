@@ -16,8 +16,8 @@
         <link rel="apple-touch-icon" sizes="180x180" href="{{ url('favicons/wowsbar-website-favicon-color-180x180.png') }}">
 
         <!-- Scripts -->
-        @routes
-        @vite(['resources/js/app.js', "resources/js/Pages/{$page['component']}.vue"])
+        @routes('tenant')
+        {{Vite::useHotFile('tenant.hot')->useBuildDirectory('tenant')->withEntryPoints(['resources/js/app-tenant.js'])}}
         @inertiaHead
     </head>
     <body class="font-sans antialiased h-full">

@@ -46,7 +46,7 @@ class ShowBannerWorkshop extends InertiaAction
     {
 
         return Inertia::render(
-            'Tenant/Portfolio/BannerWorkshop',
+            'Portfolio/BannerWorkshop',
             [
                 'title'             => __("Banner's workshop"),
                 'breadcrumbs'       => $this->getBreadcrumbs(
@@ -147,7 +147,7 @@ class ShowBannerWorkshop extends InertiaAction
         }
 
         return match ($routeName) {
-            'portfolio.banners.workshop', 'portfolio.websites.show.banners.workshop' => [
+            'tenant.portfolio.banners.workshop', 'tenant.portfolio.websites.show.banners.workshop' => [
                 'label' => $banner->name,
                 'route' => [
                     'name'       => $routeName,

@@ -20,7 +20,7 @@ class ShowDashboard
     public function asController(ActionRequest $request): Response
     {
         return Inertia::render(
-            'Tenant/Dashboard',
+            'Dashboard',
             [
                 'title'       => __('dashboard'),
                 'breadcrumbs' => $this->getBreadcrumbs(__('dashboard')),
@@ -40,7 +40,7 @@ class ShowDashboard
                     'icon'  => 'fal fa-tachometer-alt-fast',
                     'label' => $label,
                     'route' => [
-                        'name' => 'dashboard.show'
+                        'name' => 'tenant.dashboard.show'
                     ]
                 ]
 

@@ -36,7 +36,7 @@ class ShowPublicDashboard
                     'icon'  => 'fal fa-tachometer-alt-fast',
                     'label' => $label,
                     'route' => [
-                        'name' => 'dashboard.show'
+                        'name' => 'tenant.dashboard.show'
                     ]
                 ]
 

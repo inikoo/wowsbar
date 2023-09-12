@@ -10,5 +10,7 @@ return [
         'delivery' => ['delivery.*'],
         'org'      => ['org.*'],
         'public'   => ['public.*'],
+        'tenant'   => ['tenant.*'],
+
     ],
 ];

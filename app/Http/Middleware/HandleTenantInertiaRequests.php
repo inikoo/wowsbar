@@ -15,9 +15,9 @@ use Inertia\Middleware;
 use Spatie\Multitenancy\Models\Tenant;
 use Tightenco\Ziggy\Ziggy;
 
-class HandleInertiaRequests extends Middleware
+class HandleTenantInertiaRequests extends Middleware
 {
-    protected $rootView = 'app';
+    protected $rootView = 'app-tenant';
 
 
     public function share(Request $request): array
@@ -25,8 +25,6 @@ class HandleInertiaRequests extends Middleware
         $user = $request->user();
 
         $firstLoadOnlyProps = [];
-
-
 
         if ((!$request->inertia() or Session::get('reloadLayout')) and Tenant::checkCurrent()) {
             $firstLoadOnlyProps          = GetFirstLoadProps::run($user);
