@@ -8,7 +8,7 @@
 namespace App\Actions\Organisation\Auth\OrganisationUser\UI;
 
 use App\Actions\InertiaAction;
-use App\Actions\UI\Organisation\SysAdmin\SysAdminDashboard;
+use App\Actions\UI\Organisation\SysAdmin\ShowSysAdminDashboard;
 use App\Enums\UI\UsersTabsEnum;
 use App\Http\Resources\Auth\UserResource;
 use App\InertiaTable\InertiaTable;
@@ -199,7 +199,7 @@ class IndexOrganisationUsers extends InertiaAction
         return match ($routeName) {
             'org.sysadmin.users.index' =>
             array_merge(
-                SysAdminDashboard::make()->getBreadcrumbs(),
+                ShowSysAdminDashboard::make()->getBreadcrumbs(),
                 $headCrumb(
                     [
                         'name' => 'org.sysadmin.users.index',

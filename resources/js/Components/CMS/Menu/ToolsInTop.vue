@@ -8,6 +8,7 @@ const props = defineProps({
   tool: Object,
   theme: Object,
   columSelected: Number,
+  navigation:Object
 });
 
 
@@ -28,16 +29,15 @@ const Bluprint = [
     position: 'left',
     optionsData: {
       options: [
-        { name: '4 Columns', value: '2' },
-        { name: '4 Columns + image', value: '1' },
-        { name: 'Simple', value: '3' },
+        { name: 'One', value: '1' },
+        { name: 'Two', value: '2' },
       ],
     }
   },
   {
     name: 'activeColumn', position: 'right',
     optionsData: {
-      column: [1, 2, 3, 4]
+      column: props.navigation.categories.map((item, index) => index + 1)
     },
   }
 ]
@@ -49,9 +49,8 @@ const selectTool = (t) => {
 }
 
 const columChange = (index) => {
-  emits('setColumnSelected', index - 1)
+  emits('setColumnSelected', index)
 }
-
 
 
 </script>
@@ -69,7 +68,7 @@ const columChange = (index) => {
         <div v-if="item.name === 'activeColumn' && theme.value != 3" v-for="(columnItem, columnIndex) in item.optionsData.column"
           :key="columnIndex" @click="columChange(columnIndex)"
           class="inline-block bg-gray-300 py-1 px-2 rounded-md text-xs mx-1"
-          :class="{ 'outline outline-2': columnItem - 1 == columSelected }">
+          :class="{ 'outline outline-2': columnIndex  == columSelected }">
           {{ columnItem }}
         </div>
       </div>
