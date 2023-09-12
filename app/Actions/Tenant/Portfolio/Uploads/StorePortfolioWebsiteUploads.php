@@ -8,7 +8,6 @@
 namespace App\Actions\Tenant\Portfolio\Uploads;
 
 use App\Models\Tenancy\Tenant;
-use Excel;
 use Illuminate\Database\Eloquent\Model;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
@@ -27,8 +26,8 @@ class StorePortfolioWebsiteUploads
     {
         return $tenant->portfolioWebsiteUploads()->create([
             'original_filename' => $modelData['original_filename'],
-            'filename' => $modelData['filename'],
-            'uploaded_at' => now()
+            'filename'          => $modelData['filename'],
+            'uploaded_at'       => now()
         ]);
     }
 }

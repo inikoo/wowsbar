@@ -8,7 +8,6 @@
 namespace App\Models\Tenancy;
 
 use App\Models\Assets\Currency;
-use App\Models\Auth\PublicUser;
 use App\Models\Auth\User;
 use App\Models\CRM\Customer;
 use App\Models\Media\Media;
@@ -19,7 +18,6 @@ use App\Models\Portfolio\SnapshotStats;
 use App\Models\Traits\HasHistory;
 use App\Models\WebsiteUpload;
 use App\Models\WebsiteUploadRecord;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -42,34 +40,34 @@ use Spatie\Sluggable\SlugOptions;
  * @property bool $status
  * @property array $data
  * @property array $settings
- * @property int $country_id
  * @property int $language_id
  * @property int $timezone_id
- * @property int $currency_id tenant accounting currency
  * @property int|null $logo_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string|null $deleted_at
+ * @property int $customer_id
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \OwenIt\Auditing\Models\Audit> $audits
  * @property-read int|null $audits_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Banner> $banners
  * @property-read int|null $banners_count
  * @property-read Currency $currency
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Customer> $customers
+ * @property-read int|null $customers_count
  * @property-read array $es_audits
  * @property-read Media|null $logo
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, Media> $media
  * @property-read int|null $media_count
  * @property-read \App\Models\Tenancy\TenantPortfolioStats|null $portfolioStats
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, WebsiteUpload> $portfolioWebsiteUploads
+ * @property-read int|null $portfolio_website_uploads_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, PortfolioWebsite> $portfolioWebsites
  * @property-read int|null $portfolio_websites_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, PublicUser> $publicUsers
- * @property-read int|null $public_users_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, SnapshotStats> $snapshotStats
  * @property-read int|null $snapshot_stats_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Snapshot> $snapshots
  * @property-read int|null $snapshots_count
  * @property-read \App\Models\Tenancy\TenantStats|null $stats
- * @property-read Customer|null $customers
  * @property-read \Illuminate\Database\Eloquent\Collection<int, User> $users
  * @property-read int|null $users_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, WebsiteUploadRecord> $websiteUploadRecords
@@ -77,25 +75,24 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Spatie\Multitenancy\TenantCollection<int, static> all($columns = ['*'])
  * @method static \Database\Factories\Tenancy\TenantFactory factory($count = null, $state = [])
  * @method static \Spatie\Multitenancy\TenantCollection<int, static> get($columns = ['*'])
- * @method static Builder|Tenant newModelQuery()
- * @method static Builder|Tenant newQuery()
- * @method static Builder|Tenant query()
- * @method static Builder|Tenant whereCode($value)
- * @method static Builder|Tenant whereCountryId($value)
- * @method static Builder|Tenant whereCreatedAt($value)
- * @method static Builder|Tenant whereCurrencyId($value)
- * @method static Builder|Tenant whereData($value)
- * @method static Builder|Tenant whereDeletedAt($value)
- * @method static Builder|Tenant whereEmail($value)
- * @method static Builder|Tenant whereId($value)
- * @method static Builder|Tenant whereLanguageId($value)
- * @method static Builder|Tenant whereLogoId($value)
- * @method static Builder|Tenant whereName($value)
- * @method static Builder|Tenant whereSettings($value)
- * @method static Builder|Tenant whereSlug($value)
- * @method static Builder|Tenant whereStatus($value)
- * @method static Builder|Tenant whereTimezoneId($value)
- * @method static Builder|Tenant whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Tenant newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Tenant newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Tenant query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Tenant whereCode($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Tenant whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Tenant whereCustomerId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Tenant whereData($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Tenant whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Tenant whereEmail($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Tenant whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Tenant whereLanguageId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Tenant whereLogoId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Tenant whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Tenant whereSettings($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Tenant whereSlug($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Tenant whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Tenant whereTimezoneId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Tenant whereUpdatedAt($value)
  * @mixin \Eloquent
  */
 class Tenant extends SpatieTenant implements HasMedia, Auditable
@@ -151,11 +148,6 @@ class Tenant extends SpatieTenant implements HasMedia, Auditable
     public function users(): HasMany
     {
         return $this->hasMany(User::class);
-    }
-
-    public function publicUsers(): HasMany
-    {
-        return $this->hasMany(PublicUser::class);
     }
 
     public function portfolioWebsites(): HasMany

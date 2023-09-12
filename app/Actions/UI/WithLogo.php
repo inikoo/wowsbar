@@ -13,7 +13,7 @@ use App\Models\Media\Media;
 
 trait WithLogo
 {
-    function getArt(): array
+    public function getArt(): array
     {
         /** @var Media $logo */
         $logo=organisation()->getMedia('logo')->first();

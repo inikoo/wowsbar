@@ -60,7 +60,7 @@ class GetFirstLoadProps
                     'languageOptions' => GetLanguagesOptions::make()->translated(),
                 ],
 
-            'art'=>$this->getArt(),
+            'art'=> $this->getArt(),
 
             'layout'   => function () use ($user) {
                 if ($user) {

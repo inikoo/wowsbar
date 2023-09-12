@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property int $id
  * @property int $tenant_id
+ * @property int $website_upload_id
  * @property mixed $data
  * @property string $status
  * @property \Illuminate\Support\Carbon|null $created_at
@@ -23,6 +24,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|WebsiteUploadRecord whereStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder|WebsiteUploadRecord whereTenantId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|WebsiteUploadRecord whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|WebsiteUploadRecord whereWebsiteUploadId($value)
  * @mixin \Eloquent
  */
 

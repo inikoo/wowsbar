@@ -21,8 +21,7 @@ class HumanResourcesDashboard
 
     public function authorize(ActionRequest $request): bool
     {
-        return true;
-        //        return $request->user()->hasPermissionTo("hr.view");
+        return $request->user()->hasPermissionTo("hr.view");
     }
 
 

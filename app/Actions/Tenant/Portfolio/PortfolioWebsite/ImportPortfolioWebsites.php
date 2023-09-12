@@ -10,13 +10,10 @@ namespace App\Actions\Tenant\Portfolio\PortfolioWebsite;
 use App\Actions\Traits\WithExportData;
 use App\Enums\Helpers\Import\UploadRecordStatusEnum;
 use App\Events\UploadWebsiteProgressEvent;
-use App\Exports\PortfolioWebsite\BannersExport;
 use App\Models\Tenancy\Tenant;
 use App\Models\WebsiteUploadRecord;
-use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class ImportPortfolioWebsites
 {
