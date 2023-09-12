@@ -1,44 +1,26 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref } from "vue"
 
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
-import {
-    faUser,
-    faHeart,
-    faShoppingCart,
-    faSignOut,
-} from "@/../private/pro-solid-svg-icons"
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { faUser, faHeart, faShoppingCart, faSignOut } from '@/../private/pro-solid-svg-icons'
 import { library } from "@fortawesome/fontawesome-svg-core"
-import { get } from "lodash"
 import Popover from "@/Components/Utils/Popover.vue"
-import IconPicker from "@/Components/CMS/Fields/IconPicker/IconPicker.vue"
+import { Link } from "@inertiajs/vue3"
+import { Dialog, DialogPanel, Tab, TabGroup, TabList, TabPanel, TabPanels, TransitionChild, TransitionRoot } from "@headlessui/vue"
+
 library.add(faUser, faHeart, faShoppingCart, faSignOut)
 
-
 const props = defineProps<{
-    navigation: {
-        type: Object,
-        required: true,
-    },
-    tool: {
-        type: Object,
-        required: true,
-    },
-    selectedNav: {
-        type: Object,
-        required: true,
-    },
-    changeNavActive: {
-        type: Function,
-        required: true,
-    },
+    data: any
 }>()
 
 const openNav = ref(null)
-const mobileMenuOpen = ref(false);
+const mobileMenuOpen = ref(false)
+console.log(props.data.navigation.categories)
 </script>
 
 <template>
+	<div v-if="openNav" class="absolute w-screen h-screen bg-green-700 opacity-0" @click="openNav = null"></div>
     <!-- mobile -->
     <!-- <TransitionRoot as="template" :show="mobileMenuOpen">
     <Dialog as="div" class="relative z-40 lg:hidden" @close="mobileMenuOpen = false">
@@ -117,64 +99,51 @@ const mobileMenuOpen = ref(false);
                 <!-- navigation -->
                 <div class="bg-gray-600 bg-opacity-10">
                     <div class="mx-auto px-4 sm:px-6 lg:px-4">
-                        <div class="flex h-16 items-center justify-between">
-                            <div class="h-full flex">
-                                <draggable v-model="navigation.categories" group="topMenu" options="id"
-                                    :disabled="tool.name !== 'grab'" class="flex justify-center space-x-8 h-fit">
-                                    <template v-slot:item="{ element: category, index }">
-                                        <div :class="[
-                                            get(selectedNav, 'id') == category.id ? 'border' : '',
-                                            tool.name !== 'grab' ? 'cursor-pointer' : 'cursor-grab',
-                                        ]">
-                                            <!-- Flyout menus -->
-                                            <div v-if="category.type == 'group'" :key="category.id" class="flex">
-                                                <div @click="() => {
-                                                    (openNav = category.id), changeNavActive(category);
-                                                }
-                                                    "
-                                                    class="py-5 px-2.5 relative z-10 items-center justify-center text-sm font-medium text-white transition-colors duration-200 ease-out">
-                                                    <div class="flex gap-3">
-                                                        <IconPicker :key="category.id" :data="category"
-                                                            class="text-white" />
-                                                        <HyperLink
-                                                            :formList="{ name: 'name', }"
-                                                            :useDelete="true" :data="category" label="name"
-                                                            @OnDelete="() => { navigation.categories.splice(index, 1) }"
-                                                            cssClass="items-center text-sm font-medium text-white" />
+                        <div class="flex h-16 items-center w-full">
+                            
+                            <!-- Group: Navigation -->
+                            <div class="h-full flex text-gray-200 justify-around w-full">
+                                <div v-for="category in data.navigation.categories" class="flex space-x-8 h-fit">
+                                    <!-- Type: Group -->
+                                    <div v-if="category.type == 'group'" :key="category.id" class="flex relative">
+                                        <div @click="() => (openNav = category.id)"
+                                            class="py-5 px-2.5 relative z-10 items-center justify-center text-sm font-medium transition-colors duration-100 ease-out cursor-pointer hover:text-indigo-500">
+                                            <div :href="category.link" class="flex gap-3 items-center">
+                                                <FontAwesomeIcon :icon='category.icon' class='' aria-hidden='true' />
+                                                <div class="items-center text-sm font-medium">{{ category.name }}</div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Popup: Navigation -->
+                                        <div v-if="openNav == category.id">
+                                            <div class="absolute inset-x-0 min-w-fit top-full text-sm text-gray-300">
+                                                <div class="relative bg-gray-600 border border-gray-500 rounded">
+                                                    <div class="mx-auto min-w-full max-w-7xl px-4 sm:px-6">
+                                                        <a :href="feature.link" v-for="feature in category.featured" class="grid gap-x-8 gap-y-4">
+                                                            <div class="font-medium p-2 hover:text-gray-100">
+                                                                <div class="flex gap-3 items-center">
+                                                                    <FontAwesomeIcon :icon='feature.icon' class='' aria-hidden='true' />
+                                                                    <span class="items-center text-sm font-medium whitespace-nowrap">{{ feature.name }}</span>
+                                                                </div>
+                                                            </div>
+                                                        </a>
                                                     </div>
                                                 </div>
-
-                                                <div v-if="openNav == category.id">
-                                                    <SubMenu :data="category" @OnClose="() => {
-                                                        changeNavActive(null), (openNav = null);
-                                                    }
-                                                        " :tool="tool" />
-                                                </div>
                                             </div>
-                                            <!-- Flyout menus -->
-                                            <!-- menus -->
-                                            <div v-if="category.type == 'link'" class="py-5 px-2.5 leading-4" @click="(e) => {
-                                                changeNavActive(category), (openNav = null);
-                                            }
-                                                ">
-                                                <div class="flex gap-3">
-                                                    <IconPicker :key="category.id" :data="category" class="text-white" />
-                                                    <HyperLink :formList="{
-                                                        name: 'name',
-                                                        link: 'link',
-                                                    }" :useDelete="true" :data="category" label="name" @OnDelete="() => {
-    navigation.categories.splice(index, 1);
-}
-    " cssClass="items-center text-sm font-medium text-white" />
-                                                </div>
-                                            </div>
-
-                                            <!-- menus -->
                                         </div>
-                                    </template>
-                                </draggable>
+                                    </div>
+
+                                    <!-- Type: Link -->
+                                    <div v-if="category.type === 'link'" class="py-5 px-2.5 leading-4">
+                                        <div class="flex gap-3 items-center">
+                                            <FontAwesomeIcon :icon='category.icon' class='' aria-hidden='true' />
+                                            <Link :href="category.link" class="items-center text-sm font-medium">{{ category.name }}</Link>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
+                            <!-- Group: Cart -->
                             <div class="flex flex-1 items-center justify-end">
                                 <div class="w-1/3 flex items-center space-x-3 justify-end">
                                     <Popover>
@@ -214,6 +183,7 @@ const mobileMenuOpen = ref(false);
                                     </a>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
