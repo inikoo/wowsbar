@@ -20,7 +20,7 @@ const props = defineProps<{
   options?: any;
   fieldData?: {
     placeholder: string;
-    readonly: boolean;
+    readonly?: boolean;
     copyButton: boolean;
     maxLength?: number
   };
@@ -78,7 +78,7 @@ const updateFormValue = (newValue) => {
                 :type="props.options?.type ?? 'text'" @input="form.errors[fieldName] = ''"
                 :placeholder="fieldData?.placeholder"
                 :maxlength="fieldData?.maxLength"
-                class="block w-full shadow-sm rounded-md text-gray-600 dark:bg-gray-600 dark:text-gray-400 focus:ring-gray-500 focus:border-gray-500 sm:text-sm border-gray-300 dark:border-gray-500 read-only:bg-gray-100 read-only:ring-0 read-only:ring-transparent read-only:text-gray-500"
+                class="block w-full shadow-sm rounded-md text-gray-600 dark:bg-gray-600 dark:text-gray-400 focus:ring-gray-500 focus:border-gray-500 sm:text-sm border-gray-300 dark:border-gray-500 read-only:bg-gray-100 read-only:ring-0 read-only:ring-transparent read-only:focus:border-transparent read-only:focus:border-gray-300 read-only:text-gray-500"
             />
             <div v-if="fieldData?.copyButton" class="absolute inset-y-0 right-0 group cursor-pointer px-1.5 flex justify-center items-center text-gray-600"
                 @click="copyText(form[fieldName])">
