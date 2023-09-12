@@ -95,8 +95,8 @@ const layerActive = ref(null)
 const layout = ref({
     right: 0,
     bottom: 0,
-    height: 200,
-    width: '100%',
+    height: "200px",
+    width: '1233px',
     left: 0,
     top: 0,
 })
