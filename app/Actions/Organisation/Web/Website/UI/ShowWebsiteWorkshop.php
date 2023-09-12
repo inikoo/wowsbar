@@ -65,7 +65,7 @@ class ShowWebsiteWorkshop extends InertiaAction
                             'style'      => 'exitEdit',
                             'icon'       => 'far fa-desktop',
                             'label'      => __('Preview'),
-                            'route' => [
+                            'route'      => [
                                 'name'       => preg_replace('/workshop$/', 'preview', $request->route()->getName()),
                                 'parameters' => array_values($request->route()->originalParameters())
                             ]

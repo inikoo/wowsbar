@@ -32,13 +32,10 @@ use Spatie\Permission\Traits\HasRoles;
  *
  * @property int $id
  * @property int $tenant_id
- * @property bool $is_public
- * @property int|null $public_user_id
  * @property string $username
  * @property bool $status
  * @property string|null $contact_name
  * @property string|null $email
- * @property \Illuminate\Support\Carbon|null $email_verified_at
  * @property mixed $password
  * @property string|null $remember_token
  * @property string|null $about
@@ -80,12 +77,9 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static Builder|User whereData($value)
  * @method static Builder|User whereDeletedAt($value)
  * @method static Builder|User whereEmail($value)
- * @method static Builder|User whereEmailVerifiedAt($value)
  * @method static Builder|User whereId($value)
- * @method static Builder|User whereIsPublic($value)
  * @method static Builder|User whereLanguageId($value)
  * @method static Builder|User wherePassword($value)
- * @method static Builder|User wherePublicUserId($value)
  * @method static Builder|User whereRememberToken($value)
  * @method static Builder|User whereSettings($value)
  * @method static Builder|User whereStatus($value)

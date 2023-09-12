@@ -66,7 +66,7 @@ const props = defineProps<{
 								<template #item="{ element, index }">
 									<div :class="['space-y-3 min-w-[20%]',
 										get(columSelected,'id') !== element.id ? '' : 'border',
-										]" @click="props.selectedColums(element)">
+										]" @click="props.selectedColums(index)">
 										<!-- <h3 class="text-sm font-bold leading-6 text-gray-700 capitalize">{{ element.title }}</h3> -->
 										<Input :data="element" keyValue="title" classCss="font-bold text-gray-300 capitalize" />
 
@@ -76,12 +76,12 @@ const props = defineProps<{
 												:disabled="tool.name !== 'grab'">
 												<template #item="{ element: child, index: childIndex }">
 													<ul role="list">
-														<li :key="child.name" class="py-1.5">
+														<li :key="child.name" class="py-1.5" >
 															<HyperLink :formList="{
 																name: 'name',
 																link: 'link',
 															}" :useDelete="true" :data="child" label="name" cssClass="hover:text-gray-200 pr-2 py-3"
-																@onDelete="() => element.data.splice(childIndex, 1)" />
+																@onDelete="() => element.data.splice(childIndex, 1)"/>
 														</li>
 													</ul>
 												</template>

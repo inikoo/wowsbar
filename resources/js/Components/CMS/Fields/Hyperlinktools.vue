@@ -88,30 +88,29 @@ const emits = defineEmits();
 </script>
 
 <template>
-    <div class="mt-5 flex gap-2">
-        <div v-for="item of formList" class="flex-1 w-[80%]">
-            <div
-                class="flex shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md"
-            >
-                <!-- <span
-                    class="flex select-none items-center pl-3 text-gray-500 sm:text-sm"
-                    ><font-awesome-icon :icon="['fas', 'tag']"/>
-                </span> -->
+<div class="flex gap-2 justify-center align-middle">
+    <div class="mt-2">
+        <div v-for="item of formList">
+            <div class="shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md rounded-md my-2">
                 <input
                     v-model="data[item]"
                     type="text"
-                    class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 w-[85%]"
+                    class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 w-full"
                     :placeholder="item"
                 />
             </div>
         </div>
-        <div class="flex justify-center align-middle">
-            <button
-                @click="emits('OnDelete')"
-                class="rounded-md cursor-pointer border ring-gray-300 px-3 py-2 text-sm font-semibold text-black shadow-sm"
-            >
-                <font-awesome-icon :icon="['fas', 'trash']" />
-            </button>
-        </div>
     </div>
+    <div class="flex items-center">
+        <button
+            @click="emits('OnDelete')"
+            class="rounded-md cursor-pointer border ring-gray-300 px-3 py-2 text-sm font-semibold text-black shadow-sm"
+            style="margin-top: 2px;"
+        >
+            <font-awesome-icon :icon="['fas', 'trash']" />
+        </button>
+    </div>
+</div>
+
+
 </template>

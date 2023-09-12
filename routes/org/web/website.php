@@ -7,6 +7,7 @@
 
 
 use App\Actions\Organisation\Web\Webpage\IndexWebpages;
+use App\Actions\Organisation\Web\Website\UI\CreateWebsite;
 use App\Actions\Organisation\Web\Website\UI\EditWebsite;
 use App\Actions\Organisation\Web\Website\UI\ShowWebsite;
 use App\Actions\Organisation\Web\Website\UI\ShowWebsiteWorkshop;
@@ -14,6 +15,7 @@ use App\Actions\Organisation\Web\Website\UI\ShowWebsiteWorkshopPreview;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', ShowWebsite::class)->name('show');
+Route::get('/create', CreateWebsite::class)->name('create');
 Route::get('/edit', EditWebsite::class)->name('edit');
 Route::get('/workshop', ShowWebsiteWorkshop::class)->name('workshop');
 Route::get('/workshop/preview', ShowWebsiteWorkshopPreview::class)->name('preview');

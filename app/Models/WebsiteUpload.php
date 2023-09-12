@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $tenant_id
  * @property string $original_filename
  * @property string $filename
+ * @property int $number_rows
  * @property string $uploaded_at
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -21,6 +22,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|WebsiteUpload whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|WebsiteUpload whereFilename($value)
  * @method static \Illuminate\Database\Eloquent\Builder|WebsiteUpload whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|WebsiteUpload whereNumberRows($value)
  * @method static \Illuminate\Database\Eloquent\Builder|WebsiteUpload whereOriginalFilename($value)
  * @method static \Illuminate\Database\Eloquent\Builder|WebsiteUpload whereTenantId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|WebsiteUpload whereUpdatedAt($value)

@@ -9,16 +9,17 @@ namespace App\Actions\Organisation\Web\Website;
 
 use App\Models\Organisation\Web\Website;
 use App\Rules\CaseSensitive;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Redirect;
 use Lorisleiva\Actions\ActionRequest;
-use Lorisleiva\Actions\Concerns\AsAction;
 use Illuminate\Validation\Validator;
+use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
 
 class StoreWebsite
 {
     use AsAction;
     use WithAttributes;
-
 
     private bool $asAction = false;
 
@@ -42,11 +43,15 @@ class StoreWebsite
     {
         return [
             'domain' => ['required', new CaseSensitive('websites')],
-            'code'   => ['required', 'unique:tenant.websites','max:8'],
-            'name'   => ['required']
         ];
     }
 
+    public function asController(ActionRequest $request): Website
+    {
+        $request->validate();
+        return $this->handle($request->validated());
+
+    }
 
     public function afterValidator(Validator $validator): void
     {
@@ -63,5 +68,10 @@ class StoreWebsite
         $validatedData = $this->validateAttributes();
 
         return $this->handle($validatedData);
+    }
+
+    public function htmlResponse(): RedirectResponse
+    {
+        return Redirect::route('org.website.show');
     }
 }

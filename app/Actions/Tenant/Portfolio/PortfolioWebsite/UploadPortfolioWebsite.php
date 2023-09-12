@@ -9,7 +9,6 @@ namespace App\Actions\Tenant\Portfolio\PortfolioWebsite;
 
 use App\Actions\Tenant\Portfolio\Uploads\StorePortfolioWebsiteUploads;
 use App\Imports\WebsiteImport;
-use App\Models\WebsiteUpload;
 use Excel;
 use Illuminate\Support\Facades\Storage;
 use Lorisleiva\Actions\ActionRequest;
@@ -36,7 +35,7 @@ class UploadPortfolioWebsite
 
         $websiteUpload = StorePortfolioWebsiteUploads::run(app('currentTenant'), [
             'original_filename' => $file->getClientOriginalName(),
-            'filename' => $filename
+            'filename'          => $filename
         ]);
 
         Excel::import(new WebsiteImport($websiteUpload), $path . '/' . $filename);
