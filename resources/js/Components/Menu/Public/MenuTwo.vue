@@ -119,7 +119,7 @@ console.log(props.data.navigation.categories)
                                             <div class="absolute inset-x-0 min-w-fit top-full text-sm text-gray-300">
                                                 <div class="relative bg-gray-600 border border-gray-500 rounded">
                                                     <div class="mx-auto min-w-full max-w-7xl px-4 sm:px-6">
-                                                        <a :href="feature.link" v-for="feature in category.featured" class="grid gap-x-8 gap-y-4">
+                                                        <a :href="feature.link" v-for="feature in category.featured" class="qwezxc grid gap-x-8 gap-y-4">
                                                             <div class="font-medium p-2 hover:text-gray-100">
                                                                 <div class="flex gap-3 items-center">
                                                                     <FontAwesomeIcon :icon='feature.icon' class='' aria-hidden='true' />
