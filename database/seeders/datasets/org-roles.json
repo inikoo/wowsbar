@@ -8,7 +8,7 @@
     {
         "name":"super-admin",
         "permissions": [
-            "sysadmin","website","crm"
+            "sysadmin","website","crm","hr"
         ]
     }
 

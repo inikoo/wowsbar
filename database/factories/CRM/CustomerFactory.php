@@ -1,7 +1,7 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Wed, 21 Jun 2023 07:56:25 Malaysia Time, Pantai Lembeng, Bali, Id
+ * Created: Tue, 12 Sep 2023 14:18:37 Malaysia Time, Pantai Lembeng, Bali, Indonesia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
@@ -14,11 +14,12 @@ class CustomerFactory extends Factory
     public function definition(): array
     {
         return [
-            'contact_name'             => fake()->name,
-            'company_name'             => fake()->company,
-            'email'                    => fake()->email,
-            'identity_document_number' => fake('en_GB')->vat(),
-            'website'                  => fake()->url,
+
+            'email'        => fake()->email(),
+            'contact_name' => fake()->name(),
+            'company_name' => fake()->company(),
+
+
         ];
     }
 }

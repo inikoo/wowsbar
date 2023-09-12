@@ -7,7 +7,7 @@
 
 namespace App\Actions\UI\Public\Auth;
 
-use App\Models\Auth\PublicUser;
+use App\Models\CRM\PublicUser;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;

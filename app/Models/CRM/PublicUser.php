@@ -1,16 +1,17 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Fri, 11 Aug 2023 09:22:13 Malaysia Time, Pantai Lembeng, Bali
+ * Created: Tue, 12 Sep 2023 14:18:37 Malaysia Time, Pantai Lembeng, Bali, Indonesia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Models\Auth;
+namespace App\Models\CRM;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\Assets\Language;
+use App\Models\Auth\User;
+use App\Models\Auth\UserStats;
 use App\Models\Media\Media;
-use App\Models\Tenancy\Tenant;
 use App\Models\Traits\HasUniversalSearch;
 use App\Notifications\Auth\ResetPassword;
 use App\Notifications\Auth\VerifyEmail;
@@ -28,13 +29,13 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Permission\Traits\HasRoles;
 
 /**
- * App\Models\Auth\PublicUser
+ * App\Models\CRM\PublicUser
  *
  * @property int $id
- * @property int|null $tenant_id
+ * @property int|null $customer_id
  * @property bool $status
  * @property string|null $contact_name
- * @property string|null $email
+ * @property string $email
  * @property \Illuminate\Support\Carbon|null $email_verified_at
  * @property mixed $password
  * @property string|null $remember_token
@@ -47,6 +48,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string|null $deleted_at
  * @property-read Media|null $avatar
+ * @property-read \App\Models\CRM\Customer|null $customer
  * @property-read Language $language
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, Media> $media
  * @property-read int|null $media_count
@@ -56,12 +58,11 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read int|null $permissions_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Permission\Models\Role> $roles
  * @property-read int|null $roles_count
- * @property-read \App\Models\Auth\UserStats|null $stats
- * @property-read Tenant|null $tenant
+ * @property-read UserStats|null $stats
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Laravel\Sanctum\PersonalAccessToken> $tokens
  * @property-read int|null $tokens_count
  * @property-read \App\Models\Search\UniversalSearch|null $universalSearch
- * @property-read \App\Models\Auth\User|null $user
+ * @property-read User|null $user
  * @method static Builder|PublicUser newModelQuery()
  * @method static Builder|PublicUser newQuery()
  * @method static Builder|PublicUser permission($permissions)
@@ -71,6 +72,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static Builder|PublicUser whereAvatarId($value)
  * @method static Builder|PublicUser whereContactName($value)
  * @method static Builder|PublicUser whereCreatedAt($value)
+ * @method static Builder|PublicUser whereCustomerId($value)
  * @method static Builder|PublicUser whereData($value)
  * @method static Builder|PublicUser whereDeletedAt($value)
  * @method static Builder|PublicUser whereEmail($value)
@@ -81,7 +83,6 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static Builder|PublicUser whereRememberToken($value)
  * @method static Builder|PublicUser whereSettings($value)
  * @method static Builder|PublicUser whereStatus($value)
- * @method static Builder|PublicUser whereTenantId($value)
  * @method static Builder|PublicUser whereUpdatedAt($value)
  * @mixin \Eloquent
  */
@@ -120,9 +121,9 @@ class PublicUser extends Authenticatable implements HasMedia, CanResetPassword, 
         return $this->hasOne(UserStats::class);
     }
 
-    public function tenant(): BelongsTo
+    public function customer(): BelongsTo
     {
-        return $this->belongsTo(Tenant::class);
+        return $this->belongsTo(Customer::class);
     }
 
     public function registerMediaCollections(): void

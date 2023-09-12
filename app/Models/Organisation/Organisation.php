@@ -8,13 +8,16 @@
 namespace App\Models\Organisation;
 
 use App\Models\Assets\Currency;
+use App\Models\Helpers\SerialReference;
 use App\Models\Traits\HasOrganisationUniversalSearch;
 use App\Models\Organisation\Web\Website;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
@@ -36,11 +39,14 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property-read Currency $currency
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \App\Models\Media\Media> $media
  * @property-read int|null $media_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, SerialReference> $serialReferences
+ * @property-read int|null $serial_references_count
  * @property-read \App\Models\Organisation\OrganisationStats|null $stats
  * @property-read \App\Models\Search\OrganisationUniversalSearch|null $universalSearch
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Organisation\OrganisationUser> $users
  * @property-read int|null $users_count
  * @property-read Website|null $website
+ * @method static \Database\Factories\Organisation\OrganisationFactory factory($count = null, $state = [])
  * @method static Builder|Organisation newModelQuery()
  * @method static Builder|Organisation newQuery()
  * @method static Builder|Organisation query()
@@ -62,7 +68,7 @@ class Organisation extends Model implements HasMedia
 {
     use InteractsWithMedia;
     use HasOrganisationUniversalSearch;
-
+    use HasFactory;
 
     protected $casts = [
         'data'     => 'array',
@@ -96,4 +102,10 @@ class Organisation extends Model implements HasMedia
     {
         return $this->hasMany(OrganisationUser::class);
     }
+
+    public function serialReferences(): MorphMany
+    {
+        return $this->morphMany(SerialReference::class, 'container');
+    }
+
 }

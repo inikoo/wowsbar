@@ -11,11 +11,11 @@ const props = defineProps<{
 	data: Object
 }>()
 
-
 const listData = ref(props.data.column.filter((item) => item.type == 'list')[0])
 
 onMounted(() => {
-    props.selectedColums(props.data.column.filter((item) => item.type == 'list')[0]);
+    const setData = props.data.column.filter((item) => item.type == 'list')
+    props.selectedColums(props.data.column.findIndex((item)=>item.id == setData[0].id));
 });
 
 </script>

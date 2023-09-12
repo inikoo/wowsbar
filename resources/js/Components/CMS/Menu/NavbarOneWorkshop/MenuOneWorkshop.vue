@@ -209,8 +209,7 @@ const mobileMenuOpen = ref(false)
 									<div :key="category.name" class="flex">
 										<div class="relative flex p-2.5"
 											@click="() => { openNav = category.id, changeNavActive(category) }">
-											<div
-												:class="[openNav == category.id ? 'border-indigo-600 text-indigo-600' : 'border-transparent text-gray-700 hover:text-gray-800', tool.name !== 'grab' ? 'cursor-pointer' : 'cursor-grab', 'relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out']">
+											<div :class="[openNav == category.id ? 'border-indigo-600 text-indigo-600' : 'border-transparent text-gray-700 hover:text-gray-800', tool.name !== 'grab' ? 'cursor-pointer' : 'cursor-grab', 'relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out']">
 												<div class="flex gap-3">
 													<IconPicker :key="category.id" :data="category" class="text-black" />
 													<HyperLink :formList="{

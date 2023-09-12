@@ -35,11 +35,11 @@ class WebsiteImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wit
         foreach ($collection as $website) {
             try {
                 $website = WebsiteUploadRecord::create([
-                    'tenant_id' => app('currentTenant')->id,
+                    'tenant_id'         => app('currentTenant')->id,
                     'website_upload_id' => $this->websiteUpload->id,
-                    'data'      => json_encode([
-                        'code' => $website['code'],
-                        'name' => $website['name'],
+                    'data'              => json_encode([
+                        'code'   => $website['code'],
+                        'name'   => $website['name'],
                         'domain' => $website['domain']
                     ])
                 ]);
@@ -55,8 +55,8 @@ class WebsiteImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wit
     public function rules(): array
     {
         return [
-            'code' => ['required', 'string'],
-            'name' => ['required', 'string'],
+            'code'   => ['required', 'string'],
+            'name'   => ['required', 'string'],
             'domain' => ['required', 'string']
         ];
     }

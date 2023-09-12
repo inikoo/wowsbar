@@ -38,6 +38,23 @@ use Spatie\Multitenancy\Models\Concerns\UsesTenantConnection;
  * @method static Builder|CustomerStats newModelQuery()
  * @method static Builder|CustomerStats newQuery()
  * @method static Builder|CustomerStats query()
+ * @method static Builder|CustomerStats whereCreatedAt($value)
+ * @method static Builder|CustomerStats whereCustomerId($value)
+ * @method static Builder|CustomerStats whereId($value)
+ * @method static Builder|CustomerStats whereLastDispatchedDeliveryAt($value)
+ * @method static Builder|CustomerStats whereLastInvoicedAt($value)
+ * @method static Builder|CustomerStats whereLastSubmittedOrderAt($value)
+ * @method static Builder|CustomerStats whereNumberActiveClients($value)
+ * @method static Builder|CustomerStats whereNumberActiveWebUsers($value)
+ * @method static Builder|CustomerStats whereNumberClients($value)
+ * @method static Builder|CustomerStats whereNumberDeliveries($value)
+ * @method static Builder|CustomerStats whereNumberDeliveriesTypeOrder($value)
+ * @method static Builder|CustomerStats whereNumberDeliveriesTypeReplacement($value)
+ * @method static Builder|CustomerStats whereNumberInvoices($value)
+ * @method static Builder|CustomerStats whereNumberInvoicesTypeInvoice($value)
+ * @method static Builder|CustomerStats whereNumberInvoicesTypeRefund($value)
+ * @method static Builder|CustomerStats whereNumberWebUsers($value)
+ * @method static Builder|CustomerStats whereUpdatedAt($value)
  * @mixin Eloquent
  */
 class CustomerStats extends Model

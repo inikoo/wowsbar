@@ -71,8 +71,8 @@ class Handler extends ExceptionHandler
             };
             $user=$request->user();
             if(Auth::check()) {
-                $errorData= match(class_basename($user)){
-                    'User'=>array_merge(
+                $errorData= match(class_basename($user)) {
+                    'User'=> array_merge(
                         GetFirstLoadProps::run($user),
                         $errorData,
                         [
@@ -81,7 +81,7 @@ class Handler extends ExceptionHandler
                             ],
                         ]
                     ),
-                    default=>[]
+                    default=> []
                 };
 
             }
@@ -112,7 +112,7 @@ class Handler extends ExceptionHandler
 
     public function getInertiaPage(Throwable $e): string
     {
-        if(get_class($e)=='Spatie\Multitenancy\Exceptions\NoCurrentTenant'){
+        if(get_class($e)=='Spatie\Multitenancy\Exceptions\NoCurrentTenant') {
             return 'Utils/TenantNotFound';
         }
 

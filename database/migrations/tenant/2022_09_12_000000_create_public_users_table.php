@@ -17,12 +17,11 @@ return new class () extends Migration {
     {
         Schema::create('public_users', function (Blueprint $table) {
             $table->smallIncrements('id');
-            $table->unsignedSmallInteger('tenant_id')->index()->nullable();
-            $table->foreign('tenant_id')->references('id')->on('tenants');
-            $table = $this->userDetailsColumns($table);
+            $table->unsignedInteger('customer_id')->index()->nullable();
+            $table->foreign('customer_id')->references('id')->on('customers');
+            $table = $this->userDetailsColumns($table, 'email');
             $table->timestampsTz();
             $table->softDeletesTz();
-            $table->unique(['tenant_id', 'email']);
         });
     }
 

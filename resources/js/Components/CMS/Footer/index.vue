@@ -19,7 +19,7 @@ const props = defineProps<{
 }>()
 
 
-
+console.log('foot',props)
 const component = {
     1: FooterThemeOne,
     2: FooterThemeTwo,

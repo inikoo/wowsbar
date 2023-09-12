@@ -12,6 +12,8 @@ use App\Actions\UI\Organisation\Dashboard\ShowDashboard;
 use App\Actions\UI\WithInertia;
 use App\Enums\UI\Organisation\WebsiteTabsEnum;
 use App\Models\Organisation\Web\Website;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -31,7 +33,7 @@ class ShowWebsite extends InertiaAction
 
 
 
-    public function asController(ActionRequest $request): Website
+    public function asController(ActionRequest $request): ?Website
     {
         $this->initialisation($request)->withTab(WebsiteTabsEnum::values());
 
@@ -39,8 +41,14 @@ class ShowWebsite extends InertiaAction
     }
 
 
-    public function htmlResponse(Website $website, ActionRequest $request): Response
+    public function htmlResponse(?Website $website, ActionRequest $request): Response|RedirectResponse
     {
+
+        if($website==null) {
+            return Redirect::route('org.website.create');
+        }
+
+
         return Inertia::render(
             'Web/Website',
             [

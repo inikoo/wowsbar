@@ -42,8 +42,8 @@ class CRMDashboard
             'CRM/CRMDashboard',
             [
                 'breadcrumbs'  => $this->getBreadcrumbs(),
-                'title'       => 'CRM',
-                'pageHead'    => [
+                'title'        => 'CRM',
+                'pageHead'     => [
                     'title'     => __('customer relationship manager'),
                     'icon'    => [
                         'title' => __('customers'),
