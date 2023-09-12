@@ -446,7 +446,7 @@ const publicData = {
 // import Cookies from '@/Components/Cookies.vue'
 // import FooterTabLanguage from '@/Components/Footer/FooterLanguage.vue'
 // import HeaderThemeOne from '@/Components/Header/Public/HeaderThemeOne.vue'
-// import MenuOne from '@/Components/Menu/Public/MenuOne.vue'
+import MenuOne from '@/Components/Menu/Public/MenuOne.vue'
 import MenuTwo from '@/Components/Menu/Public/MenuTwo.vue'
 import FooterThemeOne from '@/Components/Footer/Public/FooterThemeOne.vue'
 import FooterThemeTwo from '@/Components/Footer/Public/FooterThemeTwo.vue'
@@ -470,7 +470,7 @@ const getHeaderComponent = computed(() => {
 
 const getMenuComponent = computed(() => {
     const componentList = {
-        // 'MenuOne': MenuOne,
+        'MenuOne': MenuOne,
         'MenuTwo': MenuTwo
     }
 
