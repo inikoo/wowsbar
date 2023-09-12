@@ -17,10 +17,9 @@ return new class () extends Migration {
     {
         Schema::create('organisation_users', function (Blueprint $table) {
             $table->smallIncrements('id');
-            $table->string('username')->collation('und_ns');
             $table->unsignedInteger('parent_id')->nullable();
             $table->string('parent_type')->nullable();
-            $table = $this->userDetailsColumns($table);
+            $table = $this->userDetailsColumns($table,'username');
             $table->timestampsTz();
             $table->softDeletesTz();
             $table->unique(['parent_type','parent_id']);

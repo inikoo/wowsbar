@@ -24,13 +24,12 @@ use Spatie\Permission\Traits\HasRoles;
  * App\Models\Organisation\OrganisationUser
  *
  * @property int $id
- * @property string $username
  * @property int|null $parent_id
  * @property string|null $parent_type
+ * @property string $username
  * @property bool $status
  * @property string|null $contact_name
  * @property string|null $email
- * @property \Illuminate\Support\Carbon|null $email_verified_at
  * @property mixed $password
  * @property string|null $remember_token
  * @property string|null $about
@@ -68,7 +67,6 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static Builder|OrganisationUser whereData($value)
  * @method static Builder|OrganisationUser whereDeletedAt($value)
  * @method static Builder|OrganisationUser whereEmail($value)
- * @method static Builder|OrganisationUser whereEmailVerifiedAt($value)
  * @method static Builder|OrganisationUser whereId($value)
  * @method static Builder|OrganisationUser whereLanguageId($value)
  * @method static Builder|OrganisationUser whereParentId($value)

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ac28af009da03b9891f6a131aece68fd",
+    "content-hash": "3c58c0332a0f589e5967082e91ebd8f0",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -13637,6 +13637,71 @@
                 }
             ],
             "time": "2023-08-21T16:06:30+00:00"
+        },
+        {
+            "name": "pestphp/pest-plugin-faker",
+            "version": "v2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pestphp/pest-plugin-faker.git",
+                "reference": "39fa2bd69d95024783ccf40ff48e3680aea1ba4a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pestphp/pest-plugin-faker/zipball/39fa2bd69d95024783ccf40ff48e3680aea1ba4a",
+                "reference": "39fa2bd69d95024783ccf40ff48e3680aea1ba4a",
+                "shasum": ""
+            },
+            "require": {
+                "fakerphp/faker": "^1.21.0",
+                "pestphp/pest": "^2.0.0",
+                "php": "^8.1"
+            },
+            "require-dev": {
+                "pestphp/pest-dev-tools": "^2.5.0"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/Faker.php"
+                ],
+                "psr-4": {
+                    "Pest\\Faker\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "The Pest Faker Plugin",
+            "keywords": [
+                "faker",
+                "framework",
+                "pest",
+                "php",
+                "plugin",
+                "test",
+                "testing",
+                "unit"
+            ],
+            "support": {
+                "source": "https://github.com/pestphp/pest-plugin-faker/tree/v2.0.0"
+            },
+            "funding": [
+                {
+                    "url": "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=66BYDWAT92N6L",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/nunomaduro",
+                    "type": "github"
+                },
+                {
+                    "url": "https://www.patreon.com/nunomaduro",
+                    "type": "patreon"
+                }
+            ],
+            "time": "2023-03-20T10:06:05+00:00"
         },
         {
             "name": "pestphp/pest-plugin-laravel",

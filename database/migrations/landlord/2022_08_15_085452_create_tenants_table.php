@@ -23,7 +23,11 @@ return new class () extends Migration {
             $table->boolean('status')->default(true);
             $table->jsonb('data');
             $table->jsonb('settings');
-            $table = $this->assets($table);
+            $table->unsignedSmallInteger('language_id');
+            $table->foreign('language_id')->references('id')->on('languages');
+            $table->unsignedSmallInteger('timezone_id');
+            $table->foreign('timezone_id')->references('id')->on('timezones');
+            $table->unsignedInteger('logo_id')->nullable();
             $table->timestampsTz();
             $table->softDeletesTz();
 

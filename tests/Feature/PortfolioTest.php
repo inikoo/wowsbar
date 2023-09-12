@@ -1,18 +1,21 @@
 <?php
-
-/** @noinspection PhpParamsInspection */
-
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Mon, 10 Jul 2023 10:49:40 Malaysia Time, Kuala Lumpur, Malaysia
+ * Created: Tue, 12 Sep 2023 14:15:26 Malaysia Time, Pantai Lembeng, Bali, Indonesia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
+/** @noinspection PhpParamsInspection */
+
+use App\Actions\CRM\Customer\StoreCustomer;
+use App\Actions\Organisation\Organisation\StoreOrganisation;
 use App\Actions\Tenancy\Tenant\StoreTenant;
 use App\Actions\Tenant\Portfolio\Banner\DeleteBanner;
 use App\Actions\Tenant\Portfolio\Banner\StoreBanner;
 use App\Actions\Tenant\Portfolio\Banner\UpdateBanner;
 use App\Actions\Tenant\Portfolio\PortfolioWebsite\StorePortfolioWebsite;
+use App\Models\CRM\Customer;
+use App\Models\Organisation\Organisation;
 use App\Models\Portfolio\Banner;
 use App\Models\Portfolio\PortfolioWebsite;
 use App\Models\Tenancy\Tenant;
@@ -22,18 +25,16 @@ beforeAll(function () {
 });
 
 beforeEach(function () {
+    try{
+        $organisation=organisation();
+    }catch (Exception){
+        $organisation = StoreOrganisation::make()->action(Organisation::factory()->definition());
+    }
     $tenant = Tenant::first();
     if (!$tenant) {
+        $customer  = StoreCustomer::make()->action($organisation,Customer::factory()->definition());
         $modelData = Tenant::factory()->definition();
-        $tenant    = StoreTenant::make()->action($modelData);
-        $modelData = array_merge(
-            Tenant::factory()->definition(),
-            [
-                'code'     => 'XYZ',
-                'username' => 'xyz',
-            ]
-        );
-        StoreTenant::make()->action($modelData);
+        $tenant    = StoreTenant::make()->action($customer,$modelData);
     }
     $tenant->makeCurrent();
 });

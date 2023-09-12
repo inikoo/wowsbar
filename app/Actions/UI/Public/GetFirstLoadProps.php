@@ -11,7 +11,7 @@ use App\Actions\Assets\Language\UI\GetLanguagesOptions;
 use App\Actions\UI\WithLogo;
 use App\Http\Resources\Assets\LanguageResource;
 use App\Models\Assets\Language;
-use App\Models\Auth\PublicUser;
+use App\Models\CRM\PublicUser;
 use Illuminate\Support\Facades\App;
 use Lorisleiva\Actions\Concerns\AsObject;
 

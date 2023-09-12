@@ -1,16 +1,17 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Thu, 17 Aug 2023 13:57:40 Malaysia Time, Pantai Lembeng, Bali
+ * Created: Tue, 12 Sep 2023 14:19:22 Malaysia Time, Pantai Lembeng, Bali, Indonesia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Organisation\Auth\Guest;
+namespace App\Actions\Organisation\Guest;
 
-use App\Actions\Organisation\Auth\Guest\Hydrators\GuestHydrateUniversalSearch;
 use App\Actions\Organisation\Auth\OrganisationUser\StoreOrganisationUser;
+use App\Actions\Organisation\Guest\Hydrators\GuestHydrateUniversalSearch;
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateGuests;
 use App\Enums\Organisation\Guest\GuestTypeEnum;
+use App\Models\Auth\Role;
 use App\Models\Organisation\Guest;
 use App\Rules\AlphaDashDot;
 use Illuminate\Console\Command;
@@ -32,9 +33,11 @@ class StoreGuest
 
     public function handle(array $modelData): Guest
     {
-        $guest = Guest::create(Arr::except($modelData, [
-            'username'
-        ]));
+        $guest = Guest::create(
+            Arr::except($modelData, [
+                'username'
+            ])
+        );
         OrganisationHydrateGuests::dispatch();
         GuestHydrateUniversalSearch::dispatch($guest);
 
@@ -99,24 +102,31 @@ class StoreGuest
         return $this->handle($validatedData);
     }
 
-    public string $commandSignature = 'create:guest  {name} {username} {type : Guest type contractor|external_employee|external_administrator} {--e|email=} {--t|phone=}  {--identity_document_number=} {--identity_document_type=}';
+    public string $commandSignature = 'org:create-guest {name} {username}  {type : Guest type contractor|external_employee|external_administrator} {--P|password=} {--e|email=} {--t|phone=}  {--identity_document_number=} {--identity_document_type=}';
 
 
     public function asCommand(Command $command): int
     {
-
         $this->trusted = true;
+
 
         $this->fill([
             'type'         => $command->argument('type'),
             'contact_name' => $command->argument('name'),
             'email'        => $command->option('email'),
             'phone'        => $command->option('phone'),
-            'username'     => $command->argument('username')
+            'username'     => $command->argument('username'),
+            'password'     => $command->option('password') ?? (app()->isLocal() ? 'hello' : wordwrap(Str::random(), 4, '-', true))
         ]);
 
         $validatedData = $this->validateAttributes();
         $guest         = $this->handle($validatedData);
+
+        if($command->argument('type')==GuestTypeEnum::EXTERNAL_ADMINISTRATOR){
+            $superAdminRole = Role::where('guard_name', 'org')->where('name', 'super-admin')->firstOrFail();
+            $guest->organisationUser->assignRole($superAdminRole);
+        }
+
         $command->info("Guest <fg=yellow>$guest->slug</> created 👍");
 
 

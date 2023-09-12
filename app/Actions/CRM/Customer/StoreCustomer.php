@@ -1,23 +1,19 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Tue, 20 Jun 2023 20:32:25 Malaysia Time, Pantai Lembeng, Bali, Id
+ * Created: Tue, 20 Jun 2023 20:32:25 Malaysia Time, Pantai Lembeng, Bali, Indonesia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
 namespace App\Actions\CRM\Customer;
 
-use App\Models\Assets\Country;
-use App\Models\Assets\Currency;
-use App\Models\Assets\Language;
-use App\Models\Assets\Timezone;
+use App\Actions\Helpers\SerialReference\GetSerialReference;
+use App\Enums\Helpers\SerialReference\SerialReferenceModelEnum;
 use App\Models\CRM\Customer;
+use App\Models\Organisation\Organisation;
 use Exception;
 use Illuminate\Console\Command;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Validation\Validator;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -31,23 +27,29 @@ class StoreCustomer
 
     private bool $asAction = false;
 
-    public string $commandSignature = 'customer:create {code} {email} {name} {country_code} {currency_code} {username?} {password?} {--l|language_code= : Language code} {--tz|timezone= : Timezone}';
 
     /**
      * @throws Throwable
      */
-    public function handle(array $customerData, array $customerAddressesData = []): Customer
+    public function handle(Organisation $organisation,array $customerData, array $customerAddressesData = []): Customer
     {
-        return DB::transaction(function () use ($customerData) {
+        return DB::transaction(function () use ($customerData,$organisation) {
             /** @var Customer $customer */
             $customer = Customer::create($customerData);
             if ($customer->reference == null) {
+
+                $reference = GetSerialReference::run(
+                    container: $organisation,
+                    modelType: SerialReferenceModelEnum::CUSTOMER);
                 $customer->update(
                     [
-                        'reference' => null
+                        'reference' => $reference
                     ]
                 );
+
+
             }
+            $customer->generateSlug();
             $customer->stats()->create();
 
             // CustomerHydrateUniversalSearch::dispatch($customer);
@@ -62,25 +64,19 @@ class StoreCustomer
             return true;
         }
 
-        return $request->user()->hasPermissionTo("shops.customers.edit");
+        return $request->user()->hasPermissionTo("org.crm.edit");
     }
 
     public function rules(): array
     {
         return [
-            'slug'                     => ['nullable', 'string'],
             'contact_name'             => ['nullable', 'string', 'max:255'],
             'company_name'             => ['nullable', 'string', 'max:255'],
             'email'                    => ['nullable', 'email'],
-            'username'                 => ['nullable', 'string'],
-            'password'                 => ['nullable', 'string'],
             'phone'                    => ['nullable', 'phone:AUTO'],
             'identity_document_number' => ['nullable', 'string'],
             'contact_website'          => ['nullable', 'active_url'],
-            'currency_id' => ['required', 'exists:currencies,id'],
-            'country_id'  => ['required', 'exists:countries,id'],
-            'language_id' => ['required', 'exists:languages,id'],
-            'timezone_id' => ['required', 'exists:timezones,id'],
+
         ];
     }
 
@@ -99,77 +95,34 @@ class StoreCustomer
         $this->fillFromRequest($request);
         $request->validate();
 
-        return $this->handle($request->validated());
+        return $this->handle(organisation(),$request->validated());
     }
 
     /**
      * @throws Throwable
      */
-    public function action(array $objectData, array $customerAddressesData): Customer
+    public function action(Organisation $organisation, $objectData, array $customerAddressesData=[]): Customer
     {
         $this->asAction = true;
         $this->setRawAttributes($objectData);
         $validatedData = $this->validateAttributes();
 
-        return $this->handle($validatedData, $customerAddressesData);
+        return $this->handle($organisation,$validatedData, $customerAddressesData);
     }
 
+    public string $commandSignature = 'customer:create {email} {--N|contact_name=} {--C|company=} {--P|password=}';
 
+    /**
+     * @throws \Throwable
+     */
     public function asCommand(Command $command): int
     {
         $this->asAction = true;
-        try {
-            $country = Country::where('code', $command->argument('country_code'))->firstOrFail();
-        } catch (Exception $e) {
-            $command->error($e->getMessage());
-
-            return 1;
-        }
-
-        try {
-            $currency = Currency::where('code', $command->argument('currency_code'))->firstOrFail();
-        } catch (Exception $e) {
-            $command->error($e->getMessage());
-
-            return 1;
-        }
-
-        if ($command->option('language_code')) {
-            try {
-                $language = Language::where('code', $command->option('language_code'))->firstOrFail();
-            } catch (Exception $e) {
-                $command->error($e->getMessage());
-
-                return 1;
-            }
-        } else {
-            $language = Language::where('code', 'en-gb')->firstOrFail();
-        }
-
-        if ($command->option('timezone')) {
-            try {
-                $timezone = Timezone::where('name', $command->option('timezone'))->firstOrFail();
-            } catch (Exception $e) {
-                $command->error($e->getMessage());
-
-                return 1;
-            }
-        } else {
-            $timezone = Timezone::where('name', 'UTC')->firstOrFail();
-        }
 
         $this->setRawAttributes([
-            'slug'        => $command->argument('code'),
-            'name'        => $command->argument('name'),
-            'contact_name'        => $command->argument('name'),
-            'company_name'        => $command->argument('name'),
+            'contact_name'        => $command->option('contact_name'),
+            'company_name'        => $command->option('company'),
             'email'       => $command->argument('email'),
-            'username'    => $command->argument('username'),
-            'password'    => \Hash::make($command->argument('password')),
-            'country_id'  => $country->id,
-            'currency_id' => $currency->id,
-            'language_id' => $language->id,
-            'timezone_id' => $timezone->id,
         ]);
 
         try {
@@ -180,7 +133,7 @@ class StoreCustomer
             return 1;
         }
 
-        $customer = $this->handle($validatedData);
+        $customer = $this->handle(organisation(),$validatedData);
 
         $command->info("Customer $customer->slug created successfully 🎉");
 

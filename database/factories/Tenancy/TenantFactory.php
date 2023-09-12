@@ -19,16 +19,6 @@ class TenantFactory extends Factory
     {
         return [
             'code'         => 'ABC',
-            'name'         => fake()->company(),
-            'email'        => fake()->email(),
-            'contact_name' => fake()->name(),
-            'currency_id'  => Currency::where('code', 'GBP')->firstOrFail()->id,
-            'country_id'   => Country::where('iso3', 'GBR')->firstOrFail()->id,
-            'language_id'  => Language::where('code', 'en')->firstOrFail()->id,
-            'timezone_id'  => Timezone::where('name', 'Europe/london')->firstOrFail()->id,
-            'username'     => 'abc',
-            'password'     => 'password'
-
         ];
     }
 }

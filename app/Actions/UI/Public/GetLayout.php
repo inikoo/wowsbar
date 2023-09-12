@@ -7,7 +7,7 @@
 
 namespace App\Actions\UI\Public;
 
-use App\Models\Auth\PublicUser;
+use App\Models\CRM\PublicUser;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class GetLayout
