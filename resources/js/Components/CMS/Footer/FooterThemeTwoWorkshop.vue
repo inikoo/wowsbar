@@ -46,7 +46,7 @@ const props = defineProps<{
 					<template #item="{ element, index }">
 						<div :class="['space-y-3 min-w-[20%]',
 							get(columSelected,'id') !== element.id ? '' : 'border',
-						]" @click="props.selectedColums(element)">
+						]" @click="props.selectedColums(index)">
 							<Input :data="element" keyValue="title" classCss="font-bold text-gray-700 capitalize"/>
 							<div v-if="element.type == 'list'">
 								<draggable :list="element.data" group="list" itemKey="name"
