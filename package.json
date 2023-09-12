@@ -2,12 +2,14 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "dev": "npm run dev.tenant && npm run dev.delivery  && npm run dev.organisation",
-        "build": "npm run build.tenant && npm run build.delivery  && npm run build.organisation",
+        "dev": "npm run dev.tenant && npm run dev.delivery  && npm run dev.organisation && npm run dev.public",
+        "build": "npm run build.tenant && npm run build.delivery  && npm run build.organisation && npm run build.public",
         "dev.tenant": "vite --config vite.config.js",
         "build.tenant": "vite build --config vite.config.js && vite build --config vite.config.js --ssr",
         "dev.organisation": "vite --config vite.organisation.config.js",
         "build.organisation": "vite build --config vite.organisation.config.js && vite build --config vite.organisation.config.js --ssr",
+        "dev.public": "vite --config vite.public.config.js",
+        "build.public": "vite build --config vite.public.config.js && vite build --config vite.public.config.js --ssr",
         "dev.delivery": "vite --config vite.delivery.config.js",
         "build.delivery": "vite build --config vite.delivery.config.js && vite build --config vite.delivery.config.js --ssr"
     },

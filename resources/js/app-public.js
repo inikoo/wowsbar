@@ -1,3 +1,10 @@
+
+/*
+ * Author: Raul Perusquia <raul@inikoo.com>
+ * Created: Tue, 12 Sep 2023 20:51:16 Malaysia Time, Sanur, Bali, Indonesia
+ * Copyright (c) 2023, Raul A Perusquia Flores
+ */
+
 import "./bootstrap";
 import "../css/app.css";
 
@@ -19,8 +26,8 @@ createInertiaApp({
     title: (title) => `${title} - ${appName}`,
     resolve: (name) =>
         resolvePageComponent(
-            `./Pages/${name}.vue`,
-            import.meta.glob("./Pages/**/*.vue")
+            `./Pages/Public/${name}.vue`,
+            import.meta.glob("./Pages/Public/**/*.vue")
         ),
     setup({ el, App, props, plugin }) {
         return createApp({ render: () => h(App, props) })

@@ -13,7 +13,7 @@ library.add(faPlus);
 
 import { createPinia } from "pinia";
 const appName =
-    window.document.getElementsByTagName("title")[0]?.innerText || "Laravel";
+    window.document.getElementsByTagName("title")[0]?.innerText || "Wowsbar";
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,

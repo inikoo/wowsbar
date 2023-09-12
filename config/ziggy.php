@@ -9,5 +9,6 @@ return [
     'groups' => [
         'delivery' => ['delivery.*'],
         'org'      => ['org.*'],
+        'public'   => ['public.*'],
     ],
 ];

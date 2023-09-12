@@ -16,7 +16,7 @@ use Tightenco\Ziggy\Ziggy;
 
 class HandlePublicInertiaRequests extends Middleware
 {
-    protected $rootView = 'app';
+    protected $rootView = 'app-public';
 
 
     public function share(Request $request): array

@@ -31,3 +31,4 @@ lang/php_*.json
 /delete-bucket.sh
 /.env.local
 /.env.prod
+/public/public.hot
