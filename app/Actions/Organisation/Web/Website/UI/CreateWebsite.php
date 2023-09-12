@@ -23,7 +23,7 @@ class CreateWebsite extends InertiaAction
 
     public function asController(ActionRequest $request): ActionRequest
     {
-        if(organisation()->website){
+        if(organisation()->website) {
             abort(419);
         }
         $this->initialisation($request);
