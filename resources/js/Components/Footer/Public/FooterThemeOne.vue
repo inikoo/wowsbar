@@ -6,7 +6,23 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 declareFonts // to inheritance the font declaration 
 
 const props = defineProps<{
-	data: Object
+	data: {
+        column: {
+            data: {
+                name: string
+                link: string
+            }[]
+        }[]
+        social: {
+            label: string
+            icon: string
+            link: string
+        }[]
+        copyRight: {
+            link: string
+            label: string
+        }
+    }
 }>()
 </script>
 
@@ -32,7 +48,7 @@ const props = defineProps<{
 						
 						<!-- Box: Icon -->
 						<div class="flex justify-center space-x-6">
-							<Link :href="social.link" v-for="social in data.data.social" class="cursor-pointer text-gray-400 hover:text-gray-500" :alt="social.label">
+							<Link :href="social.link" v-for="social in data.social" class="cursor-pointer text-gray-400 hover:text-gray-500" :alt="social.label">
 								<span class="sr-only">{{ social.label }}</span>
 								<!-- {{ social }} -->
 								<FontAwesomeIcon :icon='social.icon' class='h-6 w-6' aria-hidden='true' />
@@ -43,7 +59,7 @@ const props = defineProps<{
 					<div class="col-span-2">
 						<div class="flex gap-x-10 justify-between">
 							<!-- Looping: Column -->
-							<div v-for="(column, index) in data.data.column" class="space-y-3 min-w-[20%]">
+							<div v-for="(column, index) in data.column" class="space-y-3 min-w-[20%]">
 								<h3 class="font-bold text-gray-300 capitalize">{{ column.title }}</h3>
 								
 								<!-- If the data type is List -->
@@ -78,7 +94,7 @@ const props = defineProps<{
 				<!-- Footer: Copyright -->
 				<div class="mt-16 border-t border-white/10 pt-8 sm:mt-20 lg:mt-24 text-center">
 					<div class="text-xs flex justify-center leading-5 text-gray-400">
-						&copy; 2023 &nbsp;<Link :href="data.data.copyRight.link" class="font-semibold">{{ data.data.copyRight.label }}</Link>. All rights reserved.
+						&copy; 2023 &nbsp;<Link :href="data.copyRight.link" class="font-semibold">{{ data.copyRight.label }}</Link>. All rights reserved.
 					</div>
 				</div>
 			</div>

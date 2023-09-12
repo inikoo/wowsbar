@@ -6,10 +6,26 @@ import declareFonts from '@/Components/CMS/Fields/IconPicker/Components/fonts.js
 declareFonts // to inheritance the font declaration 
 
 const props = defineProps<{
-	data: Object
+	data: {
+        column: {
+            data: {
+                name: string
+                link: string
+            }[]
+        }[]
+        social: {
+            label: string
+            icon: string
+            link: string
+        }[]
+        copyRight: {
+            link: string
+            label: string
+        }
+    }
 }>()
 
-console.log(props.data.data.column)
+console.log(props.data.column)
 </script>
 
 <template>
@@ -20,7 +36,7 @@ console.log(props.data.data.column)
 			<div class="xl:grid xl:gap-x-24 xl:px-6">
 				<!-- Navigations -->
 				<div class="flex gap-8 xl:col-span-2">
-					<div v-for="column in data.data.column" class="space-y-3 min-w-[20%]" >
+					<div v-for="column in data.column" class="space-y-3 min-w-[20%]" >
 						<h3 class="font-bold text-gray-700 capitalize">{{ column.title }}</h3>
 						
 						<!-- If the data type is List -->
@@ -54,7 +70,7 @@ console.log(props.data.data.column)
 			<div class="border-t border-gray-900/10 pt-8 sm:mt-10 flex flex-col md:flex-row items-center justify-between mt-16 lg:mt-18 xl:px-3">
 				<div class="md:order-2">
 					<div class="text-gray-400 flex space-x-6">
-						<Link :href="dataSocial.link" v-for="dataSocial in data.data.social" class="hover:text-gray-500 p-1">
+						<Link :href="dataSocial.link" v-for="dataSocial in data.social" class="hover:text-gray-500 p-1">
 							<FontAwesomeIcon :icon='dataSocial.icon' class='h-6 w-6' aria-hidden='true' />
 							<span class="sr-only">{{ dataSocial.label }}</span>
 						</Link>
@@ -64,7 +80,7 @@ console.log(props.data.data.column)
 				<!-- Footer: Copyright -->
 				<div class="flex">
 					<div class="mt-4 text-xs flex leading-6 text-gray-500 md:order-1 md:mt-0"> 
-						&copy; 2023&nbsp;<Link :href="data.data.copyRight.link" class="font-semibold">{{ data.data.copyRight.label }}</Link>. All rights reserved.
+						&copy; 2023&nbsp;<Link :href="data.copyRight.link" class="font-semibold">{{ data.copyRight.label }}</Link>. All rights reserved.
 					</div>
 				</div>
 			</div>

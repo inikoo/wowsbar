@@ -676,7 +676,7 @@ const publicData = {
 // import MenuTwo from '@/Components/Footer/Public/MenuTwo.vue'
 import FooterThemeOne from '@/Components/Footer/Public/FooterThemeOne.vue'
 import FooterThemeTwo from '@/Components/Footer/Public/FooterThemeTwo.vue'
-// import FooterThemeThree from '@/Components/Footer/Public/FooterThemeThree.vue'
+import FooterThemeThree from '@/Components/Footer/Public/FooterThemeThree.vue'
 
 const isTabActive = ref(false)
 
@@ -702,12 +702,12 @@ const getMenuComponent = computed(() => {
 
     return componentList[props.layout.menu.component]
 })
-console.log(props.layout.footer.component)
+
 const getFooterComponent = computed(() => {
     const componentList = {
         'FooterThemeOne': FooterThemeOne,
         'FooterThemeTwo': FooterThemeTwo,
-        // 'FooterThemeThree': FooterThemeThree,
+        'FooterThemeThree': FooterThemeThree,
     }
 
     return componentList[props.layout.footer.component]
@@ -737,7 +737,7 @@ const getFooterComponent = computed(() => {
             <!-- Main content of page -->
             <slot />
 
-            <component :is="getFooterComponent" :data="publicData.footer" />
+            <component :is="getFooterComponent" :data="publicData.footer.data" />
         </section>
     </div>
 
