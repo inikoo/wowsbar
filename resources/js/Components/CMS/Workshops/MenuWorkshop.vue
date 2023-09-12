@@ -5,39 +5,28 @@
   -->
 
 <script setup>
-import { ref, watch } from 'vue'
+import { ref, watch, reactive } from 'vue'
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { RadioGroup, RadioGroupLabel, RadioGroupOption } from '@headlessui/vue'
 import Menu from '@/Components/CMS/Menu/index.vue'
-import { faHandPointer, faHandRock, faPlus } from '@/../private/pro-solid-svg-icons';
+import { faHandPointer, faHandRock, faPlus, faLink, faObjectGroup} from '@/../private/pro-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { ulid } from 'ulid';
 import HyperlinkTools from '@/Components/CMS/Fields/Hyperlinktools.vue'
 import { get } from 'lodash'
 import IconPicker from '@/Components/CMS/Fields/IconPicker/IconPicker.vue';
 import { getDbRef, getDataFirebase, setDataFirebase } from '@/Composables/firebase'
-library.add(faHandPointer, faHandRock, faPlus)
+import ToolInTop from '@/Components/CMS/Menu/ToolsInTop.vue'
+library.add(faHandPointer, faHandRock, faPlus, faLink,faObjectGroup)
 
 const toolsData = {
-    tools: [
-        { name: 'edit', icon: ['fas', 'fa-hand-pointer'] },
-        { name: 'grab', icon: ['fas', 'hand-rock'] },
-        // { name: 'Heather Grey', icon: ['fas', 'fa-hand-pointer']},
-    ],
-    theme: [
-        { name: 'One', value: '1' },
-        { name: 'Two', value: '2' },
-    ],
     menuType: [
-        { name: 'Group', value: 'group' },
-        { name: 'Link', value: 'link' },
-    ],
-    modeType: [
-        { name: 'User', value: 'user' },
-        { name: 'Guest', value: 'guest' },
+        { name: 'Group', value: 'group', icon:['fas','object-group'] },
+        { name: 'Link', value: 'link',  icon:['fas','link']  },
     ],
 }
-const navigation = ref({
+
+const navigation = reactive({
     categories: [
         {
             name: 'Home',
@@ -256,28 +245,28 @@ const navigation = ref({
     ],
 })
 
-const selectedTheme = ref(toolsData.theme[0])
-const handtools = ref(toolsData.tools[0])
+const selectedTheme = ref({ name: 'One', value: '1' },)
+const handtools = ref({ name: 'edit', icon: ['fas', 'fa-hand-pointer'] },)
 const selectedNav = ref(null)
 
 
 
 const changeMenuType = (value) => {
-    const index = navigation.value.categories.findIndex(
-        (item) => item.id === selectedNav.value.id
+    const index = navigation.categories.findIndex(
+        (item) => item.id === navigation.categories[selectedNav.value].id
     );
 
-    if (value.value === 'link' && selectedNav.value.type !== 'link') {
-        navigation.value.categories[index] = {
-            ...navigation.value.categories[index],
+    if (value.value === 'link' && navigation.categories[selectedNav.value].type !== 'link') {
+        navigation.categories[index] = {
+            ...navigation.categories[index],
             type: 'link',
             link: '',
         };
     }
 
-    if (value.value === 'group' && selectedNav.value.type !== 'group') {
-        navigation.value.categories[index] = {
-            ...navigation.value.categories[index],
+    if (value.value === 'group' && navigation.categories[selectedNav.value].type !== 'group') {
+        navigation.categories[index] = {
+            ...navigation.categories[index],
             type: 'group',
             featured: [
                 {
@@ -298,14 +287,14 @@ const changeNavActive = (value) => {
 }
 
 const columItemLinkChange = () => {
-    const index = navigation.value.categories.findIndex((item) => item.id === selectedNav.value.id);
-    navigation.value.categories[index].featured.push({ name: 'New', id: ulid(), link: '' });
+    const index = navigation.categories.findIndex((item) => item.id === navigation.categories[selectedNav.value].id);
+    navigation.categories[index].featured.push({ name: 'New', id: ulid(), link: '' });
 };
 
 const deleteCategory = () => {
-    const index = navigation.value.categories.findIndex((item) => item.id == selectedNav.value.id)
+    const index = navigation.categories.findIndex((item) => item.id == navigation.categories[selectedNav.value].id)
     if (index >= 0) {
-        navigation.value.categories.splice(index, 1)
+        navigation.categories.splice(index, 1)
         selectedNav.value = null
     }
 }
@@ -313,7 +302,7 @@ const deleteCategory = () => {
 async function setToFirebase() {
   const column = 'org/websites/menu';
   try {
-    await setDataFirebase(column, { navigation : navigation.value, theme : selectedTheme.value });
+    await setDataFirebase(column, { navigation : navigation, theme : selectedTheme.value });
   } catch (error) {
     console.log(error)
   }
@@ -329,87 +318,23 @@ setToFirebase()
     <div class="bg-white">
 
         <div class="flex">
-            <div class="w-1/4 p-6 overflow-y-auto h-[46rem]">
-                <form>
-                    <!-- tool picker -->
-                    <div>
-                        <h2 class="text-sm font-medium text-gray-900">Tools</h2>
-                        <RadioGroup v-model="handtools" class="mt-2">
-                            <RadioGroupLabel class="sr-only">Choose a tool</RadioGroupLabel>
-                            <div class="flex items-center space-x-3">
-                                <RadioGroupOption as="template" v-for="color in toolsData.tools" :key="color.name"
-                                    :value="color" v-slot="{ active, checked }">
-                                    <div :class="[
-                                        color.tools,
-                                        active && checked ? 'ring ring-offset-1' : '',
-                                        !active && checked ? 'ring-2' : '',
-                                        'relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-none',
-                                    ]">
-                                        <RadioGroupLabel as="span" class="sr-only">{{ color.name }}
-                                        </RadioGroupLabel>
-                                        <span aria-hidden="true" class="flex items-center justify-center">
-                                            <span
-                                                class="h-8 w-8 rounded-full border border-black border-opacity-10 flex items-center justify-center">
-                                                <span style="line-height: 1">
-                                                    <FontAwesomeIcon :icon="color.icon" aria-hidden="true" />
-                                                </span>
-                                            </span>
-                                        </span>
-                                    </div>
-                                </RadioGroupOption>
-                            </div>
-                        </RadioGroup>
-                    </div>
-                    <hr class="mt-5" />
-
-                    <!-- theme picker -->
-                    <div class="mt-8">
-                        <div class="flex items-center justify-between">
-                            <h2 class="text-sm font-medium text-gray-900">Theme</h2>
-                        </div>
-
-                        <RadioGroup v-model="selectedTheme" class="mt-2">
-                            <div class="grid grid-cols-3 gap-3 sm:grid-cols-2">
-                                <RadioGroupOption as="template" v-for="theme in toolsData.theme" :key="theme.name"
-                                    :value="theme" v-slot="{ active, checked }">
-                                    <div :class="[
-                                        'cursor-pointer focus:outline-none',
-                                        active
-                                            ? 'ring-2 ring-indigo-500 ring-offset-2'
-                                            : '',
-                                        checked
-                                            ? 'border-transparent bg-indigo-600 text-white hover:bg-indigo-700'
-                                            : 'border-gray-200 bg-white text-gray-900 hover:bg-gray-50',
-                                        'flex items-center justify-center rounded-md border py-3 px-3 text-sm font-medium uppercase sm:flex-1',
-                                    ]">
-                                        <RadioGroupLabel as="span">{{
-                                            theme.name
-                                        }}</RadioGroupLabel>
-                                    </div>
-                                </RadioGroupOption>
-                            </div>
-                        </RadioGroup>
-                    </div>
-                    <hr class="mt-5" />
+            <div class="w-[250px] p-6 overflow-y-auto h-[46rem]">
                     <!-- colums -->
-                    <div class="mt-8" v-if="selectedNav !== null">
+                    <div class="mt-2" v-if="selectedNav !== null">
                         <div class="flex items-center justify-between">
                             <h2 class="text-sm font-medium text-gray-900">Menu Type</h2>
                         </div>
                         <RadioGroup class="mt-2">
-                            <div class="grid grid-cols-3 gap-3 sm:grid-cols-2">
+                            <div class="flex justify-start gap-3">
                                 <RadioGroupOption as="template" v-for="option in toolsData.menuType" :key="option.value"
-                                    :value="option" v-slot="{ active, checked }">
+                                    :value="option" :title="option.name" v-slot="{ active, checked }">
                                     <div @click="changeMenuType(option)" :class="{
-                                        'cursor-pointer': get(selectedNav, 'type') === option.value && selectedNav !== null,
-                                        'cursor-not-allowed': get(selectedNav, 'type') !== option.value && selectedNav !== null,
-                                        'bg-gray-300 text-gray-600': get(selectedNav, 'type') === option.value && selectedNav !== null, // Apply different class when disabled
-                                        'ring-2 ring-indigo-500 ring-offset-2': active,
-                                        'border-transparent bg-indigo-600 text-white hover:bg-indigo-700': checked && get(selectedNav, 'type') !== option.value && selectedNav !== null,
-                                        'border-gray-200 bg-white text-gray-900 hover:bg-gray-50': !checked && get(selectedNav, 'type') !== option.value && selectedNav !== null,
-                                        'flex items-center justify-center rounded-md border py-3 px-3 text-sm font-medium uppercase sm:flex-1': true
+                                        'cursor-not-allowed': get(navigation.categories[selectedNav], 'type') !== option.value && selectedNav !== null,
+                                        'bg-gray-300 text-gray-600': get(navigation.categories[selectedNav], 'type') === option.value && selectedNav !== null,
+                                        'border-gray-200 bg-white text-gray-900 hover:bg-gray-50': !checked && get(navigation.categories[selectedNav], 'type') !== option.value && selectedNav !== null,
+                                        'flex items-center justify-center rounded-md border py-1 px-2 text-sm font-medium uppercase w-fit cursor-pointer': true
                                     }">
-                                        <RadioGroupLabel as="span">{{ option.name }}</RadioGroupLabel>
+                                        <RadioGroupLabel as="span"><font-awesome-icon :icon="option.icon" /></RadioGroupLabel>
                                     </div>
                                 </RadioGroupOption>
 
@@ -420,18 +345,21 @@ setToFirebase()
                     <!-- Mode link , label & icon-->
                     <div v-if="selectedNav">
                         <!-- type group -->
-                        <div class="mt-8" v-if="selectedNav.type == 'group'">
+                        <div class="mt-8" v-if="navigation.categories[selectedNav].type == 'group'">
                             <div class="flex items-center justify-between">
-                                <h2 class="text-sm font-medium text-gray-900">{{ `Colums tools ${selectedNav.name}` }}</h2>
+                                <h2 class="text-sm font-medium text-gray-900">{{ `${navigation.categories[selectedNav].name}` }}</h2>
                             </div>
                             <div>
                                 <div class="flex gap-2 mt-2">
-                                    <div style="width:87%;"
-                                        class=" shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                        <input type="text" v-model="selectedNav.name"
-                                            class=" flex-1 border-0 bg-transparent text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                <div class="w-[90%]">
+                                    <div 
+                                        class="shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md rounded-md">
+                                        <input type="text" v-model="navigation.categories[selectedNav].name"
+                                            class="flex-1 border-0 bg-transparent text-gray-900 text-xs placeholder:text-gray-400 focus:ring-0 text-xs sm:text-sm sm:leading-6 w-full overflow-hidden"
                                             placeholder="title" />
                                     </div>
+                                </div>
+                              
                                     <div>
                                         <button type="submit" @click.prevent="columItemLinkChange()"
                                             class="rounded-md cursor-pointer border ring-gray-300 px-3 py-2 text-sm font-semibold text-black shadow-sm ">
@@ -440,32 +368,34 @@ setToFirebase()
                                     </div>
                                 </div>
 
-                                <div v-for="(set, index) in selectedNav.featured" :key="set.id" class="mt-5">
+                                <div v-for="(set, index) in navigation.categories[selectedNav].featured" :key="set.id" class="mt-5">
                                     <div class="flex gap-2 relative">
-                                        <div class="flex justify-end items-end">
+                                        <!-- <div class="flex justify-end items-center">
                                             <span
                                                 class="rounded-md cursor-pointer border ring-gray-300 px-3 py-2 text-sm font-semibold text-black shadow-sm">
                                                 <IconPicker :key="set.id" :data="set" class="text-black" />
                                             </span>
-                                        </div>
+                                        </div> -->
 
-                                        <HyperlinkTools :data="set" @OnDelete="() => selectedNav.featured.splice(index, 1)"
+                                        <HyperlinkTools :data="set" @OnDelete="() => navigation.categories[selectedNav].featured.splice(index, 1)"
                                             :formList="{
                                                 name: 'name',
                                                 link: 'link',
                                             }" />
                                     </div>
                                 </div>
+                                
+
                             </div>
                         </div>
                         <!-- type link -->
 
-                        <div class="mt-8" v-if="selectedNav.type == 'link'">
+                        <div class="mt-8" v-if="navigation.categories[selectedNav].type == 'link'">
                             <div class="flex items-center justify-between">
-                                <h2 class="text-sm font-medium text-gray-900">{{ `Colums tools ${selectedNav.name}` }}</h2>
+                                <h2 class="text-sm font-medium text-gray-900">{{ `Colums tools ${navigation.categories[selectedNav].name}` }}</h2>
                             </div>
                             <div>
-                                <HyperlinkTools :data="selectedNav" @OnDelete="deleteCategory" :formList="{
+                                <HyperlinkTools :data="navigation.categories[selectedNav]" @OnDelete="deleteCategory" :formList="{
                                     name: 'name',
                                     link: 'link',
                                 }" />
@@ -473,14 +403,15 @@ setToFirebase()
                         </div>
 
                     </div>
-
-                </form>
             </div>
 
             <!-- edit navbar area -->
-            <div class="w-[90%] bg-gray-200 flex items-center justify-center">
+            <div class="w-full bg-gray-200">
+                <ToolInTop :tool="handtools" :theme="selectedTheme" :columSelected="selectedNav"
+                @setColumnSelected="changeNavActive"  :navigation="navigation"/>
                 <div style="transform: scale(0.8);" class="w-full">
-                    <Menu :theme="selectedTheme.value" :navigation="navigation" :tool="handtools" :selectedNav="selectedNav"
+                {{ selectedNav }}
+                    <Menu :theme="selectedTheme.value" :navigation="navigation" :tool="handtools" :selectedNav="navigation.categories[selectedNav]"
                         :changeNavActive="changeNavActive" />
                 </div>
             </div>
