@@ -17,9 +17,9 @@ const props = defineProps<{
 
 function websiteRoute(website: Website) {
     switch (route().current()) {
-        case 'portfolio.websites.index':
+        case 'portfolio.websites.uploads.index':
             return route(
-                'portfolio.websites.show',
+                'portfolio.websites.uploads.show',
                 [website.slug]);
     }
 }
@@ -28,7 +28,7 @@ function websiteRoute(website: Website) {
 
 <template>
     <Table :resource="data" :name="tab" class="mt-5">
-        <template #cell(slug)="{ item: website }">
+        <template #cell(original_filename)="{ item: website }">
             <Link :href="websiteRoute(website)" :id=" website['original_filename']" class="py-2 px-1">
                 {{ website['original_filename'] }}
             </Link>
