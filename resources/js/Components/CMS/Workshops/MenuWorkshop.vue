@@ -25,8 +25,8 @@ const toolsData = {
         // { name: 'Heather Grey', icon: ['fas', 'fa-hand-pointer']},
     ],
     theme: [
-        { name: 'One', value: '2' },
-        { name: 'Two', value: '1' },
+        { name: 'One', value: '1' },
+        { name: 'Two', value: '2' },
     ],
     menuType: [
         { name: 'Group', value: 'group' },
