@@ -27,7 +27,6 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
-
 /**
  * App\Models\CRM\Customer
  *
@@ -59,6 +58,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read \App\Models\CRM\CustomerStats|null $stats
  * @property-read Tenant|null $tenant
  * @property-read UniversalSearch|null $universalSearch
+ * @method static \Database\Factories\CRM\CustomerFactory factory($count = null, $state = [])
  * @method static Builder|Customer newModelQuery()
  * @method static Builder|Customer newQuery()
  * @method static Builder|Customer onlyTrashed()

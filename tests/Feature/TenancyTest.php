@@ -8,19 +8,20 @@
 use App\Actions\Organisation\Organisation\StoreOrganisation;
 use App\Models\CRM\PublicUser;
 use App\Models\Organisation\Organisation;
-use function Pest\Faker\fake;
 use App\Actions\CRM\Customer\StoreCustomer;
 use App\Actions\CRM\PublicUser\StorePublicUser;
 use App\Actions\Tenancy\Tenant\StoreTenant;
 use App\Models\CRM\Customer;
 use App\Models\Tenancy\Tenant;
 
+use function Pest\Faker\fake;
+
 beforeAll(function () {
     loadDB('test_base_database.dump');
 });
 
 test('create organisation', function () {
-    $modelData = Organisation::factory()->definition();
+    $modelData     = Organisation::factory()->definition();
     $organisation  = StoreOrganisation::make()->action($modelData);
     expect($organisation)->toBeInstanceOf(Organisation::class);
     return $organisation;
@@ -28,7 +29,7 @@ test('create organisation', function () {
 
 test('create customer', function ($organisation) {
     $modelData = Customer::factory()->definition();
-    $customer  = StoreCustomer::make()->action($organisation,$modelData);
+    $customer  = StoreCustomer::make()->action($organisation, $modelData);
     expect($customer)->toBeInstanceOf(Customer::class);
     return $customer;
 })->depends('create organisation');
@@ -37,8 +38,8 @@ test('create customer user', function ($customer) {
     $publicUser  = StorePublicUser::make()->action(
         $customer,
         [
-            'email'=>$customer->email,
-            'password'=>fake()->password
+            'email'   => $customer->email,
+            'password'=> fake()->password
         ]
     );
     expect($publicUser)->toBeInstanceOf(PublicUser::class);
@@ -47,7 +48,7 @@ test('create customer user', function ($customer) {
 
 test('create tenant', function ($customer) {
     $modelData = Tenant::factory()->definition();
-    $tenant    = StoreTenant::make()->action($customer,$modelData);
+    $tenant    = StoreTenant::make()->action($customer, $modelData);
     expect($tenant)->toBeInstanceOf(Tenant::class);
     $tenant->makeCurrent();
 
@@ -58,4 +59,3 @@ test('create tenant', function ($customer) {
     //        ->and($user->avatar)->toBeInstanceOf(App\Models\Media\Media::class);
 
 })->depends('create customer');
-

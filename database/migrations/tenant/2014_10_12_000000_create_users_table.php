@@ -19,7 +19,7 @@ return new class () extends Migration {
             $table->smallIncrements('id');
             $table->unsignedSmallInteger('tenant_id')->index();
             $table->foreign('tenant_id')->references('id')->on('tenants');
-            $table = $this->userDetailsColumns($table,'username');
+            $table = $this->userDetailsColumns($table, 'username');
             $table->timestampsTz();
             $table->softDeletesTz();
             $table->unique(['tenant_id', 'username']);

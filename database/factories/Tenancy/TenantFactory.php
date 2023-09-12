@@ -7,10 +7,6 @@
 
 namespace Database\Factories\Tenancy;
 
-use App\Models\Assets\Country;
-use App\Models\Assets\Currency;
-use App\Models\Assets\Language;
-use App\Models\Assets\Timezone;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class TenantFactory extends Factory

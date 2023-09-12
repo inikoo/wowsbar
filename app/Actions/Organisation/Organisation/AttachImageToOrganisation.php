@@ -22,7 +22,7 @@ class AttachImageToOrganisation
     {
 
         $checksum = md5_file($imagePath);
-        $filename=dechex(crc32($checksum)).'.';
+        $filename =dechex(crc32($checksum)).'.';
         $filename.=empty($extension) ? pathinfo($imagePath, PATHINFO_EXTENSION) : $extension;
 
 

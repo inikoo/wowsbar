@@ -19,7 +19,7 @@ return new class () extends Migration {
             $table->smallIncrements('id');
             $table->unsignedInteger('customer_id')->index()->nullable();
             $table->foreign('customer_id')->references('id')->on('customers');
-            $table = $this->userDetailsColumns($table,'email');
+            $table = $this->userDetailsColumns($table, 'email');
             $table->timestampsTz();
             $table->softDeletesTz();
         });

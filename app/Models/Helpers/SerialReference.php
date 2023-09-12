@@ -10,7 +10,6 @@ namespace App\Models\Helpers;
 use App\Enums\Helpers\SerialReference\SerialReferenceModelEnum;
 use Illuminate\Database\Eloquent\Model;
 
-
 /**
  * App\Models\Helpers\SerialReference
  *
@@ -39,7 +38,6 @@ use Illuminate\Database\Eloquent\Model;
  */
 class SerialReference extends Model
 {
-
     protected $casts = [
         'data'  => 'array',
         'model' => SerialReferenceModelEnum::class

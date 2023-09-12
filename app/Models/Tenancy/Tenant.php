@@ -10,7 +10,6 @@ namespace App\Models\Tenancy;
 use App\Models\Assets\Currency;
 use App\Models\Auth\User;
 use App\Models\CRM\Customer;
-use App\Models\CRM\PublicUser;
 use App\Models\Media\Media;
 use App\Models\Portfolio\Banner;
 use App\Models\Portfolio\PortfolioWebsite;
@@ -30,7 +29,6 @@ use Spatie\Multitenancy\Models\Tenant as SpatieTenant;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
-
 /**
  * App\Models\Tenancy\Tenant
  *
@@ -48,6 +46,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string|null $deleted_at
+ * @property int $customer_id
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \OwenIt\Auditing\Models\Audit> $audits
  * @property-read int|null $audits_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Banner> $banners
@@ -64,8 +63,6 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read int|null $portfolio_website_uploads_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, PortfolioWebsite> $portfolioWebsites
  * @property-read int|null $portfolio_websites_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, PublicUser> $publicUsers
- * @property-read int|null $public_users_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, SnapshotStats> $snapshotStats
  * @property-read int|null $snapshot_stats_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Snapshot> $snapshots
@@ -83,6 +80,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|Tenant query()
  * @method static \Illuminate\Database\Eloquent\Builder|Tenant whereCode($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Tenant whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Tenant whereCustomerId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Tenant whereData($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Tenant whereDeletedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Tenant whereEmail($value)

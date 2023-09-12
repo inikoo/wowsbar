@@ -22,9 +22,9 @@ class WebsiteUploadsResource extends JsonResource
     {
         return [
             'original_filename' => $this->original_filename,
-            'filename' => $this->filename,
-            'number_rows' => $this->number_rows,
-            'uploaded_at' => $this->uploaded_at
+            'filename'          => $this->filename,
+            'number_rows'       => $this->number_rows,
+            'uploaded_at'       => $this->uploaded_at
         ];
     }
 }

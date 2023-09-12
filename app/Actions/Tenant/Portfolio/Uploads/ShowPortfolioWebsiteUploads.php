@@ -9,7 +9,6 @@ namespace App\Actions\Tenant\Portfolio\Uploads;
 
 use App\Http\Resources\Portfolio\WebsiteUploadedRecordResource;
 use App\InertiaTable\InertiaTable;
-use App\Models\WebsiteUpload;
 use App\Models\WebsiteUploadRecord;
 use Closure;
 use Illuminate\Database\Eloquent\Collection;

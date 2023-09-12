@@ -8,7 +8,6 @@
 
 
 test('globals')
-    ->todo()
     ->expect(['dd', 'dump'])
     ->not->toBeUsed();
 

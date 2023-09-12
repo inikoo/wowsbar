@@ -7,7 +7,6 @@
 
 namespace Deployer;
 
-
 desc('Deploys your project');
 task('deploy', [
     'deploy:prepare',

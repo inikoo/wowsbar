@@ -9,7 +9,6 @@ namespace App\Http\Resources\UI;
 
 use App\Http\Resources\HasSelfCall;
 use App\Models\Auth\User;
-use App\Models\CRM\PublicUser;
 use App\Models\Organisation\OrganisationUser;
 use Illuminate\Http\Resources\Json\JsonResource;
 

@@ -19,7 +19,7 @@ return new class () extends Migration {
             $table->smallIncrements('id');
             $table->unsignedInteger('parent_id')->nullable();
             $table->string('parent_type')->nullable();
-            $table = $this->userDetailsColumns($table,'username');
+            $table = $this->userDetailsColumns($table, 'username');
             $table->timestampsTz();
             $table->softDeletesTz();
             $table->unique(['parent_type','parent_id']);

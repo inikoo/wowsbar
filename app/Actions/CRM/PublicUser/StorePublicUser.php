@@ -29,7 +29,7 @@ class StorePublicUser
     {
         /** @var PublicUser $publicUser */
         $publicUser = $customer->publicUsers()->create($objectData);
-       // $publicUser->stats()->create();
+        // $publicUser->stats()->create();
 
         return $publicUser;
     }
@@ -70,18 +70,18 @@ class StorePublicUser
         $this->asAction = true;
         try {
             $customer = Customer::where('slug', $command->argument('customer'))->firstOrFail();
-        }catch (Exception $e){
+        } catch (Exception $e) {
             $command->error('Customer not found');
             return 1;
         }
         $this->setRawAttributes(
             [
-                'email'    => $command->option('email') ?? $customer->email,
+                'email'    => $command->option('email')    ?? $customer->email,
                 'password' => $command->option('password') ?? (app()->isLocal() ? 'hello' : wordwrap(Str::random(), 4, '-', true))
             ]
         );
         $validatedData = $this->validateAttributes();
-        $publicUser= $this->handle($customer, $validatedData);
+        $publicUser    = $this->handle($customer, $validatedData);
 
         $command->line("Public user $publicUser->email created successfully");
 

@@ -39,7 +39,7 @@ return new class () extends Migration {
             $table->unique(['reference']);
         });
 
-        Schema::table('tenants', function($table) {
+        Schema::table('tenants', function ($table) {
             $table->unsignedInteger('customer_id');
             $table->foreign('customer_id')->references('id')->on('customers');
         });
@@ -47,7 +47,7 @@ return new class () extends Migration {
 
     public function down(): void
     {
-        Schema::table('tenants', function($table) {
+        Schema::table('tenants', function ($table) {
             $table->dropColumn('customer_id');
         });
         Schema::dropIfExists('customers');

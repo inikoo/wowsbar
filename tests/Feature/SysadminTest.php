@@ -21,18 +21,18 @@ beforeAll(function () {
 });
 
 beforeEach(function () {
-    try{
-    $organisation=organisation();
-    }catch (Exception){
+    try {
+        $organisation=organisation();
+    } catch (Exception) {
         $organisation = StoreOrganisation::make()->action(Organisation::factory()->definition());
     }
     $tenant = Tenant::first();
     if (!$tenant) {
-        $customer  = StoreCustomer::make()->action($organisation,Customer::factory()->definition());
+        $customer  = StoreCustomer::make()->action($organisation, Customer::factory()->definition());
         $modelData = Tenant::factory()->definition();
-        $tenant    = StoreTenant::make()->action($customer,$modelData);
+        $tenant    = StoreTenant::make()->action($customer, $modelData);
     }
-   $tenant->makeCurrent();
+    $tenant->makeCurrent();
 });
 
 test('create user', function () {
