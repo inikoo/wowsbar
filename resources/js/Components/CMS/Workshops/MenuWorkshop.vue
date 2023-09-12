@@ -313,7 +313,7 @@ const deleteCategory = () => {
 async function setToFirebase() {
   const column = 'org/websites/menu';
   try {
-    await setDataFirebase(column, { navigation : navigation, theme : selectedTheme.value });
+    await setDataFirebase(column, { navigation : navigation.value, theme : selectedTheme.value });
   } catch (error) {
     console.log(error)
   }
