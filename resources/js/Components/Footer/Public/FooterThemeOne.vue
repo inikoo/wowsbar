@@ -11,7 +11,11 @@ const props = defineProps<{
             data: {
                 name: string
                 link: string
+				icon: string
+				value: string
             }[]
+			type: string
+			title: string
         }[]
         social: {
             label: string

@@ -51,7 +51,7 @@ class GetFirstLoadProps
                         'data'      => []
                     ],
                     'footer' => [
-                        'component' => 'FooterThemeTwo',
+                        'component' => 'FooterThemeOne',
                         'data'      => []
                     ]
                 ];
