@@ -36,6 +36,7 @@ class WebsiteImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wit
             try {
                 $website = WebsiteUploadRecord::create([
                     'tenant_id' => app('currentTenant')->id,
+                    'website_upload_id' => $this->websiteUpload->id,
                     'data'      => json_encode([
                         'code' => $website['code'],
                         'name' => $website['name'],

@@ -7,10 +7,10 @@
 
 namespace App\Actions\Tenant\Portfolio\Uploads;
 
-use App\Http\Resources\Portfolio\WebsiteUploadsResource;
+use App\Http\Resources\Portfolio\WebsiteUploadedRecordResource;
 use App\InertiaTable\InertiaTable;
-use App\Models\Portfolio\PortfolioWebsite;
 use App\Models\WebsiteUpload;
+use App\Models\WebsiteUploadRecord;
 use Closure;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -20,7 +20,7 @@ use Lorisleiva\Actions\Concerns\WithAttributes;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
-class IndexPortfolioWebsiteUploads
+class ShowPortfolioWebsiteUploads
 {
     use AsAction;
     use WithAttributes;
@@ -29,9 +29,7 @@ class IndexPortfolioWebsiteUploads
     {
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
             $query->where(function ($query) use ($value) {
-                $query->whereAnyWordStartWith('website_uploads.original_filename', $value)
-                    ->orWhere('website_uploads.original_filename', 'ilike', "%$value%")
-                    ->orWhere('website_uploads.filename', 'ilike', "$value%");
+                $query->orWhere('website_upload_records.data', 'ilike', "$value%");
             });
         });
 
@@ -39,11 +37,9 @@ class IndexPortfolioWebsiteUploads
             InertiaTable::updateQueryBuilderParameters($prefix);
         }
 
-        $queryBuilder = QueryBuilder::for(WebsiteUpload::class);
+        $queryBuilder = QueryBuilder::for(WebsiteUploadRecord::class);
 
         return $queryBuilder
-            ->defaultSort('website_uploads.original_filename')
-            ->allowedSorts(['original_filename', 'filename', 'number_rows'])
             ->allowedFilters([$globalSearch])
             ->withPaginator($prefix)
             ->withQueryString();
@@ -63,21 +59,21 @@ class IndexPortfolioWebsiteUploads
                 ->withGlobalSearch()
                 ->withEmptyState(
                     [
-                        'title' => __('No uploaded websites found'),
+                        'title' => __('No websites found'),
                         'count' => 0,
                     ]
                 )
                 ->withExportLinks($exportLinks)
-                ->column(key: 'original_filename', label: __('Original Filename'), sortable: true)
-                ->column(key: 'filename', label: __('Filename'), sortable: true)
-                ->column(key: 'number_rows', label: __('Number Rows'), sortable: true)
-                ->defaultSort('original_filename');
+                ->column(key: 'code', label: __('Code'), sortable: true)
+                ->column(key: 'name', label: __('Name'), sortable: true)
+                ->column(key: 'domain', label: __('Domain'), sortable: true)
+                ->defaultSort('code');
         };
     }
 
     public function jsonResponse(Collection $websiteUploads): AnonymousResourceCollection
     {
-        return WebsiteUploadsResource::collection($websiteUploads);
+        return WebsiteUploadedRecordResource::collection($websiteUploads);
     }
 
     public function asController(): LengthAwarePaginator

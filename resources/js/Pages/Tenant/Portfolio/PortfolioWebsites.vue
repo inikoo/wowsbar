@@ -25,6 +25,7 @@ import {useTabChange} from "@/Composables/tab-change";
 import ModelDetails from "@/Pages/ModelDetails.vue";
 import TableHistories from "@/Pages/Tables/TableHistories.vue";
 import TableBanners from "@/Pages/Tables/TableBanners.vue";
+import TableUploadedWebsites from "@/Pages/Tables/TableUploadedWebsites.vue";
 
 library.add(faUpload, falFile, faTimes, faFileDownload, fasFile)
 
@@ -32,6 +33,8 @@ const props = defineProps<{
     pageHead: any
     title: string
     websites: object
+    changelog: object
+    uploaded_websites: object
     tabs: {
         current: string;
         navigation: object;
@@ -45,7 +48,8 @@ const component = computed(() => {
     const components = {
         details: ModelDetails,
         changelog: TableHistories,
-        websites: TablePortfolioWebsites
+        websites: TablePortfolioWebsites,
+        uploaded_websites: TableUploadedWebsites
     };
 
     return components[currentTab.value];

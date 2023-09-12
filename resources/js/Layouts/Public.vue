@@ -218,448 +218,222 @@ const publicData = {
     },
     "menu": {
         "navigation": {
-            "__v_isRef": true,
-            "__v_isShallow": false,
-            "_rawValue": {
-                "categories": [
-                    {
-                        "featured": [
-                            {
-                                "icon": "far fa-dot-circle",
-                                "id": "01HA14PKCXWDY8TWPAFXYA2FMY",
-                                "link": "#",
-                                "name": "About us"
-                            },
-                            {
-                                "icon": "far fa-dot-circle",
-                                "id": "01HA14PKCX9PB6GNPAEYPC1WEN",
-                                "link": "#",
-                                "name": "Contact"
-                            },
-                            {
-                                "icon": "far fa-dot-circle",
-                                "id": "01HA14PKCX9A7V4EPTEAWAHRTD",
-                                "link": "#",
-                                "name": "ShowRoom"
-                            },
-                            {
-                                "icon": "far fa-dot-circle",
-                                "id": "01HA14PKCX1FHV5EBYABHZNPCN",
-                                "link": "#",
-                                "name": "Trems & Conditions"
-                            },
-                            {
-                                "icon": "far fa-dot-circle",
-                                "id": "01HA14PKCXT86NW0BVT9MQN7XK",
-                                "link": "#",
-                                "name": "Delivery"
-                            },
-                            {
-                                "icon": "far fa-dot-circle",
-                                "id": "01HA14PKCXWH1QTHK29PW6JKTG",
-                                "link": "#",
-                                "name": "Operation Hours"
-                            },
-                            {
-                                "icon": "far fa-dot-circle",
-                                "id": "01HA14PKCXG8P6JYNXW5Q0ZZPV",
-                                "link": "#",
-                                "name": "Freedom"
-                            },
-                            {
-                                "icon": "far fa-dot-circle",
-                                "id": "01HA14PKCXRF97SP6WBVPYJV5A",
-                                "link": "#",
-                                "name": "Business Ethics"
-                            },
-                            {
-                                "icon": "far fa-dot-circle",
-                                "id": "01HA14PKCXZE95H41Q8YKK13BW",
-                                "link": "#",
-                                "name": "Catalogue"
-                            },
-                            {
-                                "icon": "far fa-dot-circle",
-                                "id": "01HA14PKCX8CE08GFJ3J88T24X",
-                                "link": "#",
-                                "name": "Retruns Policy"
-                            },
-                            {
-                                "icon": "far fa-dot-circle",
-                                "id": "01HA14PKCXTTBCD5YYG7A6VY0M",
-                                "link": "#",
-                                "name": "Dropshiping Sevices"
-                            },
-                            {
-                                "icon": "far fa-dot-circle",
-                                "id": "01HA14PKCX5K48SFFYPPKREZEQ",
-                                "link": "#",
-                                "name": "Working with local businesses"
-                            },
-                            {
-                                "icon": "far fa-dot-circle",
-                                "id": "01HA14PKCX3G2MCZKG32PSRSV3",
-                                "link": "#",
-                                "name": "sustainable palm oil"
-                            },
-                            {
-                                "icon": "far fa-dot-circle",
-                                "id": "01HA14PKCX3NAQTTYZAT1P1BDC",
-                                "link": "#",
-                                "name": "Privacy Policy"
-                            },
-                            {
-                                "icon": "far fa-dot-circle",
-                                "id": "01HA14PKCXFES02B7G1Q9VBP17",
-                                "link": "#",
-                                "name": "Cookies Policy"
-                            },
-                            {
-                                "icon": "far fa-dot-circle",
-                                "id": "01HA14PKCX51K3BEJN0E23938R",
-                                "link": "#",
-                                "name": "Travel Blog"
-                            }
-                        ],
-                        "icon": "far fa-dot-circle",
-                        "id": "01HA14PKCXN02C6VPZ5RAPH7HZ",
-                        "name": "Home",
-                        "type": "group"
-                    },
-                    {
-                        "featured": [
-                            {
-                                "icon": "far fa-dot-circle",
-                                "id": "01HA14PKCYWZ86JHB8QGYXMJ4N",
-                                "link": "#",
-                                "name": "New Arrivals"
-                            },
-                            {
-                                "icon": "far fa-dot-circle",
-                                "id": "01HA14PKCYFHNB7HPWJ87RK1SP",
-                                "link": "#",
-                                "name": "Basic Tees"
-                            },
-                            {
-                                "icon": "far fa-dot-circle",
-                                "id": "01HA14PKCYTA78SPTK2F5MFB2R",
-                                "link": "#",
-                                "name": "Accessories"
-                            },
-                            {
-                                "icon": "far fa-dot-circle",
-                                "id": "01HA14PKCYAAJANB7JQDVWZ9YF",
-                                "link": "#",
-                                "name": "Carry"
-                            }
-                        ],
-                        "icon": "far fa-dot-circle",
-                        "id": "01HA14PKCYMY7TGQ8P98EZFEYM",
-                        "name": "Departements",
-                        "type": "group"
-                    },
-                    {
-                        "featured": [
-                            {
-                                "icon": "far fa-dot-circle",
-                                "id": "01HA14PKCY859EHX8G28XCZEQ9",
-                                "link": "#",
-                                "name": "New Arrivals"
-                            },
-                            {
-                                "icon": "far fa-dot-circle",
-                                "id": "01HA14PKCY3G6FK5DGN9GGC1ZV",
-                                "link": "#",
-                                "name": "Basic Tees"
-                            },
-                            {
-                                "icon": "far fa-dot-circle",
-                                "id": "01HA14PKCYRAG821NWCQE84H63",
-                                "link": "#",
-                                "name": "Accessories"
-                            },
-                            {
-                                "icon": "far fa-dot-circle",
-                                "id": "01HA14PKCYHPT2K1BGNCTJR7FQ",
-                                "link": "#",
-                                "name": "Carry"
-                            }
-                        ],
-                        "icon": "far fa-dot-circle",
-                        "id": "01HA14PKCYWAGNNA5KVA1PWP4G",
-                        "name": "Incentives & Inspiration",
-                        "type": "group"
-                    },
-                    {
-                        "featured": [
-                            {
-                                "icon": "far fa-dot-circle",
-                                "id": "01HA14PKCYMQ5EQ1VYBMY6D2JQ",
-                                "link": "#",
-                                "name": "New Arrivals"
-                            },
-                            {
-                                "icon": "far fa-dot-circle",
-                                "id": "01HA14PKCYDJBK4EBTWVRJT7RE",
-                                "link": "#",
-                                "name": "Basic Tees"
-                            },
-                            {
-                                "icon": "far fa-dot-circle",
-                                "id": "01HA14PKCYG6KJSAFCEE9Y1KBS",
-                                "link": "#",
-                                "name": "Accessories"
-                            },
-                            {
-                                "icon": "far fa-dot-circle",
-                                "id": "01HA14PKCYFJMHA2SEWGG6MZG5",
-                                "link": "#",
-                                "name": "Carry"
-                            }
-                        ],
-                        "icon": "far fa-dot-circle",
-                        "id": "01HA14PKCY8F6C3Q2671Y357FY",
-                        "name": "Delivery",
-                        "type": "group"
-                    },
-                    {
-                        "icon": "far fa-dot-circle",
-                        "id": "01HA14PKCY532F508M647ZFC3R",
-                        "link": "#",
-                        "name": "Test link 1",
-                        "type": "link"
-                    },
-                    {
-                        "icon": "far fa-dot-circle",
-                        "id": "01HA14PKCYTZY1VP1Y89779TYE",
-                        "link": "#",
-                        "name": "Test link 2",
-                        "type": "link"
-                    }
-                ]
-            },
-            "_value": {
-                "categories": [
-                    {
-                        "featured": [
-                            {
-                                "icon": "far fa-dot-circle",
-                                "id": "01HA14PKCXWDY8TWPAFXYA2FMY",
-                                "link": "#",
-                                "name": "About us"
-                            },
-                            {
-                                "icon": "far fa-dot-circle",
-                                "id": "01HA14PKCX9PB6GNPAEYPC1WEN",
-                                "link": "#",
-                                "name": "Contact"
-                            },
-                            {
-                                "icon": "far fa-dot-circle",
-                                "id": "01HA14PKCX9A7V4EPTEAWAHRTD",
-                                "link": "#",
-                                "name": "ShowRoom"
-                            },
-                            {
-                                "icon": "far fa-dot-circle",
-                                "id": "01HA14PKCX1FHV5EBYABHZNPCN",
-                                "link": "#",
-                                "name": "Trems & Conditions"
-                            },
-                            {
-                                "icon": "far fa-dot-circle",
-                                "id": "01HA14PKCXT86NW0BVT9MQN7XK",
-                                "link": "#",
-                                "name": "Delivery"
-                            },
-                            {
-                                "icon": "far fa-dot-circle",
-                                "id": "01HA14PKCXWH1QTHK29PW6JKTG",
-                                "link": "#",
-                                "name": "Operation Hours"
-                            },
-                            {
-                                "icon": "far fa-dot-circle",
-                                "id": "01HA14PKCXG8P6JYNXW5Q0ZZPV",
-                                "link": "#",
-                                "name": "Freedom"
-                            },
-                            {
-                                "icon": "far fa-dot-circle",
-                                "id": "01HA14PKCXRF97SP6WBVPYJV5A",
-                                "link": "#",
-                                "name": "Business Ethics"
-                            },
-                            {
-                                "icon": "far fa-dot-circle",
-                                "id": "01HA14PKCXZE95H41Q8YKK13BW",
-                                "link": "#",
-                                "name": "Catalogue"
-                            },
-                            {
-                                "icon": "far fa-dot-circle",
-                                "id": "01HA14PKCX8CE08GFJ3J88T24X",
-                                "link": "#",
-                                "name": "Retruns Policy"
-                            },
-                            {
-                                "icon": "far fa-dot-circle",
-                                "id": "01HA14PKCXTTBCD5YYG7A6VY0M",
-                                "link": "#",
-                                "name": "Dropshiping Sevices"
-                            },
-                            {
-                                "icon": "far fa-dot-circle",
-                                "id": "01HA14PKCX5K48SFFYPPKREZEQ",
-                                "link": "#",
-                                "name": "Working with local businesses"
-                            },
-                            {
-                                "icon": "far fa-dot-circle",
-                                "id": "01HA14PKCX3G2MCZKG32PSRSV3",
-                                "link": "#",
-                                "name": "sustainable palm oil"
-                            },
-                            {
-                                "icon": "far fa-dot-circle",
-                                "id": "01HA14PKCX3NAQTTYZAT1P1BDC",
-                                "link": "#",
-                                "name": "Privacy Policy"
-                            },
-                            {
-                                "icon": "far fa-dot-circle",
-                                "id": "01HA14PKCXFES02B7G1Q9VBP17",
-                                "link": "#",
-                                "name": "Cookies Policy"
-                            },
-                            {
-                                "icon": "far fa-dot-circle",
-                                "id": "01HA14PKCX51K3BEJN0E23938R",
-                                "link": "#",
-                                "name": "Travel Blog"
-                            }
-                        ],
-                        "icon": "far fa-dot-circle",
-                        "id": "01HA14PKCXN02C6VPZ5RAPH7HZ",
-                        "name": "Home",
-                        "type": "group"
-                    },
-                    {
-                        "featured": [
-                            {
-                                "icon": "far fa-dot-circle",
-                                "id": "01HA14PKCYWZ86JHB8QGYXMJ4N",
-                                "link": "#",
-                                "name": "New Arrivals"
-                            },
-                            {
-                                "icon": "far fa-dot-circle",
-                                "id": "01HA14PKCYFHNB7HPWJ87RK1SP",
-                                "link": "#",
-                                "name": "Basic Tees"
-                            },
-                            {
-                                "icon": "far fa-dot-circle",
-                                "id": "01HA14PKCYTA78SPTK2F5MFB2R",
-                                "link": "#",
-                                "name": "Accessories"
-                            },
-                            {
-                                "icon": "far fa-dot-circle",
-                                "id": "01HA14PKCYAAJANB7JQDVWZ9YF",
-                                "link": "#",
-                                "name": "Carry"
-                            }
-                        ],
-                        "icon": "far fa-dot-circle",
-                        "id": "01HA14PKCYMY7TGQ8P98EZFEYM",
-                        "name": "Departements",
-                        "type": "group"
-                    },
-                    {
-                        "featured": [
-                            {
-                                "icon": "far fa-dot-circle",
-                                "id": "01HA14PKCY859EHX8G28XCZEQ9",
-                                "link": "#",
-                                "name": "New Arrivals"
-                            },
-                            {
-                                "icon": "far fa-dot-circle",
-                                "id": "01HA14PKCY3G6FK5DGN9GGC1ZV",
-                                "link": "#",
-                                "name": "Basic Tees"
-                            },
-                            {
-                                "icon": "far fa-dot-circle",
-                                "id": "01HA14PKCYRAG821NWCQE84H63",
-                                "link": "#",
-                                "name": "Accessories"
-                            },
-                            {
-                                "icon": "far fa-dot-circle",
-                                "id": "01HA14PKCYHPT2K1BGNCTJR7FQ",
-                                "link": "#",
-                                "name": "Carry"
-                            }
-                        ],
-                        "icon": "far fa-dot-circle",
-                        "id": "01HA14PKCYWAGNNA5KVA1PWP4G",
-                        "name": "Incentives & Inspiration",
-                        "type": "group"
-                    },
-                    {
-                        "featured": [
-                            {
-                                "icon": "far fa-dot-circle",
-                                "id": "01HA14PKCYMQ5EQ1VYBMY6D2JQ",
-                                "link": "#",
-                                "name": "New Arrivals"
-                            },
-                            {
-                                "icon": "far fa-dot-circle",
-                                "id": "01HA14PKCYDJBK4EBTWVRJT7RE",
-                                "link": "#",
-                                "name": "Basic Tees"
-                            },
-                            {
-                                "icon": "far fa-dot-circle",
-                                "id": "01HA14PKCYG6KJSAFCEE9Y1KBS",
-                                "link": "#",
-                                "name": "Accessories"
-                            },
-                            {
-                                "icon": "far fa-dot-circle",
-                                "id": "01HA14PKCYFJMHA2SEWGG6MZG5",
-                                "link": "#",
-                                "name": "Carry"
-                            }
-                        ],
-                        "icon": "far fa-dot-circle",
-                        "id": "01HA14PKCY8F6C3Q2671Y357FY",
-                        "name": "Delivery",
-                        "type": "group"
-                    },
-                    {
-                        "icon": "far fa-dot-circle",
-                        "id": "01HA14PKCY532F508M647ZFC3R",
-                        "link": "#",
-                        "name": "Test link 1",
-                        "type": "link"
-                    },
-                    {
-                        "icon": "far fa-dot-circle",
-                        "id": "01HA14PKCYTZY1VP1Y89779TYE",
-                        "link": "#",
-                        "name": "Test link 2",
-                        "type": "link"
-                    }
-                ]
-            },
-            "dep": {
-                "n": 0,
-                "w": 0
-            }
+            "categories": [
+                {
+                    "featured": [
+                        {
+                            "icon": "far fa-dot-circle",
+                            "id": "01HA14PKCXWDY8TWPAFXYA2FMY",
+                            "link": "#",
+                            "name": "About us"
+                        },
+                        {
+                            "icon": "far fa-dot-circle",
+                            "id": "01HA14PKCX9PB6GNPAEYPC1WEN",
+                            "link": "#",
+                            "name": "Contact"
+                        },
+                        {
+                            "icon": "far fa-dot-circle",
+                            "id": "01HA14PKCX9A7V4EPTEAWAHRTD",
+                            "link": "#",
+                            "name": "ShowRoom"
+                        },
+                        {
+                            "icon": "far fa-dot-circle",
+                            "id": "01HA14PKCX1FHV5EBYABHZNPCN",
+                            "link": "#",
+                            "name": "Trems & Conditions"
+                        },
+                        {
+                            "icon": "far fa-dot-circle",
+                            "id": "01HA14PKCXT86NW0BVT9MQN7XK",
+                            "link": "#",
+                            "name": "Delivery"
+                        },
+                        {
+                            "icon": "far fa-dot-circle",
+                            "id": "01HA14PKCXWH1QTHK29PW6JKTG",
+                            "link": "#",
+                            "name": "Operation Hours"
+                        },
+                        {
+                            "icon": "far fa-dot-circle",
+                            "id": "01HA14PKCXG8P6JYNXW5Q0ZZPV",
+                            "link": "#",
+                            "name": "Freedom"
+                        },
+                        {
+                            "icon": "far fa-dot-circle",
+                            "id": "01HA14PKCXRF97SP6WBVPYJV5A",
+                            "link": "#",
+                            "name": "Business Ethics"
+                        },
+                        {
+                            "icon": "far fa-dot-circle",
+                            "id": "01HA14PKCXZE95H41Q8YKK13BW",
+                            "link": "#",
+                            "name": "Catalogue"
+                        },
+                        {
+                            "icon": "far fa-dot-circle",
+                            "id": "01HA14PKCX8CE08GFJ3J88T24X",
+                            "link": "#",
+                            "name": "Retruns Policy"
+                        },
+                        {
+                            "icon": "far fa-dot-circle",
+                            "id": "01HA14PKCXTTBCD5YYG7A6VY0M",
+                            "link": "#",
+                            "name": "Dropshiping Sevices"
+                        },
+                        {
+                            "icon": "far fa-dot-circle",
+                            "id": "01HA14PKCX5K48SFFYPPKREZEQ",
+                            "link": "#",
+                            "name": "Working with local businesses"
+                        },
+                        {
+                            "icon": "far fa-dot-circle",
+                            "id": "01HA14PKCX3G2MCZKG32PSRSV3",
+                            "link": "#",
+                            "name": "sustainable palm oil"
+                        },
+                        {
+                            "icon": "far fa-dot-circle",
+                            "id": "01HA14PKCX3NAQTTYZAT1P1BDC",
+                            "link": "#",
+                            "name": "Privacy Policy"
+                        },
+                        {
+                            "icon": "far fa-dot-circle",
+                            "id": "01HA14PKCXFES02B7G1Q9VBP17",
+                            "link": "#",
+                            "name": "Cookies Policy"
+                        },
+                        {
+                            "icon": "far fa-dot-circle",
+                            "id": "01HA14PKCX51K3BEJN0E23938R",
+                            "link": "#",
+                            "name": "Travel Blog"
+                        }
+                    ],
+                    "icon": "far fa-dot-circle",
+                    "id": "01HA14PKCXN02C6VPZ5RAPH7HZ",
+                    "name": "Home",
+                    "type": "group"
+                },
+                {
+                    "featured": [
+                        {
+                            "icon": "far fa-dot-circle",
+                            "id": "01HA14PKCYWZ86JHB8QGYXMJ4N",
+                            "link": "#",
+                            "name": "New Arrivals"
+                        },
+                        {
+                            "icon": "far fa-dot-circle",
+                            "id": "01HA14PKCYFHNB7HPWJ87RK1SP",
+                            "link": "#",
+                            "name": "Basic Tees"
+                        },
+                        {
+                            "icon": "far fa-dot-circle",
+                            "id": "01HA14PKCYTA78SPTK2F5MFB2R",
+                            "link": "#",
+                            "name": "Accessories"
+                        },
+                        {
+                            "icon": "far fa-dot-circle",
+                            "id": "01HA14PKCYAAJANB7JQDVWZ9YF",
+                            "link": "#",
+                            "name": "Carry"
+                        }
+                    ],
+                    "icon": "far fa-dot-circle",
+                    "id": "01HA14PKCYMY7TGQ8P98EZFEYM",
+                    "name": "Departements",
+                    "type": "group"
+                },
+                {
+                    "featured": [
+                        {
+                            "icon": "far fa-dot-circle",
+                            "id": "01HA14PKCY859EHX8G28XCZEQ9",
+                            "link": "#",
+                            "name": "New Arrivals"
+                        },
+                        {
+                            "icon": "far fa-dot-circle",
+                            "id": "01HA14PKCY3G6FK5DGN9GGC1ZV",
+                            "link": "#",
+                            "name": "Basic Tees"
+                        },
+                        {
+                            "icon": "far fa-dot-circle",
+                            "id": "01HA14PKCYRAG821NWCQE84H63",
+                            "link": "#",
+                            "name": "Accessories"
+                        },
+                        {
+                            "icon": "far fa-dot-circle",
+                            "id": "01HA14PKCYHPT2K1BGNCTJR7FQ",
+                            "link": "#",
+                            "name": "Carry"
+                        }
+                    ],
+                    "icon": "far fa-dot-circle",
+                    "id": "01HA14PKCYWAGNNA5KVA1PWP4G",
+                    "name": "Incentives & Inspiration",
+                    "type": "group"
+                },
+                {
+                    "featured": [
+                        {
+                            "icon": "far fa-dot-circle",
+                            "id": "01HA14PKCYMQ5EQ1VYBMY6D2JQ",
+                            "link": "#",
+                            "name": "New Arrivals"
+                        },
+                        {
+                            "icon": "far fa-dot-circle",
+                            "id": "01HA14PKCYDJBK4EBTWVRJT7RE",
+                            "link": "#",
+                            "name": "Basic Tees"
+                        },
+                        {
+                            "icon": "far fa-dot-circle",
+                            "id": "01HA14PKCYG6KJSAFCEE9Y1KBS",
+                            "link": "#",
+                            "name": "Accessories"
+                        },
+                        {
+                            "icon": "far fa-dot-circle",
+                            "id": "01HA14PKCYFJMHA2SEWGG6MZG5",
+                            "link": "#",
+                            "name": "Carry"
+                        }
+                    ],
+                    "icon": "far fa-dot-circle",
+                    "id": "01HA14PKCY8F6C3Q2671Y357FY",
+                    "name": "Delivery",
+                    "type": "group"
+                },
+                {
+                    "icon": "far fa-dot-circle",
+                    "id": "01HA14PKCY532F508M647ZFC3R",
+                    "link": "#",
+                    "name": "Test link 1",
+                    "type": "link"
+                },
+                {
+                    "icon": "far fa-dot-circle",
+                    "id": "01HA14PKCYTZY1VP1Y89779TYE",
+                    "link": "#",
+                    "name": "Test link 2",
+                    "type": "link"
+                }
+            ]
         },
         "theme": {
             "name": "One",
@@ -672,8 +446,8 @@ const publicData = {
 // import Cookies from '@/Components/Cookies.vue'
 // import FooterTabLanguage from '@/Components/Footer/FooterLanguage.vue'
 // import HeaderThemeOne from '@/Components/Header/Public/HeaderThemeOne.vue'
-// import MenuOne from '@/Components/Footer/Public/MenuOne.vue'
-// import MenuTwo from '@/Components/Footer/Public/MenuTwo.vue'
+import MenuOne from '@/Components/Menu/Public/MenuOne.vue'
+import MenuTwo from '@/Components/Menu/Public/MenuTwo.vue'
 import FooterThemeOne from '@/Components/Footer/Public/FooterThemeOne.vue'
 import FooterThemeTwo from '@/Components/Footer/Public/FooterThemeTwo.vue'
 import FooterThemeThree from '@/Components/Footer/Public/FooterThemeThree.vue'
@@ -700,7 +474,7 @@ const getMenuComponent = computed(() => {
         'MenuTwo': MenuTwo
     }
 
-    return componentList[props.layout.menu.component]
+    return componentList[props.layout?.menu?.component ?? 'MenuTwo']
 })
 
 const getFooterComponent = computed(() => {
@@ -710,7 +484,7 @@ const getFooterComponent = computed(() => {
         'FooterThemeThree': FooterThemeThree,
     }
 
-    return componentList[props.layout.footer.component]
+    return componentList[props.layout?.footer?.component ?? 'FooterThemeOne']
 })
 
 </script>
@@ -720,7 +494,8 @@ const getFooterComponent = computed(() => {
         <section class="relative isolate overflow-hidden bg-gray-100">
             <!-- <component :is="getHeaderComponent"></component>
 
-            <component :is="getMenuComponent"></component> -->
+            -->
+            <component :is="getMenuComponent" :data="publicData.menu"></component>
 
             <!-- Background: Square line -->
             <svg class="absolute inset-0 -z-10 h-full w-full stroke-gray-200 [mask-image:radial-gradient(100%_100%_at_top_right,white,transparent)]"

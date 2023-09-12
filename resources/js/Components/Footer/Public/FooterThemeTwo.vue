@@ -29,7 +29,7 @@ const props = defineProps<{
     }
 }>()
 
-console.log(props.data.column)
+
 </script>
 
 <template>

@@ -7,10 +7,12 @@
 
 namespace App\Actions\Tenant\Portfolio\PortfolioWebsite\UI;
 
+use App\Actions\Helpers\History\IndexHistories;
 use App\Actions\InertiaAction;
 use App\Actions\Tenant\Portfolio\Uploads\IndexPortfolioWebsiteUploads;
 use App\Actions\UI\Tenant\Portfolio\ShowPortfolio;
 use App\Enums\UI\Tenant\PortfolioWebsitesTabsEnum;
+use App\Http\Resources\History\HistoryResource;
 use App\Http\Resources\Portfolio\PortfolioWebsiteResource;
 use App\Http\Resources\Portfolio\WebsiteUploadsResource;
 use App\InertiaTable\InertiaTable;
@@ -158,7 +160,11 @@ class IndexPortfolioWebsites extends InertiaAction
 
                 PortfolioWebsitesTabsEnum::UPLOADED_WEBSITES->value => $this->tab == PortfolioWebsitesTabsEnum::UPLOADED_WEBSITES->value ?
                     fn () => WebsiteUploadsResource::collection(IndexPortfolioWebsiteUploads::run())
-                    : Inertia::lazy(fn () => WebsiteUploadsResource::collection(IndexPortfolioWebsiteUploads::run()))
+                    : Inertia::lazy(fn () => WebsiteUploadsResource::collection(IndexPortfolioWebsiteUploads::run())),
+
+                PortfolioWebsitesTabsEnum::CHANGELOG->value => $this->tab == PortfolioWebsitesTabsEnum::CHANGELOG->value ?
+                    fn () => HistoryResource::collection(IndexHistories::run(PortfolioWebsite::class))
+                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistories::run(PortfolioWebsite::class)))
             ]
         )->table($this->tableStructure(
             prefix: 'websites',
@@ -169,7 +175,8 @@ class IndexPortfolioWebsites extends InertiaAction
                     ]
                 ]
             ]
-        ));
+        ))->table(IndexPortfolioWebsiteUploads::make()->tableStructure(prefix: PortfolioWebsitesTabsEnum::UPLOADED_WEBSITES->value))
+            ->table(IndexHistories::make()->tableStructure());
     }
 
     /** @noinspection PhpUnusedParameterInspection */
