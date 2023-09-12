@@ -62,6 +62,7 @@ class EditOrganisation
                                 ],
                             ],
                         ],
+
                         // [
                         //     "title"  => __("appearance"),
                         //     "icon"   => "fa-light fa-paint-brush",

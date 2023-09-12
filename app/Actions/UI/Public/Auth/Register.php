@@ -7,10 +7,13 @@
 
 namespace App\Actions\UI\Public\Auth;
 
+use App\Actions\CRM\Customer\StoreCustomer;
+use App\Actions\CRM\PublicUser\StorePublicUser;
 use App\Models\CRM\PublicUser;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rules;
 use Lorisleiva\Actions\ActionRequest;
@@ -28,12 +31,20 @@ class Register
 
     public function handle(array $modelData): RedirectResponse
     {
-        $user = PublicUser::create($modelData);
 
-        // TODO: Store customer
+        $customer=StoreCustomer::run(
+            [
+                'contact_name'=> Arr::get($modelData, 'contact_name'),
+                'email'       => Arr::get($modelData, 'email')
 
-        event(new Registered($user));
-        Auth::guard('public')->login($user);
+            ]
+        );
+
+        $publicUser = StorePublicUser::run($customer, $modelData);
+
+
+        event(new Registered($publicUser));
+        Auth::guard('public')->login($publicUser);
         return redirect(RouteServiceProvider::HOME);
     }
 

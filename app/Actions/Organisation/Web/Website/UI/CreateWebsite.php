@@ -59,6 +59,8 @@ class CreateWebsite extends InertiaAction
                                     'leftAddOn' => [
                                         'label' => 'https://'
                                     ],
+                                    'value'=>config('app.domain'),
+                                    'readonly'=>true,
                                     'required'  => true,
                                 ],
 

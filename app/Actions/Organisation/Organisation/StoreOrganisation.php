@@ -7,6 +7,7 @@
 
 namespace App\Actions\Organisation\Organisation;
 
+use App\Actions\Organisation\Web\Website\StoreWebsite;
 use App\Enums\Helpers\SerialReference\SerialReferenceModelEnum;
 use App\Models\Assets\Country;
 use App\Models\Assets\Currency;
@@ -70,6 +71,13 @@ class StoreOrganisation
 
         Artisan::call("db:seed --force --class=StockImageSeeder");
 
+        /*
+        StoreWebsite::run(
+            [
+                'domain'=>config('app.domain')
+            ]
+        );
+        */
 
         return $organisation;
     }
