@@ -410,7 +410,6 @@ setToFirebase()
                 <ToolInTop :tool="handtools" :theme="selectedTheme" :columSelected="selectedNav"
                 @setColumnSelected="changeNavActive"  :navigation="navigation"/>
                 <div style="transform: scale(0.8);" class="w-full">
-                {{ selectedNav }}
                     <Menu :theme="selectedTheme.value" :navigation="navigation" :tool="handtools" :selectedNav="navigation.categories[selectedNav]"
                         :changeNavActive="changeNavActive" />
                 </div>
