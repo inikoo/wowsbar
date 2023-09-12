@@ -17,6 +17,9 @@ return new class () extends Migration {
             $table->unsignedSmallInteger('tenant_id');
             $table->foreign('tenant_id')->references('id')->on('tenants')->onUpdate('cascade')->onDelete('cascade');
 
+            $table->unsignedSmallInteger('website_upload_id');
+            $table->foreign('website_upload_id')->references('id')->on('website_uploads')->onUpdate('cascade')->onDelete('cascade');
+
             $table->jsonb('data');
             $table->string('status')->default(UploadRecordStatusEnum::PROCESSING->value);
 
