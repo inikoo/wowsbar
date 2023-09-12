@@ -1,14 +1,14 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Tue, 12 Sep 2023 13:51:25 Malaysia Time, Pantai Lembeng, Bali, Indonesia
+ * Created: Tue, 12 Sep 2023 14:35:16 Malaysia Time, Pantai Lembeng, Bali, Indonesia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
 namespace App\Actions\Organisation\Guest;
 
 use App\Actions\Traits\WithActionUpdate;
-use App\Enums\Auth\Guest\GuestTypeEnum;
+use App\Enums\Organisation\Guest\GuestTypeEnum;
 use App\Http\Resources\SysAdmin\GuestResource;
 use App\Models\Organisation\Guest;
 use Illuminate\Validation\Rule;
