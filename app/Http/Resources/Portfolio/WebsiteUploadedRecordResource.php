@@ -17,7 +17,7 @@ class WebsiteUploadedRecordResource extends JsonResource
 {
     public function toArray($request): array
     {
-        /** @var \App\Models\WebsiteUploadRecord $websitePortfolio */
+        /** @var \App\Models\Portfolio\WebsiteUploadRecord $websitePortfolio */
         $websitePortfolio = $this;
 
         return [

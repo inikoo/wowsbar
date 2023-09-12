@@ -7,7 +7,7 @@
 
 namespace App\Actions\Tenant\Portfolio\Uploads;
 
-use App\Models\WebsiteUpload;
+use App\Models\Portfolio\WebsiteUpload;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
 

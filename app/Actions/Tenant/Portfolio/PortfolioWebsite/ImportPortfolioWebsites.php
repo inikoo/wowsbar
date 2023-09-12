@@ -10,8 +10,8 @@ namespace App\Actions\Tenant\Portfolio\PortfolioWebsite;
 use App\Actions\Traits\WithExportData;
 use App\Enums\Helpers\Import\UploadRecordStatusEnum;
 use App\Events\UploadWebsiteProgressEvent;
+use App\Models\Portfolio\WebsiteUploadRecord;
 use App\Models\Tenancy\Tenant;
-use App\Models\WebsiteUploadRecord;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
 

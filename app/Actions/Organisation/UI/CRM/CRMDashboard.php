@@ -54,12 +54,12 @@ class CRMDashboard
                     [
                         'name' => __('customers'),
                         'stat' => organisation()->stats->number_organisation_users_status_active,
-                        'href' => ['org.sysadmin.users.index']
+                        'href' => ['org.crm.customers.index']
                     ],
                     [
                         'name' => __('prospects'),
                         'stat' => organisation()->stats->number_organisation_users_status_active,
-                        'href' => ['org.sysadmin.users.index']
+                        'href' => ['org.crm.prospects.index']
                     ]
                 ]
             ]

@@ -4,8 +4,8 @@ namespace App\Imports;
 
 use App\Actions\Tenant\Portfolio\PortfolioWebsite\ImportPortfolioWebsites;
 use App\Actions\Tenant\Portfolio\Uploads\UpdatePortfolioWebsiteUploads;
-use App\Models\WebsiteUpload;
-use App\Models\WebsiteUploadRecord;
+use App\Models\Portfolio\WebsiteUpload;
+use App\Models\Portfolio\WebsiteUploadRecord;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\SkipsFailures;
 use Maatwebsite\Excel\Concerns\SkipsOnFailure;

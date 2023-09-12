@@ -6,13 +6,28 @@
  */
 
 
+use App\Actions\CRM\Prospect\IndexProspects;
+use App\Actions\Organisation\CRM\Customer\UI\EditCustomer;
+use App\Actions\Organisation\CRM\Customer\UI\IndexCustomers;
+use App\Actions\Organisation\CRM\Customer\UI\ShowCustomer;
 use App\Actions\Organisation\UI\CRM\CRMDashboard;
 
 Route::get('/', [CRMDashboard::class, 'inTenant'])->name('dashboard');
-//Route::get('/customers', [IndexCustomers::class, 'inTenant'])->name('customers.index');
-//Route::get('/customers/{customer}', [ShowCustomer::class, 'inTenant'])->name('customers.show');
-//Route::get('/customers/{customer}/edit', [EditCustomer::class, 'inTenant'])->name('customers.edit');
-//Route::get('/customers/{customer}/delete', RemoveCustomer::class)->name('customers.remove');
-//Route::get('/customers/{customer}/web-users', [IndexWebUser::class, 'inCustomerInTenant'])->name('customers.show.web-users.index');
-//Route::get('/customers/{customer}/web-users/{webUser}', [ShowWebUser::class, 'inCustomerInTenant'])->name('customers.show.web-users.show');
-//Route::get('/customers/{customer}/web-users/{webUser}/edit', [EditWebUser::class, 'inCustomerInTenant'])->name('customers.show.web-users.edit');
+
+Route::prefix('customers')->as('customers.')->group(function () {
+    Route::get('/', IndexCustomers::class)->name('index');
+    Route::get('/{customer}', [ShowCustomer::class, 'inTenant'])->name('show');
+    Route::get('/{customer}/edit', [EditCustomer::class, 'inTenant'])->name('edit');
+    //Route::get('/customers/{customer}/delete', RemoveCustomer::class)->name('customers.remove');
+    //Route::get('/customers/{customer}/web-users', [IndexWebUser::class, 'inCustomerInTenant'])->name('customers.show.web-users.index');
+    //Route::get('/customers/{customer}/web-users/{webUser}', [ShowWebUser::class, 'inCustomerInTenant'])->name('customers.show.web-users.show');
+    //Route::get('/customers/{customer}/web-users/{webUser}/edit', [EditWebUser::class, 'inCustomerInTenant'])->name('customers.show.web-users.edit');
+});
+
+Route::prefix('prospects')->as('prospects.')->group(function () {
+    Route::get('/', [IndexProspects::class, 'inTenant'])->name('index');
+    //Route::get('/customers/{customer}/delete', RemoveCustomer::class)->name('customers.remove');
+    //Route::get('/customers/{customer}/web-users', [IndexWebUser::class, 'inCustomerInTenant'])->name('customers.show.web-users.index');
+    //Route::get('/customers/{customer}/web-users/{webUser}', [ShowWebUser::class, 'inCustomerInTenant'])->name('customers.show.web-users.show');
+    //Route::get('/customers/{customer}/web-users/{webUser}/edit', [EditWebUser::class, 'inCustomerInTenant'])->name('customers.show.web-users.edit');
+});
