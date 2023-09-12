@@ -47,11 +47,11 @@ class GetFirstLoadProps
                         'data'      => []
                     ],
                     'menu'   => [
-                        'component' => 'MenuOne',
+                        'component' => 'MenuTwo',
                         'data'      => []
                     ],
                     'footer' => [
-                        'component' => 'FooterThemeOne',
+                        'component' => 'FooterThemeTwo',
                         'data'      => []
                     ]
                 ];
