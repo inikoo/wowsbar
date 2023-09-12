@@ -1,14 +1,14 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Tue, 12 Sep 2023 13:51:25 Malaysia Time, Pantai Lembeng, Bali, Indonesia
+ * Created: Tue, 12 Sep 2023 15:35:15 Malaysia Time, Pantai Lembeng, Bali, Indonesia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
 namespace App\Actions\Organisation\Guest\UI;
 
 use App\Actions\InertiaAction;
-use App\Actions\UI\Organisation\SysAdmin\SysAdminDashboard;
+use App\Actions\UI\Organisation\SysAdmin\ShowSysAdminDashboard;
 use App\Enums\Organisation\Guest\GuestTypeEnum;
 use App\Http\Resources\SysAdmin\GuestResource;
 use App\InertiaTable\InertiaTable;
@@ -190,7 +190,7 @@ class IndexGuest extends InertiaAction
     public function getBreadcrumbs($suffix = null): array
     {
         return array_merge(
-            (new SysAdminDashboard())->getBreadcrumbs(),
+            (new ShowSysAdminDashboard())->getBreadcrumbs(),
             [
                 [
                     'type'   => 'simple',

@@ -119,10 +119,9 @@ class StoreGuest
             'password'     => $command->option('password') ?? (app()->isLocal() ? 'hello' : wordwrap(Str::random(), 4, '-', true))
         ]);
 
-        $validatedData = $this->validateAttributes();
-        $guest         = $this->handle($validatedData);
+        $guest = $this->handle($this->validateAttributes());
 
-        if($command->argument('type')==GuestTypeEnum::EXTERNAL_ADMINISTRATOR->value) {
+        if ($command->argument('type') == GuestTypeEnum::EXTERNAL_ADMINISTRATOR->value) {
             $superAdminRole = Role::where('guard_name', 'org')->where('name', 'super-admin')->firstOrFail();
             $guest->organisationUser->assignRole($superAdminRole);
         }

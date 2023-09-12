@@ -36,7 +36,7 @@ class SysAdminDashboard
         $tenant=app('currentTenant');
 
         return Inertia::render(
-            'SysAdmin/SysAdminDashboard',
+            'SysAdmin/ShowSysAdminDashboard',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(),
                 'title'       => __('system administration'),

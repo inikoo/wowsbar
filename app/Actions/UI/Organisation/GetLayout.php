@@ -99,7 +99,7 @@ class GetLayout
                             'label' => __('system settings'),
                             'icon'  => ['fal', 'fa-cog'],
                             'route' => [
-                                'name' => 'org.sysadmin.settings.edit',
+                                'name' => 'org.sysadmin.organisation.edit',
 
                             ]
                         ],

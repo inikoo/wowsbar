@@ -7,16 +7,16 @@
 
 
 use App\Actions\Organisation\Auth\OrganisationUser\UI\IndexOrganisationUsers;
+use App\Actions\Organisation\Organisation\UI\EditOrganisation;
 use App\Actions\Tenant\Auth\User\ExportUsers;
 use App\Actions\Tenant\Auth\User\UI\CreateUser;
 use App\Actions\Tenant\Auth\User\UI\EditUser;
 use App\Actions\Tenant\Auth\User\UI\ShowUser;
-use App\Actions\UI\Organisation\SysAdmin\SysAdminDashboard;
-use App\Actions\UI\Tenant\SysAdmin\EditSystemSettings;
+use App\Actions\UI\Organisation\SysAdmin\ShowSysAdminDashboard;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', SysAdminDashboard::class)->name('dashboard');
-Route::get('/system-settings', EditSystemSettings::class)->name('settings.edit');
+Route::get('/', ShowSysAdminDashboard::class)->name('dashboard');
+Route::get('/system-settings', EditOrganisation::class)->name('organisation.edit');
 
 Route::get('/users', IndexOrganisationUsers::class)->name('users.index');
 Route::get('/users/export', ExportUsers::class)->name('users.export');
