@@ -34,7 +34,7 @@ import {
     faAbacus,
     faChevronDown,
     faGlobe,
-    faLanguage
+    faLanguage, faUsers
 } from "@/../private/pro-light-svg-icons"
 import { faSearch, faBell} from "../../private/pro-regular-svg-icons"
 import {useAuthFirebase} from "@/Composables/firebaseAuth";
@@ -60,7 +60,8 @@ library.add(
     faGlobe,
     faLanguage,
     faSearch,
-    faBell
+    faBell,
+    faUsers
 )
 
 const layout = initialiseOrgApp()

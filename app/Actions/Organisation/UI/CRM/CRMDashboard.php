@@ -45,10 +45,23 @@ class CRMDashboard
                 'title'       => 'CRM',
                 'pageHead'    => [
                     'title'     => __('customer relationship manager'),
+                    'icon'    => [
+                        'title' => __('customers'),
+                        'icon'  => 'fal fa-user'
+                    ],
                 ],
-
-
-
+                'stats' => [
+                    [
+                        'name' => __('customers'),
+                        'stat' => organisation()->stats->number_organisation_users_status_active,
+                        'href' => ['org.sysadmin.users.index']
+                    ],
+                    [
+                        'name' => __('prospects'),
+                        'stat' => organisation()->stats->number_organisation_users_status_active,
+                        'href' => ['org.sysadmin.users.index']
+                    ]
+                ]
             ]
         );
     }

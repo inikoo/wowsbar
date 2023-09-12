@@ -8,19 +8,19 @@
 import { Head } from '@inertiajs/vue3';
 import PageHeading from '@/Components/Headings/PageHeading.vue';
 import { capitalize } from "@/Composables/capitalize"
+import Stats from "@/Components/DataDisplay/Stats.vue";
 
 
 const props = defineProps<{
     title: string,
     pageHead: object,
-
+    stats: object,
 }>()
-
-
 </script>
 
 
 <template layout="OrgApp">
     <Head :title="capitalize(title)" />
     <PageHeading :data="pageHead"></PageHeading>
+    <stats class="m-4" :stats="stats"/>
 </template>
