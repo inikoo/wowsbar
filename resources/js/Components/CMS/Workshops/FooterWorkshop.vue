@@ -20,7 +20,7 @@ import SocialMediaPicker from "@/Components/CMS/Fields/IconPicker/SocialMediaToo
 import { getDbRef, getDataFirebase, setDataFirebase } from '@/Composables/firebase'
 import ToolInTop from '@/Components/CMS/Footer/ToolsInTop.vue'
 
-library.add(faHandPointer, faHandRock, faPlus, faAlignJustify, faList,faInfoCircle)
+library.add(faHandPointer, faHandRock, faPlus, faAlignJustify, faList, faInfoCircle)
 
 const Dummy = {
     images: [
@@ -31,32 +31,16 @@ const Dummy = {
             primary: true,
         },
     ],
-    tools: [
-        { name: 'edit', icon: ['fas', 'fa-hand-pointer'] },
-        { name: 'grab', icon: ['fas', 'hand-rock'] },
-        // { name: 'Heather Grey', icon: ['fas', 'fa-hand-pointer']},
-    ],
-    theme: [
-        { name: 'Light', value: '2' },
-        { name: 'Dark', value: '1' },
-        { name: 'Simple', value: '3' },
-    ],
     columsType: [
-        { name: 'Description', value: 'description' , icon : ['fas', 'align-justify'] },
-        { name: 'List', value: 'list', icon : ['fas', 'list'] },
-        { name: 'Info', value: 'info', icon : ['fas', 'info-circle']  },
-    ],
-    columsToolsLink: [
-        { name: 'Add Item', value: 'add' },
-    ],
-    columsToolsInfo: [
-        { name: 'Add Item', value: 'add' },
+        { name: 'Description', value: 'description', icon: ['fas', 'align-justify'] },
+        { name: 'List', value: 'list', icon: ['fas', 'list'] },
+        { name: 'Info', value: 'info', icon: ['fas', 'info-circle'] },
     ],
 }
 
-const selectedTheme = ref(Dummy.theme[0])
+const selectedTheme = ref({ name: 'Light', value: '2' })
 const columsTypeTheme = ref(Dummy.columsType[0])
-const tool = ref(Dummy.tools[0])
+const tool = ref({ name: 'edit', icon: ['fas', 'fa-hand-pointer'] })
 
 const DummyColums = [
     {
@@ -222,18 +206,18 @@ const data = reactive({
     copyRight: { label: 'AW Advantage', link: '*' }
 })
 
-// async function setToFirebase() {
-//   const column = 'org/websites/footer';
-//   try {
-//     await setDataFirebase(column, { data : data, theme : selectedTheme.value });
-//   } catch (error) {
-//     console.log(error)
-//   }
-// }
+async function setToFirebase() {
+    const column = 'org/websites/footer';
+    try {
+        await setDataFirebase(column, { data: data, theme: selectedTheme.value });
+    } catch (error) {
+        console.log(error)
+    }
+}
 
-// watch(data, setToFirebase, { deep: true })
+watch(data, setToFirebase, { deep: true })
 
-// setToFirebase()
+setToFirebase()
 
 const columSelected = ref(null);
 
@@ -242,7 +226,6 @@ const selectedColums = (value) => {
 }
 
 const handleColumsTypeChange = (value) => {
-    console.log(value)
     if (value.title !== data.column[columSelected.value].type) {
         let indexDummy = DummyColums.findIndex((item) => item.type === value.value);
         let indexColums = data.column.findIndex((item) => item.id === data.column[columSelected.value].id);
@@ -305,131 +288,134 @@ const changeColumnFromSelectedColumn = () => {
 <template>
     <div class="bg-white flex">
         <div class="w-[250px] p-6 overflow-y-auto overflow-x-hidden  h-[46rem]">
-        <!-- Column Type -->
-                <div>
-                    <div class="flex items-center justify-between">
-                        <h2 class="text-xs font-medium text-gray-900">Column Type</h2>
-                    </div>
-                    <RadioGroup v-model="columsTypeTheme" class="mt-2">
-                        <div class="flex justify-start gap-3">
-                            <RadioGroupOption as="template" v-for="option in Dummy.columsType" :key="option.value">
-                                <div :title="option.name" :class="{
-                                    'cursor-not-allowed': get(data.column[columSelected], 'type') == option.value,
-                                    'bg-gray-300 text-gray-600': get(data.column[columSelected], 'type') == option.value,
-                                    'flex items-center justify-center rounded-md border py-1 px-2 text-sm font-medium uppercase w-fit cursor-pointer': true
-                                }" @click="handleColumsTypeChange(option)">
-                                    <RadioGroupLabel as="span"  class="w-fit"><font-awesome-icon :icon="option.icon" /></RadioGroupLabel>
-                                </div>
-                            </RadioGroupOption>
-                        </div>
-                    </RadioGroup>
+            <!-- Column Type -->
+            <div>
+                <div class="flex items-center justify-between">
+                    <h2 class="text-xs font-medium text-gray-900">Column Type</h2>
                 </div>
-                 <!-- end Column Type -->
-
-                <!-- column tools -->
-                <div v-if="data.column[columSelected]">
-                    <!-- column tools list -->
-                    <div class="mt-8" v-if="data.column[columSelected].type == 'list'">
-                        <div class="flex items-center justify-between">
-                            <h2 class="text-xs font-medium text-gray-900">{{ `${data.column[columSelected].title}` }}</h2>
-                        </div>
-                        <div>
-                            <div class="flex gap-2 mt-2">
-                                <div class="w-[90%]">
-                                    <div class="shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md rounded-md">
-                                        <input type="text" v-model="data.column[columSelected].title"
-                                            @input="changeColumnFromSelectedColumn"
-                                            class="flex-1 border-0 bg-transparent text-gray-900 text-xs placeholder:text-gray-400 focus:ring-0 text-xs sm:text-sm sm:leading-6 w-full overflow-hidden"
-                                            placeholder="xs" />
-                                    </div>
-                                </div>
-                                <div class="flex justify-center align-middle">
-                                    <button type="submit"
-                                        @click.prevent="columItemLinkChange({ name: 'Add Item', value: 'add' })"
-                                        class="rounded-md cursor-pointer border ring-gray-300 px-3 py-2 text-xs font-semibold text-black shadow-sm">
-                                        <font-awesome-icon :icon="['fas', 'plus']" />
-                                    </button>
-                                </div>
+                <RadioGroup v-model="columsTypeTheme" class="mt-2">
+                    <div class="flex justify-start gap-3">
+                        <RadioGroupOption as="template" v-for="option in Dummy.columsType" :key="option.value">
+                            <div :title="option.name" :class="{
+                                'cursor-not-allowed': get(data.column[columSelected], 'type') == option.value,
+                                'bg-gray-300 text-gray-600': get(data.column[columSelected], 'type') == option.value,
+                                'flex items-center justify-center rounded-md border py-1 px-2 text-sm font-medium uppercase w-fit cursor-pointer': true
+                            }" @click="handleColumsTypeChange(option)">
+                                <RadioGroupLabel as="span" class="w-fit"><font-awesome-icon :icon="option.icon" />
+                                </RadioGroupLabel>
                             </div>
-
-
-                            <div v-for="(set, index) in data.column[columSelected].data" :key="set.id">
-                                <HyperlinkTools :data="set" @OnDelete="() => data.column[columSelected].data.splice(index, 1)"
-                                    :formList="{
-                                        name: 'name',
-                                        link: 'link',
-                                    }" />
-                            </div>
-                        </div>
-
+                        </RadioGroupOption>
                     </div>
-                    <!-- column tools info-->
-                    <div class="mt-8" v-if="data.column[columSelected].type == 'info'">
-                        <div class="flex items-center justify-between">
-                            <h2 class="text-sm font-medium text-gray-900">{{ `Colums tools
-                                ${data.column[columSelected].title}`
-                            }}</h2>
-                        </div>
-                        <div>
-                            <div class="flex gap-2 mt-2">
-                                <div style="width:85%;"
+                </RadioGroup>
+            </div>
+            <!-- end Column Type -->
+
+            <!-- column tools -->
+            <div v-if="data.column[columSelected]">
+                <!-- column tools list -->
+                <div class="mt-8" v-if="data.column[columSelected].type == 'list'">
+                    <div class="flex items-center justify-between">
+                        <h2 class="text-xs font-medium text-gray-900">{{ `${data.column[columSelected].title}` }}</h2>
+                    </div>
+                    <div>
+                        <div class="flex gap-2 mt-2">
+                            <div class="w-[90%]">
+                                <div
                                     class="shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md rounded-md">
                                     <input type="text" v-model="data.column[columSelected].title"
                                         @input="changeColumnFromSelectedColumn"
                                         class="flex-1 border-0 bg-transparent text-gray-900 text-xs placeholder:text-gray-400 focus:ring-0 text-xs sm:text-sm sm:leading-6 w-full overflow-hidden"
-                                        placeholder="title" />
+                                        placeholder="xs" />
                                 </div>
-                                <div>
-
-                                    <button type="submit"
-                                        @click.prevent="columItemLinkChange({ name: 'Add Item', value: 'add' })"
-                                        class="rounded-md cursor-pointer border ring-gray-300 px-3 py-2 text-sm font-semibold text-black shadow-sm "><font-awesome-icon
-                                            :icon="['fas', 'plus']" /></button>
-                                </div>
-
                             </div>
-
-                            <div v-for="(set, index) in data.column[columSelected].data" :key="set.id">
-                                <HyperInfoTools :data="set"
-                                    @OnDelete="() => data.column[columSelected].data.splice(index, 1)" />
+                            <div class="flex justify-center align-middle">
+                                <button type="submit"
+                                    @click.prevent="columItemLinkChange({ name: 'Add Item', value: 'add' })"
+                                    class="rounded-md cursor-pointer border ring-gray-300 px-3 py-2 text-xs font-semibold text-black shadow-sm">
+                                    <font-awesome-icon :icon="['fas', 'plus']" />
+                                </button>
                             </div>
                         </div>
+
+
+                        <div v-for="(set, index) in data.column[columSelected].data" :key="set.id">
+                            <HyperlinkTools :data="set" @OnDelete="() => data.column[columSelected].data.splice(index, 1)"
+                                :formList="{
+                                    name: 'name',
+                                    link: 'link',
+                                }" />
+                        </div>
                     </div>
+
                 </div>
-
-
-                <hr class="mt-5">
-                <!-- social Media -->
-                <div class="mt-8">
+                <!-- column tools info-->
+                <div class="mt-8" v-if="data.column[columSelected].type == 'info'">
                     <div class="flex items-center justify-between">
-                        <h2 class="text-xs font-medium text-gray-900">{{ `Social media setting` }}</h2>
+                        <h2 class="text-sm font-medium text-gray-900">{{ `Colums tools
+                            ${data.column[columSelected].title}`
+                        }}</h2>
                     </div>
-                    <RadioGroup class="mt-2">
-                        <div class="grid grid-cols-3 gap-3 sm:grid-cols-2">
-                            <RadioGroupOption as="template" v-for="option in data.social" :key="option.value"
-                                :value="option" v-slot="{ active, checked }">
-                                <div :class="{
-                                    'flex cursor-pointer items-center justify-center rounded-md border py-1 px-2 text-sm font-sm uppercase w-fit': true
-                                }">
-                                    <RadioGroupLabel as="span">
-                                        <SocialMediaPicker :modelValue="option.icon" cssClass="font-sm" :data="option"
-                                            :save="saveSocialmedia" />
-                                    </RadioGroupLabel>
-                                </div>
-                            </RadioGroupOption>
-                            <RadioGroupOption as="template">
-                                <div :class="{
-                                    'flex cursor-pointer items-center justify-center rounded-md border  border-dashed py-1 px-2 text-sm font-sm uppercase sm:flex-1': true
-                                }" @click="addSocial">
-                                    <RadioGroupLabel as="span">
-                                        <FontAwesomeIcon :icon="['fas', 'plus']" />
-                                    </RadioGroupLabel>
-                                </div>
-                            </RadioGroupOption>
+                    <div>
+                        <div class="flex gap-2 mt-2">
+                            <div style="width:85%;"
+                                class="shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md rounded-md">
+                                <input type="text" v-model="data.column[columSelected].title"
+                                    @input="changeColumnFromSelectedColumn"
+                                    class="flex-1 border-0 bg-transparent text-gray-900 text-xs placeholder:text-gray-400 focus:ring-0 text-xs sm:text-sm sm:leading-6 w-full overflow-hidden"
+                                    placeholder="title" />
+                            </div>
+                            <div>
+
+                                <button type="submit"
+                                    @click.prevent="columItemLinkChange({ name: 'Add Item', value: 'add' })"
+                                    class="rounded-md cursor-pointer border ring-gray-300 px-3 py-2 text-sm font-semibold text-black shadow-sm "><font-awesome-icon
+                                        :icon="['fas', 'plus']" /></button>
+                            </div>
+
                         </div>
-                    </RadioGroup>
+
+                        <div v-for="(set, index) in data.column[columSelected].data" :key="set.id">
+                            <HyperInfoTools :data="set"
+                                @OnDelete="() => data.column[columSelected].data.splice(index, 1)" />
+                        </div>
+                    </div>
                 </div>
-       
+            </div>
+
+
+            <hr class="mt-5">
+            <!-- social Media -->
+            <div class="mt-8">
+                <div class="flex items-center justify-between">
+                    <h2 class="text-xs font-medium text-gray-900">{{ `Social media` }}</h2>
+                </div>
+                <RadioGroup class="mt-2" style="max-height: 200px;">
+                    <div class="flex gap-2 flex-wrap">
+                        <RadioGroupOption as="template" v-for="option in data.social" :key="option.value" :value="option"
+                            v-slot="{ active, checked }">
+                            <div :class="{
+                                'flex cursor-pointer items-center justify-center rounded-md border py-1 px-2 text-sm font-sm uppercase w-fit': true
+                            }">
+                                <RadioGroupLabel as="span">
+                                    <SocialMediaPicker :modelValue="option.icon" cssClass="font-sm" :data="option"
+                                        :save="saveSocialmedia" />
+                                </RadioGroupLabel>
+                            </div>
+                        </RadioGroupOption>
+                        <RadioGroupOption as="span">
+                            <div :class="{
+                                'flex cursor-pointer items-center justify-center rounded-md border border-dashed py-1 px-2 text-sm font-sm uppercase sm:flex-1 w-fit': true
+                            }" @click="addSocial">
+                                <RadioGroupLabel as="span">
+                                    <FontAwesomeIcon :icon="['fas', 'plus']" />
+                                </RadioGroupLabel>
+                            </div>
+                        </RadioGroupOption>
+                    </div>
+                </RadioGroup>
+
+            </div>
+
         </div>
 
         <div class=" w-full bg-gray-200  items-center justify-center">

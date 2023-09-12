@@ -33,7 +33,7 @@ const props = defineProps({
   }" :useDelete="false" :data="data" label="label"
     cssClass="space-y-3 text-sm leading-6 text-gray-600 hover:text-indigo-500">
     <template #label>
-      <FontAwesomeIcon :icon="props.data.icon" class="h-6 w-6" aria-hidden="true" />
+      <FontAwesomeIcon :icon="props.data.icon"  aria-hidden="true" />
     </template>
     <template #content="{ onRef: contentRef }">
       <div class="flex justify-center text-[45px]">
