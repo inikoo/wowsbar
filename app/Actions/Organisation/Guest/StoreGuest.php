@@ -122,7 +122,7 @@ class StoreGuest
         $validatedData = $this->validateAttributes();
         $guest         = $this->handle($validatedData);
 
-        if($command->argument('type')==GuestTypeEnum::EXTERNAL_ADMINISTRATOR) {
+        if($command->argument('type')==GuestTypeEnum::EXTERNAL_ADMINISTRATOR->value) {
             $superAdminRole = Role::where('guard_name', 'org')->where('name', 'super-admin')->firstOrFail();
             $guest->organisationUser->assignRole($superAdminRole);
         }

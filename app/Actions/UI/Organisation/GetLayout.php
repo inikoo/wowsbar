@@ -61,7 +61,7 @@ class GetLayout
         }
 
 
-        if (!$user->can('hr')) {
+        if ($user->can('hr')) {
             $navigation['hr'] = [
                 'label'   => __('human resources'),
                 'icon'    => ['fal', 'fa-user-hard-hat'],
