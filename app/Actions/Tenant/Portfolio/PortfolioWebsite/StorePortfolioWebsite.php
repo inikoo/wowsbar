@@ -62,7 +62,6 @@ class StorePortfolioWebsite
     public function asController(ActionRequest $request): PortfolioWebsite
     {
         $request->validate();
-
         return $this->handle($request->validated());
     }
 
