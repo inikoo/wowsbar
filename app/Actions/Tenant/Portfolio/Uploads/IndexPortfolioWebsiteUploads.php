@@ -9,23 +9,44 @@ namespace App\Actions\Tenant\Portfolio\Uploads;
 
 use App\Http\Resources\Portfolio\WebsiteUploadsResource;
 use App\InertiaTable\InertiaTable;
+use App\Models\Portfolio\PortfolioWebsite;
 use App\Models\WebsiteUpload;
 use Closure;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class IndexPortfolioWebsiteUploads
 {
     use AsAction;
     use WithAttributes;
 
-    public function handle(): Collection
+    public function handle($prefix = null): LengthAwarePaginator
     {
-        /** @var \App\Models\Tenancy\Tenant $tenant */
-        $tenant = app('currentTenant');
-        return $tenant->portfolioWebsiteUploads()->orderByDesc('id')->limit(4)->get();
+        $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
+            $query->where(function ($query) use ($value) {
+                $query->whereAnyWordStartWith('website_uploads.original_filename', $value)
+                    ->orWhere('website_uploads.original_filename', 'ilike', "%$value%")
+                    ->orWhere('website_uploads.filename', 'ilike', "$value%");
+            });
+        });
+
+        if ($prefix) {
+            InertiaTable::updateQueryBuilderParameters($prefix);
+        }
+
+        $queryBuilder = QueryBuilder::for(WebsiteUpload::class);
+
+        return $queryBuilder
+            ->defaultSort('website_uploads.original_filename')
+            ->allowedSorts(['original_filename', 'filename', 'number_rows'])
+            ->allowedFilters([$globalSearch])
+            ->withPaginator($prefix)
+            ->withQueryString();
     }
 
     public function tableStructure(?array $modelOperations = null, $prefix = null, ?array $exportLinks = null): Closure
@@ -42,17 +63,15 @@ class IndexPortfolioWebsiteUploads
                 ->withGlobalSearch()
                 ->withEmptyState(
                     [
-                        'title' => __('No websites found'),
-                        'count' => app('currentTenant')->stats->number_websites,
-
+                        'title' => __('No uploaded websites found'),
+                        'count' => 0,
                     ]
                 )
                 ->withExportLinks($exportLinks)
-                ->column(key: 'slug', label: __('code'), sortable: true)
-                ->column(key: 'name', label: __('name'), sortable: true)
-                ->column(key: 'domain', label: __('domain'), sortable: true)
-                ->column(key: 'number_banners', label: __('banners'), sortable: true)
-                ->defaultSort('slug');
+                ->column(key: 'original_filename', label: __('Original Filename'), sortable: true)
+                ->column(key: 'filename', label: __('Filename'), sortable: true)
+                ->column(key: 'number_rows', label: __('Number Rows'), sortable: true)
+                ->defaultSort('original_filename');
         };
     }
 
@@ -61,7 +80,7 @@ class IndexPortfolioWebsiteUploads
         return WebsiteUploadsResource::collection($websiteUploads);
     }
 
-    public function asController(): Collection
+    public function asController(): LengthAwarePaginator
     {
         return $this->handle();
     }

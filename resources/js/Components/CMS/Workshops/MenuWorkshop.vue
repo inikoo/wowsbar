@@ -25,8 +25,8 @@ const toolsData = {
         // { name: 'Heather Grey', icon: ['fas', 'fa-hand-pointer']},
     ],
     theme: [
-        { name: 'One', value: '2' },
-        { name: 'Two', value: '1' },
+        { name: 'One', value: '1' },
+        { name: 'Two', value: '2' },
     ],
     menuType: [
         { name: 'Group', value: 'group' },
@@ -313,7 +313,7 @@ const deleteCategory = () => {
 async function setToFirebase() {
   const column = 'org/websites/menu';
   try {
-    await setDataFirebase(column, { navigation : navigation, theme : selectedTheme.value });
+    await setDataFirebase(column, { navigation : navigation.value, theme : selectedTheme.value });
   } catch (error) {
     console.log(error)
   }
