@@ -474,7 +474,7 @@ const getMenuComponent = computed(() => {
         'MenuTwo': MenuTwo
     }
 
-    return componentList[props.layout.menu.component]
+    return componentList[props.layout?.menu?.component ?? 'MenuTwo']
 })
 
 const getFooterComponent = computed(() => {
@@ -484,7 +484,7 @@ const getFooterComponent = computed(() => {
         'FooterThemeThree': FooterThemeThree,
     }
 
-    return componentList[props.layout.footer.component]
+    return componentList[props.layout?.footer?.component ?? 'FooterThemeOne']
 })
 
 </script>
