@@ -14,8 +14,6 @@ use App\Actions\Tenancy\Tenant\StoreTenant;
 use App\Models\CRM\Customer;
 use App\Models\Tenancy\Tenant;
 
-use function Pest\Faker\fake;
-
 beforeAll(function () {
     loadDB('test_base_database.dump');
 });

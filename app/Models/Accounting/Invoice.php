@@ -8,15 +8,10 @@
 namespace App\Models\Accounting;
 
 use App\Actions\CRM\Customer\Hydrators\CustomerHydrateInvoices;
-use App\Actions\Market\Shop\Hydrators\ShopHydrateInvoices;
-use App\Enums\Accounting\Invoice\InvoiceTypeEnum;
 use App\Models\Assets\Currency;
 use App\Models\CRM\Customer;
 use App\Models\Helpers\Address;
-use App\Models\Market\Shop;
-use App\Models\OMS\Order;
 use App\Models\Search\UniversalSearch;
-use App\Models\Traits\HasTenantAddress;
 use App\Models\Traits\HasUniversalSearch;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
@@ -42,7 +37,6 @@ use Spatie\Sluggable\SlugOptions;
  * @property int $shop_id
  * @property int $customer_id
  * @property int|null $order_id
- * @property InvoiceTypeEnum $type
  * @property int $currency_id
  * @property string $exchange
  * @property string $net
@@ -77,7 +71,6 @@ class Invoice extends Model
     use UsesTenantConnection;
     use SoftDeletes;
     use HasSlug;
-    use HasTenantAddress;
     use HasUniversalSearch;
     use HasFactory;
 
