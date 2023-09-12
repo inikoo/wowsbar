@@ -14,32 +14,23 @@ const props = defineProps<{
 </script>
 
 <template>
-    <div class="ml-2 cursor-pointer text-rose-500" @click="emits('OnClose')">x</div>
-    <div class="absolute inset-x-0 top-full text-sm text-gray-500">
-        <div class="absolute inset-0 top-1/2 bg-white shadow" aria-hidden="true"></div>
-        <div class="relative bg-white">
-            <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                <div>
-                    <draggable :list="data.featured"  :disabled="tool.name !== 'grab'" :group="`menu${data.name}`" key="id" class="grid grid-cols-3 gap-x-8 gap-y-4 py-4">
-                        <template v-slot:item="{ element: child, index }">
-                            <div class="group relative">
-                                <div :class="['mt-4', 'block', 'font-medium', 'text-gray-900', 'p-2', tool.name !== 'grab' ? 'cursor-pointer' : 'cursor-grab']">
-                                    <span class="absolute inset-0 z-10" aria-hidden="true">
-                                        <div class="flex gap-3">
-                                            <IconPicker :key="child.id" :data="child"/>
-                                            <HyperLink 
-                                                :formList="{
-                                                name: 'name',
-                                                link: 'link'
-                                                }" :useDelete="true" :data="child" label="name" @OnDelete="()=>{data.featured.splice(index,1)}"
-                                                cssClass="items-center text-sm font-medium text-black" />
-                                        </div>
-                                    </span>
-                                </div>
-                            </div>
-                        </template>
-                    </draggable>
-                </div>
+    <div class="absolute top-0 right-2 cursor-pointer text-rose-400 hover:text-rose-600" @click="emits('OnClose')">x</div>
+    <div class="absolute inset-x-0 min-w-fit top-full text-sm text-gray-300">
+        <div class="relative bg-gray-600 border border-gray-500 rounded">
+            <div class="mx-auto min-w-full max-w-7xl px-4 sm:px-6">
+                <draggable :list="data.featured"  :disabled="tool.name !== 'grab'" :group="`menu${data.name}`" key="id" >
+                    <template v-slot:item="{ element: child, index }">
+                        <div class="p-2 flex gap-3 items-center" :class="[tool.name !== 'grab' ? 'cursor-pointer' : 'cursor-grab']">
+                            <IconPicker :key="child.id" :data="child"/>
+                            <HyperLink
+                                :formList="{
+                                name: 'name',
+                                link: 'link'
+                                }" :useDelete="true" :data="child" label="name" @OnDelete="()=>{data.featured.splice(index,1)}"
+                                cssClass="items-center text-sm font-medium whitespace-nowrap " />
+                        </div>
+                    </template>
+                </draggable>
             </div>
         </div>
     </div>

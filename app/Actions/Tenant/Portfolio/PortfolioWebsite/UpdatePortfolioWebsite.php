@@ -20,10 +20,8 @@ class UpdatePortfolioWebsite
 
     public function handle(PortfolioWebsite $portfolioWebsite, array $modelData): PortfolioWebsite
     {
-        $this->update($portfolioWebsite, $modelData, ['data']);
-
+        $portfolioWebsite=$this->update($portfolioWebsite, $modelData, ['data']);
         PortfolioWebsiteHydrateUniversalSearch::dispatch($portfolioWebsite);
-
         return $portfolioWebsite;
     }
 
@@ -45,9 +43,8 @@ class UpdatePortfolioWebsite
 
     public function asController(PortfolioWebsite $portfolioWebsite, ActionRequest $request): PortfolioWebsite
     {
-        $request->validate();
-
-        return $this->handle($portfolioWebsite, $request->all());
+        $this->fillFromRequest($request);
+        return $this->handle($portfolioWebsite, $this->validateAttributes());
     }
 
 

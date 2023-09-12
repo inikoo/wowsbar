@@ -141,6 +141,7 @@ const mobileMenuOpen = ref(false)
 		<!-- Desktop -->
 		<header class="relative z-10">
 			<nav aria-label="Top">
+			<!-- topNavbar -->
 				<div class="bg-gray-900">
 					<div class="mx-auto flex h-10 px-4 sm:px-6 lg:px-8">
 						<div class="w-full flex items-center space-x-6 justify-end">
@@ -198,25 +199,25 @@ const mobileMenuOpen = ref(false)
 						</div>
 					</div>
 				</div>
-
+			<!-- end topNavbar -->
 				<!-- Secondary navigation -->
 				<div class="bg-white">
 					<draggable :list="navigation.categories" group="topMenu" key="id" :disabled="tool.name !== 'grab'"
 						class="flex h-full justify-center space-x-8 align-middle">
 						<template v-slot:item="{ element: category, index }">
-							<div :class="[get(selectedNav, 'id') == category.id ? 'border' : '']">
+							<div :class="[get(selectedNav, 'id') == category.id ? 'outline outline-gray-400' : '',  tool.name !== 'grab' ? 'cursor-pointer' : 'cursor-grab']">
 								<div v-if="category.type === 'group'" class="p-2.5">
 									<div :key="category.name" class="flex">
 										<div class="relative flex p-2.5"
-											@click="() => { openNav = category.id, changeNavActive(category) }">
-											<div :class="[openNav == category.id ? 'border-indigo-600 text-indigo-600' : 'border-transparent text-gray-700 hover:text-gray-800', tool.name !== 'grab' ? 'cursor-pointer' : 'cursor-grab', 'relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out']">
+											@click="() => { openNav = category.id, changeNavActive(index) }">
+											<div :class="[openNav == category.id ? 'border-indigo-600 text-indigo-600' : 'border-transparent text-gray-700 hover:text-gray-800', 'relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out']">
 												<div class="flex gap-3">
 													<IconPicker :key="category.id" :data="category" class="text-black" />
 													<HyperLink :formList="{
 														name: 'name',
 													}" :useDelete="true" :data="category" label="name"
 														@OnDelete="() => { navigation.categories.splice(index, 1) }"
-														cssClass="items-center text-sm font-medium " />
+														:cssClass="`items-center text-sm font-medium ${tool.name !== 'grab' ? 'cursor-pointer' : 'cursor-grab'}`" />
 												</div>
 											</div>
 										</div>
@@ -228,7 +229,7 @@ const mobileMenuOpen = ref(false)
 
 									</div>
 								</div>
-								<div @click="(e) => { changeNavActive(category), openNav = null }"
+								<div @click="(e) => { changeNavActive(index), openNav = null }"
 									v-if="category.type === 'link'" class="py-5 px-2.5 text-black">
 
 									<div class="flex gap-3">

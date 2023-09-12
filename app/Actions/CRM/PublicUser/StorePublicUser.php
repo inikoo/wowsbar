@@ -46,8 +46,9 @@ class StorePublicUser
     public function rules(): array
     {
         return [
-            'password' => ['required', app()->isLocal() || app()->environment('testing') ? null : Password::min(8)->uncompromised()],
-            'email'    => ['required', 'email', 'unique:public_users,email']
+            'contact_name'     => 'sometimes|required|string|max:255',
+            'password'         => ['required', app()->isLocal() || app()->environment('testing') ? null : Password::min(8)->uncompromised()],
+            'email'            => ['required', 'email', 'unique:public_users,email']
         ];
     }
 
@@ -70,7 +71,7 @@ class StorePublicUser
         $this->asAction = true;
         try {
             $customer = Customer::where('slug', $command->argument('customer'))->firstOrFail();
-        } catch (Exception $e) {
+        } catch (Exception) {
             $command->error('Customer not found');
             return 1;
         }

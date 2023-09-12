@@ -30,6 +30,7 @@ const props = defineProps<{
             icon?: object,
             label?: string,
         }
+        readonly?: boolean;
     }
 }>()
 </script>
@@ -38,7 +39,8 @@ const props = defineProps<{
     <div>
         <label :for="fieldName" class="block text-sm font-medium leading-6 text-gray-800"></label>
         <div
-            class="relative flex rounded-md px-3 shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-gray-500 sm:max-w-md">
+            class="relative flex rounded-md px-3 shadow-sm ring-1 ring-inset ring-gray-300 sm:max-w-md"
+            :class="[fieldData?.readonly ? 'focus-within:ring-1 bg-gray-100' : 'focus-within:ring-2 focus-within:ring-inset focus-within:ring-gray-500']">
             <!-- Add On: Left -->
             <div v-if="fieldData?.leftAddOn" class="flex items-center gap-x-1.5">
                 <div v-for="leftAddOn in fieldData?.leftAddOn"
@@ -50,8 +52,8 @@ const props = defineProps<{
             </div>
 
             <input v-model="form[fieldName]" type="text" :name="fieldName" :id="fieldName"
-                class="block flex-1 border-0 bg-transparent py-1.5 px-1 mb-0.5 leading-none placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                :placeholder="fieldData?.placeholder ?? ''" />
+                class="block flex-1 border-0 bg-transparent py-1.5 px-1 mb-0.5 leading-none placeholder:text-gray-400 read-only:text-gray-600 focus:ring-0 sm:text-sm sm:leading-6"
+                :placeholder="fieldData?.placeholder ?? ''" :readonly="fieldData?.readonly" />
 
             <!-- Add On: Right -->
             <div v-if="fieldData?.rightAddOn" class="flex items-center gap-x-1.5">

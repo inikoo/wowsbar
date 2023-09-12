@@ -15,7 +15,7 @@ use App\Actions\UI\Tenant\SysAdmin\SysAdminDashboard;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', SysAdminDashboard::class)->name('dashboard');
-Route::get('/system-settings', EditSystemSettings::class)->name('settings.edit');
+Route::get('/system-settings', EditSystemSettings::class)->name('organisation.edit');
 
 Route::get('/users', IndexUsers::class)->name('users.index');
 

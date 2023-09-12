@@ -124,32 +124,34 @@ const mobileMenuOpen = ref(false);
                                         :disabled="tool.name !== 'grab'"
                                         class="flex justify-center space-x-8 h-fit"
                                     >
+                                        <!-- Navigation -->
                                         <template v-slot:item="{element: category,index}">
                                             <div :class="[
-                                                    get(selectedNav,'id') == category.id? 'border': '',
+                                                    get(selectedNav,'id') == category.id? 'outline outline-gray-400': '',
                                                     tool.name !== 'grab' ? 'cursor-pointer': 'cursor-grab',
                                                 ]"
                                             >
                                               <!-- Flyout menus -->
-                                                <div v-if="category.type =='group'" :key="category.id" class="flex">
-                                                    <div @click="() => {(openNav =category.id),changeNavActive(category);}"
-                                                        class="py-5 px-2.5 relative z-10 items-center justify-center text-sm font-medium text-white transition-colors duration-200 ease-out"
+                                                <div v-if="category.type =='group'" :key="category.id" class="flex relative">
+                                                    <div @click="() => {(openNav =category.id),changeNavActive(index);}"
+                                                        class="py-5 px-2.5 relative z-10 items-center justify-center text-sm font-medium text-gray-200 transition-colors duration-200 ease-out"
                                                     >
-                                                    <div class="flex gap-3">
-                                                        <IconPicker :key="category.id" :data="category" class="text-white"/>
-                                                        <HyperLink
-                                                            :formList="{
-                                                                name: 'name',
-                                                            }"
-                                                            :useDelete="true"
-                                                            :data="category"
-                                                            label="name"
-                                                            @OnDelete="()=>{navigation.categories.splice(index,1)}"
-                                                            cssClass="items-center text-sm font-medium text-white"
-                                                        />
-                                                      </div>
+                                                        <div class="flex gap-3">
+                                                            <IconPicker :key="category.id" :data="category" class="text-gray-200"/>
+                                                            <HyperLink
+                                                                :formList="{
+                                                                    name: 'name',
+                                                                }"
+                                                                :useDelete="true"
+                                                                :data="category"
+                                                                label="name"
+                                                                @OnDelete="()=>{navigation.categories.splice(index,1)}"
+                                                                cssClass="text-left text-sm font-medium text-gray whitespace-nowrap"
+                                                            />
+                                                        </div>
                                                     </div>
 
+                                                    <!-- Popup: Navigation -->
                                                     <div v-if="openNav == category.id">
                                                         <SubMenu 
                                                             :data="category" 
@@ -161,10 +163,10 @@ const mobileMenuOpen = ref(false);
                                                   <!-- Flyout menus -->
                                                   <!-- menus -->
                                                 <div v-if="category.type == 'link'" class="py-5 px-2.5 leading-4"
-                                                    @click="(e) => {changeNavActive(category),(openNav =null);}"
+                                                    @click="(e) => {changeNavActive(index),(openNav =null);}"
                                                 >
                                                 <div class="flex gap-3">
-                                                  <IconPicker :key="category.id" :data="category" class="text-white"/>
+                                                  <IconPicker :key="category.id" :data="category" class="text-gray-200"/>
                                                 <HyperLink
                                                       :formList="{
                                                           name: 'name',
@@ -174,7 +176,7 @@ const mobileMenuOpen = ref(false);
                                                       :data="category"
                                                       label="name"
                                                       @OnDelete="()=>{navigation.categories.splice(index,1)}"
-                                                      cssClass="items-center text-sm font-medium text-white"
+                                                      cssClass="items-center text-sm font-medium text-gray-200 whitespace-nowrap"
                                                   />
                                                 </div>
                                                 </div>

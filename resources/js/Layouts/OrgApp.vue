@@ -16,6 +16,7 @@ import Breadcrumbs from "@/Components/Navigation/Breadcrumbs.vue"
 
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { initialiseOrgApp } from "@/Composables/initialiseOrgApp"
+import { useLayoutStore } from "@/Stores/layout"
 
 import {
     faHome,
@@ -69,6 +70,8 @@ if (usePage().props.firebaseAuthToken) {
     useAuthFirebase(usePage().props.firebaseAuthToken)
 }
 
+const layoutState = useLayoutStore()
+console.log(layoutState.leftSidebar.show)
 
 const sidebarOpen = ref(false)
 
@@ -76,7 +79,7 @@ const sidebarOpen = ref(false)
 
 <template>
     <div class="fixed top-0 left-0 w-screen h-screen dark:bg-gray-700 bg-gray-50" />
-    <div class="relative min-h-full transition-all duration-200 ease-in-out"
+    <div class="relative min-h-full transition-all duration-200 ease-in-out text-gray-700"
         :class="[Object.values(layout.rightSidebar).some(value => value.show) ? 'mr-44' : 'mr-0']"
     >
 
@@ -89,19 +92,22 @@ const sidebarOpen = ref(false)
         </AppTopBar>
 
         <!-- Breedcrumbs -->
-        <Breadcrumbs class="fixed md:left-10 xl:left-56 top-11 lg:top-10 z-[19] w-full"
+        <Breadcrumbs class="fixed top-11 lg:top-10 z-[19] w-full transition-all duration-200 ease-in-out"
+            :class="[layoutState.leftSidebar.show ? 'left-56' : 'left-10']"
             :breadcrumbs="usePage().props.breadcrumbs??[]"
             :navigation="usePage().props.navigation??[]"
         />
 
         <!-- Sidebar: Left -->
         <div>
-            <div class="bg-gray-200/80 fixed top-0 w-screen h-screen z-10 md:hidden" v-if="sidebarOpen" @click="sidebarOpen = !sidebarOpen" />
+            <div class="bg-gray-200/80 fixed top-0 w-screen h-screen z-10 md:hidden" v-if="sidebarOpen" @click="sidebarOpen = !sidebarOpen" /> <!-- Mobile Helper: background to close hamburger -->
             <AppLeftSideBar class="-left-2/3 transition-all duration-100 ease-in-out z-20 block md:left-[0]" :class="{'left-[0]': sidebarOpen }" @click="sidebarOpen = !sidebarOpen" />
         </div>
 
         <!-- Main Content -->
-        <main class="relative flex flex-col pt-16 pb-5 ml-0 md:ml-10 xl:ml-56 bg-gray-50 text-gray-700 dark:bg-gray-700 dark:text-gray-400">
+        <main class="relative flex flex-col pt-16 pb-5 bg-gray-50 text-gray-700 dark:bg-gray-700 dark:text-gray-400 transition-all duration-200 ease-in-out"
+            :class="[layoutState.leftSidebar.show ? 'ml-56' : 'ml-10']"
+        >
             <slot />
         </main>
 

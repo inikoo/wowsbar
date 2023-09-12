@@ -126,12 +126,5 @@ const sidebarOpen = ref(false)
 </template>
 
 <style lang="scss">
-.tabNavigationActive {
-    // Indicate current active state to have consistent style. Use for: AppLeftSideBar, CreateModel
-    @apply bg-gray-200/80 sm:border-l-4 sm:border-orange-500 text-gray-700 dark:text-gray-300 transition-all duration-100 ease-in-out
-}
 
-.tabNavigation {
-    @apply hover:bg-gray-200/30 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-400 transition-all duration-100 ease-in-out
-}
 </style>
