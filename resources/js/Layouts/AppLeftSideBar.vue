@@ -65,9 +65,9 @@ const handleToggleLeftbar = () => {
 		:class="[layout.leftSidebar.show ? 'w-8/12 md:w-56' : 'w-8/12 md:w-10']"
 		@mouseenter="isHover = true" @mouseleave="isHover = false"
 	>
-	<!-- aaaaaaaaa -->
+		<!-- Toggle: collapse-expand LeftSideBar -->
 		<div @click="handleToggleLeftbar"
-			class="hidden absolute z-10 right-0 top-2/4 -translate-y-full translate-x-1/2 w-10 aspect-square bg-gray-200 hover:bg-gray-300 border border-gray-300 rounded-full md:flex place-content-center cursor-pointer"
+			class="hidden absolute z-10 right-0 top-2/4 -translate-y-full translate-x-1/2 w-10 aspect-square bg-gray-200 hover:bg-gray-300 border border-gray-300 rounded-full md:flex md:justify-center md:items-center cursor-pointer"
 			:title="[layout.leftSidebar.show ? 'Collapse the bar' : 'Expand the bar']"	
 		>
 			<FontAwesomeIcon icon='far fa-chevron-left' class='h-4 transition-all duration-200 ease-in-out' :class="{'rotate-180': !layout.leftSidebar.show}" aria-hidden='true' />
