@@ -21,21 +21,21 @@ class GetLayout
 
         if ($user->can('website')) {
             $navigation['website'] = [
-                'label' => __('website'),
-                'icon' => ['fal', 'fa-globe'],
-                'route' => 'org.website.show',
+                'label'   => __('website'),
+                'icon'    => ['fal', 'fa-globe'],
+                'route'   => 'org.website.show',
                 'topMenu' => [
                     'subSections' => [
                         [
                             'label' => __('website'),
-                            'icon' => ['fal', 'fa-globe'],
+                            'icon'  => ['fal', 'fa-globe'],
                             'route' => [
                                 'name' => 'org.website.show',
                             ]
                         ],
                         [
                             'label' => __('webpages'),
-                            'icon' => ['fal', 'fa-browser'],
+                            'icon'  => ['fal', 'fa-browser'],
                             'route' => [
                                 'name' => 'org.website.webpages.index',
                             ]
@@ -48,9 +48,9 @@ class GetLayout
         if ($user->can('crm.view')) {
             $navigation['crm'] = [
                 'label' => __('Customers'),
-                'icon' => ['fal', 'fa-user'],
+                'icon'  => ['fal', 'fa-user'],
 
-                'route' => 'org.crm.dashboard',
+                'route'   => 'org.crm.dashboard',
                 'topMenu' => [
                     'subSections' => [
 
@@ -62,14 +62,14 @@ class GetLayout
 
         if (!$user->can('hr')) {
             $navigation['hr'] = [
-                'label' => __('human resources'),
-                'icon' => ['fal', 'fa-user-hard-hat'],
-                'route' => 'org.hr.dashboard',
+                'label'   => __('human resources'),
+                'icon'    => ['fal', 'fa-user-hard-hat'],
+                'route'   => 'org.hr.dashboard',
                 'topMenu' => [
                     'subSections' => [
                         [
                             'label' => __('website'),
-                            'icon' => ['fal', 'fa-globe'],
+                            'icon'  => ['fal', 'fa-globe'],
                             'route' => [
                                 'name' => 'org.website.show',
                             ]
@@ -81,14 +81,14 @@ class GetLayout
 
         if ($user->can('sysadmin')) {
             $navigation['sysadmin'] = [
-                'label' => __('sysadmin'),
-                'icon' => ['fal', 'fa-users-cog'],
-                'route' => 'org.sysadmin.dashboard',
+                'label'   => __('sysadmin'),
+                'icon'    => ['fal', 'fa-users-cog'],
+                'route'   => 'org.sysadmin.dashboard',
                 'topMenu' => [
                     'subSections' => [
                         [
                             'label' => __('users'),
-                            'icon' => ['fal', 'fa-terminal'],
+                            'icon'  => ['fal', 'fa-terminal'],
                             'route' => [
                                 'name' => 'org.sysadmin.users.index',
 
@@ -96,7 +96,7 @@ class GetLayout
                         ],
                         [
                             'label' => __('system settings'),
-                            'icon' => ['fal', 'fa-cog'],
+                            'icon'  => ['fal', 'fa-cog'],
                             'route' => [
                                 'name' => 'org.sysadmin.organisation.edit',
 

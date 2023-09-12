@@ -7,7 +7,6 @@
 
 namespace App\Actions\UI\Public\Disclosure;
 
-
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\Concerns\AsController;

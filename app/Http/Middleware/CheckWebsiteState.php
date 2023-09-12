@@ -28,25 +28,25 @@ class CheckWebsiteState
 
 
 
-            $url='';
+            $url    ='';
             $status = 307;
 
             switch (organisation()->website->state) {
                 case                     WebsiteStateEnum::LIVE:
                     $url    = 'disclosure/maintenance';
-                    if($request->route()->getName()=='public.disclosure.maintenance'){
+                    if($request->route()->getName()=='public.disclosure.maintenance') {
                         return $next($request);
                     }
                     break;
                 case                     WebsiteStateEnum::IN_PROCESS:
                     $url = 'disclosure/under-construction';
-                    if($request->route()->getName()=='public.disclosure.under-construction'){
+                    if($request->route()->getName()=='public.disclosure.under-construction') {
                         return $next($request);
                     }
 
                     break;
                 case                     WebsiteStateEnum::CLOSED:
-                    if($request->route()->getName()=='public.disclosure.closed'){
+                    if($request->route()->getName()=='public.disclosure.closed') {
                         return $next($request);
                     }
                     $url    = 'disclosure/closed';
@@ -54,7 +54,7 @@ class CheckWebsiteState
                     break;
             }
 
-            if(!$url){
+            if(!$url) {
                 return $next($request);
             }
 

@@ -45,7 +45,7 @@ class CRMDashboard
                 'title'        => 'CRM',
                 'pageHead'     => [
                     'title'     => __('customer relationship manager'),
-                    'icon'    => [
+                    'icon'      => [
                         'title' => __('customers'),
                         'icon'  => 'fal fa-user'
                     ],

@@ -8,9 +8,7 @@
 namespace App\Actions\Organisation\CRM\Prospect;
 
 use App\Actions\CRM\Prospect\Hydrators\ProspectHydrateUniversalSearch;
-use App\Actions\Helpers\Address\StoreAddressAttachToModel;
 use App\Models\CRM\Prospect;
-use App\Models\Market\Shop;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;

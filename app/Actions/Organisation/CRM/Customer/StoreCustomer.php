@@ -14,10 +14,7 @@ use App\Models\Assets\Timezone;
 use App\Models\CRM\Customer;
 use Exception;
 use Illuminate\Console\Command;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Validation\Validator;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -77,10 +74,10 @@ class StoreCustomer
             'phone'                    => ['nullable', 'phone:AUTO'],
             'identity_document_number' => ['nullable', 'string'],
             'contact_website'          => ['nullable', 'active_url'],
-            'currency_id' => ['required', 'exists:currencies,id'],
-            'country_id'  => ['required', 'exists:countries,id'],
-            'language_id' => ['required', 'exists:languages,id'],
-            'timezone_id' => ['required', 'exists:timezones,id'],
+            'currency_id'              => ['required', 'exists:currencies,id'],
+            'country_id'               => ['required', 'exists:countries,id'],
+            'language_id'              => ['required', 'exists:languages,id'],
+            'timezone_id'              => ['required', 'exists:timezones,id'],
         ];
     }
 
@@ -159,17 +156,17 @@ class StoreCustomer
         }
 
         $this->setRawAttributes([
-            'slug'        => $command->argument('code'),
-            'name'        => $command->argument('name'),
+            'slug'                => $command->argument('code'),
+            'name'                => $command->argument('name'),
             'contact_name'        => $command->argument('name'),
             'company_name'        => $command->argument('name'),
-            'email'       => $command->argument('email'),
-            'username'    => $command->argument('username'),
-            'password'    => \Hash::make($command->argument('password')),
-            'country_id'  => $country->id,
-            'currency_id' => $currency->id,
-            'language_id' => $language->id,
-            'timezone_id' => $timezone->id,
+            'email'               => $command->argument('email'),
+            'username'            => $command->argument('username'),
+            'password'            => \Hash::make($command->argument('password')),
+            'country_id'          => $country->id,
+            'currency_id'         => $currency->id,
+            'language_id'         => $language->id,
+            'timezone_id'         => $timezone->id,
         ]);
 
         try {

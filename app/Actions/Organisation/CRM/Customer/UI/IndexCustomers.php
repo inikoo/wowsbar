@@ -12,11 +12,9 @@ use App\Actions\Organisation\UI\CRM\CRMDashboard;
 use App\Http\Resources\CRM\CustomerResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\CRM\Customer;
-use App\Models\Tenancy\Tenant;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -25,7 +23,6 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class IndexCustomers extends InertiaAction
 {
-
     public function authorize(ActionRequest $request): bool
     {
         $this->canEdit = $request->user()->can('crm.customers.edit');
@@ -91,11 +88,11 @@ class IndexCustomers extends InertiaAction
                 ->withGlobalSearch()
                 ->withEmptyState(
                     [
-                        'type' => 'button',
-                        'style' => 'create',
+                        'type'    => 'button',
+                        'style'   => 'create',
                         'tooltip' => __('new customer'),
-                        'label' => __('customer'),
-                        'route' => [
+                        'label'   => __('customer'),
+                        'route'   => [
                             'name' => 'shops.create',
                         ]
                     ]
@@ -119,11 +116,11 @@ class IndexCustomers extends InertiaAction
                     $request->route()->getName(),
                     $request->route()->parameters
                 ),
-                'title' => __('customers'),
+                'title'    => __('customers'),
                 'pageHead' => [
-                    'title' => __('customers'),
+                    'title'     => __('customers'),
                     'iconRight' => [
-                        'icon' => ['fal', 'fa-user'],
+                        'icon'  => ['fal', 'fa-user'],
                         'title' => __('customer')
                     ]
                 ],
@@ -137,11 +134,11 @@ class IndexCustomers extends InertiaAction
         $headCrumb = function (array $routeParameters = []) {
             return [
                 [
-                    'type' => 'simple',
+                    'type'   => 'simple',
                     'simple' => [
                         'route' => $routeParameters,
                         'label' => __('customers'),
-                        'icon' => 'fal fa-bars'
+                        'icon'  => 'fal fa-bars'
                     ],
                 ],
             ];
@@ -163,7 +160,7 @@ class IndexCustomers extends InertiaAction
                 (new CRMDashboard())->getBreadcrumbs(),
                 $headCrumb(
                     [
-                        'name' => 'crm.shops.show.customers.index',
+                        'name'       => 'crm.shops.show.customers.index',
                         'parameters' => $routeParameters
                     ]
                 )
