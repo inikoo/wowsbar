@@ -204,11 +204,11 @@ const mobileMenuOpen = ref(false)
 					<draggable :list="navigation.categories" group="topMenu" key="id" :disabled="tool.name !== 'grab'"
 						class="flex h-full justify-center space-x-8 align-middle">
 						<template v-slot:item="{ element: category, index }">
-							<div :class="[get(selectedNav, 'id') == category.id ? 'border' : '']">
+							<div :class="[get(selectedNav, 'id') == category.id ? 'outline outline-gray-400' : '']">
 								<div v-if="category.type === 'group'" class="p-2.5">
 									<div :key="category.name" class="flex">
 										<div class="relative flex p-2.5"
-											@click="() => { openNav = category.id, changeNavActive(category) }">
+											@click="() => { openNav = category.id, changeNavActive(index) }">
 											<div :class="[openNav == category.id ? 'border-indigo-600 text-indigo-600' : 'border-transparent text-gray-700 hover:text-gray-800', tool.name !== 'grab' ? 'cursor-pointer' : 'cursor-grab', 'relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out']">
 												<div class="flex gap-3">
 													<IconPicker :key="category.id" :data="category" class="text-black" />
@@ -228,7 +228,7 @@ const mobileMenuOpen = ref(false)
 
 									</div>
 								</div>
-								<div @click="(e) => { changeNavActive(category), openNav = null }"
+								<div @click="(e) => { changeNavActive(index), openNav = null }"
 									v-if="category.type === 'link'" class="py-5 px-2.5 text-black">
 
 									<div class="flex gap-3">
