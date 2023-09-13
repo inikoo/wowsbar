@@ -51,7 +51,7 @@ class UpdateProspect
     {
         $request->validate();
 
-        return $this->handle($prospect, $request->all());
+        return $this->handle($prospect,$request->validated());
     }
 
     public function action(Prospect $prospect, $objectData): Prospect

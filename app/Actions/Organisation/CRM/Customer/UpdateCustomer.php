@@ -60,7 +60,7 @@ class UpdateCustomer
     {
         $request->validate();
 
-        return $this->handle($customer, $request->all());
+        return $this->handle($customer,$request->validated());
     }
 
 

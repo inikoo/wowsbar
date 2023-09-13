@@ -45,7 +45,7 @@ class UpdateClockingMachine
     {
         $request->validate();
 
-        return $this->handle($clockingMachine, $request->all());
+        return $this->handle($clockingMachine,$request->validated());
     }
 
     public function jsonResponse(ClockingMachine $clockingMachine): ClockingMachineResource
