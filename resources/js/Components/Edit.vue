@@ -103,7 +103,7 @@ onBeforeUnmount(() => {
                     <div class=" pt-4 sm:pt-5 px-6 " v-for="(fieldData, field ) in formData.blueprint[current].fields">
                         <!-- If the type is 'action' -->
                         <div v-if="fieldData.type === 'action'" class="flex justify-center">
-                            <Action :fieldData="fieldData">
+                            <Action :fieldData="fieldData" :key="field">
                             </Action>
                         </div>
 
