@@ -10,7 +10,7 @@
 <script setup lang="ts">
 import { ref } from "vue"
 import Footer from "@/Layouts/Footer/Tenant/Footer.vue"
-import { usePage, router } from "@inertiajs/vue3"
+import { usePage } from "@inertiajs/vue3"
 
 import AppLeftSideBar from "@/Layouts/AppLeftSideBar.vue"
 import AppRightSideBar from "@/Layouts/AppRightSideBar.vue"
@@ -21,6 +21,7 @@ import { library } from "@fortawesome/fontawesome-svg-core"
 
 import { useAuthFirebase } from "@/Composables/firebaseAuth"
 import { initialiseApp } from "@/Composables/initialiseApp"
+import { useLayoutStore } from "@/Stores/layout"
 
 import {
     faHome,
@@ -65,19 +66,17 @@ library.add(
     faLanguage,
     faSearch,
     faBell
-);
+)
 
-
-
+const sidebarOpen = ref(false)
 const layout = initialiseApp()
-
 
 if (usePage().props.firebaseAuthToken) {
     useAuthFirebase(usePage().props.firebaseAuthToken)
 }
 
+const layoutState = useLayoutStore()
 
-const sidebarOpen = ref(false)
 
 </script>
 
@@ -86,26 +85,31 @@ const sidebarOpen = ref(false)
     <div class="relative min-h-full transition-all duration-200 ease-in-out"
         :class="[Object.values(layout.rightSidebar).some(value => value.show) ? 'mr-44' : 'mr-0']"
     >
-        <AppTopBar @sidebarOpen="(value: boolean) => sidebarOpen = value" :sidebarOpen="sidebarOpen" :logoRoute="`tenant.dashboard.show`" urlPrefix="">
+        <!-- Topbar -->
+        <AppTopBar @sidebarOpen="(value: boolean) => sidebarOpen = value" :sidebarOpen="sidebarOpen" :logoRoute="`tenant.dashboard.show`" urlPrefix="tenant.">
             <img v-if="layout.tenant.logo_id" class="h-7 md:h-5 shadow" :src="`/media/${layout.tenant.logo_id}`" :alt="layout.tenant.code" />
-            <span class="hidden leading-none md:inline font-bold  xl:truncate text-gray-800 dark:text-gray-300">
+            <span class="hidden leading-none md:inline font-bold xl:truncate text-gray-800 dark:text-gray-300">
                 {{ layout.tenant.name}}
             </span>
         </AppTopBar>
 
-        <Breadcrumbs class="fixed top-11 z-[19] w-full md:left-10 md:top-11 lg:top-10 xl:left-56"
+        <!-- Breadcrumbs -->
+        <Breadcrumbs class="fixed top-11 z-[19] w-full md:top-11 lg:top-10 "
+            :class="[layoutState.leftSidebar.show ? 'left-0 md:left-56' : 'left-0 md:left-10']"
             :breadcrumbs="usePage().props.breadcrumbs??[]"
             :navigation="usePage().props.navigation??[]"
         />
 
         <!-- Sidebar: Left -->
         <div>
-            <div class="bg-gray-200/80 fixed top-0 w-screen h-screen z-10 md:hidden" v-if="sidebarOpen" @click="sidebarOpen = !sidebarOpen" />
-            <AppLeftSideBar class="-left-2/3 transition-all duration-100 ease-in-out z-20 block md:left-[0]" :class="{'left-[0]': sidebarOpen }" @click="sidebarOpen = !sidebarOpen" />
+            <div class="bg-gray-200/80 fixed top-0 w-screen h-screen z-10 md:hidden transition-all duration-500 ease-in-out" v-if="sidebarOpen" @click="sidebarOpen = !sidebarOpen" /> <!-- Mobile Helper: background to close hamburger -->
+            <AppLeftSideBar class="-left-2/3 transition-all duration-300 ease-in-out z-20 block md:left-0" :class="{'left-0': sidebarOpen }" @click="sidebarOpen = !sidebarOpen" />
         </div>
 
         <!-- Main Content -->
-        <main class="relative flex flex-col pt-20 pb-5 ml-0 md:pt-[68px] md:ml-10 lg:pt-16 xl:ml-56 bg-gray-50 text-gray-700 dark:bg-gray-700 dark:text-gray-400">
+        <main class="relative flex flex-col pt-20 pb-5 md:pt-[68px] lg:pt-16 bg-gray-50 text-gray-700 dark:bg-gray-700 dark:text-gray-400 transition-all duration-200 ease-in-out"
+            :class="[layoutState.leftSidebar.show ? 'ml-0 md:ml-56' : 'ml-0 md:ml-10']"
+        >
             <slot />
         </main>
 
