@@ -236,7 +236,7 @@ class IndexCustomers extends InertiaAction
         };
 
         return match ($routeName) {
-            'crm.customers.index' =>
+            'org.crm.customers.index' =>
             array_merge(
                 (new CRMDashboard())->getBreadcrumbs(
                     'crm.dashboard',
@@ -244,12 +244,12 @@ class IndexCustomers extends InertiaAction
                 ),
                 $headCrumb(
                     [
-                        'name' => 'crm.customers.index',
+                        'name' => 'org.crm.customers.index',
                         null
                     ]
                 ),
             ),
-            'crm.shops.show.customers.index' =>
+            'org.crm.shops.show.customers.index' =>
             array_merge(
                 (new CRMDashboard())->getBreadcrumbs(
                     'crm.shops.show.dashboard',
@@ -257,7 +257,7 @@ class IndexCustomers extends InertiaAction
                 ),
                 $headCrumb(
                     [
-                        'name'       => 'crm.shops.show.customers.index',
+                        'name'       => 'org.crm.shops.show.customers.index',
                         'parameters' => $routeParameters
                     ]
                 )
