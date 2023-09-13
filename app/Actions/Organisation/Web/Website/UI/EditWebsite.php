@@ -224,9 +224,19 @@ class EditWebsite extends InertiaAction
                                 'fields'=> [
                                     'state' => [
                                         'type'     => 'action',
-                                        'label'    => '',
+                                        'label'    => __('Launch'),
+                                        'icon'     => 'fal fa-rocket-launch',
                                         'value'    => false,
                                         'required' => true,
+                                        'button'   => [
+                                            'method'    => 'patch',
+                                            'data'      => [
+                                                'state' => 'live'
+                                            ],
+                                            'route'     => [
+                                                'name'  => 'org.models.website.state.update'
+                                            ]
+                                        ]
                                     ],
                                 ]
                             ]
