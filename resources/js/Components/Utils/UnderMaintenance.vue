@@ -19,15 +19,19 @@ library.add(faConstruction)
             <p class="mt-4 text-base leading-7 text-gray-400">
                 Sorry, we couldn’t provide the page you’re looking for.
             </p>
-            <!-- <div class="mt-10 flex items-center justify-center gap-x-6">
-                <Button :style="`primary`" href="#"
-                    class="rounded-md px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Go
-                    back home</Button>
-                <a href="#" class="text-sm font-semibold text-gray-700">
-                    Contact support
-                    <span aria-hidden="true">&rarr;</span>
-                </a>
-            </div> -->
+
+            <slot name="button">
+                <!-- <div class="mt-10 flex items-center justify-center gap-x-6">
+                    <Button :style="`primary`" href="#"
+                        class="rounded-md px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Go
+                        back home
+                    </Button>
+                    <a href="#" class="text-sm font-semibold text-gray-700">
+                        Contact support
+                        <span aria-hidden="true">&rarr;</span>
+                    </a>
+                </div> -->
+            </slot>
         </div>
     </div>
 </template>
