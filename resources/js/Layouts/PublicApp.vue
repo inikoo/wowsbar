@@ -79,7 +79,7 @@ const sidebarOpen = ref(false)
             </span>
         </AppTopBar>
 
-        <!-- Breedcrumbs -->
+        <!-- Breadcrumbs -->
         <Breadcrumbs class="fixed md:left-10 xl:left-56 top-11 lg:top-10 z-[19] w-full"
             :breadcrumbs="usePage().props.breadcrumbs??[]"
             :navigation="usePage().props.navigation??[]"

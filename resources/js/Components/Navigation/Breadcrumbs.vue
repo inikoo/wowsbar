@@ -5,14 +5,15 @@
   -  Version 4.0
   -->
 <script setup lang="ts">
-import { computed, ref } from "vue";
-import { Link, router } from "@inertiajs/vue3";
-import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faChevronRight } from "@/../private/pro-regular-svg-icons";
-import { faSparkles, faArrowFromLeft, faArrowLeft, faArrowRight } from "@/../private/pro-solid-svg-icons";
+import { computed, ref } from "vue"
+import { Link, router } from "@inertiajs/vue3"
+import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue"
+import { library } from "@fortawesome/fontawesome-svg-core"
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
+import { faChevronRight } from "@/../private/pro-regular-svg-icons"
+import { faSparkles, faArrowFromLeft, faArrowLeft, faArrowRight } from "@/../private/pro-solid-svg-icons"
 import { capitalize } from "@/Composables/capitalize"
+import { useLayoutStore } from "@/Stores/layout"
 
 library.add(faSparkles, faArrowFromLeft, faArrowLeft, faArrowRight,faChevronRight);
 
@@ -70,7 +71,7 @@ const props = defineProps<{
     }
 }>();
 
-const displayBreadcrumbs = computed(() => {
+const compDisplayBreadcrumbs = computed(() => {
     return Object.keys(props["breadcrumbs"]).length > 0;
 })
 
@@ -87,10 +88,15 @@ router.on('navigate', (event) => {
     }
     urlParameter.value = `?${new URLSearchParams(filteredParams).toString()}`
 })
+
+const layoutState = useLayoutStore()
+
 </script>
 
 <template>
-    <div v-if="displayBreadcrumbs" class="md:pr-10 xl:pr-56">
+    <div v-if="compDisplayBreadcrumbs" class="transition-all duration-200 ease-in-out"
+        :class="[layoutState.leftSidebar.show ? 'pr-56' : 'pr-10']"
+    >
         <nav
             class="py-4 md:py-0 flex border-b h-6 text-sm bg-gray-50 text-gray-700 border-gray-200 dark:bg-gray-700 dark:text-gray-400 dark:border-gray-500"
             aria-label="Breadcrumb">
