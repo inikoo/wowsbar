@@ -22,7 +22,7 @@ const props = defineProps<{
 const handleLaunch = () => {
     router.patch(
         route('org.models.website.state.update'),
-        { status: 'live'},
+        { state: 'live'},
     )
 }
 </script>
