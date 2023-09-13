@@ -31,3 +31,9 @@ Route::prefix('prospects')->as('prospects.')->group(function () {
     //Route::get('/customers/{customer}/web-users/{webUser}', [ShowWebUser::class, 'inCustomerInTenant'])->name('customers.show.web-users.show');
     //Route::get('/customers/{customer}/web-users/{webUser}/edit', [EditWebUser::class, 'inCustomerInTenant'])->name('customers.show.web-users.edit');
 });
+
+Route::get('/shop/{shop}', [CRMDashboard::class,'inShop'])->name('shops.show.dashboard');
+Route::get('/shop/{shop}/customers', [IndexCustomers::class, 'inShop'])->name('shops.show.customers.index');
+Route::get('/shop/{shop}/customers/{customer}', [ShowCustomer::class, 'inShop'])->name('shops.show.customers.show');
+Route::get('/shop/{shop}/customers/{customer}/edit', [EditCustomer::class, 'inShop'])->name('shops.show.customers.edit');
+Route::get('/shop/{shop}/prospects', [IndexProspects::class, 'inShop'])->name('shops.show.prospects.index');
