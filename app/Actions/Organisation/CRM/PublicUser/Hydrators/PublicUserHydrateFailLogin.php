@@ -1,11 +1,11 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Mon, 24 Apr 2023 20:23:18 Malaysia Time, Sanur, Bali, Indonesia
+ * Created: Wed, 13 Sep 2023 10:24:04 Malaysia Time, Pantai Lembeng, Bali, Indonesia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\CRM\PublicUser\Hydrators;
+namespace App\Actions\Organisation\CRM\PublicUser\Hydrators;
 
 use App\Models\CRM\PublicUser;
 use Illuminate\Support\Carbon;

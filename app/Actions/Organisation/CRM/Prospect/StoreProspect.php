@@ -1,13 +1,13 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Wed, 21 Jun 2023 08:45:00 Malaysia Time, Pantai Lembeng, Bali, Id
+ * Created: Wed, 13 Sep 2023 10:24:04 Malaysia Time, Pantai Lembeng, Bali, Indonesia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
 namespace App\Actions\Organisation\CRM\Prospect;
 
-use App\Actions\CRM\Prospect\Hydrators\ProspectHydrateUniversalSearch;
+use App\Actions\Organisation\CRM\Prospect\Hydrators\ProspectHydrateUniversalSearch;
 use App\Models\CRM\Prospect;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;

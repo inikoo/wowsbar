@@ -1,11 +1,11 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Mon, 11 Sep 2023 22:33:41 Malaysia Time, Pantai Lembeng, Bali, Indonesia
+ * Created: Wed, 13 Sep 2023 10:24:04 Malaysia Time, Pantai Lembeng, Bali, Indonesia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\CRM\PublicUser;
+namespace App\Actions\Organisation\CRM\PublicUser;
 
 use App\Actions\Traits\WithActionUpdate;
 use App\Http\Resources\Auth\UserResource;
