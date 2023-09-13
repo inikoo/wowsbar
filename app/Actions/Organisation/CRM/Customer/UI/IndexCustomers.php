@@ -7,12 +7,13 @@
 
 namespace App\Actions\Organisation\CRM\Customer\UI;
 
-use App\Actions\CRM\Customer\UI\Shop;
-use App\Actions\CRM\Customer\UI\ShopTypeEnum;
 use App\Actions\InertiaAction;
+use App\Actions\Organisation\UI\CRM\CRMDashboard;
+use App\Enums\Market\Shop\ShopTypeEnum;
 use App\Http\Resources\CRM\CustomerResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\CRM\Customer;
+use App\Models\Market\Shop;
 use App\Models\Tenancy\Tenant;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -49,7 +50,7 @@ class IndexCustomers extends InertiaAction
     }
 
     /** @noinspection PhpUndefinedMethodInspection */
-    public function handle(Tenant|Shop $parent, $prefix = null): LengthAwarePaginator
+    public function handle(Shop $parent, $prefix = null): LengthAwarePaginator
     {
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
             $query->where(function ($query) use ($value) {

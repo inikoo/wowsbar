@@ -19,22 +19,12 @@ use App\Models\Accounting\PaymentServiceProviderShop;
 use App\Models\Assets\Country;
 use App\Models\Assets\Currency;
 use App\Models\Assets\Timezone;
-use App\Models\Auth\ApiTenantUser;
 use App\Models\CRM\Customer;
 use App\Models\CRM\Prospect;
-use App\Models\CRM\ShopCRMStats;
-use App\Models\Fulfilment\FulfilmentOrder;
 use App\Models\Helpers\Address;
-use App\Models\Helpers\Issue;
 use App\Models\Helpers\SerialReference;
-use App\Models\Helpers\TaxNumber;
-use App\Models\Mail\Outbox;
-use App\Models\Marketing\OfferCampaign;
-use App\Models\OMS\Order;
 use App\Models\Search\UniversalSearch;
-use App\Models\Traits\HasTenantAddress;
 use App\Models\Traits\HasUniversalSearch;
-use App\Models\Web\Website;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -121,7 +111,6 @@ use Spatie\Sluggable\SlugOptions;
  */
 class Shop extends Model
 {
-    use HasTenantAddress;
     use SoftDeletes;
     use HasSlug;
     use UsesTenantConnection;

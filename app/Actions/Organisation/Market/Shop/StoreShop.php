@@ -34,7 +34,6 @@ class StoreShop
 
     public function handle(array $modelData): Shop
     {
-        $tenant = app('currentTenant');
         /** @var Shop $shop */
         $shop = Shop::create($modelData);
         $shop->stats()->create();
@@ -45,24 +44,12 @@ class StoreShop
             $shop->fulfilmentStats()->create();
         }
 
-        $shop->apiTenantUser()->create();
-
         /** @noinspection DuplicatedCode */
         $shop->serialReferences()->create(
             [
                 'model'     => SerialReferenceModelEnum::CUSTOMER,
-                'tenant_id' => $tenant->id,
             ]
         );
-        $shop->serialReferences()->create(
-            [
-                'model'     => SerialReferenceModelEnum::ORDER,
-                'tenant_id' => $tenant->id,
-            ]
-        );
-
-
-        SetCurrencyHistoricFields::run($shop->currency, $shop->created_at);
 
         $paymentAccount       = StorePaymentAccount::run($tenant->accountsServiceProvider(), [
             'code' => 'accounts-'.$shop->slug,
@@ -73,27 +60,8 @@ class StoreShop
         ]);
         $paymentAccount->slug = 'accounts-'.$shop->slug;
         $paymentAccount->save();
-        $shop = AttachPaymentAccountToShop::run($shop, $paymentAccount);
 
-        foreach (OutboxTypeEnum::cases() as $case) {
-            if ($case->scope() == 'shop') {
-                $mailroom = Mailroom::where('code', $case->mailroomCode()->value)->first();
-
-                StoreOutbox::run(
-                    $mailroom,
-                    [
-                        'shop_id' => $shop->id,
-                        'name'    => $case->label(),
-                        'type'    => str($case->value)->camel()->kebab()->value(),
-
-                    ]
-                );
-            }
-        }
-
-        TenantHydrateMarket::dispatch(app('currentTenant'));
-
-        return $shop;
+        return AttachPaymentAccountToShop::run($shop, $paymentAccount);
     }
 
     public function authorize(ActionRequest $request): bool
@@ -112,7 +80,6 @@ class StoreShop
                 'type' => match ($this->get('subtype')) {
                     'fulfilment'=> 'fulfilment-house',
                     'b2b','b2c','dropshipping'=>'shop',
-
                 }
             ]
         );
