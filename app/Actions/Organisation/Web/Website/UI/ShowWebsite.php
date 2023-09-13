@@ -11,6 +11,7 @@ use App\Actions\InertiaAction;
 use App\Actions\UI\Organisation\Dashboard\ShowDashboard;
 use App\Actions\UI\WithInertia;
 use App\Enums\UI\Organisation\WebsiteTabsEnum;
+use App\Http\Resources\Web\WebsiteResource;
 use App\Models\Organisation\Web\Website;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
@@ -89,6 +90,11 @@ class ShowWebsite extends InertiaAction
                     'current'    => $this->tab,
                     'navigation' => WebsiteTabsEnum::navigation()
                 ],
+
+
+                WebsiteTabsEnum::SHOWCASE->value => $this->tab == WebsiteTabsEnum::SHOWCASE->value ?
+                    fn() => WebsiteResource::make($website)->getArray()
+                    : Inertia::lazy(fn() => WebsiteResource::make($website)->getArray())
 
                 /*
                 WebsiteTabsEnum::CHANGELOG->value => $this->tab == WebsiteTabsEnum::CHANGELOG->value ?

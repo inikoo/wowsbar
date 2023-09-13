@@ -8,14 +8,13 @@
 namespace App\Actions\Organisation\CRM\Prospect;
 
 use App\Actions\InertiaAction;
+use App\Actions\Organisation\UI\CRM\CRMDashboard;
 use App\Http\Resources\CRM\ProspectResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\CRM\Prospect;
-use App\Models\Tenancy\Tenant;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -24,8 +23,6 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class IndexProspects extends InertiaAction
 {
-    private Tenant $parent;
-
     public function authorize(ActionRequest $request): bool
     {
         $this->canEdit       = $request->user()->can('crm.customers.edit');
@@ -40,12 +37,11 @@ class IndexProspects extends InertiaAction
     public function inTenant(ActionRequest $request): LengthAwarePaginator
     {
         $this->initialisation($request);
-        $this->parent = app('currentTenant');
 
-        return $this->handle(app('currentTenant'));
+        return $this->handle();
     }
 
-    public function handle(Tenant $parent, $prefix = null): LengthAwarePaginator
+    public function handle($prefix = null): LengthAwarePaginator
     {
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
             $query->where(function ($query) use ($value) {
@@ -76,9 +72,9 @@ class IndexProspects extends InertiaAction
             ->withQueryString();
     }
 
-    public function tableStructure($parent, ?array $modelOperations = null, $prefix = null): Closure
+    public function tableStructure(?array $modelOperations = null, $prefix = null): Closure
     {
-        return function (InertiaTable $table) use ($parent, $modelOperations, $prefix) {
+        return function (InertiaTable $table) use ($modelOperations, $prefix) {
             if ($prefix) {
                 $table
                     ->name($prefix)
@@ -88,29 +84,11 @@ class IndexProspects extends InertiaAction
                 ->withModelOperations($modelOperations)
                 ->withGlobalSearch()
                 ->withEmptyState(
-                    match (class_basename($parent)) {
-                        'Tenant' => [
-                            'title'       => __("No prospects found"),
-                            'count'       => $parent->crmStats->number_prospects
-                        ],
-                    }
-                    /*
                     [
-                        'title'       => __('no customers'),
-                        'description' => $this->canEdit ? __('Get started by creating a new customer.') : null,
-                        'count'       => app('currentTenant')->stats->number_employees,
-                        'action'      => $this->canEdit ? [
-                            'type'    => 'button',
-                            'style'   => 'create',
-                            'tooltip' => __('new customer'),
-                            'label'   => __('customer'),
-                            'route'   => [
-                                'name'       => 'crm.customers.create',
-                                'parameters' => array_values($this->originalParameters)
-                            ]
-                        ] : null
+                        'title'       => __('no prospect'),
+                        'description' => null,
+                        'count'       => 0
                     ]
-                    */
                 )
                 ->column(key: 'name', label: __('name'), canBeHidden: false, sortable: true, searchable: true)
                 ->column(key: 'email', label: __('email'), canBeHidden: false, sortable: true, searchable: true)
@@ -126,16 +104,6 @@ class IndexProspects extends InertiaAction
 
     public function htmlResponse(LengthAwarePaginator $prospects, ActionRequest $request): Response
     {
-        $scope     = $this->parent;
-        $container = null;
-        if (class_basename($scope) == 'Shop') {
-            $container = [
-                'icon'    => ['fal', 'fa-store-alt'],
-                'tooltip' => __('Shop'),
-                'label'   => Str::possessive($scope->name)
-            ];
-        }
-
         return Inertia::render(
             'CRM/Prospects',
             [
@@ -146,7 +114,6 @@ class IndexProspects extends InertiaAction
                 'title'       => __('prospects'),
                 'pageHead'    => [
                     'title'     => __('prospects'),
-                    'container' => $container,
                     'iconRight' => [
                         'icon'  => ['fal', 'fa-user-plus'],
                         'title' => __('prospect')
@@ -156,7 +123,7 @@ class IndexProspects extends InertiaAction
 
 
             ]
-        )->table($this->tableStructure($this->parent));
+        )->table($this->tableStructure());
     }
 
     public function getBreadcrumbs(string $routeName, array $routeParameters): array
@@ -175,7 +142,7 @@ class IndexProspects extends InertiaAction
         };
 
         return match ($routeName) {
-            'crm.prospects.index' =>
+            'org.crm.prospects.index' =>
             array_merge(
                 (new CRMDashboard())->getBreadcrumbs(
                     'crm.dashboard',
@@ -183,11 +150,11 @@ class IndexProspects extends InertiaAction
                 ),
                 $headCrumb(
                     [
-                        'name' => 'crm.prospects.index',
+                        'name' => 'org.crm.prospects.index',
                     ]
                 ),
             ),
-            'crm.shops.show.prospects.index' =>
+            'org.crm.shops.show.prospects.index' =>
             array_merge(
                 (new CRMDashboard())->getBreadcrumbs(
                     'crm.shops.show.dashboard',
@@ -195,7 +162,7 @@ class IndexProspects extends InertiaAction
                 ),
                 $headCrumb(
                     [
-                        'name'       => 'crm.shops.show.prospects.index',
+                        'name'       => 'org.crm.shops.show.prospects.index',
                         'parameters' => $routeParameters
                     ]
                 )

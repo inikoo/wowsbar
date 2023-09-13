@@ -5,7 +5,7 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-use App\Actions\CRM\Customer\StoreCustomer;
+use App\Actions\Organisation\CRM\Customer\StoreCustomer;
 use App\Actions\Organisation\Organisation\StoreOrganisation;
 use App\Actions\Tenancy\Tenant\StoreTenant;
 use App\Actions\Tenant\Auth\User\StoreUser;

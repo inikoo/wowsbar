@@ -7,7 +7,7 @@
 
 /** @noinspection PhpParamsInspection */
 
-use App\Actions\CRM\Customer\StoreCustomer;
+use App\Actions\Organisation\CRM\Customer\StoreCustomer;
 use App\Actions\Organisation\Organisation\StoreOrganisation;
 use App\Actions\Tenancy\Tenant\StoreTenant;
 use App\Actions\Tenant\Portfolio\Banner\DeleteBanner;

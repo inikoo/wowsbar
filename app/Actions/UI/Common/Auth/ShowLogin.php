@@ -23,7 +23,7 @@ class ShowLogin
             match ($request->route()->getName()) {
                 'org.login'    => 'Auth/Login',
                 'public.login' => 'Public/Auth/Login',
-                default        => 'Tenant/Auth/Login'
+                default        => 'Auth/Login'
             },
             [
                 'status' => session('status'),

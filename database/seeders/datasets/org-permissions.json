@@ -2,7 +2,6 @@
     "website",
     "website.view",
     "website.edit",
-    "website.edit",
     "crm",
     "crm.view",
     "crm.edit",
@@ -22,5 +21,10 @@
     "hr.edit",
     "hr.create",
     "hr.delete",
-    "hr"
+    "hr",
+    "supervisor",
+    "supervisor.crm",
+    "supervisor.website",
+    "supervisor.sysadmin",
+    "supervisor.hr"
 ]
