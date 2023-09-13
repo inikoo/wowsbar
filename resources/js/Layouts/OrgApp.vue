@@ -38,7 +38,7 @@ import {
     faLanguage, faUsers
 } from "@/../private/pro-light-svg-icons"
 import { faSearch, faBell} from "../../private/pro-regular-svg-icons"
-import {useAuthFirebase} from "@/Composables/firebaseAuth";
+import { useAuthFirebase } from "@/Composables/firebaseAuth"
 
 
 library.add(
@@ -65,15 +65,14 @@ library.add(
     faUsers
 )
 
+const sidebarOpen = ref(false)
 const layout = initialiseOrgApp()
+
 if (usePage().props.firebaseAuthToken) {
     useAuthFirebase(usePage().props.firebaseAuthToken)
 }
 
 const layoutState = useLayoutStore()
-console.log(layoutState.leftSidebar.show)
-
-const sidebarOpen = ref(false)
 
 </script>
 
@@ -82,7 +81,6 @@ const sidebarOpen = ref(false)
     <div class="relative min-h-full transition-all duration-200 ease-in-out text-gray-700"
         :class="[Object.values(layout.rightSidebar).some(value => value.show) ? 'mr-44' : 'mr-0']"
     >
-
         <!-- TopBar -->
         <AppTopBar @sidebarOpen="(value: boolean) => sidebarOpen = value" :sidebarOpen="sidebarOpen" :logoRoute="`org.dashboard.show`" urlPrefix="org.">
             <img v-if="layout.organisation.logo_id" class="h-7 md:h-5 shadow" :src="`/media/${layout.organisation.logo_id}`" :alt="layout.organisation.code" />
@@ -91,9 +89,9 @@ const sidebarOpen = ref(false)
             </span>
         </AppTopBar>
 
-        <!-- Breedcrumbs -->
+        <!-- Breadcrumbs -->
         <Breadcrumbs class="fixed top-11 lg:top-10 z-[19] w-full transition-all duration-200 ease-in-out"
-            :class="[layoutState.leftSidebar.show ? 'left-56' : 'left-10']"
+            :class="[layoutState.leftSidebar.show ? 'left-0 md:left-56' : 'left-0 md:left-10']"
             :breadcrumbs="usePage().props.breadcrumbs??[]"
             :navigation="usePage().props.navigation??[]"
         />
@@ -112,7 +110,7 @@ const sidebarOpen = ref(false)
         </main>
 
         <!-- Sidebar: Right -->
-        <AppRightSideBar class="fixed top-16 w-44 transition-all duration-200 ease-in-out"
+        <AppRightSideBar class="fixed top-[76px] md:top-[68px] lg:top-16 w-44 transition-all duration-200 ease-in-out"
             :class="[Object.values(layout.rightSidebar).some(value => value === true) ? 'right-0' : '-right-44']"
         />
 

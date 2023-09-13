@@ -82,7 +82,8 @@ const handleToggleLeftbar = () => {
 							itemKey === layout.currentModule
 								? 'tabNavigationActive dark:border-gray-100 dark:bg-gray-600 px-0.5'
 								: 'tabNavigation dark:hover:bg-dark-700 px-1',
-							'group flex items-center text-sm font-medium xl:px-3 py-2',
+							layout.leftSidebar.show ? 'px-3' : '',
+							'group flex items-center text-sm font-medium py-2',
 						]"
                         :aria-current="itemKey === layout.currentModule ? 'page' : undefined"
                     >
