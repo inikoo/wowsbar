@@ -9,9 +9,14 @@ import { Head } from '@inertiajs/vue3'
 import { capitalize } from "@/Composables/capitalize"
 import {computed, ref} from "vue";
 import {useTabChange} from "@/Composables/tab-change";
+
 import TableWebpages from "@/Pages/Tables/TableWebpages.vue";
 import ModelDetails from "@/Pages/ModelDetails.vue";
 import TableHistories from "@/Pages/Tables/TableHistories.vue";
+import WebsiteShowcase from '@/Pages/Organisation/Web/WebsiteShowcase.vue';
+import WebsiteAnalytics from '@/Pages/Organisation/Web/WebsiteAnalytics.vue';
+
+
 import PageHeading from "@/Components/Headings/PageHeading.vue";
 import Tabs from "@/Components/Navigation/Tabs.vue";
 import {library} from '@fortawesome/fontawesome-svg-core';
@@ -47,15 +52,16 @@ let currentTab = ref(props.tabs.current);
 const handleTabUpdate = (tabSlug) => useTabChange(tabSlug, currentTab);
 
 const component = computed(() => {
-
     const components = {
-        webpages: TableWebpages,
-        details: ModelDetails,
-        changelog: TableHistories,
-    };
-    return components[currentTab.value];
+        'webpages': TableWebpages,
+        'details': ModelDetails,
+        'changelog': TableHistories,
+        'showcase': WebsiteShowcase,
+        'analytics': WebsiteAnalytics
+    }
 
-});
+    return components[currentTab.value]
+})
 
 </script>
 
