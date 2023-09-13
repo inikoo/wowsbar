@@ -63,7 +63,7 @@ class EditWebsite extends InertiaAction
                         'actions'   => [
                             [
                                 'type'  => 'button',
-                                'style' => 'exitEdit',
+                                'style' => 'exit',
                                 'label' => __('Exit settings'),
                                 'route' => [
                                     'name'       => preg_replace('/edit$/', 'show', $request->route()->getName()),
@@ -77,7 +77,7 @@ class EditWebsite extends InertiaAction
 
                             [
                             'title'  => __('Registrations'),
-                            'icon'   => 'fa-light fa-user-plus',
+                            'icon'   => 'fal fa-user-plus',
                             'fields' => [
                                 'approval' => [
                                     'type'     => 'toggle',
