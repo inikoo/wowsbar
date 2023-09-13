@@ -19,14 +19,9 @@ class UpdateWebsiteState
 
     private bool $asAction = false;
 
-    public function handle(Website $website, $state): Website
+    public function handle(Website $website, array $modelData): Website
     {
-        dd($state);
-        $website->update(
-            [
-                'state'=> $state
-            ]
-        );
+       return $this->update($website,$modelData);
     }
 
     public function authorize(ActionRequest $request): bool
@@ -38,20 +33,32 @@ class UpdateWebsiteState
         return $request->user()->hasPermissionTo("supervisor.website");
     }
 
+    public function prepareForValidation(ActionRequest $request): void
+    {
+        if (!$request->exists('status') and $request->has('state')) {
+            $status = match ($request->get('state')) {
+                WebsiteStateEnum::LIVE->value => true,
+                default => false
+            };
+            $request->merge(['status' => $status]);
+        }
+    }
+
+
     public function rules(): array
     {
         return [
-            'state'             => ['sometimes',new Enum(WebsiteStateEnum::class)],
+            'state'  => ['required', new Enum(WebsiteStateEnum::class)],
+            'status' => ['required', 'boolean'],
 
         ];
     }
 
-    public function asController(Website $website, ActionRequest $request): Website
+    public function asController(ActionRequest $request): Website
     {
         $request->validate();
-        return $this->handle($website, $request->validated());
+        return $this->handle(organisation()->website, $request->validated());
     }
-
 
 
 }
