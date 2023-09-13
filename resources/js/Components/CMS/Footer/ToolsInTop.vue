@@ -13,6 +13,12 @@ const props = defineProps({
 
 const emits = defineEmits();
 
+const themeOption = [
+        { name: 'FooterThemeOne', value: '1' },
+        { name: 'FooterThemeTwo', value: '2' },
+        { name: 'FooterThemeThree', value: '3' },
+]
+
 const Bluprint = [
   {
     name: 'handTool', position: 'right',
@@ -27,11 +33,7 @@ const Bluprint = [
     name: 'theme',
     position: 'left',
     optionsData: {
-      options: [
-        { name: '4 Columns', value: '2' },
-        { name: '4 Columns + image', value: '1' },
-        { name: 'Simple', value: '3' },
-      ],
+      options: themeOption
     }
   },
   {
@@ -52,6 +54,12 @@ const columChange = (index) => {
   emits('setColumnSelected', index - 1)
 }
 
+const setTheme=(value)=>{
+  const data = themeOption.find((item)=> item.value == value)
+  for(const t in props.theme){
+    props.theme[t] = data[t]
+  }
+}
 
 
 </script>
@@ -77,7 +85,7 @@ const columChange = (index) => {
 
     <div class="w-1/2 flex justify-end items-center">
       <div v-for="item in Bluprint.filter((item) => item.position === 'left')" :key="item.name">
-        <select v-model="theme.value" v-if="item.name === 'theme'"
+        <select v-model="theme.value" @change="setTheme(theme.value)" v-if="item.name === 'theme'"
           class="px-2 py-1 rounded-md border-gray-300 border w-[150px]">
           <option v-for="option in item.optionsData.options" :key="option.value" :value="option.value">{{ option.name }}
           </option>
