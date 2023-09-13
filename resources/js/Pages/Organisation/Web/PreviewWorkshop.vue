@@ -205,7 +205,6 @@ onValue(getDbRef(dbPath), (snapshot) => {
     if (snapshot.exists()) {
         const firebaseData = snapshot.val()
            data.value = firebaseData
-           console.log(data.value)
     }
 })
 

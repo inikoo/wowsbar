@@ -95,7 +95,7 @@ const generateThumbnail = (file) => {
 
 <template>
 	<div>
-		<vue-resizable class="container bg-white" :minHeight="200" :maxWidth="1233" :minWidth="1233" :height="layout.height" :maxHeight="200"
+		<vue-resizable class="container bg-white overflow-hidden" :minHeight="200" :maxWidth="1233" :minWidth="1233" :height="layout.height" :maxHeight="200"
 		:left="layout.left" :top="layout.top" @mount="eHandler" @resize:move="eHandler" @resize:start="eHandler"
 		@resize:end="eHandler" @drag:move="eHandler" @drag:start="eHandler" @drag:end="eHandler">
 			<div v-for="(item, index) in props.data.slice().reverse()" :key="item.id" :fit-parent="true">

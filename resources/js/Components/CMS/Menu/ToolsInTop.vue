@@ -19,7 +19,8 @@ const themeOption =[
         { name: 'MenuOne', value: '1' },
         { name: 'MenuTwo', value: '2' },
       ]
-const Bluprint = [
+const Bluprint = ()=> { 
+  const set = [
   {
     name: 'handTool', position: 'right',
     optionsData: {
@@ -43,7 +44,8 @@ const Bluprint = [
     },
   }
 ]
-
+return set
+}
 const selectTool = (t) => {
   for (const item in props.tool) {
     props.tool[item] = t[item]
@@ -57,7 +59,6 @@ const columChange = (index) => {
 
 const setTheme=(value)=>{
   const data = themeOption.find((item)=> item.value == value)
-  console.log(data,value)
   for(const t in props.theme){
     props.theme[t] = data[t]
   }
@@ -68,7 +69,7 @@ const setTheme=(value)=>{
 <template>
   <div class="h-[40px] bg-white p-[5px] w-full flex">
     <div class="w-1/2 flex justify-start items-center">
-      <div v-for="item in Bluprint.filter((item) => item.position === 'right')" :key="item.name">
+      <div v-for="item in Bluprint().filter((item) => item.position === 'right')" :key="item.name">
         <div v-if="item.name === 'handTool'" v-for="t of item.optionsData.tools" :key="t.name"
           class="inline-block bg-gray-300 py-1 px-2 rounded-md text-[11px] mx-1"
           :class="{ 'outline outline-1': t.name === tool.name }" @click="selectTool(t)">
@@ -81,11 +82,15 @@ const setTheme=(value)=>{
           :class="{ 'outline outline-2': columnIndex  == columSelected }">
           {{ columnItem }}
         </div>
+        <div v-if="item.name === 'activeColumn' && theme.value"  @click="emits('addNavigation')"
+          class="inline-block bg-gray-300 py-1 px-2 rounded-md text-xs font-bold mx-1">
+          +
+        </div>
       </div>
     </div>
 
     <div class="w-1/2 flex justify-end items-center">
-      <div v-for="item in Bluprint.filter((item) => item.position === 'left')" :key="item.name">
+      <div v-for="item in Bluprint().filter((item) => item.position === 'left')" :key="item.name">
         <select v-model="theme.value" @change="setTheme(theme.value)" v-if="item.name === 'theme'"
           class="px-2 py-1 rounded-md border-gray-300 border w-[150px]">
           <option v-for="option in item.optionsData.options" :key="option.value" :value="option.value">{{ option.name }}
