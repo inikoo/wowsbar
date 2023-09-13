@@ -29,6 +29,7 @@ const logo = usePage().props.art.logo
 
 const widthComponent = props.data.layout.width
 const heightComponent = props.data.layout.height
+const dataLength = props.data.data.length
 
 const getComponent = (type: string) => {
     const component = {
@@ -57,9 +58,9 @@ const calcPercentage = (total: number, amount: number) => {
                 :style="[
                     'top: ' + calcPercentage(heightComponent, component.style.top) + '%',
                     'left: ' + calcPercentage(widthComponent, component.style.left) + '%',
-                    'z-index: ' + (data.data.length - index),
+                    'z-index: ' + (dataLength - index),
                     'font-size: ' + component.style.fontSize + 'px',
-                    'color: ' + component.style.color ?? '#374151'
+                    'color: ' + (component.style.color ?? '#374151')
                 ]"
             >
                 <component :is="getComponent(component.type)">
