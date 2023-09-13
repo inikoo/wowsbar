@@ -25,6 +25,7 @@ use Spatie\Sluggable\SlugOptions;
  *
  * @property int $id
  * @property int $shop_id
+ * @property string|null $type
  * @property string $slug
  * @property WebsiteStateEnum $state
  * @property bool $status
@@ -66,6 +67,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Website whereState($value)
  * @method static Builder|Website whereStatus($value)
  * @method static Builder|Website whereStructure($value)
+ * @method static Builder|Website whereType($value)
  * @method static Builder|Website whereUpdatedAt($value)
  * @method static Builder|Website withTrashed()
  * @method static Builder|Website withoutTrashed()

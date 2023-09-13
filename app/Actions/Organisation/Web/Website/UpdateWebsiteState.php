@@ -21,7 +21,7 @@ class UpdateWebsiteState
 
     public function handle(Website $website, array $modelData): Website
     {
-       return $this->update($website,$modelData);
+        return $this->update($website, $modelData);
     }
 
     public function authorize(ActionRequest $request): bool
@@ -38,7 +38,7 @@ class UpdateWebsiteState
         if (!$request->exists('status') and $request->has('state')) {
             $status = match ($request->get('state')) {
                 WebsiteStateEnum::LIVE->value => true,
-                default => false
+                default                       => false
             };
             $request->merge(['status' => $status]);
         }

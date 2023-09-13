@@ -8,6 +8,7 @@
 namespace App\Actions\Organisation\Web\Website\UI;
 
 use App\Models\Organisation\Web\Website;
+use Illuminate\Support\Arr;
 use Lorisleiva\Actions\Concerns\AsObject;
 
 class GetWebsiteWorkshopColorScheme
@@ -17,7 +18,7 @@ class GetWebsiteWorkshopColorScheme
     public function handle(Website $website): array
     {
         return [
-
+            Arr::get($website->structure,'color_schema')
 
         ];
     }

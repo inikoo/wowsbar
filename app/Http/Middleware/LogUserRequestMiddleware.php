@@ -19,7 +19,7 @@ class LogUserRequestMiddleware
         $user = $request->user(Auth::getDefaultDriver());
 
         if (!app()->runningUnitTests() && $user && env('USER_REQUEST_LOGGING')) {
-            LogUserRequest::run(
+            LogUserRequest::dispatch(
                 now(),
                 [
                     'name'      => $request->route()->getName(),

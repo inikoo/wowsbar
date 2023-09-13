@@ -24,51 +24,46 @@ class ShowWebsiteWorkshopPreview extends InertiaAction
         return $request->user()->hasPermissionTo("website.edit");
     }
 
-    public function asController(Website $website, ActionRequest $request): Website
+    public function asController(ActionRequest $request): Website
     {
         $this->initialisation($request)->withTab(WebsiteWorkshopTabsEnum::values());
 
-        return $website;
+        return organisation()->website;
     }
 
 
     public function htmlResponse(Website $website, ActionRequest $request): Response
     {
-
         return Inertia::render(
             'Web/PreviewWorkshop',
             [
-                'title'       => __("Website's Preview"),
+                'title'       => __("Website's preview"),
                 'breadcrumbs' => $this->getBreadcrumbs(),
                 'pageHead'    => [
 
-                    'title'    => __('Preview'),
-
-                    // 'iconRight'    =>
-                    //     [
-                    //         'icon'  => ['fal', 'drafting-compass'],
-                    //         'title' => __("Website's workshop")
-                    //     ],
+                    'title' => __('Preview'),
 
                     'actions' => [
                         [
-                            'type'       => 'button',
-                            'style'      => 'exit',
-                            'label'      => __('Exit Preview'),
-                            'route'      => [
-                                'name'       => preg_replace('/workshop$/', 'show', $request->route()->getName()),
+                            'type'  => 'button',
+                            'style' => 'exit',
+                            'label' => __('Exit Preview'),
+                            'route' => [
+                                'name'       => preg_replace('/preview$/', 'show', $request->route()->getName()),
                                 'parameters' => array_values($request->route()->originalParameters()),
                             ]
                         ],
-                        [
-                            'type'       => 'button',
-                            'style'      => 'exit',
-                            'label'      => __('Preview'),
-                            'route'      => [
-                                'name'       => preg_replace('/workshop$/', 'show', $request->route()->getName()),
-                                'parameters' => array_values($request->route()->originalParameters()),
+
+                        $this->canEdit ? [
+                            'type'  => 'button',
+                            'style' => 'edit',
+                            'label' => __('workshop'),
+                            'icon'  => ["fal", "fa-drafting-compass"],
+                            'route' => [
+                                'name'       => preg_replace('/preview/', 'workshop', $request->route()->getName()),
+                                'parameters' => array_values($request->route()->originalParameters())
                             ]
-                        ]
+                        ] : false,
                     ],
                 ],
             ]
@@ -78,7 +73,7 @@ class ShowWebsiteWorkshopPreview extends InertiaAction
     public function getBreadcrumbs(): array
     {
         return ShowWebsite::make()->getBreadcrumbs(
-            suffix: '('.__('editing').')'
+            suffix: '('.__('preview').')'
         );
     }
 
