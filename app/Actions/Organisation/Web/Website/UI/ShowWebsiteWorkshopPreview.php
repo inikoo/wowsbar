@@ -53,7 +53,7 @@ class ShowWebsiteWorkshopPreview extends InertiaAction
                     'actions' => [
                         [
                             'type'       => 'button',
-                            'style'      => 'exitEdit',
+                            'style'      => 'exit',
                             'label'      => __('Exit workshop'),
                             'route'      => [
                                 'name'       => preg_replace('/workshop$/', 'show', $request->route()->getName()),
@@ -62,7 +62,7 @@ class ShowWebsiteWorkshopPreview extends InertiaAction
                         ],
                         [
                             'type'       => 'button',
-                            'style'      => 'exitEdit',
+                            'style'      => 'exit',
                             'label'      => __('Preview'),
                             'route'      => [
                                 'name'       => preg_replace('/workshop$/', 'show', $request->route()->getName()),
