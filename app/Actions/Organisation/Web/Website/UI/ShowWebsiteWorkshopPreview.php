@@ -38,37 +38,28 @@ class ShowWebsiteWorkshopPreview extends InertiaAction
         return Inertia::render(
             'Web/PreviewWorkshop',
             [
-                'title'       => __("Website's workshop"),
+                'title'       => __("Website's Preview"),
                 'breadcrumbs' => $this->getBreadcrumbs(),
                 'pageHead'    => [
 
-                    'title'    => __('Workshop'),
+                    'title'    => __('Preview'),
 
-                    'iconRight'    =>
-                        [
-                            'icon'  => ['fal', 'drafting-compass'],
-                            'title' => __("Website's workshop")
-                        ],
+                    // 'iconRight'    =>
+                    //     [
+                    //         'icon'  => ['fal', 'drafting-compass'],
+                    //         'title' => __("Website's workshop")
+                    //     ],
 
                     'actions' => [
                         [
                             'type'       => 'button',
                             'style'      => 'exitEdit',
-                            'label'      => __('Exit workshop'),
+                            'label'      => __('Exit Preview'),
                             'route'      => [
                                 'name'       => preg_replace('/workshop$/', 'show', $request->route()->getName()),
                                 'parameters' => array_values($request->route()->originalParameters()),
                             ]
                         ],
-                        [
-                            'type'       => 'button',
-                            'style'      => 'exitEdit',
-                            'label'      => __('Preview'),
-                            'route'      => [
-                                'name'       => preg_replace('/workshop$/', 'show', $request->route()->getName()),
-                                'parameters' => array_values($request->route()->originalParameters()),
-                            ]
-                        ]
                     ],
                 ],
             ]
