@@ -1,11 +1,11 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Wed, 05 Jul 2023 15:31:04 Malaysia Time, Pantai Lembeng, Bali, Indonesia
+ * Created: Wed, 13 Sep 2023 18:54:39 Malaysia Time, Pantai Lembeng, Bali, Indonesia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Models\Web;
+namespace App\Models\Organisation\Web;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -20,7 +20,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $number_webpages
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Models\Web\WebBlock $webBlock
+ * @property-read \App\Models\Organisation\Web\WebBlock $webBlock
  * @method static \Illuminate\Database\Eloquent\Builder|WebBlockStats newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|WebBlockStats newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|WebBlockStats query()

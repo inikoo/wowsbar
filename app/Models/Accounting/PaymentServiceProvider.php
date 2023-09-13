@@ -17,7 +17,6 @@ use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
-use Spatie\Multitenancy\Models\Concerns\UsesTenantConnection;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
@@ -59,7 +58,6 @@ class PaymentServiceProvider extends Model
 {
     use SoftDeletes;
     use HasSlug;
-    use UsesTenantConnection;
     use HasFactory;
 
     protected $casts = [

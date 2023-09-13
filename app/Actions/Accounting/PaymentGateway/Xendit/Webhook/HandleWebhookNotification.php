@@ -34,7 +34,7 @@ class HandleWebhookNotification
     {
         return DB::transaction(function () use ($request) {
             $callbackToken = $request->header('x-callback-token');
-            $webhookId = $request->header('webhook-id');
+            $webhookId     = $request->header('webhook-id');
 
             if (Str::match($callbackToken, env('XENDIT_CALLBACK_TOKEN'))) {
                 $payment = Payment::where('reference', $request->input('external_id'));
@@ -42,8 +42,8 @@ class HandleWebhookNotification
                 if (blank($payment->webhook_id)) {
                     UpdatePayment::run($payment, [
                         'webhook_id' => $webhookId,
-                        'status' => $this->checkStatus($request->input('status')),
-                        'state' => $this->checkState($request->input('status')),
+                        'status'     => $this->checkStatus($request->input('status')),
+                        'state'      => $this->checkState($request->input('status')),
                     ]);
                 }
 
@@ -65,7 +65,7 @@ class HandleWebhookNotification
     public function checkStatus(string $status): string
     {
         match ($status) {
-            'PAID' => $status = PaymentStatusEnum::SUCCESS->value,
+            'PAID'  => $status  = PaymentStatusEnum::SUCCESS->value,
             default => $status = PaymentStatusEnum::FAIL->value
         };
 
@@ -75,7 +75,7 @@ class HandleWebhookNotification
     public function checkState(string $status): string
     {
         match ($status) {
-            'PAID' => $status = PaymentStateEnum::COMPLETED->value,
+            'PAID'  => $status  = PaymentStateEnum::COMPLETED->value,
             default => $status = PaymentStateEnum::CANCELLED->value
         };
 

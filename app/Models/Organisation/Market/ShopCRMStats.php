@@ -11,7 +11,6 @@ use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Spatie\Multitenancy\Models\Concerns\UsesTenantConnection;
 
 /**
  * App\Models\Organisation\Market\ShopCRMStats
@@ -78,8 +77,6 @@ use Spatie\Multitenancy\Models\Concerns\UsesTenantConnection;
  */
 class ShopCRMStats extends Model
 {
-    use UsesTenantConnection;
-
     protected $table = 'shop_crm_stats';
 
     protected $guarded = [];

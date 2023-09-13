@@ -7,12 +7,13 @@
 
 namespace App\Actions\Organisation\Web\Website;
 
+use App\Actions\Organisation\Web\Webpage\StoreWebpage;
 use App\Actions\Traits\WithActionUpdate;
 use App\Models\Organisation\Web\Website;
 use Illuminate\Support\Facades\Storage;
 use Lorisleiva\Actions\ActionRequest;
 
-class ResetWebsiteStructure
+class SeedWebsiteFixedWebpages
 {
     use WithActionUpdate;
 
@@ -20,24 +21,14 @@ class ResetWebsiteStructure
 
     public function handle(Website $website): Website
     {
-        $structure = $website->structure;
-        foreach (Storage::disk('datasets')->files('website-structure/'.$website->type) as $file) {
-            preg_match('/\/(\w+).json/', $file, $field);
-            $structure[$field[1]] = json_decode(Storage::disk('datasets')->get($file), true);
-            data_set(
-                $structure,
-                $field[1],
-                json_decode(Storage::disk('datasets')->get($file), true),
-                overwrite: false
-            );
+        foreach (Storage::disk('datasets')->files('webpages/'.$website->type) as $file) {
+            $modelData         = json_decode(Storage::disk('datasets')->get($file), true);
+            $webpageVariantData=[];
+            StoreWebpage::run($website, $modelData, $webpageVariantData);
         }
 
 
-        $modelData = [
-            'structure' => $structure
-        ];
 
-        $website->update($modelData);
         return $website;
     }
 
@@ -59,7 +50,7 @@ class ResetWebsiteStructure
 
     public function getCommandSignature(): string
     {
-        return 'website:reset-structure';
+        return 'website:seed-fixed-webpages';
     }
 
     public function asCommand(): int

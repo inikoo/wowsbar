@@ -7,7 +7,7 @@
 
 namespace App\Actions\Web\WebBlockType;
 
-use App\Models\Web\WebBlockType;
+use App\Models\Organisation\Web\WebBlockType;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class StoreWebBlockType

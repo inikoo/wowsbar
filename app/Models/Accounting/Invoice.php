@@ -10,11 +10,7 @@ namespace App\Models\Accounting;
 use App\Actions\Organisation\CRM\Customer\Hydrators\CustomerHydrateInvoices;
 use App\Models\Assets\Currency;
 use App\Models\CRM\Customer;
-use App\Models\Search\UniversalSearch;
 use App\Models\Traits\HasUniversalSearch;
-use Eloquent;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -22,8 +18,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Carbon;
-use Spatie\Multitenancy\Models\Concerns\UsesTenantConnection;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
@@ -42,41 +36,40 @@ use Spatie\Sluggable\SlugOptions;
  * @property string $payment
  * @property array|null $paid_at
  * @property array $data
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * @property Carbon|null $deleted_at
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read Currency $currency
  * @property-read Customer $customer
- * @property-read Collection<int, \App\Models\Accounting\InvoiceTransaction> $invoiceTransactions
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Accounting\InvoiceTransaction> $invoiceTransactions
  * @property-read int|null $invoice_transactions_count
  * @property-read \App\Models\Accounting\InvoiceStats|null $stats
- * @property-read UniversalSearch|null $universalSearch
- * @method static Builder|Invoice newModelQuery()
- * @method static Builder|Invoice newQuery()
- * @method static Builder|Invoice onlyTrashed()
- * @method static Builder|Invoice query()
- * @method static Builder|Invoice whereCreatedAt($value)
- * @method static Builder|Invoice whereCurrencyId($value)
- * @method static Builder|Invoice whereCustomerId($value)
- * @method static Builder|Invoice whereData($value)
- * @method static Builder|Invoice whereDeletedAt($value)
- * @method static Builder|Invoice whereExchange($value)
- * @method static Builder|Invoice whereId($value)
- * @method static Builder|Invoice whereNet($value)
- * @method static Builder|Invoice whereNumber($value)
- * @method static Builder|Invoice wherePaidAt($value)
- * @method static Builder|Invoice wherePayment($value)
- * @method static Builder|Invoice whereSlug($value)
- * @method static Builder|Invoice whereTotal($value)
- * @method static Builder|Invoice whereType($value)
- * @method static Builder|Invoice whereUpdatedAt($value)
- * @method static Builder|Invoice withTrashed()
- * @method static Builder|Invoice withoutTrashed()
- * @mixin Eloquent
+ * @property-read \App\Models\Search\UniversalSearch|null $universalSearch
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice whereCurrencyId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice whereCustomerId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice whereData($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice whereExchange($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice whereNet($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice whereNumber($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice wherePaidAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice wherePayment($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice whereSlug($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice whereTotal($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice whereType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice withoutTrashed()
+ * @mixin \Eloquent
  */
 class Invoice extends Model
 {
-    use UsesTenantConnection;
     use SoftDeletes;
     use HasSlug;
     use HasUniversalSearch;

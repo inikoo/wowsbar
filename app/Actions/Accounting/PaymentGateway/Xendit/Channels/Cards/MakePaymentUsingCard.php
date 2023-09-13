@@ -23,11 +23,11 @@ class MakePaymentUsingCard
     public function handle(float $amount, $paymentDetail): array
     {
         $params = [
-            'token_id' => $paymentDetail['token_id'],
-            'external_id' => 'card_' . time(),
+            'token_id'          => $paymentDetail['token_id'],
+            'external_id'       => 'card_' . time(),
             'authentication_id' => $paymentDetail['authentication_id'],
-            'amount' => $amount,
-            'capture' => false
+            'amount'            => $amount,
+            'capture'           => false
         ];
 
         return Cards::create($params);

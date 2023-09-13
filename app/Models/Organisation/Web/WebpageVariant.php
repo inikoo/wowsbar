@@ -7,16 +7,12 @@
 
 namespace App\Models\Organisation\Web;
 
-use App\Models\Web\ContentBlock;
-use App\Models\Web\ContentBlockWebpageVariant;
-use App\Models\Web\Webpage;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Spatie\Multitenancy\Models\Concerns\UsesTenantConnection;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
@@ -30,7 +26,10 @@ use Spatie\Sluggable\SlugOptions;
  * @property array $components
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Models\Organisation\Web\WebpageStats|null $stats
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Organisation\Web\ContentBlock> $contentBlocks
+ * @property-read int|null $content_blocks_count
+ * @property-read \App\Models\Organisation\Web\WebpageVariantStats|null $stats
+ * @property-read \App\Models\Organisation\Web\Webpage $webpage
  * @method static Builder|WebpageVariant newModelQuery()
  * @method static Builder|WebpageVariant newQuery()
  * @method static Builder|WebpageVariant query()
@@ -45,7 +44,6 @@ use Spatie\Sluggable\SlugOptions;
  */
 class WebpageVariant extends Model
 {
-    use UsesTenantConnection;
     use HasSlug;
 
     protected $casts = [
@@ -74,7 +72,7 @@ class WebpageVariant extends Model
 
     public function stats(): HasOne
     {
-        return $this->hasOne(WebpageStats::class);
+        return $this->hasOne(WebpageVariantStats::class);
     }
 
     public function getRouteKeyName(): string

@@ -7,6 +7,8 @@
 
 namespace App\Models\Organisation\Web;
 
+use App\Enums\Organisation\Web\Webpage\WebpagePurposeEnum;
+use App\Enums\Organisation\Web\Webpage\WebpageTypeEnum;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -23,16 +25,15 @@ use Spatie\Sluggable\SlugOptions;
  * @property string $slug
  * @property string $code
  * @property string $url
- * @property string $purpose
- * @property string $type
+ * @property WebpagePurposeEnum $purpose
+ * @property WebpageTypeEnum $type
  * @property int $website_id
  * @property int|null $main_variant_id
- * @property mixed $data
- * @property mixed $settings
+ * @property array $data
+ * @property array $settings
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string|null $deleted_at
- * @property-read \App\Models\Organisation\Web\WebpageVariant|null $mainVariant
  * @property-read \App\Models\Organisation\Web\WebpageStats|null $stats
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Organisation\Web\WebpageVariant> $variants
  * @property-read int|null $variants_count
@@ -60,6 +61,19 @@ class Webpage extends Model
     use UsesTenantConnection;
     use HasSlug;
 
+    protected $casts = [
+        'data'     => 'array',
+        'settings' => 'array',
+        'type'     => WebpageTypeEnum::class,
+        'purpose'  => WebpagePurposeEnum::class,
+
+    ];
+
+    protected $attributes = [
+        'data'     => '{}',
+        'settings' => '{}',
+    ];
+
     protected $guarded = [];
 
     public function getSlugOptions(): SlugOptions
@@ -78,11 +92,6 @@ class Webpage extends Model
     public function website(): BelongsTo
     {
         return $this->belongsTo(Website::class);
-    }
-
-    public function mainVariant(): BelongsTo
-    {
-        return $this->belongsTo(WebpageVariant::class, 'main_variant_id');
     }
 
     public function variants(): HasMany

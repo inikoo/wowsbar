@@ -7,8 +7,8 @@
 
 namespace App\Models\Organisation\Web;
 
-use App\Enums\Organisation\Website\Website\WebsiteEngineEnum;
-use App\Enums\Organisation\Website\Website\WebsiteStateEnum;
+use App\Enums\Organisation\Web\Website\WebsiteEngineEnum;
+use App\Enums\Organisation\Web\Website\WebsiteStateEnum;
 use App\Models\Traits\HasHistory;
 use App\Models\Traits\HasOrganisationUniversalSearch;
 use Illuminate\Database\Eloquent\Builder;

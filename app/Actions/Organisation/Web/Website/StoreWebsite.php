@@ -35,7 +35,8 @@ class StoreWebsite
         $website->webStats()->create();
 
         $website->refresh();
-        return ResetWebsiteStructure::run($website);
+        $website= ResetWebsiteStructure::run($website);
+        return SeedWebsiteFixedWebpages::run($website);
     }
 
     public function authorize(ActionRequest $request): bool

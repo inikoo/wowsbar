@@ -27,7 +27,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
-use Spatie\Multitenancy\Models\Concerns\UsesTenantConnection;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
@@ -39,12 +38,11 @@ use Spatie\Sluggable\SlugOptions;
  * @property int $customer_id
  * @property PaymentTypeEnum $type
  * @property string $reference
- * @property string $webhook_id
+ * @property string|null $webhook_id
  * @property string $slug
  * @property PaymentStatusEnum $status
  * @property PaymentStateEnum $state
  * @property PaymentSubsequentStatusEnum|null $subsequent_status
- * @property int $currency_id
  * @property string $amount
  * @property string $tc_amount amount in tenancy currency
  * @property string|null $gc_amount amount in group currency
@@ -70,7 +68,6 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Payment whereCancelledAt($value)
  * @method static Builder|Payment whereCompletedAt($value)
  * @method static Builder|Payment whereCreatedAt($value)
- * @method static Builder|Payment whereCurrencyId($value)
  * @method static Builder|Payment whereCustomerId($value)
  * @method static Builder|Payment whereData($value)
  * @method static Builder|Payment whereDate($value)
@@ -87,6 +84,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Payment whereTcAmount($value)
  * @method static Builder|Payment whereType($value)
  * @method static Builder|Payment whereUpdatedAt($value)
+ * @method static Builder|Payment whereWebhookId($value)
  * @method static Builder|Payment whereWithRefund($value)
  * @method static Builder|Payment withTrashed()
  * @method static Builder|Payment withoutTrashed()
@@ -96,7 +94,6 @@ class Payment extends Model
 {
     use SoftDeletes;
     use HasSlug;
-    use UsesTenantConnection;
     use HasUniversalSearch;
     use HasFactory;
 
