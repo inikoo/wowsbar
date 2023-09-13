@@ -5,21 +5,13 @@
  *  Copyright (c) 2022, Raul A Perusquia F
  */
 
-namespace App\Actions\Market\Shop;
+namespace App\Actions\Organisation\Market\Shop;
 
 use App\Actions\Accounting\PaymentAccount\StorePaymentAccount;
-use App\Actions\Assets\Currency\SetCurrencyHistoricFields;
-use App\Actions\Mail\Outbox\StoreOutbox;
-use App\Actions\Tenancy\Tenant\Hydrators\TenantHydrateMarket;
 use App\Enums\Helpers\SerialReference\SerialReferenceModelEnum;
-use App\Enums\Mail\Outbox\OutboxTypeEnum;
-use App\Enums\Market\Shop\ShopSubtypeEnum;
-use App\Enums\Market\Shop\ShopTypeEnum;
-use App\Models\Mail\Mailroom;
-use App\Models\Market\Shop;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Validation\Rule;
+use App\Models\Organisation\Market\Shop;
+use App\Models\Organisation\Organisation;
+
 use Illuminate\Validation\Validator;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -32,26 +24,42 @@ class StoreShop
 
     private bool $asAction = false;
 
-    public function handle(array $modelData): Shop
+    public function handle(Organisation $organisation, array $modelData = []): Shop
     {
+        data_set($modelData, 'code', $organisation->code, overwrite: false);
+        data_set($modelData, 'name', $organisation->name, overwrite: false);
+        data_set($modelData, 'country_id', $organisation->country_id, overwrite: false);
+        data_set($modelData, 'language_id', $organisation->language_id, overwrite: false);
+        data_set($modelData, 'timezone_id', $organisation->timezone_id, overwrite: false);
+        data_set($modelData, 'currency_id', $organisation->currency_id, overwrite: false);
+
+
         /** @var Shop $shop */
-        $shop = Shop::create($modelData);
+        $shop = $organisation->shop()->create($modelData);
         $shop->stats()->create();
         $shop->accountingStats()->create();
-        $shop->mailStats()->create();
         $shop->crmStats()->create();
-        if($shop->subtype==ShopSubtypeEnum::FULFILMENT) {
-            $shop->fulfilmentStats()->create();
-        }
 
-        /** @noinspection DuplicatedCode */
         $shop->serialReferences()->create(
             [
-                'model'     => SerialReferenceModelEnum::CUSTOMER,
+                'model' => SerialReferenceModelEnum::CUSTOMER,
             ]
         );
 
-        $paymentAccount       = StorePaymentAccount::run($tenant->accountsServiceProvider(), [
+        $shop->serialReferences()->create(
+            [
+                'model' => SerialReferenceModelEnum::ORDER,
+            ]
+        );
+
+        $shop->serialReferences()->create(
+            [
+                'model' => SerialReferenceModelEnum::INVOICE,
+            ]
+        );
+
+
+        $paymentAccount       = StorePaymentAccount::run($organisation->accountsServiceProvider(), [
             'code' => 'accounts-'.$shop->slug,
             'name' => 'Accounts '.$shop->code,
             'data' => [
@@ -73,38 +81,6 @@ class StoreShop
         return $request->user()->hasPermissionTo("shops.edit");
     }
 
-    public function prepareForValidation(ActionRequest $request): void
-    {
-        $request->merge(
-            [
-                'type' => match ($this->get('subtype')) {
-                    'fulfilment'=> 'fulfilment-house',
-                    'b2b','b2c','dropshipping'=>'shop',
-                }
-            ]
-        );
-    }
-
-    public function rules(): array
-    {
-        return [
-            'name'                     => ['required', 'string', 'max:255'],
-            'code'                     => ['required', 'unique:tenant.shops', 'between:2,4', 'alpha_dash'],
-            'contact_name'             => ['nullable', 'string', 'max:255'],
-            'company_name'             => ['nullable', 'string', 'max:255'],
-            'email'                    => ['nullable', 'email'],
-            'phone'                    => 'nullable',
-            'identity_document_number' => ['nullable', 'string'],
-            'identity_document_type'   => ['nullable', 'string'],
-            'type'                     => ['required', Rule::in(ShopTypeEnum::values())],
-            'subtype'                  => ['required', Rule::in(ShopSubtypeEnum::values())],
-            'country_id'               => ['required', 'exists:central.countries,id'],
-            'currency_id'              => ['required', 'exists:central.currencies,id'],
-            'language_id'              => ['required', 'exists:central.languages,id'],
-            'timezone_id'              => ['required', 'exists:central.timezones,id'],
-        ];
-    }
-
 
     public function afterValidator(Validator $validator, ActionRequest $request): void
     {
@@ -116,25 +92,5 @@ class StoreShop
         }
     }
 
-    public function action(array $objectData): Shop
-    {
-        $this->asAction = true;
-        $this->setRawAttributes($objectData);
-        $validatedData = $this->validateAttributes();
 
-        return $this->handle($validatedData);
-    }
-
-    public function asController(ActionRequest $request): Shop
-    {
-        $this->fillFromRequest($request);
-        $request->validate();
-
-        return $this->handle($request->validated());
-    }
-
-    public function htmlResponse(Shop $shop): RedirectResponse
-    {
-        return Redirect::route('shops.show', $shop->slug);
-    }
 }

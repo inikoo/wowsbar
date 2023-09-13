@@ -1,7 +1,7 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Fri, 16 Jun 2023 11:39:33 Malaysia Time, Pantai Lembeng, Bali, Id
+ * Created: Fri, 16 Jun 2023 11:39:33 Malaysia Time, Pantai Lembeng, Bali, Indonesia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
@@ -9,7 +9,7 @@ namespace App\Actions\Organisation\HumanResources\JobPosition\UI;
 
 use App\Actions\InertiaAction;
 use App\Models\HumanResources\JobPosition;
-use App\Models\Market\ProductCategory;
+use App\Models\Organisation\Market\ProductCategory;
 use Exception;
 use Inertia\Inertia;
 use Inertia\Response;

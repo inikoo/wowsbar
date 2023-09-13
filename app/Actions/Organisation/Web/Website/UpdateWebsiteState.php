@@ -24,7 +24,7 @@ class UpdateWebsiteState
         dd($state);
         $website->update(
             [
-                'state'=>$state
+                'state'=> $state
             ]
         );
     }
@@ -49,7 +49,7 @@ class UpdateWebsiteState
     public function asController(Website $website, ActionRequest $request): Website
     {
         $request->validate();
-        return $this->handle($website,$request->validated());
+        return $this->handle($website, $request->validated());
     }
 
 

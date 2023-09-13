@@ -11,10 +11,8 @@ use App\Http\Resources\HasSelfCall;
 use App\Models\Organisation\Web\Website;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-
 class WebsiteResource extends JsonResource
 {
-
     use HasSelfCall;
 
     public function toArray($request): array

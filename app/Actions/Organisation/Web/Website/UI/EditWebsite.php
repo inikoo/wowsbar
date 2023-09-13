@@ -77,7 +77,7 @@ class EditWebsite extends InertiaAction
 
                             [
                             'title'  => __('Registrations'),
-                            'icon'   => 'fa-light fa-user-plus',
+                            'icon'   => 'fal fa-user-plus',
                             'fields' => [
                                 'approval' => [
                                     'type'     => 'toggle',
@@ -219,9 +219,9 @@ class EditWebsite extends InertiaAction
                             ]
                         ],
                             [
-                                'title'=>'state',
-                                'icon'=>'fal fa-signal-stream',
-                                'fields'=>[
+                                'title' => 'state',
+                                'icon'  => 'fal signal-stream',
+                                'fields'=> [
                                     'state' => [
                                         'type'     => 'action',
                                         'label'    => __('Launch'),

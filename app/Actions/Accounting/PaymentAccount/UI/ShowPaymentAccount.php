@@ -18,7 +18,7 @@ use App\Http\Resources\Accounting\PaymentResource;
 use App\Http\Resources\History\HistoryResource;
 use App\Models\Accounting\PaymentAccount;
 use App\Models\Accounting\PaymentServiceProvider;
-use App\Models\Market\Shop;
+use App\Models\Organisation\Market\Shop;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;

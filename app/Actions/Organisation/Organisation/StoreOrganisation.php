@@ -7,8 +7,9 @@
 
 namespace App\Actions\Organisation\Organisation;
 
+use App\Actions\Accounting\PaymentServiceProvider\StorePaymentServiceProvider;
+use App\Actions\Organisation\Market\Shop\StoreShop;
 use App\Actions\Organisation\Web\Website\StoreWebsite;
-use App\Enums\Helpers\SerialReference\SerialReferenceModelEnum;
 use App\Models\Assets\Country;
 use App\Models\Assets\Currency;
 use App\Models\Assets\Language;
@@ -34,21 +35,15 @@ class StoreOrganisation
         $organisation = Organisation::create($modelData);
         $organisation->stats()->create();
 
-        $organisation->serialReferences()->create(
-            [
-                'model'     => SerialReferenceModelEnum::CUSTOMER,
-            ]
-        );
 
-        $organisation->serialReferences()->create(
-            [
-                'model'     => SerialReferenceModelEnum::ORDER,
-            ]
-        );
 
-        $organisation->serialReferences()->create(
-            [
-                'model'     => SerialReferenceModelEnum::INVOICE,
+        StorePaymentServiceProvider::run(
+            modelData: [
+                'type' => 'account',
+                'data' => [
+                    'service-code' => 'accounts'
+                ],
+                'code' => 'accounts'
             ]
         );
 
@@ -71,8 +66,12 @@ class StoreOrganisation
 
         Artisan::call("db:seed --force --class=StockImageSeeder");
 
+        $shop=StoreShop::run($organisation);
+
+
 
         StoreWebsite::run(
+            $shop,
             [
                 'domain'=> config('app.domain')
             ]

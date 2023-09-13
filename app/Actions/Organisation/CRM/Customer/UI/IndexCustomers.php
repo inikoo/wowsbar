@@ -13,7 +13,7 @@ use App\Enums\Market\Shop\ShopTypeEnum;
 use App\Http\Resources\CRM\CustomerResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\CRM\Customer;
-use App\Models\Market\Shop;
+use App\Models\Organisation\Market\Shop;
 use App\Models\Tenancy\Tenant;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;

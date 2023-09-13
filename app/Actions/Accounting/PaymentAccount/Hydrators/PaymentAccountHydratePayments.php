@@ -7,7 +7,6 @@
 
 namespace App\Actions\Accounting\PaymentAccount\Hydrators;
 
-
 use App\Enums\Accounting\Payment\PaymentStateEnum;
 use App\Models\Accounting\PaymentAccount;
 use Illuminate\Contracts\Queue\ShouldBeUnique;

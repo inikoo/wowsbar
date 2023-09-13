@@ -24,15 +24,16 @@ use Spatie\Sluggable\SlugOptions;
  * App\Models\Organisation\Web\Web
  *
  * @property int $id
- * @property int $organisation_id
+ * @property int $shop_id
  * @property string $slug
  * @property WebsiteStateEnum $state
+ * @property bool $status
  * @property string $domain
  * @property array $settings
  * @property array $data
  * @property array $structure
- * @property bool $status
  * @property int|null $current_layout_id
+ * @property int $organisation_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string|null $launched_at
@@ -60,6 +61,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Website whereLaunchedAt($value)
  * @method static Builder|Website whereOrganisationId($value)
  * @method static Builder|Website whereSettings($value)
+ * @method static Builder|Website whereShopId($value)
  * @method static Builder|Website whereSlug($value)
  * @method static Builder|Website whereState($value)
  * @method static Builder|Website whereStatus($value)

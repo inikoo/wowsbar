@@ -5,12 +5,12 @@
  *  Copyright (c) 2022, Raul A Perusquia F
  */
 
-namespace App\Actions\Market\Shop;
+namespace App\Actions\Organisation\Market\Shop;
 
-use App\Actions\Market\Shop\Hydrators\ShopHydratePaymentAccounts;
+use App\Actions\Organisation\Market\Shop\Hydrators\ShopHydratePaymentAccounts;
 use App\Actions\Traits\WithActionUpdate;
 use App\Models\Accounting\PaymentAccount;
-use App\Models\Market\Shop;
+use App\Models\Organisation\Market\Shop;
 
 class AttachPaymentAccountToShop
 {

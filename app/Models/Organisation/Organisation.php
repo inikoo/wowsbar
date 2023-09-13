@@ -7,8 +7,9 @@
 
 namespace App\Models\Organisation;
 
+use App\Models\Accounting\PaymentServiceProvider;
 use App\Models\Assets\Currency;
-use App\Models\Helpers\SerialReference;
+use App\Models\Organisation\Market\Shop;
 use App\Models\Traits\HasOrganisationUniversalSearch;
 use App\Models\Organisation\Web\Website;
 use Illuminate\Database\Eloquent\Builder;
@@ -17,7 +18,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
@@ -39,8 +39,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property-read Currency $currency
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \App\Models\Media\Media> $media
  * @property-read int|null $media_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, SerialReference> $serialReferences
- * @property-read int|null $serial_references_count
+ * @property-read Shop|null $shop
  * @property-read \App\Models\Organisation\OrganisationStats|null $stats
  * @property-read \App\Models\Search\OrganisationUniversalSearch|null $universalSearch
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Organisation\OrganisationUser> $users
@@ -93,6 +92,11 @@ class Organisation extends Model implements HasMedia
         return $this->hasOne(Website::class);
     }
 
+    public function shop(): HasOne
+    {
+        return $this->hasOne(Shop::class);
+    }
+
     public function currency(): BelongsTo
     {
         return $this->belongsTo(Currency::class);
@@ -103,9 +107,10 @@ class Organisation extends Model implements HasMedia
         return $this->hasMany(OrganisationUser::class);
     }
 
-    public function serialReferences(): MorphMany
+    public function accountsServiceProvider(): PaymentServiceProvider
     {
-        return $this->morphMany(SerialReference::class, 'container');
+        return PaymentServiceProvider::where('data->service-code', 'accounts')->first();
     }
+
 
 }

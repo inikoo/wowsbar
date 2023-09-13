@@ -5,12 +5,12 @@
  * Copyright (c) 2023, Inikoo LTD
  */
 
-namespace App\Actions\Market\Shop\UI;
+namespace App\Actions\Organisation\Market\Shop\UI;
 
 use App\Actions\InertiaAction;
-use App\Actions\Market\Product\UI\IndexProducts;
-use App\Actions\Market\ProductCategory\UI\IndexDepartments;
-use App\Actions\Market\ProductCategory\UI\IndexFamilies;
+use App\Actions\Organisation\Market\Product\UI\IndexProducts;
+use App\Actions\Organisation\Market\ProductCategory\UI\IndexDepartments;
+use App\Actions\Organisation\Market\ProductCategory\UI\IndexFamilies;
 use App\Actions\UI\Dashboard\ShowDashboard;
 use App\Actions\UI\WithInertia;
 use App\Enums\UI\ShopTabsEnum;
@@ -18,7 +18,7 @@ use App\Http\Resources\Market\DepartmentResource;
 use App\Http\Resources\Market\FamilyResource;
 use App\Http\Resources\Market\ProductResource;
 use App\Http\Resources\Market\ShopResource;
-use App\Models\Market\Shop;
+use App\Models\Organisation\Market\Shop;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;

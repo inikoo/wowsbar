@@ -5,12 +5,11 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Market\Shop\Hydrators;
-
+namespace App\Actions\Organisation\Market\Shop\Hydrators;
 
 use App\Enums\Accounting\Payment\PaymentStateEnum;
 use App\Models\Accounting\Payment;
-use App\Models\Market\Shop;
+use App\Models\Organisation\Market\Shop;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Support\Arr;
 use Lorisleiva\Actions\Concerns\AsAction;

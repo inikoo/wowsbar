@@ -5,15 +5,15 @@
  *  Copyright (c) 2022, Raul A Perusquia F
  */
 
-namespace App\Actions\Market\Shop;
+namespace App\Actions\Organisation\Market\Shop;
 
-use App\Actions\Market\Shop\Hydrators\ShopHydrateUniversalSearch;
+use App\Actions\Organisation\Market\Shop\Hydrators\ShopHydrateUniversalSearch;
 use App\Actions\Tenancy\Tenant\Hydrators\TenantHydrateMarket;
 use App\Actions\Traits\WithActionUpdate;
 use App\Enums\Market\Shop\ShopSubtypeEnum;
 use App\Enums\Market\Shop\ShopTypeEnum;
 use App\Http\Resources\Market\ShopResource;
-use App\Models\Market\Shop;
+use App\Models\Organisation\Market\Shop;
 use Illuminate\Validation\Rule;
 use Lorisleiva\Actions\ActionRequest;
 

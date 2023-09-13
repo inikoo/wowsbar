@@ -5,7 +5,7 @@
  * Copyright (c) 2023, Inikoo LTD
  */
 
-namespace App\Actions\Market\Shop\UI;
+namespace App\Actions\Organisation\Market\Shop\UI;
 
 use App\Actions\InertiaAction;
 use Inertia\Inertia;

@@ -9,7 +9,7 @@ namespace App\Models\Accounting;
 
 use App\Actions\Accounting\PaymentAccount\Hydrators\PaymentAccountHydratePayments;
 use App\Actions\Accounting\PaymentServiceProvider\Hydrators\PaymentServiceProviderHydratePayments;
-use App\Actions\Market\Shop\Hydrators\ShopHydratePayments;
+use App\Actions\Organisation\Market\Shop\Hydrators\ShopHydratePayments;
 use App\Actions\Tenancy\Tenant\Hydrators\TenantHydrateAccounting;
 use App\Enums\Accounting\Payment\PaymentStateEnum;
 use App\Enums\Accounting\Payment\PaymentStatusEnum;
@@ -17,7 +17,7 @@ use App\Enums\Accounting\Payment\PaymentSubsequentStatusEnum;
 use App\Enums\Accounting\Payment\PaymentTypeEnum;
 use App\Models\Assets\Currency;
 use App\Models\CRM\Customer;
-use App\Models\Market\Shop;
+use App\Models\Organisation\Market\Shop;
 use App\Models\Search\UniversalSearch;
 use App\Models\Traits\HasUniversalSearch;
 use Eloquent;
@@ -36,7 +36,6 @@ use Spatie\Sluggable\SlugOptions;
  *
  * @property int $id
  * @property int $payment_account_id
- * @property int $shop_id
  * @property int $customer_id
  * @property PaymentTypeEnum $type
  * @property string $reference
@@ -60,13 +59,34 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read Currency $currency
  * @property-read Customer $customer
  * @property-read \App\Models\Accounting\PaymentAccount $paymentAccount
- * @property-read Shop $shop
+ * @property-read Shop|null $shop
  * @property-read UniversalSearch|null $universalSearch
- * @method static \Database\Factories\Accounting\PaymentFactory factory($count = null, $state = [])
  * @method static Builder|Payment newModelQuery()
  * @method static Builder|Payment newQuery()
  * @method static Builder|Payment onlyTrashed()
  * @method static Builder|Payment query()
+ * @method static Builder|Payment whereAmount($value)
+ * @method static Builder|Payment whereCancelledAt($value)
+ * @method static Builder|Payment whereCompletedAt($value)
+ * @method static Builder|Payment whereCreatedAt($value)
+ * @method static Builder|Payment whereCurrencyId($value)
+ * @method static Builder|Payment whereCustomerId($value)
+ * @method static Builder|Payment whereData($value)
+ * @method static Builder|Payment whereDate($value)
+ * @method static Builder|Payment whereDeletedAt($value)
+ * @method static Builder|Payment whereGcAmount($value)
+ * @method static Builder|Payment whereId($value)
+ * @method static Builder|Payment wherePaymentAccountId($value)
+ * @method static Builder|Payment whereReference($value)
+ * @method static Builder|Payment whereSlug($value)
+ * @method static Builder|Payment whereSourceId($value)
+ * @method static Builder|Payment whereState($value)
+ * @method static Builder|Payment whereStatus($value)
+ * @method static Builder|Payment whereSubsequentStatus($value)
+ * @method static Builder|Payment whereTcAmount($value)
+ * @method static Builder|Payment whereType($value)
+ * @method static Builder|Payment whereUpdatedAt($value)
+ * @method static Builder|Payment whereWithRefund($value)
  * @method static Builder|Payment withTrashed()
  * @method static Builder|Payment withoutTrashed()
  * @mixin Eloquent

@@ -7,39 +7,20 @@
 
 namespace App\Models\Accounting;
 
-use App\Models\OMS\Transaction;
+use App\Models\Organisation\OMS\Transaction;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Carbon;
 use Spatie\Multitenancy\Models\Concerns\UsesTenantConnection;
 
 /**
  * App\Models\Accounting\InvoiceTransaction
  *
- * @property int $id
- * @property int $shop_id
- * @property int $customer_id
- * @property int $order_id
- * @property int|null $invoice_id
- * @property int|null $transaction_id
- * @property string|null $item_type
- * @property int|null $item_id
- * @property string $quantity
- * @property string $net
- * @property string $discounts
- * @property string $tax
- * @property int|null $tax_band_id
- * @property array $data
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * @property Carbon|null $deleted_at
- * @property int|null $source_id
- * @property int|null $source_alt_id
  * @property-read Model|\Eloquent $item
+ * @property-write mixed $quantity
  * @property-read Transaction|null $transaction
  * @method static Builder|InvoiceTransaction newModelQuery()
  * @method static Builder|InvoiceTransaction newQuery()

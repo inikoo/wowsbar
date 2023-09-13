@@ -9,14 +9,14 @@ namespace App\Actions\Accounting\Invoice;
 
 use App\Actions\Accounting\Payment\UI\IndexPayments;
 use App\Actions\InertiaAction;
-use App\Actions\Market\Shop\UI\IndexShops;
+use App\Actions\Organisation\Market\Shop\UI\IndexShops;
 use App\Actions\UI\WithInertia;
 use App\Enums\UI\CustomerTabsEnum;
 use App\Enums\UI\InvoiceTabsEnum;
 use App\Http\Resources\Accounting\InvoiceResource;
 use App\Http\Resources\Accounting\PaymentResource;
 use App\Models\Accounting\Invoice;
-use App\Models\Market\Shop;
+use App\Models\Organisation\Market\Shop;
 use Inertia\Inertia;
 use Inertia\Response;
 use JetBrains\PhpStorm\Pure;

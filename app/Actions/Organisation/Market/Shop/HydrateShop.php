@@ -6,19 +6,19 @@
  *  Version 4.0
  */
 
-namespace App\Actions\Market\Shop;
+namespace App\Actions\Organisation\Market\Shop;
 
 use App\Actions\HydrateModel;
-use App\Actions\Market\Shop\Hydrators\ShopHydrateCustomerInvoices;
-use App\Actions\Market\Shop\Hydrators\ShopHydrateCustomers;
-use App\Actions\Market\Shop\Hydrators\ShopHydrateDepartments;
-use App\Actions\Market\Shop\Hydrators\ShopHydrateInvoices;
-use App\Actions\Market\Shop\Hydrators\ShopHydrateOrders;
-use App\Actions\Market\Shop\Hydrators\ShopHydratePaymentAccounts;
-use App\Actions\Market\Shop\Hydrators\ShopHydratePayments;
-use App\Actions\Market\Shop\Hydrators\ShopHydrateProducts;
-use App\Actions\Market\Shop\Hydrators\ShopHydrateSales;
-use App\Models\Market\Shop;
+use App\Actions\Organisation\Market\Shop\Hydrators\ShopHydrateCustomerInvoices;
+use App\Actions\Organisation\Market\Shop\Hydrators\ShopHydrateCustomers;
+use App\Actions\Organisation\Market\Shop\Hydrators\ShopHydrateDepartments;
+use App\Actions\Organisation\Market\Shop\Hydrators\ShopHydrateInvoices;
+use App\Actions\Organisation\Market\Shop\Hydrators\ShopHydrateOrders;
+use App\Actions\Organisation\Market\Shop\Hydrators\ShopHydratePaymentAccounts;
+use App\Actions\Organisation\Market\Shop\Hydrators\ShopHydratePayments;
+use App\Actions\Organisation\Market\Shop\Hydrators\ShopHydrateProducts;
+use App\Actions\Organisation\Market\Shop\Hydrators\ShopHydrateSales;
+use App\Models\Organisation\Market\Shop;
 use Illuminate\Support\Collection;
 
 class HydrateShop extends HydrateModel
