@@ -8,7 +8,7 @@
 
 use App\Actions\UI\Public\Dashboard\ShowPublicDashboard;
 use App\Actions\UI\Public\ShowPricing;
-use App\Actions\UI\Public\ShowWelcome;
+use App\Actions\UI\Public\ShowHome;
 use App\Actions\UI\Public\ShowWhatsNew;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -16,14 +16,13 @@ use Illuminate\Support\Facades\Route;
 Route::middleware([
     "public-web",
 ])->group(function () {
-    Route::get('/', ShowWelcome::class)->name('welcome');
+    Route::get('/', ShowHome::class)->name('welcome');
 
     Route::prefix("disclosure")
         ->name("disclosure.")
         ->group(__DIR__."/disclosure.php");
 
-    Route::get('/whats-new', ShowWhatsNew::class)->name('whats-new');
-    Route::get('/pricing', ShowPricing::class)->name('pricing');
+
     Route::middleware(["public-auth:public"])->group(function () {
         Route::get('/dashboard', ShowPublicDashboard::class)->name('dashboard.show');
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

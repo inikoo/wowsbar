@@ -6,10 +6,10 @@
  */
 
 
-use App\Actions\CRM\Prospect\IndexProspects;
 use App\Actions\Organisation\CRM\Customer\UI\EditCustomer;
 use App\Actions\Organisation\CRM\Customer\UI\IndexCustomers;
 use App\Actions\Organisation\CRM\Customer\UI\ShowCustomer;
+use App\Actions\Organisation\CRM\Prospect\IndexProspects;
 use App\Actions\Organisation\UI\CRM\CRMDashboard;
 
 Route::get('/', [CRMDashboard::class, 'inTenant'])->name('dashboard');
