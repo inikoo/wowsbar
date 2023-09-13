@@ -7,8 +7,8 @@
 
 namespace App\Actions\UI\Public\Auth;
 
-use App\Actions\CRM\Customer\StoreCustomer;
-use App\Actions\CRM\PublicUser\StorePublicUser;
+use App\Actions\Organisation\CRM\Customer\StoreCustomer;
+use App\Actions\Organisation\CRM\PublicUser\StorePublicUser;
 use App\Models\CRM\PublicUser;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;

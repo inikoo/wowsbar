@@ -45,7 +45,7 @@ class UpdateEmployee
     {
         $request->validate();
 
-        return $this->handle($employee, $request->all());
+        return $this->handle($employee,$request->validated());
     }
 
     public function jsonResponse(Employee $employee): EmployeeResource

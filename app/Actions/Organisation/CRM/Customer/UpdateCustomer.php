@@ -1,13 +1,13 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Tue, 20 Jun 2023 20:32:25 Malaysia Time, Pantai Lembeng, Bali, Id
+ * Created: Wed, 13 Sep 2023 10:24:04 Malaysia Time, Pantai Lembeng, Bali, Indonesia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
 namespace App\Actions\Organisation\CRM\Customer;
 
-use App\Actions\CRM\Customer\Hydrators\CustomerHydrateUniversalSearch;
+use App\Actions\Organisation\CRM\Customer\Hydrators\CustomerHydrateUniversalSearch;
 use App\Actions\Traits\WithActionUpdate;
 use App\Http\Resources\CRM\CustomerResource;
 use App\Models\CRM\Customer;
@@ -60,7 +60,7 @@ class UpdateCustomer
     {
         $request->validate();
 
-        return $this->handle($customer, $request->all());
+        return $this->handle($customer,$request->validated());
     }
 
 

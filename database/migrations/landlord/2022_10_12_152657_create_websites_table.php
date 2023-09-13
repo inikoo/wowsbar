@@ -16,16 +16,17 @@ return new class () extends Migration {
     {
         Schema::create('websites', function (Blueprint $table) {
             $table->smallIncrements('id');
-            $table->unsignedSmallInteger('organisation_id');
-            $table->foreign('organisation_id')->references('id')->on('organisations')->onUpdate('cascade')->onDelete('cascade');
             $table->string('slug')->unique()->collation('und_ns');
             $table->string('state')->default(WebsiteStateEnum::IN_PROCESS->value)->index();
+            $table->boolean('status')->default(false);
             $table->string('domain')->unique()->collation('und_ns');
             $table->jsonb('settings');
             $table->jsonb('data');
             $table->jsonb('structure');
-            $table->boolean('status')->default(false);
             $table->unsignedSmallInteger('current_layout_id')->index()->nullable();
+            $table->unsignedSmallInteger('organisation_id');
+            $table->foreign('organisation_id')->references('id')->on('organisations')->onUpdate('cascade')->onDelete('cascade');
+
             $table->timestampsTz();
             $table->timestampTz('launched_at')->nullable();
             $table->timestampTz('closed_at')->nullable();

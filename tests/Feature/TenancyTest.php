@@ -5,13 +5,13 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
+use App\Actions\Organisation\CRM\Customer\StoreCustomer;
+use App\Actions\Organisation\CRM\PublicUser\StorePublicUser;
 use App\Actions\Organisation\Organisation\StoreOrganisation;
-use App\Models\CRM\PublicUser;
-use App\Models\Organisation\Organisation;
-use App\Actions\CRM\Customer\StoreCustomer;
-use App\Actions\CRM\PublicUser\StorePublicUser;
 use App\Actions\Tenancy\Tenant\StoreTenant;
 use App\Models\CRM\Customer;
+use App\Models\CRM\PublicUser;
+use App\Models\Organisation\Organisation;
 use App\Models\Tenancy\Tenant;
 
 beforeAll(function () {
