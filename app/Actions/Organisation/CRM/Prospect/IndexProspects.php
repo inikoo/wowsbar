@@ -1,7 +1,7 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Wed, 13 Sep 2023 10:24:04 Malaysia Time, Pantai Lembeng, Bali, Indonesia
+ * Created: Wed, 21 Jun 2023 08:45:00 Malaysia Time, Pantai Lembeng, Bali, Id
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
@@ -115,7 +115,7 @@ class IndexProspects extends InertiaAction
                 'pageHead'    => [
                     'title'     => __('prospects'),
                     'iconRight' => [
-                        'icon'  => ['fal', 'fa-users'],
+                        'icon'  => ['fal', 'fa-user-plus'],
                         'title' => __('prospect')
                     ]
                 ],
