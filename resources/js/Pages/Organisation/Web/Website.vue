@@ -45,7 +45,7 @@ const props = defineProps<{
     }
     webpages?: string
     changelog?: object
-    website: any
+    showcase: any
 }>()
 
 
@@ -70,7 +70,7 @@ const component = computed(() => {
     <Head :title="capitalize(title)" />
     <PageHeading :data="pageHead"></PageHeading>
     <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate"/>
-    <!-- <pre>{{ props.website }}</pre> -->
+    <!-- <pre>{{ props.showcase }}</pre> -->
     <component :is="component" :data="props[currentTab]"></component>
 
 </template>
