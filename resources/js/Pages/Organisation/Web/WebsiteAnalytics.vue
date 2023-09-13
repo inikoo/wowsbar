@@ -7,9 +7,7 @@ const props = defineProps<{
 </script>
 
 <template>
-    <div class="px-6 py-24 sm:py-20 lg:px-8">
-        <UnderMaintenance />    
-    </div>
+    Website - Analytics
 </template>
 
 <style scoped></style>

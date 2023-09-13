@@ -2,6 +2,9 @@
 import VueResizable from "vue-resizable"
 import { ref } from "vue"
 import { set, get } from "lodash"
+import Search from "@/Components/CMS/Utils/Search.vue";
+
+
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faHandPointer, faHandRock, faPlus, faText, faSearch, faImage } from '@/../private/pro-solid-svg-icons';
@@ -111,15 +114,7 @@ const generateThumbnail = (file) => {
 					class="col-sm-10 draggable-component" :style="{ ...item.style }">
 					<div :class="['draggable-handle', { border: get(data[layerActive], 'id') === item.id }]"
 						@click="(e) => { e.stopPropagation(); props.setActive(item.id) }">
-						<div class="relative">
-							<input
-								class="dark:bg-gray-600 block w-full pl-9 pr-9 text-sm rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500 dark:focus:border-gray-400 border-gray-300 dark:border-gray-500"
-								placeholder="search" type="text" name="global" :readonly="true">
-							<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-								<FontAwesomeIcon icon="far fa-search" class="h-4 w-4 text-gray-400" aria-hidden="true" />
-							</div>
-
-						</div>
+						<Search />
 					</div>
 				</div>
 

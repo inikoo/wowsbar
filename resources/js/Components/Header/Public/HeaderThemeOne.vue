@@ -2,24 +2,71 @@
 import { Link, usePage } from '@inertiajs/vue3'
 import Button from '@/Components/Elements/Buttons/Button.vue'
 import Image from "@/Components/Image.vue"
+import Text from '@/Pages/Public/PageComponents/Text.vue'
 
+const props = defineProps<{
+    data: {
+        data: {
+            id: string
+            name: string
+            style: {
+                fontSize: number
+                left: number
+                top: number
+                color?: string
+            }
+            type: string
+        }[]
+        layout: {
+            width: number
+            height: number
+        }
+    }
+}>()
 
+console.log(props.data)
 const logo = usePage().props.art.logo
+
+const widthComponent = props.data.layout.width
+const heightComponent = props.data.layout.height
+const dataLength = props.data.data.length
+
+const getComponent = (type: string) => {
+    const component = {
+        'text': 'p',
+        'search': Button
+    }
+
+    return component[type]
+}
+
+const calcPercentage = (total: number, amount: number) => {
+    return (amount/total) * 100
+}
 
 </script>
 
 <template>
-    <div class="bg-gradient-to-b from-gray-100/50 to-gray-100/0 w-screen fixed z-10 px-6 pt-3 flex justify-between items-center">
-        <Link :href="route('public.welcome')">
-            <Image class="h-6 select-none" :src="logo" alt="Wowsbar" />
-        </Link>
-        <div class="flex justify-end gap-x-4 text-sm font-medium">
-            <Link :href="route('public.register')" class="">
-                <Button :style="`tertiary`" size="xs">Register</Button>
-            </Link>
-            <Link :href="route('public.login')" class="">
-                <Button :style="`primary`" size="xs">Login</Button>
-            </Link>
+    <!-- <pre>{{ data }}</pre> -->
+    <div class="mt-24 bg-gray-100 fixed z-10 flex justify-center items-center"
+        :class="`w-full `"
+    >
+        <div :class="`isolate relative`"
+            :style="['width: ' + widthComponent + 'px', 'height: ' + heightComponent + 'px']"
+        >
+            <div v-for="(component, index) in data.data" class="absolute"
+                :style="[
+                    'top: ' + calcPercentage(heightComponent, component.style.top) + '%',
+                    'left: ' + calcPercentage(widthComponent, component.style.left) + '%',
+                    'z-index: ' + (dataLength - index),
+                    'font-size: ' + component.style.fontSize + 'px',
+                    'color: ' + (component.style.color ?? '#374151')
+                ]"
+            >
+                <component :is="getComponent(component.type)">
+                    {{ component.name }}
+                </component>
+            </div>
         </div>
     </div>
 </template>
