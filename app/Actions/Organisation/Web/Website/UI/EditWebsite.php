@@ -220,7 +220,7 @@ class EditWebsite extends InertiaAction
                         ],
                             [
                                 'title' => 'state',
-                                'icon'  => 'fal signal-stream',
+                                'icon'  => 'fal fa-signal-stream',
                                 'fields'=> [
                                     'state' => [
                                         'type'     => 'action',
