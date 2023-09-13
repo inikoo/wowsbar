@@ -10,7 +10,7 @@ namespace App\Actions\Organisation\CRM\Customer;
 use App\Actions\Helpers\SerialReference\GetSerialReference;
 use App\Enums\Helpers\SerialReference\SerialReferenceModelEnum;
 use App\Models\CRM\Customer;
-use App\Models\Organisation\Organisation;
+use App\Models\Organisation\Market\Shop;
 use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
@@ -31,15 +31,15 @@ class StoreCustomer
     /**
      * @throws Throwable
      */
-    public function handle(Organisation $organisation, array $customerData, array $customerAddressesData = []): Customer
+    public function handle(Shop $shop, array $customerData, array $customerAddressesData = []): Customer
     {
-        return DB::transaction(function () use ($customerData, $organisation) {
+        return DB::transaction(function () use ($customerData, $shop) {
             /** @var Customer $customer */
             $customer = Customer::create($customerData);
             if ($customer->reference == null) {
 
                 $reference = GetSerialReference::run(
-                    container: $organisation,
+                    container: $shop,
                     modelType: SerialReferenceModelEnum::CUSTOMER
                 );
                 $customer->update(
@@ -96,19 +96,19 @@ class StoreCustomer
         $this->fillFromRequest($request);
         $request->validate();
 
-        return $this->handle(organisation(), $request->validated());
+        return $this->handle(organisation()->shop, $request->validated());
     }
 
     /**
      * @throws Throwable
      */
-    public function action(Organisation $organisation, $objectData, array $customerAddressesData=[]): Customer
+    public function action(Shop $shop, $objectData, array $customerAddressesData=[]): Customer
     {
         $this->asAction = true;
         $this->setRawAttributes($objectData);
         $validatedData = $this->validateAttributes();
 
-        return $this->handle($organisation, $validatedData, $customerAddressesData);
+        return $this->handle($shop, $validatedData, $customerAddressesData);
     }
 
     public string $commandSignature = 'customer:create {email} {--N|contact_name=} {--C|company=} {--P|password=}';
@@ -134,7 +134,7 @@ class StoreCustomer
             return 1;
         }
 
-        $customer = $this->handle(organisation(), $validatedData);
+        $customer = $this->handle(organisation()->shop, $validatedData);
 
         $command->info("Customer $customer->slug created successfully 🎉");
 

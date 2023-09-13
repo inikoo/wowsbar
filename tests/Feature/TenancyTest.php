@@ -27,7 +27,7 @@ test('create organisation', function () {
 
 test('create customer', function ($organisation) {
     $modelData = Customer::factory()->definition();
-    $customer  = StoreCustomer::make()->action($organisation, $modelData);
+    $customer  = StoreCustomer::make()->action($organisation->shop, $modelData);
     expect($customer)->toBeInstanceOf(Customer::class);
     return $customer;
 })->depends('create organisation');

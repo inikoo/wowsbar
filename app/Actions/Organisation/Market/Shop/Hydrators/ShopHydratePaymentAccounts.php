@@ -5,9 +5,9 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Market\Shop\Hydrators;
+namespace App\Actions\Organisation\Market\Shop\Hydrators;
 
-use App\Models\Market\Shop;
+use App\Models\Organisation\Market\Shop;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Lorisleiva\Actions\Concerns\AsAction;
 

@@ -7,7 +7,6 @@
 
 namespace App\Actions\Accounting\PaymentServiceProvider\Hydrators;
 
-
 use App\Models\Accounting\PaymentServiceProvider;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Lorisleiva\Actions\Concerns\AsAction;

@@ -44,7 +44,7 @@ class UpdateWebsite
     public function asController(Website $website, ActionRequest $request): Website
     {
         $request->validate();
-        return $this->handle($website,$request->validated());
+        return $this->handle($website, $request->validated());
     }
 
 

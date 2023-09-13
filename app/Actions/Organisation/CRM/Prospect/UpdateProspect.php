@@ -1,7 +1,7 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Wed, 21 Jun 2023 08:45:00 Malaysia Time, Pantai Lembeng, Bali, Id
+ * Created: Wed, 21 Jun 2023 08:45:00 Malaysia Time, Pantai Lembeng, Bali, Indonesia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
@@ -51,7 +51,7 @@ class UpdateProspect
     {
         $request->validate();
 
-        return $this->handle($prospect,$request->validated());
+        return $this->handle($prospect, $request->validated());
     }
 
     public function action(Prospect $prospect, $objectData): Prospect

@@ -101,7 +101,7 @@ class IndexWebpages extends InertiaAction
         $container = null;
 
         return Inertia::render(
-            'Organisation/Web/Webpages',
+            'Web/Webpages',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->getName(),

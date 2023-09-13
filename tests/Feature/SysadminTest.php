@@ -28,7 +28,7 @@ beforeEach(function () {
     }
     $tenant = Tenant::first();
     if (!$tenant) {
-        $customer  = StoreCustomer::make()->action($organisation, Customer::factory()->definition());
+        $customer  = StoreCustomer::make()->action($organisation->shop, Customer::factory()->definition());
         $modelData = Tenant::factory()->definition();
         $tenant    = StoreTenant::make()->action($customer, $modelData);
     }

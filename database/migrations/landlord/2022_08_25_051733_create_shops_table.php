@@ -1,11 +1,13 @@
 <?php
 /*
- *  Author: Raul Perusquia <raul@inikoo.com>
- *  Created: Thu, 25 Aug 2022 13:18:26 Malaysia Time, Kuala Lumpur, Malaysia
- *  Copyright (c) 2022, Raul A Perusquia F
+ * Author: Raul Perusquia <raul@inikoo.com>
+ * Created: Wed, 13 Sep 2023 13:33:09 Malaysia Time, Pantai Lembeng, Bali, Indonesia
+ * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-use App\Enums\Shop\ShopStateEnum;
+use App\Enums\Market\Shop\ShopStateEnum;
+use App\Enums\Market\Shop\ShopSubtypeEnum;
+use App\Enums\Market\Shop\ShopTypeEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -28,8 +30,8 @@ return new class () extends Migration {
             $table->foreign('address_id')->references('id')->on('addresses');
             $table->jsonb('location');
             $table->string('state')->index()->default(ShopStateEnum::IN_PROCESS->value);
-            $table->string('type')->index();
-            $table->string('subtype')->nullable();
+            $table->string('type')->index()->default(ShopTypeEnum::SHOP->value);
+            $table->string('subtype')->nullable()->default(ShopSubtypeEnum::MARKETING->value);
             $table->date('open_at')->nullable();
             $table->date('closed_at')->nullable();
             $table->unsignedSmallInteger('country_id');
@@ -42,9 +44,10 @@ return new class () extends Migration {
             $table->foreign('timezone_id')->references('id')->on('public.timezones');
             $table->jsonb('data');
             $table->jsonb('settings');
+            $table->unsignedSmallInteger('organisation_id');
+            $table->foreign('organisation_id')->references('id')->on('organisations')->onUpdate('cascade')->onDelete('cascade');
             $table->timestampsTz();
             $table->softDeletesTz();
-            $table->unsignedSmallInteger('source_id')->nullable()->unique();
         });
     }
 

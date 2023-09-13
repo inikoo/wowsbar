@@ -36,17 +36,27 @@ use Spatie\Sluggable\SlugOptions;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property Carbon|null $deleted_at
- * @property int|null $source_id
  * @property-read Collection<int, \OwenIt\Auditing\Models\Audit> $audits
+ * @property-read int|null $audits_count
  * @property-read array $es_audits
  * @property-read \App\Models\Accounting\PaymentServiceProvider $paymentServiceProvider
  * @property-read Collection<int, \App\Models\Accounting\Payment> $payments
+ * @property-read int|null $payments_count
  * @property-read \App\Models\Accounting\PaymentAccountStats|null $stats
- * @method static \Database\Factories\Accounting\PaymentAccountFactory factory($count = null, $state = [])
  * @method static Builder|PaymentAccount newModelQuery()
  * @method static Builder|PaymentAccount newQuery()
  * @method static Builder|PaymentAccount onlyTrashed()
  * @method static Builder|PaymentAccount query()
+ * @method static Builder|PaymentAccount whereCode($value)
+ * @method static Builder|PaymentAccount whereCreatedAt($value)
+ * @method static Builder|PaymentAccount whereData($value)
+ * @method static Builder|PaymentAccount whereDeletedAt($value)
+ * @method static Builder|PaymentAccount whereId($value)
+ * @method static Builder|PaymentAccount whereLastUsedAt($value)
+ * @method static Builder|PaymentAccount whereName($value)
+ * @method static Builder|PaymentAccount wherePaymentServiceProviderId($value)
+ * @method static Builder|PaymentAccount whereSlug($value)
+ * @method static Builder|PaymentAccount whereUpdatedAt($value)
  * @method static Builder|PaymentAccount withTrashed()
  * @method static Builder|PaymentAccount withoutTrashed()
  * @mixin Eloquent

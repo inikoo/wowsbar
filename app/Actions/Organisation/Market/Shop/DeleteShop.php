@@ -1,14 +1,13 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Sat, 24 Jun 2023 13:12:05 Malaysia Time, Pantai Lembeng, Bali, Id
+ * Created: Sat, 24 Jun 2023 13:12:05 Malaysia Time, Pantai Lembeng, Bali, Indonesia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Market\Shop;
+namespace App\Actions\Organisation\Market\Shop;
 
-use App\Actions\Tenancy\Tenant\Hydrators\TenantHydrateMarket;
-use App\Models\Market\Shop;
+use App\Models\Organisation\Market\Shop;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
 use Lorisleiva\Actions\ActionRequest;
@@ -24,10 +23,7 @@ class DeleteShop
     {
         $shop->website()->delete();
         $shop->prospects()->delete();
-        $shop->products()->delete();
-        $shop->departments()->delete();
         $shop->delete();
-        TenantHydrateMarket::dispatch(app('currentTenant'));
         return $shop;
     }
 

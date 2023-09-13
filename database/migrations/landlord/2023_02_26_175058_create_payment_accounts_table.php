@@ -1,7 +1,7 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Mon, 27 Feb 2023 09:50:45 Malaysia Time, Kuala Lumpur, Malaysia
+ * Created: Wed, 13 Sep 2023 13:43:12 Malaysia Time, Pantai Lembeng, Bali, Indonesia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
@@ -12,22 +12,23 @@ use Illuminate\Support\Facades\Schema;
 return new class () extends Migration {
     public function up(): void
     {
-        Schema::create('payment_service_providers', function (Blueprint $table) {
+        Schema::create('payment_accounts', function (Blueprint $table) {
             $table->smallIncrements('id');
-            $table->string('type')->index();
+            $table->unsignedInteger('payment_service_provider_id')->index();
+            $table->foreign('payment_service_provider_id')->references('id')->on('payment_service_providers');
             $table->string('code')->index()->collation('und_ns');
             $table->string('slug')->unique()->collation('und_ns');
+            $table->string('name')->index()->collation('und_ns');
             $table->jsonb('data');
             $table->dateTimeTz('last_used_at')->nullable();
             $table->timestampsTz();
             $table->softDeletesTz();
-            $table->unsignedInteger('source_id')->index()->nullable();
         });
     }
 
 
     public function down(): void
     {
-        Schema::dropIfExists('payment_service_providers');
+        Schema::dropIfExists('payment_accounts');
     }
 };

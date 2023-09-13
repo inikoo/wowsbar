@@ -219,9 +219,9 @@ class EditWebsite extends InertiaAction
                             ]
                         ],
                             [
-                                'title'=>'state',
-                                'icon'=>'fal signal-stream',
-                                'fields'=>[
+                                'title' => 'state',
+                                'icon'  => 'fal signal-stream',
+                                'fields'=> [
                                     'state' => [
                                         'type'     => 'action',
                                         'label'    => '',

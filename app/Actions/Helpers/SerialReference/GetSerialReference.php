@@ -8,6 +8,7 @@
 namespace App\Actions\Helpers\SerialReference;
 
 use App\Models\Helpers\SerialReference;
+use App\Models\Organisation\Market\Shop;
 use App\Models\Organisation\Organisation;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Illuminate\Support\Facades\DB;
@@ -19,7 +20,7 @@ class GetSerialReference
     /**
      * @throws \Throwable
      */
-    public function handle(Organisation $container, $modelType): string
+    public function handle(Organisation|Shop $container, $modelType): string
     {
         $serialReference = $this->getSerialReference($container, $modelType);
 
@@ -43,7 +44,7 @@ class GetSerialReference
     private function getSerialReference($container, $modelType): SerialReference
     {
         return match (class_basename($container)) {
-            'Organisation' => $container->serialReferences()->where('model', $modelType)->firstOrFail()
+            'Organisation', 'Shop' => $container->serialReferences()->where('model', $modelType)->firstOrFail()
         };
     }
 

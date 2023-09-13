@@ -1,7 +1,7 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Tue, 20 Jun 2023 20:30:12 Malaysia Time, Pantai Lembeng, Bali, Id
+ * Created: Tue, 20 Jun 2023 20:30:12 Malaysia Time, Pantai Lembeng, Bali, Indonesia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
@@ -26,6 +26,13 @@ use Spatie\Multitenancy\Models\Concerns\UsesTenantConnection;
  * @method static Builder|PaymentAccountShop newModelQuery()
  * @method static Builder|PaymentAccountShop newQuery()
  * @method static Builder|PaymentAccountShop query()
+ * @method static Builder|PaymentAccountShop whereCreatedAt($value)
+ * @method static Builder|PaymentAccountShop whereCurrencyId($value)
+ * @method static Builder|PaymentAccountShop whereData($value)
+ * @method static Builder|PaymentAccountShop whereId($value)
+ * @method static Builder|PaymentAccountShop wherePaymentAccountId($value)
+ * @method static Builder|PaymentAccountShop whereShopId($value)
+ * @method static Builder|PaymentAccountShop whereUpdatedAt($value)
  * @mixin Eloquent
  */
 class PaymentAccountShop extends Pivot
