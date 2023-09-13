@@ -39,7 +39,7 @@ onMounted(() => {
 <template>
   <div>
     <template v-if="!editMode">
-      <div @dblclick="changeEditMode" :class="classCss" >{{ data[keyValue] }}</div>
+      <div @dblclick="changeEditMode" :class="classCss" ><slot  name="buttonMode">{{ data[keyValue] }}</slot></div>
     </template>
     <template v-else>
       <input

@@ -148,10 +148,19 @@ const deleteContent = (index) => [
     data.splice(index, 1)
 ]
 
+const setUpDataBeforeSend = (setData) => {
+    for(const item of data){
+        delete item.ref;
+    }
+    return setData
+
+};
+
 async function setToFirebase() {
   const column = 'org/websites/header';
+  const dataSend = setUpDataBeforeSend({...data})
   try {
-    await setDataFirebase(column, { data : data, layout : layout.value });
+    await setDataFirebase(column, { data : dataSend, layout : layout.value });
   } catch (error) {
     console.log(error)
   }
@@ -166,8 +175,8 @@ setToFirebase()
 <template>
     <div class="bg-white">
         <div class="flex" @click="layerActive = null">
-            <div class="w-1/4 p-6 overflow-y-auto overflow-x-hidden border border-gray-300 border-1 h-[46rem]">
-
+            <div class="w-[380px] p-6 overflow-y-auto overflow-x-hidden border border-gray-300 border-1 h-[46rem]">
+                <!-- add Content -->
                 <div>
                     <h2 class="text-sm font-medium text-gray-900">Content</h2>
                     <div class="mt-2">
@@ -176,7 +185,7 @@ setToFirebase()
                                 <div v-if="item.value !== 'image'"
                                     class='relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-none'>
                                     <div @click="createContent(item.value)"
-                                        :class="['flex items-center justify-center rounded-md border py-3 px-3 text-sm font-medium uppercase sm:flex-1']">
+                                        :class="['flex items-center justify-center rounded-md border py-1 px-2 text-sm font-medium uppercase w-fit']">
                                         <div as="span">
                                             <FontAwesomeIcon :icon="item.icon" />
                                         </div>
@@ -185,7 +194,7 @@ setToFirebase()
                                 <div v-if="item.value == 'image'"
                                     class='relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-none'>
                                     <div
-                                        :class="['flex items-center justify-center rounded-md border py-3 px-3 text-sm font-medium uppercase sm:flex-1']">
+                                        :class="['flex items-center justify-center rounded-md border py-1 px-2 text-sm font-medium uppercase w-fit']">
                                         <input type="file"  name="file" id="fileInput" class="sr-only"
                                             @change="Uploadimage" ref="fileInput" accept=".jpg,.jpeg,.png" />
                                         <label for="fileInput" as="span">
@@ -197,6 +206,7 @@ setToFirebase()
                         </div>
                     </div>
                 </div>
+                  <!-- end add Content -->
 
                 <!-- list data -->
                 <hr class="my-5" />
@@ -206,27 +216,30 @@ setToFirebase()
                         <draggable :list="data" group="content" item-key="id" handle=".handle" class="px-2">
                             <template #item="{ element: item, index }">
                                 <div
-                                    class="flex gap-3 px-2.5 py-2.5 ring-1 ring-gray-400 rounded-md bg-gray-100 flex-grow h-fit mt-1.5">
+                                    class="flex gap-3 px-2.5 py-2.5 ring-1 ring-gray-400 rounded-md bg-gray-100 flex-grow h-fit mt-1.5 justify-center">
                                     <div class="flex justify-center items-center  text-gray-600 rounded-md h-fit  py-1">
                                         <font-awesome-icon :icon="['fas', 'bars']" class="handle cursor-grab" />
                                     </div>
                                     <div
-                                        class="flex items-center justify-center rounded-md border border-gray-300 py-1 px-3 text-sm w-[15%] h-fit">
+                                        class="flex items-center justify-center rounded-md border border-gray-300 py-1 px-1 text-sm w-[15%] h-fit">
                                         <font-awesome-icon :icon="['fas', 'text']" v-if="item.type == 'text'" />
                                         <font-awesome-icon :icon="['fas', 'search']" v-if="item.type == 'search'" />
                                         <font-awesome-icon :icon="['fas', 'image']" v-if="item.type == 'image'" />
                                     </div>
                                     <div v-if="item.type == 'text'"
                                         class="w-full ring-1 ring-gray-300 rounded-md flex justify-center items-center h-fit whitespace-nowrap overflow-hidden overflow-ellipsis px-2">
-                                        <Input :data="item" keyValue="name"
-                                            styleCss="font-size: 12px; border:none; padding:0px" />
+                                        <Input :data="item" keyValue="name" styleCss="font-size: 12px; border:none; padding:0px" >
+                                        <template #buttonMode>
+                                        <div class="truncate w-[125px] text-sm"> {{ item.name }}</div>
+                                        </template>
+                                        </Input>
                                     </div>
                                     <div v-if="item.type == 'search'"
-                                        class="w-full ring-1 ring-gray-300 rounded-md flex justify-center items-center h-fit">
+                                        class="w-full ring-1 ring-gray-300 rounded-md flex justify-center items-center h-fit text-sm">
                                         Search
                                     </div>
                                     <div v-if="item.type == 'image'"
-                                        class="w-full ring-1 ring-gray-300 rounded-md flex justify-center items-center h-fit">
+                                        class="w-full ring-1 ring-gray-300 rounded-md flex justify-center items-center h-fit text-sm">
                                         Image
                                     </div>
                                     <div class="flex justify-center items-center  text-red-600 rounded-md h-fit  py-1">
@@ -243,7 +256,7 @@ setToFirebase()
             </div>
 
             <!-- editing area -->
-            <div style="width: 90%; background: #f2f2f2; border: 1px solid #bfbfbf; overflow:hidden">
+            <div class="w-full bg-gray-200 border border-gray-300 overflow-hidden">
                 <ToolsTop  :data="data" :layerActive="layerActive" @click="(e)=>e.stopPropagation()" />
                 <div class="p-3">
                     <Layout :data="data" :layout="layout" :setActive="setActive" :layerActive="layerActive" />

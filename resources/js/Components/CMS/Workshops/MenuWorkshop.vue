@@ -245,7 +245,7 @@ const navigation = reactive({
     ],
 })
 
-const selectedTheme = ref({ name: 'One', value: '1' },)
+const selectedTheme = ref({ name: 'MenuOne', value: '1' },)
 const handtools = ref({ name: 'edit', icon: ['fas', 'fa-hand-pointer'] },)
 const selectedNav = ref(null)
 
@@ -309,7 +309,7 @@ async function setToFirebase() {
 }
 
 watch(navigation, setToFirebase, { deep: true })
-
+watch(selectedTheme, setToFirebase, { deep: true })
 setToFirebase()
 
 </script>
