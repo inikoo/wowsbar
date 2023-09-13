@@ -6,6 +6,8 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
+import Button from '@/Components/Elements/Buttons/Button.vue'
+import Action from '@/Components/Forms/Fields/Action.vue'
 
 import FieldForm from '@/Components/Forms/FieldForm.vue'
 import { library } from "@fortawesome/fontawesome-svg-core"
@@ -29,6 +31,7 @@ const props = defineProps<{
                     type: string,
                     label: string,
                     value: string | object
+                    icon?: string
                 }
             >
             button: {
@@ -43,6 +46,7 @@ const props = defineProps<{
                 parameters: string | string[]
             }
         }
+        title?: string
     }
 }>()
 
@@ -96,16 +100,16 @@ onBeforeUnmount(() => {
             <!-- Content of forms -->
             <div class="px-4 sm:px-6 md:px-4 col-span-9">
                 <div class="divide-y divide-gray-200 dark:divide-gray-500 flex flex-col">
-                    <!-- <div class="space-y-1 mb-6 ">
-                        <h3 class="text-lg leading-6 font-medium text-gray-900 capitalize">
-                            {{ formData['blueprint'][current].title }}
-                        </h3>
-                        <p v-show="formData['blueprint'][current]['subtitle']" class="max-w-2xl text-sm text-gray-500 capitalize">
-                            {{ formData['blueprint'][current]['subtitle'] }}
-                        </p>
-                    </div> -->
-                    <FieldForm class=" pt-4 sm:pt-5 px-6 " v-for="(fieldData, field ) in formData.blueprint[current].fields"
-                        :key="field" :field="field" :fieldData="fieldData" :args="formData.args" :id="fieldData.name"/>
+                    <div class=" pt-4 sm:pt-5 px-6 " v-for="(fieldData, field ) in formData.blueprint[current].fields">
+                        <!-- If the type is 'action' -->
+                        <div v-if="fieldData.type === 'action'" class="flex justify-center">
+                            <Action :fieldData="fieldData" :key="field">
+                            </Action>
+                        </div>
+
+                        <!-- If the type is 'Input', 'Select', 'Radio', etc -->
+                        <FieldForm v-else :key="field" :field="field" :fieldData="fieldData" :args="formData.args" :id="fieldData.name"/>
+                    </div>
 
                     <!-- Button for Authorize Google Drive -->
                     <div class="py-2 px-3 flex justify-end max-w-2xl" v-if="formData.blueprint[current].button"  :id="formData.title">
@@ -121,6 +125,7 @@ onBeforeUnmount(() => {
             </div>
         </div>
 
+        <!-- Mobile view -->
         <div v-else class="">
             <ul class="space-y-8">
                 <li v-for="(item, key) in formData['blueprint']" class="group font-medium" :aria-current="key === current ? 'page' : undefined">
@@ -133,7 +138,10 @@ onBeforeUnmount(() => {
                         <span class="capitalize truncate">{{ item.title }}</span>
                     </div>
                     <div class="pl-5">
-                        <FieldForm class=" pt-4 sm:pt-5 px-6 " v-for="(fieldData, field ) in formData.blueprint[key].fields"
+                        <!-- <FieldForm class=" pt-4 sm:pt-5 px-6 " v-for="(fieldData, field ) in formData.blueprint[key].fields"
+                        :key="field" :field="field" :fieldData="fieldData" :args="formData.args" :id="fieldData.name"/> -->
+                        <!-- aaaaaa -->
+                        <component :is="fieldData.type === 'action' ? Button : FieldForm" class=" pt-4 sm:pt-5 px-6 " v-for="(fieldData, field ) in formData.blueprint[key].fields"
                         :key="field" :field="field" :fieldData="fieldData" :args="formData.args" :id="fieldData.name"/>
                     </div>
                 </li>

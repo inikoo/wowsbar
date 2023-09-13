@@ -24,11 +24,11 @@ class ShowWebsiteWorkshop extends InertiaAction
         return $request->user()->hasPermissionTo("website.edit");
     }
 
-    public function asController(Website $website, ActionRequest $request): Website
+    public function asController(ActionRequest $request): Website
     {
         $this->initialisation($request)->withTab(WebsiteWorkshopTabsEnum::values());
 
-        return $website;
+        return organisation()->website;
     }
 
 

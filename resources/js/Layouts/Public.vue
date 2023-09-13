@@ -158,9 +158,9 @@ const publicData = {
                 "id": "01HA15WBHKCJDR1FE6GYRH1T22",
                 "name": "Tel: +44 (0) 1142729165   info@aw-fulfilment.co.uk",
                 "style": {
-                    "fontSize": "11px",
-                    "left": "936px",
-                    "top": "111px"
+                    "fontSize": 11,
+                    "left": 936,
+                    "top": 111
                 },
                 "type": "text"
             },
@@ -168,9 +168,9 @@ const publicData = {
                 "id": "01HA15WBHKMCCX5WMEEYG332NZ",
                 "name": "We Can Fulfil Your Orders",
                 "style": {
-                    "fontSize": "11px",
-                    "left": "934px",
-                    "top": "45px"
+                    "fontSize": 11,
+                    "left": 934,
+                    "top": 45
                 },
                 "type": "text"
             },
@@ -178,9 +178,9 @@ const publicData = {
                 "id": "01HA15WBHMYFX4QR36ZTQQK7QZ",
                 "name": "search",
                 "style": {
-                    "fontSize": "34px",
-                    "left": "933px",
-                    "top": "65px"
+                    "fontSize": 34,
+                    "left": 933,
+                    "top": 65
                 },
                 "type": "search"
             },
@@ -189,9 +189,9 @@ const publicData = {
                 "name": "Your UK's Best Fulfilment Warehouse",
                 "style": {
                     "color": "rgba(255, 128, 0, 1)",
-                    "fontSize": "28px",
-                    "left": "336px",
-                    "top": "46px"
+                    "fontSize": 28,
+                    "left": 336,
+                    "top": 46
                 },
                 "type": "text"
             },
@@ -200,9 +200,9 @@ const publicData = {
                 "name": "Storage - Pick & Pack - Distribution",
                 "style": {
                     "color": "rgba(255, 218, 0, 1)",
-                    "fontSize": "22px",
-                    "left": "400px",
-                    "top": "83px"
+                    "fontSize": 22,
+                    "left": 400,
+                    "top": 83
                 },
                 "type": "text"
             }
@@ -442,10 +442,75 @@ const publicData = {
     }
 }
 
+const publicHeader = {
+    "data": [
+        {
+            "id": "01HA44YB8YT9S0N6YQDD0A9GT1",
+            "name": "Tel: +44 (0) 1142729165   info@aw-fulfilment.co.uk",
+            "style": {
+                "fontSize": 11,
+                "left": 936,
+                "top": 111
+            },
+            "type": "text"
+        },
+        {
+            "id": "01HA44YB8YMSDQ8DENMTCGTZYJ",
+            "name": "We Can Fulfil Your Orders",
+            "style": {
+                "fontSize": 11,
+                "left": 934,
+                "top": 45
+            },
+            "type": "text"
+        },
+        {
+            "id": "01HA44YB8YPNPT2XDBD3NB75V2",
+            "name": "search",
+            "style": {
+                "fontSize": 34,
+                "left": 933,
+                "top": 65
+            },
+            "type": "search"
+        },
+        {
+            "id": "01HA44YB8YQMC20N53DDH1G2T5",
+            "name": "Your UK's Best Fulfilment Warehouse",
+            "style": {
+                "color": "rgba(255, 128, 0, 1)",
+                "fontSize": 28,
+                "left": 336,
+                "top": 46
+            },
+            "type": "text"
+        },
+        {
+            "id": "01HA44YB8Y55KBVG3VEXWEYZ54",
+            "name": "Storage - Pick & Pack - Distribution",
+            "style": {
+                "color": "rgba(255, 218, 0, 1)",
+                "fontSize": 22,
+                "left": 400,
+                "top": 83
+            },
+            "type": "text"
+        }
+    ],
+    "layout": {
+        "bottom": 0,
+        "height": 200,
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "width": 1233
+    }
+}
+
 // import Image from "@/Components/Image.vue"
 // import Cookies from '@/Components/Cookies.vue'
 // import FooterTabLanguage from '@/Components/Footer/FooterLanguage.vue'
-// import HeaderThemeOne from '@/Components/Header/Public/HeaderThemeOne.vue'
+import HeaderThemeOne from '@/Components/Header/Public/HeaderThemeOne.vue'
 import MenuOne from '@/Components/Menu/Public/MenuOne.vue'
 import MenuTwo from '@/Components/Menu/Public/MenuTwo.vue'
 import FooterThemeOne from '@/Components/Footer/Public/FooterThemeOne.vue'
@@ -492,9 +557,8 @@ const getFooterComponent = computed(() => {
 <template>
     <div class="relative ">
         <section class="relative isolate overflow-hidden bg-gray-100">
-            <!-- <component :is="getHeaderComponent"></component>
+            <component :is="getHeaderComponent" :data="publicHeader"></component>
 
-            -->
             <component :is="getMenuComponent" :data="publicData.menu"></component>
 
             <!-- Background: Square line -->

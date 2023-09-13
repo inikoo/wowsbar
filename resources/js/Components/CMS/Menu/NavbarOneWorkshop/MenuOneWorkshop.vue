@@ -206,10 +206,9 @@ const mobileMenuOpen = ref(false)
 						class="flex h-full justify-center space-x-8 align-middle">
 						<template v-slot:item="{ element: category, index }">
 							<div :class="[get(selectedNav, 'id') == category.id ? 'outline outline-gray-400' : '',  tool.name !== 'grab' ? 'cursor-pointer' : 'cursor-grab']">
-								<div v-if="category.type === 'group'" class="p-2.5">
+								<div v-if="category.type === 'group'" class="p-2.5" @click="() => { openNav = category.id, changeNavActive(index) }">
 									<div :key="category.name" class="flex">
-										<div class="relative flex p-2.5"
-											@click="() => { openNav = category.id, changeNavActive(index) }">
+										<div class="relative flex p-2.5">
 											<div :class="[openNav == category.id ? 'border-indigo-600 text-indigo-600' : 'border-transparent text-gray-700 hover:text-gray-800', 'relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out']">
 												<div class="flex gap-3">
 													<IconPicker :key="category.id" :data="category" class="text-black" />
@@ -224,7 +223,7 @@ const mobileMenuOpen = ref(false)
 
 										<div v-if="openNav == category.id">
 											<SubMenu :data="category" :saveSubMenu="saveSubMenu"
-												@OnClose="() => { changeNavActive(null), openNav = null }" :tool="tool" />
+												@OnClose="() => { changeNavActive(null), openNav = null, console.log(openNav) }" :tool="tool" />
 										</div>
 
 									</div>

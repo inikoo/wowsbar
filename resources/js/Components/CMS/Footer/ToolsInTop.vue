@@ -51,7 +51,7 @@ const selectTool = (t) => {
 }
 
 const columChange = (index) => {
-  emits('setColumnSelected', index - 1)
+  emits('setColumnSelected', index)
 }
 
 const setTheme=(value)=>{

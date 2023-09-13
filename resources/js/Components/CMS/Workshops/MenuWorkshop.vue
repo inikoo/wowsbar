@@ -13,7 +13,7 @@ import { faHandPointer, faHandRock, faPlus, faLink, faObjectGroup} from '@/../pr
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { ulid } from 'ulid';
 import HyperlinkTools from '@/Components/CMS/Fields/Hyperlinktools.vue'
-import { get } from 'lodash'
+import { get, isNull } from 'lodash'
 import IconPicker from '@/Components/CMS/Fields/IconPicker/IconPicker.vue';
 import { getDbRef, getDataFirebase, setDataFirebase } from '@/Composables/firebase'
 import ToolInTop from '@/Components/CMS/Menu/ToolsInTop.vue'
@@ -299,6 +299,18 @@ const deleteCategory = () => {
     }
 }
 
+const addNavigation=()=>{
+    navigation.categories.push(
+        {
+            name: 'New link',
+            id: ulid(),
+            icon: 'far fa-dot-circle',
+            type: 'link',
+            link: '#',
+        }
+    )
+}
+
 async function setToFirebase() {
   const column = 'org/websites/menu';
   try {
@@ -343,7 +355,7 @@ setToFirebase()
                     </div>
 
                     <!-- Mode link , label & icon-->
-                    <div v-if="selectedNav">
+                    <div v-if="!isNull(selectedNav)">
                         <!-- type group -->
                         <div class="mt-8" v-if="navigation.categories[selectedNav].type == 'group'">
                             <div class="flex items-center justify-between">
@@ -408,7 +420,7 @@ setToFirebase()
             <!-- edit navbar area -->
             <div class="w-full bg-gray-200">
                 <ToolInTop :tool="handtools" :theme="selectedTheme" :columSelected="selectedNav"
-                @setColumnSelected="changeNavActive"  :navigation="navigation"/>
+                @setColumnSelected="changeNavActive"  :navigation="navigation" @addNavigation="addNavigation"/>
                 <div style="transform: scale(0.8);" class="w-full">
                     <Menu :theme="selectedTheme.value" :navigation="navigation" :tool="handtools" :selectedNav="navigation.categories[selectedNav]"
                         :changeNavActive="changeNavActive" />

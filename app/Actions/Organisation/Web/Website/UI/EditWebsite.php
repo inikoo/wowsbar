@@ -74,162 +74,242 @@ class EditWebsite extends InertiaAction
                     ],
                     'formData' => [
                         'blueprint' => [
-
                             [
-                            'title'  => __('Registrations'),
-                            'icon'   => 'fal fa-user-plus',
-                            'fields' => [
-                                'approval' => [
-                                    'type'     => 'toggle',
-                                    'label'    => __('Registrations Approval'),
-                                    'value'    => false,
-                                    'required' => true,
-                                ],
-                                'registrations_type' => [
-                                    'type'     => 'radio',
-                                    'mode'     => 'card',
-                                    'label'    => __('Registration Type'),
-                                    'value'    => [
-                                            'title'        => "type B",
-                                            'description'  => 'This user able to create and delete',
-                                            'label'        => '17 users left',
-                                            'value'        => "typeB",
-                                        ],
-                                    'required' => true,
-                                    'options'  => [
-                                        [
-                                            'title'        => "type A",
-                                            'description'  => 'This user able to edit',
-                                            'label'        => '425 users left',
-                                            'value'        => "typeA",
-                                        ],
-                                        [
-                                            'title'        => "type B",
-                                            'description'  => 'This user able to create and delete',
-                                            'label'        => '17 users left',
-                                            'value'        => "typeB",
-                                        ],
-                                    ]
-                                ],
-                                'web_registrations' => [
-                                    'type'     => 'webRegistrations',
-                                    'label'    => __('Web Registration'),
-                                    'value'    => [
-                                        [
-                                            'key'       => 'telephone',
-                                            'name'      => __('telephone'),
-                                            'show'      => true,
-                                            'required'  => false,
-                                        ],
-                                        [
-                                            'key'       => 'address',
-                                            'name'      => __('address'),
-                                            'show'      => false,
-                                            'required'  => false,
-                                        ],
-                                        [
-                                            'key'       => 'company',
-                                            'name'      => __('company'),
-                                            'show'      => false,
-                                            'required'  => false,
-                                        ],
-                                        [
-                                            'key'       => 'contact_name',
-                                            'name'      => __('contact_name'),
-                                            'show'      => false,
-                                            'required'  => false,
-                                        ],
-                                        [
-                                            'key'       => 'registration_number',
-                                            'name'      => __('registration number'),
-                                            'show'      => true,
-                                            'required'  => false,
-                                        ],
-                                        [
-                                            'key'       => 'tax_number',
-                                            'name'      => __('tax number'),
-                                            'show'      => false,
-                                            'required'  => false,
-                                        ],
-                                        [
-                                            'key'       => 'terms_and_conditions',
-                                            'name'      => __('terms and conditions'),
-                                            'show'      => true,
-                                            'required'  => true,
-                                        ],
-                                        [
-                                            'key'       => 'marketing',
-                                            'name'      => __('marketing'),
-                                            'show'      => false,
-                                            'required'  => false,
-                                        ],
-                                ],
-                                    'required' => true,
-                                    'options'  => [
-                                        [
-                                            'key'       => 'telephone',
-                                            'name'      => __('telephone'),
-                                            'show'      => true,
-                                            'required'  => false,
-                                        ],
-                                        [
-                                            'key'       => 'address',
-                                            'name'      => __('address'),
-                                            'show'      => false,
-                                            'required'  => false,
-                                        ],
-                                        [
-                                            'key'       => 'company',
-                                            'name'      => __('company'),
-                                            'show'      => false,
-                                            'required'  => false,
-                                        ],
-                                        [
-                                            'key'       => 'contact_name',
-                                            'name'      => __('contact name'),
-                                            'show'      => false,
-                                            'required'  => false,
-                                        ],
-                                        [
-                                            'key'       => 'registration_number',
-                                            'name'      => __('registration number'),
-                                            'show'      => true,
-                                            'required'  => false,
-                                        ],
-                                        [
-                                            'key'       => 'tax_number',
-                                            'name'      => __('tax number'),
-                                            'show'      => false,
-                                            'required'  => false,
-                                        ],
-                                        [
-                                            'key'       => 'terms_and_conditions',
-                                            'name'      => __('terms and conditions'),
-                                            'show'      => true,
-                                            'required'  => false,
-                                        ],
-                                        [
-                                            'key'       => 'marketing',
-                                            'name'      => __('marketing'),
-                                            'show'      => false,
-                                            'required'  => false,
-                                        ],
-                                ]
-                                ]
-                            ]
-                        ],
-                            [
-                                'title' => 'state',
-                                'icon'  => 'fal signal-stream',
-                                'fields'=> [
-                                    'state' => [
-                                        'type'     => 'action',
-                                        'label'    => '',
+                                'title'  => __('Registrations'),
+                                'icon'   => 'fal fa-user-plus',
+                                'fields' => [
+                                    'approval' => [
+                                        'type'     => 'toggle',
+                                        'label'    => __('Registrations Approval'),
                                         'value'    => false,
                                         'required' => true,
                                     ],
+                                    'registrations_type' => [
+                                        'type'     => 'radio',
+                                        'mode'     => 'card',
+                                        'label'    => __('Registration Type'),
+                                        'value'    => [
+                                                'title'        => "type B",
+                                                'description'  => 'This user able to create and delete',
+                                                'label'        => '17 users left',
+                                                'value'        => "typeB",
+                                            ],
+                                        'required' => true,
+                                        'options'  => [
+                                            [
+                                                'title'        => "type A",
+                                                'description'  => 'This user able to edit',
+                                                'label'        => '425 users left',
+                                                'value'        => "typeA",
+                                            ],
+                                            [
+                                                'title'        => "type B",
+                                                'description'  => 'This user able to create and delete',
+                                                'label'        => '17 users left',
+                                                'value'        => "typeB",
+                                            ],
+                                        ]
+                                    ],
+                                    'web_registrations' => [
+                                        'type'     => 'webRegistrations',
+                                        'label'    => __('Web Registration'),
+                                        'value'    => [
+                                            [
+                                                'key'       => 'telephone',
+                                                'name'      => __('telephone'),
+                                                'show'      => true,
+                                                'required'  => false,
+                                            ],
+                                            [
+                                                'key'       => 'address',
+                                                'name'      => __('address'),
+                                                'show'      => false,
+                                                'required'  => false,
+                                            ],
+                                            [
+                                                'key'       => 'company',
+                                                'name'      => __('company'),
+                                                'show'      => false,
+                                                'required'  => false,
+                                            ],
+                                            [
+                                                'key'       => 'contact_name',
+                                                'name'      => __('contact_name'),
+                                                'show'      => false,
+                                                'required'  => false,
+                                            ],
+                                            [
+                                                'key'       => 'registration_number',
+                                                'name'      => __('registration number'),
+                                                'show'      => true,
+                                                'required'  => false,
+                                            ],
+                                            [
+                                                'key'       => 'tax_number',
+                                                'name'      => __('tax number'),
+                                                'show'      => false,
+                                                'required'  => false,
+                                            ],
+                                            [
+                                                'key'       => 'terms_and_conditions',
+                                                'name'      => __('terms and conditions'),
+                                                'show'      => true,
+                                                'required'  => true,
+                                            ],
+                                            [
+                                                'key'       => 'marketing',
+                                                'name'      => __('marketing'),
+                                                'show'      => false,
+                                                'required'  => false,
+                                            ],
+                                    ],
+                                        'required' => true,
+                                        'options'  => [
+                                            [
+                                                'key'       => 'telephone',
+                                                'name'      => __('telephone'),
+                                                'show'      => true,
+                                                'required'  => false,
+                                            ],
+                                            [
+                                                'key'       => 'address',
+                                                'name'      => __('address'),
+                                                'show'      => false,
+                                                'required'  => false,
+                                            ],
+                                            [
+                                                'key'       => 'company',
+                                                'name'      => __('company'),
+                                                'show'      => false,
+                                                'required'  => false,
+                                            ],
+                                            [
+                                                'key'       => 'contact_name',
+                                                'name'      => __('contact name'),
+                                                'show'      => false,
+                                                'required'  => false,
+                                            ],
+                                            [
+                                                'key'       => 'registration_number',
+                                                'name'      => __('registration number'),
+                                                'show'      => true,
+                                                'required'  => false,
+                                            ],
+                                            [
+                                                'key'       => 'tax_number',
+                                                'name'      => __('tax number'),
+                                                'show'      => false,
+                                                'required'  => false,
+                                            ],
+                                            [
+                                                'key'       => 'terms_and_conditions',
+                                                'name'      => __('terms and conditions'),
+                                                'show'      => true,
+                                                'required'  => false,
+                                            ],
+                                            [
+                                                'key'       => 'marketing',
+                                                'name'      => __('marketing'),
+                                                'show'      => false,
+                                                'required'  => false,
+                                            ],
+                                    ]
+                                    ]
                                 ]
-                            ]
+                            ],
+                            [
+                                'title' => 'state',
+                                'icon'  => 'fal fa-signal-stream',
+                                'fields'=> [
+                                    'launch' => [
+                                        'type'     => 'action',
+                                        'label'    => __('Launch'),
+                                        'icon'     => 'fal fa-rocket-launch',
+                                        'value'    => false,
+                                        'required' => true,
+                                        'button'   => [
+                                            'method'    => 'patch',
+                                            'data'      => [
+                                                'state' => 'live'
+                                            ],
+                                            'route'     => [
+                                                'name'  => 'org.models.website.state.update'
+                                            ]
+                                        ]
+                                    ],
+                                ]
+                            ],
+                            [
+                                'title' => 'state',
+                                'icon'  => 'fal fa-signal-stream',
+                                'fields'=> [
+                                    'maintenance' => [
+                                        'type'     => 'action',
+                                        'label'    => __('Maintenance'),
+                                        'icon'     => 'fal fa-rocket-launch',
+                                        'value'    => false,
+                                        'required' => true,
+                                        'button'   => [
+                                            'style'     => 'negative',
+                                            'method'    => 'patch',
+                                            'data'      => [
+                                                'state' => 'live',
+                                                'status'=> false
+                                            ],
+                                            'route'     => [
+                                                'name'  => 'org.models.website.state.update'
+                                            ]
+                                        ]
+                                    ],
+                                ]
+                            ],
+                            [
+                                'title' => 'state',
+                                'icon'  => 'fal fa-signal-stream',
+                                'fields'=> [
+                                    'restore' => [
+                                        'type'     => 'action',
+                                        'label'    => __('Restore'),
+                                        'icon'     => 'fal fa-rocket-launch',
+                                        'value'    => false,
+                                        'required' => true,
+                                        'button'   => [
+                                            'style'     => 'primary',
+                                            'method'    => 'patch',
+                                            'data'      => [
+                                                'state' => 'live',
+                                                'status'=> true
+                                            ],
+                                            'route'     => [
+                                                'name'  => 'org.models.website.state.update'
+                                            ]
+                                        ]
+                                    ],
+                                ]
+                            ],
+                            [
+                                'title' => 'state',
+                                'icon'  => 'fal fa-signal-stream',
+                                'fields'=> [
+                                    'closed' => [
+                                        'type'     => 'action',
+                                        'label'    => __('Closed'),
+                                        // 'icon'     => 'fal fa-rocket-launch',
+                                        'value'    => false,
+                                        'required' => true,
+                                        'button'   => [
+                                            'style'     => 'negative',
+                                            'method'    => 'patch',
+                                            'data'      => [
+                                                'state' => 'closed',
+                                            ],
+                                            'route'     => [
+                                                'name'  => 'org.models.website.state.update'
+                                            ]
+                                        ]
+                                    ],
+                                ]
+                            ],
                     ],
                         'args'      => [
                             'updateRoute' => [

@@ -1,0 +1,77 @@
+{
+    "data": [
+      {
+        "id": "01HA6FXJMRM1P49KC8CJCAW5D0",
+        "name": "image",
+        "style": {
+          "height": "127px",
+          "left": "3px",
+          "top": "27px",
+          "width": "338px"
+        },
+        "type": "image"
+      },
+      {
+        "id": "01HA6FXA6DFV586J2EA0KZS55P",
+        "name": "Tel: +44 (0) 1142729165   info@aw-fulfilment.co.uk",
+        "style": {
+          "fontSize": "11px",
+          "left": "936px",
+          "top": "111px"
+        },
+        "type": "text"
+      },
+      {
+        "id": "01HA6FXA6DBXNXMY5E8VMNG9BD",
+        "name": "We Can Fulfil Your Orders",
+        "style": {
+          "fontSize": "11px",
+          "left": "934px",
+          "top": "45px"
+        },
+        "type": "text"
+      },
+      {
+        "id": "01HA6FXA6D0H0STSWBZK9G7XZ8",
+        "name": "search",
+        "style": {
+          "fontSize": "34px",
+          "left": "933px",
+          "top": "65px"
+        },
+        "type": "search"
+      },
+      {
+        "id": "01HA6FXA6DZG8VNA7CTJKRJEQ8",
+        "name": "Your UK's Best Fulfilment Warehouse",
+        "style": {
+          "color": "rgba(0, 0, 0, 1)",
+          "fontSize": "31px",
+          "fontWeight": "bold",
+          "left": "353px",
+          "top": "48px"
+        },
+        "type": "text"
+      },
+      {
+        "id": "01HA6FXA6DZJ77VM8NR845AAHA",
+        "name": "Storage - Pick & Pack - Distribution",
+        "style": {
+          "color": "rgba(255, 218, 0, 1)",
+          "fontSize": "23px",
+          "fontWeight": "bold",
+          "left": "419px",
+          "top": "84px"
+        },
+        "type": "text"
+      }
+    ],
+    "layout": {
+      "bottom": 0,
+      "height": "200px",
+      "left": 0,
+      "right": 0,
+      "top": 0,
+      "width": "1233px"
+    }
+  }

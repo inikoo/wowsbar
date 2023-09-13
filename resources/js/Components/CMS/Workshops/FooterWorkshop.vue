@@ -291,7 +291,7 @@ const changeColumnFromSelectedColumn = () => {
     <div class="bg-white flex">
         <div class="w-[250px] p-6 overflow-y-auto overflow-x-hidden  h-[46rem]">
             <!-- Column Type -->
-            <div>
+            <div v-if="selectedTheme.name !== 'FooterThemeThree'">
                 <div class="flex items-center justify-between">
                     <h2 class="text-xs font-medium text-gray-900">Column Type</h2>
                 </div>
@@ -315,7 +315,7 @@ const changeColumnFromSelectedColumn = () => {
             <!-- column tools -->
             <div v-if="data.column[columSelected]">
                 <!-- column tools list -->
-                <div class="mt-8" v-if="data.column[columSelected].type == 'list'">
+                <div class="mt-2" v-if="data.column[columSelected].type == 'list'">
                     <div class="flex items-center justify-between">
                         <h2 class="text-xs font-medium text-gray-900">{{ `${data.column[columSelected].title}` }}</h2>
                     </div>
@@ -351,7 +351,7 @@ const changeColumnFromSelectedColumn = () => {
 
                 </div>
                 <!-- column tools info-->
-                <div class="mt-8" v-if="data.column[columSelected].type == 'info'">
+                <div class="mt-2" v-if="data.column[columSelected].type == 'info'">
                     <div class="flex items-center justify-between">
                         <h2 class="text-sm font-medium text-gray-900">{{ `Colums tools
                             ${data.column[columSelected].title}`
@@ -387,7 +387,7 @@ const changeColumnFromSelectedColumn = () => {
 
             <hr class="mt-5">
             <!-- social Media -->
-            <div class="mt-8">
+            <div class="mt-2">
                 <div class="flex items-center justify-between">
                     <h2 class="text-xs font-medium text-gray-900">{{ `Social media` }}</h2>
                 </div>

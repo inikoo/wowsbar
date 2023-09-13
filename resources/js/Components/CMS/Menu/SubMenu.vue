@@ -14,7 +14,7 @@ const props = defineProps<{
 </script>
 
 <template>
-    <div class="absolute top-0 right-2 cursor-pointer text-rose-400 hover:text-rose-600" @click="emits('OnClose')">x</div>
+    <div class="absolute top-0 right-2 cursor-pointer text-rose-400 hover:text-rose-600" @click="(e)=>{e.stopPropagation(),  emits('OnClose')}">x</div>
     <div class="absolute inset-x-0 min-w-fit top-full text-sm text-gray-300">
         <div class="relative bg-gray-600 border border-gray-500 rounded">
             <div class="mx-auto min-w-full max-w-7xl px-4 sm:px-6">

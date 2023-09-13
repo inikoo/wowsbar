@@ -2,6 +2,9 @@
 import VueResizable from "vue-resizable"
 import { ref } from "vue"
 import { set, get } from "lodash"
+import Search from "@/Components/CMS/Utils/Search.vue";
+
+
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faHandPointer, faHandRock, faPlus, faText, faSearch, faImage } from '@/../private/pro-solid-svg-icons';
@@ -95,7 +98,7 @@ const generateThumbnail = (file) => {
 
 <template>
 	<div>
-		<vue-resizable class="container bg-white" :minHeight="200" :maxWidth="1233" :minWidth="1233" :height="layout.height" :maxHeight="200"
+		<vue-resizable class="container bg-white overflow-hidden" :minHeight="200" :maxWidth="1233" :minWidth="1233" :height="layout.height" :maxHeight="200"
 		:left="layout.left" :top="layout.top" @mount="eHandler" @resize:move="eHandler" @resize:start="eHandler"
 		@resize:end="eHandler" @drag:move="eHandler" @drag:start="eHandler" @drag:end="eHandler">
 			<div v-for="(item, index) in props.data.slice().reverse()" :key="item.id" :fit-parent="true">
@@ -111,15 +114,7 @@ const generateThumbnail = (file) => {
 					class="col-sm-10 draggable-component" :style="{ ...item.style }">
 					<div :class="['draggable-handle', { border: get(data[layerActive], 'id') === item.id }]"
 						@click="(e) => { e.stopPropagation(); props.setActive(item.id) }">
-						<div class="relative">
-							<input
-								class="dark:bg-gray-600 block w-full pl-9 pr-9 text-sm rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500 dark:focus:border-gray-400 border-gray-300 dark:border-gray-500"
-								placeholder="search" type="text" name="global" :readonly="true">
-							<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-								<FontAwesomeIcon icon="far fa-search" class="h-4 w-4 text-gray-400" aria-hidden="true" />
-							</div>
-
-						</div>
+						<Search />
 					</div>
 				</div>
 

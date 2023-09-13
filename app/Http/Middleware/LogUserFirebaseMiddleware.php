@@ -45,7 +45,7 @@ class LogUserFirebaseMiddleware
                 ];
             }
 
-            StoreUserLogFirebase::run(
+            StoreUserLogFirebase::dispatch(
                 user: $user,
                 parentType: $parentType,
                 parentSlug: $parentSlug,

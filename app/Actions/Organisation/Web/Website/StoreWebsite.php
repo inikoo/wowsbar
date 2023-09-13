@@ -31,9 +31,11 @@ class StoreWebsite
         data_set($modelData, 'organisation_id', organisation()->id);
 
         /** @var Website $website */
-        $website = organisation()->shop->website()->create($modelData);
+        $website = $shop->website()->create($modelData);
         $website->webStats()->create();
-        return $website;
+
+        $website->refresh();
+        return ResetWebsiteStructure::run($website);
     }
 
     public function authorize(ActionRequest $request): bool
@@ -51,7 +53,7 @@ class StoreWebsite
     public function asController(ActionRequest $request): Website
     {
         $request->validate();
-        return $this->handle($request->validated());
+        return $this->handle(organisation()->shop, $request->validated());
 
     }
 
@@ -63,13 +65,13 @@ class StoreWebsite
     }
 
 
-    public function action(array $objectData): Website
+    public function action(Shop $shop, array $objectData): Website
     {
         $this->asAction = true;
         $this->setRawAttributes($objectData);
         $validatedData = $this->validateAttributes();
 
-        return $this->handle($validatedData);
+        return $this->handle($shop, $validatedData);
     }
 
     public function htmlResponse(): RedirectResponse
