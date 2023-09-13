@@ -11,14 +11,9 @@ import PageHeading from '@/Components/Headings/PageHeading.vue';
 import Edit from '@/Components/Edit.vue';
 import {library} from '@fortawesome/fontawesome-svg-core';
 
-import {
-    faGlobe, faUserPlus,
-} from "@/../private/pro-light-svg-icons";
+import { faGlobe, faUserPlus, faSignalStream} from "@/../private/pro-light-svg-icons";
 
-library.add(
-    faGlobe, faUserPlus,
-
-);
+library.add(faGlobe, faUserPlus, faSignalStream)
 
 const props = defineProps<{
     title: string,

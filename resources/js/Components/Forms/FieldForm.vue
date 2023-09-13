@@ -36,19 +36,20 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 library.add(fadSave, falSave, faAsterisk)
 
 const props = defineProps<{
-    field: string,
+    field: any
     fieldData: {
-        type: string,
-        label: string,
-        value: any,
-        required: boolean
-        fullComponentArea : boolean
-        options: {}
+        type: string
+        label: string
+        value: any
+        mode?: string
+        required?: boolean
+        fullComponentArea?: boolean
+        options?: {}[]
 
-    },
+    }
     args: {
         updateRoute: {
-            name: string,
+            name: string
             parameters: string | string[]
         }
     }
