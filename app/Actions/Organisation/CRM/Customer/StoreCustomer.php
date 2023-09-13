@@ -27,9 +27,6 @@ class StoreCustomer
     use WithAttributes;
 
     private bool $asAction = false;
-
-    public string $commandSignature = 'customer:create {code} {email} {name} {country_code} {currency_code} {username?} {password?} {--l|language_code= : Language code} {--tz|timezone= : Timezone}';
-
     /**
      * @throws Throwable
      */

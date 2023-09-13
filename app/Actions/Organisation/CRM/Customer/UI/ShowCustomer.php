@@ -29,7 +29,7 @@ class ShowCustomer extends InertiaAction
         $this->canEdit   = $request->user()->can('crm.customers.edit');
         $this->canDelete = $request->user()->can('crm.customers.edit');
 
-        return $request->user()->hasPermissionTo("shops.customers.view");
+        return !$request->user()->hasPermissionTo("shops.customers.view");
     }
 
     public function inTenant(Customer $customer, ActionRequest $request): Customer
@@ -123,19 +123,19 @@ class ShowCustomer extends InertiaAction
         };
 
         return match ($routeName) {
-            'crm.customers.show',
-            'crm.customers.edit'
+            'org.crm.customers.show',
+            'org.crm.customers.edit'
             => array_merge(
                 ShowDashboard::make()->getBreadcrumbs(),
                 $headCrumb(
                     $routeParameters['customer'],
                     [
                         'index' => [
-                            'name'       => 'crm.customers.index',
+                            'name'       => 'org.crm.customers.index',
                             'parameters' => []
                         ],
                         'model' => [
-                            'name'       => 'crm.customers.show',
+                            'name'       => 'org.crm.customers.show',
                             'parameters' => [$routeParameters['customer']]
                         ]
                     ],
@@ -174,7 +174,7 @@ class ShowCustomer extends InertiaAction
         }
 
         return match ($routeName) {
-            'crm.customers.show' => [
+            'org.crm.customers.show' => [
                 'label' => $customer->name,
                 'route' => [
                     'name'       => $routeName,

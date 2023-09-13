@@ -145,22 +145,22 @@ class IndexCustomers extends InertiaAction
         };
 
         return match ($routeName) {
-            'crm.customers.index' =>
+            'org.crm.customers.index' =>
             array_merge(
                 (new CRMDashboard())->getBreadcrumbs(),
                 $headCrumb(
                     [
-                        'name' => 'crm.customers.index',
+                        'name' => 'org.crm.customers.index',
                         null
                     ]
                 ),
             ),
-            'crm.shops.show.customers.index' =>
+            'org.crm.shops.show.customers.index' =>
             array_merge(
                 (new CRMDashboard())->getBreadcrumbs(),
                 $headCrumb(
                     [
-                        'name'       => 'crm.shops.show.customers.index',
+                        'name'       => 'org.crm.shops.show.customers.index',
                         'parameters' => $routeParameters
                     ]
                 )

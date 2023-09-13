@@ -18,14 +18,10 @@ import {
     faTags,faCube,faCodeBranch
 } from "@/../private/pro-light-svg-icons";
 import ModelDetails from "@/Pages/ModelDetails.vue";
-import TableOrders from "@/Pages/Tables/TableOrders.vue";
 import {useTabChange} from "@/Composables/tab-change";
 import {computed, defineAsyncComponent, ref} from "vue";
 import Tabs from "@/Components/Navigation/Tabs.vue";
-import TableProducts from "@/Pages/Tables/TableProducts.vue";
 import CustomerShowcase from "@/Pages/CRM/CustomerShowcase.vue";
-
-import TableDispatchedEmails from "@/Pages/Tables/TableDispatchedEmails.vue";
 
 library.add(
     faStickyNote,
@@ -61,11 +57,11 @@ const component = computed(() => {
 
     const components = {
         showcase: CustomerShowcase,
-        products: TableProducts,
-        orders: TableOrders,
+        // products: TableProducts,
+        // orders: TableOrders,
         details: ModelDetails,
         history: ModelChangelog,
-        dispatched_emails: TableDispatchedEmails,
+        // dispatched_emails: TableDispatchedEmails,
     };
     return components[currentTab.value];
 
@@ -78,7 +74,6 @@ import {
     TransitionChild,
     TransitionRoot,
 } from "@headlessui/vue";
-import AgentShowcase from "@/Pages/Procurement/AgentShowcase.vue";
 
 
 const isOpen = ref(false);

@@ -6,10 +6,10 @@
  */
 
 
-use App\Actions\CRM\Prospect\IndexProspects;
 use App\Actions\Organisation\CRM\Customer\UI\EditCustomer;
 use App\Actions\Organisation\CRM\Customer\UI\IndexCustomers;
 use App\Actions\Organisation\CRM\Customer\UI\ShowCustomer;
+use App\Actions\Organisation\CRM\Prospect\IndexProspects;
 use App\Actions\Organisation\UI\CRM\CRMDashboard;
 
 Route::get('/', [CRMDashboard::class, 'inTenant'])->name('dashboard');
@@ -25,7 +25,7 @@ Route::prefix('customers')->as('customers.')->group(function () {
 });
 
 Route::prefix('prospects')->as('prospects.')->group(function () {
-    Route::get('/', [IndexProspects::class, 'inTenant'])->name('index');
+    Route::get('/', IndexProspects::class)->name('index');
     //Route::get('/customers/{customer}/delete', RemoveCustomer::class)->name('customers.remove');
     //Route::get('/customers/{customer}/web-users', [IndexWebUser::class, 'inCustomerInTenant'])->name('customers.show.web-users.index');
     //Route::get('/customers/{customer}/web-users/{webUser}', [ShowWebUser::class, 'inCustomerInTenant'])->name('customers.show.web-users.show');
