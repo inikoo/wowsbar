@@ -61,7 +61,7 @@ class ShowWebsite extends InertiaAction
                         'title' => __('website'),
                         'icon'  => 'fal fa-globe'
                     ],
-                    'actions'                        => [
+                    'actions'                    => [
                         $this->canEdit ? [
                             'type'  => 'button',
                             'style' => 'edit',
@@ -91,11 +91,11 @@ class ShowWebsite extends InertiaAction
                     'navigation' => WebsiteTabsEnum::navigation()
                 ],
 
-
-                WebsiteTabsEnum::SHOWCASE->value => $this->tab == WebsiteTabsEnum::SHOWCASE->value ?
+                'website' => [
+                    WebsiteTabsEnum::SHOWCASE->value => $this->tab == WebsiteTabsEnum::SHOWCASE->value ?
                     fn() => WebsiteResource::make($website)->getArray()
                     : Inertia::lazy(fn() => WebsiteResource::make($website)->getArray())
-
+                ]
                 /*
                 WebsiteTabsEnum::CHANGELOG->value => $this->tab == WebsiteTabsEnum::CHANGELOG->value ?
                     fn() => HistoryResource::collection(IndexHistories::run($website))

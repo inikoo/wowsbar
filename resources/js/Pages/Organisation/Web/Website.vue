@@ -37,18 +37,19 @@ library.add(
 );
 
 const props = defineProps<{
-    title: string,
-    pageHead: object,
+    title: string
+    pageHead: any
     tabs: {
-        current: string;
-        navigation: object;
+        current: string
+        navigation: object
     }
-    webpages?: string;
+    webpages?: string
     changelog?: object
+    website: any
 }>()
 
 
-let currentTab = ref(props.tabs.current);
+const currentTab = ref(props.tabs.current);
 const handleTabUpdate = (tabSlug) => useTabChange(tabSlug, currentTab);
 
 const component = computed(() => {
@@ -69,6 +70,7 @@ const component = computed(() => {
     <Head :title="capitalize(title)" />
     <PageHeading :data="pageHead"></PageHeading>
     <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate"/>
+    <!-- <pre>{{ props.website }}</pre> -->
     <component :is="component" :data="props[currentTab]"></component>
 
 </template>
