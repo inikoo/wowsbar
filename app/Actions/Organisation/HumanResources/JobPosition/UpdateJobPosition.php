@@ -39,7 +39,7 @@ class UpdateJobPosition
     {
         $request->validate();
 
-        return $this->handle($jobPosition, $request->all());
+        return $this->handle($jobPosition,$request->validated());
     }
 
 

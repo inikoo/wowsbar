@@ -7,9 +7,7 @@
 
 
 use App\Actions\UI\Public\Dashboard\ShowPublicDashboard;
-use App\Actions\UI\Public\ShowPricing;
 use App\Actions\UI\Public\ShowHome;
-use App\Actions\UI\Public\ShowWhatsNew;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 

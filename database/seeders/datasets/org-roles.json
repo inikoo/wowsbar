@@ -6,9 +6,21 @@
         ]
     },
     {
+        "name":"web-editor",
+        "permissions": [
+            "website"
+        ]
+    },
+    {
+        "name":"web-master",
+        "permissions": [
+            "website","supervisor.website"
+        ]
+    },
+    {
         "name":"super-admin",
         "permissions": [
-            "sysadmin","website","crm","hr"
+            "sysadmin","website","crm","hr","supervisor"
         ]
     }
 

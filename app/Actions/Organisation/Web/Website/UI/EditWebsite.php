@@ -218,10 +218,22 @@ class EditWebsite extends InertiaAction
                                 ]
                             ]
                         ],
+                            [
+                                'title'=>'state',
+                                'icon'=>'fal signal-stream',
+                                'fields'=>[
+                                    'state' => [
+                                        'type'     => 'action',
+                                        'label'    => '',
+                                        'value'    => false,
+                                        'required' => true,
+                                    ],
+                                ]
+                            ]
                     ],
                         'args'      => [
                             'updateRoute' => [
-                                'name'       => 'models.website.update',
+                                'name'       => 'org.models.website.update',
                                 'parameters' => $website->slug
                             ],
                         ]

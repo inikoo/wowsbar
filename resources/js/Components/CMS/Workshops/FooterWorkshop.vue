@@ -38,7 +38,7 @@ const Dummy = {
     ],
 }
 
-const selectedTheme = ref({ name: 'Light', value: '2' })
+const selectedTheme = ref({ name: 'FooterThemeTwo', value: '2' })
 const columsTypeTheme = ref(Dummy.columsType[0])
 const tool = ref({ name: 'edit', icon: ['fas', 'fa-hand-pointer'] })
 
@@ -209,6 +209,7 @@ const data = reactive({
 async function setToFirebase() {
     const column = 'org/websites/footer';
     try {
+        console.log('selectedTheme',selectedTheme)
         await setDataFirebase(column, { data: data, theme: selectedTheme.value });
     } catch (error) {
         console.log(error)
@@ -216,6 +217,7 @@ async function setToFirebase() {
 }
 
 watch(data, setToFirebase, { deep: true })
+watch(selectedTheme, setToFirebase, { deep: true })
 
 setToFirebase()
 

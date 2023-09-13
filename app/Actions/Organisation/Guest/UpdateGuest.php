@@ -54,7 +54,7 @@ class UpdateGuest
     {
         $request->validate();
 
-        return $this->handle($guest, $request->all());
+        return $this->handle($guest,$request->validated());
     }
 
     public function action(Guest $guest, $objectData): Guest
