@@ -12,11 +12,11 @@ import Edit from '@/Components/Edit.vue';
 import {library} from '@fortawesome/fontawesome-svg-core';
 
 import {
-    faGlobe, faUserPlus,
+    faGlobe, faUserPlus,faSignalStream
 } from "@/../private/pro-light-svg-icons";
 
 library.add(
-    faGlobe, faUserPlus,
+    faGlobe, faUserPlus,faSignalStream
 
 );
 

@@ -33,6 +33,7 @@ class Register
     {
 
         $customer=StoreCustomer::run(
+            organisation()->shop,
             [
                 'contact_name'=> Arr::get($modelData, 'contact_name'),
                 'email'       => Arr::get($modelData, 'email')

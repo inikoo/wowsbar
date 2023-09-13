@@ -11,11 +11,11 @@ use App\Actions\Accounting\Invoice\Hydrators\InvoiceHydrateUniversalSearch;
 use App\Actions\CRM\Customer\Hydrators\CustomerHydrateInvoices;
 use App\Actions\Helpers\Address\AttachHistoricAddressToModel;
 use App\Actions\Helpers\Address\StoreHistoricAddress;
-use App\Actions\Market\Shop\Hydrators\ShopHydrateInvoices;
+use App\Actions\Organisation\Market\Shop\Hydrators\ShopHydrateInvoices;
 use App\Models\Accounting\Invoice;
 use App\Models\CRM\Customer;
 use App\Models\Helpers\Address;
-use App\Models\OMS\Order;
+use App\Models\Organisation\OMS\Order;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class StoreInvoice

@@ -5,7 +5,7 @@
  *  Copyright (c) 2022, Raul A Perusquia F
  */
 
-namespace App\Actions\Market\Shop;
+namespace App\Actions\Organisation\Market\Shop;
 
 use App\Actions\Accounting\PaymentAccount\StorePaymentAccount;
 use App\Actions\Assets\Currency\SetCurrencyHistoricFields;
@@ -15,7 +15,7 @@ use App\Enums\Mail\Outbox\OutboxTypeEnum;
 use App\Enums\Market\Shop\ShopSubtypeEnum;
 use App\Enums\Market\Shop\ShopTypeEnum;
 use App\Models\Mail\Mailroom;
-use App\Models\Market\Shop;
+use App\Models\Organisation\Market\Shop;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Validation\Rule;
@@ -34,7 +34,7 @@ class StoreShops
     public function handle(array $modelData): Shop
     {
         $tenant = app('currentTenant');
-        /** @var Shop $shop */
+        /** @var \App\Models\Organisation\Market\Shop $shop */
         $shop = Shop::create($modelData);
         $shop->stats()->create();
         $shop->accountingStats()->create();

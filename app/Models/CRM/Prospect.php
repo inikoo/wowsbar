@@ -1,7 +1,7 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Wed, 21 Jun 2023 08:43:57 Malaysia Time, Pantai Lembeng, Bali, Id
+ * Created: Wed, 21 Jun 2023 08:43:57 Malaysia Time, Pantai Lembeng, Bali, Indonesia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
@@ -10,12 +10,10 @@ namespace App\Models\CRM;
 use App\Actions\Utils\Abbreviate;
 use App\Actions\Utils\ReadableRandomStringGenerator;
 use App\Enums\CRM\Prospect\ProspectStateEnum;
-use App\Models\Helpers\Address;
 use App\Models\Search\UniversalSearch;
 use App\Models\Traits\HasUniversalSearch;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -29,7 +27,6 @@ use Spatie\Sluggable\SlugOptions;
  * App\Models\CRM\Prospect
  *
  * @property int $id
- * @property int $shop_id
  * @property int|null $customer_id
  * @property string $slug
  * @property string|null $name
@@ -47,7 +44,6 @@ use Spatie\Sluggable\SlugOptions;
  * @property Carbon|null $updated_at
  * @property Carbon|null $deleted_at
  * @property int|null $source_id
- * @property-read Collection<int, Address> $addresses
  * @property-read \App\Models\CRM\Customer|null $customer
  * @property-read UniversalSearch|null $universalSearch
  * @method static \Database\Factories\CRM\ProspectFactory factory($count = null, $state = [])
@@ -55,6 +51,24 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Prospect newQuery()
  * @method static Builder|Prospect onlyTrashed()
  * @method static Builder|Prospect query()
+ * @method static Builder|Prospect whereCompanyName($value)
+ * @method static Builder|Prospect whereContactName($value)
+ * @method static Builder|Prospect whereContactWebsite($value)
+ * @method static Builder|Prospect whereCreatedAt($value)
+ * @method static Builder|Prospect whereCustomerId($value)
+ * @method static Builder|Prospect whereData($value)
+ * @method static Builder|Prospect whereDeletedAt($value)
+ * @method static Builder|Prospect whereEmail($value)
+ * @method static Builder|Prospect whereId($value)
+ * @method static Builder|Prospect whereIdentityDocumentNumber($value)
+ * @method static Builder|Prospect whereIdentityDocumentType($value)
+ * @method static Builder|Prospect whereLocation($value)
+ * @method static Builder|Prospect whereName($value)
+ * @method static Builder|Prospect wherePhone($value)
+ * @method static Builder|Prospect whereSlug($value)
+ * @method static Builder|Prospect whereSourceId($value)
+ * @method static Builder|Prospect whereState($value)
+ * @method static Builder|Prospect whereUpdatedAt($value)
  * @method static Builder|Prospect withTrashed()
  * @method static Builder|Prospect withoutTrashed()
  * @mixin Eloquent

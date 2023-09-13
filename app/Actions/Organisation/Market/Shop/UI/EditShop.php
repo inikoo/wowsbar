@@ -5,14 +5,14 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Market\Shop\UI;
+namespace App\Actions\Organisation\Market\Shop\UI;
 
 use App\Actions\Assets\Country\UI\GetCountriesOptions;
 use App\Actions\Assets\Currency\UI\GetCurrenciesOptions;
 use App\Actions\Assets\Language\UI\GetLanguagesOptions;
 use App\Actions\InertiaAction;
 use App\Enums\Market\Shop\ShopSubtypeEnum;
-use App\Models\Market\Shop;
+use App\Models\Organisation\Market\Shop;
 use Exception;
 use Inertia\Inertia;
 use Inertia\Response;

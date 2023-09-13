@@ -27,7 +27,7 @@ library.add(
 
 const props = defineProps<{
     title: string,
-    pageHead: object,
+    pageHead: any,
     tabs: {
         current: string
         navigation: object
@@ -59,6 +59,7 @@ const component = computed(() => {
     <!--suppress HtmlRequiredTitleElement -->
     <Head :title="capitalize(title)"/>
     <PageHeading :data="pageHead"></PageHeading>
+    {{ pageHead }}
     <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate"/>
     <component :is="component" :data="props[currentTab]"></component>
 </template>

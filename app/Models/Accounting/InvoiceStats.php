@@ -26,6 +26,11 @@ use Spatie\Multitenancy\Models\Concerns\UsesTenantConnection;
  * @method static Builder|InvoiceStats newModelQuery()
  * @method static Builder|InvoiceStats newQuery()
  * @method static Builder|InvoiceStats query()
+ * @method static Builder|InvoiceStats whereCreatedAt($value)
+ * @method static Builder|InvoiceStats whereId($value)
+ * @method static Builder|InvoiceStats whereInvoiceId($value)
+ * @method static Builder|InvoiceStats whereNumberItems($value)
+ * @method static Builder|InvoiceStats whereUpdatedAt($value)
  * @mixin Eloquent
  */
 class InvoiceStats extends Model

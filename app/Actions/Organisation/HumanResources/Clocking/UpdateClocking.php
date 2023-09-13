@@ -54,7 +54,7 @@ class UpdateClocking
     public function asController(Clocking $clocking, ActionRequest $request): Clocking
     {
         $request->validate();
-        return $this->handle($clocking,$request->validated());
+        return $this->handle($clocking, $request->validated());
     }
 
     public function jsonResponse(Clocking $clocking): LocationResource

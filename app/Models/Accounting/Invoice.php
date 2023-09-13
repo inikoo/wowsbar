@@ -10,7 +10,6 @@ namespace App\Models\Accounting;
 use App\Actions\Organisation\CRM\Customer\Hydrators\CustomerHydrateInvoices;
 use App\Models\Assets\Currency;
 use App\Models\CRM\Customer;
-use App\Models\Helpers\Address;
 use App\Models\Search\UniversalSearch;
 use App\Models\Traits\HasUniversalSearch;
 use Eloquent;
@@ -34,9 +33,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property int $id
  * @property string $slug
  * @property string $number
- * @property int $shop_id
  * @property int $customer_id
- * @property int|null $order_id
+ * @property mixed $type
  * @property int $currency_id
  * @property string $exchange
  * @property string $net
@@ -47,21 +45,31 @@ use Spatie\Sluggable\SlugOptions;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property Carbon|null $deleted_at
- * @property int|null $source_id
- * @property-read Collection<int, Address> $addresses
  * @property-read Currency $currency
  * @property-read Customer $customer
  * @property-read Collection<int, \App\Models\Accounting\InvoiceTransaction> $invoiceTransactions
- * @property-read Order|null $order
- * @property-read Collection<int, Order> $orders
- * @property-read Shop $shop
+ * @property-read int|null $invoice_transactions_count
  * @property-read \App\Models\Accounting\InvoiceStats|null $stats
  * @property-read UniversalSearch|null $universalSearch
- * @method static \Database\Factories\Accounting\InvoiceFactory factory($count = null, $state = [])
  * @method static Builder|Invoice newModelQuery()
  * @method static Builder|Invoice newQuery()
  * @method static Builder|Invoice onlyTrashed()
  * @method static Builder|Invoice query()
+ * @method static Builder|Invoice whereCreatedAt($value)
+ * @method static Builder|Invoice whereCurrencyId($value)
+ * @method static Builder|Invoice whereCustomerId($value)
+ * @method static Builder|Invoice whereData($value)
+ * @method static Builder|Invoice whereDeletedAt($value)
+ * @method static Builder|Invoice whereExchange($value)
+ * @method static Builder|Invoice whereId($value)
+ * @method static Builder|Invoice whereNet($value)
+ * @method static Builder|Invoice whereNumber($value)
+ * @method static Builder|Invoice wherePaidAt($value)
+ * @method static Builder|Invoice wherePayment($value)
+ * @method static Builder|Invoice whereSlug($value)
+ * @method static Builder|Invoice whereTotal($value)
+ * @method static Builder|Invoice whereType($value)
+ * @method static Builder|Invoice whereUpdatedAt($value)
  * @method static Builder|Invoice withTrashed()
  * @method static Builder|Invoice withoutTrashed()
  * @mixin Eloquent

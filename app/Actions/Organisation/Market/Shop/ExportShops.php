@@ -5,7 +5,7 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Market\Shop;
+namespace App\Actions\Organisation\Market\Shop;
 
 use App\Actions\Traits\WithExportData;
 use App\Exports\Marketing\ShopsExport;

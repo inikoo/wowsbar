@@ -7,8 +7,6 @@
 
 namespace App\Actions\UI\Public;
 
-use App\Actions\Helpers\Images\GetPictureSources;
-use App\Helpers\ImgProxy\Image;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\Concerns\AsController;

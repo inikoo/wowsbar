@@ -7,7 +7,6 @@
 
 namespace App\Actions\Accounting\Payment\Hydrators;
 
-
 use App\Models\Accounting\Payment;
 use Lorisleiva\Actions\Concerns\AsAction;
 
