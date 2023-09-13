@@ -16,7 +16,6 @@ class LoggedUserResource extends JsonResource
 {
     use HasSelfCall;
 
-
     public function toArray($request): array
     {
         /** @var User|OrganisationUser|\App\Models\CRM\PublicUser $user */
