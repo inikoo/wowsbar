@@ -51,7 +51,7 @@ class EditJobPosition extends InertiaAction
                     'actions'  => [
                         [
                             'type'  => 'button',
-                            'style' => 'exitEdit',
+                            'style' => 'exit',
                             'route' => [
                                 'name'       => preg_replace('/edit$/', 'show', $request->route()->getName()),
                                 'parameters' => array_values($this->originalParameters)
