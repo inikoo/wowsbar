@@ -34,9 +34,8 @@ class StoreWebsite
         $website = $shop->website()->create($modelData);
         $website->webStats()->create();
 
-        ResetWebsiteStructure::run($website);
-
-        return $website;
+        $website->refresh();
+        return ResetWebsiteStructure::run($website);
     }
 
     public function authorize(ActionRequest $request): bool
