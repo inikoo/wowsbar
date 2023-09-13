@@ -14,12 +14,11 @@ const props = defineProps<{
     data: any
 }>()
 
-const handleClick = (route: string) => {
-    // router.patch(
-    //     route,
-    //     { status: 'live'},
-
-    //     )
+const handleLaunch = () => {
+    router.patch(
+        route('org.models.website.state.update'),
+        { status: 'live'},
+    )
 }
 </script>
 
@@ -34,7 +33,7 @@ const handleClick = (route: string) => {
                             Workshop
                         </div>
                     </Button>
-                    <Button :style="`primary`" @click="handleClick('org.model.website')">
+                    <Button :style="`primary`" @click="handleLaunch">
                         <div class="flex items-center gap-x-1">
                             Launch
                             <FontAwesomeIcon icon='fas fa-rocket-launch' class='' aria-hidden='true' />
