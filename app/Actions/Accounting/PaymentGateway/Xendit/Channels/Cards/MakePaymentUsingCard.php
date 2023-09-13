@@ -5,34 +5,32 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Accounting\PaymentGateway\Xendit\Cards;
+namespace App\Actions\Accounting\PaymentGateway\Xendit\Channels\Cards;
 
-use App\Models\Accounting\PaymentAccount;
-use App\Models\Accounting\PaymentServiceProvider;
-use Illuminate\Support\Arr;
+use App\Actions\Accounting\PaymentGateway\Xendit\Traits\HasCredentials;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
-use Xendit\PaymentChannels;
-use Xendit\Xendit;
+use Xendit\Cards;
 
-class CreateToken
+class MakePaymentUsingCard
 {
     use AsAction;
     use WithAttributes;
+    use HasCredentials;
 
     private bool $asAction=false;
 
-    public function handle(float $amount, array $cardData, array $billingDetail): PaymentAccount
+    public function handle(float $amount, $paymentDetail): array
     {
-        $paymentData = [
+        $params = [
+            'token_id' => $paymentDetail['token_id'],
+            'external_id' => 'card_' . time(),
+            'authentication_id' => $paymentDetail['authentication_id'],
             'amount' => $amount,
-            'card_data' => Arr::except($cardData, 'cvn'),
-            'is_multiple_use' => false,
-            'should_authenticate' => true,
-            'billing_details' => $billingDetail
+            'capture' => false
         ];
 
-//        \Xendit\Cards::create()
+        return Cards::create($params);
     }
 
     public function rules(): array

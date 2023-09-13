@@ -8,12 +8,14 @@
 namespace App\Actions\Accounting\Payment;
 
 use App\Actions\Accounting\Payment\Hydrators\PaymentHydrateUniversalSearch;
-use App\Actions\Helpers\CurrencyExchange\GetCurrencyExchange;
+use App\Actions\Accounting\PaymentGateway\Xendit\Channels\Invoice\MakePaymentUsingInvoice;
 use App\Enums\Accounting\Payment\PaymentStateEnum;
 use App\Enums\Accounting\Payment\PaymentStatusEnum;
 use App\Models\Accounting\Payment;
 use App\Models\Accounting\PaymentAccount;
 use App\Models\CRM\Customer;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -26,21 +28,24 @@ class StorePayment
 
     private bool $asAction = false;
 
-    public function handle(Customer $customer, PaymentAccount $paymentAccount, array $modelData): Payment
+    /**
+     * @throws \Throwable
+     */
+    public function handle(Customer $customer, PaymentAccount $paymentAccount, array $modelData)
     {
-        $modelData['customer_id'] = $customer->id;
-        $modelData['shop_id']     = $customer->shop_id;
+        return DB::transaction(function () use ($customer, $paymentAccount, $modelData) {
+            $modelData['customer_id'] = $customer->id;
 
-        data_fill($modelData, 'currency_id', $customer->shop->currency_id);
-        data_fill($modelData, 'tc_amount', GetCurrencyExchange::run($customer->shop->currency, app('currentTenant')->currency));
-        data_fill($modelData, 'gc_amount', GetCurrencyExchange::run($customer->shop->currency, app('currentTenant')->group->currency));
-        data_fill($modelData, 'date', gmdate('Y-m-d H:i:s'));
+            data_fill($modelData, 'date', gmdate('Y-m-d H:i:s'));
 
-        /** @var Payment $payment */
-        $payment = $paymentAccount->payments()->create($modelData);
-        PaymentHydrateUniversalSearch::dispatch($payment);
+            /** @var Payment $payment */
+            $payment = $paymentAccount->payments()->create($modelData);
+            $payment = MakePaymentUsingInvoice::run($payment);
 
-        return $payment;
+            PaymentHydrateUniversalSearch::dispatch($payment);
+
+            return $payment;
+        });
     }
 
     public function authorize(ActionRequest $request): bool
@@ -56,11 +61,16 @@ class StorePayment
     {
         return [
             'reference' => ['required', 'string'],
-            'status'    => ['sometimes','required', Rule::in(PaymentStatusEnum::values())],
-            'state'     => ['sometimes','required', Rule::in(PaymentStateEnum::values())],
-            'amount'    => ['required','decimal:0,2']
+            'status' => ['sometimes', 'required', Rule::in(PaymentStatusEnum::values())],
+            'state' => ['sometimes', 'required', Rule::in(PaymentStateEnum::values())],
+            'amount' => ['required', 'decimal:0,2']
 
         ];
+    }
+
+    public function htmlResponse(array $payment): Response
+    {
+        return $payment['invoice_url'];
     }
 
     public function action(Customer $customer, PaymentAccount $paymentAccount, array $objectData): Payment

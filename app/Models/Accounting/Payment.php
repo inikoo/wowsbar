@@ -39,6 +39,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property int $customer_id
  * @property PaymentTypeEnum $type
  * @property string $reference
+ * @property string $webhook_id
  * @property string $slug
  * @property PaymentStatusEnum $status
  * @property PaymentStateEnum $state
