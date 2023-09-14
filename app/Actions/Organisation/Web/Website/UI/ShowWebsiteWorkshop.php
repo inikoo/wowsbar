@@ -77,6 +77,13 @@ class ShowWebsiteWorkshop extends InertiaAction
                     'navigation' => WebsiteWorkshopTabsEnum::navigation(),
                 ],
 
+                WebsiteWorkshopTabsEnum::LAYOUT->value => $this->tab == WebsiteWorkshopTabsEnum::LAYOUT->value
+                    ?
+                    fn () => GetWebsiteWorkshopLayout::run($website)
+                    : Inertia::lazy(
+                        fn () => GetWebsiteWorkshopLayout::run($website)
+                    ),
+
                 WebsiteWorkshopTabsEnum::COLOR_SCHEME->value => $this->tab == WebsiteWorkshopTabsEnum::COLOR_SCHEME->value
                     ?
                     fn () => GetWebsiteWorkshopColorScheme::run($website)

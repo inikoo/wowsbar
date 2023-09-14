@@ -11,7 +11,6 @@ import { CheckIcon } from '@heroicons/vue/20/solid'
 const props = defineProps<{
     data: Object
 }>()
-console.log('footer', props.data)
 
 const footerNavigation = {
     solutions: [

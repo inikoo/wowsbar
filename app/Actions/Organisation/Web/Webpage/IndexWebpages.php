@@ -10,7 +10,6 @@ namespace App\Actions\Organisation\Web\Webpage;
 use App\Actions\InertiaAction;
 
 use App\Actions\Organisation\Web\Website\UI\ShowWebsite;
-use App\Actions\UI\Organisation\Dashboard\ShowDashboard;
 use App\Http\Resources\Web\WebpageResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\Organisation\Web\Webpage;
@@ -103,10 +102,7 @@ class IndexWebpages extends InertiaAction
         return Inertia::render(
             'Web/Webpages',
             [
-                'breadcrumbs' => $this->getBreadcrumbs(
-                    $request->route()->getName(),
-                    $request->route()->parameters
-                ),
+                'breadcrumbs' => $this->getBreadcrumbs(),
                 'title'       => __('webpages'),
                 'pageHead'    => [
                     'title'     => __('webpages'),
@@ -122,7 +118,7 @@ class IndexWebpages extends InertiaAction
         )->table($this->tableStructure());
     }
 
-    public function getBreadcrumbs(string $routeName, array $routeParameters): array
+    public function getBreadcrumbs(): array
     {
         $headCrumb = function (array $routeParameters = []) {
             return [
@@ -137,30 +133,15 @@ class IndexWebpages extends InertiaAction
             ];
         };
 
-        return match ($routeName) {
-            'org.website.webpages.index' =>
-            array_merge(
-                ShowDashboard::make()->getBreadcrumbs(),
-                $headCrumb(
-                    [
-                        'name' => 'org.website.webpages.index',
-                        null
-                    ]
-                ),
+        return  array_merge(
+            (new ShowWebsite())->getBreadcrumbs(),
+            $headCrumb(
+                [
+                    'name' => 'org.website.webpages.index',
+                    null
+                ]
             ),
+        );
 
-
-            'org.website.websites.show.webpages.index' =>
-            array_merge(
-                (new ShowWebsite())->getBreadcrumbs(),
-                $headCrumb(
-                    [
-                        'name'       => 'org.website.websites.show.webpages.index',
-                        'parameters' => $routeParameters
-                    ]
-                )
-            ),
-            default => []
-        };
     }
 }

@@ -2,7 +2,7 @@
 import { Head } from '@inertiajs/vue3'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import {
-    faArrowAltToTop, faArrowAltToBottom, faBars, faBrowser, faCube, faPalette, faCookieBite
+    faArrowAltToTop, faArrowAltToBottom, faBars, faBrowser, faCube, faPalette, faCookieBite, faLayerGroup
 } from "@/../private/pro-light-svg-icons"
 
 import PageHeading from '@/Components/Headings/PageHeading.vue'
@@ -21,7 +21,8 @@ library.add(
     faBrowser,
     faCube,
     faPalette,
-    faCookieBite
+    faCookieBite,
+    faLayerGroup
 )
 
 
@@ -45,9 +46,9 @@ const handleTabUpdate = (tabSlug) => useTabChange(tabSlug, currentTab)
 
 const component = computed(() => {
     const components = {
-        header: HeaderWorkshop,
-        menu: MenuWorkshop,
-        footer: FooterWorkshop,
+        'header': HeaderWorkshop,
+        'menu': MenuWorkshop,
+        'footer': FooterWorkshop,
     }
     return components[currentTab.value]
 })

@@ -4,7 +4,7 @@
   - Copyright (c) 2023, Raul A Perusquia Flores
   -->
 
-<script setup>
+<script setup lang="ts">
 import { ref, watch, reactive } from 'vue'
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { RadioGroup, RadioGroupLabel, RadioGroupOption } from '@headlessui/vue'
@@ -19,6 +19,11 @@ import { getDbRef, getDataFirebase, setDataFirebase } from '@/Composables/fireba
 import ToolInTop from '@/Components/CMS/Menu/ToolsInTop.vue'
 library.add(faHandPointer, faHandRock, faPlus, faLink,faObjectGroup)
 
+const props = defineProps<{
+	data: Array,
+}>()
+
+
 const toolsData = {
     menuType: [
         { name: 'Group', value: 'group', icon:['fas','object-group'] },
@@ -26,226 +31,9 @@ const toolsData = {
     ],
 }
 
-const navigation = reactive({
-    categories: [
-        {
-            name: 'Home',
-            id: ulid(),
-            icon: 'far fa-dot-circle',
-            type: 'group',
-            featured: [
-                {
-                    name: 'About us',
-                    id: ulid(),
-                    icon: 'far fa-dot-circle',
-                    link: '#',
-                },
-                {
-                    name: 'Contact',
-                    id: ulid(),
-                    icon: 'far fa-dot-circle',
-                    link: '#',
-                },
-                {
-                    name: 'ShowRoom',
-                    id: ulid(),
-                    icon: 'far fa-dot-circle',
-                    link: '#',
-                },
-                {
-                    name: 'Trems & Conditions',
-                    id: ulid(),
-                    icon: 'far fa-dot-circle',
-                    link: '#',
-                },
-                {
-                    name: 'Delivery',
-                    id: ulid(),
-                    icon: 'far fa-dot-circle',
-                    link: '#',
-                },
-                {
-                    name: 'Operation Hours',
-                    id: ulid(),
-                    icon: 'far fa-dot-circle',
-                    link: '#',
-                },
-                {
-                    name: 'Freedom Fund',
-                    id: ulid(),
-                    icon: 'far fa-dot-circle',
-                    link: '#',
-                },
-                {
-                    name: 'Business Ethics',
-                    id: ulid(),
-                    icon: 'far fa-dot-circle',
-                    link: '#',
-                },
-                {
-                    name: 'Catalogue',
-                    id: ulid(),
-                    icon: 'far fa-dot-circle',
-                    link: '#',
-                },
-                {
-                    name: 'Retruns Policy',
-                    id: ulid(),
-                    icon: 'far fa-dot-circle',
-                    link: '#',
-                },
-                {
-                    name: 'Dropshiping Sevices',
-                    id: ulid(),
-                    icon: 'far fa-dot-circle',
-                    link: '#',
-                },
-                {
-                    name: 'Working with local businesses',
-                    id: ulid(),
-                    icon: 'far fa-dot-circle',
-                    link: '#',
-                },
-                {
-                    name: 'sustainable palm oil',
-                    id: ulid(),
-                    icon: 'far fa-dot-circle',
-                    link: '#',
-                },
-                {
-                    name: 'Privacy Policy',
-                    id: ulid(),
-                    icon: 'far fa-dot-circle',
-                    link: '#',
-                },
-                {
-                    name: 'Cookies Policy',
-                    id: ulid(),
-                    icon: 'far fa-dot-circle',
-                    link: '#',
-                },
-                {
-                    name: 'Travel Blog',
-                    id: ulid(),
-                    icon: 'far fa-dot-circle',
-                    link: '#',
-                },
-            ],
-        },
-        {
-            name: 'Departements',
-            id: ulid(),
-            icon: 'far fa-dot-circle',
-            type: 'group',
-            featured: [
-                {
-                    name: 'New Arrivals',
-                    id: ulid(),
-                    icon: 'far fa-dot-circle',
-                    link: '#',
-                },
-                {
-                    name: 'Basic Tees',
-                    id: ulid(),
-                    icon: 'far fa-dot-circle',
-                    link: '#',
-                },
-                {
-                    name: 'Accessories',
-                    id: ulid(),
-                    icon: 'far fa-dot-circle',
-                    link: '#',
-                },
-                {
-                    name: 'Carry',
-                    id: ulid(),
-                    icon: 'far fa-dot-circle',
-                    link: '#',
-                },
-            ],
-        },
-        {
-            name: 'Incentives & Inspiration',
-            id: ulid(),
-            icon: 'far fa-dot-circle',
-            type: 'group',
-            featured: [
-                {
-                    name: 'New Arrivals',
-                    id: ulid(),
-                    icon: 'far fa-dot-circle',
-                    link: '#',
-                },
-                {
-                    name: 'Basic Tees',
-                    id: ulid(),
-                    icon: 'far fa-dot-circle',
-                    link: '#',
-                },
-                {
-                    name: 'Accessories',
-                    id: ulid(),
-                    icon: 'far fa-dot-circle',
-                    link: '#',
-                },
-                {
-                    name: 'Carry',
-                    id: ulid(),
-                    icon: 'far fa-dot-circle',
-                    link: '#',
-                },
-            ],
-        },
-        {
-            name: 'Delivery',
-            id: ulid(),
-            icon: 'far fa-dot-circle',
-            type: 'group',
-            featured: [
-                {
-                    name: 'New Arrivals',
-                    id: ulid(),
-                    icon: 'far fa-dot-circle',
-                    link: '#',
-                },
-                {
-                    name: 'Basic Tees',
-                    id: ulid(),
-                    icon: 'far fa-dot-circle',
-                    link: '#',
-                },
-                {
-                    name: 'Accessories',
-                    id: ulid(),
-                    icon: 'far fa-dot-circle',
-                    link: '#',
-                },
-                {
-                    name: 'Carry',
-                    id: ulid(),
-                    icon: 'far fa-dot-circle',
-                    link: '#',
-                },
-            ],
-        },
-        {
-            name: 'Test link 1',
-            id: ulid(),
-            icon: 'far fa-dot-circle',
-            type: 'link',
-            link: '#',
-        },
-        {
-            name: 'Test link 2',
-            id: ulid(),
-            icon: 'far fa-dot-circle',
-            type: 'link',
-            link: '#',
-        },
-    ],
-})
+const navigation = reactive({...props.data.data.navigation})
 
-const selectedTheme = ref({ name: 'MenuOne', value: '1' },)
+const selectedTheme = ref({...props.data.data.theme})
 const handtools = ref({ name: 'edit', icon: ['fas', 'fa-hand-pointer'] },)
 const selectedNav = ref(null)
 
