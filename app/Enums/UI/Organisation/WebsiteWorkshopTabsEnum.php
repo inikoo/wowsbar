@@ -15,17 +15,23 @@ enum WebsiteWorkshopTabsEnum: string
     use EnumHelperTrait;
     use HasTabs;
 
-    case COLOR_SCHEME         = 'color_scheme';
+    case LAYOUT         = 'layout';
+
     case HEADER               = 'header';
     case MENU                 = 'menu';
     case FOOTER               = 'footer';
 
+    case COLOR_SCHEME         = 'color_scheme';
 
 
 
     public function blueprint(): array
     {
         return match ($this) {
+            WebsiteWorkshopTabsEnum::LAYOUT => [
+                'title' => __('layout'),
+                'icon'  => 'fal fa-layer-group',
+            ],
             WebsiteWorkshopTabsEnum::COLOR_SCHEME => [
                 'title' => __('color scheme'),
                 'icon'  => 'fal fa-palette',
