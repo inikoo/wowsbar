@@ -11,7 +11,9 @@ export const useLayoutStore = defineStore("layout", {
         {
             booted:  false,
             navigation            : [],
-            tenant                : {},
+            tenant: {
+                slug: '',
+            },
             currentRoute          : "",
             currentRouteParameters: {},
             currentModule         : "",
