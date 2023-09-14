@@ -21,6 +21,7 @@ enum WebpagePurposeEnum: string
     case BLOG    = 'blog';
     case ARTICLE = 'article';
 
+    case CONTENT = 'content';
 
     public static function labels(): array
     {
@@ -31,6 +32,7 @@ enum WebpagePurposeEnum: string
             'register'    => __('register'),
             'blog'        => __('blog'),
             'article'     => __('article'),
+            'content'     => __('content'),
 
         ];
     }

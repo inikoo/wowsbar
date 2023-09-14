@@ -28,6 +28,12 @@ class SeedWebsiteFixedWebpages
             'purpose' => 'storefront',
         ]);
 
+        $website->update(
+            [
+                'home_id'=> $home->id
+            ]
+        );
+
         foreach (Storage::disk('datasets')->files('webpages/'.$website->type) as $file) {
             $modelData = json_decode(Storage::disk('datasets')->get($file), true);
             data_set($modelData, 'parent_id', $home->id, overwrite: false);

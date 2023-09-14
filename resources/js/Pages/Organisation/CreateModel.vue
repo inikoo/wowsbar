@@ -9,7 +9,14 @@ import { Head } from '@inertiajs/vue3'
 import PageHeading from '@/Components/Headings/PageHeading.vue'
 import { capitalize } from "@/Composables/capitalize"
 import Create from "@/Components/Create.vue";
+import {library} from '@fortawesome/fontawesome-svg-core';
+import {
+faFingerprint
+} from "@/../private/pro-light-svg-icons";
 
+library.add(
+    faFingerprint
+);
 const props = defineProps<{
     title: string,
     pageHead: object,

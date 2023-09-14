@@ -13,6 +13,7 @@ use App\Models\Traits\HasHistory;
 use App\Models\Traits\HasOrganisationUniversalSearch;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -40,10 +41,12 @@ use Spatie\Sluggable\SlugOptions;
  * @property string|null $launched_at
  * @property string|null $closed_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property int|null $home_id
  * @property WebsiteEngineEnum $engine
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \OwenIt\Auditing\Models\Audit> $audits
  * @property-read int|null $audits_count
  * @property-read array $es_audits
+ * @property-read \App\Models\Organisation\Web\Webpage|null $home
  * @property-read \App\Models\Search\OrganisationUniversalSearch|null $universalSearch
  * @property-read \App\Models\Organisation\Web\WebsiteStats|null $webStats
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Organisation\Web\Webpage> $webpages
@@ -58,6 +61,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Website whereData($value)
  * @method static Builder|Website whereDeletedAt($value)
  * @method static Builder|Website whereDomain($value)
+ * @method static Builder|Website whereHomeId($value)
  * @method static Builder|Website whereId($value)
  * @method static Builder|Website whereLaunchedAt($value)
  * @method static Builder|Website whereOrganisationId($value)
@@ -118,5 +122,10 @@ class Website extends Model implements Auditable
     public function webStats(): HasOne
     {
         return $this->hasOne(WebsiteStats::class);
+    }
+
+    public function home(): BelongsTo
+    {
+        return $this->belongsTo(Webpage::class, 'home_id');
     }
 }

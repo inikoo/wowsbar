@@ -34,7 +34,6 @@ class CreateWebsite extends InertiaAction
 
     public function htmlResponse(ActionRequest $request): Response
     {
-        $request->route()->getName();
 
         return Inertia::render(
             'CreateModel',
@@ -42,7 +41,7 @@ class CreateWebsite extends InertiaAction
                 'breadcrumbs' => $this->getBreadcrumbs(),
                 'title'       => __('set up website'),
                 'pageHead'    => [
-                    'title'        => __('website'),
+                    'title'        => __('set up website'),
 
 
 

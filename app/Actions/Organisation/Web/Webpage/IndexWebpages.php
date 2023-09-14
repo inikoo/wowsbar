@@ -34,10 +34,10 @@ class IndexWebpages extends InertiaAction
     }
 
 
-
     public function asController(ActionRequest $request): LengthAwarePaginator
     {
         $this->initialisation($request);
+
         return $this->handle();
     }
 
@@ -60,8 +60,8 @@ class IndexWebpages extends InertiaAction
 
         return $queryBuilder
             ->defaultSort('webpages.level')
-            ->select(['code', 'id', 'type', 'slug','level','purpose'])
-            ->allowedSorts(['code', 'type','level'])
+            ->select(['code', 'id', 'type', 'slug', 'level', 'purpose'])
+            ->allowedSorts(['code', 'type', 'level'])
             ->allowedFilters([$globalSearch])
             ->withPaginator($prefix)
             ->withQueryString();
@@ -85,8 +85,8 @@ class IndexWebpages extends InertiaAction
                     ]
                 )
                 ->column(key: 'level', label: ['fal', 'fa-sort-amount-down-alt'], canBeHidden: false, sortable: true)
-                ->column(key: 'type', label:  ['fal', 'fa-shapes'], canBeHidden: false)
-               ->column(key: 'code', label: __('code'), canBeHidden: false, sortable: true, searchable: true)
+                ->column(key: 'type', label: ['fal', 'fa-shapes'], canBeHidden: false)
+                ->column(key: 'code', label: __('code'), canBeHidden: false, sortable: true, searchable: true)
                 ->defaultSort('level');
         };
     }
@@ -111,6 +111,23 @@ class IndexWebpages extends InertiaAction
                     'iconRight' => [
                         'icon'  => ['fal', 'fa-browser'],
                         'title' => __('webpage')
+                    ],
+                    'actions'   => [
+                        [
+                            'type'    => 'buttonGroup',
+                            'buttons' => [
+
+                                [
+                                    'type'  => 'button',
+                                    'style' => 'create',
+                                    'label' => 'create webpage',
+                                    'route' => [
+                                        'name'       => preg_replace('/index$/', 'create', $request->route()->getName()),
+                                        'parameters' => array_values($request->route()->originalParameters())
+                                    ]
+                                ]
+                            ]
+                        ]
                     ]
                 ],
                 'data'        => WebpageResource::collection($webpages),
@@ -134,7 +151,7 @@ class IndexWebpages extends InertiaAction
             ];
         };
 
-        return  array_merge(
+        return array_merge(
             (new ShowWebsite())->getBreadcrumbs(),
             $headCrumb(
                 [
@@ -143,6 +160,5 @@ class IndexWebpages extends InertiaAction
                 ]
             ),
         );
-
     }
 }
