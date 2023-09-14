@@ -97,13 +97,13 @@ const getHeaderComponent = computed(() => {
   
   </script>
   
-  <template layout="OrgApp">
+  <template>
     <Head :title="capitalize(title)" />
     <PageHeading :data="pageHead"></PageHeading>
       <div v-if="loadingState" class="w-full min-h-screen flex justify-center items-center">
             <FontAwesomeIcon icon='fad fa-spinner-third' class='animate-spin h-12  text-gray-600' aria-hidden='true' />
         </div>
-      <div v-else class="relative" :class="[data.layout == 'full' ? '' : 'flex, justify-center w-[80%]']" >
+      <div v-else class="relative" :class="[data.layout == 'full' ? '' : 'flex justify-center w-full']" >
           <section class="relative isolate overflow-hidden bg-gray-100">
               <component :is="getHeaderComponent" :data="data.header"></component>
 
