@@ -5,13 +5,29 @@
 -->
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
+import { getDbRef, getDataFirebase, setDataFirebase } from '@/Composables/firebase'
 const themeOptions = [
-  { name: 'Full', value: 1 },
-  { name: 'Page Margin', value: 2 },
+  { name: 'Full', value: 'full' },
+  { name: 'Page Margin', value: 'margin' },
 ];
 
-let selectedTheme = ref(1); // Default selected theme
+let selectedTheme = ref('full'); // Default selected theme
+
+async function setToFirebase() {
+  const column = 'org/websites/layout';
+  try {
+    await setDataFirebase(column, selectedTheme.value);
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+watch(selectedTheme, setToFirebase, { deep: true })
+
+setToFirebase()
+
+
 </script>
 
 <template>
@@ -28,8 +44,8 @@ let selectedTheme = ref(1); // Default selected theme
   <div class="flex justify-center items-center w-full">
     <div class="w-[80%] h-screen flex justify-center items-center border-2 border-gray-400 rounded-md my-9 bg-gray-200">
       <div class="bg-white  h-full rounded-md" :class="{
-        'w-full': selectedTheme === 1,
-        'w-[60%]': selectedTheme === 2,
+        'w-full': selectedTheme === 'full',
+        'w-[60%]': selectedTheme === 'margin',
       }">
         <div class="h-1/3 border-b-2 flex items-center">
           <div class="mx-auto text-3xl font-medium">Header</div>

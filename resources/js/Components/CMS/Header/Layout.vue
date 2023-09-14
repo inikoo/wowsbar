@@ -62,10 +62,10 @@ function dragElement(elmnt, dataSet) {
 			newLeft + elmnt.offsetWidth <= containerRight &&
 			newTop + elmnt.offsetHeight <= containerBottom
 		) {
-			elmnt.style.top = newTop + "px"
-			elmnt.style.left = newLeft + "px"
+			elmnt.style.top = newTop
+			elmnt.style.left = newLeft
 		}
-		set(dataSet, 'style', { ...dataSet.style, top: `${newTop}px`, left: `${newLeft}px` })
+		set(dataSet, 'style', { ...dataSet.style, top: newTop, left: newLeft })
 
 
 	}
@@ -98,12 +98,18 @@ const generateThumbnail = (file) => {
 
 <template>
 	<div>
-		<vue-resizable class="container bg-white overflow-hidden" :minHeight="200" :maxWidth="1233" :minWidth="1233" :height="layout.height" :maxHeight="200"
+		<vue-resizable class="container bg-white overflow-hidden" :minHeight="200" :maxWidth="1500" :minWidth="1500" :height="layout.height" :maxHeight="200"
 		:left="layout.left" :top="layout.top" @mount="eHandler" @resize:move="eHandler" @resize:start="eHandler"
 		@resize:end="eHandler" @drag:move="eHandler" @drag:start="eHandler" @drag:end="eHandler">
 			<div v-for="(item, index) in props.data.slice().reverse()" :key="item.id" :fit-parent="true">
 				<div v-if="item.type == 'text'" :ref="(refValue) => setdragElement(refValue, item)"
-					class="col-sm-10 draggable-component" :style="{ ...item.style }">
+					class="col-sm-10 draggable-component" 
+					:style="{
+							top: item.style?.top + 'px',
+							left: item.style?.left + 'px',
+							fontSize: item.style?.fontSize + 'px',
+							color: item.style?.color || '#374151'
+							}">
 					<div :class="['draggable-handle', { border: get(data[layerActive], 'id') === item.id }]"
 						@click="(e) => { e.stopPropagation(); props.setActive(item.id) }">
 						<Input :data="item" keyValue="name" :styleCss="item.style" />
@@ -111,7 +117,13 @@ const generateThumbnail = (file) => {
 				</div>
 
 				<div v-if="item.type == 'search'" :ref="(refValue) => setdragElement(refValue, item)"
-					class="col-sm-10 draggable-component" :style="{ ...item.style }">
+					class="col-sm-10 draggable-component"
+					:style="{
+							top: item.style?.top + 'px',
+							left: item.style?.left + 'px',
+							fontSize: item.style?.fontSize + 'px',
+							color: item.style?.color || '#374151'
+							}">
 					<div :class="['draggable-handle', { border: get(data[layerActive], 'id') === item.id }]"
 						@click="(e) => { e.stopPropagation(); props.setActive(item.id) }">
 						<Search />
@@ -124,7 +136,7 @@ const generateThumbnail = (file) => {
 					<div :class="['draggable-handle', { border: get(data[layerActive], 'id') === item.id }]"
 						@click="(e) => { e.stopPropagation(); props.setActive(item.id) }">
 						<img :class="['draggable-handle', { border: get(data[layerActive], 'id') === item.id }]"
-							class="preview-img" :src="generateThumbnail(item)" :style="`width: ${item.style.width}; height: ${item.style.height};`" />
+							class="preview-img" :src="generateThumbnail(item)" :style="`width: ${item.style.width}px; height: ${item.style.height}px;`" />
 					</div>
 				</div>
 			</div>
