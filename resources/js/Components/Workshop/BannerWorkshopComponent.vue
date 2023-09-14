@@ -23,8 +23,6 @@ const props = defineProps<{
 const jumpToIndex = ref(0)
 const screenView = ref("")
 
-
-
 </script>
 
 <template>

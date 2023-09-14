@@ -269,7 +269,6 @@ onBeforeUnmount(() => {
     setDataBeforeLeave()
 })
 
-
 </script>
 
 
@@ -334,7 +333,7 @@ onBeforeUnmount(() => {
             <BannerWorkshopComponent
                 :data="data"
                 :imagesUploadRoute="imagesUploadRoute"
-                :user="user"
+                :user="user.username"
             />
         </div>
     </section>
