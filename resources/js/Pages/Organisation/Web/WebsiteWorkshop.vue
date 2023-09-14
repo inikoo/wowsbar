@@ -13,6 +13,7 @@ import { capitalize } from "@/Composables/capitalize"
 import FooterWorkshop from "@/Components/CMS/Workshops/FooterWorkshop.vue";
 import MenuWorkshop from "@/Components/CMS/Workshops/MenuWorkshop.vue";
 import HeaderWorkshop from "@/Components/CMS/Workshops/HeaderWorkshop.vue";
+import LayoutWorkshop from "@/Components/CMS/Workshops/LayoutWorkshop.vue";
 
 library.add(
     faArrowAltToTop,
@@ -49,6 +50,7 @@ const component = computed(() => {
         'header': HeaderWorkshop,
         'menu': MenuWorkshop,
         'footer': FooterWorkshop,
+        'layout': LayoutWorkshop,
     }
     return components[currentTab.value]
 })
