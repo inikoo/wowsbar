@@ -66,7 +66,7 @@ class StorePaymentAccount
             'name' => $command->argument('name')
         ]);
 
-        $paymentServiceProvider = PaymentServiceProvider::first();
+        $paymentServiceProvider = PaymentServiceProvider::where('code', 'xendit')->first();
 
         $validatedData = $this->validateAttributes();
         $this->handle($paymentServiceProvider, $validatedData);

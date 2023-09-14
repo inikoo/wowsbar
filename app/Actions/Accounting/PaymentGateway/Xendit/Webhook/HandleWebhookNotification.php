@@ -23,7 +23,6 @@ class HandleWebhookNotification
 {
     use AsAction;
     use WithAttributes;
-    use HasCredentials;
 
     private bool $asAction = false;
 
@@ -35,6 +34,7 @@ class HandleWebhookNotification
         return DB::transaction(function () use ($request) {
             $callbackToken = $request->header('x-callback-token');
             $webhookId     = $request->header('webhook-id');
+            $status = $request->input('status');
 
             if ($callbackToken === env('XENDIT_CALLBACK_TOKEN')) {
                 $payment = Payment::where('reference', $request->input('external_id'))->first();
@@ -44,13 +44,20 @@ class HandleWebhookNotification
                 }
 
                 if (blank($payment->webhook_id)) {
-                    UpdatePayment::run($payment, [
+                    $data = [
                         'webhook_id' => $webhookId,
-                        'status'     => $this->checkStatus($request->input('status')),
-                        'state'      => $this->checkState($request->input('status')),
-                        'completed_at' => now(),
+                        'status'     => $this->checkStatus($status),
+                        'state'      => $this->checkState($status),
                         'data' => $request->all()
-                    ]);
+                    ];
+
+                    if($status === 'PAID') {
+                        array_merge($data, ['completed_at' => now()]);
+                    } else {
+                        array_merge($data, ['cancelled_at' => now()]);
+                    }
+
+                    UpdatePayment::run($payment, $data);
                 }
 
                 return $payment;
