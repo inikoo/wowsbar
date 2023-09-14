@@ -59,9 +59,9 @@ class IndexWebpages extends InertiaAction
 
 
         return $queryBuilder
-            ->defaultSort('webpages.code')
-            ->select(['code', 'id', 'type', 'slug'])
-            ->allowedSorts(['code', 'type'])
+            ->defaultSort('webpages.level')
+            ->select(['code', 'id', 'type', 'slug','level','purpose'])
+            ->allowedSorts(['code', 'type','level'])
             ->allowedFilters([$globalSearch])
             ->withPaginator($prefix)
             ->withQueryString();
@@ -84,9 +84,10 @@ class IndexWebpages extends InertiaAction
                         'count' => organisation()->stats->number_webpages,
                     ]
                 )
-                ->column(key: 'code', label: __('code'), canBeHidden: false, sortable: true, searchable: true)
-                ->column(key: 'type', label: __('type'), canBeHidden: false, sortable: true, searchable: true)
-                ->defaultSort('code');
+                ->column(key: 'level', label: ['fal', 'fa-sort-amount-down-alt'], canBeHidden: false, sortable: true)
+                ->column(key: 'type', label:  ['fal', 'fa-shapes'], canBeHidden: false)
+               ->column(key: 'code', label: __('code'), canBeHidden: false, sortable: true, searchable: true)
+                ->defaultSort('level');
         };
     }
 

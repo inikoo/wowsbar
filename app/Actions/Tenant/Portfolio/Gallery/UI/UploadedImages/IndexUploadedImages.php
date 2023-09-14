@@ -84,7 +84,7 @@ class IndexUploadedImages extends InertiaAction
                 ->column(key: 'thumbnail', label: __('image'))
                 ->column(key: 'size', label: __('size'), sortable: true)
                 ->column(key: 'created_at', label: __('uploaded at'), sortable: true)
-                ->column(key: 'select', label: __(' '))
+                ->column(key: 'select', label: '')
                 ->defaultSort('name');
         };
     }
