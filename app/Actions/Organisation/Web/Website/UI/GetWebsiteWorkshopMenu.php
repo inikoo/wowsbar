@@ -13,7 +13,7 @@ class GetWebsiteWorkshopMenu
     public function handle(Website $website): array
     {
         return [
-            'data'=> Arr::get($website->structure,'menu')
+            'data'=> Arr::get($website->structure, 'menu')
         ];
     }
 }
