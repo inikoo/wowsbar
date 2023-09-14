@@ -84,6 +84,11 @@ class Webpage extends Model
             ->saveSlugsTo('slug');
     }
 
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
+
     public function stats(): HasOne
     {
         return $this->hasOne(WebpageStats::class);
