@@ -10,6 +10,7 @@ namespace App\Actions\Accounting\PaymentAccount;
 use App\Actions\Accounting\PaymentServiceProvider\Hydrators\PaymentServiceProviderHydrateAccounts;
 use App\Models\Accounting\PaymentAccount;
 use App\Models\Accounting\PaymentServiceProvider;
+use Illuminate\Console\Command;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
@@ -20,6 +21,7 @@ class StorePaymentAccount
     use WithAttributes;
 
     private bool $asAction=false;
+    public $commandSignature = 'pa:create {code} {name}';
 
     public function handle(PaymentServiceProvider $paymentServiceProvider, array $modelData): PaymentAccount
     {
@@ -54,5 +56,23 @@ class StorePaymentAccount
         $validatedData = $this->validateAttributes();
 
         return $this->handle($paymentServiceProvider, $validatedData);
+    }
+
+    public function asCommand(Command $command): int
+    {
+        $this->asAction=true;
+        $this->setRawAttributes([
+            'code' => $command->argument('code'),
+            'name' => $command->argument('name')
+        ]);
+
+        $paymentServiceProvider = PaymentServiceProvider::first();
+
+        $validatedData = $this->validateAttributes();
+        $this->handle($paymentServiceProvider, $validatedData);
+
+        echo "Successfully create payment account \n";
+
+        return 0;
     }
 }

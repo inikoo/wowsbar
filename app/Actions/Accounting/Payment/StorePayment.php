@@ -14,6 +14,7 @@ use App\Enums\Accounting\Payment\PaymentStatusEnum;
 use App\Models\Accounting\Payment;
 use App\Models\Accounting\PaymentAccount;
 use App\Models\CRM\Customer;
+use Illuminate\Console\Command;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
@@ -27,6 +28,7 @@ class StorePayment
     use WithAttributes;
 
     private bool $asAction = false;
+    public $commandSignature = 'payment:create {reference} {amount}';
 
     /**
      * @throws \Throwable
@@ -64,7 +66,6 @@ class StorePayment
             'status'    => ['sometimes', 'required', Rule::in(PaymentStatusEnum::values())],
             'state'     => ['sometimes', 'required', Rule::in(PaymentStateEnum::values())],
             'amount'    => ['required', 'decimal:0,2']
-
         ];
     }
 
@@ -80,5 +81,24 @@ class StorePayment
         $validatedData = $this->validateAttributes();
 
         return $this->handle($customer, $paymentAccount, $validatedData);
+    }
+
+    public function asCommand(Command $command): int
+    {
+        $this->asAction=true;
+        $this->setRawAttributes([
+            'reference' => $command->argument('reference'),
+            'amount' => $command->argument('amount')
+        ]);
+
+        $customer = Customer::first();
+        $paymentAccount = PaymentAccount::first();
+
+        $validatedData = $this->validateAttributes();
+        $this->handle($customer, $paymentAccount, $validatedData);
+
+        echo "Successfully create payment \n";
+
+        return 0;
     }
 }
