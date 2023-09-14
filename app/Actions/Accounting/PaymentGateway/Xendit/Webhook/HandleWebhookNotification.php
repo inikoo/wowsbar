@@ -36,14 +36,20 @@ class HandleWebhookNotification
             $callbackToken = $request->header('x-callback-token');
             $webhookId     = $request->header('webhook-id');
 
-            if (Str::match($callbackToken, env('XENDIT_CALLBACK_TOKEN'))) {
-                $payment = Payment::where('reference', $request->input('external_id'));
+            if ($callbackToken === env('XENDIT_CALLBACK_TOKEN')) {
+                $payment = Payment::where('reference', $request->input('external_id'))->first();
+
+                if(!$payment) {
+                    abort(404);
+                }
 
                 if (blank($payment->webhook_id)) {
                     UpdatePayment::run($payment, [
                         'webhook_id' => $webhookId,
                         'status'     => $this->checkStatus($request->input('status')),
                         'state'      => $this->checkState($request->input('status')),
+                        'completed_at' => now(),
+                        'data' => $request->all()
                     ]);
                 }
 

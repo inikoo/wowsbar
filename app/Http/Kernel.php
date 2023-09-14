@@ -10,6 +10,7 @@ namespace App\Http;
 use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\CheckWebsiteState;
 use App\Http\Middleware\EncryptCookies;
+use App\Http\Middleware\ForceJsonResponse;
 use App\Http\Middleware\HandleDeliveryInertiaRequests;
 use App\Http\Middleware\HandleTenantInertiaRequests;
 use App\Http\Middleware\HandleOrgInertiaRequests;
@@ -41,6 +42,7 @@ use Illuminate\Routing\Middleware\ThrottleRequests;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
 use Spatie\Multitenancy\Http\Middleware\EnsureValidTenantSession;
 use Spatie\Multitenancy\Http\Middleware\NeedsTenant;
 
@@ -109,6 +111,10 @@ class Kernel extends HttpKernel
             LogUserRequestMiddleware::class
         ],
 
+        'webhooks-api' => [
+            EnsureFrontendRequestsAreStateful::class,
+            SubstituteBindings::class,
+        ],
 
         'tenant-api' => [
             // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,

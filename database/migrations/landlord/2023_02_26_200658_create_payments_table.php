@@ -36,6 +36,8 @@ return new class () extends Migration {
             $table->softDeletesTz();
             $table->boolean('with_refund')->default(false);
             $table->unsignedInteger('source_id')->index()->nullable();
+
+            $table->unique(['reference']);
         });
     }
 

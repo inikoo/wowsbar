@@ -28,7 +28,5 @@ Route::middleware([
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
         Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     });
-
-    Route::post('xendit/callback', HandleWebhookNotification::class)->name('webhook.xendit.notification');
     require __DIR__."/auth.php";
 });

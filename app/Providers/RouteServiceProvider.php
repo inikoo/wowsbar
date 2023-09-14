@@ -40,6 +40,13 @@ class RouteServiceProvider extends ServiceProvider
                 ->group(base_path('routes/public/web/app.php'));
 
 
+            Route::prefix('webhooks')
+                ->domain(config('app.domain'))
+                ->middleware('webhooks-api')
+                ->namespace($this->namespace)
+                ->group(base_path('routes/webhooks/webhooks.php'));
+
+
             Route::middleware('tenant-api')
                 ->prefix('api')
                 ->group(base_path('routes/tenant/api/api.php'));

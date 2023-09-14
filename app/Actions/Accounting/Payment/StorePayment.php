@@ -42,7 +42,8 @@ class StorePayment
 
             /** @var Payment $payment */
             $payment = $paymentAccount->payments()->create($modelData);
-            $payment = MakePaymentUsingInvoice::run($payment);
+            $xenditPayment = MakePaymentUsingInvoice::run($payment);
+            $payment->update(['data' => $xenditPayment]);
 
             PaymentHydrateUniversalSearch::dispatch($payment);
 
