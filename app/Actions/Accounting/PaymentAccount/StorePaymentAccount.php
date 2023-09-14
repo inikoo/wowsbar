@@ -20,7 +20,7 @@ class StorePaymentAccount
     use AsAction;
     use WithAttributes;
 
-    private bool $asAction=false;
+    private bool $asAction   =false;
     public $commandSignature = 'pa:create {code} {name}';
 
     public function handle(PaymentServiceProvider $paymentServiceProvider, array $modelData): PaymentAccount

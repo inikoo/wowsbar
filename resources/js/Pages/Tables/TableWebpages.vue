@@ -9,7 +9,14 @@
 import {Link} from '@inertiajs/vue3';
 import Table from '@/Components/Table/Table.vue';
 import {Webpage} from "@/types/webpage";
-
+import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
+import {
+    faSignIn,faHome,faNewspaper,faBrowser,faUfoBeam
+} from "@/../private/pro-light-svg-icons"
+import {library} from "@fortawesome/fontawesome-svg-core";
+library.add(
+    faSignIn,faHome,faNewspaper,faBrowser,faUfoBeam
+)
 const props = defineProps<{
     data: object
     tab?: string
@@ -34,6 +41,9 @@ function webpageRoute(webpage: Webpage) {
             <Link :href="webpageRoute(webpage)">
                 {{ webpage['code'] }}
             </Link>
+        </template>
+        <template #cell(type)="{ item: webpage }">
+            <font-awesome-icon :icon="webpage.typeIcon" />
         </template>
     </Table>
 

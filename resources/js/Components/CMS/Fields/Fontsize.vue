@@ -13,7 +13,7 @@ const emit = defineEmits()
 
 const setFormValue = (data: Object, fieldName: String) => {
     if (Array.isArray(fieldName)) {
-        return parseInt(getNestedValue(data, fieldName).match(/\d+/)[0], 10)
+        return parseInt(getNestedValue(data, fieldName))
     } else {
         return parseInt(data[fieldName].match(/\d+/)[0], 10)
     }
@@ -30,7 +30,7 @@ const getNestedValue = (obj: Object, keys: Array) => {
 const value = ref(setFormValue(props.data,props.fieldName))
 
 watch(value, (newValue) => {
-    updateFormValue(`${newValue}px`);
+    updateFormValue(newValue);
 });
 
 console.log('fontsize',props.data,value)
