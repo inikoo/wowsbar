@@ -4,7 +4,7 @@
   - Copyright (c) 2023, Raul A Perusquia Flores
   -->
 
-<script setup>
+<script setup lang="ts">
 import { ref, reactive, watch } from 'vue'
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { RadioGroup, RadioGroupLabel, RadioGroupOption } from '@headlessui/vue'
@@ -18,6 +18,11 @@ import ToolsTop from '@/Components/CMS/Header/ToolsTop.vue';
 import draggable from "vuedraggable"
 import { getDbRef, getDataFirebase, setDataFirebase } from '@/Composables/firebase'
 library.add(faHandPointer, faText, faSearch, faImage, faTrash, faBars)
+const props = defineProps<{
+	data: Array,
+}>()
+
+console.log('props',props)
 
 const Dummy = {
     tools: [
@@ -32,74 +37,11 @@ const Dummy = {
     ],
 }
 
-const data = reactive(
-    [
-        {
-            name: "Tel: +44 (0) 1142729165   info@aw-fulfilment.co.uk",
-            id: ulid(),
-            type: "text",
-            style: {
-                top: '111px',
-                left: '936px',
-                fontSize: "11px"
-            },
-
-        },
-        {
-            name: "We Can Fulfil Your Orders",
-            id: ulid(),
-            type: "text",
-            style: {
-                top: '45px',
-                left: '934px',
-                fontSize: "11px"
-            },
-        },
-        {
-            name: "search",
-            id: ulid(),
-            type: "search",
-            style: {
-                top: '65px',
-                left: '933px',
-                fontSize: "34px"
-            }
-        },
-        {
-            name: "Your UK's Best Fulfilment Warehouse",
-            id: ulid(),
-            type: "text",
-            style: {
-                top: '46px',
-                left: '336px',
-                fontSize: "28px",
-                color: "rgba(255, 128, 0, 1)"
-            }
-        },
-        {
-            name: "Storage - Pick & Pack - Distribution",
-            id: ulid(),
-            type: "text",
-            style: {
-                top: '83px',
-                left: '400px',
-                fontSize: "22px",
-                color: "rgba(255, 218, 0, 1)"
-            },
-        }
-    ]
-)
+const data = reactive([...props.data.data.data])
 
 const layerActive = ref(null)
 
-const layout = ref({
-    right: 0,
-    bottom: 0,
-    height: "200px",
-    width: '1233px',
-    left: 0,
-    top: 0,
-})
+const layout = ref({...props.data.data.layout})
 
 
 const setActive = (id) => {

@@ -18,7 +18,7 @@ class GetWebsiteWorkshopHeader
     public function handle(Website $website): array
     {
         return [
-            Arr::get($website->structure, 'header')
+            'data'=>Arr::get($website->structure, 'header')
 
         ];
     }

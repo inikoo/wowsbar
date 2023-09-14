@@ -5,7 +5,7 @@
   - Copyright (c) 2023, Raul A Perusquia Flores
   -->
 
-<script setup>
+<script setup lang="ts">
 import { ref, reactive, watch } from 'vue'
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { RadioGroup, RadioGroupLabel, RadioGroupOption } from '@headlessui/vue'
@@ -19,8 +19,12 @@ import HyperInfoTools from '@/Components/CMS/Fields/InfoFieldTools.vue'
 import SocialMediaPicker from "@/Components/CMS/Fields/IconPicker/SocialMediaTools.vue"
 import { getDbRef, getDataFirebase, setDataFirebase } from '@/Composables/firebase'
 import ToolInTop from '@/Components/CMS/Footer/ToolsInTop.vue'
-
 library.add(faHandPointer, faHandRock, faPlus, faAlignJustify, faList, faInfoCircle)
+
+const props = defineProps<{
+	data: Array,
+}>()
+
 
 const Dummy = {
     images: [
@@ -38,7 +42,7 @@ const Dummy = {
     ],
 }
 
-const selectedTheme = ref({ name: 'FooterThemeTwo', value: '2' })
+const selectedTheme = ref({...props.data.data.theme})
 const columsTypeTheme = ref(Dummy.columsType[0])
 const tool = ref({ name: 'edit', icon: ['fas', 'fa-hand-pointer'] })
 
@@ -103,113 +107,12 @@ const DummyColums = [
     }
 ]
 
-const data = reactive({
-    column: [
-        {
-            title: 'company',
-            type: "list",
-            id: ulid(),
-            data: [
-                { name: 'About', link: '#', id: ulid() },
-                { name: 'Blog', link: '#', id: ulid() },
-                { name: 'Jobs', link: '#', id: ulid() },
-                { name: 'Press', link: '#', id: ulid() },
-                { name: 'Partners', link: '#', id: ulid() },
-            ],
-        },
-        {
-            title: 'legal',
-            type: "list",
-            id: ulid(),
-            data: [
-                { name: 'Claim', link: '#', id: ulid() },
-                { name: 'Privacy', link: '#', id: ulid() },
-                { name: 'Terms', link: '#', id: ulid() },
-            ],
-        },
-        {
-            title: 'Description',
-            type: "description",
-            id: ulid(),
-            data: "Lorem Ipsum is simply dummy te printernto electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-        },
-        {
-            title: 'Info',
-            type: 'info',
-            id: ulid(),
-            data: [
-                {
-                    title: 'location',
-                    value: 'Ancient Wisdom s.r.o.',
-                    icon: 'fab fa-facebook',
-                    id: ulid()
-                },
-                {
-                    title: 'billingAddress',
-                    value: 'Billin',
-                    icon: 'fas fa-map',
-                    id: ulid()
-                },
-                {
-                    title: 'vat',
-                    value: 'VAT: SK2120525440',
-                    icon: 'fab fa-facebook',
-                    id: ulid()
-                },
-                {
-                    title: 'building',
-                    value: 'Reg: 50920600',
-                    icon: 'fas fa-building',
-                    id: ulid()
-                },
-                {
-                    title: 'phone',
-                    value: '+421 (0)33 558 60 71',
-                    icon: 'fas fa-phone',
-                    id: ulid()
-                },
-                {
-                    title: 'email',
-                    value: 'contact@awgifts.eu',
-                    icon: 'fas fa-envelope',
-                    id: ulid(),
-                },
-            ],
-        }
-    ],
-    social: [
-        {
-            label: "Facebook",
-            link: '#facebook',
-            icon: 'fab fa-facebook',
-            id: ulid()
-        },
-        {
-            label: "Instagram",
-            link: '#instagram',
-            icon: 'fab fa-instagram',
-            id: ulid()
-        },
-        {
-            label: "Twitter",
-            link: '#twitter',
-            icon: 'fab fa-facebook',
-            id: ulid()
-        },
-        {
-            label: "Github",
-            link: '#github',
-            icon: 'fab fa-facebook',
-            id: ulid()
-        },
-    ],
-    copyRight: { label: 'AW Advantage', link: '*' }
-})
+const data = reactive({...props.data.data.data })
+
 
 async function setToFirebase() {
     const column = 'org/websites/footer';
     try {
-        console.log('selectedTheme',selectedTheme)
         await setDataFirebase(column, { data: data, theme: selectedTheme.value });
     } catch (error) {
         console.log(error)

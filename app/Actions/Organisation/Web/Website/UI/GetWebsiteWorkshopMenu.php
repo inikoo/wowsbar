@@ -4,6 +4,7 @@ namespace App\Actions\Organisation\Web\Website\UI;
 
 use App\Models\Organisation\Web\Website;
 use Lorisleiva\Actions\Concerns\AsObject;
+use Arr;
 
 class GetWebsiteWorkshopMenu
 {
@@ -12,8 +13,7 @@ class GetWebsiteWorkshopMenu
     public function handle(Website $website): array
     {
         return [
-
-
+            'data'=> Arr::get($website->structure,'menu')
         ];
     }
 }

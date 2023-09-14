@@ -45,9 +45,9 @@ const handleTabUpdate = (tabSlug) => useTabChange(tabSlug, currentTab)
 
 const component = computed(() => {
     const components = {
-        header: HeaderWorkshop,
-        menu: MenuWorkshop,
-        footer: FooterWorkshop,
+        'header': HeaderWorkshop,
+        'menu': MenuWorkshop,
+        'footer': FooterWorkshop,
     }
     return components[currentTab.value]
 })
