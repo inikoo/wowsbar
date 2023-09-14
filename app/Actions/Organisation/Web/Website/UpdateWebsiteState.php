@@ -8,7 +8,7 @@
 namespace App\Actions\Organisation\Web\Website;
 
 use App\Actions\Traits\WithActionUpdate;
-use App\Enums\Organisation\Website\Website\WebsiteStateEnum;
+use App\Enums\Organisation\Web\Website\WebsiteStateEnum;
 use App\Models\Organisation\Web\Website;
 use Illuminate\Validation\Rules\Enum;
 use Lorisleiva\Actions\ActionRequest;
@@ -37,8 +37,8 @@ class UpdateWebsiteState
     {
         if (!$request->exists('status') and $request->has('state')) {
             $status = match ($request->get('state')) {
-                WebsiteStateEnum::LIVE->value => true,
-                default                       => false
+                \App\Enums\Organisation\Web\Website\WebsiteStateEnum::LIVE->value => true,
+                default                                                           => false
             };
             $request->merge(['status' => $status]);
         }

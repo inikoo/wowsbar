@@ -1,11 +1,11 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Wed, 05 Jul 2023 15:29:01 Malaysia Time, Pantai Lembeng, Bali, Indonesia
+ * Created: Wed, 13 Sep 2023 18:54:39 Malaysia Time, Pantai Lembeng, Bali, Indonesia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Models\Web;
+namespace App\Models\Organisation\Web;
 
 use App\Enums\Web\WebBlock\WebBlockScopeEnum;
 use App\Models\Portfolio\Banner;
@@ -35,8 +35,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Banner> $contentBlocks
  * @property-read int|null $content_blocks_count
- * @property-read \App\Models\Web\WebBlockStats|null $stats
- * @property-read \App\Models\Web\WebBlockType $webBlockType
+ * @property-read \App\Models\Organisation\Web\WebBlockStats|null $stats
+ * @property-read \App\Models\Organisation\Web\WebBlockType $webBlockType
  * @method static Builder|WebBlock newModelQuery()
  * @method static Builder|WebBlock newQuery()
  * @method static Builder|WebBlock onlyTrashed()

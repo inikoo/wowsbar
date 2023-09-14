@@ -18,7 +18,7 @@ class GetWebsiteWorkshopColorScheme
     public function handle(Website $website): array
     {
         return [
-            Arr::get($website->structure,'color_schema')
+            Arr::get($website->structure, 'color_schema')
 
         ];
     }

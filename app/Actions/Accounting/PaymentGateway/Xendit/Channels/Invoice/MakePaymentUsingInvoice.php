@@ -28,20 +28,20 @@ class MakePaymentUsingInvoice
         $customer = $payment->customer;
 
         $params = [
-            'external_id' => Str::ulid(),
-            'amount' => $payment->amount,
-            'description' => Arr::get($data, 'description'),
+            'external_id'      => Str::ulid(),
+            'amount'           => $payment->amount,
+            'description'      => Arr::get($data, 'description'),
             'invoice_duration' => now()->addDay()->timestamp,
-            'customer' => [
-                'given_names' => $customer->contact_name,
-                'surname' => $customer->name,
-                'email' => $customer->email,
+            'customer'         => [
+                'given_names'   => $customer->contact_name,
+                'surname'       => $customer->name,
+                'email'         => $customer->email,
                 'mobile_number' => $customer->phone
             ],
             'success_redirect_url' => url('/'),
             'failure_redirect_url' => url('/'),
-            'currency' => 'IDR',
-            'payment_methods' => ['CREDIT_CARD']
+            'currency'             => 'IDR',
+            'payment_methods'      => ['CREDIT_CARD']
         ];
 
         return Invoice::create($params);

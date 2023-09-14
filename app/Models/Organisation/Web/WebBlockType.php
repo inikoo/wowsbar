@@ -1,14 +1,14 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Wed, 05 Jul 2023 14:36:10 Malaysia Time, Pantai Lembeng, Bali, Indonesia
+ * Created: Wed, 13 Sep 2023 18:54:39 Malaysia Time, Pantai Lembeng, Bali, Indonesia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Models\Web;
+namespace App\Models\Organisation\Web;
 
-use App\Enums\Web\WebBlockType\WebBlockTypeSlugEnum;
 use App\Enums\Web\WebBlockType\WebBlockTypeScopeEnum;
+use App\Enums\Web\WebBlockType\WebBlockTypeSlugEnum;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -27,8 +27,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
- * @property-read \App\Models\Web\WebBlockTypeStats|null $stats
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Web\WebBlock> $webBlocks
+ * @property-read \App\Models\Organisation\Web\WebBlockTypeStats|null $stats
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Organisation\Web\WebBlock> $webBlocks
  * @property-read int|null $web_blocks_count
  * @method static Builder|WebBlockType newModelQuery()
  * @method static Builder|WebBlockType newQuery()

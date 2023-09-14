@@ -11,17 +11,14 @@ use App\Enums\OMS\Transaction\TransactionStateEnum;
 use App\Enums\OMS\Transaction\TransactionStatusEnum;
 use App\Enums\OMS\Transaction\TransactionTypeEnum;
 use App\Models\CRM\Customer;
-use App\Models\Dispatch\DeliveryNoteItem;
-use App\Models\Market\Shop;
+use App\Models\Organisation\Market\Shop;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Spatie\Multitenancy\Models\Concerns\UsesTenantConnection;
 
 /**
  * App\Models\Organisation\OMS\Transaction
@@ -33,6 +30,7 @@ use Spatie\Multitenancy\Models\Concerns\UsesTenantConnection;
  * @property-read Model|\Eloquent $item
  * @property-read \App\Models\Organisation\OMS\Order|null $order
  * @property-write mixed $quantity
+ * @property-read Shop $shop
  * @method static Builder|Transaction newModelQuery()
  * @method static Builder|Transaction newQuery()
  * @method static Builder|Transaction onlyTrashed()
@@ -43,7 +41,6 @@ use Spatie\Multitenancy\Models\Concerns\UsesTenantConnection;
  */
 class Transaction extends Model
 {
-    use UsesTenantConnection;
     use SoftDeletes;
     use HasFactory;
 
@@ -69,10 +66,6 @@ class Transaction extends Model
         return $this->morphTo();
     }
 
-    public function deliveryNoteItems(): HasMany
-    {
-        return $this->hasMany(DeliveryNoteItem::class);
-    }
 
     public function order(): BelongsTo
     {

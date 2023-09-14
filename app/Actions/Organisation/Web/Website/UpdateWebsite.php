@@ -8,7 +8,6 @@
 namespace App\Actions\Organisation\Web\Website;
 
 use App\Actions\Traits\WithActionUpdate;
-use App\Enums\Organisation\Website\Website\WebsiteStateEnum;
 use App\Models\Organisation\Web\Website;
 use Illuminate\Validation\Rules\Enum;
 use Lorisleiva\Actions\ActionRequest;
@@ -36,7 +35,7 @@ class UpdateWebsite
     public function rules(): array
     {
         return [
-            'state'             => ['sometimes',new Enum(WebsiteStateEnum::class)],
+            'state'             => ['sometimes',new Enum(\App\Enums\Organisation\Web\Website\WebsiteStateEnum::class)],
 
         ];
     }

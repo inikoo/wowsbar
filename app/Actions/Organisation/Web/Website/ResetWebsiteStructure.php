@@ -37,8 +37,8 @@ class ResetWebsiteStructure
             'structure' => $structure
         ];
 
-         $website->update($modelData);
-         return $website;
+        $website->update($modelData);
+        return $website;
     }
 
     public function authorize(ActionRequest $request): bool

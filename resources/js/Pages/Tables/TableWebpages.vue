@@ -5,6 +5,7 @@
   -->
 
 <script setup lang="ts">
+
 import {Link} from '@inertiajs/vue3';
 import Table from '@/Components/Table/Table.vue';
 import {Webpage} from "@/types/webpage";
@@ -16,10 +17,11 @@ const props = defineProps<{
 
 
 function webpageRoute(webpage: Webpage) {
+    route().current()
     switch (route().current()) {
-        case 'org.webpages.index':
+        case 'org.website.webpages.index':
             return route(
-                'org.webpages.show',
+                'org.website.webpages.show',
                 [webpage.slug]);
     }
 }

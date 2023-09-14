@@ -19,7 +19,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
-use Spatie\Multitenancy\Models\Concerns\UsesTenantConnection;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
@@ -75,7 +74,6 @@ use Spatie\Sluggable\SlugOptions;
  */
 class Prospect extends Model
 {
-    use UsesTenantConnection;
     use SoftDeletes;
     use HasSlug;
     use HasUniversalSearch;

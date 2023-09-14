@@ -61,9 +61,9 @@ class StorePayment
     {
         return [
             'reference' => ['required', 'string'],
-            'status' => ['sometimes', 'required', Rule::in(PaymentStatusEnum::values())],
-            'state' => ['sometimes', 'required', Rule::in(PaymentStateEnum::values())],
-            'amount' => ['required', 'decimal:0,2']
+            'status'    => ['sometimes', 'required', Rule::in(PaymentStatusEnum::values())],
+            'state'     => ['sometimes', 'required', Rule::in(PaymentStateEnum::values())],
+            'amount'    => ['required', 'decimal:0,2']
 
         ];
     }
