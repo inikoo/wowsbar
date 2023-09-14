@@ -9,8 +9,6 @@ namespace App\Actions\Accounting\PaymentGateway\Xendit\Channels\Invoice;
 
 use App\Actions\Accounting\PaymentGateway\Xendit\Traits\HasCredentials;
 use App\Models\Accounting\Payment;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
 use Xendit\Invoice;
@@ -25,22 +23,21 @@ class MakePaymentUsingInvoice
 
     public function handle(Payment $payment, array $data = []): array
     {
-        $customer = $payment->customer;
+        $customer   = $payment->customer;
+        $externalId = $payment->reference;
 
         $params = [
-            'external_id'      => Str::ulid(),
-            'amount'           => $payment->amount,
-            'description'      => Arr::get($data, 'description'),
-            'invoice_duration' => now()->addDay()->timestamp,
+            'external_id'      => $externalId,
+            'amount'           => (int) $payment->amount,
+            'description'      => 'Invoice for ' . $customer->name,
+            'invoice_duration' => 3600,
             'customer'         => [
-                'given_names'   => $customer->contact_name,
                 'surname'       => $customer->name,
-                'email'         => $customer->email,
-                'mobile_number' => $customer->phone
+                'email'         => $customer->email
             ],
             'success_redirect_url' => url('/'),
             'failure_redirect_url' => url('/'),
-            'currency'             => 'IDR',
+//            'currency'             => 'IDR',
             'payment_methods'      => ['CREDIT_CARD']
         ];
 

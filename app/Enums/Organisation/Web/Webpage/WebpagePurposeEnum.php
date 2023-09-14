@@ -13,17 +13,24 @@ enum WebpagePurposeEnum: string
 {
     use EnumHelperTrait;
 
-    case STRUCTURAL = 'structural';
-    case CONTENT    = 'content';
-    case OPERATION  = 'operation';
+    case STOREFRONT  = 'storefront';
+    case APPOINTMENT = 'appointment';
+    case LOGIN       = 'login';
+    case REGISTER    = 'register';
+
+    case BLOG    = 'blog';
+    case ARTICLE = 'article';
 
 
     public static function labels(): array
     {
         return [
-            'structural' => __('structural'),
-            'content'    => __('content'),
-            'operation'  => __('operation'),
+            'storefront'  => __('storefront'),
+            'appointment' => __('appointment'),
+            'login'       => __('login'),
+            'register'    => __('register'),
+            'blog'        => __('blog'),
+            'article'     => __('article'),
 
         ];
     }

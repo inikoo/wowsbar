@@ -25,8 +25,10 @@ use Spatie\Sluggable\SlugOptions;
  * @property string $slug
  * @property string $code
  * @property string $url
- * @property WebpagePurposeEnum $purpose
+ * @property int $level
  * @property WebpageTypeEnum $type
+ * @property WebpagePurposeEnum $purpose
+ * @property int|null $parent_id
  * @property int $website_id
  * @property int|null $main_variant_id
  * @property array $data
@@ -46,7 +48,9 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Webpage whereData($value)
  * @method static Builder|Webpage whereDeletedAt($value)
  * @method static Builder|Webpage whereId($value)
+ * @method static Builder|Webpage whereLevel($value)
  * @method static Builder|Webpage whereMainVariantId($value)
+ * @method static Builder|Webpage whereParentId($value)
  * @method static Builder|Webpage wherePurpose($value)
  * @method static Builder|Webpage whereSettings($value)
  * @method static Builder|Webpage whereSlug($value)

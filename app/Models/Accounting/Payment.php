@@ -10,7 +10,6 @@ namespace App\Models\Accounting;
 use App\Actions\Accounting\PaymentAccount\Hydrators\PaymentAccountHydratePayments;
 use App\Actions\Accounting\PaymentServiceProvider\Hydrators\PaymentServiceProviderHydratePayments;
 use App\Actions\Organisation\Market\Shop\Hydrators\ShopHydratePayments;
-use App\Actions\Tenancy\Tenant\Hydrators\TenantHydrateAccounting;
 use App\Enums\Accounting\Payment\PaymentStateEnum;
 use App\Enums\Accounting\Payment\PaymentStatusEnum;
 use App\Enums\Accounting\Payment\PaymentSubsequentStatusEnum;
@@ -44,8 +43,6 @@ use Spatie\Sluggable\SlugOptions;
  * @property PaymentStateEnum $state
  * @property PaymentSubsequentStatusEnum|null $subsequent_status
  * @property string $amount
- * @property string $tc_amount amount in tenancy currency
- * @property string|null $gc_amount amount in group currency
  * @property array $data
  * @property string $date Most relevant date at current state
  * @property string|null $completed_at
@@ -72,7 +69,6 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Payment whereData($value)
  * @method static Builder|Payment whereDate($value)
  * @method static Builder|Payment whereDeletedAt($value)
- * @method static Builder|Payment whereGcAmount($value)
  * @method static Builder|Payment whereId($value)
  * @method static Builder|Payment wherePaymentAccountId($value)
  * @method static Builder|Payment whereReference($value)
@@ -81,7 +77,6 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Payment whereState($value)
  * @method static Builder|Payment whereStatus($value)
  * @method static Builder|Payment whereSubsequentStatus($value)
- * @method static Builder|Payment whereTcAmount($value)
  * @method static Builder|Payment whereType($value)
  * @method static Builder|Payment whereUpdatedAt($value)
  * @method static Builder|Payment whereWebhookId($value)
@@ -126,10 +121,9 @@ class Payment extends Model
 
         static::created(
             function (Payment $payment) {
-                TenantHydrateAccounting::dispatch(app('currentTenant'));
                 PaymentServiceProviderHydratePayments::dispatch($payment->paymentAccount->paymentServiceProvider);
                 PaymentAccountHydratePayments::dispatch($payment->paymentAccount);
-                ShopHydratePayments::dispatch($payment->shop);
+                // ShopHydratePayments::dispatch($payment->shop);
             }
         );
     }

@@ -53,6 +53,8 @@ php artisan website:create aiku hello.com hello 'My website 😸'
 php artisan banner:create aiku test1 'My first banner 🫡' hello
 php artisan banner:create aiku test2 'My first banner without website 🫡'
 pg_dump -Fc -f "devops/devel/snapshots/portfolio.dump" ${DB}
+php artisan psp:create va account
+php artisan pa:create artha Artha
 php artisan user:create aiku arya password qwe123asd
 php artisan user:create aiku vika password super-admin
 php artisan user:create aiku artha hello super-admin
