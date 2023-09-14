@@ -8,7 +8,6 @@
 namespace App\Actions\Organisation\Web\Webpage\UI;
 
 use App\Actions\InertiaAction;
-use App\Actions\Organisation\Web\Website\UI\ShowWebsite;
 use App\Models\Organisation\Web\Webpage;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -34,17 +33,21 @@ class ShowWebpageWorkshop extends InertiaAction
 
     public function htmlResponse(Webpage $webpage, ActionRequest $request): Response
     {
-
         return Inertia::render(
             'Web/WebpageWorkshop',
             [
                 'title'       => __("Webpage's workshop"),
-                'breadcrumbs' => $this->getBreadcrumbs(),
+                'breadcrumbs' => $this->getBreadcrumbs(
+                    $request->route()->parameters()
+                ),
                 'pageHead'    => [
 
-                    'title'    => __('Workshop'),
-
-                    'iconRight'    =>
+                    'title' => $webpage->code,
+                    'icon'  => [
+                        'title' => __('webpage'),
+                        'icon'  => 'fal fa-browser'
+                    ],
+                    'iconRight' =>
                         [
                             'icon'  => ['fal', 'drafting-compass'],
                             'title' => __("Webpage's workshop")
@@ -52,20 +55,20 @@ class ShowWebpageWorkshop extends InertiaAction
 
                     'actions' => [
                         [
-                            'type'       => 'button',
-                            'style'      => 'exit',
-                            'label'      => __('Exit workshop'),
-                            'route'      => [
+                            'type'  => 'button',
+                            'style' => 'exit',
+                            'label' => __('Exit workshop'),
+                            'route' => [
                                 'name'       => preg_replace('/workshop$/', 'show', $request->route()->getName()),
                                 'parameters' => array_values($request->route()->originalParameters()),
                             ]
                         ],
                         [
-                            'type'       => 'button',
-                            'style'      => 'exit',
-                            'icon'       => 'far fa-desktop',
-                            'label'      => __('Preview'),
-                            'route'      => [
+                            'type'  => 'button',
+                            'style' => 'exit',
+                            'icon'  => 'far fa-desktop',
+                            'label' => __('Preview'),
+                            'route' => [
                                 'name'       => preg_replace('/workshop$/', 'preview', $request->route()->getName()),
                                 'parameters' => array_values($request->route()->originalParameters())
                             ]
@@ -74,15 +77,14 @@ class ShowWebpageWorkshop extends InertiaAction
                 ],
 
 
-
-
             ]
         );
     }
 
-    public function getBreadcrumbs(): array
+    public function getBreadcrumbs(array $routeParameters): array
     {
-        return ShowWebsite::make()->getBreadcrumbs(
+        return ShowWebpage::make()->getBreadcrumbs(
+            $routeParameters,
             suffix: '('.__('workshop').')'
         );
     }

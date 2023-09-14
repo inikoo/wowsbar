@@ -9,11 +9,9 @@ namespace App\Actions\Organisation\Web\Webpage\UI;
 
 use App\Actions\InertiaAction;
 use App\Actions\Organisation\Web\Website\UI\ShowWebsite;
-use App\Actions\UI\Organisation\Dashboard\ShowDashboard;
 use App\Actions\UI\WithInertia;
 use App\Enums\UI\Organisation\WebpageTabsEnum;
-use App\Http\Resources\Web\WebsiteResource;
-use App\Models\Auth\User;
+use App\Http\Resources\Web\WebpageResource;
 use App\Models\Organisation\Web\Webpage;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -51,10 +49,11 @@ class ShowWebpage extends InertiaAction
             'Web/Webpage',
             [
                 'breadcrumbs'                    => $this->getBreadcrumbs(
-                    $request->route()->parameters()),
+                    $request->route()->parameters()
+                ),
                 'title'                          => __('webpage'),
                 'pageHead'                       => [
-                    'title' => __('webpage'),
+                    'title' => $webpage->code,
                     'icon'  => [
                         'title' => __('webpage'),
                         'icon'  => 'fal fa-browser'
@@ -91,8 +90,8 @@ class ShowWebpage extends InertiaAction
 
                 // Showcase data
                 WebpageTabsEnum::SHOWCASE->value => $this->tab == WebpageTabsEnum::SHOWCASE->value ?
-                fn () => WebsiteResource::make($webpage)->getArray()
-                : Inertia::lazy(fn () => WebsiteResource::make($webpage)->getArray())
+                fn () => WebpageResource::make($webpage)->getArray()
+                : Inertia::lazy(fn () => WebpageResource::make($webpage)->getArray())
 
                 /*
                 WebpageTabsEnum::CHANGELOG->value => $this->tab == WebpageTabsEnum::CHANGELOG->value ?
@@ -105,7 +104,7 @@ class ShowWebpage extends InertiaAction
         );
     }
 
-    public function getBreadcrumbs($routeParameters, string $suffix = ''): array
+    public function getBreadcrumbs(array $routeParameters, string $suffix = ''): array
     {
 
         $headCrumb = function (Webpage $webpage, array $routeParameters, string $suffix) {
