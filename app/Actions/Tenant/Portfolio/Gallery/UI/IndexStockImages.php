@@ -92,7 +92,7 @@ class IndexStockImages extends InertiaAction
                 ->column(key: 'name', label: __('name'), sortable: true)
                 ->column(key: 'thumbnail', label: __('image'))
                 ->column(key: 'size', label: __('size'), sortable: true)
-                ->column(key: 'select', label: __(' '))
+                ->column(key: 'select', label: '')
 
                 ->defaultSort('name');
         };

@@ -14,7 +14,6 @@ use App\Enums\Accounting\Payment\PaymentStatusEnum;
 use App\Models\Accounting\Payment;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
@@ -36,14 +35,20 @@ class HandleWebhookNotification
             $callbackToken = $request->header('x-callback-token');
             $webhookId     = $request->header('webhook-id');
 
-            if (Str::match($callbackToken, env('XENDIT_CALLBACK_TOKEN'))) {
-                $payment = Payment::where('reference', $request->input('external_id'));
+            if ($callbackToken === env('XENDIT_CALLBACK_TOKEN')) {
+                $payment = Payment::where('reference', $request->input('external_id'))->first();
+
+                if(!$payment) {
+                    abort(404);
+                }
 
                 if (blank($payment->webhook_id)) {
                     UpdatePayment::run($payment, [
-                        'webhook_id' => $webhookId,
-                        'status'     => $this->checkStatus($request->input('status')),
-                        'state'      => $this->checkState($request->input('status')),
+                        'webhook_id'   => $webhookId,
+                        'status'       => $this->checkStatus($request->input('status')),
+                        'state'        => $this->checkState($request->input('status')),
+                        'completed_at' => now(),
+                        'data'         => $request->all()
                     ]);
                 }
 
@@ -66,7 +71,7 @@ class HandleWebhookNotification
     {
         match ($status) {
             'PAID'  => $status  = PaymentStatusEnum::SUCCESS->value,
-            default => $status = PaymentStatusEnum::FAIL->value
+            default => $status  = PaymentStatusEnum::FAIL->value
         };
 
         return $status;
@@ -76,7 +81,7 @@ class HandleWebhookNotification
     {
         match ($status) {
             'PAID'  => $status  = PaymentStateEnum::COMPLETED->value,
-            default => $status = PaymentStateEnum::CANCELLED->value
+            default => $status  = PaymentStateEnum::CANCELLED->value
         };
 
         return $status;

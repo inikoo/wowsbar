@@ -2,7 +2,7 @@
 import { Head } from '@inertiajs/vue3'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import {
-    faArrowAltToTop, faArrowAltToBottom, faBars, faBrowser, faCube, faPalette, faCookieBite
+    faArrowAltToTop, faArrowAltToBottom, faBars, faBrowser, faCube, faPalette, faCookieBite, faLayerGroup
 } from "@/../private/pro-light-svg-icons"
 
 import PageHeading from '@/Components/Headings/PageHeading.vue'
@@ -13,6 +13,7 @@ import { capitalize } from "@/Composables/capitalize"
 import FooterWorkshop from "@/Components/CMS/Workshops/FooterWorkshop.vue";
 import MenuWorkshop from "@/Components/CMS/Workshops/MenuWorkshop.vue";
 import HeaderWorkshop from "@/Components/CMS/Workshops/HeaderWorkshop.vue";
+import LayoutWorkshop from "@/Components/CMS/Workshops/LayoutWorkshop.vue";
 
 library.add(
     faArrowAltToTop,
@@ -21,7 +22,8 @@ library.add(
     faBrowser,
     faCube,
     faPalette,
-    faCookieBite
+    faCookieBite,
+    faLayerGroup
 )
 
 
@@ -48,6 +50,7 @@ const component = computed(() => {
         'header': HeaderWorkshop,
         'menu': MenuWorkshop,
         'footer': FooterWorkshop,
+        'layout': LayoutWorkshop,
     }
     return components[currentTab.value]
 })

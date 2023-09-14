@@ -9,6 +9,7 @@ namespace App\Actions\Accounting\PaymentServiceProvider;
 
 use App\Enums\Accounting\PaymentServiceProvider\PaymentServiceProviderTypeEnum;
 use App\Models\Accounting\PaymentServiceProvider;
+use Illuminate\Console\Command;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Validation\Rule;
@@ -21,6 +22,8 @@ class StorePaymentServiceProvider
     use AsAction;
     use WithAttributes;
     private bool $asAction=false;
+
+    public $commandSignature = 'psp:create {code} {type}';
 
     public function handle(array $modelData): PaymentServiceProvider
     {
@@ -53,6 +56,21 @@ class StorePaymentServiceProvider
         $validatedData = $this->validateAttributes();
 
         return $this->handle($validatedData);
+    }
+
+    public function asCommand(Command $command): int
+    {
+        $this->asAction=true;
+        $this->setRawAttributes([
+            'code' => $command->argument('code'),
+            'type' => $command->argument('type')
+        ]);
+        $validatedData = $this->validateAttributes();
+        $this->handle($validatedData);
+
+        echo "Successfully create payment service provider \n";
+
+        return 0;
     }
 
     public function asController(ActionRequest $request): PaymentServiceProvider

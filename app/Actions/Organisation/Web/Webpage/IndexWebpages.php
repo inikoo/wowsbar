@@ -10,7 +10,6 @@ namespace App\Actions\Organisation\Web\Webpage;
 use App\Actions\InertiaAction;
 
 use App\Actions\Organisation\Web\Website\UI\ShowWebsite;
-use App\Actions\UI\Organisation\Dashboard\ShowDashboard;
 use App\Http\Resources\Web\WebpageResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\Organisation\Web\Webpage;
@@ -35,10 +34,10 @@ class IndexWebpages extends InertiaAction
     }
 
 
-
     public function asController(ActionRequest $request): LengthAwarePaginator
     {
         $this->initialisation($request);
+
         return $this->handle();
     }
 
@@ -60,9 +59,9 @@ class IndexWebpages extends InertiaAction
 
 
         return $queryBuilder
-            ->defaultSort('webpages.code')
-            ->select(['code', 'id', 'type', 'slug'])
-            ->allowedSorts(['code', 'type'])
+            ->defaultSort('webpages.level')
+            ->select(['code', 'id', 'type', 'slug', 'level', 'purpose'])
+            ->allowedSorts(['code', 'type', 'level'])
             ->allowedFilters([$globalSearch])
             ->withPaginator($prefix)
             ->withQueryString();
@@ -85,9 +84,10 @@ class IndexWebpages extends InertiaAction
                         'count' => organisation()->stats->number_webpages,
                     ]
                 )
+                ->column(key: 'level', label: ['fal', 'fa-sort-amount-down-alt'], canBeHidden: false, sortable: true)
+                ->column(key: 'type', label: ['fal', 'fa-shapes'], canBeHidden: false)
                 ->column(key: 'code', label: __('code'), canBeHidden: false, sortable: true, searchable: true)
-                ->column(key: 'type', label: __('type'), canBeHidden: false, sortable: true, searchable: true)
-                ->defaultSort('code');
+                ->defaultSort('level');
         };
     }
 
@@ -103,10 +103,7 @@ class IndexWebpages extends InertiaAction
         return Inertia::render(
             'Web/Webpages',
             [
-                'breadcrumbs' => $this->getBreadcrumbs(
-                    $request->route()->getName(),
-                    $request->route()->parameters
-                ),
+                'breadcrumbs' => $this->getBreadcrumbs(),
                 'title'       => __('webpages'),
                 'pageHead'    => [
                     'title'     => __('webpages'),
@@ -114,6 +111,23 @@ class IndexWebpages extends InertiaAction
                     'iconRight' => [
                         'icon'  => ['fal', 'fa-browser'],
                         'title' => __('webpage')
+                    ],
+                    'actions'   => [
+                        [
+                            'type'    => 'buttonGroup',
+                            'buttons' => [
+
+                                [
+                                    'type'  => 'button',
+                                    'style' => 'create',
+                                    'label' => 'create webpage',
+                                    'route' => [
+                                        'name'       => preg_replace('/index$/', 'create', $request->route()->getName()),
+                                        'parameters' => array_values($request->route()->originalParameters())
+                                    ]
+                                ]
+                            ]
+                        ]
                     ]
                 ],
                 'data'        => WebpageResource::collection($webpages),
@@ -122,7 +136,7 @@ class IndexWebpages extends InertiaAction
         )->table($this->tableStructure());
     }
 
-    public function getBreadcrumbs(string $routeName, array $routeParameters): array
+    public function getBreadcrumbs(): array
     {
         $headCrumb = function (array $routeParameters = []) {
             return [
@@ -137,30 +151,14 @@ class IndexWebpages extends InertiaAction
             ];
         };
 
-        return match ($routeName) {
-            'org.website.webpages.index' =>
-            array_merge(
-                ShowDashboard::make()->getBreadcrumbs(),
-                $headCrumb(
-                    [
-                        'name' => 'org.website.webpages.index',
-                        null
-                    ]
-                ),
+        return array_merge(
+            (new ShowWebsite())->getBreadcrumbs(),
+            $headCrumb(
+                [
+                    'name' => 'org.website.webpages.index',
+                    null
+                ]
             ),
-
-
-            'org.website.websites.show.webpages.index' =>
-            array_merge(
-                (new ShowWebsite())->getBreadcrumbs(),
-                $headCrumb(
-                    [
-                        'name'       => 'org.website.websites.show.webpages.index',
-                        'parameters' => $routeParameters
-                    ]
-                )
-            ),
-            default => []
-        };
+        );
     }
 }

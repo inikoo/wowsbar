@@ -58,14 +58,14 @@ const createContent = (value) => {
             id: ulid(),
 
             type: 'text',
-            style: { top: '75px', left: '536px', fontSize: '34px', },
+            style: { top: 75, left: 536, fontSize: 34, },
         }
     if (value == 'search')
         setData = {
             name: 'search',
             id: ulid(),
             type: 'search',
-            style: { top: '75px', left: '536px', fontSize: '34px', },
+            style: { top: 75, left: 536, fontSize: 34, },
         }
 
     data.splice(0, 0, setData)
@@ -79,7 +79,7 @@ const Uploadimage = () => {
             name: 'image',
             id: ulid(),
             type: 'image',
-            style: { top: '0px', left: '0px', height : '200px' , width : '200px' },
+            style: { top: 0, left: 0, height : 200 , width : 200 },
             file: set
         }
     }

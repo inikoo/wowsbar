@@ -8,10 +8,10 @@
 namespace App\Actions\Organisation\Web\Webpage\UI;
 
 use App\Actions\InertiaAction;
-use App\Actions\UI\Organisation\Dashboard\ShowDashboard;
+use App\Actions\Organisation\Web\Website\UI\ShowWebsite;
 use App\Actions\UI\WithInertia;
 use App\Enums\UI\Organisation\WebpageTabsEnum;
-use App\Http\Resources\Web\WebsiteResource;
+use App\Http\Resources\Web\WebpageResource;
 use App\Models\Organisation\Web\Webpage;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -43,13 +43,17 @@ class ShowWebpage extends InertiaAction
     public function htmlResponse(Webpage $webpage, ActionRequest $request): Response
     {
 
+
+
         return Inertia::render(
             'Web/Webpage',
             [
-                'breadcrumbs'                    => $this->getBreadcrumbs($request->route()->originalParameters()),
+                'breadcrumbs'                    => $this->getBreadcrumbs(
+                    $request->route()->parameters()
+                ),
                 'title'                          => __('webpage'),
                 'pageHead'                       => [
-                    'title' => __('webpage'),
+                    'title' => $webpage->code,
                     'icon'  => [
                         'title' => __('webpage'),
                         'icon'  => 'fal fa-browser'
@@ -86,8 +90,8 @@ class ShowWebpage extends InertiaAction
 
                 // Showcase data
                 WebpageTabsEnum::SHOWCASE->value => $this->tab == WebpageTabsEnum::SHOWCASE->value ?
-                fn () => WebsiteResource::make($webpage)->getArray()
-                : Inertia::lazy(fn () => WebsiteResource::make($webpage)->getArray())
+                fn () => WebpageResource::make($webpage)->getArray()
+                : Inertia::lazy(fn () => WebpageResource::make($webpage)->getArray())
 
                 /*
                 WebpageTabsEnum::CHANGELOG->value => $this->tab == WebpageTabsEnum::CHANGELOG->value ?
@@ -102,24 +106,46 @@ class ShowWebpage extends InertiaAction
 
     public function getBreadcrumbs(array $routeParameters, string $suffix = ''): array
     {
-        return
-            array_merge(
-                ShowDashboard::make()->getBreadcrumbs(),
+
+        $headCrumb = function (Webpage $webpage, array $routeParameters, string $suffix) {
+            return [
                 [
-                    [
-                        'type'   => 'simple',
-                        'simple' => [
-                            'route' => [
-                                'name'       => 'org.website.webpages.show',
-                                'parameters' => $routeParameters
 
-                            ],
-                            'label' => __('webpage'),
+                    'type'           => 'modelWithIndex',
+                    'modelWithIndex' => [
+                        'index' => [
+                            'route' => $routeParameters['index'],
+                            'label' => __('webpages')
                         ],
-                        'suffix' => $suffix
+                        'model' => [
+                            'route' => $routeParameters['model'],
+                            'label' => $webpage->code,
+                        ],
 
+                    ],
+                    'suffix' => $suffix
+
+                ],
+            ];
+        };
+
+        return  array_merge(
+            ShowWebsite::make()->getBreadcrumbs(),
+            $headCrumb(
+                $routeParameters['webpage'],
+                [
+                    'index' => [
+                        'name'       => 'org.website.webpages.index',
+                        'parameters' => []
+                    ],
+                    'model' => [
+                        'name'       => 'org.website.webpages.show',
+                        'parameters' => [$routeParameters['webpage']->slug]
                     ]
-                ]
-            );
+                ],
+                $suffix
+            ),
+        );
+
     }
 }

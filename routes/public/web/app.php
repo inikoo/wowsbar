@@ -6,7 +6,6 @@
  */
 
 
-use App\Actions\Accounting\PaymentGateway\Xendit\Webhook\HandleWebhookNotification;
 use App\Actions\UI\Public\Dashboard\ShowPublicDashboard;
 use App\Actions\UI\Public\ShowHome;
 use App\Http\Controllers\ProfileController;
@@ -28,7 +27,5 @@ Route::middleware([
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
         Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     });
-
-    Route::post('xendit/callback', HandleWebhookNotification::class)->name('webhook.xendit.notification');
     require __DIR__."/auth.php";
 });

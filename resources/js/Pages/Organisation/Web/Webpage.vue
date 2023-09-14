@@ -10,12 +10,8 @@ import { capitalize } from "@/Composables/capitalize"
 import {computed, ref} from "vue";
 import {useTabChange} from "@/Composables/tab-change";
 
-import TableWebpages from "@/Pages/Tables/TableWebpages.vue";
 import ModelDetails from "@/Pages/ModelDetails.vue";
 import TableHistories from "@/Pages/Tables/TableHistories.vue";
-import WebsiteShowcase from '@/Pages/Organisation/Web/WebsiteShowcase.vue';
-import WebsiteAnalytics from '@/Pages/Organisation/Web/WebsiteAnalytics.vue';
-
 
 import PageHeading from "@/Components/Headings/PageHeading.vue";
 import Tabs from "@/Components/Navigation/Tabs.vue";
@@ -25,6 +21,8 @@ import {
     faAnalytics, faBrowser,
     faChartLine, faDraftingCompass, faRoad, faSlidersH,faClock
 } from "@/../private/pro-light-svg-icons";
+import WebpageShowcase from "@/Pages/Organisation/Web/WebpageShowcase.vue";
+import WebpageAnalytics from "@/Pages/Organisation/Web/WebpageAnalytics.vue";
 
 library.add(
     faChartLine,
@@ -56,8 +54,8 @@ const component = computed(() => {
     const components = {
         'details': ModelDetails,
         'changelog': TableHistories,
-        'showcase': WebsiteShowcase,
-        'analytics': WebsiteAnalytics
+        'showcase': WebpageShowcase,
+        'analytics': WebpageAnalytics
     }
 
     return components[currentTab.value]

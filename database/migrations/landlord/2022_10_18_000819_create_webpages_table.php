@@ -17,9 +17,12 @@ return new class () extends Migration {
             $table->string('slug')->unique()->collation('und_ns');
             $table->string('code')->index()->collation('und_ns');
             $table->string('url')->index()->collation('und_ns');
-
-            $table->string('purpose')->index();
+            $table->unsignedSmallInteger('level')->index();
             $table->string('type')->index();
+            $table->string('purpose')->index();
+
+            $table->unsignedSmallInteger('parent_id')->index()->nullable();
+            $table->foreign('parent_id')->references('id')->on('webpages');
 
             $table->unsignedSmallInteger('website_id')->index();
             $table->foreign('website_id')->references('id')->on('websites');
@@ -29,13 +32,19 @@ return new class () extends Migration {
             $table->jsonb('settings');
             $table->timestampsTz();
             $table->softDeletesTz();
+        });
 
-
+        Schema::table('websites', function ($table) {
+            $table->unsignedInteger('home_id')->index()->nullable();
+            $table->foreign('home_id')->references('id')->on('webpages')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
     public function down(): void
     {
+        Schema::table('websites', function (Blueprint $table) {
+            $table->dropColumn('home_id');
+        });
         Schema::dropIfExists('webpages');
     }
 };

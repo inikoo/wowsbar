@@ -49,10 +49,10 @@ const calcPercentage = (total: number, amount: number) => {
 <template>
     <!-- <pre>{{ data }}</pre> -->
     <div class="mt-24 bg-gray-100 fixed z-10 flex justify-center items-center"
-        :class="`w-full `"
+        :class="`w-full`"
     >
         <div :class="`isolate relative`"
-            :style="['width: ' + widthComponent + 'px', 'height: ' + heightComponent + 'px']"
+            :style="['width: 100%', 'height: ' + heightComponent + 'px']"
         >
             <div v-for="(component, index) in data.data" class="absolute"
                 :style="[

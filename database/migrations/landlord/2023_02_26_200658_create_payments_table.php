@@ -28,8 +28,6 @@ return new class () extends Migration {
             $table->string('state')->index()->default(PaymentStateEnum::APPROVING->value);
             $table->string('subsequent_status')->index()->nullable();
             $table->decimal('amount', 12);
-            $table->decimal('tc_amount', 12)->comment('amount in tenancy currency');
-            $table->decimal('gc_amount', 12)->nullable()->comment('amount in group currency');
             $table->jsonb('data');
             $table->dateTimeTz('date')->index()->comment('Most relevant date at current state');
             $table->dateTimeTz('completed_at')->nullable();
@@ -38,6 +36,8 @@ return new class () extends Migration {
             $table->softDeletesTz();
             $table->boolean('with_refund')->default(false);
             $table->unsignedInteger('source_id')->index()->nullable();
+
+            $table->unique(['reference']);
         });
     }
 
