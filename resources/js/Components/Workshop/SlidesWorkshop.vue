@@ -82,7 +82,7 @@ const props = defineProps<{
         name: string;
         arguments: string;
     };
-    user: Object;
+    user: string
     screenView : String
 }>();
 
@@ -158,7 +158,7 @@ const selectComponentForEdition = (slide) => {
         return;
     }
 
-    if (slide.user && slide.user !== props.user.username) {
+    if (slide.user && slide.user !== props.user) {
         console.log("Cannot edit: Component already in use");
     } else {
         const oldComponentToEdit = props.data.components.find(
@@ -169,7 +169,7 @@ const selectComponentForEdition = (slide) => {
             oldComponentToEdit.user = null;
         }
 
-        componentToEdit.user = props.user.username;
+        componentToEdit.user = props.user;
         if (commonEditActive) {
             props.data.common.user = null;
         }
@@ -503,13 +503,13 @@ const CommonBlueprint = ref([
 const _SlideWorkshop = ref(null);
 
 const setCommonEdit = () => {
-    if (props.data.common.user && props.data.common.user !== props.user.username) {
+    if (props.data.common.user && props.data.common.user !== props.user) {
         console.log("masih dipakek");
     } else {
         const oldComponentToEdit = props.data.components.find(
             (item) => item.ulid === get(currentComponentBeenEdited.value, "ulid")
         );
-        props.data.common.user = props.user.username;
+        props.data.common.user = props.user;
         if (oldComponentToEdit) {
             oldComponentToEdit.user = null;
         }
@@ -560,10 +560,10 @@ const uploadImageRespone = (res) => {
                     : 'tabNavigation hover:bg-gray-100 border-gray-300',
                 ]" @click="setCommonEdit"
             >
-                <FontAwesomeIcon v-if="props.data.common.user == props.user.username || !props.data.common.user"
+                <FontAwesomeIcon v-if="props.data.common.user == props.user || !props.data.common.user"
                     icon="fal fa-cog" class="text-xl md:text-base" aria-hidden="true" />
                 <FontAwesomeIcon v-else="
-                    props.data.common.user == props.user.username || !props.data.common.user
+                    props.data.common.user == props.user || !props.data.common.user
                     " :icon="['fal', 'lock']" class="" aria-hidden="true" />
                 <span class="text-gray-600 text-sm">{{ trans("Common properties") }}</span>
             </div>
@@ -584,7 +584,7 @@ const uploadImageRespone = (res) => {
                             slide.ulid == get(currentComponentBeenEdited, 'ulid')
                                 ? 'tabNavigationActive font-medium'
                                 : 'tabNavigation',
-                            slide.user != props.user.username && slide.user
+                            slide.user != props.user && slide.user
                                 ? 'border-l-gray-500 border-l-4 bg-gray-200/60 text-gray-600 font-medium cursor-not-allowed'
                                 : 'cursor-pointer',
                         ]"
@@ -610,7 +610,7 @@ const uploadImageRespone = (res) => {
                         </div>
 
                         <!-- Button: Show/hide, delete slide -->
-                        <div class="flex justify-center items-center pr-2 justify-self-end"  v-if="slide.user == props.user.username || !slide.user">
+                        <div class="flex justify-center items-center pr-2 justify-self-end"  v-if="slide.user == props.user || !slide.user">
                             <button  class="px-2 py-1 bg-grays-500 text-red-500/60 hover:text-red-500" type="button" v-if="!slide.visibility"
                                 @click="(e)=>{ e.stopPropagation()
                                     removeComponent(slide)}"
