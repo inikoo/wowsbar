@@ -7,6 +7,7 @@
 
 
 use App\Actions\Organisation\Web\Webpage\IndexWebpages;
+use App\Actions\Organisation\Web\Webpage\UI\CreateWebpage;
 use App\Actions\Organisation\Web\Webpage\UI\ShowWebpage;
 use App\Actions\Organisation\Web\Webpage\UI\ShowWebpageWorkshop;
 use App\Actions\Organisation\Web\Website\UI\CreateWebsite;
@@ -22,9 +23,10 @@ Route::get('/edit', EditWebsite::class)->name('edit');
 Route::get('/workshop', ShowWebsiteWorkshop::class)->name('workshop');
 Route::get('/workshop/preview', ShowWebsiteWorkshopPreview::class)->name('preview');
 Route::get('/webpages', IndexWebpages::class)->name('webpages.index');
+Route::get('/webpages/create', CreateWebpage::class)->name('webpages.create');
+
 Route::get('/webpages/{webpage}', ShowWebpage::class)->name('webpages.show');
 
-Route::get('/webpages/create', CreateWebsite::class)->name('webpages.create');
 Route::get('/webpages/{webpage}/edit', EditWebsite::class)->name('webpages.edit');
 Route::get('/webpages/{webpage}/workshop', ShowWebpageWorkshop::class)->name('webpages.workshop');
 Route::get('/webpages/{webpage}/workshop/preview', ShowWebsiteWorkshopPreview::class)->name('webpages.preview');
