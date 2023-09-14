@@ -21,12 +21,18 @@ class SeedWebsiteFixedWebpages
 
     public function handle(Website $website): Website
     {
-        foreach (Storage::disk('datasets')->files('webpages/'.$website->type) as $file) {
-            $modelData         = json_decode(Storage::disk('datasets')->get($file), true);
-            $webpageVariantData=[];
-            StoreWebpage::run($website, $modelData, $webpageVariantData);
-        }
+        $home = StoreWebpage::run($website, [
+            'code'    => 'home',
+            'url'     => '',
+            'type'    => 'storefront',
+            'purpose' => 'storefront',
+        ]);
 
+        foreach (Storage::disk('datasets')->files('webpages/'.$website->type) as $file) {
+            $modelData = json_decode(Storage::disk('datasets')->get($file), true);
+            data_set($modelData, 'parent_id', $home->id, overwrite: false);
+            StoreWebpage::run($website, $modelData);
+        }
 
 
         return $website;
@@ -44,7 +50,6 @@ class SeedWebsiteFixedWebpages
 
     public function asController(ActionRequest $request): Website
     {
-
         return $this->handle(organisation()->website);
     }
 

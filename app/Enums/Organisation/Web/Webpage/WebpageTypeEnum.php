@@ -14,15 +14,15 @@ enum WebpageTypeEnum: string
     use EnumHelperTrait;
 
 
-    case STOREFRONT   = 'storefront';
-    case PRODUCT      = 'product';
-    case CATEGORY     = 'category';
-    case BASKET       = 'basket';
-    case CHECKOUT     = 'checkout';
-    case SHOP_INFO    = 'shop-info';
-    case ENGAGEMENT   = 'engagement';
-    case LOGIN        = 'login';
-    case REGISTER     = 'register';
+    case STOREFRONT    = 'storefront';
+    case PRODUCT       = 'product';
+    case CATEGORY      = 'category';
+    case SHOPPING_CART = 'shopping-cart';
+    case CONTENT       = 'content';
+    case ENGAGEMENT    = 'engagement';
+    case AUTH          = 'auth';
 
+    case BLOG    = 'blog';
+    case ARTICLE = 'article';
 
 }

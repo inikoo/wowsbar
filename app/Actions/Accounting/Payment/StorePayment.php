@@ -27,7 +27,7 @@ class StorePayment
     use AsAction;
     use WithAttributes;
 
-    private bool $asAction = false;
+    private bool $asAction   = false;
     public $commandSignature = 'payment:create {reference} {amount}';
 
     /**
@@ -41,7 +41,7 @@ class StorePayment
             data_fill($modelData, 'date', gmdate('Y-m-d H:i:s'));
 
             /** @var Payment $payment */
-            $payment = $paymentAccount->payments()->create($modelData);
+            $payment       = $paymentAccount->payments()->create($modelData);
             $xenditPayment = MakePaymentUsingInvoice::run($payment);
             $payment->update(['data' => $xenditPayment]);
 
@@ -89,10 +89,10 @@ class StorePayment
         $this->asAction=true;
         $this->setRawAttributes([
             'reference' => $command->argument('reference'),
-            'amount' => $command->argument('amount')
+            'amount'    => $command->argument('amount')
         ]);
 
-        $customer = Customer::first();
+        $customer       = Customer::first();
         $paymentAccount = PaymentAccount::first();
 
         $validatedData = $this->validateAttributes();

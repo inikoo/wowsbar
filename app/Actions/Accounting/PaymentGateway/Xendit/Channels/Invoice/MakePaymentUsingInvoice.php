@@ -9,8 +9,6 @@ namespace App\Actions\Accounting\PaymentGateway\Xendit\Channels\Invoice;
 
 use App\Actions\Accounting\PaymentGateway\Xendit\Traits\HasCredentials;
 use App\Models\Accounting\Payment;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
 use Xendit\Invoice;
@@ -25,7 +23,7 @@ class MakePaymentUsingInvoice
 
     public function handle(Payment $payment, array $data = []): array
     {
-        $customer = $payment->customer;
+        $customer   = $payment->customer;
         $externalId = $payment->reference;
 
         $params = [

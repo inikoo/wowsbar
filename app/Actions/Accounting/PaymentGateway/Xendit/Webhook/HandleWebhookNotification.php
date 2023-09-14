@@ -14,7 +14,6 @@ use App\Enums\Accounting\Payment\PaymentStatusEnum;
 use App\Models\Accounting\Payment;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
@@ -45,11 +44,11 @@ class HandleWebhookNotification
 
                 if (blank($payment->webhook_id)) {
                     UpdatePayment::run($payment, [
-                        'webhook_id' => $webhookId,
-                        'status'     => $this->checkStatus($request->input('status')),
-                        'state'      => $this->checkState($request->input('status')),
+                        'webhook_id'   => $webhookId,
+                        'status'       => $this->checkStatus($request->input('status')),
+                        'state'        => $this->checkState($request->input('status')),
                         'completed_at' => now(),
-                        'data' => $request->all()
+                        'data'         => $request->all()
                     ]);
                 }
 
@@ -72,7 +71,7 @@ class HandleWebhookNotification
     {
         match ($status) {
             'PAID'  => $status  = PaymentStatusEnum::SUCCESS->value,
-            default => $status = PaymentStatusEnum::FAIL->value
+            default => $status  = PaymentStatusEnum::FAIL->value
         };
 
         return $status;
@@ -82,7 +81,7 @@ class HandleWebhookNotification
     {
         match ($status) {
             'PAID'  => $status  = PaymentStateEnum::COMPLETED->value,
-            default => $status = PaymentStateEnum::CANCELLED->value
+            default => $status  = PaymentStateEnum::CANCELLED->value
         };
 
         return $status;
