@@ -24,7 +24,6 @@ import Tabs from "@/Components/Navigation/Tabs.vue";
 import {useTabChange} from "@/Composables/tab-change";
 import ModelDetails from "@/Pages/ModelDetails.vue";
 import TableHistories from "@/Components/Tables/TableHistories.vue";
-import TableBanners from "@/Components/Tables/TableBanners.vue";
 import TableUploadedWebsites from "@/Components/Tables/TableUploadedWebsites.vue";
 
 library.add(faUpload, falFile, faTimes, faFileDownload, fasFile)

@@ -5,7 +5,7 @@
   -->
 
 <script setup lang="ts">
-import { Head, Link, useForm } from '@inertiajs/vue3'
+import { Head } from '@inertiajs/vue3'
 import PageHeading from '@/Components/Headings/PageHeading.vue'
 import Tabs from "@/Components/Navigation/Tabs.vue"
 import Input from '@/Components/Forms/Fields/Input.vue'
@@ -76,7 +76,7 @@ const compWebsitesList = computed(() => {
     return websitesList.value.map(obj => { return obj.slug })
 })
 
-const compselectedImagesFlat = computed(() => {
+const selectedImagesFlat = computed(() => {
     // To return the double array to flat
     return [].concat(...(Object.values(selectedImages.value)))
 })
@@ -88,7 +88,7 @@ const createBanner = async () => {
             await axios.post(
                 route('models.portfolio-website.banner.gallery.store', fieldWebsite.value),
                 {
-                    images: compselectedImagesFlat.value,
+                    images: selectedImagesFlat.value,
                     name: fieldName.value
                 },
                 {
@@ -106,7 +106,7 @@ const createBanner = async () => {
             await axios.post(
                 route('models.tenant.banner.gallery.store'),
                 {
-                    images: compselectedImagesFlat.value,
+                    images: selectedImagesFlat.value,
                     name: fieldName.value
                 },
                 {
@@ -156,7 +156,7 @@ watch(isModalOpen, async () => {
 
 const allImageFlat = ref(selectedImage());
 
-console.log('sssss',props.uploaded_images,props.stock_images)
+console.log('debug:',props.uploaded_images,props.stock_images)
 
 </script>
 

@@ -71,9 +71,6 @@ const dataComponent = ref([
 const loadingState = ref(false)
 const selectedComponent = ref(dataComponent.value[0])
 
-const compSelectedComponent = computed(() => {
-    return dataComponent[selectedComponent.value]
-})
 
 </script>
 
