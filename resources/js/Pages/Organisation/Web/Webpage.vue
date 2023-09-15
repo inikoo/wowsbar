@@ -19,7 +19,7 @@ import {library} from '@fortawesome/fontawesome-svg-core';
 
 import {
     faAnalytics, faBrowser,
-    faChartLine, faDraftingCompass, faRoad, faSlidersH,faClock
+    faChartLine, faDraftingCompass, faRoad, faSlidersH,faClock,faLevelDown
 } from "@/../private/pro-light-svg-icons";
 import WebpageShowcase from "@/Pages/Organisation/Web/WebpageShowcase.vue";
 import WebpageAnalytics from "@/Pages/Organisation/Web/WebpageAnalytics.vue";
@@ -31,7 +31,7 @@ library.add(
     faDraftingCompass,
     faSlidersH,
     faRoad,
-    faBrowser,
+    faBrowser,faLevelDown
 );
 
 const props = defineProps<{

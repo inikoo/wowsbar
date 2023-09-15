@@ -8,6 +8,7 @@
 namespace App\Actions\Organisation\Web\Website\UI;
 
 use App\Actions\InertiaAction;
+use App\Actions\Organisation\Web\HasWorkshopAction;
 use App\Actions\UI\Organisation\Dashboard\ShowDashboard;
 use App\Actions\UI\WithInertia;
 use App\Enums\UI\Organisation\WebsiteTabsEnum;
@@ -24,14 +25,15 @@ class ShowWebsite extends InertiaAction
 {
     use AsAction;
     use WithInertia;
+    use HasWorkshopAction;
 
     public function authorize(ActionRequest $request): bool
     {
         $this->canEdit   = $request->user()->can('website.edit');
         $this->canDelete = $request->user()->can('website.edit');
+
         return $request->user()->hasPermissionTo("website.view");
     }
-
 
 
     public function asController(ActionRequest $request): ?Website
@@ -44,8 +46,7 @@ class ShowWebsite extends InertiaAction
 
     public function htmlResponse(?Website $website, ActionRequest $request): Response|RedirectResponse
     {
-
-        if($website==null) {
+        if ($website == null) {
             return Redirect::route('org.website.create');
         }
 
@@ -53,37 +54,15 @@ class ShowWebsite extends InertiaAction
         return Inertia::render(
             'Web/Website',
             [
-                'breadcrumbs'                    => $this->getBreadcrumbs(),
-                'title'                          => __('website'),
-                'pageHead'                       => [
-                    'title' => __('website'),
-                    'icon'  => [
+                'breadcrumbs' => $this->getBreadcrumbs(),
+                'title'       => __('website'),
+                'pageHead'    => [
+                    'title'   => __('website'),
+                    'icon'    => [
                         'title' => __('website'),
                         'icon'  => 'fal fa-globe'
                     ],
-                    'actions'                    => [
-                        $this->canEdit ? [
-                            'type'  => 'button',
-                            'style' => 'edit',
-                            'label' => __('settings'),
-                            'icon'  => ["fal", "fa-sliders-h"],
-                            'route' => [
-                                'name'       => preg_replace('/show$/', 'edit', $request->route()->getName()),
-                                'parameters' => array_values($request->route()->originalParameters())
-                            ]
-                        ] : false,
-                        $this->canEdit ? [
-                            'type'  => 'button',
-                            'style' => 'edit',
-                            'label' => __('workshop'),
-                            'icon'  => ["fal", "fa-drafting-compass"],
-                            'route' => [
-                                'name'       => preg_replace('/show$/', 'workshop', $request->route()->getName()),
-                                'parameters' => array_values($request->route()->originalParameters())
-                            ]
-                        ] : false,
-
-                    ],
+                    'actions' => $this->workshopActions($request),
                 ],
 
                 'tabs'                           => [
@@ -93,8 +72,8 @@ class ShowWebsite extends InertiaAction
 
                 // Showcase data
                 WebsiteTabsEnum::SHOWCASE->value => $this->tab == WebsiteTabsEnum::SHOWCASE->value ?
-                fn () => WebsiteResource::make($website)->getArray()
-                : Inertia::lazy(fn () => WebsiteResource::make($website)->getArray())
+                    fn() => WebsiteResource::make($website)->getArray()
+                    : Inertia::lazy(fn() => WebsiteResource::make($website)->getArray())
 
                 /*
                 WebsiteTabsEnum::CHANGELOG->value => $this->tab == WebsiteTabsEnum::CHANGELOG->value ?
