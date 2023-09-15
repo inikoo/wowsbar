@@ -12,6 +12,7 @@ import {useTabChange} from "@/Composables/tab-change";
 
 import ModelDetails from "@/Pages/ModelDetails.vue";
 import TableHistories from "@/Pages/Tables/TableHistories.vue";
+import TableWebpages from "@/Pages/Tables/TableWebpages.vue";
 
 import PageHeading from "@/Components/Headings/PageHeading.vue";
 import Tabs from "@/Components/Navigation/Tabs.vue";
@@ -19,10 +20,12 @@ import {library} from '@fortawesome/fontawesome-svg-core';
 
 import {
     faAnalytics, faBrowser,
-    faChartLine, faDraftingCompass, faRoad, faSlidersH,faClock,faLevelDown
+    faChartLine, faDraftingCompass, faRoad, faSlidersH,faClock,faLevelDown,faShapes,faSortAmountDownAlt
 } from "@/../private/pro-light-svg-icons";
 import WebpageShowcase from "@/Pages/Organisation/Web/WebpageShowcase.vue";
 import WebpageAnalytics from "@/Pages/Organisation/Web/WebpageAnalytics.vue";
+
+
 
 library.add(
     faChartLine,
@@ -31,7 +34,7 @@ library.add(
     faDraftingCompass,
     faSlidersH,
     faRoad,
-    faBrowser,faLevelDown
+    faBrowser,faLevelDown,faShapes,faSortAmountDownAlt
 );
 
 const props = defineProps<{
@@ -41,9 +44,9 @@ const props = defineProps<{
         current: string
         navigation: object
     }
-    webpages?: string
+    webpages?: object
     changelog?: object
-    showcase: any
+    showcase?: any
 }>()
 
 
@@ -55,7 +58,8 @@ const component = computed(() => {
         'details': ModelDetails,
         'changelog': TableHistories,
         'showcase': WebpageShowcase,
-        'analytics': WebpageAnalytics
+        'analytics': WebpageAnalytics,
+        'webpages': TableWebpages
     }
 
     return components[currentTab.value]
@@ -67,6 +71,6 @@ const component = computed(() => {
     <Head :title="capitalize(title)" />
     <PageHeading :data="pageHead"></PageHeading>
     <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate"/>
-    <component :is="component" :data="props[currentTab]"></component>
+    <component :is="component" :tab="currentTab"  :data="props[currentTab]"></component>
 
 </template>

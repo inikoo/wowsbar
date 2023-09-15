@@ -8,7 +8,9 @@
 namespace App\Actions\Organisation\Web\Webpage\UI;
 
 use App\Actions\InertiaAction;
+use App\Actions\Inventory\Location\UI\IndexLocations;
 use App\Actions\Organisation\Web\HasWorkshopAction;
+use App\Actions\Organisation\Web\Webpage\IndexWebpages;
 use App\Actions\Organisation\Web\Website\UI\ShowWebsite;
 use App\Actions\UI\WithInertia;
 use App\Enums\Organisation\Web\Webpage\WebpageTypeEnum;
@@ -90,8 +92,8 @@ class ShowWebpage extends InertiaAction
                         'style' => 'create',
                         'label' => __('webpage'),
                         'route' => [
-                            'name'      => 'org.website.webpages.show.webpages.create',
-                            'parameters'=> ['webpage'=>$webpage->slug]
+                            'name'       => 'org.website.webpages.show.webpages.create',
+                            'parameters' => ['webpage' => $webpage->slug]
                         ]
                     ] : false
                 ]
@@ -121,8 +123,25 @@ class ShowWebpage extends InertiaAction
                 ],
 
                 WebpageTabsEnum::SHOWCASE->value => $this->tab == WebpageTabsEnum::SHOWCASE->value ?
-                    fn () => WebpageResource::make($webpage)->getArray()
-                    : Inertia::lazy(fn () => WebpageResource::make($webpage)->getArray())
+                    fn() => WebpageResource::make($webpage)->getArray()
+                    : Inertia::lazy(fn() => WebpageResource::make($webpage)->getArray()),
+
+
+                WebpageTabsEnum::WEBPAGES->value => $this->tab == WebpageTabsEnum::WEBPAGES->value
+                    ?
+                    fn() => WebpageResource::collection(
+                        IndexWebpages::run(
+                            parent: $webpage,
+                            prefix: 'webpages'
+                        )
+                    )
+                    : Inertia::lazy(fn() => WebpageResource::collection(
+                        IndexWebpages::run(
+                            parent: $webpage,
+                            prefix: 'webpages'
+                        )
+                    )),
+
 
                 /*
                 WebpageTabsEnum::CHANGELOG->value => $this->tab == WebpageTabsEnum::CHANGELOG->value ?
@@ -132,6 +151,8 @@ class ShowWebpage extends InertiaAction
 
 
             ]
+        )->table(
+            IndexWebpages::make()->tableStructure(prefix:'webpages')
         );
     }
 
