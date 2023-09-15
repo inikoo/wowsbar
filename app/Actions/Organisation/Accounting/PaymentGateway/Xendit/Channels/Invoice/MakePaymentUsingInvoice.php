@@ -5,7 +5,7 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Accounting\PaymentGateway\Xendit\Channels\Invoice;
+namespace App\Actions\Organisation\Accounting\PaymentGateway\Xendit\Channels\Invoice;
 
 use App\Models\Accounting\Payment;
 use Illuminate\Support\Arr;

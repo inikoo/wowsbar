@@ -1,33 +1,33 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Mon, 27 Feb 2023 11:29:47 Malaysia Time, Kuala Lumpur, Malaysia
+ * Created: Mon, 27 Feb 2023 11:37:19 Malaysia Time, Kuala Lumpur, Malaysia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Accounting\PaymentServiceProvider\Hydrators;
+namespace App\Actions\Organisation\Accounting\PaymentAccount\Hydrators;
 
 use App\Enums\Accounting\Payment\PaymentStateEnum;
-use App\Models\Accounting\PaymentServiceProvider;
+use App\Models\Accounting\PaymentAccount;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Support\Arr;
 use Lorisleiva\Actions\Concerns\AsAction;
 
-class PaymentServiceProviderHydratePayments implements ShouldBeUnique
+class PaymentAccountHydratePayments implements ShouldBeUnique
 {
     use AsAction;
 
 
-    public function handle(PaymentServiceProvider $paymentServiceProvider): void
+    public function handle(PaymentAccount $paymentAccount): void
     {
-        $paymentRecords = $paymentServiceProvider->payments()->count();
-        $refunds        = $paymentServiceProvider->payments()->where('type', 'refund')->count();
+        $paymentRecords = $paymentAccount->payments()->count();
+        $refunds        = $paymentAccount->payments()->where('type', 'refund')->count();
 
-        $amountTenantCurrencySuccessfullyPaid = $paymentServiceProvider->payments()
+        $amountTenantCurrencySuccessfullyPaid = $paymentAccount->payments()
             ->where('type', 'payment')
             ->where('status', 'success')
             ->sum('tc_amount');
-        $amountTenantCurrencyRefunded         = $paymentServiceProvider->payments()
+        $amountTenantCurrencyRefunded         = $paymentAccount->payments()
             ->where('type', 'refund')
             ->where('status', 'success')
             ->sum('tc_amount');
@@ -41,8 +41,7 @@ class PaymentServiceProviderHydratePayments implements ShouldBeUnique
             'tc_amount_refunded'          => $amountTenantCurrencyRefunded
         ];
 
-
-        $stateCounts = $paymentServiceProvider->payments()
+        $stateCounts =$paymentAccount->payments()
             ->selectRaw('state, count(*) as total')
             ->groupBy('state')
             ->pluck('total', 'state')->all();
@@ -51,7 +50,7 @@ class PaymentServiceProviderHydratePayments implements ShouldBeUnique
             $stats["number_payment_records_state_{$state->snake()}"] = Arr::get($stateCounts, $state->value, 0);
         }
 
-        $stateCounts =$paymentServiceProvider->payments()->where('type', 'payment')
+        $stateCounts =$paymentAccount->payments()->where('type', 'payment')
             ->selectRaw('state, count(*) as total')
             ->groupBy('state')
             ->pluck('total', 'state')->all();
@@ -60,7 +59,7 @@ class PaymentServiceProviderHydratePayments implements ShouldBeUnique
             $stats["number_payments_state_{$state->snake()}"] = Arr::get($stateCounts, $state->value, 0);
         }
 
-        $stateCounts = $paymentServiceProvider->payments()->where('type', 'refund')
+        $stateCounts =$paymentAccount->payments()->where('type', 'refund')
             ->selectRaw('state, count(*) as total')
             ->groupBy('state')
             ->pluck('total', 'state')->all();
@@ -69,11 +68,11 @@ class PaymentServiceProviderHydratePayments implements ShouldBeUnique
             $stats["number_refunds_state_{$state->snake()}"] = Arr::get($stateCounts, $state->value, 0);
         }
 
-        $paymentServiceProvider->stats->update($stats);
+        $paymentAccount->stats->update($stats);
     }
 
-    public function getJobUniqueId(PaymentServiceProvider $paymentServiceProvider): int
+    public function getJobUniqueId(PaymentAccount $paymentAccount): int
     {
-        return $paymentServiceProvider->id;
+        return $paymentAccount->id;
     }
 }

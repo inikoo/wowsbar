@@ -5,7 +5,7 @@
  * Copyright (c) 2023, Inikoo LTD
  */
 
-namespace App\Actions\Accounting\Payment\Hydrators;
+namespace App\Actions\Organisation\Accounting\Payment\Hydrators;
 
 use App\Models\Accounting\Payment;
 use Lorisleiva\Actions\Concerns\AsAction;

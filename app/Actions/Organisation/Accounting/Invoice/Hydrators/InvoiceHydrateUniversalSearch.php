@@ -5,7 +5,7 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Accounting\Invoice\Hydrators;
+namespace App\Actions\Organisation\Accounting\Invoice\Hydrators;
 
 use App\Models\Accounting\Invoice;
 use Lorisleiva\Actions\Concerns\AsAction;

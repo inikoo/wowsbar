@@ -5,7 +5,7 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Accounting\PaymentServiceProvider\Hydrators;
+namespace App\Actions\Organisation\Accounting\PaymentServiceProvider\Hydrators;
 
 use App\Models\Accounting\PaymentServiceProvider;
 use Illuminate\Contracts\Queue\ShouldBeUnique;

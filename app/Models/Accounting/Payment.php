@@ -7,9 +7,8 @@
 
 namespace App\Models\Accounting;
 
-use App\Actions\Accounting\PaymentAccount\Hydrators\PaymentAccountHydratePayments;
-use App\Actions\Accounting\PaymentServiceProvider\Hydrators\PaymentServiceProviderHydratePayments;
-use App\Actions\Organisation\Market\Shop\Hydrators\ShopHydratePayments;
+use App\Actions\Organisation\Accounting\PaymentAccount\Hydrators\PaymentAccountHydratePayments;
+use App\Actions\Organisation\Accounting\PaymentServiceProvider\Hydrators\PaymentServiceProviderHydratePayments;
 use App\Enums\Accounting\Payment\PaymentStateEnum;
 use App\Enums\Accounting\Payment\PaymentStatusEnum;
 use App\Enums\Accounting\Payment\PaymentSubsequentStatusEnum;
