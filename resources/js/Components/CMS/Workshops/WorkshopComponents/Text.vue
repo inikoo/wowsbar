@@ -16,14 +16,14 @@ import FontFamily from '@tiptap/extension-font-family'
 
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { library } from "@fortawesome/fontawesome-svg-core"
-import { faBold, faItalic, faUnderline, faTrashAlt, faListUl, faListOl, faUndo, faFont, faRedo, } from "@/../private/pro-regular-svg-icons"
-library.add(faBold, faItalic, faUnderline, faTrashAlt, faListUl, faListOl, faUndo, faFont, faRedo)
+import { faBold, faItalic, faUnderline, faTrashAlt, faListUl, faListOl, faUndo, faFont, faRedo, faFillDrip } from "@/../private/pro-regular-svg-icons"
+library.add(faBold, faItalic, faUnderline, faTrashAlt, faListUl, faListOl, faUndo, faFont, faRedo, faFillDrip)
 
 const props = defineProps(["modelValue", "showStats", "placeholder", "class"])
 const emit = defineEmits(["update:modelValue"])
 const editor: Ref<any> = ref(false)
 
-const options = [
+const fontOptions = [
     "Arial",
     "Comfortaa",
     "Lobster",
@@ -100,28 +100,30 @@ const selectedFontSize = ref('16px')
     <div class="group ">
         <div class="relative rounded focus-within:ring-2 focus-within:ring-gray-300">
             <!-- Group: editor tools -->
-            <div class="flex bg-indigo-100 p-2 absolute bottom-full w-fit justify-between text-slate-800 select-none space-x-1 border border-gray-100" tabindex="0">
-                <div class="flex justify-start items-center space-x-1 divide-x-2 divide-gray-200">
-                    <!-- Text color -->
-                    <div class="flex items-center">
-                        <!-- Highlight color -->
-                        <input type="color"
-                            @input="editor.chain().focus().toggleHighlight({ color: $event.target.value }).run()"
-                            :value="editor.getAttributes('highlight').color">
-
-                        <div class="relative w-12 bg-red-500">
-                            <input id="input-color-text" type="color"
-                                @input="editor.chain().focus().setColor($event.target.value).run()"
-                                :value="editor.getAttributes('textStyle').color" class="absolute opacity-50 w-full h-full z-20" />
-                            <div for="input-color-text">
-                                <FontAwesomeIcon icon='far fa-font' class="cursor-pointer hover:border z-10 hover:border-gray-300"
-                                    :style="[`color: ${editor.getAttributes('textStyle').color ?? '#1f2937'}`]"
-                                    aria-hidden='true' />
-                            </div>
-                        </div>
+            <div class="hidden group-focus-within:flex bg-gray-100 absolute bottom-full w-fit justify-between text-slate-800 select-none space-x-1 border border-gray-100" tabindex="0">
+                <div class="flex justify-start items-center divide-x-2 divide-gray-200">
+                    <!-- Font Family -->
+                    <div class="isolate relative rounded-sm w-44 flex pr-4">
+                        <Multiselect v-model="fontFamily" :options="fontOptions" :placeholder="'Select your option'"
+                            :canClear="false" :closeOnSelect="true" :canDeselect="false" :hideSelected="false"
+                            :searchable="true">
+                            <template v-slot:singlelabel="{ value }">
+                                <div class="multiselect-single-label bg-red-50 z-10 text-gray-600 whitespace-nowrap">
+                                    <span :style="`font-family : ${snakeCase(lowerCase(value.value))}`">
+                                        {{ value.value }}
+                                    </span>
+                                </div>
+                            </template>
+                            <template #option="{ option }">
+                                <span :style="`font-family : ${snakeCase(lowerCase(option.value))}`">
+                                    {{ option.label }}
+                                </span>
+                            </template>
+                        </Multiselect>
                     </div>
 
-                    <div class="flex">
+                    <!-- Bold, Italic, Underline -->
+                    <div class="flex px-2 h-full items-center text-gray-500 gap-x-2">
                         <!-- Bold -->
                         <div :class="{ 'bg-orange-400 text-white': editor.isActive('bold') }"
                             class="rounded-sm grid justify-center items-center border border-transparent active:border-orange-700 box-content cursor-pointer px-1 py-0.5"
@@ -143,25 +145,30 @@ const selectedFontSize = ref('16px')
                             <FontAwesomeIcon aria-hidden="true" icon="far fa-underline" />
                         </div>
                     </div>
+                    
+                    <!-- Color -->
+                    <div class="flex h-full items-center px-4 gap-x-2">
+                        <!-- Color: Highlight -->
+                        <div class="isolate flex items-center py-1 h-full relative">
+                            <input type="color" class="absolute opacity-0 w-full h-full z-20 cursor-pointer"
+                                @input="editor.chain().focus().toggleHighlight({ color: $event.target.value }).run()"
+                                :value="editor.getAttributes('highlight').color">
+                            <span class="h-3/4 w-7 px-1 rounded-sm text-gray-300" :style="[`background: ${editor.getAttributes('highlight').color ?? '#4b5563'}`]">
+                                <FontAwesomeIcon icon='far fa-fill-drip' class='shadow' aria-hidden='true' />
+                            </span>
+                        </div>
 
-                    <!-- Font Family -->
-                    <div class="relative rounded-sm w-44 flex">
-                        <Multiselect v-model="fontFamily" :options="options" :placeholder="'Select your option'"
-                            :canClear="false" :closeOnSelect="true" :canDeselect="false" :hideSelected="false"
-                            :searchable="true">
-                            <template v-slot:singlelabel="{ value }">
-                                <div class="place-self-start bg-red-50 relative px-2 text-gray-600 whitespace-nowrap">
-                                    <span :style="`font-family : ${snakeCase(lowerCase(value.value))}`">
-                                        {{ value.value }}
-                                    </span>
-                                </div>
-                            </template>
-                            <template #option="{ option }">
-                                <span :style="`font-family : ${snakeCase(lowerCase(option.value))}`">
-                                    {{ option.label }}
-                                </span>
-                            </template>
-                        </Multiselect>
+                        <!-- Color: Text -->
+                        <div class="isolate flex items-center py-1 h-full relative">
+                            <input id="input-color-text" type="color"
+                                @input="editor.chain().focus().setColor($event.target.value).run()"
+                                :value="editor.getAttributes('textStyle').color" class="absolute opacity-0 w-full h-full z-20 cursor-pointer" />
+                            <span class="h-3/4 w-8 px-1 rounded-sm bg-gray-300 text-gray-700 flex justify-center items-center">
+                                <FontAwesomeIcon icon='far fa-font' class="cursor-pointer hover:border z-10 hover:border-gray-300"
+                                :style="[`color: ${editor.getAttributes('textStyle').color ?? '#1f2937'}`]"
+                                aria-hidden='true' />
+                            </span>
+                        </div>
                     </div>
 
                     <!-- Font Size -->
@@ -240,5 +247,15 @@ mark {
     padding: 15px 00.125em;
     border-radius: 0.25em;
     box-decoration-break: clone;
-}</style>
+}
+
+.multiselect-search {
+    display: flex;
+    justify-content: start;
+    background-color: #ffe066;
+    z-index: 50;
+}
+</style>
+
+
 <style src="@vueform/multiselect/themes/default.css"></style>
