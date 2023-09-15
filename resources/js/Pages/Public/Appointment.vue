@@ -15,10 +15,7 @@ import { useFormatTime } from "@/Composables/useFormatTime";
 library.add(faRocketLaunch, faClock, faVideo);
 
 const data = {
-    description: `
-    <p>The Basic tee is an honest new take on a classic. The tee uses super soft, pre-shrunk cotton for true comfort and a dependable fit. They are hand cut and sewn locally, with a special dye technique that gives each tee it's own look.</p>
-    <p>Looking to stock your closet? The Basic tee also comes in a 3-pack or 5-pack at a bundle discount.</p>
-  `,
+    description: "The Basic tee is an honest new take on a classic. The tee uses super soft, pre-shrunk cotton for true comfort and a dependable fit",
   meet : {
     customerService : 'Arya',
     duration : '30 mnt'
@@ -128,16 +125,16 @@ const getDate = () => {
                             {{ data.title }}
                         </div>
                         <div>
-                            <div class="flex justify-start my-5 gap-3">
+                            <div class="flex justify-start my-2 gap-3">
                             <div>
                                 <font-awesome-icon
                                     :icon="['far', 'clock']"
-                                    class="w-5 h-5"
+                                    class="w-4 h-4"
                                 />
                             </div>
                             <div>{{ data.meet.duration }}</div>
                         </div>
-                        <div class="flex justify-start my-5 gap-3">
+                        <div class="flex justify-start my-2 gap-3">
                             <div>
                                 <font-awesome-icon :icon="['far', 'video']" />
                             </div>
@@ -145,13 +142,13 @@ const getDate = () => {
                         </div>
                         </div>
                        
-                        <div class="my-10">
+                        <div class="my-3">
                             <h2 class="text-sm font-medium text-gray-900">
                                 Description
                             </h2>
 
                             <div
-                                class="prose prose-sm mt-4 text-gray-500"
+                                class="mt-1 mb-2 text-gray-500 text-xs"
                                 v-html="data.description"
                             />
                         </div>

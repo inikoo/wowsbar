@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import BannerWorkshopComponent from '@/Components/Workshop/BannerWorkshopComponent.vue'
+import TestimonialsWorkshopComponent from '@/Components/CMS/Workshops/TestimonialsWorkshopComponent.vue'
 
 const props = defineProps<{
     selectedComponent: any
@@ -70,8 +71,6 @@ const dummyData = {
 <template>
     <div class="flex justify-center items-center">
         <BannerWorkshopComponent v-if="selectedComponent.component === 'banner'" :data="dummyData.data" :imagesUploadRoute="dummyData.route" :user="dummyData.user" />
+        <TestimonialsWorkshopComponent v-if="selectedComponent.component === 'text'" />
     </div>
 </template>
-
-<style>
-</style>

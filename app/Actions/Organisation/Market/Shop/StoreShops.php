@@ -7,9 +7,9 @@
 
 namespace App\Actions\Organisation\Market\Shop;
 
-use App\Actions\Accounting\PaymentAccount\StorePaymentAccount;
 use App\Actions\Assets\Currency\SetCurrencyHistoricFields;
 use App\Actions\Mail\Outbox\StoreOutbox;
+use App\Actions\Organisation\Accounting\PaymentAccount\StorePaymentAccount;
 use App\Enums\Helpers\SerialReference\SerialReferenceModelEnum;
 use App\Enums\Mail\Outbox\OutboxTypeEnum;
 use App\Enums\Market\Shop\ShopSubtypeEnum;

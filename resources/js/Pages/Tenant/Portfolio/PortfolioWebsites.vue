@@ -82,7 +82,7 @@ const onUpload = async (fileUploaded: any) => {
     isLoadingUpload.value = true
     try {
         await axios.post(
-            route('models.websites.upload'),
+            route('tenant.models.websites.upload'),
             {
                 file: fileUploaded.target.files[0],
             },

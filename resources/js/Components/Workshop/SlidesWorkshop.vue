@@ -414,40 +414,12 @@ const CommonBlueprint = ref([
                 type: "selectFont",
                 label: trans("Font Family"),
                 value: ["common", "centralStage", "style", "fontFamily"],
-                options: [
-                    "Arial",
-                    "Comfortaa",
-                    "Lobster",
-                    "Laila",
-                    "Port Lligat Slab",
-                    "Playfair",
-                    "Quicksand",
-                    "Times New Roman",
-                    "Yatra One",
-                ],
             },
             {
                 name: ["common", "centralStage", "textAlign"],
                 type: "textAlign",
                 label: trans("Text Align"),
                 value: ["common", "centralStage", "textAlign"],
-                options: [
-                    {
-                        label: "Align left",
-                        value: "left",
-                        icon: 'fal fa-align-left'
-                    },
-                    {
-                        label: "Align center",
-                        value: "center",
-                        icon: 'fal fa-align-center'
-                    },
-                    {
-                        label: "Align right",
-                        value: "right",
-                        icon: 'fal fa-align-right'
-                    },
-                ],
             },
             {
                 name: ["common", "centralStage", "style", "fontSize"],
