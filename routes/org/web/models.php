@@ -6,6 +6,12 @@
  */
 
 
+use App\Actions\Organisation\Accounting\Payment\UpdatePayment;
+use App\Actions\Organisation\Accounting\PaymentAccount\StorePaymentAccount;
+use App\Actions\Organisation\Accounting\PaymentAccount\UpdatePaymentAccount;
+use App\Actions\Organisation\Accounting\PaymentServiceProvider\DeletePaymentServiceProvider;
+use App\Actions\Organisation\Accounting\PaymentServiceProvider\StorePaymentServiceProvider;
+use App\Actions\Organisation\Accounting\PaymentServiceProvider\UpdatePaymentServiceProvider;
 use App\Actions\Organisation\HumanResources\Employee\DeleteEmployee;
 use App\Actions\Organisation\HumanResources\Employee\StoreEmployee;
 use App\Actions\Organisation\HumanResources\Employee\UpdateEmployee;
@@ -26,3 +32,13 @@ Route::patch('/organisation', UpdateOrganisation::class)->name('organisation.upd
 Route::patch('/website', UpdateWebsite::class)->name('website.update');
 Route::patch('/website/state', UpdateWebsiteState::class)->name('website.state.update');
 Route::post('/webpage/{webpage:id}', StoreWebpage::class)->name('webpage.store');
+
+
+Route::post('/provider', StorePaymentServiceProvider::class)->name('payment-service-provider.store');
+Route::patch('/provider/{paymentServiceProvider}', UpdatePaymentServiceProvider::class)->name('payment-service-provider.update');
+Route::delete('/provider/{paymentServiceProvider}', DeletePaymentServiceProvider::class)->name('payment-service-provider.delete');
+
+Route::patch('/payment/{payment}', UpdatePayment::class)->name('payment.update');
+
+Route::patch('/payment-account/{paymentAccount}', UpdatePaymentAccount::class)->name('payment-account.update');
+Route::post('/payment-account', StorePaymentAccount::class)->name('payment-account.store');
