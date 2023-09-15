@@ -56,10 +56,29 @@ class StoreWebpage
 
     public function prepareForValidation(ActionRequest $request): void
     {
+
+
+        $type=WebpageTypeEnum::CONTENT->value;
+
+        if($_type=Arr::get($request->all(), 'type')) {
+            if(is_array($_type)) {
+                $type=$_type['value'];
+            } else {
+                $type=$_type;
+            }
+        }
+
+
+        $purpose=match ($type) {
+            WebpageTypeEnum::SMALL_PRINT->value=> WebpagePurposeEnum::OTHER_SMALL_PRINT->value,
+            WebpageTypeEnum::SHOP->value       => WebpagePurposeEnum::SHOP->value,
+            default                            => WebpagePurposeEnum::CONTENT->value
+        };
+
         $request->merge(
             [
-                'type'    => WebpageTypeEnum::CONTENT->value,
-                'purpose' => WebpagePurposeEnum::CONTENT->value,
+                'type'    => $type,
+                'purpose' => $purpose
             ]
         );
     }

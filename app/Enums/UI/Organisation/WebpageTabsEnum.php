@@ -8,7 +8,7 @@
 namespace App\Enums\UI\Organisation;
 
 use App\Enums\EnumHelperTrait;
-use App\Enums\HasTabs;
+use App\Enums\Organisation\Web\Webpage\WebpagePurposeEnum;
 use App\Enums\Organisation\Web\Webpage\WebpageTypeEnum;
 use App\Models\Organisation\Web\Webpage;
 
@@ -34,11 +34,12 @@ enum WebpageTabsEnum: string
             ->filter(
                 function ($case) use ($webpage) {
                     if($case==WebpageTabsEnum::WEBPAGES &&
-                        ( $webpage->type==WebpageTypeEnum::AUTH ||
+                        (
+                            $webpage->type==WebpageTypeEnum::AUTH       ||
                             $webpage->type==WebpageTypeEnum::ENGAGEMENT ||
-                            $webpage->type==WebpageTypeEnum::ARTICLE
+                            $webpage->type==WebpagePurposeEnum::ARTICLE
                         )
-                    ){
+                    ) {
                         return false;
                     }
                     return true;

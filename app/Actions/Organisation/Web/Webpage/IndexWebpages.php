@@ -13,6 +13,7 @@ use App\Actions\Organisation\Web\Website\UI\ShowWebsite;
 use App\Http\Resources\Web\WebpageResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\Organisation\Web\Webpage;
+use App\Models\Organisation\Web\Website;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -37,17 +38,23 @@ class IndexWebpages extends InertiaAction
     public function asController(ActionRequest $request): LengthAwarePaginator
     {
         $this->initialisation($request);
-
-        return $this->handle();
+        return $this->handle(organisation()->website);
     }
 
+    public function inWebpage(Webpage $webpage, ActionRequest $request): LengthAwarePaginator
+    {
+        $this->initialisation($request);
+        return $this->handle($webpage);
+    }
+
+
     /** @noinspection PhpUndefinedMethodInspection */
-    public function handle($prefix = null): LengthAwarePaginator
+    public function handle(Website|Webpage $parent, $prefix = null): LengthAwarePaginator
     {
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
             $query->where(function ($query) use ($value) {
                 $query->where('webpages.code', 'LIKE', "%$value%")
-                    ->orWhere('webpages.type', 'LIKE', "%$value%");
+                    ->orWhere('webpages.url', 'LIKE', "%$value%");
             });
         });
 
@@ -56,6 +63,11 @@ class IndexWebpages extends InertiaAction
         }
 
         $queryBuilder = QueryBuilder::for(Webpage::class);
+
+
+        if(class_basename($parent)=='Webpage') {
+            $queryBuilder->where('parent_id', $parent->id);
+        }
 
 
         return $queryBuilder

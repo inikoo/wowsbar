@@ -27,6 +27,8 @@ Route::get('/webpages', IndexWebpages::class)->name('webpages.index');
 Route::get('/webpages/create', CreateWebpage::class)->name('webpages.create');
 Route::get('/blog/article/create', CreateArticle::class)->name('blog.article.create');
 
+Route::get('/webpages/{webpage}/webpages/create', [CreateWebpage::class,'inWebpage'])->name('webpages.show.webpages.create');
+Route::get('/webpages/{webpage}/webpages', [IndexWebpages::class,'inWebpage'])->name('webpages.show.webpages.index');
 
 
 Route::get('/webpages/{webpage}', ShowWebpage::class)->name('webpages.show');

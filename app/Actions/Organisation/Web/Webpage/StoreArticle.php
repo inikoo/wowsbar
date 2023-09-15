@@ -29,9 +29,9 @@ class StoreArticle
     {
         data_set($modelData, 'level', $this->getLevel(Arr::get($modelData, 'parent_id')));
 
-        data_set($modelData,'data',Arr::only($modelData,['title','subtitle']));
+        data_set($modelData, 'data', Arr::only($modelData, ['title','subtitle']));
 
-        Arr::forget($modelData,['title','subtitle']);
+        Arr::forget($modelData, ['title','subtitle']);
 
         /** @var Webpage $webpage */
         $webpage = $website->webpages()->create($modelData);
@@ -61,9 +61,9 @@ class StoreArticle
     {
         $request->merge(
             [
-                'type'    => WebpageTypeEnum::ARTICLE->value,
+                'type'    => WebpageTypeEnum::BLOG->value,
                 'purpose' => WebpagePurposeEnum::ARTICLE->value,
-                'code'=>'art-'.gmdate('Ymd')
+                'code'    => 'art-'.gmdate('Ymd')
             ]
         );
     }
@@ -71,11 +71,11 @@ class StoreArticle
     public function rules(): array
     {
         return [
-            'url'     => ['required', new CaseSensitive('webpages'), 'max:255'],
-            'code'    => ['required', 'unique:webpages', 'max:64'],
-            'type'    => ['required', new Enum(WebpageTypeEnum::class)],
-            'purpose' => ['required', new Enum(WebpagePurposeEnum::class)],
-            'title' => ['required', 'string', 'max:255'],
+            'url'      => ['required', new CaseSensitive('webpages'), 'max:255'],
+            'code'     => ['required', 'unique:webpages', 'max:64'],
+            'type'     => ['required', new Enum(WebpageTypeEnum::class)],
+            'purpose'  => ['required', new Enum(WebpagePurposeEnum::class)],
+            'title'    => ['required', 'string', 'max:255'],
             'subtitle' => ['required', 'string', 'max:255'],
 
 

@@ -56,7 +56,42 @@ class ShowWebpage extends InertiaAction
                         'style' => 'create',
                         'label' => __('new article'),
                         'route' => [
-                            'name'       => 'org.website.blog.article.create',
+                            'name' => 'org.website.blog.article.create',
+                        ]
+                    ] : false
+                ]
+            );
+        } elseif ($webpage->type == WebpageTypeEnum::STOREFRONT) {
+            $actions = array_merge(
+                $actions,
+                [
+                    $this->canEdit ? [
+                        'type'  => 'button',
+                        'style' => 'create',
+                        'label' => __('Main webpage'),
+                        'route' => [
+                            'name' => 'org.website.webpages.create',
+                        ]
+                    ] : false
+                ]
+            );
+        } elseif (in_array(
+            $webpage->type,
+            [
+                WebpageTypeEnum::SHOP,
+                WebpageTypeEnum::CONTENT
+            ]
+        )) {
+            $actions = array_merge(
+                $actions,
+                [
+                    $this->canEdit ? [
+                        'type'  => 'button',
+                        'style' => 'create',
+                        'label' => __('webpage'),
+                        'route' => [
+                            'name'      => 'org.website.webpages.show.webpages.create',
+                            'parameters'=> ['webpage'=>$webpage->slug]
                         ]
                     ] : false
                 ]
@@ -86,8 +121,8 @@ class ShowWebpage extends InertiaAction
                 ],
 
                 WebpageTabsEnum::SHOWCASE->value => $this->tab == WebpageTabsEnum::SHOWCASE->value ?
-                    fn() => WebpageResource::make($webpage)->getArray()
-                    : Inertia::lazy(fn() => WebpageResource::make($webpage)->getArray())
+                    fn () => WebpageResource::make($webpage)->getArray()
+                    : Inertia::lazy(fn () => WebpageResource::make($webpage)->getArray())
 
                 /*
                 WebpageTabsEnum::CHANGELOG->value => $this->tab == WebpageTabsEnum::CHANGELOG->value ?
