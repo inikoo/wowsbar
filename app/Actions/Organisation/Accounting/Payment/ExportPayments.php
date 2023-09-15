@@ -5,7 +5,7 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Accounting\Invoice;
+namespace App\Actions\Organisation\Accounting\Payment;
 
 use App\Actions\Traits\WithExportData;
 use App\Exports\Accounting\InvoicesExport;
@@ -14,7 +14,7 @@ use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
-class ExportInvoices
+class ExportPayments
 {
     use AsAction;
     use WithAttributes;
