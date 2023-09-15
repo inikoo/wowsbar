@@ -15,7 +15,7 @@ use Illuminate\Validation\Rules\Password;
 use Illuminate\Validation\Validator;
 use Lorisleiva\Actions\ActionRequest;
 
-class UpdateRootUser
+class DeletePublicUser
 {
     use WithActionUpdate;
 

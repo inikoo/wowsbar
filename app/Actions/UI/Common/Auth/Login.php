@@ -7,6 +7,8 @@
 
 namespace App\Actions\UI\Common\Auth;
 
+use App\Actions\Organisation\Auth\OrganisationUser\Hydrators\OrganisationUserHydrateFailLogin;
+use App\Actions\Organisation\Auth\OrganisationUser\Hydrators\OrganisationUserHydrateLogin;
 use App\Actions\Organisation\CRM\PublicUser\Hydrators\PublicUserHydrateFailLogin;
 use App\Actions\Organisation\CRM\PublicUser\Hydrators\PublicUserHydrateLogin;
 use App\Actions\Tenant\Auth\User\Hydrators\UserHydrateFailLogin;
@@ -25,9 +27,9 @@ class Login
 {
     use AsController;
 
-    private string $credentialHandler         = 'username';
-    private string $home                      = '/dashboard';
-    private string $gate                      = 'web';
+    private string $credentialHandler = 'username';
+    private string $home = '/dashboard';
+    private string $gate = 'web';
     private string $customTokenFirebasePrefix = 'web';
 
 
@@ -70,7 +72,18 @@ class Login
 
         RateLimiter::clear($this->throttleKey($request));
 
-        $this->userLogin();
+
+        switch ($this->gate) {
+            case 'public':
+                PublicUserHydrateLogin::dispatch(Auth::guard($this->gate)->user(), request()->ip(), now());
+                break;
+            case 'web':
+                UserHydrateLogin::dispatch(Auth::guard($this->gate)->user(), request()->ip(), now());
+                break;
+            case 'org':
+                OrganisationUserHydrateLogin::dispatch(Auth::guard($this->gate)->user(), request()->ip(), now());
+        }
+
 
         $request->session()->regenerate();
         Session::put('reloadLayout', '1');
@@ -86,21 +99,18 @@ class Login
         return back();
     }
 
-    public function userLogin(): void
-    {
-        if($this->gate == 'public') {
-            PublicUserHydrateLogin::run(Auth::guard($this->gate)->user(), request()->ip(), now());
-        } else {
-            UserHydrateLogin::run(Auth::guard($this->gate)->user(), request()->ip(), now());
-        }
-    }
 
     public function userFailLogin(): void
     {
-        if($this->gate == 'public') {
-            PublicUserHydrateFailLogin::run(Auth::guard($this->gate)->user(), request()->ip(), now());
-        } else {
-            UserHydrateFailLogin::run(Auth::guard($this->gate)->user(), request()->ip(), now());
+        switch ($this->gate) {
+            case 'public':
+                PublicUserHydrateFailLogin::dispatch(Auth::guard($this->gate)->user(), request()->ip(), now());
+                break;
+            case 'web':
+                UserHydrateFailLogin::dispatch(Auth::guard($this->gate)->user(), request()->ip(), now());
+                break;
+            case 'org':
+                OrganisationUserHydrateFailLogin::dispatch(Auth::guard($this->gate)->user(), request()->ip(), now());
         }
     }
 
