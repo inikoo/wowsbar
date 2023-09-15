@@ -5,10 +5,10 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Accounting\PaymentAccount;
+namespace App\Actions\Organisation\Accounting\PaymentAccount;
 
 use App\Actions\HydrateModel;
-use App\Actions\Accounting\PaymentAccount\Hydrators\PaymentAccountHydratePayments;
+use App\Actions\Organisation\Accounting\PaymentAccount\Hydrators\PaymentAccountHydratePayments;
 use App\Models\Accounting\PaymentAccount;
 use Illuminate\Support\Collection;
 

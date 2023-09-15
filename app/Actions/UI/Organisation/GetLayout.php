@@ -60,6 +60,54 @@ class GetLayout
             ];
         }
 
+        if ($user->can('crm.view')) {
+            $navigation['accounting'] = [
+                'scope' => 'shops',
+                'label' => __('Accounting'),
+                'icon'  => ['fal', 'fa-abacus'],
+                'route' => 'org.accounting.dashboard',
+
+                'topMenu' => [
+                    'subSections' => [
+                        [
+                            'label' => __('Payment accounts'),
+                            'icon'  => ['fal', 'fa-money-check-alt'],
+                            'route' => [
+                                'name' => 'org.accounting.payment-accounts.index',
+                            ]
+                        ],
+                    ],
+                    'dropdown'    => [
+                        'links' => [
+
+                            [
+                                'label'   => __('customers'),
+                                'tooltip' => __('Customers'),
+                                'icon'    => ['fal', 'fa-user'],
+                                'route'   => [
+                                    'all'      => ['org.crm.customers.index'],
+                                    'selected' => ['org.crm.shops.show.customers.index'],
+
+                                ]
+                            ],
+                            [
+                                'label'   => __('prospects'),
+                                'tooltip' => __('Prospects'),
+                                'icon'    => ['fal', 'fa-user-plus'],
+                                'route'   => [
+                                    'all'      => ['org.crm.prospects.index'],
+                                    'selected' => ['org. crm.shops.show.prospects.index'],
+
+                                ]
+                            ],
+
+
+                        ]
+                    ]
+                ]
+            ];
+        }
+
         if (!$user->can('hr')) {
             $navigation['hr'] = [
                 'label'   => __('human resources'),

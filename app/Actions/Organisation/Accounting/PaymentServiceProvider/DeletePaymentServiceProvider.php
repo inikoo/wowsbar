@@ -5,7 +5,7 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Accounting\PaymentServiceProvider;
+namespace App\Actions\Organisation\Accounting\PaymentServiceProvider;
 
 use App\Models\Accounting\PaymentServiceProvider;
 use Illuminate\Http\RedirectResponse;

@@ -5,11 +5,11 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Accounting\PaymentServiceProvider;
+namespace App\Actions\Organisation\Accounting\PaymentServiceProvider;
 
 use App\Actions\HydrateModel;
-use App\Actions\Accounting\PaymentServiceProvider\Hydrators\PaymentServiceProviderHydrateAccounts;
-use App\Actions\Accounting\PaymentServiceProvider\Hydrators\PaymentServiceProviderHydratePayments;
+use App\Actions\Organisation\Accounting\PaymentServiceProvider\Hydrators\PaymentServiceProviderHydrateAccounts;
+use App\Actions\Organisation\Accounting\PaymentServiceProvider\Hydrators\PaymentServiceProviderHydratePayments;
 use App\Models\Accounting\PaymentServiceProvider;
 use Illuminate\Support\Collection;
 

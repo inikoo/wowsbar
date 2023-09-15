@@ -5,19 +5,15 @@
  * Copyright (c) 2023, Inikoo LTD
  */
 
-namespace App\Actions\Accounting\PaymentAccount\UI;
+namespace App\Actions\Organisation\Accounting\PaymentAccount\UI;
 
 use App\Actions\InertiaAction;
-use App\Models\Accounting\PaymentServiceProvider;
-use App\Models\Organisation\Market\Shop;
-use App\Models\Tenancy\Tenant;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
 
 class CreatePaymentAccount extends InertiaAction
 {
-    private Shop|Tenant|PaymentServiceProvider $parent;
     public function handle(): Response
     {
         return Inertia::render(
@@ -33,7 +29,7 @@ class CreatePaymentAccount extends InertiaAction
                             'style' => 'cancel',
                             'label' => __('cancel'),
                             'route' => [
-                                'name'       => 'accounting.payment-accounts.index',
+                                'name'       => 'org.accounting.payment-accounts.index',
                                 'parameters' => array_values($this->originalParameters)
                             ],
                         ]
@@ -58,7 +54,7 @@ class CreatePaymentAccount extends InertiaAction
                         ]
                     ],
                     'route'      => [
-                        'name'       => 'models.payment-account.store'
+                        'name'       => 'org.models.payment-account.store'
                     ]
                 ],
 
@@ -69,14 +65,13 @@ class CreatePaymentAccount extends InertiaAction
 
     public function authorize(ActionRequest $request): bool
     {
-        return $request->user()->can('accounting.edit');
+        return !$request->user()->can('accounting.edit');
     }
 
 
     public function asController(ActionRequest $request): Response
     {
         $this->initialisation($request);
-        $this->parent = app('currentTenant');
         return $this->handle();
     }
 

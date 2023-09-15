@@ -5,7 +5,7 @@
  * Copyright (c) 2023, Inikoo LTD
  */
 
-namespace App\Actions\Accounting\PaymentAccount\UI;
+namespace App\Actions\Organisation\Accounting\PaymentAccount\UI;
 
 use App\Actions\InertiaAction;
 use App\Models\Accounting\PaymentAccount;

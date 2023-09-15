@@ -5,7 +5,7 @@
  * Copyright (c) 2023, Inikoo LTD
  */
 
-namespace App\Actions\Accounting\PaymentServiceProvider;
+namespace App\Actions\Organisation\Accounting\PaymentServiceProvider;
 
 use App\Models\Accounting\PaymentServiceProvider;
 use Lorisleiva\Actions\Concerns\AsObject;

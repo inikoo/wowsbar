@@ -5,16 +5,15 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Accounting\PaymentGateway\Xendit\Webhook;
+namespace App\Actions\Organisation\Accounting\PaymentGateway\Xendit\Webhook;
 
-use App\Actions\Accounting\Payment\UpdatePayment;
 use App\Actions\Accounting\PaymentGateway\Xendit\Traits\HasCredentials;
+use App\Actions\Organisation\Accounting\Payment\UpdatePayment;
 use App\Enums\Accounting\Payment\PaymentStateEnum;
 use App\Enums\Accounting\Payment\PaymentStatusEnum;
 use App\Models\Accounting\Payment;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;

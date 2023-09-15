@@ -5,7 +5,7 @@
  * Copyright (c) 2023, Inikoo LTD
  */
 
-namespace App\Actions\Accounting\PaymentServiceProvider\UI;
+namespace App\Actions\Organisation\Accounting\PaymentServiceProvider\UI;
 
 use App\Actions\InertiaAction;
 use App\Enums\Accounting\PaymentServiceProvider\PaymentServiceProviderTypeEnum;
