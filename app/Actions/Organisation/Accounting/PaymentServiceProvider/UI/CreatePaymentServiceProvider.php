@@ -34,7 +34,7 @@ class CreatePaymentServiceProvider extends InertiaAction
                             'style' => 'cancel',
                             'label' => __('cancel'),
                             'route' => [
-                                'name'       => 'accounting.payment-service-providers.index',
+                                'name'       => 'org.accounting.payment-service-providers.index',
                                 'parameters' => array_values($this->originalParameters)
                             ],
                         ]

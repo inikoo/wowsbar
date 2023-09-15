@@ -40,41 +40,41 @@ class AccountingDashboard
                     $request->route()->getName(),
                     $request->route()->parameters
                 ),
-                'title' => __('accounting'),
+                'title'    => __('accounting'),
                 'pageHead' => [
                     'title' => __('accounting'),
                 ],
                 'flatTreeMaps' => [
                     [
                         [
-                            'name' => __('accounts'),
-                            'icon' => ['fal', 'fa-money-check-alt'],
-                            'href' => ['org.accounting.payment-accounts.index'],
+                            'name'  => __('accounts'),
+                            'icon'  => ['fal', 'fa-money-check-alt'],
+                            'href'  => ['org.accounting.payment-accounts.index'],
                             'index' => [
                                 'number' => 0
                             ],
                             'rightSubLink' => [
-                                'tooltip' => __('payment methods'),
-                                'icon' => ['fal', 'fa-cash-register'],
+                                'tooltip'    => __('payment methods'),
+                                'icon'       => ['fal', 'fa-cash-register'],
                                 'labelStyle' => 'bordered',
-                                'href' => ['org.accounting.payment-service-providers.index'],
+                                'href'       => ['org.accounting.payment-service-providers.index'],
 
                             ]
 
                         ],
                         [
-                            'name' => __('payments'),
-                            'icon' => ['fal', 'fa-coins'],
-                            'href' => ['org.accounting.payments.index'],
+                            'name'  => __('payments'),
+                            'icon'  => ['fal', 'fa-coins'],
+                            'href'  => ['org.accounting.payments.index'],
                             'index' => [
                                 'number' => 0
                             ]
 
                         ],
                         [
-                            'name' => __('invoices'),
-                            'icon' => ['fal', 'fa-file-invoice-dollar'],
-                            'href' => ['org.accounting.invoices.index'],
+                            'name'  => __('invoices'),
+                            'icon'  => ['fal', 'fa-file-invoice-dollar'],
+                            'href'  => ['org.accounting.invoices.index'],
                             'index' => [
                                 'number' => 0
                             ]
@@ -91,12 +91,12 @@ class AccountingDashboard
     {
         return match ($routeName) {
             'org.accounting.shops.show.dashboard' => null,
-            default =>
+            default                               =>
             array_merge(
                 ShowDashboard::make()->getBreadcrumbs(),
                 [
                     [
-                        'type' => 'simple',
+                        'type'   => 'simple',
                         'simple' => [
                             'route' => [
                                 'name' => 'org.accounting.dashboard'

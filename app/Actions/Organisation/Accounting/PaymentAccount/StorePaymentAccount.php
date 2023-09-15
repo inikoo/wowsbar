@@ -21,7 +21,6 @@ class StorePaymentAccount
     use WithAttributes;
 
     private bool $asAction   =false;
-    public $commandSignature = 'pa:create {code} {name}';
 
     public function handle(PaymentServiceProvider $paymentServiceProvider, array $modelData): PaymentAccount
     {
@@ -57,6 +56,8 @@ class StorePaymentAccount
 
         return $this->handle($paymentServiceProvider, $validatedData);
     }
+
+    public $commandSignature = 'payment-account:create {code} {name}';
 
     public function asCommand(Command $command): int
     {

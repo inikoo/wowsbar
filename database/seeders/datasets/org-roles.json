@@ -20,7 +20,7 @@
     {
         "name":"super-admin",
         "permissions": [
-            "sysadmin","website","crm","hr","supervisor"
+            "sysadmin","website","crm","hr","supervisor","accounting"
         ]
     }
 

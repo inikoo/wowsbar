@@ -45,7 +45,7 @@ php artisan customer:add-user 000001 -P hello
 php artisan customer:add-user 000002 -P hello
 pg_dump -Fc -f "devops/devel/snapshots/customers.dump" ${DB}
 echo "🌱 create tenant"
-php artisan tenant:create 000001 aiku
+php artisan tenant:create 000001 aikus
 php artisan tenant:create 000002 devs
 pg_dump -Fc -f "devops/devel/snapshots/tenant.dump" ${DB}
 echo "🌱 create test website with a banner"
@@ -53,7 +53,6 @@ php artisan website:create aiku hello.com hello 'My website 😸'
 php artisan banner:create aiku test1 'My first banner 🫡' hello
 php artisan banner:create aiku test2 'My first banner without website 🫡'
 pg_dump -Fc -f "devops/devel/snapshots/portfolio.dump" ${DB}
-php artisan pa:create artha Artha
 php artisan user:create aiku arya password qwe123asd
 php artisan user:create aiku vika password super-admin
 php artisan user:create aiku artha hello super-admin

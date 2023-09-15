@@ -75,7 +75,7 @@ class ShowPaymentServiceProvider extends InertiaAction
                             'type'  => 'button',
                             'style' => 'delete',
                             'route' => [
-                                'name'       => 'accounting.payment-service-providers.remove',
+                                'name'       => 'org.accounting.payment-service-providers.remove',
                                 'parameters' => array_values($this->originalParameters)
                             ]
                         ] : false
@@ -167,7 +167,7 @@ class ShowPaymentServiceProvider extends InertiaAction
             //            modelOperations: [
             //                'createLink' => $this->canEdit ? [
             //                    'route' => [
-            //                        'name'       => 'accounting.payment-service-providers.show.payment-accounts.create',
+            //                        'name'       => 'org.accounting.payment-service-providers.show.payment-accounts.create',
             //                        'parameters' => array_values($this->originalParameters)
             //                    ],
             //                    'label' => __('payment account')
@@ -184,7 +184,7 @@ class ShowPaymentServiceProvider extends InertiaAction
     public function getBreadcrumbs(PaymentServiceProvider $paymentServiceProvider, $suffix = null): array
     {
         return array_merge(
-            AccountingDashboard::make()->getBreadcrumbs('accounting.dashboard', []),
+            AccountingDashboard::make()->getBreadcrumbs('org.accounting.dashboard', []),
             [
                 [
                     'type'           => 'modelWithIndex',

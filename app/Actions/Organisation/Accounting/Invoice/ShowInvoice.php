@@ -149,7 +149,7 @@ class ShowInvoice extends InertiaAction
             return null;
         }
         return match ($routeName) {
-            'accounting.invoices.show'=> [
+            'org.accounting.invoices.show'=> [
                 'label'=> $invoice->number,
                 'route'=> [
                     'name'      => $routeName,

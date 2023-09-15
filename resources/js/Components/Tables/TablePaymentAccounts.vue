@@ -20,15 +20,15 @@ function paymentAccountRoute(paymentAccount) {
             return route(
                 'shops.show.accounting.payment-accounts.show',
                 [paymentAccount.shop_slug, paymentAccount.slug]);
-        case 'accounting.payment-service-providers.show':
-        case 'accounting.payment-service-providers.show.payment-accounts.index':
+        case 'org.accounting.payment-service-providers.show':
+        case 'org.accounting.payment-service-providers.show.payment-accounts.index':
             return route(
-                'accounting.payment-service-providers.show.payment-accounts.show',
+                'org.accounting.payment-service-providers.show.payment-accounts.show',
                 [paymentAccount.payment_service_providers_slug, paymentAccount.slug]);
-        case 'accounting.payment-accounts.index':
+        case 'org.accounting.payment-accounts.index':
         default:
             return route(
-                'accounting.payment-accounts.show',
+                'org.accounting.payment-accounts.show',
                 [paymentAccount.slug]);
 
     }
@@ -38,16 +38,16 @@ function paymentAccountRoute(paymentAccount) {
 function paymentsRoute(paymentAccount: PaymentAccount) {
     switch (route().current()) {
 
-        case 'accounting.payment-service-providers.show.payment-accounts.index':
+        case 'org.accounting.payment-service-providers.show.payment-accounts.index':
             return route(
-                'accounting.payment-service-providers.show.payment-accounts.show.payments.index',
+                'org.accounting.payment-service-providers.show.payment-accounts.show.payments.index',
                 [paymentAccount.payment_service_providers_slug, paymentAccount.slug]);
-        case 'accounting.payment-accounts.index':
+        case 'org.accounting.payment-accounts.index':
             return route(
-                'accounting.payment-accounts.show.payments.index',
+                'org.accounting.payment-accounts.show.payments.index',
                 [paymentAccount.slug]);
         default:
-            return route('accounting.payments.index');
+            return route('org.accounting.payments.index');
     }
 
 }

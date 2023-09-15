@@ -60,6 +60,21 @@ class GetLayout
             ];
         }
 
+        if ($user->can('accounting.view')) {
+            $navigation['accounting'] = [
+                'label'   => __('Accounting'),
+                'icon'    => ['fal', 'fa-abacus'],
+                'route'   => 'org.accounting.dashboard',
+                'topMenu' => [
+                    'subSections' => [
+
+                    ]
+                ]
+
+
+            ];
+        }
+
         if ($user->can('hr')) {
             $navigation['hr'] = [
                 'label'   => __('human resources'),

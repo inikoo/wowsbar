@@ -1,0 +1,32 @@
+[
+    {
+        "code": "accounts",
+        "name": "Accounts",
+        "type": "accounts",
+        "show_marketplace": false
+    },
+    {
+        "code": "cash",
+        "name": "Cash",
+        "type": "cash",
+        "show_marketplace": false
+
+    },
+    {
+        "code": "bank",
+        "name": "Bank",
+        "type": "bank",
+        "show_marketplace": true
+    },
+    {
+        "code": "xendit",
+        "name": "Xendit",
+        "url": "https://www.xendit.co",
+        "type": "gateway",
+        "show_marketplace": null,
+
+        "countries": [
+            "my","id"
+        ]
+    }
+]

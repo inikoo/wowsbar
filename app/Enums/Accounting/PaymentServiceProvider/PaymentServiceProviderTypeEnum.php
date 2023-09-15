@@ -12,22 +12,23 @@ use App\Enums\EnumHelperTrait;
 enum PaymentServiceProviderTypeEnum: string
 {
     use EnumHelperTrait;
-    case ACCOUNT                      = 'account';
-    case CASH                         = 'cash';
-    case BANK                         = 'bank';
-    case ELECTRONIC_PAYMENT_SERVICE   = 'electronic_payment_service';
-    case CASH_ON_DELIVERY             = 'cash_on_delivery';
-    case BUY_NOW_PAY_LATER            = 'buy_now_pay_later';
+
+    case ACCOUNT          = 'account';
+    case CASH             = 'cash';
+    case BANK             = 'bank';
+    case GATEWAY          = 'gateway';
+    case CASH_ON_DELIVERY = 'cod';
+    case BNPL             = 'bnpl';
 
     public static function labels(): array
     {
         return [
-            'account'                       => __('Account'),
-            'cash'                          => __('Cash'),
-            'bank'                          => __('Bank'),
-            'electronic_payment_service'    => __('Electronic Payment Service'),
-            'cash_on_delivery'              => __('Cash On Delivery'),
-            'buy_now_pay_later'             => __('Buy Now Pay Later'),
+            'account' => __('Account'),
+            'cash'    => __('Cash'),
+            'bank'    => __('Bank'),
+            'gateway' => __('Payment Gateway'),
+            'cod'     => __('Cash On Delivery'),
+            'bnpl'    => __('Buy Now Pay Later'),
         ];
     }
 

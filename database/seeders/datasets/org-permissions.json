@@ -26,5 +26,10 @@
     "supervisor.crm",
     "supervisor.website",
     "supervisor.sysadmin",
-    "supervisor.hr"
+    "supervisor.hr",
+    "accounting",
+    "accounting.view",
+    "accounting.edit",
+    "accounting.create",
+    "accounting.delete"
 ]

@@ -7,7 +7,6 @@
 
 namespace App\Actions\Organisation\Accounting\PaymentGateway\Xendit\Webhook;
 
-use App\Actions\Accounting\PaymentGateway\Xendit\Traits\HasCredentials;
 use App\Actions\Organisation\Accounting\Payment\UpdatePayment;
 use App\Enums\Accounting\Payment\PaymentStateEnum;
 use App\Enums\Accounting\Payment\PaymentStatusEnum;
@@ -33,7 +32,7 @@ class HandleWebhookNotification
         return DB::transaction(function () use ($request) {
             $callbackToken = $request->header('x-callback-token');
             $webhookId     = $request->header('webhook-id');
-            $status = $request->input('status');
+            $status        = $request->input('status');
 
             if ($callbackToken === env('XENDIT_CALLBACK_TOKEN')) {
                 $payment = Payment::where('reference', $request->input('external_id'))->first();
@@ -47,7 +46,7 @@ class HandleWebhookNotification
                         'webhook_id' => $webhookId,
                         'status'     => $this->checkStatus($status),
                         'state'      => $this->checkState($status),
-                        'data' => $request->all()
+                        'data'       => $request->all()
                     ];
 
                     if($status === 'PAID') {
@@ -78,7 +77,7 @@ class HandleWebhookNotification
     {
         match ($status) {
             'PAID'  => $status  = PaymentStatusEnum::SUCCESS->value,
-            default => $status = PaymentStatusEnum::FAIL->value
+            default => $status  = PaymentStatusEnum::FAIL->value
         };
 
         return $status;
@@ -88,7 +87,7 @@ class HandleWebhookNotification
     {
         match ($status) {
             'PAID'  => $status  = PaymentStateEnum::COMPLETED->value,
-            default => $status = PaymentStateEnum::CANCELLED->value
+            default => $status  = PaymentStateEnum::CANCELLED->value
         };
 
         return $status;

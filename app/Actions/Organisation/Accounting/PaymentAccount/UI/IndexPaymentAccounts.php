@@ -158,7 +158,7 @@ class IndexPaymentAccounts extends InertiaAction
                         ] : false
                     ],
                     'container' => match ($routeName) {
-                        'accounting.shops.show.payment-accounts.index' => [
+                        'org.accounting.shops.show.payment-accounts.index' => [
                             'icon'    => ['fal', 'fa-store-alt'],
                             'tooltip' => __('Shop'),
                             'label'   => Str::possessive($routeParameters['shop']->name)
@@ -197,13 +197,13 @@ class IndexPaymentAccounts extends InertiaAction
         return match ($routeName) {
             'org.accounting.shops.show.payment-accounts.index' =>
             array_merge(
-                AccountingDashboard::make()->getBreadcrumbs('accounting.shops.show.dashboard', $routeParameters),
+                AccountingDashboard::make()->getBreadcrumbs('org.accounting.shops.show.dashboard', $routeParameters),
                 $headCrumb($routeParameters)
             ),
             'org.accounting.payment-accounts.index',
             'org.accounting.payment-accounts.create' =>
             array_merge(
-                AccountingDashboard::make()->getBreadcrumbs('accounting.dashboard', []),
+                AccountingDashboard::make()->getBreadcrumbs('org.accounting.dashboard', []),
                 $headCrumb()
             ),
             'org.accounting.payment-service-providers.show.payment-accounts.index' =>

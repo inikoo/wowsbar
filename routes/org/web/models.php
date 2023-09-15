@@ -10,7 +10,6 @@ use App\Actions\Organisation\Accounting\Payment\UpdatePayment;
 use App\Actions\Organisation\Accounting\PaymentAccount\StorePaymentAccount;
 use App\Actions\Organisation\Accounting\PaymentAccount\UpdatePaymentAccount;
 use App\Actions\Organisation\Accounting\PaymentServiceProvider\DeletePaymentServiceProvider;
-use App\Actions\Organisation\Accounting\PaymentServiceProvider\StorePaymentServiceProvider;
 use App\Actions\Organisation\Accounting\PaymentServiceProvider\UpdatePaymentServiceProvider;
 use App\Actions\Organisation\HumanResources\Employee\DeleteEmployee;
 use App\Actions\Organisation\HumanResources\Employee\StoreEmployee;
@@ -36,7 +35,6 @@ Route::post('/webpage/{webpage:id}', StoreWebpage::class)->name('webpage.store')
 Route::post('/article/{webpage:id}', StoreArticle::class)->name('article.store');
 
 
-Route::post('/provider', StorePaymentServiceProvider::class)->name('payment-service-provider.store');
 Route::patch('/provider/{paymentServiceProvider}', UpdatePaymentServiceProvider::class)->name('payment-service-provider.update');
 Route::delete('/provider/{paymentServiceProvider}', DeletePaymentServiceProvider::class)->name('payment-service-provider.delete');
 

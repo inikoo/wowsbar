@@ -115,7 +115,7 @@ class Organisation extends Model implements HasMedia
 
     public function accountsServiceProvider(): PaymentServiceProvider
     {
-        return PaymentServiceProvider::where('data->service-code', 'accounts')->first();
+        return PaymentServiceProvider::where('code', 'accounts')->first();
     }
 
 

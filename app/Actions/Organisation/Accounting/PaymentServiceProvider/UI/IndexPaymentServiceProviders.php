@@ -120,7 +120,7 @@ class IndexPaymentServiceProviders extends InertiaAction
     public function getBreadcrumbs($suffix=null): array
     {
         return array_merge(
-            AccountingDashboard::make()->getBreadcrumbs('accounting.dashboard', []),
+            AccountingDashboard::make()->getBreadcrumbs('org.accounting.dashboard', []),
             [
                  [
                      'type'   => 'simple',

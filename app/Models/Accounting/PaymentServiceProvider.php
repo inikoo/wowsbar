@@ -7,57 +7,58 @@
 
 namespace App\Models\Accounting;
 
-use Eloquent;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
+use App\Models\Assets\Country;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Carbon;
-use Spatie\Sluggable\HasSlug;
-use Spatie\Sluggable\SlugOptions;
 
 /**
- * App\Models\Payments\PaymentServiceProvider
+ * App\Models\Accounting\PaymentServiceProvider
  *
  * @property int $id
  * @property string $type
  * @property string $code
- * @property string $slug
+ * @property string $name
+ * @property string|null $url
+ * @property bool|null $show_marketplace
  * @property array $data
  * @property string|null $last_used_at
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * @property Carbon|null $deleted_at
- * @property-read Collection<int, \App\Models\Accounting\PaymentAccount> $accounts
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Accounting\PaymentAccount> $accounts
  * @property-read int|null $accounts_count
- * @property-read Collection<int, \App\Models\Accounting\Payment> $payments
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Country> $countries
+ * @property-read int|null $countries_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Accounting\Payment> $payments
  * @property-read int|null $payments_count
  * @property-read \App\Models\Accounting\PaymentServiceProviderStats|null $stats
- * @method static Builder|PaymentServiceProvider newModelQuery()
- * @method static Builder|PaymentServiceProvider newQuery()
- * @method static Builder|PaymentServiceProvider onlyTrashed()
- * @method static Builder|PaymentServiceProvider query()
- * @method static Builder|PaymentServiceProvider whereCode($value)
- * @method static Builder|PaymentServiceProvider whereCreatedAt($value)
- * @method static Builder|PaymentServiceProvider whereData($value)
- * @method static Builder|PaymentServiceProvider whereDeletedAt($value)
- * @method static Builder|PaymentServiceProvider whereId($value)
- * @method static Builder|PaymentServiceProvider whereLastUsedAt($value)
- * @method static Builder|PaymentServiceProvider whereSlug($value)
- * @method static Builder|PaymentServiceProvider whereType($value)
- * @method static Builder|PaymentServiceProvider whereUpdatedAt($value)
- * @method static Builder|PaymentServiceProvider withTrashed()
- * @method static Builder|PaymentServiceProvider withoutTrashed()
- * @mixin Eloquent
+ * @method static \Illuminate\Database\Eloquent\Builder|PaymentServiceProvider newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|PaymentServiceProvider newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|PaymentServiceProvider onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|PaymentServiceProvider query()
+ * @method static \Illuminate\Database\Eloquent\Builder|PaymentServiceProvider whereCode($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PaymentServiceProvider whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PaymentServiceProvider whereData($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PaymentServiceProvider whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PaymentServiceProvider whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PaymentServiceProvider whereLastUsedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PaymentServiceProvider whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PaymentServiceProvider whereShowMarketplace($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PaymentServiceProvider whereType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PaymentServiceProvider whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PaymentServiceProvider whereUrl($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PaymentServiceProvider withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|PaymentServiceProvider withoutTrashed()
+ * @mixin \Eloquent
  */
 class PaymentServiceProvider extends Model
 {
     use SoftDeletes;
-    use HasSlug;
     use HasFactory;
 
     protected $casts = [
@@ -72,15 +73,7 @@ class PaymentServiceProvider extends Model
 
     public function getRouteKeyName(): string
     {
-        return 'slug';
-    }
-
-    public function getSlugOptions(): SlugOptions
-    {
-        return SlugOptions::create()
-            ->generateSlugsFrom('code')
-            ->saveSlugsTo('slug')
-            ->doNotGenerateSlugsOnUpdate();
+        return 'code';
     }
 
     public function payments(): HasManyThrough
@@ -97,4 +90,10 @@ class PaymentServiceProvider extends Model
     {
         return $this->hasOne(PaymentServiceProviderStats::class);
     }
+
+    public function countries(): BelongsToMany
+    {
+        return $this->belongsToMany(Country::class);
+    }
+
 }

@@ -77,23 +77,23 @@ trait HasUIPayment
                     ]
                 )
             ),
-            'accounting.payments.show' => array_merge(
-                AccountingDashboard::make()->getBreadcrumbs('accounting.dashboard', []),
+            'org.accounting.payments.show' => array_merge(
+                AccountingDashboard::make()->getBreadcrumbs('org.accounting.dashboard', []),
                 $headCrumb([$routeParameters['payment']->slug])
             ),
-            'accounting.payment-service-provider.show.payments.show' => array_merge(
+            'org.accounting.payment-service-provider.show.payments.show' => array_merge(
                 (new ShowPaymentServiceProvider())
                     ->getBreadcrumbs($routeParameters['payment']->paymentAccount->paymentServiceProvider),
                 $headCrumb([$routeParameters['payment']->paymentAccount->paymentServiceProvider->slug, $routeParameters['payment']->slug])
             ),
-            'accounting.payment-accounts.show.payments.show' => array_merge(
+            'org.accounting.payment-accounts.show.payments.show' => array_merge(
                 (new ShowPaymentAccount())
-                    ->getBreadcrumbs('accounting.payment-accounts.show', $routeParameters['payment']->paymentAccount),
+                    ->getBreadcrumbs('org.accounting.payment-accounts.show', $routeParameters['payment']->paymentAccount),
                 $headCrumb([$routeParameters['payment']->paymentAccount->slug, $routeParameters['payment']->slug])
             ),
-            'accounting.payment-service-provider.show.payment-accounts.show.payments.show' => array_merge(
+            'org.accounting.payment-service-provider.show.payment-accounts.show.payments.show' => array_merge(
                 (new ShowPaymentAccount())
-                    ->getBreadcrumbs('accounting.payment-service-provider.show.payment-accounts.show', $routeParameters['payment']->paymentAccount),
+                    ->getBreadcrumbs('org.accounting.payment-service-provider.show.payment-accounts.show', $routeParameters['payment']->paymentAccount),
                 $headCrumb(
                     [
                         $routeParameters['payment']->paymentAccount->paymentServiceProvider->slug,

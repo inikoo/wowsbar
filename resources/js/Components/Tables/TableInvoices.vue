@@ -22,7 +22,7 @@ function invoiceRoute(invoice) {
                 [invoice.slug, invoice.slug]);
         default:
             return route(
-                'accounting.invoices.show',
+                'org.accounting.invoices.show',
                 [invoice.slug]);
     }
 }

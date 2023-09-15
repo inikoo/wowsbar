@@ -15,8 +15,11 @@ return new class () extends Migration {
         Schema::create('payment_service_providers', function (Blueprint $table) {
             $table->smallIncrements('id');
             $table->string('type')->index();
-            $table->string('code')->index()->collation('und_ns');
-            $table->string('slug')->unique()->collation('und_ns');
+            $table->string('code')->unique()->index()->collation('und_ns');
+            $table->string('name')->index()->collation('und_ns');
+            $table->string('url')->nullable();
+
+            $table->boolean('show_marketplace')->nullable()->index();
             $table->jsonb('data');
             $table->dateTimeTz('last_used_at')->nullable();
             $table->timestampsTz();

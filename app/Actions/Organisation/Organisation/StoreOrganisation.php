@@ -7,7 +7,6 @@
 
 namespace App\Actions\Organisation\Organisation;
 
-use App\Actions\Organisation\Accounting\PaymentServiceProvider\StorePaymentServiceProvider;
 use App\Actions\Organisation\Market\Shop\StoreShop;
 use App\Actions\Organisation\Web\Website\StoreWebsite;
 use App\Models\Assets\Country;
@@ -35,17 +34,6 @@ class StoreOrganisation
         $organisation = Organisation::create($modelData);
         $organisation->stats()->create();
         $organisation->humanResourcesStats()->create();
-
-
-        StorePaymentServiceProvider::run(
-            modelData: [
-                'type' => 'account',
-                'data' => [
-                    'service-code' => 'accounts'
-                ],
-                'code' => 'accounts'
-            ]
-        );
 
         AttachImageToOrganisation::run(
             organisation: $organisation,
