@@ -5,11 +5,11 @@
  * Copyright (c) 2023, Inikoo LTD
  */
 
-namespace App\Actions\Accounting\Payment\UI;
+namespace App\Actions\Organisation\Accounting\Payment\UI;
 
-use App\Actions\Accounting\PaymentAccount\UI\ShowPaymentAccount;
-use App\Actions\Accounting\PaymentServiceProvider\UI\ShowPaymentServiceProvider;
 use App\Actions\OMS\Order\UI\ShowOrder;
+use App\Actions\Organisation\Accounting\PaymentAccount\UI\ShowPaymentAccount;
+use App\Actions\Organisation\Accounting\PaymentServiceProvider\UI\ShowPaymentServiceProvider;
 use App\Actions\UI\Accounting\AccountingDashboard;
 
 trait HasUIPayment
