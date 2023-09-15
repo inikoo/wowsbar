@@ -45,6 +45,9 @@ function webpageRoute(webpage: Webpage) {
         <template #cell(type)="{ item: webpage }">
             <font-awesome-icon :icon="webpage.typeIcon" />
         </template>
+        <template #cell(level)="{ item: webpage }">
+          <div class="flex justify-start"> {{ webpage['level'] }}</div>
+        </template>
     </Table>
 
 
