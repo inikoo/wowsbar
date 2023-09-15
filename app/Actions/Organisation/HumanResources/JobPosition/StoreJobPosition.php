@@ -7,6 +7,7 @@
 
 namespace App\Actions\Organisation\HumanResources\JobPosition;
 
+use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateJobPositions;
 use App\Models\HumanResources\JobPosition;
 use App\Rules\CaseSensitive;
 use Illuminate\Http\RedirectResponse;
@@ -22,7 +23,9 @@ class StoreJobPosition
 
     public function handle(array $modelData): JobPosition
     {
-        return JobPosition::create($modelData);
+        $jobPosition= JobPosition::create($modelData);
+        OrganisationHydrateJobPositions::run();
+        return $jobPosition;
     }
 
     public function authorize(ActionRequest $request): bool

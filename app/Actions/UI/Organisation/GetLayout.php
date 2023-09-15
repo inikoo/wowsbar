@@ -60,7 +60,7 @@ class GetLayout
             ];
         }
 
-        if (!$user->can('hr')) {
+        if ($user->can('hr')) {
             $navigation['hr'] = [
                 'label'   => __('human resources'),
                 'icon'    => ['fal', 'fa-user-hard-hat'],
@@ -68,10 +68,43 @@ class GetLayout
                 'topMenu' => [
                     'subSections' => [
                         [
-                            'label' => __('website'),
-                            'icon'  => ['fal', 'fa-globe'],
+                            'label' => __('job positions'),
+                            'icon'  => ['fal', 'fa-network-wired'],
                             'route' => [
-                                'name' => 'org.website.show',
+                                'name' => 'org.hr.job-positions.index',
+
+                            ]
+                        ],
+                        [
+                            'label' => __('employees'),
+                            'icon'  => ['fal', 'fa-user-hard-hat'],
+                            'route' => [
+                                'name' => 'org.hr.employees.index',
+
+                            ]
+                        ],
+                        [
+                            'label' => __('calendar'),
+                            'icon'  => ['fal', 'fa-calendar'],
+                            'route' => [
+                                'name' => 'org.hr.calendars.index',
+
+                            ]
+                        ],
+                        [
+                            'label' => __('time sheets'),
+                            'icon'  => ['fal', 'fa-stopwatch'],
+                            'route' => [
+                                'name' => 'org.hr.time-sheets.index',
+
+                            ]
+                        ],
+                        [
+                            'label' => __('working place'),
+                            'icon'  => ['fal', 'fa-building'],
+                            'route' => [
+                                'name' => 'org.hr.working-places.index',
+
                             ]
                         ]
                     ]

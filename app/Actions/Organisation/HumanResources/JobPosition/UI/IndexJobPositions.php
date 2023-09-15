@@ -8,7 +8,7 @@
 namespace App\Actions\Organisation\HumanResources\JobPosition\UI;
 
 use App\Actions\InertiaAction;
-use App\Actions\UI\HumanResources\HumanResourcesDashboard;
+use App\Actions\UI\Organisation\HumanResources\ShowHumanResourcesDashboard;
 use App\Http\Resources\HumanResources\JobPositionResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\HumanResources\JobPosition;
@@ -90,14 +90,14 @@ class IndexJobPositions extends InertiaAction
                     [
                         'title'       => __('no job positions'),
                         'description' => $this->canEdit ? __('Get started by creating a new job position.') : null,
-                        'count'       => app('currentTenant')->stats->number_job_position,
+                        'count'       => organisation()->humanResourcesStats->number_job_position,
                         'action'      => $this->canEdit ? [
                             'type'    => 'button',
                             'style'   => 'create',
                             'tooltip' => __('new job position'),
                             'label'   => __('job position'),
                             'route'   => [
-                                'name'       => 'hr.job-positions.create',
+                                'name'       => 'org.hr.job-positions.create',
                                 'parameters' => array_values($this->originalParameters)
                             ]
                         ] : null
@@ -125,7 +125,7 @@ class IndexJobPositions extends InertiaAction
                             'style' => 'create',
                             'label' => __('job position'),
                             'route' => [
-                                'name'       => 'hr.job-positions.create',
+                                'name'       => 'org.hr.job-positions.create',
                                 'parameters' => array_values($this->originalParameters)
                             ]
                         ] : false
@@ -150,13 +150,13 @@ class IndexJobPositions extends InertiaAction
     public function getBreadcrumbs(): array
     {
         return array_merge(
-            (new HumanResourcesDashboard())->getBreadcrumbs(),
+            (new ShowHumanResourcesDashboard())->getBreadcrumbs(),
             [
                 [
                     'type'   => 'simple',
                     'simple' => [
                         'route' => [
-                            'name' => 'hr.job-positions.index'
+                            'name' => 'org.hr.job-positions.index'
                         ],
                         'label' => __('positions'),
                         'icon'  => 'fal fa-bars',

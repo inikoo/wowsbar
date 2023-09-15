@@ -7,7 +7,6 @@
 
 namespace App\Models\HumanResources;
 
-use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateEmployees;
 use App\Enums\HumanResources\Employee\EmployeeStateEnum;
 use App\Enums\HumanResources\Employee\EmployeeTypeEnum;
 use App\Enums\Miscellaneous\GenderEnum;
@@ -145,16 +144,7 @@ class Employee extends Model implements HasMedia, Auditable
     }
 
 
-    protected static function booted(): void
-    {
-        static::updated(function (Employee $employee) {
-            if (!$employee->wasRecentlyCreated) {
-                if ($employee->wasChanged('state')) {
-                    OrganisationHydrateEmployees::dispatch();
-                }
-            }
-        });
-    }
+
 
     public function jobPositions(): BelongsToMany
     {

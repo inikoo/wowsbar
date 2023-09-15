@@ -38,11 +38,11 @@ use App\Actions\Organisation\HumanResources\WorkingPlace\UI\EditWorkingPlace;
 use App\Actions\Organisation\HumanResources\WorkingPlace\UI\IndexWorkingPlaces;
 use App\Actions\Organisation\HumanResources\WorkingPlace\UI\RemoveWorkingPlace;
 use App\Actions\Organisation\HumanResources\WorkingPlace\UI\ShowWorkingPlace;
-use App\Actions\UI\Organisation\HumanResources\HumanResourcesDashboard;
+use App\Actions\UI\Organisation\HumanResources\ShowHumanResourcesDashboard;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [
-    'uses'  => HumanResourcesDashboard::class,
+    'uses'  => ShowHumanResourcesDashboard::class,
     'icon'  => 'user-hard-hat',
     'label' => 'human resources'
 

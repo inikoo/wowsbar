@@ -8,7 +8,7 @@
 namespace App\Actions\Organisation\HumanResources\WorkingPlace\UI;
 
 use App\Actions\InertiaAction;
-use App\Actions\UI\Organisation\HumanResources\HumanResourcesDashboard;
+use App\Actions\UI\Organisation\HumanResources\ShowHumanResourcesDashboard;
 use App\Enums\UI\Organisation\WorkingPlaceTabsEnum;
 use App\Http\Resources\HumanResources\WorkPlaceInertiaResource;
 use App\Http\Resources\HumanResources\WorkPlaceResource;
@@ -156,7 +156,7 @@ class IndexWorkingPlaces extends InertiaAction
     public function getBreadcrumbs(): array
     {
         return array_merge(
-            (new HumanResourcesDashboard())->getBreadcrumbs(),
+            (new ShowHumanResourcesDashboard())->getBreadcrumbs(),
             [
                 [
                     'type'   => 'simple',

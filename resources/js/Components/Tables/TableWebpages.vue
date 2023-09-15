@@ -12,7 +12,7 @@ import {Webpage} from "@/types/webpage";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import {
     faSignIn,faHome,faNewspaper,faBrowser,faUfoBeam
-} from "@/../private/pro-light-svg-icons"
+} from "../../../private/pro-light-svg-icons"
 import {library} from "@fortawesome/fontawesome-svg-core";
 library.add(
     faSignIn,faHome,faNewspaper,faBrowser,faUfoBeam

@@ -8,7 +8,7 @@
 import { ref, computed, watch } from 'vue'
 import { Head } from '@inertiajs/vue3'
 import PageHeading from '@/Components/Headings/PageHeading.vue'
-import TablePortfolioWebsites from "@/Pages/Tables/TablePortfolioWebsites.vue"
+import TablePortfolioWebsites from "@/Components/Tables/TablePortfolioWebsites.vue"
 import { capitalize } from "@/Composables/capitalize"
 import Modal from '@/Components/Utils/Modal.vue'
 import Button from '@/Components/Elements/Buttons/Button.vue'
@@ -23,9 +23,9 @@ import { useFormatTime } from '@/Composables/useFormatTime'
 import Tabs from "@/Components/Navigation/Tabs.vue";
 import {useTabChange} from "@/Composables/tab-change";
 import ModelDetails from "@/Pages/ModelDetails.vue";
-import TableHistories from "@/Pages/Tables/TableHistories.vue";
-import TableBanners from "@/Pages/Tables/TableBanners.vue";
-import TableUploadedWebsites from "@/Pages/Tables/TableUploadedWebsites.vue";
+import TableHistories from "@/Components/Tables/TableHistories.vue";
+import TableBanners from "@/Components/Tables/TableBanners.vue";
+import TableUploadedWebsites from "@/Components/Tables/TableUploadedWebsites.vue";
 
 library.add(faUpload, falFile, faTimes, faFileDownload, fasFile)
 

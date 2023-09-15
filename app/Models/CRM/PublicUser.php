@@ -10,7 +10,6 @@ namespace App\Models\CRM;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\Assets\Language;
 use App\Models\Auth\User;
-use App\Models\Auth\UserStats;
 use App\Models\Media\Media;
 use App\Models\Traits\HasUniversalSearch;
 use App\Notifications\Auth\ResetPassword;
@@ -58,7 +57,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read int|null $permissions_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Permission\Models\Role> $roles
  * @property-read int|null $roles_count
- * @property-read UserStats|null $stats
+ * @property-read \App\Models\CRM\PublicUserStats|null $stats
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Laravel\Sanctum\PersonalAccessToken> $tokens
  * @property-read int|null $tokens_count
  * @property-read \App\Models\Search\UniversalSearch|null $universalSearch

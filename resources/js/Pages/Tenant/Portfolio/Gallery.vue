@@ -20,7 +20,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { useTabChange } from "@/Composables/tab-change"
 import { capitalize } from "@/Composables/capitalize"
 import Button from '@/Components/Elements/Buttons/Button.vue'
-import TableImages from "@/Pages/Tables/TableImages.vue"
+import TableImages from "@/Components/Tables/TableImages.vue"
 import { get } from 'lodash'
 import Image from '@/Components/Image.vue'
 

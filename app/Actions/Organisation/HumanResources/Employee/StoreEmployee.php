@@ -9,6 +9,7 @@ namespace App\Actions\Organisation\HumanResources\Employee;
 
 use App\Actions\Organisation\HumanResources\Employee\Hydrators\EmployeeHydrateUniversalSearch;
 use App\Actions\Organisation\HumanResources\Employee\Hydrators\EmployeeHydrateWeekWorkingHours;
+use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateEmployees;
 use App\Models\HumanResources\Employee;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
@@ -25,13 +26,15 @@ class StoreEmployee
     {
         $employee = Employee::create($modelData);
         EmployeeHydrateWeekWorkingHours::run($employee);
+        OrganisationHydrateEmployees::dispatch();
+
         //        EmployeeHydrateUniversalSearch::dispatch($employee);
         return $employee;
     }
 
     public function authorize(ActionRequest $request): bool
     {
-        return !$request->user()->hasPermissionTo("hr.edit");
+        return $request->user()->hasPermissionTo("hr.edit");
     }
 
 

@@ -28,7 +28,7 @@ class UpdateEmployee
 
     public function authorize(ActionRequest $request): bool
     {
-        return !$request->user()->hasPermissionTo("hr.edit");
+        return $request->user()->hasPermissionTo("hr.edit");
     }
 
     public function rules(): array

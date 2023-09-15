@@ -9,7 +9,7 @@ namespace App\Actions\Organisation\HumanResources\Employee\UI;
 
 use App\Actions\Helpers\History\IndexHistories;
 use App\Actions\InertiaAction;
-use App\Actions\UI\Organisation\HumanResources\HumanResourcesDashboard;
+use App\Actions\UI\Organisation\HumanResources\ShowHumanResourcesDashboard;
 use App\Enums\UI\Organisation\EmployeeTabsEnum;
 use App\Http\Resources\History\HistoryResource;
 use App\Http\Resources\HumanResources\EmployeeResource;
@@ -28,9 +28,9 @@ class ShowEmployee extends InertiaAction
 
     public function authorize(ActionRequest $request): bool
     {
-        $this->canEdit   = !$request->user()->can('hr.edit');
-        $this->canDelete = !$request->user()->can('hr.edit');
-        return !$request->user()->hasPermissionTo("hr.view");
+        $this->canEdit   = $request->user()->can('hr.edit');
+        $this->canDelete = $request->user()->can('hr.edit');
+        return $request->user()->hasPermissionTo("hr.view");
     }
 
     public function asController(Employee $employee, ActionRequest $request): Employee
@@ -120,7 +120,7 @@ class ShowEmployee extends InertiaAction
     public function getBreadcrumbs(Employee $employee, $suffix = null): array
     {
         return array_merge(
-            (new HumanResourcesDashboard())->getBreadcrumbs(),
+            (new ShowHumanResourcesDashboard())->getBreadcrumbs(),
             [
                 [
                     'type'           => 'modelWithIndex',

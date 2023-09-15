@@ -26,7 +26,7 @@ class EditEmployee extends InertiaAction
 
     public function authorize(ActionRequest $request): bool
     {
-        return !$request->user()->hasPermissionTo("hr.edit");
+        return $request->user()->hasPermissionTo("hr.edit");
     }
 
     public function asController(Employee $employee, ActionRequest $request): Employee

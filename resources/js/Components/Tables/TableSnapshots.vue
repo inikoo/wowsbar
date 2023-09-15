@@ -8,7 +8,7 @@
 import Table from '@/Components/Table/Table.vue'
 import Icon from "@/Components/Icon.vue"
 import {library} from "@fortawesome/fontawesome-svg-core"
-import { faBroadcastTower, faSeedling } from "@/../private/pro-light-svg-icons"
+import { faBroadcastTower, faSeedling } from "../../../private/pro-light-svg-icons"
 import { useFormatTime } from "@/Composables/useFormatTime"
 import { useLocaleStore } from '@/Stores/locale'
 const locale = useLocaleStore()

@@ -11,7 +11,7 @@ import PageHeading from '@/Components/Headings/PageHeading.vue'
 import { capitalize } from "@/Composables/capitalize"
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { faGlobe,faImage } from "@/../private/pro-light-svg-icons"
-import TableBanners from "@/Pages/Tables/TableBanners.vue"
+import TableBanners from "@/Components/Tables/TableBanners.vue"
 
 library.add(faGlobe,faImage)
 

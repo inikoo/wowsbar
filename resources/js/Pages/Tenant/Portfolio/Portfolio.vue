@@ -11,7 +11,7 @@ import { capitalize } from "@/Composables/capitalize.ts"
 import Tabs from '@/Components/Navigation/Tabs.vue';
 import {computed, ref} from 'vue';
 import {useTabChange} from '@/Composables/tab-change.js';
-import TableHistories from '@/Pages/Tables/TableHistories.vue';
+import TableHistories from '@/Components/Tables/TableHistories.vue';
 import PortfolioDashboard from "@/Components/Dashboard/PortfolioDashboard.vue";
 
 const props = defineProps <{

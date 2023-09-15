@@ -13,8 +13,8 @@ import {useTabChange} from "@/Composables/tab-change";
 import ModelDetails from "@/Pages/ModelDetails.vue";
 import Tabs from "@/Components/Navigation/Tabs.vue";
 import {capitalize} from "@/Composables/capitalize"
-import TableHistories from "@/Pages/Tables/TableHistories.vue";
-import TableBanners from "@/Pages/Tables/TableBanners.vue";
+import TableHistories from "@/Components/Tables/TableHistories.vue";
+import TableBanners from "@/Components/Tables/TableBanners.vue";
 
 import {faWindowMaximize, faGlobe} from "@/../private/pro-light-svg-icons"
 

@@ -8,7 +8,7 @@
 namespace App\Actions\Organisation\HumanResources\Employee\UI;
 
 use App\Actions\InertiaAction;
-use App\Actions\UI\Organisation\HumanResources\HumanResourcesDashboard;
+use App\Actions\UI\Organisation\HumanResources\ShowHumanResourcesDashboard;
 use App\Enums\HumanResources\Employee\EmployeeStateEnum;
 use App\Enums\HumanResources\Employee\EmployeeTypeEnum;
 use App\Http\Resources\HumanResources\EmployeeInertiaResource;
@@ -138,13 +138,10 @@ class IndexEmployees extends InertiaAction
 
     public function authorize(ActionRequest $request): bool
     {
-        $this->canEdit = !$request->user()->can('hr.edit');
+        $this->canEdit = $request->user()->can('hr.edit');
 
-        return
-            !(
-                $request->user()->tokenCan('root') or
-                $request->user()->hasPermissionTo('hr.view')
-            );
+        return  $request->user()->hasPermissionTo('hr.view');
+
     }
 
 
@@ -191,7 +188,7 @@ class IndexEmployees extends InertiaAction
     public function getBreadcrumbs(): array
     {
         return array_merge(
-            (new HumanResourcesDashboard())->getBreadcrumbs(),
+            (new ShowHumanResourcesDashboard())->getBreadcrumbs(),
             [
                 [
                     'type'   => 'simple',

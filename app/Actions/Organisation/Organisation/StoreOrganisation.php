@@ -34,7 +34,7 @@ class StoreOrganisation
 
         $organisation = Organisation::create($modelData);
         $organisation->stats()->create();
-
+        $organisation->humanResourcesStats()->create();
 
 
         StorePaymentServiceProvider::run(
@@ -62,18 +62,16 @@ class StoreOrganisation
         );
 
 
-
-
         Artisan::call("db:seed --force --class=StockImageSeeder");
+        Artisan::call("db:seed --force --class=JobPositionSeeder");
 
-        $shop=StoreShop::run($organisation);
-
+        $shop = StoreShop::run($organisation);
 
 
         StoreWebsite::run(
             $shop,
             [
-                'domain'=> config('app.domain')
+                'domain' => config('app.domain')
             ]
         );
 
@@ -84,12 +82,12 @@ class StoreOrganisation
     public function rules(): array
     {
         return [
-            'code'         => ['required', 'unique:organisations', 'between:1,16', 'alpha_dash'],
-            'name'         => ['required', 'max:64'],
-            'currency_id'  => ['required', 'exists:currencies,id'],
-            'country_id'   => ['required', 'exists:countries,id'],
-            'language_id'  => ['required', 'exists:languages,id'],
-            'timezone_id'  => ['required', 'exists:timezones,id'],
+            'code'        => ['required', 'unique:organisations', 'between:1,16', 'alpha_dash'],
+            'name'        => ['required', 'max:64'],
+            'currency_id' => ['required', 'exists:currencies,id'],
+            'country_id'  => ['required', 'exists:countries,id'],
+            'language_id' => ['required', 'exists:languages,id'],
+            'timezone_id' => ['required', 'exists:timezones,id'],
 
 
         ];
@@ -159,12 +157,12 @@ class StoreOrganisation
 
 
         $this->setRawAttributes([
-            'code'         => $command->argument('code'),
-            'name'         => $command->argument('name'),
-            'country_id'   => $country->id,
-            'currency_id'  => $currency->id,
-            'language_id'  => $language->id,
-            'timezone_id'  => $timezone->id,
+            'code'        => $command->argument('code'),
+            'name'        => $command->argument('name'),
+            'country_id'  => $country->id,
+            'currency_id' => $currency->id,
+            'language_id' => $language->id,
+            'timezone_id' => $timezone->id,
         ]);
 
         try {

@@ -34,6 +34,6 @@ class OrganisationHydrateEmployees
         }
 
 
-        organisation()->stats->update($stats);
+        organisation()->humanResourcesStats()->update($stats);
     }
 }

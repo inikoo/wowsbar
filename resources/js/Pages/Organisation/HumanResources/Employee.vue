@@ -21,7 +21,7 @@ import ModelDetails from "@/Pages/ModelDetails.vue";
 import DataModel from "@/Pages/DataModel.vue";
 
 import Tabs from "@/Components/Navigation/Tabs.vue";
-import TableHistories from "@/Pages/Tables/TableHistories.vue";
+import TableHistories from "@/Components/Tables/TableHistories.vue";
 
 library.add(
     faIdCard,

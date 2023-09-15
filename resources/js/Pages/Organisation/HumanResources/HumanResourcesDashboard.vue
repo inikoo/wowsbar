@@ -9,6 +9,16 @@ import { Head } from '@inertiajs/vue3';
 import PageHeading from '@/Components/Headings/PageHeading.vue';
 import Stats from '@/Components/DataDisplay/Stats.vue';
 import { capitalize } from "@/Composables/capitalize"
+import {library} from '@fortawesome/fontawesome-svg-core';
+import {
+    faNetworkWired,faCalendar,faStopwatch,faBuilding
+} from "@/../private/pro-light-svg-icons";
+
+library.add(
+    faNetworkWired,faCalendar,faStopwatch,faBuilding
+);
+
+
 defineProps(['title','pageHead','stats'])
 
 </script>

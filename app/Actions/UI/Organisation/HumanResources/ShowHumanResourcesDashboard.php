@@ -14,7 +14,7 @@ use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 
-class HumanResourcesDashboard
+class ShowHumanResourcesDashboard
 {
     use AsAction;
     use WithInertia;
@@ -46,12 +46,12 @@ class HumanResourcesDashboard
                 'stats'       => [
                     [
                         'name' => __('employees'),
-                        'stat' => $org->stats->number_organisation_users_type_employee,
+                        'stat' => $org->humanResourcesStats->number_employees,
                         'href' => ['org.hr.employees.index']
                     ],
                     [
                         'name' => __('working places'),
-                        'stat' => 0,
+                        'stat' => $org->humanResourcesStats->number_working_places,
                         'href' => ['org.hr.working-places.index']
                     ]
                 ]

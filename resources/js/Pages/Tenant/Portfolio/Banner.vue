@@ -13,11 +13,11 @@ import {useTabChange} from "@/Composables/tab-change";
 import ModelDetails from "@/Pages/ModelDetails.vue";
 import Tabs from "@/Components/Navigation/Tabs.vue";
 import {capitalize} from "@/Composables/capitalize"
-import TableHistories from "@/Pages/Tables/TableHistories.vue";
+import TableHistories from "@/Components/Tables/TableHistories.vue";
 import BannerShowcase from "@/Pages/Tenant/Portfolio/BannerShowcase.vue";
 
 import {faWindowMaximize, faGlobe, faPencil, faSeedling, faPaste} from "@/../private/pro-light-svg-icons"
-import TableSnapshots from '@/Pages/Tables/TableSnapshots.vue';
+import TableSnapshots from '@/Components/Tables/TableSnapshots.vue';
 
 library.add(faWindowMaximize, faGlobe, faPencil,faSeedling, faPaste)
 

@@ -57,7 +57,15 @@ class CreateEmployee extends InertiaAction
                                     'label' => __('date of birth'),
                                     'value' => ''
                                 ],
-                                'job_title' => [
+
+
+                            ]
+                        ],
+                        [
+                            'title'  => __('job'),
+                            'fields' => [
+
+                                'position' => [
                                     'type'        => 'select',
                                     'label'       => __('position'),
                                     'options'     => Options::forModels(JobPosition::class, label: 'name', value: 'name'),
@@ -65,6 +73,21 @@ class CreateEmployee extends InertiaAction
                                     'mode'        => 'single',
                                     'searchable'  => true
                                 ],
+                                'job_title' => [
+                                    'type'        => 'input',
+                                    'label'       => __('job title'),
+                                    'placeholder' => __('Job title'),
+                                    'searchable'  => true
+                                ],
+
+
+                            ]
+                        ],
+                        [
+                            'title'  => __('state'),
+                            'fields' => [
+
+
                                 'state' => [
                                     'type'        => 'select',
                                     'label'       => __('state'),
@@ -90,7 +113,7 @@ class CreateEmployee extends InertiaAction
 
     public function authorize(ActionRequest $request): bool
     {
-        return !$request->user()->can('hr.edit');
+        return $request->user()->can('hr.edit');
     }
 
 

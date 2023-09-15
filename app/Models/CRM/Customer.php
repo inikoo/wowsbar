@@ -46,6 +46,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property CustomerStateEnum $state
  * @property CustomerTradeStateEnum $trade_state number of invoices
  * @property array $data
+ * @property int $shop_id
  * @property int|null $tenant_id
  * @property int|null $image_id
  * @property Carbon|null $created_at
@@ -78,6 +79,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Customer whereName($value)
  * @method static Builder|Customer wherePhone($value)
  * @method static Builder|Customer whereReference($value)
+ * @method static Builder|Customer whereShopId($value)
  * @method static Builder|Customer whereSlug($value)
  * @method static Builder|Customer whereState($value)
  * @method static Builder|Customer whereStatus($value)

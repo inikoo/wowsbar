@@ -35,7 +35,7 @@ import {
     faAbacus,
     faChevronDown,
     faGlobe,
-    faLanguage, faUsers
+    faLanguage, faUsers,faNetworkWired,faCalendar,faStopwatch,faBuilding
 } from "@/../private/pro-light-svg-icons"
 import { faSearch, faBell} from "../../private/pro-regular-svg-icons"
 import { useAuthFirebase } from "@/Composables/firebaseAuth"
@@ -62,7 +62,8 @@ library.add(
     faLanguage,
     faSearch,
     faBell,
-    faUsers
+    faUsers,
+    faNetworkWired,faCalendar,faStopwatch,faBuilding
 )
 
 const sidebarOpen = ref(false)
