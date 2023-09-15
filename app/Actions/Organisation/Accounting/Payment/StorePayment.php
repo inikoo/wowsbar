@@ -5,10 +5,10 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Accounting\Payment;
+namespace App\Actions\Organisation\Accounting\Payment;
 
-use App\Actions\Accounting\Payment\Hydrators\PaymentHydrateUniversalSearch;
-use App\Actions\Accounting\PaymentGateway\Xendit\Channels\Invoice\MakePaymentUsingInvoice;
+use App\Actions\Organisation\Accounting\Payment\Hydrators\PaymentHydrateUniversalSearch;
+use App\Actions\Organisation\Accounting\PaymentGateway\Xendit\Channels\Invoice\MakePaymentUsingInvoice;
 use App\Enums\Accounting\Payment\PaymentStateEnum;
 use App\Enums\Accounting\Payment\PaymentStatusEnum;
 use App\Models\Accounting\Payment;

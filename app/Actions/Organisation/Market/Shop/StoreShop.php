@@ -7,11 +7,10 @@
 
 namespace App\Actions\Organisation\Market\Shop;
 
-use App\Actions\Accounting\PaymentAccount\StorePaymentAccount;
+use App\Actions\Organisation\Accounting\PaymentAccount\StorePaymentAccount;
 use App\Enums\Helpers\SerialReference\SerialReferenceModelEnum;
 use App\Models\Organisation\Market\Shop;
 use App\Models\Organisation\Organisation;
-
 use Illuminate\Validation\Validator;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
