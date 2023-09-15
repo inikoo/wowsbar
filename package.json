@@ -46,6 +46,8 @@
         "@sentry/vue": "^7.40.0",
         "@tiptap/extension-character-count": "^2.0.3",
         "@tiptap/extension-color": "^2.1.9",
+        "@tiptap/extension-font-family": "^2.1.9",
+        "@tiptap/extension-highlight": "^2.1.9",
         "@tiptap/extension-list-item": "^2.0.3",
         "@tiptap/extension-placeholder": "^2.0.3",
         "@tiptap/extension-text-style": "^2.1.9",
