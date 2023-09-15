@@ -1,7 +1,7 @@
 <?php
 /*
  *  Author: Raul Perusquia <raul@inikoo.com>
- *  Created: Mon, 21 February 2023 17:54:17 Malaga, Spain
+ *  Created: Tue, 21 February 2023 17:54:17 Malaga, Spain
  *  Copyright (c) 2022, Raul A Perusquia Flores
  */
 
@@ -24,12 +24,12 @@ use Spatie\QueryBuilder\QueryBuilder;
 class IndexPaymentServiceProviders extends InertiaAction
 {
     /** @noinspection PhpUndefinedMethodInspection */
-    public function handle($prefix=null): LengthAwarePaginator
+    public function handle($prefix = null): LengthAwarePaginator
     {
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
             $query->where(function ($query) use ($value) {
                 $query->where('payment_service_providers.code', 'ILIKE', "%$value%")
-                    ->orWhere('payment_service_providers.data', 'ILIKE', "%$value%");
+                    ->orWhere('payment_service_providers.name', 'ILIKE', "%$value%");
             });
         });
 
@@ -37,21 +37,35 @@ class IndexPaymentServiceProviders extends InertiaAction
             InertiaTable::updateQueryBuilderParameters($prefix);
         }
 
-        $queryBuilder=QueryBuilder::for(PaymentServiceProvider::class);
-        foreach ($this->elementGroups as $key => $elementGroup) {
-            $queryBuilder->whereElementGroup(
-                prefix: $prefix,
-                key: $key,
-                allowedElements: array_keys($elementGroup['elements']),
-                engine: $elementGroup['engine']
-            );
-        }
+        $queryBuilder = QueryBuilder::for(PaymentServiceProvider::class);
+
+        $queryBuilder->leftJoin(
+            'country_payment_service_provider',
+            'country_payment_service_provider.payment_service_provider_id',
+            'payment_service_providers.id'
+        )->where('country_payment_service_provider.country_id', organisation()->country_id)
+        ->orWhere('show_marketplace', true);
+
+        /*
+        $queryBuilder->where('show_marketplace', true)
+            ->orWhere(function ($query) {
+                $query->whereNull('show_marketplace')
+                    ->where(
+                        function ($query) {
+                            $query->from('country_payment_service_provider')
+                                ->whereColumn('country_payment_service_provider.payment_service_provider_id',
+                                    'payment_service_providers.id')
+                                ->count();
+                        }
+                        , 1
+                    );
+            });
+*/
 
         return $queryBuilder
             ->defaultSort('payment_service_providers.code')
-            ->select(['code', 'slug', 'number_accounts', 'number_payments'])
-            ->leftJoin('payment_service_provider_stats', 'payment_service_providers.id', 'payment_service_provider_stats.payment_service_provider_id')
-            ->allowedSorts(['code', 'number_accounts', 'number_payments'])
+            ->select(['code', 'name'])
+            ->allowedSorts(['code', 'name'])
             ->allowedFilters([$globalSearch])
             ->withPaginator($prefix)
             ->withQueryString();
@@ -68,16 +82,16 @@ class IndexPaymentServiceProviders extends InertiaAction
             $table
                 ->withGlobalSearch()
                 ->defaultSort('code')
-                ->column(key: 'code', label: __('code'), canBeHidden: false, sortable: true, searchable: true)
-                ->column(key: 'number_accounts', label: __('accounts'), canBeHidden: false, sortable: true, searchable: true)
-                ->column(key: 'number_payments', label: __('payments'), canBeHidden: false, sortable: true, searchable: true);
+                //  ->column(key: 'code', label: __('code'), canBeHidden: false, sortable: true )
+                ->column(key: 'name', label: __('name'), canBeHidden: false, sortable: true)
+                ->column(key: 'actions', label: __('actions'), canBeHidden: false);
         };
     }
 
     public function authorize(ActionRequest $request): bool
     {
         $this->canEdit = $request->user()->can('accounting.edit');
-        return true;
+
         return
             (
                 $request->user()->tokenCan('root') or
@@ -97,9 +111,9 @@ class IndexPaymentServiceProviders extends InertiaAction
         return Inertia::render(
             'Accounting/PaymentServiceProviders',
             [
-                'breadcrumbs' => $this->getBreadcrumbs(),
-                'title'       => __('Payment Service Providers'),
-                'pageHead'    => [
+                'breadcrumbs'               => $this->getBreadcrumbs(),
+                'title'                     => __('Payment Service Providers'),
+                'pageHead'                  => [
                     'title' => __('Payment Service Providers'),
 
                 ],
@@ -114,24 +128,25 @@ class IndexPaymentServiceProviders extends InertiaAction
     public function asController(ActionRequest $request): LengthAwarePaginator
     {
         $this->initialisation($request);
+
         return $this->handle();
     }
 
-    public function getBreadcrumbs($suffix=null): array
+    public function getBreadcrumbs($suffix = null): array
     {
         return array_merge(
             AccountingDashboard::make()->getBreadcrumbs('org.accounting.dashboard', []),
             [
-                 [
-                     'type'   => 'simple',
-                     'simple' => [
-                         'route' => [
-                             'name' => 'org.accounting.payment-service-providers.index',
-                         ],
-                         'label' => __('providers'),
-                         'icon'  => 'fal fa-bars',
-                     ],
-                     'suffix'=> $suffix
+                [
+                    'type'   => 'simple',
+                    'simple' => [
+                        'route' => [
+                            'name' => 'org.accounting.payment-service-providers.index',
+                        ],
+                        'label' => __('providers'),
+                        'icon'  => 'fal fa-bars',
+                    ],
+                    'suffix' => $suffix
                 ],
             ]
         );

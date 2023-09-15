@@ -36,7 +36,7 @@ php artisan db:seed
 php artisan telescope:clear
 pg_dump -Fc -f "devops/devel/snapshots/fresh.dump" ${DB}
 echo "🏢 create organisation"
-php artisan org:create wowsbar Wowsbar GB GBP
+php artisan org:create wowsbar Wowsbar ID GBP
 php artisan org:create-guest aiku aiku external_administrator
 echo "🌱 create customer"
 php artisan customer:create aiku@inikoo.com -C 'Aiku'
@@ -45,7 +45,7 @@ php artisan customer:add-user 000001 -P hello
 php artisan customer:add-user 000002 -P hello
 pg_dump -Fc -f "devops/devel/snapshots/customers.dump" ${DB}
 echo "🌱 create tenant"
-php artisan tenant:create 000001 aikus
+php artisan tenant:create 000001 aiku
 php artisan tenant:create 000002 devs
 pg_dump -Fc -f "devops/devel/snapshots/tenant.dump" ${DB}
 echo "🌱 create test website with a banner"

@@ -9,7 +9,7 @@
         "code": "cash",
         "name": "Cash",
         "type": "cash",
-        "show_marketplace": false
+        "show_marketplace": true
 
     },
     {

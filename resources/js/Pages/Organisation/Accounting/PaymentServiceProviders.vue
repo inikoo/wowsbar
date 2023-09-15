@@ -20,19 +20,7 @@ defineProps(['payment_service_providers', 'title', 'pageHead']);
     <PageHeading :data="pageHead"></PageHeading>
     <Table :resource="payment_service_providers" class="mt-5">
         <template #cell(code)="{ item: payment_service_provider }">
-            <Link :href="route('org.accounting.payment-service-providers.show',[payment_service_provider['slug']])">
-                {{ payment_service_provider['slug'] }}
-            </Link>
-        </template>
-        <template #cell(number_accounts)="{ item: payment_service_provider }">
-            <Link :href="route('org.accounting.payment-service-providers.show.payment-accounts.index',[payment_service_provider['slug']])">
-                {{ payment_service_provider['number_accounts'] }}
-            </Link>
-        </template>
-        <template #cell(number_payments)="{ item: payment_service_provider }">
-            <Link :href="route('org.accounting.payment-service-providers.show.payments.index',[payment_service_provider['slug']])">
-                {{ payment_service_provider['number_payments'] }}
-            </Link>
+
         </template>
     </Table>
 </template>

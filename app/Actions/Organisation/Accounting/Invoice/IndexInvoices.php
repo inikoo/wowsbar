@@ -74,7 +74,7 @@ class IndexInvoices extends InertiaAction
 
     public function authorize(ActionRequest $request): bool
     {
-        return true;
+
         return
             (
                 $request->user()->tokenCan('root') or
