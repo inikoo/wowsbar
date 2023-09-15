@@ -29,7 +29,7 @@ import Text from '@/Components/CMS/Workshops/WorkshopComponents/Text.vue'
 const description = ref('hehehehe')
 const title = ref('Workcation')
 const dataName = ref('Marisca')
-const dataPosition = ref('Marisca')
+const dataPosition = ref('Ceo of Workcation')
 
 </script>
 
@@ -46,10 +46,8 @@ const dataPosition = ref('Marisca')
                     <Text v-model="title" :key="'title'" :placeholder="`Add your headline`" class="font-semibold text-4xl"/>
                 </div>
                 <figure class="mt-10">
-                    <blockquote class="text-center text-xl leading-8 sm:text-2xl sm:leading-9">
-                        <p>
-                            <Text v-model="description" :key="'title'" :placeholder="'Enter your headline title'" />
-                        </p>
+                    <blockquote class="">
+                            <Text v-model="description" :class="'text-center'" :key="'title'" :placeholder="'Enter your headline title'" />
                     </blockquote>
                     <figcaption class="mt-10">
                         <img class="mx-auto h-10 w-10 rounded-full"
@@ -60,7 +58,7 @@ const dataPosition = ref('Marisca')
                             <svg viewBox="0 0 2 2" width="3" height="3" aria-hidden="true" class="fill-gray-900">
                                 <circle cx="1" cy="1" r="1" />
                             </svg>
-                            <Text v-model="dataPosition" class="text-gray-600">CEO of Workcation</Text>
+                            <Text v-model="dataPosition" class="text-gray-600" />
                         </div>
                     </figcaption>
                 </figure>

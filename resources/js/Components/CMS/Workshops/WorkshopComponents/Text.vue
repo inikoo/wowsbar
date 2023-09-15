@@ -100,7 +100,7 @@ const selectedFontSize = ref('16px')
     <div class="group ">
         <div class="relative rounded focus-within:ring-2 focus-within:ring-gray-300">
             <!-- Group: editor tools -->
-            <div class="isolate hidden group-focus-within:opacity-100 bg-indigo-100 p-2 absolute bottom-full group-focus-within:flex w-fit justify-between text-slate-800 select-none space-x-1 border border-gray-100" tabindex="0">
+            <div class="flex bg-indigo-100 p-2 absolute bottom-full w-fit justify-between text-slate-800 select-none space-x-1 border border-gray-100" tabindex="0">
                 <div class="flex justify-start items-center space-x-1 divide-x-2 divide-gray-200">
                     <!-- Text color -->
                     <div class="flex items-center">
@@ -109,14 +109,16 @@ const selectedFontSize = ref('16px')
                             @input="editor.chain().focus().toggleHighlight({ color: $event.target.value }).run()"
                             :value="editor.getAttributes('highlight').color">
 
-                        <input id="input-color-text" type="color"
-                            @input="editor.chain().focus().setColor($event.target.value).run()"
-                            :value="editor.getAttributes('textStyle').color" class="hidden" />
-                        <label for="input-color-text">
-                            <FontAwesomeIcon icon='far fa-font' class="cursor-pointer hover:border hover:border-gray-300"
-                                :style="[`color: ${editor.getAttributes('textStyle').color ?? '#1f2937'}`]"
-                                aria-hidden='true' />
-                        </label>
+                        <div class="relative w-12 bg-red-500">
+                            <input id="input-color-text" type="color"
+                                @input="editor.chain().focus().setColor($event.target.value).run()"
+                                :value="editor.getAttributes('textStyle').color" class="absolute opacity-50 w-full h-full z-20" />
+                            <div for="input-color-text">
+                                <FontAwesomeIcon icon='far fa-font' class="cursor-pointer hover:border z-10 hover:border-gray-300"
+                                    :style="[`color: ${editor.getAttributes('textStyle').color ?? '#1f2937'}`]"
+                                    aria-hidden='true' />
+                            </div>
+                        </div>
                     </div>
 
                     <div class="flex">
