@@ -23,7 +23,7 @@ class StorePaymentServiceProvider
     use WithAttributes;
     private bool $asAction=false;
 
-    public $commandSignature = 'psp:create {code} {type}';
+    public $commandSignature = 'psp:create {code} {type} {credential}';
 
     public function handle(array $modelData): PaymentServiceProvider
     {
@@ -61,12 +61,12 @@ class StorePaymentServiceProvider
     public function asCommand(Command $command): int
     {
         $this->asAction=true;
-        $this->setRawAttributes([
+        $data          = [
             'code' => $command->argument('code'),
-            'type' => $command->argument('type')
-        ]);
-        $validatedData = $this->validateAttributes();
-        $this->handle($validatedData);
+            'type' => $command->argument('type'),
+            'data' => json_decode(file_get_contents(base_path('resources/private/xendit/credential.json')), true)
+        ];
+        $this->handle($data);
 
         echo "Successfully create payment service provider \n";
 

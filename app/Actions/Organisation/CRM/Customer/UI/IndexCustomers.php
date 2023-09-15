@@ -9,12 +9,10 @@ namespace App\Actions\Organisation\CRM\Customer\UI;
 
 use App\Actions\InertiaAction;
 use App\Actions\Organisation\UI\CRM\CRMDashboard;
-use App\Enums\Market\Shop\ShopTypeEnum;
 use App\Http\Resources\CRM\CustomerResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\CRM\Customer;
 use App\Models\Organisation\Market\Shop;
-use App\Models\Tenancy\Tenant;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -27,8 +25,17 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class IndexCustomers extends InertiaAction
 {
-    private Tenant $parent;
     private bool $canCreateShop = false;
+
+    protected Shop $parent;
+
+
+    public function asController(ActionRequest $request): LengthAwarePaginator
+    {
+        $this->initialisation($request);
+        return $this->handle(organisation()->shop);
+    }
+
 
     public function authorize(ActionRequest $request): bool
     {
@@ -42,16 +49,12 @@ class IndexCustomers extends InertiaAction
             );
     }
 
-    public function inTenant(ActionRequest $request): LengthAwarePaginator
-    {
-        $this->initialisation($request);
-        $this->parent = app('currentTenant');
-        return $this->handle($this->parent);
-    }
-
     /** @noinspection PhpUndefinedMethodInspection */
     public function handle(Shop $parent, $prefix = null): LengthAwarePaginator
     {
+
+        $this->parent=$parent;
+
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
             $query->where(function ($query) use ($value) {
                 $query->where('customers.name', '~*', "\y$value\y")
@@ -141,9 +144,9 @@ class IndexCustomers extends InertiaAction
                         ],
                         'Shop' => [
                             'title'       => __("No customers found"),
-                            'description' => $parent->type == ShopTypeEnum::FULFILMENT_HOUSE ? __("You can add your customer 🤷🏽‍♂️") : null,
+                            'description' => __("You can add your customer 🤷🏽‍♂️"),
                             'count'       => $parent->crmStats->number_customers,
-                            'action'      => $parent->type == ShopTypeEnum::FULFILMENT_HOUSE ? [
+                            'action'      => [
                                 'type'    => 'button',
                                 'style'   => 'create',
                                 'tooltip' => __('new customer'),
@@ -152,7 +155,7 @@ class IndexCustomers extends InertiaAction
                                     'name'       => 'crm.shops.show.customers.create',
                                     'parameters' => [$parent->slug]
                                 ]
-                            ] : null
+                            ]
                         ],
                         default=> null
                     }
@@ -189,6 +192,10 @@ class IndexCustomers extends InertiaAction
 
     public function htmlResponse(LengthAwarePaginator $customers, ActionRequest $request): Response
     {
+
+
+
+
         $scope     = $this->parent;
         $container = null;
         if (class_basename($scope) == 'Shop') {
@@ -239,10 +246,7 @@ class IndexCustomers extends InertiaAction
         return match ($routeName) {
             'org.crm.customers.index' =>
             array_merge(
-                (new CRMDashboard())->getBreadcrumbs(
-                    'crm.dashboard',
-                    $routeParameters
-                ),
+                (new CRMDashboard())->getBreadcrumbs(),
                 $headCrumb(
                     [
                         'name' => 'org.crm.customers.index',
@@ -252,10 +256,7 @@ class IndexCustomers extends InertiaAction
             ),
             'org.crm.shops.show.customers.index' =>
             array_merge(
-                (new CRMDashboard())->getBreadcrumbs(
-                    'crm.shops.show.dashboard',
-                    $routeParameters
-                ),
+                (new CRMDashboard())->getBreadcrumbs(),
                 $headCrumb(
                     [
                         'name'       => 'org.crm.shops.show.customers.index',

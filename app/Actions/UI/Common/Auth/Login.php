@@ -7,6 +7,10 @@
 
 namespace App\Actions\UI\Common\Auth;
 
+use App\Actions\Organisation\CRM\PublicUser\Hydrators\PublicUserHydrateFailLogin;
+use App\Actions\Organisation\CRM\PublicUser\Hydrators\PublicUserHydrateLogin;
+use App\Actions\Tenant\Auth\User\Hydrators\UserHydrateFailLogin;
+use App\Actions\Tenant\Auth\User\Hydrators\UserHydrateLogin;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
@@ -57,6 +61,8 @@ class Login
         )) {
             RateLimiter::hit($this->throttleKey($request));
 
+            $this->userFailLogin();
+
             throw ValidationException::withMessages([
                 $this->credentialHandler => trans('auth.failed'),
             ]);
@@ -64,6 +70,7 @@ class Login
 
         RateLimiter::clear($this->throttleKey($request));
 
+        $this->userLogin();
 
         $request->session()->regenerate();
         Session::put('reloadLayout', '1');
@@ -76,13 +83,25 @@ class Login
             app()->setLocale($language);
         }
 
-
-
-
-
-
-
         return back();
+    }
+
+    public function userLogin(): void
+    {
+        if($this->gate == 'public') {
+            PublicUserHydrateLogin::run(Auth::guard($this->gate)->user(), request()->ip(), now());
+        } else {
+            UserHydrateLogin::run(Auth::guard($this->gate)->user(), request()->ip(), now());
+        }
+    }
+
+    public function userFailLogin(): void
+    {
+        if($this->gate == 'public') {
+            PublicUserHydrateFailLogin::run(Auth::guard($this->gate)->user(), request()->ip(), now());
+        } else {
+            UserHydrateFailLogin::run(Auth::guard($this->gate)->user(), request()->ip(), now());
+        }
     }
 
     public function rules(): array

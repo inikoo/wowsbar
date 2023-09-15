@@ -11,11 +11,11 @@ import { capitalize } from "@/Composables/capitalize"
 import Create from "@/Components/Create.vue";
 import {library} from '@fortawesome/fontawesome-svg-core';
 import {
-faFingerprint
+faFingerprint,faIndent,faShapes
 } from "@/../private/pro-light-svg-icons";
 
 library.add(
-    faFingerprint
+    faFingerprint,faIndent,faShapes
 );
 const props = defineProps<{
     title: string,

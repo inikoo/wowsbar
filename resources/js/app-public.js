@@ -16,6 +16,8 @@ import { i18nVue } from "laravel-vue-i18n"
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faPlus } from "@/../private/pro-regular-svg-icons";
 import Notifications from '@kyvg/vue3-notification'
+import VCalendar from 'v-calendar';
+import 'v-calendar/style.css';
 library.add(faPlus);
 
 import { createPinia } from "pinia";
@@ -35,6 +37,7 @@ createInertiaApp({
             .use(createPinia())
             .use(ZiggyVue, Ziggy)
             .use(Notifications)
+            .use(VCalendar, {})
             .use(i18nVue, {
 				resolve: async (lang) => {
 					const languages = import.meta.glob("../../lang/*.json")

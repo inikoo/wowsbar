@@ -16,6 +16,7 @@ use App\Models\Accounting\PaymentAccount;
 use App\Models\CRM\Customer;
 use Illuminate\Console\Command;
 use Illuminate\Http\Response;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use Lorisleiva\Actions\ActionRequest;
@@ -41,9 +42,12 @@ class StorePayment
             data_fill($modelData, 'date', gmdate('Y-m-d H:i:s'));
 
             /** @var Payment $payment */
-            $payment       = $paymentAccount->payments()->create($modelData);
-            $xenditPayment = MakePaymentUsingInvoice::run($payment);
-            $payment->update(['data' => $xenditPayment]);
+            $payment = $paymentAccount->payments()->create($modelData);
+
+            match ($paymentAccount->paymentServiceProvider->code) {
+                'xendit' => MakePaymentUsingInvoice::run($payment),
+                default  => null
+            };
 
             PaymentHydrateUniversalSearch::dispatch($payment);
 
@@ -70,9 +74,9 @@ class StorePayment
         ];
     }
 
-    public function htmlResponse(array $payment): Response
+    public function htmlResponse(Payment $payment): Response
     {
-        return $payment['invoice_url'];
+        return Arr::get($payment->data, 'invoice_url');
     }
 
     public function action(Customer $customer, PaymentAccount $paymentAccount, array $objectData): Payment
@@ -93,7 +97,7 @@ class StorePayment
         ]);
 
         $customer       = Customer::first();
-        $paymentAccount = PaymentAccount::first();
+        $paymentAccount = PaymentAccount::where('code', 'xendit')->first();
 
         $validatedData = $this->validateAttributes();
         $this->handle($customer, $paymentAccount, $validatedData);

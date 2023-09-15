@@ -13,15 +13,33 @@ enum WebpagePurposeEnum: string
 {
     use EnumHelperTrait;
 
-    case STOREFRONT  = 'storefront';
+    case STOREFRONT = 'storefront';
+
+    case PRODUCT = 'product';
+
+    case INFO = 'info';
+
+    case PRIVACY        = 'privacy';
+    case COOKIES_POLICY = 'cookies-policy';
+
+    case TERMS_AND_CONDITIONS = 'terms-and-conditions';
+
     case APPOINTMENT = 'appointment';
-    case LOGIN       = 'login';
-    case REGISTER    = 'register';
+
+    case CONTACT = 'contact';
+
+    case LOGIN    = 'login';
+    case REGISTER = 'register';
 
     case BLOG    = 'blog';
     case ARTICLE = 'article';
 
     case CONTENT = 'content';
+
+    case OTHER_SMALL_PRINT = 'other-small-print';
+
+    case SHOP = 'shop';
+
 
     public static function labels(): array
     {

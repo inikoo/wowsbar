@@ -35,7 +35,7 @@ class StoreCustomer
     {
         return DB::transaction(function () use ($customerData, $shop) {
             /** @var Customer $customer */
-            $customer = Customer::create($customerData);
+            $customer = $shop->customers()->create($customerData);
             if ($customer->reference == null) {
 
                 $reference = GetSerialReference::run(
