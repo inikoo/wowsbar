@@ -69,17 +69,7 @@ const dummyData = [
             "style",
             "fontFamily"
         ],
-        "options": [
-            "Arial",
-            "Comfortaa",
-            "Lobster",
-            "Laila",
-            "Port Lligat Slab",
-            "Playfair",
-            "Quicksand",
-            "Times New Roman",
-            "Yatra One"
-        ]
+        
     },
     {
         "name": [
