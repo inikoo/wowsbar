@@ -8,13 +8,11 @@
 namespace App\Actions\Accounting\PaymentGateway\Xendit\Webhook;
 
 use App\Actions\Accounting\Payment\UpdatePayment;
-use App\Actions\Accounting\PaymentGateway\Xendit\Traits\HasCredentials;
 use App\Enums\Accounting\Payment\PaymentStateEnum;
 use App\Enums\Accounting\Payment\PaymentStatusEnum;
 use App\Models\Accounting\Payment;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
@@ -34,7 +32,7 @@ class HandleWebhookNotification
         return DB::transaction(function () use ($request) {
             $callbackToken = $request->header('x-callback-token');
             $webhookId     = $request->header('webhook-id');
-            $status = $request->input('status');
+            $status        = $request->input('status');
 
             if ($callbackToken === env('XENDIT_CALLBACK_TOKEN')) {
                 $payment = Payment::where('reference', $request->input('external_id'))->first();
@@ -48,7 +46,7 @@ class HandleWebhookNotification
                         'webhook_id' => $webhookId,
                         'status'     => $this->checkStatus($status),
                         'state'      => $this->checkState($status),
-                        'data' => $request->all()
+                        'data'       => $request->all()
                     ];
 
                     if($status === 'PAID') {
@@ -79,7 +77,7 @@ class HandleWebhookNotification
     {
         match ($status) {
             'PAID'  => $status  = PaymentStatusEnum::SUCCESS->value,
-            default => $status = PaymentStatusEnum::FAIL->value
+            default => $status  = PaymentStatusEnum::FAIL->value
         };
 
         return $status;
@@ -89,7 +87,7 @@ class HandleWebhookNotification
     {
         match ($status) {
             'PAID'  => $status  = PaymentStateEnum::COMPLETED->value,
-            default => $status = PaymentStateEnum::CANCELLED->value
+            default => $status  = PaymentStateEnum::CANCELLED->value
         };
 
         return $status;

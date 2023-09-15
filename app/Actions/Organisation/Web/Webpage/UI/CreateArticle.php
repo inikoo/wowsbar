@@ -26,7 +26,7 @@ class CreateArticle extends InertiaAction
     public function asController(ActionRequest $request): Webpage
     {
         $this->initialisation($request);
-        return Webpage::where('type',WebpageTypeEnum::BLOG)->firstOrFail();
+        return Webpage::where('type', WebpageTypeEnum::BLOG)->firstOrFail();
     }
 
 

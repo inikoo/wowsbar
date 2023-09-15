@@ -61,7 +61,7 @@ class StorePaymentServiceProvider
     public function asCommand(Command $command): int
     {
         $this->asAction=true;
-        $data = [
+        $data          = [
             'code' => $command->argument('code'),
             'type' => $command->argument('type'),
             'data' => json_decode(file_get_contents(base_path('resources/private/xendit/credential.json')), true)
