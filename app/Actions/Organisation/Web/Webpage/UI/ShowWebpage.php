@@ -8,7 +8,6 @@
 namespace App\Actions\Organisation\Web\Webpage\UI;
 
 use App\Actions\InertiaAction;
-use App\Actions\Inventory\Location\UI\IndexLocations;
 use App\Actions\Organisation\Web\HasWorkshopAction;
 use App\Actions\Organisation\Web\Webpage\IndexWebpages;
 use App\Actions\Organisation\Web\Website\UI\ShowWebsite;
