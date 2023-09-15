@@ -31,6 +31,8 @@ return new class () extends Migration {
             $table->string('state')->index()->default(CustomerStateEnum::IN_PROCESS->value);
             $table->string('trade_state')->index()->default(CustomerTradeStateEnum::NONE->value)->comment('number of invoices');
             $table->jsonb('data');
+            $table->unsignedSmallInteger('shop_id')->index();
+            $table->foreign('shop_id')->references('id')->on('shops');
             $table->unsignedSmallInteger('tenant_id')->index()->nullable();
             $table->foreign('tenant_id')->references('id')->on('tenants');
             $table->unsignedBigInteger('image_id')->nullable();

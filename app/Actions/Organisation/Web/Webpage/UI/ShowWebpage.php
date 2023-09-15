@@ -122,19 +122,19 @@ class ShowWebpage extends InertiaAction
                 ],
 
                 WebpageTabsEnum::SHOWCASE->value => $this->tab == WebpageTabsEnum::SHOWCASE->value ?
-                    fn() => WebpageResource::make($webpage)->getArray()
-                    : Inertia::lazy(fn() => WebpageResource::make($webpage)->getArray()),
+                    fn () => WebpageResource::make($webpage)->getArray()
+                    : Inertia::lazy(fn () => WebpageResource::make($webpage)->getArray()),
 
 
                 WebpageTabsEnum::WEBPAGES->value => $this->tab == WebpageTabsEnum::WEBPAGES->value
                     ?
-                    fn() => WebpageResource::collection(
+                    fn () => WebpageResource::collection(
                         IndexWebpages::run(
                             parent: $webpage,
                             prefix: 'webpages'
                         )
                     )
-                    : Inertia::lazy(fn() => WebpageResource::collection(
+                    : Inertia::lazy(fn () => WebpageResource::collection(
                         IndexWebpages::run(
                             parent: $webpage,
                             prefix: 'webpages'
