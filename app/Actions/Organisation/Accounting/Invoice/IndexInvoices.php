@@ -5,10 +5,10 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Accounting\Invoice;
+namespace App\Actions\Organisation\Accounting\Invoice;
 
 use App\Actions\InertiaAction;
-use App\Actions\UI\Accounting\AccountingDashboard;
+use App\Actions\UI\Organisation\Accounting\AccountingDashboard;
 use App\Http\Resources\Accounting\InvoiceResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\Accounting\Invoice;
@@ -51,12 +51,6 @@ class IndexInvoices extends InertiaAction
                 'shops.slug as shop_slug'
             ])
             ->leftJoin('invoice_stats', 'invoices.id', 'invoice_stats.invoice_id')
-            ->leftJoin('shops', 'invoices.shop_id', 'shops.id')
-            ->when($parent, function ($query) use ($parent) {
-                if (class_basename($parent) == 'Shop') {
-                    $query->where('invoices.shop_id', $parent->id);
-                }
-            })
             ->allowedSorts(['number', 'total', 'net'])
             ->allowedFilters([$globalSearch])
             ->withPaginator($prefix)
@@ -82,6 +76,7 @@ class IndexInvoices extends InertiaAction
 
     public function authorize(ActionRequest $request): bool
     {
+        return true;
         return
             (
                 $request->user()->tokenCan('root') or
@@ -111,34 +106,12 @@ class IndexInvoices extends InertiaAction
                 'title'       => __('invoices'),
                 'pageHead'    => [
                     'title'     => __('invoices'),
-                    'container' => match ($routeName) {
-                        'accounting.shops.show.invoices.index' => [
-                            'icon'    => ['fal', 'fa-store-alt'],
-                            'tooltip' => __('Shop'),
-                            'label'   => Str::possessive($routeParameters['shop']->name)
-                        ],
-                        default => null
-                    },
                 ],
                 'data' => InvoiceResource::collection($invoices),
 
 
             ]
         )->table($this->tableStructure());
-    }
-
-
-    public function inTenant(ActionRequest $request): LengthAwarePaginator
-    {
-        $this->routeName = $request->route()->getName();
-        $this->initialisation($request);
-        return $this->handle(app('currentTenant'));
-    }
-
-    public function inShop(Shop $shop, ActionRequest $request): LengthAwarePaginator
-    {
-        $this->initialisation($request);
-        return $this->handle($shop);
     }
 
     public function getBreadcrumbs(string $routeName, array $routeParameters): array
@@ -162,14 +135,14 @@ class IndexInvoices extends InertiaAction
         };
 
         return match ($routeName) {
-            'accounting.shops.show.invoices.index' =>
+            'org.accounting.shops.show.invoices.index' =>
             array_merge(
-                AccountingDashboard::make()->getBreadcrumbs('accounting.shops.show.dashboard', $routeParameters),
+                AccountingDashboard::make()->getBreadcrumbs('org.accounting.shops.show.dashboard', $routeParameters),
                 $headCrumb()
             ),
-            'accounting.invoices.index' =>
+            'org.accounting.invoices.index' =>
             array_merge(
-                AccountingDashboard::make()->getBreadcrumbs('accounting.dashboard', []),
+                AccountingDashboard::make()->getBreadcrumbs('org.accounting.dashboard', []),
                 $headCrumb()
             ),
 

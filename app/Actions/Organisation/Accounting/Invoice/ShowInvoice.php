@@ -5,10 +5,10 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Accounting\Invoice;
+namespace App\Actions\Organisation\Accounting\Invoice;
 
-use App\Actions\Accounting\Payment\UI\IndexPayments;
 use App\Actions\InertiaAction;
+use App\Actions\Organisation\Accounting\Payment\UI\IndexPayments;
 use App\Actions\Organisation\Market\Shop\UI\IndexShops;
 use App\Actions\UI\WithInertia;
 use App\Enums\UI\CustomerTabsEnum;

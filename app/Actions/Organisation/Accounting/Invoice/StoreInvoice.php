@@ -5,12 +5,12 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Accounting\Invoice;
+namespace App\Actions\Organisation\Accounting\Invoice;
 
-use App\Actions\Accounting\Invoice\Hydrators\InvoiceHydrateUniversalSearch;
 use App\Actions\CRM\Customer\Hydrators\CustomerHydrateInvoices;
 use App\Actions\Helpers\Address\AttachHistoricAddressToModel;
 use App\Actions\Helpers\Address\StoreHistoricAddress;
+use App\Actions\Organisation\Accounting\Invoice\Hydrators\InvoiceHydrateUniversalSearch;
 use App\Actions\Organisation\Market\Shop\Hydrators\ShopHydrateInvoices;
 use App\Models\Accounting\Invoice;
 use App\Models\CRM\Customer;

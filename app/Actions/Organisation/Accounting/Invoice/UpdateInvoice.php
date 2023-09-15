@@ -5,9 +5,9 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Accounting\Invoice;
+namespace App\Actions\Organisation\Accounting\Invoice;
 
-use App\Actions\Accounting\Invoice\Hydrators\InvoiceHydrateUniversalSearch;
+use App\Actions\Organisation\Accounting\Invoice\Hydrators\InvoiceHydrateUniversalSearch;
 use App\Actions\Traits\WithActionUpdate;
 use App\Http\Resources\Accounting\InvoiceResource;
 use App\Models\Accounting\Invoice;

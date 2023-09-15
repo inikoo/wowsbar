@@ -5,7 +5,7 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Accounting\InvoiceTransaction;
+namespace App\Actions\Organisation\Accounting\InvoiceTransaction;
 
 use App\Models\Accounting\Invoice;
 use App\Models\Accounting\InvoiceTransaction;
