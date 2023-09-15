@@ -5,15 +5,13 @@
  *  Copyright (c) 2022, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Accounting\PaymentServiceProvider\UI;
+namespace App\Actions\Organisation\Accounting\PaymentServiceProvider\UI;
 
 use App\Actions\InertiaAction;
-use App\Actions\UI\Accounting\AccountingDashboard;
+use App\Actions\UI\Organisation\Accounting\AccountingDashboard;
 use App\Http\Resources\Accounting\PaymentServiceProviderResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\Accounting\PaymentServiceProvider;
-use App\Models\Organisation\Market\Shop;
-use App\Models\Tenancy\Tenant;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -26,7 +24,7 @@ use Spatie\QueryBuilder\QueryBuilder;
 class IndexPaymentServiceProviders extends InertiaAction
 {
     /** @noinspection PhpUndefinedMethodInspection */
-    public function handle(Tenant|Shop $parent, $prefix=null): LengthAwarePaginator
+    public function handle($prefix=null): LengthAwarePaginator
     {
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
             $query->where(function ($query) use ($value) {
@@ -53,15 +51,6 @@ class IndexPaymentServiceProviders extends InertiaAction
             ->defaultSort('payment_service_providers.code')
             ->select(['code', 'slug', 'number_accounts', 'number_payments'])
             ->leftJoin('payment_service_provider_stats', 'payment_service_providers.id', 'payment_service_provider_stats.payment_service_provider_id')
-            ->when(true, function ($query) use ($parent) {
-                if (class_basename($parent) == 'Shop') {
-                    $query->leftJoin('payment_service_provider_shop', 'payment_service_providers.id', 'payment_service_provider_shop.payment_service_provider_id');
-                    $query->where('payment_service_provider_shop.shop_id', $parent->id);
-
-
-
-                }
-            })
             ->allowedSorts(['code', 'number_accounts', 'number_payments'])
             ->allowedFilters([$globalSearch])
             ->withPaginator($prefix)
@@ -88,6 +77,7 @@ class IndexPaymentServiceProviders extends InertiaAction
     public function authorize(ActionRequest $request): bool
     {
         $this->canEdit = $request->user()->can('accounting.edit');
+        return true;
         return
             (
                 $request->user()->tokenCan('root') or
@@ -124,13 +114,7 @@ class IndexPaymentServiceProviders extends InertiaAction
     public function asController(ActionRequest $request): LengthAwarePaginator
     {
         $this->initialisation($request);
-        return $this->handle(app('currentTenant'));
-    }
-
-    public function inShop(Shop $shop, ActionRequest $request): LengthAwarePaginator
-    {
-        $this->initialisation($request);
-        return $this->handle($shop);
+        return $this->handle();
     }
 
     public function getBreadcrumbs($suffix=null): array
@@ -142,7 +126,7 @@ class IndexPaymentServiceProviders extends InertiaAction
                      'type'   => 'simple',
                      'simple' => [
                          'route' => [
-                             'name' => 'accounting.payment-service-providers.index',
+                             'name' => 'org.accounting.payment-service-providers.index',
                          ],
                          'label' => __('providers'),
                          'icon'  => 'fal fa-bars',

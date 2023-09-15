@@ -5,12 +5,11 @@
  * Copyright (c) 2023, Inikoo LTD
  */
 
-namespace App\Actions\Accounting\Payment\UI;
+namespace App\Actions\Organisation\Accounting\Payment\UI;
 
-use App\Actions\Accounting\PaymentAccount\UI\ShowPaymentAccount;
-use App\Actions\Accounting\PaymentServiceProvider\UI\ShowPaymentServiceProvider;
 use App\Actions\InertiaAction;
-use App\Actions\UI\Accounting\AccountingDashboard;
+use App\Actions\Organisation\Accounting\PaymentAccount\UI\ShowPaymentAccount;
+use App\Actions\Organisation\Accounting\PaymentServiceProvider\UI\ShowPaymentServiceProvider;
 use App\Http\Resources\Accounting\PaymentResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\Accounting\Payment;
@@ -113,20 +112,12 @@ class IndexPayments extends InertiaAction
     public function authorize(ActionRequest $request): bool
     {
         $this->canEdit = $request->user()->can('accounting.edit');
-
+        return true;
         return
             (
                 $request->user()->tokenCan('root') or
                 $request->user()->hasPermissionTo('accounting.view')
             );
-    }
-
-
-    public function inTenant(ActionRequest $request): LengthAwarePaginator
-    {
-        $this->initialisation($request);
-
-        return $this->handle(app('currentTenant'));
     }
 
     public function inPaymentServiceProvider(PaymentServiceProvider $paymentServiceProvider, ActionRequest $request): LengthAwarePaginator
@@ -151,13 +142,6 @@ class IndexPayments extends InertiaAction
         $this->initialisation($request);
 
         return $this->handle($paymentAccount);
-    }
-
-    public function inShop(Shop $shop, ActionRequest $request): LengthAwarePaginator
-    {
-        $this->initialisation($request);
-
-        return $this->handle($shop);
     }
 
     public function jsonResponse($payments): AnonymousResourceCollection

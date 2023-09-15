@@ -5,7 +5,7 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Accounting\PaymentAccount;
+namespace App\Actions\Organisation\Accounting\PaymentAccount;
 
 use App\Actions\Traits\WithActionUpdate;
 use App\Http\Resources\Accounting\PaymentAccountResource;

@@ -5,7 +5,7 @@
  * Copyright (c) 2023, Inikoo LTD
  */
 
-namespace App\Actions\Accounting\Payment\UI;
+namespace App\Actions\Organisation\Accounting\Payment\UI;
 
 use App\Actions\InertiaAction;
 use App\Enums\UI\DepartmentTabsEnum;
@@ -14,8 +14,8 @@ use App\Http\Resources\Accounting\PaymentResource;
 use App\Models\Accounting\Payment;
 use App\Models\Accounting\PaymentAccount;
 use App\Models\Accounting\PaymentServiceProvider;
-use App\Models\Organisation\OMS\Order;
 use App\Models\Organisation\Market\Shop;
+use App\Models\Organisation\OMS\Order;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;

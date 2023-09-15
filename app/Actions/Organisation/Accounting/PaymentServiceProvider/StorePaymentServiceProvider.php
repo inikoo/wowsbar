@@ -5,7 +5,7 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Accounting\PaymentServiceProvider;
+namespace App\Actions\Organisation\Accounting\PaymentServiceProvider;
 
 use App\Enums\Accounting\PaymentServiceProvider\PaymentServiceProviderTypeEnum;
 use App\Models\Accounting\PaymentServiceProvider;
@@ -63,9 +63,7 @@ class StorePaymentServiceProvider
         $this->asAction=true;
         $data = [
             'code' => $command->argument('code'),
-            'type' => $command->argument('type'),
-            'data' => json_decode(file_get_contents(base_path('resources/private/xendit/credential.json')), true)
-        ];
+            'type' => $command->argument('type'),];
         $this->handle($data);
 
         echo "Successfully create payment service provider \n";

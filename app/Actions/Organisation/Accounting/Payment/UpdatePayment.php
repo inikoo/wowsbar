@@ -5,9 +5,9 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Accounting\Payment;
+namespace App\Actions\Organisation\Accounting\Payment;
 
-use App\Actions\Accounting\Payment\Hydrators\PaymentHydrateUniversalSearch;
+use App\Actions\Organisation\Accounting\Payment\Hydrators\PaymentHydrateUniversalSearch;
 use App\Actions\Traits\WithActionUpdate;
 use App\Http\Resources\Accounting\PaymentResource;
 use App\Models\Accounting\Payment;

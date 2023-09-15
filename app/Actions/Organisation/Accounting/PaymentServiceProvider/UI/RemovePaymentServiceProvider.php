@@ -5,7 +5,7 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Accounting\PaymentServiceProvider\UI;
+namespace App\Actions\Organisation\Accounting\PaymentServiceProvider\UI;
 
 use App\Actions\InertiaAction;
 use App\Models\Accounting\PaymentServiceProvider;

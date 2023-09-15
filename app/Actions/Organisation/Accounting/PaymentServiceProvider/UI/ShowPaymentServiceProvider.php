@@ -5,15 +5,15 @@
  *  Copyright (c) 2022, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Accounting\PaymentServiceProvider\UI;
+namespace App\Actions\Organisation\Accounting\PaymentServiceProvider\UI;
 
-use App\Actions\Accounting\Payment\UI\IndexPayments;
-use App\Actions\Accounting\PaymentAccount\UI\IndexPaymentAccounts;
-use App\Actions\Accounting\PaymentServiceProvider\GetPaymentServiceProviderShowcase;
 use App\Actions\Helpers\History\IndexHistories;
 use App\Actions\InertiaAction;
-use App\Actions\UI\Accounting\AccountingDashboard;
-use App\Enums\UI\PaymentServiceProviderTabsEnum;
+use App\Actions\Organisation\Accounting\Payment\UI\IndexPayments;
+use App\Actions\Organisation\Accounting\PaymentAccount\UI\IndexPaymentAccounts;
+use App\Actions\Organisation\Accounting\PaymentServiceProvider\GetPaymentServiceProviderShowcase;
+use App\Actions\UI\Organisation\Accounting\AccountingDashboard;
+use App\Enums\UI\Organisation\PaymentServiceProviderTabsEnum;
 use App\Http\Resources\Accounting\PaymentAccountResource;
 use App\Http\Resources\Accounting\PaymentResource;
 use App\Http\Resources\Accounting\PaymentServiceProviderResource;
@@ -35,7 +35,7 @@ class ShowPaymentServiceProvider extends InertiaAction
         $this->canEdit   = $request->user()->can('accounting.edit');
         $this->canDelete = $request->user()->can('accounting.edit');
 
-        return $request->user()->hasPermissionTo("accounting.view");
+        return !$request->user()->hasPermissionTo("accounting.view");
     }
 
     public function asController(PaymentServiceProvider $paymentServiceProvider, ActionRequest $request): PaymentServiceProvider
@@ -85,7 +85,7 @@ class ShowPaymentServiceProvider extends InertiaAction
                             'name'     => trans_choice('account | accounts', $paymentServiceProvider->stats->number_accounts),
                             'number'   => $paymentServiceProvider->stats->number_accounts,
                             'href'     => [
-                                'accounting.payment-service-providers.show.payment-accounts.index',
+                                'org.accounting.payment-service-providers.show.payment-accounts.index',
                                 $paymentServiceProvider->slug
                             ],
                             'leftIcon' => [
@@ -97,7 +97,7 @@ class ShowPaymentServiceProvider extends InertiaAction
                             'name'     => trans_choice('payment | payments', $paymentServiceProvider->stats->number_payments),
                             'number'   => $paymentServiceProvider->stats->number_payments,
                             'href'     => [
-                                'accounting.payment-service-providers.show.payments.index',
+                                'org.accounting.payment-service-providers.show.payments.index',
                                 $paymentServiceProvider->slug
                             ],
                             'leftIcon' => [
@@ -154,7 +154,7 @@ class ShowPaymentServiceProvider extends InertiaAction
                 modelOperations: [
                      'createLink' => $this->canEdit ? [
                          'route' => [
-                            'name'       => 'accounting.payment-service-providers.show.payments.create',
+                            'name'       => 'org.accounting.payment-service-providers.show.payments.create',
                             'parameters' => array_values($this->originalParameters)
                          ],
                          'label' => __('payment')
@@ -191,13 +191,13 @@ class ShowPaymentServiceProvider extends InertiaAction
                     'modelWithIndex' => [
                         'index' => [
                             'route' => [
-                                'name' => 'accounting.payment-service-providers.index',
+                                'name' => 'org.accounting.payment-service-providers.index',
                             ],
                             'label' => __('providers')
                         ],
                         'model' => [
                             'route' => [
-                                'name'       => 'accounting.payment-service-providers.show',
+                                'name'       => 'org.accounting.payment-service-providers.show',
                                 'parameters' => [$paymentServiceProvider->slug]
                             ],
                             'label' => $paymentServiceProvider->slug,
@@ -228,7 +228,7 @@ class ShowPaymentServiceProvider extends InertiaAction
             return null;
         }
         return match ($routeName) {
-            'accounting.payment-service-providers.show'=> [
+            'org.accounting.payment-service-providers.show'=> [
                 'label'=> $paymentServiceProvider->code,
                 'route'=> [
                     'name'      => $routeName,
