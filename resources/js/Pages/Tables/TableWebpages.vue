@@ -24,8 +24,8 @@ const props = defineProps<{
 
 
 function webpageRoute(webpage: Webpage) {
-    route().current()
     switch (route().current()) {
+        case 'org.website.webpages.show':
         case 'org.website.webpages.index':
             return route(
                 'org.website.webpages.show',

@@ -118,7 +118,7 @@ class PublicUser extends Authenticatable implements HasMedia, CanResetPassword, 
 
     public function stats(): HasOne
     {
-        return $this->hasOne(UserStats::class);
+        return $this->hasOne(PublicUserStats::class);
     }
 
     public function customer(): BelongsTo

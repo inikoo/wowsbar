@@ -28,7 +28,7 @@ class StorePayment
     use AsAction;
     use WithAttributes;
 
-    private bool $asAction = false;
+    private bool $asAction   = false;
     public $commandSignature = 'payment:create {reference} {amount}';
 
     /**
@@ -46,7 +46,7 @@ class StorePayment
 
             match ($paymentAccount->paymentServiceProvider->code) {
                 'xendit' => MakePaymentUsingInvoice::run($payment),
-                default => null
+                default  => null
             };
 
             PaymentHydrateUniversalSearch::dispatch($payment);
@@ -93,10 +93,10 @@ class StorePayment
         $this->asAction=true;
         $this->setRawAttributes([
             'reference' => $command->argument('reference'),
-            'amount' => $command->argument('amount')
+            'amount'    => $command->argument('amount')
         ]);
 
-        $customer = Customer::first();
+        $customer       = Customer::first();
         $paymentAccount = PaymentAccount::where('code', 'xendit')->first();
 
         $validatedData = $this->validateAttributes();

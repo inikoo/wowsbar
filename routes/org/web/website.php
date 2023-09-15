@@ -7,6 +7,7 @@
 
 
 use App\Actions\Organisation\Web\Webpage\IndexWebpages;
+use App\Actions\Organisation\Web\Webpage\UI\CreateArticle;
 use App\Actions\Organisation\Web\Webpage\UI\CreateWebpage;
 use App\Actions\Organisation\Web\Webpage\UI\ShowWebpage;
 use App\Actions\Organisation\Web\Webpage\UI\ShowWebpageWorkshop;
@@ -24,6 +25,11 @@ Route::get('/workshop', ShowWebsiteWorkshop::class)->name('workshop');
 Route::get('/workshop/preview', ShowWebsiteWorkshopPreview::class)->name('preview');
 Route::get('/webpages', IndexWebpages::class)->name('webpages.index');
 Route::get('/webpages/create', CreateWebpage::class)->name('webpages.create');
+Route::get('/blog/article/create', CreateArticle::class)->name('blog.article.create');
+
+Route::get('/webpages/{webpage}/webpages/create', [CreateWebpage::class,'inWebpage'])->name('webpages.show.webpages.create');
+Route::get('/webpages/{webpage}/webpages', [IndexWebpages::class,'inWebpage'])->name('webpages.show.webpages.index');
+
 
 Route::get('/webpages/{webpage}', ShowWebpage::class)->name('webpages.show');
 

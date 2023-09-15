@@ -8,21 +8,54 @@
 namespace App\Enums\UI\Organisation;
 
 use App\Enums\EnumHelperTrait;
-use App\Enums\HasTabs;
+use App\Enums\Organisation\Web\Webpage\WebpagePurposeEnum;
+use App\Enums\Organisation\Web\Webpage\WebpageTypeEnum;
+use App\Models\Organisation\Web\Webpage;
 
 enum WebpageTabsEnum: string
 {
     use EnumHelperTrait;
-    use HasTabs;
 
-    case SHOWCASE             = 'showcase';
+    case SHOWCASE = 'showcase';
 
-    case ANALYTICS            = 'analytics';
+    case ANALYTICS = 'analytics';
 
-    case CHANGELOG            = 'changelog';
+    case WEBPAGES = 'webpages';
 
-    case DATA                 = 'data';
 
+    case CHANGELOG = 'changelog';
+
+    case DATA = 'data';
+
+
+    public static function navigation(Webpage $webpage): array
+    {
+        return collect(self::cases())
+            ->filter(
+                function ($case) use ($webpage) {
+                    if($case==WebpageTabsEnum::WEBPAGES &&
+                        (
+                            $webpage->type==WebpageTypeEnum::AUTH       ||
+                            $webpage->type==WebpageTypeEnum::ENGAGEMENT ||
+                            $webpage->type==WebpagePurposeEnum::ARTICLE
+                        )
+                    ) {
+                        return false;
+                    }
+                    return true;
+                }
+            )
+            ->mapWithKeys(function ($case) use ($webpage) {
+                $blueprint = $case->blueprint();
+                if ($webpage->type == WebpageTypeEnum::BLOG) {
+                    if ($case == WebpageTabsEnum::WEBPAGES) {
+                        $blueprint['title'] = __('Articles');
+                    }
+                }
+
+                return [$case->value => $blueprint];
+            })->all();
+    }
 
     public function blueprint(): array
     {
@@ -34,6 +67,10 @@ enum WebpageTabsEnum: string
             WebpageTabsEnum::ANALYTICS => [
                 'title' => __('analytics'),
                 'icon'  => 'fal fa-analytics',
+            ],
+            WebpageTabsEnum::WEBPAGES => [
+                'title' => __('Webpages'),
+                'icon'  => 'fal fa-level-down',
             ],
 
             WebpageTabsEnum::DATA => [
