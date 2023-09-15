@@ -8,8 +8,11 @@
 namespace App\Actions\Organisation\Web\Webpage\UI;
 
 use App\Actions\InertiaAction;
+use App\Actions\Organisation\Web\HasWorkshopAction;
+use App\Actions\Organisation\Web\Webpage\IndexWebpages;
 use App\Actions\Organisation\Web\Website\UI\ShowWebsite;
 use App\Actions\UI\WithInertia;
+use App\Enums\Organisation\Web\Webpage\WebpageTypeEnum;
 use App\Enums\UI\Organisation\WebpageTabsEnum;
 use App\Http\Resources\Web\WebpageResource;
 use App\Models\Organisation\Web\Webpage;
@@ -22,14 +25,15 @@ class ShowWebpage extends InertiaAction
 {
     use AsAction;
     use WithInertia;
+    use HasWorkshopAction;
 
     public function authorize(ActionRequest $request): bool
     {
         $this->canEdit   = $request->user()->can('website.edit');
         $this->canDelete = $request->user()->can('website.edit');
+
         return $request->user()->hasPermissionTo("website.view");
     }
-
 
 
     public function asController(Webpage $webpage, ActionRequest $request): Webpage
@@ -42,56 +46,101 @@ class ShowWebpage extends InertiaAction
 
     public function htmlResponse(Webpage $webpage, ActionRequest $request): Response
     {
+        $actions = $this->workshopActions($request);
 
+        if ($webpage->type == WebpageTypeEnum::BLOG) {
+            $actions = array_merge(
+                $actions,
+                [
+                    $this->canEdit ? [
+                        'type'  => 'button',
+                        'style' => 'create',
+                        'label' => __('new article'),
+                        'route' => [
+                            'name' => 'org.website.blog.article.create',
+                        ]
+                    ] : false
+                ]
+            );
+        } elseif ($webpage->type == WebpageTypeEnum::STOREFRONT) {
+            $actions = array_merge(
+                $actions,
+                [
+                    $this->canEdit ? [
+                        'type'  => 'button',
+                        'style' => 'create',
+                        'label' => __('Main webpage'),
+                        'route' => [
+                            'name' => 'org.website.webpages.create',
+                        ]
+                    ] : false
+                ]
+            );
+        } elseif (in_array(
+            $webpage->type,
+            [
+                WebpageTypeEnum::SHOP,
+                WebpageTypeEnum::CONTENT
+            ]
+        )) {
+            $actions = array_merge(
+                $actions,
+                [
+                    $this->canEdit ? [
+                        'type'  => 'button',
+                        'style' => 'create',
+                        'label' => __('webpage'),
+                        'route' => [
+                            'name'       => 'org.website.webpages.show.webpages.create',
+                            'parameters' => ['webpage' => $webpage->slug]
+                        ]
+                    ] : false
+                ]
+            );
+        }
 
 
         return Inertia::render(
             'Web/Webpage',
             [
-                'breadcrumbs'                    => $this->getBreadcrumbs(
+                'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->parameters()
                 ),
-                'title'                          => __('webpage'),
-                'pageHead'                       => [
-                    'title' => $webpage->code,
-                    'icon'  => [
+                'title'       => __('webpage'),
+                'pageHead'    => [
+                    'title'   => $webpage->code,
+                    'icon'    => [
                         'title' => __('webpage'),
                         'icon'  => 'fal fa-browser'
                     ],
-                    'actions'                    => [
-                        $this->canEdit ? [
-                            'type'  => 'button',
-                            'style' => 'edit',
-                            'label' => __('settings'),
-                            'icon'  => ["fal", "fa-sliders-h"],
-                            'route' => [
-                                'name'       => preg_replace('/show$/', 'edit', $request->route()->getName()),
-                                'parameters' => array_values($request->route()->originalParameters())
-                            ]
-                        ] : false,
-                        $this->canEdit ? [
-                            'type'  => 'button',
-                            'style' => 'edit',
-                            'label' => __('workshop'),
-                            'icon'  => ["fal", "fa-drafting-compass"],
-                            'route' => [
-                                'name'       => preg_replace('/show$/', 'workshop', $request->route()->getName()),
-                                'parameters' => array_values($request->route()->originalParameters())
-                            ]
-                        ] : false,
-
-                    ],
+                    'actions' => $actions,
                 ],
 
-                'tabs'                           => [
+                'tabs' => [
                     'current'    => $this->tab,
-                    'navigation' => WebpageTabsEnum::navigation()
+                    'navigation' => WebpageTabsEnum::navigation($webpage)
                 ],
 
-                // Showcase data
                 WebpageTabsEnum::SHOWCASE->value => $this->tab == WebpageTabsEnum::SHOWCASE->value ?
-                fn () => WebpageResource::make($webpage)->getArray()
-                : Inertia::lazy(fn () => WebpageResource::make($webpage)->getArray())
+                    fn () => WebpageResource::make($webpage)->getArray()
+                    : Inertia::lazy(fn () => WebpageResource::make($webpage)->getArray()),
+
+
+                WebpageTabsEnum::WEBPAGES->value => $this->tab == WebpageTabsEnum::WEBPAGES->value
+                    ?
+                    fn () => WebpageResource::collection(
+                        IndexWebpages::run(
+                            parent: $webpage,
+                            prefix: 'webpages'
+                        )
+                    )
+                    : Inertia::lazy(fn () => WebpageResource::collection(
+                        IndexWebpages::run(
+                            parent: $webpage,
+                            prefix: 'webpages'
+                        )
+                    )),
+
 
                 /*
                 WebpageTabsEnum::CHANGELOG->value => $this->tab == WebpageTabsEnum::CHANGELOG->value ?
@@ -101,12 +150,13 @@ class ShowWebpage extends InertiaAction
 
 
             ]
+        )->table(
+            IndexWebpages::make()->tableStructure(prefix:'webpages')
         );
     }
 
     public function getBreadcrumbs(array $routeParameters, string $suffix = ''): array
     {
-
         $headCrumb = function (Webpage $webpage, array $routeParameters, string $suffix) {
             return [
                 [
@@ -123,13 +173,13 @@ class ShowWebpage extends InertiaAction
                         ],
 
                     ],
-                    'suffix' => $suffix
+                    'suffix'         => $suffix
 
                 ],
             ];
         };
 
-        return  array_merge(
+        return array_merge(
             ShowWebsite::make()->getBreadcrumbs(),
             $headCrumb(
                 $routeParameters['webpage'],
@@ -146,6 +196,5 @@ class ShowWebpage extends InertiaAction
                 $suffix
             ),
         );
-
     }
 }

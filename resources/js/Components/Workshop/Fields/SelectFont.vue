@@ -7,7 +7,8 @@
 <script setup lang="ts">
 import Multiselect from "@vueform/multiselect"
 import { set, lowerCase, snakeCase } from 'lodash'
-import { ref, watch } from 'vue'
+import { ref, watch, computed } from 'vue'
+
 const props = defineProps<{
     data: any
     fieldName: any
@@ -22,7 +23,24 @@ const props = defineProps<{
         required?: boolean
     }
 }>()
-const emit = defineEmits()
+
+const options = [
+    "Arial",
+    "Comfortaa",
+    "Lobster",
+    "Laila",
+    "Port Lligat Slab",
+    "Playfair",
+    "Quicksand",
+    "Times New Roman",
+    "Yatra One"
+]
+
+const compOptions = computed(() => {
+    // Handle if parent provide options = ['value', 'value', 'value']
+    return props.fieldData?.options ? options.filter((option: any) => props.fieldData?.options.includes(option)) : options
+})
+
 const setFormValue = (data: Object, fieldName: String) => {
     if (Array.isArray(fieldName)) {
         return getNestedValue(data, fieldName);
@@ -46,8 +64,6 @@ watch(value, (newValue) => {
     updateFormValue(newValue);
 });
 
-
-
 const updateFormValue = (newValue: any) => {
     let target = { ...props.data };
 
@@ -58,14 +74,15 @@ const updateFormValue = (newValue: any) => {
     }
 
     // Emit an event to notify the parent component
-   set(props,"data",target)
-};
+    set(props,"data",target)
+}
+
 </script>
 
 <template>
     <div class="">
         <div class="relative">
-            <Multiselect v-model="value" :options="props.fieldData.options"
+            <Multiselect v-model="value" :options="compOptions"
                 :placeholder="props.fieldData.placeholder ?? 'Select your option'" :canClear="false"
                 :closeOnSelect="props.fieldData.mode == 'multiple' ? false : true" :canDeselect="!props.fieldData.required"
                 :hideSelected="false" :searchable="!!props.fieldData.searchable">

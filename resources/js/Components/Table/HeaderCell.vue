@@ -45,7 +45,7 @@ const isCellNumber = computed(() => {
         <component :is="cell.sortable ? 'button' : 'div'" class="py-1 w-full" :class="[cell.key == 'avatar' ? 'px-3' : 'px-6']"
             :dusk="cell.sortable ? `sort-${cell.key}` : null" @click.prevent="onClick">
             <span class="flex flex-row items-center" :class="{'justify-center': cell.key == 'avatar', 'justify-end': isCellNumber}">
-                <slot name="label">
+                <slot name="label" :dataLabel="cell">
                     <div v-if="typeof cell.label === 'object'">
                         <FontAwesomeIcon v-if="cell.label.type === 'icon'" :title="capitalize(cell.label.tooltip)"
                             aria-hidden="true" :icon="cell.label.data" size="lg" />

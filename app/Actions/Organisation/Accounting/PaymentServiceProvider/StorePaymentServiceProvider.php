@@ -61,7 +61,7 @@ class StorePaymentServiceProvider
     public function asCommand(Command $command): int
     {
         $this->asAction=true;
-        $data = [
+        $data          = [
             'code' => $command->argument('code'),
             'type' => $command->argument('type'),];
         $this->handle($data);

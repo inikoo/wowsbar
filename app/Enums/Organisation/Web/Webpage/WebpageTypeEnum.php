@@ -8,21 +8,41 @@
 namespace App\Enums\Organisation\Web\Webpage;
 
 use App\Enums\EnumHelperTrait;
+use Illuminate\Support\Arr;
 
 enum WebpageTypeEnum: string
 {
     use EnumHelperTrait;
 
 
-    case STOREFRONT    = 'storefront';
-    case PRODUCT       = 'product';
-    case CATEGORY      = 'category';
-    case SHOPPING_CART = 'shopping-cart';
-    case CONTENT       = 'content';
-    case ENGAGEMENT    = 'engagement';
-    case AUTH          = 'auth';
+    case STOREFRONT = 'storefront';
+    case SHOP       = 'shop';
+    case CONTENT    = 'content';
 
-    case BLOG    = 'blog';
-    case ARTICLE = 'article';
+    case SMALL_PRINT = 'small-print';
+    case ENGAGEMENT  = 'engagement';
+    case AUTH        = 'auth';
+
+    case BLOG = 'blog';
+
+    public static function labels(): array
+    {
+        return [
+            'storefront'  => __('storefront'),
+            'shop'        => __('shop'),
+            'content'     => __('content'),
+            'info'        => __('info'),
+            'small-print' => __('small print'),
+            'engagement'  => __('engagement'),
+            'auth'        => __('authorisation'),
+            'blog'        => __('blog'),
+
+        ];
+    }
+
+    public function label(): string
+    {
+        return Arr::get($this->labels(), $this->value);
+    }
 
 }

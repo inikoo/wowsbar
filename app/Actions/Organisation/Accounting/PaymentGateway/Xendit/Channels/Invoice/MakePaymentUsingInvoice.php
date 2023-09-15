@@ -25,7 +25,7 @@ class MakePaymentUsingInvoice
     {
         Xendit::setApiKey(Arr::get($payment->paymentAccount->paymentServiceProvider->data, 'api_key'));
 
-        $customer = $payment->customer;
+        $customer   = $payment->customer;
         $externalId = $payment->reference;
 
         $params = [

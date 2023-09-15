@@ -16,6 +16,7 @@ use App\Actions\Organisation\HumanResources\Employee\DeleteEmployee;
 use App\Actions\Organisation\HumanResources\Employee\StoreEmployee;
 use App\Actions\Organisation\HumanResources\Employee\UpdateEmployee;
 use App\Actions\Organisation\Organisation\UpdateOrganisation;
+use App\Actions\Organisation\Web\Webpage\StoreArticle;
 use App\Actions\Organisation\Web\Webpage\StoreWebpage;
 use App\Actions\Organisation\Web\Website\StoreWebsite;
 use App\Actions\Organisation\Web\Website\UpdateWebsite;
@@ -32,6 +33,7 @@ Route::patch('/organisation', UpdateOrganisation::class)->name('organisation.upd
 Route::patch('/website', UpdateWebsite::class)->name('website.update');
 Route::patch('/website/state', UpdateWebsiteState::class)->name('website.state.update');
 Route::post('/webpage/{webpage:id}', StoreWebpage::class)->name('webpage.store');
+Route::post('/article/{webpage:id}', StoreArticle::class)->name('article.store');
 
 
 Route::post('/provider', StorePaymentServiceProvider::class)->name('payment-service-provider.store');

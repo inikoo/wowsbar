@@ -14,8 +14,9 @@ import Button from '@/Components/Elements/Buttons/Button.vue';
 import EmptyState from '@/Components/Utils/EmptyState.vue'
 import { Link } from "@inertiajs/vue3"
 import {trans} from 'laravel-vue-i18n'
+import { capitalize } from "@/Composables/capitalize"
 
-import { computed, onMounted, ref, watch, onUnmounted, getCurrentInstance, Transition } from 'vue';
+import { computed, onMounted, ref, watch, onUnmounted, getCurrentInstance, Transition, toRefs } from 'vue';
 import qs from 'qs';
 import clone from 'lodash-es/clone';
 import filter from 'lodash-es/filter';
@@ -23,6 +24,9 @@ import findKey from 'lodash-es/findKey';
 import forEach from 'lodash-es/forEach';
 import isEqual from 'lodash-es/isEqual';
 import map from 'lodash-es/map';
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { library } from "@fortawesome/fontawesome-svg-core";
+
 
 import {useLocaleStore} from '@/Stores/locale.js';
 const locale = useLocaleStore();
@@ -560,7 +564,9 @@ const handleElementsChange = (data) => {
     queryBuilderData.value.elementFilter = data
 }
 
-watch(props.name, () => {
+const { name }   = toRefs(props)
+
+watch(name, () => {
     // To reset the 'sort' on change Tabs
     queryBuilderData.value.sort = null
     resetQuery()
@@ -680,7 +686,33 @@ watch(props.name, () => {
                                 <tr class="border-t border-gray-200 dark:border-gray-500">
                                     <HeaderCell v-for="column in queryBuilderProps.columns"
                                         :key="`table-${name}-header-${column.key}`" :cell="header(column.key)"
-                                        :type="columnsType[column.key]" :column="column" :resource="compResourceData"/>
+                                        :type="columnsType[column.key]" :column="column" :resource="compResourceData">
+                                        <template #label :data="dataLabel">
+                                            <slot name="labelHeader">
+                                                <div v-if="typeof column.label === 'object'">
+                                                    <FontAwesomeIcon v-if="column.label.type === 'icon'" :title="capitalize(column.label.tooltip)"
+                                                        aria-hidden="true" :icon="column.label.data" size="lg" />
+                                                    <FontAwesomeIcon v-else :title="'icon'" aria-hidden="true" :icon="column.label" size="lg" />
+                                                </div>
+                                                <span v-else class="capitalize">{{ column.label ? trans(column.label) : ''}}</span>
+                                            </slot>
+                                        </template>
+                                        <template #sort>
+                                            <svg v-if="column.sortable" aria-hidden="true" class="w-3 h-3 ml-2" :class="{
+                                                    'text-gray-400': !column.sorted,
+                                                    'text-green-500': column.sorted,
+                                                }" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" :sorted="column.sorted">
+                                                    <path v-if="!column.sorted" fill="currentColor"
+                                                        d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z" />
+
+                                                    <path v-if="column.sorted === 'asc'" fill="currentColor"
+                                                        d="M279 224H41c-21.4 0-32.1-25.9-17-41L143 64c9.4-9.4 24.6-9.4 33.9 0l119 119c15.2 15.1 4.5 41-16.9 41z" />
+
+                                                    <path v-if="column.sorted === 'desc'" fill="currentColor"
+                                                        d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41z" />
+                                                </svg>
+                                        </template>
+                                    </HeaderCell>
                                 </tr>
                             </thead>
 

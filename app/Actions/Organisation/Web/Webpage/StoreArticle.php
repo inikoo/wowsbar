@@ -1,7 +1,7 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Wed, 13 Sep 2023 17:23:28 Malaysia Time, Pantai Lembeng, Bali, Indonesia
+ * Created: Fri, 15 Sep 2023 10:10:39 Malaysia Time, Pantai Lembeng, Bali, Indonesia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
@@ -21,7 +21,7 @@ use Illuminate\Validation\Rules\Enum;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 
-class StoreWebpage
+class StoreArticle
 {
     use AsAction;
 
@@ -29,6 +29,9 @@ class StoreWebpage
     {
         data_set($modelData, 'level', $this->getLevel(Arr::get($modelData, 'parent_id')));
 
+        data_set($modelData, 'data', Arr::only($modelData, ['title','subtitle']));
+
+        Arr::forget($modelData, ['title','subtitle']);
 
         /** @var Webpage $webpage */
         $webpage = $website->webpages()->create($modelData);
@@ -56,29 +59,11 @@ class StoreWebpage
 
     public function prepareForValidation(ActionRequest $request): void
     {
-
-
-        $type=WebpageTypeEnum::CONTENT->value;
-
-        if($_type=Arr::get($request->all(), 'type')) {
-            if(is_array($_type)) {
-                $type=$_type['value'];
-            } else {
-                $type=$_type;
-            }
-        }
-
-
-        $purpose=match ($type) {
-            WebpageTypeEnum::SMALL_PRINT->value=> WebpagePurposeEnum::OTHER_SMALL_PRINT->value,
-            WebpageTypeEnum::SHOP->value       => WebpagePurposeEnum::SHOP->value,
-            default                            => WebpagePurposeEnum::CONTENT->value
-        };
-
         $request->merge(
             [
-                'type'    => $type,
-                'purpose' => $purpose
+                'type'    => WebpageTypeEnum::BLOG->value,
+                'purpose' => WebpagePurposeEnum::ARTICLE->value,
+                'code'    => 'art-'.gmdate('Ymd')
             ]
         );
     }
@@ -86,10 +71,12 @@ class StoreWebpage
     public function rules(): array
     {
         return [
-            'url'     => ['required', new CaseSensitive('webpages'), 'max:255'],
-            'code'    => ['required', 'unique:webpages', 'max:64'],
-            'type'    => ['required', new Enum(WebpageTypeEnum::class)],
-            'purpose' => ['required', new Enum(WebpagePurposeEnum::class)]
+            'url'      => ['required', new CaseSensitive('webpages'), 'max:255'],
+            'code'     => ['required', 'unique:webpages', 'max:64'],
+            'type'     => ['required', new Enum(WebpageTypeEnum::class)],
+            'purpose'  => ['required', new Enum(WebpagePurposeEnum::class)],
+            'title'    => ['required', 'string', 'max:255'],
+            'subtitle' => ['required', 'string', 'max:255'],
 
 
         ];

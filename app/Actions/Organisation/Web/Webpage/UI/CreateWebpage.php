@@ -9,6 +9,7 @@ namespace App\Actions\Organisation\Web\Webpage\UI;
 
 use App\Actions\InertiaAction;
 use App\Actions\Organisation\Web\Webpage\IndexWebpages;
+use App\Enums\Organisation\Web\Webpage\WebpageTypeEnum;
 use App\Models\Organisation\Web\Webpage;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -25,13 +26,44 @@ class CreateWebpage extends InertiaAction
     public function asController(ActionRequest $request): Webpage
     {
         $this->initialisation($request);
-        return organisation()->website->home;
 
+        return organisation()->website->home;
     }
 
+    public function inWebpage(Webpage $webpage, ActionRequest $request): Webpage
+    {
+        $this->initialisation($request);
+
+        return $webpage;
+    }
 
     public function htmlResponse(Webpage $parent, ActionRequest $request): Response
     {
+        $types = [
+            [
+                'title'       => __('Content'),
+                'description' => __('General content'),
+                'value'       => WebpageTypeEnum::CONTENT->value
+            ],
+            [
+                'title'       => __('Shop'),
+                'description' => __('Services showcase'),
+                'value'       => WebpageTypeEnum::SHOP->value
+            ],
+        ];
+
+
+        if ($parent->type == WebpageTypeEnum::STOREFRONT) {
+            $types[] = [
+                'title'       => WebpageTypeEnum::SMALL_PRINT->label(),
+                'description' => __('Privacy, T&C, cookies etc'),
+                'value'       => WebpageTypeEnum::SMALL_PRINT->value
+            ];
+        }
+
+
+        $type = WebpageTypeEnum::CONTENT->value;
+
 
         return Inertia::render(
             'CreateModel',
@@ -39,15 +71,23 @@ class CreateWebpage extends InertiaAction
                 'breadcrumbs' => $this->getBreadcrumbs(),
                 'title'       => __('new webpage'),
                 'pageHead'    => [
-                    'title'        => __('new webpage'),
-                    'actions'      => [
+                    'title'   => __('new webpage'),
+                    'actions' => [
                         [
                             'type'  => 'button',
                             'style' => 'cancel',
-                            'route' => [
-                                'name'       => preg_replace('/create$/', 'index', $request->route()->getName()),
-                                'parameters' => array_values($request->route()->originalParameters())
-                            ]
+                            'route' =>
+                                match ($request->route()->getName()) {
+                                    'org.website.webpages.show.webpages.create' => [
+                                        'name'       => 'org.website.webpages.show' ,
+                                        'parameters' => array_values($request->route()->originalParameters())
+                                    ],
+                                    default => [
+                                        'name'       => preg_replace('/create$/', 'index', $request->route()->getName()),
+                                        'parameters' => array_values($request->route()->originalParameters())
+                                    ]
+                                }
+
 
                         ]
                     ]
@@ -57,15 +97,33 @@ class CreateWebpage extends InertiaAction
                 'formData'    => [
                     'blueprint' => [
                         [
+                            'title'  => __('Type'),
+                            'icon'   => ['fal', 'fa-shapes'],
+                            'fields' => [
+
+                                'type' => [
+                                    'type'     => 'radio',
+                                    'mode'     => 'card',
+                                    'label'    => __('type'),
+                                    'options'  => $types,
+                                    'value'    => $type,
+                                    'required' => true,
+                                ],
+
+
+                            ]
+                        ],
+
+                        [
                             'title'  => __('Id'),
-                            'icon'   => ['fal','fa-fingerprint'],
+                            'icon'   => ['fal', 'fa-fingerprint'],
                             'fields' => [
 
                                 'code' => [
-                                    'type'      => 'input',
-                                    'label'     => __('code'),
-                                    'value'     => '',
-                                    'required'  => true,
+                                    'type'     => 'input',
+                                    'label'    => __('code'),
+                                    'value'    => '',
+                                    'required' => true,
                                 ],
 
                                 'url' => [
@@ -83,8 +141,8 @@ class CreateWebpage extends InertiaAction
 
                     ],
                     'route'     => [
-                        'name'     => 'org.models.webpage.store',
-                        'arguments'=> [$parent->id]
+                        'name'      => 'org.models.webpage.store',
+                        'arguments' => [$parent->id]
                     ],
 
 
