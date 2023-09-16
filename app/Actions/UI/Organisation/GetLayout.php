@@ -7,6 +7,7 @@
 
 namespace App\Actions\UI\Organisation;
 
+use App\Models\Organisation\Market\Shop;
 use App\Models\Organisation\OrganisationUser;
 use Lorisleiva\Actions\Concerns\AsAction;
 
@@ -18,42 +19,89 @@ class GetLayout
     {
         $navigation = [];
 
-        $organisation=organisation();
+        $organisation = organisation();
+
+
+        $shopsCount = $organisation->stats->number_shops;
+        $shop       = null;
+        if ($shopsCount == 1) {
+            /** @var Shop $shop */
+            $shop = $organisation->shops()->first();
+        }
+
 
         if ($user->can('shops')) {
             $navigation['shops'] = [
-                'label'   => __('shops'),
-                'icon'    => ['fal', 'fa-store-alt'],
-                'route'   => 'org.shops.index',
+                'label' => __('shops'),
+                'icon'  => ['fal', 'fa-store-alt'],
+                'route' =>
+                    match ($shopsCount) {
+                        1 => [
+                            'name' => 'org.shops.show',
+                            'parameters' => $shop->slug
+                        ],
+                        default => [
+                            'name' => 'org.shops.index'
+                        ],
+                    },
+
                 'topMenu' => [
-                    'subSections' => [
-                        [
-                            'label' => __('shops'),
-                            'icon'  => ['fal', 'fa-store-alt'],
-                            'route' => [
-                                'name' => 'org.shops.index',
-                            ]
-                        ],
-                        /*
-                        [
-                            'label' => __('webpages'),
-                            'icon'  => ['fal', 'fa-browser'],
-                            'route' => [
-                                'name' => 'org.website.webpages.index',
-                            ]
-                        ],
-                        */
-                    ]
+                    'subSections' =>
+                        match ($shopsCount) {
+                            1 =>
+                            [
+                                [
+
+                                    'label' => __('departments'),
+                                    'icon'  => ['fal', 'fa-folder-tree'],
+                                    'route' => [
+                                        'name'   => 'org.shops.show.departments.index',
+                                        'parameters' =>  $shop->slug
+                                    ]
+                                ],
+                                [
+
+                                    'label' => __('products'),
+                                    'icon'  => ['fal', 'fa-cube'],
+                                    'route' => [
+                                        'name'   => 'org.shops.show.products.index',
+                                        'parameters' =>  $shop->slug
+                                    ]
+                                ]
+                            ],
+                            default => []
+                        }
+
+
+                    /*
+                       [
+                        'label' => __('shops'),
+                        'icon'  => ['fal', 'fa-store-alt'],
+                        'route' => [
+                            'name' => 'org.shops.index',
+                        ]
+                    ],
+                    [
+                        'label' => __('webpages'),
+                        'icon'  => ['fal', 'fa-browser'],
+                        'route' => [
+                            'name' => 'org.website.webpages.index',
+                        ]
+                    ],
+                    */
+
                 ]
             ];
         }
 
 
-        if ($user->can('websites') and $organisation->stats->number_shops>0) {
+        if ($user->can('websites') and $organisation->stats->number_shops > 0) {
             $navigation['websites'] = [
                 'label'   => __('websites'),
                 'icon'    => ['fal', 'fa-globe'],
-                'route'   => 'org.websites.index',
+                'route'   => [
+                    'name' => 'org.websites.index'
+                ],
                 'topMenu' => [
                     'subSections' => [
                         [
@@ -77,12 +125,14 @@ class GetLayout
             ];
         }
 
-        if ($user->can('crm.view') and $organisation->stats->number_shops>0) {
+        if ($user->can('crm.view') and $organisation->stats->number_shops > 0) {
             $navigation['crm'] = [
                 'label' => __('Customers'),
                 'icon'  => ['fal', 'fa-user'],
 
-                'route'   => 'org.crm.dashboard',
+                'route'   => [
+                    'name' => 'org.crm.dashboard'
+                ],
                 'topMenu' => [
                     'subSections' => [
 
@@ -96,7 +146,9 @@ class GetLayout
             $navigation['accounting'] = [
                 'label'   => __('Accounting'),
                 'icon'    => ['fal', 'fa-abacus'],
-                'route'   => 'org.accounting.dashboard',
+                'route'   => [
+                    'name' => 'org.accounting.dashboard'
+                ],
                 'topMenu' => [
                     'subSections' => [
 
@@ -111,7 +163,9 @@ class GetLayout
             $navigation['hr'] = [
                 'label'   => __('human resources'),
                 'icon'    => ['fal', 'fa-user-hard-hat'],
-                'route'   => 'org.hr.dashboard',
+                'route'   => [
+                    'name' => 'org.hr.dashboard'
+                ],
                 'topMenu' => [
                     'subSections' => [
                         [
@@ -163,7 +217,8 @@ class GetLayout
             $navigation['sysadmin'] = [
                 'label'   => __('sysadmin'),
                 'icon'    => ['fal', 'fa-users-cog'],
-                'route'   => 'org.sysadmin.dashboard',
+                'route'   =>
+                    ['name' => 'org.sysadmin.dashboard'],
                 'topMenu' => [
                     'subSections' => [
                         [
