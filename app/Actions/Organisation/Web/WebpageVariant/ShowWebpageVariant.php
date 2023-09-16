@@ -46,13 +46,11 @@ class ShowWebpageVariant extends InertiaAction
 
     public function inShop(Shop $shop, WebpageVariant $webpageVariant, ActionRequest $request): WebpageVariant
     {
-        $this->routeName = $request->route()->getName();
         $this->initialisation($request)->withTab(WebpageTabsEnum::values());
         return $this->handle($webpageVariant);
     }
     public function inShopInDepartment(Shop $shop, ProductCategory $department, WebpageVariant $webpageVariant, ActionRequest $request): WebpageVariant
     {
-        $this->routeName = $request->route()->getName();
         $this->initialisation($request)->withTab(WebpageTabsEnum::values());
         return $this->handle($webpageVariant);
     }
@@ -71,7 +69,7 @@ class ShowWebpageVariant extends InertiaAction
                     'title' => $webpageVariant->code,
                     'edit'  => $this->canEdit ? [
                         'route' => [
-                            'name'       => preg_replace('/show$/', 'edit', $this->routeName),
+                            'name'       => preg_replace('/show$/', 'edit', $request->route()->getName()),
                             'parameters' => array_values($this->originalParameters)
                         ]
                     ] : false,

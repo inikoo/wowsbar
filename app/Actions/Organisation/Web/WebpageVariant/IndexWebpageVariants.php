@@ -8,12 +8,10 @@
 namespace App\Actions\Organisation\Web\WebpageVariant;
 
 use App\Actions\InertiaAction;
-use App\Actions\Market\Shop\UI\ShowShop;
-use App\Actions\UI\Dashboard\ShowDashboard;
+
 use App\Http\Resources\Market\ShopResource;
 use App\Http\Resources\Web\WebpageResource;
 use App\InertiaTable\InertiaTable;
-use App\Models\Web\WebpageVariant;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -116,7 +114,6 @@ class IndexWebpageVariants extends InertiaAction
 
     public function asController(ActionRequest $request): LengthAwarePaginator
     {
-        $this->routeName = $request->route()->getName();
 
         return $this->handle();
     }

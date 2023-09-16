@@ -7,7 +7,6 @@
 
 namespace App\Models\Organisation\Web;
 
-use App\Enums\Organisation\Web\Website\WebsiteEngineEnum;
 use App\Enums\Organisation\Web\Website\WebsiteStateEnum;
 use App\Models\Traits\HasHistory;
 use App\Models\Traits\HasOrganisationUniversalSearch;
@@ -26,7 +25,6 @@ use Spatie\Sluggable\SlugOptions;
  *
  * @property int $id
  * @property int $shop_id
- * @property string|null $type
  * @property string $slug
  * @property string $code
  * @property string $name
@@ -44,7 +42,6 @@ use Spatie\Sluggable\SlugOptions;
  * @property string|null $closed_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property int|null $home_id
- * @property WebsiteEngineEnum $engine
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \OwenIt\Auditing\Models\Audit> $audits
  * @property-read int|null $audits_count
  * @property-read array $es_audits
@@ -75,7 +72,6 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Website whereState($value)
  * @method static Builder|Website whereStatus($value)
  * @method static Builder|Website whereStructure($value)
- * @method static Builder|Website whereType($value)
  * @method static Builder|Website whereUpdatedAt($value)
  * @method static Builder|Website withTrashed()
  * @method static Builder|Website withoutTrashed()
@@ -93,7 +89,6 @@ class Website extends Model implements Auditable
         'settings'  => 'array',
         'structure' => 'array',
         'state'     => WebsiteStateEnum::class,
-        'engine'    => WebsiteEngineEnum::class
     ];
 
     protected $attributes = [

@@ -10,7 +10,6 @@ namespace App\Actions\Organisation\Market\Shop;
 use App\Actions\Organisation\Market\Shop\Hydrators\ShopHydrateUniversalSearch;
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateShops;
 use App\Actions\Traits\WithActionUpdate;
-use App\Enums\Market\Shop\ShopTypeEnum;
 use App\Http\Resources\Market\ShopResource;
 use App\Models\Organisation\Market\Shop;
 use Illuminate\Validation\Rule;
@@ -53,7 +52,7 @@ class UpdateShop
             'phone'                    => ['sometimes','nullable'],
             'identity_document_number' => ['sometimes', 'nullable', 'string'],
             'identity_document_type'   => ['sometimes', 'nullable', 'string'],
-            'type'                     => ['sometimes', 'required', Rule::in(ShopTypeEnum::values())],
+            'type'                     => ['sometimes', 'required', Rule::in(\App\Enums\Organisation\Market\Shop\ShopTypeEnum::values())],
             'currency_id'              => ['sometimes', 'required', 'exists:central.currencies,id'],
             'language_id'              => ['sometimes', 'required', 'exists:central.languages,id'],
             'timezone_id'              => ['sometimes', 'required', 'exists:central.timezones,id'],

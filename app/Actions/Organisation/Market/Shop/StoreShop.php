@@ -10,9 +10,11 @@ namespace App\Actions\Organisation\Market\Shop;
 use App\Actions\Organisation\Accounting\PaymentAccount\StorePaymentAccount;
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateShops;
 use App\Enums\Helpers\SerialReference\SerialReferenceModelEnum;
-use App\Enums\Market\Shop\ShopTypeEnum;
+use App\Enums\Organisation\Market\Shop\ShopTypeEnum;
 use App\Models\Organisation\Market\Shop;
 use App\Models\Organisation\Organisation;
+use Exception;
+use Illuminate\Console\Command;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Validation\Rule;
@@ -25,7 +27,6 @@ class StoreShop
 {
     use AsAction;
     use WithAttributes;
-
     private bool $asAction = false;
 
     public function handle(Organisation $organisation, array $modelData = []): Shop
@@ -39,7 +40,7 @@ class StoreShop
 
 
         /** @var Shop $shop */
-        $shop = $organisation->shop()->create($modelData);
+        $shop = $organisation->shops()->create($modelData);
         $shop->stats()->create();
         $shop->accountingStats()->create();
         $shop->crmStats()->create();
@@ -73,7 +74,7 @@ class StoreShop
         $paymentAccount->slug = 'accounts-'.$shop->slug;
         $paymentAccount->save();
 
-        $shop= AttachPaymentAccountToShop::run($shop, $paymentAccount);
+        $shop = AttachPaymentAccountToShop::run($shop, $paymentAccount);
 
         OrganisationHydrateShops::run();
 
@@ -89,6 +90,7 @@ class StoreShop
 
         return $request->user()->hasPermissionTo("shops.edit");
     }
+
     public function afterValidator(Validator $validator, ActionRequest $request): void
     {
         if ($request->get('identity_document_number') and !$request->get('identity_document_type')) {
@@ -103,7 +105,7 @@ class StoreShop
     {
         return [
             'name'                     => ['required', 'string', 'max:255'],
-            'code'                     => ['required', 'unique:tenant.shops', 'between:2,4', 'alpha_dash'],
+            'code'                     => ['required', 'unique:tenant.shops', 'between:2,6', 'alpha_dash'],
             'contact_name'             => ['nullable', 'string', 'max:255'],
             'company_name'             => ['nullable', 'string', 'max:255'],
             'email'                    => ['nullable', 'email'],
@@ -111,10 +113,10 @@ class StoreShop
             'identity_document_number' => ['nullable', 'string'],
             'identity_document_type'   => ['nullable', 'string'],
             'type'                     => ['required', Rule::in(ShopTypeEnum::values())],
-            'country_id'               => ['required', 'exists:countries,id'],
-            'currency_id'              => ['required', 'exists:currencies,id'],
-            'language_id'              => ['required', 'exists:languages,id'],
-            'timezone_id'              => ['required', 'exists:timezones,id'],
+            'country_id'               => ['sometimes', 'required', 'exists:countries,id'],
+            'currency_id'              => ['sometimes', 'required', 'exists:currencies,id'],
+            'language_id'              => ['sometimes', 'required', 'exists:languages,id'],
+            'timezone_id'              => ['sometimes', 'required', 'exists:timezones,id'],
         ];
     }
 
@@ -129,5 +131,33 @@ class StoreShop
     public function htmlResponse(Shop $shop): RedirectResponse
     {
         return Redirect::route('org.shops.show', $shop->slug);
+    }
+
+    public string $commandSignature = 'shop:create {code} {name} {type}';
+
+    public function asCommand(Command $command): int
+    {
+        $this->asAction = true;
+
+        $this->setRawAttributes([
+            'code' => $command->argument('code'),
+            'name' => $command->argument('name'),
+            'type' => $command->argument('type'),
+
+        ]);
+
+        try {
+            $validatedData = $this->validateAttributes();
+        } catch (Exception $e) {
+            $command->error($e->getMessage());
+
+            return 1;
+        }
+
+        $organisation = $this->handle(organisation(), $validatedData);
+
+        $command->info("Organisation $organisation->code created successfully 🎉");
+
+        return 0;
     }
 }

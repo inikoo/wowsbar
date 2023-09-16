@@ -11,7 +11,7 @@ use App\Actions\Assets\Country\UI\GetCountriesOptions;
 use App\Actions\Assets\Currency\UI\GetCurrenciesOptions;
 use App\Actions\Assets\Language\UI\GetLanguagesOptions;
 use App\Actions\InertiaAction;
-use App\Enums\Market\Shop\ShopTypeEnum;
+use App\Enums\Organisation\Market\Shop\ShopTypeEnum;
 use App\Models\Organisation\Market\Shop;
 use Exception;
 use Inertia\Inertia;
@@ -62,7 +62,7 @@ class EditShop extends InertiaAction
                             'type'  => 'button',
                             'style' => 'exitEdit',
                             'route' => [
-                                'name'       => preg_replace('/edit$/', 'show', $this->routeName),
+                                'name'       => preg_replace('/edit$/', 'show', $request->route()->getName()),
                                 'parameters' => array_values($this->originalParameters)
                             ]
                         ]

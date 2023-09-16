@@ -37,7 +37,7 @@ class GetLayout
                 'route' =>
                     match ($shopsCount) {
                         1 => [
-                            'name' => 'org.shops.show',
+                            'name'       => 'org.shops.show',
                             'parameters' => $shop->slug
                         ],
                         default => [
@@ -55,8 +55,8 @@ class GetLayout
                                     'label' => __('departments'),
                                     'icon'  => ['fal', 'fa-folder-tree'],
                                     'route' => [
-                                        'name'   => 'org.shops.show.departments.index',
-                                        'parameters' =>  $shop->slug
+                                        'name'       => 'org.shops.show.departments.index',
+                                        'parameters' => $shop->slug
                                     ]
                                 ],
                                 [
@@ -64,8 +64,8 @@ class GetLayout
                                     'label' => __('products'),
                                     'icon'  => ['fal', 'fa-cube'],
                                     'route' => [
-                                        'name'   => 'org.shops.show.products.index',
-                                        'parameters' =>  $shop->slug
+                                        'name'       => 'org.shops.show.products.index',
+                                        'parameters' => $shop->slug
                                     ]
                                 ]
                             ],

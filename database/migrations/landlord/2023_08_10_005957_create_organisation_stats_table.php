@@ -5,9 +5,10 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-use App\Enums\Market\Shop\ShopStateEnum;
-use App\Enums\Market\Shop\ShopTypeEnum;
+use App\Enums\Organisation\Market\Shop\ShopStateEnum;
+use App\Enums\Organisation\Market\Shop\ShopTypeEnum;
 use App\Enums\Organisation\OrganisationUser\OrganisationUserTypeEnum;
+use App\Enums\Organisation\Web\Website\WebsiteStateEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -44,7 +45,11 @@ return new class () extends Migration {
                 $table->unsignedSmallInteger('number_shops_state_'.$shopState->snake())->default(0);
             }
 
+            $table->unsignedInteger('number_websites')->default(0);
 
+            foreach (WebsiteStateEnum::cases() as $websiteState) {
+                $table->unsignedSmallInteger('number_websites_state_'.$websiteState->snake())->default(0);
+            }
 
 
             $table->timestampsTz();

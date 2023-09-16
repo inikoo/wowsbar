@@ -8,14 +8,13 @@
 namespace App\Actions\Organisation\Market\Shop\UI;
 
 use App\Actions\InertiaAction;
+
 use App\Actions\Organisation\Market\Product\UI\IndexProducts;
 use App\Actions\Organisation\Market\ProductCategory\UI\IndexDepartments;
-use App\Actions\Organisation\Market\ProductCategory\UI\IndexFamilies;
-use App\Actions\UI\Dashboard\ShowDashboard;
+use App\Actions\UI\Organisation\Dashboard\ShowDashboard;
 use App\Actions\UI\WithInertia;
 use App\Enums\UI\Organisation\ShopTabsEnum;
 use App\Http\Resources\Market\DepartmentResource;
-use App\Http\Resources\Market\FamilyResource;
 use App\Http\Resources\Market\ProductResource;
 use App\Http\Resources\Market\ShopResource;
 use App\Models\Organisation\Market\Shop;
@@ -29,6 +28,8 @@ class ShowShop extends InertiaAction
     use AsAction;
     use WithInertia;
 
+    private bool $createWebsite;
+
     public function handle(Shop $shop): Shop
     {
         return $shop;
@@ -36,8 +37,9 @@ class ShowShop extends InertiaAction
 
     public function authorize(ActionRequest $request): bool
     {
-        $this->canEdit   = $request->user()->can('shops.edit');
-        $this->canDelete = $request->user()->can('shops.edit');
+        $this->canEdit         = $request->user()->can('shops.edit');
+        $this->canDelete       = $request->user()->can('shops.edit');
+        $this->createWebsite   = $request->user()->can('websites.edit');
 
         return $request->user()->hasPermissionTo("shops.view");
     }
@@ -51,6 +53,30 @@ class ShowShop extends InertiaAction
 
     public function htmlResponse(Shop $shop, ActionRequest $request): Response
     {
+
+        $actions= [
+            !$shop->website && $this->canEdit ? [
+                'type'  => 'button',
+                'style' => 'create',
+                'label' => __('website'),
+                'route' => [
+                    'name'       => 'org.shops.show.website.create',
+                    'parameters' => $request->route()->originalParameters()
+                ]
+
+            ] : false,
+            $this->canEdit ? [
+                'type'  => 'button',
+                'style' => 'edit',
+                'route' => [
+                    'name'       => preg_replace('/show$/', 'edit', $request->route()->getName()),
+                    'parameters' => $request->route()->originalParameters()
+                ]
+            ] : false,
+
+        ];
+
+
         return Inertia::render(
             'Market/Shop',
             [
@@ -68,34 +94,7 @@ class ShowShop extends InertiaAction
                         'title' => __('Shop'),
                         'icon'  => 'fal fa-store-alt'
                     ],
-                    'actions' => [
-                        [
-                            'type'  => 'button',
-                            'style' => 'create',
-                            'label' => __('website'),
-                            'route' => [
-                                'name'       => 'org.shops.show.website.create',
-                                'parameters' => $request->route()->originalParameters()
-                            ]
-
-                        ],
-                        $this->canEdit ? [
-                            'type'  => 'button',
-                            'style' => 'edit',
-                            'route' => [
-                                'name'       => preg_replace('/show$/', 'edit', $this->routeName),
-                                'parameters' => $request->route()->originalParameters()
-                            ]
-                        ] : false,
-                        $this->canDelete ? [
-                            'type'  => 'button',
-                            'style' => 'delete',
-                            'route' => [
-                                'name'       => 'org.shops.remove',
-                                'parameters' => $request->route()->originalParameters()
-                            ]
-                        ] : false
-                    ]
+                    'actions' => $actions
                 ],
                 'flatTreeMaps' => [
                     [
@@ -126,14 +125,7 @@ class ShowShop extends InertiaAction
                             ]
                         ],
 
-                        [
-                            'name'  => __('families'),
-                            'icon'  => ['fal', 'fa-folder'],
-                            'href'  => ['org.shops.show.families.index', $shop->slug],
-                            'index' => [
-                                'number' => $shop->stats->number_families
-                            ]
-                        ],
+
 
                         [
                             'name'  => __('products'),
@@ -176,7 +168,7 @@ class ShowShop extends InertiaAction
                     'navigation' => ShopTabsEnum::navigation()
                 ],
 
-                ShopTabsEnum::DEPARTMENTS->value => $this->tab == \App\Enums\UI\Organisation\ShopTabsEnum::DEPARTMENTS->value
+                ShopTabsEnum::DEPARTMENTS->value => $this->tab == ShopTabsEnum::DEPARTMENTS->value
                     ?
                     fn () => DepartmentResource::collection(
                         IndexDepartments::run(
@@ -191,20 +183,7 @@ class ShowShop extends InertiaAction
                         )
                     )),
 
-                ShopTabsEnum::FAMILIES->value => $this->tab == ShopTabsEnum::FAMILIES->value
-                    ?
-                    fn () => FamilyResource::collection(
-                        IndexFamilies::run(
-                            parent: $shop,
-                            prefix: 'families'
-                        )
-                    )
-                    : Inertia::lazy(fn () => FamilyResource::collection(
-                        IndexFamilies::run(
-                            parent: $shop,
-                            prefix: 'families'
-                        )
-                    )),
+
 
                 ShopTabsEnum::PRODUCTS->value => $this->tab == ShopTabsEnum::PRODUCTS->value
                     ?
@@ -236,21 +215,6 @@ class ShowShop extends InertiaAction
                     ] : false
                 ],
                 prefix: 'departments'
-            )
-        )->table(
-            IndexFamilies::make()->tableStructure(
-                parent: $shop,
-                modelOperations: [
-                    'createLink' => $this->canEdit ? [
-                        'route' => [
-                            'name'       => 'org.shops.show.families.create',
-                            'parameters' => array_values([$shop->slug])
-                        ],
-                        'label' => __('family'),
-                        'style' => 'create'
-                    ] : false
-                ],
-                prefix: 'families'
             )
         )->table(
             IndexProducts::make()->tableStructure(

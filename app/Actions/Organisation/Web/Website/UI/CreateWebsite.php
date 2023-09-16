@@ -9,6 +9,7 @@ namespace App\Actions\Organisation\Web\Website\UI;
 
 use App\Actions\InertiaAction;
 use App\Actions\UI\Organisation\Dashboard\ShowDashboard;
+use App\Models\Organisation\Market\Shop;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -21,18 +22,15 @@ class CreateWebsite extends InertiaAction
     }
 
 
-    public function asController(ActionRequest $request): ActionRequest
+    public function asController(Shop $shop, ActionRequest $request): Shop
     {
-        if(organisation()->website) {
-            abort(419);
-        }
         $this->initialisation($request);
-        return $request;
+        return $shop;
 
     }
 
 
-    public function htmlResponse(ActionRequest $request): Response
+    public function htmlResponse(Shop $shop, ActionRequest $request): Response
     {
 
         return Inertia::render(
@@ -70,7 +68,8 @@ class CreateWebsite extends InertiaAction
 
                     ],
                     'route'     => [
-                        'name' => 'org.models.website.store',
+                        'name'      => 'org.models.shop.website.store',
+                        'parameters'=> [$shop->id]
                     ],
 
 

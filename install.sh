@@ -38,6 +38,9 @@ pg_dump -Fc -f "devops/devel/snapshots/fresh.dump" ${DB}
 echo "🏢 create organisation"
 php artisan org:create wowsbar Wowsbar ID GBP
 php artisan org:create-guest aiku aiku external_administrator
+echo "🌱 create shop/website"
+php artisan shop:create awa 'aw-advantage' 'digital-marketing'
+php artisan shop:create-website awa 'awa.test'
 
 
 echo "🌱 create customer"

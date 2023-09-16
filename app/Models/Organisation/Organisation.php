@@ -40,7 +40,8 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property-read \App\Models\Organisation\OrganisationHumanResourcesStats|null $humanResourcesStats
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \App\Models\Media\Media> $media
  * @property-read int|null $media_count
- * @property-read Shop|null $shop
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Shop> $shops
+ * @property-read int|null $shops_count
  * @property-read \App\Models\Organisation\OrganisationStats|null $stats
  * @property-read \App\Models\Search\OrganisationUniversalSearch|null $universalSearch
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Organisation\OrganisationUser> $users
@@ -98,9 +99,9 @@ class Organisation extends Model implements HasMedia
         return $this->hasOne(Website::class);
     }
 
-    public function shop(): HasOne
+    public function shops(): HasMany
     {
-        return $this->hasOne(Shop::class);
+        return $this->hasMany(Shop::class);
     }
 
     public function currency(): BelongsTo

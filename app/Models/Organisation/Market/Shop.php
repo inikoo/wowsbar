@@ -7,8 +7,8 @@
 
 namespace App\Models\Organisation\Market;
 
-use App\Enums\Market\Shop\ShopStateEnum;
-use App\Enums\Market\Shop\ShopTypeEnum;
+use App\Enums\Organisation\Market\Shop\ShopStateEnum;
+use App\Enums\Organisation\Market\Shop\ShopTypeEnum;
 use App\Models\Accounting\Invoice;
 use App\Models\Accounting\Payment;
 use App\Models\Accounting\PaymentAccount;

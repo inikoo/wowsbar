@@ -7,8 +7,8 @@
 
 namespace App\Actions\Organisation\Organisation\Hydrators;
 
-use App\Enums\Market\Shop\ShopStateEnum;
-use App\Enums\Market\Shop\ShopTypeEnum;
+use App\Enums\Organisation\Market\Shop\ShopStateEnum;
+use App\Enums\Organisation\Market\Shop\ShopTypeEnum;
 use App\Models\Organisation\Market\Shop;
 use Illuminate\Support\Arr;
 use Lorisleiva\Actions\Concerns\AsAction;

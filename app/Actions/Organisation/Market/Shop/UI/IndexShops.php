@@ -130,7 +130,7 @@ class IndexShops extends InertiaAction
                         'title' => __('shop')
                     ],
                     'actions' => [
-                        $this->canEdit && $this->routeName == 'org.shops.index' ? [
+                        $this->canEdit && $request->route()->getName() == 'org.shops.index' ? [
                             'type'    => 'button',
                             'style'   => 'create',
                             'tooltip' => __('new shop'),

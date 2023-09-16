@@ -7,7 +7,6 @@
 
 namespace App\Actions\Organisation\Market\Shop\Hydrators;
 
-use App\Enums\Market\Product\ProductStateEnum;
 use App\Models\Organisation\Market\Product;
 use App\Models\Organisation\Market\Shop;
 use Illuminate\Contracts\Queue\ShouldBeUnique;

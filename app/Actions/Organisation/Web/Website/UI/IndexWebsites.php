@@ -8,6 +8,7 @@
 namespace App\Actions\Organisation\Web\Website\UI;
 
 use App\Actions\InertiaAction;
+use App\Actions\UI\Organisation\Dashboard\ShowDashboard;
 use App\Enums\Organisation\Web\Website\WebsiteStateEnum;
 use App\Http\Resources\Web\WebsiteResource;
 use App\InertiaTable\InertiaTable;
@@ -117,7 +118,7 @@ class IndexWebsites extends InertiaAction
                 ->withEmptyState(
                     [
                         'title' => __('No websites found'),
-                        'count' => app('currentTenant')->webStats->number_websites,
+                        'count' => organisation()->stats->number_websites,
 
                     ]
                 )
@@ -150,19 +151,7 @@ class IndexWebsites extends InertiaAction
                         'title' => __('website'),
                         'icon'  => 'fal fa-globe'
                     ],
-                    'actions' => [
-                        $this->canEdit ? [
-                            'type'    => 'button',
-                            'style'   => 'create',
-                            'tooltip' => __('Create a no shop connected website'),
-                            'label'   => __('new static website'),
-                            'route'   => [
-                                'name' => 'web.websites.create',
-                            ]
-                        ] : false,
 
-
-                    ]
                 ],
                 'data'        => WebsiteResource::collection($websites),
 
@@ -187,12 +176,12 @@ class IndexWebsites extends InertiaAction
         };
 
         return match ($routeName) {
-            'web.websites.index' =>
+            'org.websites.index' =>
             array_merge(
                 ShowDashboard::make()->getBreadcrumbs(),
                 $headCrumb(
                     [
-                        'name' => 'web.websites.index',
+                        'name' => 'org.websites.index',
                         null
                     ]
                 ),

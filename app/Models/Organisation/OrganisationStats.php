@@ -36,6 +36,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $number_shops_state_open
  * @property int $number_shops_state_closing_down
  * @property int $number_shops_state_closed
+ * @property int $number_websites
+ * @property int $number_websites_state_in_process
+ * @property int $number_websites_state_live
+ * @property int $number_websites_state_closed
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Organisation\Organisation $organisation
@@ -64,6 +68,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static Builder|OrganisationStats whereNumberShopsStateOpen($value)
  * @method static Builder|OrganisationStats whereNumberShopsTypeContentAsAService($value)
  * @method static Builder|OrganisationStats whereNumberShopsTypeDigitalMarketing($value)
+ * @method static Builder|OrganisationStats whereNumberWebsites($value)
+ * @method static Builder|OrganisationStats whereNumberWebsitesStateClosed($value)
+ * @method static Builder|OrganisationStats whereNumberWebsitesStateInProcess($value)
+ * @method static Builder|OrganisationStats whereNumberWebsitesStateLive($value)
  * @method static Builder|OrganisationStats whereOrganisationId($value)
  * @method static Builder|OrganisationStats whereUpdatedAt($value)
  * @mixin \Eloquent

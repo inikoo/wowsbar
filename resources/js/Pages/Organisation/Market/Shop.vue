@@ -39,7 +39,6 @@ const props = defineProps<{
     title: string
     showcase?: object
     departments?: object
-    families?: object
     products?: object
 
 }>();
@@ -52,7 +51,6 @@ const component = computed(() => {
     const components = {
         showcase: ShopShowcase,
         departments: TableDepartments,
-        families: TableFamilies,
         products: TableProducts,
         details: ModelDetails,
         history: TableHistories
