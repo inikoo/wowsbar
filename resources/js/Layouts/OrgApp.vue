@@ -48,14 +48,9 @@ library.add(
     faBars,
     faUsersCog,
     faTachometerAltFast,
-    faInventory,
     faStoreAlt,
     faUser,
     faUser,
-    faIndustry,
-    faParachuteBox,
-    faDollyEmpty,
-    faShoppingCart,
     faAbacus,
     faChevronDown,
     faGlobe,
@@ -63,7 +58,10 @@ library.add(
     faSearch,
     faBell,
     faUsers,
-    faNetworkWired,faCalendar,faStopwatch,faBuilding
+    faNetworkWired,
+    faCalendar,
+    faStopwatch,
+    faBuilding
 )
 
 const sidebarOpen = ref(false)

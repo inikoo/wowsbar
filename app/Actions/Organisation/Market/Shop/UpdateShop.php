@@ -8,9 +8,8 @@
 namespace App\Actions\Organisation\Market\Shop;
 
 use App\Actions\Organisation\Market\Shop\Hydrators\ShopHydrateUniversalSearch;
-use App\Actions\Tenancy\Tenant\Hydrators\TenantHydrateMarket;
+use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateShops;
 use App\Actions\Traits\WithActionUpdate;
-use App\Enums\Market\Shop\ShopSubtypeEnum;
 use App\Enums\Market\Shop\ShopTypeEnum;
 use App\Http\Resources\Market\ShopResource;
 use App\Models\Organisation\Market\Shop;
@@ -27,8 +26,8 @@ class UpdateShop
     {
         $shop =  $this->update($shop, $modelData, ['data', 'settings']);
         ShopHydrateUniversalSearch::dispatch($shop);
-        if ($shop->wasChanged(['type', 'subtype', 'state'])) {
-            TenantHydrateMarket::dispatch(app('currentTenant'));
+        if ($shop->wasChanged(['type', 'state'])) {
+            OrganisationHydrateShops::run();
         }
 
         return $shop;
@@ -47,7 +46,7 @@ class UpdateShop
     {
         return [
             'name'                     => ['sometimes', 'required', 'string', 'max:255'],
-            'code'                     => ['sometimes', 'required', 'unique:tenant.shops', 'between:2,4', 'alpha_dash'],
+            'code'                     => ['sometimes', 'required', 'unique:shops', 'between:2,4', 'alpha_dash'],
             'contact_name'             => ['sometimes', 'nullable', 'string', 'max:255'],
             'company_name'             => ['sometimes', 'nullable', 'string', 'max:255'],
             'email'                    => ['sometimes', 'nullable', 'email'],
@@ -55,7 +54,6 @@ class UpdateShop
             'identity_document_number' => ['sometimes', 'nullable', 'string'],
             'identity_document_type'   => ['sometimes', 'nullable', 'string'],
             'type'                     => ['sometimes', 'required', Rule::in(ShopTypeEnum::values())],
-            'subtype'                  => ['sometimes', 'required', Rule::in(ShopSubtypeEnum::values())],
             'currency_id'              => ['sometimes', 'required', 'exists:central.currencies,id'],
             'language_id'              => ['sometimes', 'required', 'exists:central.languages,id'],
             'timezone_id'              => ['sometimes', 'required', 'exists:central.timezones,id'],

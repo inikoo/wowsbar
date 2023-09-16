@@ -12,17 +12,20 @@ Route::middleware(["org-web"])->group(function () {
 
     Route::middleware(["org-auth:org"])->group(function () {
         Route::get('/', function () {
-            return redirect('/org/dashboard');
+            return redirect('/dashboard');
         });
         Route::prefix("dashboard")
             ->name("dashboard.")
             ->group(__DIR__."/dashboard.php");
+        Route::prefix("shops")
+            ->name("shops.")
+            ->group(__DIR__."/shops.php");
         Route::prefix("crm")
             ->name("crm.")
             ->group(__DIR__."/crm.php");
-        Route::prefix("website")
-            ->name("website.")
-            ->group(__DIR__."/website.php");
+        Route::prefix("websites")
+            ->name("websites.")
+            ->group(__DIR__."/websites.php");
         Route::prefix("media")
             ->name("media.")
             ->group(__DIR__."/media.php");

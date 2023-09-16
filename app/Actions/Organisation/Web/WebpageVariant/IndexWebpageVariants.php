@@ -149,12 +149,12 @@ class IndexWebpageVariants extends InertiaAction
             ),
 
 
-            'shops.show.webpages.index' =>
+            'org.shops.show.webpages.index' =>
             array_merge(
                 (new ShowShop())->getBreadcrumbs($routeParameters['shop']),
                 $headCrumb(
                     [
-                        'name'       => 'shops.show.webpages.index',
+                        'name'       => 'org.shops.show.webpages.index',
                         'parameters' =>
                             [
                                 $routeParameters['shop']->slug

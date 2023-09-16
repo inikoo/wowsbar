@@ -16,9 +16,9 @@ import Table from '@/Components/Table/Table.vue';
 
 function paymentAccountRoute(paymentAccount) {
     switch (route().current()) {
-        case 'shops.show.accounting.payment-accounts.index':
+        case 'org.shops.show.accounting.payment-accounts.index':
             return route(
-                'shops.show.accounting.payment-accounts.show',
+                'org.shops.show.accounting.payment-accounts.show',
                 [paymentAccount.shop_slug, paymentAccount.slug]);
         case 'org.accounting.payment-service-providers.show':
         case 'org.accounting.payment-service-providers.show.payment-accounts.index':

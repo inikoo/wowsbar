@@ -6,8 +6,6 @@
  */
 
 use App\Enums\Market\Shop\ShopStateEnum;
-use App\Enums\Market\Shop\ShopSubtypeEnum;
-use App\Enums\Market\Shop\ShopTypeEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -30,8 +28,7 @@ return new class () extends Migration {
             $table->foreign('address_id')->references('id')->on('addresses');
             $table->jsonb('location');
             $table->string('state')->index()->default(ShopStateEnum::IN_PROCESS->value);
-            $table->string('type')->index()->default(ShopTypeEnum::SHOP->value);
-            $table->string('subtype')->nullable()->default(ShopSubtypeEnum::MARKETING->value);
+            $table->string('type')->index();
             $table->date('open_at')->nullable();
             $table->date('closed_at')->nullable();
             $table->unsignedSmallInteger('country_id');

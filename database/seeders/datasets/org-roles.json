@@ -2,25 +2,25 @@
     {
         "name":"customer-services",
         "permissions": [
-            "crm","website.view"
+            "crm","websites.view"
         ]
     },
     {
         "name":"web-editor",
         "permissions": [
-            "website"
+            "websites"
         ]
     },
     {
         "name":"web-master",
         "permissions": [
-            "website","supervisor.website"
+            "websites","supervisor.website"
         ]
     },
     {
         "name":"super-admin",
         "permissions": [
-            "sysadmin","website","crm","hr","supervisor","accounting"
+            "sysadmin","shops","websites","crm","hr","supervisor","accounting"
         ]
     }
 

@@ -127,7 +127,7 @@ class IndexCustomers extends InertiaAction
                                 'tooltip' => __('new shop'),
                                 'label'   => __('shop'),
                                 'route'   => [
-                                    'name' => 'shops.create',
+                                    'name' => 'org.shops.create',
                                 ]
                             ] :
                                 [
@@ -136,7 +136,7 @@ class IndexCustomers extends InertiaAction
                                     'tooltip' => __('new customer'),
                                     'label'   => __('customer'),
                                     'route'   => [
-                                        'name' => 'shops.create',
+                                        'name' => 'org.shops.create',
                                     ]
                                 ]
 
@@ -179,9 +179,7 @@ class IndexCustomers extends InertiaAction
                 )
                 ->column(key: 'slug', label: __('code'), canBeHidden: false, sortable: true, searchable: true)
                 ->column(key: 'name', label: __('name'), canBeHidden: false, sortable: true, searchable: true);
-            if (class_basename($parent) == 'Shop' and $parent->subtype == 'dropshipping') {
-                $table->column(key: 'number_active_clients', label: __('clients'), canBeHidden: false, sortable: true);
-            }
+
         };
     }
 

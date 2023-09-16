@@ -7,34 +7,36 @@
 <script setup lang="ts">
 import {Link} from '@inertiajs/vue3';
 import Table from '@/Components/Table/Table.vue';
-import {Prospect} from "@/types/prospect";
+import {Department} from "@/types/department";
 
 const props = defineProps<{
     data: object,
-    tab?: string
-}>()
+    tab?:string
+}>();
 
 
-function prospectRoute(prospect: Prospect) {
+function departmentRoute(department: Department) {
     switch (route().current()) {
-        case 'org.shops.show.prospects.index':
+        case 'org.shops.show':
+        case "shops.show.departments.index":
             return route(
-                'org.shops.show.prospects.show',
-                [prospect.slug, prospect.slug]);
+                'org.shops.show.departments.show',
+                [route().params['shop'], department.slug]);
         default:
             return route(
-                'prospects.show',
-                [prospect.slug]);
+                'org.shops.show.departments.show',
+                [department.shop_slug,department.slug]);
     }
 }
 
 </script>
 
 <template>
+
     <Table :resource="data" :name="tab" class="mt-5">
-        <template #cell(name)="{ item: prospect }">
-            <Link :href="prospectRoute(prospect)">
-                {{ prospect['name'] }}
+        <template #cell(slug)="{ item: department }">
+            <Link :href="departmentRoute(department)">
+                {{ department['slug'] }}
             </Link>
         </template>
     </Table>

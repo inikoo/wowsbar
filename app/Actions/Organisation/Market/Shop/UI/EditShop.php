@@ -11,7 +11,7 @@ use App\Actions\Assets\Country\UI\GetCountriesOptions;
 use App\Actions\Assets\Currency\UI\GetCurrenciesOptions;
 use App\Actions\Assets\Language\UI\GetLanguagesOptions;
 use App\Actions\InertiaAction;
-use App\Enums\Market\Shop\ShopSubtypeEnum;
+use App\Enums\Market\Shop\ShopTypeEnum;
 use App\Models\Organisation\Market\Shop;
 use Exception;
 use Inertia\Inertia;
@@ -87,12 +87,12 @@ class EditShop extends InertiaAction
                                     'value'        => $shop->name,
                                     'required'     => true,
                                 ],
-                                'subtype' => [
+                                'type' => [
                                     'type'         => 'select',
                                     'label'        => __('type'),
-                                    'value'        => $shop->subtype,
+                                    'value'        => $shop->type,
                                     'placeholder'  => 'Select a Type',
-                                    'options'      => Options::forEnum(ShopSubtypeEnum::class),
+                                    'options'      => Options::forEnum(ShopTypeEnum::class),
                                     'required'     => true,
                                     'mode'         => 'single',
                                     'searchable'   => true
@@ -200,7 +200,7 @@ class EditShop extends InertiaAction
         }
 
         return match ($routeName) {
-            'shops.edit' => [
+            'org.shops.edit' => [
                 'label' => $shop->name,
                 'route' => [
                     'name'       => $routeName,

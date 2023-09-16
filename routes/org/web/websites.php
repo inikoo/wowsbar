@@ -13,10 +13,16 @@ use App\Actions\Organisation\Web\Webpage\UI\ShowWebpage;
 use App\Actions\Organisation\Web\Webpage\UI\ShowWebpageWorkshop;
 use App\Actions\Organisation\Web\Website\UI\CreateWebsite;
 use App\Actions\Organisation\Web\Website\UI\EditWebsite;
+use App\Actions\Organisation\Web\Website\UI\IndexWebsites;
 use App\Actions\Organisation\Web\Website\UI\ShowWebsite;
 use App\Actions\Organisation\Web\Website\UI\ShowWebsiteWorkshop;
 use App\Actions\Organisation\Web\Website\UI\ShowWebsiteWorkshopPreview;
 use Illuminate\Support\Facades\Route;
+
+Route::get('/', IndexWebsites::class)->name('index');
+
+
+/*
 
 Route::get('/dashboard', ShowWebsite::class)->name('show');
 Route::get('/create', CreateWebsite::class)->name('create');
@@ -36,3 +42,4 @@ Route::get('/webpages/{webpage}', ShowWebpage::class)->name('webpages.show');
 Route::get('/webpages/{webpage}/edit', EditWebsite::class)->name('webpages.edit');
 Route::get('/webpages/{webpage}/workshop', ShowWebpageWorkshop::class)->name('webpages.workshop');
 Route::get('/webpages/{webpage}/workshop/preview', ShowWebsiteWorkshopPreview::class)->name('webpages.preview');
+*/

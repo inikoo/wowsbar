@@ -148,7 +148,7 @@ class ShowCustomer extends InertiaAction
     public function getPrevious(Customer $customer, ActionRequest $request): ?array
     {
         $previous = Customer::where('slug', '<', $customer->slug)->when(true, function ($query) use ($customer, $request) {
-            if ($request->route()->getName() == 'shops.show.customers.show') {
+            if ($request->route()->getName() == 'org.shops.show.customers.show') {
                 $query->where('customers.shop_id', $customer->shop_id);
             }
         })->orderBy('slug', 'desc')->first();
@@ -159,7 +159,7 @@ class ShowCustomer extends InertiaAction
     public function getNext(Customer $customer, ActionRequest $request): ?array
     {
         $next = Customer::where('slug', '>', $customer->slug)->when(true, function ($query) use ($customer, $request) {
-            if ($request->route()->getName() == 'shops.show.customers.show') {
+            if ($request->route()->getName() == 'org.shops.show.customers.show') {
                 $query->where('customers.shop_id', $customer->shop_id);
             }
         })->orderBy('slug')->first();

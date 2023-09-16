@@ -41,7 +41,7 @@ class DeleteShop
 
     public function htmlResponse(): RedirectResponse
     {
-        return Redirect::route('shops.index');
+        return Redirect::route('org.shops.index');
     }
 
 }

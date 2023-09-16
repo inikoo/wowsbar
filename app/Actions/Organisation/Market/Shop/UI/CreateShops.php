@@ -50,13 +50,13 @@ class CreateShops extends InertiaAction
                     'exitEdit' => [
                         'label' => __('Back'),
                         'route' => [
-                            'name'       => 'shops.index',
+                            'name'       => 'org.shops.index',
                             'parameters' => array_values($this->originalParameters)
                         ],
                     ],
                     'clearMulti' => [
                         'route' => [
-                            'name'       => 'shops.create-multi-clear',
+                            'name'       => 'org.shops.create-multi-clear',
                             'parameters' => array_values($this->originalParameters)
                         ],
                     ]
@@ -96,7 +96,7 @@ class CreateShops extends InertiaAction
                     ],
                 ],
                 'saveRoute' => [
-                    'name' => 'models.shop.store-multi',
+                    'name' => 'org.models.shop.store-multi',
                 ]
 
             ]

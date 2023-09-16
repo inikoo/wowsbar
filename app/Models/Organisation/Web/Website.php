@@ -28,6 +28,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property int $shop_id
  * @property string|null $type
  * @property string $slug
+ * @property string $code
+ * @property string $name
  * @property WebsiteStateEnum $state
  * @property bool $status
  * @property string $domain
@@ -56,6 +58,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Website onlyTrashed()
  * @method static Builder|Website query()
  * @method static Builder|Website whereClosedAt($value)
+ * @method static Builder|Website whereCode($value)
  * @method static Builder|Website whereCreatedAt($value)
  * @method static Builder|Website whereCurrentLayoutId($value)
  * @method static Builder|Website whereData($value)
@@ -64,6 +67,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Website whereHomeId($value)
  * @method static Builder|Website whereId($value)
  * @method static Builder|Website whereLaunchedAt($value)
+ * @method static Builder|Website whereName($value)
  * @method static Builder|Website whereOrganisationId($value)
  * @method static Builder|Website whereSettings($value)
  * @method static Builder|Website whereShopId($value)

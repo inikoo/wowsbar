@@ -16,9 +16,9 @@ const props = defineProps<{
 
 function invoiceRoute(invoice) {
     switch (route().current()) {
-        case 'shops.show.invoices.index':
+        case 'org.shops.show.invoices.index':
             return route(
-                'shops.show.invoices.show',
+                'org.shops.show.invoices.show',
                 [invoice.slug, invoice.slug]);
         default:
             return route(

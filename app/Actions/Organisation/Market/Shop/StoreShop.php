@@ -8,9 +8,14 @@
 namespace App\Actions\Organisation\Market\Shop;
 
 use App\Actions\Organisation\Accounting\PaymentAccount\StorePaymentAccount;
+use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateShops;
 use App\Enums\Helpers\SerialReference\SerialReferenceModelEnum;
+use App\Enums\Market\Shop\ShopTypeEnum;
 use App\Models\Organisation\Market\Shop;
 use App\Models\Organisation\Organisation;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Validator;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -68,7 +73,12 @@ class StoreShop
         $paymentAccount->slug = 'accounts-'.$shop->slug;
         $paymentAccount->save();
 
-        return AttachPaymentAccountToShop::run($shop, $paymentAccount);
+        $shop= AttachPaymentAccountToShop::run($shop, $paymentAccount);
+
+        OrganisationHydrateShops::run();
+
+
+        return $shop;
     }
 
     public function authorize(ActionRequest $request): bool
@@ -79,8 +89,6 @@ class StoreShop
 
         return $request->user()->hasPermissionTo("shops.edit");
     }
-
-
     public function afterValidator(Validator $validator, ActionRequest $request): void
     {
         if ($request->get('identity_document_number') and !$request->get('identity_document_type')) {
@@ -91,5 +99,35 @@ class StoreShop
         }
     }
 
+    public function rules(): array
+    {
+        return [
+            'name'                     => ['required', 'string', 'max:255'],
+            'code'                     => ['required', 'unique:tenant.shops', 'between:2,4', 'alpha_dash'],
+            'contact_name'             => ['nullable', 'string', 'max:255'],
+            'company_name'             => ['nullable', 'string', 'max:255'],
+            'email'                    => ['nullable', 'email'],
+            'phone'                    => 'nullable',
+            'identity_document_number' => ['nullable', 'string'],
+            'identity_document_type'   => ['nullable', 'string'],
+            'type'                     => ['required', Rule::in(ShopTypeEnum::values())],
+            'country_id'               => ['required', 'exists:countries,id'],
+            'currency_id'              => ['required', 'exists:currencies,id'],
+            'language_id'              => ['required', 'exists:languages,id'],
+            'timezone_id'              => ['required', 'exists:timezones,id'],
+        ];
+    }
 
+    public function asController(ActionRequest $request): Shop
+    {
+        $this->fillFromRequest($request);
+        $request->validate();
+
+        return $this->handle(\organisation(), $request->validated());
+    }
+
+    public function htmlResponse(Shop $shop): RedirectResponse
+    {
+        return Redirect::route('org.shops.show', $shop->slug);
+    }
 }

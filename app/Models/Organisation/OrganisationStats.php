@@ -29,7 +29,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $filesize_images
  * @property int $number_attachments
  * @property int $filesize_attachments
- * @property int $number_webpages
+ * @property int $number_shops
+ * @property int $number_shops_type_digital_marketing
+ * @property int $number_shops_type_content_as_a_service
+ * @property int $number_shops_state_in_process
+ * @property int $number_shops_state_open
+ * @property int $number_shops_state_closing_down
+ * @property int $number_shops_state_closed
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Organisation\Organisation $organisation
@@ -51,7 +57,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static Builder|OrganisationStats whereNumberOrganisationUsersStatusInactive($value)
  * @method static Builder|OrganisationStats whereNumberOrganisationUsersTypeEmployee($value)
  * @method static Builder|OrganisationStats whereNumberOrganisationUsersTypeGuest($value)
- * @method static Builder|OrganisationStats whereNumberWebpages($value)
+ * @method static Builder|OrganisationStats whereNumberShops($value)
+ * @method static Builder|OrganisationStats whereNumberShopsStateClosed($value)
+ * @method static Builder|OrganisationStats whereNumberShopsStateClosingDown($value)
+ * @method static Builder|OrganisationStats whereNumberShopsStateInProcess($value)
+ * @method static Builder|OrganisationStats whereNumberShopsStateOpen($value)
+ * @method static Builder|OrganisationStats whereNumberShopsTypeContentAsAService($value)
+ * @method static Builder|OrganisationStats whereNumberShopsTypeDigitalMarketing($value)
  * @method static Builder|OrganisationStats whereOrganisationId($value)
  * @method static Builder|OrganisationStats whereUpdatedAt($value)
  * @mixin \Eloquent

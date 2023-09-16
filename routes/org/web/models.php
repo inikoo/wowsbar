@@ -14,6 +14,7 @@ use App\Actions\Organisation\Accounting\PaymentServiceProvider\UpdatePaymentServ
 use App\Actions\Organisation\HumanResources\Employee\DeleteEmployee;
 use App\Actions\Organisation\HumanResources\Employee\StoreEmployee;
 use App\Actions\Organisation\HumanResources\Employee\UpdateEmployee;
+use App\Actions\Organisation\Market\Shop\StoreShop;
 use App\Actions\Organisation\Organisation\UpdateOrganisation;
 use App\Actions\Organisation\Web\Webpage\StoreArticle;
 use App\Actions\Organisation\Web\Webpage\StoreWebpage;
@@ -23,6 +24,7 @@ use App\Actions\Organisation\Web\Website\UpdateWebsiteState;
 use App\Actions\UI\Organisation\Profile\UpdateProfile;
 
 Route::patch('/profile', UpdateProfile::class)->name('profile.update');
+Route::post('/shop/', StoreShop::class)->name('shop.store');
 
 Route::patch('/employee/{employee}', UpdateEmployee::class)->name('employee.update');
 Route::post('/employee/', StoreEmployee::class)->name('employee.store');

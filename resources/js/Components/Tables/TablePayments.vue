@@ -18,9 +18,9 @@ const props = defineProps<{
 function paymentsRoute(payment: Payment) {
     switch (route().current()) {
 
-        case 'shops.show.orders.show':
+        case 'org.shops.show.orders.show':
             return route(
-                'shops.show.orders.show.payments.show',
+                'org.shops.show.orders.show.payments.show',
                 [route().params['shop'],route().params['order'],payment.slug]);
         case 'orders.show':
             return route(

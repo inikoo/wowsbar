@@ -12,7 +12,7 @@ use App\Actions\Assets\Currency\UI\GetCurrenciesOptions;
 use App\Actions\Assets\Language\UI\GetLanguagesOptions;
 use App\Actions\Assets\TimeZone\UI\GetTimeZonesOptions;
 use App\Actions\InertiaAction;
-use App\Enums\Market\Shop\ShopSubtypeEnum;
+use App\Enums\Market\Shop\ShopTypeEnum;
 use Exception;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -39,7 +39,7 @@ class CreateShop extends InertiaAction
                             'style' => 'cancel',
                             'label' => __('cancel'),
                             'route' => [
-                                'name'       => 'shops.index',
+                                'name'       => 'org.shops.index',
                                 'parameters' => array_values($this->originalParameters)
                             ],
                         ]
@@ -62,11 +62,11 @@ class CreateShop extends InertiaAction
                                     'required' => true,
                                     'value'    => '',
                                 ],
-                                'subtype' => [
+                                'type' => [
                                     'type'         => 'select',
                                     'label'        => __('type'),
                                     'placeholder'  => 'Select a Type',
-                                    'options'      => Options::forEnum(ShopSubtypeEnum::class),
+                                    'options'      => Options::forEnum(ShopTypeEnum::class),
                                     'required'     => true,
                                     'mode'         => 'single',
                                     'searchable'   => true
@@ -83,7 +83,7 @@ class CreateShop extends InertiaAction
                                     'label'       => __('country'),
                                     'placeholder' => __('Select a country'),
                                     'options'     => GetCountriesOptions::run(),
-                                    'value'       => app('currentTenant')->country_id,
+                                    'value'       => organisation()->country_id,
                                     'required'    => true,
                                     'mode'        => 'single'
                                 ],
@@ -92,7 +92,7 @@ class CreateShop extends InertiaAction
                                     'label'       => __('language'),
                                     'placeholder' => __('Select a language'),
                                     'options'     => GetLanguagesOptions::make()->all(),
-                                    'value'       => app('currentTenant')->language_id,
+                                    'value'       => organisation()->language_id,
                                     'required'    => true,
                                     'mode'        => 'single'
                                 ],
@@ -101,7 +101,7 @@ class CreateShop extends InertiaAction
                                     'label'       => __('currency'),
                                     'placeholder' => __('Select a currency'),
                                     'options'     => GetCurrenciesOptions::run(),
-                                    'value'       => app('currentTenant')->currency_id,
+                                    'value'       => organisation()->currency_id,
                                     'required'    => true,
                                     'mode'        => 'single'
                                 ],
@@ -110,7 +110,7 @@ class CreateShop extends InertiaAction
                                     'label'       => __('timezone'),
                                     'placeholder' => __('Select a timezone'),
                                     'options'     => GetTimeZonesOptions::run(),
-                                    'value'       => app('currentTenant')->timezone_id,
+                                    'value'       => organisation()->timezone_id,
                                     'required'    => true,
                                     'mode'        => 'single'
                                 ],
@@ -147,7 +147,7 @@ class CreateShop extends InertiaAction
                         ],
                     ],
                     'route'     => [
-                        'name' => 'models.shop.store',
+                        'name' => 'org.models.shop.store',
                     ]
                 ],
 

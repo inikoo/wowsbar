@@ -1,7 +1,10 @@
 [
-    "website",
-    "website.view",
-    "website.edit",
+    "websites",
+    "websites.view",
+    "websites.edit",
+    "shops",
+    "shops.view",
+    "shops.edit",
     "crm",
     "crm.view",
     "crm.edit",

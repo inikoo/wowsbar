@@ -29,11 +29,11 @@ class RouteServiceProvider extends ServiceProvider
                 ->group(base_path('routes/delivery/app.php'));
 
             Route::middleware('org-web')
-                ->prefix('org')
                 ->domain(config('app.domain'))
                 ->name('org.')
                 ->group(base_path('routes/org/web/app.php'));
 
+            /*
             Route::middleware('public-web')
                 ->domain(config('app.domain'))
                 ->name('public.')
@@ -54,6 +54,7 @@ class RouteServiceProvider extends ServiceProvider
             Route::middleware('web')
                 ->name('tenant.')
                 ->group(base_path('routes/tenant/web/app.php'));
+            */
         });
     }
 

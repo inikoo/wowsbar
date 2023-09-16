@@ -18,21 +18,23 @@ class GetLayout
     {
         $navigation = [];
 
+        $organisation=organisation();
 
-        if ($user->can('website')) {
-            $navigation['website'] = [
-                'label'   => __('website'),
-                'icon'    => ['fal', 'fa-globe'],
-                'route'   => 'org.website.show',
+        if ($user->can('shops')) {
+            $navigation['shops'] = [
+                'label'   => __('shops'),
+                'icon'    => ['fal', 'fa-store-alt'],
+                'route'   => 'org.shops.index',
                 'topMenu' => [
                     'subSections' => [
                         [
-                            'label' => __('website'),
-                            'icon'  => ['fal', 'fa-globe'],
+                            'label' => __('shops'),
+                            'icon'  => ['fal', 'fa-store-alt'],
                             'route' => [
-                                'name' => 'org.website.show',
+                                'name' => 'org.shops.index',
                             ]
                         ],
+                        /*
                         [
                             'label' => __('webpages'),
                             'icon'  => ['fal', 'fa-browser'],
@@ -40,12 +42,42 @@ class GetLayout
                                 'name' => 'org.website.webpages.index',
                             ]
                         ],
+                        */
                     ]
                 ]
             ];
         }
 
-        if ($user->can('crm.view')) {
+
+        if ($user->can('websites') and $organisation->stats->number_shops>0) {
+            $navigation['websites'] = [
+                'label'   => __('websites'),
+                'icon'    => ['fal', 'fa-globe'],
+                'route'   => 'org.websites.index',
+                'topMenu' => [
+                    'subSections' => [
+                        [
+                            'label' => __('websites'),
+                            'icon'  => ['fal', 'fa-globe'],
+                            'route' => [
+                                'name' => 'org.websites.index',
+                            ]
+                        ],
+                        /*
+                        [
+                            'label' => __('webpages'),
+                            'icon'  => ['fal', 'fa-browser'],
+                            'route' => [
+                                'name' => 'org.website.webpages.index',
+                            ]
+                        ],
+                        */
+                    ]
+                ]
+            ];
+        }
+
+        if ($user->can('crm.view') and $organisation->stats->number_shops>0) {
             $navigation['crm'] = [
                 'label' => __('Customers'),
                 'icon'  => ['fal', 'fa-user'],

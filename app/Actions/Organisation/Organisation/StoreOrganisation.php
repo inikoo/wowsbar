@@ -7,8 +7,6 @@
 
 namespace App\Actions\Organisation\Organisation;
 
-use App\Actions\Organisation\Market\Shop\StoreShop;
-use App\Actions\Organisation\Web\Website\StoreWebsite;
 use App\Models\Assets\Country;
 use App\Models\Assets\Currency;
 use App\Models\Assets\Language;
@@ -53,15 +51,6 @@ class StoreOrganisation
         Artisan::call("db:seed --force --class=StockImageSeeder");
         Artisan::call("db:seed --force --class=JobPositionSeeder");
 
-        $shop = StoreShop::run($organisation);
-
-
-        StoreWebsite::run(
-            $shop,
-            [
-                'domain' => config('app.domain')
-            ]
-        );
 
 
         return $organisation;

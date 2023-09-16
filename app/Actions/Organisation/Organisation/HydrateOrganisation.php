@@ -8,7 +8,10 @@
 namespace App\Actions\Organisation\Organisation;
 
 use App\Actions\HydrateModel;
+use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateEmployees;
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateGuests;
+use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateJobPositions;
+use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateShops;
 use App\Actions\Traits\WithNormalise;
 use Illuminate\Console\Command;
 
@@ -22,6 +25,9 @@ class HydrateOrganisation extends HydrateModel
     public function handle(): void
     {
         OrganisationHydrateGuests::run();
+        OrganisationHydrateEmployees::run();
+        OrganisationHydrateJobPositions::run();
+        OrganisationHydrateShops::run();
 
     }
 

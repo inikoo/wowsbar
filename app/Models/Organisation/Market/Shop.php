@@ -8,7 +8,6 @@
 namespace App\Models\Organisation\Market;
 
 use App\Enums\Market\Shop\ShopStateEnum;
-use App\Enums\Market\Shop\ShopSubtypeEnum;
 use App\Enums\Market\Shop\ShopTypeEnum;
 use App\Models\Accounting\Invoice;
 use App\Models\Accounting\Payment;
@@ -53,7 +52,6 @@ use Spatie\Sluggable\SlugOptions;
  * @property array $location
  * @property ShopStateEnum $state
  * @property ShopTypeEnum $type
- * @property ShopSubtypeEnum|null $subtype
  * @property string|null $open_at
  * @property string|null $closed_at
  * @property int $country_id
@@ -117,7 +115,6 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|Shop whereSettings($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Shop whereSlug($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Shop whereState($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Shop whereSubtype($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Shop whereTimezoneId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Shop whereType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Shop whereUpdatedAt($value)
@@ -137,7 +134,6 @@ class Shop extends Model
         'settings' => 'array',
         'location' => 'array',
         'type'     => ShopTypeEnum::class,
-        'subtype'  => ShopSubtypeEnum::class,
         'state'    => ShopStateEnum::class
     ];
 

@@ -114,12 +114,12 @@ class ShowInvoice extends InertiaAction
         return array_merge(
             (new IndexShops())->getBreadcrumbs(),
             [
-                'shops.show' => [
-                    'route'           => 'shops.show',
+                'org.shops.show' => [
+                    'route'           => 'org.shops.show',
                     'routeParameters' => $invoice->id,
                     'name'            => $invoice->number,
                     'index'           => [
-                        'route'   => 'shops.index',
+                        'route'   => 'org.shops.index',
                         'overlay' => __('Invoices list')
                     ],
                     'modelLabel' => [

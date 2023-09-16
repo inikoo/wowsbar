@@ -13,7 +13,7 @@ use App\Actions\Organisation\Market\ProductCategory\UI\IndexDepartments;
 use App\Actions\Organisation\Market\ProductCategory\UI\IndexFamilies;
 use App\Actions\UI\Dashboard\ShowDashboard;
 use App\Actions\UI\WithInertia;
-use App\Enums\UI\ShopTabsEnum;
+use App\Enums\UI\Organisation\ShopTabsEnum;
 use App\Http\Resources\Market\DepartmentResource;
 use App\Http\Resources\Market\FamilyResource;
 use App\Http\Resources\Market\ProductResource;
@@ -74,7 +74,7 @@ class ShowShop extends InertiaAction
                             'style' => 'create',
                             'label' => __('website'),
                             'route' => [
-                                'name'       => 'shops.show.website.create',
+                                'name'       => 'org.shops.show.website.create',
                                 'parameters' => $request->route()->originalParameters()
                             ]
 
@@ -91,7 +91,7 @@ class ShowShop extends InertiaAction
                             'type'  => 'button',
                             'style' => 'delete',
                             'route' => [
-                                'name'       => 'shops.remove',
+                                'name'       => 'org.shops.remove',
                                 'parameters' => $request->route()->originalParameters()
                             ]
                         ] : false
@@ -120,7 +120,7 @@ class ShowShop extends InertiaAction
                         [
                             'name'  => __('departments'),
                             'icon'  => ['fal', 'fa-folder-tree'],
-                            'href'  => ['shops.show.departments.index', $shop->slug],
+                            'href'  => ['org.shops.show.departments.index', $shop->slug],
                             'index' => [
                                 'number' => $shop->stats->number_departments
                             ]
@@ -129,7 +129,7 @@ class ShowShop extends InertiaAction
                         [
                             'name'  => __('families'),
                             'icon'  => ['fal', 'fa-folder'],
-                            'href'  => ['shops.show.families.index', $shop->slug],
+                            'href'  => ['org.shops.show.families.index', $shop->slug],
                             'index' => [
                                 'number' => $shop->stats->number_families
                             ]
@@ -138,7 +138,7 @@ class ShowShop extends InertiaAction
                         [
                             'name'  => __('products'),
                             'icon'  => ['fal', 'fa-cube'],
-                            'href'  => ['shops.show.products.index', $shop->slug],
+                            'href'  => ['org.shops.show.products.index', $shop->slug],
                             'index' => [
                                 'number' => $shop->stats->number_products
                             ]
@@ -176,7 +176,7 @@ class ShowShop extends InertiaAction
                     'navigation' => ShopTabsEnum::navigation()
                 ],
 
-                ShopTabsEnum::DEPARTMENTS->value => $this->tab == ShopTabsEnum::DEPARTMENTS->value
+                ShopTabsEnum::DEPARTMENTS->value => $this->tab == \App\Enums\UI\Organisation\ShopTabsEnum::DEPARTMENTS->value
                     ?
                     fn () => DepartmentResource::collection(
                         IndexDepartments::run(
@@ -228,7 +228,7 @@ class ShowShop extends InertiaAction
                 modelOperations: [
                     'createLink' => $this->canEdit ? [
                         'route' => [
-                            'name'       => 'shops.show.departments.create',
+                            'name'       => 'org.shops.show.departments.create',
                             'parameters' => array_values([$shop->slug])
                         ],
                         'label' => __('department'),
@@ -243,7 +243,7 @@ class ShowShop extends InertiaAction
                 modelOperations: [
                     'createLink' => $this->canEdit ? [
                         'route' => [
-                            'name'       => 'shops.show.families.create',
+                            'name'       => 'org.shops.show.families.create',
                             'parameters' => array_values([$shop->slug])
                         ],
                         'label' => __('family'),
@@ -258,7 +258,7 @@ class ShowShop extends InertiaAction
                 modelOperations: [
                     'createLink' => $this->canEdit ? [
                         'route' => [
-                            'name'       => 'shops.show.products.create',
+                            'name'       => 'org.shops.show.products.create',
                             'parameters' => array_values([$shop->slug])
                         ],
                         'label' => __('product'),
@@ -295,14 +295,14 @@ class ShowShop extends InertiaAction
                         'modelWithIndex' => [
                             'index' => [
                                 'route' => [
-                                    'name' => 'shops.index'
+                                    'name' => 'org.shops.index'
                                 ],
                                 'label' => __('shops'),
                                 'icon'  => 'fal fa-bars'
                             ],
                             'model' => [
                                 'route' => [
-                                    'name'       => 'shops.show',
+                                    'name'       => 'org.shops.show',
                                     'parameters' => [$routeParameters['shop']->slug]
                                 ],
                                 'label' => $routeParameters['shop']->slug,
@@ -338,7 +338,7 @@ class ShowShop extends InertiaAction
         }
 
         return match ($routeName) {
-            'shops.show' => [
+            'org.shops.show' => [
                 'label' => $shop->name,
                 'route' => [
                     'name'       => $routeName,

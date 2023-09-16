@@ -5,6 +5,8 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
+use App\Enums\Market\Shop\ShopStateEnum;
+use App\Enums\Market\Shop\ShopTypeEnum;
 use App\Enums\Organisation\OrganisationUser\OrganisationUserTypeEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -33,7 +35,15 @@ return new class () extends Migration {
             $table->unsignedSmallInteger('number_attachments')->default(0);
             $table->unsignedBigInteger('filesize_attachments')->default(0);
 
-            $table->unsignedInteger('number_webpages')->default(0);
+
+            $table->unsignedInteger('number_shops')->default(0);
+            foreach (ShopTypeEnum::cases() as $shopType) {
+                $table->unsignedSmallInteger('number_shops_type_'.$shopType->snake())->default(0);
+            }
+            foreach (ShopStateEnum::cases() as $shopState) {
+                $table->unsignedSmallInteger('number_shops_state_'.$shopState->snake())->default(0);
+            }
+
 
 
 

@@ -13,13 +13,18 @@ enum ShopTypeEnum: string
 {
     use EnumHelperTrait;
 
-    case SHOP             = 'shop';
+    use EnumHelperTrait;
+
+    case DIGITAL_MARKETING    = 'digital-marketing';
+    case CONTENT_AS_A_SERVICE = 'content-as-a-service';
 
 
     public static function labels(): array
     {
         return [
-            'shop'              => 'Shop',
+            'digital-marketing'       => 'Digital Marketing',
+            'content-as-a-service'    => 'Content as a service',
+
         ];
     }
 }
