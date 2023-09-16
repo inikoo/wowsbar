@@ -7,7 +7,7 @@
 
 namespace App\Actions\UI\Organisation\SysAdmin;
 
-use App\Actions\UI\Tenant\Dashboard\ShowDashboard;
+use App\Actions\UI\Organisation\Dashboard\ShowDashboard;
 use App\Actions\UI\WithInertia;
 use Inertia\Inertia;
 use Inertia\Response;
