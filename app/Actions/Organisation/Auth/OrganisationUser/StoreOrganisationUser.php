@@ -8,6 +8,7 @@
 namespace App\Actions\Organisation\Auth\OrganisationUser;
 
 use App\Actions\Organisation\Auth\OrganisationUser\UI\SetOrganisationUserAvatar;
+use App\Models\HumanResources\Employee;
 use App\Models\Organisation\Guest;
 use App\Models\Organisation\OrganisationUser;
 use App\Rules\AlphaDashDot;
@@ -25,10 +26,10 @@ class StoreOrganisationUser
     private bool $asAction = false;
 
 
-    public function handle(Guest $parent, array $objectData = []): OrganisationUser
+    public function handle(Employee|Guest $parent, array $objectData = []): OrganisationUser
     {
         /** @var \App\Models\Organisation\OrganisationUser $organisationUser */
-        $organisationUser =$parent->organisationUser()->create($objectData);
+        $organisationUser = $parent->organisationUser()->create($objectData);
         $organisationUser->stats()->create();
         SetOrganisationUserAvatar::run($organisationUser);
 
@@ -51,16 +52,17 @@ class StoreOrganisationUser
         return [
             'username' => ['required', new AlphaDashDot(), 'unique:org_users,username', Rule::notIn(['export', 'create'])],
             'password' => ['required', app()->isLocal() || app()->environment('testing') ? null : Password::min(8)->uncompromised()],
-            'email'    => ['sometimes','required', 'email', 'unique:org_users,email']
+            'email'    => ['sometimes', 'required', 'email', 'unique:org_users,email']
         ];
     }
 
-    public function action(array $objectData = []): OrganisationUser
+    public function action(Employee|Guest $parent, array $objectData = []): OrganisationUser
     {
         $this->asAction = true;
         $this->setRawAttributes($objectData);
         $validatedData = $this->validateAttributes();
-        return $this->handle($validatedData);
+
+        return $this->handle($parent, $validatedData);
     }
 
 

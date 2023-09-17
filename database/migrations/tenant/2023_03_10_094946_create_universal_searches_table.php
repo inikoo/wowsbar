@@ -14,8 +14,8 @@ return new class () extends Migration {
     {
         Schema::create('universal_searches', function (Blueprint $table) {
             $table->id();
-            $table->unsignedSmallInteger('tenant_id')->index();
-            $table->foreign('tenant_id')->references('id')->on('tenants');
+            $table->unsignedSmallInteger('customer_id')->nullable()->index();
+            $table->foreign('customer_id')->references('id')->on('customers');
             $table->nullableMorphs('model');
             $table->string('section')->nullable();
             $table->string('title');

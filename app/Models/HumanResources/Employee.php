@@ -11,6 +11,7 @@ use App\Enums\HumanResources\Employee\EmployeeStateEnum;
 use App\Enums\HumanResources\Employee\EmployeeTypeEnum;
 use App\Enums\Miscellaneous\GenderEnum;
 use App\Models\Auth\User;
+use App\Models\Organisation\OrganisationUser;
 use App\Models\Traits\HasHistory;
 use App\Models\Traits\HasPhoto;
 use App\Models\Traits\HasUniversalSearch;
@@ -61,8 +62,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read int|null $job_positions_count
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \App\Models\Media\Media> $media
  * @property-read int|null $media_count
+ * @property-read OrganisationUser|null $organisationUser
  * @property-read \App\Models\Search\UniversalSearch|null $universalSearch
- * @property-read User|null $user
  * @method static \Illuminate\Database\Eloquent\Builder|Employee newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Employee newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Employee onlyTrashed()
@@ -154,9 +155,9 @@ class Employee extends Model implements HasMedia, Auditable
             ->withPivot('share');
     }
 
-    public function user(): MorphOne
+    public function organisationUser(): MorphOne
     {
-        return $this->morphOne(User::class, 'parent');
+        return $this->morphOne(OrganisationUser::class, 'parent');
     }
 
     public function getRouteKeyName(): string

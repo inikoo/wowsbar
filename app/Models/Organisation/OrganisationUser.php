@@ -13,6 +13,7 @@ use App\Models\Traits\IsUser;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Sanctum\HasApiTokens;
 use OwenIt\Auditing\Contracts\Auditable;
@@ -47,6 +48,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read \App\Models\Assets\Language $language
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \App\Models\Media\Media> $media
  * @property-read int|null $media_count
+ * @property-read \Illuminate\Database\Eloquent\Model|\Eloquent $parent
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Permission\Models\Permission> $permissions
  * @property-read int|null $permissions_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Permission\Models\Role> $roles
@@ -121,6 +123,11 @@ class OrganisationUser extends Authenticatable implements HasMedia, Auditable
     {
         $this->addMediaCollection('avatar')
             ->singleFile();
+    }
+
+    public function parent(): MorphTo
+    {
+        return $this->morphTo()->withTrashed();
     }
 
 }

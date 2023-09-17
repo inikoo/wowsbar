@@ -19,7 +19,7 @@ use App\Actions\Organisation\HumanResources\ClockingMachine\UI\EditClockingMachi
 use App\Actions\Organisation\HumanResources\ClockingMachine\UI\IndexClockingMachines;
 use App\Actions\Organisation\HumanResources\ClockingMachine\UI\RemoveClockingMachine;
 use App\Actions\Organisation\HumanResources\ClockingMachine\UI\ShowClockingMachine;
-use App\Actions\Organisation\HumanResources\Employee\CreateUserFromEmployee;
+use App\Actions\Organisation\HumanResources\Employee\CreateOrganisationUserFromEmployee;
 use App\Actions\Organisation\HumanResources\Employee\ExportEmployees;
 use App\Actions\Organisation\HumanResources\Employee\UI\CreateEmployee;
 use App\Actions\Organisation\HumanResources\Employee\UI\EditEmployee;
@@ -57,7 +57,7 @@ Route::get('/employees/{employee}/edit', EditEmployee::class)->name('employees.e
 Route::get('/employees/{employee}/delete', RemoveEmployee::class)->name('employees.remove');
 
 Route::post('/employees/{employee}/user', ShowEmployee::class)->name('employees.show.user');
-Route::post('/employees/{employee}/user', CreateUserFromEmployee::class)->name('employees.show.user.store');
+Route::post('/employees/{employee}/user', CreateOrganisationUserFromEmployee::class)->name('employees.show.user.store');
 
 Route::get('/positions', IndexJobPositions::class)->name('job-positions.index');
 Route::get('/positions/create', CreateJobPosition::class)->name('job-positions.create');
