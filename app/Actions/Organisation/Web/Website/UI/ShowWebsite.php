@@ -29,10 +29,10 @@ class ShowWebsite extends InertiaAction
 
     public function authorize(ActionRequest $request): bool
     {
-        $this->canEdit   = $request->user()->can('website.edit');
-        $this->canDelete = $request->user()->can('website.edit');
+        $this->canEdit   = $request->user()->can('websites.edit');
+        $this->canDelete = $request->user()->can('websites.edit');
 
-        return $request->user()->hasPermissionTo("website.view");
+        return $request->user()->hasPermissionTo("websites.view");
     }
 
 

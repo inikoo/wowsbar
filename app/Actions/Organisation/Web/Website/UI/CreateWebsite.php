@@ -18,7 +18,7 @@ class CreateWebsite extends InertiaAction
 {
     public function authorize(ActionRequest $request): bool
     {
-        return $request->user()->can('website.edit');
+        return $request->user()->can('websites.edit');
     }
 
 

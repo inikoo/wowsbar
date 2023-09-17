@@ -52,7 +52,7 @@ class StoreWebsite
             return true;
         }
 
-        return $request->user()->hasPermissionTo("website.edit");
+        return $request->user()->hasPermissionTo("websites.edit");
     }
 
     public function rules(): array
