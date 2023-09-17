@@ -6,11 +6,13 @@
  */
 
 use App\Actions\Organisation\CRM\Customer\StoreCustomer;
+use App\Actions\Organisation\Market\Shop\StoreShop;
 use App\Actions\Organisation\Organisation\StoreOrganisation;
 use App\Actions\Tenancy\Tenant\StoreTenant;
 use App\Actions\Tenant\Auth\User\StoreUser;
 use App\Actions\Tenant\Auth\User\UpdateUser;
 use App\Actions\Tenant\Auth\User\UpdateUserStatus;
+use App\Enums\Organisation\Market\Shop\ShopTypeEnum;
 use App\Models\Auth\User;
 use App\Models\CRM\Customer;
 use App\Models\Organisation\Organisation;
@@ -25,10 +27,16 @@ beforeEach(function () {
         $organisation=organisation();
     } catch (Exception) {
         $organisation = StoreOrganisation::make()->action(Organisation::factory()->definition());
+        StoreShop::run(
+            $organisation,
+            [
+                'type' => ShopTypeEnum::DIGITAL_MARKETING->value
+            ]
+        );
     }
     $tenant = Tenant::first();
     if (!$tenant) {
-        $customer  = StoreCustomer::make()->action($organisation->shop, Customer::factory()->definition());
+        $customer  = StoreCustomer::make()->action($organisation->shops->first(), Customer::factory()->definition());
         $modelData = Tenant::factory()->definition();
         $tenant    = StoreTenant::make()->action($customer, $modelData);
     }

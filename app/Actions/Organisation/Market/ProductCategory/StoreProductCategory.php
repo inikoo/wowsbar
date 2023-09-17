@@ -5,14 +5,12 @@
  *  Copyright (c) 2022, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Market\ProductCategory;
+namespace App\Actions\Organisation\Market\ProductCategory;
 
-use App\Actions\Market\ProductCategory\Hydrators\ProductCategoryHydrateUniversalSearch;
-use App\Actions\Market\Shop\Hydrators\ShopHydrateDepartments;
-use App\Enums\Market\ProductCategory\ProductCategoryTypeEnum;
-use App\Models\Market\ProductCategory;
-use App\Models\Market\Shop;
-use App\Models\Tenancy\Tenant;
+
+use App\Actions\Organisation\Market\Shop\Hydrators\ShopHydrateDepartments;
+use App\Models\Organisation\Market\ProductCategory;
+use App\Models\Organisation\Market\Shop;
 use App\Rules\CaseSensitive;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
@@ -44,15 +42,15 @@ class StoreProductCategory
         $productCategory->salesStats()->create([
             'scope' => 'sales'
         ]);
-        /** @var Tenant $tenant */
-        $tenant = app('currentTenant');
-        if ($productCategory->shop->currency_id != $tenant->currency_id) {
+
+
+        if ($productCategory->shop->currency_id != organisation()->currency_id) {
             $productCategory->salesStats()->create([
-                'scope' => 'sales-tenant-currency'
+                'scope' => 'sales-organisation-currency'
             ]);
         }
 
-        ProductCategoryHydrateUniversalSearch::dispatch($productCategory);
+       // ProductCategoryHydrateUniversalSearch::dispatch($productCategory);
         ShopHydrateDepartments::dispatch($productCategory->shop);
 
         return $productCategory;
@@ -61,7 +59,7 @@ class StoreProductCategory
     public function rules(): array
     {
         return [
-            'code'        => ['required', 'unique:tenant.product_categories', 'between:2,9', 'alpha_dash', new CaseSensitive('product_categories')],
+            'code'        => ['required', 'unique:product_categories', 'between:2,9', 'alpha_dash', new CaseSensitive('product_categories')],
             'name'        => ['required', 'max:250', 'string'],
             'image_id'    => ['sometimes', 'required', 'exists:media,id'],
             'state'       => ['sometimes', 'required'],
@@ -84,9 +82,5 @@ class StoreProductCategory
         return  Redirect::route('shops.show.departments.index', $shop);
     }
 
-    public function asFetch(Shop $shop, array $productCategoryData, int $hydratorsDelay=60): ProductCategory
-    {
-        $this->hydratorsDelay=$hydratorsDelay;
-        return $this->handle($shop, $productCategoryData);
-    }
+    
 }

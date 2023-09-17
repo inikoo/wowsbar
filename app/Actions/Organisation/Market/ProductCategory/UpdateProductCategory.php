@@ -5,12 +5,11 @@
  *  Copyright (c) 2022, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Market\ProductCategory;
+namespace App\Actions\Organisation\Market\ProductCategory;
 
-use App\Actions\Market\ProductCategory\Hydrators\ProductCategoryHydrateUniversalSearch;
 use App\Actions\Traits\WithActionUpdate;
 use App\Http\Resources\Market\DepartmentResource;
-use App\Models\Market\ProductCategory;
+use App\Models\Organisation\Market\ProductCategory;
 use Lorisleiva\Actions\ActionRequest;
 
 class UpdateProductCategory
@@ -23,7 +22,7 @@ class UpdateProductCategory
     public function handle(ProductCategory $productCategory, array $modelData): ProductCategory
     {
         $productCategory = $this->update($productCategory, $modelData, ['data']);
-        ProductCategoryHydrateUniversalSearch::dispatch($productCategory);
+        //ProductCategoryHydrateUniversalSearch::dispatch($productCategory);
 
         return $productCategory;
     }

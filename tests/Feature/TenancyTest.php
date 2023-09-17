@@ -7,10 +7,13 @@
 
 use App\Actions\Organisation\CRM\Customer\StoreCustomer;
 use App\Actions\Organisation\CRM\PublicUser\StorePublicUser;
+use App\Actions\Organisation\Market\Shop\StoreShop;
 use App\Actions\Organisation\Organisation\StoreOrganisation;
 use App\Actions\Tenancy\Tenant\StoreTenant;
+use App\Enums\Organisation\Market\Shop\ShopTypeEnum;
 use App\Models\CRM\Customer;
 use App\Models\CRM\PublicUser;
+use App\Models\Organisation\Market\Shop;
 use App\Models\Organisation\Organisation;
 use App\Models\Tenancy\Tenant;
 
@@ -25,12 +28,24 @@ test('create organisation', function () {
     return $organisation;
 });
 
-test('create customer', function ($organisation) {
+test('create shop', function () {
+    $shop  = StoreShop::make()->action(
+        [
+            'code'=>'acme',
+            'name'=>'Acme inc',
+            'type'=>ShopTypeEnum::DIGITAL_MARKETING->value
+        ]
+    );
+    expect($shop)->toBeInstanceOf(Shop::class);
+    return $shop;
+})->depends('create organisation');
+
+test('create customer', function ($shop) {
     $modelData = Customer::factory()->definition();
-    $customer  = StoreCustomer::make()->action($organisation->shop, $modelData);
+    $customer  = StoreCustomer::make()->action($shop, $modelData);
     expect($customer)->toBeInstanceOf(Customer::class);
     return $customer;
-})->depends('create organisation');
+})->depends('create shop');
 
 test('create customer user', function ($customer) {
     $publicUser  = StorePublicUser::make()->action(

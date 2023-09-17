@@ -10,7 +10,7 @@ namespace App\Actions\Organisation\Web\WebpageVariant;
 use App\Actions\CRM\Customer\UI\IndexCustomers;
 use App\Actions\InertiaAction;
 use App\Actions\Mail\Mailshot\IndexMailshots;
-use App\Actions\Market\Product\UI\IndexProducts;
+use App\Actions\Organisation\Market\Product\UI\IndexProducts;
 use App\Enums\UI\WebpageTabsEnum;
 use App\Http\Resources\Web\WebpageResource;
 use App\Models\Market\ProductCategory;

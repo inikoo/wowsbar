@@ -133,6 +133,16 @@ class StoreShop
         return Redirect::route('org.shops.show', $shop->slug);
     }
 
+    public function action($modelData): Shop
+    {
+        $this->asAction=true;
+        $this->setRawAttributes($modelData);
+        $validatedData = $this->validateAttributes();
+
+        return $this->handle(organisation(),$validatedData);
+    }
+
+
     public string $commandSignature = 'shop:create {code} {name} {type}';
 
     public function asCommand(Command $command): int
