@@ -45,7 +45,7 @@ class CreateArticle extends InertiaAction
                             'type'  => 'button',
                             'style' => 'cancel',
                             'route' => [
-                                'name'       => 'org.website.webpages.show',
+                                'name'       => 'org.websites.webpages.show',
                                 'parameters' => $blog->slug
                             ]
 

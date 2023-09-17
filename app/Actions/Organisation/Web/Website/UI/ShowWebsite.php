@@ -47,7 +47,7 @@ class ShowWebsite extends InertiaAction
     public function htmlResponse(?Website $website, ActionRequest $request): Response|RedirectResponse
     {
         if ($website == null) {
-            return Redirect::route('org.website.create');
+            return Redirect::route('org.websites.create');
         }
 
 

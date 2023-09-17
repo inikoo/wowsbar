@@ -78,8 +78,8 @@ class CreateWebpage extends InertiaAction
                             'style' => 'cancel',
                             'route' =>
                                 match ($request->route()->getName()) {
-                                    'org.website.webpages.show.webpages.create' => [
-                                        'name'       => 'org.website.webpages.show' ,
+                                    'org.websites.webpages.show.webpages.create' => [
+                                        'name'       => 'org.websites.webpages.show' ,
                                         'parameters' => array_values($request->route()->originalParameters())
                                     ],
                                     default => [

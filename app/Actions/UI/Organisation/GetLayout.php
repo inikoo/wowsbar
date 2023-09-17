@@ -85,7 +85,7 @@ class GetLayout
                         'label' => __('webpages'),
                         'icon'  => ['fal', 'fa-browser'],
                         'route' => [
-                            'name' => 'org.website.webpages.index',
+                            'name' => 'org.websites.webpages.index',
                         ]
                     ],
                     */
@@ -134,7 +134,7 @@ class GetLayout
                             'label' => __('webpages'),
                             'icon'  => ['fal', 'fa-browser'],
                             'route' => [
-                                'name' => 'org.website.webpages.index',
+                                'name' => 'org.websites.webpages.index',
                             ]
                         ],
                         */

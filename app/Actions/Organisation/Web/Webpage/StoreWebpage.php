@@ -107,7 +107,7 @@ class StoreWebpage
 
     public function htmlResponse(Webpage $webpage): RedirectResponse
     {
-        return Redirect::route('org.website.webpages.show', [
+        return Redirect::route('org.websites.webpages.show', [
             $webpage->slug
         ]);
     }

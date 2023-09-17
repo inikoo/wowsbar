@@ -167,7 +167,7 @@ class IndexWebpages extends InertiaAction
             (new ShowWebsite())->getBreadcrumbs(),
             $headCrumb(
                 [
-                    'name' => 'org.website.webpages.index',
+                    'name' => 'org.websites.webpages.index',
                     null
                 ]
             ),

@@ -57,7 +57,7 @@ class ShowWebpage extends InertiaAction
                         'style' => 'create',
                         'label' => __('new article'),
                         'route' => [
-                            'name' => 'org.website.blog.article.create',
+                            'name' => 'org.websites.blog.article.create',
                         ]
                     ] : false
                 ]
@@ -71,7 +71,7 @@ class ShowWebpage extends InertiaAction
                         'style' => 'create',
                         'label' => __('Main webpage'),
                         'route' => [
-                            'name' => 'org.website.webpages.create',
+                            'name' => 'org.websites.webpages.create',
                         ]
                     ] : false
                 ]
@@ -91,7 +91,7 @@ class ShowWebpage extends InertiaAction
                         'style' => 'create',
                         'label' => __('webpage'),
                         'route' => [
-                            'name'       => 'org.website.webpages.show.webpages.create',
+                            'name'       => 'org.websites.webpages.show.webpages.create',
                             'parameters' => ['webpage' => $webpage->slug]
                         ]
                     ] : false
@@ -185,11 +185,11 @@ class ShowWebpage extends InertiaAction
                 $routeParameters['webpage'],
                 [
                     'index' => [
-                        'name'       => 'org.website.webpages.index',
+                        'name'       => 'org.websites.webpages.index',
                         'parameters' => []
                     ],
                     'model' => [
-                        'name'       => 'org.website.webpages.show',
+                        'name'       => 'org.websites.webpages.show',
                         'parameters' => [$routeParameters['webpage']->slug]
                     ]
                 ],
