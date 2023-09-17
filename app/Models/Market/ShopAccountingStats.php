@@ -1,11 +1,11 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Wed, 13 Sep 2023 11:45:08 Malaysia Time, Pantai Lembeng, Bali, Indonesia
+ * Created: Sun, 17 Sep 2023 22:12:20 Malaysia Time, Pantai Lembeng, Bali, Indonesia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Models\Organisation\Market;
+namespace App\Models\Market;
 
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
 
 /**
- * App\Models\Organisation\Market\ShopAccountingStats
+ * App\Models\Market\ShopAccountingStats
  *
  * @property int $id
  * @property int $shop_id
@@ -52,7 +52,7 @@ use Illuminate\Support\Carbon;
  * @property int $number_refunds_state_declined
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @property-read \App\Models\Organisation\Market\Shop $shop
+ * @property-read \App\Models\Market\Shop $shop
  * @method static Builder|ShopAccountingStats newModelQuery()
  * @method static Builder|ShopAccountingStats newQuery()
  * @method static Builder|ShopAccountingStats query()

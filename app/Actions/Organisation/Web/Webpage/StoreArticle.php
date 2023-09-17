@@ -10,8 +10,8 @@ namespace App\Actions\Organisation\Web\Webpage;
 use App\Actions\Organisation\Web\WebpageVariant\StoreWebpageVariant;
 use App\Enums\Organisation\Web\Webpage\WebpagePurposeEnum;
 use App\Enums\Organisation\Web\Webpage\WebpageTypeEnum;
-use App\Models\Organisation\Web\Webpage;
-use App\Models\Organisation\Web\Website;
+use App\Models\Web\Webpage;
+use App\Models\Web\Website;
 use App\Rules\CaseSensitive;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Arr;
@@ -49,7 +49,7 @@ class StoreArticle
 
     public function getLevel($parent_id): int
     {
-        /** @var Webpage $parent */
+        /** @var \App\Models\Web\Webpage $parent */
         if ($parent_id && $parent = Webpage::where('id', $parent_id)->first()) {
             return $parent->level + 1;
         }

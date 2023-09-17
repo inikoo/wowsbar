@@ -1,11 +1,11 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Wed, 13 Sep 2023 11:48:38 Malaysia Time, Kuala Lumpur, Malaysia
+ * Created: Sun, 17 Sep 2023 22:12:21 Malaysia Time, Pantai Lembeng, Bali, Indonesia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Models\Organisation\Market;
+namespace App\Models\Market;
 
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * App\Models\Organisation\Market\ShopCRMStats
+ * App\Models\Market\ShopCRMStats
  *
  * @property int $id
  * @property int $shop_id
@@ -42,7 +42,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $number_orders_state_settled
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Models\Organisation\Market\Shop $shop
+ * @property-read \App\Models\Market\Shop $shop
  * @method static Builder|ShopCRMStats newModelQuery()
  * @method static Builder|ShopCRMStats newQuery()
  * @method static Builder|ShopCRMStats query()

@@ -9,7 +9,7 @@ namespace App\Actions\Organisation\Web\Website;
 
 use App\Actions\Traits\WithActionUpdate;
 use App\Enums\Organisation\Web\Website\WebsiteStateEnum;
-use App\Models\Organisation\Web\Website;
+use App\Models\Web\Website;
 use Illuminate\Validation\Rules\Enum;
 use Lorisleiva\Actions\ActionRequest;
 

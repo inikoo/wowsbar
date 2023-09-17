@@ -1,18 +1,15 @@
 <?php
 /*
- *  Author: Raul Perusquia <raul@inikoo.com>
- *  Created: Thu, 20 Oct 2022 18:49:22 British Summer Time, Sheffield, UK
- *  Copyright (c) 2022, Raul A Perusquia Flores
+ * Author: Raul Perusquia <raul@inikoo.com>
+ * Created: Sun, 17 Sep 2023 22:12:21 Malaysia Time, Pantai Lembeng, Bali, Indonesia
+ * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Models\Organisation\Market;
+namespace App\Models\Market;
 
 use App\Actions\Organisation\Market\Shop\Hydrators\ShopHydrateDepartments;
 use App\Enums\Market\ProductCategory\ProductCategoryStateEnum;
 use App\Models\BI\SalesStats;
-use App\Models\Market\Product;
-use App\Models\Market\ProductCategoryStats;
-use App\Models\Market\Shop;
 use App\Models\Search\UniversalSearch;
 use App\Models\Traits\HasHistory;
 use App\Models\Traits\HasUniversalSearch;

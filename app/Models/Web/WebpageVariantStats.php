@@ -1,11 +1,11 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Tue, 15 Aug 2023 16:06:13 Malaysia Time, Pantai Lembeng, Bali
+ * Created: Sun, 17 Sep 2023 22:12:20 Malaysia Time, Pantai Lembeng, Bali, Indonesia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Models\Organisation\Web;
+namespace App\Models\Web;
 
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
@@ -20,7 +20,7 @@ use Spatie\Multitenancy\Models\Concerns\UsesTenantConnection;
  * @property int $webpage_variant_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Models\Organisation\Web\WebpageVariant $webpageVariant
+ * @property-read \App\Models\Web\WebpageVariant $webpageVariant
  * @method static Builder|WebpageVariantStats newModelQuery()
  * @method static Builder|WebpageVariantStats newQuery()
  * @method static Builder|WebpageVariantStats query()

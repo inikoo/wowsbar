@@ -1,17 +1,17 @@
 <?php
 /*
- *  Author: Raul Perusquia <raul@inikoo.com>
- *  Created: Thu, 20 Oct 2022 19:00:13 British Summer Time, Sheffield, UK
- *  Copyright (c) 2022, Raul A Perusquia Flores
+ * Author: Raul Perusquia <raul@inikoo.com>
+ * Created: Sun, 17 Sep 2023 22:12:21 Malaysia Time, Pantai Lembeng, Bali, Indonesia
+ * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Models\Organisation\Market;
+namespace App\Models\Market;
 
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Multitenancy\Models\Concerns\UsesTenantConnection;
 
 /**
- * App\Models\Organisation\Market\ProductCategoryStats
+ * App\Models\Market\ProductCategoryStats
  *
  * @property int $id
  * @property int $product_category_id

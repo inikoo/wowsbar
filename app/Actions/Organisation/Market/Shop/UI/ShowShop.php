@@ -8,7 +8,6 @@
 namespace App\Actions\Organisation\Market\Shop\UI;
 
 use App\Actions\InertiaAction;
-
 use App\Actions\Organisation\Market\Product\UI\IndexProducts;
 use App\Actions\Organisation\Market\ProductCategory\UI\IndexDepartments;
 use App\Actions\UI\Organisation\Dashboard\ShowDashboard;
@@ -17,7 +16,7 @@ use App\Enums\UI\Organisation\ShopTabsEnum;
 use App\Http\Resources\Market\DepartmentResource;
 use App\Http\Resources\Market\ProductResource;
 use App\Http\Resources\Market\ShopResource;
-use App\Models\Organisation\Market\Shop;
+use App\Models\Market\Shop;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;

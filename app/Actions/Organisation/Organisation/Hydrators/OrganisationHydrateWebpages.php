@@ -11,7 +11,7 @@ use App\Actions\Traits\WithEnumStats;
 use App\Enums\Organisation\Web\Webpage\WebpagePurposeEnum;
 use App\Enums\Organisation\Web\Webpage\WebpageStateEnum;
 use App\Enums\Organisation\Web\Webpage\WebpageTypeEnum;
-use App\Models\Organisation\Web\Webpage;
+use App\Models\Web\Webpage;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class OrganisationHydrateWebpages

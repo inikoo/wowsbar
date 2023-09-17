@@ -9,7 +9,7 @@ namespace App\Actions\Organisation\Organisation\Hydrators;
 
 use App\Actions\Traits\WithEnumStats;
 use App\Enums\Organisation\Web\Website\WebsiteStateEnum;
-use App\Models\Organisation\Web\Website;
+use App\Models\Web\Website;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class OrganisationHydrateWebsites

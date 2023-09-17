@@ -7,8 +7,8 @@
 
 namespace App\Actions\Web\WebBlock;
 
-use App\Models\Organisation\Web\WebBlock;
-use App\Models\Organisation\Web\WebBlockType;
+use App\Models\Web\WebBlock;
+use App\Models\Web\WebBlockType;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class StoreWebBlock
@@ -18,7 +18,7 @@ class StoreWebBlock
     public function handle(WebBlockType $webBlockType, array $modelData): WebBlock
     {
         data_set($modelData, 'scope', $webBlockType->scope);
-        /** @var \App\Models\Organisation\Web\WebBlock $webBlock */
+        /** @var \App\Models\Web\WebBlock $webBlock */
         $webBlock = $webBlockType->webBlocks()->create($modelData);
         $webBlock->stats()->create();
         return $webBlock;

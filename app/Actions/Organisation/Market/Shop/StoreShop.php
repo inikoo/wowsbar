@@ -8,10 +8,11 @@
 namespace App\Actions\Organisation\Market\Shop;
 
 use App\Actions\Organisation\Accounting\PaymentAccount\StorePaymentAccount;
+use App\Actions\Organisation\Market\Shop\Hydrators\ShopHydrateUniversalSearch;
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateShops;
 use App\Enums\Helpers\SerialReference\SerialReferenceModelEnum;
 use App\Enums\Organisation\Market\Shop\ShopTypeEnum;
-use App\Models\Organisation\Market\Shop;
+use App\Models\Market\Shop;
 use App\Models\Organisation\Organisation;
 use Exception;
 use Illuminate\Console\Command;

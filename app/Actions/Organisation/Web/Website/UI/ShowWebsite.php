@@ -13,7 +13,7 @@ use App\Actions\UI\Organisation\Dashboard\ShowDashboard;
 use App\Actions\UI\WithInertia;
 use App\Enums\UI\Organisation\WebsiteTabsEnum;
 use App\Http\Resources\Web\WebsiteResource;
-use App\Models\Organisation\Web\Website;
+use App\Models\Web\Website;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;

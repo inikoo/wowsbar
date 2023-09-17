@@ -2,9 +2,9 @@
 
 namespace App\Actions\Organisation\Web\Website\UI;
 
-use App\Models\Organisation\Web\Website;
-use Lorisleiva\Actions\Concerns\AsObject;
+use App\Models\Web\Website;
 use Arr;
+use Lorisleiva\Actions\Concerns\AsObject;
 
 class GetWebsiteWorkshopMenu
 {

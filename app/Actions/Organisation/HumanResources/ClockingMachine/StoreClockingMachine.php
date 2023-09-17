@@ -26,7 +26,7 @@ class StoreClockingMachine
 
     public function handle(Workplace $workplace, array $modelData): ClockingMachine
     {
-        /** @var ClockingMachine $clockingMachine */
+        /** @var \App\Models\HumanResources\ClockingMachine $clockingMachine */
         $clockingMachine =  $workplace->clockingMachines()->create($modelData);
         ClockingMachineHydrateUniversalSearch::dispatch($clockingMachine);
         return $clockingMachine;

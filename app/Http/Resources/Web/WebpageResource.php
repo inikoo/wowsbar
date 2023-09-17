@@ -9,7 +9,7 @@ namespace App\Http\Resources\Web;
 
 use App\Enums\Organisation\Web\Webpage\WebpageTypeEnum;
 use App\Http\Resources\HasSelfCall;
-use App\Models\Organisation\Web\Webpage;
+use App\Models\Web\Webpage;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class WebpageResource extends JsonResource
@@ -18,7 +18,7 @@ class WebpageResource extends JsonResource
 
     public function toArray($request): array
     {
-        /** @var Webpage $webpage */
+        /** @var \App\Models\Web\Webpage $webpage */
         $webpage = $this;
 
         return [

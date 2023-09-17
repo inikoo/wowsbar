@@ -17,7 +17,7 @@ class WorkPlaceInertiaResource extends JsonResource
 {
     public function toArray($request): array|Arrayable|JsonSerializable
     {
-        /** @var Workplace $workplace */
+        /** @var \App\Models\HumanResources\Workplace $workplace */
         $workplace = $this;
 
 

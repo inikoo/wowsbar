@@ -11,7 +11,7 @@ use App\Actions\Organisation\Market\Shop\Hydrators\ShopHydrateUniversalSearch;
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateShops;
 use App\Actions\Traits\WithActionUpdate;
 use App\Http\Resources\Market\ShopResource;
-use App\Models\Organisation\Market\Shop;
+use App\Models\Market\Shop;
 use Illuminate\Validation\Rule;
 use Lorisleiva\Actions\ActionRequest;
 

@@ -1,11 +1,11 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Tue, 15 Aug 2023 16:06:13 Malaysia Time, Pantai Lembeng, Bali
+ * Created: Sun, 17 Sep 2023 22:12:21 Malaysia Time, Pantai Lembeng, Bali, Indonesia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Models\Organisation\Web;
+namespace App\Models\Web;
 
 use App\Enums\Organisation\Web\Webpage\WebpagePurposeEnum;
 use App\Enums\Organisation\Web\Webpage\WebpageTypeEnum;
@@ -19,7 +19,7 @@ use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
 /**
- * App\Models\Organisation\Web\Webpage
+ * App\Models\Web\Webpage
  *
  * @property int $id
  * @property string $slug
@@ -36,10 +36,10 @@ use Spatie\Sluggable\SlugOptions;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string|null $deleted_at
- * @property-read \App\Models\Organisation\Web\WebpageStats|null $stats
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Organisation\Web\WebpageVariant> $variants
+ * @property-read \App\Models\Web\WebpageStats|null $stats
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Web\WebpageVariant> $variants
  * @property-read int|null $variants_count
- * @property-read \App\Models\Organisation\Web\Website $website
+ * @property-read \App\Models\Web\Website $website
  * @method static Builder|Webpage newModelQuery()
  * @method static Builder|Webpage newQuery()
  * @method static Builder|Webpage query()

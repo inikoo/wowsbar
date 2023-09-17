@@ -23,7 +23,7 @@ use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
 
 /**
- * @property Clocking $clocking
+ * @property \App\Models\HumanResources\Clocking $clocking
  */
 class ShowClocking extends InertiaAction
 {

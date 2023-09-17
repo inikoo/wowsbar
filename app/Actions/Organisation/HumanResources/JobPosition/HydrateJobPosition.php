@@ -46,7 +46,7 @@ class HydrateJobPosition extends HydrateModel
     private function getNormalisedJobPositionsShare(): array
     {
         $share = [];
-        /** @var JobPosition $jobPosition */
+        /** @var \App\Models\HumanResources\JobPosition $jobPosition */
         foreach (JobPosition::all() as $jobPosition) {
             $share[$jobPosition->id] = $jobPosition->number_work_time;
         }

@@ -14,14 +14,14 @@ use App\Http\Resources\Accounting\PaymentResource;
 use App\Models\Accounting\Payment;
 use App\Models\Accounting\PaymentAccount;
 use App\Models\Accounting\PaymentServiceProvider;
-use App\Models\Organisation\Market\Shop;
-use App\Models\Organisation\OMS\Order;
+use App\Models\Market\Shop;
+use App\Models\OMS\Order;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
 
 /**
- * @property Payment $payment
+ * @property \App\Models\Accounting\Payment $payment
  */
 class ShowPayment extends InertiaAction
 {

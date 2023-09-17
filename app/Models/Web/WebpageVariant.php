@@ -1,11 +1,11 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Tue, 15 Aug 2023 16:06:13 Malaysia Time, Pantai Lembeng, Bali
+ * Created: Sun, 17 Sep 2023 22:12:20 Malaysia Time, Pantai Lembeng, Bali, Indonesia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Models\Organisation\Web;
+namespace App\Models\Web;
 
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
@@ -26,10 +26,10 @@ use Spatie\Sluggable\SlugOptions;
  * @property array $components
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Organisation\Web\ContentBlock> $contentBlocks
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Web\ContentBlock> $contentBlocks
  * @property-read int|null $content_blocks_count
- * @property-read \App\Models\Organisation\Web\WebpageVariantStats|null $stats
- * @property-read \App\Models\Organisation\Web\Webpage $webpage
+ * @property-read \App\Models\Web\WebpageVariantStats|null $stats
+ * @property-read \App\Models\Web\Webpage $webpage
  * @method static Builder|WebpageVariant newModelQuery()
  * @method static Builder|WebpageVariant newQuery()
  * @method static Builder|WebpageVariant query()

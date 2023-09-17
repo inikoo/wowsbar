@@ -35,7 +35,7 @@ class StoreClocking
         $modelData['clocked_at'] = date('Y-m-d H:i:s');
         $modelData['type']       = ClockingTypeEnum::MANUAL;
 
-        /** @var Clocking $clocking */
+        /** @var \App\Models\HumanResources\Clocking $clocking */
         $clocking = $parent->clockings()->create($modelData);
 
         return $clocking;

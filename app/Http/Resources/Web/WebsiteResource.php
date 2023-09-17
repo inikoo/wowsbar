@@ -8,7 +8,7 @@
 namespace App\Http\Resources\Web;
 
 use App\Http\Resources\HasSelfCall;
-use App\Models\Organisation\Web\Website;
+use App\Models\Web\Website;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class WebsiteResource extends JsonResource
@@ -17,7 +17,7 @@ class WebsiteResource extends JsonResource
 
     public function toArray($request): array
     {
-        /** @var Website $website */
+        /** @var \App\Models\Web\Website $website */
         $website = $this;
 
         return [

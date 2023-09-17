@@ -11,7 +11,7 @@ use App\Actions\InertiaAction;
 use App\Enums\UI\PaymentTabsEnum;
 use App\Models\Accounting\Payment;
 use App\Models\Accounting\PaymentServiceProvider;
-use App\Models\Organisation\OMS\Order;
+use App\Models\OMS\Order;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;

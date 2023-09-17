@@ -1,17 +1,17 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Tue, 20 Jun 2023 20:35:59 Malaysia Time, Pantai Lembeng, Bali, Indonesia
+ * Created: Sun, 17 Sep 2023 22:12:21 Malaysia Time, Pantai Lembeng, Bali, Indonesia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Models\Organisation\OMS;
+namespace App\Models\OMS;
 
 use App\Enums\OMS\Transaction\TransactionStateEnum;
 use App\Enums\OMS\Transaction\TransactionStatusEnum;
 use App\Enums\OMS\Transaction\TransactionTypeEnum;
 use App\Models\CRM\Customer;
-use App\Models\Organisation\Market\Shop;
+use App\Models\Market\Shop;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -21,14 +21,14 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * App\Models\Organisation\OMS\Transaction
+ * App\Models\OMS\Transaction
  *
  * @property TransactionStateEnum $state
  * @property TransactionStatusEnum $status
  * @property TransactionTypeEnum $type
  * @property-read Customer $customer
  * @property-read Model|\Eloquent $item
- * @property-read \App\Models\Organisation\OMS\Order|null $order
+ * @property-read \App\Models\OMS\Order|null $order
  * @property-write mixed $quantity
  * @property-read Shop $shop
  * @method static Builder|Transaction newModelQuery()

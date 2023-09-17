@@ -22,7 +22,7 @@ class StoreProspect
 
     public function handle(array $modelData, array $addressesData = []): Prospect
     {
-        /** @var Prospect $prospect */
+        /** @var \App\Models\CRM\Prospect $prospect */
         $prospect = Prospect::create($modelData);
 
         ProspectHydrateUniversalSearch::dispatch($prospect);

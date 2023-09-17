@@ -7,7 +7,6 @@
 
 namespace App\Actions\Organisation\HumanResources\Employee;
 
-use App\Actions\Organisation\HumanResources\Employee\Hydrators\EmployeeHydrateUniversalSearch;
 use App\Actions\Traits\WithActionUpdate;
 use App\Http\Resources\HumanResources\EmployeeResource;
 use App\Models\HumanResources\Employee;

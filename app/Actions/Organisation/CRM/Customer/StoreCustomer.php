@@ -8,9 +8,10 @@
 namespace App\Actions\Organisation\CRM\Customer;
 
 use App\Actions\Helpers\SerialReference\GetSerialReference;
+use App\Actions\Organisation\CRM\Customer\Hydrators\CustomerHydrateUniversalSearch;
 use App\Enums\Helpers\SerialReference\SerialReferenceModelEnum;
 use App\Models\CRM\Customer;
-use App\Models\Organisation\Market\Shop;
+use App\Models\Market\Shop;
 use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
@@ -34,7 +35,7 @@ class StoreCustomer
     public function handle(Shop $shop, array $customerData, array $customerAddressesData = []): Customer
     {
         return DB::transaction(function () use ($customerData, $shop) {
-            /** @var Customer $customer */
+            /** @var \App\Models\Organisation\CRM\\App\Models\CRM\Customer $customer */
             $customer = $shop->customers()->create($customerData);
             if ($customer->reference == null) {
 

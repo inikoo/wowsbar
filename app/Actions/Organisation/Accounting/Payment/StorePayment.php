@@ -41,7 +41,7 @@ class StorePayment
 
             data_fill($modelData, 'date', gmdate('Y-m-d H:i:s'));
 
-            /** @var Payment $payment */
+            /** @var \App\Models\Accounting\Payment $payment */
             $payment = $paymentAccount->payments()->create($modelData);
 
             match ($paymentAccount->paymentServiceProvider->code) {

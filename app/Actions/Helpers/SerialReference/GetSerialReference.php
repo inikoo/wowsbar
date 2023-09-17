@@ -8,10 +8,10 @@
 namespace App\Actions\Helpers\SerialReference;
 
 use App\Models\Helpers\SerialReference;
-use App\Models\Organisation\Market\Shop;
+use App\Models\Market\Shop;
 use App\Models\Organisation\Organisation;
-use Lorisleiva\Actions\Concerns\AsAction;
 use Illuminate\Support\Facades\DB;
+use Lorisleiva\Actions\Concerns\AsAction;
 
 class GetSerialReference
 {

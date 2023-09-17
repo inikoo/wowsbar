@@ -1,15 +1,15 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Tue, 15 Aug 2023 16:06:13 Malaysia Time, Pantai Lembeng, Bali
+ * Created: Sun, 17 Sep 2023 22:12:21 Malaysia Time, Pantai Lembeng, Bali, Indonesia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Models\Organisation\Web;
+namespace App\Models\Web;
 
 use App\Enums\Organisation\Web\Website\WebsiteStateEnum;
 use App\Models\Traits\HasHistory;
-use App\Models\Traits\HasOrganisationUniversalSearch;
+use App\Models\Traits\HasUniversalSearch;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -46,10 +46,9 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \OwenIt\Auditing\Models\Audit> $audits
  * @property-read int|null $audits_count
  * @property-read array $es_audits
- * @property-read \App\Models\Organisation\Web\Webpage|null $home
- * @property-read \App\Models\Search\OrganisationUniversalSearch|null $universalSearch
- * @property-read \App\Models\Organisation\Web\WebsiteStats|null $webStats
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Organisation\Web\Webpage> $webpages
+ * @property-read \App\Models\Web\Webpage|null $home
+ * @property-read \App\Models\Web\WebsiteStats|null $webStats
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Web\Webpage> $webpages
  * @property-read int|null $webpages_count
  * @method static Builder|Website newModelQuery()
  * @method static Builder|Website newQuery()
@@ -84,7 +83,7 @@ class Website extends Model implements Auditable
     use HasSlug;
     use SoftDeletes;
     use HasHistory;
-    use HasOrganisationUniversalSearch;
+    use HasUniversalSearch;
 
     protected $casts = [
         'data'      => 'array',

@@ -1,8 +1,8 @@
 <?php
 /*
- *  Author: Raul Perusquia <raul@inikoo.com>
- *  Created: Thu, 25 Aug 2022 14:10:34 Malaysia Time, Kuala Lumpur, Malaysia
- *  Copyright (c) 2022, Raul A Perusquia F
+ * Author: Raul Perusquia <raul@inikoo.com>
+ * Created: Sun, 17 Sep 2023 22:12:21 Malaysia Time, Pantai Lembeng, Bali, Indonesia
+ * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
 namespace App\Models\HumanResources;
@@ -10,7 +10,6 @@ namespace App\Models\HumanResources;
 use App\Enums\HumanResources\Employee\EmployeeStateEnum;
 use App\Enums\HumanResources\Employee\EmployeeTypeEnum;
 use App\Enums\Miscellaneous\GenderEnum;
-use App\Models\Auth\User;
 use App\Models\Organisation\OrganisationUser;
 use App\Models\Traits\HasHistory;
 use App\Models\Traits\HasPhoto;

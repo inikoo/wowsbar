@@ -14,7 +14,7 @@ class PaymentServiceProviderResource extends JsonResource
 {
     public function toArray($request): array
     {
-        /** @var PaymentServiceProvider $paymentServiceProvider */
+        /** @var \App\Models\Organisation\Accounting\PaymentServiceProvider $paymentServiceProvider */
         $paymentServiceProvider=$this;
         return [
 

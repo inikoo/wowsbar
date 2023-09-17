@@ -11,7 +11,7 @@ use App\Actions\Web\WebBlock\StoreWebBlock;
 use App\Actions\Web\WebBlock\UpdateWebBlock;
 use App\Actions\Web\WebBlockType\StoreWebBlockType;
 use App\Actions\Web\WebBlockType\UpdateWebBlockType;
-use App\Models\Organisation\Web\WebBlockType;
+use App\Models\Web\WebBlockType;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;

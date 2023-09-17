@@ -9,8 +9,8 @@ namespace App\Actions\Organisation\Market\ProductCategory;
 
 
 use App\Actions\Organisation\Market\Shop\Hydrators\ShopHydrateDepartments;
-use App\Models\Organisation\Market\ProductCategory;
-use App\Models\Organisation\Market\Shop;
+use App\Models\Market\ProductCategory;
+use App\Models\Market\Shop;
 use App\Rules\CaseSensitive;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;

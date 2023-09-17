@@ -10,7 +10,7 @@ namespace App\Actions\Organisation\Organisation\Hydrators;
 use App\Actions\Traits\WithEnumStats;
 use App\Enums\Organisation\Market\Shop\ShopStateEnum;
 use App\Enums\Organisation\Market\Shop\ShopTypeEnum;
-use App\Models\Organisation\Market\Shop;
+use App\Models\Market\Shop;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class OrganisationHydrateShops

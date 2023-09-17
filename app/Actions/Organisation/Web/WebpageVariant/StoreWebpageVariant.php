@@ -7,9 +7,8 @@
 
 namespace App\Actions\Organisation\Web\WebpageVariant;
 
-use App\Actions\Organisation\Web\Elasticsearch\StoreWebVariantElasticsearch;
-use App\Models\Organisation\Web\Webpage;
-use App\Models\Organisation\Web\WebpageVariant;
+use App\Models\Web\Webpage;
+use App\Models\Web\WebpageVariant;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class StoreWebpageVariant

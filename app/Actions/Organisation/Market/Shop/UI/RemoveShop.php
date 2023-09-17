@@ -8,7 +8,7 @@
 namespace App\Actions\Organisation\Market\Shop\UI;
 
 use App\Actions\InertiaAction;
-use App\Models\Organisation\Market\Shop;
+use App\Models\Market\Shop;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;

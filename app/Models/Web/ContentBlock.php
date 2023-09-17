@@ -1,11 +1,11 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Thu, 13 Jul 2023 14:24:05 Malaysia Time, Kuala Lumpur, Malaysia
+ * Created: Sun, 17 Sep 2023 22:12:21 Malaysia Time, Pantai Lembeng, Bali, Indonesia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Models\Organisation\Web;
+namespace App\Models\Web;
 
 use App\Actions\Utils\Abbreviate;
 use App\Actions\Utils\ReadableRandomStringGenerator;
@@ -18,10 +18,10 @@ use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
 /**
- * App\Models\Organisation\Web\ContentBlock
+ * App\Models\Web\ContentBlock
  *
- * @property-read \App\Models\Organisation\Web\WebBlock|null $webBlock
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Organisation\Web\WebpageVariant> $webpageVariants
+ * @property-read \App\Models\Web\WebBlock|null $webBlock
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Web\WebpageVariant> $webpageVariants
  * @property-read int|null $webpage_variants_count
  * @method static \Illuminate\Database\Eloquent\Builder|ContentBlock newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|ContentBlock newQuery()

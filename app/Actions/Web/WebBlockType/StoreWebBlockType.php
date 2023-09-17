@@ -7,7 +7,7 @@
 
 namespace App\Actions\Web\WebBlockType;
 
-use App\Models\Organisation\Web\WebBlockType;
+use App\Models\Web\WebBlockType;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class StoreWebBlockType
@@ -16,7 +16,7 @@ class StoreWebBlockType
 
     public function handle(array $modelData): WebBlockType
     {
-        /** @var WebBlockType $webBlockType */
+        /** @var \App\Models\Web\WebBlockType $webBlockType */
         $webBlockType = WebBlockType::create($modelData);
         $webBlockType->stats()->create();
 

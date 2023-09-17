@@ -1,18 +1,18 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Tue, 20 Jun 2023 20:26:20 Malaysia Time, Pantai Lembeng, Bali, Indonesia
+ * Created: Sun, 17 Sep 2023 22:12:21 Malaysia Time, Pantai Lembeng, Bali, Indonesia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Models\Organisation\OMS;
+namespace App\Models\OMS;
 
 use App\Enums\OMS\Order\OrderStateEnum;
 use App\Enums\OMS\Order\OrderStatusEnum;
 use App\Models\Accounting\Invoice;
 use App\Models\Accounting\Payment;
 use App\Models\CRM\Customer;
-use App\Models\Organisation\Market\Shop;
+use App\Models\Market\Shop;
 use App\Models\Traits\HasUniversalSearch;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
@@ -24,11 +24,10 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
 use Spatie\Sluggable\SlugOptions;
 
 /**
- * App\Models\Organisation\OMS\Order
+ * App\Models\OMS\Order
  *
  * @property int $id
  * @property string $slug
@@ -62,14 +61,14 @@ use Spatie\Sluggable\SlugOptions;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
- * @property-read Customer $customer
+ * @property-read \App\Models\CRM\Customer $customer
  * @property-read Collection<int, Invoice> $invoices
  * @property-read int|null $invoices_count
- * @property-read Collection<int, Payment> $payments
+ * @property-read Collection<int, \App\Models\Accounting\Payment> $payments
  * @property-read int|null $payments_count
- * @property-read Shop $shop
- * @property-read \App\Models\Organisation\OMS\OrderStats|null $stats
- * @property-read Collection<int, \App\Models\Organisation\OMS\Transaction> $transactions
+ * @property-read \App\Models\Market\Shop $shop
+ * @property-read \App\Models\OMS\OrderStats|null $stats
+ * @property-read Collection<int, \App\Models\OMS\Transaction> $transactions
  * @property-read int|null $transactions_count
  * @property-read \App\Models\Search\UniversalSearch|null $universalSearch
  * @method static Builder|Order newModelQuery()

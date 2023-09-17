@@ -8,7 +8,6 @@
 
 namespace App\Http\Resources\HumanResources;
 
-use App\Models\HumanResources\Workplace;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Http\Resources\Json\JsonResource;
 use JsonSerializable;
@@ -17,7 +16,7 @@ class WorkPlaceResource extends JsonResource
 {
     public function toArray($request): array|Arrayable|JsonSerializable
     {
-        /** @var Workplace $workplace */
+        /** @var \App\Models\HumanResources\Workplace $workplace */
         $workplace = $this;
 
 

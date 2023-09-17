@@ -7,7 +7,7 @@
 
 namespace App\Actions\Organisation\Web\Website\UI;
 
-use App\Models\Organisation\Web\Website;
+use App\Models\Web\Website;
 use Illuminate\Support\Arr;
 use Lorisleiva\Actions\Concerns\AsObject;
 

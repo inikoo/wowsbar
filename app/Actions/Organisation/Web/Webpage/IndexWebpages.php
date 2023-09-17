@@ -8,13 +8,12 @@
 namespace App\Actions\Organisation\Web\Webpage;
 
 use App\Actions\InertiaAction;
-
 use App\Actions\Organisation\Web\Website\UI\ShowWebsite;
 use App\Http\Resources\Web\WebpageResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\Organisation\Organisation;
-use App\Models\Organisation\Web\Webpage;
-use App\Models\Organisation\Web\Website;
+use App\Models\Web\Webpage;
+use App\Models\Web\Website;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -27,7 +26,7 @@ use Spatie\QueryBuilder\QueryBuilder;
 class IndexWebpages extends InertiaAction
 {
     /**
-     * @var \App\Models\Organisation\Organisation|\App\Models\Organisation\Web\Webpage|\App\Models\Organisation\Web\Website
+     * @var \App\Models\Organisation\Organisation|\App\Models\Web\Webpage|\App\Models\Web\Website
      */
     private Webpage|Website|Organisation $parent;
 

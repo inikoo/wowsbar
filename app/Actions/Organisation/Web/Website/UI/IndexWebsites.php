@@ -12,7 +12,7 @@ use App\Actions\UI\Organisation\Dashboard\ShowDashboard;
 use App\Enums\Organisation\Web\Website\WebsiteStateEnum;
 use App\Http\Resources\Web\WebsiteResource;
 use App\InertiaTable\InertiaTable;
-use App\Models\Organisation\Web\Website;
+use App\Models\Web\Website;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;

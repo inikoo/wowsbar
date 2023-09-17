@@ -7,7 +7,7 @@
 
 namespace App\Actions\Organisation\Market\Shop;
 
-use App\Models\Organisation\Market\Shop;
+use App\Models\Market\Shop;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
 use Lorisleiva\Actions\ActionRequest;

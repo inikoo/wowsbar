@@ -7,9 +7,9 @@
 
 namespace App\Actions\UI\Organisation;
 
-use App\Models\Organisation\Market\Shop;
+use App\Models\Market\Shop;
 use App\Models\Organisation\OrganisationUser;
-use App\Models\Organisation\Web\Website;
+use App\Models\Web\Website;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class GetLayout

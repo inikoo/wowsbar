@@ -1,11 +1,11 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Tue, 20 Jun 2023 20:26:47 Malaysia Time, Pantai Lembeng, Bali, Indonesia
+ * Created: Sun, 17 Sep 2023 22:12:20 Malaysia Time, Pantai Lembeng, Bali, Indonesia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Models\Organisation\OMS;
+namespace App\Models\OMS;
 
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
@@ -14,9 +14,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\Multitenancy\Models\Concerns\UsesTenantConnection;
 
 /**
- * App\Models\Organisation\OMS\OrderStats
+ * App\Models\OMS\OrderStats
  *
- * @property-read \App\Models\Organisation\OMS\Order|null $order
+ * @property-read \App\Models\OMS\Order|null $order
  * @method static Builder|OrderStats newModelQuery()
  * @method static Builder|OrderStats newQuery()
  * @method static Builder|OrderStats query()

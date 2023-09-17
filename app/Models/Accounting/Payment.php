@@ -1,7 +1,7 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Mon, 27 Feb 2023 10:42:26 Malaysia Time, Kuala Lumpur, Malaysia
+ * Created: Sun, 17 Sep 2023 22:09:49 Malaysia Time, Pantai Lembeng, Bali, Indonesia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
@@ -15,7 +15,7 @@ use App\Enums\Accounting\Payment\PaymentSubsequentStatusEnum;
 use App\Enums\Accounting\Payment\PaymentTypeEnum;
 use App\Models\Assets\Currency;
 use App\Models\CRM\Customer;
-use App\Models\Organisation\Market\Shop;
+use App\Models\Market\Shop;
 use App\Models\Search\UniversalSearch;
 use App\Models\Traits\HasUniversalSearch;
 use Eloquent;
@@ -52,7 +52,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property bool $with_refund
  * @property int|null $source_id
  * @property-read Currency $currency
- * @property-read Customer $customer
+ * @property-read \App\Models\CRM\Customer $customer
  * @property-read \App\Models\Accounting\PaymentAccount $paymentAccount
  * @property-read Shop|null $shop
  * @property-read UniversalSearch|null $universalSearch

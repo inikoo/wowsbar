@@ -8,7 +8,7 @@
 namespace App\Actions\Organisation\Web\Website;
 
 use App\Actions\Traits\WithActionUpdate;
-use App\Models\Organisation\Web\Website;
+use App\Models\Web\Website;
 use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;

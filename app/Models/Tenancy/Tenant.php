@@ -52,7 +52,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Banner> $banners
  * @property-read int|null $banners_count
  * @property-read Currency $currency
- * @property-read \Illuminate\Database\Eloquent\Collection<int, Customer> $customers
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\CRM\Customer> $customers
  * @property-read int|null $customers_count
  * @property-read array $es_audits
  * @property-read Media|null $logo

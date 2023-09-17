@@ -12,7 +12,7 @@ use App\Actions\UI\Organisation\Dashboard\ShowDashboard;
 use App\Enums\UI\Organisation\ShopsTabsEnum;
 use App\Http\Resources\Market\ShopResource;
 use App\InertiaTable\InertiaTable;
-use App\Models\Organisation\Market\Shop;
+use App\Models\Market\Shop;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;

@@ -9,7 +9,7 @@ namespace App\Actions\Organisation\HumanResources\JobPosition\UI;
 
 use App\Actions\InertiaAction;
 use App\Models\HumanResources\JobPosition;
-use App\Models\Organisation\Market\ProductCategory;
+use App\Models\Market\ProductCategory;
 use Exception;
 use Inertia\Inertia;
 use Inertia\Response;

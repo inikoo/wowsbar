@@ -8,7 +8,7 @@
 namespace App\Actions\Web\WebBlock;
 
 use App\Actions\Traits\WithActionUpdate;
-use App\Models\Organisation\Web\WebBlock;
+use App\Models\Web\WebBlock;
 
 class UpdateWebBlock
 {

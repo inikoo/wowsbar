@@ -7,7 +7,6 @@
 
 namespace App\Actions\Organisation\HumanResources\Employee;
 
-use App\Actions\Organisation\HumanResources\Employee\Hydrators\EmployeeHydrateUniversalSearch;
 use App\Actions\Organisation\HumanResources\Employee\Hydrators\EmployeeHydrateWeekWorkingHours;
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateEmployees;
 use App\Models\HumanResources\Employee;

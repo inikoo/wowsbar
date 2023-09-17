@@ -15,7 +15,7 @@ use App\Actions\Organisation\Market\Shop\Hydrators\ShopHydrateInvoices;
 use App\Models\Accounting\Invoice;
 use App\Models\CRM\Customer;
 use App\Models\Helpers\Address;
-use App\Models\Organisation\OMS\Order;
+use App\Models\OMS\Order;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class StoreInvoice

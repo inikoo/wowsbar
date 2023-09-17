@@ -1,11 +1,11 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Wed, 13 Sep 2023 11:45:08 Malaysia Time, Pantai Lembeng, Bali, Indonesia
+ * Created: Sun, 17 Sep 2023 22:12:21 Malaysia Time, Pantai Lembeng, Bali, Indonesia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Models\Organisation\Market;
+namespace App\Models\Market;
 
 use App\Enums\Organisation\Market\Shop\ShopStateEnum;
 use App\Enums\Organisation\Market\Shop\ShopTypeEnum;
@@ -21,9 +21,9 @@ use App\Models\Assets\Timezone;
 use App\Models\CRM\Customer;
 use App\Models\CRM\Prospect;
 use App\Models\Helpers\SerialReference;
-use App\Models\Organisation\OMS\Order;
-use App\Models\Organisation\Web\Website;
+use App\Models\OMS\Order;
 use App\Models\Traits\HasUniversalSearch;
+use App\Models\Web\Website;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -36,7 +36,7 @@ use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
 /**
- * App\Models\Organisation\Market\Shop
+ * App\Models\Market\Shop
  *
  * @property int $id
  * @property string $slug
@@ -64,27 +64,27 @@ use Spatie\Sluggable\SlugOptions;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
- * @property-read \App\Models\Organisation\Market\ShopAccountingStats|null $accountingStats
+ * @property-read \App\Models\Market\ShopAccountingStats|null $accountingStats
  * @property-read Country $country
- * @property-read \App\Models\Organisation\Market\ShopCRMStats|null $crmStats
+ * @property-read \App\Models\Market\ShopCRMStats|null $crmStats
  * @property-read Currency $currency
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Customer> $customers
  * @property-read int|null $customers_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, Invoice> $invoices
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Accounting\Invoice> $invoices
  * @property-read int|null $invoices_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, Order> $orders
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\OMS\Order> $orders
  * @property-read int|null $orders_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, PaymentAccount> $paymentAccounts
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Accounting\PaymentAccount> $paymentAccounts
  * @property-read int|null $payment_accounts_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, PaymentServiceProvider> $paymentServiceProviders
  * @property-read int|null $payment_service_providers_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, Payment> $payments
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Accounting\Payment> $payments
  * @property-read int|null $payments_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Prospect> $prospects
  * @property-read int|null $prospects_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, SerialReference> $serialReferences
  * @property-read int|null $serial_references_count
- * @property-read \App\Models\Organisation\Market\ShopStats|null $stats
+ * @property-read \App\Models\Market\ShopStats|null $stats
  * @property-read Timezone $timezone
  * @property-read \App\Models\Search\UniversalSearch|null $universalSearch
  * @property-read Website|null $website

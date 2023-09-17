@@ -10,7 +10,7 @@ namespace App\Enums\UI\Organisation;
 use App\Enums\EnumHelperTrait;
 use App\Enums\Organisation\Web\Webpage\WebpagePurposeEnum;
 use App\Enums\Organisation\Web\Webpage\WebpageTypeEnum;
-use App\Models\Organisation\Web\Webpage;
+use App\Models\Web\Webpage;
 
 enum WebpageTabsEnum: string
 {

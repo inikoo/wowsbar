@@ -9,7 +9,7 @@ namespace App\Actions\Organisation\Web\Website\UI;
 
 use App\Actions\InertiaAction;
 use App\Enums\UI\Organisation\WebsiteWorkshopTabsEnum;
-use App\Models\Organisation\Web\Website;
+use App\Models\Web\Website;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;

@@ -9,9 +9,8 @@ namespace App\Models\Organisation;
 
 use App\Models\Accounting\PaymentServiceProvider;
 use App\Models\Assets\Currency;
-use App\Models\Organisation\Market\Shop;
-use App\Models\Traits\HasOrganisationUniversalSearch;
-use App\Models\Organisation\Web\Website;
+use App\Models\Market\Shop;
+use App\Models\Web\Website;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -40,13 +39,13 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property-read \App\Models\Organisation\OrganisationHumanResourcesStats|null $humanResourcesStats
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \App\Models\Media\Media> $media
  * @property-read int|null $media_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, Shop> $shops
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Market\Shop> $shops
  * @property-read int|null $shops_count
  * @property-read \App\Models\Organisation\OrganisationStats|null $stats
  * @property-read \App\Models\Search\OrganisationUniversalSearch|null $universalSearch
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Organisation\OrganisationUser> $users
  * @property-read int|null $users_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, Website> $websites
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Web\Website> $websites
  * @property-read int|null $websites_count
  * @method static \Database\Factories\Organisation\OrganisationFactory factory($count = null, $state = [])
  * @method static Builder|Organisation newModelQuery()

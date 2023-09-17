@@ -24,7 +24,7 @@ class StorePaymentAccount
 
     public function handle(PaymentServiceProvider $paymentServiceProvider, array $modelData): PaymentAccount
     {
-        /** @var PaymentAccount $paymentAccount */
+        /** @var \App\Models\Accounting\PaymentAccount $paymentAccount */
         $paymentAccount = $paymentServiceProvider->accounts()->create($modelData);
         $paymentAccount->stats()->create();
         PaymentServiceProviderHydrateAccounts::dispatch($paymentServiceProvider);

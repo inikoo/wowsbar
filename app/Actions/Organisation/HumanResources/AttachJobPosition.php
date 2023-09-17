@@ -8,8 +8,6 @@
 namespace App\Actions\Organisation\HumanResources;
 
 use App\Models\Auth\Guest;
-use App\Models\HumanResources\Employee;
-use App\Models\HumanResources\JobPosition;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class AttachJobPosition
@@ -17,7 +15,7 @@ class AttachJobPosition
     use AsAction;
 
 
-    public function handle(Employee|Guest $model, JobPosition $jobPosition): void
+    public function handle(\App\Models\HumanResources\Employee|Guest $model, \App\Models\HumanResources\JobPosition $jobPosition): void
     {
         $model->jobPositions()->attach($jobPosition->id);
 

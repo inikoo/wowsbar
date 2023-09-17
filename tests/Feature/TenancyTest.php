@@ -13,7 +13,7 @@ use App\Actions\Tenancy\Tenant\StoreTenant;
 use App\Enums\Organisation\Market\Shop\ShopTypeEnum;
 use App\Models\CRM\Customer;
 use App\Models\CRM\PublicUser;
-use App\Models\Organisation\Market\Shop;
+use App\Models\Market\Shop;
 use App\Models\Organisation\Organisation;
 use App\Models\Tenancy\Tenant;
 

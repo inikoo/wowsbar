@@ -7,7 +7,6 @@
 
 namespace App\Actions\Organisation\HumanResources\Employee;
 
-
 use App\Actions\Organisation\Auth\OrganisationUser\StoreOrganisationUser;
 use App\Models\HumanResources\Employee;
 use App\Models\Organisation\OrganisationUser;
@@ -66,7 +65,7 @@ class CreateOrganisationUserFromEmployee
 
     public function HtmlResponse(OrganisationUser $organisationUser): RedirectResponse
     {
-        /** @var Employee $employee */
+        /** @var \App\Models\HumanResources\Employee $employee */
         $employee = $organisationUser->parent;
 
         return Redirect::route('hr.employees.show', $employee->id)->with('notification', [

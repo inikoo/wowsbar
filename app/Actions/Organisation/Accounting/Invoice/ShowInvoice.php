@@ -16,7 +16,7 @@ use App\Enums\UI\InvoiceTabsEnum;
 use App\Http\Resources\Accounting\InvoiceResource;
 use App\Http\Resources\Accounting\PaymentResource;
 use App\Models\Accounting\Invoice;
-use App\Models\Organisation\Market\Shop;
+use App\Models\Market\Shop;
 use Inertia\Inertia;
 use Inertia\Response;
 use JetBrains\PhpStorm\Pure;
@@ -24,7 +24,7 @@ use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 /**
- * @property Invoice $invoice
+ * @property \App\Models\Accounting\Invoice $invoice
  */
 class ShowInvoice extends InertiaAction
 {

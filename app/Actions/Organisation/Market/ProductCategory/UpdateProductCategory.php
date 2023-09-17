@@ -9,7 +9,7 @@ namespace App\Actions\Organisation\Market\ProductCategory;
 
 use App\Actions\Traits\WithActionUpdate;
 use App\Http\Resources\Market\DepartmentResource;
-use App\Models\Organisation\Market\ProductCategory;
+use App\Models\Market\ProductCategory;
 use Lorisleiva\Actions\ActionRequest;
 
 class UpdateProductCategory

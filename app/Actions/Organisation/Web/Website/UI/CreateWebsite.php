@@ -9,7 +9,7 @@ namespace App\Actions\Organisation\Web\Website\UI;
 
 use App\Actions\InertiaAction;
 use App\Actions\UI\Organisation\Dashboard\ShowDashboard;
-use App\Models\Organisation\Market\Shop;
+use App\Models\Market\Shop;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;

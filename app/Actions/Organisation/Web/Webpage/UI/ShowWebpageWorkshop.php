@@ -8,8 +8,8 @@
 namespace App\Actions\Organisation\Web\Webpage\UI;
 
 use App\Actions\InertiaAction;
-use App\Models\Organisation\Web\Webpage;
-use App\Models\Organisation\Web\Website;
+use App\Models\Web\Webpage;
+use App\Models\Web\Website;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;

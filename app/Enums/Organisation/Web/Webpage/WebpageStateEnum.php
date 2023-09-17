@@ -9,8 +9,8 @@ namespace App\Enums\Organisation\Web\Webpage;
 
 use App\Enums\EnumHelperTrait;
 use App\Models\Organisation\Organisation;
-use App\Models\Organisation\Web\Webpage;
-use App\Models\Organisation\Web\Website;
+use App\Models\Web\Webpage;
+use App\Models\Web\Website;
 
 enum WebpageStateEnum: string
 {

@@ -12,7 +12,7 @@ use App\Actions\Assets\Currency\UI\GetCurrenciesOptions;
 use App\Actions\Assets\Language\UI\GetLanguagesOptions;
 use App\Actions\InertiaAction;
 use App\Enums\Organisation\Market\Shop\ShopTypeEnum;
-use App\Models\Organisation\Market\Shop;
+use App\Models\Market\Shop;
 use Exception;
 use Inertia\Inertia;
 use Inertia\Response;

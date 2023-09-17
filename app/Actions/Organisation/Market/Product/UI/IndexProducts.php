@@ -8,11 +8,10 @@
 namespace App\Actions\Organisation\Market\Product\UI;
 
 use App\Actions\InertiaAction;
-
 use App\Http\Resources\Market\ProductResource;
-
-use App\Models\Organisation\Market\ProductCategory;
-use App\Models\Organisation\Market\Shop;
+use App\InertiaTable\InertiaTable;
+use App\Models\Market\ProductCategory;
+use App\Models\Market\Shop;
 use App\Models\Organisation\Organisation;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -21,7 +20,6 @@ use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
-use App\InertiaTable\InertiaTable;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 

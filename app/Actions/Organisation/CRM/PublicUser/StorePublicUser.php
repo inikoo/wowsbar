@@ -27,7 +27,7 @@ class StorePublicUser
 
     public function handle(Customer $customer, array $objectData = []): PublicUser
     {
-        /** @var PublicUser $publicUser */
+        /** @var \App\Models\Organisation\CRM\PublicUser $publicUser */
         $publicUser = $customer->publicUsers()->create($objectData);
         // $publicUser->stats()->create();
 
