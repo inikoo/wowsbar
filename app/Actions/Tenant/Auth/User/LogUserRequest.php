@@ -8,8 +8,8 @@
 namespace App\Actions\Tenant\Auth\User;
 
 use App\Actions\Elasticsearch\IndexElasticsearchDocument;
+use App\Models\Auth\OrganisationUser;
 use App\Models\Auth\User;
-use App\Models\Organisation\OrganisationUser;
 use hisorange\BrowserDetect\Parser as Browser;
 use Illuminate\Support\Carbon;
 use Lorisleiva\Actions\Concerns\AsAction;

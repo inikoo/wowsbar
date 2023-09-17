@@ -15,11 +15,11 @@ use App\Actions\Organisation\HumanResources\Employee\UpdateEmployeeWorkingHours;
 use App\Actions\Organisation\HumanResources\WorkingPlace\UpdateWorkingPlace;
 use App\Actions\Organisation\Organisation\StoreOrganisation;
 use App\Enums\HumanResources\Employee\EmployeeStateEnum;
+use App\Models\Auth\OrganisationUser;
 use App\Models\Helpers\Address;
 use App\Models\HumanResources\Employee;
 use App\Models\HumanResources\Workplace;
 use App\Models\Organisation\Organisation;
-use App\Models\Organisation\OrganisationUser;
 
 
 beforeAll(function () {

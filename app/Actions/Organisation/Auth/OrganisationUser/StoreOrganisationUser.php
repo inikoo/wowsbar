@@ -8,9 +8,9 @@
 namespace App\Actions\Organisation\Auth\OrganisationUser;
 
 use App\Actions\Organisation\Auth\OrganisationUser\UI\SetOrganisationUserAvatar;
+use App\Models\Auth\Guest;
+use App\Models\Auth\OrganisationUser;
 use App\Models\HumanResources\Employee;
-use App\Models\Organisation\Guest;
-use App\Models\Organisation\OrganisationUser;
 use App\Rules\AlphaDashDot;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
@@ -28,7 +28,7 @@ class StoreOrganisationUser
 
     public function handle(Employee|Guest $parent, array $objectData = []): OrganisationUser
     {
-        /** @var \App\Models\Organisation\OrganisationUser $organisationUser */
+        /** @var \App\Models\Auth\OrganisationUser $organisationUser */
         $organisationUser = $parent->organisationUser()->create($objectData);
         $organisationUser->stats()->create();
         SetOrganisationUserAvatar::run($organisationUser);

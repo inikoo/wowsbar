@@ -1,19 +1,18 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Mon, 14 Aug 2023 08:45:47 Malaysia Time, Sanur, Bali
+ * Created: Sun, 17 Sep 2023 22:18:10 Malaysia Time, Pantai Lembeng, Bali, Indonesia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Models\Organisation;
+namespace App\Models\Auth;
 
-use App\Models\Traits\HasOrganisationUniversalSearch;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * App\Models\Organisation\OrganisationUserStats
+ * App\Models\Auth\OrganisationUserStats
  *
  * @property int $id
  * @property int $organisation_user_id
@@ -26,8 +25,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string|null $last_failed_login_at
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Models\Organisation\OrganisationUser $organisationUser
- * @property-read \App\Models\Search\OrganisationUniversalSearch|null $universalSearch
+ * @property-read \App\Models\Auth\OrganisationUser $organisationUser
  * @method static Builder|OrganisationUserStats newModelQuery()
  * @method static Builder|OrganisationUserStats newQuery()
  * @method static Builder|OrganisationUserStats query()
@@ -46,7 +44,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class OrganisationUserStats extends Model
 {
-    use HasOrganisationUniversalSearch;
 
     protected $table = 'organisation_user_stats';
 

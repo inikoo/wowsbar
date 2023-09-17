@@ -7,7 +7,7 @@
 
 namespace App\Actions\Organisation\Organisation\Hydrators;
 
-use App\Models\Organisation\Guest;
+use App\Models\Auth\Guest;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class OrganisationHydrateGuests

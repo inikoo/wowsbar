@@ -12,7 +12,7 @@ use App\Actions\UI\Organisation\SysAdmin\ShowSysAdminDashboard;
 use App\Enums\Organisation\Guest\GuestTypeEnum;
 use App\Http\Resources\SysAdmin\GuestResource;
 use App\InertiaTable\InertiaTable;
-use App\Models\Organisation\Guest;
+use App\Models\Auth\Guest;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;

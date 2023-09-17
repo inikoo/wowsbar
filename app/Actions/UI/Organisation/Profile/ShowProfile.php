@@ -11,7 +11,7 @@ use App\Actions\Assets\Language\UI\GetLanguagesOptions;
 use App\Actions\UI\Tenant\Dashboard\ShowDashboard;
 use App\Actions\UI\WithInertia;
 use App\Http\Resources\Auth\UserResource;
-use App\Models\Organisation\OrganisationUser;
+use App\Models\Auth\OrganisationUser;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;

@@ -33,9 +33,12 @@ class AppServiceProvider extends ServiceProvider
                 'User'                      => 'App\Models\Auth\User',
                 'PortfolioWebsite'          => 'App\Models\Portfolio\PortfolioWebsite',
                 'Banner'                    => 'App\Models\Portfolio\Banner',
-                'OrganisationUser'          => 'App\Models\Organisation\OrganisationUser',
+                'OrganisationUser'          => 'App\Models\Auth\OrganisationUser',
                 'PublicUser'                => 'App\Models\Auth\OrganisationUser',
-                'Guest'                     => 'App\Models\Organisation\Guest',
+                'Guest'                     => 'App\Models\Auth\Guest',
+                'Shop'=> 'App\Models\Market\Shop',
+                'Website'=> 'App\Models\Web\Website',
+                'Customer'=> 'App\Models\CRM\Customer',
 
             ]
         );

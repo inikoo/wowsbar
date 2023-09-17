@@ -7,7 +7,7 @@
 
 namespace App\Actions\Organisation\Guest;
 
-use App\Models\Organisation\Guest;
+use App\Models\Auth\Guest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
 use Lorisleiva\Actions\ActionRequest;

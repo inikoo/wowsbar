@@ -10,7 +10,7 @@ namespace App\Models\HumanResources;
 use App\Enums\HumanResources\Employee\EmployeeStateEnum;
 use App\Enums\HumanResources\Employee\EmployeeTypeEnum;
 use App\Enums\Miscellaneous\GenderEnum;
-use App\Models\Organisation\OrganisationUser;
+use App\Models\Auth\OrganisationUser;
 use App\Models\Traits\HasHistory;
 use App\Models\Traits\HasPhoto;
 use App\Models\Traits\HasUniversalSearch;

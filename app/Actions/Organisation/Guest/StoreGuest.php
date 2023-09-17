@@ -11,8 +11,8 @@ use App\Actions\Organisation\Auth\OrganisationUser\StoreOrganisationUser;
 use App\Actions\Organisation\Guest\Hydrators\GuestHydrateUniversalSearch;
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateGuests;
 use App\Enums\Organisation\Guest\GuestTypeEnum;
+use App\Models\Auth\Guest;
 use App\Models\Auth\Role;
-use App\Models\Organisation\Guest;
 use App\Rules\AlphaDashDot;
 use Illuminate\Console\Command;
 use Illuminate\Http\RedirectResponse;
@@ -73,7 +73,7 @@ class StoreGuest
     {
         return [
             'type'         => ['required', Rule::in(GuestTypeEnum::values())],
-            'username'     => ['required', new AlphaDashDot(), 'unique:App\Models\Organisation\OrganisationUser,username', Rule::notIn(['export', 'create'])],
+            'username'     => ['required', new AlphaDashDot(), 'unique:App\Models\Auth\OrganisationUser,username', Rule::notIn(['export', 'create'])],
             'company_name' => ['nullable', 'string', 'max:255'],
             'contact_name' => ['required', 'string', 'max:255'],
             'phone'        => ['nullable', 'phone:AUTO'],

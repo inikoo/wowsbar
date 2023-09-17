@@ -1,11 +1,11 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Tue, 15 Aug 2023 12:15:47 Malaysia Time, Pantai Lembeng, Bali
+ * Created: Sun, 17 Sep 2023 22:17:53 Malaysia Time, Pantai Lembeng, Bali, Indonesia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Models\Organisation;
+namespace App\Models\Auth;
 
 use App\Enums\Organisation\Guest\GuestTypeEnum;
 use App\Models\Traits\HasHistory;
@@ -22,7 +22,7 @@ use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
 /**
- * App\Models\Organisation\Guest
+ * App\Models\Auth\Guest
  *
  * @property int $id
  * @property string $slug

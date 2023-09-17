@@ -8,8 +8,8 @@
 namespace App\Http\Resources\UI;
 
 use App\Http\Resources\HasSelfCall;
+use App\Models\Auth\OrganisationUser;
 use App\Models\Auth\User;
-use App\Models\Organisation\OrganisationUser;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class LoggedUserResource extends JsonResource

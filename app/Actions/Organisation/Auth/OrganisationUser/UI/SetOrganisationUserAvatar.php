@@ -7,8 +7,8 @@
 
 namespace App\Actions\Organisation\Auth\OrganisationUser\UI;
 
+use App\Models\Auth\OrganisationUser;
 use App\Models\Media\Media;
-use App\Models\Organisation\OrganisationUser;
 use Exception;
 use Illuminate\Console\Command;
 use Lorisleiva\Actions\Concerns\AsAction;

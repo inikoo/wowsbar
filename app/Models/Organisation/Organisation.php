@@ -9,6 +9,7 @@ namespace App\Models\Organisation;
 
 use App\Models\Accounting\PaymentServiceProvider;
 use App\Models\Assets\Currency;
+use App\Models\Auth\OrganisationUser;
 use App\Models\Market\Shop;
 use App\Models\Web\Website;
 use Illuminate\Database\Eloquent\Builder;
@@ -42,8 +43,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Market\Shop> $shops
  * @property-read int|null $shops_count
  * @property-read \App\Models\Organisation\OrganisationStats|null $stats
- * @property-read \App\Models\Search\OrganisationUniversalSearch|null $universalSearch
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Organisation\OrganisationUser> $users
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Auth\OrganisationUser> $users
  * @property-read int|null $users_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Web\Website> $websites
  * @property-read int|null $websites_count

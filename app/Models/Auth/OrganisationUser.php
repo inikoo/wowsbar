@@ -1,14 +1,15 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Mon, 14 Aug 2023 10:04:57 Malaysia Time, Pantai Lembeng, Bali
+ * Created: Sun, 17 Sep 2023 22:18:10 Malaysia Time, Pantai Lembeng, Bali, Indonesia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Models\Organisation;
+namespace App\Models\Auth;
 
 use App\Models\Traits\HasHistory;
-use App\Models\Traits\HasOrganisationUniversalSearch;
+use App\Models\Traits\HasRoles;
+use App\Models\Traits\HasUniversalSearch;
 use App\Models\Traits\IsUser;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -19,10 +20,9 @@ use Laravel\Sanctum\HasApiTokens;
 use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
-use Spatie\Permission\Traits\HasRoles;
 
 /**
- * App\Models\Organisation\OrganisationUser
+ * App\Models\Auth\OrganisationUser
  *
  * @property int $id
  * @property int|null $parent_id
@@ -53,10 +53,9 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read int|null $permissions_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Permission\Models\Role> $roles
  * @property-read int|null $roles_count
- * @property-read \App\Models\Organisation\OrganisationUserStats|null $stats
+ * @property-read \App\Models\Auth\OrganisationUserStats|null $stats
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Laravel\Sanctum\PersonalAccessToken> $tokens
  * @property-read int|null $tokens_count
- * @property-read \App\Models\Search\OrganisationUniversalSearch|null $universalSearch
  * @method static Builder|OrganisationUser newModelQuery()
  * @method static Builder|OrganisationUser newQuery()
  * @method static Builder|OrganisationUser permission($permissions)
@@ -89,7 +88,7 @@ class OrganisationUser extends Authenticatable implements HasMedia, Auditable
     use HasRoles;
     use InteractsWithMedia;
     use HasHistory;
-    use HasOrganisationUniversalSearch;
+    use HasUniversalSearch;
 
 
     protected string $guard_name = 'org';

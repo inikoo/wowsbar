@@ -16,7 +16,7 @@ class GuestResource extends JsonResource
 {
     public function toArray($request): array|Arrayable|JsonSerializable
     {
-        /** @var \App\Models\Organisation\Guest $guest */
+        /** @var \App\Models\Auth\Guest $guest */
         $guest = $this;
 
         return [

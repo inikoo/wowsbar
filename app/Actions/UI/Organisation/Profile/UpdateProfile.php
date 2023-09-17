@@ -9,7 +9,7 @@ namespace App\Actions\UI\Organisation\Profile;
 
 use App\Actions\Tenant\Auth\User\UI\SetUserAvatarFromImage;
 use App\Actions\Traits\WithActionUpdate;
-use App\Models\Organisation\OrganisationUser;
+use App\Models\Auth\OrganisationUser;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Arr;

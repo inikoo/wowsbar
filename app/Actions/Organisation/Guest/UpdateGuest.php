@@ -10,7 +10,7 @@ namespace App\Actions\Organisation\Guest;
 use App\Actions\Traits\WithActionUpdate;
 use App\Enums\Organisation\Guest\GuestTypeEnum;
 use App\Http\Resources\SysAdmin\GuestResource;
-use App\Models\Organisation\Guest;
+use App\Models\Auth\Guest;
 use Illuminate\Validation\Rule;
 use Lorisleiva\Actions\ActionRequest;
 

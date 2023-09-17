@@ -8,8 +8,8 @@
 namespace App\Actions\Organisation\HumanResources\Employee;
 
 use App\Actions\Organisation\Auth\OrganisationUser\StoreOrganisationUser;
+use App\Models\Auth\OrganisationUser;
 use App\Models\HumanResources\Employee;
-use App\Models\Organisation\OrganisationUser;
 use Illuminate\Console\Command;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;

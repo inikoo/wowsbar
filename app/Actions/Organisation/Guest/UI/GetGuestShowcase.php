@@ -7,7 +7,7 @@
 
 namespace App\Actions\Organisation\Guest\UI;
 
-use App\Models\Organisation\Guest;
+use App\Models\Auth\Guest;
 use Lorisleiva\Actions\Concerns\AsObject;
 
 class GetGuestShowcase

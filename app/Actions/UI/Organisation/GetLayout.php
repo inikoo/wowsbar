@@ -7,8 +7,8 @@
 
 namespace App\Actions\UI\Organisation;
 
+use App\Models\Auth\OrganisationUser;
 use App\Models\Market\Shop;
-use App\Models\Organisation\OrganisationUser;
 use App\Models\Web\Website;
 use Lorisleiva\Actions\Concerns\AsAction;
 

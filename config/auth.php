@@ -5,9 +5,9 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
+use App\Models\Auth\OrganisationUser;
 use App\Models\Auth\User;
 use App\Models\CRM\PublicUser;
-use App\Models\Organisation\OrganisationUser;
 
 return [
 

@@ -12,7 +12,7 @@ use App\Actions\UI\Organisation\SysAdmin\ShowSysAdminDashboard;
 use App\Enums\UI\UsersTabsEnum;
 use App\Http\Resources\Auth\UserResource;
 use App\InertiaTable\InertiaTable;
-use App\Models\Organisation\OrganisationUser;
+use App\Models\Auth\OrganisationUser;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;

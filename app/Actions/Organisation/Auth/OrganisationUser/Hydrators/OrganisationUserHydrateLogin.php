@@ -7,7 +7,7 @@
 
 namespace App\Actions\Organisation\Auth\OrganisationUser\Hydrators;
 
-use App\Models\Organisation\OrganisationUser;
+use App\Models\Auth\OrganisationUser;
 use Illuminate\Support\Carbon;
 use Lorisleiva\Actions\Concerns\AsAction;
 
