@@ -96,12 +96,30 @@ class GetLayout
 
 
         if ($user->can('websites') and $organisation->stats->number_shops > 0) {
+
+            if($shopsCount==1){
+                if($shop->website){
+                    $route=[
+                        'name'=>'org.websites.show',
+                        'parameters'=>$shop->website->slug
+                    ];
+                }else{
+                    $route=[
+                        'name'=>'org.shops.show.website.create',
+                        'parameters'=>$shop->slug
+                    ];
+                }
+            }else{
+               $route= [
+                    'name' => 'org.websites.index'
+                ];
+            }
+
+
             $navigation['websites'] = [
                 'label'   => __('websites'),
                 'icon'    => ['fal', 'fa-globe'],
-                'route'   => [
-                    'name' => 'org.websites.index'
-                ],
+                'route'   =>$route,
                 'topMenu' => [
                     'subSections' => [
                         [
