@@ -24,27 +24,26 @@ class ShowWebsiteWorkshop extends InertiaAction
         return $request->user()->hasPermissionTo("websites.edit");
     }
 
-    public function asController(ActionRequest $request): Website
+    public function asController(Website $website, ActionRequest $request): Website
     {
         $this->initialisation($request)->withTab(WebsiteWorkshopTabsEnum::values());
 
-        return organisation()->website;
+        return $website;
     }
 
 
     public function htmlResponse(Website $website, ActionRequest $request): Response
     {
-
         return Inertia::render(
             'Web/WebsiteWorkshop',
             [
                 'title'       => __("Website's workshop"),
-                'breadcrumbs' => $this->getBreadcrumbs(),
+                'breadcrumbs' => $this->getBreadcrumbs($request->route()->originalParameters()),
                 'pageHead'    => [
 
-                    'title'    => __('Workshop'),
+                    'title' => __('Workshop'),
 
-                    'iconRight'    =>
+                    'iconRight' =>
                         [
                             'icon'  => ['fal', 'drafting-compass'],
                             'title' => __("Website's workshop")
@@ -52,20 +51,20 @@ class ShowWebsiteWorkshop extends InertiaAction
 
                     'actions' => [
                         [
-                            'type'       => 'button',
-                            'style'      => 'exit',
-                            'label'      => __('Exit workshop'),
-                            'route'      => [
+                            'type'  => 'button',
+                            'style' => 'exit',
+                            'label' => __('Exit workshop'),
+                            'route' => [
                                 'name'       => preg_replace('/workshop$/', 'show', $request->route()->getName()),
                                 'parameters' => array_values($request->route()->originalParameters()),
                             ]
                         ],
                         [
-                            'type'       => 'button',
-                            'style'      => 'exit',
-                            'icon'       => 'far fa-desktop',
-                            'label'      => __('Preview'),
-                            'route'      => [
+                            'type'  => 'button',
+                            'style' => 'exit',
+                            'icon'  => 'far fa-desktop',
+                            'label' => __('Preview'),
+                            'route' => [
                                 'name'       => preg_replace('/workshop$/', 'preview', $request->route()->getName()),
                                 'parameters' => array_values($request->route()->originalParameters())
                             ]
@@ -102,19 +101,19 @@ class ShowWebsiteWorkshop extends InertiaAction
                     fn () => GetWebsiteWorkshopMenu::run($website)
                     : Inertia::lazy(fn () => GetWebsiteWorkshopMenu::run($website)),
 
-                WebsiteWorkshopTabsEnum::FOOTER->value   => $this->tab == WebsiteWorkshopTabsEnum::FOOTER->value ?
+                WebsiteWorkshopTabsEnum::FOOTER->value => $this->tab == WebsiteWorkshopTabsEnum::FOOTER->value ?
                     fn () => GetWebsiteWorkshopFooter::run($website)
                     : Inertia::lazy(fn () => GetWebsiteWorkshopFooter::run($website)),
-
 
 
             ]
         );
     }
 
-    public function getBreadcrumbs(): array
+    public function getBreadcrumbs(array $routeParameters): array
     {
         return ShowWebsite::make()->getBreadcrumbs(
+            $routeParameters,
             suffix: '('.__('editing').')'
         );
     }

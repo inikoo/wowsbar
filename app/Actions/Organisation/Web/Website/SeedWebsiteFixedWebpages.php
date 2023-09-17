@@ -10,6 +10,8 @@ namespace App\Actions\Organisation\Web\Website;
 use App\Actions\Organisation\Web\Webpage\StoreWebpage;
 use App\Actions\Traits\WithActionUpdate;
 use App\Models\Organisation\Web\Website;
+use Exception;
+use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
 use Lorisleiva\Actions\ActionRequest;
 
@@ -54,19 +56,26 @@ class SeedWebsiteFixedWebpages
     }
 
 
-    public function asController(ActionRequest $request): Website
+    public function asController(Website $website, ActionRequest $request): Website
     {
-        return $this->handle(organisation()->website);
+        return $this->handle($website);
     }
 
     public function getCommandSignature(): string
     {
-        return 'website:seed-fixed-webpages';
+        return 'website:seed-fixed-webpages {website}';
     }
-
-    public function asCommand(): int
+    public function asCommand(Command $command): int
     {
-        $this->handle(organisation()->website);
+
+        try {
+            $website=Website::where('slug', $command->argument('website'))->firstOrFail();
+        } catch (Exception $e) {
+            $command->error($e->getMessage());
+            return 1;
+        }
+
+        $this->handle($website);
 
         return 0;
     }

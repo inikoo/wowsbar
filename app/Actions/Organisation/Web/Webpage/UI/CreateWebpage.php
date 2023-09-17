@@ -11,6 +11,7 @@ use App\Actions\InertiaAction;
 use App\Actions\Organisation\Web\Webpage\IndexWebpages;
 use App\Enums\Organisation\Web\Webpage\WebpageTypeEnum;
 use App\Models\Organisation\Web\Webpage;
+use App\Models\Organisation\Web\Website;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -23,14 +24,13 @@ class CreateWebpage extends InertiaAction
     }
 
 
-    public function asController(ActionRequest $request): Webpage
+    public function asController(Website $website, ActionRequest $request): Webpage
     {
         $this->initialisation($request);
-
-        return organisation()->website->home;
+        return $website->home;
     }
 
-    public function inWebpage(Webpage $webpage, ActionRequest $request): Webpage
+    public function inWebsiteInWebpage(Website $website, Webpage $webpage, ActionRequest $request): Webpage
     {
         $this->initialisation($request);
 
@@ -64,11 +64,10 @@ class CreateWebpage extends InertiaAction
 
         $type = WebpageTypeEnum::CONTENT->value;
 
-
         return Inertia::render(
             'CreateModel',
             [
-                'breadcrumbs' => $this->getBreadcrumbs(),
+                'breadcrumbs' => $this->getBreadcrumbs($request->route()->getName(), $request->route()->parameters),
                 'title'       => __('new webpage'),
                 'pageHead'    => [
                     'title'   => __('new webpage'),
@@ -78,8 +77,8 @@ class CreateWebpage extends InertiaAction
                             'style' => 'cancel',
                             'route' =>
                                 match ($request->route()->getName()) {
-                                    'org.websites.webpages.show.webpages.create' => [
-                                        'name'       => 'org.websites.webpages.show' ,
+                                    'org.websites.show.webpages.show.webpages.create' => [
+                                        'name'       => 'org.websites.show.webpages.show' ,
                                         'parameters' => array_values($request->route()->originalParameters())
                                     ],
                                     default => [
@@ -153,10 +152,16 @@ class CreateWebpage extends InertiaAction
     }
 
 
-    public function getBreadcrumbs(): array
+    public function getBreadcrumbs($routeName, $routeParameters): array
     {
+
+
+        return match ($routeName) {
+            default=> []
+        };
+
         return array_merge(
-            IndexWebpages::make()->getBreadcrumbs(),
+            IndexWebpages::make()->getBreadcrumbs($routeName, $routeParameters),
             [
                 [
                     'type'          => 'creatingModel',

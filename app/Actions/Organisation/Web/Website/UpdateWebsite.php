@@ -8,6 +8,7 @@
 namespace App\Actions\Organisation\Web\Website;
 
 use App\Actions\Traits\WithActionUpdate;
+use App\Enums\Organisation\Web\Website\WebsiteStateEnum;
 use App\Models\Organisation\Web\Website;
 use Illuminate\Validation\Rules\Enum;
 use Lorisleiva\Actions\ActionRequest;
@@ -35,7 +36,7 @@ class UpdateWebsite
     public function rules(): array
     {
         return [
-            'state'             => ['sometimes',new Enum(\App\Enums\Organisation\Web\Website\WebsiteStateEnum::class)],
+            'state' => ['sometimes', new Enum(WebsiteStateEnum::class)],
 
         ];
     }
@@ -43,9 +44,9 @@ class UpdateWebsite
     public function asController(Website $website, ActionRequest $request): Website
     {
         $request->validate();
+
         return $this->handle($website, $request->validated());
     }
-
 
 
 }

@@ -18,10 +18,10 @@ return new class () extends Migration {
             $table->smallIncrements('id');
             $table->unsignedSmallInteger('shop_id')->index();
             $table->foreign('shop_id')->references('id')->on('shops');
+            $table->string('type');
             $table->string('slug')->unique()->collation('und_ns');
             $table->string('code')->unique()->collation('und_ns');
             $table->string('name')->unique()->collation('und_ns');
-
             $table->string('state')->default(WebsiteStateEnum::IN_PROCESS->value)->index();
             $table->boolean('status')->default(false);
             $table->string('domain')->unique()->collation('und_ns');

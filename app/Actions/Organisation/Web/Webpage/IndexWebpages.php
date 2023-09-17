@@ -12,6 +12,7 @@ use App\Actions\InertiaAction;
 use App\Actions\Organisation\Web\Website\UI\ShowWebsite;
 use App\Http\Resources\Web\WebpageResource;
 use App\InertiaTable\InertiaTable;
+use App\Models\Organisation\Organisation;
 use App\Models\Organisation\Web\Webpage;
 use App\Models\Organisation\Web\Website;
 use Closure;
@@ -25,12 +26,17 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class IndexWebpages extends InertiaAction
 {
+    /**
+     * @var \App\Models\Organisation\Organisation|\App\Models\Organisation\Web\Webpage|\App\Models\Organisation\Web\Website
+     */
+    private Webpage|Website|Organisation $parent;
+
     public function authorize(ActionRequest $request): bool
     {
         return
             (
                 $request->user()->tokenCan('root') or
-                $request->user()->hasPermissionTo('website.view')
+                $request->user()->hasPermissionTo('websites.view')
             );
     }
 
@@ -38,7 +44,13 @@ class IndexWebpages extends InertiaAction
     public function asController(ActionRequest $request): LengthAwarePaginator
     {
         $this->initialisation($request);
-        return $this->handle(organisation()->website);
+        return $this->handle(organisation());
+    }
+
+    public function inWebsite(Website $website, ActionRequest $request): LengthAwarePaginator
+    {
+        $this->initialisation($request);
+        return $this->handle($website);
     }
 
     public function inWebpage(Webpage $webpage, ActionRequest $request): LengthAwarePaginator
@@ -49,8 +61,9 @@ class IndexWebpages extends InertiaAction
 
 
     /** @noinspection PhpUndefinedMethodInspection */
-    public function handle(Website|Webpage $parent, $prefix = null): LengthAwarePaginator
+    public function handle(Website|Webpage|Organisation $parent, $prefix = null): LengthAwarePaginator
     {
+        $this->parent =$parent;
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
             $query->where(function ($query) use ($value) {
                 $query->where('webpages.code', 'LIKE', "%$value%")
@@ -79,7 +92,7 @@ class IndexWebpages extends InertiaAction
             ->withQueryString();
     }
 
-    public function tableStructure(?array $modelOperations = null, $prefix = null): Closure
+    public function tableStructure(Website|Webpage|Organisation $parent, ?array $modelOperations = null, $prefix = null): Closure
     {
         return function (InertiaTable $table) use ($modelOperations, $prefix) {
             if ($prefix) {
@@ -115,7 +128,10 @@ class IndexWebpages extends InertiaAction
         return Inertia::render(
             'Web/Webpages',
             [
-                'breadcrumbs' => $this->getBreadcrumbs(),
+                'breadcrumbs' => $this->getBreadcrumbs(
+                    $request->route()->getName(),
+                    $request->route()->originalParameters()
+                ),
                 'title'       => __('webpages'),
                 'pageHead'    => [
                     'title'     => __('webpages'),
@@ -145,10 +161,10 @@ class IndexWebpages extends InertiaAction
                 'data'        => WebpageResource::collection($webpages),
 
             ]
-        )->table($this->tableStructure());
+        )->table($this->tableStructure($this->parent));
     }
 
-    public function getBreadcrumbs(): array
+    public function getBreadcrumbs(string $routeName, array $routeParameters): array
     {
         $headCrumb = function (array $routeParameters = []) {
             return [
@@ -163,14 +179,20 @@ class IndexWebpages extends InertiaAction
             ];
         };
 
-        return array_merge(
-            (new ShowWebsite())->getBreadcrumbs(),
-            $headCrumb(
-                [
-                    'name' => 'org.websites.webpages.index',
-                    null
-                ]
+        return match ($routeName) {
+            'org.websites.show.webpages.index'=>
+            array_merge(
+                (new ShowWebsite())->getBreadcrumbs($routeParameters),
+                $headCrumb(
+                    [
+                        'name'      => 'org.websites.show.webpages.index',
+                        'parameters'=> $routeParameters
+                    ]
+                ),
             ),
-        );
+            default=> []
+        };
+
+
     }
 }

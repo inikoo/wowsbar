@@ -12,10 +12,12 @@ use App\Actions\Organisation\Web\HasWorkshopAction;
 use App\Actions\Organisation\Web\Webpage\IndexWebpages;
 use App\Actions\Organisation\Web\Website\UI\ShowWebsite;
 use App\Actions\UI\WithInertia;
+use App\Enums\Organisation\Web\Webpage\WebpagePurposeEnum;
 use App\Enums\Organisation\Web\Webpage\WebpageTypeEnum;
 use App\Enums\UI\Organisation\WebpageTabsEnum;
 use App\Http\Resources\Web\WebpageResource;
 use App\Models\Organisation\Web\Webpage;
+use App\Models\Organisation\Web\Website;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -43,12 +45,19 @@ class ShowWebpage extends InertiaAction
         return $webpage;
     }
 
+    public function inWebsite(Website $website, Webpage $webpage, ActionRequest $request): Webpage
+    {
+        $this->initialisation($request)->withTab(WebpageTabsEnum::values());
+
+        return $webpage;
+    }
+
 
     public function htmlResponse(Webpage $webpage, ActionRequest $request): Response
     {
         $actions = $this->workshopActions($request);
 
-        if ($webpage->type == WebpageTypeEnum::BLOG) {
+        if ($webpage->purpose == WebpagePurposeEnum::BLOG) {
             $actions = array_merge(
                 $actions,
                 [
@@ -57,7 +66,10 @@ class ShowWebpage extends InertiaAction
                         'style' => 'create',
                         'label' => __('new article'),
                         'route' => [
-                            'name' => 'org.websites.blog.article.create',
+                            'name'       => 'org.websites.show.blog.article.create',
+                            'parameters' => [
+                                'website' => $webpage->website->slug,
+                            ]
                         ]
                     ] : false
                 ]
@@ -71,7 +83,12 @@ class ShowWebpage extends InertiaAction
                         'style' => 'create',
                         'label' => __('Main webpage'),
                         'route' => [
-                            'name' => 'org.websites.webpages.create',
+                            'name'       => 'org.websites.show.webpages.show.webpages.create',
+                            'parameters' => [
+                                'website' => $webpage->website->slug,
+                                'webpage' => $webpage->slug
+
+                            ]
                         ]
                     ] : false
                 ]
@@ -91,8 +108,11 @@ class ShowWebpage extends InertiaAction
                         'style' => 'create',
                         'label' => __('webpage'),
                         'route' => [
-                            'name'       => 'org.websites.webpages.show.webpages.create',
-                            'parameters' => ['webpage' => $webpage->slug]
+                            'name'       => 'org.websites.show.webpages.show.webpages.create',
+                            'parameters' => [
+                                'website' => $webpage->website->slug,
+                                'webpage' => $webpage->slug
+                            ]
                         ]
                     ] : false
                 ]
@@ -151,7 +171,7 @@ class ShowWebpage extends InertiaAction
 
             ]
         )->table(
-            IndexWebpages::make()->tableStructure(prefix:'webpages')
+            IndexWebpages::make()->tableStructure(parent: $webpage, prefix: 'webpages')
         );
     }
 
@@ -180,17 +200,27 @@ class ShowWebpage extends InertiaAction
         };
 
         return array_merge(
-            ShowWebsite::make()->getBreadcrumbs(),
+            ShowWebsite::make()->getBreadcrumbs(
+                [
+                    'website'=> $routeParameters['website']->slug
+                ]
+            ),
             $headCrumb(
                 $routeParameters['webpage'],
                 [
                     'index' => [
-                        'name'       => 'org.websites.webpages.index',
-                        'parameters' => []
+                        'name'       => 'org.websites.show.webpages.index',
+                        'parameters' => [
+                            'website' => $routeParameters['website']->slug
+
+                        ]
                     ],
                     'model' => [
-                        'name'       => 'org.websites.webpages.show',
-                        'parameters' => [$routeParameters['webpage']->slug]
+                        'name'       => 'org.websites.show.webpages.show',
+                        'parameters' => [
+                            'website' => $routeParameters['website']->slug,
+                            'webpage' => $routeParameters['webpage']->slug
+                        ]
                     ]
                 ],
                 $suffix

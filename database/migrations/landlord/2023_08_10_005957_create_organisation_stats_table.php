@@ -8,6 +8,9 @@
 use App\Enums\Organisation\Market\Shop\ShopStateEnum;
 use App\Enums\Organisation\Market\Shop\ShopTypeEnum;
 use App\Enums\Organisation\OrganisationUser\OrganisationUserTypeEnum;
+use App\Enums\Organisation\Web\Webpage\WebpagePurposeEnum;
+use App\Enums\Organisation\Web\Webpage\WebpageStateEnum;
+use App\Enums\Organisation\Web\Webpage\WebpageTypeEnum;
 use App\Enums\Organisation\Web\Website\WebsiteStateEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -49,6 +52,19 @@ return new class () extends Migration {
 
             foreach (WebsiteStateEnum::cases() as $websiteState) {
                 $table->unsignedSmallInteger('number_websites_state_'.$websiteState->snake())->default(0);
+            }
+
+            $table->unsignedInteger('number_webpages')->default(0);
+
+            foreach (WebpageTypeEnum::cases() as $case) {
+                $table->unsignedSmallInteger('number_webpages_type_'.$case->snake())->default(0);
+            }
+            foreach (WebpagePurposeEnum::cases() as $case) {
+                $table->unsignedSmallInteger('number_webpages_purpose_'.$case->snake())->default(0);
+            }
+
+            foreach (WebpageStateEnum::cases() as $case) {
+                $table->unsignedSmallInteger('number_webpages_state_'.$case->snake())->default(0);
             }
 
 

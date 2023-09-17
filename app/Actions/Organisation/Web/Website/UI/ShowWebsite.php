@@ -15,7 +15,6 @@ use App\Enums\UI\Organisation\WebsiteTabsEnum;
 use App\Http\Resources\Web\WebsiteResource;
 use App\Models\Organisation\Web\Website;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -36,25 +35,23 @@ class ShowWebsite extends InertiaAction
     }
 
 
-    public function asController(ActionRequest $request): ?Website
+    public function asController(Website $website, ActionRequest $request): Website
     {
         $this->initialisation($request)->withTab(WebsiteTabsEnum::values());
 
-        return organisation()->website;
+        return $website;
     }
 
 
-    public function htmlResponse(?Website $website, ActionRequest $request): Response|RedirectResponse
+    public function htmlResponse(Website $website, ActionRequest $request): Response|RedirectResponse
     {
-        if ($website == null) {
-            return Redirect::route('org.websites.create');
-        }
+
 
 
         return Inertia::render(
             'Web/Website',
             [
-                'breadcrumbs' => $this->getBreadcrumbs(),
+                'breadcrumbs' => $this->getBreadcrumbs($request->route()->originalParameters()),
                 'title'       => __('website'),
                 'pageHead'    => [
                     'title'   => __('website'),
@@ -86,8 +83,10 @@ class ShowWebsite extends InertiaAction
         );
     }
 
-    public function getBreadcrumbs(string $suffix = ''): array
+    public function getBreadcrumbs(array $routeParameters, string $suffix = ''): array
     {
+
+
         return
             array_merge(
                 ShowDashboard::make()->getBreadcrumbs(),
@@ -96,7 +95,8 @@ class ShowWebsite extends InertiaAction
                         'type'   => 'simple',
                         'simple' => [
                             'route' => [
-                                'name' => 'org.website.show'
+                                'name'      => 'org.websites.show',
+                                'parameters'=> $routeParameters['website']
                             ],
                             'label' => __('website'),
                         ],

@@ -15,6 +15,7 @@ use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Validation\Rule;
 use Lorisleiva\Actions\ActionRequest;
 use Illuminate\Validation\Validator;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -34,6 +35,7 @@ class StoreWebsite
         data_set($modelData, 'organisation_id', organisation()->id);
         data_set($modelData, 'code', $shop->code, overwrite: false);
         data_set($modelData, 'name', $shop->name, overwrite: false);
+        data_set($modelData, 'type', 'marketing', overwrite: false);
 
         /** @var Website $website */
         $website = $shop->website()->create($modelData);
@@ -59,6 +61,20 @@ class StoreWebsite
     {
         return [
             'domain' => ['required', new CaseSensitive('websites')],
+            'code'   => [
+                'required',
+                'unique:websites',
+                'max:64',
+                'alpha_dash:ascii',
+                Rule::notIn(
+                    [
+                        'webpages',
+                        'blog',
+                        'edit',
+                        'workshop'
+                    ]
+                )
+            ],
         ];
     }
 
@@ -90,10 +106,10 @@ class StoreWebsite
 
     public function htmlResponse(): RedirectResponse
     {
-        return Redirect::route('org.website.show');
+        return Redirect::route('org.websites.show');
     }
 
-    public string $commandSignature = 'shop:create-website {shop} {domain}';
+    public string $commandSignature = 'shop:create-website {shop} {domain} {--c|code=}';
 
     public function asCommand(Command $command): int
     {
@@ -109,8 +125,16 @@ class StoreWebsite
         }
 
         $this->shop = $shop;
+        $code       = $shop->code;
+
+        if ($command->option('code')) {
+            $code = $command->option('code');
+        }
+
+
         $this->setRawAttributes([
             'domain' => $command->argument('domain'),
+            'code'   => $code
 
         ]);
 
@@ -122,7 +146,7 @@ class StoreWebsite
             return 1;
         }
 
-        $website= $this->handle($shop, $validatedData);
+        $website = $this->handle($shop, $validatedData);
 
         $command->info("Website $website->domain created successfully 🎉");
 

@@ -9,6 +9,7 @@ namespace App\Actions\UI\Organisation;
 
 use App\Models\Organisation\Market\Shop;
 use App\Models\Organisation\OrganisationUser;
+use App\Models\Organisation\Web\Website;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class GetLayout
@@ -22,11 +23,18 @@ class GetLayout
         $organisation = organisation();
 
 
-        $shopsCount = $organisation->stats->number_shops;
-        $shop       = null;
+        $shopsCount    = $organisation->stats->number_shops;
+        $websitesCount = $organisation->stats->number_websites;
+
+        $shop    = null;
+        $website = null;
         if ($shopsCount == 1) {
             /** @var Shop $shop */
             $shop = $organisation->shops()->first();
+        }
+        if ($websitesCount == 1) {
+            /** @var Website $website */
+            $website = $organisation->websites()->first();
         }
 
 
@@ -76,7 +84,7 @@ class GetLayout
                     /*
                        [
                         'label' => __('shops'),
-                        'icon'  => ['fal', 'fa-store-alt'],
+                        'icon'  => ['fal', 'fa-store-alt'],org.websites.webpages.index
                         'route' => [
                             'name' => 'org.shops.index',
                         ]
@@ -95,50 +103,45 @@ class GetLayout
         }
 
 
-        if ($user->can('websites') and $organisation->stats->number_shops > 0) {
-
-            if($shopsCount==1){
-                if($shop->website){
-                    $route=[
-                        'name'=>'org.websites.show',
-                        'parameters'=>$shop->website->slug
+        if ($user->can('websites') and $shopsCount > 0) {
+            if ($shopsCount == 1) {
+                if ($shop->website) {
+                    $route = [
+                        'name'       => 'org.websites.show',
+                        'parameters' => $shop->website->slug
                     ];
-                }else{
-                    $route=[
-                        'name'=>'org.shops.show.website.create',
-                        'parameters'=>$shop->slug
+                } else {
+                    $route = [
+                        'name'       => 'org.shops.show.website.create',
+                        'parameters' => $shop->slug
                     ];
                 }
-            }else{
-               $route= [
+            } else {
+                $route = [
                     'name' => 'org.websites.index'
                 ];
             }
 
 
+
+            $subSections=[];
+            if($websitesCount==1) {
+                $subSections[]=[
+                    'label' => __('webpages'),
+                    'icon'  => ['fal', 'fa-browser'],
+                    'route' => [
+                        'name'       => 'org.websites.show.webpages.index',
+                        'parameters' => $website->slug
+                    ]
+                ];
+            }
+
             $navigation['websites'] = [
                 'label'   => __('websites'),
                 'icon'    => ['fal', 'fa-globe'],
-                'route'   =>$route,
+                'route'   => $route,
                 'topMenu' => [
-                    'subSections' => [
-                        [
-                            'label' => __('websites'),
-                            'icon'  => ['fal', 'fa-globe'],
-                            'route' => [
-                                'name' => 'org.websites.index',
-                            ]
-                        ],
-                        /*
-                        [
-                            'label' => __('webpages'),
-                            'icon'  => ['fal', 'fa-browser'],
-                            'route' => [
-                                'name' => 'org.websites.webpages.index',
-                            ]
-                        ],
-                        */
-                    ]
+                    'subSections' => $subSections
                 ]
             ];
         }
@@ -259,7 +262,6 @@ class GetLayout
                 ]
             ];
         }
-
 
         return [
             'navigation' => $navigation,

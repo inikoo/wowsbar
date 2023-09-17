@@ -29,9 +29,9 @@ class StoreArticle
     {
         data_set($modelData, 'level', $this->getLevel(Arr::get($modelData, 'parent_id')));
 
-        data_set($modelData, 'data', Arr::only($modelData, ['title','subtitle']));
+        data_set($modelData, 'data', Arr::only($modelData, ['title', 'subtitle']));
 
-        Arr::forget($modelData, ['title','subtitle']);
+        Arr::forget($modelData, ['title', 'subtitle']);
 
         /** @var Webpage $webpage */
         $webpage = $website->webpages()->create($modelData);
@@ -44,7 +44,7 @@ class StoreArticle
 
     public function authorize(ActionRequest $request): bool
     {
-        return $request->user()->can("website.edit");
+        return $request->user()->can("websites.edit");
     }
 
     public function getLevel($parent_id): int
@@ -89,12 +89,13 @@ class StoreArticle
         data_set($modelData, 'parent_id', $webpage->id);
         data_set($modelData, 'url', Str::lower($modelData['url']));
 
-        return $this->handle(organisation()->website, $modelData);
+        return $this->handle($webpage->website, $modelData);
     }
 
     public function htmlResponse(Webpage $webpage): RedirectResponse
     {
-        return Redirect::route('org.websites.webpages.show', [
+        return Redirect::route('org.websites.show.webpages.show', [
+            $webpage->website->slug,
             $webpage->slug
         ]);
     }

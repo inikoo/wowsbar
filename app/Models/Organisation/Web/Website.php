@@ -25,6 +25,7 @@ use Spatie\Sluggable\SlugOptions;
  *
  * @property int $id
  * @property int $shop_id
+ * @property string $type
  * @property string $slug
  * @property string $code
  * @property string $name
@@ -72,6 +73,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Website whereState($value)
  * @method static Builder|Website whereStatus($value)
  * @method static Builder|Website whereStructure($value)
+ * @method static Builder|Website whereType($value)
  * @method static Builder|Website whereUpdatedAt($value)
  * @method static Builder|Website withTrashed()
  * @method static Builder|Website withoutTrashed()
@@ -107,8 +109,9 @@ class Website extends Model implements Auditable
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
-            ->generateSlugsFrom('domain')
+            ->generateSlugsFrom('code')
             ->doNotGenerateSlugsOnUpdate()
+            ->slugsShouldBeNoLongerThan(8)
             ->saveSlugsTo('slug');
     }
 

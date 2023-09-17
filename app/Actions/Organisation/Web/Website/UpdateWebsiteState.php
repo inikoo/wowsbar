@@ -37,7 +37,7 @@ class UpdateWebsiteState
     {
         if (!$request->exists('status') and $request->has('state')) {
             $status = match ($request->get('state')) {
-                \App\Enums\Organisation\Web\Website\WebsiteStateEnum::LIVE->value => true,
+                WebsiteStateEnum::LIVE->value                                     => true,
                 default                                                           => false
             };
             $request->merge(['status' => $status]);
@@ -54,10 +54,10 @@ class UpdateWebsiteState
         ];
     }
 
-    public function asController(ActionRequest $request): Website
+    public function asController(Website $website, ActionRequest $request): Website
     {
         $request->validate();
-        return $this->handle(organisation()->website, $request->validated());
+        return $this->handle($website, $request->validated());
     }
 
 

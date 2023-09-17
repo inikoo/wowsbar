@@ -46,7 +46,8 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property-read \App\Models\Search\OrganisationUniversalSearch|null $universalSearch
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Organisation\OrganisationUser> $users
  * @property-read int|null $users_count
- * @property-read Website|null $website
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Website> $websites
+ * @property-read int|null $websites_count
  * @method static \Database\Factories\Organisation\OrganisationFactory factory($count = null, $state = [])
  * @method static Builder|Organisation newModelQuery()
  * @method static Builder|Organisation newQuery()
@@ -94,9 +95,9 @@ class Organisation extends Model implements HasMedia
         return $this->hasOne(OrganisationHumanResourcesStats::class);
     }
 
-    public function website(): HasOne
+    public function websites(): HasMany
     {
-        return $this->hasOne(Website::class);
+        return $this->hasMany(Website::class);
     }
 
     public function shops(): HasMany

@@ -40,6 +40,33 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $number_websites_state_in_process
  * @property int $number_websites_state_live
  * @property int $number_websites_state_closed
+ * @property int $number_webpages
+ * @property int $number_webpages_type_storefront
+ * @property int $number_webpages_type_shop
+ * @property int $number_webpages_type_content
+ * @property int $number_webpages_type_small_print
+ * @property int $number_webpages_type_engagement
+ * @property int $number_webpages_type_auth
+ * @property int $number_webpages_type_blog
+ * @property int $number_webpages_purpose_storefront
+ * @property int $number_webpages_purpose_product
+ * @property int $number_webpages_purpose_info
+ * @property int $number_webpages_purpose_privacy
+ * @property int $number_webpages_purpose_cookies_policy
+ * @property int $number_webpages_purpose_terms_and_conditions
+ * @property int $number_webpages_purpose_appointment
+ * @property int $number_webpages_purpose_contact
+ * @property int $number_webpages_purpose_login
+ * @property int $number_webpages_purpose_register
+ * @property int $number_webpages_purpose_blog
+ * @property int $number_webpages_purpose_article
+ * @property int $number_webpages_purpose_content
+ * @property int $number_webpages_purpose_other_small_print
+ * @property int $number_webpages_purpose_shop
+ * @property int $number_webpages_state_in_process
+ * @property int $number_webpages_state_ready
+ * @property int $number_webpages_state_live
+ * @property int $number_webpages_state_closed
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Organisation\Organisation $organisation
@@ -68,6 +95,33 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static Builder|OrganisationStats whereNumberShopsStateOpen($value)
  * @method static Builder|OrganisationStats whereNumberShopsTypeContentAsAService($value)
  * @method static Builder|OrganisationStats whereNumberShopsTypeDigitalMarketing($value)
+ * @method static Builder|OrganisationStats whereNumberWebpages($value)
+ * @method static Builder|OrganisationStats whereNumberWebpagesPurposeAppointment($value)
+ * @method static Builder|OrganisationStats whereNumberWebpagesPurposeArticle($value)
+ * @method static Builder|OrganisationStats whereNumberWebpagesPurposeBlog($value)
+ * @method static Builder|OrganisationStats whereNumberWebpagesPurposeContact($value)
+ * @method static Builder|OrganisationStats whereNumberWebpagesPurposeContent($value)
+ * @method static Builder|OrganisationStats whereNumberWebpagesPurposeCookiesPolicy($value)
+ * @method static Builder|OrganisationStats whereNumberWebpagesPurposeInfo($value)
+ * @method static Builder|OrganisationStats whereNumberWebpagesPurposeLogin($value)
+ * @method static Builder|OrganisationStats whereNumberWebpagesPurposeOtherSmallPrint($value)
+ * @method static Builder|OrganisationStats whereNumberWebpagesPurposePrivacy($value)
+ * @method static Builder|OrganisationStats whereNumberWebpagesPurposeProduct($value)
+ * @method static Builder|OrganisationStats whereNumberWebpagesPurposeRegister($value)
+ * @method static Builder|OrganisationStats whereNumberWebpagesPurposeShop($value)
+ * @method static Builder|OrganisationStats whereNumberWebpagesPurposeStorefront($value)
+ * @method static Builder|OrganisationStats whereNumberWebpagesPurposeTermsAndConditions($value)
+ * @method static Builder|OrganisationStats whereNumberWebpagesStateClosed($value)
+ * @method static Builder|OrganisationStats whereNumberWebpagesStateInProcess($value)
+ * @method static Builder|OrganisationStats whereNumberWebpagesStateLive($value)
+ * @method static Builder|OrganisationStats whereNumberWebpagesStateReady($value)
+ * @method static Builder|OrganisationStats whereNumberWebpagesTypeAuth($value)
+ * @method static Builder|OrganisationStats whereNumberWebpagesTypeBlog($value)
+ * @method static Builder|OrganisationStats whereNumberWebpagesTypeContent($value)
+ * @method static Builder|OrganisationStats whereNumberWebpagesTypeEngagement($value)
+ * @method static Builder|OrganisationStats whereNumberWebpagesTypeShop($value)
+ * @method static Builder|OrganisationStats whereNumberWebpagesTypeSmallPrint($value)
+ * @method static Builder|OrganisationStats whereNumberWebpagesTypeStorefront($value)
  * @method static Builder|OrganisationStats whereNumberWebsites($value)
  * @method static Builder|OrganisationStats whereNumberWebsitesStateClosed($value)
  * @method static Builder|OrganisationStats whereNumberWebsitesStateInProcess($value)

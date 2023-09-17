@@ -8,9 +8,9 @@
 namespace App\Actions\Organisation\Web\Webpage\UI;
 
 use App\Actions\InertiaAction;
-use App\Actions\Organisation\Web\Webpage\IndexWebpages;
 use App\Enums\Organisation\Web\Webpage\WebpageTypeEnum;
 use App\Models\Organisation\Web\Webpage;
+use App\Models\Organisation\Web\Website;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -23,30 +23,36 @@ class CreateArticle extends InertiaAction
     }
 
 
-    public function asController(ActionRequest $request): Webpage
+    public function asController(Website $website, ActionRequest $request): Webpage
     {
         $this->initialisation($request);
-        return Webpage::where('type', WebpageTypeEnum::BLOG)->firstOrFail();
+
+        return $website->webpages->where('type', WebpageTypeEnum::BLOG)->firstOrFail();
     }
 
 
     public function htmlResponse(Webpage $blog, ActionRequest $request): Response
     {
-
         return Inertia::render(
             'CreateModel',
             [
-                'breadcrumbs' => $this->getBreadcrumbs(),
+                'breadcrumbs' => $this->getBreadcrumbs(
+                    $blog,
+                    $request->route()->parameters
+                ),
                 'title'       => __('new article'),
                 'pageHead'    => [
-                    'title'        => __('new article'),
-                    'actions'      => [
+                    'title'   => __('new article'),
+                    'actions' => [
                         [
                             'type'  => 'button',
                             'style' => 'cancel',
                             'route' => [
-                                'name'       => 'org.websites.webpages.show',
-                                'parameters' => $blog->slug
+                                'name'       => 'org.websites.show.webpages.show',
+                                'parameters' => [
+                                    $blog->website->slug,
+                                    $blog->slug
+                                ]
                             ]
 
                         ]
@@ -58,9 +64,8 @@ class CreateArticle extends InertiaAction
                     'blueprint' => [
                         [
                             'title'  => __('Id'),
-                            'icon'   => ['fal','fa-fingerprint'],
+                            'icon'   => ['fal', 'fa-fingerprint'],
                             'fields' => [
-
 
 
                                 'url' => [
@@ -76,23 +81,22 @@ class CreateArticle extends InertiaAction
                         ],
                         [
                             'title'  => __('Header'),
-                            'icon'   => ['fal','fa-indent'],
+                            'icon'   => ['fal', 'fa-indent'],
                             'fields' => [
 
 
-
                                 'title' => [
-                                    'type'      => 'input',
-                                    'label'     => __('title'),
-                                    'value'     => '',
-                                    'required'  => true,
+                                    'type'     => 'input',
+                                    'label'    => __('title'),
+                                    'value'    => '',
+                                    'required' => true,
                                 ],
 
                                 'subtitle' => [
-                                    'type'      => 'input',
-                                    'label'     => __('subtitle'),
-                                    'value'     => '',
-                                    'required'  => true,
+                                    'type'     => 'input',
+                                    'label'    => __('subtitle'),
+                                    'value'    => '',
+                                    'required' => true,
                                 ],
                             ]
                         ]
@@ -100,8 +104,8 @@ class CreateArticle extends InertiaAction
 
                     ],
                     'route'     => [
-                        'name'     => 'org.models.article.store',
-                        'arguments'=> [$blog->id]
+                        'name'      => 'org.models.article.store',
+                        'arguments' => [$blog->id]
                     ],
 
 
@@ -112,15 +116,19 @@ class CreateArticle extends InertiaAction
     }
 
 
-    public function getBreadcrumbs(): array
+    public function getBreadcrumbs(Webpage $webpage, $routeParameters): array
     {
+        $routeParameters['webpage'] = $webpage;
+
         return array_merge(
-            IndexWebpages::make()->getBreadcrumbs(),
+            ShowWebpage::make()->getBreadcrumbs(
+                $routeParameters
+            ),
             [
                 [
                     'type'          => 'creatingModel',
                     'creatingModel' => [
-                        'label' => __("webpage"),
+                        'label' => __("article"),
                     ]
                 ]
             ]

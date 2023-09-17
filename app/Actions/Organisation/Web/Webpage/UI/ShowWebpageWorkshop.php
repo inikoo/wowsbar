@@ -9,6 +9,7 @@ namespace App\Actions\Organisation\Web\Webpage\UI;
 
 use App\Actions\InertiaAction;
 use App\Models\Organisation\Web\Webpage;
+use App\Models\Organisation\Web\Website;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -26,10 +27,15 @@ class ShowWebpageWorkshop extends InertiaAction
     public function asController(Webpage $webpage, ActionRequest $request): Webpage
     {
         $this->initialisation($request);
-
         return $webpage;
     }
 
+    /** @noinspection PhpUnusedParameterInspection */
+    public function inWebsite(Website $website, Webpage $webpage, ActionRequest $request): Webpage
+    {
+        $this->initialisation($request);
+        return $webpage;
+    }
 
     public function htmlResponse(Webpage $webpage, ActionRequest $request): Response
     {

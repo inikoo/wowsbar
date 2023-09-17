@@ -1,20 +1,20 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Wed, 16 Aug 2023 18:46:22 Malaysia Time, Pantai Lembeng, Bali
+ * Created: Wed, 16 Aug 2023 18:46:22 Malaysia Time, Sanur, Bali
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Organisation\Web\Website\UI;
+namespace App\Actions\Organisation\Web\Webpage\UI;
 
 use App\Actions\InertiaAction;
-use App\Enums\UI\Organisation\WebsiteWorkshopTabsEnum;
+use App\Models\Organisation\Web\Webpage;
 use App\Models\Organisation\Web\Website;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
 
-class ShowWebsiteWorkshopPreview extends InertiaAction
+class ShowWebpageWorkshopPreview extends InertiaAction
 {
     public function authorize(ActionRequest $request): bool
     {
@@ -24,22 +24,26 @@ class ShowWebsiteWorkshopPreview extends InertiaAction
         return $request->user()->hasPermissionTo("websites.edit");
     }
 
-    public function asController(Website $website, ActionRequest $request): Website
+    public function asController(Webpage $webpage, ActionRequest $request): Webpage
     {
-        $this->initialisation($request)->withTab(WebsiteWorkshopTabsEnum::values());
+        $this->initialisation($request);
+        return $webpage;
+    }
 
-        return $website;
+    /** @noinspection PhpUnusedParameterInspection */
+    public function inWebsite(Website $website, Webpage $webpage, ActionRequest $request): Webpage
+    {
+        $this->initialisation($request);
+        return $webpage;
     }
 
 
-
-
-    public function htmlResponse(Website $website, ActionRequest $request): Response
+    public function htmlResponse(Webpage $webpage, ActionRequest $request): Response
     {
         return Inertia::render(
             'Web/PreviewWorkshop',
             [
-                'title'       => __("Website's preview"),
+                'title'       => __("Webpage's preview"),
                 'breadcrumbs' => $this->getBreadcrumbs($request->route()->originalParameters()),
                 'pageHead'    => [
 
@@ -74,7 +78,7 @@ class ShowWebsiteWorkshopPreview extends InertiaAction
 
     public function getBreadcrumbs(array $routeParameters): array
     {
-        return ShowWebsite::make()->getBreadcrumbs(
+        return ShowWebpage::make()->getBreadcrumbs(
             $routeParameters,
             suffix: '('.__('preview').')'
         );

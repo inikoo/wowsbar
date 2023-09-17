@@ -31,8 +31,8 @@ Route::post('/employee/', StoreEmployee::class)->name('employee.store');
 Route::delete('/employee/{employee}', DeleteEmployee::class)->name('employee.delete');
 Route::post('/shop/{shop:id}/website/', StoreWebsite::class)->name('shop.website.store');
 Route::patch('/organisation', UpdateOrganisation::class)->name('organisation.update');
-Route::patch('/website', UpdateWebsite::class)->name('website.update');
-Route::patch('/website/state', UpdateWebsiteState::class)->name('website.state.update');
+Route::patch('/website/{website:id}', UpdateWebsite::class)->name('website.update');
+Route::patch('/website/{website:id}/state', UpdateWebsiteState::class)->name('website.state.update');
 Route::post('/webpage/{webpage:id}', StoreWebpage::class)->name('webpage.store');
 Route::post('/article/{webpage:id}', StoreArticle::class)->name('article.store');
 

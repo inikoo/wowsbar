@@ -44,7 +44,7 @@ class GetFirstLoadProps
                         ]);
                     $auth->signInWithCustomToken($customToken);
                     $token = $customToken->toString();
-                }catch (Exception){
+                } catch (Exception) {
                     $token='';
                 }
                 return  $token;

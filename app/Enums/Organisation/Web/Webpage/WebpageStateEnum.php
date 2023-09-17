@@ -17,9 +17,9 @@ enum WebpageStateEnum: string
     use EnumHelperTrait;
 
     case IN_PROCESS = 'in-process';
-    case READY = 'ready';
+    case READY      = 'ready';
 
-    case LIVE = 'live';
+    case LIVE   = 'live';
     case CLOSED = 'closed';
 
 

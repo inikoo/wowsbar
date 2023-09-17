@@ -17,6 +17,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Enum;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -41,7 +42,7 @@ class StoreWebpage
 
     public function authorize(ActionRequest $request): bool
     {
-        return $request->user()->can("website.edit");
+        return $request->user()->can("websites.edit");
     }
 
     public function getLevel($parent_id): int
@@ -56,23 +57,21 @@ class StoreWebpage
 
     public function prepareForValidation(ActionRequest $request): void
     {
+        $type = WebpageTypeEnum::CONTENT->value;
 
-
-        $type=WebpageTypeEnum::CONTENT->value;
-
-        if($_type=Arr::get($request->all(), 'type')) {
-            if(is_array($_type)) {
-                $type=$_type['value'];
+        if ($_type = Arr::get($request->all(), 'type')) {
+            if (is_array($_type)) {
+                $type = $_type['value'];
             } else {
-                $type=$_type;
+                $type = $_type;
             }
         }
 
 
-        $purpose=match ($type) {
-            WebpageTypeEnum::SMALL_PRINT->value=> WebpagePurposeEnum::OTHER_SMALL_PRINT->value,
-            WebpageTypeEnum::SHOP->value       => WebpagePurposeEnum::SHOP->value,
-            default                            => WebpagePurposeEnum::CONTENT->value
+        $purpose = match ($type) {
+            WebpageTypeEnum::SMALL_PRINT->value => WebpagePurposeEnum::OTHER_SMALL_PRINT->value,
+            WebpageTypeEnum::SHOP->value        => WebpagePurposeEnum::SHOP->value,
+            default                             => WebpagePurposeEnum::CONTENT->value
         };
 
         $request->merge(
@@ -86,8 +85,13 @@ class StoreWebpage
     public function rules(): array
     {
         return [
-            'url'     => ['required', new CaseSensitive('webpages'), 'max:255'],
-            'code'    => ['required', 'unique:webpages', 'max:64'],
+            'url'     => ['required', new CaseSensitive('webpages'), 'max:255', 'alpha_dash:ascii'],
+            'code'    => ['required', 'unique:webpages', 'max:64', 'alpha_dash:ascii',
+                          Rule::notIn(
+                              [
+                                  'websites', 'create','edit','workshop'
+                              ]
+                          )],
             'type'    => ['required', new Enum(WebpageTypeEnum::class)],
             'purpose' => ['required', new Enum(WebpagePurposeEnum::class)]
 
@@ -102,12 +106,13 @@ class StoreWebpage
         data_set($modelData, 'parent_id', $webpage->id);
         data_set($modelData, 'url', Str::lower($modelData['url']));
 
-        return $this->handle(organisation()->website, $modelData);
+        return $this->handle($webpage->website, $modelData);
     }
 
     public function htmlResponse(Webpage $webpage): RedirectResponse
     {
-        return Redirect::route('org.websites.webpages.show', [
+        return Redirect::route('org.websites.show.webpages.show', [
+            $webpage->website->slug,
             $webpage->slug
         ]);
     }

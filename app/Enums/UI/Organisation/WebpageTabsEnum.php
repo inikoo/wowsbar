@@ -35,9 +35,9 @@ enum WebpageTabsEnum: string
                 function ($case) use ($webpage) {
                     if($case==WebpageTabsEnum::WEBPAGES &&
                         (
-                            $webpage->type==WebpageTypeEnum::AUTH       ||
-                            $webpage->type==WebpageTypeEnum::ENGAGEMENT ||
-                            $webpage->type==WebpagePurposeEnum::ARTICLE
+                            $webpage->type   ==WebpageTypeEnum::AUTH       ||
+                            $webpage->type   ==WebpageTypeEnum::ENGAGEMENT ||
+                            $webpage->purpose==WebpagePurposeEnum::ARTICLE
                         )
                     ) {
                         return false;
@@ -47,7 +47,7 @@ enum WebpageTabsEnum: string
             )
             ->mapWithKeys(function ($case) use ($webpage) {
                 $blueprint = $case->blueprint();
-                if ($webpage->type == WebpageTypeEnum::BLOG) {
+                if ($webpage->purpose == WebpagePurposeEnum::BLOG) {
                     if ($case == WebpageTabsEnum::WEBPAGES) {
                         $blueprint['title'] = __('Articles');
                     }
