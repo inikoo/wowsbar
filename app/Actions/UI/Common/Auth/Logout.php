@@ -23,7 +23,7 @@ class Logout
         switch ($request->route()->getName()) {
             case 'org.logout':
                 $gate        = 'org';
-                $redirectUrl = '/org/login';
+                $redirectUrl = '/login';
                 break;
             case 'public.logout':
                 $redirectUrl = '/';

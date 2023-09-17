@@ -39,7 +39,7 @@ class Login
             switch ($request->route()->getName()) {
                 case 'org.login.store':
                     $this->gate = 'org';
-                    $this->home = '/org/dashboard';
+                    $this->home = '/dashboard';
                     break;
                 case 'public.login.store':
                     $this->credentialHandler = 'email';
