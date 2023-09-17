@@ -87,9 +87,9 @@ class IndexWebsites extends InertiaAction
 
 
         return $queryBuilder
-            ->defaultSort('websites.code')
-            ->select(['websites.code', 'websites.name', 'websites.slug', 'websites.domain', 'in_maintenance', 'websites.state'])
-            ->allowedSorts(['slug', 'code', 'name'])
+            ->defaultSort('websites.slug')
+            ->select([ 'websites.name', 'websites.slug','websites.code', 'websites.domain','websites.status', 'websites.state'])
+            ->allowedSorts(['slug', 'domain', 'name'])
             ->allowedFilters([$globalSearch])
             ->withPaginator($prefix)
             ->withQueryString();

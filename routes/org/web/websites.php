@@ -20,6 +20,7 @@ use App\Actions\Organisation\Web\Website\UI\ShowWebsiteWorkshopPreview;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', IndexWebsites::class)->name('index');
+Route::get('/{website}}', ShowWebsite::class)->name('show');
 
 
 /*
