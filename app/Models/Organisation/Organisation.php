@@ -68,7 +68,6 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 class Organisation extends Model implements HasMedia
 {
     use InteractsWithMedia;
-    use HasOrganisationUniversalSearch;
     use HasFactory;
 
     protected $casts = [

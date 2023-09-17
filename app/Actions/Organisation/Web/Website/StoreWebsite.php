@@ -44,6 +44,9 @@ class StoreWebsite
         OrganisationHydrateWebsites::run();
 
         $website->refresh();
+
+        WebsiteHydrateUniversalSearch::dispatch($website);
+
         $website = ResetWebsiteStructure::run($website);
 
         return SeedWebsiteFixedWebpages::run($website);
@@ -110,7 +113,7 @@ class StoreWebsite
         return Redirect::route('org.websites.show');
     }
 
-    public string $commandSignature = 'shop:create-website {shop} {domain} {--c|code=}';
+    public string $commandSignature = 'shop:new-website {shop} {domain} {--c|code=}';
 
     public function asCommand(Command $command): int
     {

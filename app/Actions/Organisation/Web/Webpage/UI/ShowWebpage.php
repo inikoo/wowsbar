@@ -207,7 +207,7 @@ class ShowWebpage extends InertiaAction
                 ]
             ),
             $headCrumb(
-                Webpage::where('slug',$routeParameters['webpage'])->first(),
+                Webpage::where('slug', $routeParameters['webpage'])->first(),
                 [
                     'index' => [
                         'name'       => 'org.websites.show.webpages.index',

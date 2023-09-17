@@ -63,7 +63,7 @@ class StorePublicUser
 
     public function getCommandSignature(): string
     {
-        return 'customer:add-user {customer} {--e|email=} {--P|password=}';
+        return 'customer:new-user {customer} {--e|email=} {--P|password=}';
     }
 
     public function asCommand(Command $command): int

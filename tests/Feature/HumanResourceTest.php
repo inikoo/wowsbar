@@ -21,7 +21,6 @@ use App\Models\HumanResources\Employee;
 use App\Models\HumanResources\Workplace;
 use App\Models\Organisation\Organisation;
 
-
 beforeAll(function () {
     loadDB('test_base_database.dump');
 });

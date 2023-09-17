@@ -54,7 +54,7 @@ class StoreCustomer
             $customer->generateSlug();
             $customer->stats()->create();
 
-            // CustomerHydrateUniversalSearch::dispatch($customer);
+             CustomerHydrateUniversalSearch::dispatch($customer);
 
             return $customer;
         });
@@ -92,12 +92,12 @@ class StoreCustomer
     /**
      * @throws Throwable
      */
-    public function asController(ActionRequest $request): Customer
+    public function asController(Shop $shop, ActionRequest $request): Customer
     {
         $this->fillFromRequest($request);
         $request->validate();
 
-        return $this->handle(organisation()->shop, $request->validated());
+        return $this->handle($shop, $request->validated());
     }
 
     /**
@@ -112,7 +112,7 @@ class StoreCustomer
         return $this->handle($shop, $validatedData, $customerAddressesData);
     }
 
-    public string $commandSignature = 'customer:create {email} {--N|contact_name=} {--C|company=} {--P|password=}';
+    public string $commandSignature = 'shop:new-customer {shop} {email} {--N|contact_name=} {--C|company=} {--P|password=}';
 
     /**
      * @throws \Throwable
@@ -120,6 +120,15 @@ class StoreCustomer
     public function asCommand(Command $command): int
     {
         $this->asAction = true;
+
+        try {
+            $shop = Shop::where('slug', $command->argument('shop'))->firstOrFail();
+        } catch (Exception $e) {
+            $command->error($e->getMessage());
+
+            return 1;
+        }
+
 
         $this->setRawAttributes([
             'contact_name'        => $command->option('contact_name'),
@@ -135,7 +144,7 @@ class StoreCustomer
             return 1;
         }
 
-        $customer = $this->handle(organisation()->shop, $validatedData);
+        $customer = $this->handle($shop, $validatedData);
 
         $command->info("Customer $customer->slug created successfully 🎉");
 

@@ -102,7 +102,7 @@ class CreateOrganisationUserFromEmployee
         }
 
 
-        $password = (app()->isProduction() ? wordwrap(Str::random(), 4, '-', true) : 'hello');
+        $password             = (app()->isProduction() ? wordwrap(Str::random(), 4, '-', true) : 'hello');
         $organisationUser     = $this->handle($employee);
 
 

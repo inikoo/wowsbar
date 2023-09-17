@@ -7,7 +7,6 @@
 
 namespace App\Models\Search;
 
-use App\Concerns\BelongsToTenant;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
@@ -45,9 +44,10 @@ use Laravel\Scout\Searchable;
 class UniversalSearch extends Model
 {
     use Searchable;
-    use BelongsToTenant;
 
     protected $guarded = [];
+
+    protected $table='universal_searches';
 
     public function searchableAs(): string
     {

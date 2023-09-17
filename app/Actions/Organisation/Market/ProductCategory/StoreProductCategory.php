@@ -7,7 +7,6 @@
 
 namespace App\Actions\Organisation\Market\ProductCategory;
 
-
 use App\Actions\Organisation\Market\Shop\Hydrators\ShopHydrateDepartments;
 use App\Models\Market\ProductCategory;
 use App\Models\Market\Shop;
@@ -50,7 +49,7 @@ class StoreProductCategory
             ]);
         }
 
-       // ProductCategoryHydrateUniversalSearch::dispatch($productCategory);
+        // ProductCategoryHydrateUniversalSearch::dispatch($productCategory);
         ShopHydrateDepartments::dispatch($productCategory->shop);
 
         return $productCategory;
@@ -82,5 +81,5 @@ class StoreProductCategory
         return  Redirect::route('shops.show.departments.index', $shop);
     }
 
-    
+
 }

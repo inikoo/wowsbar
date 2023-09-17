@@ -7,7 +7,6 @@
 
 namespace App\Models\Organisation;
 
-use App\Models\Traits\HasOrganisationUniversalSearch;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -70,7 +69,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Organisation\Organisation $organisation
- * @property-read \App\Models\Search\OrganisationUniversalSearch|null $universalSearch
  * @method static Builder|OrganisationStats newModelQuery()
  * @method static Builder|OrganisationStats newQuery()
  * @method static Builder|OrganisationStats query()
@@ -132,7 +130,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class OrganisationStats extends Model
 {
-    use HasOrganisationUniversalSearch;
 
     protected $table = 'organisation_stats';
 

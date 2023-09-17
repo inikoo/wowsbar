@@ -9,7 +9,7 @@ namespace App\Models\Auth;
 
 use App\Enums\Organisation\Guest\GuestTypeEnum;
 use App\Models\Traits\HasHistory;
-use App\Models\Traits\HasOrganisationUniversalSearch;
+use App\Models\Traits\HasUniversalSearch;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -45,8 +45,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read array $es_audits
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \App\Models\Media\Media> $media
  * @property-read int|null $media_count
- * @property-read \App\Models\Organisation\OrganisationUser|null $organisationUser
- * @property-read \App\Models\Search\OrganisationUniversalSearch|null $universalSearch
+ * @property-read \App\Models\Auth\OrganisationUser|null $organisationUser
  * @method static Builder|Guest newModelQuery()
  * @method static Builder|Guest newQuery()
  * @method static Builder|Guest onlyTrashed()
@@ -78,7 +77,7 @@ class Guest extends Model implements HasMedia, Auditable
     use SoftDeletes;
     use HasFactory;
     use HasHistory;
-    use HasOrganisationUniversalSearch;
+    use HasUniversalSearch;
 
 
     protected $casts = [

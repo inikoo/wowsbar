@@ -31,9 +31,9 @@ test('create organisation', function () {
 test('create shop', function () {
     $shop  = StoreShop::make()->action(
         [
-            'code'=>'acme',
-            'name'=>'Acme inc',
-            'type'=>ShopTypeEnum::DIGITAL_MARKETING->value
+            'code'=> 'acme',
+            'name'=> 'Acme inc',
+            'type'=> ShopTypeEnum::DIGITAL_MARKETING->value
         ]
     );
     expect($shop)->toBeInstanceOf(Shop::class);

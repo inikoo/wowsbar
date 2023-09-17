@@ -78,6 +78,7 @@ class StoreShop
         $shop = AttachPaymentAccountToShop::run($shop, $paymentAccount);
 
         OrganisationHydrateShops::run();
+        ShopHydrateUniversalSearch::dispatch($shop);
 
 
         return $shop;
@@ -140,7 +141,7 @@ class StoreShop
         $this->setRawAttributes($modelData);
         $validatedData = $this->validateAttributes();
 
-        return $this->handle(organisation(),$validatedData);
+        return $this->handle(organisation(), $validatedData);
     }
 
 

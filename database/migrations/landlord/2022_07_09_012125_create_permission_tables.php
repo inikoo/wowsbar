@@ -103,6 +103,9 @@ class CreatePermissionTables extends Migration
                     'model_has_roles_role_model_type_primary'
                 );
             }
+            $table->boolean('direct_role')->default(false);
+            $table->boolean('job_position_role')->default(false);
+
         });
 
         Schema::create($tableNames['role_has_permissions'], function (Blueprint $table) use ($tableNames) {

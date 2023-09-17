@@ -40,14 +40,14 @@ php artisan org:create wowsbar Wowsbar ID GBP
 php artisan org:create-guest aiku aiku external_administrator
 echo "🌱 create shop/website"
 php artisan shop:create awa 'aw-advantage' 'digital-marketing'
-php artisan shop:create-website awa 'awa.test'
+php artisan shop:new-website awa 'awa.test'
 
 
 echo "🌱 create customer"
-#php artisan customer:create aiku@inikoo.com -C 'Aiku'
-#php artisan customer:create devs@aw-advantage.com -C 'aw-advantage'
-#php artisan customer:add-user 000001 -P hello
-#php artisan customer:add-user 000002 -P hello
+php artisan shop:new-customer awa aiku@inikoo.com -C 'Aiku'
+php artisan shop:new-customer devs@aw-advantage.com -C 'aw-advantage'
+php artisan customer:new-user 000001 -P hello
+php artisan customer:new-user 000002 -P hello
 pg_dump -Fc -f "devops/devel/snapshots/customers.dump" ${DB}
 echo "🌱 create tenant"
 #php artisan tenant:create 000001 aiku

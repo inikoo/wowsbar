@@ -28,17 +28,17 @@ class AppServiceProvider extends ServiceProvider
         }
         Relation::morphMap(
             [
-                'Organisation'              => 'App\Models\Organisation\Organisation',
-                'Tenant'                    => 'App\Models\Tenancy\Tenant',
-                'User'                      => 'App\Models\Auth\User',
-                'PortfolioWebsite'          => 'App\Models\Portfolio\PortfolioWebsite',
-                'Banner'                    => 'App\Models\Portfolio\Banner',
-                'OrganisationUser'          => 'App\Models\Auth\OrganisationUser',
-                'PublicUser'                => 'App\Models\Auth\OrganisationUser',
-                'Guest'                     => 'App\Models\Auth\Guest',
-                'Shop'=> 'App\Models\Market\Shop',
-                'Website'=> 'App\Models\Web\Website',
-                'Customer'=> 'App\Models\CRM\Customer',
+                'Organisation'     => 'App\Models\Organisation\Organisation',
+                'Tenant'           => 'App\Models\Tenancy\Tenant',
+                'User'             => 'App\Models\Auth\User',
+                'PortfolioWebsite' => 'App\Models\Portfolio\PortfolioWebsite',
+                'Banner'           => 'App\Models\Portfolio\Banner',
+                'OrganisationUser' => 'App\Models\Auth\OrganisationUser',
+                'PublicUser'       => 'App\Models\Auth\OrganisationUser',
+                'Guest'            => 'App\Models\Auth\Guest',
+                'Shop'             => 'App\Models\Market\Shop',
+                'Website'          => 'App\Models\Web\Website',
+                'Customer'         => 'App\Models\CRM\Customer',
 
             ]
         );

@@ -1,28 +1,30 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Fri, 10 Feb 2023 12:52:34 Malaysia Time, Bali
+ * Created: Thu, 09 Feb 2023 17:13:57 Malaysia Time, Ubud, Bali
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
 namespace App\Actions\Helpers\Address;
 
-use App\Models\Accounting\Invoice;
+use App\Models\CRM\Customer;
+use App\Models\CRM\Prospect;
 use App\Models\Helpers\Address;
-use App\Models\OMS\Order;
+use App\Models\HumanResources\Workplace;
+use App\Models\Market\Shop;
 use Lorisleiva\Actions\Concerns\AsAction;
 
-class AttachHistoricAddressToModel
+class StoreAddressAttachToModel
 {
     use AsAction;
 
     public function handle(
-        Order|Invoice $model,
-        Address $address,
+        Shop|Customer|Prospect|Workplace $model,
+        array $addressData,
         array $scopeData
     ): Address {
+        $address = StoreAddress::run($addressData);
         $model->addresses()->attach($address->id, $scopeData);
-        HydrateAddress::run($address);
 
         return $address;
     }
