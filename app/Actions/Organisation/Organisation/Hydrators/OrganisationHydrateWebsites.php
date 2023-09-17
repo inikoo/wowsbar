@@ -7,14 +7,15 @@
 
 namespace App\Actions\Organisation\Organisation\Hydrators;
 
+use App\Actions\Traits\WithEnumStats;
 use App\Enums\Organisation\Web\Website\WebsiteStateEnum;
 use App\Models\Organisation\Web\Website;
-use Illuminate\Support\Arr;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class OrganisationHydrateWebsites
 {
     use AsAction;
+    use WithEnumStats;
 
     public function handle(): void
     {
@@ -23,12 +24,7 @@ class OrganisationHydrateWebsites
             'number_websites' => Website::count()
         ];
 
-        $websiteStateCount = Website::selectRaw('state, count(*) as total')
-            ->groupBy('state')
-            ->pluck('total', 'state')->all();
-        foreach (WebsiteStateEnum::cases() as $websiteState) {
-            $stats['number_websites_state_'.$websiteState->snake()] = Arr::get($websiteStateCount, $websiteState->value, 0);
-        }
+        array_merge($stats, $this->getEnumStats('websites', 'state', WebsiteStateEnum::class, Website::class));
 
 
         organisation()->stats()->update($stats);

@@ -7,33 +7,23 @@
 
 namespace App\Actions\Organisation\Organisation\Hydrators;
 
+use App\Actions\Traits\WithEnumStats;
 use App\Enums\HumanResources\Employee\EmployeeStateEnum;
 use App\Models\HumanResources\Employee;
-use Illuminate\Support\Arr;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class OrganisationHydrateEmployees
 {
     use AsAction;
+    use WithEnumStats;
 
     public function handle(): void
     {
-
         $stats = [
             'number_employees' => Employee::count()
         ];
 
-
-        $employeeStateCount = Employee::selectRaw('state, count(*) as total')
-            ->groupBy('state')
-            ->pluck('total', 'state')->all();
-
-
-        foreach (EmployeeStateEnum::cases() as $employeeState) {
-            $stats['number_employees_state_'.$employeeState->snake()] = Arr::get($employeeStateCount, $employeeState->value, 0);
-        }
-
-
+        array_merge($stats, $this->getEnumStats('employees', 'state', EmployeeStateEnum::class, Employee::class));
         organisation()->humanResourcesStats()->update($stats);
     }
 }

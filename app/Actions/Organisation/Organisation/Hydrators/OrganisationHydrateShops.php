@@ -7,36 +7,25 @@
 
 namespace App\Actions\Organisation\Organisation\Hydrators;
 
+use App\Actions\Traits\WithEnumStats;
 use App\Enums\Organisation\Market\Shop\ShopStateEnum;
 use App\Enums\Organisation\Market\Shop\ShopTypeEnum;
 use App\Models\Organisation\Market\Shop;
-use Illuminate\Support\Arr;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class OrganisationHydrateShops
 {
     use AsAction;
+    use WithEnumStats;
 
     public function handle(): void
     {
-
         $stats = [
             'number_shops' => Shop::count()
         ];
 
-        $shopStateCount = Shop::selectRaw('state, count(*) as total')
-            ->groupBy('state')
-            ->pluck('total', 'state')->all();
-        foreach (ShopStateEnum::cases() as $shopState) {
-            $stats['number_shops_state_'.$shopState->snake()] = Arr::get($shopStateCount, $shopState->value, 0);
-        }
-
-        $shopTypeCount = Shop::selectRaw('type, count(*) as total')
-            ->groupBy('type')
-            ->pluck('total', 'type')->all();
-        foreach (ShopTypeEnum::cases() as $shopType) {
-            $stats['number_shops_type_'.$shopType->snake()] = Arr::get($shopTypeCount, $shopType->value, 0);
-        }
+        array_merge($stats, $this->getEnumStats('shops', 'state', ShopStateEnum::class, Shop::class));
+        array_merge($stats, $this->getEnumStats('shops', 'type', ShopTypeEnum::class, Shop::class));
 
 
         organisation()->stats()->update($stats);
