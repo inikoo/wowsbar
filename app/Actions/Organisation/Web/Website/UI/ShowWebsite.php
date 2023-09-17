@@ -83,27 +83,37 @@ class ShowWebsite extends InertiaAction
         );
     }
 
-    public function getBreadcrumbs(array $routeParameters, string $suffix = ''): array
+    public function getBreadcrumbs(array $routeParameters, $suffix = null): array
     {
-
-
         return
             array_merge(
                 ShowDashboard::make()->getBreadcrumbs(),
                 [
                     [
-                        'type'   => 'simple',
-                        'simple' => [
-                            'route' => [
-                                'name'      => 'org.websites.show',
-                                'parameters'=> $routeParameters['website']
+                        'type'           => 'modelWithIndex',
+                        'modelWithIndex' => [
+                            'index' => [
+                                'route' => [
+                                    'name' => 'org.websites.index'
+                                ],
+                                'label' => __('websites'),
+                                'icon'  => 'fal fa-bars'
                             ],
-                            'label' => __('website'),
-                        ],
-                        'suffix' => $suffix
+                            'model' => [
+                                'route' => [
+                                    'name'       => 'org.websites.show',
+                                    'parameters' => [$routeParameters['website']]
+                                ],
+                                'label' => $routeParameters['website'],
+                                'icon'  => 'fal fa-bars'
+                            ]
 
+
+                        ],
+                        'suffix'         => $suffix,
                     ]
                 ]
             );
     }
+
 }

@@ -45,6 +45,7 @@ class ShowWebpage extends InertiaAction
         return $webpage;
     }
 
+    /** @noinspection PhpUnusedParameterInspection */
     public function inWebsite(Website $website, Webpage $webpage, ActionRequest $request): Webpage
     {
         $this->initialisation($request)->withTab(WebpageTabsEnum::values());
@@ -124,7 +125,7 @@ class ShowWebpage extends InertiaAction
             'Web/Webpage',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(
-                    $request->route()->parameters()
+                    $request->route()->originalParameters()
                 ),
                 'title'       => __('webpage'),
                 'pageHead'    => [
@@ -202,24 +203,24 @@ class ShowWebpage extends InertiaAction
         return array_merge(
             ShowWebsite::make()->getBreadcrumbs(
                 [
-                    'website'=> $routeParameters['website']->slug
+                    'website'=> $routeParameters['website']
                 ]
             ),
             $headCrumb(
-                $routeParameters['webpage'],
+                Webpage::where('slug',$routeParameters['webpage'])->first(),
                 [
                     'index' => [
                         'name'       => 'org.websites.show.webpages.index',
                         'parameters' => [
-                            'website' => $routeParameters['website']->slug
+                            'website' => $routeParameters['website']
 
                         ]
                     ],
                     'model' => [
                         'name'       => 'org.websites.show.webpages.show',
                         'parameters' => [
-                            'website' => $routeParameters['website']->slug,
-                            'webpage' => $routeParameters['webpage']->slug
+                            'website' => $routeParameters['website'],
+                            'webpage' => $routeParameters['webpage']
                         ]
                     ]
                 ],

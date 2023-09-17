@@ -180,7 +180,8 @@ class IndexWebpages extends InertiaAction
         };
 
         return match ($routeName) {
-            'org.websites.show.webpages.index'=>
+            'org.websites.show.webpages.index',
+            'org.websites.show.webpages.create'=>
             array_merge(
                 (new ShowWebsite())->getBreadcrumbs($routeParameters),
                 $headCrumb(

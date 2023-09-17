@@ -26,13 +26,14 @@ class EditWebpage extends InertiaAction
     public function authorize(ActionRequest $request): bool
     {
         $this->canEdit = $request->user()->can('websites.edit');
-        return $request->user()->hasPermissionTo("websites.edit");
 
+        return $request->user()->hasPermissionTo("websites.edit");
     }
 
     public function asController(Webpage $webpage, ActionRequest $request): Webpage
     {
         $this->initialisation($request);
+
         return $this->handle($webpage);
     }
 
@@ -40,6 +41,7 @@ class EditWebpage extends InertiaAction
     public function inWebsite(Website $website, Webpage $webpage, ActionRequest $request): Webpage
     {
         $this->initialisation($request);
+
         return $this->handle($webpage);
     }
 
@@ -48,140 +50,139 @@ class EditWebpage extends InertiaAction
      */
     public function htmlResponse(Webpage $webpage, ActionRequest $request): Response
     {
-
         return Inertia::render(
             'EditModel',
             [
-                    'title'       => __("Webpage's settings"),
-                    'breadcrumbs' => $this->getBreadcrumbs($request->route()->parameters),
+                'title'       => __("Webpage's settings"),
+                'breadcrumbs' => $this->getBreadcrumbs($request->route()->originalParameters()),
 
-                    'pageHead'    => [
-                        'title'     => __('webpage settings'),
+                'pageHead' => [
+                    'title' => __('webpage settings'),
 
 
-                        'iconRight'    =>
-                            [
-                                'icon'  => ['fal', 'sliders-h'],
-                                'title' => __("Webpage settings")
-                            ],
+                    'iconRight' =>
+                        [
+                            'icon'  => ['fal', 'sliders-h'],
+                            'title' => __("Webpage settings")
+                        ],
 
-                        'actions'   => [
-                            [
-                                'type'  => 'button',
-                                'style' => 'exit',
-                                'label' => __('Exit settings'),
-                                'route' => [
-                                    'name'       => preg_replace('/edit$/', 'show', $request->route()->getName()),
-                                    'parameters' => array_values($request->route()->originalParameters())
-                                ]
+                    'actions' => [
+                        [
+                            'type'  => 'button',
+                            'style' => 'exit',
+                            'label' => __('Exit settings'),
+                            'route' => [
+                                'name'       => preg_replace('/edit$/', 'show', $request->route()->getName()),
+                                'parameters' => array_values($request->route()->originalParameters())
+                            ]
+                        ]
+                    ],
+                ],
+                'formData' => [
+                    'blueprint' => [
+                        [
+                            'title'  => 'state',
+                            'icon'   => 'fal fa-signal-stream',
+                            'fields' => [
+                                'launch' => [
+                                    'type'     => 'action',
+                                    'label'    => __('Launch'),
+                                    'icon'     => 'fal fa-rocket-launch',
+                                    'value'    => false,
+                                    'required' => true,
+                                    'button'   => [
+                                        'method' => 'patch',
+                                        'data'   => [
+                                            'state' => 'live'
+                                        ],
+                                        'route'  => [
+                                            'name' => 'org.models.webpage.state.update'
+                                        ]
+                                    ]
+                                ],
+                            ]
+                        ],
+                        [
+                            'title'  => 'state',
+                            'icon'   => 'fal fa-signal-stream',
+                            'fields' => [
+                                'maintenance' => [
+                                    'type'     => 'action',
+                                    'label'    => __('Maintenance'),
+                                    'icon'     => 'fal fa-rocket-launch',
+                                    'value'    => false,
+                                    'required' => true,
+                                    'button'   => [
+                                        'style'  => 'negative',
+                                        'method' => 'patch',
+                                        'data'   => [
+                                            'state'  => 'live',
+                                            'status' => false
+                                        ],
+                                        'route'  => [
+                                            'name' => 'org.models.webpage.state.update'
+                                        ]
+                                    ]
+                                ],
+                            ]
+                        ],
+                        [
+                            'title'  => 'state',
+                            'icon'   => 'fal fa-signal-stream',
+                            'fields' => [
+                                'restore' => [
+                                    'type'     => 'action',
+                                    'label'    => __('Restore'),
+                                    'icon'     => 'fal fa-rocket-launch',
+                                    'value'    => false,
+                                    'required' => true,
+                                    'button'   => [
+                                        'style'  => 'primary',
+                                        'method' => 'patch',
+                                        'data'   => [
+                                            'state'  => 'live',
+                                            'status' => true
+                                        ],
+                                        'route'  => [
+                                            'name' => 'org.models.webpage.state.update'
+                                        ]
+                                    ]
+                                ],
+                            ]
+                        ],
+                        [
+                            'title'  => 'state',
+                            'icon'   => 'fal fa-signal-stream',
+                            'fields' => [
+                                'closed' => [
+                                    'type'     => 'action',
+                                    'label'    => __('Closed'),
+                                    // 'icon'     => 'fal fa-rocket-launch',
+                                    'value'    => false,
+                                    'required' => true,
+                                    'button'   => [
+                                        'style'  => 'negative',
+                                        'method' => 'patch',
+                                        'data'   => [
+                                            'state' => 'closed',
+                                        ],
+                                        'route'  => [
+                                            'name' => 'org.models.webpage.state.update'
+                                        ]
+                                    ]
+                                ],
                             ]
                         ],
                     ],
-                    'formData' => [
-                        'blueprint' => [
-                            [
-                                'title' => 'state',
-                                'icon'  => 'fal fa-signal-stream',
-                                'fields'=> [
-                                    'launch' => [
-                                        'type'     => 'action',
-                                        'label'    => __('Launch'),
-                                        'icon'     => 'fal fa-rocket-launch',
-                                        'value'    => false,
-                                        'required' => true,
-                                        'button'   => [
-                                            'method'    => 'patch',
-                                            'data'      => [
-                                                'state' => 'live'
-                                            ],
-                                            'route'     => [
-                                                'name'  => 'org.models.webpage.state.update'
-                                            ]
-                                        ]
-                                    ],
-                                ]
-                            ],
-                            [
-                                'title' => 'state',
-                                'icon'  => 'fal fa-signal-stream',
-                                'fields'=> [
-                                    'maintenance' => [
-                                        'type'     => 'action',
-                                        'label'    => __('Maintenance'),
-                                        'icon'     => 'fal fa-rocket-launch',
-                                        'value'    => false,
-                                        'required' => true,
-                                        'button'   => [
-                                            'style'     => 'negative',
-                                            'method'    => 'patch',
-                                            'data'      => [
-                                                'state' => 'live',
-                                                'status'=> false
-                                            ],
-                                            'route'     => [
-                                                'name'  => 'org.models.webpage.state.update'
-                                            ]
-                                        ]
-                                    ],
-                                ]
-                            ],
-                            [
-                                'title' => 'state',
-                                'icon'  => 'fal fa-signal-stream',
-                                'fields'=> [
-                                    'restore' => [
-                                        'type'     => 'action',
-                                        'label'    => __('Restore'),
-                                        'icon'     => 'fal fa-rocket-launch',
-                                        'value'    => false,
-                                        'required' => true,
-                                        'button'   => [
-                                            'style'     => 'primary',
-                                            'method'    => 'patch',
-                                            'data'      => [
-                                                'state' => 'live',
-                                                'status'=> true
-                                            ],
-                                            'route'     => [
-                                                'name'  => 'org.models.webpage.state.update'
-                                            ]
-                                        ]
-                                    ],
-                                ]
-                            ],
-                            [
-                                'title' => 'state',
-                                'icon'  => 'fal fa-signal-stream',
-                                'fields'=> [
-                                    'closed' => [
-                                        'type'     => 'action',
-                                        'label'    => __('Closed'),
-                                        // 'icon'     => 'fal fa-rocket-launch',
-                                        'value'    => false,
-                                        'required' => true,
-                                        'button'   => [
-                                            'style'     => 'negative',
-                                            'method'    => 'patch',
-                                            'data'      => [
-                                                'state' => 'closed',
-                                            ],
-                                            'route'     => [
-                                                'name'  => 'org.models.webpage.state.update'
-                                            ]
-                                        ]
-                                    ],
-                                ]
-                            ],
-                    ],
-                        'args'      => [
-                            'updateRoute' => [
-                                'name'       => 'org.models.webpage.update',
-                                'parameters' => $webpage->slug
-                            ],
-                        ]
-                    ],
+                    'args'      => [
+                        'updateRoute' => [
+                            'name'       => 'org.models.webpage.update',
+                            'parameters' => $webpage->slug
+                        ],
+                    ]
+                ],
 
-                ]
+            ]
         );
     }
 

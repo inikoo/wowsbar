@@ -44,7 +44,7 @@ class ShowWebpageWorkshop extends InertiaAction
             [
                 'title'       => __("Webpage's workshop"),
                 'breadcrumbs' => $this->getBreadcrumbs(
-                    $request->route()->parameters()
+                    $request->route()->originalParameters()
                 ),
                 'pageHead'    => [
 

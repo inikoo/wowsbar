@@ -67,7 +67,10 @@ class CreateWebpage extends InertiaAction
         return Inertia::render(
             'CreateModel',
             [
-                'breadcrumbs' => $this->getBreadcrumbs($request->route()->getName(), $request->route()->parameters),
+                'breadcrumbs' => $this->getBreadcrumbs(
+                    $request->route()->getName(),
+                    $request->route()->originalParameters()
+                ),
                 'title'       => __('new webpage'),
                 'pageHead'    => [
                     'title'   => __('new webpage'),
@@ -155,22 +158,35 @@ class CreateWebpage extends InertiaAction
     public function getBreadcrumbs($routeName, $routeParameters): array
     {
 
-
         return match ($routeName) {
+            'org.websites.show.webpages.show.webpages.create'=>
+            array_merge(
+                ShowWebpage::make()->getBreadcrumbs($routeParameters),
+                [
+                    [
+                        'type'          => 'creatingModel',
+                        'creatingModel' => [
+                            'label' => __("webpage"),
+                        ]
+                    ]
+                ]
+            ),
+            'org.websites.show.webpages.create'=>
+            array_merge(
+                IndexWebpages::make()->getBreadcrumbs($routeName, $routeParameters),
+                [
+                    [
+                        'type'          => 'creatingModel',
+                        'creatingModel' => [
+                            'label' => __("webpage"),
+                        ]
+                    ]
+                ]
+            ),
             default=> []
         };
 
-        return array_merge(
-            IndexWebpages::make()->getBreadcrumbs($routeName, $routeParameters),
-            [
-                [
-                    'type'          => 'creatingModel',
-                    'creatingModel' => [
-                        'label' => __("webpage"),
-                    ]
-                ]
-            ]
-        );
+
     }
 
 

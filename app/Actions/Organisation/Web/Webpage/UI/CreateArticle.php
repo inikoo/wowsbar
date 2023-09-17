@@ -37,8 +37,8 @@ class CreateArticle extends InertiaAction
             'CreateModel',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(
-                    $blog,
-                    $request->route()->parameters
+                    $blog->slug,
+                    $request->route()->originalParameters()
                 ),
                 'title'       => __('new article'),
                 'pageHead'    => [
@@ -116,9 +116,9 @@ class CreateArticle extends InertiaAction
     }
 
 
-    public function getBreadcrumbs(Webpage $webpage, $routeParameters): array
+    public function getBreadcrumbs(string $webpageSlug, $routeParameters): array
     {
-        $routeParameters['webpage'] = $webpage;
+        $routeParameters['webpage'] = $webpageSlug;
 
         return array_merge(
             ShowWebpage::make()->getBreadcrumbs(
