@@ -54,7 +54,7 @@ class StoreCustomer
             $customer->generateSlug();
             $customer->stats()->create();
 
-             CustomerHydrateUniversalSearch::dispatch($customer);
+            CustomerHydrateUniversalSearch::dispatch($customer);
 
             return $customer;
         });

@@ -85,7 +85,7 @@ class StoreTenant
 
     public function getCommandSignature(): string
     {
-        return 'tenant:create {customer} {code}';
+        return 'customer:new-tenant {customer} {code}';
     }
 
     public function asCommand(Command $command): int

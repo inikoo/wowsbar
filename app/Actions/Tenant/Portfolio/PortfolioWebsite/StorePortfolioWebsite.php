@@ -103,6 +103,6 @@ class StorePortfolioWebsite
 
         $portfolioWebsite=$this->handle($validatedData);
 
-        $command->info("Done! website $portfolioWebsite->code created  🥳");
+        $command->info("Done! website $portfolioWebsite->code created 🥳");
     }
 }

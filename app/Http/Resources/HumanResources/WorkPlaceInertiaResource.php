@@ -8,7 +8,6 @@
 
 namespace App\Http\Resources\HumanResources;
 
-use App\Models\HumanResources\Workplace;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Http\Resources\Json\JsonResource;
 use JsonSerializable;

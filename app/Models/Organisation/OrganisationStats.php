@@ -130,7 +130,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class OrganisationStats extends Model
 {
-
     protected $table = 'organisation_stats';
 
     protected $guarded = [];

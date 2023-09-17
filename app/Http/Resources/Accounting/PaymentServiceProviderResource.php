@@ -7,7 +7,6 @@
 
 namespace App\Http\Resources\Accounting;
 
-use App\Models\Accounting\PaymentServiceProvider;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class PaymentServiceProviderResource extends JsonResource

@@ -9,7 +9,6 @@ namespace App\Http\Resources\Web;
 
 use App\Enums\Organisation\Web\Webpage\WebpageTypeEnum;
 use App\Http\Resources\HasSelfCall;
-use App\Models\Web\Webpage;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class WebpageResource extends JsonResource

@@ -44,7 +44,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class OrganisationUserStats extends Model
 {
-
     protected $table = 'organisation_user_stats';
 
     protected $guarded = [];
