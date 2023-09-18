@@ -26,9 +26,9 @@ import Text from '@/Components/CMS/Workshops/WorkshopComponents/Text.vue'
 //     'textAlign': TextAlign
 // }
 
-const description = ref('hehehehe')
-const title = ref('<p>Workcation yes or <span>no</span></p>')
-const dataName = ref('Marisca')
+const description = ref('<p><strong><span style="font-size: 24px; font-family: Arial">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo expedita voluptas culpa sapiente alias molestiae. Numquam corrupti in laborum sed rerum et corporis.</span></strong></p>')
+const title = ref('<p><span style="font-size: 44px; font-family: Laila">Workcation</span></p>')
+const dataName = ref('<p><strong><span style="text: center">Jane Doe</span></strong></p>')
 const dataPosition = ref('Ceo of Workcation')
 
 </script>
@@ -47,7 +47,7 @@ const dataPosition = ref('Ceo of Workcation')
                 </div>
                 <figure class="mt-10">
                     <blockquote class="">
-                            <Text v-model="description" :key="'title'" :placeholder="'Enter your headline title'" />
+                            <Text v-model="description" :key="'title'" :placeholder="'Enter your headline title'" :class="`text-center`"/>
                     </blockquote>
                     <figcaption class="mt-10">
                         <img class="mx-auto h-10 w-10 rounded-full"
