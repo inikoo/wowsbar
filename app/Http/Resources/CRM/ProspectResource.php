@@ -17,7 +17,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property string $name
  * @property string $email
  * @property string $phone
- * @property string $website
+ * @property string $contact_website
  */
 class ProspectResource extends JsonResource
 {
@@ -28,7 +28,7 @@ class ProspectResource extends JsonResource
             'name'       => $this->name,
             'email'      => $this->email,
             'phone'      => $this->phone,
-            'website'    => $this->website,
+            'website'    => $this->contact_website,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

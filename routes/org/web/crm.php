@@ -27,6 +27,7 @@ Route::prefix('customers')->as('customers.')->group(function () {
 
 Route::prefix('prospects')->as('prospects.')->group(function () {
     Route::get('/', IndexProspects::class)->name('index');
+    Route::get('/{prospect}', IndexProspects::class)->name('show');
     //Route::get('/customers/{customer}/delete', RemoveCustomer::class)->name('customers.remove');
     //Route::get('/customers/{customer}/web-users', [IndexWebUser::class, 'inCustomerInTenant'])->name('customers.show.web-users.index');
     //Route::get('/customers/{customer}/web-users/{webUser}', [ShowWebUser::class, 'inCustomerInTenant'])->name('customers.show.web-users.show');
