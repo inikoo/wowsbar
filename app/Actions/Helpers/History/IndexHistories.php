@@ -7,7 +7,7 @@
 
 namespace App\Actions\Helpers\History;
 
-use App\Actions\Tenant\Auth\User\Traits\WithFormattedUserHistories;
+use App\Actions\Auth\User\Traits\WithFormattedUserHistories;
 use App\InertiaTable\InertiaTable;
 use Closure;
 use Illuminate\Pagination\LengthAwarePaginator;

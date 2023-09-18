@@ -106,7 +106,7 @@ class IndexClockingMachines extends InertiaAction
     }
 
 
-    public function inTenant(ActionRequest $request): LengthAwarePaginator
+    public function inOrganisation(ActionRequest $request): LengthAwarePaginator
     {
         $this->initialisation($request);
 

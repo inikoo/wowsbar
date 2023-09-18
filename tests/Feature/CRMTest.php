@@ -6,11 +6,11 @@
  */
 
 
-use App\Actions\Organisation\CRM\Customer\StoreCustomer;
+use App\Actions\Auth\User\StoreUser;
+use App\Actions\CRM\Customer\StoreCustomer;
 use App\Actions\Organisation\Market\Shop\StoreShop;
 use App\Actions\Organisation\Organisation\StoreOrganisation;
 use App\Actions\Organisation\Web\Website\StoreWebsite;
-use App\Actions\Tenant\Auth\User\StoreUser;
 use App\Enums\Organisation\Market\Shop\ShopTypeEnum;
 use App\Models\Auth\User;
 use App\Models\CRM\Customer;

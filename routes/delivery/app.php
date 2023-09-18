@@ -6,7 +6,7 @@
  */
 
 
-use App\Actions\Tenant\Portfolio\Banner\UI\DeliverBanner;
+use App\Actions\Portfolio\Banner\UI\DeliverBanner;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware([

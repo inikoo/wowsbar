@@ -5,9 +5,9 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-use App\Actions\Tenant\Auth\User\StoreUser;
-use App\Actions\Tenant\Auth\User\UpdateUser;
-use App\Actions\Tenant\Auth\User\UpdateUserStatus;
+use App\Actions\Auth\User\StoreUser;
+use App\Actions\Auth\User\UpdateUser;
+use App\Actions\Auth\User\UpdateUserStatus;
 use App\Models\Auth\User;
 
 beforeAll(function () {

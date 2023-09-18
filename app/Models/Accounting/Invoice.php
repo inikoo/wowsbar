@@ -7,7 +7,7 @@
 
 namespace App\Models\Accounting;
 
-use App\Actions\Organisation\CRM\Customer\Hydrators\CustomerHydrateInvoices;
+use App\Actions\CRM\Customer\Hydrators\CustomerHydrateInvoices;
 use App\Models\Assets\Currency;
 use App\Models\CRM\Customer;
 use App\Models\Traits\HasUniversalSearch;

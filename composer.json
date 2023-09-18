@@ -34,7 +34,8 @@
         "tightenco/ziggy": "^1.0",
         "vemcogroup/laravel-translation": "^3.0",
         "vlucas/phpdotenv": "^5.5",
-        "xendit/xendit-php": "^2.19"
+        "xendit/xendit-php": "^2.19",
+        "ext-fileinfo": "*"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.13",

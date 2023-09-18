@@ -7,9 +7,9 @@
 
 namespace App\Drivers\Audits;
 
+use App\Actions\Auth\User\LogUserRequest;
 use App\Actions\Elasticsearch\BuildElasticsearchClient;
 use App\Actions\Elasticsearch\IndexElasticsearchDocument;
-use App\Actions\Tenant\Auth\User\LogUserRequest;
 use App\Enums\Elasticsearch\ElasticsearchTypeEnum;
 use App\Models\Auth\User;
 use App\Models\Tenancy\Tenant;

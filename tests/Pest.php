@@ -6,7 +6,7 @@
  */
 
 
-use App\Actions\Organisation\CRM\Customer\StoreCustomer;
+use App\Actions\CRM\Customer\StoreCustomer;
 use App\Actions\Organisation\Market\Shop\StoreShop;
 use App\Actions\Organisation\Organisation\StoreOrganisation;
 use App\Actions\Organisation\Web\Website\StoreWebsite;

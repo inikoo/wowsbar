@@ -8,6 +8,7 @@
 namespace App\Models\Web;
 
 use App\Enums\Organisation\Web\Website\WebsiteStateEnum;
+use App\Models\Market\Shop;
 use App\Models\Traits\HasHistory;
 use App\Models\Traits\HasUniversalSearch;
 use Illuminate\Database\Eloquent\Builder;

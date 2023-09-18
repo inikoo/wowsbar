@@ -7,10 +7,10 @@
 
 /** @noinspection PhpParamsInspection */
 
-use App\Actions\Tenant\Portfolio\Banner\DeleteBanner;
-use App\Actions\Tenant\Portfolio\Banner\StoreBanner;
-use App\Actions\Tenant\Portfolio\Banner\UpdateBanner;
-use App\Actions\Tenant\Portfolio\PortfolioWebsite\StorePortfolioWebsite;
+use App\Actions\Portfolio\Banner\DeleteBanner;
+use App\Actions\Portfolio\Banner\StoreBanner;
+use App\Actions\Portfolio\Banner\UpdateBanner;
+use App\Actions\Portfolio\PortfolioWebsite\StorePortfolioWebsite;
 use App\Models\Portfolio\Banner;
 use App\Models\Portfolio\PortfolioWebsite;
 

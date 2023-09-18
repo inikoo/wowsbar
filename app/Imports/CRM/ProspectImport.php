@@ -2,8 +2,8 @@
 
 namespace App\Imports\CRM;
 
-use App\Actions\Organisation\CRM\Prospect\ImportProspects;
-use App\Actions\Organisation\CRM\Prospect\UpdateProspectUploads;
+use App\Actions\CRM\Prospect\ImportProspects;
+use App\Actions\CRM\Prospect\UpdateProspectUploads;
 use App\Models\Media\ExcelUpload;
 use App\Models\Media\ExcelUploadRecord;
 use Illuminate\Support\Collection;

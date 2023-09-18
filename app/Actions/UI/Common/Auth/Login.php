@@ -7,12 +7,12 @@
 
 namespace App\Actions\UI\Common\Auth;
 
+use App\Actions\Auth\User\Hydrators\UserHydrateFailLogin;
+use App\Actions\Auth\User\Hydrators\UserHydrateLogin;
 use App\Actions\Organisation\Auth\OrganisationUser\Hydrators\OrganisationUserHydrateFailLogin;
 use App\Actions\Organisation\Auth\OrganisationUser\Hydrators\OrganisationUserHydrateLogin;
 use App\Actions\Organisation\CRM\PublicUser\Hydrators\PublicUserHydrateFailLogin;
 use App\Actions\Organisation\CRM\PublicUser\Hydrators\PublicUserHydrateLogin;
-use App\Actions\Tenant\Auth\User\Hydrators\UserHydrateFailLogin;
-use App\Actions\Tenant\Auth\User\Hydrators\UserHydrateLogin;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;

@@ -39,7 +39,7 @@ class ShowClocking extends InertiaAction
     }
 
 
-    public function inTenant(Clocking $clocking, ActionRequest $request): Clocking
+    public function inOrganisation(Clocking $clocking, ActionRequest $request): Clocking
     {
         $this->initialisation($request)->withTab(ClockingTabsEnum::values());
         return $this->handle($clocking);

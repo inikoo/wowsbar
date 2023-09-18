@@ -31,7 +31,7 @@ class ShowClockingMachine extends InertiaAction
         return $request->user()->hasPermissionTo("hr.view");
     }
 
-    public function inTenant(ClockingMachine $clockingMachine, ActionRequest $request): ClockingMachine
+    public function inOrganisation(ClockingMachine $clockingMachine, ActionRequest $request): ClockingMachine
     {
         $this->initialisation($request)->withTab(ClockingMachineTabsEnum::values());
 

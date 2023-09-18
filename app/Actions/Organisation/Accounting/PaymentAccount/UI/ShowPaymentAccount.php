@@ -11,8 +11,8 @@ use App\Actions\Helpers\History\IndexHistories;
 use App\Actions\InertiaAction;
 use App\Actions\Organisation\Accounting\Payment\UI\IndexPayments;
 use App\Actions\Organisation\Accounting\PaymentServiceProvider\UI\ShowPaymentServiceProvider;
-use App\Actions\UI\Accounting\AccountingDashboard;
-use App\Enums\UI\PaymentAccountTabsEnum;
+use App\Actions\UI\Organisation\Accounting\AccountingDashboard;
+use App\Enums\UI\Organisation\PaymentAccountTabsEnum;
 use App\Http\Resources\Accounting\PaymentAccountResource;
 use App\Http\Resources\Accounting\PaymentResource;
 use App\Http\Resources\History\HistoryResource;
@@ -40,7 +40,7 @@ class ShowPaymentAccount extends InertiaAction
         return $request->user()->hasPermissionTo("accounting.view");
     }
 
-    public function inTenant(PaymentAccount $paymentAccount, ActionRequest $request): PaymentAccount
+    public function asController(PaymentAccount $paymentAccount, ActionRequest $request): PaymentAccount
     {
         $this->initialisation($request)->withTab(PaymentAccountTabsEnum::values());
         return $this->handle($paymentAccount);

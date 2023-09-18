@@ -6,13 +6,13 @@
  */
 
 
+use App\Actions\Auth\User\ExportUsers;
 use App\Actions\Helpers\History\ExportHistories;
 use App\Actions\Media\ExportStockImages;
-use App\Actions\Tenant\Auth\User\ExportUsers;
-use App\Actions\Tenant\Portfolio\Banner\ExportBanners;
-use App\Actions\Tenant\Portfolio\Gallery\ExportUploadedImages;
-use App\Actions\Tenant\Portfolio\PortfolioWebsite\ExportWebsites;
-use App\Actions\Tenant\Portfolio\Snapshot\ExportSnapshots;
+use App\Actions\Portfolio\Banner\ExportBanners;
+use App\Actions\Portfolio\Gallery\ExportUploadedImages;
+use App\Actions\Portfolio\PortfolioWebsite\ExportWebsites;
+use App\Actions\Portfolio\Snapshot\ExportSnapshots;
 
 Route::get('/users', ExportUsers::class)->name('users.index');
 Route::get('/banners', ExportBanners::class)->name('banners.index');

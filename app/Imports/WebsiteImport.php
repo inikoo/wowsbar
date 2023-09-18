@@ -2,8 +2,8 @@
 
 namespace App\Imports;
 
-use App\Actions\Tenant\Portfolio\PortfolioWebsite\ImportPortfolioWebsites;
-use App\Actions\Tenant\Portfolio\Uploads\UpdatePortfolioWebsiteUploads;
+use App\Actions\Portfolio\PortfolioWebsite\ImportPortfolioWebsites;
+use App\Actions\Portfolio\Uploads\UpdatePortfolioWebsiteUploads;
 use App\Models\Media\ExcelUpload;
 use App\Models\Media\ExcelUploadRecord;
 use Illuminate\Support\Collection;

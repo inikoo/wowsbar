@@ -6,22 +6,22 @@
  */
 
 
+use App\Actions\Auth\User\StoreUser;
+use App\Actions\Auth\User\UpdateUser;
 use App\Actions\Media\ImageGenerator;
+use App\Actions\Portfolio\Banner\DeleteBanner;
+use App\Actions\Portfolio\Banner\FetchFirebaseSnapshot;
+use App\Actions\Portfolio\Banner\PublishBanner;
+use App\Actions\Portfolio\Banner\StoreBanner;
+use App\Actions\Portfolio\Banner\UpdateBanner;
+use App\Actions\Portfolio\Banner\UpdateBannerState;
+use App\Actions\Portfolio\Gallery\UpdateUploadedImage;
+use App\Actions\Portfolio\PortfolioWebsite\DeletePortfolioWebsite;
+use App\Actions\Portfolio\PortfolioWebsite\StorePortfolioWebsite;
+use App\Actions\Portfolio\PortfolioWebsite\UpdatePortfolioWebsite;
+use App\Actions\Portfolio\PortfolioWebsite\UploadPortfolioWebsite;
 use App\Actions\Tenancy\Tenant\UpdateSystemSettings;
-use App\Actions\Tenant\Auth\User\StoreUser;
-use App\Actions\Tenant\Auth\User\UpdateUser;
-use App\Actions\Tenant\Portfolio\Banner\DeleteBanner;
-use App\Actions\Tenant\Portfolio\Banner\PublishBanner;
-use App\Actions\Tenant\Portfolio\Banner\StoreBanner;
-use App\Actions\Tenant\Portfolio\Banner\UpdateBanner;
-use App\Actions\Tenant\Portfolio\Banner\UpdateBannerState;
-use App\Actions\Tenant\Portfolio\Banner\FetchFirebaseSnapshot;
-use App\Actions\Tenant\Portfolio\Gallery\UpdateUploadedImage;
-use App\Actions\Tenant\Portfolio\PortfolioWebsite\DeletePortfolioWebsite;
-use App\Actions\Tenant\Portfolio\PortfolioWebsite\StorePortfolioWebsite;
-use App\Actions\Tenant\Portfolio\PortfolioWebsite\UpdatePortfolioWebsite;
-use App\Actions\Tenant\Portfolio\PortfolioWebsite\UploadPortfolioWebsite;
-use App\Actions\UI\Tenant\Profile\UpdateProfile;
+use App\Actions\UI\Authenticated\Profile\UpdateProfile;
 
 Route::post('/portfolio-website', StorePortfolioWebsite::class)->name('portfolio-website.store');
 Route::patch('/portfolio-website/{portfolioWebsite}', UpdatePortfolioWebsite::class)->name('portfolio-website.update');
@@ -32,7 +32,7 @@ Route::post('/portfolio-website/{portfolioWebsite}/banners/gallery', [StoreBanne
 
 Route::post('/tenant/banners/gallery', [StoreBanner::class, 'inTenantFromGallery'])->name('tenant.banner.gallery.store');
 
-Route::post('/banner', [StoreBanner::class, 'inTenant'])->name('banner.store');
+Route::post('/banner', [StoreBanner::class, 'inCustomer'])->name('banner.store');
 Route::patch('/banner/{banner}', UpdateBanner::class)->name('banner.update');
 Route::patch('/banner/{banner}/publish', PublishBanner::class)->name('banner.publish');
 Route::patch('/banner/{banner}/fetch-firebase', FetchFirebaseSnapshot::class)->name('banner.fetch-firebase');

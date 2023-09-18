@@ -7,8 +7,8 @@
 
 namespace App\Actions\UI\Public\Auth;
 
-use App\Actions\Organisation\CRM\Customer\StoreCustomer;
-use App\Actions\Tenant\Auth\User\StoreUser;
+use App\Actions\Auth\User\StoreUser;
+use App\Actions\CRM\Customer\StoreCustomer;
 use App\Models\Auth\User;
 use App\Models\Market\Shop;
 use App\Providers\RouteServiceProvider;

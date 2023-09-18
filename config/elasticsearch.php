@@ -16,7 +16,13 @@ return [
         'mappings' => [
             'universal_search' => [
                 'properties' => [
-                    'tenant_id'   => [
+                    'shop_id'     => [
+                        'type' => 'keyword',
+                    ],
+                    'website_id'  => [
+                        'type' => 'keyword',
+                    ],
+                    'customer_id' => [
                         'type' => 'keyword',
                     ],
                     'section'     => [

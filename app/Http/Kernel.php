@@ -43,8 +43,6 @@ use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
-use Spatie\Multitenancy\Http\Middleware\EnsureValidTenantSession;
-use Spatie\Multitenancy\Http\Middleware\NeedsTenant;
 
 class Kernel extends HttpKernel
 {
@@ -62,13 +60,11 @@ class Kernel extends HttpKernel
     protected $middlewareGroups = [
 
         'web'        => [
-            NeedsTenant::class,
             EncryptCookies::class,
             AddQueuedCookiesToResponse::class,
             StartSession::class,
             ShareErrorsFromSession::class,
             VerifyCsrfToken::class,
-            EnsureValidTenantSession::class,
             SubstituteBindings::class,
             HandleTenantInertiaRequests::class,
             AddLinkHeadersForPreloadedAssets::class,

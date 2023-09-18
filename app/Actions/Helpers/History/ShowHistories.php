@@ -7,7 +7,7 @@
 
 namespace App\Actions\Helpers\History;
 
-use App\Actions\Tenant\Auth\User\Traits\WithFormattedUserHistories;
+use App\Actions\Auth\User\Traits\WithFormattedUserHistories;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;

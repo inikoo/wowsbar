@@ -8,7 +8,7 @@
 namespace App\Actions\UI\Organisation\Profile;
 
 use App\Actions\Assets\Language\UI\GetLanguagesOptions;
-use App\Actions\UI\Tenant\Dashboard\ShowDashboard;
+use App\Actions\UI\Authenticated\Dashboard\ShowDashboard;
 use App\Actions\UI\WithInertia;
 use App\Http\Resources\Auth\UserResource;
 use App\Models\Auth\OrganisationUser;

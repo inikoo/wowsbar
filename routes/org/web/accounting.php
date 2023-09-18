@@ -53,15 +53,15 @@ Route::get('/accounts/export', ExportPaymentAccounts::class)->name('payment-acco
 Route::get('/accounts/{paymentAccount}/payments/create', [CreatePayment::class, 'inPaymentAccount'])->name('payment-accounts.show.payments.create');
 //Route::get('/payments/create', CreatePayment::class)->name('payments.create');
 Route::get('/accounts', IndexPaymentAccounts::class)->name('payment-accounts.index');
-Route::get('/accounts/{paymentAccount}', [ShowPaymentAccount::class, 'inTenant'])->name('payment-accounts.show');
+Route::get('/accounts/{paymentAccount}', ShowPaymentAccount::class)->name('payment-accounts.show');
 Route::get('/accounts/{paymentAccount}/payments', [IndexPayments::class, 'inPaymentAccount'])->name('payment-accounts.show.payments.index');
 Route::get('/accounts/{paymentAccount}/payments/{payment}', [ShowPayment::class, 'inPaymentAccount'])->name('payment-accounts.show.payments.show');
 Route::get('/accounts/{paymentAccount}/payments/{payment}/edit', [EditPayment::class, 'inPaymentAccount'])->name('payment-accounts.show.payments.edit');
 
 Route::get('/payments/export', ExportPayments::class)->name('payments.export');
 Route::get('/payments', IndexPayments::class)->name('payments.index');
-Route::get('/payments/{payment}', [ShowPayment::class, 'inTenant'])->name('payments.show');
-Route::get('/payments/{payment}/edit', [EditPayment::class, 'inTenant'])->name('payments.edit');
+Route::get('/payments/{payment}', [ShowPayment::class, 'inOrganisation'])->name('payments.show');
+Route::get('/payments/{payment}/edit', [EditPayment::class, 'inOrganisation'])->name('payments.edit');
 Route::get('/invoices/{invoice}/export', ExportInvoice::class)->name('invoices.download');
 Route::get('/invoices/export', ExportInvoices::class)->name('invoices.export');
 Route::get('/invoices', IndexInvoices::class)->name('invoices.index');

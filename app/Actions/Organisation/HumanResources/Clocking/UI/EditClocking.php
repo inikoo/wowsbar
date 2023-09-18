@@ -29,7 +29,7 @@ class EditClocking extends InertiaAction
         return $request->user()->hasPermissionTo("hr.view");
     }
 
-    public function inTenant(Clocking $clocking, ActionRequest $request): Clocking
+    public function inOrganisation(Clocking $clocking, ActionRequest $request): Clocking
     {
         $this->initialisation($request);
 

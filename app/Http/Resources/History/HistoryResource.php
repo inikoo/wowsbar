@@ -21,7 +21,6 @@ class HistoryResource extends JsonResource
             'datetime'       => $this['created_at'],
             'url'            => $this['url'],
             'type'           => $this['type'],
-            'tenant'         => customer()->slug,
             'old_values'     => $this['old_values'],
             'new_values'     => $this['new_values'],
             'event'          => $this['event'],
