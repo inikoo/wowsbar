@@ -26,17 +26,17 @@ const screenView = ref("")
 </script>
 
 <template>
-    <div v-if="data.components.filter((item: any) => item.ulid != null).length > 0">
+    <div v-if="data.components.filter((item: any) => item.ulid != null).length > 0" class="w-full">
         <div class="flex w-full">
             <div class="flex justify-end pr-2 w w-full">
                 <ScreenView @screenView="(val) => (screenView = val)" />
             </div>
         </div>
 
-        <div class="flex justify-center pr-0.5">
+        <div class="flex justify-center pr-0.5 w-full">
             <Slider :data="data" :jumpToIndex="jumpToIndex" :view="screenView" />
         </div>
-        <SlidesWorkshop class="clear-both mt-2 p-2.5" :data="data" @jumpToIndex="(val) => jumpToIndex = val"
+        <SlidesWorkshop class="clear-both mt-2 p-2.5 w-full" :data="data" @jumpToIndex="(val) => jumpToIndex = val"
             :imagesUploadRoute="imagesUploadRoute" :user="user" :screenView="screenView" />
     </div>
 
