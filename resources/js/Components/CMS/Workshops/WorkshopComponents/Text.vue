@@ -162,7 +162,7 @@ const selectedTextAlign = ref('left')
     <div class="group ">
         <div class="relative rounded focus-within:ring-2 focus-within:ring-gray-300">
             <!-- Group: editor tools -->
-            <div class="flex bg-gray-100 absolute bottom-full w-fit justify-between text-slate-800 select-none space-x-1 border border-gray-100" tabindex="0">
+            <div class="hidden group-focus-within:flex bg-gray-100 absolute bottom-full w-fit justify-between text-slate-800 select-none space-x-1 border border-gray-100" tabindex="0">
                 <div class="flex justify-start items-center divide-x-2 divide-gray-200">
                 
                     <!-- Font Family -->
@@ -246,8 +246,8 @@ const selectedTextAlign = ref('left')
                             <input type="color" class="absolute opacity-0 w-full h-full z-20 cursor-pointer"
                                 @input="editor.chain().focus().toggleHighlight({ color: $event.target.value }).run()"
                                 :value="editor.getAttributes('highlight').color">
-                            <span class="h-3/4 w-7 px-1 rounded-sm text-gray-300" :style="[`background: ${editor.getAttributes('highlight').color ?? '#4b5563'}`]">
-                                <FontAwesomeIcon icon='far fa-fill-drip' class='shadow' aria-hidden='true' />
+                            <span class="shadow ring-1 ring-gray-400 h-3/4 w-7 px-1 rounded-sm text-gray-300" :style="[`background: ${editor.getAttributes('highlight').color ?? ''}`]">
+                                <FontAwesomeIcon icon='far fa-fill-drip' class='text-gray-500' aria-hidden='true' />
                             </span>
                         </div>
 
@@ -256,9 +256,9 @@ const selectedTextAlign = ref('left')
                             <input id="input-color-text" type="color"
                                 @input="editor.chain().focus().setColor($event.target.value).run()"
                                 :value="editor.getAttributes('textStyle').color" class="absolute opacity-0 w-full h-full z-20 cursor-pointer" />
-                            <span class="h-3/4 w-8 px-1 rounded-sm bg-gray-300 text-gray-700 flex justify-center items-center">
+                            <span class="shadow ring-1 ring-gray-400 h-3/4 w-8 px-1 rounded-sm text-gray-700 flex justify-center items-center">
                                 <FontAwesomeIcon icon='far fa-font' class="cursor-pointer hover:border z-10 hover:border-gray-300"
-                                :style="[`color: ${editor.getAttributes('textStyle').color ?? '#1f2937'}`]"
+                                :style="[`color: ${editor.getAttributes('textStyle').color ?? '#6b7280'}`]"
                                 aria-hidden='true' />
                             </span>
                         </div>
@@ -269,16 +269,16 @@ const selectedTextAlign = ref('left')
                 <!-- Clear text -->
                 <div class="w-min rounded-sm grid justify-end items-center place-self-center border border-transparent active:border-gray-700 box-content cursor-pointer px-1 py-0.5"
                     @click="editor.chain().focus().clearContent(true).run()">
-                    <span class="text-base text-gray-600">Clear</span>
+                    <span class="text-base text-red-500">Clear</span>
                     <!-- <FontAwesomeIcon aria-hidden="true" icon="far fa-trash-alt" /> -->
                 </div>
             </div>
 
             <!-- The main content -->
-            <div :class="['min-w-[200px]', `text-${selectedTextAlign}`, props.class]">
+            <div :class="['min-w-[200px]', `text-${selectedTextAlign} whitespace-nowrap`, props.class]">
                 <EditorContent :editor="editor" />
             </div>
-            {{ editor.getAttributes('font-Family').color }}
+            <!-- {{ editor.getAttributes('font-Family').color }} -->
         </div>
 
         <div v-if="props.showStats" class="grid grid-flow-col text-xs italic text-gray-500 mt-2 space-x-12 justify-start">
@@ -292,6 +292,7 @@ const selectedTextAlign = ref('left')
             </p>
         </div>
 <!-- {{ editor.getHTML() }} -->
+<!-- {{ editor.getAttributes('highlight') }} -->
     </div>
 </template>
 
@@ -301,12 +302,10 @@ const selectedTextAlign = ref('left')
 }
 
 .ProseMirror p {
-    width: 90%;
-    /* background: #e1e1e1; */
-    /* max-width: 100%; */
+    width: 100%;
     word-wrap: break-word;
     outline-color: #6b7280 !important;
-    display: inline-block;
+    display: block;
 }
 
 .ProseMirror ul,
