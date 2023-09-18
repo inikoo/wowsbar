@@ -1,31 +1,10 @@
 
-<script setup>
+<script setup lang="ts">
 import { CheckIcon } from '@heroicons/vue/20/solid'
 
-const tiers = [
-  {
-    name: 'Hobby',
-    id: 'tier-hobby',
-    href: '#',
-    priceMonthly: '$49',
-    description: 'Modi dolorem expedita deleniti. Corporis iste qui inventore pariatur adipisci vitae.',
-    features: ['5 products', 'Up to 1,000 subscribers', 'Basic analytics', '48-hour support response time'],
-  },
-  {
-    name: 'Team',
-    id: 'tier-team',
-    href: '#',
-    priceMonthly: '$79',
-    description: 'Explicabo quo fugit vel facere ullam corrupti non dolores. Expedita eius sit sequi.',
-    features: [
-      'Unlimited products',
-      'Unlimited subscribers',
-      'Advanced analytics',
-      '1-hour, dedicated support response time',
-      'Marketing automations',
-    ],
-  },
-]
+const props = defineProps<{
+    data: array,
+}>()
 </script>
 
 <template>
@@ -52,7 +31,7 @@ const tiers = [
         <div class="-mt-80">
           <div class="mx-auto max-w-7xl px-6 lg:px-8">
             <div class="mx-auto grid max-w-md grid-cols-1 gap-8 lg:max-w-4xl lg:grid-cols-2">
-              <div v-for="tier in tiers" :key="tier.id" class="flex flex-col justify-between rounded-3xl bg-white p-8 shadow-xl ring-1 ring-gray-900/10 sm:p-10">
+              <div v-for="tier in data" :key="tier.id" class="flex flex-col justify-between rounded-3xl bg-white p-8 shadow-xl ring-1 ring-gray-900/10 sm:p-10">
                 <div>
                   <h3 :id="tier.id" class="text-base font-semibold leading-7 text-indigo-600">{{ tier.name }}</h3>
                   <div class="mt-4 flex items-baseline gap-x-2">

@@ -80,5 +80,5 @@ const dummyData = {
         <BannerWorkshopComponent v-if="selectedComponent.component === 'banner'" :data="dummyData.data" :imagesUploadRoute="dummyData.route" :user="dummyData.user" />
         <TestimonialsWorkshopComponent v-if="selectedComponent.component === 'text'" />
     </div>
-    <!-- <Pricing :theme="3"></Pricing> -->
+    <!-- <Hero :theme="1"></Hero> -->
 </template>
