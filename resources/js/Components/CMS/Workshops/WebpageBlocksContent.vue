@@ -71,7 +71,7 @@ const dummyData = {
 </script>
 
 <template>
-    <div class="flex justify-center items-center">
+    <div class="flex justify-center items-center w-full">
         <BannerWorkshopComponent v-if="selectedComponent.component === 'banner'" :data="dummyData.data" :imagesUploadRoute="dummyData.route" :user="dummyData.user" />
         <TestimonialsWorkshopComponent v-if="selectedComponent.component === 'text'" />
     </div>
