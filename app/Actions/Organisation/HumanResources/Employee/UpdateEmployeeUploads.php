@@ -5,21 +5,21 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Tenant\Portfolio\Uploads;
+namespace App\Actions\Organisation\HumanResources\Employee;
 
 use App\Models\Media\ExcelUpload;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
 
-class UpdatePortfolioWebsiteUploads
+class UpdateEmployeeUploads
 {
     use AsAction;
     use WithAttributes;
 
-    public function handle(ExcelUpload $websiteUpload, array $data): ExcelUpload
+    public function handle(ExcelUpload $excelUpload, array $data): ExcelUpload
     {
-        $websiteUpload->update($data);
+        $excelUpload->update($data);
 
-        return $websiteUpload;
+        return $excelUpload;
     }
 }

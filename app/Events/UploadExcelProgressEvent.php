@@ -9,7 +9,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class UploadWebsiteProgressEvent implements ShouldBroadcastNow
+class UploadExcelProgressEvent implements ShouldBroadcastNow
 {
     use Dispatchable;
     use InteractsWithSockets;
@@ -18,11 +18,13 @@ class UploadWebsiteProgressEvent implements ShouldBroadcastNow
     /**
      * Create a new event instance.
      */
-    public Tenant $tenant;
+    public Tenant|null $tenant;
     public array $data;
-    public function __construct($tenant, $data)
+    public string $event;
+    public function __construct($tenant, $data, $event = 'WebsiteUpload')
     {
         $this->data   = $data;
+        $this->event  = $event;
         $this->tenant = $tenant;
     }
 
@@ -34,12 +36,12 @@ class UploadWebsiteProgressEvent implements ShouldBroadcastNow
     public function broadcastOn(): array
     {
         return [
-            new Channel('uploads.' . $this->tenant->slug),
+            new Channel('uploads.' . $this->tenant->slug ?? 'org'),
         ];
     }
 
     public function broadcastAs(): string
     {
-        return 'WebsiteUpload';
+        return $this->event;
     }
 }

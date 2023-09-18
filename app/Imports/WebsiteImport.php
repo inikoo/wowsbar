@@ -4,8 +4,8 @@ namespace App\Imports;
 
 use App\Actions\Tenant\Portfolio\PortfolioWebsite\ImportPortfolioWebsites;
 use App\Actions\Tenant\Portfolio\Uploads\UpdatePortfolioWebsiteUploads;
-use App\Models\Portfolio\WebsiteUpload;
-use App\Models\Portfolio\WebsiteUploadRecord;
+use App\Models\Media\ExcelUpload;
+use App\Models\Media\ExcelUploadRecord;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\SkipsFailures;
 use Maatwebsite\Excel\Concerns\SkipsOnFailure;
@@ -17,8 +17,8 @@ class WebsiteImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wit
 {
     use SkipsFailures;
 
-    public WebsiteUpload $websiteUpload;
-    public function __construct(WebsiteUpload $websiteUpload)
+    public ExcelUpload $websiteUpload;
+    public function __construct(ExcelUpload $websiteUpload)
     {
         $this->websiteUpload = $websiteUpload;
     }
@@ -34,9 +34,9 @@ class WebsiteImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wit
 
         foreach ($collection as $website) {
             try {
-                $website = WebsiteUploadRecord::create([
+                $website = ExcelUploadRecord::create([
                     'tenant_id'         => app('currentTenant')->id,
-                    'website_upload_id' => $this->websiteUpload->id,
+                    'excel_upload_id'   => $this->websiteUpload->id,
                     'data'              => json_encode([
                         'code'   => $website['code'],
                         'name'   => $website['name'],
