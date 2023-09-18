@@ -48,7 +48,7 @@ class IndexProspects extends InertiaAction
                 $query->where('prospects.name', '~*', "\y$value\y")
                     ->orWhere('prospects.email', '=', $value)
                     ->orWhere('prospects.phone', '=', $value)
-                    ->orWhere('prospects.website', '=', $value);
+                    ->orWhere('prospects.contact_website', '=', $value);
             });
         });
 
@@ -64,9 +64,9 @@ class IndexProspects extends InertiaAction
                 'prospects.slug',
                 'prospects.email',
                 'prospects.phone',
-                'prospects.website'
+                'prospects.contact_website'
             ])
-            ->allowedSorts(['name', 'email', 'phone', 'website'])
+            ->allowedSorts(['name', 'email', 'phone', 'contact_website'])
             ->allowedFilters([$globalSearch])
             ->withPaginator($prefix)
             ->withQueryString();
