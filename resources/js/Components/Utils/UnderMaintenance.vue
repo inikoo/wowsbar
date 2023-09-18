@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import Button from '@/Components/Elements/Buttons/Button.vue'
 import { router } from '@inertiajs/vue3'
+import { trans } from 'laravel-vue-i18n'
+
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faRocketLaunch, faDoNotEnter } from '@/../private/pro-solid-svg-icons'
@@ -35,15 +37,15 @@ const handleLaunch = () => {
 
             <div class="mt-4 text-3xl font-bold tracking-tight text-gray-700 sm:text-5xl">
                 <h3 v-if="data.state == 'in-process'">
-                    Page is under construction.
+                    {{ trans("Page is under construction") }}
                 </h3>
                 <h3 v-else-if="data.state === 'live'">
                     <div v-if="!data.status">
-                        Page is under maintenance.
+                        {{ trans("Page is under maintenance") }}
                     </div>
                 </h3>
                 <h3 v-else-if="data.state == 'closed'">
-                    Page closed.
+                    {{ trans("Page closed") }}
                 </h3>
             </div>
 
@@ -51,18 +53,18 @@ const handleLaunch = () => {
                 <Button v-if="data.state === 'in-process'" :style="`secondary`" @click="router.visit(route('org.website.workshop'))">
                     <div class="flex items-center gap-x-1">
                         <FontAwesomeIcon icon='fal fa-drafting-compass' class='' aria-hidden='true' />
-                        Workshop
+                        {{ trans("Workshop") }}
                     </div>
                 </Button>
                 <Button v-if="data.state === 'in-process'" :style="`primary`" @click="handleLaunch">
                     <div class="flex items-center gap-x-1">
-                        <span>Launch</span>
+                        <span>{{ trans("Launch") }}</span>
                         <FontAwesomeIcon icon='fas fa-rocket-launch' class='' aria-hidden='true' />
                     </div>
                 </Button>
                 <Button v-if="data.state === 'live' && !data.status" :style="`primary`" @click="handleLaunch">
                     <div class="flex items-center gap-x-1">
-                        <span>Restore</span>
+                        <span>{{ trans("Restore") }}</span>
                         <FontAwesomeIcon icon='fas fa-rocket-launch' class='' aria-hidden='true' />
                     </div>
                 </Button>
