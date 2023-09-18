@@ -161,12 +161,25 @@ class IndexEmployees extends InertiaAction
                     'title'  => __('employees'),
                     'actions'=> [
                         $this->canEdit ? [
-                            'type'  => 'button',
-                            'style' => 'create',
-                            'label' => __('employee'),
-                            'route' => [
-                                'name'       => 'org.hr.employees.create',
-                                'parameters' => array_values($this->originalParameters)
+                            'type'    => 'buttonGroup',
+                            'buttons' => [
+                                [
+                                    'style' => 'secondary',
+                                    'icon'  => ['fal', 'fa-upload'],
+                                    'label' => 'upload',
+                                    'route' => [
+                                        'name'       => 'org.models.employees.upload'
+                                    ],
+                                ],
+                                [
+                                    'type'  => 'button',
+                                    'style' => 'create',
+                                    'label' => __('employee'),
+                                    'route' => [
+                                        'name'       => 'org.hr.employees.create',
+                                        'parameters' => array_values($this->originalParameters)
+                                    ]
+                                ]
                             ]
                         ] : false
                     ]

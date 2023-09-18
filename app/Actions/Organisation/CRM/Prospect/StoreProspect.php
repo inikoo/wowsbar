@@ -8,6 +8,7 @@
 namespace App\Actions\Organisation\CRM\Prospect;
 
 use App\Actions\Organisation\CRM\Prospect\Hydrators\ProspectHydrateUniversalSearch;
+use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateProspects;
 use App\Models\CRM\Prospect;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -26,6 +27,7 @@ class StoreProspect
         $prospect = Prospect::create($modelData);
 
         ProspectHydrateUniversalSearch::dispatch($prospect);
+        OrganisationHydrateProspects::dispatch();
 
         return $prospect;
     }

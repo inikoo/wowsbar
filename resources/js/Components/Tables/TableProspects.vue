@@ -23,7 +23,7 @@ function prospectRoute(prospect: Prospect) {
                 [prospect.slug, prospect.slug]);
         default:
             return route(
-                'prospects.show',
+                'org.crm.prospects.show',
                 [prospect.slug]);
     }
 }
