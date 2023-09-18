@@ -40,7 +40,6 @@ class EmployeeImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wi
                         'contact_name'    => $employee['contact_name'],
                         'date_of_birth'   => $employee['date_of_birth'],
                         'job_title' => $employee['job_title'],
-                        'state' => $employee['state'],
                         'email' => $employee['email'],
                     ])
                 ]);

@@ -7,6 +7,7 @@
 
 namespace App\Actions\Organisation\HumanResources\Employee;
 
+use App\Exports\HumanResources\EmployeeTemplateExport;
 use App\Exports\PortfolioWebsite\WebsiteTemplateExport;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
@@ -20,7 +21,7 @@ class DownloadEmployeesTemplate
 
     public function handle(): BinaryFileResponse
     {
-        return Excel::download(new WebsiteTemplateExport(), 'template.xlsx');
+        return Excel::download(new EmployeeTemplateExport(), 'template.xlsx');
     }
 
     public function asController(): BinaryFileResponse

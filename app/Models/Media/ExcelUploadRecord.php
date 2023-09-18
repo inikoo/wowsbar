@@ -9,8 +9,8 @@ use Illuminate\Database\Eloquent\Model;
  * App\Models\ExcelUploadRecord
  *
  * @property int $id
- * @property int $tenant_id
- * @property int $website_upload_id
+ * @property int|null $tenant_id
+ * @property int $excel_upload_id
  * @property mixed $data
  * @property string $status
  * @property \Illuminate\Support\Carbon|null $created_at

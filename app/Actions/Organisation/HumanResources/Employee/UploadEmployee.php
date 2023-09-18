@@ -8,6 +8,7 @@
 namespace App\Actions\Organisation\HumanResources\Employee;
 
 use App\Imports\HumanResources\EmployeeImport;
+use App\Models\HumanResources\Employee;
 use Excel;
 use finfo;
 use Illuminate\Console\Command;
@@ -36,6 +37,7 @@ class UploadEmployee
         Storage::disk('local')->put($path, $file);
 
         $employeeUpload = StoreEmployeeUploads::run([
+            'type' => class_basename(Employee::class),
             'original_filename' => $file->getClientOriginalName(),
             'filename'          => $filename
         ]);
@@ -57,13 +59,14 @@ class UploadEmployee
         $filename = $command->argument('filename');
         $path = 'org/employees';
         $finfo = new finfo(FILEINFO_MIME_TYPE);
+        $fullPath = storage_path('app/' . $path . '/' . $filename);
 
         if (Storage::disk('local')->exists('org/employees/' . $filename)) {
             $file = new UploadedFile(
-                $path,
+                $fullPath,
                 $filename,
-                $finfo->file($path),
-                filesize($path),
+                $finfo->file($fullPath),
+                filesize($fullPath),
                 0,
                 false
             );
