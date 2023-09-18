@@ -7,7 +7,7 @@
 
 namespace App\Actions\Organisation\CRM\Prospect;
 
-use App\Actions\CRM\Prospect\Hydrators\ProspectHydrateUniversalSearch;
+use App\Actions\Organisation\CRM\Prospect\Hydrators\ProspectHydrateUniversalSearch;
 use App\Models\CRM\Prospect;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
