@@ -12,17 +12,20 @@ import FooterThemeThree from './FooterThemeThreeWorkshop.vue'
 
 const props = defineProps<{
     selectedColums: Function,
-    columSelected: Object
-    theme: number,
+    columSelected: {
+		type: Object,
+		required: false,
+	}
+    theme: String,
     tool: Object
     data: Object
 }>()
 
 
 const component = {
-    1: FooterThemeOne,
-    2: FooterThemeTwo,
-    3: FooterThemeThree,
+   "1": FooterThemeOne,
+   "2": FooterThemeTwo,
+   "3": FooterThemeThree,
 }
 
 </script>

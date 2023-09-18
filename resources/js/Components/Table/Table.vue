@@ -687,31 +687,35 @@ watch(name, () => {
                                     <HeaderCell v-for="column in queryBuilderProps.columns"
                                         :key="`table-${name}-header-${column.key}`" :cell="header(column.key)"
                                         :type="columnsType[column.key]" :column="column" :resource="compResourceData">
-                                        <template #label :data="dataLabel">
-                                            <slot name="labelHeader">
-                                                <div v-if="typeof column.label === 'object'">
-                                                    <FontAwesomeIcon v-if="column.label.type === 'icon'" :title="capitalize(column.label.tooltip)"
-                                                        aria-hidden="true" :icon="column.label.data" size="lg" />
-                                                    <FontAwesomeIcon v-else :title="'icon'" aria-hidden="true" :icon="column.label" size="lg" />
-                                                </div>
-                                                <span v-else class="capitalize">{{ column.label ? trans(column.label) : ''}}</span>
+                                        <template #pagehead="{ data: data }">
+                                            <slot :name="`heading(${column.key})`" :item="column" >
+                                                <span class="flex flex-row items-center" :class="{ 'justify-center': column.key == 'avatar', 'justify-end': data.isCellNumber }">
+                                                    <slot :name="`headLabel(${column.key})`">
+                                                        <div v-if="typeof column.label === 'object'">
+                                                            <FontAwesomeIcon v-if="column.label.type === 'icon'" :title="capitalize(column.label.tooltip)"
+                                                                aria-hidden="true" :icon="column.label.data" size="lg" />
+                                                            <FontAwesomeIcon v-else :title="'icon'" aria-hidden="true" :icon="column.label" size="lg" />
+                                                        </div>
+                                                        <span v-else class="capitalize">{{ column.label ? trans(column.label) : '' }}</span>
+                                                    </slot>
+                                        
+                                                    <svg v-if="column.sortable" aria-hidden="true" class="w-3 h-3 ml-2" :class="{
+                                                        'text-gray-400': !column.sorted,
+                                                        'text-green-500': column.sorted,
+                                                    }" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" :sorted="column.sorted">
+                                                            <path v-if="!column.sorted" fill="currentColor"
+                                                                d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z" />
+
+                                                            <path v-if="column.sorted === 'asc'" fill="currentColor"
+                                                                d="M279 224H41c-21.4 0-32.1-25.9-17-41L143 64c9.4-9.4 24.6-9.4 33.9 0l119 119c15.2 15.1 4.5 41-16.9 41z" />
+
+                                                            <path v-if="column.sorted === 'desc'" fill="currentColor"
+                                                                d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41z" />
+                                                        </svg>
+                                                </span>
                                             </slot>
                                         </template>
-                                        <template #sort>
-                                            <svg v-if="column.sortable" aria-hidden="true" class="w-3 h-3 ml-2" :class="{
-                                                    'text-gray-400': !column.sorted,
-                                                    'text-green-500': column.sorted,
-                                                }" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" :sorted="column.sorted">
-                                                    <path v-if="!column.sorted" fill="currentColor"
-                                                        d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z" />
-
-                                                    <path v-if="column.sorted === 'asc'" fill="currentColor"
-                                                        d="M279 224H41c-21.4 0-32.1-25.9-17-41L143 64c9.4-9.4 24.6-9.4 33.9 0l119 119c15.2 15.1 4.5 41-16.9 41z" />
-
-                                                    <path v-if="column.sorted === 'desc'" fill="currentColor"
-                                                        d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41z" />
-                                                </svg>
-                                        </template>
+                                 
                                     </HeaderCell>
                                 </tr>
                             </thead>

@@ -9,8 +9,8 @@ namespace App\Actions\Tenant\Portfolio\PortfolioWebsite;
 
 use App\Actions\Traits\WithExportData;
 use App\Enums\Helpers\Import\UploadRecordStatusEnum;
-use App\Events\UploadWebsiteProgressEvent;
-use App\Models\Portfolio\WebsiteUploadRecord;
+use App\Events\UploadExcelProgressEvent;
+use App\Models\Media\ExcelUploadRecord;
 use App\Models\Tenancy\Tenant;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
@@ -24,12 +24,12 @@ class ImportPortfolioWebsites
     /**
      * @throws \Throwable
      */
-    public function handle(Tenant $tenant, WebsiteUploadRecord $websiteUploadRecord, $totalUploads, $totalImported): void
+    public function handle(Tenant|null $tenant, ExcelUploadRecord $websiteUploadRecord, $totalUploads, $totalImported): void
     {
         try {
             StorePortfolioWebsite::run(json_decode($websiteUploadRecord->data, true));
 
-            event(new UploadWebsiteProgressEvent($tenant, [
+            event(new UploadExcelProgressEvent($tenant, [
                 'total_uploads'  => $totalUploads,
                 'total_complete' => $totalImported
             ]));

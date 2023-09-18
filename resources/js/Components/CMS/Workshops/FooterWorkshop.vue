@@ -22,7 +22,7 @@ import ToolInTop from '@/Components/CMS/Footer/ToolsInTop.vue'
 library.add(faHandPointer, faHandRock, faPlus, faAlignJustify, faList, faInfoCircle)
 
 const props = defineProps<{
-	data: Array,
+	data: Object,
 }>()
 
 

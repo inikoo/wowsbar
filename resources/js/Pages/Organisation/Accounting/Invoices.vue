@@ -24,4 +24,3 @@ const props = defineProps<{
     <PageHeading :data="pageHead"></PageHeading>
     <TableInvoices :data="data" />
 </template>
-

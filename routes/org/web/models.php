@@ -14,6 +14,7 @@ use App\Actions\Organisation\Accounting\PaymentServiceProvider\UpdatePaymentServ
 use App\Actions\Organisation\HumanResources\Employee\DeleteEmployee;
 use App\Actions\Organisation\HumanResources\Employee\StoreEmployee;
 use App\Actions\Organisation\HumanResources\Employee\UpdateEmployee;
+use App\Actions\Organisation\HumanResources\Employee\UploadEmployee;
 use App\Actions\Organisation\Market\Shop\StoreShop;
 use App\Actions\Organisation\Organisation\UpdateOrganisation;
 use App\Actions\Organisation\Web\Webpage\StoreArticle;
@@ -36,6 +37,8 @@ Route::patch('/website/{website:id}/state', UpdateWebsiteState::class)->name('we
 Route::post('/webpage/{webpage:id}', StoreWebpage::class)->name('webpage.store');
 Route::post('/article/{webpage:id}', StoreArticle::class)->name('article.store');
 
+
+Route::post('/employees/imports/upload', UploadEmployee::class)->name('employees.upload');
 
 Route::patch('/provider/{paymentServiceProvider}', UpdatePaymentServiceProvider::class)->name('payment-service-provider.update');
 Route::delete('/provider/{paymentServiceProvider}', DeletePaymentServiceProvider::class)->name('payment-service-provider.delete');
