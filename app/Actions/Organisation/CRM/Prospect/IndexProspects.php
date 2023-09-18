@@ -117,6 +117,17 @@ class IndexProspects extends InertiaAction
                     'iconRight' => [
                         'icon'  => ['fal', 'fa-user-plus'],
                         'title' => __('prospect')
+                    ],
+                    'actions'=> [
+                        !$this->canEdit ? [
+                            'type'  => 'button',
+                            'style' => 'create',
+                            'label' => __('prospect'),
+                            'route' => [
+                                'name'       => 'org.crm.prospects.create',
+                                'parameters' => array_values($this->originalParameters)
+                            ]
+                        ] : false
                     ]
                 ],
                 'data'        => ProspectResource::collection($prospects),
