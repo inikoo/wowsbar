@@ -3,6 +3,11 @@ import BannerWorkshopComponent from '@/Components/Workshop/BannerWorkshopCompone
 import TestimonialsWorkshopComponent from '@/Components/CMS/BlocksContent/Testimonials/TestimonialsWorkshopComponent.vue'
 import Stats from '@/Components/CMS/BlocksContent/Stats/index.vue';
 import BlogSection from '@/Components/CMS/BlocksContent/BlogSections/index.vue'
+import Hero from '@/Components/CMS/BlocksContent/Hero/index.vue'
+import CardContent from '@/Components/CMS/BlocksContent/CardContent/index.vue'
+import CTABlocks from '@/Components/CMS/BlocksContent/CTABlocks/index.vue'
+import COntentDescription from '@/Components/CMS/BlocksContent/ContentDescription/index.vue'
+import Pricing from '@/Components/CMS/BlocksContent/Pricing/index.vue'
 
 const props = defineProps<{
     selectedComponent: any
@@ -75,5 +80,5 @@ const dummyData = {
         <BannerWorkshopComponent v-if="selectedComponent.component === 'banner'" :data="dummyData.data" :imagesUploadRoute="dummyData.route" :user="dummyData.user" />
         <TestimonialsWorkshopComponent v-if="selectedComponent.component === 'text'" />
     </div>
-    <!-- <Stats :theme="3"></Stats> -->
+    <!-- <Pricing :theme="3"></Pricing> -->
 </template>
