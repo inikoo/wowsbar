@@ -7,7 +7,10 @@ library.add(faHandPointer, faHandRock, faPlus)
 const props = defineProps({
   tool: Object,
   theme: Object,
-  columSelected: Number,
+  columSelected: {
+		type: Number,
+		required: false,
+	},
 });
 
 

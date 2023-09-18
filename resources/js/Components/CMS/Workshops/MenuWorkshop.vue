@@ -20,7 +20,7 @@ import ToolInTop from '@/Components/CMS/Menu/ToolsInTop.vue'
 library.add(faHandPointer, faHandRock, faPlus, faLink,faObjectGroup)
 
 const props = defineProps<{
-	data: Array,
+	data: Object,
 }>()
 
 

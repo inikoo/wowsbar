@@ -19,10 +19,9 @@ import draggable from "vuedraggable"
 import { getDbRef, getDataFirebase, setDataFirebase } from '@/Composables/firebase'
 library.add(faHandPointer, faText, faSearch, faImage, faTrash, faBars)
 const props = defineProps<{
-	data: Array,
+	data: Object,
 }>()
 
-console.log('props',props)
 
 const Dummy = {
     tools: [

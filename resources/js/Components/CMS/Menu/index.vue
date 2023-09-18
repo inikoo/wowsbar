@@ -10,18 +10,18 @@ import Menu2 from './NavbarTwoWorkshop/MenuTwoWorkshop.vue'
 
 
 const props = defineProps<{
-    theme: number,
+    theme: String,
     navigation : Object
     tool:Object
-    selectedNav:Object
+    selectedNav?:Object
     changeNavActive : Function
   
 }>()
 
 
 const component = {
-    1: Menu1,
-    2: Menu2,
+    "1": Menu1,
+    "2": Menu2,
 }
 
 </script>

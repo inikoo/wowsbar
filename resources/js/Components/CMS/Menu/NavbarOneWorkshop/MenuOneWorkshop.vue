@@ -22,7 +22,7 @@ const props = defineProps({
 	},
 	selectedNav: {
 		type: Object,
-		required: true,
+		required: false,
 	},
 	changeNavActive: {
 		type: Function,
@@ -202,7 +202,7 @@ const mobileMenuOpen = ref(false)
 			<!-- end topNavbar -->
 				<!-- Secondary navigation -->
 				<div class="bg-white">
-					<draggable :list="navigation.categories" group="topMenu" key="id" :disabled="tool.name !== 'grab'"
+					<draggable :list="navigation.categories" group="topMenu" itemKey="id" :disabled="tool.name !== 'grab'"
 						class="flex h-full justify-center space-x-8 align-middle">
 						<template v-slot:item="{ element: category, index }">
 							<div :class="[get(selectedNav, 'id') == category.id ? 'outline outline-gray-400' : '',  tool.name !== 'grab' ? 'cursor-pointer' : 'cursor-grab']">
