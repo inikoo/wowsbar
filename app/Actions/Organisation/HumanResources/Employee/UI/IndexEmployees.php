@@ -168,8 +168,7 @@ class IndexEmployees extends InertiaAction
                                     'icon'  => ['fal', 'fa-upload'],
                                     'label' => 'upload',
                                     'route' => [
-                                        'name'       => 'org.hr.employees.create',
-                                        // 'parameters' => array_values($request->route()->originalParameters())
+                                        'name'       => 'org.models.employees.upload'
                                     ],
                                 ],
                                 [
