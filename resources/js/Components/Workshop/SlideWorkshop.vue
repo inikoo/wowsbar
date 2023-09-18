@@ -62,8 +62,7 @@ const setCurrent=(key)=>{
 </script>
 
 <template>
-        {{ blueprint[current].fields }}
-    <div class="divide-y divide-gray-200 lg:grid grid-flow-col lg:grid-cols-12 lg:divide-y-0 lg:divide-x min-h-full">
+    <div class="divide-y divide-gray-200 lg:grid grid-flow-col lg:grid-cols-12 lg:divide-y-0 lg:divide-x min-h-full w-full">
 
         <!-- Left Tab: Navigation -->
         <aside class="py-0 lg:col-span-3 lg:h-full">

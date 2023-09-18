@@ -4,6 +4,8 @@ import SelectFont from '@/Components/Workshop/Fields/SelectFont.vue'
 import Multiselect from "@vueform/multiselect"
 import { set, lowerCase, snakeCase } from 'lodash'
 
+import { FontSize } from '@/Composables/useTiptapFontSize'
+
 import StarterKit from "@tiptap/starter-kit"
 import Placeholder from "@tiptap/extension-placeholder"
 import Underline from "@tiptap/extension-underline"
@@ -16,8 +18,9 @@ import FontFamily from '@tiptap/extension-font-family'
 
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { library } from "@fortawesome/fontawesome-svg-core"
+import { faAlignLeft, faAlignCenter, faAlignRight } from '@/../private/pro-light-svg-icons'
 import { faBold, faItalic, faUnderline, faTrashAlt, faListUl, faListOl, faUndo, faFont, faRedo, faFillDrip } from "@/../private/pro-regular-svg-icons"
-library.add(faBold, faItalic, faUnderline, faTrashAlt, faListUl, faListOl, faUndo, faFont, faRedo, faFillDrip)
+library.add(faBold, faItalic, faUnderline, faTrashAlt, faListUl, faListOl, faUndo, faFont, faRedo, faFillDrip, faAlignLeft, faAlignCenter, faAlignRight)
 
 const props = defineProps(["modelValue", "showStats", "placeholder", "class"])
 const emit = defineEmits(["update:modelValue"])
@@ -34,6 +37,59 @@ const fontOptions = [
     "Quicksand",
     "Times New Roman",
     "Yatra One"
+]
+
+const textAlignOptions = [
+    {
+        "label": "Align left",
+        "value": "left",
+        "icon": "fal fa-align-left"
+    },
+    {
+        "label": "Align center",
+        "value": "center",
+        "icon": "fal fa-align-center"
+    },
+    {
+        "label": "Align right",
+        "value": "right",
+        "icon": "fal fa-align-right"
+    }
+]
+
+const fontSizeOptions = [
+    {
+        "name": '12',
+        "value": '12px'
+    },
+    {
+        "name": '16',
+        "value": '16px'
+    },
+    {
+        "name": '20',
+        "value": '20px'
+    },
+    {
+        "name": '24',
+        "value": '24px'
+    },
+    {
+        "name": '28',
+        "value": '28px'
+    },
+    {
+        "name": '36',
+        "value": '36px'
+    },
+    {
+        "name": '44',
+        "value": '44px'
+    },
+    {
+        "name": '52',
+        "value": '52px'
+    },
 ]
 
 // Handle v-model
@@ -66,6 +122,7 @@ editor.value = new Editor({
         }),
         Underline,
         TextStyle,
+        FontSize,
         Color.configure({
             types: ['textStyle'],
         }),
@@ -85,14 +142,19 @@ onBeforeUnmount(() => {
     editor.value.destroy()
 })
 
-// Declare font faily
-const fontFamily = ref('Comfortaa')
-watch(fontFamily, () => {
-    editor.value.chain().focus().setFontFamily(fontFamily.value).run()
+// Declare font family
+const selectedFontFamily = ref('Comfortaa')
+watch(selectedFontFamily, () => {
+    editor.value.chain().focus().setFontFamily(selectedFontFamily.value).run()
 })
 
-const fontSizeOptions = ['12px', '16px', '20px', '24px']
+// Declare & watch Font Size
 const selectedFontSize = ref('16px')
+watch(selectedFontSize, () => {
+    editor.value.chain().focus().setFontSize(selectedFontSize.value).run()
+})
+
+const selectedTextAlign = ref('left')
 
 </script>
 
@@ -102,11 +164,13 @@ const selectedFontSize = ref('16px')
             <!-- Group: editor tools -->
             <div class="hidden group-focus-within:flex bg-gray-100 absolute bottom-full w-fit justify-between text-slate-800 select-none space-x-1 border border-gray-100" tabindex="0">
                 <div class="flex justify-start items-center divide-x-2 divide-gray-200">
+                
                     <!-- Font Family -->
-                    <div class="isolate relative rounded-sm w-44 flex pr-4">
-                        <Multiselect v-model="fontFamily" :options="fontOptions" :placeholder="'Select your option'"
+                    <div class="relative rounded-sm min-w-max flex px-2 gap-x-2">
+                        <Multiselect v-model="selectedFontFamily" :options="fontOptions" :placeholder="'Select your option'"
                             :canClear="false" :closeOnSelect="true" :canDeselect="false" :hideSelected="false"
-                            :searchable="true">
+                            :searchable="true"
+                        >
                             <template v-slot:singlelabel="{ value }">
                                 <div class="multiselect-single-label bg-red-50 z-10 text-gray-600 whitespace-nowrap">
                                     <span :style="`font-family : ${snakeCase(lowerCase(value.value))}`">
@@ -120,29 +184,58 @@ const selectedFontSize = ref('16px')
                                 </span>
                             </template>
                         </Multiselect>
+                        
+                        <!-- Font Size -->
+                        <!-- <div>
+                            <select v-model="editor.getAttributes('textStyle').fontSize" @change="editor.chain().focus().setFontSize(selectedFontSize).run()">
+                                <option v-for="fontSizeOption in fontSizeOptions"
+                                    :key="fontSizeOption" :value="fontSizeOption">{{ fontSizeOption }}</option>
+                            </select>
+                        </div> -->
+                        <Multiselect v-model="selectedFontSize" :options="fontSizeOptions" :placeholder="'Select font size'"
+                            :canClear="false" :closeOnSelect="true" :canDeselect="false" :hideSelected="false"
+                            :searchable="false">
+                            <template v-slot:singlelabel="{ value }">
+                                <div class="multiselect-single-label bg-red-50 z-10 text-gray-600 whitespace-nowrap w-44">
+                                    {{ value.value }}
+                                </div>
+                            </template>
+                            <template #option="{ option }">
+                                    {{ option.name }}
+                            </template>
+                        </Multiselect>
                     </div>
 
                     <!-- Bold, Italic, Underline -->
                     <div class="flex px-2 h-full items-center text-gray-500 gap-x-2">
                         <!-- Bold -->
-                        <div :class="{ 'bg-orange-400 text-white': editor.isActive('bold') }"
-                            class="rounded-sm grid justify-center items-center border border-transparent active:border-orange-700 box-content cursor-pointer px-1 py-0.5"
+                        <div :class="{ 'bg-gray-500 text-white': editor.isActive('bold') }"
+                            class="rounded-sm grid justify-center items-center border border-transparent active:border-gray-700 box-content cursor-pointer px-1 py-0.5"
                             @click="editor.chain().focus().toggleBold().run()">
                             <FontAwesomeIcon aria-hidden="true" icon="far fa-bold" />
                         </div>
 
                         <!-- Italic -->
-                        <div :class="{ 'bg-orange-400 text-white': editor.isActive('italic') }"
-                            class="rounded-sm grid justify-center items-center border border-transparent active:border-orange-700 box-content cursor-pointer px-1 py-0.5"
+                        <div :class="{ 'bg-gray-500 text-white': editor.isActive('italic') }"
+                            class="rounded-sm grid justify-center items-center border border-transparent active:border-gray-700 box-content cursor-pointer px-1 py-0.5"
                             @click="editor.chain().focus().toggleItalic().run()">
                             <FontAwesomeIcon aria-hidden="true" icon="far fa-italic" />
                         </div>
 
                         <!-- Underline -->
-                        <div :class="{ 'bg-orange-400 text-white': editor.isActive('underline') }"
-                            class="rounded-sm grid justify-center items-end border border-transparent active:border-orange-700 box-content cursor-pointer px-1 py-0.5"
+                        <div :class="{ 'bg-gray-500 text-white': editor.isActive('underline') }"
+                            class="rounded-sm grid justify-center items-end border border-transparent active:border-gray-700 box-content cursor-pointer px-1 py-0.5"
                             @click="editor.chain().focus().toggleUnderline().run()">
                             <FontAwesomeIcon aria-hidden="true" icon="far fa-underline" />
+                        </div>
+                    </div>
+
+                    <!-- Text Align -->
+                    <div class="flex h-full items-center px-4 gap-x-2">
+                        <div v-for="option in textAlignOptions" @click="selectedTextAlign = option.value" class="flex items-center justify-center bg-gray-50 rounded-sm aspect-square h-6 ring-1 ring-gray-300 cursor-pointer"
+                            :class="[ selectedTextAlign == option.value ? 'bg-gray-500 text-gray-100' : 'hover:bg-gray-200 text-gray-600']"
+                        >
+                            <FontAwesomeIcon :icon='option.icon' class='text-xs' aria-hidden='true' />
                         </div>
                     </div>
                     
@@ -153,8 +246,8 @@ const selectedFontSize = ref('16px')
                             <input type="color" class="absolute opacity-0 w-full h-full z-20 cursor-pointer"
                                 @input="editor.chain().focus().toggleHighlight({ color: $event.target.value }).run()"
                                 :value="editor.getAttributes('highlight').color">
-                            <span class="h-3/4 w-7 px-1 rounded-sm text-gray-300" :style="[`background: ${editor.getAttributes('highlight').color ?? '#4b5563'}`]">
-                                <FontAwesomeIcon icon='far fa-fill-drip' class='shadow' aria-hidden='true' />
+                            <span class="shadow ring-1 ring-gray-400 h-3/4 w-7 px-1 rounded-sm text-gray-300" :style="[`background: ${editor.getAttributes('highlight').color ?? ''}`]">
+                                <FontAwesomeIcon icon='far fa-fill-drip' class='text-gray-500' aria-hidden='true' />
                             </span>
                         </div>
 
@@ -163,34 +256,29 @@ const selectedFontSize = ref('16px')
                             <input id="input-color-text" type="color"
                                 @input="editor.chain().focus().setColor($event.target.value).run()"
                                 :value="editor.getAttributes('textStyle').color" class="absolute opacity-0 w-full h-full z-20 cursor-pointer" />
-                            <span class="h-3/4 w-8 px-1 rounded-sm bg-gray-300 text-gray-700 flex justify-center items-center">
+                            <span class="shadow ring-1 ring-gray-400 h-3/4 w-8 px-1 rounded-sm text-gray-700 flex justify-center items-center">
                                 <FontAwesomeIcon icon='far fa-font' class="cursor-pointer hover:border z-10 hover:border-gray-300"
-                                :style="[`color: ${editor.getAttributes('textStyle').color ?? '#1f2937'}`]"
+                                :style="[`color: ${editor.getAttributes('textStyle').color ?? '#6b7280'}`]"
                                 aria-hidden='true' />
                             </span>
                         </div>
                     </div>
 
-                    <!-- Font Size -->
-                    <div>
-                        <select v-model="selectedFontSize" @change="editor.commands.setMark('textStyle', { class: selectedFontSize })">
-                            <option v-for="fontSizeOption in fontSizeOptions"
-                                :key="fontSizeOption" :value="fontSizeOption">{{ fontSizeOption }}</option>
-                        </select>
-                    </div>
-
                 </div>
-                <div class="w-min rounded-sm grid justify-end items-center place-self-end border border-transparent active:border-orange-700 box-content cursor-pointer px-1 py-0.5"
+                
+                <!-- Clear text -->
+                <div class="w-min rounded-sm grid justify-end items-center place-self-center border border-transparent active:border-gray-700 box-content cursor-pointer px-1 py-0.5"
                     @click="editor.chain().focus().clearContent(true).run()">
-                    <span class="text-base">Clear</span>
+                    <span class="text-base text-red-500">Clear</span>
                     <!-- <FontAwesomeIcon aria-hidden="true" icon="far fa-trash-alt" /> -->
                 </div>
             </div>
 
             <!-- The main content -->
-            <div :class="['min-w-[200px]', props.class]">
+            <div :class="['min-w-[200px]', `text-${selectedTextAlign} whitespace-nowrap`, props.class]">
                 <EditorContent :editor="editor" />
             </div>
+            <!-- {{ editor.getAttributes('font-Family').color }} -->
         </div>
 
         <div v-if="props.showStats" class="grid grid-flow-col text-xs italic text-gray-500 mt-2 space-x-12 justify-start">
@@ -203,21 +291,21 @@ const selectedFontSize = ref('16px')
                 Words: {{ editor.storage.characterCount.words() }}
             </p>
         </div>
+<!-- {{ editor.getHTML() }} -->
+<!-- {{ editor.getAttributes('highlight') }} -->
     </div>
 </template>
 
-<style scoped>
+<style lang="scss">
 .ProseMirror {
     padding: 7px 15px;
 }
 
 .ProseMirror p {
-    width: 90%;
-    /* background: #e1e1e1; */
-    /* max-width: 100%; */
+    width: 100%;
     word-wrap: break-word;
     outline-color: #6b7280 !important;
-    display: inline-block;
+    display: block;
 }
 
 .ProseMirror ul,
@@ -242,19 +330,30 @@ ol {
     pointer-events: none;
 }
 
-mark {
+/* mark {
     background-color: #ffe066;
-    padding: 15px 00.125em;
-    border-radius: 0.25em;
-    box-decoration-break: clone;
+    padding: 20px;
+} */
+
+
+
+/* Multiselect styling */
+.multiselect {
+    width: 150px !important;
 }
 
-.multiselect-search {
-    display: flex;
-    justify-content: start;
-    background-color: #ffe066;
-    z-index: 50;
+.multiselect-option.is-selected {
+    @apply bg-gray-500 text-white
 }
+
+.multiselect-option.is-selected.is-pointed {
+    @apply bg-gray-500 text-white
+}
+
+.multiselect-option.is-selected.is-disabled {
+    @apply bg-gray-300 text-white
+}
+
 </style>
 
 

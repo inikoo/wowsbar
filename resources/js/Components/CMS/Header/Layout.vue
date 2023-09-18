@@ -11,10 +11,10 @@ import { faHandPointer, faHandRock, faPlus, faText, faSearch, faImage } from '@/
 import Input from "../Fields/Input.vue"
 library.add(faHandPointer, faText, faSearch, faImage)
 const props = defineProps<{
-	data: Array
+	data: Object
 	layout: Object
 	setActive: Function
-	layerActive: Object
+	layerActive?: Object
 }>()
 
 

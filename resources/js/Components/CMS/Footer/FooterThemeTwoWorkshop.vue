@@ -23,7 +23,10 @@ import { get } from 'lodash'
 
 const props = defineProps<{
 	selectedColums: Function
-	columSelected: Object
+	columSelected:{
+		type: Object,
+		required: false,
+	}
 	tool: Object
 	data: Object
 }>()

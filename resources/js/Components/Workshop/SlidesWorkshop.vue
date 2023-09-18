@@ -522,7 +522,7 @@ const uploadImageRespone = (res) => {
 
 <template>
     <div class="flex flex-grow gap-2.5">
-        <div class="p-2.5 border rounded h-fit shadow w-[25%]"
+        <div class="p-2.5 border rounded h-fit shadow w-1/4"
             v-if="data.components" @dragover="dragover" @dragleave="dragleave" @drop="drop">
             <!-- Common Properties -->
             <div :class="[
@@ -628,13 +628,13 @@ const uploadImageRespone = (res) => {
         </div>
 
         <!-- The Editor: Common -->
-        <div class="border border-gray-300 w-[75%]" v-if="commonEditActive">
+        <div class="border border-gray-300 w-3/4" v-if="commonEditActive">
             <SliderCommonWorkshop :currentComponentBeenEdited="props.data" :blueprint="CommonBlueprint"
                 ref="_SlideWorkshop" />
         </div>
 
         <!-- The Editor: Slide -->
-        <div class="border border-gray-300 w-[75%]" v-if="currentComponentBeenEdited != null">
+        <div class="border border-gray-300 w-3/4" v-if="currentComponentBeenEdited != null">
             <SlideWorkshop :common="data.common" :currentComponentBeenEdited="currentComponentBeenEdited"
                 :blueprint="ComponentsBlueprint" ref="_SlideWorkshop" :remove="removeComponent" />
         </div>

@@ -4,8 +4,8 @@ import ColorPicker from "@/Components/Workshop/Fields/ColorPicker.vue";
 import FontSize from '@/Components/CMS/Fields/Fontsize.vue'
 import FontDecorator from '@/Components/CMS/Fields/FontDecorator.vue'
 const props = defineProps<{
-    data: Array
-    layerActive: Object
+    data: Object
+    layerActive?: Object
 }>()
 </script>
 

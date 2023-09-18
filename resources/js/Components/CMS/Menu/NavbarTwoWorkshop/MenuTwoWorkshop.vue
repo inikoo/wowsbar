@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from "vue";
 
 import draggable from "vuedraggable";
@@ -25,7 +25,7 @@ const props = defineProps({
     },
     selectedNav: {
         type: Object,
-        required: true,
+        required: false,
     },
     changeNavActive: {
         type: Function,
@@ -123,6 +123,7 @@ const mobileMenuOpen = ref(false);
                                         options="id"
                                         :disabled="tool.name !== 'grab'"
                                         class="flex justify-center space-x-8 h-fit"
+                                        itemKey="id"
                                     >
                                         <!-- Navigation -->
                                         <template v-slot:item="{element: category,index}">
