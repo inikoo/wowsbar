@@ -27,7 +27,7 @@ import Text from '@/Components/CMS/Workshops/WorkshopComponents/Text.vue'
 // }
 
 const description = ref('hehehehe')
-const title = ref('Workcation')
+const title = ref('<p>Workcation yes or <span>no</span></p>')
 const dataName = ref('Marisca')
 const dataPosition = ref('Ceo of Workcation')
 
@@ -47,7 +47,7 @@ const dataPosition = ref('Ceo of Workcation')
                 </div>
                 <figure class="mt-10">
                     <blockquote class="">
-                            <Text v-model="description" :class="'text-center'" :key="'title'" :placeholder="'Enter your headline title'" />
+                            <Text v-model="description" :key="'title'" :placeholder="'Enter your headline title'" />
                     </blockquote>
                     <figcaption class="mt-10">
                         <img class="mx-auto h-10 w-10 rounded-full"
