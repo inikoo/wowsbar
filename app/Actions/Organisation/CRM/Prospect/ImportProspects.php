@@ -5,17 +5,17 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Tenant\Portfolio\PortfolioWebsite;
+namespace App\Actions\Organisation\CRM\Prospect;
 
+use App\Actions\Organisation\HumanResources\Employee\StoreEmployee;
 use App\Actions\Traits\WithExportData;
 use App\Enums\Helpers\Import\UploadRecordStatusEnum;
 use App\Events\UploadExcelProgressEvent;
 use App\Models\Media\ExcelUploadRecord;
-use App\Models\Tenancy\Tenant;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
 
-class ImportPortfolioWebsites
+class ImportProspects
 {
     use AsAction;
     use WithAttributes;
@@ -24,18 +24,18 @@ class ImportPortfolioWebsites
     /**
      * @throws \Throwable
      */
-    public function handle(Tenant|null $tenant, ExcelUploadRecord $websiteUploadRecord, $totalUploads, $totalImported): void
+    public function handle(ExcelUploadRecord $prospectUploadRecord, $totalUploads, $totalImported): void
     {
         try {
-            StorePortfolioWebsite::run(json_decode($websiteUploadRecord->data, true));
+            StoreProspect::run(json_decode($prospectUploadRecord->data, true));
 
-            event(new UploadExcelProgressEvent($tenant, [
+            event(new UploadExcelProgressEvent(null, [
                 'total_uploads'  => $totalUploads,
                 'total_complete' => $totalImported
-            ]));
-            $websiteUploadRecord->update(['status' => UploadRecordStatusEnum::COMPLETE]);
+            ], 'ProspectUpload'));
+            $prospectUploadRecord->update(['status' => UploadRecordStatusEnum::COMPLETE]);
         } catch (\Exception $e) {
-            $websiteUploadRecord->update(['status' => UploadRecordStatusEnum::FAILED]);
+            $prospectUploadRecord->update(['status' => UploadRecordStatusEnum::FAILED]);
         }
     }
 }

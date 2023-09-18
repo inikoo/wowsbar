@@ -7,7 +7,6 @@
 
 namespace App\Exports\PortfolioWebsite;
 
-use App\Models\Portfolio\Banner;
 use App\Models\Portfolio\PortfolioWebsite;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Database\Query\Builder;
@@ -18,7 +17,7 @@ use Maatwebsite\Excel\Concerns\WithMapping;
 
 class PortfolioWebsiteExport implements FromQuery, WithMapping, ShouldAutoSize, WithHeadings
 {
-    public function query(): Relation|\Illuminate\Database\Eloquent\Builder|Banner|Builder
+    public function query(): Relation|\Illuminate\Database\Eloquent\Builder|PortfolioWebsite|Builder
     {
         return PortfolioWebsite::query();
     }

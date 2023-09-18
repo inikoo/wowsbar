@@ -10,13 +10,13 @@ namespace App\Models\Tenancy;
 use App\Models\Assets\Currency;
 use App\Models\Auth\User;
 use App\Models\CRM\Customer;
+use App\Models\Media\ExcelUpload;
 use App\Models\Media\Media;
+use App\Models\Media\ExcelUploadRecord;
 use App\Models\Portfolio\Banner;
 use App\Models\Portfolio\PortfolioWebsite;
 use App\Models\Portfolio\Snapshot;
 use App\Models\Portfolio\SnapshotStats;
-use App\Models\Portfolio\WebsiteUpload;
-use App\Models\Portfolio\WebsiteUploadRecord;
 use App\Models\Traits\HasHistory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -70,7 +70,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read \App\Models\Tenancy\TenantStats|null $stats
  * @property-read \Illuminate\Database\Eloquent\Collection<int, User> $users
  * @property-read int|null $users_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, WebsiteUploadRecord> $websiteUploadRecords
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, ExcelUploadRecord> $websiteUploadRecords
  * @property-read int|null $website_upload_records_count
  * @method static \Spatie\Multitenancy\TenantCollection<int, static> all($columns = ['*'])
  * @method static \Database\Factories\Tenancy\TenantFactory factory($count = null, $state = [])
@@ -177,12 +177,12 @@ class Tenant extends SpatieTenant implements HasMedia, Auditable
 
     public function websiteUploadRecords(): HasMany
     {
-        return $this->hasMany(WebsiteUploadRecord::class);
+        return $this->hasMany(ExcelUploadRecord::class);
     }
 
     public function portfolioWebsiteUploads(): HasMany
     {
-        return $this->hasMany(WebsiteUpload::class);
+        return $this->hasMany(ExcelUpload::class);
     }
 
     public function customers(): HasMany

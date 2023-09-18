@@ -61,3 +61,7 @@ pg_dump -Fc -f "devops/devel/snapshots/portfolio.dump" ${DB}
 php artisan user:create aiku arya password qwe123asd
 php artisan user:create aiku vika password super-admin
 php artisan user:create aiku artha hello super-admin
+php artisan employee:import employees.xlsx
+echo "🌱 All the employees are imported"
+php artisan prospect:import prospects.xlsx
+echo "🌱 All the prospects are imported"

@@ -11,14 +11,14 @@ return new class () extends Migration {
      */
     public function up(): void
     {
-        Schema::create('website_upload_records', function (Blueprint $table) {
+        Schema::create('excel_upload_records', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->unsignedSmallInteger('tenant_id');
+            $table->unsignedSmallInteger('tenant_id')->nullable();
             $table->foreign('tenant_id')->references('id')->on('tenants')->onUpdate('cascade')->onDelete('cascade');
 
-            $table->unsignedSmallInteger('website_upload_id');
-            $table->foreign('website_upload_id')->references('id')->on('website_uploads')->onUpdate('cascade')->onDelete('cascade');
+            $table->unsignedSmallInteger('excel_upload_id');
+            $table->foreign('excel_upload_id')->references('id')->on('excel_uploads')->onUpdate('cascade')->onDelete('cascade');
 
             $table->jsonb('data');
             $table->string('status')->default(UploadRecordStatusEnum::PROCESSING->value);
@@ -32,6 +32,6 @@ return new class () extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('website_upload_records');
+        Schema::dropIfExists('excel_upload_records');
     }
 };
