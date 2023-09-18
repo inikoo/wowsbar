@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import BannerWorkshopComponent from '@/Components/Workshop/BannerWorkshopComponent.vue'
-import TestimonialsWorkshopComponent from '@/Components/CMS/Workshops/TestimonialsWorkshopComponent.vue'
+import TestimonialsWorkshopComponent from '@/Components/CMS/BlocksContent/Testimonials/TestimonialsWorkshopComponent.vue'
+// import BlogSectionOne from '@/Components/CMS/BlocksContent/BlogSections/BlogSectionOne.vue'
+// import BlogSectionTwo from '@/Components/CMS/BlocksContent/BlogSections/BlogSectionTwo.vue'
+// import BlogSectionThree from '@/Components/CMS/BlocksContent/BlogSections/BlogSectionThree.vue'
+import BlogSection from '@/Components/CMS/BlocksContent/BlogSections/index.vue'
 
 const props = defineProps<{
     selectedComponent: any
@@ -73,4 +77,5 @@ const dummyData = {
         <BannerWorkshopComponent v-if="selectedComponent.component === 'banner'" :data="dummyData.data" :imagesUploadRoute="dummyData.route" :user="dummyData.user" />
         <TestimonialsWorkshopComponent v-if="selectedComponent.component === 'text'" />
     </div>
+    <!-- <BlogSection :theme="2"></BlogSection> -->
 </template>
