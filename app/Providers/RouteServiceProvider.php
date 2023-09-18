@@ -24,6 +24,7 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->routes(function () {
 
+
             Route::domain('delivery.'.config('app.domain'))
                 ->name('delivery.')
                 ->group(base_path('routes/delivery/app.php'));
@@ -33,28 +34,34 @@ class RouteServiceProvider extends ServiceProvider
                 ->name('org.')
                 ->group(base_path('routes/org/web/app.php'));
 
+
+            Route:$this->middleware('frontend')->group(base_path('routes/frontend/app.php'));
+
+
             /*
-            Route::middleware('public-web')
-                ->domain(config('app.domain'))
-                ->name('public.')
-                ->group(base_path('routes/public/web/app.php'));
+
+                        Route::middleware('web')
+                            ->prefix('api')
+                            ->name('tenant.')
+                            ->group(base_path('routes/tenant/web/app.php'));
 
 
-            Route::prefix('webhooks')
-                ->domain(config('app.domain'))
-                ->middleware('webhooks-api')
-                ->namespace($this->namespace)
-                ->group(base_path('routes/webhooks/webhooks.php'));
+                        Route::middleware('public-web')
+                            ->domain(config('app.domain'))
+                            ->name('public.')
+                            ->group(base_path('routes/public/web/app.php'));
 
 
-            Route::middleware('tenant-api')
-                ->prefix('api')
-                ->group(base_path('routes/tenant/api/api.php'));
+                        /*
 
-            Route::middleware('web')
-                ->name('tenant.')
-                ->group(base_path('routes/tenant/web/app.php'));
+                        Route::middleware('tenant-api')
+                            ->prefix('api')
+                            ->group(base_path('routes/tenant/api/api.php'));
             */
+
+
+
+
         });
     }
 

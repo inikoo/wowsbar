@@ -33,7 +33,7 @@ class DuplicateBanner
                 $relation[0]->banners()->attach(
                     $newBanner->id,
                     [
-                        'tenant_id' => app('currentTenant')->id,
+                        'tenant_id' => customer()->id,
                         'ulid'      => Str::ulid()
                     ]
                 );

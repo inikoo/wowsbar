@@ -7,7 +7,7 @@
 
 namespace App\Models\Portfolio;
 
-use App\Concerns\BelongsToTenant;
+use App\Concerns\BelongsToCustomer;
 use App\Enums\Portfolio\Banner\BannerStateEnum;
 use App\Models\Media\Media;
 use App\Models\Traits\HasHistory;
@@ -32,7 +32,7 @@ use Spatie\Sluggable\SlugOptions;
  *
  * @property int $id
  * @property string $ulid
- * @property int $tenant_id
+ * @property int $customer_id
  * @property int|null $portfolio_website_id
  * @property string $slug
  * @property string $code
@@ -51,6 +51,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \OwenIt\Auditing\Models\Audit> $audits
  * @property-read int|null $audits_count
+ * @property-read \App\Models\CRM\Customer $customer
  * @property-read array $es_audits
  * @property-read Media|null $image
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, Media> $images
@@ -63,7 +64,6 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Portfolio\Snapshot> $snapshots
  * @property-read int|null $snapshots_count
  * @property-read \App\Models\Portfolio\BannerStats|null $stats
- * @property-read \App\Models\Tenancy\Tenant $tenant
  * @property-read \App\Models\Search\UniversalSearch|null $universalSearch
  * @property-read \App\Models\Portfolio\Snapshot|null $unpublishedSnapshot
  * @method static \Database\Factories\Portfolio\BannerFactory factory($count = null, $state = [])
@@ -75,6 +75,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Banner whereCode($value)
  * @method static Builder|Banner whereCompiledLayout($value)
  * @method static Builder|Banner whereCreatedAt($value)
+ * @method static Builder|Banner whereCustomerId($value)
  * @method static Builder|Banner whereData($value)
  * @method static Builder|Banner whereDeletedAt($value)
  * @method static Builder|Banner whereId($value)
@@ -86,7 +87,6 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Banner whereRetiredAt($value)
  * @method static Builder|Banner whereSlug($value)
  * @method static Builder|Banner whereState($value)
- * @method static Builder|Banner whereTenantId($value)
  * @method static Builder|Banner whereUlid($value)
  * @method static Builder|Banner whereUnpublishedSnapshotId($value)
  * @method static Builder|Banner whereUpdatedAt($value)
@@ -99,7 +99,7 @@ class Banner extends Model implements HasMedia, Auditable
     use SoftDeletes;
     use HasSlug;
     use HasFactory;
-    use BelongsToTenant;
+    use BelongsToCustomer;
     use HasUniversalSearch;
     use InteractsWithMedia;
     use HasHistory;

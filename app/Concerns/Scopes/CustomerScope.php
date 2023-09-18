@@ -7,23 +7,22 @@
 
 namespace App\Concerns\Scopes;
 
-use App\Models\Tenancy\Tenant;
+use App\Exceptions\NoCustomer;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Scope;
-use Spatie\Multitenancy\Exceptions\NoCurrentTenant;
 
-class TenantScope implements Scope
+class CustomerScope implements Scope
 {
     /**
-     * @throws \Spatie\Multitenancy\Exceptions\NoCurrentTenant
+     * @throws \App\Exceptions\NoCustomer
      */
     public function apply(Builder $builder, Model $model): void
     {
-        if (! $tenant = Tenant::current()) {
-            throw new NoCurrentTenant();
+        if (! config('global.customer_id')) {
+            throw new NoCustomer();
         }
 
-        $builder->where($model->getTable().'.tenant_id', $tenant->id);
+        $builder->where($model->getTable().'.customer_id', config('global.customer_id'));
     }
 }

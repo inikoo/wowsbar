@@ -33,25 +33,26 @@ return new class () extends Migration {
             $table->jsonb('data');
             $table->unsignedSmallInteger('shop_id')->index();
             $table->foreign('shop_id')->references('id')->on('shops');
-            $table->unsignedSmallInteger('tenant_id')->index()->nullable();
-            $table->foreign('tenant_id')->references('id')->on('tenants');
+            $table->unsignedSmallInteger('website_id')->nullable()->index();
+            $table->foreign('website_id')->references('id')->on('websites');
+
+            $table->unsignedSmallInteger('language_id');
+            $table->foreign('language_id')->references('id')->on('languages');
+            $table->unsignedSmallInteger('timezone_id');
+            $table->foreign('timezone_id')->references('id')->on('timezones');
+
             $table->unsignedBigInteger('image_id')->nullable();
             $table->timestampsTz();
             $table->softDeletesTz();
             $table->unique(['reference']);
         });
 
-        Schema::table('tenants', function ($table) {
-            $table->unsignedInteger('customer_id');
-            $table->foreign('customer_id')->references('id')->on('customers');
-        });
+
     }
 
     public function down(): void
     {
-        Schema::table('tenants', function ($table) {
-            $table->dropColumn('customer_id');
-        });
+
         Schema::dropIfExists('customers');
 
     }

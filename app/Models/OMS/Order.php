@@ -61,12 +61,12 @@ use Spatie\Sluggable\SlugOptions;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
- * @property-read \App\Models\CRM\Customer $customer
+ * @property-read Customer $customer
  * @property-read Collection<int, Invoice> $invoices
  * @property-read int|null $invoices_count
- * @property-read Collection<int, \App\Models\Accounting\Payment> $payments
+ * @property-read Collection<int, Payment> $payments
  * @property-read int|null $payments_count
- * @property-read \App\Models\Market\Shop $shop
+ * @property-read Shop $shop
  * @property-read \App\Models\OMS\OrderStats|null $stats
  * @property-read Collection<int, \App\Models\OMS\Transaction> $transactions
  * @property-read int|null $transactions_count

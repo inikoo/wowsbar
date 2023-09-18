@@ -7,13 +7,15 @@
 
 namespace App\Actions\Tenant\Portfolio\PortfolioWebsite;
 
-use App\Actions\Tenancy\Tenant\Hydrators\TenantHydratePortfolioWebsites;
+use App\Actions\Organisation\CRM\Customer\Hydrators\CustomerHydratePortfolioWebsites;
 use App\Actions\Tenant\Portfolio\PortfolioWebsite\Hydrators\PortfolioWebsiteHydrateUniversalSearch;
+use App\Models\CRM\Customer;
 use App\Models\Portfolio\PortfolioWebsite;
-use App\Models\Tenancy\Tenant;
 use App\Rules\CaseSensitive;
+use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Redirect;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -35,7 +37,7 @@ class StorePortfolioWebsite
     {
         $portfolioWebsite = PortfolioWebsite::create($modelData);
         $portfolioWebsite->stats()->create();
-        TenantHydratePortfolioWebsites::dispatch(app('currentTenant'));
+        CustomerHydratePortfolioWebsites::dispatch($portfolioWebsite->customer);
         PortfolioWebsiteHydrateUniversalSearch::dispatch($portfolioWebsite);
 
         return $portfolioWebsite;
@@ -83,15 +85,20 @@ class StorePortfolioWebsite
 
     public function getCommandSignature(): string
     {
-        return 'website:create {tenant} {domain} {code} {name}';
+        return 'customer:new-portfolio-website {customer} {domain} {code} {name}';
     }
 
-    public function asCommand(Command $command): void
+    public function asCommand(Command $command): int
     {
-        $tenant = Tenant::where('slug', $command->argument('tenant'))->firstOrFail();
-        $tenant->makeCurrent();
-
         $this->asAction = true;
+        try {
+            $customer = Customer::where('slug', $command->argument('customer'))->firstOrFail();
+        } catch (Exception) {
+            $command->error('Customer not found');
+            return 1;
+        }
+        Config::set('global.customer_id', $customer->id);
+
         $this->setRawAttributes(
             [
                 'domain' => $command->argument('domain'),
@@ -104,5 +111,6 @@ class StorePortfolioWebsite
         $portfolioWebsite=$this->handle($validatedData);
 
         $command->info("Done! website $portfolioWebsite->code created 🥳");
+        return 0;
     }
 }

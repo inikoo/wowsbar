@@ -28,7 +28,7 @@ enum EmployeeStateEnum: string
 
     public static function count(): array
     {
-        $stats=app('currentTenant')->stats;
+        $stats=customer()->stats;
         return [
             'hired'         => $stats->number_employees_state_hired,
             'working'       => $stats->number_employees_state_working,

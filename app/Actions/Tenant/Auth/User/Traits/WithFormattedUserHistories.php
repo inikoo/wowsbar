@@ -30,7 +30,7 @@ trait WithFormattedUserHistories
                     'url'            => $result['_source']['route']['url'],
                     'datetime'       => $result['_source']['datetime'],
                     'type'           => $result['_source']['type'],
-                    'tenant'         => app('currentTenant')->slug,
+                    'tenant'         => customer()->slug,
                     'old_values'     => $result['_source']['old_values'],
                     'new_values'     => $result['_source']['new_values'],
                     'event'          => $result['_source']['event'],

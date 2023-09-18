@@ -19,12 +19,10 @@ class ShowLogin
 
     public function handle(ActionRequest $request): Response
     {
+        $request->route()->getName();
+
         return Inertia::render(
-            match ($request->route()->getName()) {
-                'org.login'    => 'Auth/Login',
-                'public.login' => 'Public/Auth/Login',
-                default        => 'Auth/Login'
-            },
+            'Auth/Login',
             [
                 'status' => session('status'),
             ]

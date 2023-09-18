@@ -95,7 +95,7 @@ class IndexClockings extends InertiaAction
                     [
                         'title'       => __('no clockings'),
                         'description' => $this->canEdit ? __('Get started by creating a new clocking.') : null,
-                        'count'       => app('currentTenant')->stats->number_clockings,
+                        'count'       => customer()->stats->number_clockings,
                         'action'      => $this->canEdit ? [
                             'type'    => 'button',
                             'style'   => 'create',
@@ -117,7 +117,7 @@ class IndexClockings extends InertiaAction
     {
         $this->initialisation($request);
 
-        return $this->handle(parent: app('currentTenant'));
+        return $this->handle(parent: customer());
     }
 
     public function inWorkplace(Workplace $workplace, ActionRequest $request): LengthAwarePaginator

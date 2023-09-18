@@ -16,19 +16,19 @@ return new class () extends Migration {
         Schema::create('snapshots', function (Blueprint $table) {
             $table->mediumIncrements('id');
             $table->string('slug')->nullable()->collation('und_ns');
-            $table->unsignedSmallInteger('tenant_id');
             $table->string('user_type')->nullable();
             $table->unsignedSmallInteger('user_id')->nullable();
             $table->string('parent_type')->nullable();
             $table->unsignedInteger('parent_id')->nullable();
-            $table->foreign('tenant_id')->references('id')->on('tenants')->onUpdate('cascade')->onDelete('cascade');
+            $table->unsignedInteger('customer_id');
+            $table->foreign('customer_id')->references('id')->on('customers')->onUpdate('cascade')->onDelete('cascade');
             $table->string('state')->default(SnapshotStateEnum::UNPUBLISHED->value);
             $table->dateTimeTz('published_at')->nullable();
             $table->dateTimeTz('published_until')->nullable();
             $table->string('checksum');
             $table->jsonb('layout');
             $table->string('comment')->nullable();
-            $table->timestamps();
+            $table->timestampsTz();
             $table->index(['parent_type', 'parent_id']);
             $table->index(['user_id', 'user_type']);
 

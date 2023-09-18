@@ -20,6 +20,8 @@ class WebsiteHydrateUniversalSearch
         $website->universalSearch()->updateOrCreate(
             [],
             [
+                'shop_id'     => $website->shop_id,
+                'website_id'  => $website->id,
                 'section'     => 'websites',
                 'title'       => trim($website->code.' '.$website->name.' '.$website->domain),
                 'description' => ''

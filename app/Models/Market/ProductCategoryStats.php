@@ -8,7 +8,6 @@
 namespace App\Models\Market;
 
 use Illuminate\Database\Eloquent\Model;
-use Spatie\Multitenancy\Models\Concerns\UsesTenantConnection;
 
 /**
  * App\Models\Market\ProductCategoryStats
@@ -42,8 +41,6 @@ use Spatie\Multitenancy\Models\Concerns\UsesTenantConnection;
  */
 class ProductCategoryStats extends Model
 {
-    use UsesTenantConnection;
-
     protected $table = 'product_category_stats';
 
     protected $guarded = [];

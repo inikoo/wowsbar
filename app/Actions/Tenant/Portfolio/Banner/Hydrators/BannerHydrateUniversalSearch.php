@@ -18,6 +18,9 @@ class BannerHydrateUniversalSearch
     {
         $banner->universalSearch()->create(
             [
+                'shop_id'     => $banner->customer->shop_id,
+                'website_id'  => $banner->customer->website_id,
+                'customer_id' => $banner->customer_id,
                 'section'     => 'portfolio',
                 'title'       => trim($banner->code.' '.$banner->name),
                 'description' => ''

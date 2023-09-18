@@ -15,8 +15,8 @@ return new class () extends Migration {
         Schema::create('slides', function (Blueprint $table) {
             $table->mediumIncrements('id');
             $table->ulid()->index()->nullable();
-            $table->unsignedSmallInteger('tenant_id')->index();
-            $table->foreign('tenant_id')->references('id')->on('tenants');
+            $table->unsignedInteger('customer_id');
+            $table->foreign('customer_id')->references('id')->on('customers')->onUpdate('cascade')->onDelete('cascade');
             $table->unsignedSmallInteger('snapshot_id');
             $table->boolean('visibility')->default(true)->index();
             $table->jsonb('layout')->nullable();

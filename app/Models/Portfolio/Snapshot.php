@@ -7,7 +7,7 @@
 
 namespace App\Models\Portfolio;
 
-use App\Concerns\BelongsToTenant;
+use App\Concerns\BelongsToCustomer;
 use App\Enums\Portfolio\Snapshot\SnapshotStateEnum;
 use App\Http\Resources\Portfolio\SlideResource;
 use Illuminate\Database\Eloquent\Builder;
@@ -23,11 +23,11 @@ use Spatie\Sluggable\SlugOptions;
  *
  * @property int $id
  * @property string|null $slug
- * @property int $tenant_id
  * @property string|null $user_type
  * @property int|null $user_id
  * @property string|null $parent_type
  * @property int|null $parent_id
+ * @property int $customer_id
  * @property SnapshotStateEnum $state
  * @property string|null $published_at
  * @property string|null $published_until
@@ -36,17 +36,18 @@ use Spatie\Sluggable\SlugOptions;
  * @property string|null $comment
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\CRM\Customer $customer
  * @property-read Model|\Eloquent $parent
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Portfolio\Slide> $slides
  * @property-read int|null $slides_count
  * @property-read \App\Models\Portfolio\SnapshotStats|null $stats
- * @property-read \App\Models\Tenancy\Tenant $tenant
  * @method static Builder|Snapshot newModelQuery()
  * @method static Builder|Snapshot newQuery()
  * @method static Builder|Snapshot query()
  * @method static Builder|Snapshot whereChecksum($value)
  * @method static Builder|Snapshot whereComment($value)
  * @method static Builder|Snapshot whereCreatedAt($value)
+ * @method static Builder|Snapshot whereCustomerId($value)
  * @method static Builder|Snapshot whereId($value)
  * @method static Builder|Snapshot whereLayout($value)
  * @method static Builder|Snapshot whereParentId($value)
@@ -55,7 +56,6 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Snapshot wherePublishedUntil($value)
  * @method static Builder|Snapshot whereSlug($value)
  * @method static Builder|Snapshot whereState($value)
- * @method static Builder|Snapshot whereTenantId($value)
  * @method static Builder|Snapshot whereUpdatedAt($value)
  * @method static Builder|Snapshot whereUserId($value)
  * @method static Builder|Snapshot whereUserType($value)
@@ -64,7 +64,7 @@ use Spatie\Sluggable\SlugOptions;
 class Snapshot extends Model
 {
     use HasSlug;
-    use BelongsToTenant;
+    use BelongsToCustomer;
 
     protected $dateFormat  = 'Y-m-d H:i:s P';
     protected array $dates = ['published_at', 'published_until'];

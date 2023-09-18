@@ -15,7 +15,6 @@ use Lorisleiva\Actions\Concerns\AsAction;
 class TenantHydrateUsers implements ShouldBeUnique
 {
     use AsAction;
-    use HasTenantHydrate;
 
     public function handle(Tenant $tenant): void
     {

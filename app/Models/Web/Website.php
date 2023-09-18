@@ -47,6 +47,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read int|null $audits_count
  * @property-read array $es_audits
  * @property-read \App\Models\Web\Webpage|null $home
+ * @property-read \App\Models\Search\UniversalSearch|null $universalSearch
  * @property-read \App\Models\Web\WebsiteStats|null $webStats
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Web\Webpage> $webpages
  * @property-read int|null $webpages_count
@@ -123,6 +124,11 @@ class Website extends Model implements Auditable
     public function webStats(): HasOne
     {
         return $this->hasOne(WebsiteStats::class);
+    }
+
+    public function shop(): BelongsTo
+    {
+        return $this->belongsTo(Shop::class);
     }
 
     public function home(): BelongsTo

@@ -30,7 +30,7 @@ class UploadImagesToGallery
 
         foreach ($imageFiles as $imageFile) {
             $medias[] = AttachImageToTenant::run(
-                tenant: app('currentTenant'),
+                tenant: customer(),
                 collection: 'content_block',
                 imagePath: $imageFile->getPathName(),
                 originalFilename: $imageFile->getClientOriginalName(),

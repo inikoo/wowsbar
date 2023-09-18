@@ -33,7 +33,7 @@ class SysAdminDashboard
 
     public function htmlResponse(): Response
     {
-        $tenant=app('currentTenant');
+        $tenant=customer();
 
         return Inertia::render(
             'SysAdmin/SysAdminDashboard',

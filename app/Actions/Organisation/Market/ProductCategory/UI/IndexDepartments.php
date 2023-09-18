@@ -43,8 +43,8 @@ class IndexDepartments extends InertiaAction
     public function inTenant(ActionRequest $request): LengthAwarePaginator
     {
         $this->initialisation($request);
-        $this->parent = app('currentTenant');
-        return $this->handle(parent: app('currentTenant'));
+        $this->parent = customer();
+        return $this->handle(parent: customer());
     }
 
     public function inShop(Shop $shop, ActionRequest $request): LengthAwarePaginator
@@ -158,7 +158,7 @@ class IndexDepartments extends InertiaAction
                     [
                         'title'       => __('no departments'),
                         'description' => $this->canEdit ? __('Get started by creating a new department.') : null,
-                        'count'       => app('currentTenant')->stats->number_shops,
+                        'count'       => customer()->stats->number_shops,
                         'action'      => $this->canEdit ? [
                             'type'    => 'button',
                             'style'   => 'create',

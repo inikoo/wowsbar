@@ -142,7 +142,7 @@ class IndexProducts extends InertiaAction
                     [
                         'title'       => __('no products'),
                         'description' => $this->canEdit ? __('Get started by creating a new product.') : null,
-                        'count'       => app('currentTenant')->stats->number_products,
+                        'count'       => customer()->stats->number_products,
                         'action'      => $this->canEdit ? [
                             'type'    => 'button',
                             'style'   => 'create',

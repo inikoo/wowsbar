@@ -34,7 +34,7 @@ class EditSystemSettings
     public function htmlResponse(): Response
     {
 
-        $tenant= app('currentTenant');
+        $tenant= customer();
         return Inertia::render(
             'EditModel',
             [

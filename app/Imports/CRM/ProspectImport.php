@@ -36,11 +36,11 @@ class ProspectImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wi
             try {
                 $prospect = ExcelUploadRecord::create([
                         'excel_upload_id' => $this->prospectUpload->id,
-                        'data'   => json_encode([
+                        'data'            => json_encode([
                         'contact_name'    => $prospect['contact_name'],
-                        'company_name'   => $prospect['company_name'],
-                        'email' => $prospect['email'],
-                        'phone' => $prospect['phone'],
+                        'company_name'    => $prospect['company_name'],
+                        'email'           => $prospect['email'],
+                        'phone'           => $prospect['phone'],
                         'contact_website' => $prospect['contact_website'],
                     ])
                 ]);

@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
  * @property int $id
  * @property string $ulid
  * @property int|null $portfolio_website_id
- * @property int $tenant_id
+ * @property int $customer_id
  * @property int $banner_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -25,9 +25,9 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
  * @method static Builder|BannerPortfolioWebsite query()
  * @method static Builder|BannerPortfolioWebsite whereBannerId($value)
  * @method static Builder|BannerPortfolioWebsite whereCreatedAt($value)
+ * @method static Builder|BannerPortfolioWebsite whereCustomerId($value)
  * @method static Builder|BannerPortfolioWebsite whereId($value)
  * @method static Builder|BannerPortfolioWebsite wherePortfolioWebsiteId($value)
- * @method static Builder|BannerPortfolioWebsite whereTenantId($value)
  * @method static Builder|BannerPortfolioWebsite whereUlid($value)
  * @method static Builder|BannerPortfolioWebsite whereUpdatedAt($value)
  * @mixin \Eloquent

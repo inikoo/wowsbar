@@ -29,7 +29,7 @@ enum WebsiteStateEnum: string
 
     public static function count(): array
     {
-        $webStats=app('currentTenant')->webStats;
+        $webStats=customer()->webStats;
         return [
             'in-process' => $webStats->number_websites_state_in_process,
             'live'       => $webStats->number_websites_state_live,

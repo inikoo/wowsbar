@@ -7,7 +7,7 @@
 
 namespace App\Models\Portfolio;
 
-use App\Concerns\BelongsToTenant;
+use App\Concerns\BelongsToCustomer;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -16,27 +16,27 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * App\Models\Portfolio\SnapshotStats
  *
  * @property int $id
- * @property int $tenant_id
+ * @property int $customer_id
  * @property int $snapshot_id
  * @property int $number_snapshots
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\CRM\Customer $customer
  * @property-read \App\Models\Portfolio\Snapshot $snapshot
- * @property-read \App\Models\Tenancy\Tenant $tenant
  * @method static Builder|SnapshotStats newModelQuery()
  * @method static Builder|SnapshotStats newQuery()
  * @method static Builder|SnapshotStats query()
  * @method static Builder|SnapshotStats whereCreatedAt($value)
+ * @method static Builder|SnapshotStats whereCustomerId($value)
  * @method static Builder|SnapshotStats whereId($value)
  * @method static Builder|SnapshotStats whereNumberSnapshots($value)
  * @method static Builder|SnapshotStats whereSnapshotId($value)
- * @method static Builder|SnapshotStats whereTenantId($value)
  * @method static Builder|SnapshotStats whereUpdatedAt($value)
  * @mixin \Eloquent
  */
 class SnapshotStats extends Model
 {
-    use BelongsToTenant;
+    use BelongsToCustomer;
 
     protected $table   = 'snapshot_stats';
     protected $guarded = [];

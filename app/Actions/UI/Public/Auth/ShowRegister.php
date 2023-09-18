@@ -17,7 +17,7 @@ class ShowRegister
 
     public function handle(): Response
     {
-        return Inertia::render('Public/Auth/Register');
+        return Inertia::render('Auth/Register');
     }
 
     public function asController(): Response

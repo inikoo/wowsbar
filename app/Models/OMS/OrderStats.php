@@ -11,7 +11,6 @@ use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Spatie\Multitenancy\Models\Concerns\UsesTenantConnection;
 
 /**
  * App\Models\OMS\OrderStats
@@ -24,8 +23,6 @@ use Spatie\Multitenancy\Models\Concerns\UsesTenantConnection;
  */
 class OrderStats extends Model
 {
-    use UsesTenantConnection;
-
     protected $table = 'order_stats';
 
     protected $guarded = [];

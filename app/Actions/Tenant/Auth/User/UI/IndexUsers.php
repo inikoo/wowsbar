@@ -38,11 +38,11 @@ class IndexUsers extends InertiaAction
                         'active'    =>
                             [
                                 __('Active'),
-                                app('currentTenant')->stats->number_users_status_active
+                                customer()->stats->number_users_status_active
                             ],
                         'suspended' => [
                             __('Suspended'),
-                            app('currentTenant')->stats->number_users_status_inactive
+                            customer()->stats->number_users_status_inactive
                         ]
                     ],
                     'engine'   => function ($query, $elements) {

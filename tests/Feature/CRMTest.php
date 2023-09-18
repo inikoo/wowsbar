@@ -5,70 +5,81 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
+
 use App\Actions\Organisation\CRM\Customer\StoreCustomer;
-use App\Actions\Organisation\CRM\PublicUser\StorePublicUser;
 use App\Actions\Organisation\Market\Shop\StoreShop;
 use App\Actions\Organisation\Organisation\StoreOrganisation;
-use App\Actions\Tenancy\Tenant\StoreTenant;
+use App\Actions\Organisation\Web\Website\StoreWebsite;
+use App\Actions\Tenant\Auth\User\StoreUser;
 use App\Enums\Organisation\Market\Shop\ShopTypeEnum;
+use App\Models\Auth\User;
 use App\Models\CRM\Customer;
-use App\Models\CRM\PublicUser;
 use App\Models\Market\Shop;
 use App\Models\Organisation\Organisation;
-use App\Models\Tenancy\Tenant;
+use App\Models\Web\Website;
 
 beforeAll(function () {
     loadDB('test_base_database.dump');
 });
 
 test('create organisation', function () {
-    $modelData     = Organisation::factory()->definition();
-    $organisation  = StoreOrganisation::make()->action($modelData);
+    $modelData    = Organisation::factory()->definition();
+    $organisation = StoreOrganisation::make()->action($modelData);
     expect($organisation)->toBeInstanceOf(Organisation::class);
+
     return $organisation;
 });
 
 test('create shop', function () {
-    $shop  = StoreShop::make()->action(
+    $shop = StoreShop::make()->action(
         [
-            'code'=> 'acme',
-            'name'=> 'Acme inc',
-            'type'=> ShopTypeEnum::DIGITAL_MARKETING->value
+            'code' => 'acme',
+            'name' => 'Acme inc',
+            'type' => ShopTypeEnum::DIGITAL_MARKETING->value
         ]
     );
     expect($shop)->toBeInstanceOf(Shop::class);
+
     return $shop;
 })->depends('create organisation');
+
+test('create website', function ($shop) {
+    $website = StoreWebsite::make()->action(
+        $shop,
+        [
+            'code'   => $shop->code,
+            'domain' => 'acme.test',
+        ]
+    );
+
+    $shop->refresh();
+
+    expect($website)->toBeInstanceOf(Website::class)
+        ->and($shop->website)->toBeInstanceOf(Website::class);
+})->depends('create shop');
+
 
 test('create customer', function ($shop) {
     $modelData = Customer::factory()->definition();
     $customer  = StoreCustomer::make()->action($shop, $modelData);
     expect($customer)->toBeInstanceOf(Customer::class);
+
     return $customer;
 })->depends('create shop');
 
 test('create customer user', function ($customer) {
-    $publicUser  = StorePublicUser::make()->action(
+    Config::set('global.customer_id', $customer->id);
+
+
+    $user = StoreUser::make()->action(
+        $customer->shop->website,
         $customer,
         [
-            'email'   => $customer->email,
-            'password'=> fake()->password
+            'username'     => 'aiku',
+            'contact_name' => 'Alex',
+            'email'        => $customer->email,
+            'password'     => fake()->password
         ]
     );
-    expect($publicUser)->toBeInstanceOf(PublicUser::class);
-
-})->depends('create customer');
-
-test('create tenant', function ($customer) {
-    $modelData = Tenant::factory()->definition();
-    $tenant    = StoreTenant::make()->action($customer, $modelData);
-    expect($tenant)->toBeInstanceOf(Tenant::class);
-    $tenant->makeCurrent();
-
-    //$user = $tenant->users()->first();
-    //expect($user)->toBeInstanceOf(User::class);
-
-    //        ->and($user->getMedia('avatar')->first())->toBeInstanceOf(Media::class) // TODO Need To Fix
-    //        ->and($user->avatar)->toBeInstanceOf(App\Models\Media\Media::class);
-
+    expect($user)->toBeInstanceOf(User::class);
 })->depends('create customer');

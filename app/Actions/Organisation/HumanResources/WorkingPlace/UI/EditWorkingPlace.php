@@ -91,7 +91,7 @@ class EditWorkingPlace extends InertiaAction
                                     'value'   => AddressFormFieldsResource::make(
                                         new Address(
                                             [
-                                                'country_id' => app('currentTenant')->country_id,
+                                                'country_id' => customer()->country_id,
 
                                             ]
                                         )

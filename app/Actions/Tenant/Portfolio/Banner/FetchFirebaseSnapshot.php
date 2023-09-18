@@ -19,7 +19,7 @@ class FetchFirebaseSnapshot
 
     public function handle(Banner $banner): bool
     {
-        $tenant    =app('currentTenant');
+        $tenant    =customer();
         $database  = app('firebase.database');
         $reference = $database->getReference('tenants/' . $tenant->slug . '/banner_workshop/' . $banner->slug);
         $value     = $reference->getValue();

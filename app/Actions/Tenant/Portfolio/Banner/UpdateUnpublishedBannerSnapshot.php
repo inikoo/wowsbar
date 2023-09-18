@@ -7,7 +7,6 @@
 
 namespace App\Actions\Tenant\Portfolio\Banner;
 
-use App\Actions\Tenancy\Tenant\Hydrators\TenantHydrateBanners;
 use App\Actions\Tenant\Portfolio\Banner\Hydrators\BannerHydrateUniversalSearch;
 use App\Actions\Tenant\Portfolio\Banner\UI\ParseBannerLayout;
 use App\Actions\Tenant\Portfolio\PortfolioWebsite\Hydrators\PortfolioWebsiteHydrateBanners;
@@ -60,7 +59,7 @@ class UpdateUnpublishedBannerSnapshot
         /** @var Banner $banner */
         $banner = $snapshot->parent;
         BannerHydrateUniversalSearch::dispatch($banner);
-        TenantHydrateBanners::dispatch(app('currentTenant'));
+        CustomerHydrateBanners::dispatch(customer());
 
         if (class_basename($banner->portfolioWebsite) == 'PortfolioWebsite') {
             PortfolioWebsiteHydrateBanners::dispatch($banner->portfolioWebsite);

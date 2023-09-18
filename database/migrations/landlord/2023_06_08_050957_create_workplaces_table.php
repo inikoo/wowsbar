@@ -25,7 +25,7 @@ return new class () extends Migration {
             $table->foreign('address_id')->references('id')->on('addresses');
             $table->jsonb('data');
             $table->jsonb('location');
-            $table->timestamps();
+            $table->timestampsTz();
             $table->softDeletesTz();
         });
         //DB::statement('CREATE INDEX ON workplaces USING gin (name gin_trgm_ops) ');

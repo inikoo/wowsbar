@@ -18,7 +18,7 @@ class UpdateSystemSettings
 
     public function handle(array $modelData): void
     {
-        $tenant = app('currentTenant');
+        $tenant = customer();
 
         $this->update($tenant, $modelData, ['data', 'settings']);
     }

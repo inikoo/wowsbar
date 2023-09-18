@@ -34,7 +34,7 @@ trait WithElasticsearch
         $results = [];
 
         $params = [
-            'index' => app('currentTenant')->slug,
+            'index' => customer()->slug,
             'size'  => 10000
         ];
         $params['body']['query']['match']['username'] = $query;

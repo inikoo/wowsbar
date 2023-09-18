@@ -139,7 +139,7 @@ class ElasticsearchAuditDriver implements AuditDriver
 
         $tenantSlug=null;
         if(Tenant::checkCurrent()) {
-            $tenantSlug=app('currentTenant')->slug;
+            $tenantSlug=customer()->slug;
         }
 
         return [

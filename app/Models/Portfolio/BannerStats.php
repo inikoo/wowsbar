@@ -7,7 +7,7 @@
 
 namespace App\Models\Portfolio;
 
-use App\Concerns\BelongsToTenant;
+use App\Concerns\BelongsToCustomer;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * App\Models\Portfolio\BannerStats
  *
  * @property int $id
- * @property int $tenant_id
+ * @property int $customer_id
  * @property int $banner_id
  * @property int $number_snapshots_state_unpublished
  * @property int $number_snapshots_state_live
@@ -24,23 +24,23 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Portfolio\Banner $banner
- * @property-read \App\Models\Tenancy\Tenant $tenant
+ * @property-read \App\Models\CRM\Customer $customer
  * @method static Builder|BannerStats newModelQuery()
  * @method static Builder|BannerStats newQuery()
  * @method static Builder|BannerStats query()
  * @method static Builder|BannerStats whereBannerId($value)
  * @method static Builder|BannerStats whereCreatedAt($value)
+ * @method static Builder|BannerStats whereCustomerId($value)
  * @method static Builder|BannerStats whereId($value)
  * @method static Builder|BannerStats whereNumberSnapshotsStateHistoric($value)
  * @method static Builder|BannerStats whereNumberSnapshotsStateLive($value)
  * @method static Builder|BannerStats whereNumberSnapshotsStateUnpublished($value)
- * @method static Builder|BannerStats whereTenantId($value)
  * @method static Builder|BannerStats whereUpdatedAt($value)
  * @mixin \Eloquent
  */
 class BannerStats extends Model
 {
-    use BelongsToTenant;
+    use BelongsToCustomer;
     protected $table = 'banner_stats';
 
     protected $guarded = [];

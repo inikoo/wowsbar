@@ -163,7 +163,7 @@ class IndexCustomers extends InertiaAction
                     [
                         'title'       => __('no customers'),
                         'description' => $this->canEdit ? __('Get started by creating a new customer.') : null,
-                        'count'       => app('currentTenant')->stats->number_employees,
+                        'count'       => customer()->stats->number_employees,
                         'action'      => $this->canEdit ? [
                             'type'    => 'button',
                             'style'   => 'create',

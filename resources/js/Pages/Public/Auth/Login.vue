@@ -7,13 +7,13 @@ import ValidationErrors from '@/Components/ValidationErrors.vue'
 import { trans } from 'laravel-vue-i18n'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faArrowLeft } from '@/../private/pro-light-svg-icons'
-import { faSpinnerThird } from '@/../private/pro-duotone-svg-icons'
+import { faArrowLeft } from '../../../../private/pro-light-svg-icons'
+import { faSpinnerThird } from '../../../../private/pro-duotone-svg-icons'
 import { library } from '@fortawesome/fontawesome-svg-core'
 library.add(faArrowLeft, faSpinnerThird)
 
 const form = useForm({
-    email: '',
+    username: '',
     password: '',
     remember: false,
 })
@@ -42,9 +42,9 @@ const condition: Ref<string | boolean> = ref(false)
     <Head title="Login"/>
     <form v-if="!condition" class="space-y-6" @submit.prevent="submit" >
         <div>
-            <label for="login" class="block text-sm font-medium text-gray-600">{{ trans('Email') }}</label>
+            <label for="login" class="block text-sm font-medium text-gray-600">{{ trans('Email') }}/ {{ trans('Username')}}</label>
             <div class="mt-1">
-                <input v-model="form.email" id="email" name="email" autocomplete="email" type="email" required
+                <input v-model="form.username" id="username" name="username" autocomplete="username"  required
                     class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-gray-500 focus:border-gray-500 sm:text-sm"/>
             </div>
         </div>

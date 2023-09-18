@@ -23,7 +23,7 @@ class IndexUniversalSearch extends InertiaAction
     public function handle(string $query): Collection
     {
         return UniversalSearch::search($query)
-            ->within(UniversalSearch::make()->searchableAs().'_'.app('currentTenant')->slug)
+            ->within(UniversalSearch::make()->searchableAs().'_'.customer()->slug)
             ->get()
             ->load('model');
 

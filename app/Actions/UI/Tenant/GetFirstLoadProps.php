@@ -38,7 +38,7 @@ class GetFirstLoadProps
         if ($user) {
             $firebaseAuthToken = Cache::remember('tenant_firebase_auth_token_'.$user->id, 3600, function () use ($user) {
                 $auth        = app('firebase.auth');
-                $tenant      = app('currentTenant');
+                $tenant      = customer();
                 $customToken = $auth
                     ->createCustomToken('tenant-'.$user->id, [
                         'scope'       => 'tenant',
@@ -53,7 +53,7 @@ class GetFirstLoadProps
 
 
         return [
-            'tenant'     => app('currentTenant') ? app('currentTenant')->only('name', 'code', 'logo_id', 'slug') : null,
+            'tenant'     => customer() ? customer()->only('name', 'code', 'logo_id', 'slug') : null,
             'localeData' =>
                 [
                     'language'        => LanguageResource::make($language)->getArray(),

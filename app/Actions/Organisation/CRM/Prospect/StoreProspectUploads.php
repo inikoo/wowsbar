@@ -25,7 +25,7 @@ class StoreProspectUploads
     public function handle(array $modelData): Model
     {
         return ExcelUpload::create([
-            'type' => $modelData['type'],
+            'type'              => $modelData['type'],
             'original_filename' => $modelData['original_filename'],
             'filename'          => $modelData['filename'],
             'uploaded_at'       => now()

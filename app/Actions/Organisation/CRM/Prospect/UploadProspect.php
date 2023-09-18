@@ -26,7 +26,7 @@ class UploadProspect
     /**
      * @var true
      */
-    private bool $asAction = false;
+    private bool $asAction          = false;
     public string $commandSignature = 'prospect:import {filename}';
 
     public function handle($file): void
@@ -37,7 +37,7 @@ class UploadProspect
         Storage::disk('local')->put($path, $file);
 
         $prospectUpload = StoreProspectUploads::run([
-            'type' => class_basename(Prospect::class),
+            'type'              => class_basename(Prospect::class),
             'original_filename' => $file->getClientOriginalName(),
             'filename'          => $filename
         ]);
@@ -57,8 +57,8 @@ class UploadProspect
     public function asCommand(Command $command): void
     {
         $filename = $command->argument('filename');
-        $path = 'org/prospects';
-        $finfo = new finfo(FILEINFO_MIME_TYPE);
+        $path     = 'org/prospects';
+        $finfo    = new finfo(FILEINFO_MIME_TYPE);
         $fullPath = storage_path('app/' . $path . '/' . $filename);
 
         if (Storage::disk('local')->exists('org/prospects/' . $filename)) {

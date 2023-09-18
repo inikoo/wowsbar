@@ -92,7 +92,7 @@ class IndexWebpageVariants extends InertiaAction
 
     public function htmlResponse(LengthAwarePaginator $webpages, ActionRequest $request): Response
     {
-        $parent = $request->route()->parameters() == [] ? app('currentTenant') : last($request->route()->parameters());
+        $parent = $request->route()->parameters() == [] ? customer() : last($request->route()->parameters());
 
         return Inertia::render(
             'Web/Webpages',

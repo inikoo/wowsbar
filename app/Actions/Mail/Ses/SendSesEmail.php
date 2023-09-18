@@ -65,6 +65,6 @@ class SendSesEmail
     {
         $user = request()->user();
 
-        return $user?->username ?? 'aiku' . '@' . app('currentTenant')->slug . env('MAIL_MAIN_URL');
+        return $user?->username ?? 'aiku' . '@' . customer()->slug . env('MAIL_MAIN_URL');
     }
 }

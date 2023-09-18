@@ -41,12 +41,12 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property-read \App\Models\Organisation\OrganisationCrmStats|null $crmStats
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \App\Models\Media\Media> $media
  * @property-read int|null $media_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Market\Shop> $shops
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Shop> $shops
  * @property-read int|null $shops_count
  * @property-read \App\Models\Organisation\OrganisationStats|null $stats
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Auth\OrganisationUser> $users
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, OrganisationUser> $users
  * @property-read int|null $users_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Web\Website> $websites
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Website> $websites
  * @property-read int|null $websites_count
  * @method static \Database\Factories\Organisation\OrganisationFactory factory($count = null, $state = [])
  * @method static Builder|Organisation newModelQuery()

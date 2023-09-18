@@ -55,7 +55,7 @@ class IndexSnapshots extends InertiaAction
                 ->withEmptyState(
                     [
                         'title' => __('No snapshot found'),
-                        'count' => app('currentTenant')->snapshotStats->sum('number_snapshots')
+                        'count' => customer()->snapshotStats->sum('number_snapshots')
                     ]
                 )
                 ->withExportLinks($exportLinks)

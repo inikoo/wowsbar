@@ -6,8 +6,6 @@
  */
 
 use App\Enums\CRM\Prospect\ProspectStateEnum;
-use App\Enums\HumanResources\Employee\EmployeeStateEnum;
-use App\Enums\HumanResources\Employee\EmployeeTypeEnum;
 use App\Enums\Miscellaneous\GenderEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;

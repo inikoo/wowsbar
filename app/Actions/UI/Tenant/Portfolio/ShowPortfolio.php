@@ -68,7 +68,7 @@ class ShowPortfolio extends InertiaAction
 
     private function getDashboard(): array
     {
-        $tenant=app('currentTenant');
+        $tenant=customer();
 
         return [
             'flatTreeMaps' => [

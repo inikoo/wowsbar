@@ -32,7 +32,7 @@ class IndexUserRequestLogs
         if ($client instanceof Client) {
             try {
                 $params  = [
-                    'index' => config('elasticsearch.index_prefix') . 'user_requests_' . app('currentTenant')->slug,
+                    'index' => config('elasticsearch.index_prefix') . 'user_requests_' . customer()->slug,
                     'size'  => 10000,
                     'body'  => [
                         'query' => [

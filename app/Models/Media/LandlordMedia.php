@@ -16,7 +16,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media as BaseMedia;
  * App\Models\Media\LandlordMedia
  *
  * @property int $id
- * @property int|null $tenant_id
+ * @property int|null $customer_id
  * @property string $slug
  * @property string|null $model_type
  * @property int|null $model_id
@@ -49,6 +49,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media as BaseMedia;
  * @method static Builder|LandlordMedia whereConversionsDisk($value)
  * @method static Builder|LandlordMedia whereCreatedAt($value)
  * @method static Builder|LandlordMedia whereCustomProperties($value)
+ * @method static Builder|LandlordMedia whereCustomerId($value)
  * @method static Builder|LandlordMedia whereDisk($value)
  * @method static Builder|LandlordMedia whereFileName($value)
  * @method static Builder|LandlordMedia whereGeneratedConversions($value)
@@ -63,7 +64,6 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media as BaseMedia;
  * @method static Builder|LandlordMedia whereResponsiveImages($value)
  * @method static Builder|LandlordMedia whereSize($value)
  * @method static Builder|LandlordMedia whereSlug($value)
- * @method static Builder|LandlordMedia whereTenantId($value)
  * @method static Builder|LandlordMedia whereUpdatedAt($value)
  * @method static Builder|LandlordMedia whereUuid($value)
  * @mixin \Eloquent

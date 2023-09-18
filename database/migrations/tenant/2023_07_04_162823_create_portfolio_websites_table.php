@@ -14,8 +14,8 @@ return new class () extends Migration {
     {
         Schema::create('portfolio_websites', function (Blueprint $table) {
             $table->smallIncrements('id');
-            $table->unsignedSmallInteger('tenant_id')->index();
-            $table->foreign('tenant_id')->references('id')->on('tenants');
+            $table->unsignedInteger('customer_id');
+            $table->foreign('customer_id')->references('id')->on('customers')->onUpdate('cascade')->onDelete('cascade');
             $table->string('slug')->collation('und_ns');
             $table->string('code')->collation('und_ns');
             $table->string('domain')->collation('und_ns');
@@ -23,9 +23,9 @@ return new class () extends Migration {
             $table->jsonb('data');
             $table->timestampsTz();
             $table->softDeletesTz();
-            $table->unique(['tenant_id','slug']);
-            $table->unique(['tenant_id','code']);
-            $table->unique(['tenant_id','domain']);
+            $table->unique(['customer_id','slug']);
+            $table->unique(['customer_id','code']);
+            $table->unique(['customer_id','domain']);
 
         });
     }

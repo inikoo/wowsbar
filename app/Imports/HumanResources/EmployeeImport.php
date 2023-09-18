@@ -36,11 +36,11 @@ class EmployeeImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wi
             try {
                 $employee = ExcelUploadRecord::create([
                         'excel_upload_id' => $this->employeeUpload->id,
-                        'data'   => json_encode([
+                        'data'            => json_encode([
                         'contact_name'    => $employee['contact_name'],
                         'date_of_birth'   => $employee['date_of_birth'],
-                        'job_title' => $employee['job_title'],
-                        'email' => $employee['email'],
+                        'job_title'       => $employee['job_title'],
+                        'email'           => $employee['email'],
                     ])
                 ]);
 

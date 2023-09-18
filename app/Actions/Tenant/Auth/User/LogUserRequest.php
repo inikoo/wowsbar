@@ -24,7 +24,7 @@ class LogUserRequest
         $parent = organisation();
 
         if(class_basename($user) == 'User') {
-            $parent = app('currentTenant');
+            $parent = customer();
         }
 
         switch (class_basename($parent)) {

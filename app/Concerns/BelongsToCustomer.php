@@ -7,26 +7,26 @@
 
 namespace App\Concerns;
 
-use App\Concerns\Scopes\TenantScope;
-use App\Models\Tenancy\Tenant;
+use App\Concerns\Scopes\CustomerScope;
+use App\Models\CRM\Customer;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-trait BelongsToTenant
+trait BelongsToCustomer
 {
-    public static function bootBelongsToTenant(): void
+    public static function bootBelongsToCustomer(): void
     {
-        static::addGlobalScope(new TenantScope());
+        static::addGlobalScope(new CustomerScope());
 
         static::creating(function (Model $model) {
-            $model->tenant_id ??= Tenant::current()?->id;
+            $model->customer_id ??= config('global.customer_id');
         });
 
     }
 
 
-    public function tenant(): BelongsTo
+    public function customer(): BelongsTo
     {
-        return $this->belongsTo(Tenant::class);
+        return $this->belongsTo(Customer::class);
     }
 }

@@ -7,8 +7,7 @@
 
 namespace App\Models\Portfolio;
 
-use App\Concerns\BelongsToTenant;
-use App\Models\Tenancy\Tenant;
+use App\Concerns\BelongsToCustomer;
 use App\Models\Traits\HasHistory;
 use App\Models\Traits\HasUniversalSearch;
 use Illuminate\Database\Eloquent\Builder;
@@ -25,7 +24,7 @@ use Spatie\Sluggable\SlugOptions;
  * App\Models\Portfolio\PortfolioWebsite
  *
  * @property int $id
- * @property int $tenant_id
+ * @property int $customer_id
  * @property string $slug
  * @property string $code
  * @property string $domain
@@ -38,9 +37,9 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read int|null $audits_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Portfolio\Banner> $banners
  * @property-read int|null $banners_count
+ * @property-read \App\Models\CRM\Customer $customer
  * @property-read array $es_audits
  * @property-read \App\Models\Portfolio\PortfolioWebsiteStats|null $stats
- * @property-read Tenant $tenant
  * @property-read \App\Models\Search\UniversalSearch|null $universalSearch
  * @method static \Database\Factories\Portfolio\PortfolioWebsiteFactory factory($count = null, $state = [])
  * @method static Builder|PortfolioWebsite newModelQuery()
@@ -49,13 +48,13 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|PortfolioWebsite query()
  * @method static Builder|PortfolioWebsite whereCode($value)
  * @method static Builder|PortfolioWebsite whereCreatedAt($value)
+ * @method static Builder|PortfolioWebsite whereCustomerId($value)
  * @method static Builder|PortfolioWebsite whereData($value)
  * @method static Builder|PortfolioWebsite whereDeletedAt($value)
  * @method static Builder|PortfolioWebsite whereDomain($value)
  * @method static Builder|PortfolioWebsite whereId($value)
  * @method static Builder|PortfolioWebsite whereName($value)
  * @method static Builder|PortfolioWebsite whereSlug($value)
- * @method static Builder|PortfolioWebsite whereTenantId($value)
  * @method static Builder|PortfolioWebsite whereUpdatedAt($value)
  * @method static Builder|PortfolioWebsite withTrashed()
  * @method static Builder|PortfolioWebsite withoutTrashed()
@@ -67,7 +66,7 @@ class PortfolioWebsite extends Model implements Auditable
     use SoftDeletes;
     use HasUniversalSearch;
     use HasFactory;
-    use BelongsToTenant;
+    use BelongsToCustomer;
     use HasHistory;
 
     protected $casts = [

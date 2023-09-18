@@ -7,7 +7,7 @@
 
 namespace App\Actions\Tenant\Auth\User;
 
-use App\Actions\Tenancy\Tenant\Hydrators\TenantHydrateUsers;
+use App\Actions\Organisation\CRM\Customer\Hydrators\CustomerHydrateUsers;
 use App\Actions\Traits\WithActionUpdate;
 use App\Http\Resources\Auth\UserResource;
 use App\Models\Auth\User;
@@ -26,8 +26,7 @@ class UpdateUserStatus
                 'status' => $status
             ]
         );
-
-        TenantHydrateUsers::dispatch(app('currentTenant'));
+        CustomerHydrateUsers::dispatch($user->customer);
 
         return $user;
     }

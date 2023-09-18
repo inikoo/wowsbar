@@ -26,7 +26,7 @@ class SetRootUserAvatar
                 ->preservingOriginal()
                 ->withProperties(
                     [
-                        'tenant_id' => app('currentTenant')
+                        'tenant_id' => customer()
                     ]
                 )
                 ->usingFileName($rootUser->username."-avatar.sgv")

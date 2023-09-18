@@ -7,17 +7,19 @@
 
 namespace App\Actions\Tenant\Portfolio\Banner;
 
-use App\Actions\Tenancy\Tenant\Hydrators\TenantHydrateBanners;
+use App\Actions\Organisation\CRM\Customer\Hydrators\CustomerHydrateBanners;
 use App\Actions\Tenant\Portfolio\Banner\Hydrators\BannerHydrateUniversalSearch;
 use App\Actions\Tenant\Portfolio\Banner\UI\ParseBannerLayout;
 use App\Actions\Tenant\Portfolio\PortfolioWebsite\Hydrators\PortfolioWebsiteHydrateBanners;
 use App\Actions\Tenant\Portfolio\Snapshot\StoreSnapshot;
+use App\Models\CRM\Customer;
 use App\Models\Portfolio\Banner;
 use App\Models\Portfolio\PortfolioWebsite;
-use App\Models\Tenancy\Tenant;
+use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Str;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -30,12 +32,13 @@ class StoreBanner
 
     private bool $asAction = false;
 
-    private Tenant|PortfolioWebsite $parent;
+    private Customer|PortfolioWebsite $parent;
 
 
-    public function handle(Tenant|PortfolioWebsite $parent, array $modelData): Banner
+    public function handle(Customer|PortfolioWebsite $parent, array $modelData): Banner
     {
         $this->parent = $parent;
+        $customer     =customer();
 
         $layout = [
             "delay"      => 5000,
@@ -56,7 +59,6 @@ class StoreBanner
         ];
         list($layout, $slides, $hash) = ParseBannerLayout::run($layout);
 
-        data_set($modelData, 'tenant_id', app('currentTenant')->id);
         data_set($modelData, 'data.website_slug', $parent->slug);
         data_set($modelData, 'ulid', Str::ulid());
         if (class_basename($parent) == 'PortfolioWebsite') {
@@ -87,15 +89,15 @@ class StoreBanner
             $parent->banners()->attach(
                 $banner->id,
                 [
-                    'tenant_id' => app('currentTenant')->id,
-                    'ulid'      => Str::ulid()
+                    'customer_id' => $customer->id,
+                    'ulid'        => Str::ulid()
                 ]
             );
 
         }
 
 
-        TenantHydrateBanners::dispatch(app('currentTenant'));
+        CustomerHydrateBanners::dispatch($customer);
 
         if(class_basename($parent) == 'PortfolioWebsite') {
             PortfolioWebsiteHydrateBanners::dispatch($parent);
@@ -130,7 +132,7 @@ class StoreBanner
     {
         //dd( $request->input());
 
-        $parent = app('currentTenant');
+        $parent = customer();
         $request->validate();
 
         $validatedData=$request->validated();
@@ -160,13 +162,18 @@ class StoreBanner
 
     public function getCommandSignature(): string
     {
-        return 'banner:create {tenant} {code} {name} {portfolio-website?}';
+        return 'customer:new-banner {customer} {code} {name} {portfolio-website?}';
     }
 
-    public function asCommand(Command $command): void
+    public function asCommand(Command $command): int
     {
-        $tenant = Tenant::where('slug', $command->argument('tenant'))->firstOrFail();
-        $tenant->makeCurrent();
+        try {
+            $customer = Customer::where('slug', $command->argument('customer'))->firstOrFail();
+        } catch (Exception) {
+            $command->error('Customer not found');
+            return 1;
+        }
+        Config::set('global.customer_id', $customer->id);
 
         if($website = $command->argument('portfolio-website')) {
             $portfolioWebsite = PortfolioWebsite::where('slug', $website)->firstOrFail();
@@ -183,9 +190,10 @@ class StoreBanner
         );
         $validatedData = $this->validateAttributes();
 
-        $banner = $this->handle($portfolioWebsite ?? $tenant, $validatedData);
+        $banner = $this->handle($portfolioWebsite ?? $customer, $validatedData);
 
         $command->info("Done! Content block $banner->code created 🎉");
+        return 0;
     }
 
     public function htmlResponse(Banner $banner): RedirectResponse

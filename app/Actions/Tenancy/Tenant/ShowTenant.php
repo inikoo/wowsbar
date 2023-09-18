@@ -18,7 +18,7 @@ class ShowTenant extends InertiaAction
 
     public function asController(): void
     {
-        $this->tenant = app('currentTenant');
+        $this->tenant = customer();
     }
 
 

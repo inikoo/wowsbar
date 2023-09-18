@@ -7,7 +7,7 @@
 
 namespace App\Actions\Tenant\Portfolio\Banner;
 
-use App\Actions\Tenancy\Tenant\Hydrators\TenantHydrateBanners;
+use App\Actions\Organisation\CRM\Customer\Hydrators\CustomerHydrateBanners;
 use App\Actions\Tenant\Portfolio\Banner\Hydrators\BannerHydrateUniversalSearch;
 use App\Actions\Tenant\Portfolio\PortfolioWebsite\Hydrators\PortfolioWebsiteHydrateBanners;
 use App\Actions\Traits\WithActionUpdate;
@@ -23,12 +23,10 @@ class UpdateBanner
 
     public function handle(Banner $banner, array $modelData): Banner
     {
-
-
         $this->update($banner, $modelData, ['data']);
 
         BannerHydrateUniversalSearch::dispatch($banner);
-        TenantHydrateBanners::dispatch(app('currentTenant'));
+        CustomerHydrateBanners::dispatch(customer());
 
         if (class_basename($banner->portfolioWebsite) == 'PortfolioWebsite') {
             PortfolioWebsiteHydrateBanners::dispatch($banner->portfolioWebsite);

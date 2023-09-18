@@ -17,7 +17,9 @@ use Laravel\Scout\Searchable;
  * App\Models\Search\UniversalSearch
  *
  * @property int $id
- * @property int $tenant_id
+ * @property int|null $shop_id
+ * @property int|null $website_id
+ * @property int|null $customer_id
  * @property string|null $model_type
  * @property int|null $model_id
  * @property string|null $section
@@ -26,19 +28,20 @@ use Laravel\Scout\Searchable;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read Model|\Eloquent $model
- * @property-read \App\Models\Tenancy\Tenant $tenant
  * @method static Builder|UniversalSearch newModelQuery()
  * @method static Builder|UniversalSearch newQuery()
  * @method static Builder|UniversalSearch query()
  * @method static Builder|UniversalSearch whereCreatedAt($value)
+ * @method static Builder|UniversalSearch whereCustomerId($value)
  * @method static Builder|UniversalSearch whereDescription($value)
  * @method static Builder|UniversalSearch whereId($value)
  * @method static Builder|UniversalSearch whereModelId($value)
  * @method static Builder|UniversalSearch whereModelType($value)
  * @method static Builder|UniversalSearch whereSection($value)
- * @method static Builder|UniversalSearch whereTenantId($value)
+ * @method static Builder|UniversalSearch whereShopId($value)
  * @method static Builder|UniversalSearch whereTitle($value)
  * @method static Builder|UniversalSearch whereUpdatedAt($value)
+ * @method static Builder|UniversalSearch whereWebsiteId($value)
  * @mixin \Eloquent
  */
 class UniversalSearch extends Model

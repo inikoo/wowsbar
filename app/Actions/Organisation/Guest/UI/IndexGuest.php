@@ -112,7 +112,7 @@ class IndexGuest extends InertiaAction
                     [
                         'title'       => __('no guest'),
                         'description' => $this->canEdit ? __('Get started by creating a new guest.') : null,
-                        'count'       => app('currentTenant')->stats->number_guests_status_active,
+                        'count'       => customer()->stats->number_guests_status_active,
                         'action'      => $this->canEdit ? [
                             'type'    => 'button',
                             'style'   => 'create',

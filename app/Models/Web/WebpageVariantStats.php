@@ -11,7 +11,6 @@ use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Spatie\Multitenancy\Models\Concerns\UsesTenantConnection;
 
 /**
  * App\Models\PortfolioWebsite\WebpageVariantStats
@@ -32,8 +31,6 @@ use Spatie\Multitenancy\Models\Concerns\UsesTenantConnection;
  */
 class WebpageVariantStats extends Model
 {
-    use UsesTenantConnection;
-
     protected $table = 'webpage_variant_stats';
 
     protected $guarded = [];

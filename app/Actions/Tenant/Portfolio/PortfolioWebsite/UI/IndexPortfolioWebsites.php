@@ -89,7 +89,7 @@ class IndexPortfolioWebsites extends InertiaAction
                 ->withEmptyState(
                     [
                         'title' => __('No websites found'),
-                        'count' => app('currentTenant')->stats->number_websites,
+                        'count' => customer()->stats->number_websites,
 
                     ]
                 )

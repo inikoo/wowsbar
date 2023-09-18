@@ -29,7 +29,7 @@ enum BannerStateEnum: string
 
     public static function count(): array
     {
-        $stats = app('currentTenant')->portfolioStats;
+        $stats = customer()->portfolioStats;
 
         return [
             'unpublished' => $stats->number_banners_state_unpublished,

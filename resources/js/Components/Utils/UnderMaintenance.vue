@@ -12,6 +12,7 @@ library.add(faConstruction, faRocketLaunch, faDoNotEnter, faDraftingCompass)
 
 const props = defineProps<{
     data: {
+        id: integer,
         slug: string
         state: string
         status: string
@@ -23,7 +24,7 @@ const props = defineProps<{
 // Handle Button: Launch
 const handleLaunch = () => {
     router.patch(
-        route('org.models.website.state.update'),
+        route('org.models.website.state.update',{website:props.data.id}),
         { state: 'live'},
     )
 }
@@ -50,7 +51,7 @@ const handleLaunch = () => {
             </div>
 
             <div class="mt-10 flex items-center justify-center gap-x-6">
-                <Button v-if="data.state === 'in-process'" :style="`secondary`" @click="router.visit(route('org.website.workshop'))">
+                <Button v-if="data.state === 'in-process'" :style="`secondary`" @click="router.visit(route('org.websites.workshop',data.slug))">
                     <div class="flex items-center gap-x-1">
                         <FontAwesomeIcon icon='fal fa-drafting-compass' class='' aria-hidden='true' />
                         {{ trans("Workshop") }}

@@ -7,7 +7,7 @@
 
 namespace App\Actions\Tenant\Portfolio\Banner;
 
-use App\Actions\Tenancy\Tenant\Hydrators\TenantHydrateBanners;
+use App\Actions\Organisation\CRM\Customer\Hydrators\CustomerHydrateBanners;
 use App\Actions\Tenant\Portfolio\Banner\Elasticsearch\DeleteBannerElasticsearch;
 use App\Actions\Tenant\Portfolio\PortfolioWebsite\Hydrators\PortfolioWebsiteHydrateBanners;
 use App\Models\Portfolio\Banner;
@@ -31,7 +31,7 @@ class DeleteBanner
     {
         $contentBlock->delete();
 
-        TenantHydrateBanners::dispatch(app('currentTenant'));
+        CustomerHydrateBanners::dispatch(customer());
 
         if(class_basename($contentBlock->portfolioWebsite) == 'PortfolioWebsite') {
             PortfolioWebsiteHydrateBanners::dispatch($contentBlock->portfolioWebsite);

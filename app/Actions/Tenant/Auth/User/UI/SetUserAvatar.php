@@ -27,7 +27,7 @@ class SetUserAvatar
                 ->preservingOriginal()
                 ->withProperties(
                     [
-                        'tenant_id' => app('currentTenant')->id
+                        'tenant_id' => customer()->id
                     ]
                 )
                 ->usingName($user->username."-avatar")

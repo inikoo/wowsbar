@@ -33,7 +33,7 @@ class UploadImagesToBanner
         foreach ($imageFiles as $imageFile) {
 
             $media =AttachImageToTenant::run(
-                tenant: app('currentTenant'),
+                tenant: customer(),
                 collection: 'content_block',
                 imagePath: $imageFile->getPathName(),
                 originalFilename: $imageFile->getClientOriginalName(),

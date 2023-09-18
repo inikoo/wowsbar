@@ -16,8 +16,8 @@ return new class () extends Migration {
     {
         Schema::create('banner_stats', function (Blueprint $table) {
             $table->id();
-            $table->unsignedSmallInteger('tenant_id');
-            $table->foreign('tenant_id')->references('id')->on('tenants')->onUpdate('cascade')->onDelete('cascade');
+            $table->unsignedInteger('customer_id');
+            $table->foreign('customer_id')->references('id')->on('customers')->onUpdate('cascade')->onDelete('cascade');
             $table->unsignedMediumInteger('banner_id');
             $table->foreign('banner_id')->references('id')->on('banners')->onUpdate('cascade')->onDelete('cascade');
             foreach (SnapshotStateEnum::cases() as $state) {

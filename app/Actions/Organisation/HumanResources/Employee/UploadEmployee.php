@@ -26,7 +26,7 @@ class UploadEmployee
     /**
      * @var true
      */
-    private bool $asAction = false;
+    private bool $asAction          = false;
     public string $commandSignature = 'employee:import {filename}';
 
     public function handle($file): void
@@ -37,7 +37,7 @@ class UploadEmployee
         Storage::disk('local')->put($path, $file);
 
         $employeeUpload = StoreEmployeeUploads::run([
-            'type' => class_basename(Employee::class),
+            'type'              => class_basename(Employee::class),
             'original_filename' => $file->getClientOriginalName(),
             'filename'          => $filename
         ]);
@@ -57,8 +57,8 @@ class UploadEmployee
     public function asCommand(Command $command): void
     {
         $filename = $command->argument('filename');
-        $path = 'org/employees';
-        $finfo = new finfo(FILEINFO_MIME_TYPE);
+        $path     = 'org/employees';
+        $finfo    = new finfo(FILEINFO_MIME_TYPE);
         $fullPath = storage_path('app/' . $path . '/' . $filename);
 
         if (Storage::disk('local')->exists('org/employees/' . $filename)) {

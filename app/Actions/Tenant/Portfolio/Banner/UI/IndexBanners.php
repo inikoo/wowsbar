@@ -115,7 +115,7 @@ class IndexBanners extends InertiaAction
 
             $description = null;
             if ($canEdit) {
-                if (app('currentTenant')->stats->number_websites == 0) {
+                if (customer()->stats->number_websites == 0) {
                     $description = __('Before creating your first banner you need a website').' 😉';
 
                     $action = [
@@ -132,7 +132,7 @@ class IndexBanners extends InertiaAction
 
             $emptyState = [
                 'title'       => __('No banners found'),
-                'count'       => app('currentTenant')->stats->number_content_blocks_web_block_type_banner,
+                'count'       => customer()->stats->number_content_blocks_web_block_type_banner,
                 'description' => $description,
                 'action'      => $action
                 /*
@@ -180,7 +180,7 @@ class IndexBanners extends InertiaAction
     public function inTenant(ActionRequest $request): LengthAwarePaginator
     {
         $this->initialisation($request);
-        $this->parent = app('currentTenant');
+        $this->parent = customer();
 
         return $this->handle($this->parent);
     }
@@ -223,14 +223,14 @@ class IndexBanners extends InertiaAction
                         'icon'  => 'fal fa-window-maximize'
                     ],
                     'actions'   => [
-                        match (app('currentTenant')->stats->number_websites) {
+                        match (customer()->stats->number_websites) {
                             1 => [
                                 'type'  => 'button',
                                 'style' => 'create',
                                 'label' => __('create banner'),
                                 'route' => [
                                     'name'       => 'tenant.portfolio.websites.show.banners.create',
-                                    'parameters' => app('currentTenant')->portfolioWebsites()->first()->slug
+                                    'parameters' => customer()->portfolioWebsites()->first()->slug
                                 ]
                             ],
                             default => [

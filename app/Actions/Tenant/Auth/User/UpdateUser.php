@@ -7,7 +7,7 @@
 
 namespace App\Actions\Tenant\Auth\User;
 
-use App\Actions\Tenancy\Tenant\Hydrators\TenantHydrateUsers;
+use App\Actions\Organisation\CRM\Customer\Hydrators\CustomerHydrateUsers;
 use App\Actions\Traits\WithActionUpdate;
 use App\Http\Resources\Auth\UserResource;
 use App\Models\Auth\User;
@@ -27,7 +27,7 @@ class UpdateUser
         $user = $this->update($user, $modelData, 'settings');
 
         if ($user->wasChanged('status')) {
-            TenantHydrateUsers::run(app('currentTenant'));
+            CustomerHydrateUsers::run($user->customer);
         }
 
         return $user;

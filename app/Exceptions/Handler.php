@@ -38,6 +38,8 @@ class Handler extends ExceptionHandler
                 app('sentry')->captureException($e);
             }
         });
+
+
     }
 
     public function render($request, Throwable $e): Response|JsonResponse|\Symfony\Component\HttpFoundation\Response|RedirectResponse
@@ -112,8 +114,8 @@ class Handler extends ExceptionHandler
 
     public function getInertiaPage(Throwable $e): string
     {
-        if(get_class($e)=='Spatie\Multitenancy\Exceptions\NoCurrentTenant') {
-            return 'Utils/TenantNotFound';
+        if(get_class($e)=='Exceptions\NoCustomer') {
+            return 'Utils/CustomerNotFound';
         }
 
         return Auth::check() ? 'Utils/ErrorInApp' : 'Utils/Error';

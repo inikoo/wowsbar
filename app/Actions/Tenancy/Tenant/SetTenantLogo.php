@@ -19,14 +19,14 @@ class SetTenantLogo
     public function handle(): void
     {
 
-        $tenant=app('currentTenant');
+        $tenant=customer();
         try {
             $seed       = 'tenant-'.$tenant->id;
             $media      = $tenant->addMediaFromUrl("https://api.dicebear.com/6.x/shapes/svg?seed=$seed")
                 ->preservingOriginal()
                 ->withProperties(
                     [
-                        'tenant_id' => app('currentTenant')->id
+                        'tenant_id' => customer()->id
                     ]
                 )
                 ->usingName($tenant->slug."-logo")

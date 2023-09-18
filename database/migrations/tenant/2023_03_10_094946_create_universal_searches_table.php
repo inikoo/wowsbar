@@ -14,7 +14,11 @@ return new class () extends Migration {
     {
         Schema::create('universal_searches', function (Blueprint $table) {
             $table->id();
-            $table->unsignedSmallInteger('customer_id')->nullable()->index();
+            $table->unsignedInteger('shop_id')->nullable()->index();
+            $table->foreign('shop_id')->references('id')->on('shops');
+            $table->unsignedInteger('website_id')->nullable()->index();
+            $table->foreign('website_id')->references('id')->on('websites');
+            $table->unsignedInteger('customer_id')->nullable()->index();
             $table->foreign('customer_id')->references('id')->on('customers');
             $table->nullableMorphs('model');
             $table->string('section')->nullable();

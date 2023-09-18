@@ -16,14 +16,17 @@ return new class () extends Migration {
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->smallIncrements('id');
-            $table->unsignedSmallInteger('tenant_id')->index();
-            $table->foreign('tenant_id')->references('id')->on('tenants');
-            $table = $this->userDetailsColumns($table, 'username');
+            $table->increments('id');
+            $table->unsignedInteger('customer_id')->index()->nullable();
+            $table->foreign('customer_id')->references('id')->on('customers');
+            $table->unsignedInteger('website_id')->index();
+            $table->foreign('website_id')->references('id')->on('websites');
+            $table->string('username')->unique()->nullable()->index()->collation('und_ns');
+
+            $table = $this->userDetailsColumns($table, 'email');
             $table->timestampsTz();
             $table->softDeletesTz();
-            $table->unique(['tenant_id', 'username']);
-            $table->unique(['tenant_id', 'email']);
+
         });
     }
 

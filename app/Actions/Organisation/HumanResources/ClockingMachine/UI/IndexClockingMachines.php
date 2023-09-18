@@ -76,7 +76,7 @@ class IndexClockingMachines extends InertiaAction
                     [
                         'title'       => __('no clocking machines'),
                         'description' => $this->canEdit ? __('Get started by creating a new clocking machine.') : null,
-                        'count'       => app('currentTenant')->stats->number_clocking_machines,
+                        'count'       => customer()->stats->number_clocking_machines,
                         'action'      => $this->canEdit ? [
                             'type'    => 'button',
                             'style'   => 'create',
@@ -110,7 +110,7 @@ class IndexClockingMachines extends InertiaAction
     {
         $this->initialisation($request);
 
-        return $this->handle(app('currentTenant'));
+        return $this->handle(customer());
     }
 
     public function inWorkplace(Workplace $workplace, ActionRequest $request): LengthAwarePaginator

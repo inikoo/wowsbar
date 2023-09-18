@@ -25,7 +25,7 @@ class LogUserFirebaseMiddleware
         if ($user && env('LIVE_USERS_LIST')) {
             if (Auth::getDefaultDriver() == 'web') {
                 $parentType = 'Tenant';
-                $parentSlug = app('currentTenant')->slug;
+                $parentSlug = customer()->slug;
             } else {
                 $parentType = 'Organisation';
                 $parentSlug = null;

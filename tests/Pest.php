@@ -6,10 +6,17 @@
  */
 
 
+use App\Actions\Organisation\CRM\Customer\StoreCustomer;
+use App\Actions\Organisation\Market\Shop\StoreShop;
+use App\Actions\Organisation\Organisation\StoreOrganisation;
+use App\Actions\Organisation\Web\Website\StoreWebsite;
+use App\Enums\Organisation\Market\Shop\ShopTypeEnum;
+use App\Models\CRM\Customer;
+use App\Models\Organisation\Organisation;
 use Symfony\Component\Process\Process;
 use Tests\TestCase;
 
-uses(TestCase::class, )->in('Feature');
+uses(TestCase::class)->in('Feature');
 
 function loadDB($dumpName): void
 {
@@ -27,4 +34,38 @@ function loadDB($dumpName): void
         ]
     );
     $process->run();
+}
+
+
+/**
+ * @throws \Throwable
+ */
+function createCustomer(): void
+{
+    try {
+        $organisation = organisation();
+    } catch (Exception) {
+        $organisation = StoreOrganisation::make()->action(Organisation::factory()->definition());
+        $shop         = StoreShop::run(
+            $organisation,
+            [
+                'type' => ShopTypeEnum::DIGITAL_MARKETING->value
+            ]
+        );
+
+        StoreWebsite::make()->action(
+            $shop,
+            [
+                'code'   => $shop->code,
+                'domain' => 'acme.test',
+            ]
+        );
+        $shop->refresh();
+
+    }
+    $customer = Customer::first();
+    if (!$customer) {
+        $customer = StoreCustomer::make()->action($organisation->shops->first(), Customer::factory()->definition());
+    }
+    config(['global.customer_id' => $customer->id]);
 }

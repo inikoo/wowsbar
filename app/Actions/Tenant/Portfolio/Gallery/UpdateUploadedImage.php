@@ -26,7 +26,7 @@ class UpdateUploadedImage
         if(count($imageFiles) > 0) {
             foreach ($imageFiles as $imageFile) {
                 AttachImageToTenant::run(
-                    tenant: app('currentTenant'),
+                    tenant: customer(),
                     collection: 'content_block',
                     imagePath: $imageFile->getPathName(),
                     originalFilename: $imageFile->getClientOriginalName(),

@@ -7,11 +7,8 @@
 
 namespace App\Models\Media;
 
-use App\Models\Tenancy\Tenant;
-
 use App\Models\Traits\IsMedia;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection;
 use Spatie\MediaLibrary\MediaCollections\Models\Media as BaseMedia;
 
@@ -19,7 +16,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media as BaseMedia;
  * App\Models\Media\Media
  *
  * @property int $id
- * @property int|null $tenant_id
+ * @property int|null $customer_id
  * @property string $slug
  * @property string|null $model_type
  * @property int|null $model_id
@@ -41,8 +38,6 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media as BaseMedia;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Model|\Eloquent $model
- * @property-read \Spatie\Multitenancy\TenantCollection<int, Tenant> $tenants
- * @property-read int|null $tenants_count
  * @method static MediaCollection<int, static> all($columns = ['*'])
  * @method static MediaCollection<int, static> get($columns = ['*'])
  * @method static Builder|Media newModelQuery()
@@ -54,6 +49,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media as BaseMedia;
  * @method static Builder|Media whereConversionsDisk($value)
  * @method static Builder|Media whereCreatedAt($value)
  * @method static Builder|Media whereCustomProperties($value)
+ * @method static Builder|Media whereCustomerId($value)
  * @method static Builder|Media whereDisk($value)
  * @method static Builder|Media whereFileName($value)
  * @method static Builder|Media whereGeneratedConversions($value)
@@ -68,7 +64,6 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media as BaseMedia;
  * @method static Builder|Media whereResponsiveImages($value)
  * @method static Builder|Media whereSize($value)
  * @method static Builder|Media whereSlug($value)
- * @method static Builder|Media whereTenantId($value)
  * @method static Builder|Media whereUpdatedAt($value)
  * @method static Builder|Media whereUuid($value)
  * @mixin \Eloquent
@@ -77,10 +72,7 @@ class Media extends BaseMedia
 {
     use IsMedia;
 
-    public function tenants(): BelongsToMany
-    {
-        return $this->belongsToMany(Tenant::class)->withTimestamps();
-    }
+
 
     public function getRouteKeyName(): string
     {

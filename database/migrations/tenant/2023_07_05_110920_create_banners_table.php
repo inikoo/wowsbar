@@ -16,8 +16,8 @@ return new class () extends Migration {
         Schema::create('banners', function (Blueprint $table) {
             $table->mediumIncrements('id');
             $table->ulid()->index();
-            $table->unsignedSmallInteger('tenant_id')->index();
-            $table->foreign('tenant_id')->references('id')->on('tenants');
+            $table->unsignedInteger('customer_id');
+            $table->foreign('customer_id')->references('id')->on('customers')->onUpdate('cascade')->onDelete('cascade');
             $table->unsignedSmallInteger('portfolio_website_id')->nullable()->index();
             $table->foreign('portfolio_website_id')->references('id')->on('portfolio_websites');
             $table->string('slug')->collation('und_ns');
@@ -35,7 +35,7 @@ return new class () extends Migration {
             $table->foreign('image_id')->references('id')->on('media');
             $table->timestampsTz();
             $table->softDeletesTz();
-            $table->unique(['tenant_id', 'slug']);
+            $table->unique(['customer_id', 'slug']);
         });
     }
 

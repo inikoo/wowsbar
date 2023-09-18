@@ -31,11 +31,11 @@ class UploadPortfolioWebsite
         $file     = $request->file('file');
         $filename = $file->hashName();
 
-        $path = 'tenants/' . app('currentTenant')->slug . '/websites';
+        $path = 'tenants/' . customer()->slug . '/websites';
         Storage::disk('local')->put($path, $file);
 
-        $websiteUpload = StorePortfolioWebsiteUploads::run(app('currentTenant'), [
-            'type' => class_basename(PortfolioWebsite::class),
+        $websiteUpload = StorePortfolioWebsiteUploads::run(customer(), [
+            'type'              => class_basename(PortfolioWebsite::class),
             'original_filename' => $file->getClientOriginalName(),
             'filename'          => $filename
         ]);

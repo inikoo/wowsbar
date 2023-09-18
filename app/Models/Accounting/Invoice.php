@@ -40,7 +40,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read Currency $currency
- * @property-read \App\Models\CRM\Customer $customer
+ * @property-read Customer $customer
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Accounting\InvoiceTransaction> $invoiceTransactions
  * @property-read int|null $invoice_transactions_count
  * @property-read \App\Models\Accounting\InvoiceStats|null $stats

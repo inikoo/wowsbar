@@ -20,10 +20,10 @@ class WebsiteResource extends JsonResource
         $website = $this;
 
         return [
-            'slug'   => $website->slug,
-            'name'   => $website->name,
-            'domain' => $website->domain,
-
+            'id'         => $website->id,
+            'slug'       => $website->slug,
+            'name'       => $website->name,
+            'domain'     => $website->domain,
             'state'      => $website->state,
             'status'     => $website->status,
             'created_at' => $website->created_at,

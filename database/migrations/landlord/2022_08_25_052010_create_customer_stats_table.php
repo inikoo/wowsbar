@@ -16,19 +16,25 @@ return new class () extends Migration {
             $table->increments('id');
             $table->unsignedInteger('customer_id')->index();
             $table->foreign('customer_id')->references('id')->on('customers');
-            $table->unsignedInteger('number_web_users')->default(0);
-            $table->unsignedInteger('number_active_web_users')->default(0);
+
+            $table->unsignedSmallInteger('number_users')->default(0);
+            $table->unsignedSmallInteger('number_users_status_active')->default(0);
+            $table->unsignedSmallInteger('number_users_status_inactive')->default(0);
+
+
+            $table->unsignedSmallInteger('number_portfolio_websites')->default(0);
+            $table->unsignedSmallInteger('number_images')->default(0);
+            $table->unsignedBigInteger('filesize_images')->default(0);
+            $table->unsignedSmallInteger('number_attachments')->default(0);
+            $table->unsignedBigInteger('filesize_attachments')->default(0);
+
+
             $table->timestampTz('last_submitted_order_at')->nullable();
-            $table->timestampTz('last_dispatched_delivery_at')->nullable();
             $table->timestampTz('last_invoiced_at')->nullable();
-            $table->unsignedInteger('number_deliveries')->default(0);
-            $table->unsignedInteger('number_deliveries_type_order')->default(0);
-            $table->unsignedInteger('number_deliveries_type_replacement')->default(0);
+
             $table->unsignedInteger('number_invoices')->default(0);
             $table->unsignedInteger('number_invoices_type_invoice')->default(0);
             $table->unsignedInteger('number_invoices_type_refund')->default(0);
-            $table->unsignedInteger('number_clients')->default(0);
-            $table->unsignedInteger('number_active_clients')->default(0);
             $table->timestampsTz();
         });
     }

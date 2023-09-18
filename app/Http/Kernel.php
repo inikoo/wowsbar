@@ -9,6 +9,7 @@ namespace App\Http;
 
 use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\CheckWebsiteState;
+use App\Http\Middleware\DetectWebsite;
 use App\Http\Middleware\EncryptCookies;
 use App\Http\Middleware\HandleDeliveryInertiaRequests;
 use App\Http\Middleware\HandleTenantInertiaRequests;
@@ -62,7 +63,6 @@ class Kernel extends HttpKernel
 
         'web'        => [
             NeedsTenant::class,
-
             EncryptCookies::class,
             AddQueuedCookiesToResponse::class,
             StartSession::class,
@@ -109,6 +109,29 @@ class Kernel extends HttpKernel
             LogUserFirebaseMiddleware::class,
             LogUserRequestMiddleware::class
         ],
+        'frontend' => [
+            DetectWebsite::class,
+            CheckWebsiteState::class,
+            EncryptCookies::class,
+            AddQueuedCookiesToResponse::class,
+            StartSession::class,
+            ShareErrorsFromSession::class,
+            VerifyCsrfToken::class,
+            SubstituteBindings::class,
+            HandlePublicInertiaRequests::class,
+            AddLinkHeadersForPreloadedAssets::class,
+        ],
+
+        'public' => [
+            HandlePublicInertiaRequests::class,
+            AddLinkHeadersForPreloadedAssets::class,
+        ],
+
+        'customer' => [
+            HandleTenantInertiaRequests::class,
+            AddLinkHeadersForPreloadedAssets::class,
+        ],
+
 
         'webhooks-api' => [
             EnsureFrontendRequestsAreStateful::class,
@@ -120,6 +143,9 @@ class Kernel extends HttpKernel
             ThrottleRequests::class.':api',
             SubstituteBindings::class,
         ],
+
+
+
     ];
 
 

@@ -84,7 +84,7 @@ class IndexStockImages extends InertiaAction
                 ->withEmptyState(
                     [
                         'title' => __('No images found'),
-                        'count' => app('currentTenant')->stats->number_websites,
+                        'count' => customer()->stats->number_websites,
 
                     ]
                 )

@@ -24,7 +24,7 @@ class ShowDashboard
             [
                 'title'       => __('dashboard'),
                 'breadcrumbs' => $this->getBreadcrumbs(__('dashboard')),
-                'banners'     => GetLastEditedBanner::run(app('currentTenant')),
+                'banners'     => GetLastEditedBanner::run(customer()),
                 'userName'    => $request->user()->contact_name??$request->user()->username
             ]
         );

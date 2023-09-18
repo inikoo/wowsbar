@@ -14,8 +14,8 @@ return new class () extends Migration {
     {
         Schema::create('media', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedSmallInteger('tenant_id')->nullable()->index();
-            $table->foreign('tenant_id')->references('id')->on('tenants');
+            $table->unsignedInteger('customer_id')->nullable()->index();
+            $table->foreign('customer_id')->references('id')->on('customers');
             $table->string('slug')->unique()->index();
             $table->string('model_type')->nullable();
             $table->unsignedInteger('model_id')->nullable();

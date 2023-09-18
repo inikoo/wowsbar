@@ -28,7 +28,7 @@ class CreateBanner extends InertiaAction
     {
         $this->initialisation($request);
 
-        return $this->handle(app('currentTenant'), $request);
+        return $this->handle(customer(), $request);
     }
 
     public function inPortfolioWebsite(PortfolioWebsite $portfolioWebsite, ActionRequest $request): Response|RedirectResponse

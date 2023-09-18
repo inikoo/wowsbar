@@ -7,7 +7,6 @@
 
 namespace App\Actions\Tenant\Portfolio\PortfolioWebsite\Hydrators;
 
-use App\Actions\Tenancy\Tenant\Hydrators\HasTenantHydrate;
 use App\Enums\Portfolio\Banner\BannerStateEnum;
 use App\Models\Portfolio\PortfolioWebsite;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
@@ -16,7 +15,6 @@ use Lorisleiva\Actions\Concerns\AsAction;
 class PortfolioWebsiteHydrateBanners implements ShouldBeUnique
 {
     use AsAction;
-    use HasTenantHydrate;
 
 
     public function handle(PortfolioWebsite $portfolioWebsite): void

@@ -32,13 +32,17 @@ class StoreCustomer
     /**
      * @throws Throwable
      */
-    public function handle(Shop $shop, array $customerData, array $customerAddressesData = []): Customer
+    public function handle(Shop $shop, array $modelData, array $customerAddressesData = []): Customer
     {
-        return DB::transaction(function () use ($customerData, $shop) {
-            /** @var \App\Models\Organisation\CRM\\App\Models\CRM\Customer $customer */
-            $customer = $shop->customers()->create($customerData);
-            if ($customer->reference == null) {
+        return DB::transaction(function () use ($modelData, $shop) {
+            $organisation = organisation();
 
+            data_set($modelData, 'timezone_id', $organisation->timezone_id, overwrite: false);
+            data_set($modelData, 'language_id', $organisation->language_id, overwrite: false);
+
+            /** @var Customer $customer */
+            $customer = $shop->customers()->create($modelData);
+            if ($customer->reference == null) {
                 $reference = GetSerialReference::run(
                     container: $shop,
                     modelType: SerialReferenceModelEnum::CUSTOMER
@@ -48,11 +52,10 @@ class StoreCustomer
                         'reference' => $reference
                     ]
                 );
-
-
             }
             $customer->generateSlug();
             $customer->stats()->create();
+            $customer->portfolioStats()->create();
 
             CustomerHydrateUniversalSearch::dispatch($customer);
 
@@ -78,6 +81,8 @@ class StoreCustomer
             'phone'                    => ['nullable', 'phone:AUTO'],
             'identity_document_number' => ['nullable', 'string'],
             'contact_website'          => ['nullable', 'active_url'],
+            'timezone_id'              => ['nullable', 'exists:timezones,id'],
+            'language_id'              => ['nullable', 'exists:languages,id']
 
         ];
     }
@@ -103,7 +108,7 @@ class StoreCustomer
     /**
      * @throws Throwable
      */
-    public function action(Shop $shop, $objectData, array $customerAddressesData=[]): Customer
+    public function action(Shop $shop, $objectData, array $customerAddressesData = []): Customer
     {
         $this->asAction = true;
         $this->setRawAttributes($objectData);
@@ -131,9 +136,9 @@ class StoreCustomer
 
 
         $this->setRawAttributes([
-            'contact_name'        => $command->option('contact_name'),
-            'company_name'        => $command->option('company'),
-            'email'               => $command->argument('email'),
+            'contact_name' => $command->option('contact_name'),
+            'company_name' => $command->option('company'),
+            'email'        => $command->argument('email'),
         ]);
 
         try {

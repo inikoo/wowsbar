@@ -19,9 +19,11 @@ class CustomerHydrateUniversalSearch
         $customer->universalSearch()->updateOrCreate(
             [],
             [
-                'section'    => 'crm',
-                'title'      => trim($customer->email.' '.$customer->contact_name.' '.$customer->company_name),
-                'customer_id'=> $customer->id
+                'shop_id'     => $customer->shop_id,
+                'website_id'  => $customer->website_id,
+                'section'     => 'crm',
+                'title'       => trim($customer->email.' '.$customer->contact_name.' '.$customer->company_name),
+                'customer_id' => $customer->id
             ]
         );
     }
