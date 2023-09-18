@@ -27,7 +27,7 @@ class CustomerHydrateSnapshot implements ShouldBeUnique
             $stats['number_snapshots_state_'.$state->snake()] = $customer->banners()->where('state', $state->value)->count();
         }
 
-        $customer->snapshotStats->update($stats);
+        $customer->portfolioStats()->update($stats);
     }
 
 }

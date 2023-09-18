@@ -16,18 +16,15 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $id
  * @property int $organisation_id
  * @property int $number_prospects
- * @property int $number_employees_state_hired
- * @property int $number_employees_state_working
- * @property int $number_employees_state_left
- * @property int $number_employees_type_employee
- * @property int $number_employees_type_volunteer
- * @property int $number_employees_type_temporal_worker
- * @property int $number_employees_type_work_experience
- * @property int $number_employees_gender_male
- * @property int $number_employees_gender_female
- * @property int $number_employees_gender_other
- * @property int $number_job_positions
- * @property int $number_working_places
+ * @property int $number_prospects_state_no_contacted
+ * @property int $number_prospects_state_contacted
+ * @property int $number_prospects_state_not_interested
+ * @property int $number_prospects_state_registered
+ * @property int $number_prospects_state_invoiced
+ * @property int $number_prospects_state_bounced
+ * @property int $number_prospects_gender_male
+ * @property int $number_prospects_gender_female
+ * @property int $number_prospects_gender_other
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Organisation\Organisation $organisation
@@ -36,19 +33,16 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats query()
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberEmployees($value)
- * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberEmployeesGenderFemale($value)
- * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberEmployeesGenderMale($value)
- * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberEmployeesGenderOther($value)
- * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberEmployeesStateHired($value)
- * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberEmployeesStateLeft($value)
- * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberEmployeesStateWorking($value)
- * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberEmployeesTypeEmployee($value)
- * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberEmployeesTypeTemporalWorker($value)
- * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberEmployeesTypeVolunteer($value)
- * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberEmployeesTypeWorkExperience($value)
- * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberJobPositions($value)
- * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberWorkingPlaces($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberProspects($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberProspectsGenderFemale($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberProspectsGenderMale($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberProspectsGenderOther($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberProspectsStateBounced($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberProspectsStateContacted($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberProspectsStateInvoiced($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberProspectsStateNoContacted($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberProspectsStateNotInterested($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberProspectsStateRegistered($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereOrganisationId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereUpdatedAt($value)
  * @mixin \Eloquent

@@ -21,36 +21,32 @@ class CheckWebsiteState
      */
     public function handle(Request $request, Closure $next): Response
     {
-
-        $website=$request->get('website');
+        $website = $request->get('website');
 
         $status = $website->status;
         if ($status) {
             return $next($request);
         } else {
-
-
-
-            $url    ='';
+            $url    = '';
             $status = 307;
 
 
             switch ($website->state) {
                 case                     WebsiteStateEnum::LIVE:
-                    $url    = 'disclosure/maintenance';
-                    if($request->route()->getName()=='frontend.disclosure.maintenance') {
+                    $url = 'disclosure/maintenance';
+                    if ($request->route()->getName() == 'public.disclosure.maintenance') {
                         return $next($request);
                     }
                     break;
                 case                     WebsiteStateEnum::IN_PROCESS:
                     $url = 'disclosure/under-construction';
-                    if($request->route()->getName()=='frontend.disclosure.under-construction') {
+                    if ($request->route()->getName() == 'public.disclosure.under-construction') {
                         return $next($request);
                     }
 
                     break;
                 case                     WebsiteStateEnum::CLOSED:
-                    if($request->route()->getName()=='frontend.disclosure.closed') {
+                    if ($request->route()->getName() == 'public.disclosure.closed') {
                         return $next($request);
                     }
                     $url    = 'disclosure/closed';
@@ -58,7 +54,7 @@ class CheckWebsiteState
                     break;
             }
 
-            if(!$url) {
+            if (!$url) {
                 return $next($request);
             }
 

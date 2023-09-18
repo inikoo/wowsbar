@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $id
  * @property int $customer_id
  * @property int $banner_id
+ * @property int $number_snapshots
  * @property int $number_snapshots_state_unpublished
  * @property int $number_snapshots_state_live
  * @property int $number_snapshots_state_historic
@@ -32,6 +33,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static Builder|BannerStats whereCreatedAt($value)
  * @method static Builder|BannerStats whereCustomerId($value)
  * @method static Builder|BannerStats whereId($value)
+ * @method static Builder|BannerStats whereNumberSnapshots($value)
  * @method static Builder|BannerStats whereNumberSnapshotsStateHistoric($value)
  * @method static Builder|BannerStats whereNumberSnapshotsStateLive($value)
  * @method static Builder|BannerStats whereNumberSnapshotsStateUnpublished($value)

@@ -20,11 +20,11 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|ExcelUploadRecord query()
  * @method static \Illuminate\Database\Eloquent\Builder|ExcelUploadRecord whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ExcelUploadRecord whereData($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ExcelUploadRecord whereExcelUploadId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ExcelUploadRecord whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ExcelUploadRecord whereStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ExcelUploadRecord whereTenantId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ExcelUploadRecord whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ExcelUploadRecord whereWebsiteUploadId($value)
  * @mixin \Eloquent
  */
 

@@ -46,8 +46,8 @@ php artisan shop:new-website awa 'awa.test'
 echo "🌱 create customer"
 php artisan shop:new-customer awa aiku@inikoo.com -C 'Aiku'
 php artisan shop:new-customer awa devs@aw-advantage.com -C 'aw-advantage'
-php artisan customer:new-user 000001 -P hello -N 'Mary'
-php artisan customer:new-user 000002 -P hello -N 'Zoe'
+php artisan customer:new-user 000001 -u aiku -P hello -N 'Mary'
+php artisan customer:new-user 000002 -u aiku2 -P hello -N 'Zoe'
 pg_dump -Fc -f "devops/devel/snapshots/customers.dump" ${DB}
 echo "🌱 create test website with a banner"
 php artisan customer:new-portfolio-website 000001 hello.com hello 'My website 😸'

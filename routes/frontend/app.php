@@ -15,9 +15,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware([
     'frontend',
 ])->group(function () {
-
-    Route::middleware(['public-auth:public','public'])
-
+    Route::middleware(['guest:public', 'public'])
         ->name('public.')->group(function () {
             Route::get('/', ShowHome::class)->name('welcome');
             Route::get('/appointment', ShowPublicAppointment::class)->name('appointment.show');
@@ -26,7 +24,7 @@ Route::middleware([
                 ->group(__DIR__."/disclosure.php");
         });
 
-    Route::middleware(['public-auth:public','frontend-logged-in'])->group(function () {
+    Route::middleware(['public-auth:public', 'frontend-logged-in'])->group(function () {
         Route::get('/dashboard', ShowPublicDashboard::class)->name('dashboard.show');
 
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

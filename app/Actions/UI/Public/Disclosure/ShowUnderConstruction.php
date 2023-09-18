@@ -7,16 +7,24 @@
 
 namespace App\Actions\UI\Public\Disclosure;
 
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
+use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsController;
 
 class ShowUnderConstruction
 {
     use AsController;
 
-    public function handle(): Response
+    public function handle(ActionRequest $request): Response|RedirectResponse
     {
+        if($request->get('website')->status) {
+            return  Redirect::route('public.welcome');
+
+        }
+
         return Inertia::render('Disclosure/UnderConstruction');
     }
 }

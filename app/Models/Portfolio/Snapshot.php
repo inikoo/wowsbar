@@ -13,7 +13,6 @@ use App\Http\Resources\Portfolio\SlideResource;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
@@ -40,7 +39,6 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read Model|\Eloquent $parent
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Portfolio\Slide> $slides
  * @property-read int|null $slides_count
- * @property-read \App\Models\Portfolio\SnapshotStats|null $stats
  * @method static Builder|Snapshot newModelQuery()
  * @method static Builder|Snapshot newQuery()
  * @method static Builder|Snapshot query()
@@ -102,10 +100,6 @@ class Snapshot extends Model
         return $this->morphTo();
     }
 
-    public function stats(): HasOne
-    {
-        return $this->hasOne(SnapshotStats::class);
-    }
 
     public function slides(): HasMany
     {

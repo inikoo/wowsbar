@@ -6,6 +6,7 @@
  */
 
 
+use App\Enums\Portfolio\Snapshot\SnapshotStateEnum;
 use App\Stubs\Migrations\HasPortfolioStats;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -21,6 +22,10 @@ return new class () extends Migration {
             $table->foreign('customer_id')->references('id')->on('customers')->onUpdate('cascade')->onDelete('cascade');
             $table->unsignedSmallInteger('number_banners_no_website')->default(0);
             $table=$this->portfolioStats($table);
+            $table->unsignedSmallInteger('number_snapshots')->default(0);
+            foreach (SnapshotStateEnum::cases() as $state) {
+                $table->unsignedSmallInteger('number_snapshots_state_'.Str::replace('-', '_', $state->snake()))->default(0);
+            }
             $table->timestampsTz();
         });
     }

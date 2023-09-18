@@ -36,9 +36,9 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property int|null $logo_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\Organisation\OrganisationCrmStats|null $crmStats
  * @property-read Currency $currency
  * @property-read \App\Models\Organisation\OrganisationHumanResourcesStats|null $humanResourcesStats
- * @property-read \App\Models\Organisation\OrganisationCrmStats|null $crmStats
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \App\Models\Media\Media> $media
  * @property-read int|null $media_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Shop> $shops

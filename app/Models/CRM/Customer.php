@@ -17,7 +17,6 @@ use App\Models\Media\Media;
 use App\Models\Portfolio\Banner;
 use App\Models\Portfolio\PortfolioWebsite;
 use App\Models\Portfolio\Snapshot;
-use App\Models\Portfolio\SnapshotStats;
 use App\Models\Search\UniversalSearch;
 use App\Models\Traits\HasPhoto;
 use App\Models\Traits\HasUniversalSearch;
@@ -70,12 +69,9 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, Media> $media
  * @property-read int|null $media_count
  * @property-read \App\Models\CRM\CustomerPortfolioStats|null $portfolioStats
- * @property-read int|null $portfolio_website_uploads_count
  * @property-read Collection<int, PortfolioWebsite> $portfolioWebsites
  * @property-read int|null $portfolio_websites_count
  * @property-read Shop $shop
- * @property-read Collection<int, SnapshotStats> $snapshotStats
- * @property-read int|null $snapshot_stats_count
  * @property-read Collection<int, Snapshot> $snapshots
  * @property-read int|null $snapshots_count
  * @property-read \App\Models\CRM\CustomerStats|null $stats
@@ -83,7 +79,6 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read Collection<int, User> $users
  * @property-read int|null $users_count
  * @property-read Website|null $website
- * @property-read int|null $website_upload_records_count
  * @method static \Database\Factories\CRM\CustomerFactory factory($count = null, $state = [])
  * @method static Builder|Customer newModelQuery()
  * @method static Builder|Customer newQuery()
@@ -199,12 +194,6 @@ class Customer extends Model implements HasMedia
     {
         return $this->hasMany(Snapshot::class);
     }
-
-    public function snapshotStats(): HasMany
-    {
-        return $this->hasMany(SnapshotStats::class);
-    }
-
 
     public function portfolioWebsites(): HasMany
     {

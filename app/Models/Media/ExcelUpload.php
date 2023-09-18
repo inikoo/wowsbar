@@ -26,6 +26,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|ExcelUpload whereNumberRows($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ExcelUpload whereOriginalFilename($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ExcelUpload whereTenantId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ExcelUpload whereType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ExcelUpload whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ExcelUpload whereUploadedAt($value)
  * @mixin \Eloquent

@@ -31,7 +31,6 @@ class StoreSnapshot
         );
 
         $snapshot=Snapshot::create($modelData);
-
         $banner->snapshots()->save($snapshot);
         $banner->generateSlug();
         if ($slides) {
@@ -42,8 +41,6 @@ class StoreSnapshot
                 );
             }
         }
-
-        $snapshot->stats()->create();
 
         return $snapshot;
     }
