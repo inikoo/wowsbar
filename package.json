@@ -51,6 +51,7 @@
         "@tiptap/extension-highlight": "^2.1.9",
         "@tiptap/extension-list-item": "^2.0.3",
         "@tiptap/extension-placeholder": "^2.0.3",
+        "@tiptap/extension-text-align": "^2.1.10",
         "@tiptap/extension-text-style": "^2.1.9",
         "@tiptap/extension-underline": "^2.0.3",
         "@tiptap/pm": "^2.0.3",

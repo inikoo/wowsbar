@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { ref, watch, onMounted, onBeforeUnmount, Ref } from "vue"
-import SelectFont from '@/Components/Workshop/Fields/SelectFont.vue'
+import { ref, watch, onBeforeUnmount, Ref } from "vue"
 import Multiselect from "@vueform/multiselect"
-import { set, lowerCase, snakeCase } from 'lodash'
+import { lowerCase, snakeCase } from 'lodash'
 
 import { FontSize } from '@/Composables/useTiptapFontSize'
 
@@ -15,6 +14,7 @@ import { Color } from '@tiptap/extension-color'
 import TextStyle from '@tiptap/extension-text-style'
 import Highlight from '@tiptap/extension-highlight'
 import FontFamily from '@tiptap/extension-font-family'
+import TextAlign from '@tiptap/extension-text-align'
 
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { library } from "@fortawesome/fontawesome-svg-core"
@@ -133,6 +133,9 @@ editor.value = new Editor({
             types: ['textStyle'],
         }),
         Highlight.configure({ multicolor: true }),
+        TextAlign.configure({
+            types: ['heading', 'paragraph'],
+        }),
     ],
     content: props.modelValue,
     onUpdate: () => {
@@ -235,8 +238,8 @@ const selectedTextAlign = ref('left')
 
                     <!-- Text Align -->
                     <div class="flex h-full items-center px-4 gap-x-2">
-                        <div v-for="option in textAlignOptions" @click="selectedTextAlign = option.value" class="flex items-center justify-center bg-gray-50 rounded-sm aspect-square h-6 ring-1 ring-gray-300 cursor-pointer"
-                            :class="[ selectedTextAlign == option.value ? 'bg-gray-500 text-gray-100' : 'hover:bg-gray-200 text-gray-600']"
+                        <div v-for="option in textAlignOptions" @click="editor.chain().focus().setTextAlign(option.value).run()" class="flex items-center justify-center bg-gray-50 rounded-sm aspect-square h-6 ring-1 ring-gray-300 cursor-pointer"
+                            :class="[ editor.isActive({ textAlign: option.value }) ? 'bg-gray-500 text-gray-100' : 'hover:bg-gray-200 text-gray-600']"
                         >
                             <FontAwesomeIcon :icon='option.icon' class='text-xs' aria-hidden='true' />
                         </div>

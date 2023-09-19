@@ -7,9 +7,22 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 library.add(faUmbrellaBeach)
 
 const description = ref('<p><strong><span style="font-size: 24px; font-family: Arial">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo expedita voluptas culpa sapiente alias molestiae. Numquam corrupti in laborum sed rerum et corporis.</span></strong></p>')
-const title = ref('<p><span style="font-size: 44px; font-family: Laila">Workcation</span></p>')
+const title = ref('<p><span style="font-size: 20px; font-family: Arial">Testimonial</span></p>')
 const dataName = ref('<p><strong><span style="text: center">Jane Doe</span></strong></p>')
 const dataPosition = ref('Ceo of Workcation')
+
+const dataTestimonial = {
+    title: "Testimonial",
+    people: [
+        {
+            name: '<p><strong><span>Jane Doe</span></strong></p>',
+            jobs: "Ceo of Company",
+            review: '<p><strong><span style="font-size: 24px; font-family: Arial">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo expedita voluptas culpa sapiente alias molestiae. Numquam corrupti in laborum sed rerum et corporis.</span></strong></p>',
+            image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+        }
+    ]
+}
+
 </script>
 
 <template>
@@ -20,7 +33,7 @@ const dataPosition = ref('Ceo of Workcation')
         <div class="mx-auto max-w-2xl lg:max-w-4xl flex flex-col">
             <!-- <img class="mx-auto h-12" src="https://tailwindui.com/img/logos/workcation-logo-indigo-600.svg" alt="" /> -->
             <div class="mx-auto text-indigo-500 flex items-center gap-x-2">
-                <FontAwesomeIcon icon='far fa-umbrella-beach' class='text-4xl' aria-hidden='true' />
+                <!-- <FontAwesomeIcon icon='far fa-umbrella-beach' class='text-4xl' aria-hidden='true' /> -->
                 <Text v-model="title" :key="'title'" :placeholder="`Add your headline`" class="font-semibold text-4xl" />
             </div>
             <figure class="mt-10">
