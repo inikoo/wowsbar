@@ -65,7 +65,7 @@ class BannerResource extends JsonResource
             'image_thumbnail' => $imageThumbnail ? GetPictureSources::run($imageThumbnail) : null,
             'image'           => $image ? GetPictureSources::run($image) : null,
             'route'           => [
-                'name'       => 'tenant.portfolio.banners.show',
+                'name'       => 'customer.portfolio.banners.show',
                 'parameters' => [$banner->slug]
             ],
             'websites'        => implode(', ', $banner->portfolioWebsite->pluck('name')->toArray()),

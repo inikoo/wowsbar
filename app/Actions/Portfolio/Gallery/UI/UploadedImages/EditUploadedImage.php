@@ -8,7 +8,7 @@
 namespace App\Actions\Portfolio\Gallery\UI\UploadedImages;
 
 use App\Actions\InertiaAction;
-use App\Actions\UI\Authenticated\Portfolio\ShowPortfolio;
+use App\Actions\UI\Customer\Portfolio\ShowPortfolio;
 use App\Models\Media\Media;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -113,12 +113,12 @@ class EditUploadedImage extends InertiaAction
         };
 
         return match ($routeName) {
-            'tenant.portfolio.images.index' =>
+            'customer.portfolio.images.index' =>
             array_merge(
                 ShowPortfolio::make()->getBreadcrumbs(),
                 $headCrumb(
                     [
-                        'name' => 'tenant.portfolio.images.index',
+                        'name' => 'customer.portfolio.images.index',
                         null
                     ]
                 ),

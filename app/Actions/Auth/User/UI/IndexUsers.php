@@ -10,7 +10,7 @@ namespace App\Actions\Auth\User\UI;
 use App\Actions\Auth\UserRequest\IndexUserRequestLogs;
 use App\Actions\Helpers\History\IndexHistories;
 use App\Actions\InertiaAction;
-use App\Actions\UI\Authenticated\SysAdmin\SysAdminDashboard;
+use App\Actions\UI\Customer\SysAdmin\SysAdminDashboard;
 use App\Enums\UI\UsersTabsEnum;
 use App\Http\Resources\Auth\UserRequestLogsResource;
 use App\Http\Resources\Auth\UserResource;

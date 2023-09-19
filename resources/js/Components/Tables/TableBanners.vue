@@ -27,17 +27,17 @@ const props = defineProps<{
 
 function bannerRoute(banner: Banner) {
     switch (route().current()) {
-        case 'tenant.portfolio.banners.index':
+        case 'customer.portfolio.banners.index':
             return route(
-                'tenant.portfolio.banners.show',
+                'customer.portfolio.banners.show',
                 [banner.slug])
-        case 'tenant.portfolio.websites.show':
+        case 'customer.portfolio.websites.show':
             return route(
-                'tenant.portfolio.websites.show.banners.show',
+                'customer.portfolio.websites.show.banners.show',
                 [route().params['portfolioWebsite'],banner.slug])
-        case 'tenant.portfolio.websites.show.banners.index':
+        case 'customer.portfolio.websites.show.banners.index':
             return route(
-                'tenant.portfolio.websites.show.banners.show',
+                'customer.portfolio.websites.show.banners.show',
                 [route().params['portfolioWebsite'],banner.slug])
     }
 }

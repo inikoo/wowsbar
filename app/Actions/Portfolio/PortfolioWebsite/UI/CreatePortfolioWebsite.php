@@ -16,7 +16,7 @@ class CreatePortfolioWebsite extends InertiaAction
 {
     public function authorize(ActionRequest $request): bool
     {
-        return $request->user()->can('tenant.portfolio.edit');
+        return $request->user()->can('customer.portfolio.edit');
     }
 
 
@@ -110,7 +110,7 @@ class CreatePortfolioWebsite extends InertiaAction
     {
         return array_merge(
             IndexPortfolioWebsites::make()->getBreadcrumbs(
-                'tenant.portfolio.websites.index',
+                'customer.portfolio.websites.index',
                 []
             ),
             [

@@ -35,15 +35,24 @@ class RouteServiceProvider extends ServiceProvider
                 ->group(base_path('routes/org/web/app.php'));
 
 
-            Route:$this->middleware('frontend')->group(base_path('routes/frontend/app.php'));
+
+
+            Route::middleware('public')
+                ->name('public.')
+                ->group(base_path('routes/public/web/app.php'));
+
+            Route::middleware('customer')
+                ->prefix('auth')
+                ->name('customer.')
+                ->group(base_path('routes/customer/app.php'));
 
 
             /*
 
                         Route::middleware('web')
                             ->prefix('api')
-                            ->name('tenant.')
-                            ->group(base_path('routes/tenant/web/app.php'));
+                            ->name('customer.')
+                            ->group(base_path('routes/customer/web/app.php'));
 
 
                         Route::middleware('public-web')
@@ -54,9 +63,9 @@ class RouteServiceProvider extends ServiceProvider
 
                         /*
 
-                        Route::middleware('tenant-api')
+                        Route::middleware('customer-api')
                             ->prefix('api')
-                            ->group(base_path('routes/tenant/api/api.php'));
+                            ->group(base_path('routes/customer/api/api.php'));
             */
 
 

@@ -9,7 +9,7 @@ namespace App\Actions\Portfolio\Banner\UI;
 
 use App\Actions\InertiaAction;
 use App\Actions\Portfolio\PortfolioWebsite\UI\ShowPortfolioWebsite;
-use App\Actions\UI\Authenticated\Portfolio\ShowPortfolio;
+use App\Actions\UI\Customer\Portfolio\ShowPortfolio;
 use App\Enums\Portfolio\Banner\BannerStateEnum;
 use App\Http\Resources\Portfolio\BannerResource;
 use App\InertiaTable\InertiaTable;
@@ -124,7 +124,7 @@ class IndexBanners extends InertiaAction
                         'tooltip' => __('new website'),
                         'label'   => __('website'),
                         'route'   => [
-                            'name' => 'tenant.portfolio.websites.create',
+                            'name' => 'customer.portfolio.websites.create',
                         ]
                     ];
                 }
@@ -142,7 +142,7 @@ class IndexBanners extends InertiaAction
                     'tooltip' => __('new banner'),
                     'label'   => __('banner'),
                     'route'   => [
-                        'name'       => 'tenant.portfolio.websites.show.banners.create',
+                        'name'       => 'customer.portfolio.websites.show.banners.create',
                         'parameters' => ['website' => $parent->slug]
                     ]
                 ] : null
@@ -229,7 +229,7 @@ class IndexBanners extends InertiaAction
                                 'style' => 'create',
                                 'label' => __('create banner'),
                                 'route' => [
-                                    'name'       => 'tenant.portfolio.websites.show.banners.create',
+                                    'name'       => 'customer.portfolio.websites.show.banners.create',
                                     'parameters' => customer()->portfolioWebsites()->first()->slug
                                 ]
                             ],
@@ -238,7 +238,7 @@ class IndexBanners extends InertiaAction
                                 'style' => 'create',
                                 'label' => __('create banner'),
                                 'route' => [
-                                    'name' => 'tenant.portfolio.banners.create',
+                                    'name' => 'customer.portfolio.banners.create',
                                 ]
                             ]
                         }
@@ -255,7 +255,7 @@ class IndexBanners extends InertiaAction
                 modelOperations: [
                     'createLink' => $this->canEdit ? [
                         'route' => [
-                            'name'       => 'tenant.portfolio.websites.show.banners.create',
+                            'name'       => 'customer.portfolio.websites.show.banners.create',
                             'parameters' => array_values([$this->parent->slug])
                         ],
                         'label' => __('banner'),
@@ -292,24 +292,24 @@ class IndexBanners extends InertiaAction
         };
 
         return match ($routeName) {
-            'tenant.portfolio.banners.index' =>
+            'customer.portfolio.banners.index' =>
             array_merge(
                 ShowPortfolio::make()->getBreadcrumbs(),
                 $headCrumb(
                     [
-                        'name' => 'tenant.portfolio.banners.index'
+                        'name' => 'customer.portfolio.banners.index'
                     ]
                 ),
             ),
-            'tenant.portfolio.websites.show.banners.index' =>
+            'customer.portfolio.websites.show.banners.index' =>
             array_merge(
                 ShowPortfolioWebsite::make()->getBreadcrumbs(
-                    'tenant.portfolio.websites.show',
+                    'customer.portfolio.websites.show',
                     $routeParameters
                 ),
                 $headCrumb(
                     [
-                        'name'       => 'tenant.portfolio.websites.show.banners.index',
+                        'name'       => 'customer.portfolio.websites.show.banners.index',
                         'parameters' => $routeParameters
                     ]
                 ),

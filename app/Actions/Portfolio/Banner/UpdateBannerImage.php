@@ -44,12 +44,12 @@ class UpdateBannerImage
 
     public function getCommandSignature(): string
     {
-        return 'banner:image {tenant} {slug}';
+        return 'banner:image {customer} {slug}';
     }
 
     public function asCommand(Command $command): void
     {
-        $tenant = Tenant::where('slug', $command->argument('tenant'))->firstOrFail();
+        $tenant = Tenant::where('slug', $command->argument('customer'))->firstOrFail();
         $tenant->makeCurrent();
 
         $banner = Banner::where('slug', $command->argument('slug'))->firstOrFail();

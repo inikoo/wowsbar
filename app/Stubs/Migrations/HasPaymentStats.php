@@ -25,7 +25,7 @@ trait HasPaymentStats
             $table->decimal('amount_refunded', 16)->default(0);
         }
 
-        $table->decimal('tc_amount', 16)->comment('tenant currency, amount_successfully_paid-amount_returned')->default(0);
+        $table->decimal('tc_amount', 16)->comment('customer currency, amount_successfully_paid-amount_returned')->default(0);
         $table->decimal('tc_amount_successfully_paid', 16)->default(0);
         $table->decimal('tc_amount_refunded', 16)->default(0);
 

@@ -21,7 +21,7 @@ class DeleteUserLogFirebase
     {
         $database  = app('firebase.database');
         $path      = match ($parent_type) {
-            'Tenant' => 'tenants',
+            'Customers' => 'customers',
             default  => 'organisations',
         };
 

@@ -9,7 +9,7 @@ namespace App\Actions\Portfolio\Gallery\UI;
 
 use App\Actions\InertiaAction;
 use App\Actions\Portfolio\Gallery\UI\UploadedImages\IndexUploadedImages;
-use App\Actions\UI\Authenticated\Portfolio\ShowPortfolio;
+use App\Actions\UI\Customer\Portfolio\ShowPortfolio;
 use App\Enums\UI\Tenant\GalleryTabsEnum;
 use App\Http\Resources\Gallery\ImageResource;
 use Inertia\Inertia;
@@ -100,7 +100,7 @@ class ShowGallery extends InertiaAction
                 modelOperations: [
                     'uploadFile' => $this->canEdit ? [
                         'route' => [
-                            'name'       => 'tenant.portfolio.images.upload',
+                            'name'       => 'customer.portfolio.images.upload',
                             'parameters' => []
                         ],
                         'label' => __('Upload image'),
@@ -147,12 +147,12 @@ class ShowGallery extends InertiaAction
         };
 
         return match ($routeName) {
-            'tenant.portfolio.gallery' =>
+            'customer.portfolio.gallery' =>
             array_merge(
                 ShowPortfolio::make()->getBreadcrumbs(),
                 $headCrumb(
                     [
-                        'name' => 'tenant.portfolio.gallery',
+                        'name' => 'customer.portfolio.gallery',
                         null
                     ]
                 ),

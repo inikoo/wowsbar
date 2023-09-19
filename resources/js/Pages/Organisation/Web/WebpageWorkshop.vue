@@ -4,7 +4,7 @@ import { trans } from "laravel-vue-i18n"
 import { ref, computed } from "vue"
 
 import WebpageBlocksOrder from "@/Components/Workshop/Webpage/WebpageBlocksOrder.vue"
-import BannerWorkshop from "@/Pages/Tenant/Portfolio/BannerWorkshop.vue"
+import BannerWorkshop from "@/Pages/Authenticated/Portfolio/BannerWorkshop.vue"
 import WebpageBlocksContent from "@/Components/CMS/Workshops/WebpageBlocksContent.vue"
 
 

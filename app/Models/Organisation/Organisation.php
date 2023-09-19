@@ -32,7 +32,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property int $country_id
  * @property int $language_id
  * @property int $timezone_id
- * @property int $currency_id tenant accounting currency
+ * @property int $currency_id customer accounting currency
  * @property int|null $logo_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
