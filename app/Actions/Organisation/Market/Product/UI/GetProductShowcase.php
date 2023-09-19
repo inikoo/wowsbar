@@ -5,7 +5,7 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Market\Product\UI;
+namespace App\Actions\Organisation\Market\Product\UI;
 
 use App\Models\Market\Product;
 use Lorisleiva\Actions\Concerns\AsObject;
