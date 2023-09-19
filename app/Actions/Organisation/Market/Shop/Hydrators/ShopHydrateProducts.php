@@ -7,8 +7,9 @@
 
 namespace App\Actions\Organisation\Market\Shop\Hydrators;
 
+use App\Enums\Organisation\Market\Product\ProductStateEnum;
+use App\Models\Market\Product;
 use App\Models\Market\Shop;
-use App\Models\Organisation\Market\Product;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Support\Arr;
 use Lorisleiva\Actions\Concerns\AsAction;

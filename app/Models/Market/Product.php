@@ -10,6 +10,7 @@ namespace App\Models\Market;
 use App\Enums\Market\Product\ProductTradeUnitCompositionEnum;
 use App\Enums\Organisation\Market\Product\ProductStateEnum;
 use App\Enums\Organisation\Market\Product\ProductTypeEnum;
+use App\Models\BI\SalesStats;
 use App\Models\Search\UniversalSearch;
 use App\Models\Traits\HasImages;
 use App\Models\Traits\HasUniversalSearch;
@@ -28,7 +29,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection;
-use Spatie\Multitenancy\Models\Concerns\UsesTenantConnection;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
@@ -134,14 +134,6 @@ class Product extends Model implements HasMedia
     public function shop(): BelongsTo
     {
         return $this->belongsTo(Shop::class);
-    }
-
-    public function tradeUnits(): BelongsToMany
-    {
-        return $this->belongsToMany(
-            TradeUnit::class,
-            'tenant_'.app('currentTenant')->slug.'.product_trade_unit',
-        )->withPivot(['quantity','notes'])->withTimestamps();
     }
 
     public function salesStats(): MorphOne
