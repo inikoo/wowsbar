@@ -2,6 +2,7 @@
 import Text from '@/Components/CMS/Workshops/WorkshopComponents/Text.vue'
  const props = defineProps<{
     data: array,
+    pagehead : Object
 }>()
   </script>
 
@@ -10,8 +11,8 @@ import Text from '@/Components/CMS/Workshops/WorkshopComponents/Text.vue'
       <div class="mx-auto max-w-7xl px-6 lg:px-8">
         <div class="mx-auto max-w-2xl lg:max-w-none">
           <div class="text-center">
-            <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Trusted by creators worldwide</h2>
-            <p class="mt-4 text-lg leading-8 text-gray-600">Lorem ipsum dolor sit amet consect adipisicing possimus.</p>
+            <Text v-model="pagehead.title" :key="'title'" :placeholder="'Enter your headline value'" :class="``" />
+            <Text v-model="pagehead.description" :key="'description'" :placeholder="'Enter your headline value'" :class="``" />
           </div>
           <dl class="mt-16 grid grid-cols-1 gap-0.5 overflow-hidden rounded-2xl text-center sm:grid-cols-2 lg:grid-cols-4">
             <div v-for="stat in data" :key="stat.id" class="flex flex-col bg-gray-400/5 p-8">

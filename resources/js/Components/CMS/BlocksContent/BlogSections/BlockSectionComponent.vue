@@ -1,18 +1,15 @@
-<template>
-    <div>
-        <component :is="component" :data="posts" />
-    </div>
-</template>
-
 <script setup lang="ts">
 import BlogSectionOne from '@/Components/CMS/BlocksContent/BlogSections/BlogSectionOne.vue'
 import BlogSectionTwo from '@/Components/CMS/BlocksContent/BlogSections/BlogSectionTwo.vue'
-import { computed } from 'vue';
+import ButtonTheme from '@/Components/CMS/Utils/ButtonTheme.vue'
+import { computed, ref } from 'vue';
+
+const props = defineProps<{}>()
 
 const posts = [
   {
     id: 1,
-    title: 'Boost your conversion rate',
+    title: "<p><strong><span style=\"font-size: 20px\">Boost your conversion rate</span></strong></p>",
     href: '#',
     description:
       'Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.',
@@ -30,8 +27,8 @@ const posts = [
     },
   },
   {
-    id: 1,
-    title: 'Boost your conversion rate',
+    id: 3,
+    title: "<p><strong><span style=\"font-size: 20px\">Boost your conversion rate</span></strong></p>",
     href: '#',
     description:
       'Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.',
@@ -49,8 +46,8 @@ const posts = [
     },
   },
   {
-    id: 1,
-    title: 'Boost your conversion rate',
+    id: 2,
+    title: "<p><strong><span style=\"font-size: 20px\">Boost your conversion rate</span></strong></p>",
     href: '#',
     description:
       'Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.',
@@ -69,22 +66,32 @@ const posts = [
   },
 ]
 
-const props = defineProps<{
-    theme: number,
-}>()
+const pageHead = {
+  title : '<p><strong><span style="font-size: 36px">From the blog</span></strong></p>',
+  description : "<p><span style=\"font-size: 16px\">Learn how to grow your business with our expert advice.</span></p>"
+}
 
+const blockTheme = ref(0)
 
 const components = {
-    1: BlogSectionOne,
-    2: BlogSectionTwo,
+    0: BlogSectionOne,
+    1: BlogSectionTwo,
 
 }
 
 
 const component = computed(()=>{
-    return components[props.theme]
+    return components[blockTheme.value]
 })
 
 </script>
+
+<template>
+  <div>
+     <ButtonTheme v-model="blockTheme" :label="['Simple', 'wide']"/>
+      <component :is="component" :data="posts" :pageHead="pageHead" />
+      <div @click="()=>console.log('data',posts,pageHead)">iniiii</div>
+  </div>
+</template>
 
 <style scoped></style>

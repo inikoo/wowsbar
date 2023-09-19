@@ -6,18 +6,22 @@ import StatsThree from './StatsThree.vue'
 import { computed, ref } from 'vue';
 
 
-const props = defineProps<{
-    theme: number,
-}>()
+const props = defineProps<{}>()
 
 const statsTheme = ref(0)
 
 const stats = [
-  { id: 1, name: '<p><span style="color: #969696; font-size: 18px;">Creators on the platform</p>', value: '<p><strong><span style="color: black; font-size: 32px;" >80000</span></strong></p>' },
-  { id: 2, name: '<p><span style="color: #969696; font-size: 18px;">Creators on the platform</p>', value: '<p><strong><span style="color: black; font-size: 32px;" >80000</span></strong></p>'  },
-  { id: 3, name: '<p><span style="color: #969696; font-size: 18px;">Creators on the platform</p>', value: '<p><strong><span style="color: black; font-size: 32px;" >80000</span></strong></p>' },
-  { id: 4, name: '<p><span style="color: #969696; font-size: 18px;">Creators on the platform</p>', value: '<p><strong><span style="color: black; font-size: 32px;" >80000</span></strong></p>'  },
+  { id: 1, name: '<p><span style="color: #969696; font-size: 18px;">Creators on the platform</p>', value: "<p style=\"text-align: center\"><strong><span style=\"font-size: 32px; color: black\">80000</span></strong></p>"},
+  { id: 2, name: '<p><span style="color: #969696; font-size: 18px;">Creators on the platform</p>', value:  "<p style=\"text-align: center\"><strong><span style=\"font-size: 32px; color: black\">80000</span></strong></p>"  },
+  { id: 3, name: '<p><span style="color: #969696; font-size: 18px;">Creators on the platform</p>', value:  "<p style=\"text-align: center\"><strong><span style=\"font-size: 32px; color: black\">80000</span></strong></p>" },
+  { id: 4, name: '<p><span style="color: #969696; font-size: 18px;">Creators on the platform</p>', value:  "<p style=\"text-align: center\"><strong><span style=\"font-size: 32px; color: black\">80000</span></strong></p>"  },
 ]
+
+const pagehead = {
+    title : "<p style=\"text-align: center\"><strong><span style=\"font-size: 28px\">Trusted by creators worldwide</span></strong></p>",
+    description : "<p style=\"text-align: center\">Lorem ipsum dolor sit amet consect adipisicing possimus.</p>",
+    subtitle :  "<p><strong><span style=\"font-size: 24px; color: #c639ba\">iste dolor cupiditate blanditiis ratione.</span></strong></p>"
+}
 
 const components = {
     0: StatsOne,
@@ -36,8 +40,8 @@ const component = computed(()=>{
 <template>
     <div class="w-full">
         <ButtonTheme v-model="statsTheme" :label="['Simple', 'wide', 'image']"/>
-        <component :is="component" :data="stats" />
-        <div @click="()=>console.log('stats',stats)">iniii</div>
+        <component :is="component" :data="stats" :pagehead="pagehead" />
+        <div @click="()=>console.log('stats',stats,pagehead)">iniii</div>
     </div>
 </template>
 

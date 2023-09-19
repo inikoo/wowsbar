@@ -66,6 +66,31 @@ const dataComponent = ref([
         "ulid": ulid(),
         "visibility": true
     },
+    {
+        "component": "blogSection",
+        "icon": "far fa-text",
+        "ulid": ulid(),
+        "visibility": true
+    },
+    {
+        "component": "CTA",
+        "icon": "far fa-text",
+        "ulid": ulid(),
+        "visibility": true
+    },
+    {
+        "component": "CardContent",
+        "icon": "far fa-text",
+        "ulid": ulid(),
+        "visibility": true
+    },
+    {
+        "component": "pricing",
+        "icon": "far fa-text",
+        "ulid": ulid(),
+        "visibility": true
+    },
+    
 ])
 
 const loadingState = ref(false)

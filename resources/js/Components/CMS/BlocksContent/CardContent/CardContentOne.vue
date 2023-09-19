@@ -1,6 +1,8 @@
 <script setup lang="ts">
+import Text from '@/Components/CMS/Workshops/WorkshopComponents/Text.vue'
 const props = defineProps<{
     data: array,
+    pageHead:Object
 }>()
 </script>
 
@@ -8,14 +10,14 @@ const props = defineProps<{
     <div class="bg-gray-900 py-24 sm:py-32">
       <div class="mx-auto max-w-7xl px-6 text-center lg:px-8">
         <div class="mx-auto max-w-2xl">
-          <h2 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">Meet our team</h2>
-          <p class="mt-4 text-lg leading-8 text-gray-400">We’re a dynamic group of individuals who are passionate about what we do.</p>
+          <Text v-model="pageHead.title" :key="pageHead.title" :placeholder="'Enter your headline value'" :class="``" />
+          <Text v-model="pageHead.description" :key="pageHead.description" :placeholder="'Enter your headline value'" :class="``" />
         </div>
         <ul role="list" class="mx-auto mt-20 grid max-w-2xl grid-cols-1 gap-6 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3 lg:gap-8">
           <li v-for="person in data" :key="person.name" class="rounded-2xl bg-gray-800 px-8 py-10">
             <img class="mx-auto h-48 w-48 rounded-full md:h-56 md:w-56" :src="person.imageUrl" alt="" />
-            <h3 class="mt-6 text-base font-semibold leading-7 tracking-tight text-white">{{ person.name }}</h3>
-            <p class="text-sm leading-6 text-gray-400">{{ person.role }}</p>
+            <Text v-model="person.name" :key="person.name" :placeholder="'Enter your headline value'" :class="``" />
+            <Text v-model="person.role" :key="person.role" :placeholder="'Enter your headline value'" :class="``" />
             <ul role="list" class="mt-6 flex justify-center gap-x-6">
               <li>
                 <a :href="person.twitterUrl" class="text-gray-400 hover:text-gray-300">

@@ -1,14 +1,9 @@
-<template>
-    <div>
-        <component :is="component" :data="tiers"/>
-    </div>
-</template>
-
 <script setup lang="ts">
 import PricingOne from './PricingOne.vue';
 import PricingTwo from './PricingTwo.vue';
 import PricingThree from './PricingThree.vue';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
+import ButtonTheme from '@/Components/CMS/Utils/ButtonTheme.vue'
 
 const props = defineProps<{
     theme: number,
@@ -56,17 +51,26 @@ const tiers = [
   },
 ]
 
+const pricingTheme = ref(0)
+
 const components = {
-    1: PricingOne,
-    2: PricingTwo,
-    3: PricingThree
+    0: PricingOne,
+    1: PricingTwo,
+    2: PricingThree
 }
 
 
 const component = computed(()=>{
-    return components[props.theme]
+    return components[pricingTheme.value]
 })
 
 </script>
+
+<template>
+  <div>
+    <ButtonTheme v-model="pricingTheme" :label="['Simple', 'wide', 'image']"/>
+      <component :is="component" :data="tiers"/>
+  </div>
+</template>
 
 <style scoped></style>
