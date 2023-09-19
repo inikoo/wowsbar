@@ -18,7 +18,6 @@ class ShopHydrateProducts implements ShouldBeUnique
 {
     use AsAction;
 
-
     public function handle(Shop $shop): void
     {
         $stateCounts   = Product::where('shop_id', $shop->id)

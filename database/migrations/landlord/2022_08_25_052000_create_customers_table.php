@@ -23,7 +23,7 @@ return new class () extends Migration {
         Schema::create('customers', function (Blueprint $table) {
             $table->increments('id');
             $table->string('slug')->unique()->collation('und_ns')->nullable();
-            $table->string('reference')->nullable()->collation('und_ns')->comment('customer public id');
+            $table->string('reference')->nullable()->unique()->collation('und_ns')->comment('customer public id');
             $table->string('name', 256)->nullable()->collation('und_ns');
             $table = $this->contactFields(table: $table, withWebsite: true);
             $table->jsonb('location');
@@ -44,7 +44,6 @@ return new class () extends Migration {
             $table->unsignedBigInteger('image_id')->nullable();
             $table->timestampsTz();
             $table->softDeletesTz();
-            $table->unique(['reference']);
         });
 
 
