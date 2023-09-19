@@ -8,6 +8,7 @@ import CardContent from '@/Components/CMS/BlocksContent/CardContent/index.vue'
 import CTABlocks from '@/Components/CMS/BlocksContent/CTABlocks/index.vue'
 import COntentDescription from '@/Components/CMS/BlocksContent/ContentDescription/index.vue'
 import Pricing from '@/Components/CMS/BlocksContent/Pricing/index.vue'
+import Testimonials from '@/Components/CMS/BlocksContent/Testimonials/index.vue'
 
 const props = defineProps<{
     selectedComponent: any
@@ -78,7 +79,7 @@ const dummyData = {
 <template>
     <div class="flex justify-center items-center w-full">
         <BannerWorkshopComponent v-if="selectedComponent.component === 'banner'" :data="dummyData.data" :imagesUploadRoute="dummyData.route" :user="dummyData.user" />
-        <TestimonialsWorkshopComponent v-if="selectedComponent.component === 'text'" />
+        <!-- <TestimonialsWorkshopComponent v-if="selectedComponent.component === 'text'" /> -->
     </div>
-    <!-- <Hero :theme="1"></Hero> -->
+    <!-- <Testimonials :theme="3"></Testimonials> -->
 </template>
