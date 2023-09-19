@@ -33,7 +33,7 @@ Route::prefix('prospects')->as('prospects.')->group(function () {
     //Route::get('/customers/{customer}/web-users', [IndexWebUser::class, 'inCustomerinOrganisation'])->name('customers.show.web-users.index');
     //Route::get('/customers/{customer}/web-users/{webUser}', [ShowWebUser::class, 'inCustomerinOrganisation'])->name('customers.show.web-users.show');
     //Route::get('/customers/{customer}/web-users/{webUser}/edit', [EditWebUser::class, 'inCustomerinOrganisation'])->name('customers.show.web-users.edit');
-    Route::get('/uploads/template/download', DownloadProspectsTemplate::class)->name('prospect.uploads.template.download');
+    Route::get('/uploads/template/download', DownloadProspectsTemplate::class)->name('uploads.template.download');
 });
 
 Route::get('/shop/{shop}', [CRMDashboard::class,'inShop'])->name('org.shops.show.dashboard');

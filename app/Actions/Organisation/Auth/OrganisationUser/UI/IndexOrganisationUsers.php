@@ -144,6 +144,33 @@ class IndexOrganisationUsers extends InertiaAction
                     $request->route()->getName(),
                 ),
                 'title'       => __('users'),
+                'pageHead'    => [
+                    'title'  => __('users'),
+                    'actions'=> [
+                        $this->canEdit ? [
+                            'type'    => 'buttonGroup',
+                            'buttons' => [
+                                [
+                                    'style' => 'secondary',
+                                    'icon'  => ['fal', 'fa-upload'],
+                                    'label' => 'upload',
+                                    'route' => [
+                                        'name'       => 'org.models.users.upload'
+                                    ],
+                                ],
+                                [
+                                    'type'  => 'button',
+                                    'style' => 'create',
+                                    'label' => __('employee'),
+                                    'route' => [
+                                        'name'       => 'org.sysadmin.employees.create',
+                                        'parameters' => array_values($this->originalParameters)
+                                    ]
+                                ]
+                            ]
+                        ] : false
+                    ]
+                ],
 
                 'labels' => [
                     'usernameNoSet' => __('username no set')

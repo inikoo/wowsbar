@@ -6,17 +6,20 @@
  */
 
 
+use App\Actions\CRM\Prospect\UploadProspect;
 use App\Actions\Organisation\Accounting\Payment\UpdatePayment;
 use App\Actions\Organisation\Accounting\PaymentAccount\StorePaymentAccount;
 use App\Actions\Organisation\Accounting\PaymentAccount\UpdatePaymentAccount;
 use App\Actions\Organisation\Accounting\PaymentServiceProvider\DeletePaymentServiceProvider;
 use App\Actions\Organisation\Accounting\PaymentServiceProvider\UpdatePaymentServiceProvider;
+use App\Actions\Organisation\Guest\UploadGuest;
 use App\Actions\Organisation\HumanResources\Employee\DeleteEmployee;
 use App\Actions\Organisation\HumanResources\Employee\StoreEmployee;
 use App\Actions\Organisation\HumanResources\Employee\UpdateEmployee;
 use App\Actions\Organisation\HumanResources\Employee\UploadEmployee;
 use App\Actions\Organisation\Market\Product\StoreProduct;
 use App\Actions\Organisation\Market\Product\UpdateProduct;
+use App\Actions\Organisation\Market\Product\UploadProduct;
 use App\Actions\Organisation\Market\Shop\StoreShop;
 use App\Actions\Organisation\Organisation\UpdateOrganisation;
 use App\Actions\Organisation\Web\Webpage\StoreArticle;
@@ -41,6 +44,9 @@ Route::post('/article/{webpage:id}', StoreArticle::class)->name('article.store')
 
 
 Route::post('/employees/imports/upload', UploadEmployee::class)->name('employees.upload');
+Route::post('/prospects/imports/upload', UploadProspect::class)->name('prospects.upload');
+Route::post('/products/imports/upload', UploadProduct::class)->name('products.upload');
+Route::post('/guests/imports/upload', UploadGuest::class)->name('guests.upload');
 
 Route::patch('/provider/{paymentServiceProvider}', UpdatePaymentServiceProvider::class)->name('payment-service-provider.update');
 Route::delete('/provider/{paymentServiceProvider}', DeletePaymentServiceProvider::class)->name('payment-service-provider.delete');
