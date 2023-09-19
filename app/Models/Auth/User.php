@@ -10,6 +10,7 @@ namespace App\Models\Auth;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Concerns\BelongsToCustomer;
 use App\Models\Assets\Language;
+use App\Models\CRM\Customer;
 use App\Models\Media\Media;
 use App\Models\Traits\HasHistory;
 use App\Models\Traits\HasUniversalSearch;
@@ -103,7 +104,6 @@ class User extends Authenticatable implements HasMedia, Auditable
     use InteractsWithMedia;
     use HasUniversalSearch;
     use HasHistory;
-    use BelongsToCustomer;
 
 
     protected $casts = [
@@ -126,8 +126,6 @@ class User extends Authenticatable implements HasMedia, Auditable
         'remember_token',
     ];
 
-
-
     public function stats(): HasOne
     {
         return $this->hasOne(UserStats::class);
@@ -138,7 +136,10 @@ class User extends Authenticatable implements HasMedia, Auditable
         return $this->belongsTo(Website::class);
     }
 
-
+    public function customer(): BelongsTo
+    {
+        return $this->belongsTo(Customer::class);
+    }
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('avatar')

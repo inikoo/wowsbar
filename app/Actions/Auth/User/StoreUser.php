@@ -151,7 +151,7 @@ class StoreUser
         $validatedData = $this->validateAttributes();
         $user          = $this->handle($website, $customer, $validatedData);
 
-        $superAdminRole = Role::where('guard_name', 'web')->where('name', 'super-admin')->firstOrFail();
+        $superAdminRole = Role::where('guard_name', 'customer')->where('name', 'super-admin')->firstOrFail();
         $user->assignRole($superAdminRole);
 
         $command->line("Public user $user->email created successfully");

@@ -5,7 +5,7 @@
   -->
 
 <script setup lang="ts">
-// This file is used on TenantApp, PublicApp
+// This file is used on CustomerApp, PublicApp
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faLanguage } from '../../../private/pro-light-svg-icons'

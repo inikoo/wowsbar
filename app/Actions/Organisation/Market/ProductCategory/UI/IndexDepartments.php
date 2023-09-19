@@ -94,7 +94,7 @@ class IndexDepartments extends InertiaAction
                 if (class_basename($parent) == 'Shop') {
                     $query->where('product_categories.parent_type', 'Shop');
                     $query->where('product_categories.parent_id', $parent->id);
-                } elseif (class_basename($parent) == 'Tenant') {
+                } elseif (class_basename($parent) == 'Organisation') {
                     $query->leftJoin('shops', 'product_categories.shop_id', 'shops.id');
                     $query->addSelect('shops.slug as shop_slug');
                 }
@@ -120,7 +120,7 @@ class IndexDepartments extends InertiaAction
                 ->withModelOperations($modelOperations)
                 ->withEmptyState(
                     match (class_basename($parent)) {
-                        'Tenant' => [
+                        'Authenticated' => [
                             'title'       => __("No departments found"),
                             'description' => $this->canEdit && $parent->marketStats->number_shops == 0 ? __('Get started by creating a shop. ✨')
                                 : __("In fact, is no even a shop yet 🤷🏽‍♂️"),

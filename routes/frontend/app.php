@@ -1,7 +1,7 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Mon, 18 Sep 2023 17:51:02 Malaysia Time, Pantai Lembeng, Bali, Indonesia
+ * Created: Tue, 19 Sep 2023 09:10:04 Malaysia Time, Pantai Lembeng, Bali, Indonesia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
@@ -15,16 +15,19 @@ use Illuminate\Support\Facades\Route;
 Route::middleware([
     'frontend',
 ])->group(function () {
-    Route::middleware(['guest:public', 'public'])
-        ->name('public.')->group(function () {
-            Route::get('/', ShowHome::class)->name('welcome');
+
+
+
+
+    Route::name('public.')->group(function () {
+            Route::get('/', ShowHome::class)->name('home');
             Route::get('/appointment', ShowPublicAppointment::class)->name('appointment.show');
             Route::prefix("disclosure")
                 ->name("disclosure.")
                 ->group(__DIR__."/disclosure.php");
         });
 
-    Route::middleware(['public-auth:public', 'frontend-logged-in'])->group(function () {
+    Route::middleware(['public-auth:public'])->group(function () {
         Route::get('/dashboard', ShowPublicDashboard::class)->name('dashboard.show');
 
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

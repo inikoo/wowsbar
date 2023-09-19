@@ -36,7 +36,7 @@ class ShowPublicAppointment
                     'icon'  => 'fal fa-tachometer-alt-fast',
                     'label' => $label,
                     'route' => [
-                        'name' => 'tenant.dashboard.show'
+                        'name' => 'customer.dashboard.show'
                     ]
                 ]
 

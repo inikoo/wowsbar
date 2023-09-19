@@ -36,7 +36,7 @@ class UpdatePortfolioWebsite
     {
         return [
             'domain' => ['sometimes','required'],
-            'code'   => ['sometimes','required', 'unique:tenant.portfolio_websites','max:8'],
+            'code'   => ['sometimes','required', 'unique:portfolio_websites','max:8'],
             'name'   => ['sometimes','required']
         ];
     }

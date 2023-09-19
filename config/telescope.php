@@ -76,7 +76,7 @@ return [
     */
 
     'middleware' => [
-        'public-web',
+        'public',
         Authorize::class,
     ],
 

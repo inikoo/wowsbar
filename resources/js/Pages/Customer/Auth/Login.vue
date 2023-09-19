@@ -1,0 +1,64 @@
+<script setup>
+import { Head, useForm } from '@inertiajs/vue3'
+import Password from '@/Components/Auth/LoginPassword.vue'
+import Checkbox from '@/Components/Checkbox.vue'
+import ValidationErrors from '@/Components/ValidationErrors.vue'
+import { trans } from 'laravel-vue-i18n'
+
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { faSpinnerThird } from '@/../private/pro-duotone-svg-icons'
+import { library } from '@fortawesome/fontawesome-svg-core'
+library.add(faSpinnerThird)
+
+const form = useForm({
+    username: '',
+    password: '',
+    remember: false,
+})
+
+const submit = () => {
+    form.post(route('customer.login'), {
+        onFinish: () => form.reset('password'),
+    })
+}
+
+</script>
+
+<template layout="GuestLayout">
+    <!-- This file for login Authenticated -->
+    <Head title="Login" />
+    <form class="space-y-6" @submit.prevent="submit" >
+        <div>
+            <label for="login" class="block text-sm font-medium text-gray-700">{{ trans('Username') }}</label>
+            <div class="mt-1">
+                <input v-model="form.username" id="username" name="username" autocomplete="username" required=""
+                    class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-gray-500 focus:border-gray-500 sm:text-sm"/>
+            </div>
+        </div>
+
+        <div>
+            <label for="password" class="block text-sm font-medium text-gray-700"> {{ trans('Password') }} </label>
+            <div class="mt-1 flex rounded-md shadow-sm">
+                <Password id="password" name="password" v-model="form.password"/>
+            </div>
+        </div>
+
+        <div class="flex items-center justify-between">
+            <div class="flex items-center">
+                <Checkbox name="remember-me" id="remember-me" v-model:checked="form.remember"/>
+                <label for="remember-me" class="ml-2 block text-sm text-gray-900 cursor-pointer select-none"> {{ trans('Remember me') }} </label>
+            </div>
+        </div>
+
+        <div>
+            <button type="submit" id="submit" name="submit"
+                    class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+                {{ trans('Login') }}
+                <FontAwesomeIcon icon="fad fa-spinner-third" class="ml-2 h-5 w-5 animate-spin dark:text-gray-200 opacity-0" :class="{'opacity-100': form.processing}" />
+            </button>
+        </div>
+    </form>
+
+    <ValidationErrors />
+
+</template>

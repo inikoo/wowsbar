@@ -1,4 +1,4 @@
-// Used for  PublicApp, TenantApp
+// Used for  PublicApp, CustomerApp
 import { useLayoutStore } from "@/Stores/layout"
 import { useLocaleStore } from "@/Stores/locale"
 import { usePage } from "@inertiajs/vue3"
@@ -27,14 +27,13 @@ export const initialiseApp = () => {
             locale.languageOptions = usePage().props.localeData.languageOptions
         }
 
-        // Set data of Tenant
-        if (usePage().props.tenant) {
-            layout.tenant = usePage().props.tenant ?? null
+        if (usePage().props.app) {
+            layout.app = usePage().props.app ?? null
         }
 
         // Set data of User
-        if (usePage().props.user) {
-            layout.user = usePage().props.user ?? null
+        if (usePage().props.auth.user) {
+            layout.user = usePage().props.auth.user ?? null
         }
 
 
@@ -46,7 +45,7 @@ export const initialiseApp = () => {
             layout.currentRoute?.indexOf(".")
         )
 
-        if (substring === "org" || substring === "public" || substring === 'tenant') {
+        if (substring === "org" || substring === "public" || substring === 'customer') {
             let moduleName = layout.currentRoute.split(".")
             layout.currentModule = moduleName[1]
         } else {

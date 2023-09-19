@@ -22,7 +22,7 @@ defineEmits<{
 }>()
 
 
-const dummyData = {
+const dummyDataBanner = {
     data: {
         "delay": 5000,
         "common": {
@@ -67,7 +67,7 @@ const dummyData = {
         "hash": "5f2b0deec33a501be9c595dc03269dc6"
     },
     route: {
-        "name": "tenant.portfolio.websites.show.banners.workshop.images.store",
+        "name": "customer.portfolio.websites.show.banners.workshop.images.store",
         "arguments": {
             "portfolioWebsite": "hello",
             "banner": "test1"

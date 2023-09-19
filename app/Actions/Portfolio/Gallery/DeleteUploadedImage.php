@@ -31,7 +31,7 @@ class DeleteUploadedImage
 
     public function htmlResponse(): RedirectResponse
     {
-        return redirect()->route('tenant.portfolio.gallery');
+        return redirect()->route('customer.portfolio.gallery');
     }
 
     public function asController(Media $media): bool

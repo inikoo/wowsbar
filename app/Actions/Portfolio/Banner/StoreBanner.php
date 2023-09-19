@@ -121,8 +121,8 @@ class StoreBanner
     public function rules(): array
     {
         return [
-            'portfolio_website_id' => ['sometimes', 'nullable', 'exists:tenant.portfolio_websites,id'],
-            'code'                 => ['required', 'unique:tenant.banners', 'max:8'],
+            'portfolio_website_id' => ['sometimes', 'nullable', 'exists:portfolio_websites,id'],
+            'code'                 => ['required', 'unique:banners', 'max:8'],
             'name'                 => ['required']
         ];
     }
@@ -199,7 +199,7 @@ class StoreBanner
     {
         if (class_basename($this->parent) == 'PortfolioWebsite') {
             return redirect()->route(
-                'tenant.portfolio.websites.show.banners.workshop',
+                'customer.portfolio.websites.show.banners.workshop',
                 [
                     $this->parent->slug,
                     $banner->slug
@@ -208,7 +208,7 @@ class StoreBanner
         }
 
         return redirect()->route(
-            'tenant.portfolio.banners.workshop',
+            'customer.portfolio.banners.workshop',
             [
                 $banner->slug
             ]

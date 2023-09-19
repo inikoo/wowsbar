@@ -8,7 +8,7 @@
 namespace App\Actions\Portfolio\Snapshot\UI;
 
 use App\Actions\InertiaAction;
-use App\Actions\UI\Authenticated\Portfolio\ShowPortfolio;
+use App\Actions\UI\Customer\Portfolio\ShowPortfolio;
 use App\Http\Resources\Portfolio\SnapshotResource;
 use App\Models\Portfolio\Banner;
 use App\Models\Portfolio\PortfolioWebsite;
@@ -82,7 +82,7 @@ class ShowSnapshot extends InertiaAction
         };
 
         return match ($routeName) {
-            'tenant.portfolio.images.index' =>
+            'customer.portfolio.images.index' =>
             array_merge(
                 ShowPortfolio::make()->getBreadcrumbs(),
                 $headCrumb(

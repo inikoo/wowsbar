@@ -7,14 +7,14 @@
 
 namespace App\Actions\UI\Public;
 
-use App\Models\CRM\PublicUser;
+use App\Models\Auth\User;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class GetLayout
 {
     use AsAction;
 
-    public function handle(PublicUser $user): array
+    public function handle(User $user): array
     {
         $navigation = [];
 
@@ -22,7 +22,7 @@ class GetLayout
             'scope' => 'portfolio',
             'icon'  => ['fal', 'fa-home'],
             'label' => __('dashboard'),
-            'route' => 'tenant.portfolio.dashboard'
+            'route' => 'customer.portfolio.dashboard'
         ];
 
         $navigation['banner'] = [

@@ -1,7 +1,7 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Mon, 18 Sep 2023 17:51:02 Malaysia Time, Pantai Lembeng, Bali, Indonesia
+ * Created: Tue, 19 Sep 2023 09:10:28 Malaysia Time, Pantai Lembeng, Bali, Indonesia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
@@ -22,7 +22,7 @@ use App\Actions\UI\Public\Auth\ShowPasswordResetLink;
 use App\Actions\UI\Public\Auth\ShowRegister;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(['guest:public','public'])->name('public.')->group(function () {
+Route::middleware(['guest:public'])->name('public.')->group(function () {
     Route::get('register', ShowRegister::class)->name('register');
     Route::post('register', Register::class);
     Route::get('login', ShowLogin::class)->name('login');
@@ -38,7 +38,7 @@ Route::middleware(['guest:public','public'])->name('public.')->group(function ()
                 ->name('password.store');
 });
 
-Route::middleware(['public-auth:public','frontend-logged-in'])->group(function () {
+Route::middleware(['public-auth:public'])->group(function () {
     Route::get('verify-email', ShowEmailVerificationPrompt::class)
                 ->name('verification.notice');
 
