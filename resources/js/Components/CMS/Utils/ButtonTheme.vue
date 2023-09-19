@@ -11,7 +11,7 @@ defineEmits<{
 </script>
 
 <template>
-    <div class="absolute top-0 left-1/2 -translate-x-1/2 z-50 flex gap-x-2">
+    <div class="z-50 flex justify-center gap-x-2">
         <div v-for="(button, index) in label" @click="() => $emit('update:modelValue', index)" class="py-0.5 px-2 rounded cursor-pointer ring-1 ring-gray-500 capitalize" :class="[modelValue == index ? 'bg-gray-600 text-white' : 'hover:bg-gray-200' ]">{{ button }}</div>
     </div>
 </template>

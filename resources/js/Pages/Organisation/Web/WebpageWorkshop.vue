@@ -91,6 +91,12 @@ const dataComponent = ref([
         "visibility": true
     },
     
+    {
+        "component": "hero",
+        "icon": "fad fa-rectangle-wide",
+        "ulid": ulid(),
+        "visibility": true
+    },
 ])
 
 const loadingState = ref(false)
