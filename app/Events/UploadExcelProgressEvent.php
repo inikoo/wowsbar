@@ -2,7 +2,7 @@
 
 namespace App\Events;
 
-use App\Models\Tenancy\Tenant;
+use App\Models\Portfolio\PortfolioWebsite;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
@@ -18,14 +18,12 @@ class UploadExcelProgressEvent implements ShouldBroadcastNow
     /**
      * Create a new event instance.
      */
-    public Tenant|null $tenant;
     public array $data;
     public string $event;
-    public function __construct($tenant, $data, $event = 'WebsiteUpload')
+    public function __construct($data, $event = PortfolioWebsite::class)
     {
         $this->data   = $data;
-        $this->event  = $event;
-        $this->tenant = $tenant;
+        $this->event  = class_basename($event);
     }
 
     /**
@@ -36,7 +34,7 @@ class UploadExcelProgressEvent implements ShouldBroadcastNow
     public function broadcastOn(): array
     {
         return [
-            new Channel('uploads.' . $this->tenant?->slug ?? 'org'),
+            new Channel('uploads.org')
         ];
     }
 

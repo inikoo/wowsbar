@@ -10,6 +10,7 @@ namespace App\Actions\CRM\Prospect;
 use App\Actions\Traits\WithExportData;
 use App\Enums\Helpers\Import\UploadRecordStatusEnum;
 use App\Events\UploadExcelProgressEvent;
+use App\Models\CRM\Prospect;
 use App\Models\Media\ExcelUploadRecord;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
@@ -28,10 +29,10 @@ class ImportProspects
         try {
             StoreProspect::run(json_decode($prospectUploadRecord->data, true));
 
-            event(new UploadExcelProgressEvent(null, [
+            event(new UploadExcelProgressEvent([
                 'total_uploads'  => $totalUploads,
                 'total_complete' => $totalImported
-            ], 'ProspectUpload'));
+            ], Prospect::class));
             $prospectUploadRecord->update(['status' => UploadRecordStatusEnum::COMPLETE]);
         } catch (\Exception $e) {
             $prospectUploadRecord->update(['status' => UploadRecordStatusEnum::FAILED]);
