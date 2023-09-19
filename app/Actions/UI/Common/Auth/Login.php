@@ -11,11 +11,10 @@ use App\Actions\Auth\User\Hydrators\UserHydrateFailLogin;
 use App\Actions\Auth\User\Hydrators\UserHydrateLogin;
 use App\Actions\Organisation\Auth\OrganisationUser\Hydrators\OrganisationUserHydrateFailLogin;
 use App\Actions\Organisation\Auth\OrganisationUser\Hydrators\OrganisationUserHydrateLogin;
-use App\Actions\Organisation\CRM\PublicUser\Hydrators\PublicUserHydrateFailLogin;
-use App\Actions\Organisation\CRM\PublicUser\Hydrators\PublicUserHydrateLogin;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
@@ -29,23 +28,22 @@ class Login
 
     private string $credentialHandler         = 'username';
     private string $home                      = '/dashboard';
-    private string $gate                      = 'web';
-    private string $customTokenFirebasePrefix = 'web';
+    private string $gate                      = '';
 
 
     public function __construct(ActionRequest $request)
     {
         if ($request->route()) {
-            switch ($request->route()->getName()) {
-                case 'org.login.store':
-                    $this->gate = 'org';
-                    $this->home = '/dashboard';
-                    break;
-                case 'public.login.store':
-                    $this->credentialHandler = 'email';
-                    $this->gate              = 'public';
-                    break;
+
+            $routeName=$request->route()->getName();
+            $this->gate=match ($request->route()->getName()){
+                'org.login.store'=>'org',
+                default=>'customer'
+            };
+            if($routeName=='customer.login.store'){
+                $this->home='auth/dashboard';
             }
+
         }
     }
 
@@ -74,10 +72,9 @@ class Login
 
 
         switch ($this->gate) {
-            case 'public':
-                PublicUserHydrateLogin::dispatch(Auth::guard($this->gate)->user(), request()->ip(), now());
-                break;
             case 'web':
+            case 'public':
+                Config::set('global.customer_id',Auth::guard($this->gate)->user()->customer_id);
                 UserHydrateLogin::dispatch(Auth::guard($this->gate)->user(), request()->ip(), now());
                 break;
             case 'org':
@@ -103,10 +100,8 @@ class Login
     public function userFailLogin(): void
     {
         switch ($this->gate) {
-            case 'public':
-                PublicUserHydrateFailLogin::dispatch(Auth::guard($this->gate)->user(), request()->ip(), now());
-                break;
             case 'web':
+            case 'public':
                 UserHydrateFailLogin::dispatch(Auth::guard($this->gate)->user(), request()->ip(), now());
                 break;
             case 'org':

@@ -3,9 +3,9 @@
     "type": "module",
     "scripts": {
         "dev": "npm run dev.tenant && npm run dev.delivery  && npm run dev.organisation && npm run dev.public",
-        "build": "npm run build.tenant && npm run build.delivery  && npm run build.organisation && npm run build.public",
-        "dev.tenant": "vite --config vite.tenant.config.js",
-        "build.tenant": "vite build --config vite.tenant.config.js && vite build --config vite.tenant.config.js --ssr",
+        "build": "npm run build.customer && npm run build.delivery  && npm run build.organisation && npm run build.public",
+        "dev.customer": "vite --config vite.customer.config.js",
+        "build.customer": "vite build --config vite.customer.config.js && vite build --config vite.customer.config.js --ssr",
         "dev.organisation": "vite --config vite.organisation.config.js",
         "build.organisation": "vite build --config vite.organisation.config.js && vite build --config vite.organisation.config.js --ssr",
         "dev.public": "vite --config vite.public.config.js",

@@ -10,7 +10,7 @@ const logo = usePage().props.art.logo
 
 <template>
     <div class="bg-gradient-to-b from-gray-100/50 to-gray-100/0 w-screen fixed z-10 px-6 pt-3 flex justify-between items-center">
-        <Link :href="route('public.welcome')">
+        <Link :href="route('public.home')">
             <Image class="h-6 select-none" :src="logo" alt="Wowsbar" />
         </Link>
         <div class="flex justify-end gap-x-4 text-sm font-medium">

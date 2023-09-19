@@ -26,7 +26,7 @@ use Illuminate\Support\Carbon;
  * @property string $amount amount_successfully_paid-amount_returned
  * @property string $amount_successfully_paid
  * @property string $amount_refunded
- * @property string $tc_amount tenant currency, amount_successfully_paid-amount_returned
+ * @property string $tc_amount customer currency, amount_successfully_paid-amount_returned
  * @property string $tc_amount_successfully_paid
  * @property string $tc_amount_refunded
  * @property string $gc_amount Group currency, amount_successfully_paid-amount_returned

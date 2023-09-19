@@ -43,17 +43,6 @@ class GetImgProxyUrl
 
         $this->image = $image;
 
-        /*
-        dd( join(
-            '/',
-            array_filter([
-                config('img-proxy.base_url'),
-                $this->getSignature(),
-                $this->getParameters(),
-
-            ])
-        ));
-        */
 
         return
 

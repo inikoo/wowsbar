@@ -152,7 +152,7 @@ class EditPortfolioWebsite extends InertiaAction
         }
 
         return match ($routeName) {
-            'tenant.portfolio.websites.edit' => [
+            'customer.portfolio.websites.edit' => [
                 'label' => $portfolioWebsite->name,
                 'route' => [
                     'name'       => $routeName,

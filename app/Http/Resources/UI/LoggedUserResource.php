@@ -18,7 +18,7 @@ class LoggedUserResource extends JsonResource
 
     public function toArray($request): array
     {
-        /** @var User|OrganisationUser|\App\Models\CRM\PublicUser $user */
+        /** @var User|OrganisationUser $user */
         $user=$this;
         return [
             'username'           => $user->username,

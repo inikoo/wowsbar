@@ -67,7 +67,7 @@ class CreatePayment extends InertiaAction
                                 ],
                                 'tc_amount' => [
                                     'type'  => 'input',
-                                    'label' => __('tenant currency amount'),
+                                    'label' => __('customer currency amount'),
                                     'value' => ''
                                 ],
                                 'currency_id' => [

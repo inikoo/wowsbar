@@ -31,7 +31,6 @@ class AppServiceProvider extends ServiceProvider
         Relation::morphMap(
             [
                 'Organisation'     => 'App\Models\Organisation\Organisation',
-                'Tenant'           => 'App\Models\Tenancy\Tenant',
                 'User'             => 'App\Models\Auth\User',
                 'PortfolioWebsite' => 'App\Models\Portfolio\PortfolioWebsite',
                 'Banner'           => 'App\Models\Portfolio\Banner',

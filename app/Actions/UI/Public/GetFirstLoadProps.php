@@ -11,7 +11,7 @@ use App\Actions\Assets\Language\UI\GetLanguagesOptions;
 use App\Actions\UI\WithLogo;
 use App\Http\Resources\Assets\LanguageResource;
 use App\Models\Assets\Language;
-use App\Models\CRM\PublicUser;
+use App\Models\Auth\User;
 use Illuminate\Support\Facades\App;
 use Lorisleiva\Actions\Concerns\AsObject;
 
@@ -20,7 +20,7 @@ class GetFirstLoadProps
     use AsObject;
     use WithLogo;
 
-    public function handle(?PublicUser $user): array
+    public function handle(?User $user): array
     {
         if ($user) {
             $language = $user->language;

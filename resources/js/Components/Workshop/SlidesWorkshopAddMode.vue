@@ -98,7 +98,7 @@ const uploadImageRespone = (res) => {
 }
 </script>
 
-<template layout="TenantApp">
+<template layout="CustomerApp">
     <Modal :isOpen="isOpen" @onClose="closeModal">
         <div>
             <CropImage :data="addFiles" :imagesUploadRoute="props.imagesUploadRoute" :respone="uploadImageRespone" />

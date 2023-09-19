@@ -9,13 +9,13 @@ namespace App\Actions\Portfolio\Banner\UI;
 
 use App\Actions\InertiaAction;
 use App\Http\Resources\Portfolio\BannerResource;
+use App\Models\CRM\Customer;
 use App\Models\Portfolio\PortfolioWebsite;
-use App\Models\Tenancy\Tenant;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class GetLastEditedBanner extends InertiaAction
 {
-    public function handle(Tenant|PortfolioWebsite $parent, $prefix = null): AnonymousResourceCollection
+    public function handle(Customer|PortfolioWebsite $parent): AnonymousResourceCollection
     {
         $responses = $parent->banners()->limit(3)->latest('updated_at')->get();
 

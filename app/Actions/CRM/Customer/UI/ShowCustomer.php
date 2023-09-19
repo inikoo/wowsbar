@@ -8,7 +8,7 @@
 namespace App\Actions\CRM\Customer\UI;
 
 use App\Actions\InertiaAction;
-use App\Actions\UI\Authenticated\Dashboard\ShowDashboard;
+use App\Actions\UI\Customer\Dashboard\ShowDashboard;
 use App\Enums\UI\Tenant\CustomerTabsEnum;
 use App\Http\Resources\CRM\CustomerResource;
 use App\Models\CRM\Customer;

@@ -10,10 +10,9 @@ const props = defineProps<{
 }>()
 
 
-
 </script>
 
 <template layout="Public">
      <Head title="Home"/>
-
+    hi
 </template>
