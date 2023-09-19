@@ -32,8 +32,8 @@ export const initialiseApp = () => {
         }
 
         // Set data of User
-        if (usePage().props.user) {
-            layout.user = usePage().props.user ?? null
+        if (usePage().props.auth.user) {
+            layout.user = usePage().props.auth.user ?? null
         }
 
 

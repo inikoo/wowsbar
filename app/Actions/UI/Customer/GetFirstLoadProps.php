@@ -13,6 +13,7 @@ use App\Http\Resources\Assets\LanguageResource;
 use App\Http\Resources\UI\CustomerAppResource;
 use App\Models\Assets\Language;
 use App\Models\Auth\User;
+use Exception;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cache;
 use Lorisleiva\Actions\Concerns\AsObject;
@@ -42,18 +43,22 @@ class GetFirstLoadProps
 
         if ($user) {
             $firebaseAuthToken = Cache::remember('customer_firebase_auth_token_'.$user->id, 3600, function () use ($user) {
-                $auth        = app('firebase.auth');
-                $customer    = customer();
-                $customToken = $auth
-                    ->createCustomToken('customer-'.$user->id, [
-                        'scope'         => 'customer',
-                        'customer_slug' => $customer->slug
-                    ]);
+                try {
+                    $auth        = app('firebase.auth');
+                    $customer    = customer();
+                    $customToken = $auth
+                        ->createCustomToken('customer-'.$user->id, [
+                            'scope'         => 'customer',
+                            'customer_slug' => $customer->slug
+                        ]);
 
-                $auth->signInWithCustomToken($customToken);
+                    $auth->signInWithCustomToken($customToken);
+                    $token = $customToken->toString();
+                } catch (Exception) {
+                    $token='';
+                }
 
-
-                return $customToken->toString();
+                return $token;
             });
         }
 

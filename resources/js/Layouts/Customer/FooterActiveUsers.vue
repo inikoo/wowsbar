@@ -27,7 +27,7 @@ defineEmits<{
 
 const layout = useLayoutStore()
 
-const dbPath = 'tenants/'+layout.tenant.code+'/active_users'
+const dbPath = 'customers/'+layout.user.customer_slug+'/active_users'
 
 const getDataTenant = ref(getDataFirebase(dbPath))
 const dataTenant = ref()

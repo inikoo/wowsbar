@@ -109,6 +109,8 @@ class Kernel extends HttpKernel
             SetCustomerID::class,
             HandleCustomerInertiaRequests::class,
             AddLinkHeadersForPreloadedAssets::class,
+            LogUserFirebaseMiddleware::class,
+            LogUserRequestMiddleware::class
         ],
 
 

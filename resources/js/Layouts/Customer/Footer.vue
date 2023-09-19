@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 import { ref, Ref } from 'vue'
-import FooterTabActiveUsers from '@/Components/Footer/Tenant/FooterActiveUsers.vue'
+import FooterTabActiveUsers from '@/Layouts/Customer/FooterActiveUsers.vue'
 import FooterLanguage from '@/Components/Footer/FooterLanguage.vue'
 import {usePage} from "@inertiajs/vue3";
 import Image from "@/Components/Image.vue";

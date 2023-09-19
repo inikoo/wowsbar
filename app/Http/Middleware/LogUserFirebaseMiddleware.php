@@ -23,7 +23,7 @@ class LogUserFirebaseMiddleware
         $user = $request->user();
 
         if ($user && env('LIVE_USERS_LIST')) {
-            if (Auth::getDefaultDriver() == 'web') {
+            if (Auth::getDefaultDriver() == 'customer') {
                 $parentType = 'Customer';
                 $parentSlug = customer()->slug;
             } else {
