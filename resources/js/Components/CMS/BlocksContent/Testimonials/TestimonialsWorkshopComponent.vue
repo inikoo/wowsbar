@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, reactive } from 'vue'
 import { faUmbrellaBeach } from '@/../private/pro-regular-svg-icons'
 import { library } from '@fortawesome/fontawesome-svg-core'
 library.add(faUmbrellaBeach)
@@ -10,6 +10,30 @@ import TestimonialTwo from '@/Components/CMS/BlocksContent/Testimonials/Testimon
 import TestimonialThree from '@/Components/CMS/BlocksContent/Testimonials/TestimonialThree.vue'
 
 const testimonialTheme = ref(0)
+
+const dataTestimonial = reactive({
+    title: '<p style="text-align: center"><span style="font-size: 20px; font-family: Arial">Testimonial</span></p>',
+    people: [
+        {
+            name: '<p><strong><span>Jane Doe</span></strong></p>',
+            jobs: "Ceo of Company A",
+            review: '<p><strong><span style="font-size: 24px; font-family: Arial">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo expedita voluptas culpa sapiente alias molestiae. Numquam corrupti in laborum sed rerum et corporis.</span></strong></p>',
+            image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+        },
+        {
+            name: '<p><strong><span>Jane Smith</span></strong></p>',
+            jobs: "Ceo of Company B",
+            review: '<p><strong><span style="font-size: 24px; font-family: Arial">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo expedita voluptas culpa sapiente alias molestiae. Numquam corrupti in laborum sed rerum et corporis.</span></strong></p>',
+            image: "https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=80"
+        },
+        {
+            name: '<p><strong><span>John Doe</span></strong></p>',
+            jobs: "Ceo of Company C",
+            review: '<p><strong><span style="font-size: 24px; font-family: Arial">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo expedita voluptas culpa sapiente alias molestiae. Numquam corrupti in laborum sed rerum et corporis.</span></strong></p>',
+            image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=80"
+        },
+    ]
+})
 
 const components = {
     0: TestimonialOne,
@@ -26,6 +50,6 @@ const component = computed(()=>{
 <template>
     <div class="w-full">
         <ButtonTheme v-model="testimonialTheme" :label="['Clean', 'Simple', 'Forest']"/>
-        <component :is="component" />
+        <component :is="component" :dataTestimonial="dataTestimonial"/>
     </div>
 </template>

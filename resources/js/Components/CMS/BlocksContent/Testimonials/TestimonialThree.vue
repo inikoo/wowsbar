@@ -1,13 +1,31 @@
-<script setup>
+<script setup lang="ts">
+import Text from '@/Components/CMS/Workshops/WorkshopComponents/Text.vue'
 
+const props = defineProps<{
+    dataTestimonial: {
+        title: string
+        people: {
+            name: string
+            jobs: string
+            review: string
+            image: string
+        }[]
+    }
+}>()
 </script>
 
 <template>
     <section class="isolate overflow-hidden bg-white px-6 lg:px-8">
-        <div class="relative mx-auto max-w-2xl py-24 sm:py-32 lg:max-w-4xl">
-            <!-- Background -->
-            <div class="absolute left-1/2 top-0 -z-10 h-[50rem] w-[90rem] -translate-x-1/2 bg-[radial-gradient(50%_100%_at_top,theme(colors.indigo.100),white)] opacity-20 lg:left-36" />
-            <div class="absolute inset-y-0 right-1/2 -z-10 mr-12 w-[150vw] origin-bottom-left skew-x-[-30deg] bg-white shadow-xl shadow-indigo-600/10 ring-1 ring-indigo-50 sm:mr-20 md:mr-0 lg:right-full lg:-mr-36 lg:origin-center" />
+        <!-- Background -->
+        <div class="absolute left-1/2 top-0 -z-10 h-[50rem] w-[90rem] -translate-x-1/2 bg-[radial-gradient(50%_100%_at_top,theme(colors.indigo.100),white)] opacity-20 lg:left-36" />
+        <div class="absolute inset-y-0 right-1/2 -z-10 mr-12 w-[150vw] origin-bottom-left skew-x-[-30deg] bg-white shadow-xl shadow-indigo-600/10 ring-1 ring-indigo-50 sm:mr-20 md:mr-0 lg:right-full lg:-mr-36 lg:origin-center" />
+        
+        <div class="relative mx-auto max-w-2xl py-10 lg:max-w-4xl space-y-10">
+            <!-- Title: Testimonial -->
+            <div class="mx-auto text-indigo-500 flex items-center gap-x-2 justify-center">
+                <!-- <FontAwesomeIcon icon='far fa-umbrella-beach' class='text-4xl' aria-hidden='true' /> -->
+                <Text v-model="dataTestimonial.title" :key="'title'" :placeholder="`Add your headline`" />
+            </div>
             
             <!-- Content -->
             <figure class="grid grid-cols-1 items-center gap-x-6 gap-y-8 lg:gap-x-10">
@@ -19,9 +37,7 @@
                         <use href="#b56e9dab-6ccb-4d32-ad02-6b4bb5d9bbeb" x="86" />
                     </svg>
                     <blockquote class="text-xl font-semibold leading-8 text-gray-900 sm:text-2xl sm:leading-9">
-                        <p>Commodo amet fugiat excepteur sunt qui ea elit cupidatat ullamco consectetur ipsum elit
-                            consequat. Elit sunt proident ea nulla ad nulla dolore ad pariatur tempor non. Sint veniam minim
-                            et ea.</p>
+                        <Text v-model="dataTestimonial.people[0].review" :key="'review'" :placeholder="'Enter your headline title'" :class="``" />
                     </blockquote>
                 </div>
                 <div class="col-end-1 w-16 lg:row-span-4 lg:w-72">
@@ -30,8 +46,8 @@
                         alt="" />
                 </div>
                 <figcaption class="text-base lg:col-start-1 lg:row-start-3">
-                    <div class="font-semibold text-gray-900">Judith Black</div>
-                    <div class="mt-1 text-gray-500">CEO of Workcation</div>
+                    <Text v-model="dataTestimonial.people[0].name" :placeholder="`Enter your name`" />
+                    <Text v-model="dataTestimonial.people[0].jobs" />
                 </figcaption>
             </figure>
         </div>
