@@ -161,16 +161,27 @@ class IndexGuest extends InertiaAction
                 'pageHead'    => [
                     'title'  => __('guests'),
                     'actions'=> [
-                        $this->canEdit && $request->route()->getName() == 'sysadmin.guests.index' ? [
-                            'type'  => 'button',
-                            'style' => 'create',
-                            'label' => __('guest'),
-                            'route' => [
-
-                                'name'       => 'sysadmin.guests.create',
-                                'parameters' => array_values($request->route()->originalParameters())
+                        $this->canEdit ? [
+                            'type'    => 'buttonGroup',
+                            'buttons' => [
+                                [
+                                    'style' => 'secondary',
+                                    'icon'  => ['fal', 'fa-upload'],
+                                    'label' => 'upload',
+                                    'route' => [
+                                        'name'       => 'org.models.guests.upload'
+                                    ],
+                                ],
+                                [
+                                    'type'  => 'button',
+                                    'style' => 'create',
+                                    'label' => __('guest'),
+                                    'route' => [
+                                        'name'       => 'sysadmin.guests.create',
+                                        'parameters' => array_values($request->route()->originalParameters())
+                                    ]
+                                ]
                             ]
-
                         ] : false
                     ]
                 ],
