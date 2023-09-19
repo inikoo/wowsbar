@@ -2,14 +2,14 @@
 import { reactive } from 'vue'
 import BannerWorkshopComponent from '@/Components/Workshop/BannerWorkshopComponent.vue'
 import TestimonialsWorkshopComponent from '@/Components/CMS/BlocksContent/Testimonials/TestimonialsWorkshopComponent.vue'
-import BlogSection from '@/Components/CMS/BlocksContent/BlogSections/index.vue'
+import BlogSection from '@/Components/CMS/BlocksContent/BlogSections/BlockSectionComponent.vue'
 import StatsWorkshopComponent from "@/Components/CMS/BlocksContent/Stats/StatsWorkshopComponent.vue"
 
 import Hero from '@/Components/CMS/BlocksContent/Hero/index.vue'
-import CardContent from '@/Components/CMS/BlocksContent/CardContent/index.vue'
-import CTABlocks from '@/Components/CMS/BlocksContent/CTABlocks/index.vue'
+import CardContent from '@/Components/CMS/BlocksContent/CardContent/CardContentWorkshopComponent.vue'
+import CTABlocks from '@/Components/CMS/BlocksContent/CTABlocks/CTABlocksWorkshopComponent.vue'
 import COntentDescription from '@/Components/CMS/BlocksContent/ContentDescription/index.vue'
-import Pricing from '@/Components/CMS/BlocksContent/Pricing/index.vue'
+import Pricing from '@/Components/CMS/BlocksContent/Pricing/PricingWorkshopCOmponent.vue'
 import Testimonials from '@/Components/CMS/BlocksContent/Testimonials/index.vue'
 
 const props = defineProps<{
@@ -22,7 +22,7 @@ defineEmits<{
 }>()
 
 
-const dummyData = {
+const dummyDataBanner = {
     data: {
         "delay": 5000,
         "common": {
@@ -67,7 +67,7 @@ const dummyData = {
         "hash": "5f2b0deec33a501be9c595dc03269dc6"
     },
     route: {
-        "name": "tenant.portfolio.websites.show.banners.workshop.images.store",
+        "name": "customer.portfolio.websites.show.banners.workshop.images.store",
         "arguments": {
             "portfolioWebsite": "hello",
             "banner": "test1"
@@ -79,7 +79,8 @@ const dummyData = {
 const dataTheme = reactive({
     text: 1,
     testimonial: 2,
-    stats: 2
+    stats: 2,
+    blogSection : 1
 })
 
 </script>
@@ -88,7 +89,12 @@ const dataTheme = reactive({
     <div class="relative flex justify-center items-center w-full">
         <TestimonialsWorkshopComponent v-if="selectedComponent.component === 'testimonial'" />
         <BannerWorkshopComponent v-if="selectedComponent.component === 'banner'" :data="dummyData.data" :imagesUploadRoute="dummyData.route" :user="dummyData.user" />
-        <StatsWorkshopComponent v-if="selectedComponent.component === 'stats'" :theme="dataTheme[selectedComponent.component]"/>
+        <StatsWorkshopComponent v-if="selectedComponent.component === 'stats'"/>
+        <BlogSection v-if="selectedComponent.component === 'blogSection'" />
+        <CTABlocks v-if="selectedComponent.component === 'CTA'" />
+        <CardContent v-if="selectedComponent.component === 'CardContent'" />
+        <Pricing v-if="selectedComponent.component === 'pricing'" />
     </div>
+   
     <!-- <Testimonials :theme="3"></Testimonials> -->
 </template>

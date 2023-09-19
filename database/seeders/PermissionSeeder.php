@@ -22,16 +22,11 @@ class PermissionSeeder extends Seeder
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
 
-        $permissions = collect(json_decode(Storage::disk('datasets')->get('permissions.json'), true));
-        $roles       = collect(json_decode(Storage::disk('datasets')->get('roles.json'), true));
 
+        $publicPermissions = collect(json_decode(Storage::disk('datasets')->get('customer-permissions.json'), true));
+        $publicRoles       = collect(json_decode(Storage::disk('datasets')->get('customer-roles.json'), true));
 
-        $this->storePermissionsRoles($permissions, $roles, 'web');
-
-        $publicPermissions = collect(json_decode(Storage::disk('datasets')->get('public-permissions.json'), true));
-        $publicRoles       = collect(json_decode(Storage::disk('datasets')->get('public-roles.json'), true));
-
-        $this->storePermissionsRoles($publicPermissions, $publicRoles, 'public');
+        $this->storePermissionsRoles($publicPermissions, $publicRoles, 'customer');
 
         $orgPermissions = collect(json_decode(Storage::disk('datasets')->get('org-permissions.json'), true));
         $orgRoles       = collect(json_decode(Storage::disk('datasets')->get('org-roles.json'), true));

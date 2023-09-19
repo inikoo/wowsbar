@@ -25,13 +25,9 @@ class Logout
                 $gate        = 'org';
                 $redirectUrl = '/login';
                 break;
-            case 'public.logout':
-                $redirectUrl = '/';
-                $gate        = 'public';
-                break;
             default:
-                $gate        = 'web';
-                $redirectUrl = '/login';
+                $gate        = 'customer';
+                $redirectUrl = '/auth/login';
         }
 
         Auth::guard($gate)->logout();

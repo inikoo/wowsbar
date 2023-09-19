@@ -145,7 +145,7 @@ class ElasticsearchAuditDriver implements AuditDriver
         return [
                 'type'           => $this->type,
                 'datetime'       => now(),
-                'tenant'         => $tenantSlug,
+                'customer'         => $tenantSlug,
                 'route'          => $this->routes(),
                 'module'         => explode('.', $this->routes()['name'])[0],
                 'ip_address'     => request()->ip(),

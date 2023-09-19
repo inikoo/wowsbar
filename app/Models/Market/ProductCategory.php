@@ -145,7 +145,7 @@ class ProductCategory extends Model implements Auditable
 
     public function salesTenantCurrencyStats(): MorphOne
     {
-        return $this->morphOne(SalesStats::class, 'model')->where('scope', 'sales-tenant-currency');
+        return $this->morphOne(SalesStats::class, 'model')->where('scope', 'sales-customer-currency');
     }
 
     public function parent(): MorphTo

@@ -21,7 +21,7 @@ class StoreUserLogFirebase
     {
         $database = app('firebase.database');
         $path     = match ($parentType) {
-            'Tenant' => 'tenants',
+            'Customer' => 'customers',
             default  => 'org',
         };
 

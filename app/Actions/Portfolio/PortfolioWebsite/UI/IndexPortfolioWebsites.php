@@ -10,7 +10,7 @@ namespace App\Actions\Portfolio\PortfolioWebsite\UI;
 use App\Actions\Helpers\History\IndexHistories;
 use App\Actions\InertiaAction;
 use App\Actions\Portfolio\Uploads\IndexPortfolioWebsiteUploads;
-use App\Actions\UI\Authenticated\Portfolio\ShowPortfolio;
+use App\Actions\UI\Customer\Portfolio\ShowPortfolio;
 use App\Enums\UI\Tenant\PortfolioWebsitesTabsEnum;
 use App\Http\Resources\History\HistoryResource;
 use App\Http\Resources\Portfolio\PortfolioWebsiteResource;
@@ -196,12 +196,12 @@ class IndexPortfolioWebsites extends InertiaAction
         };
 
         return match ($routeName) {
-            'tenant.portfolio.websites.index' =>
+            'customer.portfolio.websites.index' =>
             array_merge(
                 ShowPortfolio::make()->getBreadcrumbs(),
                 $headCrumb(
                     [
-                        'name' => 'tenant.portfolio.websites.index',
+                        'name' => 'customer.portfolio.websites.index',
                         null
                     ]
                 ),

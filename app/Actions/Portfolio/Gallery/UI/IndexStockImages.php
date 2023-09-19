@@ -8,7 +8,7 @@
 namespace App\Actions\Portfolio\Gallery\UI;
 
 use App\Actions\InertiaAction;
-use App\Actions\UI\Authenticated\Portfolio\ShowPortfolio;
+use App\Actions\UI\Customer\Portfolio\ShowPortfolio;
 use App\Http\Resources\Gallery\ImageResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\Media\LandlordMedia;
@@ -127,7 +127,7 @@ class IndexStockImages extends InertiaAction
             modelOperations: [
                 'createLink' => [
                     'route' => [
-                        'name'       => 'tenant.portfolio.websites.create',
+                        'name'       => 'customer.portfolio.websites.create',
                         'parameters' => array_values([])
                     ],
                     'type'    => 'button',
@@ -157,12 +157,12 @@ class IndexStockImages extends InertiaAction
         };
 
         return match ($routeName) {
-            'tenant.portfolio.images.index' =>
+            'customer.portfolio.images.index' =>
             array_merge(
                 ShowPortfolio::make()->getBreadcrumbs(),
                 $headCrumb(
                     [
-                        'name' => 'tenant.portfolio.images.index',
+                        'name' => 'customer.portfolio.images.index',
                         null
                     ]
                 ),

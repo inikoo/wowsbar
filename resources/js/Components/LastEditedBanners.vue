@@ -28,7 +28,7 @@ const props = defineProps<{
     <div class="max-w-2xl lg:mx-0 lg:max-w-none">
         <div class="flex items-center justify-between">
             <h2 class="text-base font-semibold text-gray-700 leading-none">{{ trans('Recently edited banner') }}</h2>
-            <Link :href="route('tenant.portfolio.banners.index')" class="text-sm text-gray-500 hover:text-gray-700">
+            <Link :href="route('customer.portfolio.banners.index')" class="text-sm text-gray-500 hover:text-gray-700">
                 View all<span class="sr-only">, banner</span>
             </Link>
         </div>

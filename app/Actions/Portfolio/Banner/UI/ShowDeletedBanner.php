@@ -10,7 +10,7 @@ namespace App\Actions\Portfolio\Banner\UI;
 use App\Actions\Elasticsearch\History\IndexHistories;
 use App\Actions\InertiaAction;
 use App\Actions\Portfolio\PortfolioWebsite\UI\ShowPortfolioWebsite;
-use App\Actions\UI\Authenticated\Portfolio\ShowPortfolio;
+use App\Actions\UI\Customer\Portfolio\ShowPortfolio;
 use App\Enums\UI\Tenant\BannerTabsEnum;
 use App\Enums\UI\Tenant\PortfolioWebsiteTabsEnum;
 use App\Http\Resources\History\HistoryResource;
@@ -121,7 +121,7 @@ class ShowDeletedBanner extends InertiaAction
 
         };
         return match ($routeName) {
-            'tenant.portfolio.banners.deleted' =>
+            'customer.portfolio.banners.deleted' =>
             array_merge(
                 ShowPortfolio::make()->getBreadcrumbs(),
                 $headCrumb(
@@ -129,21 +129,21 @@ class ShowDeletedBanner extends InertiaAction
                     $routeParameters['banner'],
                     [
                         'index' => [
-                            'name'       => 'tenant.portfolio.banners.index',
+                            'name'       => 'customer.portfolio.banners.index',
                             'parameters' => []
                         ],
                         'model' => [
-                            'name'       => 'tenant.portfolio.banners.deleted',
+                            'name'       => 'customer.portfolio.banners.deleted',
                             'parameters' => [$routeParameters['banner']->slug]
                         ]
                     ],
                     $suffix
                 ),
             ),
-            'tenant.portfolio.websites.show.banners.deleted' =>
+            'customer.portfolio.websites.show.banners.deleted' =>
             array_merge(
                 ShowPortfolioWebsite::make()->getBreadcrumbs(
-                    'tenant.portfolio.websites.show',
+                    'customer.portfolio.websites.show',
                     ['website' => $routeParameters['portfolioWebsite']]
                 ),
                 $headCrumb(
@@ -151,11 +151,11 @@ class ShowDeletedBanner extends InertiaAction
                     $routeParameters['banner'],
                     [
                         'index' => [
-                            'name'       => 'tenant.portfolio.websites.show.banners.index',
+                            'name'       => 'customer.portfolio.websites.show.banners.index',
                             'parameters' => [$routeParameters['portfolioWebsite']->slug]
                         ],
                         'model' => [
-                            'name'       => 'tenant.portfolio.websites.show.banners.deleted',
+                            'name'       => 'customer.portfolio.websites.show.banners.deleted',
                             'parameters' => $routeParameters
                         ]
                     ],

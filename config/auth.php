@@ -7,7 +7,6 @@
 
 use App\Models\Auth\OrganisationUser;
 use App\Models\Auth\User;
-use App\Models\CRM\PublicUser;
 
 return [
 
@@ -23,7 +22,7 @@ return [
     */
 
     'defaults' => [
-        'guard'     => 'web',
+        'guard'     => 'customer',
         'passwords' => 'users',
     ],
 
@@ -45,13 +44,15 @@ return [
     */
 
     'guards' => [
+      /*
         'web' => [
             'driver'   => 'session',
             'provider' => 'users',
         ],
-        'public' => [
+      */
+        'customer' => [
             'driver'   => 'session',
-            'provider' => 'public_users',
+            'provider' => 'users',
         ],
         'org' => [
             'driver'   => 'session',
@@ -80,10 +81,6 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model'  => User::class,
-        ],
-        'public_users' => [
-            'driver' => 'eloquent',
-            'model'  => PublicUser::class,
         ],
         'org_users' => [
             'driver' => 'eloquent',

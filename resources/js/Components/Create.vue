@@ -98,7 +98,7 @@ onMounted(() => {
 
 </script>
 
-<template layout="TenantApp">
+<template layout="CustomerApp">
     <div class="rounded-lg bg-white shadow">
         <div class="divide-y divide-gray-200 lg:grid grid-flow-col lg:grid-cols-12 lg:divide-y-0 lg:divide-x">
 

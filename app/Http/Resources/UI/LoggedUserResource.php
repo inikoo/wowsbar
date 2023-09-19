@@ -18,11 +18,12 @@ class LoggedUserResource extends JsonResource
 
     public function toArray($request): array
     {
-        /** @var User|OrganisationUser|\App\Models\CRM\PublicUser $user */
+        /** @var User|OrganisationUser $user */
         $user=$this;
         return [
             'username'           => $user->username,
-            'avatar_thumbnail'   => ! blank($user->avatar_id) ? $user->avatarImageSources(0, 48) : null
+            'avatar_thumbnail'   => ! blank($user->avatar_id) ? $user->avatarImageSources(0, 48) : null,
+            'customer_slug'     => 1 // $user->customer->slug 
         ];
     }
 }

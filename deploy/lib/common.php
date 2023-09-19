@@ -11,7 +11,7 @@ desc('🚡 Migrating database');
 task('deploy:migrate', function () {
     artisan('migrate --force --database=backup --path=database/migrations/backup', ['skipIfNoEnv', 'showOutput'])();
     artisan('migrate --force --path=database/migrations/landlord', ['skipIfNoEnv', 'showOutput'])();
-    artisan('migrate --force --path=database/migrations/tenant', ['skipIfNoEnv', 'showOutput'])();
+    artisan('migrate --force --path=database/migrations/customer', ['skipIfNoEnv', 'showOutput'])();
 });
 
 desc('🚡 Deploy elasticsearch');

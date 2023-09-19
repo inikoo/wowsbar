@@ -39,7 +39,7 @@ class CreateBanner extends InertiaAction
     }
 
 
-    public function handle(Tenant|PortfolioWebsite $parent, ActionRequest $request): Response
+    public function handle(Customer|PortfolioWebsite $parent, ActionRequest $request): Response
     {
 
         $fields=[];
@@ -65,7 +65,7 @@ class CreateBanner extends InertiaAction
             ]
         ];
 
-        if(class_basename($parent)=='Tenant') {
+        if(class_basename($parent)=='Customer') {
             $fields[]= [
                 'title'  => __('Website'),
                 'fields' => [
@@ -99,9 +99,9 @@ class CreateBanner extends InertiaAction
                             'style' => 'cancel',
                             'route' =>
                                 match ($request->route()->getName()) {
-                                    'tenant.portfolio.websites.show.banners.create' =>
+                                    'customer.portfolio.websites.show.banners.create' =>
                                     [
-                                        'name'       => 'tenant.portfolio.websites.show',
+                                        'name'       => 'customer.portfolio.websites.show',
                                         'parameters' => array_values($request->route()->originalParameters())
                                     ],
                                     default => [
@@ -121,7 +121,7 @@ class CreateBanner extends InertiaAction
                     'route'     =>
 
                         match (class_basename($parent)) {
-                            'Tenant' => [
+                            'Authenticated' => [
                                 'name' => 'models.banner.store',
                             ],
                             default => [
@@ -144,12 +144,12 @@ class CreateBanner extends InertiaAction
     {
         return array_merge(
             match ($routeName) {
-                'tenant.portfolio.banners.create' => IndexBanners::make()->getBreadcrumbs(
-                    'tenant.portfolio.banners.index',
+                'customer.portfolio.banners.create' => IndexBanners::make()->getBreadcrumbs(
+                    'customer.portfolio.banners.index',
                     $routeParameters
                 ),
                 default => IndexBanners::make()->getBreadcrumbs(
-                    'tenant.portfolio.websites.show.banners.index',
+                    'customer.portfolio.websites.show.banners.index',
                     $routeParameters
                 )
             },

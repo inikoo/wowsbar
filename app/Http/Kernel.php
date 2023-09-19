@@ -12,7 +12,7 @@ use App\Http\Middleware\CheckWebsiteState;
 use App\Http\Middleware\DetectWebsite;
 use App\Http\Middleware\EncryptCookies;
 use App\Http\Middleware\HandleDeliveryInertiaRequests;
-use App\Http\Middleware\HandleTenantInertiaRequests;
+use App\Http\Middleware\HandleCustomerInertiaRequests;
 use App\Http\Middleware\HandleOrgInertiaRequests;
 use App\Http\Middleware\HandlePublicInertiaRequests;
 use App\Http\Middleware\LogUserFirebaseMiddleware;
@@ -21,6 +21,7 @@ use App\Http\Middleware\OrgAuthenticate;
 use App\Http\Middleware\PreventRequestsDuringMaintenance;
 use App\Http\Middleware\PublicAuthenticate;
 use App\Http\Middleware\RedirectIfAuthenticated;
+use App\Http\Middleware\SetCustomerID;
 use App\Http\Middleware\TrimStrings;
 use App\Http\Middleware\TrustProxies;
 use App\Http\Middleware\ValidateSignature;
@@ -59,18 +60,7 @@ class Kernel extends HttpKernel
 
     protected $middlewareGroups = [
 
-        'web'        => [
-            EncryptCookies::class,
-            AddQueuedCookiesToResponse::class,
-            StartSession::class,
-            ShareErrorsFromSession::class,
-            VerifyCsrfToken::class,
-            SubstituteBindings::class,
-            HandleTenantInertiaRequests::class,
-            AddLinkHeadersForPreloadedAssets::class,
-            LogUserFirebaseMiddleware::class,
-            LogUserRequestMiddleware::class,
-        ],
+
 
         'delivery' => [
             EncryptCookies::class,
@@ -82,18 +72,7 @@ class Kernel extends HttpKernel
             HandleDeliveryInertiaRequests::class,
             AddLinkHeadersForPreloadedAssets::class,
         ],
-        'public-web' => [
-            CheckWebsiteState::class,
-            EncryptCookies::class,
-            AddQueuedCookiesToResponse::class,
-            StartSession::class,
-            ShareErrorsFromSession::class,
-            VerifyCsrfToken::class,
-            SubstituteBindings::class,
-            HandlePublicInertiaRequests::class,
-            AddLinkHeadersForPreloadedAssets::class,
-        ],
-        'org-web'    => [
+        'org-web' => [
             EncryptCookies::class,
             AddQueuedCookiesToResponse::class,
             StartSession::class,
@@ -105,7 +84,7 @@ class Kernel extends HttpKernel
             LogUserFirebaseMiddleware::class,
             LogUserRequestMiddleware::class
         ],
-        'frontend' => [
+        'public' => [
             DetectWebsite::class,
             CheckWebsiteState::class,
             EncryptCookies::class,
@@ -118,15 +97,22 @@ class Kernel extends HttpKernel
             AddLinkHeadersForPreloadedAssets::class,
         ],
 
-        'public' => [
-            HandlePublicInertiaRequests::class,
+        'customer' => [
+            DetectWebsite::class,
+            CheckWebsiteState::class,
+            EncryptCookies::class,
+            AddQueuedCookiesToResponse::class,
+            StartSession::class,
+            ShareErrorsFromSession::class,
+            VerifyCsrfToken::class,
+            SubstituteBindings::class,
+            SetCustomerID::class,
+            HandleCustomerInertiaRequests::class,
             AddLinkHeadersForPreloadedAssets::class,
+            LogUserFirebaseMiddleware::class,
+            LogUserRequestMiddleware::class
         ],
 
-        'customer' => [
-            HandleTenantInertiaRequests::class,
-            AddLinkHeadersForPreloadedAssets::class,
-        ],
 
 
         'webhooks-api' => [
@@ -134,7 +120,7 @@ class Kernel extends HttpKernel
             SubstituteBindings::class,
         ],
 
-        'tenant-api' => [
+        'customer-api' => [
             // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
             ThrottleRequests::class.':api',
             SubstituteBindings::class,

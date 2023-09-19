@@ -46,12 +46,12 @@ class FetchFirebaseSnapshot
 
     public function getCommandSignature(): string
     {
-        return 'banner:fetch-firebase {tenant} {slug}';
+        return 'banner:fetch-firebase {customer} {slug}';
     }
 
     public function asCommand(Command $command): void
     {
-        $tenant = Tenant::where('slug', $command->argument('tenant'))->firstOrFail();
+        $tenant = Tenant::where('slug', $command->argument('customer'))->firstOrFail();
         $tenant->makeCurrent();
 
         $banner = Banner::where('slug', $command->argument('slug'))->firstOrFail();

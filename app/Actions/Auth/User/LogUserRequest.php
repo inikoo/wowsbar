@@ -28,7 +28,7 @@ class LogUserRequest
         }
 
         switch (class_basename($parent)) {
-            case 'Tenant':
+            case 'Customer':
                 $slug = $parent->slug;
                 $name = 'user';
                 break;
@@ -44,7 +44,7 @@ class LogUserRequest
         $body = [
             'type'        => $type,
             'datetime'    => $datetime,
-            'tenant'      => $slug,
+            'customer'      => $slug,
             'username'    => $user->username,
             'route'       => $routeData,
             'module'      => explode('.', $routeData['name'])[0],

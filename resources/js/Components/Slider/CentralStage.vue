@@ -32,6 +32,6 @@ const props = defineProps<{
 </template>
 
 <style lang="scss">
-@import url('https://fonts.googleapis.com/css2?family=Comfortaa&family=Laila&family=Lobster&family=Playfair&family=Port+Lligat+Slab&family=Quicksand&family=Yatra+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa&family=Inter&family=Laila&family=Lobster&family=Playfair&family=Port+Lligat+Slab&family=Quicksand&family=Yatra+One&display=swap');
 
 </style>

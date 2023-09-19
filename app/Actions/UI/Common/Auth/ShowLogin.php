@@ -17,10 +17,8 @@ class ShowLogin
     use AsController;
 
 
-    public function handle(ActionRequest $request): Response
+    public function handle(): Response
     {
-        $request->route()->getName();
-
         return Inertia::render(
             'Auth/Login',
             [

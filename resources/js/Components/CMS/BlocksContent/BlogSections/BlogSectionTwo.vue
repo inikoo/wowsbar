@@ -1,7 +1,11 @@
 <script setup lang="ts">
+import Text from '@/Components/CMS/Workshops/WorkshopComponents/Text.vue'
+
 const props = defineProps<{
     data: array,
+    pageHead: Object
 }>()
+
 </script>
 
 
@@ -9,9 +13,10 @@ const props = defineProps<{
     <div class="bg-white py-24 sm:py-32">
       <div class="mx-auto max-w-7xl px-6 lg:px-8">
         <div class="mx-auto max-w-2xl text-center">
-          <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">From the blog</h2>
-          <p class="mt-2 text-lg leading-8 text-gray-600">Learn how to grow your business with our expert advice.</p>
+          <Text v-model="pageHead.title" :key="pageHead.title" :placeholder="'Enter your headline value'" :class="``" />
+          <Text v-model="pageHead.description" :key="pageHead.description" :placeholder="'Enter your headline value'" :class="``" />
         </div>
+
         <div class="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
           <article v-for="post in data" :key="post.id" class="flex flex-col items-start justify-between">
             <div class="relative w-full">
@@ -23,25 +28,15 @@ const props = defineProps<{
                 <time :datetime="post.datetime" class="text-gray-500">{{ post.date }}</time>
                 <a :href="post.category.href" class="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100">{{ post.category.title }}</a>
               </div>
-              <div class="group relative">
-                <h3 class="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
-                  <a :href="post.href">
-                    <span class="absolute inset-0" />
-                    {{ post.title }}
-                  </a>
-                </h3>
-                <p class="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">{{ post.description }}</p>
+              <div>
+                <Text v-model="post.title" :key="post.title" :placeholder="'Enter your headline value'" :class="``" />
+                <Text v-model="post.description" :key="post.description" :placeholder="'Enter your description'" :class="``" />
               </div>
               <div class="relative mt-8 flex items-center gap-x-4">
                 <img :src="post.author.imageUrl" alt="" class="h-10 w-10 rounded-full bg-gray-100" />
-                <div class="text-sm leading-6">
-                  <p class="font-semibold text-gray-900">
-                    <a :href="post.author.href">
-                      <span class="absolute inset-0" />
-                      {{ post.author.name }}
-                    </a>
-                  </p>
-                  <p class="text-gray-600">{{ post.author.role }}</p>
+                <div class="leading-6">
+                  <Text v-model="post.author.name" :key="post.author.name" :placeholder="'Enter your name'" :class="``" />
+                  <Text v-model="post.author.role" :key="post.author.role" :placeholder="'Enter your role'" :class="``" />
                 </div>
               </div>
             </div>

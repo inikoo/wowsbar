@@ -10,7 +10,7 @@ namespace App\Actions\Portfolio\Banner\UI;
 use App\Actions\Helpers\History\IndexHistories;
 use App\Actions\InertiaAction;
 use App\Actions\Portfolio\PortfolioWebsite\UI\ShowPortfolioWebsite;
-use App\Actions\UI\Authenticated\Portfolio\ShowPortfolio;
+use App\Actions\UI\Customer\Portfolio\ShowPortfolio;
 use App\Enums\Portfolio\Banner\BannerStateEnum;
 use App\Enums\UI\Tenant\BannerTabsEnum;
 use App\Enums\UI\Tenant\PortfolioWebsiteTabsEnum;
@@ -106,7 +106,7 @@ class ShowBanner extends InertiaAction
                             'label' => __('clone this banner'),
                             'icon'  => ["fal", "fa-paste"],
                             'route' => [
-                                'name'       => 'tenant.portfolio.banners.duplicate',
+                                'name'       => 'customer.portfolio.banners.duplicate',
                                 'parameters' => array_values($request->route()->originalParameters())
                             ]
                         ],
@@ -210,8 +210,8 @@ class ShowBanner extends InertiaAction
 
 
         return match ($routeName) {
-            'tenant.portfolio.banners.show',
-            'tenant.portfolio.banners.edit' =>
+            'customer.portfolio.banners.show',
+            'customer.portfolio.banners.edit' =>
             array_merge(
                 ShowPortfolio::make()->getBreadcrumbs(),
                 $headCrumb(
@@ -219,22 +219,22 @@ class ShowBanner extends InertiaAction
                     $routeParameters['banner'],
                     [
                         'index' => [
-                            'name'       => 'tenant.portfolio.banners.index',
+                            'name'       => 'customer.portfolio.banners.index',
                             'parameters' => []
                         ],
                         'model' => [
-                            'name'       => 'tenant.portfolio.banners.show',
+                            'name'       => 'customer.portfolio.banners.show',
                             'parameters' => [$routeParameters['banner']->slug]
                         ]
                     ],
                     $suffix
                 ),
             ),
-            'tenant.portfolio.websites.show.banners.show',
-            'tenant.portfolio.websites.show.banners.edit'=>
+            'customer.portfolio.websites.show.banners.show',
+            'customer.portfolio.websites.show.banners.edit'=>
             array_merge(
                 ShowPortfolioWebsite::make()->getBreadcrumbs(
-                    'tenant.portfolio.websites.show',
+                    'customer.portfolio.websites.show',
                     ['portfolioWebsite' => $routeParameters['portfolioWebsite']]
                 ),
                 $headCrumb(
@@ -242,11 +242,11 @@ class ShowBanner extends InertiaAction
                     $routeParameters['banner'],
                     [
                         'index' => [
-                            'name'       => 'tenant.portfolio.websites.show.banners.index',
+                            'name'       => 'customer.portfolio.websites.show.banners.index',
                             'parameters' => [$routeParameters['portfolioWebsite']->slug]
                         ],
                         'model' => [
-                            'name'       => 'tenant.portfolio.websites.show.banners.show',
+                            'name'       => 'customer.portfolio.websites.show.banners.show',
                             'parameters' => $routeParameters
                         ]
                     ],

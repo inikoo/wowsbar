@@ -56,7 +56,7 @@ class StorePortfolioWebsite
     {
         return [
             'domain' => ['required', new CaseSensitive('portfolio_websites')],
-            'code'   => ['required', 'unique:tenant.portfolio_websites', 'max:8'],
+            'code'   => ['required', 'unique:portfolio_websites', 'max:8'],
             'name'   => ['required']
         ];
     }
@@ -69,7 +69,7 @@ class StorePortfolioWebsite
 
     public function htmlResponse(PortfolioWebsite $portfolioWebsite): RedirectResponse
     {
-        return Redirect::route('tenant.portfolio.websites.show', [
+        return Redirect::route('customer.portfolio.websites.show', [
             $portfolioWebsite->slug
         ]);
     }

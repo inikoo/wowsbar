@@ -10,7 +10,7 @@ import Footer from "@/Layouts/Footer/Organisation/Footer.vue"
 import { usePage } from "@inertiajs/vue3"
 
 import AppLeftSideBar from "@/Layouts/Organisation/AppLeftSideBar.vue"
-import AppRightSideBar from "@/Layouts/AppRightSideBar.vue"
+import AppRightSideBar from "@/Layouts/Customer/AppRightSideBar.vue"
 import AppTopBar from "@/Layouts/Organisation/AppTopBar.vue"
 import Breadcrumbs from "@/Components/Navigation/Breadcrumbs.vue"
 
