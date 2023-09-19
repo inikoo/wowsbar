@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import { Head } from '@inertiajs/vue3'
-import { trans } from "laravel-vue-i18n"
-import { ref, computed } from "vue"
+import { ref } from "vue"
 
 import WebpageBlocksOrder from "@/Components/Workshop/Webpage/WebpageBlocksOrder.vue"
-import BannerWorkshop from "@/Pages/Tenant/Portfolio/BannerWorkshop.vue"
 import WebpageBlocksContent from "@/Components/CMS/Workshops/WebpageBlocksContent.vue"
 
+import { componentBlocks } from '@/types/WebPageWorkshop'
 
 import PageHeading from '@/Components/Headings/PageHeading.vue'
 import { capitalize } from "@/Composables/capitalize"
+import { ulid } from 'ulid'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faArrowAltToTop, faArrowAltToBottom, faBars, faBrowser, faCube, faPalette, faCookieBite, faTrashAlt, faTimes } from "@/../private/pro-light-svg-icons"
@@ -17,7 +17,6 @@ import { faText, faWindowMaximize } from "@/../private/pro-regular-svg-icons"
 import { faEye, faEyeSlash } from '@/../private/pro-solid-svg-icons'
 import { faRectangleWide } from "@/../private/pro-duotone-svg-icons"
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { ulid } from 'ulid'
 
 library.add(
     faArrowAltToTop,
@@ -86,7 +85,7 @@ const selectedComponent = ref(dataComponent.value[0])
 
     <!-- The content -->
     <div v-else class="h-full w-full px-2 py-3 flex gap-x-2">
-        <WebpageBlocksOrder @handleSelectComponent="(componentName) => selectedComponent = componentName" :dataComponent="dataComponent" :selectedComponent="selectedComponent"/>
+        <WebpageBlocksOrder @handleSelectComponent="(component: componentBlocks) => selectedComponent = component" :dataComponent="dataComponent" :selectedComponent="selectedComponent"/>
 
         <!-- The editor -->
         <div class="flex w-full h-full p-3 border border-gray-200 rounded shadow-sm">

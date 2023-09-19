@@ -5,6 +5,8 @@ import draggable from "vuedraggable"
 
 import Button from '@/Components/Elements/Buttons/Button.vue'
 
+import { componentBlocks } from '@/types/WebPageWorkshop'
+
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faTrashAlt, faTimes } from "@/../private/pro-light-svg-icons"
 import { faText, faWindowMaximize } from "@/../private/pro-regular-svg-icons"
@@ -18,12 +20,13 @@ const props = defineProps<{
 }>()
 
 const emits = defineEmits<{
-    (e: 'handleSelectComponent'): string
+    (e: 'handleSelectComponent', componentName: componentBlocks): void
 }>()
 
 library.add(faEye, faEyeSlash,faTrashAlt, faTimes, faRectangleWide, faText, faWindowMaximize)
 
-const handleSelectComponent = (componentName: string) => {
+const handleSelectComponent = (componentName: componentBlocks) => {
+    console.log(componentName)
     emits('handleSelectComponent', componentName)
 }
 
