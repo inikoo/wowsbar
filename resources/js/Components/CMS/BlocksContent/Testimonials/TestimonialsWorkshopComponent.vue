@@ -12,7 +12,8 @@ import TestimonialThree from '@/Components/CMS/BlocksContent/Testimonials/Testim
 const testimonialTheme = ref(0)
 
 const dataTestimonial = reactive({
-    title: '<p style="text-align: center"><span style="font-size: 20px; font-family: Arial">Testimonial</span></p>',
+    title: '<p style="text-align: center"><strong><span style="font-size: 20px; color: #6366f1; font-family: Arial">Testimonial</span></strong></p>',
+    description: '<p><strong><span style="font-size: 36px; font-family: Arial">We have worked with thousands of amazing people</span></strong></p>',
     people: [
         {
             name: '<p><strong><span>Jane Doe</span></strong></p>',
