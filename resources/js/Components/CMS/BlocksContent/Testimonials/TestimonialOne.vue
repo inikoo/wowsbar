@@ -21,11 +21,13 @@ const props = defineProps<{
 </script>
 
 <template>
-    <section class="relative isolate overflow-hidden bg-white px-6 py-16 lg:px-8">
-        <div class="absolute inset-0 -z-10 bg-[radial-gradient(45rem_50rem_at_top,theme(colors.indigo.100),white)] opacity-20" />
-        <div class="absolute inset-y-0 right-1/2 -z-10 mr-16 w-[200%] origin-bottom-left skew-x-[-30deg] bg-white shadow-xl shadow-indigo-600/10 ring-1 ring-indigo-50 sm:mr-28 lg:mr-0 xl:mr-16 xl:origin-center" />
+    <section class="relative isolate bg-white">
+        <div class="overflow-hidden absolute w-full h-full">
+            <div class="absolute inset-0 -z-10 bg-[radial-gradient(45rem_50rem_at_top,theme(colors.indigo.100),white)] opacity-20" />
+            <div class="absolute inset-y-0 right-1/2 -z-10 mr-16 w-[200%] origin-bottom-left skew-x-[-30deg] bg-white shadow-xl shadow-indigo-600/10 ring-1 ring-indigo-50 sm:mr-28 lg:mr-0 xl:mr-16 xl:origin-center" />
+        </div>
 
-        <div class="mx-auto max-w-2xl lg:max-w-4xl flex flex-col">
+        <div class="mx-auto max-w-2xl px-6 lg:px-8 lg:max-w-4xl flex flex-col py-16">
             <!-- <img class="mx-auto h-12" src="https://tailwindui.com/img/logos/workcation-logo-indigo-600.svg" alt="" /> -->
             <div class="mx-auto text-indigo-500 flex items-center gap-x-2">
                 <!-- <FontAwesomeIcon icon='far fa-umbrella-beach' class='text-4xl' aria-hidden='true' /> -->

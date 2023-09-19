@@ -18,19 +18,19 @@ const dataTestimonial = reactive({
         {
             name: '<p><strong><span>Jane Doe</span></strong></p>',
             jobs: "Ceo of Company A",
-            review: '<p><strong><span style="font-size: 24px; font-family: Arial">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo expedita voluptas culpa sapiente alias molestiae. Numquam corrupti in laborum sed rerum et corporis.</span></strong></p>',
+            review: '<p><strong><span style="font-size: 24px; color: #4b5563; font-family: Arial">"I tested a levitating coffee cup. It hovers, keeping my coffee warm and my desk tidy"</span></strong></p>',
             image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
         },
         {
             name: '<p><strong><span>Jane Smith</span></strong></p>',
             jobs: "Ceo of Company B",
-            review: '<p><strong><span style="font-size: 24px; font-family: Arial">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo expedita voluptas culpa sapiente alias molestiae. Numquam corrupti in laborum sed rerum et corporis.</span></strong></p>',
+            review: `<p><strong><span style="font-size: 24px; color: #4b5563; font-family: Arial">"The self-replicating pen - I never run out of ink again. A writer's paradise!"</span></strong></p>`,
             image: "https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=80"
         },
         {
             name: '<p><strong><span>John Doe</span></strong></p>',
             jobs: "Ceo of Company C",
-            review: '<p><strong><span style="font-size: 24px; font-family: Arial">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo expedita voluptas culpa sapiente alias molestiae. Numquam corrupti in laborum sed rerum et corporis.</span></strong></p>',
+            review: `<p><strong><span style="font-size: 24px; color: #4b5563; font-family: Arial">"The hoverboard suitcase made my last trip a breeze. I'll never drag a suitcase again."</span></strong></p>`,
             image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=80"
         },
     ]
@@ -50,7 +50,7 @@ const component = computed(()=>{
 
 <template>
     <div class="w-full">
-        <ButtonTheme v-model="testimonialTheme" :label="['Clean', 'Simple', 'Forest']"/>
+        <ButtonTheme v-model="testimonialTheme" :label="['Clean', 'Multi', 'Simple']"/>
         <component :is="component" :dataTestimonial="dataTestimonial"/>
     </div>
 </template>
