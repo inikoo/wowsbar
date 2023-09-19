@@ -21,12 +21,11 @@ return new class () extends Migration {
             $table->foreign('shop_id')->references('id')->on('shops');
 
             $table =$this->crmStats($table);
+            $table->unsignedInteger('number_products')->default(0);
+
             $table->unsignedInteger('number_deliveries')->default(0);
             $table->unsignedInteger('number_deliveries_type_order')->default(0);
             $table->unsignedInteger('number_deliveries_type_replacement')->default(0);
-
-
-
 
             $table->unsignedInteger('number_invoices')->default(0);
             $table->unsignedInteger('number_invoices_type_invoice')->default(0);
@@ -35,7 +34,6 @@ return new class () extends Migration {
             $table->unsignedInteger('number_payment_service_providers')->default(0);
             $table->unsignedInteger('number_payment_accounts')->default(0);
             $table->unsignedInteger('number_payments')->default(0);
-
 
             $table->timestampsTz();
         });

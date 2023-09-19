@@ -134,7 +134,7 @@ class IndexProducts extends InertiaAction
                         ],
                         'Shop' => [
                             'title'       => __("No products found"),
-                            'count'       => $parent->stats->number_products,
+                            'count'       => $parent->stats->number_products
                         ],
                         default => null
                     }
@@ -196,16 +196,16 @@ class IndexProducts extends InertiaAction
                         'title' => __('product')
                     ],
                     'actions' => [
-                        $this->canEdit && class_basename($this->parent)=='ProductCategory' && $this->parent->is_family ? [
+                        [
                             'type'    => 'button',
                             'style'   => 'create',
                             'tooltip' => __('new product'),
                             'label'   => __('product'),
                             'route'   => [
-                                'name'       => $request->route()->getName().'.create',
+                                'name'       => 'org.shops.show.products.create',
                                 'parameters' => $request->route()->originalParameters()
                             ]
-                        ] : false,
+                        ]
                     ]
                 ],
                 'data'        => ProductResource::collection($products),

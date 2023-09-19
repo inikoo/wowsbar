@@ -7,9 +7,11 @@
 
 namespace App\Models\Market;
 
+use App\Enums\Market\Product\ProductTradeUnitCompositionEnum;
 use App\Enums\Organisation\Market\Product\ProductStateEnum;
 use App\Enums\Organisation\Market\Product\ProductTypeEnum;
 use App\Models\Search\UniversalSearch;
+use App\Models\Traits\HasImages;
 use App\Models\Traits\HasUniversalSearch;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
@@ -81,11 +83,9 @@ class Product extends Model implements HasMedia
 {
     use SoftDeletes;
     use HasSlug;
-    use UsesTenantConnection;
     use HasUniversalSearch;
     use HasImages;
     use HasFactory;
-
 
     protected $casts = [
         'data'                   => 'array',

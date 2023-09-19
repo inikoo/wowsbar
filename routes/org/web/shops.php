@@ -6,6 +6,7 @@
  */
 
 
+use App\Actions\Organisation\Market\Product\UI\CreateProduct;
 use App\Actions\Organisation\Market\Product\UI\IndexProducts;
 use App\Actions\Organisation\Market\ProductCategory\UI\CreateDepartment;
 use App\Actions\Organisation\Market\ProductCategory\UI\IndexDepartments;
@@ -33,4 +34,4 @@ Route::get('/{shop}/departments', [IndexDepartments::class, 'inShop'])->name('sh
 
 
 Route::get('/{shop}/products', [IndexProducts::class, 'inShop'])->name('show.products.index');
-//Route::get('/shops/{shop}/products/create', CreateProduct::class)->name('show.products.create');
+Route::get('/shops/{shop}/products/create', CreateProduct::class)->name('show.products.create');
