@@ -2,10 +2,13 @@
 
 namespace App\Imports\CRM;
 
-use App\Actions\CRM\Prospect\ImportProspects;
-use App\Actions\CRM\Prospect\UpdateProspectUploads;
+use App\Actions\CRM\Prospect\StoreProspect;
+use App\Actions\Helpers\Uploads\ImportExcelUploads;
+use App\Actions\Helpers\Uploads\UpdateExcelUploads;
+use App\Models\CRM\Prospect;
 use App\Models\Media\ExcelUpload;
 use App\Models\Media\ExcelUploadRecord;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\SkipsFailures;
 use Maatwebsite\Excel\Concerns\SkipsOnFailure;
@@ -30,22 +33,17 @@ class ProspectImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wi
     {
         $totalImported = 1;
 
-        UpdateProspectUploads::run($this->prospectUpload, ['number_rows' => count($collection)]);
+        UpdateExcelUploads::run($this->prospectUpload, ['number_rows' => count($collection)]);
 
         foreach ($collection as $prospect) {
             try {
                 $prospect = ExcelUploadRecord::create([
-                        'excel_upload_id' => $this->prospectUpload->id,
-                        'data'            => json_encode([
-                        'contact_name'    => $prospect['contact_name'],
-                        'company_name'    => $prospect['company_name'],
-                        'email'           => $prospect['email'],
-                        'phone'           => $prospect['phone'],
-                        'contact_website' => $prospect['contact_website'],
-                    ])
+                    'excel_upload_id' => $this->prospectUpload->id,
+                    'data'            => json_encode(Arr::except($prospect, 'code'))
                 ]);
 
-                ImportProspects::dispatch($prospect, count($collection), $totalImported++);
+                StoreProspect::run(json_decode($prospect->data, true));
+                ImportExcelUploads::dispatch($prospect, count($collection), $totalImported++, Prospect::class);
             } catch (\Exception $e) {
                 $totalImported--;
             }

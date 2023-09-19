@@ -2,10 +2,13 @@
 
 namespace App\Imports\HumanResources;
 
-use App\Actions\Organisation\HumanResources\Employee\ImportEmployees;
-use App\Actions\Organisation\HumanResources\Employee\UpdateEmployeeUploads;
+use App\Actions\Helpers\Uploads\ImportExcelUploads;
+use App\Actions\Helpers\Uploads\UpdateExcelUploads;
+use App\Actions\Organisation\HumanResources\Employee\StoreEmployee;
+use App\Models\HumanResources\Employee;
 use App\Models\Media\ExcelUpload;
 use App\Models\Media\ExcelUploadRecord;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\SkipsFailures;
 use Maatwebsite\Excel\Concerns\SkipsOnFailure;
@@ -30,25 +33,20 @@ class EmployeeImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wi
     {
         $totalImported = 1;
 
-        UpdateEmployeeUploads::run($this->employeeUpload, ['number_rows' => count($collection)]);
+        UpdateExcelUploads::run($this->employeeUpload, ['number_rows' => count($collection)]);
 
         foreach ($collection as $employee) {
             try {
                 $employee = ExcelUploadRecord::create([
-                        'excel_upload_id' => $this->employeeUpload->id,
-                        'data'            => json_encode([
-                        'contact_name'    => $employee['contact_name'],
-                        'date_of_birth'   => $employee['date_of_birth'],
-                        'job_title'       => $employee['job_title'],
-                        'email'           => $employee['email'],
-                    ])
+                    'excel_upload_id' => $this->employeeUpload->id,
+                    'data'            => json_encode(Arr::except($employee, 'code'))
                 ]);
 
-                ImportEmployees::dispatch($employee, count($collection), $totalImported++);
+                StoreEmployee::run(json_decode($employee->data, true));
+                ImportExcelUploads::dispatch($employee, count($collection), $totalImported++, Employee::class);
             } catch (\Exception $e) {
                 $totalImported--;
             }
-
         }
     }
 

@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $type
  * @property string $original_filename
  * @property string $filename
+ * @property string $path
  * @property int $number_rows
  * @property string $uploaded_at
  * @property \Illuminate\Support\Carbon|null $created_at
@@ -36,4 +37,9 @@ class ExcelUpload extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function getFullPath(): string
+    {
+        return $this->path . '/' . $this->filename;
+    }
 }

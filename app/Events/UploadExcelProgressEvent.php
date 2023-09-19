@@ -23,7 +23,7 @@ class UploadExcelProgressEvent implements ShouldBroadcastNow
     public function __construct($data, $event = PortfolioWebsite::class)
     {
         $this->data   = $data;
-        $this->event  = class_basename($event);
+        $this->event  = $event;
     }
 
     /**

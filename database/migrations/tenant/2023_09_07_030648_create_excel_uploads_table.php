@@ -19,6 +19,7 @@ return new class () extends Migration {
             $table->string('type');
             $table->string('original_filename');
             $table->string('filename');
+            $table->string('path');
             $table->smallInteger('number_rows')->default(0);
             $table->dateTimeTz('uploaded_at');
             $table->timestamps();

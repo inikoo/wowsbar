@@ -7,6 +7,8 @@
 
 namespace App\Actions\CRM\Prospect;
 
+use App\Actions\Helpers\Uploads\ConvertUploadedFile;
+use App\Actions\Helpers\Uploads\StoreExcelUploads;
 use App\Imports\CRM\ProspectImport;
 use App\Models\CRM\Prospect;
 use Excel;
@@ -26,23 +28,14 @@ class UploadProspect
     /**
      * @var true
      */
-    private bool $asAction          = false;
+    private bool $asAction = false;
     public string $commandSignature = 'prospect:import {filename}';
 
     public function handle($file): void
     {
-        $filename = $file->hashName();
+        $prospectUpload = StoreExcelUploads::run($file, Prospect::class);
 
-        $path = 'org/prospects';
-        Storage::disk('local')->put($path, $file);
-
-        $prospectUpload = StoreProspectUploads::run([
-            'type'              => class_basename(Prospect::class),
-            'original_filename' => $file->getClientOriginalName(),
-            'filename'          => $filename
-        ]);
-
-        Excel::import(new ProspectImport($prospectUpload), $path . '/' . $filename);
+        Excel::import(new ProspectImport($prospectUpload), storage_path('app/' . $prospectUpload->getFullPath()));
     }
 
     /**
@@ -50,28 +43,15 @@ class UploadProspect
      */
     public function asController(ActionRequest $request): void
     {
-        $file     = $request->file('file');
+        $file = $request->file('file');
         $this->handle($file);
     }
 
     public function asCommand(Command $command): void
     {
-        $filename    = $command->argument('filename');
-        $path        = 'org/prospects';
-        $fileInfo    = new finfo(FILEINFO_MIME_TYPE);
-        $fullPath    = storage_path('app/' . $path . '/' . $filename);
+        $filename = $command->argument('filename');
+        $file = ConvertUploadedFile::run($filename);
 
-        if (Storage::disk('local')->exists('org/prospects/' . $filename)) {
-            $file = new UploadedFile(
-                $fullPath,
-                $filename,
-                $fileInfo->file($fullPath),
-                filesize($fullPath),
-                0,
-                false
-            );
-
-            $this->handle($file);
-        }
+        $this->handle($file);
     }
 }

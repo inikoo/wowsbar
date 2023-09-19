@@ -7,6 +7,8 @@
 
 namespace App\Actions\Organisation\HumanResources\Employee;
 
+use App\Actions\Helpers\Uploads\ConvertUploadedFile;
+use App\Actions\Helpers\Uploads\StoreExcelUploads;
 use App\Imports\HumanResources\EmployeeImport;
 use App\Models\HumanResources\Employee;
 use Excel;
@@ -26,23 +28,14 @@ class UploadEmployee
     /**
      * @var true
      */
-    private bool $asAction          = false;
+    private bool $asAction = false;
     public string $commandSignature = 'employee:import {filename}';
 
     public function handle($file): void
     {
-        $filename = $file->hashName();
+        $employeeUpload = StoreExcelUploads::run($file, Employee::class);
 
-        $path = 'org/employees';
-        Storage::disk('local')->put($path, $file);
-
-        $employeeUpload = StoreEmployeeUploads::run([
-            'type'              => class_basename(Employee::class),
-            'original_filename' => $file->getClientOriginalName(),
-            'filename'          => $filename
-        ]);
-
-        Excel::import(new EmployeeImport($employeeUpload), $path . '/' . $filename);
+        Excel::import(new EmployeeImport($employeeUpload), storage_path('app/' . $employeeUpload->getFullPath()));
     }
 
     /**
@@ -50,28 +43,15 @@ class UploadEmployee
      */
     public function asController(ActionRequest $request): void
     {
-        $file     = $request->file('file');
+        $file = $request->file('file');
         $this->handle($file);
     }
 
     public function asCommand(Command $command): void
     {
         $filename = $command->argument('filename');
-        $path     = 'org/employees';
-        $finfo    = new finfo(FILEINFO_MIME_TYPE);
-        $fullPath = storage_path('app/' . $path . '/' . $filename);
+        $file = ConvertUploadedFile::run($filename);
 
-        if (Storage::disk('local')->exists('org/employees/' . $filename)) {
-            $file = new UploadedFile(
-                $fullPath,
-                $filename,
-                $finfo->file($fullPath),
-                filesize($fullPath),
-                0,
-                false
-            );
-
-            $this->handle($file);
-        }
+        $this->handle($file);
     }
 }

@@ -3,8 +3,3 @@
 !.gitignore
 !websites/
 !websites/template.xlsx
-!org
-!org/employees
-!org/employees/employees.xlsx
-!org/prospects
-!org/prospects/prospects.xlsx
