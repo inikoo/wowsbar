@@ -4,12 +4,13 @@ import BannerWorkshopComponent from '@/Components/Workshop/BannerWorkshopCompone
 import TestimonialsWorkshopComponent from '@/Components/CMS/BlocksContent/Testimonials/TestimonialsWorkshopComponent.vue'
 import BlogSection from '@/Components/CMS/BlocksContent/BlogSections/BlockSectionComponent.vue'
 import StatsWorkshopComponent from "@/Components/CMS/BlocksContent/Stats/StatsWorkshopComponent.vue"
+import HeroWorkshopComponent from '@/Components/CMS/BlocksContent/Hero/HeroWorkshopComponent.vue'
 
 import Hero from '@/Components/CMS/BlocksContent/Hero/index.vue'
 import CardContent from '@/Components/CMS/BlocksContent/CardContent/CardContentWorkshopComponent.vue'
 import CTABlocks from '@/Components/CMS/BlocksContent/CTABlocks/CTABlocksWorkshopComponent.vue'
 import COntentDescription from '@/Components/CMS/BlocksContent/ContentDescription/index.vue'
-import Pricing from '@/Components/CMS/BlocksContent/Pricing/PricingWorkshopCOmponent.vue'
+import Pricing from '@/Components/CMS/BlocksContent/Pricing/PricingWorkshopComponent.vue'
 import Testimonials from '@/Components/CMS/BlocksContent/Testimonials/index.vue'
 
 const props = defineProps<{
@@ -88,12 +89,13 @@ const dataTheme = reactive({
 <template>
     <div class="relative flex justify-center items-center w-full">
         <TestimonialsWorkshopComponent v-if="selectedComponent.component === 'testimonial'" />
-        <BannerWorkshopComponent v-if="selectedComponent.component === 'banner'" :data="dummyData.data" :imagesUploadRoute="dummyData.route" :user="dummyData.user" />
+        <BannerWorkshopComponent v-if="selectedComponent.component === 'banner'" :data="dummyDataBanner.data" :imagesUploadRoute="dummyDataBanner.route" :user="dummyDataBanner.user" />
         <StatsWorkshopComponent v-if="selectedComponent.component === 'stats'"/>
         <BlogSection v-if="selectedComponent.component === 'blogSection'" />
         <CTABlocks v-if="selectedComponent.component === 'CTA'" />
         <CardContent v-if="selectedComponent.component === 'CardContent'" />
         <Pricing v-if="selectedComponent.component === 'pricing'" />
+        <HeroWorkshopComponent v-if="selectedComponent.component === 'hero'" />
     </div>
    
     <!-- <Testimonials :theme="3"></Testimonials> -->

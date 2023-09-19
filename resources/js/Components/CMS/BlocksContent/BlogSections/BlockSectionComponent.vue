@@ -4,7 +4,6 @@ import BlogSectionTwo from '@/Components/CMS/BlocksContent/BlogSections/BlogSect
 import ButtonTheme from '@/Components/CMS/Utils/ButtonTheme.vue'
 import { computed, ref } from 'vue';
 
-const props = defineProps<{}>()
 
 const posts = [
   {

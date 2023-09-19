@@ -6,8 +6,6 @@ import StatsThree from './StatsThree.vue'
 import { computed, ref } from 'vue';
 
 
-const props = defineProps<{}>()
-
 const statsTheme = ref(0)
 
 const stats = [

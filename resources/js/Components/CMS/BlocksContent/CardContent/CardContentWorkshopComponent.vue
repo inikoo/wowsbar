@@ -8,10 +8,6 @@ import { computed, ref } from 'vue';
 import ButtonTheme from '@/Components/CMS/Utils/ButtonTheme.vue'
 
 
-const props = defineProps<{
-    theme: number,
-}>()
-
 const CardTheme = ref(0)
 
 const people = [

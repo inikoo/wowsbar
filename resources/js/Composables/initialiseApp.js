@@ -1,4 +1,3 @@
-// Used for  PublicApp, CustomerApp
 import { useLayoutStore } from "@/Stores/layout"
 import { useLocaleStore } from "@/Stores/locale"
 import { usePage } from "@inertiajs/vue3"
