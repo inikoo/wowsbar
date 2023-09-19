@@ -10,6 +10,7 @@ namespace App\Actions\Organisation\Market\Product\UI;
 use App\Actions\InertiaAction;
 use App\Http\Resources\Market\ProductResource;
 use App\InertiaTable\InertiaTable;
+use App\Models\Market\Product;
 use App\Models\Market\ProductCategory;
 use App\Models\Market\Shop;
 use App\Models\Organisation\Organisation;
