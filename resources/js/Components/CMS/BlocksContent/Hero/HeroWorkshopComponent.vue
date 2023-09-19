@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref, computed, reactive } from 'vue'
-import { faUmbrellaBeach } from '@/../private/pro-regular-svg-icons'
+import {  } from '@/../private/pro-regular-svg-icons'
 import { library } from '@fortawesome/fontawesome-svg-core'
-library.add(faUmbrellaBeach)
+library.add()
 
 import ButtonTheme from '@/Components/CMS/Utils/ButtonTheme.vue'
 import HeroOne from '@/Components/CMS/BlocksContent/Hero/HeroOne.vue'
@@ -12,9 +12,11 @@ import HeroThree from '@/Components/CMS/BlocksContent/Hero/HeroThree.vue'
 const testimonialTheme = ref(0)
 
 const dataHero = reactive({
-    title: '<p style="text-align: center"><strong><span style="font-size: 20px; color: #6366f1; font-family: Arial">Deploy to the cloud with confidence</span></strong></p>',
-    description: '<p><strong><span style="font-size: 36px; font-family: Arial">Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo. Elit sunt amet fugiat veniam occaecat fugiat aliqua.</span></strong></p>',
-    image: ''
+    title: '<p><strong><span style="font-size: 44px; color: rgb(99, 102, 241); font-family: Arial">Deploy to the cloud with confidence</span></strong></p>',
+    description: '<p><span style="font-size: 20px; color: #484e63; font-family: Inter">Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo. Elit sunt amet fugiat veniam occaecat fugiat aliqua.</span></p>',
+    image: 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&facepad=2&w=900&h=900&q=80',
+    label1: 'Just shipped v1.0'
+
 })
 
 const components = {

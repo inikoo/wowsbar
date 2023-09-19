@@ -5,9 +5,6 @@ import PricingThree from './PricingThree.vue';
 import { computed, ref } from 'vue';
 import ButtonTheme from '@/Components/CMS/Utils/ButtonTheme.vue'
 
-const props = defineProps<{
-    theme: number,
-}>()
 
 const tiers = [
   {

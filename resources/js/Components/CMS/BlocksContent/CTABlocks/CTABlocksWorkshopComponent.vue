@@ -5,7 +5,6 @@ import CTATwo from './CTATwo.vue';
 import { computed, ref } from 'vue';
 import ButtonTheme from '@/Components/CMS/Utils/ButtonTheme.vue'
 
-const props = defineProps<{}>()
 
 const CTATheme = ref(0)
 
