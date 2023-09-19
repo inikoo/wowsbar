@@ -5,19 +5,14 @@
  * Copyright (c) 2023, Inikoo LTD
  */
 
-namespace App\Actions\Market\Product\UI;
+namespace App\Actions\Organisation\Market\Product\UI;
 
 use App\Actions\CRM\Customer\UI\IndexCustomers;
 use App\Actions\InertiaAction;
-use App\Actions\Mail\Mailshot\IndexMailshots;
-use App\Actions\Market\Shop\UI\IndexShops;
-use App\Actions\Market\Shop\UI\ShowShop;
-use App\Actions\OMS\Order\UI\IndexOrders;
-use App\Enums\UI\ProductTabsEnum;
-use App\Http\Resources\Mail\MailshotResource;
+use App\Actions\Organisation\Market\Shop\UI\IndexShops;
+use App\Actions\Organisation\Market\Shop\UI\ShowShop;
+use App\Enums\UI\Organisation\ProductTabsEnum;
 use App\Http\Resources\Market\ProductResource;
-use App\Http\Resources\Sales\CustomerResource;
-use App\Http\Resources\Sales\OrderResource;
 use App\Models\Market\Product;
 use App\Models\Market\Shop;
 use Inertia\Inertia;
@@ -99,12 +94,11 @@ class ShowProduct extends InertiaAction
                     'navigation' => ProductTabsEnum::navigation()
                 ],
 
-
                 ProductTabsEnum::SHOWCASE->value => $this->tab == ProductTabsEnum::SHOWCASE->value ?
                     fn () => GetProductShowcase::run($product)
                     : Inertia::lazy(fn () => GetProductShowcase::run($product)),
 
-                ProductTabsEnum::ORDERS->value => $this->tab == ProductTabsEnum::ORDERS->value ?
+/*                ProductTabsEnum::ORDERS->value => $this->tab == ProductTabsEnum::ORDERS->value ?
                     fn () => OrderResource::collection(IndexOrders::run($product))
                     : Inertia::lazy(fn () => OrderResource::collection(IndexOrders::run($product))),
 
@@ -114,7 +108,7 @@ class ShowProduct extends InertiaAction
 
                 ProductTabsEnum::MAILSHOTS->value => $this->tab == ProductTabsEnum::MAILSHOTS->value ?
                     fn () => MailshotResource::collection(IndexMailshots::run($product))
-                    : Inertia::lazy(fn () => MailshotResource::collection(IndexMailshots::run($product))),
+                    : Inertia::lazy(fn () => MailshotResource::collection(IndexMailshots::run($product))),*/
 
                 /*
                 ProductTabsEnum::IMAGES->value => $this->tab == ProductTabsEnum::IMAGES->value ?
@@ -123,9 +117,9 @@ class ShowProduct extends InertiaAction
                 */
 
             ]
-        )->table(IndexOrders::make()->tableStructure($product))
-            ->table(IndexCustomers::make()->tableStructure($product))
-            ->table(IndexMailshots::make()->tableStructure($product));
+        )//->table(IndexOrders::make()->tableStructure($product))
+            ->table(IndexCustomers::make()->tableStructure($product));
+//            ->table(IndexMailshots::make()->tableStructure($product));
     }
 
     public function jsonResponse(Product $product): ProductResource
@@ -157,7 +151,7 @@ class ShowProduct extends InertiaAction
             ];
         };
         return match ($routeName) {
-            'shops.products.show' =>
+            'org.shops.products.show' =>
             array_merge(
                 IndexShops::make()->getBreadcrumbs(),
                 $headCrumb(
@@ -177,7 +171,7 @@ class ShowProduct extends InertiaAction
                     $suffix
                 )
             ),
-            'shops.show.products.show' =>
+            'org.shops.show.products.show' =>
             array_merge(
                 ShowShop::make()->getBreadcrumbs(['shop' => $routeParameters['shop']]),
                 $headCrumb(
@@ -221,7 +215,7 @@ class ShowProduct extends InertiaAction
             return null;
         }
         return match ($routeName) {
-            'shops.products.show'=> [
+            'org.shops.products.show'=> [
                 'label'=> $product->name,
                 'route'=> [
                     'name'      => $routeName,
@@ -231,7 +225,7 @@ class ShowProduct extends InertiaAction
 
                 ]
             ],
-            'shops.show.products.show'=> [
+            'org.shops.show.products.show'=> [
                 'label'=> $product->name,
                 'route'=> [
                     'name'      => $routeName,

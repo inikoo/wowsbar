@@ -5,7 +5,7 @@
  * Copyright (c) 2023, Inikoo LTD
  */
 
-namespace App\Actions\Market\Product\UI;
+namespace App\Actions\Organisation\Market\Product\UI;
 
 use App\Actions\InertiaAction;
 use App\Enums\Market\Product\ProductTypeEnum;

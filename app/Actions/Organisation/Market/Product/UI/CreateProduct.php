@@ -23,7 +23,6 @@ class CreateProduct extends InertiaAction
      */
     public function handle(Shop $shop, ActionRequest $request): Response
     {
-
         return Inertia::render(
             'CreateModel',
             [
@@ -41,15 +40,14 @@ class CreateProduct extends InertiaAction
                             'label' => __('cancel'),
                             'route' => [
                                 'name' => match ($this->routeName) {
-                                    'shops.show.products.create'    => 'shops.show.products.index',
-                                    'shops.products.create'         => 'shops',
+                                    'org.shops.show.products.create'    => 'org.shops.show.products.index',
+                                    'org.shops.products.create'         => 'org.shops',
                                     default                         => preg_replace('/create$/', 'index', $this->routeName)
                                 },
                                 'parameters' => array_values($this->originalParameters)
                             ],
                         ]
                     ]
-
                 ],
                 'formData'    => [
                     'blueprint' =>
@@ -94,12 +92,12 @@ class CreateProduct extends InertiaAction
                             ]
                         ],
                     'route' => match ($this->routeName) {
-                        'shops.show.products.create' => [
-                            'name'      => 'models.show.product.store',
+                        'org.shops.show.products.create' => [
+                            'name'      => 'org.models.show.product.store',
                             'arguments' => [$shop->slug]
                         ],
                         default => [
-                            'name' => 'models.product.store'
+                            'name' => 'org.models.product.store'
                         ]
                     }
                 ]
@@ -112,7 +110,6 @@ class CreateProduct extends InertiaAction
     {
         return $request->user()->can('shops.products.edit');
     }
-
 
     /**
      * @throws Exception
@@ -140,5 +137,4 @@ class CreateProduct extends InertiaAction
             ]
         );
     }
-
 }

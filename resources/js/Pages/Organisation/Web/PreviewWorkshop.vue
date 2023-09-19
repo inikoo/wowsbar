@@ -107,7 +107,7 @@ const getHeaderComponent = computed(() => {
           <section class="relative isolate overflow-hidden bg-gray-100">
               <!-- <component :is="getHeaderComponent" :data="data.header"></component> -->
 
-              <component :is="getMenuComponent" :data="data.menu"></component>
+              <component v-if="data.menu" :is="getMenuComponent" :data="data.menu"></component>
   
               <!-- Background: Square line -->
               <svg class="absolute inset-0 -z-10 h-full w-full stroke-gray-200 [mask-image:radial-gradient(100%_100%_at_top_right,white,transparent)]"
@@ -124,7 +124,7 @@ const getHeaderComponent = computed(() => {
               <!-- Main content of page -->
               <slot />
   
-              <component :is="getFooterComponent" :data="data.footer.data" />
+              <component v-if="data.footer" :is="getFooterComponent" :data="data.footer.data" />
           </section>
       </div>
   

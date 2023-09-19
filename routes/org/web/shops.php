@@ -35,3 +35,6 @@ Route::get('/{shop}/departments', [IndexDepartments::class, 'inShop'])->name('sh
 
 Route::get('/{shop}/products', [IndexProducts::class, 'inShop'])->name('show.products.index');
 Route::get('/shops/{shop}/products/create', CreateProduct::class)->name('show.products.create');
+Route::get('/{shop}/products/{product}', [ShowProduct::class, 'inShop'])->name('show.products.show');
+Route::get('/{shop}/products/{product}/edit', [EditProduct::class, 'inShop'])->name('show.products.edit');
+Route::get('/{shop}/products/{product}/delete', [RemoveProduct::class, 'inShop'])->name('show.products.remove');

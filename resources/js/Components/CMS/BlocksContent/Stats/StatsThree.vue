@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import Text from '@/Components/CMS/Workshops/WorkshopComponents/Text.vue'
 const props = defineProps<{
     data: array,
 }>()
@@ -18,8 +19,8 @@ const props = defineProps<{
         </div>
         <dl class="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-10 text-white sm:mt-20 sm:grid-cols-2 sm:gap-y-16 lg:mx-0 lg:max-w-none lg:grid-cols-4">
           <div v-for="stat in data" :key="stat.id" class="flex flex-col gap-y-3 border-l border-white/10 pl-6">
-            <dt class="text-sm leading-6">{{ stat.name }}</dt>
-            <dd class="order-first text-3xl font-semibold tracking-tight">{{ stat.value }}</dd>
+            <Text v-model="stat.value" :key="'value'" :placeholder="'Enter your headline value'" :class="``" />
+            <Text v-model="stat.name" :key="'title'" :placeholder="'Enter your headline title'" :class="``" />
           </div>
         </dl>
       </div>

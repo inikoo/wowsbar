@@ -8,6 +8,8 @@
 namespace App\Actions\Organisation\Market\Product\UI;
 
 use App\Actions\InertiaAction;
+use App\Actions\Organisation\Market\Shop\UI\IndexShops;
+use App\Actions\Organisation\Market\Shop\UI\ShowShop;
 use App\Http\Resources\Market\ProductResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\Market\Product;
@@ -232,7 +234,7 @@ class IndexProducts extends InertiaAction
         };
 
         return match ($routeName) {
-            'shops.show.products.index' =>
+            'org.shops.show.products.index' =>
             array_merge(
                 ShowShop::make()->getBreadcrumbs($routeParameters),
                 $headCrumb(
@@ -244,7 +246,7 @@ class IndexProducts extends InertiaAction
                 )
             ),
 
-            'shops.products.index' =>
+            'org.shops.products.index' =>
             array_merge(
                 IndexShops::make()->getBreadcrumbs(),
                 $headCrumb(

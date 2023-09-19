@@ -15,6 +15,8 @@ use App\Actions\Organisation\HumanResources\Employee\DeleteEmployee;
 use App\Actions\Organisation\HumanResources\Employee\StoreEmployee;
 use App\Actions\Organisation\HumanResources\Employee\UpdateEmployee;
 use App\Actions\Organisation\HumanResources\Employee\UploadEmployee;
+use App\Actions\Organisation\Market\Product\StoreProduct;
+use App\Actions\Organisation\Market\Product\UpdateProduct;
 use App\Actions\Organisation\Market\Shop\StoreShop;
 use App\Actions\Organisation\Organisation\UpdateOrganisation;
 use App\Actions\Organisation\Web\Webpage\StoreArticle;
@@ -47,3 +49,7 @@ Route::patch('/payment/{payment}', UpdatePayment::class)->name('payment.update')
 
 Route::patch('/payment-account/{paymentAccount}', UpdatePaymentAccount::class)->name('payment-account.update');
 Route::post('/payment-account', StorePaymentAccount::class)->name('payment-account.store');
+
+Route::post('/shop/{shop}/product', [StoreProduct::class, 'inShop'])->name('show.product.store');
+Route::patch('/product/{product}', UpdateProduct::class)->name('product.update');
+Route::delete('/product/{product}', UpdateProduct::class)->name('product.delete');

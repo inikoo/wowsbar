@@ -1,31 +1,33 @@
 <script setup lang="ts">
+import ButtonTheme from '@/Components/CMS/Utils/ButtonTheme.vue'
 import StatsOne from './StatsOne.vue';
 import StatsTwo from './StatsTwo.vue';
 import StatsThree from './StatsThree.vue'
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 
 
 const props = defineProps<{
     theme: number,
 }>()
 
+const statsTheme = ref(0)
 
 const stats = [
-  { id: 1, name: 'Creators on the platform', value: '8,000+' },
-  { id: 2, name: 'Flat platform fee', value: '3%' },
-  { id: 3, name: 'Uptime guarantee', value: '99.9%' },
-  { id: 4, name: 'Paid out to creators', value: '$70M' },
+  { id: 1, name: '<p><span style="color: #969696; font-size: 18px;">Creators on the platform</p>', value: '<p><strong><span style="color: black; font-size: 32px;" >80000</span></strong></p>' },
+  { id: 2, name: '<p><span style="color: #969696; font-size: 18px;">Creators on the platform</p>', value: '<p><strong><span style="color: black; font-size: 32px;" >80000</span></strong></p>'  },
+  { id: 3, name: '<p><span style="color: #969696; font-size: 18px;">Creators on the platform</p>', value: '<p><strong><span style="color: black; font-size: 32px;" >80000</span></strong></p>' },
+  { id: 4, name: '<p><span style="color: #969696; font-size: 18px;">Creators on the platform</p>', value: '<p><strong><span style="color: black; font-size: 32px;" >80000</span></strong></p>'  },
 ]
 
 const components = {
-    1: StatsOne,
-    2: StatsTwo,
-    3: StatsThree,
+    0: StatsOne,
+    1: StatsTwo,
+    2: StatsThree,
 }
 
 
 const component = computed(()=>{
-    return components[props.theme]
+    return components[statsTheme.value]
 })
 
 </script>
@@ -33,7 +35,9 @@ const component = computed(()=>{
 
 <template>
     <div class="w-full">
+        <ButtonTheme v-model="statsTheme" :label="['Simple', 'wide', 'image']"/>
         <component :is="component" :data="stats" />
+        <div @click="()=>console.log('stats',stats)">iniii</div>
     </div>
 </template>
 
