@@ -26,14 +26,16 @@ const props = defineProps<{
     routeUpload: string
     routeDownload: string
     routeHistory: string
+    isUploaded: boolean
 }>()
 
-defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue', 'isUploaded'])
+
+const { isUploaded } = toRefs(props)
 
 const isLoadingUpload = ref(false)
 const dataHistory: any = ref([])
 const isLoadingHistory = ref(false)
-const isProgressDone = ref(false)
 
 // Running when file is uploaded
 const onUploadFile = async (fileUploaded: any) => {
@@ -53,6 +55,7 @@ const onUploadFile = async (fileUploaded: any) => {
         console.error(error.message)
     }
     isLoadingUpload.value = false
+    emit('isUploaded', true)
 }
 
 const compVModel = computed(() => {

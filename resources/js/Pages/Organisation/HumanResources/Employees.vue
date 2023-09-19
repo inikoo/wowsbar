@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import Pusher from 'pusher-js'
 import { Head } from '@inertiajs/vue3'
 import PageHeading from '@/Components/Headings/PageHeading.vue'
@@ -19,7 +19,8 @@ const props = defineProps <{
     data: object
 }>()
 
-const isProgressDone = ref(false)
+const isProgress = ref(false)
+const isUploaded = ref(false)
 const isModalOpen = ref(false)
 const dataPusher = ref({
     data: {
@@ -33,7 +34,7 @@ const pusher = new Pusher(import.meta.env.VITE_PUSHER_APP_KEY, {
     cluster: 'ap1'
 })
 const channel = pusher.subscribe('uploads.org')
-channel.bind('EmployeeUpload', (data: any) => {
+channel.bind('Employee', (data: any) => {
     dataPusher.value = data
     // console.log("==============")
     // console.log(data)
@@ -42,6 +43,12 @@ channel.bind('EmployeeUpload', (data: any) => {
 // Progress bar for adding website
 const compProgressBar = computed(() => {
     return dataPusher.value?.data.total_uploads ? dataPusher.value?.data.total_complete/dataPusher.value?.data.total_uploads * 100 : 0
+})
+
+watch(compProgressBar, () => {
+    compProgressBar.value >= 100 ? setTimeout(() => {
+        isProgress.value = true
+    }, 3000) : ''
 })
 </script>
 
@@ -59,13 +66,20 @@ const compProgressBar = computed(() => {
     <TableEmployees :data="data" />
 
     <!-- Modal: Upload -->
-    <ModalUpload v-model="isModalOpen" :routeUpload="pageHead.actions[0].buttons[0].route.name" :routeHistory="'org.models.employees.upload'" :routeDownload="'org.hr.employee.uploads.template.download'" />
+    <ModalUpload
+        v-model="isModalOpen"
+        :routeUpload="pageHead.actions[0].buttons[0].route.name"
+        :routeHistory="'org.models.employees.upload'"
+        :routeDownload="'org.hr.employee.uploads.template.download'"
+        :isUploaded="isUploaded"
+        @isUploaded="(val: any) => isUploaded = val"
+    />
 
     <!-- Progress Bar -->
-    <div :class="compProgressBar && !isProgressDone ? 'bottom-12' : '-bottom-12'" class="z-50 fixed right-1/2 translate-x-1/2 transition-all duration-200 ease-in-out flex gap-x-1">
+    <div :class="isUploaded && !isProgress ? 'bottom-12' : '-bottom-12'" class="z-50 fixed right-1/2 translate-x-1/2 transition-all duration-200 ease-in-out flex gap-x-1">
         <div class="flex justify-center items-center flex-col gap-y-1">
             <div v-if="compProgressBar >=100">Finished!!🥳</div>
-            <div v-else>Adding websites ({{ dataPusher.data.total_complete }}/<span class="font-semibold inline">{{ dataPusher.data.total_uploads }}</span>)</div>
+            <div v-else>Adding Employees ({{ dataPusher.data.total_complete }}/<span class="font-semibold inline">{{ dataPusher.data.total_uploads }}</span>)</div>
             <div class="overflow-hidden rounded-full bg-gray-200 w-64">
                 <div class="h-2 rounded-full bg-slate-600 transition-all duration-100 ease-in-out" :style="`width: ${compProgressBar}%`" />
             </div>
