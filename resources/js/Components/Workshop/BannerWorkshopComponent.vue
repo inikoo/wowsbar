@@ -27,10 +27,8 @@ const screenView = ref("")
 
 <template>
     <div v-if="data.components.filter((item: any) => item.ulid != null).length > 0" class="w-full">
-        <div class="flex w-full">
-            <div class="flex justify-end pr-2">
+        <div class="flex justify-end pr-2">
                 <ScreenView @screenView="(val) => (screenView = val)" />
-            </div>
         </div>
 
         <div class="flex justify-center pr-0.5">

@@ -1,8 +1,10 @@
 <script setup lang="ts">
+import { reactive } from 'vue'
 import BannerWorkshopComponent from '@/Components/Workshop/BannerWorkshopComponent.vue'
 import TestimonialsWorkshopComponent from '@/Components/CMS/BlocksContent/Testimonials/TestimonialsWorkshopComponent.vue'
-import Stats from '@/Components/CMS/BlocksContent/Stats/index.vue';
 import BlogSection from '@/Components/CMS/BlocksContent/BlogSections/index.vue'
+import StatsWorkshopComponent from "@/Components/CMS/BlocksContent/Stats/StatsWorkshopComponent.vue"
+
 import Hero from '@/Components/CMS/BlocksContent/Hero/index.vue'
 import CardContent from '@/Components/CMS/BlocksContent/CardContent/index.vue'
 import CTABlocks from '@/Components/CMS/BlocksContent/CTABlocks/index.vue'
@@ -74,12 +76,19 @@ const dummyData = {
     user: 'vika'
 }
 
+const dataTheme = reactive({
+    text: 1,
+    testimonial: 2,
+    stats: 2
+})
+
 </script>
 
 <template>
-    <div class="flex justify-center items-center w-full">
+    <div class="relative flex justify-center items-center w-full">
+        <TestimonialsWorkshopComponent v-if="selectedComponent.component === 'testimonial'" />
         <BannerWorkshopComponent v-if="selectedComponent.component === 'banner'" :data="dummyData.data" :imagesUploadRoute="dummyData.route" :user="dummyData.user" />
-        <!-- <TestimonialsWorkshopComponent v-if="selectedComponent.component === 'text'" /> -->
+        <StatsWorkshopComponent v-if="selectedComponent.component === 'stats'" :theme="dataTheme[selectedComponent.component]"/>
     </div>
     <!-- <Testimonials :theme="3"></Testimonials> -->
 </template>

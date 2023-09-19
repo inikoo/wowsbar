@@ -55,7 +55,8 @@ const handleSelectComponent = (componentName: string) => {
                         <div class="flex items-center justify-center rounded-sm px-2 py-1 cursor-pointer border-gray-400 hover:bg-gray-300"
                             :class="[item.ulid == selectedComponent.ulid ? 'border bg-gray-200' : 'border border-dashed']"
                         >
-                            <FontAwesomeIcon :icon='item.icon' class='' aria-hidden='true' />
+                            <!-- <FontAwesomeIcon :icon='item.icon' class='' aria-hidden='true' /> -->
+                            {{ item.component }}
                         </div>
 
                         <!-- Button: Show/hide, delete item -->

@@ -32,7 +32,7 @@ const component = computed(()=>{
 
 
 <template>
-    <div>
+    <div class="w-full">
         <component :is="component" :data="stats" />
     </div>
 </template>
