@@ -24,6 +24,7 @@ library.add(falFile, faFileDownload)
 const props = defineProps<{
     modelValue: Boolean
     routeUpload: string
+    routeDownload: string
     routeHistory: string
 }>()
 
@@ -110,7 +111,7 @@ watch(compVModel, async () => {
                 </div>
 
                 <!-- Download template -->
-                <a :href="`route('tenant.portfolio.website.uploads.template.download')`" target="_blank" class="group text-xs text-gray-600 cursor-pointer px-2 w-fit" >
+                <a :href="route(routeDownload)" target="_blank" class="group text-xs text-gray-600 cursor-pointer px-2 w-fit" >
                     <FontAwesomeIcon icon='fas fa-file-download' class='text-gray-400 group-hover:text-gray-600' aria-hidden='true' />
                     Download template .xlsx
                 </a>

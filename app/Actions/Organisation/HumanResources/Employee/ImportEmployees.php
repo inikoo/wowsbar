@@ -10,6 +10,7 @@ namespace App\Actions\Organisation\HumanResources\Employee;
 use App\Actions\Traits\WithExportData;
 use App\Enums\Helpers\Import\UploadRecordStatusEnum;
 use App\Events\UploadExcelProgressEvent;
+use App\Models\HumanResources\Employee;
 use App\Models\Media\ExcelUploadRecord;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
@@ -28,10 +29,10 @@ class ImportEmployees
         try {
             StoreEmployee::run(json_decode($employeeUploadRecord->data, true));
 
-            event(new UploadExcelProgressEvent(null, [
+            event(new UploadExcelProgressEvent([
                 'total_uploads'  => $totalUploads,
                 'total_complete' => $totalImported
-            ], 'EmployeeUpload'));
+            ], Employee::class));
             $employeeUploadRecord->update(['status' => UploadRecordStatusEnum::COMPLETE]);
         } catch (\Exception $e) {
             $employeeUploadRecord->update(['status' => UploadRecordStatusEnum::FAILED]);

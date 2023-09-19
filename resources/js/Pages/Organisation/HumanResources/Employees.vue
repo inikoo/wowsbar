@@ -59,7 +59,7 @@ const compProgressBar = computed(() => {
     <TableEmployees :data="data" />
 
     <!-- Modal: Upload -->
-    <ModalUpload v-model="isModalOpen" :routeUpload="pageHead.actions[0].buttons[0].route.name" :routeHistory="'org.models.employees.upload'" />
+    <ModalUpload v-model="isModalOpen" :routeUpload="pageHead.actions[0].buttons[0].route.name" :routeHistory="'org.models.employees.upload'" :routeDownload="'org.hr.employee.uploads.template.download'" />
 
     <!-- Progress Bar -->
     <div :class="compProgressBar && !isProgressDone ? 'bottom-12' : '-bottom-12'" class="z-50 fixed right-1/2 translate-x-1/2 transition-all duration-200 ease-in-out flex gap-x-1">
