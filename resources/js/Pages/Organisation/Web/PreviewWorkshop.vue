@@ -105,7 +105,7 @@ const getHeaderComponent = computed(() => {
         </div>
       <div v-else class="relative" :class="[data.layout == 'full' ? '' : 'flex justify-center w-full']" >
           <section class="relative isolate overflow-hidden bg-gray-100">
-              <component :is="getHeaderComponent" :data="data.header"></component>
+              <!-- <component :is="getHeaderComponent" :data="data.header"></component> -->
 
               <component :is="getMenuComponent" :data="data.menu"></component>
   

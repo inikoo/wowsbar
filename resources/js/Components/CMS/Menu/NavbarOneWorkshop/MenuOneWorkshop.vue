@@ -142,7 +142,7 @@ const mobileMenuOpen = ref(false)
 		<header class="relative z-10">
 			<nav aria-label="Top">
 			<!-- topNavbar -->
-				<div class="bg-gray-900">
+				<div class="bg-white">
 					<div class="mx-auto flex h-10 px-4 sm:px-6 lg:px-8">
 						<div class="w-full flex items-center space-x-6 justify-end">
 							<div class="flex flex-1 items-center justify-end">
@@ -158,7 +158,7 @@ const mobileMenuOpen = ref(false)
 												</div>
 											</template>
 											<template #content>
-												<div class="py-[10px] px-[10px] rounded-lg bg-white">
+												<div class="py-[10px] px-[10px] rounded-lg bg-white text-gray-600">
 													<div class="p-1 text-center">
 														<div class="flex items-center justify-center mb-2">
 															<font-awesome-icon :icon="['fas', 'user']"
@@ -170,7 +170,7 @@ const mobileMenuOpen = ref(false)
 														<div class="flex items-center justify-center mb-2">
 															<font-awesome-icon :icon="['fas', 'sign-out']"
 																class="text-base mr-2" />
-															<span class="text-lg font-semibold text-gray-800">logout</span>
+															<span class="text-lg font-semibold">logout</span>
 														</div>
 													</div>
 												</div>
@@ -187,7 +187,7 @@ const mobileMenuOpen = ref(false)
 									<span class="mx-4 h-6 w-px bg-gray-200 lg:mx-6" aria-hidden="true" />
 
 									<div class="flow-root">
-										<a href="#" class="group -m-2 flex items-center p-2 -m-2 p-2 text-gray-400 ">
+										<a href="#" class="group -m-2 flex items-center p-2   text-gray-400 ">
 											<font-awesome-icon :icon="['fas', 'shopping-cart']" />
 											<span
 												class="ml-2 text-sm font-medium text-gray-400 group-hover:text-gray-800">0</span>
@@ -201,7 +201,7 @@ const mobileMenuOpen = ref(false)
 				</div>
 			<!-- end topNavbar -->
 				<!-- Secondary navigation -->
-				<div class="bg-white">
+				<div class="bg-gray-100">
 					<draggable :list="navigation.categories" group="topMenu" itemKey="id" :disabled="tool.name !== 'grab'"
 						class="flex h-full justify-center space-x-8 align-middle">
 						<template v-slot:item="{ element: category, index }">
@@ -211,7 +211,7 @@ const mobileMenuOpen = ref(false)
 										<div class="relative flex p-2.5">
 											<div :class="[openNav == category.id ? 'border-indigo-600 text-indigo-600' : 'border-transparent text-gray-700 hover:text-gray-800', 'relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out']">
 												<div class="flex gap-3">
-													<IconPicker :key="category.id" :data="category" class="text-black" />
+													<IconPicker :key="category.id" :data="category" />
 													<HyperLink :formList="{
 														name: 'name',
 													}" :useDelete="true" :data="category" label="name"
