@@ -275,7 +275,7 @@ const selectedTextAlign = ref('left')
             </div>
 
             <!-- The main content -->
-            <div :class="['min-w-[200px]', `text-${selectedTextAlign} whitespace-nowrap`, props.class]">
+            <div :class="['min-w-[200px]', `text-${selectedTextAlign} whitespace-nowrap ring-2 ring-gray-200 rounded hover:bg-gray-200 hover:ring-gray-400 focus-within:ring-gray-400`, props.class]">
                 <EditorContent :editor="editor" />
             </div>
             <!-- {{ editor.getAttributes('font-Family').color }} -->

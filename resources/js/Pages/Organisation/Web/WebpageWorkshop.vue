@@ -42,7 +42,7 @@ const props = defineProps<{
 
 const dataComponent = ref([
     {
-        "component": "text",
+        "component": "testimonial",
         "icon": "far fa-text",
         "ulid": ulid(),
         "visibility": true,
@@ -55,7 +55,7 @@ const dataComponent = ref([
         "visibility": true
     },
     {
-        "component": "text",
+        "component": "stats",
         "icon": "far fa-text",
         "ulid": ulid(),
         "visibility": true

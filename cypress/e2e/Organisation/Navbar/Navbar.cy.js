@@ -13,7 +13,7 @@
 
 describe("login", () => {
     beforeEach(() => {
-        cy.visit("http://wowsbar.test/login");
+        cy.visit("http://wowsbar.test/dashboard");
     });
 
     it("login", () => {
