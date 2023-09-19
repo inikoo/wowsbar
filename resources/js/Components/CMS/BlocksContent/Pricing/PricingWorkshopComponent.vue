@@ -51,6 +51,12 @@ const tiers = [
   },
 ]
 
+const pagHead = {
+  title : "<p style=\"text-align: center\"><strong><span style=\"font-size: 36px; color: #979191\">Pricing plans for teams of all sizes</span></strong></p>",
+  subtitle :  "<p><strong><span style=\"color: #9f32d2\">Pricing</span></strong></p>",
+  description :"<p style=\"text-align: center\"><span style=\"font-size: 16px; color: #877d7d\">Distinctio et nulla eum soluta et neque labore quibusdam. Saepe et quasi iusto modi velit ut non voluptas in. Explicabo id ut laborum.</span></p>"
+}
+
 const pricingTheme = ref(0)
 
 const components = {
@@ -69,8 +75,10 @@ const component = computed(()=>{
 <template>
   <div>
     <ButtonTheme v-model="pricingTheme" :label="['Simple', 'wide', 'image']"/>
-      <component :is="component" :data="tiers"/>
+      <component :is="component" :data="tiers" :pageHead="pagHead"/>
+    
   </div>
+  <div @click="()=>console.log('sss',pagHead)">dfdfdf</div>
 </template>
 
 <style scoped></style>

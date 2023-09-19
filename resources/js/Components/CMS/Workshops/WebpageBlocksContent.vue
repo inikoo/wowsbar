@@ -9,7 +9,7 @@ import Hero from '@/Components/CMS/BlocksContent/Hero/index.vue'
 import CardContent from '@/Components/CMS/BlocksContent/CardContent/CardContentWorkshopComponent.vue'
 import CTABlocks from '@/Components/CMS/BlocksContent/CTABlocks/CTABlocksWorkshopComponent.vue'
 import COntentDescription from '@/Components/CMS/BlocksContent/ContentDescription/index.vue'
-import Pricing from '@/Components/CMS/BlocksContent/Pricing/PricingWorkshopCOmponent.vue'
+import Pricing from '@/Components/CMS/BlocksContent/Pricing/PricingWorkshopComponent.vue'
 import Testimonials from '@/Components/CMS/BlocksContent/Testimonials/index.vue'
 
 const props = defineProps<{
