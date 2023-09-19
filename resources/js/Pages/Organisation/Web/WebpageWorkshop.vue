@@ -89,7 +89,7 @@ const selectedComponent = ref(dataComponent.value[0])
         <WebpageBlocksOrder @handleSelectComponent="(componentName) => selectedComponent = componentName" :dataComponent="dataComponent" :selectedComponent="selectedComponent"/>
 
         <!-- The editor -->
-        <div class="flex w-full h-full p-3 border border-gray-200 rounded shadow-sm overflow-auto">
+        <div class="flex w-full h-full p-3 border border-gray-200 rounded shadow-sm">
             <div class="w-full h-fit">
                 <WebpageBlocksContent :selectedComponent="selectedComponent" v-model="selectedComponent.value"/>
             </div>

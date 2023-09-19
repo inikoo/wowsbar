@@ -22,7 +22,7 @@ defineEmits<{
 }>()
 
 
-const dummyData = {
+const dummyDataBanner = {
     data: {
         "delay": 5000,
         "common": {
@@ -87,7 +87,7 @@ const dataTheme = reactive({
 <template>
     <div class="relative flex justify-center items-center w-full">
         <TestimonialsWorkshopComponent v-if="selectedComponent.component === 'testimonial'" />
-        <BannerWorkshopComponent v-if="selectedComponent.component === 'banner'" :data="dummyData.data" :imagesUploadRoute="dummyData.route" :user="dummyData.user" />
+        <BannerWorkshopComponent v-if="selectedComponent.component === 'banner'" :data="dummyDataBanner.data" :imagesUploadRoute="dummyDataBanner.route" :user="dummyDataBanner.user" />
         <StatsWorkshopComponent v-if="selectedComponent.component === 'stats'" :theme="dataTheme[selectedComponent.component]"/>
     </div>
     <!-- <Testimonials :theme="3"></Testimonials> -->
