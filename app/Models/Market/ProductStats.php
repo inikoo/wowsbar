@@ -24,6 +24,10 @@ use Illuminate\Support\Carbon;
  * @method static Builder|ProductStats newModelQuery()
  * @method static Builder|ProductStats newQuery()
  * @method static Builder|ProductStats query()
+ * @method static Builder|ProductStats whereCreatedAt($value)
+ * @method static Builder|ProductStats whereId($value)
+ * @method static Builder|ProductStats whereProductId($value)
+ * @method static Builder|ProductStats whereUpdatedAt($value)
  * @mixin Eloquent
  */
 class ProductStats extends Model

@@ -11,15 +11,10 @@ use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
-use Spatie\Multitenancy\Models\Concerns\UsesTenantConnection;
 
 /**
  * App\Models\Market\HistoricProductStats
  *
- * @property int $id
- * @property int $historic_product_id
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
  * @method static Builder|HistoricProductStats newModelQuery()
  * @method static Builder|HistoricProductStats newQuery()
  * @method static Builder|HistoricProductStats query()
@@ -27,7 +22,6 @@ use Spatie\Multitenancy\Models\Concerns\UsesTenantConnection;
  */
 class HistoricProductStats extends Model
 {
-    use UsesTenantConnection;
 
     protected $table = 'historic_product_stats';
 

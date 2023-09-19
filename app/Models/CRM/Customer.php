@@ -59,6 +59,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property int $language_id
  * @property int $timezone_id
  * @property int|null $image_id
+ * @property string $ulid
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property Carbon|null $deleted_at
@@ -106,6 +107,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Customer whereStatus($value)
  * @method static Builder|Customer whereTimezoneId($value)
  * @method static Builder|Customer whereTradeState($value)
+ * @method static Builder|Customer whereUlid($value)
  * @method static Builder|Customer whereUpdatedAt($value)
  * @method static Builder|Customer whereWebsiteId($value)
  * @method static Builder|Customer withTrashed()

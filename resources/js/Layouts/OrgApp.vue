@@ -8,14 +8,11 @@
 <script setup lang="ts">
 import { ref } from "vue"
 import { usePage } from "@inertiajs/vue3"
-
 import Footer from "@/Layouts/Footer/Organisation/Footer.vue"
-
 import AppLeftSideBar from "@/Layouts/Organisation/AppLeftSideBar.vue"
 import AppRightSideBar from "@/Layouts/Customer/AppRightSideBar.vue"
 import AppTopBar from "@/Layouts/Organisation/AppTopBar.vue"
 import Breadcrumbs from "@/Components/Navigation/Breadcrumbs.vue"
-
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { initialiseOrgApp } from "@/Composables/initialiseOrgApp"
 import { useLayoutStore } from "@/Stores/layout"

@@ -39,6 +39,7 @@ class StoreUser
 
     public function handle(Website $website, Customer $customer, array $modelData = []): User
     {
+        data_set($modelData, 'ulid', Str::ulid());
         data_set($modelData, 'website_id', $website->id);
         /** @var User $user */
         $user = $customer->users()->create($modelData);

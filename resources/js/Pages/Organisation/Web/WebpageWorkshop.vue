@@ -3,7 +3,6 @@ import { Head } from '@inertiajs/vue3'
 import { ref } from "vue"
 
 import WebpageBlocksOrder from "@/Components/Workshop/Webpage/WebpageBlocksOrder.vue"
-// import BannerWorkshop from "@/Pages/Authenticated/Portfolio/BannerWorkshop.vue"
 import WebpageBlocksContent from "@/Components/CMS/Workshops/WebpageBlocksContent.vue"
 
 import { componentBlocks } from '@/types/WebPageWorkshop'
@@ -90,7 +89,7 @@ const dataComponent = ref([
         "ulid": ulid(),
         "visibility": true
     },
-    
+
     {
         "component": "hero",
         "icon": "fad fa-rectangle-wide",

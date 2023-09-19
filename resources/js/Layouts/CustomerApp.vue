@@ -9,12 +9,10 @@
   import { ref } from "vue";
   import { usePage } from "@inertiajs/vue3"
   import Footer from "@/Layouts/Customer/Footer.vue"
-
   import AppLeftSideBar from "@/Layouts/Customer/AppLeftSideBar.vue"
   import AppRightSideBar from "@/Layouts/Customer/AppRightSideBar.vue"
   import AppTopBar from "@/Layouts/Customer/AppTopBar.vue"
   import Breadcrumbs from "@/Components/Navigation/Breadcrumbs.vue"
-
   import { library } from "@fortawesome/fontawesome-svg-core"
   import { initialiseApp } from "@/Composables/initialiseApp"
   import { useLayoutStore } from "@/Stores/layout"

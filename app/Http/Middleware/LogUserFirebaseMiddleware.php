@@ -25,7 +25,7 @@ class LogUserFirebaseMiddleware
         if ($user && env('LIVE_USERS_LIST')) {
             if (Auth::getDefaultDriver() == 'customer') {
                 $parentType = 'Customer';
-                $parentSlug = customer()->id;
+                $parentSlug = customer()->ulid;
             } else {
                 $parentType = 'Organisation';
                 $parentSlug = null;
@@ -47,7 +47,7 @@ class LogUserFirebaseMiddleware
 
 
 
-            StoreUserLogFirebase::run(
+            StoreUserLogFirebase::dispatch(
                 user: $user,
                 parentType: $parentType,
                 parentSlug: $parentSlug,
