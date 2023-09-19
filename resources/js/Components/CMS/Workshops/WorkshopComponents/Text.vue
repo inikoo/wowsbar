@@ -23,7 +23,10 @@ import { faBold, faItalic, faUnderline, faTrashAlt, faListUl, faListOl, faUndo, 
 library.add(faBold, faItalic, faUnderline, faTrashAlt, faListUl, faListOl, faUndo, faFont, faRedo, faFillDrip, faAlignLeft, faAlignCenter, faAlignRight)
 
 const props = defineProps(["modelValue", "showStats", "placeholder", "class"])
-const emit = defineEmits(["update:modelValue"])
+const emit = defineEmits<{
+    (e: 'update:modelValue'): string
+}>()
+
 const editor: Ref<any> = ref(false)
 
 const fontOptions = [
@@ -93,17 +96,17 @@ const fontSizeOptions = [
 ]
 
 // Handle v-model
-watch(props.modelValue,
-    (newValue) => {
-        const isSame = editor.value.getHTML() === newValue
+// watch(props.modelValue,
+//     (newValue) => {
+//         const isSame = editor.value.getHTML() === newValue
 
-        if (isSame) {
-            return
-        }
+//         if (isSame) {
+//             return
+//         }
 
-        editor.commands.setContent(newValue, false)
-    }
-)
+//         editor.commands.setContent(newValue, false)
+//     }
+// )
 
 // Declare Tiptap editor
 editor.value = new Editor({

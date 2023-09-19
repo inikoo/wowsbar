@@ -25,7 +25,7 @@ const dataPosition = ref('Ceo of Workcation')
             </div>
             <figure class="mt-10">
                 <blockquote class="">
-                    <Text v-model="description" :key="'title'" :placeholder="'Enter your headline title'" :class="``" />
+                    <Text v-model="description" :key="'description'" :placeholder="'Enter your headline title'" :class="``" />
                 </blockquote>
                 <figcaption class="mt-10">
                     <img class="mx-auto h-10 w-10 rounded-full"
