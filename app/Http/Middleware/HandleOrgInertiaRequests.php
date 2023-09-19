@@ -8,7 +8,7 @@
 namespace App\Http\Middleware;
 
 use App\Actions\UI\Organisation\GetFirstLoadProps;
-use App\Http\Resources\UI\LoggedUserResource;
+use App\Http\Resources\UI\LoggedOrganisationUserResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Inertia\Middleware;
@@ -44,7 +44,7 @@ class HandleOrgInertiaRequests extends Middleware
             $firstLoadOnlyProps,
             [
                 'auth'  => [
-                    'user' => $request->user() ? LoggedUserResource::make($request->user())->getArray() : null,
+                    'user' => $request->user() ? LoggedOrganisationUserResource::make($request->user())->getArray() : null,
                 ],
                 'ziggy' => [
                     'location' => $request->url(),

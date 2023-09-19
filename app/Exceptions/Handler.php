@@ -69,7 +69,7 @@ class Handler extends ExceptionHandler
                     'title'       => __('Service Unavailable'),
                     'description' => __('Sorry, we are doing some maintenance. Please check back soon.')
                 ],
-                default => $this->getExceptionInfo($e)
+                default => $this->getExceptionInfo()
             };
             $user=$request->user();
             if(Auth::check()) {
@@ -103,7 +103,7 @@ class Handler extends ExceptionHandler
         return $response;
     }
 
-    public function getExceptionInfo(Throwable $e): array
+    public function getExceptionInfo(): array
     {
         return [
             'status'      => 500,

@@ -29,19 +29,19 @@ const layout = useLayoutStore()
 
 const dbPath = 'customers/'+layout.user.customer_slug+'/active_users'
 
-const getDataTenant = ref(getDataFirebase(dbPath))
-const dataTenant = ref()
-const dataTenantLength = ref()
+const getDataCustomer = ref(getDataFirebase(dbPath))
+const dataCustomer = ref()
+const dataCustomerLength = ref()
 
 const compUserOnline = computed(() => {
-    return dataTenant.value.filter((item: any) => item.loggedIn === true)
+    return dataCustomer.value.filter((item: any) => item.loggedIn === true)
 })
 
 watchEffect(() => {
-    dataTenant.value = getDataTenant.value
-    dataTenantLength.value = compUserOnline.value ? Object.keys(compUserOnline.value).length : 0
-    layout.rightSidebar.activeUsers.users = dataTenant.value
-    layout.rightSidebar.activeUsers.count = dataTenantLength.value
+    dataCustomer.value = getDataCustomer.value
+    dataCustomerLength.value = compUserOnline.value ? Object.keys(compUserOnline.value).length : 0
+    layout.rightSidebar.activeUsers.users = dataCustomer.value
+    layout.rightSidebar.activeUsers.count = dataCustomerLength.value
 })
 
 const getStatusOnline = (dataUser: any) => {
@@ -49,7 +49,7 @@ const getStatusOnline = (dataUser: any) => {
     const lastActive = new Date(dataUser.last_active)
     const currentTime = new Date()
     const timeDifference = Math.floor((currentTime - lastActive) / (1000 * 60))
-    
+
     return timeDifference < 11
 }
 
@@ -64,12 +64,12 @@ const getStatusOnline = (dataUser: any) => {
         @click="isTabActive == 'activeUsers' ? $emit('isTabActive', !isTabActive) : $emit('isTabActive', 'activeUsers')"
     >
         <div class="relative text-xs flex items-center gap-x-1">
-            <div class="ring-1 h-2 aspect-square rounded-full" :class="[dataTenantLength > 0 ? 'animate-pulse bg-green-400 ring-green-600' : 'bg-gray-400 ring-gray-600']" />
-            <span class="">{{ trans('Active Users') }} ({{ dataTenantLength ?? 0 }})</span>
+            <div class="ring-1 h-2 aspect-square rounded-full" :class="[dataCustomerLength > 0 ? 'animate-pulse bg-green-400 ring-green-600' : 'bg-gray-400 ring-gray-600']" />
+            <span class="">{{ trans('Active Users') }} ({{ dataCustomerLength ?? 0 }})</span>
         </div>
         <FooterTab @pinTab="() => $emit('isTabActive', false)" v-if="isTabActive == 'activeUsers'" :tabName="`activeUsers`">
             <template #default>
-                <div v-if="dataTenantLength" v-for="(dataUser, index) in compUserOnline" class="flex justify-start py-1 px-2 gap-x-1.5 hover:bg-gray-700 cursor-default">
+                <div v-if="dataCustomerLength" v-for="(dataUser, index) in compUserOnline" class="flex justify-start py-1 px-2 gap-x-1.5 hover:bg-gray-700 cursor-default">
                     <!-- <img :src="`/media/${user.user.avatar_thumbnail}`" :alt="user.user.contact_name" srcset="" class="h-4 rounded-full shadow"> -->
                     <span class="font-semibold" :class="[getStatusOnline(dataUser) ? 'text-gray-100' : 'text-gray-400']">{{ dataUser.id }}</span> -
                     <span v-if="dataUser.loggedIn" class="" :class="[getStatusOnline(dataUser) ? 'text-gray-300' : 'text-gray-400']">{{ getStatusOnline(dataUser) ? dataUser.route.name : 'Away' }}</span>

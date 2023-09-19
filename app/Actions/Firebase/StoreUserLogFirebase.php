@@ -40,6 +40,7 @@ class StoreUserLogFirebase
             $data['route']=$route;
         }
 
+
         $reference->set($data);
     }
 }

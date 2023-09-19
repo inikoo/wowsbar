@@ -4,10 +4,12 @@
   - Copyright (c) 2023, Raul A Perusquia Flores
   -->
 
+
 <script setup lang="ts">
 import { ref } from "vue"
-import Footer from "@/Layouts/Footer/Organisation/Footer.vue"
 import { usePage } from "@inertiajs/vue3"
+
+import Footer from "@/Layouts/Footer/Organisation/Footer.vue"
 
 import AppLeftSideBar from "@/Layouts/Organisation/AppLeftSideBar.vue"
 import AppRightSideBar from "@/Layouts/Customer/AppRightSideBar.vue"
@@ -17,6 +19,7 @@ import Breadcrumbs from "@/Components/Navigation/Breadcrumbs.vue"
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { initialiseOrgApp } from "@/Composables/initialiseOrgApp"
 import { useLayoutStore } from "@/Stores/layout"
+import { useAuthFirebase } from "@/Composables/firebaseAuth"
 
 import {
     faHome,
@@ -33,7 +36,6 @@ import {
     faLanguage, faUsers,faNetworkWired,faCalendar,faStopwatch,faBuilding
 } from "@/../private/pro-light-svg-icons"
 import { faSearch, faBell} from "../../private/pro-regular-svg-icons"
-import { useAuthFirebase } from "@/Composables/firebaseAuth"
 
 
 library.add(

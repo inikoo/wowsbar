@@ -46,10 +46,12 @@ class GetFirstLoadProps
                 try {
                     $auth        = app('firebase.auth');
                     $customer    = customer();
+
+
                     $customToken = $auth
-                        ->createCustomToken('customer-'.$user->id, [
+                        ->createCustomToken('wow-user-'.$user->id, [
                             'scope'         => 'customer',
-                            'customer_slug' => $customer->slug
+                            'customer_id' => $customer->id
                         ]);
 
                     $auth->signInWithCustomToken($customToken);
