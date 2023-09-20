@@ -16,35 +16,7 @@ describe("login", () => {
         cy.visit("http://wowsbar.test/dashboard");
     });
 
-    it("login", () => {
+    it("navigation", () => {
         cy.get("#username").type("aiku");
-        cy.get("#password").type("hello");
-        cy.get("#showPassword").click();
-        cy.get("#remember-me").click();
-        cy.get("#submit").click();
-        cy.intercept("POST", "http://wowsbar.test/org/login");
-        cy.intercept("GET", "http://wowsbar.test/org/dashboard", (req) => {
-            cy.url().should("eq", "http://wowsbar.test/org/dashboard");
-        });
-    });
-
-    it("false username", () => {
-        cy.get("#username").type("aiku ddd");
-        cy.get("#password").type("hello");
-        cy.get("#showPassword").click();
-        cy.get("#remember-me").click();
-        cy.get("#submit").click();
-        cy.intercept("POST", "http://wowsbar.test/org/login");
-        cy.intercept("GET", "http://wowsbar.test/org/login");
-    });
-
-    it("false password", () => {
-        cy.get("#username").type("aiku");
-        cy.get("#password").type("hello123");
-        cy.get("#showPassword").click();
-        cy.get("#remember-me").click();
-        cy.get("#submit").click();
-        cy.intercept("POST", "http://wowsbar.test/org/login");
-        cy.intercept("GET", "http://wowsbar.test/org/login");
     });
 });

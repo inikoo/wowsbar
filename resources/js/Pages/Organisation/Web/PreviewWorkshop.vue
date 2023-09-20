@@ -26,6 +26,7 @@
   import { Head } from '@inertiajs/vue3'
   import { capitalize } from "@/Composables/capitalize"
   import HeaderThemeOne from '@/Components/Header/Public/HeaderThemeOne.vue'
+  import { get as _get } from 'lodash'
   library.add(faSpinnerThird );
   const isTabActive = ref(false)
 
@@ -103,11 +104,11 @@ const getHeaderComponent = computed(() => {
       <div v-if="loadingState" class="w-full min-h-screen flex justify-center items-center">
             <FontAwesomeIcon icon='fad fa-spinner-third' class='animate-spin h-12  text-gray-600' aria-hidden='true' />
         </div>
-      <div v-else class="relative" :class="[data.layout == 'full' ? '' : 'flex justify-center w-full']" >
+      <div v-else class="relative" :class="[_get(data,'layout') == 'full' ? '' : 'flex justify-center w-full']" >
           <section class="relative isolate overflow-hidden bg-gray-100">
               <!-- <component :is="getHeaderComponent" :data="data.header"></component> -->
 
-              <component v-if="data.menu" :is="getMenuComponent" :data="data.menu"></component>
+              <component v-if="_get(data,'menu')" :is="getMenuComponent" :data="data.menu"></component>
   
               <!-- Background: Square line -->
               <svg class="absolute inset-0 -z-10 h-full w-full stroke-gray-200 [mask-image:radial-gradient(100%_100%_at_top_right,white,transparent)]"
@@ -124,7 +125,7 @@ const getHeaderComponent = computed(() => {
               <!-- Main content of page -->
               <slot />
   
-              <component v-if="data.footer" :is="getFooterComponent" :data="data.footer.data" />
+              <component v-if="_get(data,'footer')" :is="getFooterComponent" :data="data.footer.data" />
           </section>
       </div>
   
