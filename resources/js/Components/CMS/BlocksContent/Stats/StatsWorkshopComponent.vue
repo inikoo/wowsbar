@@ -2,7 +2,7 @@
 import ButtonTheme from '@/Components/CMS/Utils/ButtonTheme.vue'
 import StatsOne from '@/Components/CMS/BlocksContent/Stats/StatsOne.vue'
 import StatsTwo from '@/Components/CMS/BlocksContent/Stats/StatsTwo.vue'
-import StatsThree from '@/Components/CMS/BlocksContent/Stats/StatsThree.vue'
+// import StatsThree from '@/Components/CMS/BlocksContent/Stats/StatsThree.vue'
 import { computed, ref, reactive } from 'vue'
 
 const statsTheme = ref(0)
@@ -36,7 +36,7 @@ const dataStats = reactive({
 const components = {
     0: StatsOne,
     1: StatsTwo,
-    2: StatsThree,
+    // 2: StatsThree,
 }
 
 const component = computed(()=>{
@@ -45,14 +45,10 @@ const component = computed(()=>{
 
 </script>
 
-
 <template>
     <div class="w-full">
-        <ButtonTheme v-model="statsTheme" :label="['Simple', 'wide', 'image']"/>
+        <ButtonTheme v-model="statsTheme" :label="['Simple', 'Clean']"/>
         <component :is="component" :dataStats="dataStats" />
         <!-- <div @click="()=>console.log('stats',stats,pagehead)">iniii</div> -->
     </div>
 </template>
-
-
-<style scoped></style>
