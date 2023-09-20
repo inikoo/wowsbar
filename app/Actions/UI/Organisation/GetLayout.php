@@ -152,7 +152,7 @@ class GetLayout
                 'icon'    => ['fal', 'fa-briefcase'],
                 'label'   => __('Customer Websites'),
                 'route'   => [
-                    'name' => 'org.portfolio-websites.index',
+                    'name'       => 'org.portfolio-websites.index',
                     'parameters' => []
                 ],
                 'topMenu' => [

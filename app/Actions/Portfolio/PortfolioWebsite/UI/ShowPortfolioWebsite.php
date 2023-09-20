@@ -12,7 +12,7 @@ use App\Actions\InertiaAction;
 use App\Actions\Portfolio\Banner\UI\IndexBanners;
 use App\Actions\UI\Customer\Portfolio\ShowPortfolio;
 use App\Actions\UI\WithInertia;
-use App\Enums\UI\Tenant\PortfolioWebsiteTabsEnum;
+use App\Enums\UI\Customer\PortfolioWebsiteTabsEnum;
 use App\Http\Resources\History\HistoryResource;
 use App\Http\Resources\Portfolio\BannerResource;
 use App\Http\Resources\Portfolio\PortfolioWebsiteResource;

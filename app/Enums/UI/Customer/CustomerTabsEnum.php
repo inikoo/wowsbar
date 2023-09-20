@@ -1,11 +1,11 @@
 <?php
 /*
- * Author: Jonathan Lopez Sanchez <jonathan@ancientwisdom.biz>
- * Created: Mon, 20 Mar 2023 14:46:07 Central European Standard Time, Malaga, Spain
- * Copyright (c) 2023, Inikoo LTD
+ * Author: Raul Perusquia <raul@inikoo.com>
+ * Created: Wed, 20 Sep 2023 11:43:42 Malaysia Time, Pantai Lembeng, Bali, Indonesia
+ * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Enums\UI\Tenant;
+namespace App\Enums\UI\Customer;
 
 use App\Enums\EnumHelperTrait;
 use App\Enums\HasTabs;
@@ -21,10 +21,12 @@ enum CustomerTabsEnum: string
     case PORTFOLIO = 'portfolio';
     case ORDERS    = 'orders';
 
-    case DATA              = 'data';
-    case ATTACHMENTS       = 'attachments';
-    case DISPATCHED_EMAILS = 'dispatched_emails';
 
+    case DATA               = 'data';
+    case ATTACHMENTS        = 'attachments';
+    case USERS              = 'users';
+
+    case DISPATCHED_EMAILS = 'dispatched_emails';
 
     public function blueprint(): array
     {
@@ -38,6 +40,12 @@ enum CustomerTabsEnum: string
                 'type'  => 'icon',
                 'title' => __('data'),
                 'icon'  => 'fal fa-database',
+            ],
+            CustomerTabsEnum::USERS => [
+                'align' => 'right',
+                'type'  => 'icon',
+                'title' => __('users'),
+                'icon'  => 'fal fa-terminal',
             ],
             CustomerTabsEnum::PORTFOLIO => [
                 'title' => __('portfolio'),

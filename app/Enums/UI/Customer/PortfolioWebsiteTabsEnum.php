@@ -5,7 +5,7 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Enums\UI\Tenant;
+namespace App\Enums\UI\Customer;
 
 use App\Enums\EnumHelperTrait;
 use App\Enums\HasTabs;
@@ -17,10 +17,10 @@ enum PortfolioWebsiteTabsEnum: string
 
     case SHOWCASE             = 'showcase';
 
-    case BANNERS             = 'banners';
-    case SEO             = 'seo';
+    case BANNERS                = 'banners';
+    case SEO                    = 'seo';
     case GOOGLE_ADS             = 'google_ads';
-    case LEADS             = 'leads';
+    case LEADS                  = 'leads';
 
     case CHANGELOG            = 'changelog';
 

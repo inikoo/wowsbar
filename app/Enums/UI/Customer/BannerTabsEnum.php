@@ -5,32 +5,43 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Enums\UI\Tenant;
+namespace App\Enums\UI\Customer;
 
 use App\Enums\EnumHelperTrait;
 use App\Enums\HasTabs;
 
-enum PortfolioWebsitesTabsEnum: string
+enum BannerTabsEnum: string
 {
     use EnumHelperTrait;
     use HasTabs;
 
-    case WEBSITES             = 'websites';
-    case UPLOADED_WEBSITES    = 'uploaded_websites';
+    case SHOWCASE              = 'showcase';
+    case SNAPSHOTS             = 'snapshots';
+
+
     case CHANGELOG            = 'changelog';
+
+    case DATA                 = 'data';
+
 
     public function blueprint(): array
     {
         return match ($this) {
-            PortfolioWebsitesTabsEnum::WEBSITES => [
-                'title' => __('websites'),
+            BannerTabsEnum::SHOWCASE => [
+                'title' => __('banner'),
                 'icon'  => 'fas fa-info-circle',
             ],
-            PortfolioWebsitesTabsEnum::UPLOADED_WEBSITES => [
-                'title' => __('uploaded websites'),
-                'icon'  => 'fal fa-window-maximize',
+            BannerTabsEnum::SNAPSHOTS => [
+                'title' => __('snapshots'),
+                'icon'  => 'fal fa-wallet',
             ],
-            PortfolioWebsitesTabsEnum::CHANGELOG => [
+            BannerTabsEnum::DATA => [
+                'title' => __('data'),
+                'icon'  => 'fal fa-database',
+                'type'  => 'icon',
+                'align' => 'right',
+            ],
+            BannerTabsEnum::CHANGELOG => [
                 'title' => __('changelog'),
                 'icon'  => 'fal fa-clock',
                 'type'  => 'icon',

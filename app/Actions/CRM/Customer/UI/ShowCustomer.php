@@ -9,7 +9,7 @@ namespace App\Actions\CRM\Customer\UI;
 
 use App\Actions\InertiaAction;
 use App\Actions\UI\Customer\Dashboard\ShowDashboard;
-use App\Enums\UI\Tenant\CustomerTabsEnum;
+use App\Enums\UI\Customer\CustomerTabsEnum;
 use App\Http\Resources\CRM\CustomerResource;
 use App\Models\CRM\Customer;
 use Inertia\Inertia;
@@ -47,7 +47,7 @@ class ShowCustomer extends InertiaAction
                 'title'       => __('customer'),
                 'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->getName(),
-                    $request->route()->parameters
+                    $request->route()->originalParameters()
                 ),
                 'navigation'  => [
                     'previous' => $this->getPrevious($customer, $request),
@@ -58,6 +58,20 @@ class ShowCustomer extends InertiaAction
                     'icon'    => [
                         'icon'  => ['fal', 'fa-user'],
                         'title' => __('customer')
+                    ],
+                    'meta'    => [
+                        [
+                            'href'     => [
+                                'name'       => $request->route()->getName().'.web-users.index',
+                                'parameters' => $request->route()->originalParameters()
+                            ],
+                            'number'   => $customer->stats->number_users_status_active,
+                            'label'    => __('Users'),
+                            'leftIcon' => [
+                                'icon'    => 'fal fa-terminal',
+                                'tooltip' => __('users')
+                            ]
+                        ],
                     ],
                     'actions' => [
                         $this->canEdit ? [
@@ -128,7 +142,7 @@ class ShowCustomer extends InertiaAction
             => array_merge(
                 ShowDashboard::make()->getBreadcrumbs(),
                 $headCrumb(
-                    $routeParameters['customer'],
+                    Customer::where('slug', $routeParameters['customer'])->first(),
                     [
                         'index' => [
                             'name'       => 'org.crm.customers.index',
@@ -136,7 +150,7 @@ class ShowCustomer extends InertiaAction
                         ],
                         'model' => [
                             'name'       => 'org.crm.customers.show',
-                            'parameters' => [$routeParameters['customer']]
+                            'parameters' => $routeParameters
                         ]
                     ],
                     $suffix
