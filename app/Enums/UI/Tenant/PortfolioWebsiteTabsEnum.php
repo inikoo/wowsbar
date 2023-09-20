@@ -17,10 +17,10 @@ enum PortfolioWebsiteTabsEnum: string
 
     case SHOWCASE             = 'showcase';
 
-    case BANNERS             = 'banners';
-    case SEO             = 'seo';
+    case BANNERS                = 'banners';
+    case SEO                    = 'seo';
     case GOOGLE_ADS             = 'google_ads';
-    case LEADS             = 'leads';
+    case LEADS                  = 'leads';
 
     case CHANGELOG            = 'changelog';
 

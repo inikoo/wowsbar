@@ -22,9 +22,9 @@ Route::prefix('customers')->as('customers.')->group(function () {
     Route::get('/{customer}', [ShowCustomer::class, 'inOrganisation'])->name('show');
     Route::get('/{customer}/edit', [EditCustomer::class, 'inOrganisation'])->name('edit');
     Route::get('/customers/{customer}/delete', RemoveCustomer::class)->name('remove');
-//    Route::get('/customers/{customer}/web-users', [IndexWebUser::class, 'inCustomerinOrganisation'])->name('customers.show.web-users.index');
-//    Route::get('/customers/{customer}/web-users/{webUser}', [ShowWebUser::class, 'inCustomerinOrganisation'])->name('customers.show.web-users.show');
-//    Route::get('/customers/{customer}/web-users/{webUser}/edit', [EditWebUser::class, 'inCustomerinOrganisation'])->name('customers.show.web-users.edit');
+    //    Route::get('/customers/{customer}/web-users', [IndexWebUser::class, 'inCustomerinOrganisation'])->name('customers.show.web-users.index');
+    //    Route::get('/customers/{customer}/web-users/{webUser}', [ShowWebUser::class, 'inCustomerinOrganisation'])->name('customers.show.web-users.show');
+    //    Route::get('/customers/{customer}/web-users/{webUser}/edit', [EditWebUser::class, 'inCustomerinOrganisation'])->name('customers.show.web-users.edit');
     Route::get('/uploads/template/download', DownloadCustomersTemplate::class)->name('uploads.template.download');
 });
 

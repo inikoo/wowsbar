@@ -3,11 +3,9 @@
 namespace App\Imports\CRM;
 
 use App\Actions\CRM\Customer\StoreCustomer;
-use App\Actions\CRM\Prospect\StoreProspect;
 use App\Actions\Helpers\Uploads\ImportExcelUploads;
 use App\Actions\Helpers\Uploads\UpdateExcelUploads;
 use App\Models\CRM\Customer;
-use App\Models\CRM\Prospect;
 use App\Models\Market\Shop;
 use App\Models\Media\ExcelUpload;
 use App\Models\Media\ExcelUploadRecord;

@@ -7,21 +7,12 @@
 
 
 use App\Actions\Portfolio\Banner\UI\CreateBanner;
-use App\Actions\Portfolio\Banner\UI\DuplicateBanner;
 use App\Actions\Portfolio\Banner\UI\EditBanner;
 use App\Actions\Portfolio\Banner\UI\IndexBanners;
 use App\Actions\Portfolio\Banner\UI\RemoveBanner;
 use App\Actions\Portfolio\Banner\UI\ShowBanner;
 use App\Actions\Portfolio\Banner\UI\ShowBannerWorkshop;
-use App\Actions\Portfolio\Banner\UI\ShowDeletedBanner;
 use App\Actions\Portfolio\Banner\UploadImagesToBanner;
-use App\Actions\Portfolio\Gallery\DeleteUploadedImage;
-use App\Actions\Portfolio\Gallery\UI\IndexStockImages;
-use App\Actions\Portfolio\Gallery\UI\ShowGallery;
-use App\Actions\Portfolio\Gallery\UI\UploadedImages\EditUploadedImage;
-use App\Actions\Portfolio\Gallery\UI\UploadedImages\IndexUploadedImages;
-use App\Actions\Portfolio\Gallery\UI\UploadedImages\ShowUploadedImage;
-use App\Actions\Portfolio\Gallery\UploadImagesToGallery;
 use App\Actions\Portfolio\PortfolioWebsite\UI\CreatePortfolioWebsite;
 use App\Actions\Portfolio\PortfolioWebsite\UI\EditPortfolioWebsite;
 use App\Actions\Portfolio\PortfolioWebsite\UI\IndexPortfolioWebsites;
@@ -29,9 +20,6 @@ use App\Actions\Portfolio\PortfolioWebsite\UI\RemovePortfolioWebsite;
 use App\Actions\Portfolio\PortfolioWebsite\UI\ShowPortfolioWebsite;
 use App\Actions\Portfolio\Snapshot\UI\IndexSnapshots;
 use App\Actions\Portfolio\Snapshot\UI\ShowSnapshot;
-use App\Actions\Portfolio\Uploads\DownloadPortfolioWebsiteUploadsTemplate;
-use App\Actions\Portfolio\Uploads\IndexPortfolioWebsiteUploads;
-use App\Actions\UI\Customer\Portfolio\ShowPortfolio;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [
