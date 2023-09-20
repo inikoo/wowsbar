@@ -5,11 +5,12 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Auth\User\UI;
+namespace App\Actions\CRM\User\UI;
 
 use App\Actions\InertiaAction;
 use App\Actions\Traits\Fields\WithUserFields;
 use App\Models\Auth\User;
+use App\Models\CRM\Customer;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -25,13 +26,19 @@ class EditUser extends InertiaAction
 
     public function authorize(ActionRequest $request): bool
     {
-        return $request->user()->can("sysadmin.view");
+        return $request->user()->can("crm.edit");
     }
 
     public function asController(User $user, ActionRequest $request): User
     {
         $this->initialisation($request);
+        return $this->handle($user);
+    }
 
+    /** @noinspection PhpUnusedParameterInspection */
+    public function inCustomer(Customer $customer, User $user, ActionRequest $request): User
+    {
+        $this->initialisation($request);
         return $this->handle($user);
     }
 
@@ -45,7 +52,7 @@ class EditUser extends InertiaAction
                 'title'       => __('user'),
                 'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->getName(),
-                    $request->route()->parameters
+                    $request->route()->originalParameters()
                 ),
                 'pageHead'    => [
                     'title'     => $user->username,
@@ -66,7 +73,7 @@ class EditUser extends InertiaAction
                     'args'      => [
                         'updateRoute' => [
                             'name'      => 'models.user.update',
-                            'parameters'=> [$user->username]
+                            'parameters'=> [$user->id]
 
                         ],
                     ]

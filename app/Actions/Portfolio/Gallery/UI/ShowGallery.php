@@ -10,7 +10,7 @@ namespace App\Actions\Portfolio\Gallery\UI;
 use App\Actions\InertiaAction;
 use App\Actions\Portfolio\Gallery\UI\UploadedImages\IndexUploadedImages;
 use App\Actions\UI\Customer\Portfolio\ShowPortfolio;
-use App\Enums\UI\Tenant\GalleryTabsEnum;
+use App\Enums\UI\Customer\GalleryTabsEnum;
 use App\Http\Resources\Gallery\ImageResource;
 use Inertia\Inertia;
 use Inertia\Response;

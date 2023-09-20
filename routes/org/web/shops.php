@@ -8,7 +8,10 @@
 
 use App\Actions\Organisation\Market\Product\DownloadProductsTemplate;
 use App\Actions\Organisation\Market\Product\UI\CreateProduct;
+use App\Actions\Organisation\Market\Product\UI\EditProduct;
 use App\Actions\Organisation\Market\Product\UI\IndexProducts;
+use App\Actions\Organisation\Market\Product\UI\RemoveProduct;
+use App\Actions\Organisation\Market\Product\UI\ShowProduct;
 use App\Actions\Organisation\Market\ProductCategory\UI\CreateDepartment;
 use App\Actions\Organisation\Market\ProductCategory\UI\IndexDepartments;
 use App\Actions\Organisation\Market\Shop\UI\CreateShop;

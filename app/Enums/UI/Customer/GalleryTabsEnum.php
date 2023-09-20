@@ -5,7 +5,7 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Enums\UI\Tenant;
+namespace App\Enums\UI\Customer;
 
 use App\Enums\EnumHelperTrait;
 use App\Enums\HasTabs;
