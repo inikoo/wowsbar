@@ -22,7 +22,7 @@ class DeleteUserLogFirebase
         $database  = app('firebase.database');
         $path      = match ($parent_type) {
             'Customers' => 'customers',
-            default  => 'organisations',
+            default     => 'organisations',
         };
 
         if ($slug) {

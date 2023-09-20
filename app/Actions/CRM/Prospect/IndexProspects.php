@@ -120,12 +120,25 @@ class IndexProspects extends InertiaAction
                     ],
                     'actions'=> [
                         !$this->canEdit ? [
-                            'type'  => 'button',
-                            'style' => 'create',
-                            'label' => __('prospect'),
-                            'route' => [
-                                'name'       => 'org.crm.prospects.create',
-                                'parameters' => array_values($this->originalParameters)
+                            'type'    => 'buttonGroup',
+                            'buttons' => [
+                                [
+                                    'style' => 'secondary',
+                                    'icon'  => ['fal', 'fa-upload'],
+                                    'label' => 'upload',
+                                    'route' => [
+                                        'name'       => 'org.models.prospects.upload'
+                                    ],
+                                ],
+                                [
+                                    'type'  => 'button',
+                                    'style' => 'create',
+                                    'label' => __('prospect'),
+                                    'route' => [
+                                        'name'       => 'org.crm.prospects.create',
+                                        'parameters' => array_values($this->originalParameters)
+                                    ]
+                                ]
                             ]
                         ] : false
                     ]

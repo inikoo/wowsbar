@@ -9,7 +9,6 @@ namespace App\Actions\UI\Common\Auth;
 
 use Inertia\Inertia;
 use Inertia\Response;
-use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsController;
 
 class ShowLogin

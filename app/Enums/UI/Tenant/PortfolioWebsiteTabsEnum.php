@@ -18,11 +18,13 @@ enum PortfolioWebsiteTabsEnum: string
     case SHOWCASE             = 'showcase';
 
     case BANNERS             = 'banners';
+    case SEO             = 'seo';
+    case GOOGLE_ADS             = 'google_ads';
+    case LEADS             = 'leads';
 
     case CHANGELOG            = 'changelog';
 
     case DATA                 = 'data';
-
 
     public function blueprint(): array
     {
@@ -34,6 +36,18 @@ enum PortfolioWebsiteTabsEnum: string
             PortfolioWebsiteTabsEnum::BANNERS => [
                 'title' => __('banners'),
                 'icon'  => 'fal fa-window-maximize',
+            ],
+            PortfolioWebsiteTabsEnum::LEADS => [
+                'title' => __('leads'),
+                'icon'  => 'fal fa-transporter',
+            ],
+            PortfolioWebsiteTabsEnum::SEO => [
+                'title' => __('SEO'),
+                'icon'  => 'fab fa-google',
+            ],
+            PortfolioWebsiteTabsEnum::GOOGLE_ADS => [
+                'title' => __('google Ads'),
+                'icon'  => 'fal fa-bullseye',
             ],
             PortfolioWebsiteTabsEnum::DATA => [
                 'title' => __('data'),

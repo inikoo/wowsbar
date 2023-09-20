@@ -38,7 +38,7 @@ class GetLayout
         }
 
 
-        if ($user->can('shops')) {
+        if ($user->can('shops.view')) {
             $navigation['shops'] = [
                 'label' => __('shops'),
                 'icon'  => ['fal', 'fa-store-alt'],
@@ -81,29 +81,12 @@ class GetLayout
                         }
 
 
-                    /*
-                       [
-                        'label' => __('shops'),
-                        'icon'  => ['fal', 'fa-store-alt'],org.websites.webpages.index
-                        'route' => [
-                            'name' => 'org.shops.index',
-                        ]
-                    ],
-                    [
-                        'label' => __('webpages'),
-                        'icon'  => ['fal', 'fa-browser'],
-                        'route' => [
-                            'name' => 'org.websites.webpages.index',
-                        ]
-                    ],
-                    */
 
                 ]
             ];
         }
 
-
-        if ($user->can('websites') and $shopsCount > 0) {
+        if ($user->can('websites.view') and $shopsCount > 0) {
             if ($shopsCount == 1) {
                 if ($shop->website) {
                     $route = [
@@ -163,6 +146,21 @@ class GetLayout
             ];
         }
 
+        if ($user->can('crm.view')) {
+            $navigation['portfolio-websites'] = [
+                'scope'   => 'portfolio-websites',
+                'icon'    => ['fal', 'fa-briefcase'],
+                'label'   => __('Customer Websites'),
+                'route'   => [
+                    'name' => 'org.portfolio-websites.index',
+                    'parameters' => []
+                ],
+                'topMenu' => [
+                    'subSections' => []
+                ]
+            ];
+        }
+
         if ($user->can('accounting.view')) {
             $navigation['accounting'] = [
                 'label'   => __('Accounting'),
@@ -180,7 +178,7 @@ class GetLayout
             ];
         }
 
-        if ($user->can('hr')) {
+        if ($user->can('hr.view')) {
             $navigation['hr'] = [
                 'label'   => __('human resources'),
                 'icon'    => ['fal', 'fa-user-hard-hat'],
@@ -234,7 +232,7 @@ class GetLayout
             ];
         }
 
-        if ($user->can('sysadmin')) {
+        if ($user->can('sysadmin.view')) {
             $navigation['sysadmin'] = [
                 'label'   => __('sysadmin'),
                 'icon'    => ['fal', 'fa-users-cog'],
@@ -262,6 +260,7 @@ class GetLayout
                 ]
             ];
         }
+
 
         return [
             'navigation' => $navigation,

@@ -9,12 +9,10 @@
   import { ref } from "vue";
   import { usePage } from "@inertiajs/vue3"
   import Footer from "@/Layouts/Customer/Footer.vue"
-
   import AppLeftSideBar from "@/Layouts/Customer/AppLeftSideBar.vue"
   import AppRightSideBar from "@/Layouts/Customer/AppRightSideBar.vue"
   import AppTopBar from "@/Layouts/Customer/AppTopBar.vue"
   import Breadcrumbs from "@/Components/Navigation/Breadcrumbs.vue"
-
   import { library } from "@fortawesome/fontawesome-svg-core"
   import { initialiseApp } from "@/Composables/initialiseApp"
   import { useLayoutStore } from "@/Stores/layout"
@@ -23,21 +21,10 @@
 
   import {
       faHome,
-      faConveyorBeltAlt,
-      faUserHardHat,
       faBars,
       faUsersCog,
       faTachometerAltFast,
-      faInventory,
-      faStoreAlt,
       faUser,
-      faIndustry,
-      faParachuteBox,
-      faDollyEmpty,
-      faShoppingCart,
-      faAbacus,
-      faChevronDown,
-      faGlobe,
       faLanguage
   } from "@/../private/pro-light-svg-icons"
   import { faSearch, faBell} from "@/../private/pro-regular-svg-icons"
@@ -45,22 +32,10 @@
 
   library.add(
       faHome,
-      faConveyorBeltAlt,
-      faUserHardHat,
       faBars,
       faUsersCog,
       faTachometerAltFast,
-      faInventory,
-      faStoreAlt,
       faUser,
-      faUser,
-      faIndustry,
-      faParachuteBox,
-      faDollyEmpty,
-      faShoppingCart,
-      faAbacus,
-      faChevronDown,
-      faGlobe,
       faLanguage,
       faSearch,
       faBell

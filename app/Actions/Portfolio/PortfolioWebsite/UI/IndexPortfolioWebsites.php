@@ -9,12 +9,10 @@ namespace App\Actions\Portfolio\PortfolioWebsite\UI;
 
 use App\Actions\Helpers\History\IndexHistories;
 use App\Actions\InertiaAction;
-use App\Actions\Portfolio\Uploads\IndexPortfolioWebsiteUploads;
 use App\Actions\UI\Customer\Portfolio\ShowPortfolio;
-use App\Enums\UI\Tenant\PortfolioWebsitesTabsEnum;
+use App\Enums\UI\Organisation\PortfolioWebsitesTabsEnum;
 use App\Http\Resources\History\HistoryResource;
 use App\Http\Resources\Portfolio\PortfolioWebsiteResource;
-use App\Http\Resources\Portfolio\WebsiteUploadsResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\Portfolio\PortfolioWebsite;
 use Closure;
@@ -30,13 +28,9 @@ class IndexPortfolioWebsites extends InertiaAction
 {
     public function authorize(ActionRequest $request): bool
     {
-        $this->canEdit = $request->user()->can('portfolio.edit');
+        $this->canEdit = $request->user()->can('portfolio');
 
-        return
-            (
-                $request->user()->tokenCan('root') or
-                $request->user()->can('portfolio.view')
-            );
+        return !$request->user()->can('portfolio');
     }
 
     public function asController(ActionRequest $request): LengthAwarePaginator
@@ -63,11 +57,10 @@ class IndexPortfolioWebsites extends InertiaAction
 
         $queryBuilder = QueryBuilder::for(PortfolioWebsite::class);
 
-
         return $queryBuilder
             ->defaultSort('portfolio_websites.code')
-            ->leftJoin('portfolio_website_stats', 'portfolio_website_id', 'portfolio_websites.id')
-            ->select(['portfolio_websites.code', 'portfolio_websites.name', 'portfolio_websites.slug', 'portfolio_websites.domain', 'portfolio_website_stats.number_banners'])
+            ->with(['customer', 'stats'])
+//            ->select(['portfolio_websites.code', 'portfolio_websites.name', 'portfolio_websites.slug', 'portfolio_websites.domain'])
             ->allowedSorts(['slug', 'code', 'name','number_banners','domain'])
             ->allowedFilters([$globalSearch])
             ->withPaginator($prefix)
@@ -89,12 +82,12 @@ class IndexPortfolioWebsites extends InertiaAction
                 ->withEmptyState(
                     [
                         'title' => __('No websites found'),
-                        'count' => customer()->stats->number_websites,
-
+                        'count' => 0
                     ]
                 )
                 ->withExportLinks($exportLinks)
                 ->column(key: 'slug', label: __('code'), sortable: true)
+                ->column(key: 'customer_name', label: __('customer name'), sortable: true)
                 ->column(key: 'name', label: __('name'), sortable: true)
                 ->column(key: 'domain', label: __('domain'), sortable: true)
                 ->column(key: 'number_banners', label: __('banners'), sortable: true)
@@ -116,38 +109,13 @@ class IndexPortfolioWebsites extends InertiaAction
                     $request->route()->getName(),
                     $request->route()->parameters
                 ),
-                'title'       => __('websites'),
+                'title'       => __('customer websites'),
                 'pageHead'    => [
-                    'title'     => __('websites'),
+                    'title'     => __('customers websites'),
                     'iconRight' => [
                         'title' => __('website'),
                         'icon'  => 'fal fa-globe'
                     ],
-                    'actions'   => [
-                        [
-                            'type'    => 'buttonGroup',
-                            'buttons' => [
-                                [
-                                    'style' => 'secondary',
-                                    'icon'  => ['fal', 'fa-upload'],
-                                    'label' => 'upload',
-                                    'route' => [
-                                        'name'       => preg_replace('/index$/', 'create', $request->route()->getName()),
-                                        'parameters' => array_values($request->route()->originalParameters())
-                                    ],
-                                ],
-                                [
-                                    'type'  => 'button',
-                                    'style' => 'create',
-                                    'label' => 'create website',
-                                    'route' => [
-                                        'name'       => preg_replace('/index$/', 'create', $request->route()->getName()),
-                                        'parameters' => array_values($request->route()->originalParameters())
-                                    ]
-                                ]
-                            ]
-                        ]
-                    ]
                 ],
                 'tabs' => [
                     'current'    => $this->tab,
@@ -157,10 +125,6 @@ class IndexPortfolioWebsites extends InertiaAction
                 PortfolioWebsitesTabsEnum::WEBSITES->value => $this->tab == PortfolioWebsitesTabsEnum::WEBSITES->value ?
                     fn () => PortfolioWebsiteResource::collection($websites)
                     : Inertia::lazy(fn () => PortfolioWebsiteResource::collection($websites)),
-
-                PortfolioWebsitesTabsEnum::UPLOADED_WEBSITES->value => $this->tab == PortfolioWebsitesTabsEnum::UPLOADED_WEBSITES->value ?
-                    fn () => WebsiteUploadsResource::collection(IndexPortfolioWebsiteUploads::run())
-                    : Inertia::lazy(fn () => WebsiteUploadsResource::collection(IndexPortfolioWebsiteUploads::run())),
 
                 PortfolioWebsitesTabsEnum::CHANGELOG->value => $this->tab == PortfolioWebsitesTabsEnum::CHANGELOG->value ?
                     fn () => HistoryResource::collection(IndexHistories::run(PortfolioWebsite::class))
@@ -175,8 +139,7 @@ class IndexPortfolioWebsites extends InertiaAction
                     ]
                 ]
             ]
-        ))->table(IndexPortfolioWebsiteUploads::make()->tableStructure(prefix: PortfolioWebsitesTabsEnum::UPLOADED_WEBSITES->value))
-            ->table(IndexHistories::make()->tableStructure());
+        ))->table(IndexHistories::make()->tableStructure());
     }
 
     /** @noinspection PhpUnusedParameterInspection */

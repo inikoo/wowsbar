@@ -9,6 +9,7 @@ namespace App\Actions\Portfolio\PortfolioWebsite\UI;
 
 use App\Actions\Helpers\History\IndexHistories;
 use App\Actions\InertiaAction;
+use App\Actions\Portfolio\Banner\UI\IndexBanners;
 use App\Actions\UI\Customer\Portfolio\ShowPortfolio;
 use App\Actions\UI\WithInertia;
 use App\Enums\UI\Tenant\PortfolioWebsiteTabsEnum;
@@ -32,7 +33,7 @@ class ShowPortfolioWebsite extends InertiaAction
         $this->canEdit   = $request->user()->can('portfolio.edit');
         $this->canDelete = $request->user()->can('portfolio.edit');
 
-        return $request->user()->can('portfolio.view');
+        return !$request->user()->can('portfolio.view');
     }
 
     public function asController(PortfolioWebsite $portfolioWebsite, ActionRequest $request): PortfolioWebsite
@@ -41,7 +42,6 @@ class ShowPortfolioWebsite extends InertiaAction
 
         return $portfolioWebsite;
     }
-
 
     public function htmlResponse(PortfolioWebsite $portfolioWebsite, ActionRequest $request): Response
     {
@@ -63,86 +63,22 @@ class ShowPortfolioWebsite extends InertiaAction
                         'title' => __('website'),
                         'icon'  => 'fal fa-globe'
                     ],
-                    'actions' => [
-                        $this->canDelete ? [
-                            'type'  => 'button',
-                            'style' => 'delete',
-                            'route' => [
-                                'name'       => 'customer.portfolio.websites.remove',
-                                'parameters' => array_values($request->route()->originalParameters())
-                            ]
-                        ] : false,
-
-                        $this->canEdit ? [
-                            'type'  => 'button',
-                            'style' => 'edit',
-                            'label' => __('edit'),
-                            'route' => [
-                                'name'       => preg_replace('/show$/', 'edit', $request->route()->getName()),
-                                'parameters' => array_values($request->route()->originalParameters())
-                            ]
-                        ] : false,
-
-                        $this->canEdit ? [
-                            'type'  => 'button',
-                            'style' => 'create',
-                            'label' => __('new banner'),
-                            'route' => [
-                                'name'       => $request->route()->getName().'.banners.create',
-                                'parameters' => array_values($request->route()->originalParameters())
-                            ]
-                        ] : false,
-                    ],
-
                 ],
                 'tabs'        => [
                     'current'    => $this->tab,
                     'navigation' => PortfolioWebsiteTabsEnum::navigation()
                 ],
 
-                PortfolioWebsiteTabsEnum::BANNERS->value => $this->tab == PortfolioWebsiteTabsEnum::BANNERS->value
-                    ?
-                    fn () => BannerResource::collection(
-                        \App\Actions\Portfolio\Banner\UI\IndexBanners::run(
-                            parent: $portfolioWebsite,
-                            prefix: 'banners'
-                        )
-                    )
-                    : Inertia::lazy(fn () => BannerResource::collection(
-                        \App\Actions\Portfolio\Banner\UI\IndexBanners::run(
-                            parent: $portfolioWebsite,
-                            prefix: 'banners'
-                        )
-                    )),
-
-
                 PortfolioWebsiteTabsEnum::CHANGELOG->value => $this->tab == PortfolioWebsiteTabsEnum::CHANGELOG->value ?
                     fn () => HistoryResource::collection(IndexHistories::run($portfolioWebsite))
-                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistories::run($portfolioWebsite)))
-            ]
-        )->table(IndexHistories::make()->tableStructure())
-            ->table(
-                \App\Actions\Portfolio\Banner\UI\IndexBanners::make()->tableStructure(
-                    parent: $portfolioWebsite,
-                    /*
-                    modelOperations: [
-                        'createLink' => $this->canEdit ? [
-                            'route' => [
-                                'name'       => 'customer.portfolio.websites.show.banners.create',
-                                'parameters' => array_values([$portfolioWebsite->slug])
-                            ],
-                            'label' => __('banner'),
-                            'style' => 'primary',
-                            'icon'  => 'fas fa-plus'
-                        ] : false
-                    ],
-                    */
-                    prefix: 'banners',
-                    canEdit: $this->canEdit
-                )
-            );
-    }
+                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistories::run($portfolioWebsite))),
 
+                PortfolioWebsiteTabsEnum::BANNERS->value => $this->tab == PortfolioWebsiteTabsEnum::BANNERS->value ?
+                    fn () => BannerResource::collection(IndexBanners::run($portfolioWebsite))
+                    : Inertia::lazy(fn () => BannerResource::collection(IndexBanners::run($portfolioWebsite)))
+            ]
+        )->table(IndexHistories::make()->tableStructure());
+    }
 
     public function jsonResponse(PortfolioWebsite $portfolioWebsite): PortfolioWebsiteResource
     {
@@ -176,9 +112,8 @@ class ShowPortfolioWebsite extends InertiaAction
         };
 
         return match ($routeName) {
-            'customer.portfolio.websites.show',
-            'customer.portfolio.websites.edit' =>
-
+            'org.portfolio-websites.show',
+            'org.portfolio-websites.edit' =>
             array_merge(
                 ShowPortfolio::make()->getBreadcrumbs(),
                 $headCrumb(
@@ -186,11 +121,11 @@ class ShowPortfolioWebsite extends InertiaAction
                     $routeParameters['portfolioWebsite'],
                     [
                         'index' => [
-                            'name'       => 'customer.portfolio.websites.index',
+                            'name'       => 'org.portfolio-websites.index',
                             'parameters' => []
                         ],
                         'model' => [
-                            'name'       => 'customer.portfolio.websites.show',
+                            'name'       => 'org.portfolio-websites.show',
                             'parameters' => [$routeParameters['portfolioWebsite']->slug]
                         ]
                     ],
@@ -223,7 +158,7 @@ class ShowPortfolioWebsite extends InertiaAction
         }
 
         return match ($routeName) {
-            'customer.portfolio.websites.show' => [
+            'org.portfolio-websites.show' => [
                 'label' => $portfolioWebsite->name,
                 'route' => [
                     'name'       => $routeName,

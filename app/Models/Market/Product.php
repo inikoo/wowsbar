@@ -49,7 +49,6 @@ use Spatie\Sluggable\SlugOptions;
  * @property int|null $shop_id
  * @property ProductStateEnum|null $state
  * @property bool|null $status
- * @property ProductTradeUnitCompositionEnum $trade_unit_composition
  * @property string|null $units units per outer
  * @property string $price unit price
  * @property string|null $rrp RRP per outer
@@ -61,20 +60,44 @@ use Spatie\Sluggable\SlugOptions;
  * @property Carbon|null $updated_at
  * @property Carbon|null $deleted_at
  * @property int|null $source_id
- * @property-read Collection<int, Barcode> $barcode
+ * @property ProductTradeUnitCompositionEnum $trade_unit_composition
  * @property-read Collection<int, \App\Models\Market\HistoricProduct> $historicRecords
- * @property-read MediaCollection<int, GroupMedia> $images
- * @property-read MediaCollection<int, GroupMedia> $media
+ * @property-read int|null $historic_records_count
+ * @property-read MediaCollection<int, \App\Models\Media\Media> $media
+ * @property-read int|null $media_count
  * @property-read SalesStats|null $salesStats
  * @property-read \App\Models\Market\Shop|null $shop
  * @property-read \App\Models\Market\ProductStats|null $stats
- * @property-read Collection<int, TradeUnit> $tradeUnits
  * @property-read UniversalSearch|null $universalSearch
- * @method static \Database\Factories\Market\ProductFactory factory($count = null, $state = [])
  * @method static Builder|Product newModelQuery()
  * @method static Builder|Product newQuery()
  * @method static Builder|Product onlyTrashed()
  * @method static Builder|Product query()
+ * @method static Builder|Product whereAvailable($value)
+ * @method static Builder|Product whereCode($value)
+ * @method static Builder|Product whereCreatedAt($value)
+ * @method static Builder|Product whereCurrentHistoricProductId($value)
+ * @method static Builder|Product whereData($value)
+ * @method static Builder|Product whereDeletedAt($value)
+ * @method static Builder|Product whereDescription($value)
+ * @method static Builder|Product whereId($value)
+ * @method static Builder|Product whereImageId($value)
+ * @method static Builder|Product whereName($value)
+ * @method static Builder|Product whereOwnerId($value)
+ * @method static Builder|Product whereOwnerType($value)
+ * @method static Builder|Product whereParentId($value)
+ * @method static Builder|Product whereParentType($value)
+ * @method static Builder|Product wherePrice($value)
+ * @method static Builder|Product whereRrp($value)
+ * @method static Builder|Product whereSettings($value)
+ * @method static Builder|Product whereShopId($value)
+ * @method static Builder|Product whereSlug($value)
+ * @method static Builder|Product whereSourceId($value)
+ * @method static Builder|Product whereState($value)
+ * @method static Builder|Product whereStatus($value)
+ * @method static Builder|Product whereType($value)
+ * @method static Builder|Product whereUnits($value)
+ * @method static Builder|Product whereUpdatedAt($value)
  * @method static Builder|Product withTrashed()
  * @method static Builder|Product withoutTrashed()
  * @mixin Eloquent

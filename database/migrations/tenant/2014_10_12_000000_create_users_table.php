@@ -24,6 +24,9 @@ return new class () extends Migration {
             $table->string('username')->unique()->nullable()->index()->collation('und_ns');
 
             $table = $this->userDetailsColumns($table, 'email');
+
+            $table->ulid('ulid')->index()->unuque();
+
             $table->timestampsTz();
             $table->softDeletesTz();
 

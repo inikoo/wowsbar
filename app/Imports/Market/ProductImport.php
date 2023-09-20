@@ -41,7 +41,7 @@ class ProductImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wit
             try {
                 $product = ExcelUploadRecord::create([
                         'excel_upload_id' => $this->productUpload->id,
-                        'data' => json_encode($product)
+                        'data'            => json_encode($product)
                 ]);
 
                 ImportExcelUploads::dispatch($product, count($collection), $totalImported++, Product::class);

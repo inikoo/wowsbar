@@ -5,9 +5,11 @@
  * Copyright (c) 2023, Inikoo LTD
  */
 
-namespace App\Actions\Market\Product\UI;
+namespace App\Actions\Organisation\Market\Product\UI;
 
-use App\Actions\Market\Shop\UI\IndexShops;
+
+
+use App\Actions\Organisation\Market\Shop\UI\IndexShops;
 use App\Models\Market\Product;
 
 trait HasUIProduct

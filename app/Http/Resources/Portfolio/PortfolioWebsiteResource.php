@@ -22,10 +22,11 @@ class PortfolioWebsiteResource extends JsonResource
 
         return [
             'slug'           => $websitePortfolio->slug,
+            'customer_name'  => $websitePortfolio->customer->name,
             'code'           => $websitePortfolio->code,
             'name'           => $websitePortfolio->name,
             'domain'         => $websitePortfolio->domain,
-            'number_banners' => $this->number_banners
+            'number_banners' => $websitePortfolio->stats->number_banners
         ];
     }
 }

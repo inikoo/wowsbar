@@ -7,7 +7,6 @@
 
 namespace App\Http\Middleware;
 
-
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Tightenco\Ziggy\Ziggy;
@@ -27,7 +26,6 @@ class HandlePublicInertiaRequests extends Middleware
         };
 
         return array_merge(
-
             $firstLoadOnlyProps,
             parent::share($request),
         );

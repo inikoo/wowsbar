@@ -6,6 +6,7 @@
  */
 
 
+use App\Actions\Organisation\Market\Product\DownloadProductsTemplate;
 use App\Actions\Organisation\Market\Product\UI\CreateProduct;
 use App\Actions\Organisation\Market\Product\UI\IndexProducts;
 use App\Actions\Organisation\Market\ProductCategory\UI\CreateDepartment;
@@ -32,6 +33,7 @@ Route::get('/{shop}/departments', [IndexDepartments::class, 'inShop'])->name('sh
 //Route::get('/{shop}/departments/{department}/edit', [EditDepartment::class, 'inShop'])->name('show.departments.edit');
 //Route::get('/{shop}/departments/{department}/delete', [RemoveDepartment::class, 'inShop'])->name('show.departments.remove');
 
+Route::get('/uploads/template/download', DownloadProductsTemplate::class)->name('products.uploads.template.download');
 
 Route::get('/{shop}/products', [IndexProducts::class, 'inShop'])->name('show.products.index');
 Route::get('/shops/{shop}/products/create', CreateProduct::class)->name('show.products.create');

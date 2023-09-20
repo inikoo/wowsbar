@@ -49,9 +49,10 @@ class GetFirstLoadProps
 
 
                     $customToken = $auth
-                        ->createCustomToken('wow-user-'.$user->id, [
+                        ->createCustomToken('wow-user-'.$user->ulid, [
                             'scope'         => 'customer',
-                            'customer_id' => $customer->id
+                            'customer-ulid' => $customer->ulid,
+                            'ulid'          => $user->ulid
                         ]);
 
                     $auth->signInWithCustomToken($customToken);

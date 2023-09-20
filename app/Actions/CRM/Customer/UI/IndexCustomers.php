@@ -13,6 +13,7 @@ use App\Http\Resources\CRM\CustomerResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\CRM\Customer;
 use App\Models\Market\Shop;
+use App\Models\Organisation\Organisation;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -27,14 +28,21 @@ class IndexCustomers extends InertiaAction
 {
     private bool $canCreateShop = false;
 
-    protected Shop $parent;
+    protected Organisation|Shop $parent;
 
 
     public function asController(ActionRequest $request): LengthAwarePaginator
     {
         $this->initialisation($request);
-        return $this->handle(organisation()->shop);
+        return $this->handle(organisation());
     }
+
+    public function inShop(Shop $shop, ActionRequest $request): LengthAwarePaginator
+    {
+        $this->initialisation($request);
+        return $this->handle($shop);
+    }
+
 
 
     public function authorize(ActionRequest $request): bool
@@ -50,7 +58,7 @@ class IndexCustomers extends InertiaAction
     }
 
     /** @noinspection PhpUndefinedMethodInspection */
-    public function handle(Shop $parent, $prefix = null): LengthAwarePaginator
+    public function handle(Organisation|Shop $parent, $prefix = null): LengthAwarePaginator
     {
 
         $this->parent=$parent;
@@ -85,8 +93,7 @@ class IndexCustomers extends InertiaAction
                 'customers.name',
                 'customers.slug',
                 'shops.code as shop_code',
-                'shops.slug as shop_slug',
-                'number_active_clients'
+                'shops.slug as shop_slug'
             ])
             ->leftJoin('customer_stats', 'customers.id', 'customer_stats.customer_id')
             ->leftJoin('shops', 'shops.id', 'shop_id')
@@ -95,7 +102,7 @@ class IndexCustomers extends InertiaAction
                     $query->where('customers.shop_id', $parent->id);
                 }
             })
-            ->allowedSorts(['reference', 'name', 'number_active_clients', 'slug'])
+            ->allowedSorts(['reference', 'name', 'slug'])
             ->allowedFilters([$globalSearch])
             ->withPaginator($prefix)
             ->withQueryString();
@@ -118,27 +125,27 @@ class IndexCustomers extends InertiaAction
                     match (class_basename($parent)) {
                         'Organisation' => [
                             'title'       => __("No customers found"),
-                            'description' => $this->canCreateShop && $parent->marketStats->number_shops == 0 ? __('Get started by creating a shop. ✨')
-                                : __("In fact, is no even a shop yet 🤷🏽‍♂️"),
+//                            'description' => $this->canCreateShop && $parent->marketStats->number_shops == 0 ? __('Get started by creating a shop. ✨')
+//                                : __("In fact, is no even a shop yet 🤷🏽‍♂️"),
                             'count'       => $parent->crmStats->number_customers,
-                            'action'      => $this->canCreateShop && $parent->marketStats->number_shops == 0 ? [
-                                'type'    => 'button',
-                                'style'   => 'create',
-                                'tooltip' => __('new shop'),
-                                'label'   => __('shop'),
-                                'route'   => [
-                                    'name' => 'org.shops.create',
-                                ]
-                            ] :
-                                [
-                                    'type'    => 'button',
-                                    'style'   => 'create',
-                                    'tooltip' => __('new customer'),
-                                    'label'   => __('customer'),
-                                    'route'   => [
-                                        'name' => 'org.shops.create',
-                                    ]
-                                ]
+//                            'action'      => $this->canCreateShop && $parent->marketStats->number_shops == 0 ? [
+//                                'type'    => 'button',
+//                                'style'   => 'create',
+//                                'tooltip' => __('new shop'),
+//                                'label'   => __('shop'),
+//                                'route'   => [
+//                                    'name' => 'org.shops.create',
+//                                ]
+//                            ] :
+//                                [
+//                                    'type'    => 'button',
+//                                    'style'   => 'create',
+//                                    'tooltip' => __('new customer'),
+//                                    'label'   => __('customer'),
+//                                    'route'   => [
+//                                        'name' => 'org.shops.create',
+//                                    ]
+//                                ]
 
 
                         ],

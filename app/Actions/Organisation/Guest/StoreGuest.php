@@ -77,9 +77,7 @@ class StoreGuest
             'company_name' => ['nullable', 'string', 'max:255'],
             'contact_name' => ['required', 'string', 'max:255'],
             'phone'        => ['nullable', 'phone:AUTO'],
-            'email'        => ['nullable', 'email'],
-
-
+            'email'        => ['nullable', 'email']
         ];
     }
 

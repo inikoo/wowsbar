@@ -10,7 +10,6 @@ namespace App\Actions\Portfolio\Banner\UI;
 use App\Actions\InertiaAction;
 use App\Actions\Portfolio\PortfolioWebsite\UI\GetPortfolioWebsitesOptions;
 use App\Models\Portfolio\PortfolioWebsite;
-use App\Models\Tenancy\Tenant;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Str;
 use Inertia\Inertia;

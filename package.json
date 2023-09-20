@@ -35,11 +35,12 @@
         "vue-tsc": "^1.2.0"
     },
     "dependencies": {
+        "@fortawesome/fontawesome-free": "^6.4.2",
         "@fortawesome/fontawesome-svg-core": "^6.2.0",
-        "@fortawesome/free-brands-svg-icons": "^6.1.2",
+        "@fortawesome/free-brands-svg-icons": "^6.4.2",
         "@fortawesome/free-regular-svg-icons": "^6.1.2",
         "@fortawesome/free-solid-svg-icons": "^6.1.2",
-        "@fortawesome/vue-fontawesome": "^3.0.1",
+        "@fortawesome/vue-fontawesome": "^3.0.3",
         "@headlessui/vue": "^1.7.14",
         "@heroicons/vue": "^2.0.18",
         "@kyvg/vue3-notification": "^3.0.1",

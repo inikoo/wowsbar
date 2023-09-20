@@ -21,6 +21,10 @@ function websiteRoute(website: Website) {
             return route(
                 'customer.portfolio.websites.show',
                 [website.slug]);
+        case 'org.portfolio-websites.index':
+            return route(
+                'org.portfolio-websites.show',
+                [website.slug]);
     }
 }
 

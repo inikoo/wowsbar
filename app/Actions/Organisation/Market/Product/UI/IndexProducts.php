@@ -198,16 +198,29 @@ class IndexProducts extends InertiaAction
                         'title' => __('product')
                     ],
                     'actions' => [
-                        [
-                            'type'    => 'button',
-                            'style'   => 'create',
-                            'tooltip' => __('new product'),
-                            'label'   => __('product'),
-                            'route'   => [
-                                'name'       => 'org.shops.show.products.create',
-                                'parameters' => $request->route()->originalParameters()
+                        $this->canEdit ? [
+                            'type'    => 'buttonGroup',
+                            'buttons' => [
+                                [
+                                    'style' => 'secondary',
+                                    'icon'  => ['fal', 'fa-upload'],
+                                    'label' => 'upload',
+                                    'route' => [
+                                        'name'       => 'org.models.products.upload'
+                                    ],
+                                ],
+                                [
+                                    'type'    => 'button',
+                                    'style'   => 'create',
+                                    'tooltip' => __('new product'),
+                                    'label'   => __('product'),
+                                    'route'   => [
+                                        'name'       => 'org.shops.show.products.create',
+                                        'parameters' => $request->route()->originalParameters()
+                                    ]
+                                ]
                             ]
-                        ]
+                        ] : false
                     ]
                 ],
                 'data'        => ProductResource::collection($products),

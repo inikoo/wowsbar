@@ -64,6 +64,4 @@ class StoreOrganisationUser
 
         return $this->handle($parent, $validatedData);
     }
-
-
 }

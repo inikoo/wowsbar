@@ -27,9 +27,9 @@ class ProductTemplateExport extends Factory implements FromArray
                 fake()->numerify,
                 fake()->numerify,
                 fake()->name,
-                ProductStateEnum::ACTIVE,
-                ProductTypeEnum::PHYSICAL_GOOD,
-                fake()->text(1500),
+                ProductStateEnum::ACTIVE->value,
+                ProductTypeEnum::PHYSICAL_GOOD->value,
+                fake()->text(1500)
             ];
         } while(count($array) <= 5);
 

@@ -10,9 +10,15 @@ import FooterTabActiveUsers from '@/Layouts/Customer/FooterActiveUsers.vue'
 import FooterLanguage from '@/Components/Footer/FooterLanguage.vue'
 import {usePage} from "@inertiajs/vue3";
 import Image from "@/Components/Image.vue";
+import {faHeart,faComputerClassic} from "../../../private/pro-solid-svg-icons"
+import {library} from "@fortawesome/fontawesome-svg-core";
+import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 
 const isTabActive: Ref<boolean | string> = ref(false)
 const logoSrc=usePage().props.art.footer_logo;
+
+library.add(faHeart,faComputerClassic)
+
 </script>
 
 <template>
@@ -26,7 +32,15 @@ const logoSrc=usePage().props.art.footer_logo;
             <!-- Left: Logo Section -->
             <div class="pl-4 flex items-center gap-x-1.5 py-1">
                 <Image class="h-4 select-none"  :src="logoSrc" alt="T-Wowsbar" />
+                <span class="text-slate-400	 text-xs">
+                    Made with
+                    <FontAwesomeIcon icon='fas fa-heart' class="text-red-500 mx-1" aria-hidden='true'/>
+                    and
+                    <FontAwesomeIcon icon='fas fa-computer-classic' class="mx-1" aria-hidden='true'/>
+                    in Bali
+                </span>
             </div>
+
 
             <!-- Right: Tab Section -->
             <div class="flex items-end flex-row-reverse text-sm">
