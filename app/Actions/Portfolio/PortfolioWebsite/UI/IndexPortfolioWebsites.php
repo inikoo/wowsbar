@@ -133,12 +133,33 @@ class IndexPortfolioWebsites extends InertiaAction
         )->table($this->tableStructure(
             modelOperations: [
                 'createLink' => [
-                    'route' => [
-                        'name'       => 'org.shops.show.departments.create',
-                        'parameters' => array_values(['shop'])
+                    [
+                        'route' => [
+                            'name'       => 'org.shops.show.products.create',
+                            'parameters' => array_values(['$shop->slug'])
+                        ],
+                        'icon'  => 'fal fa-upload',
+                        'label' => __('upload'),
+                        'style' => 'secondary'
                     ],
-                    'label' => __('new website'),
-                    'style' => 'create'
+                    [
+                        'route' => [
+                            'name'       => 'org.shops.show.products.create',
+                            'parameters' => array_values(['$shop->slug'])
+                        ],
+                        'icon'  => 'fal fa-download',
+                        'label' => __('Download'),
+                        'style' => 'tertiary'
+                    ],
+                    [
+                        'route' => [
+                            'name'       => 'org.shops.show.products.create',
+                            'parameters' => array_values(['$shop->slug'])
+                        ],
+                        'label' => __('create'),
+                        'style' => 'primary'
+                    ],
+
                 ]
             ],
             prefix: 'websites',

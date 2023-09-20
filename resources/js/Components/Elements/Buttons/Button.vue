@@ -8,11 +8,11 @@
 
 import { faSave as fadSave } from "@/../private/pro-duotone-svg-icons"
 import { library } from '@fortawesome/fontawesome-svg-core';
-import {  } from '@/../private/pro-light-svg-icons';
+import { faDownload } from '@/../private/pro-light-svg-icons';
 import { faPlus, faSave, faUpload } from '@/../private/pro-solid-svg-icons';
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
-library.add(faPlus, faSave, fadSave, faUpload);
+library.add(faPlus, faSave, fadSave, faUpload, faDownload);
 
 const props = withDefaults(defineProps<{
     'style'?: string
