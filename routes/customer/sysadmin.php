@@ -11,10 +11,10 @@ use App\Actions\Auth\User\UI\EditUser;
 use App\Actions\Auth\User\UI\IndexUsers;
 use App\Actions\Auth\User\UI\ShowUser;
 use App\Actions\UI\Customer\SysAdmin\EditSystemSettings;
-use App\Actions\UI\Customer\SysAdmin\SysAdminDashboard;
+use App\Actions\UI\Customer\SysAdmin\ShowSysAdminDashboard;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', SysAdminDashboard::class)->name('dashboard');
+Route::get('/', ShowSysAdminDashboard::class)->name('dashboard');
 Route::get('/system-settings', EditSystemSettings::class)->name('organisation.edit');
 
 Route::get('/users', IndexUsers::class)->name('users.index');

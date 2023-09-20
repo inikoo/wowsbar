@@ -16,7 +16,7 @@ use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 
-class CRMDashboard
+class ShowCRMDashboard
 {
     use AsAction;
     use WithInertia;

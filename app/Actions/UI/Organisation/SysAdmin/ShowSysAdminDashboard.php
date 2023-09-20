@@ -46,7 +46,7 @@ class ShowSysAdminDashboard
                     [
                         'name' => __('users'),
                         'stat' => organisation()->stats->number_organisation_users_status_active,
-                        'href' => ['org.sysadmin.users.index']
+                        'href' => ['name'=>'org.sysadmin.users.index']
                     ],
 
                 ]

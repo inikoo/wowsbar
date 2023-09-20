@@ -8,7 +8,7 @@
 namespace App\Actions\CRM\Prospect;
 
 use App\Actions\InertiaAction;
-use App\Actions\Organisation\UI\CRM\CRMDashboard;
+use App\Actions\Organisation\UI\CRM\ShowCRMDashboard;
 use App\Http\Resources\CRM\ProspectResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\CRM\Prospect;
@@ -168,7 +168,7 @@ class IndexProspects extends InertiaAction
         return match ($routeName) {
             'org.crm.prospects.index' =>
             array_merge(
-                (new CRMDashboard())->getBreadcrumbs(
+                (new ShowCRMDashboard())->getBreadcrumbs(
                     'crm.dashboard',
                     $routeParameters
                 ),
@@ -180,7 +180,7 @@ class IndexProspects extends InertiaAction
             ),
             'org.crm.shops.show.prospects.index' =>
             array_merge(
-                (new CRMDashboard())->getBreadcrumbs(
+                (new ShowCRMDashboard())->getBreadcrumbs(
                     'crm.shops.show.dashboard',
                     $routeParameters
                 ),
