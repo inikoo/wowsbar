@@ -7,30 +7,58 @@ const props = defineProps<{
 </script>
 
 
+
 <template>
-    <div class="relative bg-gray-900">
-      <div class="relative h-80 overflow-hidden bg-indigo-600 md:absolute md:left-0 md:h-full md:w-1/3 lg:w-1/2">
-        <img class="h-full w-full object-cover" src="https://images.unsplash.com/photo-1525130413817-d45c1d127c42?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1920&q=60&blend=6366F1&sat=-100&blend-mode=multiply" alt="" />
-        <svg viewBox="0 0 926 676" aria-hidden="true" class="absolute -bottom-24 left-24 w-[57.875rem] transform-gpu blur-[118px]">
-          <path fill="url(#60c3c621-93e0-4a09-a0e6-4c228a0116d8)" fill-opacity=".4" d="m254.325 516.708-90.89 158.331L0 436.427l254.325 80.281 163.691-285.15c1.048 131.759 36.144 345.144 168.149 144.613C751.171 125.508 707.17-93.823 826.603 41.15c95.546 107.978 104.766 294.048 97.432 373.585L685.481 297.694l16.974 360.474-448.13-141.46Z" />
-          <defs>
-            <linearGradient id="60c3c621-93e0-4a09-a0e6-4c228a0116d8" x1="926.392" x2="-109.635" y1=".176" y2="321.024" gradientUnits="userSpaceOnUse">
-              <stop stop-color="#776FFF" />
-              <stop offset="1" stop-color="#FF4694" />
-            </linearGradient>
-          </defs>
-        </svg>
-      </div>
-      <div class="relative mx-auto max-w-7xl py-24 sm:py-32 lg:px-8 lg:py-40">
-        <div class="pl-6 pr-6 md:ml-auto md:w-2/3 md:pl-16 lg:w-1/2 lg:pl-24 lg:pr-0 xl:pl-32">
-          <Text v-model="data.subtitle" :key="data.subtitle" :placeholder="'Enter your headline title'" :class="``" />
-          <Text v-model="data.title" :key="data.title" :placeholder="'Enter your headline title'" :class="``" />
-          <Text v-model="data.description" :key="data.description" :placeholder="'Enter your headline description'" :class="``" />
-          <div class="mt-8">
-            <a href="#" class="inline-flex rounded-md bg-white/10 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-white/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">Visit the help center</a>
-          </div>
+    <div class="relative bg-gray-500 py-16">
+        <div class="absolute inset-x-0 top-0 hidden h-1/2 bg-gray-50 lg:block" aria-hidden="true" />
+        <div class="mx-auto max-w-7xl bg-red-600 lg:bg-transparent lg:px-8">
+            <div class="lg:grid lg:grid-cols-12">
+                <div class="relative z-10 lg:col-span-4 lg:col-start-1 lg:row-start-1 lg:bg-transparent lg:py-16">
+                    <div class="absolute inset-x-0 h-1/2 bg-gray-50 lg:hidden" aria-hidden="true" />
+                    <div class="mx-auto max-w-md px-6 sm:max-w-3xl lg:max-w-none lg:p-0">
+                        <div class="aspect-h-6 aspect-w-10 sm:aspect-h-1 sm:aspect-w-2 lg:aspect-w-1">
+                            <img class="rounded-3xl object-cover object-center shadow-2xl"
+                                src="https://images.unsplash.com/photo-1507207611509-ec012433ff52?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=934&q=80"
+                                alt="" />
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    class="relative bg-gray-700 lg:col-span-10 lg:col-start-3 lg:row-start-1 lg:grid lg:grid-cols-10 lg:items-center lg:rounded-3xl">
+                    <div class="absolute inset-0 hidden overflow-hidden rounded-3xl lg:block" aria-hidden="true">
+                        <svg class="absolute bottom-full left-full -translate-x-2/3 translate-y-1/3 transform xl:bottom-auto xl:top-0 xl:translate-y-0"
+                            width="404" height="384" fill="none" viewBox="0 0 404 384" aria-hidden="true">
+                            <defs>
+                                <pattern id="64e643ad-2176-4f86-b3d7-f2c5da3b6a6d" x="0" y="0" width="20" height="20"
+                                    patternUnits="userSpaceOnUse">
+                                    <rect x="0" y="0" width="4" height="4" class="text-gray-500" fill="currentColor" />
+                                </pattern>
+                            </defs>
+                            <rect width="404" height="384" fill="url(#64e643ad-2176-4f86-b3d7-f2c5da3b6a6d)" />
+                        </svg>
+                        <svg class="absolute top-full -translate-x-1/3 -translate-y-1/3 transform xl:-translate-y-1/2"
+                            width="404" height="384" fill="none" viewBox="0 0 404 384" aria-hidden="true">
+                            <defs>
+                                <pattern id="64e643ad-2176-4f86-b3d7-f2c5da3b6a6d" x="0" y="0" width="20" height="20"
+                                    patternUnits="userSpaceOnUse">
+                                    <rect x="0" y="0" width="4" height="4" class="text-indigo-500" fill="currentColor" />
+                                </pattern>
+                            </defs>
+                            <rect width="404" height="384" fill="url(#64e643ad-2176-4f86-b3d7-f2c5da3b6a6d)" />
+                        </svg>
+                    </div>
+                    <div
+                        class="relative mx-auto max-w-md space-y-6 px-6 py-12 sm:max-w-3xl sm:py-16 lg:col-span-6 lg:col-start-4 lg:max-w-none lg:p-0">
+                        <h2 class="text-3xl font-bold tracking-tight text-white" id="join-heading">Boost your career</h2>
+                        <p class="text-lg text-white">
+                            Elevate your career with a leading company. Uncover your full potential and embark on a rewarding journey with us.
+                        </p>
+                        <a class="block w-full rounded-md border border-transparent bg-white px-5 py-3 text-center text-base font-medium text-indigo-700 shadow-md hover:bg-gray-50 sm:inline-block sm:w-auto"
+                            href="#">Join Now!</a>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </template>
-  
+</template>
