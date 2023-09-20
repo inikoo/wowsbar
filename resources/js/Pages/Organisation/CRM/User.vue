@@ -1,6 +1,6 @@
 <!--
   - Author: Raul Perusquia <raul@inikoo.com>
-  - Created: Tue, 19 Sep 2023 13:37:29 Malaysia Time, Pantai Lembeng, Bali, Indonesia
+  - Created: Wed, 20 Sep 2023 13:50:48 Malaysia Time, Pantai Lembeng, Bali, Indonesia
   - Copyright (c) 2023, Raul A Perusquia Flores
   -->
 
@@ -17,7 +17,7 @@ import Tabs from "@/Components/Navigation/Tabs.vue"
 import {faIdCard, faUser, faClock, faDatabase, faEnvelope, faHexagon, faFile} from "../../../../private/pro-light-svg-icons"
 import {library} from "@fortawesome/fontawesome-svg-core"
 import {capitalize} from "@/Composables/capitalize"
-import UsersShowcase from  '@/Components/Showcases/Customer/UsersShowcase.vue'
+import UsersShowcase from  '@/Components/Showcases/Organisation/UsersShowcase.vue'
 
 library.add(
     faIdCard,
@@ -60,7 +60,7 @@ const component = computed(() => {
 
 </script>
 
-<template layout="CustomerApp">
+<template layout="OrgApp">
     <Head :title="capitalize(title)"/>
     <PageHeading :data="pageHead"></PageHeading>
     <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate"/>

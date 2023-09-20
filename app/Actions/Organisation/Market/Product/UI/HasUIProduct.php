@@ -7,8 +7,6 @@
 
 namespace App\Actions\Organisation\Market\Product\UI;
 
-
-
 use App\Actions\Organisation\Market\Shop\UI\IndexShops;
 use App\Models\Market\Product;
 

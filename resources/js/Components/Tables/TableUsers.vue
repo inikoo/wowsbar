@@ -20,7 +20,12 @@ const props = defineProps<{
 
 
 function userRoute(user: User) {
+    console.log(route().current())
     switch (route().current()) {
+        case 'org.crm.customers.show.web-users.index':
+            return route(
+                'org.crm.customers.show.web-users.show',
+                [route().params['customer'],user.username]);
         case 'sysadmin.users.index':
             return route(
                 'sysadmin.users.show',

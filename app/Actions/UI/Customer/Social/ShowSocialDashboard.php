@@ -10,7 +10,7 @@ namespace App\Actions\UI\Customer\Social;
 use App\Actions\Helpers\History\IndexHistories;
 use App\Actions\InertiaAction;
 use App\Actions\UI\Customer\Dashboard\ShowDashboard;
-use App\Enums\UI\Tenant\PortfolioDashboardTabsEnum;
+use App\Enums\UI\Customer\PortfolioDashboardTabsEnum;
 use App\Http\Resources\History\HistoryResource;
 use App\Models\Portfolio\PortfolioWebsite;
 use Inertia\Inertia;

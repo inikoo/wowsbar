@@ -11,8 +11,8 @@ use App\Actions\Elasticsearch\History\IndexHistories;
 use App\Actions\InertiaAction;
 use App\Actions\Portfolio\PortfolioWebsite\UI\ShowPortfolioWebsite;
 use App\Actions\UI\Customer\Portfolio\ShowPortfolio;
-use App\Enums\UI\Tenant\BannerTabsEnum;
-use App\Enums\UI\Tenant\PortfolioWebsiteTabsEnum;
+use App\Enums\UI\Customer\BannerTabsEnum;
+use App\Enums\UI\Customer\PortfolioWebsiteTabsEnum;
 use App\Http\Resources\History\HistoryResource;
 use App\Models\Portfolio\Banner;
 use App\Models\Portfolio\PortfolioWebsite;
@@ -82,7 +82,7 @@ class ShowDeletedBanner extends InertiaAction
                     'current'    => $this->tab,
                     'navigation' => BannerTabsEnum::navigation()
                 ],
-                \App\Enums\UI\Tenant\PortfolioWebsiteTabsEnum::SHOWCASE->value => $this->tab == PortfolioWebsiteTabsEnum::SHOWCASE->value ?
+                \App\Enums\UI\Customer\PortfolioWebsiteTabsEnum::SHOWCASE->value => $this->tab == PortfolioWebsiteTabsEnum::SHOWCASE->value ?
                     fn () => $banner->compiled_layout
                     : Inertia::lazy(fn () => $banner->compiled_layout),
 

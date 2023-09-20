@@ -20,11 +20,9 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
-use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 use Spatie\MediaLibrary\HasMedia;
@@ -139,20 +137,7 @@ class Product extends Model implements HasMedia
             ->doNotGenerateSlugsOnUpdate()
             ->slugsShouldBeNoLongerThan(64);
     }
-    /*
-        protected static function booted(): void
-        {
-            static::updated(function (Product $product) {
-                if ($product->wasChanged('state')) {
 
-                    if ($product->family_id) {
-                        FamilyHydrateProducts::dispatch($product->family);
-                     }
-                    ShopHydrateProducts::dispatch($product->shop);
-                }
-            });
-        }
-    */
 
     public function shop(): BelongsTo
     {
@@ -174,16 +159,5 @@ class Product extends Model implements HasMedia
         return $this->hasOne(ProductStats::class);
     }
 
-    public function images(): BelongsToMany
-    {
-        return $this->belongsToMany(GroupMedia::class, 'media_product')->withTimestamps()
-            ->withPivot(['public', 'owner_type', 'owner_id'])
-            ->wherePivot('type', 'image');
-    }
-
-    public function barcode(): MorphToMany
-    {
-        return $this->morphToMany(Barcode::class, 'barcodeable');
-    }
 
 }
