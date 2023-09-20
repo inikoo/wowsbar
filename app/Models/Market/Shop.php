@@ -80,6 +80,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read int|null $payment_service_providers_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Payment> $payments
  * @property-read int|null $payments_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Market\Product> $products
+ * @property-read int|null $products_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Prospect> $prospects
  * @property-read int|null $prospects_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, SerialReference> $serialReferences

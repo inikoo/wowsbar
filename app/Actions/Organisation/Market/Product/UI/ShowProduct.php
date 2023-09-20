@@ -119,7 +119,7 @@ class ShowProduct extends InertiaAction
             ]
         )//->table(IndexOrders::make()->tableStructure($product))
             ->table(IndexCustomers::make()->tableStructure($product));
-//            ->table(IndexMailshots::make()->tableStructure($product));
+        //            ->table(IndexMailshots::make()->tableStructure($product));
     }
 
     public function jsonResponse(Product $product): ProductResource

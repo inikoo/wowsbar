@@ -8,7 +8,6 @@
 namespace App\Models\Auth;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use App\Concerns\BelongsToCustomer;
 use App\Models\Assets\Language;
 use App\Models\CRM\Customer;
 use App\Models\Media\Media;
@@ -46,13 +45,14 @@ use Spatie\Permission\Traits\HasRoles;
  * @property array $settings
  * @property int $language_id
  * @property int|null $avatar_id
+ * @property string $ulid
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string|null $deleted_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \OwenIt\Auditing\Models\Audit> $audits
  * @property-read int|null $audits_count
  * @property-read Media|null $avatar
- * @property-read \App\Models\CRM\Customer|null $customer
+ * @property-read Customer|null $customer
  * @property-read array $es_audits
  * @property-read Language $language
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, Media> $media
@@ -89,6 +89,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static Builder|User whereRememberToken($value)
  * @method static Builder|User whereSettings($value)
  * @method static Builder|User whereStatus($value)
+ * @method static Builder|User whereUlid($value)
  * @method static Builder|User whereUpdatedAt($value)
  * @method static Builder|User whereUsername($value)
  * @method static Builder|User whereWebsiteId($value)

@@ -1,17 +1,18 @@
 <!--
-  -  Author: Raul Perusquia <raul@inikoo.com>
-  -  Created: Thu, 19 Aug 2021 18:54:53 Malaysia Time, Kuala Lumpur, Malaysia
-  -  Copyright (c) 2021, Inikoo
-  -  Version 4.0
+  - Author: Raul Perusquia <raul@inikoo.com>
+  - Created: Wed, 20 Sep 2023 09:17:50 Malaysia Time, Pantai Lembeng, Bali, Indonesia
+  - Copyright (c) 2023, Raul A Perusquia Flores
   -->
 <script setup lang="ts">
+import {trans} from 'laravel-vue-i18n'
+
 import { computed, ref } from "vue"
 import { Link, router } from "@inertiajs/vue3"
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue"
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
-import { faChevronRight } from "@/../private/pro-regular-svg-icons"
-import { faSparkles, faArrowFromLeft, faArrowLeft, faArrowRight } from "@/../private/pro-solid-svg-icons"
+import { faChevronRight } from "../../../private/pro-regular-svg-icons"
+import { faSparkles, faArrowFromLeft, faArrowLeft, faArrowRight } from "../../../private/pro-solid-svg-icons"
 import { capitalize } from "@/Composables/capitalize"
 import { useLayoutStore } from "@/Stores/layout"
 
@@ -249,7 +250,7 @@ const layoutState = useLayoutStore()
                                     <span
                                         v-if="breadcrumbIdx == 0 && !breadcrumb.simple.label"
                                         class="grid grid-flow-cols justify-center font-bold capitalize ml-2"
-                                    >DASHBOARD
+                                    >{{trans('Home')}}
 									</span>
                                     <span
                                         class="capitalize grid grid-flow-col items-center ml-4 mr-3">

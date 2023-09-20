@@ -34,3 +34,4 @@ lang/php_*.json
 /public/public.hot
 /public/tenant.hot
 /public/customer.hot
+/public/customer/

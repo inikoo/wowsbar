@@ -15,6 +15,7 @@ use App\Models\Market\Shop;
 use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Validator;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -37,6 +38,7 @@ class StoreCustomer
         return DB::transaction(function () use ($modelData, $shop) {
             $organisation = organisation();
 
+            data_set($modelData, 'ulid', Str::ulid());
             data_set($modelData, 'timezone_id', $organisation->timezone_id, overwrite: false);
             data_set($modelData, 'language_id', $organisation->language_id, overwrite: false);
 

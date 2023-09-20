@@ -9,7 +9,7 @@ namespace App\Models\Traits;
 
 use Spatie\MediaLibrary\InteractsWithMedia;
 
-trait   HasImages
+trait HasImages
 {
     use InteractsWithMedia;
 

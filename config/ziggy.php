@@ -7,9 +7,9 @@
 
 return [
     'groups' => [
-        'delivery' => ['delivery.*'],
-        'org'      => ['org.*'],
-        'public'   => ['public.*'],
+        'delivery'   => ['delivery.*'],
+        'org'        => ['org.*'],
+        'public'     => ['public.*'],
         'customer'   => ['customer.*'],
 
     ],

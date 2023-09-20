@@ -14,11 +14,10 @@ use Symfony\Component\HttpFoundation\Response;
 
 class SetCustomerID
 {
-
     public function handle(Request $request, Closure $next): Response
     {
-        if($request->user()){
-            Config::set('global.customer_id',$request->user()->customer_id);
+        if($request->user()) {
+            Config::set('global.customer_id', $request->user()->customer_id);
         }
 
         return $next($request);

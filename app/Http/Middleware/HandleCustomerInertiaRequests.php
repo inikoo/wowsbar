@@ -8,7 +8,6 @@
 namespace App\Http\Middleware;
 
 use App\Actions\UI\Customer\GetFirstLoadProps;
-use App\Http\Resources\UI\LoggedCustomerResource;
 use App\Http\Resources\UI\LoggedUserResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;

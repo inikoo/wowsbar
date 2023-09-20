@@ -19,9 +19,9 @@ const firebaseConfig = {
 
 // Init Firebase with config
 const firebaseApp = initializeApp(firebaseConfig);
-initializeAppCheck(firebaseApp, {
-    provider: new ReCaptchaEnterpriseProvider(import.meta.env.VITE_RECAPTCHA_APP_KEY),
-});
+
+//todo activate this
+//initializeAppCheck(firebaseApp, {provider: new ReCaptchaEnterpriseProvider(import.meta.env.VITE_RECAPTCHA_APP_KEY),});
 
 let db = getDatabase(firebaseApp);
 

@@ -22,7 +22,7 @@ class StoreUserLogFirebase
         $database = app('firebase.database');
         $path     = match ($parentType) {
             'Customer' => 'customers',
-            default  => 'org',
+            default    => 'org',
         };
 
         if ($parentSlug) {

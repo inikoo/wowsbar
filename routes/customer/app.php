@@ -28,6 +28,24 @@ Route::middleware([
         Route::prefix("portfolio")
             ->name("portfolio.")
             ->group(__DIR__."/portfolio.php");
+
+        Route::prefix("prospects")
+            ->name("prospects.")
+            ->group(__DIR__."/prospects.php");
+
+        Route::prefix("seo")
+            ->name("seo.")
+            ->group(__DIR__."/seo.php");
+        Route::prefix("google-ads")
+            ->name("google-ads.")
+            ->group(__DIR__."/google-ads.php");
+        Route::prefix("social")
+            ->name("social.")
+            ->group(__DIR__."/social.php");
+
+        Route::prefix("banners")
+            ->name("banners.")
+            ->group(__DIR__."/banners.php");
         Route::prefix("media")
             ->name("media.")
             ->group(__DIR__."/media.php");
@@ -49,6 +67,6 @@ Route::middleware([
 
     });
 
-;
+    ;
     require __DIR__."/auth.php";
 });

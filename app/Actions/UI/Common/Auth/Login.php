@@ -35,12 +35,12 @@ class Login
     {
         if ($request->route()) {
 
-            $routeName=$request->route()->getName();
-            $this->gate=match ($request->route()->getName()){
-                'org.login.store'=>'org',
-                default=>'customer'
+            $routeName =$request->route()->getName();
+            $this->gate=match ($request->route()->getName()) {
+                'org.login.store'=> 'org',
+                default          => 'customer'
             };
-            if($routeName=='customer.login.store'){
+            if($routeName=='customer.login.store') {
                 $this->home='auth/dashboard';
             }
 
@@ -74,7 +74,7 @@ class Login
         switch ($this->gate) {
             case 'web':
             case 'public':
-                Config::set('global.customer_id',Auth::guard($this->gate)->user()->customer_id);
+                Config::set('global.customer_id', Auth::guard($this->gate)->user()->customer_id);
                 UserHydrateLogin::dispatch(Auth::guard($this->gate)->user(), request()->ip(), now());
                 break;
             case 'org':

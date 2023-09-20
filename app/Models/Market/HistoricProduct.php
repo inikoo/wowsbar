@@ -13,26 +13,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Carbon;
-use Spatie\Multitenancy\Models\Concerns\UsesTenantConnection;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
 /**
  * App\Models\Market\HistoricProduct
  *
- * @property int $id
- * @property string $slug
- * @property bool $status
- * @property int $product_id
- * @property string $price unit price
- * @property string|null $code
- * @property string|null $name
- * @property string|null $units units per outer
- * @property Carbon|null $created_at
- * @property Carbon|null $deleted_at
- * @property int|null $source_id
- * @property-read \App\Models\Market\Product $product
+ * @property-read \App\Models\Market\Product|null $product
  * @property-read \App\Models\Market\HistoricProductStats|null $stats
  * @method static Builder|HistoricProduct newModelQuery()
  * @method static Builder|HistoricProduct newQuery()
@@ -46,7 +33,6 @@ class HistoricProduct extends Model
 {
     use SoftDeletes;
     use HasSlug;
-    use UsesTenantConnection;
 
     protected $casts = [
         'status' => 'boolean',

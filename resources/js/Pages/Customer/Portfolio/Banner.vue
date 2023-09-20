@@ -14,7 +14,7 @@ import ModelDetails from "@/Pages/ModelDetails.vue";
 import Tabs from "@/Components/Navigation/Tabs.vue";
 import {capitalize} from "@/Composables/capitalize"
 import TableHistories from "@/Components/Tables/TableHistories.vue";
-import BannerShowcase from "@/Pages/Authenticated/Portfolio/BannerShowcase.vue";
+import BannerShowcase from "@/Pages/Customer/Portfolio/BannerShowcase.vue";
 
 import {faWindowMaximize, faGlobe, faPencil, faSeedling, faPaste} from "@/../private/pro-light-svg-icons"
 import TableSnapshots from '@/Components/Tables/TableSnapshots.vue';

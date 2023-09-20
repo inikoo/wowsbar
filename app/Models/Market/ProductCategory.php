@@ -56,6 +56,10 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read int|null $departments_count
  * @property-read array $es_audits
  * @property-read Model|\Eloquent $parent
+ * @property-read Collection<int, \App\Models\Market\Product> $products
+ * @property-read int|null $products_count
+ * @property-read SalesStats|null $salesStats
+ * @property-read SalesStats|null $salesTenantCurrencyStats
  * @property-read \App\Models\Market\Shop|null $shop
  * @property-read \App\Models\Market\ProductCategoryStats|null $stats
  * @property-read UniversalSearch|null $universalSearch
