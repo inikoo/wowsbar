@@ -10,7 +10,6 @@ const statsTheme = ref(0)
 const dataStats = reactive({
     title: "<p style=\"text-align: center\"><strong><span style=\"font-size: 28px; color: rgb(75 85 99)\">Trusted by creators worldwide</span></strong></p>",
     description: "<p style=\"text-align: center\"><span style=\"color: rgb(107 114 128)\">Lorem ipsum dolor sit amet consect adipisicing possimus.</span></p>",
-    subtitle:  "<p><strong><span style=\"font-size: 24px; color: #c639ba\">iste dolor cupiditate blanditiis ratione.</span></strong></p>",
     statsList: [
         {
             id: 1,

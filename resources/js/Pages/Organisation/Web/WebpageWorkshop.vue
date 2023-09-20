@@ -61,12 +61,6 @@ const dataComponent = ref([
         "visibility": true
     },
     {
-        "component": "button",
-        "icon": "fad fa-rectangle-wide",
-        "ulid": ulid(),
-        "visibility": true
-    },
-    {
         "component": "blogSection",
         "icon": "far fa-text",
         "ulid": ulid(),
