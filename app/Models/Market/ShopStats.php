@@ -19,8 +19,9 @@ use Illuminate\Support\Carbon;
  * @property int $id
  * @property int $shop_id
  * @property int $number_customers
- * @property int $number_customers_state_in_process
  * @property int $number_customers_state_registered
+ * @property int $number_customers_state_with_appointment
+ * @property int $number_customers_state_contacted
  * @property int $number_customers_state_active
  * @property int $number_customers_state_losing
  * @property int $number_customers_state_lost
@@ -61,10 +62,11 @@ use Illuminate\Support\Carbon;
  * @method static Builder|ShopStats whereId($value)
  * @method static Builder|ShopStats whereNumberCustomers($value)
  * @method static Builder|ShopStats whereNumberCustomersStateActive($value)
- * @method static Builder|ShopStats whereNumberCustomersStateInProcess($value)
+ * @method static Builder|ShopStats whereNumberCustomersStateContacted($value)
  * @method static Builder|ShopStats whereNumberCustomersStateLosing($value)
  * @method static Builder|ShopStats whereNumberCustomersStateLost($value)
  * @method static Builder|ShopStats whereNumberCustomersStateRegistered($value)
+ * @method static Builder|ShopStats whereNumberCustomersStateWithAppointment($value)
  * @method static Builder|ShopStats whereNumberCustomersTradeStateMany($value)
  * @method static Builder|ShopStats whereNumberCustomersTradeStateNone($value)
  * @method static Builder|ShopStats whereNumberCustomersTradeStateOne($value)

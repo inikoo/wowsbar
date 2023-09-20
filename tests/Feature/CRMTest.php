@@ -62,7 +62,9 @@ test('create website', function ($shop) {
 test('create customer', function ($shop) {
     $modelData = Customer::factory()->definition();
     $customer  = StoreCustomer::make()->action($shop, $modelData);
-    expect($customer)->toBeInstanceOf(Customer::class);
+    expect($customer)->toBeInstanceOf(Customer::class)
+        ->and($shop->crmStats->number_customers)->toBe(1)
+        ->and(organisation()->crmStats->number_customers)->toBe(1);
 
     return $customer;
 })->depends('create shop');

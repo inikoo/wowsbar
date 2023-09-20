@@ -13,8 +13,12 @@ enum CustomerStateEnum: string
 {
     use EnumHelperTrait;
 
-    case IN_PROCESS = 'in-process';
     case REGISTERED = 'registered';
+
+    case WITH_APPOINTMENT = 'with-appointment';
+
+    case CONTACTED = 'contacted';
+
     case ACTIVE     = 'active';
     case LOSING     = 'losing';
     case LOST       = 'lost';

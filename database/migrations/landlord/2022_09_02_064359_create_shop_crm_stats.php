@@ -24,7 +24,6 @@ return new class () extends Migration {
         });
     }
 
-
     public function down(): void
     {
         Schema::dropIfExists('shop_crm_stats');

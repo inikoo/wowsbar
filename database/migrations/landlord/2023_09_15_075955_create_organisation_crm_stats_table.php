@@ -5,30 +5,20 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-use App\Enums\CRM\Prospect\ProspectStateEnum;
-use App\Enums\Miscellaneous\GenderEnum;
+use App\Stubs\Migrations\HasCRMStats;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class () extends Migration {
+    use HasCRMStats;
     public function up(): void
     {
         Schema::create('organisation_crm_stats', function (Blueprint $table) {
             $table->smallIncrements('id');
             $table->unsignedSmallInteger('organisation_id');
             $table->foreign('organisation_id')->references('id')->on('organisations')->onUpdate('cascade')->onDelete('cascade');
-
-            $table->unsignedSmallInteger('number_prospects')->default(0);
-
-            foreach (ProspectStateEnum::cases() as $prospectState) {
-                $table->unsignedSmallInteger('number_prospects_state_'.$prospectState->snake())->default(0);
-            }
-
-            foreach (GenderEnum::cases() as $gender) {
-                $table->unsignedSmallInteger('number_prospects_gender_'.$gender->snake())->default(0);
-            }
-
+            $table = $this->crmStats($table);
             $table->timestampsTz();
         });
     }

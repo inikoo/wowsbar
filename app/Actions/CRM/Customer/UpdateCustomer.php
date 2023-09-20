@@ -8,6 +8,8 @@
 namespace App\Actions\CRM\Customer;
 
 use App\Actions\CRM\Customer\Hydrators\CustomerHydrateUniversalSearch;
+use App\Actions\Organisation\Market\Shop\Hydrators\ShopHydrateCustomers;
+use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateCustomers;
 use App\Actions\Traits\WithActionUpdate;
 use App\Http\Resources\CRM\CustomerResource;
 use App\Models\CRM\Customer;
@@ -30,6 +32,10 @@ class UpdateCustomer
         }
 
         $customer = $this->update($customer, $modelData, ['data']);
+        if ($customer->wasChanged(['status'])) {
+            OrganisationHydrateCustomers::dispatch($customer);
+            ShopHydrateCustomers::dispatch($shop);
+        }
         CustomerHydrateUniversalSearch::dispatch($customer);
 
         return $customer;

@@ -8,7 +8,7 @@
 namespace App\Actions\Organisation\Market\Product;
 
 use App\Actions\HydrateModel;
-use App\Actions\Market\Product\Hydrators\ProductInitialiseImageID;
+use App\Actions\Organisation\Market\Product\Hydrators\ProductInitialiseImageID;
 use App\Models\Market\Product;
 use Illuminate\Support\Collection;
 

@@ -18,8 +18,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $id
  * @property int $shop_id
  * @property int $number_customers
- * @property int $number_customers_state_in_process
  * @property int $number_customers_state_registered
+ * @property int $number_customers_state_with_appointment
+ * @property int $number_customers_state_contacted
  * @property int $number_customers_state_active
  * @property int $number_customers_state_losing
  * @property int $number_customers_state_lost
@@ -50,10 +51,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static Builder|ShopCRMStats whereId($value)
  * @method static Builder|ShopCRMStats whereNumberCustomers($value)
  * @method static Builder|ShopCRMStats whereNumberCustomersStateActive($value)
- * @method static Builder|ShopCRMStats whereNumberCustomersStateInProcess($value)
+ * @method static Builder|ShopCRMStats whereNumberCustomersStateContacted($value)
  * @method static Builder|ShopCRMStats whereNumberCustomersStateLosing($value)
  * @method static Builder|ShopCRMStats whereNumberCustomersStateLost($value)
  * @method static Builder|ShopCRMStats whereNumberCustomersStateRegistered($value)
+ * @method static Builder|ShopCRMStats whereNumberCustomersStateWithAppointment($value)
  * @method static Builder|ShopCRMStats whereNumberCustomersTradeStateMany($value)
  * @method static Builder|ShopCRMStats whereNumberCustomersTradeStateNone($value)
  * @method static Builder|ShopCRMStats whereNumberCustomersTradeStateOne($value)
