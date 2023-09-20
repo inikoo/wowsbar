@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import Text from '@/Components/CMS/Workshops/WorkshopComponents/Text.vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faDatabase } from '@/../private/pro-light-svg-icons'
+import { faDatabase, faClock, faServer } from '@/../private/pro-light-svg-icons'
 import { library } from '@fortawesome/fontawesome-svg-core'
-library.add(faDatabase)
+library.add(faDatabase, faClock, faServer)
 const props = defineProps<{
     dataStats: any,
 }>()
@@ -16,7 +16,7 @@ const props = defineProps<{
 
         <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
             <div v-for="item in dataStats.statsList" :key="item.id"
-                class="rounded-lg bg-white shadow">
+                class="rounded-lg bg-white shadow h-fit">
                 <div class="flex gap-x-4 px-4 py-5 sm:px-6 sm:py-6">
                     <dt class="flex items-center justify-center rounded-md bg-indigo-500 inset-y-0 w-fit h-fit p-4">
                         <FontAwesomeIcon :icon='item.icon' class='h-8 w-8 text-white' aria-hidden='true' />
