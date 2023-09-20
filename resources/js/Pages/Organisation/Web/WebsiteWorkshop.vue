@@ -12,7 +12,7 @@ import Tabs from "@/Components/Navigation/Tabs.vue"
 import { capitalize } from "@/Composables/capitalize"
 import FooterWorkshop from "@/Components/CMS/Workshops/FooterWorkshop.vue";
 import MenuWorkshop from "@/Components/CMS/Workshops/MenuWorkshop.vue";
-import HeaderWorkshop from "@/Components/CMS/Workshops/HeaderWorkshop.vue";
+import HeaderWorkshop from "@/Components/CMS/Workshops/HeaderWorkshop/HeaderTemplateWorkshop.vue";
 import LayoutWorkshop from "@/Components/CMS/Workshops/LayoutWorkshop.vue";
 
 library.add(
@@ -62,7 +62,7 @@ const component = computed(() => {
     <!--suppress HtmlRequiredTitleElement -->
     <Head :title="capitalize(title)"/>
     <PageHeading :data="pageHead"></PageHeading>
-    <!-- <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate"/>
-    <component :is="component" :data="props[currentTab]"></component> -->
+    <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate"/>
+    <component :is="component" :data="props[currentTab]"></component>
 </template>
 
