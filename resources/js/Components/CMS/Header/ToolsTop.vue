@@ -1,51 +1,60 @@
 <script setup lang="ts">
-import { get } from "lodash"
-import ColorPicker from "@/Components/Workshop/Fields/ColorPicker.vue";
-import FontSize from '@/Components/CMS/Fields/Fontsize.vue'
-import FontDecorator from '@/Components/CMS/Fields/FontDecorator.vue'
-const props = defineProps<{
-    data: Object
-    layerActive?: Object
-}>()
+import { faHandPointer, faHandRock, faPlus } from '@/../private/pro-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { library } from '@fortawesome/fontawesome-svg-core';
+
+library.add(faHandPointer, faHandRock, faPlus)
+const props = defineProps({
+  tool: Object,
+  theme: Object,
+});
+
+
+const emits = defineEmits();
+
+const themeOption = [
+        { name: 'Header Theme One', value: 1 },
+        { name: 'header Theme Two', value: 2 },
+]
+
+const Bluprint = [
+  {
+    name: 'theme',
+    position: 'left',
+    optionsData: {
+      options: themeOption
+    }
+  },
+]
+
+
+const setTheme=(value)=>{
+  const data = themeOption.find((item)=> item.value == value)
+  for(const t in props.theme){
+    props.theme[t] = data[t]
+  }
+}
+
+
 </script>
 
 <template>
-    <div class="h-[6%] bg-white p-[5px] w-full">
-        <div v-if="data[layerActive]">
-            <div v-if="data[layerActive].type == 'text'" class="flex gap-3">
-                <div>
-                    <span aria-hidden="true">
-                        <ColorPicker :data="data[layerActive]" :fieldName="['style', 'color']" :colorSuggestions="false"
-                            stylePanel="top:330px" @click="(e) => e.stopPropagation" />
-                    </span>
-                </div>
-                <div>
-                    <span aria-hidden="true">
-                        <FontSize :data="data[layerActive]" :fieldName="['style', 'fontSize']"
-                            @click="(e) => e.stopPropagation()" />
-                    </span>
-                </div>
-                <div>
-                    <span aria-hidden="true">
-                        <FontDecorator :data="data[layerActive]" :fieldName="['style']"
-                            @click="(e) => e.stopPropagation()" />
-                    </span>
-                </div>
-            </div>
-            <div v-if="data[layerActive].type == 'image'" class="flex gap-3 align-middle">
-                <div>
-                    <div aria-hidden="true" class="flex gap-2">
-                        <FontSize :data="data[layerActive]" :fieldName="['style', 'height']"
-                            @click="(e) => e.stopPropagation()" />
-                        x
-                        <FontSize :data="data[layerActive]" :fieldName="['style', 'width']"
-                            @click="(e) => e.stopPropagation()" />
-                    </div>
-                </div>
-            </div>
-        </div>
+  <div class="h-[40px] bg-white p-[5px] w-full flex">
+    <div class="w-1/2 flex justify-start items-center">
     </div>
+
+    <div class="w-1/2 flex justify-end items-center">
+      <div v-for="item in Bluprint.filter((item) => item.position === 'left')" :key="item.name">
+        <select v-model="theme.value" @change="setTheme(theme.value)" v-if="item.name === 'theme'"
+          class="px-2 py-1 rounded-md border-gray-300 border w-[150px]">
+          <option v-for="option in item.optionsData.options" :key="option.value" :value="option.value">{{ option.name }}
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
 </template>
+  
 
 <style></style>
 
