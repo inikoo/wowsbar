@@ -32,7 +32,6 @@ const component = computed(()=>{
         <ButtonTheme v-model="CTATheme" :label="['Simple', 'wide', 'image']"/>
         <component :is="component" :data="data"/>
     </div>
-    <div @click="()=>console.log(data)">sdfff</div>
 </template>
 
 <style scoped></style>
