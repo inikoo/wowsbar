@@ -9,6 +9,8 @@ namespace App\Actions\Organisation\UI\CRM;
 
 use App\Actions\UI\Organisation\Dashboard\ShowDashboard;
 use App\Actions\UI\WithInertia;
+use App\Models\Market\Shop;
+use App\Models\Organisation\Organisation;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -20,46 +22,76 @@ class CRMDashboard
     use WithInertia;
 
 
-
-
     public function authorize(ActionRequest $request): bool
     {
         return $request->user()->hasPermissionTo("crm.view");
     }
 
 
-    public function asController(ActionRequest $request)
+    public function asController(ActionRequest $request): Organisation
     {
+        $request->validate();
 
+        return organisation();
     }
 
-
-
-    public function htmlResponse(): Response
+    public function inShop(Shop $shop, ActionRequest $request): Shop
     {
+        $request->validate();
+
+        return $shop;
+    }
+
+    public function htmlResponse(Organisation|Shop $parent, ActionRequest $request): Response
+    {
+        $routeName       = $request->route()->getName();
+        $routeParameters = $request->route()->originalParameters();
 
         return Inertia::render(
             'CRM/CRMDashboard',
             [
-                'breadcrumbs'  => $this->getBreadcrumbs(),
-                'title'        => 'CRM',
-                'pageHead'     => [
-                    'title'     => __('customer relationship manager'),
-                    'icon'      => [
+                'breadcrumbs' => $this->getBreadcrumbs(
+                    $routeName,
+                    $routeParameters
+                ),
+                'title'       => 'CRM',
+                'pageHead'    => [
+                    'title' => __('customer relationship manager'),
+                    'icon'  => [
                         'title' => __('customers'),
                         'icon'  => 'fal fa-user'
                     ],
                 ],
-                'stats' => [
+                'stats'       => [
                     [
                         'name' => __('customers'),
-                        'stat' => organisation()->crmStats->number_customers,
-                        'href' => ['org.crm.customers.index']
+                        'stat' => $parent->crmStats->number_customers,
+
+                        'href' => match ($routeName) {
+                            'org.crm.shop.dashboard' =>
+                            [
+                                'name'=>'org.crm.shop.customers.index',
+                                'parameters'=>$routeParameters
+                            ],
+                            default => [
+                                'name' => 'org.crm.customers.index'
+                            ]
+                        }
+
                     ],
                     [
                         'name' => __('prospects'),
-                        'stat' => organisation()->crmStats->number_prospects,
-                        'href' => ['org.crm.prospects.index']
+                        'stat' => $parent->crmStats->number_prospects,
+                        'href' => match ($routeName) {
+                            'org.crm.shop.dashboard' =>
+                            [
+                                'name'=>'org.crm.shop.prospects.index',
+                                'parameters'=>$routeParameters
+                            ],
+                            default => [
+                                'name' => 'org.crm.prospects.index'
+                            ]
+                        }
                     ]
                 ]
             ]
@@ -67,20 +99,32 @@ class CRMDashboard
     }
 
 
-    public function getBreadcrumbs(): array
+    public function getBreadcrumbs(string $routeName, array $routeParameters): array
     {
-        return  array_merge(
+        return array_merge(
             ShowDashboard::make()->getBreadcrumbs(),
             [
-                [
-                    'type'   => 'simple',
-                    'simple' => [
-                        'route' => [
-                            'name' => 'org.crm.dashboard'
-                        ],
-                        'label' => __('CRM'),
+                match ($routeName) {
+                    'org.crm.shop.dashboard' => [
+                        'type'   => 'simple',
+                        'simple' => [
+                            'route' => [
+                                'name'       => 'org.crm.shop.dashboard',
+                                'parameters' => $routeParameters
+                            ],
+                            'label' => __('CRM'),
+                        ]
+                    ],
+                    default => [
+                        'type'   => 'simple',
+                        'simple' => [
+                            'route' => [
+                                'name' => 'org.crm.dashboard'
+                            ],
+                            'label' => __('CRM'),
+                        ]
                     ]
-                ]
+                }
             ]
         );
     }
