@@ -72,7 +72,7 @@ class ShowCustomer extends InertiaAction
                             'type'  => 'button',
                             'style' => 'delete',
                             'route' => [
-                                'name'       => 'crm.customers.remove',
+                                'name'       => 'org.crm.customers.remove',
                                 'parameters' => $request->route()->originalParameters()
                             ]
 

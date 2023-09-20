@@ -146,6 +146,21 @@ class GetLayout
             ];
         }
 
+        if ($user->can('crm.view')) {
+            $navigation['portfolio-websites'] = [
+                'scope'   => 'portfolio-websites',
+                'icon'    => ['fal', 'fa-briefcase'],
+                'label'   => __('Customer Websites'),
+                'route'   => [
+                    'name' => 'org.portfolio-websites.index',
+                    'parameters' => []
+                ],
+                'topMenu' => [
+                    'subSections' => []
+                ]
+            ];
+        }
+
         if ($user->can('accounting.view')) {
             $navigation['accounting'] = [
                 'label'   => __('Accounting'),

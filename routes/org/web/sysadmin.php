@@ -26,4 +26,4 @@ Route::get('/users/create', CreateUser::class)->name('users.create');
 Route::get('/users/{user:username}', ShowUser::class)->name('users.show');
 Route::get('/users/{user:username}/edit', EditUser::class)->name('users.edit');
 
-Route::get('/employees/uploads/template/download', DownloadGuestsTemplate::class)->name('guest.uploads.template.download');
+Route::get('/guests/uploads/template/download', DownloadGuestsTemplate::class)->name('guest.uploads.template.download');
