@@ -40,7 +40,7 @@ class StoreCustomer
         return DB::transaction(function () use ($modelData, $shop) {
             $organisation = organisation();
 
-            data_set($modelData, 'ulid', Str::ulid());
+            //            data_set($modelData, 'ulid', Str::ulid());
             data_set($modelData, 'timezone_id', $organisation->timezone_id, overwrite: false);
             data_set($modelData, 'language_id', $organisation->language_id, overwrite: false);
 

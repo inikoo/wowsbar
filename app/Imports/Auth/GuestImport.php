@@ -59,7 +59,7 @@ class GuestImport implements ToCollection, WithHeadingRow, SkipsOnFailure, WithV
             'username'     => ['required', new AlphaDashDot(), 'unique:App\Models\Auth\OrganisationUser,username', Rule::notIn(['export', 'create'])],
             'company_name' => ['nullable', 'string', 'max:255'],
             'contact_name' => ['required', 'string', 'max:255'],
-            'phone'        => ['nullable', 'phone:AUTO'],
+            'phone'        => ['nullable'],
             'email'        => ['nullable', 'email']
         ];
     }
