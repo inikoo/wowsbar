@@ -13,6 +13,6 @@ enum AppointmentEventEnum: string
 {
     use EnumHelperTrait;
 
-    case CALLBACK = 'callback';
+    case CALLBACK  = 'callback';
     case IN_PERSON = 'in_person';
 }

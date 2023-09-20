@@ -109,12 +109,12 @@ class IndexStockImages extends InertiaAction
                     $request->route()->getName(),
                     $request->route()->parameters
                 ),
-                'title' => __('images'),
+                'title'    => __('images'),
                 'pageHead' => [
-                    'title' => __('images'),
+                    'title'     => __('images'),
                     'iconRight' => [
                         'title' => __('image'),
-                        'icon' => 'fal fa-images'
+                        'icon'  => 'fal fa-images'
                     ],
                 ],
                 'data' => ImageResource::collection($websites),
@@ -125,14 +125,14 @@ class IndexStockImages extends InertiaAction
                 'createLink' => [
                     [
                         'route' => [
-                            'name' => 'customer.portfolio.websites.create',
+                            'name'       => 'customer.portfolio.websites.create',
                             'parameters' => array_values([])
                         ],
-                        'type' => 'button',
-                        'style' => 'primary',
+                        'type'    => 'button',
+                        'style'   => 'primary',
                         'tooltip' => __('upload image'),
-                        'label' => __('upload image'),
-                        'icon' => 'fas fa-upload'
+                        'label'   => __('upload image'),
+                        'icon'    => 'fas fa-upload'
                     ]
                 ]
             ]
@@ -145,11 +145,11 @@ class IndexStockImages extends InertiaAction
         $headCrumb = function (array $routeParameters = []) {
             return [
                 [
-                    'type' => 'simple',
+                    'type'   => 'simple',
                     'simple' => [
                         'route' => $routeParameters,
                         'label' => __('images'),
-                        'icon' => 'fal fa-bars'
+                        'icon'  => 'fal fa-bars'
                     ],
                 ],
             ];

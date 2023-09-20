@@ -70,8 +70,8 @@ class ShowCRMDashboard
                         'href' => match ($routeName) {
                             'org.crm.shop.dashboard' =>
                             [
-                                'name'=>'org.crm.shop.customers.index',
-                                'parameters'=>$routeParameters
+                                'name'      => 'org.crm.shop.customers.index',
+                                'parameters'=> $routeParameters
                             ],
                             default => [
                                 'name' => 'org.crm.customers.index'
@@ -85,8 +85,8 @@ class ShowCRMDashboard
                         'href' => match ($routeName) {
                             'org.crm.shop.dashboard' =>
                             [
-                                'name'=>'org.crm.shop.prospects.index',
-                                'parameters'=>$routeParameters
+                                'name'      => 'org.crm.shop.prospects.index',
+                                'parameters'=> $routeParameters
                             ],
                             default => [
                                 'name' => 'org.crm.prospects.index'
