@@ -17,7 +17,7 @@ import Tabs from "@/Components/Navigation/Tabs.vue"
 import {faIdCard, faUser, faClock, faDatabase, faEnvelope, faHexagon, faFile} from "../../../../private/pro-light-svg-icons"
 import {library} from "@fortawesome/fontawesome-svg-core"
 import {capitalize} from "@/Composables/capitalize"
-import UsersShowcaseVue from '../../UsersShowcase.vue'
+import UsersShowcase from  '@/Components/Showcases/Customer/UsersShowcase.vue'
 
 library.add(
     faIdCard,
@@ -52,7 +52,7 @@ const component = computed(() => {
         details: ModelDetails,
         request_logs: TableUserRequestLogs,
         history: TableHistories,
-        showcase: UsersShowcaseVue
+        showcase: UsersShowcase
     }
     return components[currentTab.value]
 

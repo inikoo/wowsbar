@@ -2,16 +2,16 @@
 import { reactive } from 'vue'
 import BannerWorkshopComponent from '@/Components/Workshop/BannerWorkshopComponent.vue'
 import TestimonialsWorkshopComponent from '@/Components/CMS/BlocksContent/Testimonials/TestimonialsWorkshopComponent.vue'
-import BlogSection from '@/Components/CMS/BlocksContent/BlogSections/BlockSectionComponent.vue'
+import BlogsWorkshopComponent from '@/Components/CMS/BlocksContent/BlogSections/BlogsWorkshopComponent.vue'
 import StatsWorkshopComponent from "@/Components/CMS/BlocksContent/Stats/StatsWorkshopComponent.vue"
 import HeroWorkshopComponent from '@/Components/CMS/BlocksContent/Hero/HeroWorkshopComponent.vue'
 
-import Hero from '@/Components/CMS/BlocksContent/Hero/index.vue'
+// import Hero from '@/Components/CMS/BlocksContent/Hero/index.vue'
 import CardContent from '@/Components/CMS/BlocksContent/CardContent/CardContentWorkshopComponent.vue'
 import CTABlocks from '@/Components/CMS/BlocksContent/CTABlocks/CTABlocksWorkshopComponent.vue'
 import COntentDescription from '@/Components/CMS/BlocksContent/ContentDescription/index.vue'
 import Pricing from '@/Components/CMS/BlocksContent/Pricing/PricingWorkshopComponent.vue'
-import Testimonials from '@/Components/CMS/BlocksContent/Testimonials/index.vue'
+// import Testimonials from '@/Components/CMS/BlocksContent/Testimonials/index.vue'
 
 const props = defineProps<{
     selectedComponent: any
@@ -91,7 +91,7 @@ const dataTheme = reactive({
         <TestimonialsWorkshopComponent v-if="selectedComponent.component === 'testimonial'" />
         <BannerWorkshopComponent v-if="selectedComponent.component === 'banner'" :data="dummyDataBanner.data" :imagesUploadRoute="dummyDataBanner.route" :user="dummyDataBanner.user" />
         <StatsWorkshopComponent v-if="selectedComponent.component === 'stats'"/>
-        <BlogSection v-if="selectedComponent.component === 'blogSection'" />
+        <BlogsWorkshopComponent v-if="selectedComponent.component === 'blogSection'" />
         <CTABlocks v-if="selectedComponent.component === 'CTA'" />
         <CardContent v-if="selectedComponent.component === 'CardContent'" />
         <Pricing v-if="selectedComponent.component === 'pricing'" />

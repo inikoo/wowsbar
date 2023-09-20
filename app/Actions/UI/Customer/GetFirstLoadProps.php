@@ -66,6 +66,10 @@ class GetFirstLoadProps
         }
 
 
+        $app                 =CustomerAppResource::make(request()->get('website'))->getArray();
+        $app['showLiveUsers']= $user && $user->customer->stats->number_users_status_active > 1;
+
+
         return [
 
             'localeData' =>
@@ -74,9 +78,8 @@ class GetFirstLoadProps
                     'languageOptions' => GetLanguagesOptions::make()->translated(),
                 ],
 
-            'art' => $this->getArt(),
-            'app' => CustomerAppResource::make(request()->get('website'))->getArray(),
-
+            'art'    => $this->getArt(),
+            'app'    => $app,
             'layout' => function () use ($user) {
                 if ($user) {
                     return GetLayout::run($user);

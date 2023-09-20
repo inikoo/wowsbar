@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import Text from '@/Components/CMS/Workshops/WorkshopComponents/Text.vue'
 const props = defineProps<{
     dataHero: any

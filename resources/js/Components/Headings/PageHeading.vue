@@ -17,6 +17,7 @@ import Button from "@/Components/Elements/Buttons/Button.vue"
 import {capitalize} from "@/Composables/capitalize"
 import {useLocaleStore} from "@/Stores/locale.js"
 import {trans} from "laravel-vue-i18n"
+import MetaLabel from "@/Components/Headings/MetaLabel.vue";
 
 interface Icon {
     icon: string[] | string
@@ -141,21 +142,15 @@ const getActionIcon = (action: any) => {
             </h2>
             <div class="mt-1 flex flex-col sm:mt-0 sm:flex-row sm:flex-wrap sm:space-x-6">
                 <div class="mt-1 flex flex-col sm:mt-0 sm:flex-row sm:flex-wrap sm:space-x-6">
-                    <div v-for="item in data.meta" :key="item.name" class="mt-2 flex items-center text-sm text-gray-500">
-                        <FontAwesomeIcon v-if="item['leftIcon']" :title="capitalize(item['leftIcon']['tooltip'])"
-                                         aria-hidden="true" :icon="item['leftIcon']['icon']" size="lg" class="text-gray-400 pr-2"/>
-                        <Link v-if="item.href" :href="`${route(item.href[0], item.href[1])}`">
-                            <span v-if="item.number">{{ locale.number(item.number) }}</span>
-                            <FontAwesomeIcon v-else icon="fal fa-empty-set"/>
-                            {{ item.name ? trans(item.name) : '' }}
+                    <div v-for="item in data.meta" class="mt-2 flex items-center text-xs text-gray-500">
+                        <FontAwesomeIcon v-if="item['leftIcon']"
+                                         :title="capitalize(item['leftIcon']['tooltip'])"
+                                         aria-hidden="true" :icon="item['leftIcon']['icon']"  class="text-gray-400 pr-2"/>
+                        <Link v-if="item.href" :href="`${route(item.href['name'], item.href['parameters'])}`">
+                            <MetaLabel :item=item />
                         </Link>
-                        <template v-else-if="item['emptyWithCreateAction']">
-                            <FontAwesomeIcon icon="fal fa-empty-set" class="mr-2"/>
-                            <Button type="submit" size="xs" action="create">
-                                {{ trans(item["emptyWithCreateAction"]["label"]) }}
-                            </Button>
-                        </template>
-                        <span v-else><span v-if="item.number">{{ locale.number(item.number) }}</span> {{ item.name ? trans(item.name) : '' }}
+                        <span v-else>
+                          <MetaLabel :item=item />
                         </span>
                     </div>
                 </div>

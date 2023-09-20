@@ -168,7 +168,7 @@ const selectedTextAlign = ref('left')
     <div class="group ">
         <div class="relative rounded focus-within:ring-2 focus-within:ring-gray-300">
             <!-- Group: editor tools -->
-            <div class="hidden group-focus-within:flex bg-gray-100 absolute bottom-full w-fit justify-between text-slate-800 select-none space-x-1 border border-gray-100" tabindex="0">
+            <div class="z-10 hidden group-focus-within:flex bg-gray-100 absolute bottom-full -translate-y-2 w-fit justify-between rounded-r ring-1 ring-gray-300 shadow-md py-0.5 text-slate-800 select-none space-x-1 border border-gray-100" tabindex="0">
                 <div class="flex justify-start items-center divide-x-2 divide-gray-200">
                 
                     <!-- Font Family -->

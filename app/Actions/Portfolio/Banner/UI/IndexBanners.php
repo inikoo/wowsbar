@@ -110,7 +110,6 @@ class IndexBanners extends InertiaAction
                 );
             }
 
-
             $action = null;
 
             $description = null;

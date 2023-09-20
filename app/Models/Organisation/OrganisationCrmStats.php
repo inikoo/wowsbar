@@ -15,6 +15,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  *
  * @property int $id
  * @property int $organisation_id
+ * @property int $number_customers
+ * @property int $number_customers_state_registered
+ * @property int $number_customers_state_with_appointment
+ * @property int $number_customers_state_contacted
+ * @property int $number_customers_state_active
+ * @property int $number_customers_state_losing
+ * @property int $number_customers_state_lost
  * @property int $number_prospects
  * @property int $number_prospects_state_no_contacted
  * @property int $number_prospects_state_contacted
@@ -33,6 +40,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats query()
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberCustomers($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberCustomersStateActive($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberCustomersStateContacted($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberCustomersStateLosing($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberCustomersStateLost($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberCustomersStateRegistered($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberCustomersStateWithAppointment($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberProspects($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberProspectsGenderFemale($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberProspectsGenderMale($value)

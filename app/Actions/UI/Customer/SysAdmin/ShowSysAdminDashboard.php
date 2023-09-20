@@ -14,7 +14,7 @@ use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 
-class SysAdminDashboard
+class ShowSysAdminDashboard
 {
     use AsAction;
     use WithInertia;
@@ -47,7 +47,7 @@ class SysAdminDashboard
                     [
                         'name' => __('users'),
                         'stat' => $customer->stats->number_users_status_active,
-                        'href' => ['customer.sysadmin.users.index']
+                        'href' => ['name'=>'customer.sysadmin.users.index']
                     ],
 
                 ]

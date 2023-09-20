@@ -12,7 +12,6 @@ use App\Actions\Elasticsearch\BuildElasticsearchClient;
 use App\Actions\Elasticsearch\IndexElasticsearchDocument;
 use App\Enums\Elasticsearch\ElasticsearchTypeEnum;
 use App\Models\Auth\User;
-use App\Models\Tenancy\Tenant;
 use Carbon\Carbon;
 use Elastic\Elasticsearch\Client;
 use Elastic\Transport\Exception\NoNodeAvailableException;
@@ -137,15 +136,11 @@ class ElasticsearchAuditDriver implements AuditDriver
         $parsedUserAgent = (new Browser())->parse($model['user_agent']);
         $user            = User::find($model['user_id']);
 
-        $tenantSlug=null;
-        if(Tenant::checkCurrent()) {
-            $tenantSlug=customer()->slug;
-        }
+
 
         return [
                 'type'             => $this->type,
                 'datetime'         => now(),
-                'customer'         => $tenantSlug,
                 'route'            => $this->routes(),
                 'module'           => explode('.', $this->routes()['name'])[0],
                 'ip_address'       => request()->ip(),

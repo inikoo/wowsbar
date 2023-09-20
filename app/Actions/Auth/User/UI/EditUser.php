@@ -8,6 +8,7 @@
 namespace App\Actions\Auth\User\UI;
 
 use App\Actions\InertiaAction;
+use App\Actions\Traits\Fields\WithUserFields;
 use App\Models\Auth\User;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -15,6 +16,8 @@ use Lorisleiva\Actions\ActionRequest;
 
 class EditUser extends InertiaAction
 {
+    use WithUserFields;
+
     public function handle(User $user): User
     {
         return $user;
@@ -59,72 +62,8 @@ class EditUser extends InertiaAction
                 ],
 
                 'formData' => [
-                    'blueprint' => [
-                        [
-                            'title'    => __('id'),
-                             'icon'    => 'fal fa-user',
-                             'current' => true,
-                            'fields'   => [
-                                'contact_name' => [
-                                    'type'  => 'input',
-                                    'label' => __('name'),
-                                    'value' => $user->contact_name
-                                ],
-                                'username' => [
-                                    'type'  => 'input',
-                                    'label' => __('username'),
-                                    'value' => $user->username
-                                ],
-                                'email' => [
-                                    'type'  => 'input',
-                                    'label' => __('email'),
-                                    'value' => $user->email
-                                ],
-
-                            ]
-                        ],
-                        [
-                            'title'    => __('Status'),
-                            'icon'     => 'fal fa-user-lock',
-                            'current'  => true,
-                            'fields'   => [
-                                'status' => [
-                                    'type'      => 'toggleSquare',
-                                    'typeLabel' => ['suspended', 'active'],
-                                    'label'     => __('Status'),
-                                    'value'     => $user->status
-                                ],
-                            ]
-                        ],
-                        'password'   => [
-                            'title'   => __('Password'),
-                            'icon'    => 'fal fa-key',
-                            'current' => false,
-                            'fields'  => [
-                                'password' => [
-                                    'type'  => 'password',
-                                    'label' => __('password'),
-                                    'value' => ''
-                                ],
-                            ]
-                        ],
-                        'permissions'   => [
-                            'title'   => __('Permissions'),
-                            'icon'    => 'fal fa-user-lock',
-                            'current' => false,
-                            'fields'  => [
-                                'permissions' => [
-                                    'type'              => 'select',
-                                    'label'             => __('permissions'),
-                                    'options'           => $user->getRoleNames(),
-                                    'value'             => $user->getRoleNames(),
-                                    // 'fullComponentArea' => true,
-                                ],
-                            ]
-                        ],
-
-                    ],
-                    'args' => [
+                    'blueprint' => $this->getUserFields($user),
+                    'args'      => [
                         'updateRoute' => [
                             'name'      => 'models.user.update',
                             'parameters'=> [$user->username]

@@ -13,7 +13,8 @@ export const useLayoutStore = defineStore("layout", {
             navigation            : [],
             app: {
                 slug: '',
-                name: ''
+                name: '',
+                showLiveUsers:false,
             },
             currentRoute          : "",
             currentRouteParameters: {},

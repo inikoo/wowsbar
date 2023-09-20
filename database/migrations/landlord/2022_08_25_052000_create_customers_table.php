@@ -28,7 +28,7 @@ return new class () extends Migration {
             $table = $this->contactFields(table: $table, withWebsite: true);
             $table->jsonb('location');
             $table->string('status')->index()->default(CustomerStatusEnum::PENDING_APPROVAL->value);
-            $table->string('state')->index()->default(CustomerStateEnum::IN_PROCESS->value);
+            $table->string('state')->index()->default(CustomerStateEnum::REGISTERED->value);
             $table->string('trade_state')->index()->default(CustomerTradeStateEnum::NONE->value)->comment('number of invoices');
             $table->jsonb('data');
             $table->unsignedSmallInteger('shop_id')->index();

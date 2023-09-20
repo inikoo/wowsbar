@@ -9,6 +9,8 @@ namespace App\Actions\CRM\Customer;
 
 use App\Actions\CRM\Customer\Hydrators\CustomerHydrateUniversalSearch;
 use App\Actions\Helpers\SerialReference\GetSerialReference;
+use App\Actions\Organisation\Market\Shop\Hydrators\ShopHydrateCustomers;
+use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateCustomers;
 use App\Enums\Helpers\SerialReference\SerialReferenceModelEnum;
 use App\Models\CRM\Customer;
 use App\Models\Market\Shop;
@@ -38,7 +40,7 @@ class StoreCustomer
         return DB::transaction(function () use ($modelData, $shop) {
             $organisation = organisation();
 
-            data_set($modelData, 'ulid', Str::ulid());
+            //            data_set($modelData, 'ulid', Str::ulid());
             data_set($modelData, 'timezone_id', $organisation->timezone_id, overwrite: false);
             data_set($modelData, 'language_id', $organisation->language_id, overwrite: false);
 
@@ -59,6 +61,8 @@ class StoreCustomer
             $customer->stats()->create();
             $customer->portfolioStats()->create();
 
+            OrganisationHydrateCustomers::dispatch($customer);
+            ShopHydrateCustomers::dispatch($shop);
             CustomerHydrateUniversalSearch::dispatch($customer);
 
             return $customer;
