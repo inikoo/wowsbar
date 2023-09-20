@@ -12,7 +12,7 @@ use App\Actions\Helpers\History\IndexHistories;
 use App\Actions\Helpers\History\ShowHistories;
 use App\Actions\InertiaAction;
 use App\Actions\Traits\WithElasticsearch;
-use App\Actions\UI\Customer\SysAdmin\SysAdminDashboard;
+use App\Actions\UI\Customer\SysAdmin\ShowSysAdminDashboard;
 use App\Enums\UI\UserTabsEnum;
 use App\Http\Resources\History\HistoryResource;
 use App\Http\Resources\SysAdmin\UserRequestLogsResource;
@@ -124,7 +124,7 @@ class ShowUser extends InertiaAction
             'sysadmin.users.edit' =>
 
             array_merge(
-                SysAdminDashboard::make()->getBreadcrumbs(),
+                ShowSysAdminDashboard::make()->getBreadcrumbs(),
                 $headCrumb(
                     $routeParameters['user'],
                     [

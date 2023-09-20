@@ -5,59 +5,170 @@
 -->
 
 <script setup lang="ts">
-import { ref, watch } from 'vue'
-import { getDbRef, getDataFirebase, setDataFirebase } from '@/Composables/firebase'
+import { ref, watch } from "vue";
+import {
+    getDbRef,
+    getDataFirebase,
+    setDataFirebase,
+} from "@/Composables/firebase";
+import ColorPicker from "@/Components/Workshop/Fields/ColorPicker.vue";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faImage } from "@/../private/pro-regular-svg-icons";
+import { library } from "@fortawesome/fontawesome-svg-core";
+library.add(faImage);
+
 const themeOptions = [
-  { name: 'Full', value: 'full' },
-  { name: 'Page Margin', value: 'margin' },
+    { name: "Full", value: "full" },
+    { name: "Page Margin", value: "margin" },
 ];
 
-let selectedTheme = ref('full'); // Default selected theme
+const data = ref({
+    layout: "full",
+    colorLayout: "rgba(99, 102, 241, 255)",
+    imageLayout: null,
+    header: {
+        color: "rgba(99, 102, 241, 255)",
+    },
+    content: {
+        color: "rgba(99, 102, 241, 255)",
+    },
+    footer: {
+        color: "rgba(99, 102, 241, 255)",
+    },
+});
 
-async function setToFirebase() {
-  const column = 'org/websites/layout';
-  try {
-    await setDataFirebase(column, selectedTheme.value);
-  } catch (error) {
-    console.log(error)
-  }
-}
+// async function setToFirebase() {
+//     const column = "org/websites/layout";
+//     try {
+//         await setDataFirebase(column, selectedTheme.value);
+//     } catch (error) {
+//         console.log(error);
+//     }
+// }
 
-watch(selectedTheme, setToFirebase, { deep: true })
+// watch(selectedTheme, setToFirebase, { deep: true });
 
-setToFirebase()
-
-
+// setToFirebase();
 </script>
 
 <template>
-  <div class="flex justify-center items-center w-full mt-3">
-    <div class="w-[80%] flex justify-end">
-      <select v-model="selectedTheme" class="px-2 py-1 rounded-md border-stone-300 border w-[150px]">
-        <option v-for="option in themeOptions" :key="option.value" :value="option.value">
-          {{ option.name }}
-        </option>
-      </select>
+    <div class="flex justify-center items-center w-full mt-3">
+        <div class="w-[80%] flex justify-end">
+            <button
+                v-for="option in themeOptions"
+                :key="option.value"
+                @click="data.layout = option.value"
+                :class="{
+                    'bg-gray-700 dark:bg-gray-300/90 text-white dark:text-gray-700 hover:bg-gray-800 dark:hover:bg-gray-300':
+                        data.layout === option.value,
+                    'bg-gray-300 text-gray-700': data.layout !== option.value,
+                }"
+                class="px-4 py-2 w-[150px]"
+            >
+                {{ option.name }}
+            </button>
+        </div>
     </div>
-  </div>
-
-  <div class="flex justify-center items-center w-full">
-    <div class="w-[80%] h-screen flex justify-center items-center border-2 border-gray-400 rounded-md my-9 bg-gray-200">
-      <div class="bg-white  h-full rounded-md" :class="{
-        'w-full': selectedTheme === 'full',
-        'w-[60%]': selectedTheme === 'margin',
-      }">
-        <div class="h-1/3 border-b-2 flex items-center">
-          <div class="mx-auto text-3xl font-medium">Header</div>
+    <div class="flex justify-center items-center w-full w">
+        <div
+            class="w-[80%] flex justify-start items-center border-gray-400 rounded-t-md mt-9 bg-gray-200"
+        >
+            <div
+                class="p-1 w-52 bg-white border-gray-400 border-x-[1px] border-t-[1px] rounded-t-md"
+            >
+                Awa
+            </div>
         </div>
-        <div class="h-1/3 border-b-2 flex items-center">
-          <div class="mx-auto text-3xl font-medium">Content</div>
-        </div>
-        <div class="h-1/3 border-b-2 flex items-center">
-          <div class="mx-auto text-3xl font-medium">Footer</div>
-        </div>
-
-      </div>
     </div>
-  </div>
+    <div class="flex justify-center items-center w-full">
+        <div
+            class="w-[80%] h-96 flex relative justify-center items-center border-[1px] border-gray-400 rounded-b-md"
+            :style="{
+                'background-image': `url('https://tailwindui.com/img/ecommerce-images/home-page-03-category-01.jpg')`,
+                'background-color': `${data.colorLayout}`,
+            }"
+        >
+            <div
+                class="h-full rounded-b-md relative"
+                :class="{
+                    'w-full': data.layout === 'full',
+                    'w-[60%]': data.layout === 'margin',
+                }"
+            >
+                <div
+                    class="h-1/3 border-b-2 flex items-center relative"
+                    :style="`background-color: ${data.header.color} ;`"
+                >
+                    <div class="mx-auto text-3xl font-medium">Header</div>
+                    <div
+                        class="absolute left-[-20px] bottom-0"
+                        style="transform: scale(0.7)"
+                    >
+                        <ColorPicker
+                            :color="data.header.color"
+                            @onChange="(value) => (data.header.color = value)"
+                            class=""
+                        />
+                    </div>
+                </div>
+                <div
+                    class="h-1/3 border-b-2 flex items-center relative"
+                    :style="`background-color: ${data.content.color} ;`"
+                >
+                    <div class="mx-auto text-3xl font-medium">Content</div>
+                    <div
+                        class="absolute left-[-20px] bottom-0"
+                        style="transform: scale(0.7)"
+                    >
+                        <ColorPicker
+                            :color="data.content.color"
+                            @onChange="(value) => (data.content.color = value)"
+                            class=""
+                        />
+                    </div>
+                </div>
+                <div
+                    class="h-1/3 border-b-2 flex items-center relative"
+                    :style="`background-color: ${data.footer.color} ;`"
+                >
+                    <div class="mx-auto text-3xl font-medium">Footer</div>
+                    <div
+                        class="absolute left-[-20px] bottom-0"
+                        style="transform: scale(0.7)"
+                    >
+                        <ColorPicker
+                            :color="data.footer.color"
+                            @onChange="(value) => (data.footer.color = value)"
+                            class=""
+                        />
+                    </div>
+                </div>
+            </div>
+            <div
+                v-if="data.layout === 'margin'"
+                class="absolute bottom-0 left-0"
+                style="transform: scale(0.7)"
+            >
+                <ColorPicker
+                    :color="data.colorLayout"
+                    @onChange="(value) => (data.colorLayout = value)"
+                    class=""
+                    :colorSuggestions="false"
+                />
+
+                <label
+                    for="imageUpload"
+                    class="border border-slate-300 rounded-full w-10 h-10 flex justify-center items-center bg-white mt-2 cursor-pointer"
+                >
+                    <input
+                        type="file"
+                        id="imageUpload"
+                        accept="image/*"
+                        style="display: none"
+                    />
+                    <FontAwesomeIcon icon="far fa-image" aria-hidden="true" />
+                </label>
+            </div>
+        </div>
+    </div>
 </template>

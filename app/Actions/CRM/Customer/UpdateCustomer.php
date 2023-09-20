@@ -34,7 +34,7 @@ class UpdateCustomer
         $customer = $this->update($customer, $modelData, ['data']);
         if ($customer->wasChanged(['status'])) {
             OrganisationHydrateCustomers::dispatch($customer);
-            ShopHydrateCustomers::dispatch($shop);
+            ShopHydrateCustomers::dispatch($customer->shop);
         }
         CustomerHydrateUniversalSearch::dispatch($customer);
 

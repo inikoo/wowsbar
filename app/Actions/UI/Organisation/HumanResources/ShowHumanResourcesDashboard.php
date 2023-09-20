@@ -47,12 +47,12 @@ class ShowHumanResourcesDashboard
                     [
                         'name' => __('employees'),
                         'stat' => $org->humanResourcesStats->number_employees,
-                        'href' => ['org.hr.employees.index']
+                        'href' => ['name'=>'org.hr.employees.index']
                     ],
                     [
                         'name' => __('working places'),
                         'stat' => $org->humanResourcesStats->number_working_places,
-                        'href' => ['org.hr.working-places.index']
+                        'href' => ['name'=>'org.hr.working-places.index']
                     ]
                 ]
 

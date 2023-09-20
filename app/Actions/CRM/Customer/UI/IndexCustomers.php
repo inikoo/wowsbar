@@ -8,7 +8,7 @@
 namespace App\Actions\CRM\Customer\UI;
 
 use App\Actions\InertiaAction;
-use App\Actions\Organisation\UI\CRM\CRMDashboard;
+use App\Actions\Organisation\UI\CRM\ShowCRMDashboard;
 use App\Http\Resources\CRM\CustomerResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\CRM\Customer;
@@ -251,7 +251,7 @@ class IndexCustomers extends InertiaAction
         return match ($routeName) {
             'org.crm.customers.index' =>
             array_merge(
-                (new CRMDashboard())->getBreadcrumbs(),
+                (new ShowCRMDashboard())->getBreadcrumbs(),
                 $headCrumb(
                     [
                         'name' => 'org.crm.customers.index',
@@ -261,7 +261,7 @@ class IndexCustomers extends InertiaAction
             ),
             'org.crm.shops.show.customers.index' =>
             array_merge(
-                (new CRMDashboard())->getBreadcrumbs(),
+                (new ShowCRMDashboard())->getBreadcrumbs(),
                 $headCrumb(
                     [
                         'name'       => 'org.crm.shops.show.customers.index',

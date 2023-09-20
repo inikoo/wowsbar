@@ -19,7 +19,10 @@ class CreateUser extends InertiaAction
         return Inertia::render(
             'CreateModel',
             [
-                'breadcrumbs' => $this->getBreadcrumbs($request->route()->getName()),
+                'breadcrumbs' => $this->getBreadcrumbs(
+                    $request->route()->getName(),
+                    $request->route()->originalParameters()
+                ),
                 'title'       => __('new user'),
                 'pageHead'    => [
                     'title'        => __('new user'),
@@ -87,11 +90,12 @@ class CreateUser extends InertiaAction
         return $this->handle($request);
     }
 
-    public function getBreadcrumbs(string $routeName): array
+    public function getBreadcrumbs(string $routeName, array $routeParameters): array
     {
         return array_merge(
             IndexUsers::make()->getBreadcrumbs(
-                routeName: preg_replace('/create$/', 'index', $routeName),
+                preg_replace('/create$/', 'index', $routeName),
+                $routeParameters
             ),
             [
                 [

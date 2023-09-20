@@ -75,39 +75,6 @@
       <div class="bg-white">
           <div class="flex" @click="layerActive = null">
               <div class="w-[200px] p-6 overflow-y-auto overflow-x-hidden border border-gray-300 border-1 h-[46rem]">
-                  <!-- add Content -->
-                  <div>
-                      <h2 class="text-sm font-medium text-gray-900">Content</h2>
-                      <div class="mt-2">
-                          <div class="flex items-center space-x-3">
-                              <div as="template" v-for="item in Dummy.addContent">
-                                  <div v-if="item.value !== 'image'"
-                                      class='relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-none'>
-                                      <div 
-                                          :class="['flex items-center justify-center rounded-md border py-1 px-2 text-sm font-medium uppercase w-fit']">
-                                          <div as="span">
-                                              <FontAwesomeIcon :icon="item.icon" />
-                                          </div>
-                                      </div>
-                                  </div>
-                                  <div v-if="item.value == 'image'"
-                                      class='relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-none'>
-                                      <div
-                                          :class="['flex items-center justify-center rounded-md border py-1 px-2 text-sm font-medium uppercase w-fit']">
-                                          <input type="file"  name="file" id="fileInput" class="sr-only"
-                                              @change="Uploadimage" ref="fileInput" accept=".jpg,.jpeg,.png" />
-                                          <label for="fileInput" as="span">
-                                              <FontAwesomeIcon :icon="item.icon" />
-                                          </label>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-                    <!-- end add Content -->
-  
-                  <hr class="my-5" />
               </div>
   
               <!-- editing area -->

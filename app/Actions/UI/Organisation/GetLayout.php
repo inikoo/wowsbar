@@ -133,10 +133,16 @@ class GetLayout
             $navigation['crm'] = [
                 'label' => __('Customers'),
                 'icon'  => ['fal', 'fa-user'],
-
-                'route'   => [
-                    'name' => 'org.crm.dashboard'
-                ],
+                'route' =>
+                    match ($shopsCount) {
+                        1 => [
+                            'name'       => 'org.crm.shop.dashboard',
+                            'parameters' => $shop->slug
+                        ],
+                        default => [
+                            'name' => 'org.crm.dashboard'
+                        ],
+                    },
                 'topMenu' => [
                     'subSections' => [
 
