@@ -1,16 +1,15 @@
 <script setup lang="ts">
 import ButtonTheme from '@/Components/CMS/Utils/ButtonTheme.vue'
-import StatsOne from './StatsOne.vue'
-import StatsTwo from './StatsTwo.vue'
-import StatsThree from './StatsThree.vue'
+import StatsOne from '@/Components/CMS/BlocksContent/Stats/StatsOne.vue'
+import StatsTwo from '@/Components/CMS/BlocksContent/Stats/StatsTwo.vue'
+import StatsThree from '@/Components/CMS/BlocksContent/Stats/StatsThree.vue'
 import { computed, ref, reactive } from 'vue'
-
 
 const statsTheme = ref(0)
 
 const dataStats = reactive({
-    title: "<p style=\"text-align: center\"><strong><span style=\"font-size: 28px\">Trusted by creators worldwide</span></strong></p>",
-    description: "<p style=\"text-align: center\">Lorem ipsum dolor sit amet consect adipisicing possimus.</p>",
+    title: "<p style=\"text-align: center\"><strong><span style=\"font-size: 28px; color: rgb(75 85 99)\">Trusted by creators worldwide</span></strong></p>",
+    description: "<p style=\"text-align: center\"><span style=\"color: rgb(107 114 128)\">Lorem ipsum dolor sit amet consect adipisicing possimus.</span></p>",
     subtitle:  "<p><strong><span style=\"font-size: 24px; color: #c639ba\">iste dolor cupiditate blanditiis ratione.</span></strong></p>",
     statsList: [
         {
@@ -32,7 +31,6 @@ const dataStats = reactive({
             icon: 'fal fa-database'
         },
     ]
-
 })
 
 const components = {
@@ -40,7 +38,6 @@ const components = {
     1: StatsTwo,
     2: StatsThree,
 }
-
 
 const component = computed(()=>{
     return components[statsTheme.value]
