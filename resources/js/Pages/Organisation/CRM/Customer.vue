@@ -21,7 +21,7 @@ import ModelDetails from "@/Pages/ModelDetails.vue";
 import {useTabChange} from "@/Composables/tab-change";
 import {computed, defineAsyncComponent, ref} from "vue";
 import Tabs from "@/Components/Navigation/Tabs.vue";
-import CustomerShowcase from "@/Pages/CRM/CustomerShowcase.vue";
+import CustomerShowcase from "@/Components/Showcases/Organisation/CustomerShowcase.vue";
 
 library.add(
     faStickyNote,
