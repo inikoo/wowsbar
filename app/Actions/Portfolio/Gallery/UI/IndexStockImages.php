@@ -41,7 +41,6 @@ class IndexStockImages extends InertiaAction
     }
 
 
-
     /** @noinspection PhpUndefinedMethodInspection */
     public function handle($prefix = null): LengthAwarePaginator
     {
@@ -60,8 +59,8 @@ class IndexStockImages extends InertiaAction
         return $queryBuilder
             ->defaultSort('media.name')
             ->where('collection_name', 'stock_images')
-            ->select(['media.name','media.id','size','mime_type','file_name','disk','media.slug','is_animated'])
-            ->allowedSorts(['name','size'])
+            ->select(['media.name', 'media.id', 'size', 'mime_type', 'file_name', 'disk', 'media.slug', 'is_animated'])
+            ->allowedSorts(['name', 'size'])
             ->allowedFilters([$globalSearch])
             ->withPaginator($prefix)
             ->withQueryString();
@@ -75,7 +74,6 @@ class IndexStockImages extends InertiaAction
                     ->name($prefix)
                     ->pageName($prefix . 'Page');
             }
-
 
 
             $table
@@ -93,7 +91,6 @@ class IndexStockImages extends InertiaAction
                 ->column(key: 'thumbnail', label: __('image'))
                 ->column(key: 'size', label: __('size'), sortable: true)
                 ->column(key: 'select', label: '')
-
                 ->defaultSort('name');
         };
     }
@@ -112,12 +109,12 @@ class IndexStockImages extends InertiaAction
                     $request->route()->getName(),
                     $request->route()->parameters
                 ),
-                'title'    => __('images'),
+                'title' => __('images'),
                 'pageHead' => [
-                    'title'     => __('images'),
+                    'title' => __('images'),
                     'iconRight' => [
                         'title' => __('image'),
-                        'icon'  => 'fal fa-images'
+                        'icon' => 'fal fa-images'
                     ],
                 ],
                 'data' => ImageResource::collection($websites),
@@ -126,15 +123,17 @@ class IndexStockImages extends InertiaAction
         )->table($this->tableStructure(
             modelOperations: [
                 'createLink' => [
-                    'route' => [
-                        'name'       => 'customer.portfolio.websites.create',
-                        'parameters' => array_values([])
-                    ],
-                    'type'    => 'button',
-                    'style'   => 'primary',
-                    'tooltip' => __('upload image'),
-                    'label'   => __('upload image'),
-                    'icon'    => 'fas fa-upload'
+                    [
+                        'route' => [
+                            'name' => 'customer.portfolio.websites.create',
+                            'parameters' => array_values([])
+                        ],
+                        'type' => 'button',
+                        'style' => 'primary',
+                        'tooltip' => __('upload image'),
+                        'label' => __('upload image'),
+                        'icon' => 'fas fa-upload'
+                    ]
                 ]
             ]
         ));
@@ -146,11 +145,11 @@ class IndexStockImages extends InertiaAction
         $headCrumb = function (array $routeParameters = []) {
             return [
                 [
-                    'type'   => 'simple',
+                    'type' => 'simple',
                     'simple' => [
                         'route' => $routeParameters,
                         'label' => __('images'),
-                        'icon'  => 'fal fa-bars'
+                        'icon' => 'fal fa-bars'
                     ],
                 ],
             ];

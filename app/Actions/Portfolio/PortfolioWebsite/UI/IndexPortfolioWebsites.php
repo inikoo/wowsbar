@@ -147,15 +147,6 @@ class IndexPortfolioWebsites extends InertiaAction
                             'name'       => 'org.shops.show.products.create',
                             'parameters' => array_values(['$shop->slug'])
                         ],
-                        'icon'  => 'fal fa-download',
-                        'label' => __('Download'),
-                        'style' => 'tertiary'
-                    ],
-                    [
-                        'route' => [
-                            'name'       => 'org.shops.show.products.create',
-                            'parameters' => array_values(['$shop->slug'])
-                        ],
                         'label' => __('create'),
                         'style' => 'primary'
                     ],
