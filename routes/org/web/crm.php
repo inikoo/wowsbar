@@ -6,6 +6,7 @@
  */
 
 
+use App\Actions\CRM\Customer\DownloadCustomersTemplate;
 use App\Actions\CRM\Customer\UI\EditCustomer;
 use App\Actions\CRM\Customer\UI\IndexCustomers;
 use App\Actions\CRM\Customer\UI\RemoveCustomer;
@@ -24,6 +25,7 @@ Route::prefix('customers')->as('customers.')->group(function () {
 //    Route::get('/customers/{customer}/web-users', [IndexWebUser::class, 'inCustomerinOrganisation'])->name('customers.show.web-users.index');
 //    Route::get('/customers/{customer}/web-users/{webUser}', [ShowWebUser::class, 'inCustomerinOrganisation'])->name('customers.show.web-users.show');
 //    Route::get('/customers/{customer}/web-users/{webUser}/edit', [EditWebUser::class, 'inCustomerinOrganisation'])->name('customers.show.web-users.edit');
+    Route::get('/uploads/template/download', DownloadCustomersTemplate::class)->name('uploads.template.download');
 });
 
 Route::prefix('prospects')->as('prospects.')->group(function () {

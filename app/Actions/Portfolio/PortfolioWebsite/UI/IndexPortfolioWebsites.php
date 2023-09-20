@@ -131,6 +131,16 @@ class IndexPortfolioWebsites extends InertiaAction
                     : Inertia::lazy(fn () => HistoryResource::collection(IndexHistories::run(PortfolioWebsite::class)))
             ]
         )->table($this->tableStructure(
+            modelOperations: [
+                'createLink' => [
+                    'route' => [
+                        'name'       => 'org.shops.show.departments.create',
+                        'parameters' => array_values(['shop'])
+                    ],
+                    'label' => __('new website'),
+                    'style' => 'create'
+                ]
+            ],
             prefix: 'websites',
             exportLinks: [
                 'export' => [
