@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import BlogSectionOne from '@/Components/CMS/BlocksContent/BlogSections/BlogSectionOne.vue'
-import BlogSectionTwo from '@/Components/CMS/BlocksContent/BlogSections/BlogSectionTwo.vue'
+import BlogOne from '@/Components/CMS/BlocksContent/BlogSections/BlogOne.vue'
+import BlogTwo from '@/Components/CMS/BlocksContent/BlogSections/BlogTwo.vue'
 import ButtonTheme from '@/Components/CMS/Utils/ButtonTheme.vue'
 import { computed, ref } from 'vue'
 
@@ -70,8 +70,8 @@ const pageHead = {
 
 const blockTheme = ref(0)
 const components = {
-    0: BlogSectionOne,
-    1: BlogSectionTwo,
+    0: BlogOne,
+    1: BlogTwo,
 }
 
 const component = computed(() => {
@@ -82,7 +82,7 @@ const component = computed(() => {
 
 <template>
     <div>
-        <ButtonTheme v-model="blockTheme" :label="['Simple', 'wide']" />
+        <ButtonTheme v-model="blockTheme" :label="['Simple', 'Card']" />
         <component :is="component" :dataBlogs="dataBlogs" class="shadow-lg"/>
     </div>
 </template>
