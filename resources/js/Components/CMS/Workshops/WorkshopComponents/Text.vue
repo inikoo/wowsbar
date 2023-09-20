@@ -281,10 +281,9 @@ const selectedTextAlign = ref('left')
             </div>
 
             <!-- The main content -->
-            <div :class="['min-w-[100px]', `whitespace-nowrap ring-2 ring-gray-200 rounded hover:bg-gray-200 hover:ring-gray-400 focus-within:ring-gray-400`, props.class]">
+            <div :class="['min-w-[50px]', `whitespace-nowrap ring-2 ring-gray-200 rounded hover:bg-gray-200 hover:ring-gray-400 hover:z-50 focus-within:ring-gray-400`, props.class]">
                 <EditorContent :editor="editor" />
             </div>
-            <!-- {{ editor.getAttributes('font-Family').color }} -->
         </div>
 
         <div v-if="props.showStats" class="grid grid-flow-col text-xs italic text-gray-500 mt-2 space-x-12 justify-start">
@@ -304,7 +303,7 @@ const selectedTextAlign = ref('left')
 
 <style lang="scss">
 .ProseMirror {
-    padding: 7px 15px;
+    padding: 2px 4px;
 }
 
 .ProseMirror p {
