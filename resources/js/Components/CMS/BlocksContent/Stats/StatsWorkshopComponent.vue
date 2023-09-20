@@ -13,21 +13,21 @@ const dataStats = reactive({
     statsList: [
         {
             id: 1,
-            name: '<p><span style="color: #484e63; font-size: 18px;">Number of deploys</p>',
-            value: "<p style=\"text-align: center\"><strong><span style=\"font-size: 32px; color: rgb(99, 102, 241)\">405</span></strong></p>",
+            name: '<p><span style="font-size: 12px; color: rgb(72, 78, 99)">Number of deploys</span></p>',
+            value: '<p style="text-align: center"><strong><span style="font-size: 24px; color: rgb(99, 102, 241)">405</span></strong></p>',
             icon: 'fal fa-database'
         },
         {
             id: 2,
-            name: '<p><span style="color: #484e63; font-size: 18px;">Average deploy time</p>',
-            value: "<p style=\"text-align: center\"><strong><span style=\"font-size: 32px; color: rgb(99, 102, 241)\">3.65 mins</span></strong></p>",
-            icon: 'fal fa-database'
+            name: '<p><span style="font-size: 12px; color: rgb(72, 78, 99)">Average deploy time</span></p>',
+            value: '<p style="text-align: center"><strong><span style="font-size: 24px; color: rgb(99, 102, 241)">3.65 mins</span></strong></p>',
+            icon: 'fal fa-clock'
         },
         {
             id: 3,
-            name: '<p><span style="color: #484e63; font-size: 18px;">Number of servers</p>',
-            value: "<p style=\"text-align: center\"><strong><span style=\"font-size: 32px; color: rgb(99, 102, 241)\">3</span></strong></p>",
-            icon: 'fal fa-database'
+            name: '<p><span style="font-size: 12px; color: rgb(72, 78, 99)">Number of servers</span></p>',
+            value: '<p style="text-align: center"><strong><span style="font-size: 24px; color: rgb(99, 102, 241)">3</span></strong></p>',
+            icon: 'fal fa-server'
         },
     ]
 })

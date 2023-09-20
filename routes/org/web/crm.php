@@ -17,9 +17,9 @@ use App\Actions\CRM\User\UI\CreateUser;
 use App\Actions\CRM\User\UI\EditUser;
 use App\Actions\CRM\User\UI\IndexUsers;
 use App\Actions\CRM\User\UI\ShowUser;
-use App\Actions\Organisation\UI\CRM\CRMDashboard;
+use App\Actions\Organisation\UI\CRM\ShowCRMDashboard;
 
-Route::get('/', [CRMDashboard::class, 'inOrganisation'])->name('dashboard');
+Route::get('/', [ShowCRMDashboard::class, 'inOrganisation'])->name('dashboard');
 
 Route::prefix('customers')->as('customers.')->group(function () {
     Route::get('/', IndexCustomers::class)->name('index');
@@ -44,8 +44,8 @@ Route::prefix('prospects')->as('prospects.')->group(function () {
     Route::get('/uploads/template/download', DownloadProspectsTemplate::class)->name('uploads.template.download');
 });
 
-Route::get('/shop/{shop}', [CRMDashboard::class, 'inShop'])->name('org.shops.show.dashboard');
-Route::get('/shop/{shop}/customers', [IndexCustomers::class, 'inShop'])->name('org.shops.show.customers.index');
-Route::get('/shop/{shop}/customers/{customer}', [ShowCustomer::class, 'inShop'])->name('org.shops.show.customers.show');
-Route::get('/shop/{shop}/customers/{customer}/edit', [EditCustomer::class, 'inShop'])->name('org.shops.show.customers.edit');
-Route::get('/shop/{shop}/prospects', [IndexProspects::class, 'inShop'])->name('org.shops.show.prospects.index');
+Route::get('/shop/{shop}', [ShowCRMDashboard::class, 'inShop'])->name('shop.dashboard');
+Route::get('/shop/{shop}/customers', [IndexCustomers::class, 'inShop'])->name('shop.customers.index');
+Route::get('/shop/{shop}/customers/{customer}', [ShowCustomer::class, 'inShop'])->name('shop.customers.show');
+Route::get('/shop/{shop}/customers/{customer}/edit', [EditCustomer::class, 'inShop'])->name('shop.customers.edit');
+Route::get('/shop/{shop}/prospects', [IndexProspects::class, 'inShop'])->name('shop.prospects.index');
