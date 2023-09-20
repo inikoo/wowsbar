@@ -581,7 +581,6 @@ watch(name, () => {
         <fieldset v-else ref="tableFieldset" :key="`table-${name}`" :dusk="`table-${name}`" class="min-w-0" :class="{ 'opacity-75': isVisiting }">
             <div class="my-2">
             <!-- Wrapper -->
-
                 <div class="mb-2" @checkboxChanged="handleElementsChange">
                     <TableElements v-if="queryBuilderProps.elementGroups" :elements="queryBuilderProps.elementGroups" @checkboxChanged="handleElementsChange" :title="queryBuilderData.title" :name="props.name"/>
                 </div>
@@ -590,21 +589,27 @@ watch(name, () => {
                     <!-- Left Section: Records, -->
                     <div class="flex space-x-2">
                         <!-- Result Number -->
-                        <div class="flex gap-2 outline-red-500">
+                        <div class="flex gap-2 items-center">
                             <div class="grid border rounded-md border-gray-300 dark:border-gray-500 justify-end items-center text-base font-normal text-gray-700 dark:text-gray-400"
                                 title="Results">
                                 <div v-if="compResourceMeta.total" class="px-2 py-1.5 ">{{ locale.number(compResourceMeta.total) }} {{ compResourceMeta.total > 1 ? trans('records') : trans('record') }}</div>
                                 <div v-else class="px-2 py-1.5">{{ locale.number(0) }} {{ trans('record') }}</div>
                             </div>
-                            <!-- Button -->
-                            <div v-if="queryBuilderProps.modelOperations?.createLink">
-                                <Link :href="route(queryBuilderProps.modelOperations.createLink.route.name, queryBuilderProps.modelOperations.createLink.route.parameters[0])">
-                                    <!--suppress HtmlWrongAttributeValue -->
 
-                                    <Button :style="`primary`" :icon="queryBuilderProps.modelOperations.createLink.icon" action="create"  class="capitalize">
-                                        {{queryBuilderProps.modelOperations.createLink.label}}
+                            <!-- Button or Button Group -->
+                            <div v-if="queryBuilderProps.modelOperations?.createLink" class="flex">
+                                <Link v-for="linkButton in queryBuilderProps.modelOperations?.createLink"
+                                    :href="route(linkButton.route.name, linkButton.route.parameters)"
+                                    class="ring-1 ring-gray-300 overflow-hidden"
+                                    :class="[queryBuilderProps.modelOperations?.createLink.length > 1 ? 'first:rounded-l last:rounded-r' : '']"
+                                >
+                                    <Button :style="linkButton.style" :icon="linkButton.icon" 
+                                        class="capitalize inline-flex items-center rounded-none text-sm border-none font-medium shadow-sm focus:ring-transparent focus:ring-offset-transparent focus:ring-0"
+                                    >
+                                        <span v-if="linkButton.label" class="">{{ linkButton.label }}</span>
                                     </Button>
                                 </Link>
+
                             </div>
                             <slot v-if="queryBuilderProps.modelOperations?.uploadFile" name="uploadFile"  id="uploadFile" :item="queryBuilderProps.modelOperations?.uploadFile"/>
                         </div>
