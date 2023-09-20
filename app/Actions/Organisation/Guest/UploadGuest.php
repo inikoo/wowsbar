@@ -31,7 +31,7 @@ class UploadGuest
      * @var true
      */
     private bool $asAction          = false;
-    public string $commandSignature = 'employee:import {filename}';
+    public string $commandSignature = 'guest:import {filename}';
 
     public function handle($file): void
     {
