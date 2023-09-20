@@ -19,6 +19,7 @@
   import { getDbRef, getDataFirebase, setDataFirebase } from '@/Composables/firebase'
   import HeaderTheme1 from '../../Header/HeaderTheme1.vue';
   import HeaderTheme2 from '../../Header/HeaderTheme2.vue';
+  import Header from '@/Components/CMS/Header/index.vue'
   library.add(faHandPointer, faText, faSearch, faImage, faTrash, faBars)
   const props = defineProps<{
     data: Object,
@@ -37,40 +38,19 @@
           { name: 'Search', value: 'search', icon: "fas fa-search" },
       ],
   }
+
+  const set = {
+    img : "https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600",
+    appointment : {
+      label : 'appointment',
+      link : ''
+    }
+  }
   
   const data = reactive([...props.data.data.data])
-  
   const layerActive = ref(null)
   
-  const layout = ref({...props.data.data.layout})
-  
-  
-  const setActive = (id) => {
-      const index = data.findIndex((item) => item.id == id)
-      if (index >= 0) layerActive.value = index
-      else layerActive.value = null
-  }
-  
-  const createContent = (value) => {
-      let setData = {}
-      if (value == 'text')
-          setData = {
-              name: 'Title',
-              id: ulid(),
-  
-              type: 'text',
-              style: { top: 75, left: 536, fontSize: 34, },
-          }
-      if (value == 'search')
-          setData = {
-              name: 'search',
-              id: ulid(),
-              type: 'search',
-              style: { top: 75, left: 536, fontSize: 34, },
-          }
-  
-      data.splice(0, 0, setData)
-  }
+  const theme = ref({ name: 'Header theme One', value: 1 })
   
   const fileInput = ref(null)
   const Uploadimage = () => {
@@ -87,31 +67,7 @@
       data.splice(0, 0, setData)
   }
   
-  const deleteContent = (index) => [
-      data.splice(index, 1)
-  ]
-  
-  const setUpDataBeforeSend = (setData) => {
-      for(const item of data){
-          delete item.ref;
-      }
-      return setData
-  
-  };
-  
-  async function setToFirebase() {
-    const column = 'org/websites/header';
-    const dataSend = setUpDataBeforeSend({...data})
-    try {
-      await setDataFirebase(column, { data : dataSend, layout : layout.value });
-    } catch (error) {
-      console.log(error)
-    }
-  }
-  
-  watch(data, setToFirebase, { deep: true })
-  watch(layout, setToFirebase, { deep: true })
-  setToFirebase()
+
   
   </script>
   
@@ -127,7 +83,7 @@
                               <div as="template" v-for="item in Dummy.addContent">
                                   <div v-if="item.value !== 'image'"
                                       class='relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-none'>
-                                      <div @click="createContent(item.value)"
+                                      <div 
                                           :class="['flex items-center justify-center rounded-md border py-1 px-2 text-sm font-medium uppercase w-fit']">
                                           <div as="span">
                                               <FontAwesomeIcon :icon="item.icon" />
@@ -156,11 +112,9 @@
   
               <!-- editing area -->
               <div class="w-full bg-gray-200 border border-gray-300 overflow-hidden">
-                  <ToolsTop  :data="data" :layerActive="layerActive" @click="(e)=>e.stopPropagation()" />
+                  <ToolsTop  :data="data" :theme="theme" @click="(e)=>e.stopPropagation()" />
                     <div style="transform: scale(0.8);" class="w-full">
-                      <HeaderTheme1 />
-                      sadas
-                      <HeaderTheme2 />
+                      <Header :theme="theme.value" :data="set" />
                       </div>
               
                
