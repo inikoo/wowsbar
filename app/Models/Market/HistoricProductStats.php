@@ -10,7 +10,6 @@ namespace App\Models\Market;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Carbon;
 
 /**
  * App\Models\Market\HistoricProductStats
@@ -22,7 +21,6 @@ use Illuminate\Support\Carbon;
  */
 class HistoricProductStats extends Model
 {
-
     protected $table = 'historic_product_stats';
 
     protected $guarded = [];

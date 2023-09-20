@@ -21,21 +21,10 @@
 
   import {
       faHome,
-      faConveyorBeltAlt,
-      faUserHardHat,
       faBars,
       faUsersCog,
       faTachometerAltFast,
-      faInventory,
-      faStoreAlt,
       faUser,
-      faIndustry,
-      faParachuteBox,
-      faDollyEmpty,
-      faShoppingCart,
-      faAbacus,
-      faChevronDown,
-      faGlobe,
       faLanguage
   } from "@/../private/pro-light-svg-icons"
   import { faSearch, faBell} from "@/../private/pro-regular-svg-icons"
@@ -43,22 +32,10 @@
 
   library.add(
       faHome,
-      faConveyorBeltAlt,
-      faUserHardHat,
       faBars,
       faUsersCog,
       faTachometerAltFast,
-      faInventory,
-      faStoreAlt,
       faUser,
-      faUser,
-      faIndustry,
-      faParachuteBox,
-      faDollyEmpty,
-      faShoppingCart,
-      faAbacus,
-      faChevronDown,
-      faGlobe,
       faLanguage,
       faSearch,
       faBell

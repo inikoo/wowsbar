@@ -42,7 +42,7 @@ class CreateProduct extends InertiaAction
                                 'name' => match ($this->routeName) {
                                     'org.shops.show.products.create'    => 'org.shops.show.products.index',
                                     'org.shops.products.create'         => 'org.shops',
-                                    default                         => preg_replace('/create$/', 'index', $this->routeName)
+                                    default                             => preg_replace('/create$/', 'index', $this->routeName)
                                 },
                                 'parameters' => array_values($this->originalParameters)
                             ],

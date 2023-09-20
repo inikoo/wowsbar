@@ -7,7 +7,6 @@
 
 namespace App\Actions\Organisation\Market\Product;
 
-use App\Exports\HumanResources\EmployeeTemplateExport;
 use App\Exports\Market\ProductTemplateExport;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;

@@ -26,8 +26,8 @@ class StoreExcelUploads
     public function handle($file, $class): ExcelUpload
     {
         $filename = $file->hashName();
-        $type = class_basename($class);
-        $path = 'org/' . Str::lower($type);
+        $type     = class_basename($class);
+        $path     = 'org/' . Str::lower($type);
         Storage::disk('local')->put($path, $file);
 
         return ExcelUpload::create([

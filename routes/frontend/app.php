@@ -20,12 +20,12 @@ Route::middleware([
 
 
     Route::name('public.')->group(function () {
-            Route::get('/', ShowHome::class)->name('home');
-            Route::get('/appointment', ShowPublicAppointment::class)->name('appointment.show');
-            Route::prefix("disclosure")
-                ->name("disclosure.")
-                ->group(__DIR__."/disclosure.php");
-        });
+        Route::get('/', ShowHome::class)->name('home');
+        Route::get('/appointment', ShowPublicAppointment::class)->name('appointment.show');
+        Route::prefix("disclosure")
+            ->name("disclosure.")
+            ->group(__DIR__."/disclosure.php");
+    });
 
     Route::middleware(['public-auth:public'])->group(function () {
         Route::get('/dashboard', ShowPublicDashboard::class)->name('dashboard.show');

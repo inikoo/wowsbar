@@ -42,16 +42,16 @@ class LogUserRequest
         $parsedUserAgent = (new Browser())->parse($userAgent);
 
         $body = [
-            'type'        => $type,
-            'datetime'    => $datetime,
+            'type'          => $type,
+            'datetime'      => $datetime,
             'customer'      => $slug,
-            'username'    => $user->username,
-            'route'       => $routeData,
-            'module'      => explode('.', $routeData['name'])[0],
-            'ip_address'  => $ip,
-            'location'    => json_encode($this->getLocation($ip)), // reference: https://github.com/stevebauman/location
-            'user_agent'  => $userAgent,
-            'device_type' => json_encode([
+            'username'      => $user->username,
+            'route'         => $routeData,
+            'module'        => explode('.', $routeData['name'])[0],
+            'ip_address'    => $ip,
+            'location'      => json_encode($this->getLocation($ip)), // reference: https://github.com/stevebauman/location
+            'user_agent'    => $userAgent,
+            'device_type'   => json_encode([
                 'title' => $parsedUserAgent->deviceType(),
                 'icon'  => $this->getDeviceIcon($parsedUserAgent->deviceType())
             ]),

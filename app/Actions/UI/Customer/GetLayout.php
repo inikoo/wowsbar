@@ -18,11 +18,24 @@ class GetLayout
     {
         $navigation = [];
 
+
+        $navigation['dashboard'] = [
+            'scope'   => 'dashboard',
+            'icon'    => ['fal', 'fa-home'],
+            'label'   => __('Home'),
+            'route'   => 'customer.dashboard.show',
+            'topMenu' => [
+                'subSections' => [],
+            ]
+
+
+        ];
+
         if ($user->can('portfolio.view')) {
             $navigation['portfolio'] = [
                 'scope'   => 'portfolio',
                 'icon'    => ['fal', 'fa-briefcase'],
-                'label'   => __('Portfolio'),
+                'label'   => __('portfolio'),
                 'route'   => 'customer.portfolio.dashboard',
                 'topMenu' => [
                     'subSections' => [
@@ -39,18 +52,113 @@ class GetLayout
                                 'name' => 'customer.portfolio.websites.index',
                             ]
                         ],
+
+
+                    ],
+
+                ]
+
+
+            ];
+        }
+
+        if ($user->can('portfolio.view')) {
+            $navigation['prospects'] = [
+                'scope'   => 'prospects',
+                'icon'    => ['fal', 'fa-transporter'],
+                'label'   => __('Leads'),
+                'route'   => 'customer.prospects.dashboard',
+                'topMenu' => [
+                    'subSections' => [
+
+                    ],
+                ]
+            ];
+        }
+
+        if ($user->can('portfolio.view')) {
+            $navigation['seo'] = [
+                'scope'   => 'seo',
+                'icon'    => ['fab', 'fa-google'],
+                'label'   => __('SEO'),
+                'route'   => 'customer.seo.dashboard',
+                'topMenu' => [
+                    'subSections' => [
                         [
-                            'icon'  => ['fal', 'fa-window-maximize'],
+                            'icon'  => ['fal', 'fa-globe'],
+                            'label' => __('websites'),
+                            'route' => [
+                                'name' => 'customer.seo.websites.index',
+                            ]
+                        ],
+                    ],
+                ]
+            ];
+        }
+
+        if ($user->can('portfolio.view')) {
+            $navigation['google-ads'] = [
+                'scope'   => 'google-ads',
+                'icon'    => ['fal', 'fa-bullseye'],
+                'label'   => __('Google Ads'),
+                'route'   => 'customer.google-ads.dashboard',
+                'topMenu' => [
+                    'subSections' => [
+                        [
+                            'icon'  => ['fal', 'fa-globe'],
+                            'label' => __('websites'),
+                            'route' => [
+                                'name' => 'customer.google-ads.websites.index',
+                            ]
+                        ],
+                    ],
+                ]
+            ];
+        }
+
+        if ($user->can('portfolio.view')) {
+            $navigation['social'] = [
+                'scope'   => 'social',
+                'icon'    => ['fal', 'fa-thumbs-up'],
+                'label'   => __('Social'),
+                'route'   => 'customer.social.dashboard',
+                'topMenu' => [
+                    'subSections' => [
+
+                    ],
+                ]
+            ];
+        }
+
+
+        if ($user->can('portfolio.view')) {
+            $navigation['banners'] = [
+                'scope'   => 'banners',
+                'icon'    => ['fal', 'fa-rectangle-wide'],
+                'label'   => __('Banners'),
+                'route'   => 'customer.banners.index',
+                'topMenu' => [
+                    'subSections' => [
+
+                        [
+                            'icon'  => ['fal', 'fa-rectangle-wide'],
                             'label' => __('banners'),
                             'route' => [
-                                'name' => 'customer.portfolio.banners.index',
+                                'name' => 'customer.banners.index',
+                            ]
+                        ],
+                        [
+                            'icon'  => ['fal', 'fa-browser'],
+                            'label' => __('websites'),
+                            'route' => [
+                                'name' => 'customer.banners.websites.index',
                             ]
                         ],
                         [
                             'icon'  => ['fal', 'fa-photo-video'],
                             'label' => __('gallery'),
                             'route' => [
-                                'name' => 'customer.portfolio.gallery',
+                                'name' => 'customer.banners.gallery',
                             ]
                         ],
 
@@ -62,11 +170,9 @@ class GetLayout
             ];
         }
 
-
-
         if ($user->can('sysadmin')) {
             $navigation['sysadmin'] = [
-                'label'   => __('sysadmin'),
+                'label'   => __('Manage account'),
                 'icon'    => ['fal', 'fa-users-cog'],
                 'route'   => 'customer.sysadmin.dashboard',
                 'topMenu' => [

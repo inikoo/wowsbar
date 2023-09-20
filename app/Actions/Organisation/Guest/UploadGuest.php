@@ -10,13 +10,9 @@ namespace App\Actions\Organisation\Guest;
 use App\Actions\Helpers\Uploads\ConvertUploadedFile;
 use App\Actions\Helpers\Uploads\StoreExcelUploads;
 use App\Imports\Auth\GuestImport;
-use App\Imports\HumanResources\EmployeeImport;
 use App\Models\HumanResources\Employee;
 use Excel;
-use finfo;
 use Illuminate\Console\Command;
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
@@ -29,7 +25,7 @@ class UploadGuest
     /**
      * @var true
      */
-    private bool $asAction = false;
+    private bool $asAction          = false;
     public string $commandSignature = 'employee:import {filename}';
 
     public function handle($file): void
@@ -51,7 +47,7 @@ class UploadGuest
     public function asCommand(Command $command): void
     {
         $filename = $command->argument('filename');
-        $file = ConvertUploadedFile::run($filename);
+        $file     = ConvertUploadedFile::run($filename);
 
         $this->handle($file);
     }

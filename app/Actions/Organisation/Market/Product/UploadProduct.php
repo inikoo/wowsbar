@@ -25,7 +25,7 @@ class UploadProduct
     /**
      * @var true
      */
-    private bool $asAction = false;
+    private bool $asAction          = false;
     public string $commandSignature = 'product:import {filename}';
 
     public function handle($file): void
@@ -47,7 +47,7 @@ class UploadProduct
     public function asCommand(Command $command): void
     {
         $filename = $command->argument('filename');
-        $file = ConvertUploadedFile::run($filename);
+        $file     = ConvertUploadedFile::run($filename);
 
         $this->handle($file);
     }

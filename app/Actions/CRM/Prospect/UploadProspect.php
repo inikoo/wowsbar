@@ -12,10 +12,7 @@ use App\Actions\Helpers\Uploads\StoreExcelUploads;
 use App\Imports\CRM\ProspectImport;
 use App\Models\CRM\Prospect;
 use Excel;
-use finfo;
 use Illuminate\Console\Command;
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
@@ -28,7 +25,7 @@ class UploadProspect
     /**
      * @var true
      */
-    private bool $asAction = false;
+    private bool $asAction          = false;
     public string $commandSignature = 'prospect:import {filename}';
 
     public function handle($file): void
@@ -50,7 +47,7 @@ class UploadProspect
     public function asCommand(Command $command): void
     {
         $filename = $command->argument('filename');
-        $file = ConvertUploadedFile::run($filename);
+        $file     = ConvertUploadedFile::run($filename);
 
         $this->handle($file);
     }

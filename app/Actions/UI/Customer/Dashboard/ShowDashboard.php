@@ -37,7 +37,7 @@ class ShowDashboard
 
                 'type'   => 'simple',
                 'simple' => [
-                    'icon'  => 'fal fa-tachometer-alt-fast',
+                    'icon'  => 'fal fa-home',
                     'label' => $label,
                     'route' => [
                         'name' => 'customer.dashboard.show'

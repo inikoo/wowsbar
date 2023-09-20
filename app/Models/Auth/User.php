@@ -8,7 +8,6 @@
 namespace App\Models\Auth;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use App\Concerns\BelongsToCustomer;
 use App\Models\Assets\Language;
 use App\Models\CRM\Customer;
 use App\Models\Media\Media;

@@ -9,17 +9,8 @@ use App\Actions\UI\Public\Appointment\ShowPublicAppointment;
 use App\Actions\UI\Public\ShowHome;
 use Illuminate\Support\Facades\Route;
 
-
 Route::get('/', ShowHome::class)->name('home');
 Route::get('/appointment', ShowPublicAppointment::class)->name('appointment.show');
 Route::prefix("disclosure")
     ->name("disclosure.")
     ->group(__DIR__."/disclosure.php");
-
-
-
-
-
-
-
-
