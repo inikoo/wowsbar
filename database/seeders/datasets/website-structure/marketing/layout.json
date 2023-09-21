@@ -1,0 +1,15 @@
+{
+    "layout": "full",
+    "favicon": "http://wowsbar.test/favicons/wowsbar-website-favicon-color-180x180.png",
+    "colorLayout": "rgba(55 65 81)",
+    "imageLayout": null,
+    "header": {
+      "color": "rgba(55 65 81)"
+    },
+    "content": {
+      "color": "rgba(55 65 81)"
+    },
+    "footer": {
+      "color": "rgba(55 65 81)"
+    }
+  }
