@@ -9,6 +9,7 @@ namespace App\Models\Web;
 
 use App\Enums\Organisation\Web\Website\WebsiteStateEnum;
 use App\Http\Resources\Web\WebsiteHeaderResource;
+use App\Http\Resources\Web\WebsiteLayoutResource;
 use App\Models\Market\Shop;
 use App\Models\Traits\HasHistory;
 use App\Models\Traits\HasUniversalSearch;
@@ -178,6 +179,7 @@ class Website extends Model implements Auditable, HasMedia
     public function getCompiledStructure(): array
     {
         data_set($compiledLayout, 'header', WebsiteHeaderResource::make($this->header)->getArray());
+        data_set($compiledLayout, 'layout', WebsiteLayoutResource::make($this->layout)->getArray());
 
         return $compiledLayout;
     }

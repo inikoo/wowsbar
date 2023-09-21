@@ -22,21 +22,9 @@ class ResetWebsiteStructure
     public function handle(Website $website): Website
     {
 
-        $logo=AttachImageToWebsite::run(
-            website: $website,
-            collection: 'logo',
-            imagePath: resource_path('art/logo/logo-teal.png'),
-            originalFilename: 'logo.png'
-        );
 
-        data_set(
-            $modelData,
-            'header',
-            [
-                'component'=> 'simpleSticky',
-                'logo'     => $logo->id
-            ]
-        );
+        data_set($modelData, 'header', $this->getInitialHeader($website));
+        data_set($modelData, 'layout', $this->getInitialLayout($website));
 
         $website->update($modelData);
 
@@ -77,6 +65,55 @@ class ResetWebsiteStructure
         }
 
         return $request->user()->hasPermissionTo("supervisor.website");
+    }
+
+
+    public function getInitialHeader($website): array
+    {
+
+        $logo=AttachImageToWebsite::run(
+            website: $website,
+            collection: 'logo',
+            imagePath: resource_path('art/logo/logo-teal.png'),
+            originalFilename: 'logo.png'
+        );
+
+        return  [
+            'component'=> 'simpleSticky',
+            'logo'     => $logo->id
+        ];
+    }
+
+    public function getInitialLayout($website): array
+    {
+
+        $favicon=AttachImageToWebsite::run(
+            website: $website,
+            collection: 'logo',
+            imagePath: resource_path('art/favicons/wowsbar-website-favicon-color-180x180.png'),
+            originalFilename: 'favicon.png'
+        );
+
+
+        return [
+            "layout"      => "full",
+            "favicon"     => $favicon->id,
+            "colorLayout" => "rgba(55 65 81)",
+            "imageLayout" => null,
+            "header"      => [
+                "color" => "rgba(55 65 81)"
+            ],
+            "content"     => [
+                "color" => "rgba(55 65 81)"
+            ],
+            "footer"      => [
+                "color" => "rgba(55 65 81)"
+            ]
+        ];
+
+
+
+
     }
 
 
