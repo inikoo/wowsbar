@@ -41,6 +41,8 @@ php artisan org:create-guest aiku aiku external_administrator
 echo "🌱 create shop/website"
 php artisan shop:create awa 'aw-advantage' 'digital-marketing'
 php artisan shop:new-website awa 'awa.test'
+php artisan website:change-state awa launch
+
 
 
 echo "🌱 create customer"
