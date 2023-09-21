@@ -8,6 +8,7 @@
 namespace App\Actions\Helpers\Uploads;
 
 use App\Models\Media\ExcelUpload;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -20,14 +21,17 @@ class StoreExcelUploads
 
     private bool $asAction = false;
 
-    public function handle($file, $class): ExcelUpload
+    public function handle($file, $class): Model
     {
+        /** @var \App\Models\Auth\OrganisationUser $orgUser */
+        $orgUser = request()->user();
         $filename = $file->hashName();
         $type     = class_basename($class);
         $path     = 'org/' . Str::lower($type);
         Storage::disk('local')->put($path, $file);
 
         return ExcelUpload::create([
+            'organisation_user_id' => $orgUser?->id,
             'type'              => $type,
             'original_filename' => $file->getClientOriginalName(),
             'filename'          => $filename,

@@ -6,20 +6,20 @@
  */
 
 
-use App\Actions\Organisation\Market\Product\DownloadProductsTemplate;
-use App\Actions\Organisation\Market\Product\UI\CreateProduct;
-use App\Actions\Organisation\Market\Product\UI\EditProduct;
-use App\Actions\Organisation\Market\Product\UI\IndexProducts;
-use App\Actions\Organisation\Market\Product\UI\RemoveProduct;
-use App\Actions\Organisation\Market\Product\UI\ShowProduct;
-use App\Actions\Organisation\Market\ProductCategory\UI\CreateDepartment;
-use App\Actions\Organisation\Market\ProductCategory\UI\IndexDepartments;
-use App\Actions\Organisation\Market\Shop\UI\CreateShop;
-use App\Actions\Organisation\Market\Shop\UI\EditShop;
-use App\Actions\Organisation\Market\Shop\UI\IndexShops;
-use App\Actions\Organisation\Market\Shop\UI\RemoveShop;
-use App\Actions\Organisation\Market\Shop\UI\ShowShop;
-use App\Actions\Organisation\Web\Website\UI\CreateWebsite;
+use App\Actions\Market\Product\DownloadProductsTemplate;
+use App\Actions\Market\Product\UI\CreateProduct;
+use App\Actions\Market\Product\UI\EditProduct;
+use App\Actions\Market\Product\UI\IndexProducts;
+use App\Actions\Market\Product\UI\RemoveProduct;
+use App\Actions\Market\Product\UI\ShowProduct;
+use App\Actions\Market\ProductCategory\UI\CreateDepartment;
+use App\Actions\Market\ProductCategory\UI\IndexDepartments;
+use App\Actions\Market\Shop\UI\CreateShop;
+use App\Actions\Market\Shop\UI\EditShop;
+use App\Actions\Market\Shop\UI\IndexShops;
+use App\Actions\Market\Shop\UI\RemoveShop;
+use App\Actions\Market\Shop\UI\ShowShop;
+use App\Actions\Web\Website\UI\CreateWebsite;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', IndexShops::class)->name('index');

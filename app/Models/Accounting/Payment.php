@@ -7,8 +7,8 @@
 
 namespace App\Models\Accounting;
 
-use App\Actions\Organisation\Accounting\PaymentAccount\Hydrators\PaymentAccountHydratePayments;
-use App\Actions\Organisation\Accounting\PaymentServiceProvider\Hydrators\PaymentServiceProviderHydratePayments;
+use App\Actions\Accounting\PaymentAccount\Hydrators\PaymentAccountHydratePayments;
+use App\Actions\Accounting\PaymentServiceProvider\Hydrators\PaymentServiceProviderHydratePayments;
 use App\Enums\Accounting\Payment\PaymentStateEnum;
 use App\Enums\Accounting\Payment\PaymentStatusEnum;
 use App\Enums\Accounting\Payment\PaymentSubsequentStatusEnum;
@@ -50,7 +50,6 @@ use Spatie\Sluggable\SlugOptions;
  * @property Carbon|null $updated_at
  * @property Carbon|null $deleted_at
  * @property bool $with_refund
- * @property int|null $source_id
  * @property-read Currency $currency
  * @property-read Customer $customer
  * @property-read \App\Models\Accounting\PaymentAccount $paymentAccount
@@ -72,7 +71,6 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Payment wherePaymentAccountId($value)
  * @method static Builder|Payment whereReference($value)
  * @method static Builder|Payment whereSlug($value)
- * @method static Builder|Payment whereSourceId($value)
  * @method static Builder|Payment whereState($value)
  * @method static Builder|Payment whereStatus($value)
  * @method static Builder|Payment whereSubsequentStatus($value)

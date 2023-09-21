@@ -4,7 +4,7 @@ namespace App\Imports\Auth;
 
 use App\Actions\Helpers\Uploads\ImportExcelUploads;
 use App\Actions\Helpers\Uploads\UpdateExcelUploads;
-use App\Actions\Organisation\Auth\OrganisationUser\StoreOrganisationUser;
+use App\Actions\Organisation\OrganisationUser\StoreOrganisationUser;
 use App\Models\Auth\OrganisationUser;
 use App\Models\Media\ExcelUpload;
 use App\Models\Media\ExcelUploadRecord;

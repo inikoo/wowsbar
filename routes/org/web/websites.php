@@ -6,18 +6,18 @@
  */
 
 
-use App\Actions\Organisation\Web\Webpage\IndexWebpages;
-use App\Actions\Organisation\Web\Webpage\UI\CreateArticle;
-use App\Actions\Organisation\Web\Webpage\UI\CreateWebpage;
-use App\Actions\Organisation\Web\Webpage\UI\EditWebpage;
-use App\Actions\Organisation\Web\Webpage\UI\ShowWebpage;
-use App\Actions\Organisation\Web\Webpage\UI\ShowWebpageWorkshop;
-use App\Actions\Organisation\Web\Webpage\UI\ShowWebpageWorkshopPreview;
-use App\Actions\Organisation\Web\Website\UI\EditWebsite;
-use App\Actions\Organisation\Web\Website\UI\IndexWebsites;
-use App\Actions\Organisation\Web\Website\UI\ShowWebsite;
-use App\Actions\Organisation\Web\Website\UI\ShowWebsiteWorkshop;
-use App\Actions\Organisation\Web\Website\UI\ShowWebsiteWorkshopPreview;
+use App\Actions\Web\Webpage\IndexWebpages;
+use App\Actions\Web\Webpage\UI\CreateArticle;
+use App\Actions\Web\Webpage\UI\CreateWebpage;
+use App\Actions\Web\Webpage\UI\EditWebpage;
+use App\Actions\Web\Webpage\UI\ShowWebpage;
+use App\Actions\Web\Webpage\UI\ShowWebpageWorkshop;
+use App\Actions\Web\Webpage\UI\ShowWebpageWorkshopPreview;
+use App\Actions\Web\Website\UI\EditWebsite;
+use App\Actions\Web\Website\UI\IndexWebsites;
+use App\Actions\Web\Website\UI\ShowWebsite;
+use App\Actions\Web\Website\UI\ShowWebsiteWorkshop;
+use App\Actions\Web\Website\UI\ShowWebsiteWorkshopPreview;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', IndexWebsites::class)->name('index');

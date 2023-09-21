@@ -14,15 +14,12 @@ return new class () extends Migration {
         Schema::create('excel_upload_records', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->unsignedSmallInteger('tenant_id')->nullable();
-            $table->foreign('tenant_id')->references('id')->on('tenants')->onUpdate('cascade')->onDelete('cascade');
-
             $table->unsignedSmallInteger('excel_upload_id');
             $table->foreign('excel_upload_id')->references('id')->on('excel_uploads')->onUpdate('cascade')->onDelete('cascade');
 
             $table->jsonb('data');
             $table->string('status')->default(UploadRecordStatusEnum::PROCESSING->value);
-
+            $table->string('comment')->nullable();
             $table->timestamps();
         });
     }

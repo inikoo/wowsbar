@@ -81,6 +81,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read Collection<int, User> $users
  * @property-read int|null $users_count
  * @property-read Website|null $website
+ * @method static Builder|Customer dProspects()
  * @method static \Database\Factories\CRM\CustomerFactory factory($count = null, $state = [])
  * @method static Builder|Customer newModelQuery()
  * @method static Builder|Customer newQuery()
@@ -227,7 +228,7 @@ class Customer extends Model implements HasMedia
 
     public function scopedProspects(): MorphMany
     {
-        return $this->morphMany(Prospect::class,'scope');
+        return $this->morphMany(Prospect::class, 'scope');
     }
 
 }

@@ -43,6 +43,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read array $es_audits
  * @property-read \App\Models\Portfolio\PortfolioWebsiteStats|null $stats
  * @property-read \App\Models\Search\UniversalSearch|null $universalSearch
+ * @method static Builder|PortfolioWebsite dProspects()
  * @method static \Database\Factories\Portfolio\PortfolioWebsiteFactory factory($count = null, $state = [])
  * @method static Builder|PortfolioWebsite newModelQuery()
  * @method static Builder|PortfolioWebsite newQuery()
@@ -107,7 +108,7 @@ class PortfolioWebsite extends Model implements Auditable
 
     public function scopedProspects(): MorphMany
     {
-        return $this->morphMany(Prospect::class,'scope');
+        return $this->morphMany(Prospect::class, 'scope');
     }
 
 }

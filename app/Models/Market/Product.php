@@ -57,7 +57,6 @@ use Spatie\Sluggable\SlugOptions;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property Carbon|null $deleted_at
- * @property int|null $source_id
  * @property ProductTradeUnitCompositionEnum $trade_unit_composition
  * @property-read Collection<int, \App\Models\Market\HistoricProduct> $historicRecords
  * @property-read int|null $historic_records_count
@@ -90,7 +89,6 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Product whereSettings($value)
  * @method static Builder|Product whereShopId($value)
  * @method static Builder|Product whereSlug($value)
- * @method static Builder|Product whereSourceId($value)
  * @method static Builder|Product whereState($value)
  * @method static Builder|Product whereStatus($value)
  * @method static Builder|Product whereType($value)

@@ -5,25 +5,25 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-use App\Actions\Organisation\Accounting\Invoice\ExportInvoice;
-use App\Actions\Organisation\Accounting\Invoice\ExportInvoices;
-use App\Actions\Organisation\Accounting\Invoice\IndexInvoices;
-use App\Actions\Organisation\Accounting\Invoice\ShowInvoice;
-use App\Actions\Organisation\Accounting\Payment\ExportPayments;
-use App\Actions\Organisation\Accounting\Payment\UI\CreatePayment;
-use App\Actions\Organisation\Accounting\Payment\UI\EditPayment;
-use App\Actions\Organisation\Accounting\Payment\UI\IndexPayments;
-use App\Actions\Organisation\Accounting\Payment\UI\ShowPayment;
-use App\Actions\Organisation\Accounting\PaymentAccount\ExportPaymentAccounts;
-use App\Actions\Organisation\Accounting\PaymentAccount\UI\CreatePaymentAccount;
-use App\Actions\Organisation\Accounting\PaymentAccount\UI\IndexPaymentAccounts;
-use App\Actions\Organisation\Accounting\PaymentAccount\UI\ShowPaymentAccount;
-use App\Actions\Organisation\Accounting\PaymentServiceProvider\ExportPaymentServiceProviders;
-use App\Actions\Organisation\Accounting\PaymentServiceProvider\UI\CreatePaymentServiceProvider;
-use App\Actions\Organisation\Accounting\PaymentServiceProvider\UI\EditPaymentServiceProvider;
-use App\Actions\Organisation\Accounting\PaymentServiceProvider\UI\IndexPaymentServiceProviders;
-use App\Actions\Organisation\Accounting\PaymentServiceProvider\UI\RemovePaymentServiceProvider;
-use App\Actions\Organisation\Accounting\PaymentServiceProvider\UI\ShowPaymentServiceProvider;
+use App\Actions\Accounting\Invoice\ExportInvoice;
+use App\Actions\Accounting\Invoice\ExportInvoices;
+use App\Actions\Accounting\Invoice\IndexInvoices;
+use App\Actions\Accounting\Invoice\ShowInvoice;
+use App\Actions\Accounting\Payment\ExportPayments;
+use App\Actions\Accounting\Payment\UI\CreatePayment;
+use App\Actions\Accounting\Payment\UI\EditPayment;
+use App\Actions\Accounting\Payment\UI\IndexPayments;
+use App\Actions\Accounting\Payment\UI\ShowPayment;
+use App\Actions\Accounting\PaymentAccount\ExportPaymentAccounts;
+use App\Actions\Accounting\PaymentAccount\UI\CreatePaymentAccount;
+use App\Actions\Accounting\PaymentAccount\UI\IndexPaymentAccounts;
+use App\Actions\Accounting\PaymentAccount\UI\ShowPaymentAccount;
+use App\Actions\Accounting\PaymentServiceProvider\ExportPaymentServiceProviders;
+use App\Actions\Accounting\PaymentServiceProvider\UI\CreatePaymentServiceProvider;
+use App\Actions\Accounting\PaymentServiceProvider\UI\EditPaymentServiceProvider;
+use App\Actions\Accounting\PaymentServiceProvider\UI\IndexPaymentServiceProviders;
+use App\Actions\Accounting\PaymentServiceProvider\UI\RemovePaymentServiceProvider;
+use App\Actions\Accounting\PaymentServiceProvider\UI\ShowPaymentServiceProvider;
 use App\Actions\UI\Organisation\Accounting\AccountingDashboard;
 use Illuminate\Support\Facades\Route;
 

@@ -6,13 +6,13 @@
  */
 
 
-use App\Actions\Organisation\HumanResources\ClockingMachine\StoreClockingMachine;
-use App\Actions\Organisation\HumanResources\ClockingMachine\UpdateClockingMachine;
-use App\Actions\Organisation\HumanResources\Employee\CreateOrganisationUserFromEmployee;
-use App\Actions\Organisation\HumanResources\Employee\StoreEmployee;
-use App\Actions\Organisation\HumanResources\Employee\UpdateEmployee;
-use App\Actions\Organisation\HumanResources\Employee\UpdateEmployeeWorkingHours;
-use App\Actions\Organisation\HumanResources\WorkingPlace\UpdateWorkingPlace;
+use App\Actions\HumanResources\ClockingMachine\StoreClockingMachine;
+use App\Actions\HumanResources\ClockingMachine\UpdateClockingMachine;
+use App\Actions\HumanResources\Employee\CreateOrganisationUserFromEmployee;
+use App\Actions\HumanResources\Employee\StoreEmployee;
+use App\Actions\HumanResources\Employee\UpdateEmployee;
+use App\Actions\HumanResources\Employee\UpdateEmployeeWorkingHours;
+use App\Actions\HumanResources\WorkingPlace\UpdateWorkingPlace;
 use App\Actions\Organisation\Organisation\StoreOrganisation;
 use App\Enums\HumanResources\Employee\EmployeeStateEnum;
 use App\Models\Auth\OrganisationUser;
