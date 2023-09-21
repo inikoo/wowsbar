@@ -7,9 +7,9 @@
 
 
 use App\Actions\CRM\Customer\StoreCustomer;
-use App\Actions\Organisation\Market\Shop\StoreShop;
+use App\Actions\Market\Shop\StoreShop;
 use App\Actions\Organisation\Organisation\StoreOrganisation;
-use App\Actions\Organisation\Web\Website\StoreWebsite;
+use App\Actions\Web\Website\StoreWebsite;
 use App\Enums\Organisation\Market\Shop\ShopTypeEnum;
 use App\Models\CRM\Customer;
 use App\Models\Organisation\Organisation;

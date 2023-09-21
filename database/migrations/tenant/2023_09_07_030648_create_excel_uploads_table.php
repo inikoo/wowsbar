@@ -13,8 +13,8 @@ return new class () extends Migration {
         Schema::create('excel_uploads', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->unsignedSmallInteger('tenant_id')->nullable();
-            $table->foreign('tenant_id')->references('id')->on('tenants')->onUpdate('cascade')->onDelete('cascade');
+            $table->unsignedSmallInteger('organisation_user_id')->nullable();
+            $table->foreign('organisation_user_id')->references('id')->on('organisation_users');
 
             $table->string('type');
             $table->string('original_filename');

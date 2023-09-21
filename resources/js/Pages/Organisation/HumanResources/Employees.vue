@@ -34,7 +34,7 @@ const pusher = new Pusher(import.meta.env.VITE_PUSHER_APP_KEY, {
     cluster: 'ap1'
 })
 const channel = pusher.subscribe('uploads.org')
-channel.bind('Employees', (data: any) => {
+channel.bind('Employee', (data: any) => {
     dataPusher.value = data
     // console.log("==============")
     // console.log(data)
