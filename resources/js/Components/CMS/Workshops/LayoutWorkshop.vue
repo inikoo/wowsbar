@@ -13,10 +13,10 @@ import {
 } from "@/Composables/firebase";
 import ColorPicker from "@/Components/Workshop/Fields/ColorPicker.vue";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faImage, faTimes } from "@/../private/pro-regular-svg-icons";
+import { faImage, faTimes, faOven } from "@/../private/pro-regular-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { isNull } from 'lodash'
-library.add(faImage, faTimes);
+library.add(faImage, faTimes, faOven);
 
 const themeOptions = [
     { name: "Full", value: "full" },
@@ -160,11 +160,18 @@ const addfavicon= async (element) => {
                         class="absolute left-[-20px] bottom-0"
                         style="transform: scale(0.7)"
                     >
-                        <!-- <ColorPicker
+                        <ColorPicker
                             :color="data.content.color"
                             @onChange="(value) => (data.content.color = value)"
                             class=""
-                        /> -->
+                        />
+                    </div>
+                    <div
+                        class="absolute right-0 top-5 flex gap-2"
+                        :style="`color: ${data.content.color};`"
+                    >
+                    <font-awesome-icon :icon="['far', 'oven']" class="w-40 h-14" />
+
                     </div>
                 </div>
                 <div

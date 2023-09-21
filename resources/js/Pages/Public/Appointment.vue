@@ -7,7 +7,11 @@ import {
     GlobeAmericasIcon,
 } from "@heroicons/vue/24/outline";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faRocketLaunch, faClock, faVideo } from "@/../private/pro-regular-svg-icons";
+import {
+    faRocketLaunch,
+    faClock,
+    faVideo,
+} from "@/../private/pro-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { isNull } from "lodash";
 import { useFormatTime } from "@/Composables/useFormatTime";
@@ -15,13 +19,14 @@ import { useFormatTime } from "@/Composables/useFormatTime";
 library.add(faRocketLaunch, faClock, faVideo);
 
 const data = {
-    description: "The Basic tee is an honest new take on a classic. The tee uses super soft, pre-shrunk cotton for true comfort and a dependable fit",
-  meet : {
-    customerService : 'Arya',
-    duration : '30 mnt'
-  },
-  title : 'Discovery Call - Wowsbar',
-  meetInformation : 'Web conferencing details provided upon confirmation.'
+    description:
+        "The Basic tee is an honest new take on a classic. The tee uses super soft, pre-shrunk cotton for true comfort and a dependable fit",
+    meet: {
+        customerService: "Arya",
+        duration: "30 mnt",
+    },
+    title: "Discovery Call - Wowsbar",
+    meetInformation: "Web conferencing details provided upon confirmation.",
 };
 const attrs = ref([
     {
@@ -120,28 +125,32 @@ const getDate = () => {
                             />
                         </div>
                         <hr />
-                        <div class="text-lg text-slate-400">{{ data.meet.customerService }}</div>
+                        <div class="text-lg text-slate-400">
+                            {{ data.meet.customerService }}
+                        </div>
                         <div class="text-4xl font-medium">
                             {{ data.title }}
                         </div>
                         <div>
                             <div class="flex justify-start my-2 gap-3">
-                            <div>
-                                <font-awesome-icon
-                                    :icon="['far', 'clock']"
-                                    class="w-4 h-4"
-                                />
+                                <div>
+                                    <font-awesome-icon
+                                        :icon="['far', 'clock']"
+                                        class="w-4 h-4"
+                                    />
+                                </div>
+                                <div>{{ data.meet.duration }}</div>
                             </div>
-                            <div>{{ data.meet.duration }}</div>
-                        </div>
-                        <div class="flex justify-start my-2 gap-3">
-                            <div>
-                                <font-awesome-icon :icon="['far', 'video']" />
+                            <div class="flex justify-start my-2 gap-3">
+                                <div>
+                                    <font-awesome-icon
+                                        :icon="['far', 'video']"
+                                    />
+                                </div>
+                                <div>{{ data.meetInformation }}</div>
                             </div>
-                            <div>{{ data.meetInformation }}</div>
                         </div>
-                        </div>
-                       
+
                         <div class="my-3">
                             <h2 class="text-sm font-medium text-gray-900">
                                 Description
