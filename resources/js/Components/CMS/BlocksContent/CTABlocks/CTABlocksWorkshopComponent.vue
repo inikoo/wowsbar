@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import CTAThree from './CTAThree.vue';
-import CTAOne from './CTAOne.vue';
-import CTATwo from './CTATwo.vue';
-import { computed, ref } from 'vue';
+import { computed, ref } from 'vue'
+import CTAOne from '@/Components/CMS/BlocksContent/CTABlocks/CTAOne.vue'
+import CTATwo from '@/Components/CMS/BlocksContent/CTABlocks/CTATwo.vue'
+import CTAThree from '@/Components/CMS/BlocksContent/CTABlocks/CTAThree.vue'
 import ButtonTheme from '@/Components/CMS/Utils/ButtonTheme.vue'
 
 
@@ -14,10 +14,10 @@ const components = {
     2: CTAThree
 }
 
-const data = {
-    title : '<p style=\"text-align: center\"><strong><span style=\"font-size: 44px; color: #ffffff\">We’re here to help</span></strong></p>',
-    subtitle :'Award winning support',
-    description :'<p style="text-align: center"><span style="font-size: 20px; color: #d6d6d6">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Et, egestas tempus tellus etiam sed. Quam a scelerisque amet ullamcorper eu enim et fermentum, augue. Aliquet amet volutpat quisque ut interdum tincidunt duis.</span></p>'
+const dataCTA = {
+    title : '<p style="text-align: center"><strong><span style="font-size: 44px; color: #171717">Boost your career</span></strong></p>',
+    subtitle :'<p style="text-align: center"><span style="font-size: 24px; color: rgb(74, 74, 74)">Elevate your career with a leading company. Uncover your full potential and embark on a rewarding journey with us.</span></p>',
+    button :'Join now!'
 }
 
 
@@ -28,9 +28,9 @@ const component = computed(()=>{
 </script>
 
 <template>
-    <div class="w-ful">
-        <ButtonTheme v-model="CTATheme" :label="['Simple', 'wide', 'image']"/>
-        <component :is="component" :data="data"/>
+    <div class="w-full space-y-4">
+        <ButtonTheme v-model="CTATheme" :label="['Simple', '2 Grids', 'Elevating']"/>
+        <component :is="component" :dataCTA="dataCTA"/>
     </div>
 </template>
 

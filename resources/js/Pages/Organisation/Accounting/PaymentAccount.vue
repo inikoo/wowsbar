@@ -17,11 +17,11 @@ import {
 import PageHeading from '@/Components/Headings/PageHeading.vue';
 import {computed, defineAsyncComponent, ref} from "vue";
 import {useTabChange} from "@/Composables/tab-change";
-import TablePayments from "@/Pages/Tables/TablePayments.vue";
+import TablePayments from "@/Components/Tables/TablePayments.vue";
 import ModelDetails from "@/Pages/ModelDetails.vue";
 import Tabs from "@/Components/Navigation/Tabs.vue";
 import { capitalize } from "@/Composables/capitalize"
-import TableHistories from "@/Pages/Tables/TableHistories.vue";
+import TableHistories from "@/Components/Tables/TableHistories.vue";
 
 library.add(faCoins, faChartLine, faInfoCircle,faMoneyCheckAlt);
 
@@ -55,7 +55,7 @@ const component = computed(() => {
 </script>
 
 
-<template layout="App">
+<template layout="OrgApp">
     <Head :title="capitalize(title)"/>
     <PageHeading :data="pageHead"></PageHeading>
     <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate"/>
