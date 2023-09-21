@@ -4,6 +4,7 @@ namespace App\Models\Media;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * App\Models\ExcelUploadRecord
@@ -33,4 +34,9 @@ class ExcelUploadRecord extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function excel(): BelongsTo
+    {
+        return $this->belongsTo(ExcelUpload::class);
+    }
 }

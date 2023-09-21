@@ -23,16 +23,19 @@ class ImportExcelUploads
     /**
      * @throws \Throwable
      */
-    public function handle(ExcelUploadRecord $employeeUploadRecord, $totalUploads, $totalImported, $type): void
+    public function handle(ExcelUploadRecord $uploadRecord, $totalUploads, $totalImported, $type): void
     {
         try {
             event(new UploadExcelProgressEvent([
                 'total_uploads'  => $totalUploads,
                 'total_complete' => $totalImported
             ], class_basename($type)));
-            $employeeUploadRecord->update(['status' => UploadRecordStatusEnum::COMPLETE]);
+            $uploadRecord->update(['status' => UploadRecordStatusEnum::COMPLETE]);
         } catch (\Exception $e) {
-            $employeeUploadRecord->update(['status' => UploadRecordStatusEnum::FAILED]);
+            $uploadRecord->update([
+                'status' => UploadRecordStatusEnum::FAILED,
+                'comment' => $e->getMessage()
+            ]);
         }
     }
 }
