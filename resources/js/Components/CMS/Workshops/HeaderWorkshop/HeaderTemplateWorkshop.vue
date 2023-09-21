@@ -15,9 +15,9 @@ import {
     faTrash,
     faBars,
 } from "@/../private/pro-solid-svg-icons";
-import HyperlinkTools from "@/Components/CMS/Fields/Hyperlinktools.vue";
 import ToolsTop from "@/Components/CMS/Header/ToolsTop.vue";
 import Header from "@/Components/CMS/Header/index.vue";
+import Image from "@/Components/Image.vue"
 
 library.add(faHandPointer, faText, faSearch, faImage, faTrash, faBars);
 const props = defineProps<{
@@ -38,7 +38,7 @@ const changeLogo = async (element) => {
 
 <template>
     <div class="bg-white">
-        <div class="flex" @click="layerActive = null">
+        <div class="flex">
             <div
                 class="w-[200px] p-6 overflow-y-auto overflow-x-hidden h-[46rem]"
             >
@@ -56,26 +56,10 @@ const changeLogo = async (element) => {
                         style="display: none"
                         @change="changeLogo"
                     />
-                    <img
-                        class="inline-block h-14 w-auto rounded-md my-2"
-                        :src="set.img"
-                        alt=""
-                    />
+                    <Image :src="set.logo" class="inline-block h-14 w-auto rounded-md my-2"/>
                 </label>
 
                 <hr class="mt-5" />
-                <div class="flex items-center justify-between mt-5">
-                    <h2 class="text-sm font-medium text-gray-900">
-                        Appointment
-                    </h2>
-                </div>
-                <!-- <HyperlinkTools
-                    :data="set.appointment"
-                    :formList="{
-                        label: 'label',
-                        link: 'link',
-                    }"
-                /> -->
             </div>
 
             <!-- editing area -->
