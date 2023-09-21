@@ -15,6 +15,7 @@ import {
     faTrash,
     faBars,
 } from "@/../private/pro-solid-svg-icons";
+import HyperlinkTools from '@/Components/CMS/Fields/Hyperlinktools.vue';
 import ToolsTop from "@/Components/CMS/Header/ToolsTop.vue";
 import {
     getDbRef,
@@ -27,20 +28,8 @@ const props = defineProps<{
     data: Object;
 }>();
 
-const Dummy = {
-    tools: [
-        { name: "edit", icon: ["fas", "fa-hand-pointer"] },
-        { name: "grab", icon: ["fas", "hand-rock"] },
-        // { name: 'Heather Grey', icon: ['fas', 'fa-hand-pointer']},
-    ],
-    addContent: [
-        { name: "Text", value: "text", icon: "fas fa-text" },
-        { name: "Image", value: "image", icon: "fas fa-image" },
-        { name: "Search", value: "search", icon: "fas fa-search" },
-    ],
-};
 
-const set = {
+const set = ref({
     img: "http://wowsbar.test/favicons/wowsbar-website-favicon-color-180x180.png",
     appointment: {
         label: "appointment",
@@ -50,13 +39,15 @@ const set = {
         label: "Log in",
         link: "",
     },
-    theme : {name: 'simple Sticky', value: 2 }
+    theme: { name: "simple Sticky", value: 2 },
+});
+
+const changeLogo = async (element) => {
+  const file = element.target.files[0];
+  if (file) {
+    set.value.img = URL.createObjectURL(file);
+  }
 };
-
-const data = reactive([...props.data.data.data]);
-const layerActive = ref(null);
-
-const theme = ref({ name: "Header theme One", value: 1 });
 
 </script>
 
@@ -64,13 +55,43 @@ const theme = ref({ name: "Header theme One", value: 1 });
     <div class="bg-white">
         <div class="flex" @click="layerActive = null">
             <div
-                class="w-[200px] p-6 overflow-y-auto overflow-x-hidden border border-gray-300 border-1 h-[46rem]"
-            ></div>
+                class="w-[200px] p-6 overflow-y-auto overflow-x-hidden h-[46rem]"
+            >
+                <div class="flex items-center justify-between">
+                    <h2 class="text-sm font-medium text-gray-900">Logo</h2>
+                </div>
+                <label
+                    for="faviconUpload"
+                    class="flex justify-center items-center bg-white cursor-pointer"
+                >
+                    <input
+                        type="file"
+                        id="faviconUpload"
+                        accept="image/*"
+                        style="display: none"
+                        @change="changeLogo"
+                    />
+                    <img
+                        class="inline-block h-14 w-auto rounded-md my-2"
+                        :src="set.img"
+                        alt=""
+                    />
+                </label>
+
+                <hr class="mt-5">
+                <div class="flex items-center justify-between mt-5">
+                    <h2 class="text-sm font-medium text-gray-900">Appointment</h2>
+                </div>
+                <HyperlinkTools :data="set.appointment"
+                                :formList="{
+                                    label: 'label',
+                                    link: 'link',
+                                }" />
+
+            </div>
 
             <!-- editing area -->
-            <div
-                class="w-full bg-gray-200 border border-gray-300 overflow-hidden"
-            >
+            <div class="w-full bg-gray-200 overflow-hidden">
                 <ToolsTop
                     :theme="set.theme"
                     @click="(e) => e.stopPropagation()"

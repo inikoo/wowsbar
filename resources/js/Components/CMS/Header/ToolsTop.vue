@@ -33,6 +33,7 @@ const setTheme=(value)=>{
   for(const t in props.theme){
     props.theme[t] = data[t]
   }
+  console.log(props)
 }
 
 
