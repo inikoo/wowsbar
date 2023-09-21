@@ -7,12 +7,14 @@
 
 namespace App\Models\Auth;
 
+use App\Models\Media\ExcelUpload;
 use App\Models\Traits\HasHistory;
 use App\Models\Traits\HasRoles;
 use App\Models\Traits\HasUniversalSearch;
 use App\Models\Traits\IsUser;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -44,6 +46,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \OwenIt\Auditing\Models\Audit> $audits
  * @property-read int|null $audits_count
  * @property-read \App\Models\Media\Media|null $avatar
+ * @property-read ExcelUpload|null $excelUploads
  * @property-read array $es_audits
  * @property-read \App\Models\Assets\Language $language
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \App\Models\Media\Media> $media
@@ -128,6 +131,11 @@ class OrganisationUser extends Authenticatable implements HasMedia, Auditable
     public function parent(): MorphTo
     {
         return $this->morphTo()->withTrashed();
+    }
+
+    public function excelUploads(): HasMany
+    {
+        return $this->hasMany(ExcelUpload::class);
     }
 
 }
