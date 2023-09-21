@@ -34,7 +34,6 @@ use Spatie\Sluggable\SlugOptions;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property Carbon|null $deleted_at
- * @property int|null $source_id
  * @property-read Collection<int, \OwenIt\Auditing\Models\Audit> $audits
  * @property-read int|null $audits_count
  * @property-read Collection<int, \App\Models\HumanResources\Clocking> $clockings
@@ -52,7 +51,6 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|ClockingMachine whereDeletedAt($value)
  * @method static Builder|ClockingMachine whereId($value)
  * @method static Builder|ClockingMachine whereSlug($value)
- * @method static Builder|ClockingMachine whereSourceId($value)
  * @method static Builder|ClockingMachine whereUpdatedAt($value)
  * @method static Builder|ClockingMachine whereWorkplaceId($value)
  * @method static Builder|ClockingMachine withTrashed()

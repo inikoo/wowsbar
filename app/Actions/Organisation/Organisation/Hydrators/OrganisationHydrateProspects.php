@@ -20,10 +20,10 @@ class OrganisationHydrateProspects
     public function handle(): void
     {
         $stats = [
-            'number_prospects' => Prospect::where('scope_type','Shop')->count()
+            'number_prospects' => Prospect::where('scope_type', 'Shop')->count()
         ];
 
-        array_merge($stats, $this->getEnumStats('prospects', 'state', ProspectStateEnum::class, Prospect::where('scope_type','Shop')));
+        array_merge($stats, $this->getEnumStats('prospects', 'state', ProspectStateEnum::class, Prospect::where('scope_type', 'Shop')));
         organisation()->crmStats()->update($stats);
     }
 }

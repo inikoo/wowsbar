@@ -9,7 +9,6 @@ namespace App\Actions\CRM\Customer\UI;
 
 use App\Actions\InertiaAction;
 use App\Actions\Organisation\UI\CRM\ShowCRMDashboard;
-use App\Actions\UI\Customer\Dashboard\ShowDashboard;
 use App\Enums\UI\Customer\CustomerTabsEnum;
 use App\Http\Resources\CRM\CustomerResource;
 use App\Models\CRM\Customer;
@@ -40,7 +39,7 @@ class ShowCustomer extends InertiaAction
         return $this->handle($customer);
     }
 
-    public function inShop(Shop $shop,Customer $customer, ActionRequest $request): Customer
+    public function inShop(Shop $shop, Customer $customer, ActionRequest $request): Customer
     {
         $this->initialisation($request)->withTab(CustomerTabsEnum::values());
         return $this->handle($customer);
@@ -165,7 +164,7 @@ class ShowCustomer extends InertiaAction
             'org.crm.shop.customers.show',
             'org.crm.shop.customers.edit'
             => array_merge(
-                ShowCRMDashboard::make()->getBreadcrumbs('org.crm.shop.dashboard',$routeParameters),
+                ShowCRMDashboard::make()->getBreadcrumbs('org.crm.shop.dashboard', $routeParameters),
                 $headCrumb(
                     Customer::where('slug', $routeParameters['customer'])->first(),
                     [
@@ -227,7 +226,7 @@ class ShowCustomer extends InertiaAction
                 'route' => [
                     'name'       => $routeName,
                     'parameters' => [
-                        'shop' => $customer->shop->slug,
+                        'shop'     => $customer->shop->slug,
                         'customer' => $customer->slug
                     ]
                 ]

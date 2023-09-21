@@ -50,7 +50,6 @@ use Spatie\Sluggable\SlugOptions;
  * @property Carbon|null $updated_at
  * @property Carbon|null $deleted_at
  * @property bool $with_refund
- * @property int|null $source_id
  * @property-read Currency $currency
  * @property-read Customer $customer
  * @property-read \App\Models\Accounting\PaymentAccount $paymentAccount
@@ -72,7 +71,6 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Payment wherePaymentAccountId($value)
  * @method static Builder|Payment whereReference($value)
  * @method static Builder|Payment whereSlug($value)
- * @method static Builder|Payment whereSourceId($value)
  * @method static Builder|Payment whereState($value)
  * @method static Builder|Payment whereStatus($value)
  * @method static Builder|Payment whereSubsequentStatus($value)

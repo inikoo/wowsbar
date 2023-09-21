@@ -26,8 +26,12 @@ use Spatie\Sluggable\SlugOptions;
  * App\Models\CRM\Prospect
  *
  * @property int $id
- * @property int|null $customer_id
  * @property string $slug
+ * @property string $scope_type
+ * @property int $scope_id
+ * @property int|null $shop_id
+ * @property int|null $customer_id
+ * @property int|null $portfolio_website_id
  * @property string|null $name
  * @property string|null $contact_name
  * @property string|null $company_name
@@ -42,7 +46,6 @@ use Spatie\Sluggable\SlugOptions;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property Carbon|null $deleted_at
- * @property int|null $source_id
  * @property-read \App\Models\CRM\Customer|null $customer
  * @property-read UniversalSearch|null $universalSearch
  * @method static \Database\Factories\CRM\ProspectFactory factory($count = null, $state = [])
@@ -64,8 +67,11 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Prospect whereLocation($value)
  * @method static Builder|Prospect whereName($value)
  * @method static Builder|Prospect wherePhone($value)
+ * @method static Builder|Prospect wherePortfolioWebsiteId($value)
+ * @method static Builder|Prospect whereScopeId($value)
+ * @method static Builder|Prospect whereScopeType($value)
+ * @method static Builder|Prospect whereShopId($value)
  * @method static Builder|Prospect whereSlug($value)
- * @method static Builder|Prospect whereSourceId($value)
  * @method static Builder|Prospect whereState($value)
  * @method static Builder|Prospect whereUpdatedAt($value)
  * @method static Builder|Prospect withTrashed()

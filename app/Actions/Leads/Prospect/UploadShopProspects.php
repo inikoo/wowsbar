@@ -29,11 +29,11 @@ class UploadShopProspects
      */
     private bool $asAction          = false;
 
-    public function handle(Shop $shop,$file): void
+    public function handle(Shop $shop, $file): void
     {
         $prospectUpload = StoreExcelUploads::run($file, Prospect::class);
 
-        $importer=new ProspectImport($shop,$prospectUpload);
+        $importer=new ProspectImport($shop, $prospectUpload);
 
         Excel::import($importer, storage_path('app/' . $prospectUpload->getFullPath()));
     }
@@ -41,10 +41,10 @@ class UploadShopProspects
     /**
      * @throws \Throwable
      */
-    public function asController(Shop $shop,ActionRequest $request): void
+    public function asController(Shop $shop, ActionRequest $request): void
     {
         $file = $request->file('file');
-        $this->handle($shop,$file);
+        $this->handle($shop, $file);
     }
 
     public string $commandSignature = 'shop:import-prospects {shop} {filename}';
@@ -64,7 +64,7 @@ class UploadShopProspects
         $filename = $command->argument('filename');
         $file     = ConvertUploadedFile::run($filename);
 
-        $this->handle($shop,$file);
+        $this->handle($shop, $file);
 
         $command->line('Prospect imported');
 

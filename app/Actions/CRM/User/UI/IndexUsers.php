@@ -248,7 +248,7 @@ class IndexUsers extends InertiaAction
     }
 
     /** @noinspection PhpUnusedParameterInspection */
-    public function inCustomerInShop(Shop $shop,Customer $customer, ActionRequest $request): LengthAwarePaginator
+    public function inCustomerInShop(Shop $shop, Customer $customer, ActionRequest $request): LengthAwarePaginator
     {
         $this->initialisation($request)->withTab(UsersTabsEnum::values());
         $this->parent = $customer;
