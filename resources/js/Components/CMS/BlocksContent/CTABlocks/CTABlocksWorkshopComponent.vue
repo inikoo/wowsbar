@@ -29,7 +29,7 @@ const component = computed(()=>{
 
 <template>
     <div class="w-full space-y-4">
-        <ButtonTheme v-model="CTATheme" :label="['Simple', 'wide', 'image']"/>
+        <ButtonTheme v-model="CTATheme" :label="['Simple', '2 Grids', 'Elevating']"/>
         <component :is="component" :dataCTA="dataCTA"/>
     </div>
 </template>
