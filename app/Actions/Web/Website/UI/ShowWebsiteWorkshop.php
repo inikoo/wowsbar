@@ -84,13 +84,6 @@ class ShowWebsiteWorkshop extends InertiaAction
                         fn () => GetWebsiteWorkshopLayout::run($website)
                     ),
 
-                WebsiteWorkshopTabsEnum::COLOR_SCHEME->value => $this->tab == WebsiteWorkshopTabsEnum::COLOR_SCHEME->value
-                    ?
-                    fn () => GetWebsiteWorkshopColorScheme::run($website)
-                    : Inertia::lazy(
-                        fn () => GetWebsiteWorkshopColorScheme::run($website)
-                    ),
-
                 WebsiteWorkshopTabsEnum::HEADER->value => $this->tab == WebsiteWorkshopTabsEnum::HEADER->value
                     ?
                     fn () => GetWebsiteWorkshopHeader::run($website)

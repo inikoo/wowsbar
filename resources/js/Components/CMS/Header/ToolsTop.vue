@@ -2,20 +2,19 @@
 import { faHandPointer, faHandRock, faPlus } from '@/../private/pro-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
+import { toRefs } from 'vue'
 
 library.add(faHandPointer, faHandRock, faPlus)
 const props = defineProps({
-  tool: Object,
   theme: Object,
 });
 
 
+const { theme } = toRefs(props)
+
 const emits = defineEmits();
 
-const themeOption = [
-        { name: 'Simple', value: 1 },
-        { name: 'simple Sticky', value: 2 },
-]
+const themeOption = ["simpleSticky","simple"]
 
 const Bluprint = [
   {
@@ -33,7 +32,6 @@ const setTheme=(value)=>{
   for(const t in props.theme){
     props.theme[t] = data[t]
   }
-  console.log(props)
 }
 
 
@@ -46,9 +44,9 @@ const setTheme=(value)=>{
 
     <div class="w-1/2 flex justify-end items-center">
       <div v-for="item in Bluprint.filter((item) => item.position === 'left')" :key="item.name">
-        <select v-model="theme.value" @change="setTheme(theme.value)" v-if="item.name === 'theme'"
+        <select v-model="theme" @change="setTheme(theme)" v-if="item.name === 'theme'"
           class="px-2 py-1 rounded-md border-gray-300 border w-[200px]">
-          <option v-for="option in item.optionsData.options" :key="option.value" :value="option.value">{{ option.name }}
+          <option v-for="option in item.optionsData.options" :key="option" :value="option">{{ option }}
           </option>
         </select>
       </div>
