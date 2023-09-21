@@ -21,12 +21,15 @@ class ShopHydrateProspects
     public function handle(Shop $shop): void
     {
         $stats = [
-            'number_prospects' => Prospect::where('shop_id',$shop->id)->count()
+            'number_prospects' => Prospect::where('shop_id', $shop->id)->count()
         ];
 
-        array_merge($stats, $this->getEnumStats('prospects', 'state',
+        array_merge($stats, $this->getEnumStats(
+            'prospects',
+            'state',
             ProspectStateEnum::class,
-            Prospect::where('shop_id',$shop->id)));
+            Prospect::where('shop_id', $shop->id)
+        ));
         organisation()->crmStats()->update($stats);
     }
 }

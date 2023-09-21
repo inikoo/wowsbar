@@ -32,9 +32,9 @@ class ProspectImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wi
     public ExcelUpload $prospectUpload;
     private Shop|Customer|PortfolioWebsite $scope;
 
-    public function __construct(Shop|Customer|PortfolioWebsite $scope,ExcelUpload $prospectUpload)
+    public function __construct(Shop|Customer|PortfolioWebsite $scope, ExcelUpload $prospectUpload)
     {
-        $this->scope=$scope;
+        $this->scope          =$scope;
         $this->prospectUpload = $prospectUpload;
     }
 
@@ -54,7 +54,7 @@ class ProspectImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wi
                 ]);
 
 
-                StoreProspect::run($this->scope,json_decode($prospect->data, true));
+                StoreProspect::run($this->scope, json_decode($prospect->data, true));
                 ImportExcelUploads::dispatch($prospect, count($collection), $totalImported++, Prospect::class);
             } catch (Exception $e) {
                 $totalImported--;
