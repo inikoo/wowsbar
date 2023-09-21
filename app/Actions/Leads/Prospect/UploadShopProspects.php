@@ -9,7 +9,6 @@ namespace App\Actions\Leads\Prospect;
 
 use App\Actions\Helpers\Uploads\ConvertUploadedFile;
 use App\Actions\Helpers\Uploads\StoreExcelUploads;
-use App\Actions\Organisation\Market\Shop\Hydrators\ShopHydrateProspects;
 use App\Imports\Leads\ProspectImport;
 use App\Models\CRM\Prospect;
 use App\Models\Market\Shop;
@@ -42,10 +41,10 @@ class UploadShopProspects
     /**
      * @throws \Throwable
      */
-    public function asController(ActionRequest $request): void
+    public function asController(Shop $shop,ActionRequest $request): void
     {
         $file = $request->file('file');
-        $this->handle($file);
+        $this->handle($shop,$file);
     }
 
     public string $commandSignature = 'shop:import-prospects {shop} {filename}';

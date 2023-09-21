@@ -44,7 +44,7 @@ Route::post('/article/{webpage:id}', StoreArticle::class)->name('article.store')
 
 
 Route::post('/employees/imports/upload', UploadEmployee::class)->name('employees.upload');
-Route::post('/prospects/imports/upload', UploadShopProspects::class)->name('prospects.upload');
+Route::post('/{shop:id}/prospects/imports/upload', UploadShopProspects::class)->name('shop.prospects.upload');
 Route::post('/products/imports/upload', UploadProduct::class)->name('products.upload');
 Route::post('/guests/imports/upload', UploadGuest::class)->name('guests.upload');
 

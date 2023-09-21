@@ -25,9 +25,12 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class IndexProspects extends InertiaAction
 {
+
+    private Shop|Organisation $parent;
+
     public function authorize(ActionRequest $request): bool
     {
-        $this->canEdit       = $request->user()->can('crm.prospects.edit');
+        $this->canEdit = $request->user()->can('crm.prospects.edit');
 
         return
             (
@@ -39,16 +42,20 @@ class IndexProspects extends InertiaAction
     public function asController(ActionRequest $request): LengthAwarePaginator
     {
         $this->initialisation($request);
-        return $this->handle(organisation());
+        $this->parent = organisation();
+
+        return $this->handle($this->parent);
     }
 
-    public function inShop(Shop $shop,ActionRequest $request): LengthAwarePaginator
+    public function inShop(Shop $shop, ActionRequest $request): LengthAwarePaginator
     {
         $this->initialisation($request);
+        $this->parent = $shop;
+
         return $this->handle($shop);
     }
 
-    public function handle(Organisation|Shop $parent,$prefix = null): LengthAwarePaginator
+    public function handle(Organisation|Shop $parent, $prefix = null): LengthAwarePaginator
     {
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
             $query->where(function ($query) use ($value) {
@@ -63,10 +70,10 @@ class IndexProspects extends InertiaAction
             InertiaTable::updateQueryBuilderParameters($prefix);
         }
 
-        $query=QueryBuilder::for(Prospect::class);
+        $query = QueryBuilder::for(Prospect::class);
 
-        if(class_basename($parent)=='Shop'){
-            $query->where('shop_id',$parent->id);
+        if (class_basename($parent) == 'Shop') {
+            $query->where('shop_id', $parent->id);
         }
 
         /** @noinspection PhpUndefinedMethodInspection */
@@ -131,28 +138,38 @@ class IndexProspects extends InertiaAction
                         'icon'  => ['fal', 'fa-user-plus'],
                         'title' => __('prospect')
                     ],
-                    'actions'=> [
+                    'actions'   => [
                         !$this->canEdit ? [
                             'type'    => 'buttonGroup',
-                            'buttons' => [
-                                [
-                                    'style' => 'secondary',
-                                    'icon'  => ['fal', 'fa-upload'],
-                                    'label' => 'upload',
-                                    'route' => [
-                                        'name'       => 'org.models.prospects.upload'
+                            'buttons' =>
+                                match (class_basename($this->parent)) {
+                                    'Shop' => [
+                                        [
+                                            'style' => 'secondary',
+                                            'icon'  => ['fal', 'fa-upload'],
+                                            'label' => 'upload',
+                                            'route' => [
+                                                'name' => 'org.models.shop.prospects.upload',
+                                                'parameters' => $this->parent->id
+
+                                            ],
+                                        ],
+                                        [
+                                            'type'  => 'button',
+                                            'style' => 'create',
+                                            'label' => __('prospect'),
+                                            'route' => [
+                                                'name'       => 'org.crm.shop.prospects.create',
+                                                'parameters' => array_values($this->originalParameters)
+                                            ]
+                                        ]
                                     ],
-                                ],
-                                [
-                                    'type'  => 'button',
-                                    'style' => 'create',
-                                    'label' => __('prospect'),
-                                    'route' => [
-                                        'name'       => 'org.crm.prospects.create',
-                                        'parameters' => array_values($this->originalParameters)
+                                    default => [
+
                                     ]
-                                ]
-                            ]
+                                }
+
+
                         ] : false
                     ]
                 ],
