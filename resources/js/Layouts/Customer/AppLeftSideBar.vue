@@ -12,8 +12,9 @@ import {ref, onMounted, onUnmounted} from 'vue'
 import {router} from '@inertiajs/vue3'
 
 import {library} from "@fortawesome/fontawesome-svg-core"
-import {faBrowser, faRectangleWide, faUserCog, faTachometerAlt,
-faTransporter,faBullseye,faThumbsUp
+import {
+    faBrowser, faRectangleWide, faUserCog, faTachometerAlt,
+    faTransporter, faBullseye, faThumbsUp, faEnvelope
 } from "../../../private/pro-light-svg-icons"
 import { faGoogle } from '@fortawesome/free-brands-svg-icons'
 
@@ -22,7 +23,7 @@ import {useLayoutStore} from "@/Stores/layout.js"
 import {computed} from "vue"
 
 library.add(faBrowser, faRectangleWide, faUserCog, faChevronLeft, faTachometerAlt,
-    faGoogle,faTransporter,faBullseye,faThumbsUp
+    faGoogle,faTransporter,faBullseye,faThumbsUp,faEnvelope
 )
 
 const layout = useLayoutStore()

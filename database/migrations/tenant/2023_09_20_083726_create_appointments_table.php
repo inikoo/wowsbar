@@ -16,11 +16,10 @@ return new class () extends Migration {
             $table->unsignedInteger('customer_id');
             $table->foreign('customer_id')->references('id')->on('customers')->onUpdate('cascade')->onDelete('cascade');
 
-            $table->unsignedSmallInteger('organisation_user_id');
+            $table->unsignedSmallInteger('organisation_user_id')->nullable();
             $table->foreign('organisation_user_id')->references('id')->on('organisation_users');
 
-            $table->morphs('parent');
-            $table->dateTimeTz('datetime');
+            $table->dateTimeTz('schedule_at');
             $table->string('description')->nullable();
 
             $table->string('state')->default(AppointmentStateEnum::BOOKED->value);

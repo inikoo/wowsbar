@@ -185,6 +185,21 @@ class GetLayout
             ];
         }
 
+        if ($user->can('crm.view')) {
+            $navigation['mailroom'] = [
+                'scope'   => 'mailroom',
+                'icon'    => ['fal', 'fa-envelope'],
+                'label'   => __('Mailroom'),
+                'route'   => [
+                    'name'       => 'org.portfolio-websites.index',
+                    'parameters' => []
+                ],
+                'topMenu' => [
+                    'subSections' => []
+                ]
+            ];
+        }
+
         if ($user->can('accounting.view')) {
             $navigation['accounting'] = [
                 'label'   => __('Accounting'),

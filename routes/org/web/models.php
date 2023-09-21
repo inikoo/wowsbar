@@ -11,6 +11,8 @@ use App\Actions\Accounting\PaymentAccount\StorePaymentAccount;
 use App\Actions\Accounting\PaymentAccount\UpdatePaymentAccount;
 use App\Actions\Accounting\PaymentServiceProvider\DeletePaymentServiceProvider;
 use App\Actions\Accounting\PaymentServiceProvider\UpdatePaymentServiceProvider;
+use App\Actions\CRM\Appointment\AssignAppointmentUser;
+use App\Actions\CRM\Appointment\StoreAppointment;
 use App\Actions\HumanResources\Employee\DeleteEmployee;
 use App\Actions\HumanResources\Employee\StoreEmployee;
 use App\Actions\HumanResources\Employee\UpdateEmployee;
@@ -59,3 +61,9 @@ Route::post('/payment-account', StorePaymentAccount::class)->name('payment-accou
 Route::post('/shop/{shop}/product', [StoreProduct::class, 'inShop'])->name('show.product.store');
 Route::patch('/product/{product}', UpdateProduct::class)->name('product.update');
 Route::delete('/product/{product}', UpdateProduct::class)->name('product.delete');
+
+
+Route::prefix('appointment')->as('appointment.')->group(function () {
+    Route::post('/', StoreAppointment::class)->name('store');
+    Route::patch('/assign/{organisationUser}', AssignAppointmentUser::class)->name('assign');
+});

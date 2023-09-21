@@ -15,6 +15,7 @@ use App\Models\Market\Shop;
 use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
@@ -24,20 +25,18 @@ use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
 use Throwable;
 
-class StoreAppointment
+class GetScheduleAppointment
 {
     use AsAction;
     use WithAttributes;
-
-    private bool $asAction = false;
 
 
     /**
      * @throws Throwable
      */
-    public function handle(Customer $customer, array $modelData): Model
+    public function handle(string $date): Collection
     {
-        return $customer->appointment()->create($modelData);
+        return Appointment::whereDate('schedule_at', $date)->get();
     }
 
     public function authorize(ActionRequest $request): bool
@@ -59,34 +58,33 @@ class StoreAppointment
     /**
      * @throws Throwable
      */
-    public function asController(Customer $customer, ActionRequest $request): Model
+    public function asController(ActionRequest $request): Collection
     {
-        $this->fillFromRequest($request);
-        $request->validate();
-
-        return $this->handle($customer, $request->validated());
+        return $this->handle($request->input('date'));
     }
 
-    public string $commandSignature = 'appointment:book {customer} {schedule} {--t|type=} {--e|event=} {--a|event_address=}';
+    public string $commandSignature = 'shop:new-customer {shop} {email} {--N|contact_name=} {--C|company=} {--P|password=}';
 
     /**
      * @throws \Throwable
      */
     public function asCommand(Command $command): int
     {
+        $this->asAction = true;
+
         try {
-            $customer = Customer::where('slug', $command->argument('customer'))->firstOrFail();
+            $shop = Shop::where('slug', $command->argument('shop'))->firstOrFail();
         } catch (Exception $e) {
             $command->error($e->getMessage());
 
             return 1;
         }
 
+
         $this->setRawAttributes([
-            'schedule_at' => $command->argument('schedule'),
-            'type' => $command->option('type'),
-            'event'        => $command->option('event'),
-            'event_address'        => $command->option('event_address')
+            'contact_name' => $command->option('contact_name'),
+            'company_name' => $command->option('company'),
+            'email'        => $command->argument('email'),
         ]);
 
         try {
@@ -97,9 +95,9 @@ class StoreAppointment
             return 1;
         }
 
-        $this->handle($customer, $validatedData);
+        $customer = $this->handle($shop, $validatedData);
 
-        $command->info("Appointment created successfully 🎉");
+        $command->info("Customer $customer->slug created successfully 🎉");
 
         return 0;
     }

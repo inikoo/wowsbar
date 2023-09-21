@@ -77,6 +77,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read Collection<int, Snapshot> $snapshots
  * @property-read int|null $snapshots_count
  * @property-read \App\Models\CRM\CustomerStats|null $stats
+ * @property-read \App\Models\CRM\Appointment|null $appointment
  * @property-read UniversalSearch|null $universalSearch
  * @property-read Collection<int, User> $users
  * @property-read int|null $users_count
@@ -224,6 +225,11 @@ class Customer extends Model implements HasMedia
     public function shop(): BelongsTo
     {
         return $this->belongsTo(Shop::class);
+    }
+
+    public function appointment(): HasMany
+    {
+        return $this->hasMany(Appointment::class);
     }
 
     public function scopedProspects(): MorphMany
