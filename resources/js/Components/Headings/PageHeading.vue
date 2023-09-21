@@ -123,7 +123,7 @@ const getActionIcon = (action: any) => {
     <div class="mx-4 my-4 md:my-2 grid grid-flow-col justify-between items-center">
         <div>
             <h2 class="font-bold text-gray-700 dark:text-gray-300 text-2xl tracking-tight capitalize">
-                <span v-if="data.container" class="text-orange-500 font-medium mr-2">
+                <span v-if="data.container" class="text-black-500 font-medium mr-2">
                     <FontAwesomeIcon v-if="data.container.icon" :title="capitalize(data.container.tooltip)"
                                      aria-hidden="true" :icon="data.container.icon" size="xs"/>
                     {{ trans(data.container.label) }}

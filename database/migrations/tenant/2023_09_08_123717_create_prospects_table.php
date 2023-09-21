@@ -17,9 +17,16 @@ return new class () extends Migration {
     {
         Schema::create('prospects', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('slug')->unique()->collation('und_ns');
+            $table->string('scope_type')->index();
+            $table->unsignedInteger('scope_id')->index();
+
+            $table->unsignedInteger('shop_id')->index()->nullable();
+            $table->foreign('shop_id')->references('id')->on('shops');
             $table->unsignedInteger('customer_id')->index()->nullable();
             $table->foreign('customer_id')->references('id')->on('customers');
-            $table->string('slug')->unique()->collation('und_ns');
+            $table->unsignedInteger('portfolio_website_id')->index()->nullable();
+            $table->foreign('portfolio_website_id')->references('id')->on('portfolio_websites');
             $table->string('name', 256)->nullable()->collation('und_ns');
             $table = $this->contactFields(table: $table, withWebsite: true);
             $table->jsonb('location');
@@ -27,8 +34,9 @@ return new class () extends Migration {
             $table->jsonb('data');
             $table->timestampsTz();
             $table->softDeletesTz();
+            $table->unique(['scope_type','scope_id','email']);
+            $table->unique(['scope_type','scope_id','phone']);
 
-            $table->unsignedInteger('source_id')->nullable()->unique();
         });
     }
 

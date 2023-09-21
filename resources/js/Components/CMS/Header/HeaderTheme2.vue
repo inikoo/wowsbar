@@ -7,9 +7,13 @@ const props = defineProps<{
   data: Object
 }>()
 
+const changeLogo = async (element) => {
+  const file = element.target.files[0];
+  if (file) {
+    props.data.img = URL.createObjectURL(file);
+  }
+};
 
-
-const mobileMenuOpen = ref(false)
 </script>
 
 <template>
@@ -17,20 +21,29 @@ const mobileMenuOpen = ref(false)
     <nav class="mx-auto flex items-center justify-between p-6 lg:px-8" aria-label="Global">
       <a href="#" class="-m-1.5 p-1.5">
         <span class="sr-only">Your Company</span>
-        <img class="h-8 w-auto" :src="data.img" alt="" />
+        <label for="faviconUpload" class="flex justify-center items-center bg-white cursor-pointer">
+          <input type="file" id="faviconUpload" accept="image/*" style="display: none" @change="changeLogo" />
+          <img class="h-8 w-auto" :src="data.img" alt="" />
+        </label>
       </a>
       <div class="flex gap-3">
         <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-          <a href="#" class="flex text-sm font-semibold leading-6 text-gray-900"><Button>
+          <a href="#" class="flex text-sm font-semibold leading-6 text-gray-900">
+            <Button>
               <HyperLink :formList="{
                 label: 'label',
                 link: 'link',
-              }" label="label" :data="data.appointment" :useDelete="false"/>
+              }" label="label" :data="data.appointment" :useDelete="false" />
             </Button></a>
         </div>
         <div class="text-gray-300">|</div>
         <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-          <a href="#" class="text-sm font-semibold leading-6 text-gray-900"><Button>Log in</Button></a>
+          <a class="text-sm font-semibold leading-6 text-gray-900"><Button>
+              <HyperLink :formList="{
+                label: 'label',
+                link: 'link',
+              }" label="label" :data="data.logIn" :useDelete="false" />
+            </Button></a>
         </div>
       </div>
 

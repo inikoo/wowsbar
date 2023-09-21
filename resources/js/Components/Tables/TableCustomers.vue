@@ -14,10 +14,18 @@ const props = defineProps<{
 }>()
 
 function customerRoute(customer) {
-    return route(
-        'org.crm.customers.show',
-        [customer.slug]);
+    switch (route().current()) {
+        case 'org.crm.shop.customers.index':
+            return route(
+                'org.crm.shop.customers.show',
+                [route().params['shop'],customer.slug]);
+        default:
+            return route(
+                'org.crm.customers.show',
+                [customer.slug]);
+    }
 }
+
 </script>
 
 <template>

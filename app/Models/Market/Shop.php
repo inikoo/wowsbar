@@ -90,6 +90,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read Timezone $timezone
  * @property-read \App\Models\Search\UniversalSearch|null $universalSearch
  * @property-read Website|null $website
+ * @method static \Illuminate\Database\Eloquent\Builder|Shop dProspects()
  * @method static \Illuminate\Database\Eloquent\Builder|Shop newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Shop newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Shop onlyTrashed()
@@ -186,6 +187,12 @@ class Shop extends Model
     {
         return $this->hasMany(Prospect::class);
     }
+
+    public function scopedProspects(): MorphMany
+    {
+        return $this->morphMany(Prospect::class, 'scope');
+    }
+
 
     public function orders(): HasMany
     {

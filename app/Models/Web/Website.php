@@ -12,6 +12,7 @@ use App\Models\Market\Shop;
 use App\Models\Traits\HasHistory;
 use App\Models\Traits\HasUniversalSearch;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -22,7 +23,7 @@ use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
 /**
- * App\Models\Organisation\Web\Web
+ * App\Models\Web\Website
  *
  * @property int $id
  * @property int $shop_id
@@ -136,5 +137,17 @@ class Website extends Model implements Auditable
     public function home(): BelongsTo
     {
         return $this->belongsTo(Webpage::class, 'home_id');
+    }
+
+    protected function condition(): Attribute
+    {
+        return Attribute::make(
+            get: function (mixed $value, array $attributes) {
+                if($attributes['state']=='live') {
+                    return $attributes['status'] ? 'live' : 'maintenance';
+                }
+                return $attributes['state'];
+            }
+        );
     }
 }

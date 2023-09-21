@@ -18,6 +18,7 @@ use App\Http\Resources\History\HistoryResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\Auth\User;
 use App\Models\CRM\Customer;
+use App\Models\Market\Shop;
 use App\Models\Organisation\Organisation;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -246,6 +247,15 @@ class IndexUsers extends InertiaAction
         return $this->handle($customer, prefix: 'users');
     }
 
+    /** @noinspection PhpUnusedParameterInspection */
+    public function inCustomerInShop(Shop $shop, Customer $customer, ActionRequest $request): LengthAwarePaginator
+    {
+        $this->initialisation($request)->withTab(UsersTabsEnum::values());
+        $this->parent = $customer;
+
+        return $this->handle($customer, prefix: 'users');
+    }
+
 
     public function getBreadcrumbs(string $routeName, array $routeParameters): array
     {
@@ -273,7 +283,16 @@ class IndexUsers extends InertiaAction
                     ]
                 ),
             ),
-
+            'org.crm.shop.customers.show.web-users.index' =>
+            array_merge(
+                ShowCustomer::make()->getBreadcrumbs('org.crm.shop.customers.show', $routeParameters),
+                $headCrumb(
+                    [
+                        'name'       => 'org.crm.shop.customers.show.web-users.index',
+                        'parameters' => $routeParameters
+                    ]
+                ),
+            ),
 
             default => []
         };

@@ -1,13 +1,22 @@
 <?php
+/*
+ * Author: Raul Perusquia <raul@inikoo.com>
+ * Created: Thu, 21 Sep 2023 08:26:02 Malaysia Time, Pantai Lembeng, Bali, Indonesia
+ * Copyright (c) 2023, Raul A Perusquia Flores
+ */
 
-namespace App\Imports\CRM;
+namespace App\Imports\Leads;
 
-use App\Actions\CRM\Prospect\StoreProspect;
 use App\Actions\Helpers\Uploads\ImportExcelUploads;
 use App\Actions\Helpers\Uploads\UpdateExcelUploads;
+use App\Actions\Leads\Prospect\StoreProspect;
+use App\Models\CRM\Customer;
 use App\Models\CRM\Prospect;
+use App\Models\Market\Shop;
 use App\Models\Media\ExcelUpload;
 use App\Models\Media\ExcelUploadRecord;
+use App\Models\Portfolio\PortfolioWebsite;
+use Exception;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\SkipsFailures;
@@ -21,14 +30,16 @@ class ProspectImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wi
     use SkipsFailures;
 
     public ExcelUpload $prospectUpload;
-    public function __construct(ExcelUpload $prospectUpload)
+    private Shop|Customer|PortfolioWebsite $scope;
+
+    public function __construct(Shop|Customer|PortfolioWebsite $scope, ExcelUpload $prospectUpload)
     {
+        $this->scope          =$scope;
         $this->prospectUpload = $prospectUpload;
     }
 
-    /**
-    * @param Collection $collection
-    */
+
+
     public function collection(Collection $collection): void
     {
         $totalImported = 1;
@@ -42,9 +53,10 @@ class ProspectImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wi
                     'data'            => json_encode(Arr::except($prospect, 'code'))
                 ]);
 
-                StoreProspect::run(json_decode($prospect->data, true));
+
+                StoreProspect::run($this->scope, json_decode($prospect->data, true));
                 ImportExcelUploads::dispatch($prospect, count($collection), $totalImported++, Prospect::class);
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $totalImported--;
             }
         }

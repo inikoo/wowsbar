@@ -29,6 +29,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 use Spatie\MediaLibrary\HasMedia;
@@ -80,6 +81,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read Collection<int, User> $users
  * @property-read int|null $users_count
  * @property-read Website|null $website
+ * @method static Builder|Customer dProspects()
  * @method static \Database\Factories\CRM\CustomerFactory factory($count = null, $state = [])
  * @method static Builder|Customer newModelQuery()
  * @method static Builder|Customer newQuery()
@@ -222,6 +224,11 @@ class Customer extends Model implements HasMedia
     public function shop(): BelongsTo
     {
         return $this->belongsTo(Shop::class);
+    }
+
+    public function scopedProspects(): MorphMany
+    {
+        return $this->morphMany(Prospect::class, 'scope');
     }
 
 }

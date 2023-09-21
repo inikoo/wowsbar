@@ -37,7 +37,6 @@ use Spatie\Sluggable\SlugOptions;
  * @property Carbon|null $deleted_at
  * @property string|null $deleted_by_type
  * @property int|null $deleted_by_id
- * @property int|null $source_id
  * @property-read \App\Models\HumanResources\ClockingMachine|null $clockingMachine
  * @property-read \App\Models\HumanResources\Workplace|null $workplace
  * @method static Builder|Clocking newModelQuery()
@@ -55,7 +54,6 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Clocking whereId($value)
  * @method static Builder|Clocking whereNotes($value)
  * @method static Builder|Clocking whereSlug($value)
- * @method static Builder|Clocking whereSourceId($value)
  * @method static Builder|Clocking whereSubjectId($value)
  * @method static Builder|Clocking whereSubjectType($value)
  * @method static Builder|Clocking whereTimeTrackingId($value)

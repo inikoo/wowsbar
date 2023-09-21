@@ -1,15 +1,19 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Mon, 18 Sep 2023 18:48:13 Malaysia Time, Pantai Lembeng, Bali, Indonesia
+ * Created: Thu, 21 Sep 2023 08:23:57 Malaysia Time, Pantai Lembeng, Bali, Indonesia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\CRM\Prospect;
+namespace App\Actions\Leads\Prospect;
 
-use App\Actions\CRM\Prospect\Hydrators\ProspectHydrateUniversalSearch;
+use App\Actions\Leads\Prospect\Hydrators\ProspectHydrateUniversalSearch;
+use App\Actions\Organisation\Market\Shop\Hydrators\ShopHydrateProspects;
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateProspects;
+use App\Models\CRM\Customer;
 use App\Models\CRM\Prospect;
+use App\Models\Market\Shop;
+use App\Models\Portfolio\PortfolioWebsite;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
@@ -21,13 +25,32 @@ class StoreProspect
 
     private bool $asAction = false;
 
-    public function handle(array $modelData, array $addressesData = []): Prospect
+    public function handle(Shop|Customer|PortfolioWebsite $scope, array $modelData, array $addressesData = []): Prospect
     {
-        /** @var \App\Models\CRM\Prospect $prospect */
-        $prospect = Prospect::create($modelData);
+        if (class_basename($scope) == 'PortfolioWebsite') {
+            data_set($modelData, 'customer_id', $scope->customer_id);
+            data_set($modelData, 'portfolio_website_id', $scope->id);
+        } elseif (class_basename($scope) == 'Customer') {
+            data_set($modelData, 'customer_id', $scope->id);
+            data_set($modelData, 'portfolio_website_id', $scope->id);
+        } elseif (class_basename($scope) == 'Shop') {
+            data_set($modelData, 'shop_id', $scope->id);
+        }
 
-        ProspectHydrateUniversalSearch::dispatch($prospect);
-        OrganisationHydrateProspects::dispatch();
+        /** @var \App\Models\CRM\Prospect $prospect */
+        $prospect = $scope->scopedProspects()->create($modelData);
+
+
+        if (class_basename($scope) == 'PortfolioWebsite') {
+        } elseif (class_basename($scope) == 'Customer') {
+
+        } elseif (class_basename($scope) == 'Shop') {
+            ProspectHydrateUniversalSearch::dispatch($prospect);
+            OrganisationHydrateProspects::dispatch();
+            ShopHydrateProspects::dispatch($scope);
+
+        }
+
 
         return $prospect;
     }

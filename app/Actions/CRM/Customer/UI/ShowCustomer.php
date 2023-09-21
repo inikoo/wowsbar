@@ -8,10 +8,11 @@
 namespace App\Actions\CRM\Customer\UI;
 
 use App\Actions\InertiaAction;
-use App\Actions\UI\Customer\Dashboard\ShowDashboard;
+use App\Actions\Organisation\UI\CRM\ShowCRMDashboard;
 use App\Enums\UI\Customer\CustomerTabsEnum;
 use App\Http\Resources\CRM\CustomerResource;
 use App\Models\CRM\Customer;
+use App\Models\Market\Shop;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -32,10 +33,15 @@ class ShowCustomer extends InertiaAction
         return $request->user()->hasPermissionTo("shops.customers.view");
     }
 
-    public function inOrganisation(Customer $customer, ActionRequest $request): Customer
+    public function asController(Customer $customer, ActionRequest $request): Customer
     {
         $this->initialisation($request)->withTab(CustomerTabsEnum::values());
+        return $this->handle($customer);
+    }
 
+    public function inShop(Shop $shop, Customer $customer, ActionRequest $request): Customer
+    {
+        $this->initialisation($request)->withTab(CustomerTabsEnum::values());
         return $this->handle($customer);
     }
 
@@ -135,12 +141,11 @@ class ShowCustomer extends InertiaAction
                 ],
             ];
         };
-
         return match ($routeName) {
             'org.crm.customers.show',
             'org.crm.customers.edit'
             => array_merge(
-                ShowDashboard::make()->getBreadcrumbs(),
+                ShowCRMDashboard::make()->getBreadcrumbs('org.crm.dashboard'),
                 $headCrumb(
                     Customer::where('slug', $routeParameters['customer'])->first(),
                     [
@@ -150,6 +155,25 @@ class ShowCustomer extends InertiaAction
                         ],
                         'model' => [
                             'name'       => 'org.crm.customers.show',
+                            'parameters' => $routeParameters
+                        ]
+                    ],
+                    $suffix
+                ),
+            ),
+            'org.crm.shop.customers.show',
+            'org.crm.shop.customers.edit'
+            => array_merge(
+                ShowCRMDashboard::make()->getBreadcrumbs('org.crm.shop.dashboard', $routeParameters),
+                $headCrumb(
+                    Customer::where('slug', $routeParameters['customer'])->first(),
+                    [
+                        'index' => [
+                            'name'       => 'org.crm.shop.customers.index',
+                            'parameters' => $routeParameters
+                        ],
+                        'model' => [
+                            'name'       => 'org.crm.shop.customers.show',
                             'parameters' => $routeParameters
                         ]
                     ],
@@ -195,7 +219,16 @@ class ShowCustomer extends InertiaAction
                     'parameters' => [
                         'customer' => $customer->slug
                     ]
-
+                ]
+            ],
+            'org.crm.shop.customers.show' => [
+                'label' => $customer->name,
+                'route' => [
+                    'name'       => $routeName,
+                    'parameters' => [
+                        'shop'     => $customer->shop->slug,
+                        'customer' => $customer->slug
+                    ]
                 ]
             ]
         };
