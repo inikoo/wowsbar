@@ -29,8 +29,14 @@ const props = defineProps<{
                     </div>
                     <div class="text-gray-300">|</div>
                     <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-                        <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Log in <span
-                                aria-hidden="true">&rarr;</span></a>
+                        <a href="#" class="text-sm font-semibold leading-6 text-gray-900">
+                            <HyperLink :formList="{
+                                label: 'label',
+                                link: 'link',
+                            }" label="label" :data="data.logIn" :useDelete="false"
+                                cssClass="text-sm font-semibold leading-6 text-gray-900" /><span
+                                aria-hidden="true">&rarr;</span>
+                        </a>
                     </div>
                 </div>
             </nav>

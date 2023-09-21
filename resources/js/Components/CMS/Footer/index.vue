@@ -23,9 +23,9 @@ const props = defineProps<{
 
 
 const component = {
-   "1": FooterThemeOne,
-   "2": FooterThemeTwo,
-   "3": FooterThemeThree,
+   1: FooterThemeOne,
+   2: FooterThemeTwo,
+   3: FooterThemeThree,
 }
 
 </script>
