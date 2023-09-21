@@ -33,7 +33,7 @@ class ImportExcelUploads
             $uploadRecord->update(['status' => UploadRecordStatusEnum::COMPLETE]);
         } catch (\Exception $e) {
             $uploadRecord->update([
-                'status' => UploadRecordStatusEnum::FAILED,
+                'status'  => UploadRecordStatusEnum::FAILED,
                 'comment' => $e->getMessage()
             ]);
         }

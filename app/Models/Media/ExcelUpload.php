@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
  * App\Models\ExcelUpload
  *
  * @property int $id
- * @property int|null $tenant_id
+ * @property int|null $organisation_user_id
  * @property string $type
  * @property string $original_filename
  * @property string $filename
@@ -25,9 +25,9 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|ExcelUpload whereFilename($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ExcelUpload whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ExcelUpload whereNumberRows($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ExcelUpload whereOrganisationUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ExcelUpload whereOriginalFilename($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ExcelUpload wherePath($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ExcelUpload whereTenantId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ExcelUpload whereType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ExcelUpload whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ExcelUpload whereUploadedAt($value)
