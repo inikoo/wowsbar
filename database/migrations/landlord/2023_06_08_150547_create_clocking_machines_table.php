@@ -21,7 +21,6 @@ return new class () extends Migration {
             $table->jsonb('data');
             $table->timestampsTz();
             $table->softDeletes();
-            $table->unsignedBigInteger('source_id')->nullable()->unique();
         });
     }
 

@@ -1,17 +1,19 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Mon, 18 Sep 2023 18:48:13 Malaysia Time, Pantai Lembeng, Bali, Indonesia
+ * Created: Thu, 21 Sep 2023 08:23:57 Malaysia Time, Pantai Lembeng, Bali, Indonesia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\CRM\Prospect;
+namespace App\Actions\Leads\Prospect;
 
 use App\Actions\InertiaAction;
 use App\Actions\Organisation\UI\CRM\ShowCRMDashboard;
 use App\Http\Resources\CRM\ProspectResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\CRM\Prospect;
+use App\Models\Market\Shop;
+use App\Models\Organisation\Organisation;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -23,25 +25,37 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class IndexProspects extends InertiaAction
 {
+
+    private Shop|Organisation $parent;
+
     public function authorize(ActionRequest $request): bool
     {
-        $this->canEdit       = $request->user()->can('crm.customers.edit');
+        $this->canEdit = $request->user()->can('crm.prospects.edit');
 
         return
             (
                 $request->user()->tokenCan('root') or
-                $request->user()->hasPermissionTo('crm.customers.view')
+                $request->user()->hasPermissionTo('crm.prospects.view')
             );
     }
 
-    public function inOrganisation(ActionRequest $request): LengthAwarePaginator
+    public function asController(ActionRequest $request): LengthAwarePaginator
     {
         $this->initialisation($request);
+        $this->parent = organisation();
 
-        return $this->handle();
+        return $this->handle($this->parent);
     }
 
-    public function handle($prefix = null): LengthAwarePaginator
+    public function inShop(Shop $shop, ActionRequest $request): LengthAwarePaginator
+    {
+        $this->initialisation($request);
+        $this->parent = $shop;
+
+        return $this->handle($shop);
+    }
+
+    public function handle(Organisation|Shop $parent, $prefix = null): LengthAwarePaginator
     {
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
             $query->where(function ($query) use ($value) {
@@ -56,8 +70,14 @@ class IndexProspects extends InertiaAction
             InertiaTable::updateQueryBuilderParameters($prefix);
         }
 
+        $query = QueryBuilder::for(Prospect::class);
+
+        if (class_basename($parent) == 'Shop') {
+            $query->where('shop_id', $parent->id);
+        }
+
         /** @noinspection PhpUndefinedMethodInspection */
-        return QueryBuilder::for(Prospect::class)
+        return $query
             ->defaultSort('prospects.name')
             ->select([
                 'prospects.name',
@@ -118,28 +138,38 @@ class IndexProspects extends InertiaAction
                         'icon'  => ['fal', 'fa-user-plus'],
                         'title' => __('prospect')
                     ],
-                    'actions'=> [
+                    'actions'   => [
                         !$this->canEdit ? [
                             'type'    => 'buttonGroup',
-                            'buttons' => [
-                                [
-                                    'style' => 'secondary',
-                                    'icon'  => ['fal', 'fa-upload'],
-                                    'label' => 'upload',
-                                    'route' => [
-                                        'name'       => 'org.models.prospects.upload'
+                            'buttons' =>
+                                match (class_basename($this->parent)) {
+                                    'Shop' => [
+                                        [
+                                            'style' => 'secondary',
+                                            'icon'  => ['fal', 'fa-upload'],
+                                            'label' => 'upload',
+                                            'route' => [
+                                                'name' => 'org.models.shop.prospects.upload',
+                                                'parameters' => $this->parent->id
+
+                                            ],
+                                        ],
+                                        [
+                                            'type'  => 'button',
+                                            'style' => 'create',
+                                            'label' => __('prospect'),
+                                            'route' => [
+                                                'name'       => 'org.crm.shop.prospects.create',
+                                                'parameters' => array_values($this->originalParameters)
+                                            ]
+                                        ]
                                     ],
-                                ],
-                                [
-                                    'type'  => 'button',
-                                    'style' => 'create',
-                                    'label' => __('prospect'),
-                                    'route' => [
-                                        'name'       => 'org.crm.prospects.create',
-                                        'parameters' => array_values($this->originalParameters)
+                                    default => [
+
                                     ]
-                                ]
-                            ]
+                                }
+
+
                         ] : false
                     ]
                 ],

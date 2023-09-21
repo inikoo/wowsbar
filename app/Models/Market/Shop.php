@@ -187,6 +187,12 @@ class Shop extends Model
         return $this->hasMany(Prospect::class);
     }
 
+    public function scopedProspects(): MorphMany
+    {
+        return $this->morphMany(Prospect::class,'scope');
+    }
+
+
     public function orders(): HasMany
     {
         return $this->hasMany(Order::class);

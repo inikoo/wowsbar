@@ -38,7 +38,6 @@ return new class () extends Migration {
             $table->jsonb('errors');
             $table->timestampsTz();
             $table->softDeletesTz();
-            $table->unsignedInteger('source_id')->nullable()->unique();
         });
 
         //DB::statement('CREATE INDEX ON employees USING gin (contact_name gin_trgm_ops) ');

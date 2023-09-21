@@ -18,9 +18,6 @@ class StoreExcelUploads
     use AsAction;
     use WithAttributes;
 
-    /**
-     * @var true
-     */
     private bool $asAction = false;
 
     public function handle($file, $class): ExcelUpload

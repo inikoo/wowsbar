@@ -99,7 +99,7 @@ class ShowCRMDashboard
     }
 
 
-    public function getBreadcrumbs(string $routeName, array $routeParameters): array
+    public function getBreadcrumbs(string $routeName, array $routeParameters=[]): array
     {
         return array_merge(
             ShowDashboard::make()->getBreadcrumbs(),

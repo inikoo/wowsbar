@@ -79,9 +79,6 @@ class GetLayout
                             ],
                             default => []
                         }
-
-
-
                 ]
             ];
         }
@@ -144,11 +141,32 @@ class GetLayout
                         ],
                     },
                 'topMenu' => [
-                    'subSections' => [
+                    'subSections' =>
+                        match ($shopsCount) {
+                            1 =>
+                            [
+                                [
 
+                                    'label' => __('customers'),
+                                    'icon'  => ['fal', 'fa-user'],
+                                    'route' => [
+                                        'name'       => 'org.crm.shop.customers.index',
+                                        'parameters' => $shop->slug
+                                    ]
+                                ],
+                                [
+
+                                    'label' => __('prospects'),
+                                    'icon'  => ['fal', 'fa-transporter'],
+                                    'route' => [
+                                        'name'       => 'org.crm.shop.prospects.index',
+                                        'parameters' => $shop->slug
+                                    ]
+                                ]
+                            ],
+                            default => []
+                        }
                     ]
-                ]
-
             ];
         }
 
