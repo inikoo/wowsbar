@@ -28,7 +28,7 @@ const component = computed(()=>{
 </script>
 
 <template>
-    <div class="w-full">
+    <div class="w-full space-y-4">
         <ButtonTheme v-model="CTATheme" :label="['Simple', 'wide', 'image']"/>
         <component :is="component" :dataCTA="dataCTA"/>
     </div>
