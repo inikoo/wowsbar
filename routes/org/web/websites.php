@@ -25,7 +25,6 @@ Route::get('/', IndexWebsites::class)->name('index');
 Route::get('/{website}', ShowWebsite::class)->name('show');
 Route::get('/{website}/edit', EditWebsite::class)->name('edit');
 Route::get('/{website}/workshop', ShowWebsiteWorkshop::class)->name('workshop');
-Route::post('/{website}workshop/images', UploadImagesToWebsite::class)->name('workshop.images.store');
 
 Route::get('/{website}/workshop/preview', ShowWebsiteWorkshopPreview::class)->name('preview');
 Route::get('/{website}/blog/article/create', CreateArticle::class)->name('show.blog.article.create');
