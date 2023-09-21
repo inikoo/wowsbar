@@ -59,4 +59,10 @@ Route::prefix('shop/{shop}')->as('shop.')->group(function () {
         Route::get('/{prospect}', [IndexProspects::class, 'inShop'])->name('show');
         Route::get('/{prospect}/delete', [RemoveProspect::class, 'inShop'])->name('remove');
     });
+
+    Route::get('mailroom', [ShowCRMDashboard::class, 'inShop'])->name('mailroom.dashboard');
+
 });
+
+
+
