@@ -27,7 +27,12 @@ return new class () extends Migration {
             $table->string('domain')->unique()->collation('und_ns');
             $table->jsonb('settings');
             $table->jsonb('data');
-            $table->jsonb('structure');
+            $table->jsonb('header');
+            $table->jsonb('menu');
+            $table->jsonb('footer');
+            $table->jsonb('layout');
+            $table->jsonb('compiled_structure');
+
             $table->unsignedSmallInteger('current_layout_id')->index()->nullable();
             $table->unsignedSmallInteger('organisation_id');
             $table->foreign('organisation_id')->references('id')->on('organisations')->onUpdate('cascade')->onDelete('cascade');

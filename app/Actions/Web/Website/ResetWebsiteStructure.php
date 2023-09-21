@@ -11,7 +11,6 @@ use App\Actions\Traits\WithActionUpdate;
 use App\Models\Web\Website;
 use Exception;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Storage;
 use Lorisleiva\Actions\ActionRequest;
 
 class ResetWebsiteStructure
@@ -22,6 +21,27 @@ class ResetWebsiteStructure
 
     public function handle(Website $website): Website
     {
+
+        $logo=AttachImageToWebsite::run(
+            website: $website,
+            collection: 'logo',
+            imagePath: resource_path('art/logo/logo-teal.png'),
+            originalFilename: 'logo.png'
+        );
+
+        data_set(
+            $modelData,
+            'header',
+            [
+                'component'=> 'simpleSticky',
+                'logo'     => $logo->id
+            ]
+        );
+
+        $website->update($modelData);
+
+
+        /*
         $structure = $website->structure;
         foreach (Storage::disk('datasets')->files('website-structure/'.$website->type) as $file) {
             preg_match('/\/(\w+).json/', $file, $field);
@@ -39,7 +59,14 @@ class ResetWebsiteStructure
             'structure' => $structure
         ];
 
-        $website->update($modelData);
+        */
+
+
+        $website->update(
+            [
+                'compiled_structure' => $website->getCompiledStructure()
+            ]
+        );
         return $website;
     }
 

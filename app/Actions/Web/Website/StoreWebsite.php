@@ -41,17 +41,15 @@ class StoreWebsite
 
 
 
-        data_set($modelData,'header',
-            [
-                'component'=>'simpleSticky',
-                'logo'=>$logo
-                ]
-        );
+
 
 
         /** @var Website $website */
         $website = $shop->website()->create($modelData);
         $website->webStats()->create();
+
+
+
         OrganisationHydrateWebsites::run();
 
         $website->refresh();

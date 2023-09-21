@@ -7,18 +7,10 @@
 
 namespace App\Actions\CRM\Appointment;
 
-use App\Actions\CRM\Customer\Hydrators\CustomerHydrateUniversalSearch;
-use App\Actions\Helpers\SerialReference\GetSerialReference;
-use App\Actions\Organisation\Market\Shop\Hydrators\ShopHydrateCustomers;
-use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateCustomers;
-use App\Enums\CRM\Appointment\AppointmentEventEnum;
-use App\Enums\Helpers\SerialReference\SerialReferenceModelEnum;
 use App\Models\CRM\Customer;
 use App\Models\Market\Shop;
 use Exception;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 use Illuminate\Validation\Validator;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;

@@ -24,7 +24,7 @@ class StoreExcelUploads
     public function handle($file, $class): Model
     {
         /** @var \App\Models\Auth\OrganisationUser $orgUser */
-        $orgUser = request()->user();
+        $orgUser  = request()->user();
         $filename = $file->hashName();
         $type     = class_basename($class);
         $path     = 'org/' . Str::lower($type);
@@ -32,11 +32,11 @@ class StoreExcelUploads
 
         return ExcelUpload::create([
             'organisation_user_id' => $orgUser?->id,
-            'type'              => $type,
-            'original_filename' => $file->getClientOriginalName(),
-            'filename'          => $filename,
-            'path'              => $path,
-            'uploaded_at'       => now()
+            'type'                 => $type,
+            'original_filename'    => $file->getClientOriginalName(),
+            'filename'             => $filename,
+            'path'                 => $path,
+            'uploaded_at'          => now()
         ]);
     }
 }

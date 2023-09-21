@@ -13,10 +13,10 @@ import {
 } from "@/Composables/firebase";
 import ColorPicker from "@/Components/Workshop/Fields/ColorPicker.vue";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faImage, faTimes } from "@/../private/pro-regular-svg-icons";
+import { faImage, faTimes, faOven } from "@/../private/pro-regular-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { isNull } from 'lodash'
-library.add(faImage, faTimes);
+library.add(faImage, faTimes, faOven);
 
 const themeOptions = [
     { name: "Full", value: "full" },
@@ -26,16 +26,16 @@ const themeOptions = [
 const data = ref({
     layout: "full",
     favicon: 'http://wowsbar.test/favicons/wowsbar-website-favicon-color-180x180.png',
-    colorLayout: "rgba(99, 102, 241, 255)",
+    colorLayout: "rgba(55 65 81)",
     imageLayout: null,
     header: {
-        color: "rgba(255, 255, 255, 255)",
+        color: "rgba(55 65 81)",
     },
     content: {
-        color: "rgba(255, 255, 255, 255)",
+        color: "rgba(55 65 81)",
     },
     footer: {
-        color: "rgba(255, 255, 255, 255)",
+        color: "rgba(55 65 81)",
     },
 });
 
@@ -74,7 +74,7 @@ const addfavicon= async (element) => {
 
 <template>
     <div class="flex justify-center items-center w-full mt-3">
-        <div class="w-[80%] flex justify-end">
+        <div class="w-[60%] flex justify-end">
             <button
                 v-for="option in themeOptions"
                 :key="option.value"
@@ -92,7 +92,7 @@ const addfavicon= async (element) => {
     </div>
     <div class="flex justify-center items-center w-full w">
         <div
-            class="w-[80%] flex justify-start items-center border-gray-400 rounded-t-md mt-9 bg-gray-200"
+            class="w-[60%] flex justify-start items-center border-gray-400 rounded-t-md mt-9 bg-gray-200"
         >
             <div class="p-1 w-52 bg-white border-gray-400 border-x-[1px] border-t-[1px] rounded-t-md flex gap-2 justify-start align-middle">
                 <label
@@ -108,13 +108,13 @@ const addfavicon= async (element) => {
                     />
                     <img :src="data.favicon" class="w-[20px]"/>
                 </label>
-                Awa
+                ~ Website ~
             </div>
         </div>
     </div>
     <div class="flex justify-center items-center w-full">
         <div
-            class="w-[80%] h-96 flex relative justify-center items-center border-[1px] border-gray-400 rounded-b-md"
+            class="w-[60%] h-72 flex relative justify-center items-center border-[1px] border-gray-400 rounded-b-md"
             :style="{
                 'background-image': `url(${data.imageLayout})`,
                 'background-color': `${data.colorLayout}`,
@@ -130,10 +130,9 @@ const addfavicon= async (element) => {
                 }"
             >
                 <div
-                    class="h-1/3 border-b-2 flex items-center relative"
-                    :style="`background-color: ${data.header.color} ;`"
+                    class="h-1/3 border-b-2 flex items-center relative bg-white"
                 >
-                    <div class="mx-auto text-3xl font-medium">Header</div>
+                    <div class="mx-auto text-xl font-medium">Header</div>
                     <div
                         class="absolute left-[-20px] bottom-0"
                         style="transform: scale(0.7)"
@@ -144,12 +143,19 @@ const addfavicon= async (element) => {
                             class=""
                         />
                     </div>
+                    <div
+                        class="absolute right-0 top-8 flex gap-2"
+                        style="transform: scale(0.7)"
+                    >
+                    <div class="font-xs border rounded-lg py-1 px-2 text-white" :style="`background-color: ${data.header.color};`">Apoointment</div>
+                    <div :style="`border-left: 1px solid ${data.header.color};`"></div>
+                    <div class="font-xs border rounded-lg py-1 px-2 text-white" :style="`background-color: ${data.header.color};`">sign in</div>
+                    </div>
                 </div>
                 <div
-                    class="h-1/3 border-b-2 flex items-center relative"
-                    :style="`background-color: ${data.content.color} ;`"
+                    class="h-1/3 border-b-2 flex items-center relative bg-white"
                 >
-                    <div class="mx-auto text-3xl font-medium">Content</div>
+                    <div class="mx-auto text-xl font-medium">Content</div>
                     <div
                         class="absolute left-[-20px] bottom-0"
                         style="transform: scale(0.7)"
@@ -160,21 +166,27 @@ const addfavicon= async (element) => {
                             class=""
                         />
                     </div>
+                    <div
+                        class="absolute right-0 top-5 flex gap-2"
+                        :style="`color: ${data.content.color};`"
+                    >
+                    <font-awesome-icon :icon="['far', 'oven']" class="w-40 h-14" />
+
+                    </div>
                 </div>
                 <div
-                    class="h-1/3 border-b-2 flex items-center relative"
-                    :style="`background-color: ${data.footer.color} ;`"
+                    class="h-1/3 border-b-2 flex items-center relative bg-white"
                 >
-                    <div class="mx-auto text-3xl font-medium">Footer</div>
+                    <div class="mx-auto text-xl font-medium" >Footer</div>
                     <div
                         class="absolute left-[-20px] bottom-0"
                         style="transform: scale(0.7)"
                     >
-                        <ColorPicker
+                        <!-- <ColorPicker
                             :color="data.footer.color"
                             @onChange="(value) => (data.footer.color = value)"
                             class=""
-                        />
+                        /> -->
                     </div>
                 </div>
             </div>
