@@ -6,7 +6,6 @@
  */
 
 
-use App\Actions\CRM\Customer\DownloadCustomersTemplate;
 use App\Actions\CRM\Customer\UI\EditCustomer;
 use App\Actions\CRM\Customer\UI\IndexCustomers;
 use App\Actions\CRM\Customer\UI\RemoveCustomer;
@@ -15,45 +14,49 @@ use App\Actions\CRM\User\UI\CreateUser;
 use App\Actions\CRM\User\UI\EditUser;
 use App\Actions\CRM\User\UI\IndexUsers;
 use App\Actions\CRM\User\UI\ShowUser;
-use App\Actions\Leads\Prospect\DownloadProspectsTemplate;
 use App\Actions\Leads\Prospect\IndexProspects;
+use App\Actions\Leads\Prospect\RemoveProspect;
 use App\Actions\Organisation\UI\CRM\ShowCRMDashboard;
 
 Route::get('/', [ShowCRMDashboard::class, 'inOrganisation'])->name('dashboard');
 
-Route::prefix('customers')->as('customers.')->group(function () {
-    Route::get('/', IndexCustomers::class)->name('index');
-    Route::get('/{customer}', ShowCustomer::class)->name('show');
-    Route::get('/{customer}/edit', [EditCustomer::class, 'inOrganisation'])->name('edit');
-    Route::get('/{customer}/delete', RemoveCustomer::class)->name('remove');
-    Route::get('/{customer}/web-users', [IndexUsers::class, 'inCustomer'])->name('show.web-users.index');
-    Route::get('/customers/{customer}/web-users/create', [CreateUser::class, 'inCustomer'])->name('show.web-users.create');
-    Route::get('/customers/{customer}/web-users/{user}', [ShowUser::class, 'inCustomer'])->name('show.web-users.show');
-    Route::get('/customers/{customer}/web-users/{user}/edit', [EditUser::class, 'inCustomer'])->name('show.web-users.edit');
-    Route::get('/uploads/template/download', DownloadCustomersTemplate::class)->name('uploads.template.download');
+Route::get('customers', IndexCustomers::class)->name('customers.index');
+
+Route::prefix('customers/{customer}')->as('customers.')->group(function () {
+    Route::get('', ShowCustomer::class)->name('show');
+    Route::get('edit', [EditCustomer::class, 'inOrganisation'])->name('edit');
+    Route::get('delete', RemoveCustomer::class)->name('remove');
+    Route::get('web-users', [IndexUsers::class, 'inCustomer'])->name('show.web-users.index');
+    Route::get('web-users/create', [CreateUser::class, 'inCustomer'])->name('show.web-users.create');
+    Route::get('web-users/{user}', [ShowUser::class, 'inCustomer'])->name('show.web-users.show');
+    Route::get('web-users/{user}/edit', [EditUser::class, 'inCustomer'])->name('show.web-users.edit');
 });
 
 Route::prefix('prospects')->as('prospects.')->group(function () {
     Route::get('/', IndexProspects::class)->name('index');
     Route::get('/{prospect}', IndexProspects::class)->name('show');
-    Route::get('/create', IndexProspects::class)->name('create');
-    //Route::get('/customers/{customer}/delete', RemoveCustomer::class)->name('customers.remove');
-    //Route::get('/customers/{customer}/web-users', [IndexWebUser::class, 'inCustomerinOrganisation'])->name('customers.show.web-users.index');
-    //Route::get('/customers/{customer}/web-users/{webUser}', [ShowWebUser::class, 'inCustomerinOrganisation'])->name('customers.show.web-users.show');
-    //Route::get('/customers/{customer}/web-users/{webUser}/edit', [EditWebUser::class, 'inCustomerinOrganisation'])->name('customers.show.web-users.edit');
-    Route::get('/uploads/template/download', DownloadProspectsTemplate::class)->name('uploads.template.download');
+    Route::get('/{prospect}/delete', RemoveProspect::class)->name('remove');
 });
 
-Route::get('/shop/{shop}', [ShowCRMDashboard::class, 'inShop'])->name('shop.dashboard');
-Route::get('/shop/{shop}/customers', [IndexCustomers::class, 'inShop'])->name('shop.customers.index');
-Route::get('/shop/{shop}/customers/{customer}', [ShowCustomer::class, 'inShop'])->name('shop.customers.show');
-Route::get('/shop/{shop}/customers/{customer}/edit', [EditCustomer::class, 'inShop'])->name('shop.customers.edit');
+Route::prefix('shop/{shop}')->as('shop.')->group(function () {
+    Route::get('/', [ShowCRMDashboard::class, 'inShop'])->name('dashboard');
 
-Route::get('/shop/{shop}/customers/{customer}/web-users', [IndexUsers::class, 'inCustomerInShop'])->name('shop.customers.show.web-users.index');
-Route::get('/shop/{shop}/customers/{customer}/web-users/create', [CreateUser::class, 'inCustomerInShop'])->name('shop.customers.show.web-users.create');
-Route::get('/shop/{shop}/customers/{customer}/web-users/{user}', [ShowUser::class, 'inCustomerInShop'])->name('shop.customers.show.web-users.show');
-Route::get('/shop/{shop}/customers/{customer}/web-users/{user}/edit', [EditUser::class, 'inCustomerInShop'])->name('shop.customers.show.web-users.edit');
+    Route::get('customers', [IndexCustomers::class, 'inShop'])->name('customers.index');
+    Route::get('customers/create', [IndexCustomers::class, 'inShop'])->name('customers.create');
 
+    Route::prefix('customers/{customer}')->as('customers.')->group(function () {
+        Route::get('', [ShowCustomer::class, 'inShop'])->name('show');
+        Route::get('/edit', [EditCustomer::class, 'inShop'])->name('edit');
+        Route::get('/web-users', [IndexUsers::class, 'inCustomerInShop'])->name('show.web-users.index');
+        Route::get('/web-users/create', [CreateUser::class, 'inCustomerInShop'])->name('show.web-users.create');
+        Route::get('/web-users/{user}', [ShowUser::class, 'inCustomerInShop'])->name('show.web-users.show');
+        Route::get('/web-users/{user}/edit', [EditUser::class, 'inCustomerInShop'])->name('show.web-users.edit');
+    });
 
-
-Route::get('/shop/{shop}/prospects', [IndexProspects::class, 'inShop'])->name('shop.prospects.index');
+    Route::prefix('prospects')->as('prospects.')->group(function () {
+        Route::get('/', [IndexProspects::class, 'inShop'])->name('index');
+        Route::get('/create', [IndexProspects::class, 'inShop'])->name('create');
+        Route::get('/{prospect}', [IndexProspects::class, 'inShop'])->name('show');
+        Route::get('/{prospect}/delete', [RemoveProspect::class, 'inShop'])->name('remove');
+    });
+});

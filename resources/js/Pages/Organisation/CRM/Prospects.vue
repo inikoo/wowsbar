@@ -18,7 +18,12 @@ import ModalUpload from "@/Components/Utils/ModalUpload.vue";
 const props = defineProps<{
     data: object
     title: string
-    pageHead: object
+    pageHead: object,
+    uploadRoutes: {
+        upload:object,
+        history:object,
+        download:object
+    }
 }>()
 
 
@@ -69,9 +74,7 @@ watch(compProgressBar, () => {
     <!-- Modal: Upload -->
     <ModalUpload
         v-model="isModalOpen"
-        :routeUpload="pageHead.actions[0].buttons[0].route.name"
-        :routeHistory="'org.models.prospects.upload'"
-        :routeDownload="'org.crm.prospects.uploads.template.download'"
+        :routes="uploadRoutes"
         :isUploaded="isUploaded"
         @isUploaded="(val: any) => isUploaded = val"
     />

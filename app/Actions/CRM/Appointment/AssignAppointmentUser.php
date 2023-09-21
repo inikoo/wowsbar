@@ -9,10 +9,8 @@ namespace App\Actions\CRM\Appointment;
 
 use App\Models\Auth\OrganisationUser;
 use App\Models\CRM\Appointment;
-use App\Models\Market\Shop;
 use Illuminate\Console\Command;
 use Illuminate\Database\Eloquent\Model;
-use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
 use Throwable;
@@ -45,7 +43,7 @@ class AssignAppointmentUser
 
     public function asCommand(Command $command): int
     {
-        $user = OrganisationUser::where('username', $command->argument('user'))->first();
+        $user        = OrganisationUser::where('username', $command->argument('user'))->first();
         $appointment = Appointment::findOrFail($command->argument('appointment'));
 
         $this->handle($appointment, $user);

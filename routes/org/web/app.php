@@ -50,6 +50,9 @@ Route::middleware(["org-web"])->group(function () {
         Route::prefix("accounting")
             ->name("accounting.")
             ->group(__DIR__."/accounting.php");
+        Route::prefix("downloads")
+            ->name("downloads.")
+            ->group(__DIR__."/downloads.php");
         /*
 
 

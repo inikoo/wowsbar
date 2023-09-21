@@ -8,22 +8,25 @@
     "crm",
     "crm.view",
     "crm.edit",
-    "crm.edit",
+
+    "crm.prospects",
+    "crm.prospects.view",
+    "crm.prospects.edit",
+
+
+
     "sysadmin",
     "sysadmin.view",
     "sysadmin.create",
     "sysadmin.edit",
-    "sysadmin.delete",
     "sysadmin.look-and-field",
     "hr.working-places",
     "hr.working-places.view",
     "hr.working-places.edit",
     "hr.working-places.create",
-    "hr.working-places.delete",
     "hr.view",
     "hr.edit",
     "hr.create",
-    "hr.delete",
     "hr",
     "supervisor",
     "supervisor.crm",
@@ -34,5 +37,4 @@
     "accounting.view",
     "accounting.edit",
     "accounting.create",
-    "accounting.delete"
 ]

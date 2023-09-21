@@ -126,19 +126,19 @@ class IndexProspects extends InertiaAction
         return Inertia::render(
             'CRM/Prospects',
             [
-                'breadcrumbs' => $this->getBreadcrumbs(
+                'breadcrumbs'  => $this->getBreadcrumbs(
                     $request->route()->getName(),
                     $request->route()->parameters(),
                 ),
-                'title'       => __('prospects'),
-                'pageHead'    => [
+                'title'        => __('prospects'),
+                'pageHead'     => [
                     'title'     => __('prospects'),
                     'iconRight' => [
                         'icon'  => ['fal', 'fa-user-plus'],
                         'title' => __('prospect')
                     ],
                     'actions'   => [
-                        !$this->canEdit ? [
+                        $this->canEdit ? [
                             'type'    => 'buttonGroup',
                             'buttons' =>
                                 match (class_basename($this->parent)) {
@@ -163,16 +163,28 @@ class IndexProspects extends InertiaAction
                                             ]
                                         ]
                                     ],
-                                    default => [
-
-                                    ]
+                                    default => null
                                 }
 
 
                         ] : false
                     ]
                 ],
-                'data'        => ProspectResource::collection($prospects),
+                'uploadRoutes' => [
+                    'upload' => [
+                        'name'       => 'org.models.shop.prospects.upload',
+                        'parameters' => $this->parent->id
+                    ],
+                    'history' => [
+                        'name'       => 'org.models.prospects.upload',
+                        'parameters' => $this->parent->id
+                    ],
+                    'download' => [
+                        'name'       => 'org.crm.prospects.uploads.template.download',
+                        'parameters' => $this->parent->id
+                    ]
+                ],
+                'data'         => ProspectResource::collection($prospects),
 
 
             ]

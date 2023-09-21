@@ -10,16 +10,11 @@ namespace App\Actions\CRM\Appointment;
 use App\Enums\CRM\Appointment\AppointmentEventEnum;
 use App\Enums\CRM\Appointment\AppointmentTypeEnum;
 use App\Models\CRM\Appointment;
-use App\Models\CRM\Customer;
 use App\Models\Market\Shop;
 use Exception;
 use Illuminate\Console\Command;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
-use Illuminate\Validation\Validator;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
@@ -47,11 +42,11 @@ class GetScheduleAppointment
     public function rules(): array
     {
         return [
-            'schedule_at'             => ['required', 'string'],
-            'description'             => ['nullable', 'string', 'max:255'],
-            'type'                    => ['required', Rule::in(AppointmentTypeEnum::values())],
+            'schedule_at'              => ['required', 'string'],
+            'description'              => ['nullable', 'string', 'max:255'],
+            'type'                     => ['required', Rule::in(AppointmentTypeEnum::values())],
             'event'                    => ['required', Rule::in(AppointmentEventEnum::values())],
-            'event_address' => ['required', 'string']
+            'event_address'            => ['required', 'string']
         ];
     }
 

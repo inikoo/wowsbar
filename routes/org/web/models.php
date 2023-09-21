@@ -17,6 +17,7 @@ use App\Actions\HumanResources\Employee\DeleteEmployee;
 use App\Actions\HumanResources\Employee\StoreEmployee;
 use App\Actions\HumanResources\Employee\UpdateEmployee;
 use App\Actions\HumanResources\Employee\UploadEmployee;
+use App\Actions\Leads\Prospect\RemoveProspect;
 use App\Actions\Leads\Prospect\UploadShopProspects;
 use App\Actions\Market\Product\StoreProduct;
 use App\Actions\Market\Product\UpdateProduct;
@@ -42,7 +43,9 @@ Route::patch('/organisation', UpdateOrganisation::class)->name('organisation.upd
 
 Route::post('/article/{webpage:id}', StoreArticle::class)->name('article.store');
 Route::post('/employees/imports/upload', UploadEmployee::class)->name('employees.upload');
-Route::post('/{shop:id}/prospects/imports/upload', UploadShopProspects::class)->name('shop.prospects.upload');
+Route::post('/shop/{shop:id}/prospect/upload', UploadShopProspects::class)->name('shop.prospect.upload');
+Route::delete('/prospect/{prospect:id}', RemoveProspect::class)->name('prospect.remove');
+
 Route::post('/products/imports/upload', UploadProduct::class)->name('products.upload');
 Route::post('/guests/imports/upload', UploadGuest::class)->name('guests.upload');
 Route::patch('/provider/{paymentServiceProvider}', UpdatePaymentServiceProvider::class)->name('payment-service-provider.update');

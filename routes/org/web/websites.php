@@ -18,7 +18,6 @@ use App\Actions\Web\Website\UI\IndexWebsites;
 use App\Actions\Web\Website\UI\ShowWebsite;
 use App\Actions\Web\Website\UI\ShowWebsiteWorkshop;
 use App\Actions\Web\Website\UI\ShowWebsiteWorkshopPreview;
-use App\Actions\Web\Website\UploadImagesToWebsite;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', IndexWebsites::class)->name('index');

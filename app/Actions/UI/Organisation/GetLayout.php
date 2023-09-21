@@ -40,7 +40,7 @@ class GetLayout
 
         if ($user->can('shops.view')) {
             $navigation['shops'] = [
-                'label' => __('shops'),
+                'label' => $shopsCount == 1 ? __('shop') : __('shops'),
                 'icon'  => ['fal', 'fa-store-alt'],
                 'route' =>
                     match ($shopsCount) {
@@ -102,8 +102,6 @@ class GetLayout
                 ];
             }
 
-
-
             $subSections=[];
             if($websitesCount==1) {
                 $subSections[]=[
@@ -117,7 +115,7 @@ class GetLayout
             }
 
             $navigation['websites'] = [
-                'label'   => __('websites'),
+                'label'   => $websitesCount==1 ? __('website') : __('websites'),
                 'icon'    => ['fal', 'fa-globe'],
                 'route'   => $route,
                 'topMenu' => [
@@ -162,6 +160,15 @@ class GetLayout
                                         'name'       => 'org.crm.shop.prospects.index',
                                         'parameters' => $shop->slug
                                     ]
+                                ],
+                                [
+
+                                    'label' => __('mailroom'),
+                                    'icon'  => ['fal', 'fa-envelope'],
+                                    'route' => [
+                                        'name'       => 'org.crm.shop.prospects.index',
+                                        'parameters' => $shop->slug
+                                    ]
                                 ]
                             ],
                             default => []
@@ -185,20 +192,7 @@ class GetLayout
             ];
         }
 
-        if ($user->can('crm.view')) {
-            $navigation['mailroom'] = [
-                'scope'   => 'mailroom',
-                'icon'    => ['fal', 'fa-envelope'],
-                'label'   => __('Mailroom'),
-                'route'   => [
-                    'name'       => 'org.portfolio-websites.index',
-                    'parameters' => []
-                ],
-                'topMenu' => [
-                    'subSections' => []
-                ]
-            ];
-        }
+
 
         if ($user->can('accounting.view')) {
             $navigation['accounting'] = [

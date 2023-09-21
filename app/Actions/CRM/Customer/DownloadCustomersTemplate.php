@@ -18,11 +18,19 @@ class DownloadCustomersTemplate
     use AsAction;
     use WithAttributes;
 
+    /**
+     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
+     */
     public function handle(): BinaryFileResponse
     {
         return Excel::download(new CustomerTemplateExport(), 'template.xlsx');
     }
 
+    /**
+     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
+     */
     public function asController(): BinaryFileResponse
     {
         return $this->handle();

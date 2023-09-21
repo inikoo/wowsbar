@@ -2,20 +2,13 @@
 import { ref, computed, watch } from 'vue'
 import { trans } from 'laravel-vue-i18n'
 
-import TablePortfolioWebsites from "@/Components/Tables/TablePortfolioWebsites.vue"
 import Modal from '@/Components/Utils/Modal.vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faUpload, faFile as falFile, faTimes } from '@/../private/pro-light-svg-icons'
-import { faFile as fasFile, faFileDownload } from '@/../private/pro-solid-svg-icons'
+import { faFile as falFile } from '@/../private/pro-light-svg-icons'
+import { faFileDownload } from '@/../private/pro-solid-svg-icons'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import axios from 'axios'
-import Pusher from 'pusher-js'
 import { useFormatTime } from '@/Composables/useFormatTime'
-import Tabs from "@/Components/Navigation/Tabs.vue";
-import {useTabChange} from "@/Composables/tab-change";
-import ModelDetails from "@/Pages/ModelDetails.vue";
-import TableHistories from "@/Components/Tables/TableHistories.vue";
-import TableUploadedWebsites from "@/Components/Tables/TableUploadedWebsites.vue";
 import { toRefs } from 'vue'
 
 library.add(falFile, faFileDownload)
@@ -23,9 +16,11 @@ library.add(falFile, faFileDownload)
 
 const props = defineProps<{
     modelValue: Boolean
-    routeUpload: string
-    routeDownload: string
-    routeHistory: string
+    routes: {
+        upload:object,
+        history:object,
+        download:object
+    }
     isUploaded: boolean
 }>()
 
@@ -42,7 +37,7 @@ const onUploadFile = async (fileUploaded: any) => {
     isLoadingUpload.value = true
     try {
         await axios.post(
-            route(props.routeUpload),
+            route(props.routes.upload.name,props.routes.upload.parameters),
             {
                 file: fileUploaded.target.files[0],
             },
@@ -65,9 +60,9 @@ const compVModel = computed(() => {
 // Fetch data history when Modal is opened
 watch(compVModel, async () => {
     isLoadingHistory.value = true
-    // if(!dataHistory.value.length) { // If dataHistory empty (not fetched yet) then fetch agains
+    // if(!dataHistory.value.length) { // If dataHistory empty (not fetched yet) then fetch again
         try {
-            const data = await axios.get(route(props.routeHistory))
+            const data = await axios.get(route(props.routes.history.name,props.routes.history.parameters))
             dataHistory.value = data.data.data
         } catch (error: any) {
             dataHistory.value = []
@@ -114,7 +109,7 @@ watch(compVModel, async () => {
                 </div>
 
                 <!-- Download template -->
-                <a :href="route(routeDownload)" target="_blank" class="group text-xs text-gray-600 cursor-pointer px-2 w-fit" >
+                <a :href="route(routes.download.name,routes.download.parameters)" target="_blank" class="group text-xs text-gray-600 cursor-pointer px-2 w-fit" >
                     <FontAwesomeIcon icon='fas fa-file-download' class='text-gray-400 group-hover:text-gray-600' aria-hidden='true' />
                     Download template .xlsx
                 </a>
