@@ -11,19 +11,19 @@ use App\Actions\CRM\Customer\UI\EditCustomer;
 use App\Actions\CRM\Customer\UI\IndexCustomers;
 use App\Actions\CRM\Customer\UI\RemoveCustomer;
 use App\Actions\CRM\Customer\UI\ShowCustomer;
-use App\Actions\CRM\Prospect\DownloadProspectsTemplate;
-use App\Actions\CRM\Prospect\IndexProspects;
 use App\Actions\CRM\User\UI\CreateUser;
 use App\Actions\CRM\User\UI\EditUser;
 use App\Actions\CRM\User\UI\IndexUsers;
 use App\Actions\CRM\User\UI\ShowUser;
+use App\Actions\Leads\Prospect\DownloadProspectsTemplate;
+use App\Actions\Leads\Prospect\IndexProspects;
 use App\Actions\Organisation\UI\CRM\ShowCRMDashboard;
 
 Route::get('/', [ShowCRMDashboard::class, 'inOrganisation'])->name('dashboard');
 
 Route::prefix('customers')->as('customers.')->group(function () {
     Route::get('/', IndexCustomers::class)->name('index');
-    Route::get('/{customer}', [ShowCustomer::class, 'inOrganisation'])->name('show');
+    Route::get('/{customer}', ShowCustomer::class)->name('show');
     Route::get('/{customer}/edit', [EditCustomer::class, 'inOrganisation'])->name('edit');
     Route::get('/{customer}/delete', RemoveCustomer::class)->name('remove');
     Route::get('/{customer}/web-users', [IndexUsers::class, 'inCustomer'])->name('show.web-users.index');
@@ -48,4 +48,12 @@ Route::get('/shop/{shop}', [ShowCRMDashboard::class, 'inShop'])->name('shop.dash
 Route::get('/shop/{shop}/customers', [IndexCustomers::class, 'inShop'])->name('shop.customers.index');
 Route::get('/shop/{shop}/customers/{customer}', [ShowCustomer::class, 'inShop'])->name('shop.customers.show');
 Route::get('/shop/{shop}/customers/{customer}/edit', [EditCustomer::class, 'inShop'])->name('shop.customers.edit');
+
+Route::get('/shop/{shop}/customers/{customer}/web-users', [IndexUsers::class, 'inCustomerInShop'])->name('shop.customers.show.web-users.index');
+Route::get('/shop/{shop}/customers/{customer}/web-users/create', [CreateUser::class, 'inCustomerInShop'])->name('shop.customers.show.web-users.create');
+Route::get('/shop/{shop}/customers/{customer}/web-users/{user}', [ShowUser::class, 'inCustomerInShop'])->name('shop.customers.show.web-users.show');
+Route::get('/shop/{shop}/customers/{customer}/web-users/{user}/edit', [EditUser::class, 'inCustomerInShop'])->name('shop.customers.show.web-users.edit');
+
+
+
 Route::get('/shop/{shop}/prospects', [IndexProspects::class, 'inShop'])->name('shop.prospects.index');

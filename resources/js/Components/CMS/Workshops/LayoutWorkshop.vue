@@ -13,9 +13,10 @@ import {
 } from "@/Composables/firebase";
 import ColorPicker from "@/Components/Workshop/Fields/ColorPicker.vue";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faImage } from "@/../private/pro-regular-svg-icons";
+import { faImage, faTimes } from "@/../private/pro-regular-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
-library.add(faImage);
+import { isNull } from 'lodash'
+library.add(faImage, faTimes);
 
 const themeOptions = [
     { name: "Full", value: "full" },
@@ -24,18 +25,37 @@ const themeOptions = [
 
 const data = ref({
     layout: "full",
+    favicon: 'http://wowsbar.test/favicons/wowsbar-website-favicon-color-180x180.png',
     colorLayout: "rgba(99, 102, 241, 255)",
     imageLayout: null,
     header: {
-        color: "rgba(99, 102, 241, 255)",
+        color: "rgba(255, 255, 255, 255)",
     },
     content: {
-        color: "rgba(99, 102, 241, 255)",
+        color: "rgba(255, 255, 255, 255)",
     },
     footer: {
-        color: "rgba(99, 102, 241, 255)",
+        color: "rgba(255, 255, 255, 255)",
     },
 });
+
+const fileInput = ref(null);
+
+
+const addImage = async (element) => { 
+    const file = element.target.files[0];
+    if (file) {
+        data.value.imageLayout = URL.createObjectURL(file);
+      }
+};
+
+const addfavicon= async (element) => { 
+    const file = element.target.files[0];
+    if (file) {
+        data.value.favicon = URL.createObjectURL(file);
+      }
+};
+
 
 // async function setToFirebase() {
 //     const column = "org/websites/layout";
@@ -49,6 +69,7 @@ const data = ref({
 // watch(selectedTheme, setToFirebase, { deep: true });
 
 // setToFirebase();
+
 </script>
 
 <template>
@@ -73,9 +94,20 @@ const data = ref({
         <div
             class="w-[80%] flex justify-start items-center border-gray-400 rounded-t-md mt-9 bg-gray-200"
         >
-            <div
-                class="p-1 w-52 bg-white border-gray-400 border-x-[1px] border-t-[1px] rounded-t-md"
-            >
+            <div class="p-1 w-52 bg-white border-gray-400 border-x-[1px] border-t-[1px] rounded-t-md flex gap-2 justify-start align-middle">
+                <label
+                    for="faviconUpload"
+                    class="flex justify-center items-center bg-white cursor-pointer"
+                >
+                    <input 
+                        type="file"
+                        id="faviconUpload"
+                        accept="image/*"
+                        style="display: none"
+                        @change="addfavicon"
+                    />
+                    <img :src="data.favicon" class="w-[20px]"/>
+                </label>
                 Awa
             </div>
         </div>
@@ -84,8 +116,10 @@ const data = ref({
         <div
             class="w-[80%] h-96 flex relative justify-center items-center border-[1px] border-gray-400 rounded-b-md"
             :style="{
-                'background-image': `url('https://tailwindui.com/img/ecommerce-images/home-page-03-category-01.jpg')`,
+                'background-image': `url(${data.imageLayout})`,
                 'background-color': `${data.colorLayout}`,
+                'background-repeat': 'no-repeat',
+                'background-size': 'cover'
             }"
         >
             <div
@@ -156,15 +190,21 @@ const data = ref({
                     :colorSuggestions="false"
                 />
 
+                <div v-if="!isNull(data.imageLayout)" class="border border-slate-300 rounded-full w-10 h-10 flex justify-center items-center bg-white mt-2 cursor-pointer text-red-500" @click="data.imageLayout = null" >
+                    <font-awesome-icon :icon="['fal', 'times']" />
+                </div>
+
                 <label
                     for="imageUpload"
+                    v-if="isNull(data.imageLayout)"
                     class="border border-slate-300 rounded-full w-10 h-10 flex justify-center items-center bg-white mt-2 cursor-pointer"
                 >
-                    <input
+                    <input 
                         type="file"
                         id="imageUpload"
                         accept="image/*"
                         style="display: none"
+                        @change="addImage"
                     />
                     <FontAwesomeIcon icon="far fa-image" aria-hidden="true" />
                 </label>

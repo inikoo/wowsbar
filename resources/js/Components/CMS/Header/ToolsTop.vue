@@ -13,8 +13,8 @@ const props = defineProps({
 const emits = defineEmits();
 
 const themeOption = [
-        { name: 'Header Theme One', value: 1 },
-        { name: 'header Theme Two', value: 2 },
+        { name: 'Simple', value: 1 },
+        { name: 'simple Sticky', value: 2 },
 ]
 
 const Bluprint = [
@@ -46,7 +46,7 @@ const setTheme=(value)=>{
     <div class="w-1/2 flex justify-end items-center">
       <div v-for="item in Bluprint.filter((item) => item.position === 'left')" :key="item.name">
         <select v-model="theme.value" @change="setTheme(theme.value)" v-if="item.name === 'theme'"
-          class="px-2 py-1 rounded-md border-gray-300 border w-[150px]">
+          class="px-2 py-1 rounded-md border-gray-300 border w-[200px]">
           <option v-for="option in item.optionsData.options" :key="option.value" :value="option.value">{{ option.name }}
           </option>
         </select>

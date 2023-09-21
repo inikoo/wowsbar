@@ -56,5 +56,5 @@ php artisan customer:new-banner aiku test2 'My first banner without website 🫡
 pg_dump -Fc -f "devops/devel/snapshots/portfolio.dump" ${DB}
 php artisan employee:import employees.xlsx
 echo "🌱 All the employees are imported"
-php artisan prospect:import prospects.xlsx
-echo "🌱 All the prospects are imported"
+php artisan shop:import-prospects awa prospects.xlsx
+echo "🛃 Organisation prospects imported"

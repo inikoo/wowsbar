@@ -8,6 +8,7 @@
 namespace App\Models\Portfolio;
 
 use App\Concerns\BelongsToCustomer;
+use App\Models\CRM\Prospect;
 use App\Models\Traits\HasHistory;
 use App\Models\Traits\HasUniversalSearch;
 use Illuminate\Database\Eloquent\Builder;
@@ -15,6 +16,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\Sluggable\HasSlug;
@@ -101,6 +103,11 @@ class PortfolioWebsite extends Model implements Auditable
     {
         return $this->belongsToMany(Banner::class)->using(BannerPortfolioWebsite::class)
             ->withTimestamps();
+    }
+
+    public function scopedProspects(): MorphMany
+    {
+        return $this->morphMany(Prospect::class,'scope');
     }
 
 }

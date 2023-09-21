@@ -7,9 +7,6 @@ const props = defineProps<{
   data: Object
 }>()
 
-
-
-const mobileMenuOpen = ref(false)
 </script>
 
 <template>
@@ -21,16 +18,22 @@ const mobileMenuOpen = ref(false)
       </a>
       <div class="flex gap-3">
         <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-          <a href="#" class="flex text-sm font-semibold leading-6 text-gray-900"><Button>
+          <a href="#" class="flex text-sm font-semibold leading-6 text-gray-900">
+            <Button>
               <HyperLink :formList="{
                 label: 'label',
                 link: 'link',
-              }" label="label" :data="data.appointment" :useDelete="false"/>
+              }" label="label" :data="data.appointment" :useDelete="false" />
             </Button></a>
         </div>
         <div class="text-gray-300">|</div>
         <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-          <a href="#" class="text-sm font-semibold leading-6 text-gray-900"><Button>Log in</Button></a>
+          <a class="text-sm font-semibold leading-6 text-gray-900"><Button>
+              <HyperLink :formList="{
+                label: 'label',
+                link: 'link',
+              }" label="label" :data="data.logIn" :useDelete="false" />
+            </Button></a>
         </div>
       </div>
 
