@@ -1,176 +1,40 @@
 {
-    "slug": "header",
-    "name": "Website header",
-    "blueprint": {
-        "defaultParameters": {
-            "navigation": {
-                "categories": [
-                    {
-                        "name": "Home",
-                        "featured": [
-                            {
-                                "name": "About us",
-                                "href": "#"
-                            },
-                            {
-                                "name": "Contact",
-                                "href": "#"
-                            },
-                            {
-                                "name": "ShowRoom",
-                                "href": "#"
-                            },
-                            {
-                                "name": "Trems & Conditions",
-                                "href": "#"
-                            },
-                            {
-                                "name": "Delivery",
-                                "href": "#"
-                            },
-                            {
-                                "name": "Operation Hours",
-                                "href": "#"
-                            },
-                            {
-                                "name": "Freedom Fund",
-                                "href": "#"
-                            },
-                            {
-                                "name": "Business Ethics",
-                                "href": "#"
-                            },
-                            {
-                                "name": "Catalogue",
-                                "href": "#"
-                            },
-                            {
-                                "name": "Retruns Policy",
-                                "href": "#"
-                            },
-                            {
-                                "name": "Dropshiping Sevices",
-                                "href": "#"
-                            },
-                            {
-                                "name": "Working with local businesses",
-                                "href": "#"
-                            },
-                            {
-                                "name": "sustainable palm oil",
-                                "href": "#"
-                            },
-                            {
-                                "name": "Privacy Policy",
-                                "href": "#"
-                            },
-                            {
-                                "name": "Cookies Policy",
-                                "href": "#"
-                            },
-                            {
-                                "name": "Travel Blog",
-                                "href": "#"
-                            }
-                        ]
-                    },
-                    {
-                        "name": "Departements",
-                        "featured": [
-                            {
-                                "name": "New Arrivals",
-                                "href": "#"
-                            },
-                            {
-                                "name": "Basic Tees",
-                                "href": "#"
-                            },
-                            {
-                                "name": "Accessories",
-                                "href": "#"
-                            },
-                            {
-                                "name": "Carry",
-                                "href": "#"
-                            }
-                        ]
-                    },
-                    {
-                        "name": "Incentives & Inspiration",
-                        "featured": [
-                            {
-                                "name": "New Arrivals",
-                                "href": "#"
-                            },
-                            {
-                                "name": "Basic Tees",
-                                "href": "#"
-                            },
-                            {
-                                "name": "Accessories",
-                                "href": "#"
-                            },
-                            {
-                                "name": "Carry",
-                                "href": "#"
-                            }
-                        ]
-                    },
-                    {
-                        "name": "Delivery",
-                        "featured": [
-                            {
-                                "name": "New Arrivals",
-                                "href": "#"
-                            },
-                            {
-                                "name": "Basic Tees",
-                                "href": "#"
-                            },
-                            {
-                                "name": "Accessories",
-                                "href": "#"
-                            },
-                            {
-                                "name": "Carry",
-                                "href": "#"
-                            }
-                        ]
-                    },
-                    {
-                        "name": "New & Notetable",
-                        "featured": [
-                            {
-                                "name": "New Arrivals",
-                                "href": "#"
-                            },
-                            {
-                                "name": "Basic Tees",
-                                "href": "#"
-                            },
-                            {
-                                "name": "Accessories",
-                                "href": "#"
-                            },
-                            {
-                                "name": "Carry",
-                                "href": "#"
-                            }
-                        ]
-                    }
-                ]
-            }
-        }
+    "header" : {
+        "logo": {
+            "webp": "http://localhost:8080/Mvn7Au_KCMyCNz8xmXEp0dmDji1KJzbNOT7EZUNGexw/rs::0:64::/bG9jYWw6Ly8vd293c2Jhci9hcHAvbWVkaWEvMzMvNDdlZTJhODYucG5n.webp",
+            "webp_2x": "http://localhost:8080/jwSKxx2fPC03rpmAYoePRONEo8rcuub_R5Jcz0fdJBY/rs::0:128::/bG9jYWw6Ly8vd293c2Jhci9hcHAvbWVkaWEvMzMvNDdlZTJhODYucG5n.webp",
+            "original": "http://localhost:8080/JF-aK_hHicwgByA3HFKFxlFwJq7GUGxyg8skU2edNOM/rs::0:64::/bG9jYWw6Ly8vd293c2Jhci9hcHAvbWVkaWEvMzMvNDdlZTJhODYucG5n",
+            "original_2x": "http://localhost:8080/kyr9RWXRJpKa-eKTOhE4n_xKB-vVPsmw9OlJnE9KqJI/rs::0:128::/bG9jYWw6Ly8vd293c2Jhci9hcHAvbWVkaWEvMzMvNDdlZTJhODYucG5n"
+          },
+          "component": "simpleSticky"
     },
-    "scope": "website",
-    "webBlocks": [
-        {
-            "code": "DarkHeader",
-            "name": "Header 1"
+    "navigation": {
+          "menu": [
+            {
+              "icon": "far fa-dot-circle",
+              "id": "01HA6JWZP194R0VZTCVZNBZ3R7",
+              "link": "#",
+              "name": "SEO",
+              "type": "link"
+            },
+            {
+              "icon": "far fa-dot-circle",
+              "id": "01HA6JWZP18J177XYJS9XCJBS1",
+              "link": "#",
+              "name": "PPC",
+              "type": "link"
+            },
+            {
+              "icon": "far fa-dot-circle",
+              "id": "01HA6JWZP18J177XYJS9XCJBS1",
+              "link": "#",
+              "name": "SEM",
+              "type": "link"
+            }
+          ]
         },
-        {
-            "code": "LightHeader",
-            "name": "Header 2"
+        "theme": {
+          "name": "MenuOne",
+          "value": "1"
         }
-    ]
-}
+  }

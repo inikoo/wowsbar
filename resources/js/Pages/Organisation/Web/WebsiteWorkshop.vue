@@ -34,12 +34,12 @@ const props = defineProps<{
         current: string
         navigation: object
     }
-    color_scheme?: object
     header?: object
     menu?: object
     footer?: object
     category?: object
     product?: object
+    structure : Object
 }>()
 
 let currentTab = ref(props.tabs.current)
@@ -54,6 +54,8 @@ const component = computed(() => {
     }
     return components[currentTab.value]
 })
+
+console.log(props)
 
 </script>
 

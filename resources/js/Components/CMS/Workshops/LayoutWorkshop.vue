@@ -18,26 +18,16 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { isNull } from 'lodash'
 library.add(faImage, faTimes, faOven);
 
+const props = defineProps<{
+	data: Object,
+}>()
+
 const themeOptions = [
     { name: "Full", value: "full" },
     { name: "Page Margin", value: "margin" },
 ];
 
-const data = ref({
-    layout: "full",
-    favicon: 'http://wowsbar.test/favicons/wowsbar-website-favicon-color-180x180.png',
-    colorLayout: "rgba(55 65 81)",
-    imageLayout: null,
-    header: {
-        color: "rgba(55 65 81)",
-    },
-    content: {
-        color: "rgba(55 65 81)",
-    },
-    footer: {
-        color: "rgba(55 65 81)",
-    },
-});
+const data = ref();
 
 const fileInput = ref(null);
 

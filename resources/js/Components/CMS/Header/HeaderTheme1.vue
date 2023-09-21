@@ -28,20 +28,22 @@ const changeLogo = async (element) => {
                 </div>
                 <div class="flex gap-3">
                     <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-                        <HyperLink :formList="{
+                    appointment
+                        <!-- <HyperLink :formList="{
                             label: 'label',
                             link: 'link',
                         }" label="label" :data="data.appointment" :useDelete="false"
-                            cssClass="text-sm font-semibold leading-6 text-gray-900" />
+                            cssClass="text-sm font-semibold leading-6 text-gray-900" /> -->
                     </div>
                     <div class="text-gray-300">|</div>
                     <div class="hidden lg:flex lg:flex-1 lg:justify-end">
                         <a href="#" class="text-sm font-semibold leading-6 text-gray-900">
-                            <HyperLink :formList="{
+                        sign in
+                            <!-- <HyperLink :formList="{
                                 label: 'label',
                                 link: 'link',
                             }" label="label" :data="data.logIn" :useDelete="false"
-                                cssClass="text-sm font-semibold leading-6 text-gray-900" />
+                                cssClass="text-sm font-semibold leading-6 text-gray-900" /> -->
                         </a>
                     </div>
                 </div>

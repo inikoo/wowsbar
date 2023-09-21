@@ -17,19 +17,16 @@ import {
 } from "@/../private/pro-solid-svg-icons";
 import HyperlinkTools from "@/Components/CMS/Fields/Hyperlinktools.vue";
 import ToolsTop from "@/Components/CMS/Header/ToolsTop.vue";
-import {
-    getDbRef,
-    getDataFirebase,
-    setDataFirebase,
-} from "@/Composables/firebase";
 import Header from "@/Components/CMS/Header/index.vue";
+
 library.add(faHandPointer, faText, faSearch, faImage, faTrash, faBars);
 const props = defineProps<{
     data: Object;
 }>();
 
 
-const set = ref({...props.data.data});
+
+const set = ref({...props.data.header});
 
 const changeLogo = async (element) => {
     const file = element.target.files[0];
@@ -72,13 +69,13 @@ const changeLogo = async (element) => {
                         Appointment
                     </h2>
                 </div>
-                <HyperlinkTools
+                <!-- <HyperlinkTools
                     :data="set.appointment"
                     :formList="{
                         label: 'label',
                         link: 'link',
                     }"
-                />
+                /> -->
             </div>
 
             <!-- editing area -->
@@ -88,7 +85,7 @@ const changeLogo = async (element) => {
                     @click="(e) => e.stopPropagation()"
                 />
                 <div style="transform: scale(0.8)" class="w-full">
-                    <Header :theme="set.theme.value" :data="set" />
+                    <Header :theme="set.component" :data="set" />
                 </div>
             </div>
         </div>
