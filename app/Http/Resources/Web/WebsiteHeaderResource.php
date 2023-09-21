@@ -21,7 +21,7 @@ class WebsiteHeaderResource extends JsonResource
 
     public function toArray($request): array
     {
-        $headerData = $request;
+        $headerData = (array) $request;
 
 
         $media = Media::find(Arr::get($headerData, 'logo'));
@@ -30,8 +30,8 @@ class WebsiteHeaderResource extends JsonResource
         $logo = (new Image())->make($media->getImgProxyFilename())->resize(0, 64);
 
 
-        return [
-            'logo' => GetPictureSources::run($logo)
-        ];
+        return array_merge($headerData,['logo' => GetPictureSources::run($logo)]);
+
+
     }
 }
