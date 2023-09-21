@@ -4,6 +4,10 @@
     "label": "appointment",
     "link": ""
   },
+  "logIn": {
+    "label": "Log in",
+    "link": ""
+  },
   "theme": {
     "name": "simple Sticky",
     "value": 2
