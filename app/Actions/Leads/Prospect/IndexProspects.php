@@ -25,7 +25,6 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class IndexProspects extends InertiaAction
 {
-
     private Shop|Organisation $parent;
 
     public function authorize(ActionRequest $request): bool
@@ -149,7 +148,7 @@ class IndexProspects extends InertiaAction
                                             'icon'  => ['fal', 'fa-upload'],
                                             'label' => 'upload',
                                             'route' => [
-                                                'name' => 'org.models.shop.prospects.upload',
+                                                'name'       => 'org.models.shop.prospects.upload',
                                                 'parameters' => $this->parent->id
 
                                             ],

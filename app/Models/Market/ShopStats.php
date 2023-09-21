@@ -25,9 +25,6 @@ use Illuminate\Support\Carbon;
  * @property int $number_customers_state_active
  * @property int $number_customers_state_losing
  * @property int $number_customers_state_lost
- * @property int $number_customers_trade_state_none
- * @property int $number_customers_trade_state_one
- * @property int $number_customers_trade_state_many
  * @property int $number_prospects
  * @property int $number_prospects_state_no_contacted
  * @property int $number_prospects_state_contacted
@@ -35,6 +32,9 @@ use Illuminate\Support\Carbon;
  * @property int $number_prospects_state_registered
  * @property int $number_prospects_state_invoiced
  * @property int $number_prospects_state_bounced
+ * @property int $number_prospects_gender_male
+ * @property int $number_prospects_gender_female
+ * @property int $number_prospects_gender_other
  * @property int $number_orders
  * @property int $number_orders_state_creating
  * @property int $number_orders_state_submitted
@@ -67,9 +67,6 @@ use Illuminate\Support\Carbon;
  * @method static Builder|ShopStats whereNumberCustomersStateLost($value)
  * @method static Builder|ShopStats whereNumberCustomersStateRegistered($value)
  * @method static Builder|ShopStats whereNumberCustomersStateWithAppointment($value)
- * @method static Builder|ShopStats whereNumberCustomersTradeStateMany($value)
- * @method static Builder|ShopStats whereNumberCustomersTradeStateNone($value)
- * @method static Builder|ShopStats whereNumberCustomersTradeStateOne($value)
  * @method static Builder|ShopStats whereNumberDeliveries($value)
  * @method static Builder|ShopStats whereNumberDeliveriesTypeOrder($value)
  * @method static Builder|ShopStats whereNumberDeliveriesTypeReplacement($value)
@@ -88,6 +85,9 @@ use Illuminate\Support\Carbon;
  * @method static Builder|ShopStats whereNumberPayments($value)
  * @method static Builder|ShopStats whereNumberProducts($value)
  * @method static Builder|ShopStats whereNumberProspects($value)
+ * @method static Builder|ShopStats whereNumberProspectsGenderFemale($value)
+ * @method static Builder|ShopStats whereNumberProspectsGenderMale($value)
+ * @method static Builder|ShopStats whereNumberProspectsGenderOther($value)
  * @method static Builder|ShopStats whereNumberProspectsStateBounced($value)
  * @method static Builder|ShopStats whereNumberProspectsStateContacted($value)
  * @method static Builder|ShopStats whereNumberProspectsStateInvoiced($value)

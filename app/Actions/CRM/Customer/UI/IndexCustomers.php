@@ -26,7 +26,6 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class IndexCustomers extends InertiaAction
 {
-
     protected Organisation|Shop $parent;
 
 
@@ -249,7 +248,7 @@ class IndexCustomers extends InertiaAction
         return match ($routeName) {
             'org.crm.customers.index' =>
             array_merge(
-                (new ShowCRMDashboard())->getBreadcrumbs('org.crm.dashboard',$routeParameters),
+                (new ShowCRMDashboard())->getBreadcrumbs('org.crm.dashboard', $routeParameters),
                 $headCrumb(
                     [
                         'name' => 'org.crm.customers.index',
@@ -259,7 +258,7 @@ class IndexCustomers extends InertiaAction
             ),
             'org.crm.shop.customers.index' =>
             array_merge(
-                (new ShowCRMDashboard())->getBreadcrumbs('org.crm.shop.dashboard',$routeParameters),
+                (new ShowCRMDashboard())->getBreadcrumbs('org.crm.shop.dashboard', $routeParameters),
                 $headCrumb(
                     [
                         'name'       => 'org.crm.shop.customers.index',

@@ -53,7 +53,6 @@ use Spatie\Sluggable\SlugOptions;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
- * @property int|null $source_id
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \OwenIt\Auditing\Models\Audit> $audits
  * @property-read int|null $audits_count
  * @property-read array $es_audits
@@ -86,7 +85,6 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|Employee wherePhone($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Employee whereSalary($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Employee whereSlug($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Employee whereSourceId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Employee whereState($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Employee whereType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Employee whereUpdatedAt($value)
