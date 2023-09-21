@@ -7,8 +7,8 @@
 
 namespace Database\Seeders;
 
-use App\Actions\Organisation\HumanResources\JobPosition\StoreJobPosition;
-use App\Actions\Organisation\HumanResources\JobPosition\UpdateJobPosition;
+use App\Actions\HumanResources\JobPosition\StoreJobPosition;
+use App\Actions\HumanResources\JobPosition\UpdateJobPosition;
 use App\Models\Auth\Role;
 use App\Models\HumanResources\JobPosition;
 use Illuminate\Database\Seeder;

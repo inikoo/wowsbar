@@ -15,7 +15,7 @@ import {
     faTrash,
     faBars,
 } from "@/../private/pro-solid-svg-icons";
-import HyperlinkTools from '@/Components/CMS/Fields/Hyperlinktools.vue';
+import HyperlinkTools from "@/Components/CMS/Fields/Hyperlinktools.vue";
 import ToolsTop from "@/Components/CMS/Header/ToolsTop.vue";
 import {
     getDbRef,
@@ -29,26 +29,14 @@ const props = defineProps<{
 }>();
 
 
-const set = ref({
-    img: "http://wowsbar.test/favicons/wowsbar-website-favicon-color-180x180.png",
-    appointment: {
-        label: "appointment",
-        link: "",
-    },
-    logIn: {
-        label: "Log in",
-        link: "",
-    },
-    theme: { name: "simple Sticky", value: 2 },
-});
+const set = ref({...props.data.data});
 
 const changeLogo = async (element) => {
-  const file = element.target.files[0];
-  if (file) {
-    set.value.img = URL.createObjectURL(file);
-  }
+    const file = element.target.files[0];
+    if (file) {
+        set.value.img = URL.createObjectURL(file);
+    }
 };
-
 </script>
 
 <template>
@@ -78,16 +66,19 @@ const changeLogo = async (element) => {
                     />
                 </label>
 
-                <hr class="mt-5">
+                <hr class="mt-5" />
                 <div class="flex items-center justify-between mt-5">
-                    <h2 class="text-sm font-medium text-gray-900">Appointment</h2>
+                    <h2 class="text-sm font-medium text-gray-900">
+                        Appointment
+                    </h2>
                 </div>
-                <HyperlinkTools :data="set.appointment"
-                                :formList="{
-                                    label: 'label',
-                                    link: 'link',
-                                }" />
-
+                <HyperlinkTools
+                    :data="set.appointment"
+                    :formList="{
+                        label: 'label',
+                        link: 'link',
+                    }"
+                />
             </div>
 
             <!-- editing area -->

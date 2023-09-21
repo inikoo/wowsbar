@@ -10,9 +10,9 @@ use App\Actions\Auth\User\ExportUsers;
 use App\Actions\Auth\User\UI\CreateUser;
 use App\Actions\Auth\User\UI\EditUser;
 use App\Actions\Auth\User\UI\ShowUser;
-use App\Actions\Organisation\Auth\OrganisationUser\UI\IndexOrganisationUsers;
 use App\Actions\Organisation\Guest\DownloadGuestsTemplate;
 use App\Actions\Organisation\Organisation\UI\EditOrganisation;
+use App\Actions\Organisation\OrganisationUser\UI\IndexOrganisationUsers;
 use App\Actions\UI\Organisation\SysAdmin\ShowSysAdminDashboard;
 use Illuminate\Support\Facades\Route;
 

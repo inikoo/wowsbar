@@ -8,7 +8,7 @@
 namespace App\Actions\Leads\Prospect;
 
 use App\Actions\Leads\Prospect\Hydrators\ProspectHydrateUniversalSearch;
-use App\Actions\Organisation\Market\Shop\Hydrators\ShopHydrateProspects;
+use App\Actions\Market\Shop\Hydrators\ShopHydrateProspects;
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateProspects;
 use App\Models\CRM\Customer;
 use App\Models\CRM\Prospect;

@@ -7,7 +7,7 @@
 
 namespace Database\Seeders;
 
-use App\Actions\Organisation\Accounting\PaymentServiceProvider\StorePaymentServiceProvider;
+use App\Actions\Accounting\PaymentServiceProvider\StorePaymentServiceProvider;
 use App\Models\Accounting\PaymentServiceProvider;
 use App\Models\Assets\Country;
 use Illuminate\Database\Seeder;

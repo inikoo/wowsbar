@@ -6,28 +6,28 @@
  */
 
 
+use App\Actions\Accounting\Payment\UpdatePayment;
+use App\Actions\Accounting\PaymentAccount\StorePaymentAccount;
+use App\Actions\Accounting\PaymentAccount\UpdatePaymentAccount;
+use App\Actions\Accounting\PaymentServiceProvider\DeletePaymentServiceProvider;
+use App\Actions\Accounting\PaymentServiceProvider\UpdatePaymentServiceProvider;
+use App\Actions\HumanResources\Employee\DeleteEmployee;
+use App\Actions\HumanResources\Employee\StoreEmployee;
+use App\Actions\HumanResources\Employee\UpdateEmployee;
+use App\Actions\HumanResources\Employee\UploadEmployee;
 use App\Actions\Leads\Prospect\UploadShopProspects;
-use App\Actions\Organisation\Accounting\Payment\UpdatePayment;
-use App\Actions\Organisation\Accounting\PaymentAccount\StorePaymentAccount;
-use App\Actions\Organisation\Accounting\PaymentAccount\UpdatePaymentAccount;
-use App\Actions\Organisation\Accounting\PaymentServiceProvider\DeletePaymentServiceProvider;
-use App\Actions\Organisation\Accounting\PaymentServiceProvider\UpdatePaymentServiceProvider;
+use App\Actions\Market\Product\StoreProduct;
+use App\Actions\Market\Product\UpdateProduct;
+use App\Actions\Market\Product\UploadProduct;
+use App\Actions\Market\Shop\StoreShop;
 use App\Actions\Organisation\Guest\UploadGuest;
-use App\Actions\Organisation\HumanResources\Employee\DeleteEmployee;
-use App\Actions\Organisation\HumanResources\Employee\StoreEmployee;
-use App\Actions\Organisation\HumanResources\Employee\UpdateEmployee;
-use App\Actions\Organisation\HumanResources\Employee\UploadEmployee;
-use App\Actions\Organisation\Market\Product\StoreProduct;
-use App\Actions\Organisation\Market\Product\UpdateProduct;
-use App\Actions\Organisation\Market\Product\UploadProduct;
-use App\Actions\Organisation\Market\Shop\StoreShop;
 use App\Actions\Organisation\Organisation\UpdateOrganisation;
-use App\Actions\Organisation\Web\Webpage\StoreArticle;
-use App\Actions\Organisation\Web\Webpage\StoreWebpage;
-use App\Actions\Organisation\Web\Website\StoreWebsite;
-use App\Actions\Organisation\Web\Website\UpdateWebsite;
-use App\Actions\Organisation\Web\Website\UpdateWebsiteState;
 use App\Actions\UI\Organisation\Profile\UpdateProfile;
+use App\Actions\Web\Webpage\StoreArticle;
+use App\Actions\Web\Webpage\StoreWebpage;
+use App\Actions\Web\Website\StoreWebsite;
+use App\Actions\Web\Website\UpdateWebsite;
+use App\Actions\Web\Website\UpdateWebsiteState;
 
 Route::patch('/profile', UpdateProfile::class)->name('profile.update');
 Route::post('/shop/', StoreShop::class)->name('shop.store');
