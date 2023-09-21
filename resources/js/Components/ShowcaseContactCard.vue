@@ -1,7 +1,7 @@
 <!--suppress JSDeprecatedSymbols -->
 <script setup lang="ts">
 import { trans } from 'laravel-vue-i18n'
-import AddressLocation from '@/Components/AddressLocation.vue'
+// import AddressLocation from '@/Components/AddressLocation.vue'
 import {
     faEnvelope, faPhone,
     faMapMarkerAlt, faCopy,
@@ -109,7 +109,7 @@ const copyText = (text: string) => {
 
                 <!-- Location address -->
                 <div v-if="data.address" class="grid grid-flow-col justify-start items-start pl-0">
-                    <AddressLocation :data="props.data.address"/>
+                    <!-- <AddressLocation :data="props.data.address"/> -->
                 </div>
             </div>
 

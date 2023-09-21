@@ -16,43 +16,34 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faImage, faTimes, faOven } from "@/../private/pro-regular-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { isNull } from 'lodash'
+import Image from "@/Components/Image.vue"
 library.add(faImage, faTimes, faOven);
+
+const props = defineProps<{
+	data: Object,
+}>()
 
 const themeOptions = [
     { name: "Full", value: "full" },
     { name: "Page Margin", value: "margin" },
 ];
 
-const data = ref({
-    layout: "full",
-    favicon: 'http://wowsbar.test/favicons/wowsbar-website-favicon-color-180x180.png',
-    colorLayout: "rgba(55 65 81)",
-    imageLayout: null,
-    header: {
-        color: "rgba(55 65 81)",
-    },
-    content: {
-        color: "rgba(55 65 81)",
-    },
-    footer: {
-        color: "rgba(55 65 81)",
-    },
-});
 
-const fileInput = ref(null);
+const setData = ref({...props.data.layout});
+
 
 
 const addImage = async (element) => { 
     const file = element.target.files[0];
     if (file) {
-        data.value.imageLayout = URL.createObjectURL(file);
+        setData.value.imageLayout = URL.createObjectURL(file);
       }
 };
 
 const addfavicon= async (element) => { 
     const file = element.target.files[0];
     if (file) {
-        data.value.favicon = URL.createObjectURL(file);
+        setData.value.favicon = URL.createObjectURL(file);
       }
 };
 
@@ -78,11 +69,11 @@ const addfavicon= async (element) => {
             <button
                 v-for="option in themeOptions"
                 :key="option.value"
-                @click="data.layout = option.value"
+                @click="setData.layout = option.value"
                 :class="{
                     'bg-gray-700 dark:bg-gray-300/90 text-white dark:text-gray-700 hover:bg-gray-800 dark:hover:bg-gray-300':
-                        data.layout === option.value,
-                    'bg-gray-300 text-gray-700': data.layout !== option.value,
+                    setData.layout === option.value,
+                    'bg-gray-300 text-gray-700': setData.layout !== option.value,
                 }"
                 class="px-4 py-2 w-[150px]"
             >
@@ -106,7 +97,7 @@ const addfavicon= async (element) => {
                         style="display: none"
                         @change="addfavicon"
                     />
-                    <img :src="data.favicon" class="w-[20px]"/>
+                    <Image :src="setData.favicon" class="w-[20px]"/>
                 </label>
                 ~ Website ~
             </div>
@@ -116,8 +107,8 @@ const addfavicon= async (element) => {
         <div
             class="w-[60%] h-72 flex relative justify-center items-center border-[1px] border-gray-400 rounded-b-md"
             :style="{
-                'background-image': `url(${data.imageLayout})`,
-                'background-color': `${data.colorLayout}`,
+                'background-image': `url(${setData.imageLayout})`,
+                'background-color': `${setData.colorLayout}`,
                 'background-repeat': 'no-repeat',
                 'background-size': 'cover'
             }"
@@ -125,8 +116,8 @@ const addfavicon= async (element) => {
             <div
                 class="h-full rounded-b-md relative"
                 :class="{
-                    'w-full': data.layout === 'full',
-                    'w-[60%]': data.layout === 'margin',
+                    'w-full': setData.layout === 'full',
+                    'w-[60%]': setData.layout === 'margin',
                 }"
             >
                 <div
@@ -138,8 +129,8 @@ const addfavicon= async (element) => {
                         style="transform: scale(0.7)"
                     >
                         <ColorPicker
-                            :color="data.header.color"
-                            @onChange="(value) => (data.header.color = value)"
+                            :color="setData.header.color"
+                            @onChange="(value) => (setData.header.color = value)"
                             class=""
                         />
                     </div>
@@ -147,9 +138,9 @@ const addfavicon= async (element) => {
                         class="absolute right-0 top-8 flex gap-2"
                         style="transform: scale(0.7)"
                     >
-                    <div class="font-xs border rounded-lg py-1 px-2 text-white" :style="`background-color: ${data.header.color};`">Apoointment</div>
-                    <div :style="`border-left: 1px solid ${data.header.color};`"></div>
-                    <div class="font-xs border rounded-lg py-1 px-2 text-white" :style="`background-color: ${data.header.color};`">sign in</div>
+                    <div class="font-xs border rounded-lg py-1 px-2 text-white" :style="`background-color: ${setData.header.color};`">Apoointment</div>
+                    <div :style="`border-left: 1px solid ${setData.header.color};`"></div>
+                    <div class="font-xs border rounded-lg py-1 px-2 text-white" :style="`background-color: ${setData.header.color};`">sign in</div>
                     </div>
                 </div>
                 <div
@@ -161,14 +152,14 @@ const addfavicon= async (element) => {
                         style="transform: scale(0.7)"
                     >
                         <ColorPicker
-                            :color="data.content.color"
-                            @onChange="(value) => (data.content.color = value)"
+                            :color="setData.content.color"
+                            @onChange="(value) => (setData.content.color = value)"
                             class=""
                         />
                     </div>
                     <div
                         class="absolute right-0 top-5 flex gap-2"
-                        :style="`color: ${data.content.color};`"
+                        :style="`color: ${setData.content.color};`"
                     >
                     <font-awesome-icon :icon="['far', 'oven']" class="w-40 h-14" />
 
@@ -191,24 +182,24 @@ const addfavicon= async (element) => {
                 </div>
             </div>
             <div
-                v-if="data.layout === 'margin'"
+                v-if="setData.layout === 'margin'"
                 class="absolute bottom-0 left-0"
                 style="transform: scale(0.7)"
             >
                 <ColorPicker
-                    :color="data.colorLayout"
-                    @onChange="(value) => (data.colorLayout = value)"
+                    :color="setData.colorLayout"
+                    @onChange="(value) => (setData.colorLayout = value)"
                     class=""
                     :colorSuggestions="false"
                 />
 
-                <div v-if="!isNull(data.imageLayout)" class="border border-slate-300 rounded-full w-10 h-10 flex justify-center items-center bg-white mt-2 cursor-pointer text-red-500" @click="data.imageLayout = null" >
+                <div v-if="!isNull(setData.imageLayout)" class="border border-slate-300 rounded-full w-10 h-10 flex justify-center items-center bg-white mt-2 cursor-pointer text-red-500" @click="setData.imageLayout = null" >
                     <font-awesome-icon :icon="['fal', 'times']" />
                 </div>
 
                 <label
                     for="imageUpload"
-                    v-if="isNull(data.imageLayout)"
+                    v-if="isNull(setData.imageLayout)"
                     class="border border-slate-300 rounded-full w-10 h-10 flex justify-center items-center bg-white mt-2 cursor-pointer"
                 >
                     <input 

@@ -9,7 +9,9 @@ namespace App\Models\Web;
 
 use App\Enums\Organisation\Web\Website\WebsiteStateEnum;
 use App\Http\Resources\Web\WebsiteHeaderResource;
+use App\Http\Resources\Web\WebsiteLayoutResource;
 use App\Models\Market\Shop;
+use App\Models\Media\Media;
 use App\Models\Traits\HasHistory;
 use App\Models\Traits\HasUniversalSearch;
 use Illuminate\Database\Eloquent\Builder;
@@ -18,6 +20,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\MediaLibrary\HasMedia;
@@ -178,7 +181,14 @@ class Website extends Model implements Auditable, HasMedia
     public function getCompiledStructure(): array
     {
         data_set($compiledLayout, 'header', WebsiteHeaderResource::make($this->header)->getArray());
+        data_set($compiledLayout, 'layout', WebsiteLayoutResource::make($this->layout)->getArray());
 
         return $compiledLayout;
+    }
+
+
+    public function images(): MorphToMany
+    {
+        return $this->morphToMany(Media::class, 'model', 'model_has_media');
     }
 }

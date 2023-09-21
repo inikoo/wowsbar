@@ -1,123 +1,110 @@
 {
-    "slug": "footer",
-    "name": "Website footer",
-    "blueprint": {
-        "defaultParameters": {
-            "navigations": [
-                {
-                    "title": "company",
-                    "type": "list",
-                    "id": 1,
-                    "data": [
-                        { "name": "About", "href": "#", "id": 1 },
-                        { "name": "Blog", "href": "#", "id": 2 },
-                        { "name": "Jobs", "href": "#", "id": 3 },
-                        { "name": "Press", "href": "#", "id": 4 },
-                        { "name": "Partners", "href": "#", "id": 5 }
-                    ]
-                },
-                {
-                    "title": "legal",
-                    "type": "list",
-                    "id": 2,
-                    "data": [
-                        { "name": "Claim", "href": "#", "id": 1 },
-                        { "name": "Privacy", "href": "#", "id": 2 },
-                        { "name": "Terms", "href": "#", "id": 3 }
-                    ]
-                },
-                {
-                    "title": "Description",
-                    "type": "description",
-                    "id": 3,
-                    "data": "Lorem Ipsum is simply dummy te printernto electronic setting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
-                },
-                {
-                    "title": "Info",
-                    "type": "info",
-                    "id": 4,
-                    "data": [
-                        {
-                            "title": "location",
-                            "value": "Ancient Wisdom s.r.o.",
-                            "icon": "fas fa-map-marker-alt",
-                            "id": 1
-                        },
-                        {
-                            "title": "billingAddress",
-                            "value": "Billin",
-                            "icon": "fas fa-map",
-                            "id": 2
-                        },
-                        {
-                            "title": "vat",
-                            "value": "VAT: SK2120525440",
-                            "icon": "fas fa-balance-scale",
-                            "id": 3
-                        },
-                        {
-                            "title": "building",
-                            "value": "Reg: 50920600",
-                            "icon": "fas fa-building",
-                            "id": 4
-                        },
-                        {
-                            "title": "phone",
-                            "value": "+421 (0)33 558 60 71",
-                            "icon": "fas fa-phone",
-                            "id": 5
-                        },
-                        {
-                            "title": "email",
-                            "value": "contact@awgifts.eu",
-                            "icon": "fas fa-envelope",
-                            "id": 6
-                        }
-                    ]
-                }
-            ],
-            "copyRight": { "label": "AW Advantage", "href": "#" },
-            "socials": [
-                {
-                    "label": "Facebook",
-                    "href": "#facebook",
-                    "icon": "fab fa-facebook",
-                    "id": 1
-                },
-                {
-                    "label": "Instagram",
-                    "href": "#instagram",
-                    "icon": "fab fa-instagram",
-                    "id": 2
-                },
-                {
-                    "label": "Twitter",
-                    "href": "#twitter",
-                    "icon": "fab fa-twitter",
-                    "id": 3
-                },
-                {
-                    "label": "Github",
-                    "href": "#github",
-                    "icon": "fab fa-github",
-                    "id": 4
-                }
-            ]
+    "data": {
+      "column": [
+        {
+          "data": [
+            {
+              "id": "01HA6EVP5P974KJJ9ZJXE1R71W",
+              "link": "#",
+              "name": "Wowsbar articel 1"
+            },
+            {
+              "id": "01HA6EVP5P81WWA5T68TZ6VGCM",
+              "link": "#",
+              "name": "Wowsbar articel 2"
+            },
+            {
+              "id": "01HA6EVP5PNT4DXQWFVBQ6Q5AF",
+              "link": "#",
+              "name": "Wowsbar articel 3"
+            },
+            {
+              "id": "01HA6EVP5PTFFXFNR60CMBHVZN",
+              "link": "#",
+              "name": "Wowsbar articel 4"
+            },
+            {
+              "id": "01HA6EVP5PRXX5D0YPN1Z5FCM5",
+              "link": "#",
+              "name": "Wowsbar articel 5"
+            }
+          ],
+          "id": "01HA6EVP5PYKFF0N45F46ZDZB3",
+          "title": "Blog",
+          "type": "list"
+        },
+        {
+          "data": [
+            {
+              "id": "01HA6EVP5PTPAANKN48ZVZDM2H",
+              "link": "#",
+              "name": "blog 1"
+            },
+            {
+              "id": "01HA6EVP5P2NE8TJ2Y539ZC8EN",
+              "link": "#",
+              "name": "blog 2"
+            },
+            {
+              "id": "01HA6EVP5P5ZMED5ZPFF6VS3ST",
+              "link": "#",
+              "name": "blog 3"
+            }
+          ],
+          "id": "01HA6EVP5PQJ7G4M0C03J0BRMV",
+          "title": "Blog 2",
+          "type": "list"
+        },
+        {
+          "data": "Lorem Ipsum is simply dummy te printernto electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+          "id": "01HA6EVP5PV14YMW5RYVC10CEX",
+          "title": "Wowsbar",
+          "type": "description"
+        },
+        {
+          "data": [
+            {
+              "icon": "fas fa-phone",
+              "id": "01HA6EVP5PFZSMZK9NQ4CBA4KH",
+              "title": "phone",
+              "value": "+421 (0)33 000 00 00"
+            },
+            {
+              "icon": "fas fa-envelope",
+              "id": "01HA6EVP5QGX7QD4SA25KCVEQF",
+              "title": "email",
+              "value": "contact@example.com"
+            }
+          ],
+          "id": "01HA6EVP5PNRGNER1RJ5V7X29K",
+          "title": "Wowsbar Info",
+          "type": "info"
         }
+      ],
+
+      "copyRight": {
+        "label": "Wowsbar",
+        "link": "*"
+      },
+
+      "social": [
+        {
+          "icon": "fab fa-facebook",
+          "id": "01HA6EVP5Q7FFPGMMM85467XGA",
+          "label": "Facebook",
+          "link": "#"
+        },
+        {
+          "icon": "fab fa-instagram",
+          "id": "01HA6EVP5QH4VG21EVD1FTGDBM",
+          "label": "Instagram",
+          "link": "#"
+        }
+      ]
+      
     },
-    "scope": "website",
-    "webBlocks": [
-        {
-            "code": "FooterTheme1",
-            "name": "Footer 1"
-        },
-        {
-            "code": "FooterTheme2",
-            "name": "Footer 2"
-        },
-        {
-            "code": "FooterTheme3",
-            "name": "Footer 3"
-        }
-    ]
+    "theme": {
+      "name": "Footer Theme Two",
+      "value": 2
+    }
 }

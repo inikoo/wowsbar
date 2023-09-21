@@ -9,14 +9,14 @@ import HeaderTheme1 from './HeaderTheme1.vue';
 import HeaderTheme2 from './HeaderTheme2.vue';
 
 const props = defineProps<{
-    theme: Number,
+    theme: String,
     data: Object
 }>()
 
 
 const component = {
-   1: HeaderTheme1,
-   2: HeaderTheme2,
+   "simpleSticky": HeaderTheme1,
+   "simple": HeaderTheme2,
 }
 
 </script>

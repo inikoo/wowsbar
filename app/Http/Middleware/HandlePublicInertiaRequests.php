@@ -18,13 +18,13 @@ class HandlePublicInertiaRequests extends Middleware
 
     public function share(Request $request): array
     {
-
         $firstLoadOnlyProps['ziggy'] = function () use ($request) {
             return array_merge((new Ziggy())->toArray(), [
                 'location' => $request->url(),
             ]);
         };
 
+        $firstLoadOnlyProps['structure']=$request->get('website')->compiled_structure;
         return array_merge(
             $firstLoadOnlyProps,
             parent::share($request),

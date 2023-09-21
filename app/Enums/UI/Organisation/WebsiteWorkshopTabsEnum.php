@@ -21,7 +21,6 @@ enum WebsiteWorkshopTabsEnum: string
     case MENU                 = 'menu';
     case FOOTER               = 'footer';
 
-    case COLOR_SCHEME         = 'color_scheme';
 
 
 
@@ -31,10 +30,6 @@ enum WebsiteWorkshopTabsEnum: string
             WebsiteWorkshopTabsEnum::LAYOUT => [
                 'title' => __('layout'),
                 'icon'  => 'fal fa-layer-group',
-            ],
-            WebsiteWorkshopTabsEnum::COLOR_SCHEME => [
-                'title' => __('color scheme'),
-                'icon'  => 'fal fa-palette',
             ],
             WebsiteWorkshopTabsEnum::HEADER => [
                 'title' => __('header'),
