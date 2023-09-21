@@ -140,7 +140,7 @@ class ShowPaymentAccount extends InertiaAction
             ]
         )->table(
             \App\Actions\Accounting\Payment\UI\IndexPayments::make()->tableStructure(
-            modelOperations: [
+                modelOperations: [
                 'createLink' => [
                     $this->canEdit ? [
                         'route' => [
@@ -151,8 +151,9 @@ class ShowPaymentAccount extends InertiaAction
                     ] : false
                 ]
             ],
-            prefix: 'payments'
-        ))->table(IndexHistories::make()->tableStructure());
+                prefix: 'payments'
+            )
+        )->table(IndexHistories::make()->tableStructure());
     }
 
 

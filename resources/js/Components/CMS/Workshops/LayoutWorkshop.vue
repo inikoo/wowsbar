@@ -74,7 +74,7 @@ const addfavicon= async (element) => {
 
 <template>
     <div class="flex justify-center items-center w-full mt-3">
-        <div class="w-[80%] flex justify-end">
+        <div class="w-[60%] flex justify-end">
             <button
                 v-for="option in themeOptions"
                 :key="option.value"
@@ -92,7 +92,7 @@ const addfavicon= async (element) => {
     </div>
     <div class="flex justify-center items-center w-full w">
         <div
-            class="w-[80%] flex justify-start items-center border-gray-400 rounded-t-md mt-9 bg-gray-200"
+            class="w-[60%] flex justify-start items-center border-gray-400 rounded-t-md mt-9 bg-gray-200"
         >
             <div class="p-1 w-52 bg-white border-gray-400 border-x-[1px] border-t-[1px] rounded-t-md flex gap-2 justify-start align-middle">
                 <label
@@ -114,7 +114,7 @@ const addfavicon= async (element) => {
     </div>
     <div class="flex justify-center items-center w-full">
         <div
-            class="w-[80%] h-72 flex relative justify-center items-center border-[1px] border-gray-400 rounded-b-md"
+            class="w-[60%] h-72 flex relative justify-center items-center border-[1px] border-gray-400 rounded-b-md"
             :style="{
                 'background-image': `url(${data.imageLayout})`,
                 'background-color': `${data.colorLayout}`,
@@ -144,7 +144,7 @@ const addfavicon= async (element) => {
                         />
                     </div>
                     <div
-                        class="absolute right-0 top-0 flex gap-2"
+                        class="absolute right-0 top-8 flex gap-2"
                         style="transform: scale(0.7)"
                     >
                     <div class="font-xs border rounded-lg py-1 px-2 text-white" :style="`background-color: ${data.header.color};`">Apoointment</div>

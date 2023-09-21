@@ -46,7 +46,8 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \OwenIt\Auditing\Models\Audit> $audits
  * @property-read int|null $audits_count
  * @property-read \App\Models\Media\Media|null $avatar
- * @property-read ExcelUpload|null $excelUploads
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, ExcelUpload> $excelUploads
+ * @property-read int|null $excel_uploads_count
  * @property-read array $es_audits
  * @property-read \App\Models\Assets\Language $language
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \App\Models\Media\Media> $media

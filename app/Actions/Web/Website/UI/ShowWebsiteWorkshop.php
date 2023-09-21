@@ -75,6 +75,7 @@ class ShowWebsiteWorkshop extends InertiaAction
                     'current'    => $this->tab,
                     'navigation' => WebsiteWorkshopTabsEnum::navigation(),
                 ],
+                'structure'   => $website->compiled_structure,
 
                 WebsiteWorkshopTabsEnum::LAYOUT->value => $this->tab == WebsiteWorkshopTabsEnum::LAYOUT->value
                     ?

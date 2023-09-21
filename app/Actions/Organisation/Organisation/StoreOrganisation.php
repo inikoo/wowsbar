@@ -37,14 +37,14 @@ class StoreOrganisation
         AttachImageToOrganisation::run(
             organisation: $organisation,
             collection: 'logo',
-            imagePath: resource_path('images/logo.png'),
+            imagePath: resource_path('art/logo/logo-teal.png'),
             originalFilename: 'logo.png'
         );
 
         AttachImageToOrganisation::run(
             organisation: $organisation,
             collection: 'logo_white',
-            imagePath: resource_path('images/logo.png'),
+            imagePath: resource_path('art/logo/logo-white.png'),
             originalFilename: 'logo.png'
         );
 

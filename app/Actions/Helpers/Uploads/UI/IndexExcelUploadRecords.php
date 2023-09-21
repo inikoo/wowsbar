@@ -9,12 +9,9 @@ namespace App\Actions\Helpers\Uploads\UI;
 
 use App\Actions\InertiaAction;
 use App\Actions\UI\Organisation\HumanResources\ShowHumanResourcesDashboard;
-use App\Enums\HumanResources\Employee\EmployeeStateEnum;
-use App\Enums\HumanResources\Employee\EmployeeTypeEnum;
 use App\Http\Resources\HumanResources\EmployeeInertiaResource;
 use App\Http\Resources\HumanResources\EmployeeResource;
 use App\InertiaTable\InertiaTable;
-use App\Models\HumanResources\Employee;
 use App\Models\Media\ExcelUploadRecord;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;

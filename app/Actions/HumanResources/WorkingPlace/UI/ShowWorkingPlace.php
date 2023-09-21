@@ -129,9 +129,10 @@ class ShowWorkingPlace extends InertiaAction
                     ))
                     : Inertia::lazy(fn () => ClockingResource::collection(
                         \App\Actions\HumanResources\Clocking\UI\IndexClockings::run(
-                        parent: $workplace,
-                        prefix: 'clockings'
-                    ))),
+                            parent: $workplace,
+                            prefix: 'clockings'
+                        )
+                    )),
                 WorkingPlaceTabsEnum::CLOCKING_MACHINES->value => $this->tab == WorkingPlaceTabsEnum::CLOCKING_MACHINES->value
                     ?
                     fn () => ClockingMachineResource::collection(IndexClockingMachines::run(
