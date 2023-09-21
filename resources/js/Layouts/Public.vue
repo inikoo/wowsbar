@@ -19,51 +19,51 @@ import FooterThemeThree from '@/Components/Footer/Public/FooterThemeThree.vue'
 
 const isTabActive = ref(false)
 
-/*
+console.log(usePage().props.structure.header)
 const props = defineProps([
-    'layout'
+    'layout',
+    'structure'
 ])
 
-const footerLogo = usePage().props.art.footer_logo
+// const footerLogo = usePage().props.art.footer_logo
 
 const getHeaderComponent = computed(() => {
     const componentList = {
-        'HeaderThemeOne': HeaderThemeOne
+        'simpleSticky': HeaderThemeOne
     }
 
-    return componentList[props.layout.header.component]
+    return componentList[props.structure.header.component]
 })
 
-const getMenuComponent = computed(() => {
-    const componentList = {
-        'MenuOne': MenuOne,
-        'MenuTwo': MenuTwo
-    }
+// const getMenuComponent = computed(() => {
+//     const componentList = {
+//         'MenuOne': MenuOne,
+//         'MenuTwo': MenuTwo
+//     }
 
-    return componentList[props.layout?.menu?.component ?? 'MenuTwo']
-})
+//     return componentList[props.layout?.menu?.component ?? 'MenuTwo']
+// })
 
-const getFooterComponent = computed(() => {
-    const componentList = {
-        'FooterThemeOne': FooterThemeOne,
-        'FooterThemeTwo': FooterThemeTwo,
-        'FooterThemeThree': FooterThemeThree,
-    }
+// const getFooterComponent = computed(() => {
+//     const componentList = {
+//         'FooterThemeOne': FooterThemeOne,
+//         'FooterThemeTwo': FooterThemeTwo,
+//         'FooterThemeThree': FooterThemeThree,
+//     }
 
-    return componentList[props.layout?.footer?.component ?? 'FooterThemeOne']
-})
-
-*/
+//     return componentList[props.layout?.footer?.component ?? 'FooterThemeOne']
+// })
 
 
 </script>
 
 <template>
     <div class="relative ">
+    <!-- <pre>{{ props }}</pre> -->
         <section class="relative isolate overflow-hidden bg-gray-100">
-            <!--
-           <component :is="getHeaderComponent" :data="publicHeader"></component>
+           <component :is="getHeaderComponent" :data="structure.header"></component>
 
+            <!--
            <component :is="getMenuComponent" :data="publicData.menu"></component>
 
            -->

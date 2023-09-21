@@ -5,7 +5,7 @@ import Image from "@/Components/Image.vue"
 import Text from '@/Pages/Public/PageComponents/Text.vue'
 
 const props = defineProps<{
-    data: {
+    data?: {
         data: {
             id: string
             name: string
@@ -24,12 +24,12 @@ const props = defineProps<{
     }
 }>()
 
-console.log(props.data)
-const logo = usePage().props.art.logo
+// console.log(props.data)
+// const logo = usePage().props.art.logo
 
-const widthComponent = props.data.layout.width
-const heightComponent = props.data.layout.height
-const dataLength = props.data.data.length
+const widthComponent = props.data?.layout?.width ?? 0
+const heightComponent = props.data?.layout?.height ?? 0
+const dataLength = props.data?.data?.length ?? 0
 
 const getComponent = (type: string) => {
     const component = {
@@ -48,25 +48,28 @@ const calcPercentage = (total: number, amount: number) => {
 
 <template>
     <!-- <pre>{{ data }}</pre> -->
+    <Image :src="data.logo" />
     <div class="mt-24 bg-gray-100 fixed z-10 flex justify-center items-center"
         :class="`w-full`"
     >
         <div :class="`isolate relative`"
             :style="['width: 100%', 'height: ' + heightComponent + 'px']"
         >
-            <div v-for="(component, index) in data.data" class="absolute"
-                :style="[
-                    'top: ' + calcPercentage(heightComponent, component.style.top) + '%',
-                    'left: ' + calcPercentage(widthComponent, component.style.left) + '%',
-                    'z-index: ' + (dataLength - index),
-                    'font-size: ' + component.style.fontSize + 'px',
-                    'color: ' + (component.style.color ?? '#374151')
-                ]"
-            >
-                <component :is="getComponent(component.type)">
-                    {{ component.name }}
-                </component>
-            </div>
+            <template v-if="data?.data">
+                <div v-for="(component, index) in data.data" class="absolute"
+                    :style="[
+                        'top: ' + calcPercentage(heightComponent, component.style.top) + '%',
+                        'left: ' + calcPercentage(widthComponent, component.style.left) + '%',
+                        'z-index: ' + (dataLength - index),
+                        'font-size: ' + component.style.fontSize + 'px',
+                        'color: ' + (component.style.color ?? '#374151')
+                    ]"
+                >
+                    <component :is="getComponent(component.type)">
+                        {{ component.name }}
+                    </component>
+                </div>
+            </template>
         </div>
     </div>
 </template>
