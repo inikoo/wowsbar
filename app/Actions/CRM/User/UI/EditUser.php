@@ -11,6 +11,7 @@ use App\Actions\InertiaAction;
 use App\Actions\Traits\Fields\WithUserFields;
 use App\Models\Auth\User;
 use App\Models\CRM\Customer;
+use App\Models\Market\Shop;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -42,7 +43,12 @@ class EditUser extends InertiaAction
         return $this->handle($user);
     }
 
-
+    /** @noinspection PhpUnusedParameterInspection */
+    public function inCustomerInShop(Shop $shop,Customer $customer, User $user, ActionRequest $request): User
+    {
+        $this->initialisation($request);
+        return $this->handle($user);
+    }
 
     public function htmlResponse(User $user, ActionRequest $request): Response
     {

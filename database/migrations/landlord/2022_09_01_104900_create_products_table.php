@@ -37,7 +37,6 @@ return new class () extends Migration {
             $table->jsonb('data');
             $table->timestampsTz();
             $table->softDeletesTz();
-            $table->unsignedInteger('source_id')->nullable()->unique();
             $table->index(['owner_id','owner_type']);
             $table->index(['parent_id','parent_type']);
         });

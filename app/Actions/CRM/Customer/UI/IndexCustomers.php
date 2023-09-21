@@ -26,7 +26,6 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class IndexCustomers extends InertiaAction
 {
-    private bool $canCreateShop = false;
 
     protected Organisation|Shop $parent;
 
@@ -42,7 +41,6 @@ class IndexCustomers extends InertiaAction
         $this->initialisation($request);
         return $this->handle($shop);
     }
-
 
 
     public function authorize(ActionRequest $request): bool
@@ -203,7 +201,7 @@ class IndexCustomers extends InertiaAction
 
         $scope     = $this->parent;
         $container = null;
-        if (class_basename($scope) == 'Shop') {
+        if (class_basename($scope) == 'Shop' and organisation()->stats->number_shops>1) {
             $container = [
                 'icon'    => ['fal', 'fa-store-alt'],
                 'tooltip' => __('Shop'),
@@ -251,7 +249,7 @@ class IndexCustomers extends InertiaAction
         return match ($routeName) {
             'org.crm.customers.index' =>
             array_merge(
-                (new ShowCRMDashboard())->getBreadcrumbs(),
+                (new ShowCRMDashboard())->getBreadcrumbs('org.crm.dashboard',$routeParameters),
                 $headCrumb(
                     [
                         'name' => 'org.crm.customers.index',
@@ -259,12 +257,12 @@ class IndexCustomers extends InertiaAction
                     ]
                 ),
             ),
-            'org.crm.shops.show.customers.index' =>
+            'org.crm.shop.customers.index' =>
             array_merge(
-                (new ShowCRMDashboard())->getBreadcrumbs(),
+                (new ShowCRMDashboard())->getBreadcrumbs('org.crm.shop.dashboard',$routeParameters),
                 $headCrumb(
                     [
-                        'name'       => 'org.crm.shops.show.customers.index',
+                        'name'       => 'org.crm.shop.customers.index',
                         'parameters' => $routeParameters
                     ]
                 )
