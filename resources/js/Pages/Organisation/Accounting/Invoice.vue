@@ -17,7 +17,7 @@ import PageHeading from '@/Components/Headings/PageHeading.vue';
 import { computed, defineAsyncComponent, ref } from "vue";
 import { useTabChange } from "@/Composables/tab-change";
 import ModelDetails from "@/Pages/ModelDetails.vue";
-import TablePayments from "@/Pages/Tables/TablePayments.vue";
+import TablePayments from '@/Components/Tables/TablePayments.vue';
 import Tabs from "@/Components/Navigation/Tabs.vue";
 import { faClock } from "@/../private/pro-solid-svg-icons";
 import { capitalize } from "@/Composables/capitalize"
@@ -53,7 +53,7 @@ const component = computed(() => {
 </script>
 
 
-<template layout="App">
+<template layout="OrgApp">
     <Head :title="capitalize(title)"/>
     <PageHeading :data="pageHead"></PageHeading>
     <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate"/>

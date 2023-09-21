@@ -15,13 +15,13 @@ import {
 } from "@/../private/pro-light-svg-icons";
 import PageHeading from '@/Components/Headings/PageHeading.vue';
 import ModelDetails from "@/Pages/ModelDetails.vue";
-import TableOrders from "@/Pages/Tables/TableOrders.vue";
+// import TableOrders from "@/Pages/Tables/TableOrders.vue";
 import {useTabChange} from "@/Composables/tab-change";
 import {computed, defineAsyncComponent, ref} from "vue";
 import Tabs from "@/Components/Navigation/Tabs.vue";
-import TableMailshots from "@/Pages/Tables/TableMailshots.vue";
-import TableCustomers from "@/Pages/Tables/TableCustomers.vue";
-import ProductShowcase from "@/Pages/Market/ProductShowcase.vue";
+// import TableMailshots from "@/Pages/Tables/TableMailshots.vue";
+// import TableCustomers from "@/Pages/Tables/TableCustomers.vue";
+// import ProductShowcase from "@/Pages/Market/ProductShowcase.vue";
 import { capitalize } from "@/Composables/capitalize"
 
 library.add(
@@ -60,10 +60,10 @@ const handleTabUpdate = (tabSlug) => useTabChange(tabSlug, currentTab);
 const component = computed(() => {
 
     const components = {
-        showcase: ProductShowcase,
-        mailshots: TableMailshots,
-        customers: TableCustomers,
-        orders: TableOrders,
+        // showcase: ProductShowcase,
+        // mailshots: TableMailshots,
+        // customers: TableCustomers,
+        // orders: TableOrders,
         details: ModelDetails,
         history: ModelChangelog,
     };
@@ -74,7 +74,7 @@ const component = computed(() => {
 </script>
 
 
-<template layout="App">
+<template layout="OrgApp">
     <Head :title="capitalize(title)"/>
     <PageHeading :data="pageHead"></PageHeading>
     <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate"/>
