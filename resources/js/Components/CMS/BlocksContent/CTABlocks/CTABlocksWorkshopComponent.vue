@@ -18,7 +18,7 @@ const dataCTA = reactive({
     title : '<p style="text-align: center"><strong><span style="font-size: 44px; color: #171717">Boost your career</span></strong></p>',
     subtitle :'<p style="text-align: center"><span style="font-size: 24px; color: rgb(74, 74, 74)">Elevate your career with a leading company. Uncover your full potential and embark on a rewarding journey with us.</span></p>',
     button :{
-        style: '',
+        background: 'rgba(55, 65, 81, 1)',
         label: 'Join now!'
     }
 })
