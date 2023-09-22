@@ -2,7 +2,7 @@
 import { ref, watch, onBeforeUnmount, Ref } from "vue"
 import Multiselect from "@vueform/multiselect"
 import { lowerCase, snakeCase } from 'lodash'
-import { useHelperLayout } from '@/Stores/helperLayout.js'
+// import { useHelperLayout } from '@/Stores/helperLayout.js'
 
 import { Popover, PopoverPanel } from '@headlessui/vue'
 import { FontSize } from '@/Composables/useTiptapFontSize'
