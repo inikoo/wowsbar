@@ -3,10 +3,8 @@ import { ref, watch, onBeforeUnmount, Ref } from "vue"
 import Multiselect from "@vueform/multiselect"
 import { lowerCase, snakeCase } from 'lodash'
 import { useHelperLayout } from '@/Stores/helperLayout.js'
-const helperLayout = useHelperLayout()
 
-import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue'
-import { ChevronDownIcon } from '@heroicons/vue/20/solid'
+import { Popover, PopoverPanel } from '@headlessui/vue'
 import { FontSize } from '@/Composables/useTiptapFontSize'
 
 import StarterKit from "@tiptap/starter-kit"
@@ -33,7 +31,6 @@ const emit = defineEmits<{
 }>()
 
 const editor: Ref<any> = ref(false)
-// const _popoverButton: Ref<any> = ref()
 const popoverValue: Ref<any> = ref(false)
 
 const fontOptions = [
@@ -180,7 +177,7 @@ const tempId = ulid()
             <!-- The main content -->
             <div @focusin="() => { popoverValue = tempId }" @focusout="true"
                 class="z-20 relative"
-                :class="['min-w-[50px] whitespace-nowrap rounded hover:bg-gray-200 hover:ring-gray-400 focus-within:ring-gray-400', props.class]"
+                :class="['min-w-[50px] whitespace-nowrap rounded hover:bg-orange-200 hover:ring-gray-400 focus-within:ring-gray-400', props.class]"
             >
                 <div class="relative z-40">
                     <EditorContent :editor="editor" />
