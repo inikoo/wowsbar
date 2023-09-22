@@ -22,7 +22,8 @@ import ToolInTop from '@/Components/CMS/Footer/ToolsInTop.vue'
 library.add(faHandPointer, faHandRock, faPlus, faAlignJustify, faList, faInfoCircle)
 
 const props = defineProps<{
-	data: Object,
+    data: Object,
+    imagesUploadRoute: Object
 }>()
 
 
@@ -42,13 +43,9 @@ const Dummy = {
     ],
 }
 
-const selectedTheme = ref({...props.data.data.theme})
-const columsTypeTheme = ref(Dummy.columsType[0])
-const tool = ref({ name: 'edit', icon: ['fas', 'fa-hand-pointer'] })
-
 const DummyColums = [
     {
-        title: 'add list',
+        label: 'add list',
         type: "list",
         id: ulid(),
         data: [
@@ -57,48 +54,48 @@ const DummyColums = [
         ],
     },
     {
-        title: 'add description',
+        label: 'add description',
         type: "description",
         id: ulid(),
         data: "Lorem Ipsum is simply dummy te printernto electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
     },
     {
-        title: 'add info',
+        label: 'add info',
         type: 'info',
         id: ulid(),
         data: [
             {
-                title: 'location',
+                label: 'location',
                 value: 'Ancient Wisdom s.r.o.',
                 icon: 'fab fa-facebook',
                 id: ulid(),
             },
             {
-                title: 'billingAddress',
+                label: 'billingAddress',
                 value: 'Billin',
                 icon: 'fas fa-map',
                 id: ulid(),
             },
             {
-                title: 'vat',
+                label: 'vat',
                 value: 'VAT: SK2120525440',
                 icon: 'fab fa-facebook',
                 id: ulid(),
             },
             {
-                title: 'building',
+                label: 'building',
                 value: 'Reg: 50920600',
                 icon: 'fas fa-building',
                 id: ulid(),
             },
             {
-                title: 'phone',
+                label: 'phone',
                 value: '+421 (0)33 558 60 71',
                 icon: 'fas fa-phone',
                 id: ulid(),
             },
             {
-                title: 'email',
+                label: 'email',
                 value: 'contact@awgifts.eu',
                 icon: 'fas fa-envelope',
                 id: ulid(),
@@ -107,22 +104,28 @@ const DummyColums = [
     }
 ]
 
-const data = reactive({...props.data.data.data })
+const selectedTheme = ref(props.data.footer.type)
+const columsTypeTheme = ref(Dummy.columsType[0])
+const tool = ref({ name: 'edit', icon: ['fas', 'fa-hand-pointer'] })
 
 
-async function setToFirebase() {
-    const column = 'org/websites/footer';
-    try {
-        await setDataFirebase(column, { data: data, theme: selectedTheme.value });
-    } catch (error) {
-        console.log(error)
-    }
-}
 
-watch(data, setToFirebase, { deep: true })
-watch(selectedTheme, setToFirebase, { deep: true })
+const data = reactive({ ...props.data.footer })
 
-setToFirebase()
+
+// async function setToFirebase() {
+//     const columns = 'org/websites/footer';
+//     try {
+//         await setDataFirebase(columns, { data: data, theme: selectedTheme.value });
+//     } catch (error) {
+//         console.log(error)
+//     }
+// }
+
+// watch(data, setToFirebase, { deep: true })
+// watch(selectedTheme, setToFirebase, { deep: true })
+
+// setToFirebase()
 
 const columSelected = ref(null);
 
@@ -131,35 +134,35 @@ const selectedColums = (value) => {
 }
 
 const handleColumsTypeChange = (value) => {
-    if (value.title !== data.column[columSelected.value].type) {
+    if (value.label !== data.columns[columSelected.value].type) {
         let indexDummy = DummyColums.findIndex((item) => item.type === value.value);
-        let indexColums = data.column.findIndex((item) => item.id === data.column[columSelected.value].id);
+        let indexColums = data.columns.findIndex((item) => item.id === data.columns[columSelected.value].id);
         const set = { ...DummyColums[indexDummy], id: ulid() }
-        data.column[indexColums] = set
+        data.columns[indexColums] = set
         selectedColums(data)
     } else { cosnole.log('salah') }
 
 }
 
 const columItemLinkChange = (value) => {
-    const set = data.column
+    const set = data.columns
     if (value.value == 'add') {
-        const index = set.findIndex((item) => item.id == data.column[columSelected.value].id)
-        if (data.column[columSelected.value].type == 'list') set[index].data.push({ name: 'dummy', link: '#' })
-        else if (data.column[columSelected.value].type == 'info') set[index].data.push({
-            title: 'location',
+        const index = set.findIndex((item) => item.id == data.columns[columSelected.value].id)
+        if (data.columns[columSelected.value].type == 'list') set[index].data.push({ name: 'dummy', link: '#' })
+        else if (data.columns[columSelected.value].type == 'info') set[index].data.push({
+            label: 'location',
             value: 'new item',
             icon: 'far fa-dot-circle',
             id: ulid(),
         })
     }
-    data.column = set
+    data.columns = set
 }
 
 
 
 const saveSocialmedia = (value) => {
-    const index = socials.value.findIndex((item) => item.id == value.column.id)
+    const index = socials.value.findIndex((item) => item.id == value.columns.id)
     if (value.type == 'save') {
         const data = { ...socials.value[index], ...value.value }
         socials.value[index] = data
@@ -181,11 +184,28 @@ const addSocial = () => {
 }
 
 const changeColumnFromSelectedColumn = () => {
-    const index = data.column.findIndex((item) => item.id == data.column[columSelected.value].id)
-    if (index >= 0) data.column[index] = data.column[columSelected.value]
+    const index = data.columns.findIndex((item) => item.id == data.columns[columSelected.value].id)
+    if (index >= 0) data.columns[index] = data.columns[columSelected.value]
 }
 
 
+const changeImage = async (file) => {
+    try {
+        const response = await axios.post(
+            route(
+                props.imagesUploadRoute.name,
+                props.imagesUploadRoute.arguments
+            ),
+            { images: file },
+            {
+                headers: { "Content-Type": "multipart/form-data" },
+            }
+        );
+        console.log(response)
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 
 </script>
@@ -201,9 +221,9 @@ const changeColumnFromSelectedColumn = () => {
                 <RadioGroup v-model="columsTypeTheme" class="mt-2">
                     <div class="flex justify-start gap-3">
                         <RadioGroupOption as="template" v-for="option in Dummy.columsType" :key="option.value">
-                            <div :title="option.name" :class="{
-                                'cursor-not-allowed': get(data.column[columSelected], 'type') == option.value,
-                                'bg-gray-300 text-gray-600': get(data.column[columSelected], 'type') == option.value,
+                            <div :label="option.name" :class="{
+                                'cursor-not-allowed': get(data.columns[columSelected], 'type') == option.value,
+                                'bg-gray-300 text-gray-600': get(data.columns[columSelected], 'type') == option.value,
                                 'flex items-center justify-center rounded-md border py-1 px-2 text-sm font-medium uppercase w-fit cursor-pointer': true
                             }" @click="handleColumsTypeChange(option)">
                                 <RadioGroupLabel as="span" class="w-fit"><font-awesome-icon :icon="option.icon" />
@@ -215,19 +235,18 @@ const changeColumnFromSelectedColumn = () => {
             </div>
             <!-- end Column Type -->
 
-            <!-- column tools -->
-            <div v-if="data.column[columSelected]">
-                <!-- column tools list -->
-                <div class="mt-2" v-if="data.column[columSelected].type == 'list'">
+            <!-- columns tools -->
+            <div v-if="data.columns[columSelected]">
+                <div class="mt-2" v-if="data.columns[columSelected].type == 'list'">
                     <div class="flex items-center justify-between">
-                        <h2 class="text-xs font-medium text-gray-900">{{ `${data.column[columSelected].title}` }}</h2>
+                        <h2 class="text-xs font-medium text-gray-900">{{ `${data.columns[columSelected].label}` }}</h2>
                     </div>
                     <div>
                         <div class="flex gap-2 mt-2">
                             <div class="w-[90%]">
                                 <div
                                     class="shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md rounded-md">
-                                    <input type="text" v-model="data.column[columSelected].title"
+                                    <input type="text" v-model="data.columns[columSelected].label"
                                         @input="changeColumnFromSelectedColumn"
                                         class="flex-1 border-0 bg-transparent text-gray-900 text-xs placeholder:text-gray-400 focus:ring-0 text-xs sm:text-sm sm:leading-6 w-full overflow-hidden"
                                         placeholder="xs" />
@@ -243,31 +262,30 @@ const changeColumnFromSelectedColumn = () => {
                         </div>
 
 
-                        <div v-for="(set, index) in data.column[columSelected].data" :key="set.id">
-                            <HyperlinkTools :data="set" @OnDelete="() => data.column[columSelected].data.splice(index, 1)"
+                        <div v-for="(set, index) in data.columns[columSelected].items" :key="set.id">
+                            <HyperlinkTools :data="set" @OnDelete="() => data.columns[columSelected].data.splice(index, 1)"
                                 :formList="{
-                                    name: 'name',
-                                    link: 'link',
+                                    name: 'label',
+                                    link: 'href',
                                 }" />
                         </div>
                     </div>
 
                 </div>
-                <!-- column tools info-->
-                <div class="mt-2" v-if="data.column[columSelected].type == 'info'">
+                <div class="mt-2" v-if="data.columns[columSelected].type == 'info'">
                     <div class="flex items-center justify-between">
                         <h2 class="text-sm font-medium text-gray-900">{{ `Colums tools
-                            ${data.column[columSelected].title}`
+                            ${data.columns[columSelected].label}`
                         }}</h2>
                     </div>
                     <div>
                         <div class="flex gap-2 mt-2">
                             <div style="width:85%;"
                                 class="shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md rounded-md">
-                                <input type="text" v-model="data.column[columSelected].title"
+                                <input type="text" v-model="data.columns[columSelected].label"
                                     @input="changeColumnFromSelectedColumn"
                                     class="flex-1 border-0 bg-transparent text-gray-900 text-xs placeholder:text-gray-400 focus:ring-0 text-xs sm:text-sm sm:leading-6 w-full overflow-hidden"
-                                    placeholder="title" />
+                                    placeholder="label" />
                             </div>
                             <div>
 
@@ -279,9 +297,12 @@ const changeColumnFromSelectedColumn = () => {
 
                         </div>
 
-                        <div v-for="(set, index) in data.column[columSelected].data" :key="set.id">
-                            <HyperInfoTools :data="set"
-                                @OnDelete="() => data.column[columSelected].data.splice(index, 1)" />
+                        <div v-for="(set, index) in data.columns[columSelected].items" :key="set.id">
+                        <div v-if="set.type == 'other'">
+                            <HyperInfoTools :data="set.data"
+                                @OnDelete="() => data.columns[columSelected].data.splice(index, 1)" />
+                        </div>
+                           
                         </div>
                     </div>
                 </div>
@@ -290,7 +311,7 @@ const changeColumnFromSelectedColumn = () => {
 
             <hr class="mt-5">
             <!-- social Media -->
-            <div class="mt-2">
+            <!-- <div class="mt-2">
                 <div class="flex items-center justify-between">
                     <h2 class="text-xs font-medium text-gray-900">{{ `Social media` }}</h2>
                 </div>
@@ -319,17 +340,23 @@ const changeColumnFromSelectedColumn = () => {
                     </div>
                 </RadioGroup>
 
-            </div>
+            </div> -->
 
         </div>
 
         <div class=" w-full bg-gray-200  items-center justify-center">
-            <ToolInTop :tool="tool" :theme="selectedTheme" :columSelected="columSelected"
-                @setColumnSelected="selectedColums" />
+            <ToolInTop :tool="tool" :theme="selectedTheme" @changeTheme="(val) => selectedTheme = val"
+                :columSelected="columSelected" @setColumnSelected="selectedColums" />
             <div style="transform: scale(0.8);" class="w-full">
-                <Footer class="lg:col-span-2 lg:row-span-2 rounded-lg" :data="data"
-                    :columSelected="data.column[columSelected]" :theme="selectedTheme.value"
-                    :selectedColums="selectedColums" :tool="tool" />
+                <Footer 
+                    class="lg:col-span-2 lg:row-span-2 rounded-lg" 
+                    :data="data"
+                    :columSelected="data.columns[columSelected]" 
+                    :theme="selectedTheme" 
+                    :selectedColums="selectedColums"
+                    :tool="tool"
+                    @uploadImage="changeImage"
+                />
             </div>
         </div>
     </div>
