@@ -13,6 +13,7 @@ use App\Actions\Accounting\PaymentServiceProvider\DeletePaymentServiceProvider;
 use App\Actions\Accounting\PaymentServiceProvider\UpdatePaymentServiceProvider;
 use App\Actions\CRM\Appointment\AssignAppointmentUser;
 use App\Actions\CRM\Appointment\StoreAppointment;
+use App\Actions\CRM\Customer\UpdateCustomer;
 use App\Actions\HumanResources\Employee\DeleteEmployee;
 use App\Actions\HumanResources\Employee\StoreEmployee;
 use App\Actions\HumanResources\Employee\UpdateEmployee;
@@ -74,3 +75,5 @@ Route::prefix('appointment')->as('appointment.')->group(function () {
     Route::post('/', StoreAppointment::class)->name('store');
     Route::patch('/assign/{organisationUser}', AssignAppointmentUser::class)->name('assign');
 });
+
+Route::patch('/customer/{customer}', UpdateCustomer::class)->name('customer.update');

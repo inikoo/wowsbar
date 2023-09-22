@@ -16,11 +16,12 @@ const props = defineProps<{
 
 
 function prospectRoute(prospect: Prospect) {
+    console.log(route().current());
     switch (route().current()) {
-        case 'org.shops.show.prospects.index':
+        case 'org.crm.shop.prospects.index':
             return route(
-                'org.shops.show.prospects.show',
-                [prospect.slug, prospect.slug]);
+                'org.crm.shop.prospects.show',
+                [prospect.shop.slug, prospect.slug]);
         default:
             return route(
                 'org.crm.prospects.show',
