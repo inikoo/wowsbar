@@ -6,6 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "ext-fileinfo": "*",
         "ext-pdo": "*",
         "aws/aws-sdk-php": "^3.278",
         "commerceguys/addressing": "^2.0",
@@ -23,6 +24,7 @@
         "maatwebsite/excel": "^3.1",
         "matchish/laravel-scout-elasticsearch": "^7.2",
         "owen-it/laravel-auditing": "^13.5",
+        "propaganistas/laravel-phone": "^5.0",
         "pusher/pusher-php-server": "^7.2",
         "sentry/sentry-laravel": "^3.7",
         "spatie/laravel-medialibrary": "^10.0.0",
@@ -34,8 +36,7 @@
         "tightenco/ziggy": "^1.0",
         "vemcogroup/laravel-translation": "^3.0",
         "vlucas/phpdotenv": "^5.5",
-        "xendit/xendit-php": "^2.19",
-        "ext-fileinfo": "*"
+        "xendit/xendit-php": "^2.19"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.13",
