@@ -21,11 +21,15 @@ class WebsiteFooterResource extends JsonResource
 
     public function toArray($request): array
     {
-        $footerData = (array) $request;
+        $footerData = (array)$request;
 
-        $media      = Media::find(Arr::get($footerData, 'logo'));
-        $logo       = (new Image())->make($media->getImgProxyFilename())->resize(0, 120);
-        return array_merge($footerData, ['logo' => GetPictureSources::run($logo)]);
+        $media = Media::find(Arr::get($footerData, 'logo'));
+        if ($media) {
+            $logo = (new Image())->make($media->getImgProxyFilename())->resize(0, 120);
 
+            $footerData = array_merge($footerData, ['logo' => GetPictureSources::run($logo)]);
+        }
+
+        return $footerData;
     }
 }

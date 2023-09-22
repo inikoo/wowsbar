@@ -7,7 +7,6 @@
 
 namespace App\Actions\Leads\Prospect;
 
-use App\Actions\CRM\Prospect\UI\ShowProspect;
 use App\Actions\InertiaAction;
 use App\Models\CRM\Prospect;
 use Inertia\Inertia;
