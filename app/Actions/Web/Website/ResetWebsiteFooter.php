@@ -21,12 +21,11 @@ class ResetWebsiteFooter
 
     public function handle(Website $website): Website
     {
-
         data_set(
             $modelData,
             'footer',
             [
-                'component' => 'simple',
+                'type'      => 'simple',
                 'columns'   => $this->getColumns(),
                 'copyright' => $this->getCopyright(),
                 'social'    => $this->getSocialLinks(),
@@ -47,13 +46,14 @@ class ResetWebsiteFooter
 
     private function getFooterLogo(Website $website)
     {
-        return  AttachImageToWebsite::run(
+        return AttachImageToWebsite::run(
             website: $website,
             collection: 'footer-logo',
             imagePath: resource_path('art/logo/logo-white-square.png'),
             originalFilename: 'footer-logo.png'
         )->id;
     }
+
     private function getColumns(): array
     {
         return [
@@ -108,19 +108,19 @@ class ResetWebsiteFooter
                 'type'  => 'info',
                 'items' => [
                     [
-                        'id'    => Str::ulid(),
-                        'type'  => 'phone',
-                        'data'  => '+421 (0)33 000 00 00'
+                        'id'   => Str::ulid(),
+                        'type' => 'phone',
+                        'data' => '+421 (0)33 000 00 00'
                     ],
                     [
-                        'id'    => Str::ulid(),
-                        'type'  => 'email',
-                        'data'  => 'contact@exmple.com'
+                        'id'   => Str::ulid(),
+                        'type' => 'email',
+                        'data' => 'contact@exmple.com'
                     ],
                     [
-                        'id'    => Str::ulid(),
-                        'type'  => 'other',
-                        'data'  => [
+                        'id'   => Str::ulid(),
+                        'type' => 'other',
+                        'data' => [
                             'icon'    => 'fas fa-star',
                             'tooltip' => 'hello world',
                             'label'   => __('Hello 👋🏻')
@@ -134,7 +134,7 @@ class ResetWebsiteFooter
 
     private function getCopyright(): array
     {
-        return  [
+        return [
             'label'     => 'Wowsbar',
             'startYear' => 2023
         ];
@@ -142,16 +142,16 @@ class ResetWebsiteFooter
 
     private function getSocialLinks(): array
     {
-        return   [
+        return [
             [
-                'id'    => Str::ulid(),
-                'type'  => 'facebook',
-                'href'  => '#'
+                'id'   => Str::ulid(),
+                'type' => 'facebook',
+                'href' => '#'
             ],
             [
-                'id'    => Str::ulid(),
-                'type'  => 'instagram',
-                'href'  => '#'
+                'id'   => Str::ulid(),
+                'type' => 'instagram',
+                'href' => '#'
             ]
         ];
     }
