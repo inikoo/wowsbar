@@ -30,6 +30,7 @@ class ShowEmployee extends InertiaAction
     {
         $this->canEdit   = $request->user()->can('hr.edit');
         $this->canDelete = $request->user()->can('hr.edit');
+
         return $request->user()->hasPermissionTo("hr.view");
     }
 
@@ -42,6 +43,35 @@ class ShowEmployee extends InertiaAction
 
     public function htmlResponse(Employee $employee, ActionRequest $request): Response
     {
+        $meta = [];
+        if ($employee->worker_number) {
+            $meta[] = [
+                'label'    => $employee->worker_number,
+                'leftIcon' => [
+                    'icon'    => 'fal fa-id-card',
+                    'tooltip' => __('Worker number')
+                ]
+            ];
+        }
+        if ($employee->organisationUser) {
+            $meta[] = [
+                'label'    => $employee->organisationUser->username,
+                'leftIcon' => [
+                    'icon'    => 'fal fa-user',
+                    'tooltip' => __('User')
+                ]
+            ];
+        } else {
+            $meta[] = [
+                'label'    => __('New user'),
+                'type'     => 'button',
+                'leftIcon' => [
+                    'icon'    => 'fal fa-user-slash',
+                    'tooltip' => __('Give employee access to system')
+                ]
+            ];
+        }
+
         return Inertia::render(
             'HumanResources/Employee',
             [
@@ -52,25 +82,8 @@ class ShowEmployee extends InertiaAction
                     'next'     => $this->getNext($employee, $request),
                 ],
                 'pageHead'    => [
-                    'title' => $employee->contact_name,
-                    'meta'  => [
-                        [
-                            'name'     => $employee->worker_number,
-                            'leftIcon' => [
-                                'icon'    => 'fal fa-id-card',
-                                'tooltip' => __('Worker number')
-                            ]
-                        ],
-
-                        /* $employee->user ?
-                            [
-                                'name'     => $employee->user->username,
-                                'leftIcon' => [
-                                    'icon'    => 'fal fa-user',
-                                    'tooltip' => __('User')
-                                ]
-                            ] : [] */
-                    ],
+                    'title'   => $employee->contact_name,
+                    'meta'    => $meta,
                     'actions' => [
                         $this->canEdit ? [
                             'type'  => 'button',
@@ -97,19 +110,19 @@ class ShowEmployee extends InertiaAction
                 ],
 
                 EmployeeTabsEnum::DATA->value => $this->tab == EmployeeTabsEnum::DATA->value ?
-                    fn () => $this->getData($employee)
-                    : Inertia::lazy(fn () => $this->getData($employee)),
+                    fn() => $this->getData($employee)
+                    : Inertia::lazy(fn() => $this->getData($employee)),
 
                 EmployeeTabsEnum::HISTORY->value => $this->tab == EmployeeTabsEnum::HISTORY->value ?
-                    fn () => HistoryResource::collection(IndexHistories::run($employee))
-                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistories::run($employee)))
+                    fn() => HistoryResource::collection(IndexHistories::run($employee))
+                    : Inertia::lazy(fn() => HistoryResource::collection(IndexHistories::run($employee)))
             ]
         )->table(IndexHistories::make()->tableStructure());
     }
 
     public function getData(Employee $employee): array
     {
-        return Arr::except($employee->toArray(), ['id', 'source_id','working_hours','errors','salary','data','job_position_scopes']);
+        return Arr::except($employee->toArray(), ['id', 'source_id', 'working_hours', 'errors', 'salary', 'data', 'job_position_scopes']);
     }
 
     public function jsonResponse(Employee $employee): EmployeeResource

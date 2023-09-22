@@ -7,8 +7,7 @@
 <script setup lang="ts">
 import { Head } from '@inertiajs/vue3';
 import {library} from '@fortawesome/fontawesome-svg-core';
-import { faEnvelope, faIdCard, faPhone, faSignature, faUser, faBirthdayCake, faVenusMars, faHashtag, faHeading, faHospitalUser, faClock, faPaperclip, faTimes, faCameraRetro} from "@/../private/pro-light-svg-icons";
-import {faCheckCircle} from '@/../private/pro-solid-svg-icons';
+import { faUserSlash,faUser, faPaperclip, faCameraRetro} from "@/../private/pro-light-svg-icons";
 import { router } from '@inertiajs/vue3'
 import { capitalize } from "@/Composables/capitalize"
 
@@ -24,21 +23,9 @@ import Tabs from "@/Components/Navigation/Tabs.vue";
 import TableHistories from "@/Components/Tables/TableHistories.vue";
 
 library.add(
-    faIdCard,
+    faUserSlash,
     faUser,
-    faCheckCircle,
-    faSignature,
-    faEnvelope,
-    faPhone,
-    faIdCard,
-    faBirthdayCake,
-    faVenusMars,
-    faHashtag,
-    faHeading,
-    faHospitalUser,
-    faClock,
     faPaperclip,
-    faTimes,
     faCameraRetro
 )
 
