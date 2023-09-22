@@ -17,7 +17,7 @@ class UploadFileR2
 
     public function handle(string $name, string $disk='r2'): bool|string
     {
-        $path    = resource_path('art/logo/logo-teal.png');
+        $path    = resource_path('art/logo/logo-charcoal.png');
         $content = file_get_contents($path);
         return Storage::disk($disk)->put($name, $content);
     }

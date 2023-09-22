@@ -14,18 +14,18 @@ use App\Models\Media\Media;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Arr;
 
-class WebsiteHeaderResource extends JsonResource
+class WebsiteFooterResource extends JsonResource
 {
     use HasSelfCall;
 
 
     public function toArray($request): array
     {
-        $headerData = (array) $request;
+        $footerData = (array) $request;
 
-        $media      = Media::find(Arr::get($headerData, 'logo'));
-        $logo       = (new Image())->make($media->getImgProxyFilename())->resize(0, 64);
-        return array_merge($headerData, ['logo' => GetPictureSources::run($logo)]);
+        $media      = Media::find(Arr::get($footerData, 'logo'));
+        $logo       = (new Image())->make($media->getImgProxyFilename())->resize(0, 120);
+        return array_merge($footerData, ['logo' => GetPictureSources::run($logo)]);
 
     }
 }
