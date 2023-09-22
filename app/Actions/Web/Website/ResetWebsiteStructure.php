@@ -22,40 +22,9 @@ class ResetWebsiteStructure
     public function handle(Website $website): Website
     {
 
-
-        data_set($modelData, 'header', $this->getInitialHeader($website));
-        data_set($modelData, 'layout', $this->getInitialLayout($website));
-
-        $website->update($modelData);
-
-
-        /*
-        $structure = $website->structure;
-        foreach (Storage::disk('datasets')->files('website-structure/'.$website->type) as $file) {
-            preg_match('/\/(\w+).json/', $file, $field);
-            $structure[$field[1]] = json_decode(Storage::disk('datasets')->get($file), true);
-            data_set(
-                $structure,
-                $field[1],
-                json_decode(Storage::disk('datasets')->get($file), true),
-                overwrite: false
-            );
-        }
-
-
-        $modelData = [
-            'structure' => $structure
-        ];
-
-        */
-
-
-        $website->update(
-            [
-                'compiled_structure' => $website->getCompiledStructure()
-            ]
-        );
-        return $website;
+        $website=ResetWebsiteHeader::run($website);
+        $website=ResetWebsiteFooter::run($website);
+        return ResetWebsiteLayout::run($website);
     }
 
     public function authorize(ActionRequest $request): bool
@@ -68,58 +37,8 @@ class ResetWebsiteStructure
     }
 
 
-    public function getInitialHeader($website): array
-    {
-
-        $logo=AttachImageToWebsite::run(
-            website: $website,
-            collection: 'logo',
-            imagePath: resource_path('art/logo/logo-teal.png'),
-            originalFilename: 'logo.png'
-        );
-
-        return  [
-            'component'=> 'simpleSticky',
-            'logo'     => $logo->id
-        ];
-    }
-
-    public function getInitialLayout($website): array
-    {
-
-        $favicon=AttachImageToWebsite::run(
-            website: $website,
-            collection: 'logo',
-            imagePath: resource_path('art/favicons/wowsbar-website-favicon-color-180x180.png'),
-            originalFilename: 'favicon.png'
-        );
-
-
-        return [
-            "layout"      => "full",
-            "favicon"     => $favicon->id,
-            "colorLayout" => "rgba(55 65 81)",
-            "imageLayout" => null,
-            "header"      => [
-                "color" => "rgba(55 65 81)"
-            ],
-            "content"     => [
-                "color" => "rgba(55 65 81)"
-            ],
-            "footer"      => [
-                "color" => "rgba(55 65 81)"
-            ]
-        ];
-
-
-
-
-    }
-
-
     public function asController(Website $website, ActionRequest $request): Website
     {
-
         return $this->handle($website);
     }
 
@@ -130,11 +49,11 @@ class ResetWebsiteStructure
 
     public function asCommand(Command $command): int
     {
-
         try {
-            $website=Website::where('slug', $command->argument('website'))->firstOrFail();
+            $website = Website::where('slug', $command->argument('website'))->firstOrFail();
         } catch (Exception $e) {
             $command->error($e->getMessage());
+
             return 1;
         }
 

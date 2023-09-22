@@ -63,6 +63,3 @@ Route::prefix('shop/{shop}')->as('shop.')->group(function () {
     Route::get('mailroom', [ShowCRMDashboard::class, 'inShop'])->name('mailroom.dashboard');
 
 });
-
-
-

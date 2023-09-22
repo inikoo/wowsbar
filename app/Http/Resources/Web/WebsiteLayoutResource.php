@@ -22,9 +22,16 @@ class WebsiteLayoutResource extends JsonResource
     public function toArray($request): array
     {
         $layoutData = (array) $request;
+
+
+
         $media      = Media::find(Arr::get($layoutData, 'favicon'));
-        $favicon    = (new Image())->make($media->getImgProxyFilename())->resize(0, 180);
-        return array_merge($layoutData, ['favicon' => GetPictureSources::run($favicon)]);
+        if($media) {
+            $favicon    = (new Image())->make($media->getImgProxyFilename())->resize(0, 180);
+            return array_merge($layoutData, ['favicon' => GetPictureSources::run($favicon)]);
+
+        }
+        return  $layoutData;
 
     }
 }

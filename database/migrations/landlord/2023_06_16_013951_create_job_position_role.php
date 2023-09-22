@@ -16,7 +16,7 @@ return new class () extends Migration {
             $table->unsignedSmallInteger('job_position_id')->index();
             $table->foreign('job_position_id')->references('id')->on('job_positions');
             $table->unsignedSmallInteger('role_id')->index();
-            $table->foreign('role_id')->references('id')->on('roles');
+            // $table->foreign('role_id')->references('id')->on('roles');
             $table->timestampsTz();
         });
     }
