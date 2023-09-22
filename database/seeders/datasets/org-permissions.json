@@ -8,13 +8,9 @@
     "crm",
     "crm.view",
     "crm.edit",
-
     "crm.prospects",
     "crm.prospects.view",
     "crm.prospects.edit",
-
-
-
     "sysadmin",
     "sysadmin.view",
     "sysadmin.create",
@@ -36,5 +32,5 @@
     "accounting",
     "accounting.view",
     "accounting.edit",
-    "accounting.create",
+    "accounting.create"
 ]
