@@ -5,7 +5,7 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Leads\Prospect;
+namespace App\Actions\Leads\Prospect\UI;
 
 use App\Actions\InertiaAction;
 use App\Actions\Organisation\UI\CRM\ShowCRMDashboard;
@@ -78,13 +78,7 @@ class IndexProspects extends InertiaAction
         /** @noinspection PhpUndefinedMethodInspection */
         return $query
             ->defaultSort('prospects.name')
-            ->select([
-                'prospects.name',
-                'prospects.slug',
-                'prospects.email',
-                'prospects.phone',
-                'prospects.contact_website'
-            ])
+            ->with('shop')
             ->allowedSorts(['name', 'email', 'phone', 'contact_website'])
             ->allowedFilters([$globalSearch])
             ->withPaginator($prefix)

@@ -14,9 +14,12 @@ use App\Actions\CRM\User\UI\CreateUser;
 use App\Actions\CRM\User\UI\EditUser;
 use App\Actions\CRM\User\UI\IndexUsers;
 use App\Actions\CRM\User\UI\ShowUser;
-use App\Actions\Leads\Prospect\IndexProspects;
 use App\Actions\Leads\Prospect\RemoveProspect;
+use App\Actions\Leads\Prospect\UI\EditProspect;
+use App\Actions\Leads\Prospect\UI\IndexProspects;
+use App\Actions\Leads\Prospect\UI\ShowProspect;
 use App\Actions\Organisation\UI\CRM\ShowCRMDashboard;
+use App\Actions\Organisation\UI\CRM\ShowMailroomDashboard;
 
 Route::get('/', [ShowCRMDashboard::class, 'inOrganisation'])->name('dashboard');
 
@@ -56,7 +59,8 @@ Route::prefix('shop/{shop}')->as('shop.')->group(function () {
     Route::prefix('prospects')->as('prospects.')->group(function () {
         Route::get('/', [IndexProspects::class, 'inShop'])->name('index');
         Route::get('/create', [IndexProspects::class, 'inShop'])->name('create');
-        Route::get('/{prospect}', [IndexProspects::class, 'inShop'])->name('show');
+        Route::get('/{prospect}', [ShowProspect::class, 'inShop'])->name('show');
+        Route::get('/{prospect}/edit', [EditProspect::class, 'inShop'])->name('show');
         Route::get('/{prospect}/delete', [RemoveProspect::class, 'inShop'])->name('remove');
     });
 

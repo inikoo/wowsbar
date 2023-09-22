@@ -7,6 +7,7 @@
 
 namespace App\Http\Resources\CRM;
 
+use App\Http\Resources\Market\ShopResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
@@ -18,6 +19,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property string $email
  * @property string $phone
  * @property string $contact_website
+ * @property \App\Models\Market\Shop $shop
  */
 class ProspectResource extends JsonResource
 {
@@ -25,6 +27,7 @@ class ProspectResource extends JsonResource
     {
         return [
             'slug'       => $this->slug,
+            'shop'       => new ShopResource($this->shop),
             'name'       => $this->name,
             'email'      => $this->email,
             'phone'      => $this->phone,
