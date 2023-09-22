@@ -2,25 +2,24 @@
 import { faHandPointer, faHandRock, faPlus } from '@/../private/pro-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
+import { toRefs, watch, ref } from 'vue'
 
 library.add(faHandPointer, faHandRock, faPlus)
 const props = defineProps({
   tool: Object,
-  theme: Object,
+  theme: String,
   columSelected: {
-		type: Number,
-		required: false,
-	},
+    type: Number,
+    required: false,
+  },
 });
 
 
+const theme = ref(props.theme)
+
 const emits = defineEmits();
 
-const themeOption = [
-        { name: 'Footer Theme One', value: 1 },
-        { name: 'Footer Theme Two', value: 2 },
-        { name: 'Footer Theme Three', value: 3 },
-]
+const themeOption = ['simple', 'simple image']
 
 const Bluprint = [
   {
@@ -42,7 +41,7 @@ const Bluprint = [
   {
     name: 'activeColumn', position: 'right',
     optionsData: {
-      column: [1, 2, 3, 4]
+      column: [1, 2, 3]
     },
   }
 ]
@@ -57,12 +56,6 @@ const columChange = (index) => {
   emits('setColumnSelected', index)
 }
 
-const setTheme=(value)=>{
-  const data = themeOption.find((item)=> item.value == value)
-  for(const t in props.theme){
-    props.theme[t] = data[t]
-  }
-}
 
 
 </script>
@@ -77,9 +70,9 @@ const setTheme=(value)=>{
           <font-awesome-icon :icon="t.icon" />
         </div>
 
-        <div v-if="item.name === 'activeColumn' && theme.value != 3" v-for="(columnItem, columnIndex) in item.optionsData.column"
-          :key="columnIndex" @click="columChange(columnIndex)"
-          class="inline-block bg-gray-300 py-1 px-2 rounded-md text-xs mx-1"
+        <div v-if="item.name === 'activeColumn' && theme.value != 3"
+          v-for="(columnItem, columnIndex) in item.optionsData.column" :key="columnIndex"
+          @click="columChange(columnIndex)" class="inline-block bg-gray-300 py-1 px-2 rounded-md text-xs mx-1"
           :class="{ 'outline outline-2': columnItem - 1 == columSelected }">
           {{ columnItem }}
         </div>
@@ -88,9 +81,9 @@ const setTheme=(value)=>{
 
     <div class="w-1/2 flex justify-end items-center">
       <div v-for="item in Bluprint.filter((item) => item.position === 'left')" :key="item.name">
-        <select v-model="theme.value" @change="setTheme(theme.value)" v-if="item.name === 'theme'"
+        <select v-model="theme" @change="emits('changeTheme', theme)" v-if="item.name === 'theme'"
           class="px-2 py-1 rounded-md border-gray-300 border w-[200px]">
-          <option v-for="option in item.optionsData.options" :key="option.value" :value="option.value">{{ option.name }}
+          <option v-for="option in item.optionsData.options" :key="option" :value="option">{{ option }}
           </option>
         </select>
       </div>

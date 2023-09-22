@@ -43,7 +43,8 @@ export default {
             'fas fa-building',
             'fas fa-circle',
             'fas fa-map',
-            'fas fa-user'
+            'fas fa-user',
+            'fas fa-star'
           ]
         },
         brands: {

@@ -6,6 +6,7 @@
 
 export interface Prospect {
     slug:string,
+    shop:object,
     reference: string,
     name: string,
     contact_name: string

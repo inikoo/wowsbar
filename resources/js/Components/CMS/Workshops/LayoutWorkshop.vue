@@ -125,12 +125,13 @@ const addfavicon= async (element) => {
                 >
                     <div class="mx-auto text-xl font-medium">Header</div>
                     <div
-                        class="absolute left-[-20px] bottom-0"
+                        class="absolute left-[-20px] bottom-8"
                         style="transform: scale(0.7)"
                     >
                         <ColorPicker
-                            :color="setData.header.color"
-                            @onChange="(value) => (setData.header.color = value)"
+                            :color="setData?.header?.color"
+                           
+                            :colorSuggestions="false"
                             class=""
                         />
                     </div>
@@ -138,9 +139,19 @@ const addfavicon= async (element) => {
                         class="absolute right-0 top-8 flex gap-2"
                         style="transform: scale(0.7)"
                     >
-                    <div class="font-xs border rounded-lg py-1 px-2 text-white" :style="`background-color: ${setData.header.color};`">Apoointment</div>
-                    <div :style="`border-left: 1px solid ${setData.header.color};`"></div>
-                    <div class="font-xs border rounded-lg py-1 px-2 text-white" :style="`background-color: ${setData.header.color};`">sign in</div>
+                    <div
+                        style="transform: scale(0.7)"
+                    >
+                        <ColorPicker
+                            :color="setData?.header?.color"
+                           
+                            :colorSuggestions="false"
+                            class=""
+                        />
+                    </div>
+                    <div class="font-xs border rounded-lg py-1 px-2 text-white" :style="`background-color: ${setData?.header?.color};`">Apoointment</div>
+                    <div :style="`border-left: 1px solid ${setData?.header?.color};`"></div>
+                    <div class="font-xs border rounded-lg py-1 px-2 text-white" :style="`background-color: ${setData?.header?.color};`">sign in</div>
                     </div>
                 </div>
                 <div
@@ -148,18 +159,19 @@ const addfavicon= async (element) => {
                 >
                     <div class="mx-auto text-xl font-medium">Content</div>
                     <div
-                        class="absolute left-[-20px] bottom-0"
+                        class="absolute left-[-20px] bottom-8"
                         style="transform: scale(0.7)"
                     >
                         <ColorPicker
-                            :color="setData.content.color"
-                            @onChange="(value) => (setData.content.color = value)"
+                            :color="setData?.content?.color"
+                       
+                            :colorSuggestions="false"
                             class=""
                         />
                     </div>
                     <div
                         class="absolute right-0 top-5 flex gap-2"
-                        :style="`color: ${setData.content.color};`"
+                        :style="`color: ${setData?.content?.color};`"
                     >
                     <font-awesome-icon :icon="['far', 'oven']" class="w-40 h-14" />
 
@@ -170,14 +182,15 @@ const addfavicon= async (element) => {
                 >
                     <div class="mx-auto text-xl font-medium" >Footer</div>
                     <div
-                        class="absolute left-[-20px] bottom-0"
+                        class="absolute left-[-20px] bottom-8"
                         style="transform: scale(0.7)"
                     >
-                        <!-- <ColorPicker
-                            :color="data.footer.color"
-                            @onChange="(value) => (data.footer.color = value)"
+                        <ColorPicker
+                            :color="setData?.footer?.color"
+                            :colorSuggestions="false"
+                         
                             class=""
-                        /> -->
+                        />
                     </div>
                 </div>
             </div>
@@ -187,8 +200,8 @@ const addfavicon= async (element) => {
                 style="transform: scale(0.7)"
             >
                 <ColorPicker
-                    :color="setData.colorLayout"
-                    @onChange="(value) => (setData.colorLayout = value)"
+                    :color="setData?.colorLayout"
+                 
                     class=""
                     :colorSuggestions="false"
                 />
@@ -199,7 +212,7 @@ const addfavicon= async (element) => {
 
                 <label
                     for="imageUpload"
-                    v-if="isNull(setData.imageLayout)"
+                    v-if="isNull(setData?.imageLayout)"
                     class="border border-slate-300 rounded-full w-10 h-10 flex justify-center items-center bg-white mt-2 cursor-pointer"
                 >
                     <input 

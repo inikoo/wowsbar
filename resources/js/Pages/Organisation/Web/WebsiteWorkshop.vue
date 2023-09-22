@@ -34,12 +34,8 @@ const props = defineProps<{
         current: string
         navigation: object
     }
-    header?: object
-    menu?: object
-    footer?: object
-    category?: object
-    product?: object
     structure : Object
+    imagesUploadRoute : Object
 }>()
 
 let currentTab = ref(props.tabs.current)
@@ -55,7 +51,7 @@ const component = computed(() => {
     return components[currentTab.value]
 })
 
-console.log(props)
+console.log('props',props)
 
 </script>
 
@@ -65,6 +61,6 @@ console.log(props)
     <Head :title="capitalize(title)"/>
     <PageHeading :data="pageHead"></PageHeading>
     <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate"/>
-    <component :is="component" :data="structure"></component>
+    <component :is="component" :data="structure" :imagesUploadRoute="imagesUploadRoute"></component>
 </template>
 

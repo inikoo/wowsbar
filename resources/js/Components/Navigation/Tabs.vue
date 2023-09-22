@@ -10,11 +10,20 @@ import { capitalize } from "@/Composables/capitalize"
 import { trans } from 'laravel-vue-i18n'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faInfoCircle, faTachometerAlt } from "@/../private/pro-solid-svg-icons"
-import {faBullseye, faClock, faDatabase, faRoad, faTransporter, faWallet} from "@/../private/pro-light-svg-icons"
+import {
+    faAd,
+    faBullseye,
+    faClock,
+    faDatabase, faEnvelopeOpenText,
+    faNewspaper, faPaperPlane,
+    faRoad,
+    faTransporter,
+    faWallet
+} from "@/../private/pro-light-svg-icons"
 import { library } from '@fortawesome/fontawesome-svg-core'
 import {faGoogle} from "@fortawesome/free-brands-svg-icons";
 
-library.add(faInfoCircle, faTachometerAlt, faRoad, faWallet, faClock, faDatabase, faGoogle, faTransporter, faBullseye)
+library.add(faInfoCircle, faTachometerAlt, faRoad, faWallet, faClock, faDatabase, faGoogle, faTransporter, faBullseye, faNewspaper, faPaperPlane, faAd, faEnvelopeOpenText)
 
 const props = defineProps<{
     navigation: any

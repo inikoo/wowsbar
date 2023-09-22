@@ -193,7 +193,6 @@ class GetLayout
         }
 
 
-
         if ($user->can('accounting.view')) {
             $navigation['accounting'] = [
                 'label'   => __('Accounting'),

@@ -14,7 +14,13 @@
 }
 
 .qwezxc {
-    @apply border border-red-500
+    /* For debug element */
+    @apply border border-red-500 
+}
+
+.asdzxc {
+    /* For debug element */
+    @apply ring-2 ring-offset-2 ring-red-500 
 }
 
 .button-wowsbar {

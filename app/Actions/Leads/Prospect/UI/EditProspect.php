@@ -5,20 +5,20 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\CRM\Customer\UI;
+namespace App\Actions\Leads\Prospect\UI;
 
 use App\Actions\InertiaAction;
-use App\Models\CRM\Customer;
+use App\Models\CRM\Prospect;
 use App\Models\Market\Shop;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
 
-class EditCustomer extends InertiaAction
+class EditProspect extends InertiaAction
 {
-    public function handle(Customer $customer): Customer
+    public function handle(Prospect $prospect): Prospect
     {
-        return $customer;
+        return $prospect;
     }
 
     public function authorize(ActionRequest $request): bool
@@ -28,36 +28,29 @@ class EditCustomer extends InertiaAction
         return $request->user()->hasPermissionTo("shops.customers.edit");
     }
 
-    public function inOrganisation(Customer $customer, ActionRequest $request): Customer
+    public function inShop(Shop $shop, Prospect $prospect, ActionRequest $request): Prospect
     {
         $this->initialisation($request);
 
-        return $this->handle($customer);
+        return $this->handle($prospect);
     }
 
-    public function inShop(Shop $shop, Customer $customer, ActionRequest $request): Customer
-    {
-        $this->initialisation($request);
-
-        return $this->handle($customer);
-    }
-
-    public function htmlResponse(Customer $customer, ActionRequest $request): Response
+    public function htmlResponse(Prospect $prospect, ActionRequest $request): Response
     {
         return Inertia::render(
             'EditModel',
             [
-                'title'       => __('customer'),
+                'title'       => __('prospect'),
                 'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->getName(),
                     $request->route()->originalParameters()
                 ),
                 'navigation'                            => [
-                    'previous' => $this->getPrevious($customer, $request),
-                    'next'     => $this->getNext($customer, $request),
+                    'previous' => $this->getPrevious($prospect, $request),
+                    'next'     => $this->getNext($prospect, $request),
                 ],
                 'pageHead'    => [
-                    'title'    => $customer->name,
+                    'title'    => $prospect->name,
                     'exitEdit' => [
                         'route' => [
                             'name'       => preg_replace('/edit$/', 'show', $request->route()->getName()),
@@ -71,31 +64,28 @@ class EditCustomer extends InertiaAction
                         [
                             'title'  => __('contact information'),
                             'fields' => [
-
                                 'contact_name' => [
                                     'type'  => 'input',
                                     'label' => __('contact name'),
-                                    'value' => $customer->contact_name
+                                    'value' => $prospect->contact_name
                                 ],
                                 'company_name' => [
                                     'type'  => 'input',
                                     'label' => __('company'),
-                                    'value' => $customer->company_name
+                                    'value' => $prospect->company_name
                                 ],
                                 'phone'        => [
                                     'type'  => 'phone',
-                                    'label' => __('Phone'),
-                                    'value' => $customer->phone
+                                    'label' => __('phone'),
+                                    'value' => $prospect->phone
                                 ],
-
                             ]
                         ]
-
                     ],
                     'args'      => [
                         'updateRoute' => [
                             'name'       => 'org.models.customer.update',
-                            'parameters' => $customer->slug
+                            'parameters' => $prospect->slug
                         ],
                     ]
 
@@ -108,19 +98,19 @@ class EditCustomer extends InertiaAction
 
     public function getBreadcrumbs(string $routeName, array $routeParameters): array
     {
-        return ShowCustomer::make()->getBreadcrumbs(
+        return ShowProspect::make()->getBreadcrumbs(
             routeName: preg_replace('/edit$/', 'show', $routeName),
             routeParameters: $routeParameters,
             suffix: '('.__('editing').')'
         );
     }
 
-    public function getPrevious(Customer $customer, ActionRequest $request): ?array
+    public function getPrevious(Prospect $prospect, ActionRequest $request): ?array
     {
 
-        $previous = Customer::where('slug', '<', $customer->slug)->when(true, function ($query) use ($customer, $request) {
+        $previous = Prospect::where('slug', '<', $prospect->slug)->when(true, function ($query) use ($prospect, $request) {
             if ($request->route()->getName() == 'org.shops.show.customers.show') {
-                $query->where('customers.shop_id', $customer->shop_id);
+                $query->where('customers.shop_id', $prospect->shop_id);
             }
         })->orderBy('slug', 'desc')->first();
 
@@ -128,26 +118,26 @@ class EditCustomer extends InertiaAction
 
     }
 
-    public function getNext(Customer $customer, ActionRequest $request): ?array
+    public function getNext(Prospect $prospect, ActionRequest $request): ?array
     {
-        $next = Customer::where('slug', '>', $customer->slug)->when(true, function ($query) use ($customer, $request) {
+        $next = Prospect::where('slug', '>', $prospect->slug)->when(true, function ($query) use ($prospect, $request) {
             if ($request->route()->getName() == 'org.shops.show.customers.show') {
-                $query->where('customers.shop_id', $customer->shop_id);
+                $query->where('customers.shop_id', $prospect->shop_id);
             }
         })->orderBy('slug')->first();
 
         return $this->getNavigation($next, $request->route()->getName());
     }
 
-    private function getNavigation(?Customer $customer, string $routeName): ?array
+    private function getNavigation(?Prospect $prospect, string $routeName): ?array
     {
-        if(!$customer) {
+        if(!$prospect) {
             return null;
         }
 
         return match ($routeName) {
             'org.crm.shop.customers.edit' => [
-                'label'=> $customer->name,
+                'label'=> $prospect->name,
                 'route'=> [
                     'name'      => $routeName,
                     'parameters'=> $this->originalParameters
