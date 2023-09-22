@@ -41,6 +41,12 @@ const props = defineProps<{
 
 const dataComponent = ref([
     {
+        "component": "CTA",
+        "icon": "far fa-text",
+        "ulid": ulid(),
+        "visibility": true
+    },
+    {
         "component": "testimonial",
         "icon": "far fa-text",
         "ulid": ulid(),
@@ -61,12 +67,6 @@ const dataComponent = ref([
     },
     {
         "component": "blogSection",
-        "icon": "far fa-text",
-        "ulid": ulid(),
-        "visibility": true
-    },
-    {
-        "component": "CTA",
         "icon": "far fa-text",
         "ulid": ulid(),
         "visibility": true
@@ -104,20 +104,23 @@ const selectedComponent = ref(dataComponent.value[0])
     <Head :title="capitalize(title)" />
     <PageHeading :data="pageHead"></PageHeading>
 
-    <div v-if="loadingState" class="w-full min-h-screen flex justify-center items-center">
-        <FontAwesomeIcon icon='fad fa-spinner-third' class='animate-spin h-12  text-gray-600' aria-hidden='true' />
-    </div>
-
-    <!-- The content -->
-    <div v-else class="h-full w-full px-2 py-3 flex gap-x-2">
-        <WebpageBlocksOrder @handleSelectComponent="(component: componentBlocks) => selectedComponent = component" :dataComponent="dataComponent" :selectedComponent="selectedComponent"/>
-
-        <!-- The editor -->
-        <div class="flex w-full h-full p-3 border border-gray-200 rounded shadow-sm">
-            <div class="w-full h-fit">
-                <WebpageBlocksContent :selectedComponent="selectedComponent" v-model="selectedComponent.value"/>
+    <div id="webpageWorkshop"> <!-- For helper on focus Popover Editor Tools -->
+        <div v-if="loadingState" class="w-full min-h-screen flex justify-center items-center">
+            <FontAwesomeIcon icon='fad fa-spinner-third' class='animate-spin h-12  text-gray-600' aria-hidden='true' />
+        </div>
+        <div v-else class="h-full w-full px-2 py-3 flex gap-x-2">
+            <!-- Section: Blocks Order -->
+            <WebpageBlocksOrder @handleSelectComponent="(component: componentBlocks) => selectedComponent = component" :dataComponent="dataComponent" :selectedComponent="selectedComponent"/>
+            <!-- Section: Main content -->
+            <div class="flex w-full h-full p-3 border border-gray-200 rounded shadow-sm">
+                <div class="w-full h-fit">
+                    <WebpageBlocksContent :selectedComponent="selectedComponent" v-model="selectedComponent.value"/>
+                </div>
             </div>
-            <!-- <BannerWorkshop /> -->
+            <!-- Section: Tools editor -->
+            <div class="w-64 ring-1 ring-gray-300 rounded-md px-2 py-4">
+        
+            </div>
         </div>
     </div>
 </template>
