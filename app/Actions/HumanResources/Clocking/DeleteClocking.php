@@ -70,7 +70,7 @@ class DeleteClocking
     {
         if (class_basename($parent::class) == 'ClockingMachine') {
             return Redirect::route(
-                route: 'hr.working-place.show.clocking-machines.show.clockings.index',
+                route: 'org.hr.workplace.show.clocking-machines.show.clockings.index',
                 parameters: [
                     'workplace'         => $parent->workplace->slug,
                     'clockingMachine'   => $parent->slug

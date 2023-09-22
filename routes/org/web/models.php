@@ -17,6 +17,9 @@ use App\Actions\HumanResources\Employee\DeleteEmployee;
 use App\Actions\HumanResources\Employee\StoreEmployee;
 use App\Actions\HumanResources\Employee\UpdateEmployee;
 use App\Actions\HumanResources\Employee\UploadEmployee;
+use App\Actions\HumanResources\Workplace\DeleteWorkplace;
+use App\Actions\HumanResources\Workplace\StoreWorkplace;
+use App\Actions\HumanResources\Workplace\UpdateWorkplace;
 use App\Actions\Leads\Prospect\RemoveProspect;
 use App\Actions\Leads\Prospect\UploadShopProspects;
 use App\Actions\Market\Product\StoreProduct;
@@ -74,3 +77,7 @@ Route::prefix('appointment')->as('appointment.')->group(function () {
     Route::post('/', StoreAppointment::class)->name('store');
     Route::patch('/assign/{organisationUser}', AssignAppointmentUser::class)->name('assign');
 });
+
+Route::patch('/workplace/{workplace}', UpdateWorkplace::class)->name('workplace.update');
+Route::post('/workplace/', StoreWorkplace::class)->name('workplace.store');
+Route::delete('/workplace/{workplace}', DeleteWorkplace::class)->name('workplace.delete');

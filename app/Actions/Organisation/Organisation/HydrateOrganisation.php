@@ -14,6 +14,7 @@ use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateGuests;
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateJobPositions;
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateShops;
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateWebsites;
+use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateWorkplaces;
 use App\Actions\Traits\WithNormalise;
 use Illuminate\Console\Command;
 
@@ -32,6 +33,7 @@ class HydrateOrganisation extends HydrateModel
         OrganisationHydrateShops::run();
         OrganisationHydrateWebsites::run();
         OrganisationHydrateCustomers::run();
+        OrganisationHydrateWorkplaces::run();
 
     }
 

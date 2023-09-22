@@ -12,7 +12,7 @@ use App\Actions\HumanResources\Employee\CreateOrganisationUserFromEmployee;
 use App\Actions\HumanResources\Employee\StoreEmployee;
 use App\Actions\HumanResources\Employee\UpdateEmployee;
 use App\Actions\HumanResources\Employee\UpdateEmployeeWorkingHours;
-use App\Actions\HumanResources\WorkingPlace\UpdateWorkingPlace;
+use App\Actions\HumanResources\Workplace\UpdateWorkplace;
 use App\Actions\Organisation\Organisation\StoreOrganisation;
 use App\Enums\HumanResources\Employee\EmployeeStateEnum;
 use App\Models\Auth\OrganisationUser;
@@ -98,7 +98,7 @@ test('update working place successful', function ($createdWorkplace) {
         'type' => 'home',
     ];
     $addressData      = Address::create(Address::factory()->definition())->toArray();
-    $updatedWorkplace = UpdateWorkingPlace::run($createdWorkplace, $arrayData, $addressData);
+    $updatedWorkplace = UpdateWorkplace::run($createdWorkplace, $arrayData, $addressData);
 
     expect($updatedWorkplace->name)->toBe($arrayData['name']);
 })->depends('create working place successful');

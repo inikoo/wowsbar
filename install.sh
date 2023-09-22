@@ -56,6 +56,7 @@ php artisan customer:new-portfolio-website aiku hello.com hello 'My website 😸
 php artisan customer:new-banner aiku test1 'My first banner 🫡' hello
 php artisan customer:new-banner aiku test2 'My first banner without website 🫡'
 pg_dump -Fc -f "devops/devel/snapshots/portfolio.dump" ${DB}
+php artisan workplace:create "Beach bar" hq
 php artisan employee:import employees.xlsx
 echo "🌱 All the employees are imported"
 php artisan shop:import-prospects awa prospects.xlsx
