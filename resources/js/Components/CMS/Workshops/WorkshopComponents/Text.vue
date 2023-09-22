@@ -175,7 +175,7 @@ const tempId = ulid()
     <!-- {{ popoverValue == tempId }} -->
         <div
             class="relative rounded focus-within:ring focus-within:ring-gray-400 border-2 border-dashed border-gray-400 focus-within:border-transparent"
-            :class="[popoverValue == tempId ? 'z-50' : '-z-50']"
+            :class="[popoverValue == tempId ? 'z-50' : 'z-0']"
         >
             <!-- The main content -->
             <div @focusin="() => { popoverValue = tempId }" @focusout="true"
