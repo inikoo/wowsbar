@@ -110,12 +110,12 @@ class ShowEmployee extends InertiaAction
                 ],
 
                 EmployeeTabsEnum::DATA->value => $this->tab == EmployeeTabsEnum::DATA->value ?
-                    fn() => $this->getData($employee)
-                    : Inertia::lazy(fn() => $this->getData($employee)),
+                    fn () => $this->getData($employee)
+                    : Inertia::lazy(fn () => $this->getData($employee)),
 
                 EmployeeTabsEnum::HISTORY->value => $this->tab == EmployeeTabsEnum::HISTORY->value ?
-                    fn() => HistoryResource::collection(IndexHistories::run($employee))
-                    : Inertia::lazy(fn() => HistoryResource::collection(IndexHistories::run($employee)))
+                    fn () => HistoryResource::collection(IndexHistories::run($employee))
+                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistories::run($employee)))
             ]
         )->table(IndexHistories::make()->tableStructure());
     }
