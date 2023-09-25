@@ -61,9 +61,7 @@ const changeColor = (value: valueColorPicker) => {
         <div class="flex gap-x-1 items-center">
             <div class="bg-gray-700 border border-slate-300 rounded w-6 h-6 shadow cursor-pointer hover:scale-110 transition-transform duration-100 ease-in-out" @click="() => changeColor({ rgba: { r: 55, g: 65, b: 81, a: 1 } })" />
             <div class="bg-white border border-slate-300 rounded w-6 h-6 shadow cursor-pointer hover:scale-110 transition-transform duration-100 ease-in-out" @click="() => changeColor({ rgba: { r: 255, g: 255, b: 255, a: 255 } })" />
-            <div class="bg-yellow-300 border border-slate-300 rounded w-6 h-6 shadow cursor-pointer hover:scale-110 transition-transform duration-100 ease-in-out" @click="() => changeColor({ rgba: { r: 253, g: 224, b: 71, a: 255 } })" />
-            <div class="bg-emerald-500 border border-slate-300 rounded w-6 h-6 shadow cursor-pointer hover:scale-110 transition-transform duration-100 ease-in-out" @click="() => changeColor({ rgba: { r: 16, g: 185, b: 129, a: 255 } })" />
-            <div class="bg-sky-500 border border-slate-300 rounded w-6 h-6 shadow cursor-pointer hover:scale-110 transition-transform duration-100 ease-in-out" @click="() => changeColor({ rgba: { r: 14, g: 165, b: 233, a: 255 } })" />
+            <div class="bg-orange-500 border border-slate-300 rounded w-6 h-6 shadow cursor-pointer hover:scale-110 transition-transform duration-100 ease-in-out" @click="() => changeColor({ rgba: { r: 249, g: 115, b: 22, a: 255 } })" />
             <div class="bg-fuchsia-500 border border-slate-300 rounded w-6 h-6 shadow cursor-pointer hover:scale-110 transition-transform duration-100 ease-in-out" @click="() => changeColor({ rgba: { r: 99, g: 102, b: 241, a: 255 } })" />
             <div class="bg-rose-500 border border-slate-300 rounded w-6 h-6 shadow cursor-pointer hover:scale-110 transition-transform duration-100 ease-in-out" @click="() => changeColor({ rgba: { r: 244, g: 63, b: 94, a: 255 } })" />
         </div>
