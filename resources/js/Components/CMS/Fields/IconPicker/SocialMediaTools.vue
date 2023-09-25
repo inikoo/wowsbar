@@ -8,6 +8,7 @@ import { faEnvelope as fadEnvelope, faPhone as fadPhone, faBuilding as fadBuildi
 import { faTiktok, faFacebook, faFacebookF, faSquareFacebook, faInstagram, faSquareInstagram, faWhatsapp, faSquareWhatsapp } from "@fortawesome/free-brands-svg-icons"
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { upperFirst } from 'lodash'
+import Button from "@/Components/Elements/Buttons/Button.vue"
 import IconPicker from '@/Components/CMS/Fields/IconPicker/IconPicker.vue';
 library.add(
   faTiktok, faFacebook, faFacebookF, faSquareFacebook, faInstagram, faSquareInstagram, faWhatsapp, faSquareWhatsapp,
@@ -23,6 +24,7 @@ const props = defineProps({
     icon: String
   }
 })
+const emits = defineEmits();
 </script>
 
 
@@ -43,7 +45,11 @@ const props = defineProps({
         <span class="text-sm">{{ upperFirst(item) }}</span>
         <input v-model="contentRef.value[item]" class="w-full" @blur="() => contentRef.handleInputBlur(item)" />
       </div>
-
+      <div  class="my-2 mx-1">
+						<Button @click="emits('OnDelete')" class="w-full flex justify-center bg-red-500">
+							Delete
+						</Button>
+					</div>
     </template>
   </Hyperlink>
 </template>

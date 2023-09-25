@@ -115,7 +115,7 @@ console.log('themetwo',props)
 						<template #item="{ element: child, index: childIndex }">
 							<div class="hover:text-gray-500 ">
 								<span class="sr-only">{{ child.label }}</span>
-								<SocialMediaPicker :data="child" />
+								<SocialMediaPicker :data="child" @OnDelete="data.social.splice(index,1)" />
 							</div>
 						</template>
 					</draggable>
