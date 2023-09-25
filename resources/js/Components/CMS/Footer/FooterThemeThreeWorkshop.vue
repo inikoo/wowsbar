@@ -58,7 +58,7 @@ onMounted(() => {
                     <template #item="{ element: child, index: childIndex }">
                         <div>
                             <span class="sr-only">{{ child.label }}</span>
-                            <SocialMediaPicker :data="child" />
+                            <SocialMediaPicker :data="child"  @OnDelete="data.social.splice(index,1)" />
                         </div>
                     </template>
                 </draggable>

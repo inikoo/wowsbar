@@ -15,7 +15,7 @@ import ColorPicker from "@/Components/Workshop/Fields/ColorPicker.vue";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faImage, faTimes, faOven } from "@/../private/pro-regular-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { isNull } from 'lodash'
+import { isNull, set } from 'lodash'
 import Image from "@/Components/Image.vue"
 library.add(faImage, faTimes, faOven);
 
@@ -29,22 +29,58 @@ const themeOptions = [
 ];
 
 
-const setData = ref({...props.data.layout});
+const setData = ref(props.data.layout);
 
-
+console.log('data',setData.value)
 
 const addImage = async (element) => { 
+    // const file = element.target.files[0];
+    // if (file) {
+    //     setData.value.imageLayout = URL.createObjectURL(file);
+    //   }
     const file = element.target.files[0];
     if (file) {
-        setData.value.imageLayout = URL.createObjectURL(file);
-      }
+        try {
+            const response = await axios.post(
+                route(
+                    props.imagesUploadRoute.name,
+                    props.imagesUploadRoute.parameters
+                ),
+                { images: file },
+                {
+                    headers: { "Content-Type": "multipart/form-data" },
+                }
+            );
+            console.log(response);
+        } catch (error) {
+            console.log(error);
+        }
+    }
 };
 
 const addfavicon= async (element) => { 
+    // const file = element.target.files[0];
+    // if (file) {
+    //     setData.value.favicon = URL.createObjectURL(file);
+    //   }
     const file = element.target.files[0];
     if (file) {
-        setData.value.favicon = URL.createObjectURL(file);
-      }
+        try {
+            const response = await axios.post(
+                route(
+                    props.imagesUploadRoute.name,
+                    props.imagesUploadRoute.parameters
+                ),
+                { images: file },
+                {
+                    headers: { "Content-Type": "multipart/form-data" },
+                }
+            );
+            console.log(response);
+        } catch (error) {
+            console.log(error);
+        }
+    }
 };
 
 
@@ -120,18 +156,16 @@ const addfavicon= async (element) => {
                     'w-[60%]': setData.layout === 'margin',
                 }"
             >
-                <div
-                    class="h-1/3 border-b-2 flex items-center relative bg-white"
-                >
-                    <div class="mx-auto text-xl font-medium">Header</div>
+                <div class="h-1/3 border-b-2 flex items-center relative" :style="`background-color: ${setData?.header?.color};`">
+                    <div class="mx-auto text-xl font-medium text-black">Header</div>
                     <div
                         class="absolute left-[-20px] bottom-8"
                         style="transform: scale(0.7)"
                     >
                         <ColorPicker
-                            :color="setData?.header?.color"
-                           
+                            :color="setData.header.color"
                             :colorSuggestions="false"
+                            @onChange="(color)=>set(setData,['header','color'],color)"
                             class=""
                         />
                     </div>
@@ -144,43 +178,53 @@ const addfavicon= async (element) => {
                     >
                         <ColorPicker
                             :color="setData?.header?.color"
-                           
+                            @onChange="(color)=>set(setData,['header','colorScheme'],color)"
                             :colorSuggestions="false"
                             class=""
                         />
                     </div>
-                    <div class="font-xs border rounded-lg py-1 px-2 text-white" :style="`background-color: ${setData?.header?.color};`">Apoointment</div>
-                    <div :style="`border-left: 1px solid ${setData?.header?.color};`"></div>
-                    <div class="font-xs border rounded-lg py-1 px-2 text-white" :style="`background-color: ${setData?.header?.color};`">sign in</div>
+                    <div class="font-xs border rounded-lg py-1 px-2 text-white" :style="`background-color: ${setData?.header?.colorScheme};`">Apoointment</div>
+                    <div :style="`border-left: 1px solid ${setData?.header?.colorScheme};`"></div>
+                    <div class="font-xs border rounded-lg py-1 px-2 text-white" :style="`background-color: ${setData?.header?.colorScheme};`">sign in</div>
                     </div>
                 </div>
                 <div
-                    class="h-1/3 border-b-2 flex items-center relative bg-white"
+                    class="h-1/3 border-b-2 flex items-center relative" :style="`background-color: ${setData?.content?.color};`"
                 >
-                    <div class="mx-auto text-xl font-medium">Content</div>
+                    <div class="mx-auto text-xl font-medium text-black">Content</div>
                     <div
                         class="absolute left-[-20px] bottom-8"
                         style="transform: scale(0.7)"
                     >
                         <ColorPicker
                             :color="setData?.content?.color"
-                       
+                            @onChange="(color)=>set(setData,['content','color'],color)"
                             :colorSuggestions="false"
                             class=""
                         />
                     </div>
                     <div
                         class="absolute right-0 top-5 flex gap-2"
-                        :style="`color: ${setData?.content?.color};`"
+                        :style="`color: ${setData?.content?.colorScheme};`"
                     >
+                    <div
+                        style="transform: scale(0.5)"
+                    >
+                        <ColorPicker
+                            :color="setData?.header?.color"
+                            @onChange="(color)=>set(setData,['content','colorScheme'],color)"
+                            :colorSuggestions="false"
+                            class=""
+                        />
+                    </div>
                     <font-awesome-icon :icon="['far', 'oven']" class="w-40 h-14" />
 
                     </div>
                 </div>
                 <div
-                    class="h-1/3 border-b-2 flex items-center relative bg-white"
+                    class="h-1/3 border-b-2 flex items-center relative " :style="`background-color: ${setData?.footer?.color};`"
                 >
-                    <div class="mx-auto text-xl font-medium" >Footer</div>
+                    <div class="mx-auto text-xl font-medium text-black" >Footer</div>
                     <div
                         class="absolute left-[-20px] bottom-8"
                         style="transform: scale(0.7)"
@@ -188,7 +232,7 @@ const addfavicon= async (element) => {
                         <ColorPicker
                             :color="setData?.footer?.color"
                             :colorSuggestions="false"
-                         
+                            @onChange="(color)=>set(setData,['footer','color'],color)"
                             class=""
                         />
                     </div>
@@ -201,8 +245,7 @@ const addfavicon= async (element) => {
             >
                 <ColorPicker
                     :color="setData?.colorLayout"
-                 
-                    class=""
+                    @onChange="(color)=>set(setData,['colorLayout'],color)"
                     :colorSuggestions="false"
                 />
 
