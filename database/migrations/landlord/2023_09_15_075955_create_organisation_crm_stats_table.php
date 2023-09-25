@@ -19,6 +19,11 @@ return new class () extends Migration {
             $table->unsignedSmallInteger('organisation_id');
             $table->foreign('organisation_id')->references('id')->on('organisations')->onUpdate('cascade')->onDelete('cascade');
             $table = $this->crmStats($table);
+
+            $table->unsignedInteger('number_customer_websites')->default(0);
+
+
+
             $table->timestampsTz();
         });
     }

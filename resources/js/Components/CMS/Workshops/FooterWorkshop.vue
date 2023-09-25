@@ -173,7 +173,7 @@ const changeImage = async (file) => {
         const response = await axios.post(
             route(
                 props.imagesUploadRoute.name,
-                props.imagesUploadRoute.arguments
+                props.imagesUploadRoute.parameters
             ),
             { images: file },
             {

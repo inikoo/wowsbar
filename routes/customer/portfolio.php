@@ -34,23 +34,11 @@ use App\Actions\Portfolio\Uploads\IndexPortfolioWebsiteUploads;
 use App\Actions\UI\Customer\Portfolio\ShowPortfolio;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/dashboard', [
-    'uses'  => ShowPortfolio::class,
-    'icon'  => 'briefcase',
-    'label' => 'portfolio'
-])->name('dashboard');
+Route::get('/dashboard', ['uses'  => ShowPortfolio::class, 'icon'  => 'briefcase', 'label' => 'portfolio'])->name('dashboard');
 
-Route::get('/websites', [
-    'uses'  => IndexPortfolioWebsites::class,
-    'icon'  => 'globe',
-    'label' => 'websites'
-])->name('websites.index');
+Route::get('/websites', ['uses'  => IndexPortfolioWebsites::class,'icon'  => 'globe', 'label' => 'websites'])->name('websites.index');
 Route::get('/websites/create', CreatePortfolioWebsite::class)->name('websites.create');
-Route::get('/websites/{portfolioWebsite}', [
-        'uses'  => ShowPortfolioWebsite::class,
-        'icon'  => 'globe',
-        'label' => 'websites'
-    ])->name('websites.show');
+Route::get('/websites/{portfolioWebsite}', ['uses'  => ShowPortfolioWebsite::class, 'icon'  => 'globe', 'label' => 'websites'])->name('websites.show');
 Route::get('/websites/{portfolioWebsite}/edit', EditPortfolioWebsite::class)->name('websites.edit');
 Route::get('/websites/{portfolioWebsite}/delete', RemovePortfolioWebsite::class)->withTrashed()->name('websites.remove');
 

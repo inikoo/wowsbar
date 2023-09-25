@@ -6,6 +6,7 @@
  */
 
 
+use App\Actions\CustomerWebsites\CustomerWebsite\UI\IndexCustomerWebsites;
 use App\Actions\Portfolio\Banner\UI\CreateBanner;
 use App\Actions\Portfolio\Banner\UI\DuplicateBanner;
 use App\Actions\Portfolio\Banner\UI\EditBanner;
@@ -24,7 +25,6 @@ use App\Actions\Portfolio\Gallery\UI\UploadedImages\ShowUploadedImage;
 use App\Actions\Portfolio\Gallery\UploadImagesToGallery;
 use App\Actions\Portfolio\PortfolioWebsite\UI\CreatePortfolioWebsite;
 use App\Actions\Portfolio\PortfolioWebsite\UI\EditPortfolioWebsite;
-use App\Actions\Portfolio\PortfolioWebsite\UI\IndexPortfolioWebsites;
 use App\Actions\Portfolio\PortfolioWebsite\UI\RemovePortfolioWebsite;
 use App\Actions\Portfolio\PortfolioWebsite\UI\ShowPortfolioWebsite;
 use App\Actions\Portfolio\Snapshot\UI\IndexSnapshots;
@@ -41,7 +41,7 @@ Route::get('/dashboard', [
 ])->name('dashboard');
 
 Route::get('/websites', [
-    'uses'  => IndexPortfolioWebsites::class,
+    'uses'  => IndexCustomerWebsites::class,
     'icon'  => 'globe',
     'label' => 'websites'
 ])->name('websites.index');
@@ -77,37 +77,6 @@ Route::get('/banners', [IndexBanners::class, 'inCustomer'])->name('index');
 
 Route::get('websites/{portfolioWebsite}/banners/{banner}/snapshots', [IndexSnapshots::class, 'inWebsite'])->name('websites.snapshots.index');
 Route::get('websites/{portfolioWebsite}/banners/{banner}/snapshots/{snapshot}', [ShowSnapshot::class, 'inWebsite'])->name('websites.snapshots.show');
-
-Route::get('/banners/create', [CreateBanner::class, 'inCustomer'])->name('banners.create');
-
-Route::get('/banners/{banner}', [ShowBanner::class, 'inCustomer'])->name('banners.show');
-Route::get('/banners/{banner}/edit', EditBanner::class)->name('banners.edit');
-Route::get('/banners/{banner}/workshop', [ShowBannerWorkshop::class, 'inCustomer'])->name('banners.workshop');
-Route::post('/banners/{banner}/workshop/images', [UploadImagesToBanner::class, 'inBanner'])->name('banners.workshop.images.store');
-
-Route::get('/banners/{banner}/delete', [RemoveBanner::class, 'inCustomer'])->name('banners.remove');
-Route::get('/banners/{banner}/deleted', [ShowDeletedBanner::class, 'inCustomer'])->withTrashed()->name('banners.deleted');
-
-Route::get('/banners/{banner}/duplicate', DuplicateBanner::class)->name('banners.duplicate');
-
-Route::get('/banners/{banner}/snapshots', [IndexSnapshots::class, 'inBanner'])->name('banners.snapshots.index');
-Route::get('/banners/{banner}/snapshots/{snapshot}', [ShowSnapshot::class, 'inBanner'])->name('banners.snapshots.show');
-
-//Route::get('/banners/{banner}/delete', [RemoveBanner::class,'inCustomer'])->name('banners.remove');
-
-Route::prefix('gallery')->group(function () {
-    Route::get('/', ShowGallery::class)->name('gallery');
-    Route::get('/images/{media}', ShowUploadedImage::class)->name('images.show');
-    Route::get('/images/{media}/edit', EditUploadedImage::class)->name('images.edit');
-    Route::get('/images/{media}/delete', DeleteUploadedImage::class)->name('images.remove');
-    Route::post('/images', UploadImagesToGallery::class)->name('images.upload');
-
-
-    Route::get('/uploaded/images', IndexUploadedImages::class)->name('uploaded.images');
-    Route::get('/stock/images', IndexStockImages::class)->name('stock.images');
-});
-
-//Route::get('/images', IndexImages::class)->name('images.index');
 
 
 Route::get('/portfolio-websites/uploads/history', IndexPortfolioWebsiteUploads::class)->name('website.uploads.history');

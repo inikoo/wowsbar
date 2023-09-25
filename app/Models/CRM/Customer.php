@@ -12,6 +12,7 @@ use App\Enums\CRM\Customer\CustomerStatusEnum;
 use App\Enums\CRM\Customer\CustomerTradeStateEnum;
 use App\Models\Assets\Currency;
 use App\Models\Auth\User;
+use App\Models\CustomerWebsites\CustomerWebsite;
 use App\Models\Market\Shop;
 use App\Models\Media\Media;
 use App\Models\Portfolio\Banner;
@@ -69,6 +70,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read Collection<int, Banner> $banners
  * @property-read int|null $banners_count
  * @property-read Currency $currency
+ * @property-read Collection<int, CustomerWebsite> $customerWebsites
+ * @property-read int|null $customer_websites_count
  * @property-read Media|null $logo
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, Media> $media
  * @property-read int|null $media_count
@@ -205,6 +208,11 @@ class Customer extends Model implements HasMedia
     public function portfolioWebsites(): HasMany
     {
         return $this->hasMany(PortfolioWebsite::class);
+    }
+
+    public function customerWebsites(): HasMany
+    {
+        return $this->hasMany(CustomerWebsite::class);
     }
 
     public function registerMediaCollections(): void

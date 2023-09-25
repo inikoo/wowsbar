@@ -1,18 +1,18 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Mon, 18 Sep 2023 18:42:14 Malaysia Time, Pantai Lembeng, Bali, Indonesia
+ * Created: Mon, 25 Sep 2023 12:16:11 Malaysia Time, Kuala Lumpur, Malaysia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Portfolio\PortfolioWebsite\UI;
+namespace App\Actions\CustomerWebsites\CustomerWebsite\UI;
 
 use App\Actions\InertiaAction;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
 
-class CreatePortfolioWebsite extends InertiaAction
+class CreateCustomerWebsite extends InertiaAction
 {
     public function authorize(ActionRequest $request): bool
     {

@@ -108,10 +108,6 @@ class ShowWebsiteWorkshop extends InertiaAction
                     : Inertia::lazy(
                         fn () => GetWebsiteWorkshopHeader::run($website)
                     ),
-                WebsiteWorkshopTabsEnum::MENU->value   => $this->tab == WebsiteWorkshopTabsEnum::MENU->value
-                    ?
-                    fn () => GetWebsiteWorkshopMenu::run($website)
-                    : Inertia::lazy(fn () => GetWebsiteWorkshopMenu::run($website)),
 
                 WebsiteWorkshopTabsEnum::FOOTER->value => $this->tab == WebsiteWorkshopTabsEnum::FOOTER->value ?
                     fn () => GetWebsiteWorkshopFooter::run($website)

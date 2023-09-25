@@ -2,16 +2,16 @@
 import { ref } from 'vue'
 import Button from '@/Components/Elements/Buttons/Button.vue'
 import HyperLink from "../Fields/Hyperlink.vue"
+import Image from "@/Components/Image.vue"
 
 const props = defineProps<{
   data: Object
 }>()
 
+const emits = defineEmits();
+
 const changeLogo = async (element) => {
-  const file = element.target.files[0];
-  if (file) {
-    props.data.img = URL.createObjectURL(file);
-  }
+    emits('changeLogo',element)
 };
 
 </script>
@@ -23,30 +23,23 @@ const changeLogo = async (element) => {
         <span class="sr-only">Your Company</span>
         <label for="faviconUpload" class="flex justify-center items-center bg-white cursor-pointer">
           <input type="file" id="faviconUpload" accept="image/*" style="display: none" @change="changeLogo" />
-          <img class="h-8 w-auto" :src="data.img" alt="" />
+          <Image :src="data.logo" class="h-8 w-auto"/>
         </label>
       </a>
       <div class="flex gap-3">
         <div class="hidden lg:flex lg:flex-1 lg:justify-end">
           <a href="#" class="flex text-sm font-semibold leading-6 text-gray-900">
             <Button>
-              <HyperLink :formList="{
-                label: 'label',
-                link: 'link',
-              }" label="label" :data="data.appointment" :useDelete="false" />
+              Appointment
             </Button></a>
         </div>
         <div class="text-gray-300">|</div>
         <div class="hidden lg:flex lg:flex-1 lg:justify-end">
           <a class="text-sm font-semibold leading-6 text-gray-900"><Button>
-              <HyperLink :formList="{
-                label: 'label',
-                link: 'link',
-              }" label="label" :data="data.logIn" :useDelete="false" />
+             log in
             </Button></a>
         </div>
       </div>
-
     </nav>
   </header>
 </template>
