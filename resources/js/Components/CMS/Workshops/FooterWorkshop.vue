@@ -48,9 +48,9 @@ const DummyColums = [
         label: 'add list',
         type: "list",
         id: ulid(),
-        data: [
-            { name: 'dummy', link: '#' },
-            { name: 'dummy2', link: '#' },
+        items: [
+            { label: 'sub Menu 1', link: '#', id: ulid() },
+            { label: 'sub Menu 2', link: '#' },
         ],
     },
     {
@@ -60,44 +60,17 @@ const DummyColums = [
         data: "Lorem Ipsum is simply dummy te printernto electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
     },
     {
-        label: 'add info',
+        label: 'info',
         type: 'info',
         id: ulid(),
-        data: [
+        items: [
             {
-                label: 'location',
-                value: 'Ancient Wisdom s.r.o.',
-                icon: 'fab fa-facebook',
-                id: ulid(),
-            },
-            {
-                label: 'billingAddress',
-                value: 'Billin',
-                icon: 'fas fa-map',
-                id: ulid(),
-            },
-            {
-                label: 'vat',
-                value: 'VAT: SK2120525440',
-                icon: 'fab fa-facebook',
-                id: ulid(),
-            },
-            {
-                label: 'building',
-                value: 'Reg: 50920600',
-                icon: 'fas fa-building',
-                id: ulid(),
-            },
-            {
-                label: 'phone',
-                value: '+421 (0)33 558 60 71',
-                icon: 'fas fa-phone',
-                id: ulid(),
-            },
-            {
-                label: 'email',
-                value: 'contact@awgifts.eu',
-                icon: 'fas fa-envelope',
+                data: {
+                    icon: 'fas fa-map',
+                    label: 'map',
+                    tooltip: 'map'
+                },
+                type: 'other',
                 id: ulid(),
             },
         ],
@@ -148,13 +121,18 @@ const columItemLinkChange = (value) => {
     const set = data.columns
     if (value.value == 'add') {
         const index = set.findIndex((item) => item.id == data.columns[columSelected.value].id)
-        if (data.columns[columSelected.value].type == 'list') set[index].data.push({ name: 'dummy', link: '#' })
-        else if (data.columns[columSelected.value].type == 'info') set[index].data.push({
-            label: 'location',
-            value: 'new item',
-            icon: 'far fa-dot-circle',
-            id: ulid(),
-        })
+        if (data.columns[columSelected.value].type == 'list') set[index].items.push({ label: 'sub Menu', link: '#', id: ulid() },)
+        else if (data.columns[columSelected.value].type == 'info') set[index].items.push(
+            {
+                data: {
+                    icon: 'far fa-dot-circle',
+                    label: 'New Item',
+                    tooltip: 'New Item'
+                },
+                type: 'other',
+                id: ulid(),
+            },
+        )
     }
     data.columns = set
 }
@@ -172,6 +150,7 @@ const saveSocialmedia = (value) => {
     }
 
 }
+
 const addSocial = () => {
     data.social.push(
         {
@@ -263,7 +242,7 @@ const changeImage = async (file) => {
 
 
                         <div v-for="(set, index) in data.columns[columSelected].items" :key="set.id">
-                            <HyperlinkTools :data="set" @OnDelete="() => data.columns[columSelected].data.splice(index, 1)"
+                            <HyperlinkTools :data="set" @OnDelete="() => data.columns[columSelected].items.splice(index, 1)"
                                 :formList="{
                                     name: 'label',
                                     link: 'href',
@@ -298,11 +277,11 @@ const changeImage = async (file) => {
                         </div>
 
                         <div v-for="(set, index) in data.columns[columSelected].items" :key="set.id">
-                        <div v-if="set.type == 'other'">
-                            <HyperInfoTools :data="set.data"
-                                @OnDelete="() => data.columns[columSelected].data.splice(index, 1)" />
-                        </div>
-                           
+                            <div v-if="set.type == 'other'">
+                                <HyperInfoTools :data="set.data"
+                                    @OnDelete="() => data.columns[columSelected].items.splice(index, 1)" />
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -348,15 +327,9 @@ const changeImage = async (file) => {
             <ToolInTop :tool="tool" :theme="selectedTheme" @changeTheme="(val) => selectedTheme = val"
                 :columSelected="columSelected" @setColumnSelected="selectedColums" />
             <div style="transform: scale(0.8);" class="w-full">
-                <Footer 
-                    class="lg:col-span-2 lg:row-span-2 rounded-lg" 
-                    :data="data"
-                    :columSelected="data.columns[columSelected]" 
-                    :theme="selectedTheme" 
-                    :selectedColums="selectedColums"
-                    :tool="tool"
-                    @uploadImage="changeImage"
-                />
+                <Footer class="lg:col-span-2 lg:row-span-2 rounded-lg" :data="data"
+                    :columSelected="data.columns[columSelected]" :theme="selectedTheme" :selectedColums="selectedColums"
+                    :tool="tool" @uploadImage="changeImage" />
             </div>
         </div>
     </div>
