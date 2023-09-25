@@ -129,6 +129,7 @@ class ShowCustomer extends InertiaAction
 
             ]
         )->table(IndexCustomerWebsites::make()->tableStructure(
+            parent: $customer,
             modelOperations: [
                 'createLink' => [
                     [
