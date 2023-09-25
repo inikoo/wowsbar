@@ -8,9 +8,9 @@
 namespace App\Actions\Web\Website;
 
 use App\Http\Resources\Gallery\ImageResource;
+use App\Models\Media\Media;
 use App\Models\Web\Website;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use Illuminate\Support\Collection;
+use Illuminate\Http\UploadedFile;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
@@ -21,33 +21,28 @@ class UploadImagesToWebsite
     use WithAttributes;
 
 
-
-    public function handle(Website $website, array $imageFiles): Collection
+    public function handle(Website $website, UploadedFile $imageFile): Media
     {
+        $media = AttachImageToWebsite::run(
+            website: $website,
+            collection: 'structure',
+            imagePath: $imageFile->getPathName(),
+            originalFilename: $imageFile->getClientOriginalName(),
+            extension: $imageFile->guessClientExtension()
+        );
 
-        $medias=[];
-        foreach ($imageFiles as $imageFile) {
 
-            $media =AttachImageToWebsite::run(
-                website: customer(),
-                collection: 'content_block',
-                imagePath: $imageFile->getPathName(),
-                originalFilename: $imageFile->getClientOriginalName(),
-                extension: $imageFile->guessClientExtension()
-            );
+        $scope        = 'tmp';
+        $existing_ids = $website->images()->where('scope', $scope)->whereIn('media_id', [$media->id])->pluck('media_id');
+        $website->images()->attach(
+            collect([$media->id])->diff($existing_ids),
+            [
+                'scope' => 'tmp'
+            ]
+        );
 
-            $medias[]=$media;
 
-            $website->images()->attach(
-                $media->id,
-                [
-                    'scope'=> 'tmp'
-                ]
-            );
-
-        }
-
-        return collect($medias);
+        return $media;
     }
 
     public function authorize(ActionRequest $request): bool
@@ -64,16 +59,16 @@ class UploadImagesToWebsite
     }
 
 
-
-    public function asController(Website $website, ActionRequest $request): Collection
+    public function asController(Website $website, ActionRequest $request): Media
     {
         $request->validate();
+
         return $this->handle($website, $request->validated('images'));
     }
 
-    public function jsonResponse($medias): AnonymousResourceCollection
+    public function jsonResponse(Media $media): array
     {
-        return ImageResource::collection($medias);
+        return ImageResource::make($media)->getArray();
     }
 
 }

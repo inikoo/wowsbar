@@ -26,21 +26,28 @@ class AttachImageToWebsite
         $checksum = md5_file($imagePath);
         /** @var Media $media */
         $media = $website->media()->where('collection_name', $collection)->where('checksum', $checksum)->first();
-        if (!$media) {
-            $filename=dechex(crc32($checksum)).'.';
-            $filename.=empty($extension) ? pathinfo($imagePath, PATHINFO_EXTENSION) : $extension;
 
-            $media = $website->addMedia($imagePath)
-                ->preservingOriginal()
-                ->withProperties(
-                    [
-                        'checksum'    => $checksum,
-                    ]
-                )
-                ->usingName($originalFilename)
-                ->usingFileName($filename)
-                ->toMediaCollection($collection);
+        if ($media) {
+
+            return $media;
         }
+
+
+
+        $filename = dechex(crc32($checksum)).'.';
+        $filename .= empty($extension) ? pathinfo($imagePath, PATHINFO_EXTENSION) : $extension;
+
+        $media = $website->addMedia($imagePath)
+            ->preservingOriginal()
+            ->withProperties(
+                [
+                    'checksum' => $checksum,
+                ]
+            )
+            ->usingName($originalFilename)
+            ->usingFileName($filename)
+            ->toMediaCollection($collection);
+
         return $media;
     }
 }
