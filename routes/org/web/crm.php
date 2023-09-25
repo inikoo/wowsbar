@@ -60,7 +60,7 @@ Route::prefix('shop/{shop}')->as('shop.')->group(function () {
         Route::get('/', [IndexProspects::class, 'inShop'])->name('index');
         Route::get('/create', [IndexProspects::class, 'inShop'])->name('create');
         Route::get('/{prospect}', [ShowProspect::class, 'inShop'])->name('show');
-        Route::get('/{prospect}/edit', [EditProspect::class, 'inShop'])->name('show');
+        Route::get('/{prospect}/edit', [EditProspect::class, 'inShop'])->name('edit');
         Route::get('/{prospect}/delete', [RemoveProspect::class, 'inShop'])->name('remove');
     });
 

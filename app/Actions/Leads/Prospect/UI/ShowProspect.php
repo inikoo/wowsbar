@@ -80,7 +80,7 @@ class ShowProspect extends InertiaAction
                             'type'  => 'button',
                             'style' => 'delete',
                             'route' => [
-                                'name'       => 'org.crm.Prospects.remove',
+                                'name'       => 'org.crm.shop.prospects.remove',
                                 'parameters' => $request->route()->originalParameters()
                             ]
 
@@ -173,7 +173,7 @@ class ShowProspect extends InertiaAction
     public function getPrevious(Prospect $prospect, ActionRequest $request): ?array
     {
         $previous = Prospect::where('slug', '<', $prospect->slug)->when(true, function ($query) use ($prospect, $request) {
-            if ($request->route()->getName() == 'org.shops.show.Prospects.show') {
+            if ($request->route()->getName() == 'org.shops.show.prospects.show') {
                 $query->where('Prospects.shop_id', $prospect->shop_id);
             }
         })->orderBy('slug', 'desc')->first();
@@ -184,7 +184,7 @@ class ShowProspect extends InertiaAction
     public function getNext(Prospect $prospect, ActionRequest $request): ?array
     {
         $next = Prospect::where('slug', '>', $prospect->slug)->when(true, function ($query) use ($prospect, $request) {
-            if ($request->route()->getName() == 'org.shops.show.Prospects.show') {
+            if ($request->route()->getName() == 'org.shops.show.prospects.show') {
                 $query->where('Prospects.shop_id', $prospect->shop_id);
             }
         })->orderBy('slug')->first();
