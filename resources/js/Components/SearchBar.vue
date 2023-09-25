@@ -53,7 +53,7 @@ const fetchApi = async (query: string) => {
     if (query !== '') {
         resultsSearch.value = null
         loadingState.value = true
-        await fetch(`http://wowsbar.test/search?q=${query}&route_src=${route().current()}${paramsToString.value}`)
+        await fetch(`search?q=${query}&route_src=${route().current()}${paramsToString.value}`)
             .then(response => {
                 response.json().then((data: Object) => {
                     resultsSearch.value = data
