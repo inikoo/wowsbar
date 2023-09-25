@@ -118,9 +118,9 @@ const selectedComponent = ref(dataComponent.value[0])
                 </div>
             </div>
             <!-- Section: Tools editor -->
-            <div class="w-64 ring-1 ring-gray-300 rounded-md px-2 py-4">
+            <!-- <div class="w-64 ring-1 ring-gray-300 rounded-md px-2 py-4">
         
-            </div>
+            </div> -->
         </div>
     </div>
 </template>

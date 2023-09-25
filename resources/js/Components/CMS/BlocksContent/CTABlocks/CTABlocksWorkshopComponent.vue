@@ -20,7 +20,8 @@ const dataCTA = reactive({
     button: {
         background: 'rgba(55, 65, 81, 1)',
         label: 'Join now!',
-        full: false
+        full: false,
+        link: 'https://google.com'
     },
 })
 

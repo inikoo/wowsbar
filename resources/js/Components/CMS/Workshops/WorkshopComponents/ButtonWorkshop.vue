@@ -10,11 +10,10 @@ import { ulid } from "ulid"
 const props = defineProps<{
     // modelValue: any
     dataButton: {
-        button: {
-            label: string
-            background: string
-            full: boolean
-        }
+        label: string
+        background: string
+        full: boolean
+        link: string
     }
 }>()
 
@@ -31,17 +30,17 @@ const tempId = ulid() // To show the match Popover
 
     <div class="relative rounded border-2 border-dashed border-gray-400 focus-within:border-transparent transition-all duration-300 ease-in-out"
         :class="[popoverValue == tempId ? 'z-50' : 'z-0',
-        dataButton.button.full ? 'w-full' : 'w-fit']">
+        dataButton.full ? 'w-full' : 'w-fit']">
         <!-- The main editor -->
         <div  class="z-20 relative"
             :class="['min-w-[50px] whitespace-nowrap rounded hover:bg-orange-200 hover:ring-gray-400 focus-within:ring-gray-400']">
                 <!-- Editor Button -->
                 <div @click="() => { popoverValue = tempId }"
-                    :style="[dataButton.button.background ? `background-color: ${dataButton.button.background};` : 'background-color: rgb(239 68 68)']"
+                    :style="[dataButton.background ? `background-color: ${dataButton.background};` : 'background-color: rgb(239 68 68)']"
                     class="w-full focus:ring focus:ring-gray-400 flex rounded-md hover:opacity-80 cursor-pointer px-3.5 py-2.5 text-sm font-semibold text-gray-100 shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
                     <!-- Editor Text -->
                     <div @click.stop="" class="w-full">
-                        <Text v-model="dataButton.button.label" :placeholder="'Enter your headline description'" />
+                        <Text v-model="dataButton.label" :placeholder="'Enter your headline description'" />
                     </div>
                 </div>
 
@@ -60,14 +59,25 @@ const tempId = ulid() // To show the match Popover
                         <!-- Group: editor tools -->
                         <div class="z-50 flex bg-gray-100 absolute w-fit justify-between rounded-r ring-1 ring-gray-300 shadow-md py-0.5 text-slate-800 select-none space-x-1 border border-gray-100 divide-x-2 divide-gray-200"
                             tabindex="0">
+                            <!-- Background color -->
                             <div class="flex flex-col justify-center px-2 pb-1">
                                 <div class="text-xxs tracking-wide text-center text-gray-700">Background color</div>
-                                <WebpageColorPicker v-model="dataButton.button.background"/>
+                                <WebpageColorPicker v-model="dataButton.background"/>
                             </div>
+
+                            <!-- Full width -->
                             <div class="flex flex-col justify-start px-2 pb-1 items-center">
                                 <div class="text-xxs tracking-wide text-center text-gray-700 ">Full width</div>
                                 <div class="h-full flex items-center">
-                                    <Toggle v-model="dataButton.button.full" />
+                                    <Toggle v-model="dataButton.full" />
+                                </div>
+                            </div>
+                            
+                            <!-- Url -->
+                            <div class="flex flex-col justify-start px-2 pb-1 items-center">
+                                <div class="text-xxs tracking-wide text-center text-gray-700 ">Url</div>
+                                <div class="h-full flex items-center">
+                                    <input v-model="dataButton.link" class="text-xxs px-2 py-1 border-gray-300 focus:ring-gray-500 focus:outline-none focus:border-transparent rounded text-gray-700" />
                                 </div>
                             </div>
                         </div>
