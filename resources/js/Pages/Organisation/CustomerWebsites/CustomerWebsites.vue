@@ -8,7 +8,7 @@
 import { ref, computed, watch } from 'vue'
 import { Head } from '@inertiajs/vue3'
 import PageHeading from '@/Components/Headings/PageHeading.vue'
-import TablePortfolioWebsites from "@/Components/Tables/TablePortfolioWebsites.vue"
+import TableCustomerWebsites from "@/Components/Tables/TableCustomerWebsites.vue"
 import { capitalize } from "@/Composables/capitalize"
 import Modal from '@/Components/Utils/Modal.vue'
 import Button from '@/Components/Elements/Buttons/Button.vue'
@@ -24,7 +24,6 @@ import Tabs from "@/Components/Navigation/Tabs.vue";
 import {useTabChange} from "@/Composables/tab-change";
 import ModelDetails from "@/Pages/ModelDetails.vue";
 import TableHistories from "@/Components/Tables/TableHistories.vue";
-import TableUploadedWebsites from "@/Components/Tables/TableUploadedWebsites.vue";
 
 library.add(faUpload, falFile, faTimes, faFileDownload, fasFile)
 
@@ -47,7 +46,7 @@ const component = computed(() => {
     const components = {
         details: ModelDetails,
         changelog: TableHistories,
-        websites: TablePortfolioWebsites
+        websites: TableCustomerWebsites
     };
 
     return components[currentTab.value];
@@ -72,8 +71,7 @@ const pusher = new Pusher(import.meta.env.VITE_PUSHER_APP_KEY, {
 const channel = pusher.subscribe('uploads.aiku')
 channel.bind('WebsiteUpload', (data: any) => {
     dataPusher.value = data
-    // console.log("==============")
-    // console.log(data)
+
 })
 
 // On upload file website

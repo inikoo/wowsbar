@@ -17,7 +17,6 @@ enum CustomerTabsEnum: string
 
     case SHOWCASE = 'showcase';
 
-    case TIMELINE  = 'timeline';
     case PORTFOLIO = 'portfolio';
     case ORDERS    = 'orders';
 
@@ -31,10 +30,7 @@ enum CustomerTabsEnum: string
     public function blueprint(): array
     {
         return match ($this) {
-            CustomerTabsEnum::TIMELINE => [
-                'title' => __('timeline'),
-                'icon'  => 'fal fa-code-branch',
-            ],
+
             CustomerTabsEnum::DATA => [
                 'align' => 'right',
                 'type'  => 'icon',
@@ -48,8 +44,8 @@ enum CustomerTabsEnum: string
                 'icon'  => 'fal fa-terminal',
             ],
             CustomerTabsEnum::PORTFOLIO => [
-                'title' => __('portfolio'),
-                'icon'  => 'fal fa-store-alt',
+                'title' => __('portfolio websites'),
+                'icon'  => 'fal fa-briefcase',
             ],
 
             CustomerTabsEnum::ORDERS => [
