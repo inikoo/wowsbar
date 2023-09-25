@@ -17,7 +17,7 @@ const emits = defineEmits();
             <span class="relative flex select-none p-2.5  border-gray-500 items-center pl-3 text-gray-500 sm:text-sm">
                 <IconPicker :data="data" />
             </span>
-            <input v-model="data.value" type="text"
+            <input v-model="data.label" type="text"
                 class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 overflow-hidden w-full"
                 placeholder="label" />
         </div>
