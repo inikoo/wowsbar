@@ -26,9 +26,9 @@ Route::middleware(["org-web"])->group(function () {
         Route::prefix("websites")
             ->name("websites.")
             ->group(__DIR__."/websites.php");
-        Route::prefix("portfolio-websites")
-            ->name("portfolio-websites.")
-            ->group(__DIR__."/portfolio.php");
+        Route::prefix("customer-websites")
+            ->name("customer-websites.")
+            ->group(__DIR__."/customer-websites.php");
         Route::prefix("products")
             ->name("products.")
             ->group(__DIR__."/products.php");
@@ -44,6 +44,9 @@ Route::middleware(["org-web"])->group(function () {
         Route::prefix("models")
             ->name("models.")
             ->group(__DIR__."/models.php");
+        Route::prefix("search")
+            ->name("search.")
+            ->group(__DIR__."/search.php");
         Route::prefix("helpers")
             ->name("helpers.")
             ->group(__DIR__."/helpers.php");
@@ -56,14 +59,6 @@ Route::middleware(["org-web"])->group(function () {
         Route::prefix("downloads")
             ->name("downloads.")
             ->group(__DIR__."/downloads.php");
-        /*
-
-
-
-        Route::prefix("search")
-            ->name("search.")
-            ->group(__DIR__."/search.php");
-*/
     });
 
 

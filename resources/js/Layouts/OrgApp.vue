@@ -107,6 +107,13 @@ const layoutState = useLayoutStore()
 
     </div>
 
+    <notifications
+        dangerously-set-inner-html
+        :max="3"
+        :width="500"
+      />
+
+
     <Footer />
 
 </template>

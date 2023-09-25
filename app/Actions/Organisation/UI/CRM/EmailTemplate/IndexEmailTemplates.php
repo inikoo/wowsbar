@@ -8,11 +8,13 @@
 namespace App\Actions\Organisation\UI\CRM\EmailTemplate;
 
 use App\Actions\InertiaAction;
+use App\Actions\Organisation\UI\CRM\ShowCRMDashboard;
 use App\Actions\UI\Organisation\SysAdmin\ShowSysAdminDashboard;
 use App\Enums\Organisation\Guest\GuestTypeEnum;
 use App\Http\Resources\SysAdmin\GuestResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\Auth\Guest;
+use App\Models\CRM\EmailTemplate;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -24,30 +26,6 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class IndexEmailTemplates extends InertiaAction
 {
-    protected function getElementGroups(): array
-    {
-        return
-            [
-                'status' => [
-                    'label'    => __('Status'),
-                    'elements' => ['active' => __('Active'), 'suspended' => __('Suspended')],
-                    'engine'   => function ($query, $elements) {
-                        $query->where('users.status', array_pop($elements) === 'active');
-                    }
-
-                ],
-                'type'   => [
-                    'label'    => __('Type'),
-                    'elements' => GuestTypeEnum::labels(),
-                    'engine'   => function ($query, $elements) {
-                        $query->whereIn('guests.type', $elements);
-                    }
-
-                ],
-            ];
-    }
-
-
     /** @noinspection PhpUndefinedMethodInspection */
     public function handle($prefix = null): LengthAwarePaginator
     {
@@ -62,23 +40,7 @@ class IndexEmailTemplates extends InertiaAction
             InertiaTable::updateQueryBuilderParameters($prefix);
         }
 
-        $queryBuilder = QueryBuilder::for(Guest::class)
-            ->leftJoin(
-                'users',
-                function ($leftJoin) {
-                    $leftJoin
-                        ->on('users.parent_id', '=', 'guests.id')
-                        ->where('users.parent_type', '=', 'Guest');
-                }
-            )->leftJoin('user_stats', 'user_stats.user_id', 'users.id');
-        foreach ($this->getElementGroups() as $key => $elementGroup) {
-            $queryBuilder->whereElementGroup(
-                prefix: $prefix,
-                key: $key,
-                allowedElements: array_keys($elementGroup['elements']),
-                engine: $elementGroup['engine']
-            );
-        }
+        $queryBuilder = QueryBuilder::for(EmailTemplate::class);
 
         return $queryBuilder
             ->defaultSort('guests.slug')
@@ -98,21 +60,13 @@ class IndexEmailTemplates extends InertiaAction
                     ->pageName($prefix.'Page');
             }
 
-            foreach ($this->getElementGroups() as $key => $elementGroup) {
-                $table->elementGroup(
-                    key: $key,
-                    label: $elementGroup['label'],
-                    elements: $elementGroup['elements']
-                );
-            }
-
             $table
                 ->withGlobalSearch()
                 ->withEmptyState(
                     [
                         'title'       => __('no guest'),
                         'description' => $this->canEdit ? __('Get started by creating a new guest.') : null,
-                        'count'       => customer()->stats->number_guests_status_active,
+                        'count'       => 0,
                         'action'      => $this->canEdit ? [
                             'type'    => 'button',
                             'style'   => 'create',
@@ -154,7 +108,7 @@ class IndexEmailTemplates extends InertiaAction
     public function htmlResponse(LengthAwarePaginator $guests, ActionRequest $request): Response
     {
         return Inertia::render(
-            'SysAdmin/Guests',
+            'SysAdmin/EmailTemplates',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(),
                 'title'       => __('guests'),
@@ -201,7 +155,7 @@ class IndexEmailTemplates extends InertiaAction
     public function getBreadcrumbs($suffix = null): array
     {
         return array_merge(
-            (new ShowSysAdminDashboard())->getBreadcrumbs(),
+            (new ShowCRMDashboard())->getBreadcrumbs('org.crm.shop.mailshot.email-template.index', $this->originalParameters),
             [
                 [
                     'type'   => 'simple',

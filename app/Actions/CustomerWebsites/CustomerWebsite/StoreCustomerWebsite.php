@@ -1,11 +1,11 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Mon, 18 Sep 2023 18:42:14 Malaysia Time, Pantai Lembeng, Bali, Indonesia
+ * Created: Mon, 25 Sep 2023 12:16:11 Malaysia Time, Kuala Lumpur, Malaysia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Portfolio\PortfolioWebsite;
+namespace App\Actions\CustomerWebsites\CustomerWebsite;
 
 use App\Actions\CRM\Customer\Hydrators\CustomerHydratePortfolioWebsites;
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateCustomerWebsites;
@@ -22,27 +22,24 @@ use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
 
-class StorePortfolioWebsite
+class StoreCustomerWebsite
 {
     use AsAction;
     use WithAttributes;
 
 
-    /**
-     * @var true
-     */
     private bool $asAction = false;
 
 
-    public function handle(array $modelData): PortfolioWebsite
+    public function handle(Customer $customer,array $modelData): PortfolioWebsite
     {
-        $portfolioWebsite = PortfolioWebsite::create($modelData);
-        $portfolioWebsite->stats()->create();
-        CustomerHydratePortfolioWebsites::dispatch($portfolioWebsite->customer);
-        PortfolioWebsiteHydrateUniversalSearch::dispatch($portfolioWebsite);
+        $customerWebsite = $customer->customerWebsites()->create($modelData);
+        $customerWebsite->stats()->create();
+        CustomerHydratePortfolioWebsites::dispatch($customerWebsite->customer);
         OrganisationHydrateCustomerWebsites::dispatch();
+        PortfolioWebsiteHydrateUniversalSearch::dispatch($customerWebsite);
 
-        return $portfolioWebsite;
+        return $customerWebsite;
     }
 
     public function authorize(ActionRequest $request): bool
@@ -69,10 +66,10 @@ class StorePortfolioWebsite
         return $this->handle($request->validated());
     }
 
-    public function htmlResponse(PortfolioWebsite $portfolioWebsite): RedirectResponse
+    public function htmlResponse(PortfolioWebsite $customerWebsite): RedirectResponse
     {
         return Redirect::route('customer.portfolio.websites.show', [
-            $portfolioWebsite->slug
+            $customerWebsite->slug
         ]);
     }
 
@@ -110,9 +107,9 @@ class StorePortfolioWebsite
         );
         $validatedData = $this->validateAttributes();
 
-        $portfolioWebsite=$this->handle($validatedData);
+        $customerWebsite=$this->handle($validatedData);
 
-        $command->info("Done! website $portfolioWebsite->code created 🥳");
+        $command->info("Done! website $customerWebsite->code created 🥳");
         return 0;
     }
 }

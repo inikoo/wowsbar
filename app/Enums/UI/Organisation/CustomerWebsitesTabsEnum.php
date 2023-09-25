@@ -10,7 +10,7 @@ namespace App\Enums\UI\Organisation;
 use App\Enums\EnumHelperTrait;
 use App\Enums\HasTabs;
 
-enum PortfolioWebsitesTabsEnum: string
+enum CustomerWebsitesTabsEnum: string
 {
     use EnumHelperTrait;
     use HasTabs;
@@ -21,11 +21,11 @@ enum PortfolioWebsitesTabsEnum: string
     public function blueprint(): array
     {
         return match ($this) {
-            PortfolioWebsitesTabsEnum::WEBSITES => [
+            CustomerWebsitesTabsEnum::WEBSITES => [
                 'title' => __('websites'),
                 'icon'  => 'fas fa-info-circle',
             ],
-            PortfolioWebsitesTabsEnum::CHANGELOG => [
+            CustomerWebsitesTabsEnum::CHANGELOG => [
                 'title' => __('changelog'),
                 'icon'  => 'fal fa-clock',
                 'type'  => 'icon',

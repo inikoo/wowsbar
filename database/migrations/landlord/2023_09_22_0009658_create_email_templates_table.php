@@ -16,6 +16,8 @@ return new class () extends Migration {
             $table->smallIncrements('id');
             $table->string('title');
 
+            // $table->string('title');
+
             $table->json('data');
             $table->json('compiled');
 

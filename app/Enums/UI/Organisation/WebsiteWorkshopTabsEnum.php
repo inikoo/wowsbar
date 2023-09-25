@@ -15,10 +15,8 @@ enum WebsiteWorkshopTabsEnum: string
     use EnumHelperTrait;
     use HasTabs;
 
-    case LAYOUT         = 'layout';
-
+    case LAYOUT               = 'layout';
     case HEADER               = 'header';
-    case MENU                 = 'menu';
     case FOOTER               = 'footer';
 
 
@@ -34,10 +32,6 @@ enum WebsiteWorkshopTabsEnum: string
             WebsiteWorkshopTabsEnum::HEADER => [
                 'title' => __('header'),
                 'icon'  => 'fal fa-arrow-alt-to-top',
-            ],
-            WebsiteWorkshopTabsEnum::MENU => [
-                'title' => __('menu'),
-                'icon'  => 'fal fa-bars',
             ],
             WebsiteWorkshopTabsEnum::FOOTER => [
                 'title' => __('footer'),

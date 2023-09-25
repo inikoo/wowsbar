@@ -33,7 +33,7 @@ class ShowPortfolioWebsite extends InertiaAction
         $this->canEdit   = $request->user()->can('portfolio.edit');
         $this->canDelete = $request->user()->can('portfolio.edit');
 
-        return !$request->user()->can('portfolio.view');
+        return $request->user()->can('portfolio.view');
     }
 
     public function asController(PortfolioWebsite $portfolioWebsite, ActionRequest $request): PortfolioWebsite
@@ -112,8 +112,8 @@ class ShowPortfolioWebsite extends InertiaAction
         };
 
         return match ($routeName) {
-            'org.portfolio-websites.show',
-            'org.portfolio-websites.edit' =>
+            'org.customer-websites.show',
+            'org.customer-websites.edit' =>
             array_merge(
                 ShowPortfolio::make()->getBreadcrumbs(),
                 $headCrumb(
@@ -121,11 +121,11 @@ class ShowPortfolioWebsite extends InertiaAction
                     $routeParameters['portfolioWebsite'],
                     [
                         'index' => [
-                            'name'       => 'org.portfolio-websites.index',
+                            'name'       => 'org.customer-websites.index',
                             'parameters' => []
                         ],
                         'model' => [
-                            'name'       => 'org.portfolio-websites.show',
+                            'name'       => 'org.customer-websites.show',
                             'parameters' => [$routeParameters['portfolioWebsite']->slug]
                         ]
                     ],
@@ -158,7 +158,7 @@ class ShowPortfolioWebsite extends InertiaAction
         }
 
         return match ($routeName) {
-            'org.portfolio-websites.show' => [
+            'org.customer-websites.show' => [
                 'label' => $portfolioWebsite->name,
                 'route' => [
                     'name'       => $routeName,

@@ -18,15 +18,15 @@ const props = defineProps<{
     <div class="absolute inset-x-0 min-w-fit top-full text-sm text-gray-300">
         <div class="relative bg-gray-100 border border-gray-200 rounded">
             <div class="mx-auto min-w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-                <draggable :list="data.featured"  :disabled="tool.name !== 'grab'" :group="`menu${data.name}`" key="id" >
+                <draggable :list="data.items"  :disabled="tool.name !== 'grab'" :group="`menu${data.name}`" key="id" >
                     <template v-slot:item="{ element: child, index }">
-                        <div class="p-2 flex gap-3 items-center" :class="[tool.name !== 'grab' ? 'cursor-pointer' : 'cursor-grab']">
+                        <div class="p-2 flex gap-3 items-center w-52" :class="[tool.name !== 'grab' ? 'cursor-pointer' : 'cursor-grab']">
                             <IconPicker :key="child.id" :data="child" class="font-medium text-gray-500 p-2 hover:text-gray-700"/>
                             <HyperLink
                                 :formList="{
-                                name: 'name',
+                                label: 'label',
                                 link: 'link'
-                                }" :useDelete="true" :data="child" label="name" @OnDelete="()=>{data.featured.splice(index,1)}"
+                                }" :useDelete="true" :data="child" label="label" @OnDelete="()=>{data.featured.splice(index,1)}"
                                 cssClass="font-medium text-gray-500 p-2 hover:text-gray-700" />
                         </div>
                     </template>

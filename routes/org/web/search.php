@@ -1,8 +1,8 @@
 <?php
 /*
- * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Tue, 19 Sep 2023 12:02:06 Malaysia Time, Pantai Lembeng, Bali, Indonesia
- * Copyright (c) 2023, Raul A Perusquia Flores
+ * Author: Jonathan Lopez Sanchez <jonathan@ancientwisdom.biz>
+ * Created: Tue, 07 Mar 2023 11:12:51 Central European Standard Time, Malaga, Spain
+ * Copyright (c) 2023, Inikoo LTD
  */
 
 use App\Actions\Search\UniversalSearch\UI\IndexUniversalSearch;
