@@ -5,11 +5,10 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\HumanResources\WorkingPlace\UI;
+namespace App\Actions\HumanResources\Workplace\UI;
 
 use App\Actions\InertiaAction;
 use App\Actions\UI\Organisation\HumanResources\ShowHumanResourcesDashboard;
-use App\Enums\UI\Organisation\WorkingPlaceTabsEnum;
 use App\Http\Resources\HumanResources\WorkPlaceInertiaResource;
 use App\Http\Resources\HumanResources\WorkPlaceResource;
 use App\InertiaTable\InertiaTable;
@@ -23,7 +22,7 @@ use Lorisleiva\Actions\ActionRequest;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
-class IndexWorkingPlaces extends InertiaAction
+class IndexWorkplaces extends InertiaAction
 {
     /** @noinspection PhpUndefinedMethodInspection */
     public function handle($prefix=null): LengthAwarePaginator
@@ -82,7 +81,7 @@ class IndexWorkingPlaces extends InertiaAction
                             'tooltip' => __('new working place'),
                             'label'   => __('working place'),
                             'route'   => [
-                                'name'       => 'org.hr.working-places.create',
+                                'name'       => 'org.hr.workplaces.create',
                                 'parameters' => array_values($this->originalParameters)
                             ]
                         ] : null
@@ -97,10 +96,10 @@ class IndexWorkingPlaces extends InertiaAction
 
     public function authorize(ActionRequest $request): bool
     {
-        $this->canEdit = $request->user()->can('hr.working-places.edit');
+        $this->canEdit = $request->user()->can('hr.workplaces.edit');
 
         return
-            !(
+            (
                 $request->user()->tokenCan('root') or
                 $request->user()->hasPermissionTo('hr.view')
             );
@@ -117,7 +116,7 @@ class IndexWorkingPlaces extends InertiaAction
     {
 
         return Inertia::render(
-            'HumanResources/WorkingPlaces',
+            'HumanResources/Workplaces',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(),
                 'title'       => __('working places'),
@@ -129,16 +128,13 @@ class IndexWorkingPlaces extends InertiaAction
                             'style' => 'create',
                             'label' => __('working place'),
                             'route' => [
-                                'name'       => 'org.hr.working-places.create',
+                                'name'       => 'org.hr.workplaces.create',
                                 'parameters' => array_values($this->originalParameters)
                             ]
                         ] : false
                     ]
                 ],
-                'tabs' => [
-                    'current'    => $this->tab,
-                    'navigation' => WorkingPlaceTabsEnum::navigation(),
-                ],
+
                 'data'        => WorkPlaceInertiaResource::collection($workplace),
             ]
         )->table($this->tableStructure());
@@ -162,7 +158,7 @@ class IndexWorkingPlaces extends InertiaAction
                     'type'   => 'simple',
                     'simple' => [
                         'route' => [
-                            'name' => 'org.hr.working-places.index'
+                            'name' => 'org.hr.workplaces.index'
                         ],
                         'label' => __('working places'),
                         'icon'  => 'fal fa-bars',

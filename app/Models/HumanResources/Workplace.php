@@ -8,12 +8,15 @@
 namespace App\Models\HumanResources;
 
 use App\Actions\Utils\Abbreviate;
+use App\Enums\HumanResources\Workplace\WorkplaceTypeEnum;
 use App\Models\Assets\Timezone;
 use App\Models\Traits\HasAddress;
 use App\Models\Traits\HasUniversalSearch;
+use App\Models\WorkplaceStats;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Sluggable\HasSlug;
@@ -24,7 +27,7 @@ use Spatie\Sluggable\SlugOptions;
  *
  * @property int $id
  * @property bool $status
- * @property string $type
+ * @property WorkplaceTypeEnum $type
  * @property string $slug
  * @property string $name
  * @property int|null $timezone_id
@@ -43,6 +46,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read \App\Models\Assets\Country $country
  * @property-read string $formatted_address
  * @property-read Model|\Eloquent $owner
+ * @property-read WorkplaceStats|null $stats
  * @property-read Timezone|null $timezone
  * @property-read \App\Models\Search\UniversalSearch|null $universalSearch
  * @method static \Illuminate\Database\Eloquent\Builder|Workplace newModelQuery()
@@ -73,14 +77,15 @@ class Workplace extends Model
     use HasAddress;
 
     protected $casts = [
-        'data'        => 'array',
-        'location'    => 'array',
-        'status'      => 'boolean',
+        'data'     => 'array',
+        'location' => 'array',
+        'status'   => 'boolean',
+        'type'     => WorkplaceTypeEnum::class
     ];
 
     protected $attributes = [
-        'data'        => '{}',
-        'location'    => '{}',
+        'data'     => '{}',
+        'location' => '{}',
     ];
 
     protected $guarded = [];
@@ -119,6 +124,11 @@ class Workplace extends Model
     public function clockings(): HasMany
     {
         return $this->hasMany(Clocking::class);
+    }
+
+    public function stats(): HasOne
+    {
+        return $this->hasOne(WorkplaceStats::class);
     }
 
 }

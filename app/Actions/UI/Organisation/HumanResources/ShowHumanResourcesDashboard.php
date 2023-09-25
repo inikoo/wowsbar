@@ -51,8 +51,8 @@ class ShowHumanResourcesDashboard
                     ],
                     [
                         'name' => __('working places'),
-                        'stat' => $org->humanResourcesStats->number_working_places,
-                        'href' => ['name'=>'org.hr.working-places.index']
+                        'stat' => $org->humanResourcesStats->number_workplaces,
+                        'href' => ['name'=>'org.hr.workplaces.index']
                     ]
                 ]
 

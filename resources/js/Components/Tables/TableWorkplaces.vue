@@ -16,9 +16,9 @@ import {Workplace} from "@/types/workplace";
 
 function workplaceRoute(workplace: Workplace) {
     switch (route().current()) {
-        case 'hr.working-places.index':
+        case 'org.hr.workplaces.index':
             return route(
-                'hr.working-places.show',
+                'org.hr.workplaces.show',
                 [workplace.slug]);
 
     }

@@ -5,12 +5,12 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\HumanResources\WorkingPlace\UI;
+namespace App\Actions\HumanResources\Workplace\UI;
 
 use App\Models\HumanResources\Workplace;
 use Lorisleiva\Actions\Concerns\AsObject;
 
-class GetWorkingPlaceShowcase
+class GetWorkplaceShowcase
 {
     use AsObject;
 

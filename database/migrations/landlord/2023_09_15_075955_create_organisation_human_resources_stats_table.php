@@ -7,6 +7,7 @@
 
 use App\Enums\HumanResources\Employee\EmployeeStateEnum;
 use App\Enums\HumanResources\Employee\EmployeeTypeEnum;
+use App\Enums\HumanResources\Workplace\WorkplaceTypeEnum;
 use App\Enums\Miscellaneous\GenderEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -21,23 +22,27 @@ return new class () extends Migration {
             $table->foreign('organisation_id')->references('id')->on('organisations')->onUpdate('cascade')->onDelete('cascade');
 
             $table->unsignedSmallInteger('number_employees')->default(0);
-            foreach (EmployeeStateEnum::cases() as $employeeState) {
-                $table->unsignedSmallInteger('number_employees_state_'.$employeeState->snake())->default(0);
+            foreach (EmployeeStateEnum::cases() as $case) {
+                $table->unsignedSmallInteger('number_employees_state_'.$case->snake())->default(0);
             }
-            foreach (EmployeeTypeEnum::cases() as $employeeType) {
-                $table->unsignedSmallInteger('number_employees_type_'.$employeeType->snake())->default(0);
+            foreach (EmployeeTypeEnum::cases() as $case) {
+                $table->unsignedSmallInteger('number_employees_type_'.$case->snake())->default(0);
             }
 
-            foreach (GenderEnum::cases() as $gender) {
-                $table->unsignedSmallInteger('number_employees_gender_'.$gender->snake())->default(0);
+            foreach (GenderEnum::cases() as $case) {
+                $table->unsignedSmallInteger('number_employees_gender_'.$case->snake())->default(0);
             }
 
             $table->unsignedSmallInteger('number_job_positions')->default(0);
-            $table->unsignedSmallInteger('number_working_places')->default(0);
+            $table->unsignedSmallInteger('number_workplaces')->default(0);
+            foreach (WorkplaceTypeEnum::cases() as $case) {
+                $table->unsignedSmallInteger('number_workplaces_type'.$case->snake())->default(0);
+            }
 
+            $table->unsignedSmallInteger('number_clocking_machines')->default(0);
+            $table->unsignedSmallInteger('number_clockings')->default(0);
 
             $table->timestampsTz();
-
         });
     }
 

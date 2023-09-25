@@ -75,7 +75,7 @@ class IndexClockingMachines extends InertiaAction
                     [
                         'title'       => __('no clocking machines'),
                         'description' => $this->canEdit ? __('Get started by creating a new clocking machine.') : null,
-                        'count'       => customer()->stats->number_clocking_machines,
+                        'count'       => organisation()->stats->number_clocking_machines,
                         'action'      => $this->canEdit ? [
                             'type'    => 'button',
                             'style'   => 'create',
@@ -95,7 +95,7 @@ class IndexClockingMachines extends InertiaAction
 
     public function authorize(ActionRequest $request): bool
     {
-        $this->canEdit = $request->user()->can('hr.working-places.edit');
+        $this->canEdit = $request->user()->can('hr.workplaces.edit');
 
         return
             (
@@ -109,7 +109,7 @@ class IndexClockingMachines extends InertiaAction
     {
         $this->initialisation($request);
 
-        return $this->handle(customer());
+        return $this->handle(organisation());
     }
 
     public function inWorkplace(Workplace $workplace, ActionRequest $request): LengthAwarePaginator
@@ -139,12 +139,12 @@ class IndexClockingMachines extends InertiaAction
                 'pageHead'    => [
                     'title'  => __('clocking machines'),
                     'actions'=> [
-                        $this->canEdit && $request->route()->getName() == 'hr.working-places.show.clocking-machines.index' ? [
+                        $this->canEdit && $request->route()->getName() == 'org.hr.workplaces.show.clocking-machines.index' ? [
                             'type'  => 'button',
                             'style' => 'create',
                             'label' => __('clocking machine'),
                             'route' => [
-                                'name'       => 'hr.working-places.show.clocking-machines.create',
+                                'name'       => 'org.hr.workplaces.show.clocking-machines.create',
                                 'parameters' => array_values($this->originalParameters)
                             ],
                         ] : false
@@ -183,14 +183,14 @@ class IndexClockingMachines extends InertiaAction
                     ]
                 )
             ),
-            'hr.working-places.show.clocking-machines.index',
+            'org.hr.workplaces.show.clocking-machines.index',
             =>
             array_merge(
-                (new \App\Actions\HumanResources\WorkingPlace\UI\ShowWorkingPlace())->getBreadcrumbs(
+                (new \App\Actions\HumanResources\Workplace\UI\ShowWorkplace())->getBreadcrumbs(
                     $routeParameters['workplace']
                 ),
                 $headCrumb([
-                    'name'       => 'hr.working-places.show.clocking-machines.index',
+                    'name'       => 'org.hr.workplaces.show.clocking-machines.index',
                     'parameters' =>
                         [
                             $routeParameters['workplace']->slug

@@ -5,7 +5,7 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\HumanResources\WorkingPlace\UI;
+namespace App\Actions\HumanResources\Workplace\UI;
 
 use App\Actions\InertiaAction;
 use App\Models\HumanResources\Workplace;
@@ -13,7 +13,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
 
-class RemoveWorkingPlace extends InertiaAction
+class RemoveWorkplace extends InertiaAction
 {
     public function handle(Workplace $workplace): Workplace
     {
@@ -72,7 +72,7 @@ class RemoveWorkingPlace extends InertiaAction
                 ],
                 'data'      => $this->getAction(
                     route:[
-                        'name'       => 'models.working-place.delete',
+                        'name'       => 'models.workplace.delete',
                         'parameters' => $request->route()->originalParameters()
                     ]
                 )
@@ -83,6 +83,6 @@ class RemoveWorkingPlace extends InertiaAction
 
     public function getBreadcrumbs(Workplace $workplace): array
     {
-        return ShowWorkingPlace::make()->getBreadcrumbs($workplace, suffix: '('.__('deleting').')');
+        return ShowWorkplace::make()->getBreadcrumbs($workplace, suffix: '('.__('deleting').')');
     }
 }

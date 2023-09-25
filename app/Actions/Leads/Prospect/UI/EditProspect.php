@@ -136,7 +136,7 @@ class EditProspect extends InertiaAction
         }
 
         return match ($routeName) {
-            'org.crm.shop.customers.edit' => [
+            'org.crm.shop.prospects.edit' => [
                 'label'=> $prospect->name,
                 'route'=> [
                     'name'      => $routeName,
