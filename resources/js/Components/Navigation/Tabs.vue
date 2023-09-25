@@ -92,22 +92,24 @@ const tabIconClass = (current: string, type: string, align: string, extraClass: 
 
                 <!-- Right section -->
                 <nav class="flex flex-row-reverse mr-4" aria-label="Secondary Tabs">
-                    <template v-for="(tab, tabSlug, index) in navigation" :key="tabSlug">
-                        <div class="relative group">
-                            <button
-                                :id="tab.title"
-                                v-if="tab.align === 'right'"
-                                @click="[$emit('update:tab', tabSlug), changeTab(tabSlug)]"
-                                :class="['group inline-flex justify-center items-center py-2 px-2 font-medium text-sm']"
-                                :aria-current="tabSlug === currentTab ? 'page' : undefined">
-                                <FontAwesomeIcon :title="capitalize(tab.title)" v-if="tab.icon" :icon="tab.icon" class="h-5 w-5" aria-hidden="true"/>
-                                <span v-if="tab.type!=='icon'" class="capitalize">{{ trans(tab.title) }}</span>
-                            </button>
-                            <div class="absolute h-0.5 rounded-full bottom-0 left-[50%] translate-x-[-50%] mx-auto transition-all duration-200 ease-in-out"
-                                :class="[tabSlug === currentTab ? 'bg-orange-500 dark:bg-gray-300 w-full' : 'bg-gray-400 w-0 group-hover:w-3/6']"
-                            />
-                        </div>
-                    </template>
+                    <slot name="content">
+                        <template v-for="(tab, tabSlug, index) in navigation" :key="tabSlug">
+                                <div class="relative group">
+                                <button
+                                    :id="tab.title"
+                                    v-if="tab.align === 'right'"
+                                    @click="[$emit('update:tab', tabSlug), changeTab(tabSlug)]"
+                                    :class="['group inline-flex justify-center items-center py-2 px-2 font-medium text-sm']"
+                                    :aria-current="tabSlug === currentTab ? 'page' : undefined">
+                                    <FontAwesomeIcon :title="capitalize(tab.title)" v-if="tab.icon" :icon="tab.icon" class="h-5 w-5" aria-hidden="true"/>
+                                    <span v-if="tab.type!=='icon'" class="capitalize">{{ trans(tab.title) }}</span>
+                                </button>
+                                <div class="absolute h-0.5 rounded-full bottom-0 left-[50%] translate-x-[-50%] mx-auto transition-all duration-200 ease-in-out"
+                                    :class="[tabSlug === currentTab ? 'bg-orange-500 dark:bg-gray-300 w-full' : 'bg-gray-400 w-0 group-hover:w-3/6']"
+                                />
+                            </div>
+                        </template>
+                    </slot>
                 </nav>
             </div>
         </div>

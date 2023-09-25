@@ -9,6 +9,7 @@ import { i18nVue } from "laravel-vue-i18n"
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faPlus } from "@/../private/pro-regular-svg-icons";
 import Notifications from '@kyvg/vue3-notification'
+
 library.add(faPlus);
 
 import { createPinia } from "pinia";
