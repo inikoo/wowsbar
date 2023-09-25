@@ -8,9 +8,11 @@
 namespace App\Actions\Portfolio\PortfolioWebsite;
 
 use App\Actions\CRM\Customer\Hydrators\CustomerHydratePortfolioWebsites;
+use App\Actions\CustomerWebsites\CustomerWebsite\Hydrators\CustomerWebsiteHydrateUniversalSearch;
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateCustomerWebsites;
 use App\Actions\Portfolio\PortfolioWebsite\Hydrators\PortfolioWebsiteHydrateUniversalSearch;
 use App\Models\CRM\Customer;
+use App\Models\CustomerWebsites\CustomerWebsite;
 use App\Models\Portfolio\PortfolioWebsite;
 use App\Rules\CaseSensitive;
 use Exception;
@@ -40,6 +42,7 @@ class StorePortfolioWebsite
         $portfolioWebsite->stats()->create();
         CustomerHydratePortfolioWebsites::dispatch($portfolioWebsite->customer);
         PortfolioWebsiteHydrateUniversalSearch::dispatch($portfolioWebsite);
+        CustomerWebsiteHydrateUniversalSearch::dispatch(CustomerWebsite::find($portfolioWebsite->id));
         OrganisationHydrateCustomerWebsites::dispatch();
 
         return $portfolioWebsite;
@@ -66,6 +69,7 @@ class StorePortfolioWebsite
     public function asController(ActionRequest $request): PortfolioWebsite
     {
         $request->validate();
+
         return $this->handle($request->validated());
     }
 
@@ -97,6 +101,7 @@ class StorePortfolioWebsite
             $customer = Customer::where('slug', $command->argument('customer'))->firstOrFail();
         } catch (Exception) {
             $command->error('Customer not found');
+
             return 1;
         }
         Config::set('global.customer_id', $customer->id);
@@ -110,9 +115,10 @@ class StorePortfolioWebsite
         );
         $validatedData = $this->validateAttributes();
 
-        $portfolioWebsite=$this->handle($validatedData);
+        $portfolioWebsite = $this->handle($validatedData);
 
         $command->info("Done! website $portfolioWebsite->code created 🥳");
+
         return 0;
     }
 }

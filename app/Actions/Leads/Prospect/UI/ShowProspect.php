@@ -11,7 +11,7 @@ use App\Actions\InertiaAction;
 use App\Actions\Organisation\UI\CRM\ShowCRMDashboard;
 use App\Enums\UI\ProspectTabsEnum;
 use App\Http\Resources\CRM\ProspectResource;
-use App\Models\CRM\Prospect;
+use App\Models\Leads\Prospect;
 use App\Models\Market\Shop;
 use Inertia\Inertia;
 use Inertia\Response;

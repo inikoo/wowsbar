@@ -1,11 +1,11 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Tue, 11 Jul 2023 12:17:22 Malaysia Time, Kuala Lumpur, Malaysia
+ * Created: Mon, 25 Sep 2023 15:06:43 Malaysia Time, Kuala Lumpur, Malaysia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Http\Resources\Portfolio;
+namespace App\Http\Resources\UniversalSearch\Organisation;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -15,7 +15,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property string $code
  * @property string $domain
  */
-class PortfolioWebsiteSearchResultResource extends JsonResource
+class CustomerWebsiteSearchResultResource extends JsonResource
 {
     public function toArray($request): array
     {
@@ -24,7 +24,7 @@ class PortfolioWebsiteSearchResultResource extends JsonResource
             'name'   => $this->name,
             'domain' => $this->domain,
             'route'  => [
-                'name'       => 'customer.portfolio.websites.show',
+                'name'       => 'org.customer-websites.websites.show',
                 'parameters' => $this->slug
             ],
             'icon'   => ['fal', 'fa-globe']

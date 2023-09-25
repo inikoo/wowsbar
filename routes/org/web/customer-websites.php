@@ -24,7 +24,6 @@ use App\Actions\Portfolio\Snapshot\UI\ShowSnapshot;
 use App\Actions\UI\Organisation\CustomerWebsites\ShowCustomerWebsitesDashboard;
 use Illuminate\Support\Facades\Route;
 
-
 Route::get('/', ['uses'  => ShowCustomerWebsitesDashboard::class, 'icon'  => 'user-hard-hat', 'label' => 'human resources'])->name('dashboard');
 
 Route::get('/', ['uses'  => IndexCustomerWebsites::class, 'icon'  => 'globe', 'label' => 'websites'])->name('index');

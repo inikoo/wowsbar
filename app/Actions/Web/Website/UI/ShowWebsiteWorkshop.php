@@ -77,20 +77,20 @@ class ShowWebsiteWorkshop extends InertiaAction
                 ],
                 'structure'         => $website->compiled_structure,
                 'imagesUploadRoute' => [
-                    'name'      => 'org.models.website.images.store',
+                    'name'       => 'org.models.website.images.store',
                     'parameters' => $website->id
                 ],
                 'updateRoutes' => [
-                    'header'=>[
-                        'name'      => 'org.models.website.header.update',
+                    'header'=> [
+                        'name'       => 'org.models.website.header.update',
                         'parameters' => $website->id
                     ],
-                    'footer'=>[
-                        'name'      => 'org.models.website.footer.update',
+                    'footer'=> [
+                        'name'       => 'org.models.website.footer.update',
                         'parameters' => $website->id
                     ],
-                    'layout'=>[
-                        'name'      => 'org.models.website.layout.update',
+                    'layout'=> [
+                        'name'       => 'org.models.website.layout.update',
                         'parameters' => $website->id
                     ],
                 ],

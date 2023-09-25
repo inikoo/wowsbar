@@ -20,9 +20,10 @@ class GuestHydrateUniversalSearch
         $guest->universalSearch()->updateOrCreate(
             [],
             [
-                'section'     => 'sysadmin',
-                'title'       => trim($guest->slug.' '.$guest->contact_name),
-                'description' => $guest->contact_name.' '.$guest->email.' '.$guest->phone.' '.$guest->company_name
+                'in_organisation' => true,
+                'section'         => 'sysadmin',
+                'title'           => trim($guest->slug.' '.$guest->contact_name),
+                'description'     => $guest->contact_name.' '.$guest->email.' '.$guest->phone.' '.$guest->company_name
             ]
         );
     }

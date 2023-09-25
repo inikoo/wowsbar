@@ -20,8 +20,9 @@ class InvoiceHydrateUniversalSearch
         $invoice->universalSearch()->updateOrCreate(
             [],
             [
-                'section'        => 'accounting',
-                'title'          => $invoice->number,
+                'in_organisation' => true,
+                'section'         => 'accounting',
+                'title'           => $invoice->number,
             ]
         );
     }

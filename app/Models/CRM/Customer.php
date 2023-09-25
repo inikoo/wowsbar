@@ -13,6 +13,7 @@ use App\Enums\CRM\Customer\CustomerTradeStateEnum;
 use App\Models\Assets\Currency;
 use App\Models\Auth\User;
 use App\Models\CustomerWebsites\CustomerWebsite;
+use App\Models\Leads\Prospect;
 use App\Models\Market\Shop;
 use App\Models\Media\Media;
 use App\Models\Portfolio\Banner;

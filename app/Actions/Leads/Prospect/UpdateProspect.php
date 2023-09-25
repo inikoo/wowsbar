@@ -10,7 +10,7 @@ namespace App\Actions\Leads\Prospect;
 use App\Actions\Leads\Prospect\Hydrators\ProspectHydrateUniversalSearch;
 use App\Actions\Traits\WithActionUpdate;
 use App\Http\Resources\CRM\ProspectResource;
-use App\Models\CRM\Prospect;
+use App\Models\Leads\Prospect;
 use Lorisleiva\Actions\ActionRequest;
 
 class UpdateProspect

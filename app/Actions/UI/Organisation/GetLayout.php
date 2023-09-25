@@ -178,8 +178,8 @@ class GetLayout
         }
 
         if ($user->can('crm.view')) {
-            $navigation['portfolio-websites'] = [
-                'scope'   => 'portfolio-websites',
+            $navigation['customer-websites'] = [
+                'scope'   => 'customer-websites',
                 'icon'    => ['fal', 'fa-briefcase'],
                 'label'   => __('Customer Websites'),
                 'route'   => [

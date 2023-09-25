@@ -1,11 +1,11 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Tue, 11 Jul 2023 12:31:59 Malaysia Time, Kuala Lumpur, Malaysia
+ * Created: Mon, 25 Sep 2023 15:27:03 Malaysia Time, Kuala Lumpur, Malysia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Http\Resources\Auth;
+namespace App\Http\Resources\UniversalSearch\Customers;
 
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -26,7 +26,7 @@ class UserSearchResultResource extends JsonResource
             'email'              => $user->email,
             'contact_name'       => $user->contact_name,
             'route'              => [
-                'name'       => 'sysadmin.users.index',
+                'name'       => 'customer.sysadmin.users.index',
                 'parameters' => $user->username
             ],
             'icon'   => ['fal', 'fa-terminal']

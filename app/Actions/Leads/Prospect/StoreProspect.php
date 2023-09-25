@@ -11,7 +11,7 @@ use App\Actions\Leads\Prospect\Hydrators\ProspectHydrateUniversalSearch;
 use App\Actions\Market\Shop\Hydrators\ShopHydrateProspects;
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateProspects;
 use App\Models\CRM\Customer;
-use App\Models\CRM\Prospect;
+use App\Models\Leads\Prospect;
 use App\Models\Market\Shop;
 use App\Models\Portfolio\PortfolioWebsite;
 use Lorisleiva\Actions\ActionRequest;
@@ -37,7 +37,7 @@ class StoreProspect
             data_set($modelData, 'shop_id', $scope->id);
         }
 
-        /** @var \App\Models\CRM\Prospect $prospect */
+        /** @var \App\Models\Leads\Prospect $prospect */
         $prospect = $scope->scopedProspects()->create($modelData);
 
 

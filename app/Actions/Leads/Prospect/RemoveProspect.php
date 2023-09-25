@@ -8,7 +8,7 @@
 namespace App\Actions\Leads\Prospect;
 
 use App\Actions\InertiaAction;
-use App\Models\CRM\Prospect;
+use App\Models\Leads\Prospect;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;

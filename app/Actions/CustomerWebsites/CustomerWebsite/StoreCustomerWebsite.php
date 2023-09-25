@@ -31,7 +31,7 @@ class StoreCustomerWebsite
     private bool $asAction = false;
 
 
-    public function handle(Customer $customer,array $modelData): PortfolioWebsite
+    public function handle(Customer $customer, array $modelData): PortfolioWebsite
     {
         $customerWebsite = $customer->customerWebsites()->create($modelData);
         $customerWebsite->stats()->create();

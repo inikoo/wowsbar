@@ -20,9 +20,10 @@ class EmployeeHydrateUniversalSearch
         $employee->universalSearch()->updateOrCreate(
             [],
             [
-                'section'     => 'hr',
-                'title'       => trim($employee->slug.' '.$employee->worker_number.' '.$employee->contact_name),
-                'description' => $employee->work_email.' '.$employee->job_title
+                'in_organisation' => true,
+                'section'         => 'hr',
+                'title'           => trim($employee->slug.' '.$employee->worker_number.' '.$employee->contact_name),
+                'description'     => $employee->work_email.' '.$employee->job_title
             ]
         );
     }

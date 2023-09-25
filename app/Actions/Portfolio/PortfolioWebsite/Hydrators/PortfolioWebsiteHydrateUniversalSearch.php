@@ -18,12 +18,13 @@ class PortfolioWebsiteHydrateUniversalSearch
     {
         $portfolioWebsite->universalSearch()->create(
             [
-                'shop_id'     => $portfolioWebsite->customer->shop_id,
-                'website_id'  => $portfolioWebsite->customer->website_id,
-                'customer_id' => $portfolioWebsite->customer_id,
-                'section'     => 'portfolio',
-                'title'       => trim($portfolioWebsite->code.' '.$portfolioWebsite->name),
-                'description' => $portfolioWebsite->domain
+                'in_organisation' => false,
+                'shop_id'         => $portfolioWebsite->customer->shop_id,
+                'website_id'      => $portfolioWebsite->customer->website_id,
+                'customer_id'     => $portfolioWebsite->customer_id,
+                'section'         => 'portfolio',
+                'title'           => trim($portfolioWebsite->code.' '.$portfolioWebsite->name),
+                'description'     => $portfolioWebsite->domain
             ]
         );
     }

@@ -23,8 +23,6 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-
-
         if ($this->app->runningInConsole()) {
             Actions::registerCommands();
         }
@@ -32,6 +30,7 @@ class AppServiceProvider extends ServiceProvider
             [
                 'Organisation'     => 'App\Models\Organisation\Organisation',
                 'User'             => 'App\Models\Auth\User',
+                'CustomerWebsite'  => 'App\Models\CustomerWebsites\CustomerWebsite',
                 'PortfolioWebsite' => 'App\Models\Portfolio\PortfolioWebsite',
                 'Banner'           => 'App\Models\Portfolio\Banner',
                 'OrganisationUser' => 'App\Models\Auth\OrganisationUser',
@@ -39,6 +38,8 @@ class AppServiceProvider extends ServiceProvider
                 'Shop'             => 'App\Models\Market\Shop',
                 'Website'          => 'App\Models\Web\Website',
                 'Customer'         => 'App\Models\CRM\Customer',
+                'Prospect'         => 'App\Models\Leads\Prospect',
+                'Workplace'        => 'App\Models\HumanResources\Workplace'
 
             ]
         );

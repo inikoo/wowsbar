@@ -1,15 +1,16 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Sun, 17 Sep 2023 22:10:06 Malaysia Time, Pantai Lembeng, Bali, Indonesia
+ * Created: Mon, 25 Sep 2023 14:23:04 Malaysia Time, Kuala Lumpur, Malaysia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Models\CRM;
+namespace App\Models\Leads;
 
 use App\Actions\Utils\Abbreviate;
 use App\Actions\Utils\ReadableRandomStringGenerator;
 use App\Enums\CRM\Prospect\ProspectStateEnum;
+use App\Models\CRM\Customer;
 use App\Models\Market\Shop;
 use App\Models\Search\UniversalSearch;
 use App\Models\Traits\HasUniversalSearch;
@@ -24,7 +25,7 @@ use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
 /**
- * App\Models\CRM\Prospect
+ * App\Models\Leads\Prospect
  *
  * @property int $id
  * @property string $slug
@@ -47,10 +48,9 @@ use Spatie\Sluggable\SlugOptions;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property Carbon|null $deleted_at
- * @property-read \App\Models\CRM\Customer|null $customer
+ * @property-read Customer|null $customer
  * @property-read Shop|null $shop
  * @property-read UniversalSearch|null $universalSearch
- * @method static \Database\Factories\CRM\ProspectFactory factory($count = null, $state = [])
  * @method static Builder|Prospect newModelQuery()
  * @method static Builder|Prospect newQuery()
  * @method static Builder|Prospect onlyTrashed()

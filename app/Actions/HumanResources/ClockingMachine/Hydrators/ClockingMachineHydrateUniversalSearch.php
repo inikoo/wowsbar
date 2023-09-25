@@ -19,9 +19,10 @@ class ClockingMachineHydrateUniversalSearch
         $clockingMachine->universalSearch()->updateOrCreate(
             [],
             [
-                'section'     => 'hr',
-                'title'       => $clockingMachine->code,
-                'description' => $clockingMachine->workplace->name
+                'in_organisation' => true,
+                'section'         => 'hr',
+                'title'           => $clockingMachine->code,
+                'description'     => $clockingMachine->workplace->name
             ]
         );
     }

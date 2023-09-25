@@ -58,9 +58,9 @@ class IndexCustomerWebsites extends InertiaAction
         $queryBuilder = QueryBuilder::for(CustomerWebsite::class);
 
         return $queryBuilder
-            ->select('customers.name as customer_name','portfolio_websites.slug','portfolio_websites.name','domain')
+            ->select('customers.name as customer_name', 'portfolio_websites.slug', 'portfolio_websites.name', 'domain')
             ->defaultSort('portfolio_websites.code')
-            ->leftJoin('customers','customer_id','customers.id')
+            ->leftJoin('customers', 'customer_id', 'customers.id')
             ->allowedSorts(['slug', 'code', 'name','number_banners','domain'])
             ->allowedFilters([$globalSearch])
             ->withPaginator($prefix)

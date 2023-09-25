@@ -1,11 +1,11 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Thu, 13 Jul 2023 20:01:56 Malaysia Time, Kuala Lumpur, Malaysia
+ * Created: Mon, 25 Sep 2023 15:26:15 Malaysia Time, Kuala Lumpur, Malysia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Http\Resources\Portfolio;
+namespace App\Http\Resources\UniversalSearch\Customers;
 
 use App\Models\Portfolio\Banner;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -15,7 +15,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property string $name
  * @property string $code
  */
-class ContentBlockSearchResultResource extends JsonResource
+class BannerSearchResultResource extends JsonResource
 {
     public function toArray($request): array
     {

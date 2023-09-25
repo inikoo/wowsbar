@@ -20,8 +20,9 @@ class PaymentHydrateUniversalSearch
         $payment->universalSearch()->updateOrCreate(
             [],
             [
-                'section' => 'accounting',
-                'title'   => $payment->reference,
+                'in_organisation' => true,
+                'section'         => 'accounting',
+                'title'           => $payment->reference,
             ]
         );
     }

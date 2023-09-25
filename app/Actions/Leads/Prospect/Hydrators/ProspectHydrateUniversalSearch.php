@@ -7,7 +7,7 @@
 
 namespace App\Actions\Leads\Prospect\Hydrators;
 
-use App\Models\CRM\Prospect;
+use App\Models\Leads\Prospect;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class ProspectHydrateUniversalSearch
@@ -19,9 +19,10 @@ class ProspectHydrateUniversalSearch
         $prospect->universalSearch()->updateOrCreate(
             [],
             [
-                'section'     => 'crm',
-                'title'       => trim($prospect->name.' '.$prospect->contact_name),
-                'description' => trim($prospect->email.' '.$prospect->company_name)
+                'in_organisation' => true,
+                'section'         => 'crm',
+                'title'           => trim($prospect->name.' '.$prospect->contact_name),
+                'description'     => trim($prospect->email.' '.$prospect->company_name)
             ]
         );
     }

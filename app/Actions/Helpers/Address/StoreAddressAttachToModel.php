@@ -8,9 +8,9 @@
 namespace App\Actions\Helpers\Address;
 
 use App\Models\CRM\Customer;
-use App\Models\CRM\Prospect;
 use App\Models\Helpers\Address;
 use App\Models\HumanResources\Workplace;
+use App\Models\Leads\Prospect;
 use App\Models\Market\Shop;
 use Lorisleiva\Actions\Concerns\AsAction;
 

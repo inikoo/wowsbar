@@ -8,7 +8,7 @@
 namespace App\Actions\Leads\Prospect\UI;
 
 use App\Actions\InertiaAction;
-use App\Models\CRM\Prospect;
+use App\Models\Leads\Prospect;
 use App\Models\Market\Shop;
 use Inertia\Inertia;
 use Inertia\Response;

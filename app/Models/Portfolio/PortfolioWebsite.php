@@ -8,7 +8,7 @@
 namespace App\Models\Portfolio;
 
 use App\Concerns\BelongsToCustomer;
-use App\Models\CRM\Prospect;
+use App\Models\Leads\Prospect;
 use App\Models\Traits\HasHistory;
 use App\Models\Traits\HasUniversalSearch;
 use Illuminate\Database\Eloquent\Builder;

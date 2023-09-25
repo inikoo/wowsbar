@@ -16,6 +16,9 @@ return [
         'mappings' => [
             'universal_search' => [
                 'properties' => [
+                    'in_organisation'     => [
+                        'type' => 'boolean',
+                    ],
                     'shop_id'     => [
                         'type' => 'keyword',
                     ],

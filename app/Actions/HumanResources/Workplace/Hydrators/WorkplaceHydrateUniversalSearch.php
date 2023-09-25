@@ -19,8 +19,9 @@ class WorkplaceHydrateUniversalSearch
         $workplace->universalSearch()->updateOrCreate(
             [],
             [
-                'section' => 'hr',
-                'title'   => $workplace->name,
+                'in_organisation' => true,
+                'section'         => 'hr',
+                'title'           => $workplace->name,
             ]
         );
     }

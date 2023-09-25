@@ -19,9 +19,10 @@ class ProductHydrateUniversalSearch
         $product->universalSearch()->updateOrCreate(
             [],
             [
-                'section'     => 'shops',
-                'title'       => $product->name,
-                'description' => $product->code
+                'in_organisation' => true,
+                'section'         => 'shops',
+                'title'           => $product->name,
+                'description'     => $product->code
             ]
         );
     }

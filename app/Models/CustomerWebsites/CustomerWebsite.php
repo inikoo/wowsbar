@@ -1,13 +1,14 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Mon, 25 Sep 2023 12:26:15 Malaysia Time, Kuala Lumpur, Malysia
+ * Created: Mon, 25 Sep 2023 12:26:15 Malaysia Time, Kuala Lumpur, Malaysia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
 namespace App\Models\CustomerWebsites;
 
-use App\Models\CRM\Prospect;
+use App\Models\CRM\Customer;
+use App\Models\Leads\Prospect;
 use App\Models\Portfolio\Banner;
 use App\Models\Portfolio\BannerPortfolioWebsite;
 use App\Models\Portfolio\PortfolioWebsiteStats;
@@ -16,6 +17,7 @@ use App\Models\Traits\HasUniversalSearch;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
@@ -23,7 +25,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
-
 
 /**
  * App\Models\CustomerWebsites\CustomerWebsite
@@ -40,10 +41,11 @@ use Spatie\Sluggable\SlugOptions;
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \OwenIt\Auditing\Models\Audit> $audits
  * @property-read int|null $audits_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Portfolio\Banner> $banners
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Banner> $banners
  * @property-read int|null $banners_count
+ * @property-read Customer $customer
  * @property-read array $es_audits
- * @property-read \App\Models\Portfolio\PortfolioWebsiteStats|null $stats
+ * @property-read PortfolioWebsiteStats|null $stats
  * @property-read \App\Models\Search\UniversalSearch|null $universalSearch
  * @method static Builder|CustomerWebsite dProspects()
  * @method static Builder|CustomerWebsite newModelQuery()
@@ -112,6 +114,11 @@ class CustomerWebsite extends Model implements Auditable
     public function scopedProspects(): MorphMany
     {
         return $this->morphMany(Prospect::class, 'scope');
+    }
+
+    public function customer(): BelongsTo
+    {
+        return $this->belongsTo(Customer::class);
     }
 
 }

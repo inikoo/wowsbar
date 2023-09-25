@@ -1,15 +1,12 @@
 <?php
 /*
- *  Author: Jonathan lopez <raul@inikoo.com>
- *  Created: Sat, 22 Oct 2022 18:53:15 British Summer Time, Sheffield, UK
- *  Copyright (c) 2022, inikoo
+ * Author: Raul Perusquia <raul@inikoo.com>
+ * Created: Mon, 25 Sep 2023 15:25:58 Malaysia Time, Kuala Lumpur, Malysia
+ * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Http\Resources\UniversalSearch;
+namespace App\Http\Resources\UniversalSearch\Customers;
 
-use App\Http\Resources\Auth\UserSearchResultResource;
-use App\Http\Resources\Portfolio\ContentBlockSearchResultResource;
-use App\Http\Resources\Portfolio\PortfolioWebsiteSearchResultResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
@@ -24,7 +21,7 @@ class UniversalSearchResource extends JsonResource
             'model'      => $this->when(true, function () {
                 return match (class_basename($this->resource->model)) {
                     'PortfolioWebsite'      => new PortfolioWebsiteSearchResultResource($this->resource->model),
-                    'Banner'                => new ContentBlockSearchResultResource($this->resource->model),
+                    'Banner'                => new BannerSearchResultResource($this->resource->model),
                     'User'                  => new UserSearchResultResource($this->resource->model),
                     default                 => [],
                 };

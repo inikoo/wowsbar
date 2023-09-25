@@ -17,6 +17,7 @@ use Laravel\Scout\Searchable;
  * App\Models\Search\UniversalSearch
  *
  * @property int $id
+ * @property bool $in_organisation
  * @property int|null $shop_id
  * @property int|null $website_id
  * @property int|null $customer_id
@@ -35,6 +36,7 @@ use Laravel\Scout\Searchable;
  * @method static Builder|UniversalSearch whereCustomerId($value)
  * @method static Builder|UniversalSearch whereDescription($value)
  * @method static Builder|UniversalSearch whereId($value)
+ * @method static Builder|UniversalSearch whereInOrganisation($value)
  * @method static Builder|UniversalSearch whereModelId($value)
  * @method static Builder|UniversalSearch whereModelType($value)
  * @method static Builder|UniversalSearch whereSection($value)

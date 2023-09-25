@@ -9,11 +9,8 @@ namespace App\Actions\Organisation\UI\CRM\EmailTemplate;
 
 use App\Actions\InertiaAction;
 use App\Actions\Organisation\UI\CRM\ShowCRMDashboard;
-use App\Actions\UI\Organisation\SysAdmin\ShowSysAdminDashboard;
-use App\Enums\Organisation\Guest\GuestTypeEnum;
 use App\Http\Resources\SysAdmin\GuestResource;
 use App\InertiaTable\InertiaTable;
-use App\Models\Auth\Guest;
 use App\Models\CRM\EmailTemplate;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;

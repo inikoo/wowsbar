@@ -9,7 +9,7 @@ namespace App\Actions\Organisation\Organisation\Hydrators;
 
 use App\Actions\Traits\WithEnumStats;
 use App\Enums\CRM\Prospect\ProspectStateEnum;
-use App\Models\CRM\Prospect;
+use App\Models\Leads\Prospect;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class OrganisationHydrateProspects

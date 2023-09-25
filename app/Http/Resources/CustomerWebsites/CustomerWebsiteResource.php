@@ -9,7 +9,6 @@ namespace App\Http\Resources\CustomerWebsites;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-
 /**
  * @property string $customer_name
  */

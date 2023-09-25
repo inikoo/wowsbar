@@ -13,10 +13,11 @@ return new class () extends Migration {
     public function up(): void
     {
         Schema::create('universal_searches', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedInteger('shop_id')->nullable()->index();
+            $table->increments('id');
+            $table->boolean('in_organisation')->default(true);
+            $table->unsignedSmallInteger('shop_id')->nullable()->index();
             $table->foreign('shop_id')->references('id')->on('shops');
-            $table->unsignedInteger('website_id')->nullable()->index();
+            $table->unsignedSmallInteger('website_id')->nullable()->index();
             $table->foreign('website_id')->references('id')->on('websites');
             $table->unsignedInteger('customer_id')->nullable()->index();
             $table->foreign('customer_id')->references('id')->on('customers');

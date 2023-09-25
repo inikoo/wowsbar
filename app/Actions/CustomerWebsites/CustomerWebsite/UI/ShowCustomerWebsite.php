@@ -7,7 +7,6 @@
 
 namespace App\Actions\CustomerWebsites\CustomerWebsite\UI;
 
-
 use App\Actions\Helpers\History\IndexHistories;
 use App\Actions\InertiaAction;
 use App\Actions\UI\WithInertia;
