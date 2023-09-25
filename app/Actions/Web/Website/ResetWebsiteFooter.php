@@ -145,14 +145,10 @@ class ResetWebsiteFooter
         return [
             [
                 'id'   => Str::ulid(),
-                'type' => 'facebook',
+                'label' => 'facebook',
+                'icon' => 'fab fa-facebook',
                 'href' => '#'
             ],
-            [
-                'id'   => Str::ulid(),
-                'type' => 'instagram',
-                'href' => '#'
-            ]
         ];
     }
 

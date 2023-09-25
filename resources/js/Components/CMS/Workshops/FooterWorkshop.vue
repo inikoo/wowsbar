@@ -83,7 +83,7 @@ const tool = ref({ name: 'edit', icon: ['fas', 'fa-hand-pointer'] })
 
 
 
-const data = reactive({ ...props.data.footer })
+const data = reactive(props.data.footer)
 
 
 // async function setToFirebase() {
@@ -290,20 +290,20 @@ const changeImage = async (file) => {
 
             <hr class="mt-5">
             <!-- social Media -->
-            <!-- <div class="mt-2">
+            <div class="mt-2">
                 <div class="flex items-center justify-between">
                     <h2 class="text-xs font-medium text-gray-900">{{ `Social media` }}</h2>
                 </div>
                 <RadioGroup class="mt-2" style="max-height: 200px;">
                     <div class="flex gap-2 flex-wrap">
-                        <RadioGroupOption as="template" v-for="option in data.social" :key="option.value" :value="option"
+                        <RadioGroupOption as="template" v-for="(option,index) in data.social" :key="option.value" :value="option"
                             v-slot="{ active, checked }">
                             <div :class="{
                                 'flex cursor-pointer items-center justify-center rounded-md border py-1 px-2 text-sm font-sm uppercase w-fit': true
                             }">
                                 <RadioGroupLabel as="span">
                                     <SocialMediaPicker :modelValue="option.icon" cssClass="font-sm" :data="option"
-                                        :save="saveSocialmedia" />
+                                        :save="saveSocialmedia" @OnDelete="data.social.splice(index,1)" />
                                 </RadioGroupLabel>
                             </div>
                         </RadioGroupOption>
@@ -319,7 +319,7 @@ const changeImage = async (file) => {
                     </div>
                 </RadioGroup>
 
-            </div> -->
+            </div>
 
         </div>
 
@@ -333,5 +333,4 @@ const changeImage = async (file) => {
             </div>
         </div>
     </div>
-    <div @click="() => console.log(data)">checkdata</div>
 </template>

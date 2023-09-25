@@ -2,10 +2,13 @@
 
 namespace App\Imports;
 
-use App\Actions\Portfolio\PortfolioWebsite\ImportPortfolioWebsites;
+use App\Actions\Helpers\Uploads\ImportExcelUploads;
+use App\Actions\Portfolio\PortfolioWebsite\StorePortfolioWebsite;
 use App\Actions\Portfolio\Uploads\UpdatePortfolioWebsiteUploads;
+use App\Models\CRM\Customer;
 use App\Models\Media\ExcelUpload;
 use App\Models\Media\ExcelUploadRecord;
+use App\Models\Portfolio\PortfolioWebsite;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\SkipsFailures;
 use Maatwebsite\Excel\Concerns\SkipsOnFailure;
@@ -18,9 +21,11 @@ class WebsiteImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wit
     use SkipsFailures;
 
     public ExcelUpload $websiteUpload;
-    public function __construct(ExcelUpload $websiteUpload)
+    public Customer $customer;
+    public function __construct(ExcelUpload $websiteUpload, Customer $customer)
     {
         $this->websiteUpload = $websiteUpload;
+        $this->customer = $customer;
     }
 
     /**
@@ -35,16 +40,17 @@ class WebsiteImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wit
         foreach ($collection as $website) {
             try {
                 $website = ExcelUploadRecord::create([
-                    'tenant_id'         => app('currentTenant')->id,
                     'excel_upload_id'   => $this->websiteUpload->id,
                     'data'              => json_encode([
                         'code'   => $website['code'],
                         'name'   => $website['name'],
-                        'domain' => $website['domain']
+                        'domain' => $website['domain'],
+                        'customer_id' => $this->customer->id
                     ])
                 ]);
 
-                ImportPortfolioWebsites::dispatch(app('currentTenant'), $website, count($collection), $totalImported++);
+                StorePortfolioWebsite::run(json_decode($website->data, true));
+                ImportExcelUploads::dispatch($website, count($collection), $totalImported++, PortfolioWebsite::class);
             } catch (\Exception $e) {
                 $totalImported--;
             }

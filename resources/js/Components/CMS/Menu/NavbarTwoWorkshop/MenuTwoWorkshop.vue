@@ -4,11 +4,9 @@ import { ref } from "vue";
 import draggable from "vuedraggable";
 import HyperLink from "@/Components/CMS/Fields/Hyperlink.vue";
 import SubMenu from "../SubMenu.vue";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faUser, faHeart, faShoppingCart, faSignOut } from '../../../../../private/pro-solid-svg-icons';
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { get } from "lodash";
-import Popover from "@/Components/Utils/Popover.vue";
 import IconPicker from "@/Components/CMS/Fields/IconPicker/IconPicker.vue";
 library.add(faUser, faHeart, faShoppingCart, faSignOut)
 
