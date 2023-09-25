@@ -43,6 +43,12 @@ const handleSearchInput = () => {
 }
 
 const loadingState = ref(false)
+const routeLink = (query) => route('customer.search.index', {
+    _query: {
+        q: query,
+    },
+});
+
 
 const resultsSearch = ref()
 const paramsToString = computed(() => {
@@ -53,7 +59,7 @@ const fetchApi = async (query: string) => {
     if (query !== '') {
         resultsSearch.value = null
         loadingState.value = true
-        await fetch(`search?q=${query}&route_src=${route().current()}${paramsToString.value}`)
+        await fetch(routeLink(query))
             .then(response => {
                 response.json().then((data: Object) => {
                     resultsSearch.value = data
@@ -67,6 +73,8 @@ const fetchApi = async (query: string) => {
         // comboValue.value = 'Select Users'
     }
 }
+
+
 
 function handleKeyDown() {
     clearTimeout(timeoutId)
