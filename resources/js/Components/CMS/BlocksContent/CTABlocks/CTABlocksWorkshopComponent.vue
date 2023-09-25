@@ -19,7 +19,7 @@ const dataCTA = reactive({
     subtitle: '<p style="text-align: center"><span style="font-size: 24px; color: rgb(74, 74, 74)">Elevate your career with a leading company. Uncover your full potential and embark on a rewarding journey with us.</span></p>',
     button: {
         background: 'rgba(55, 65, 81, 1)',
-        label: 'Join now!',
+        label: '<p><span style="color: #c0c0c0">Join now!</span></p>',
         full: false,
         link: 'https://google.com'
     },
@@ -38,5 +38,3 @@ const component = computed(()=>{
         <component :is="component" :dataCTA="dataCTA" class="shadow-md"/>
     </div>
 </template>
-
-<style scoped></style>

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Text from '@/Components/CMS/Workshops/WorkshopComponents/Text.vue'
+import ButtonWorkshop from '@/Components/CMS/Workshops/WorkshopComponents/ButtonWorkshop.vue'
 
 const props = defineProps<{
     dataCTA: any
@@ -32,10 +33,7 @@ const props = defineProps<{
                 <Text v-model="dataCTA.subtitle" :key="dataCTA.subtitle" :placeholder="'Enter your headline description'"
                     :class="`leading-7`" />
                 <div class="mt-8">
-                    <a href="#"
-                        class="inline-flex rounded-md bg-gray-700 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-gray-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
-                        Visit the help center
-                    </a>
+                    <ButtonWorkshop :dataButton="dataCTA.button"/>
                 </div>
         </div>
     </div>

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Text from '@/Components/CMS/Workshops/WorkshopComponents/Text.vue'
+import ButtonWorkshop from '@/Components/CMS/Workshops/WorkshopComponents/ButtonWorkshop.vue'
 
 const props = defineProps<{
     dataCTA: any
@@ -16,7 +17,7 @@ const props = defineProps<{
                     <div class="mx-auto max-w-md px-6 sm:max-w-3xl lg:max-w-none lg:p-0">
                         <div class="aspect-h-6 aspect-w-10 sm:aspect-h-1 sm:aspect-w-2 lg:aspect-w-1 bg-blue-300 rounded-3xl overflow-hidden">
                             <img class=" object-cover object-center shadow-2xl mix-blend-multiply grayscale"
-                                src="https://images.unsplash.com/photo-1557804506-669a67965ba0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&h=800&q=80"
+                                src="https://images.unsplash.com/photo-1525130413817-d45c1d127c42?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1920&q=60"
                                 alt="" />
                         </div>
                     </div>
@@ -51,10 +52,7 @@ const props = defineProps<{
                         <Text v-model="dataCTA.title" :key="dataCTA.title" :placeholder="'Enter your headline title'" />
                         <Text v-model="dataCTA.subtitle" :key="dataCTA.subtitle"
                             :placeholder="'Enter your headline description'" />
-                        <a class="block w-full rounded-md border border-transparent bg-white px-5 py-3 text-center text-base font-medium text-indigo-700 shadow-md hover:bg-gray-50 sm:inline-block sm:w-auto"
-                            href="#">
-                            <Text v-model="dataCTA.button" :key="dataCTA.subtitle" :placeholder="'Enter button name'" />
-                        </a>
+                        <ButtonWorkshop :dataButton="dataCTA.button"/>
                     </div>
                 </div>
             </div>
