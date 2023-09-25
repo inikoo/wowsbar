@@ -29,8 +29,18 @@
     "supervisor.website",
     "supervisor.sysadmin",
     "supervisor.hr",
+    "supervisor.products",
     "accounting",
     "accounting.view",
     "accounting.edit",
-    "accounting.create"
+    "accounting.create",
+    "products",
+    "products.view",
+    "products.edit",
+    "products.seo.view",
+    "products.seo.edit",
+    "products.social.view",
+    "products.social.edit",
+    "products.google-ads.view",
+    "products.google-ads.edit"
 ]

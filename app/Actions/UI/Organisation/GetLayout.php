@@ -192,6 +192,51 @@ class GetLayout
             ];
         }
 
+        if ($user->can('products.seo')) {
+            $navigation['seo'] = [
+                'label'   => __('SEO'),
+                'icon'    => ['fab', 'fa-google'],
+                'route'   => [
+                    'name' => 'org.products.seo.dashboard'
+                ],
+                'topMenu' => [
+                    'subSections' => [
+
+                    ]
+                ]
+            ];
+        }
+
+        if ($user->can('products.google-ads')) {
+            $navigation['google-ads'] = [
+                'label'   => __('Ads'),
+                'icon'    => ['fal', 'fa-ad'],
+                'route'   => [
+                    'name' => 'org.products.google-ads.dashboard'
+                ],
+                'topMenu' => [
+                    'subSections' => [
+
+                    ]
+                ]
+            ];
+        }
+
+        if ($user->can('products.social')) {
+            $navigation['social'] = [
+                'label'   => __('Social'),
+                'icon'    => ['fal', 'fa-thumbs-up'],
+                'route'   => [
+                    'name' => 'org.products.social.dashboard'
+                ],
+                'topMenu' => [
+                    'subSections' => [
+
+                    ]
+                ]
+            ];
+        }
+
 
         if ($user->can('accounting.view')) {
             $navigation['accounting'] = [
