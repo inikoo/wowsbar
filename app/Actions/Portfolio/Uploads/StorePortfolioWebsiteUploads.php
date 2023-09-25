@@ -7,7 +7,8 @@
 
 namespace App\Actions\Portfolio\Uploads;
 
-use App\Models\Tenancy\Tenant;
+use App\Models\CRM\Customer;
+use App\Models\Media\ExcelUpload;
 use Illuminate\Database\Eloquent\Model;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
@@ -22,9 +23,9 @@ class StorePortfolioWebsiteUploads
      */
     private bool $asAction = false;
 
-    public function handle(Tenant $tenant, array $modelData): Model
+    public function handle(array $modelData): Model
     {
-        return $tenant->portfolioWebsiteUploads()->create([
+        return ExcelUpload::create([
             'original_filename' => $modelData['original_filename'],
             'filename'          => $modelData['filename'],
             'uploaded_at'       => now()

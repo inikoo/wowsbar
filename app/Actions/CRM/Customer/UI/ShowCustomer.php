@@ -7,6 +7,7 @@
 
 namespace App\Actions\CRM\Customer\UI;
 
+use App\Actions\CustomerWebsites\CustomerWebsite\UI\IndexCustomerWebsites;
 use App\Actions\InertiaAction;
 use App\Actions\Organisation\UI\CRM\ShowCRMDashboard;
 use App\Enums\UI\Customer\CustomerTabsEnum;
@@ -109,8 +110,41 @@ class ShowCustomer extends InertiaAction
                     fn () => GetCustomerShowcase::run($customer)
                     : Inertia::lazy(fn () => GetCustomerShowcase::run($customer)),
 
+                CustomerTabsEnum::PORTFOLIO->value => $this->tab == CustomerTabsEnum::PORTFOLIO->value ?
+                    fn () => IndexCustomerWebsites::run($customer)
+                    : Inertia::lazy(fn () => IndexCustomerWebsites::run($customer)),
+
             ]
-        );
+        )->table(IndexCustomerWebsites::make()->tableStructure(
+            modelOperations: [
+                'createLink' => [
+                    [
+                        'route' => [
+                            'name'       => 'org.models.customers.websites.upload',
+                            'parameters' => array_values($this->originalParameters)
+                        ],
+                        'icon'  => 'fal fa-upload',
+                        'label' => 'upload',
+                        'style' => 'secondary'
+                    ],
+                    [
+                        'route' => [
+                            'name'       => 'org.shops.show.products.create',
+                            'parameters' => array_values($this->originalParameters)
+                        ],
+                        'label' => __('create'),
+                        'style' => 'primary'
+                    ],
+                ]
+            ],
+            exportLinks: [
+                'export' => [
+                    'route' => [
+                        'name' => 'export.websites.index'
+                    ]
+                ]
+            ]
+        ));
     }
 
     public function jsonResponse(Customer $customer): CustomerResource

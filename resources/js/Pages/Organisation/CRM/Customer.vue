@@ -46,9 +46,7 @@ const props = defineProps<{
         navigation: object;
     }
     showcase?:object
-    orders?: object
-    products?: object
-    dispatched_emails?: object
+    portfolio?: object
 }>()
 let currentTab = ref(props.tabs.current);
 const handleTabUpdate = (tabSlug) => useTabChange(tabSlug, currentTab);
@@ -57,11 +55,9 @@ const component = computed(() => {
 
     const components = {
         showcase: CustomerShowcase,
-        // products: TableProducts,
-        // orders: TableOrders,
         details: ModelDetails,
         history: ModelChangelog,
-        // dispatched_emails: TableDispatchedEmails,
+        portfolio: TablePortfolioWebsites
     };
     return components[currentTab.value];
 
@@ -74,6 +70,7 @@ import {
     TransitionChild,
     TransitionRoot,
 } from "@headlessui/vue";
+import TablePortfolioWebsites from "@/Components/Tables/TablePortfolioWebsites.vue";
 
 
 const isOpen = ref(false);
