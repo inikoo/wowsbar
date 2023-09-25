@@ -5,12 +5,12 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\HumanResources\WorkingPlace\Hydrators;
+namespace App\Actions\HumanResources\Workplace\Hydrators;
 
 use App\Models\HumanResources\Workplace;
 use Lorisleiva\Actions\Concerns\AsAction;
 
-class WorkingPlaceHydrateUniversalSearch
+class WorkplaceHydrateUniversalSearch
 {
     use AsAction;
 

@@ -139,7 +139,7 @@ class IndexPortfolioWebsites extends InertiaAction
                             'parameters' => array_values(['$shop->slug'])
                         ],
                         'icon'  => 'fal fa-upload',
-                        'label' => __('upload'),
+                        'label' => __(''),
                         'style' => 'secondary'
                     ],
                     [

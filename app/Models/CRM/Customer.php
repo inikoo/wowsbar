@@ -64,6 +64,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property Carbon|null $deleted_at
+ * @property-read Collection<int, \App\Models\CRM\Appointment> $appointment
+ * @property-read int|null $appointment_count
  * @property-read Collection<int, Banner> $banners
  * @property-read int|null $banners_count
  * @property-read Currency $currency
@@ -77,7 +79,6 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read Collection<int, Snapshot> $snapshots
  * @property-read int|null $snapshots_count
  * @property-read \App\Models\CRM\CustomerStats|null $stats
- * @property-read \App\Models\CRM\Appointment|null $appointment
  * @property-read UniversalSearch|null $universalSearch
  * @property-read Collection<int, User> $users
  * @property-read int|null $users_count

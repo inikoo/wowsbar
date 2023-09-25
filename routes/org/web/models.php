@@ -18,6 +18,9 @@ use App\Actions\HumanResources\Employee\DeleteEmployee;
 use App\Actions\HumanResources\Employee\StoreEmployee;
 use App\Actions\HumanResources\Employee\UpdateEmployee;
 use App\Actions\HumanResources\Employee\UploadEmployee;
+use App\Actions\HumanResources\Workplace\DeleteWorkplace;
+use App\Actions\HumanResources\Workplace\StoreWorkplace;
+use App\Actions\HumanResources\Workplace\UpdateWorkplace;
 use App\Actions\Leads\Prospect\RemoveProspect;
 use App\Actions\Leads\Prospect\UploadShopProspects;
 use App\Actions\Market\Product\StoreProduct;
@@ -31,6 +34,9 @@ use App\Actions\Web\Webpage\StoreArticle;
 use App\Actions\Web\Webpage\StoreWebpage;
 use App\Actions\Web\Website\StoreWebsite;
 use App\Actions\Web\Website\UpdateWebsite;
+use App\Actions\Web\Website\UpdateWebsiteFooter;
+use App\Actions\Web\Website\UpdateWebsiteHeader;
+use App\Actions\Web\Website\UpdateWebsiteLayout;
 use App\Actions\Web\Website\UpdateWebsiteState;
 use App\Actions\Web\Website\UploadImagesToWebsite;
 
@@ -62,6 +68,10 @@ Route::prefix('website')->as('website.')->group(function () {
     Route::patch('{website:id}', UpdateWebsite::class)->name('update');
     Route::patch('{website:id}/state', UpdateWebsiteState::class)->name('state.update');
     Route::post('{website:id}/images', UploadImagesToWebsite::class)->name('images.store');
+    Route::patch('{website:id}/header', UpdateWebsiteHeader::class)->name('header.update');
+    Route::patch('{website:id}/footer', UpdateWebsiteFooter::class)->name('footer.update');
+    Route::patch('{website:id}/layout', UpdateWebsiteLayout::class)->name('layout.update');
+
 });
 
 Route::prefix('webpage')->as('webpage.')->group(function () {
@@ -75,5 +85,9 @@ Route::prefix('appointment')->as('appointment.')->group(function () {
     Route::post('/', StoreAppointment::class)->name('store');
     Route::patch('/assign/{organisationUser}', AssignAppointmentUser::class)->name('assign');
 });
+
+Route::patch('/workplace/{workplace}', UpdateWorkplace::class)->name('workplace.update');
+Route::post('/workplace/', StoreWorkplace::class)->name('workplace.store');
+Route::delete('/workplace/{workplace}', DeleteWorkplace::class)->name('workplace.delete');
 
 Route::patch('/customer/{customer}', UpdateCustomer::class)->name('customer.update');

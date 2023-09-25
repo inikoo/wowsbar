@@ -16,7 +16,7 @@ import ColorMode from '@/Components/Forms/Fields/ColorMode.vue'
 import Avatar from '@/Components/Forms/Fields/Avatar.vue'
 import Password from '@/Components/Forms/Fields/Password.vue'
 import Textarea from '@/Components/Forms/Fields/Textarea.vue'
-import Toggle from '@/Components/Forms/Fields/Toggle.vue'
+import FieldToggle from '@/Components/Forms/Fields/FieldToggle.vue'
 import Select from '@/Components/Forms/Fields/Select.vue'
 import Radio from '@/Components/Forms/Fields/Radio.vue'
 import TextEditor from '@/Components/Forms/Fields/TextEditor.vue'
@@ -69,7 +69,7 @@ const components = {
     'password': Password,
     'avatar': Avatar,
     'textarea': Textarea,
-    'toggle': Toggle,
+    'toggle': FieldToggle,
     'radio': Radio,
     'textEditor': TextEditor,
     'address': Address,

@@ -105,16 +105,16 @@ class RemoveClocking extends InertiaAction
                             'name'       => 'models.clocking.delete',
                             'parameters' => $request->route()->originalParameters()
                         ],
-                        'hr.working-places.show.clockings.remove' => [
-                            'name'       => 'models.working-place.clocking.delete',
+                        'org.hr.workplaces.show.clockings.remove' => [
+                            'name'       => 'models.workplace.clocking.delete',
                             'parameters' => $request->route()->originalParameters()
                         ],
                         'hr.clocking-machines.show.clockings.remove' => [
                             'name'       => 'models.clocking-machine.clocking.delete',
                             'parameters' => $request->route()->originalParameters()
                         ],
-                        'hr.working-places.show.clocking-machines.show.clockings.remove' => [
-                            'name'       => 'models.working-place.clocking-machine.clocking.delete',
+                        'org.hr.workplaces.show.clocking-machines.show.clockings.remove' => [
+                            'name'       => 'models.workplace.clocking-machine.clocking.delete',
                             'parameters' => $request->route()->originalParameters()
                         ]
                     }

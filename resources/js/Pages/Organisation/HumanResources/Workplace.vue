@@ -7,31 +7,14 @@
 <script setup lang="ts">
 import { Head } from '@inertiajs/vue3';
 import {library} from '@fortawesome/fontawesome-svg-core';
-import { faEnvelope, faIdCard, faPhone, faSignature, faUser, faBuilding, faBirthdayCake, faVenusMars, faHashtag, faHeading, faHospitalUser, faClock, faPaperclip, faTimes, faCameraRetro} from "@/../private/pro-light-svg-icons";
-import {faCheckCircle} from '@/../private/pro-solid-svg-icons';
+import { faChessClock } from "@/../private/pro-light-svg-icons";
 import { capitalize } from "@/Composables/capitalize"
 import TableHistories from "@/Components/Tables/TableHistories.vue";
 
 import PageHeading from '@/Components/Headings/PageHeading.vue';
 
 library.add(
-    faIdCard,
-    faUser,
-    faCheckCircle,
-    faSignature,
-    faEnvelope,
-    faPhone,
-    faIdCard,
-    faBirthdayCake,
-    faVenusMars,
-    faHashtag,
-    faHeading,
-    faHospitalUser,
-    faClock,
-    faPaperclip,
-    faTimes,
-    faCameraRetro,
-    faBuilding
+   faChessClock
 )
 import { computed, defineAsyncComponent, ref } from "vue";
 import { useTabChange } from "@/Composables/tab-change";

@@ -79,7 +79,7 @@ class ShowClockingMachine extends InertiaAction
                             'type'  => 'button',
                             'style' => 'delete',
                             'route' => [
-                                'name'       => 'hr.working-places.show.clocking-machines.remove',
+                                'name'       => 'org.hr.workplaces.show.clocking-machines.remove',
                                 'parameters' => $request->route()->originalParameters()
                             ]
 
@@ -91,8 +91,8 @@ class ShowClockingMachine extends InertiaAction
                             'number'   => 0/*$clockingMachine->stats->number_clockings*/,
                             'href'     =>
                                 match ($request->route()->getName()) {
-                                    'hr.working-places.show.clocking-machines.show' => [
-                                        'hr.working-places.show.clocking-machines.show.clockings.index',
+                                    'org.hr.workplaces.show.clocking-machines.show' => [
+                                        'org.hr.workplaces.show.clocking-machines.show.clockings.index',
                                         [$clockingMachine->workplace->slug, $clockingMachine->slug]
                                     ],
                                     default => [
@@ -180,18 +180,18 @@ class ShowClockingMachine extends InertiaAction
                     $suffix
                 )
             ),
-            'hr.working-places.show.clocking-machines.show' =>
+            'org.hr.workplaces.show.clocking-machines.show' =>
             array_merge(
-                (new \App\Actions\HumanResources\WorkingPlace\UI\ShowWorkingPlace())->getBreadcrumbs($routeParameters['workplace']),
+                (new \App\Actions\HumanResources\Workplace\UI\ShowWorkplace())->getBreadcrumbs($routeParameters['workplace']),
                 $headCrumb(
                     $routeParameters['clockingMachine'],
                     [
                         'index' => [
-                            'name'       => 'hr.working-places.show.clocking-machines.index',
+                            'name'       => 'org.hr.workplaces.show.clocking-machines.index',
                             'parameters' => [$routeParameters['workplace']->slug]
                         ],
                         'model' => [
-                            'name'       => 'hr.working-places.show.clocking-machines.show',
+                            'name'       => 'org.hr.workplaces.show.clocking-machines.show',
                             'parameters' => [
                                 $routeParameters['workplace']->slug,
                                 $routeParameters['clockingMachine']->slug
@@ -236,7 +236,7 @@ class ShowClockingMachine extends InertiaAction
 
                 ]
             ],
-            'hr.working-places.show.clocking-machines.show' => [
+            'org.hr.workplaces.show.clocking-machines.show' => [
                 'label' => $clockingMachine->code,
                 'route' => [
                     'name'       => $routeName,

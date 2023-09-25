@@ -48,6 +48,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property Carbon|null $updated_at
  * @property Carbon|null $deleted_at
  * @property-read \App\Models\CRM\Customer|null $customer
+ * @property-read Shop|null $shop
  * @property-read UniversalSearch|null $universalSearch
  * @method static \Database\Factories\CRM\ProspectFactory factory($count = null, $state = [])
  * @method static Builder|Prospect newModelQuery()

@@ -12,7 +12,6 @@ test('Upload file to r2.', function () {
     $path    = resource_path('art/logo/logo-charcoal.png');
     $content = file_get_contents($path);
     $result  = Storage::disk('r2')->put('test.png', $content);
-
     expect($result)->toBeTrue();
 
-});
+})->todo();

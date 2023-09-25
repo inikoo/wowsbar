@@ -78,7 +78,21 @@ class ShowWebsiteWorkshop extends InertiaAction
                 'structure'         => $website->compiled_structure,
                 'imagesUploadRoute' => [
                     'name'      => 'org.models.website.images.store',
-                    'arguments' => $website->id
+                    'parameters' => $website->id
+                ],
+                'updateRoutes' => [
+                    'header'=>[
+                        'name'      => 'org.models.website.header.update',
+                        'parameters' => $website->id
+                    ],
+                    'footer'=>[
+                        'name'      => 'org.models.website.footer.update',
+                        'parameters' => $website->id
+                    ],
+                    'layout'=>[
+                        'name'      => 'org.models.website.layout.update',
+                        'parameters' => $website->id
+                    ],
                 ],
 
                 WebsiteWorkshopTabsEnum::LAYOUT->value => $this->tab == WebsiteWorkshopTabsEnum::LAYOUT->value

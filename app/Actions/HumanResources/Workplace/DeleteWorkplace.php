@@ -5,7 +5,7 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\HumanResources\WorkingPlace;
+namespace App\Actions\HumanResources\Workplace;
 
 use App\Models\HumanResources\Workplace;
 use Illuminate\Http\RedirectResponse;
@@ -14,7 +14,7 @@ use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsController;
 use Lorisleiva\Actions\Concerns\WithAttributes;
 
-class DeleteWorkingPlace
+class DeleteWorkplace
 {
     use AsController;
     use WithAttributes;
@@ -40,7 +40,7 @@ class DeleteWorkingPlace
 
     public function htmlResponse(): RedirectResponse
     {
-        return Redirect::route('hr.working-places.index');
+        return Redirect::route('org.hr.workplaces.index');
     }
 
 }

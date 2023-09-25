@@ -5,17 +5,18 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\HumanResources\WorkingPlace;
+namespace App\Actions\HumanResources\Workplace;
 
 use App\Actions\Helpers\Address\StoreAddressAttachToModel;
-use App\Actions\HumanResources\WorkingPlace\Hydrators\WorkingPlaceHydrateUniversalSearch;
+use App\Actions\HumanResources\Workplace\Hydrators\WorkplaceHydrateUniversalSearch;
+use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateWorkplaces;
 use App\Actions\Traits\WithActionUpdate;
 use App\Http\Resources\HumanResources\WorkPlaceResource;
 use App\Models\HumanResources\Workplace;
 use Illuminate\Support\Arr;
 use Lorisleiva\Actions\ActionRequest;
 
-class UpdateWorkingPlace
+class UpdateWorkplace
 {
     use WithActionUpdate;
 
@@ -29,8 +30,11 @@ class UpdateWorkingPlace
             $workplace->location = $workplace->getLocation();
             $workplace->save();
         }
+        if ($workplace->wasChanged('type')) {
+            OrganisationHydrateWorkplaces::run();
+        }
 
-        WorkingPlaceHydrateUniversalSearch::dispatch($workplace);
+        WorkplaceHydrateUniversalSearch::dispatch($workplace);
         return $workplace;
     }
 

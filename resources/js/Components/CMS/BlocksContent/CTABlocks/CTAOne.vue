@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import Text from '@/Components/CMS/Workshops/WorkshopComponents/Text.vue'
 import ButtonWorkshop from '@/Components/CMS/Workshops/WorkshopComponents/ButtonWorkshop.vue'
-import { useHelperLayout } from '@/Stores/helperLayout.js'
-import { ulid } from 'ulid'
+// import { useHelperLayout } from '@/Stores/helperLayout.js'
+// import { ulid } from 'ulid'
 
-const helperLayout = useHelperLayout()
+// const helperLayout = useHelperLayout()
 
 const props = defineProps<{
     dataCTA: any
@@ -22,7 +22,7 @@ const props = defineProps<{
             </div>
         </div>
         <div class="mt-10 flex items-center justify-center gap-x-6">
-            <ButtonWorkshop :dataButton="dataCTA"/>
+            <ButtonWorkshop :dataButton="dataCTA.button"/>
         </div>
         
         <!-- Background -->

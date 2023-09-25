@@ -5,7 +5,7 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\HumanResources\WorkingPlace\UI;
+namespace App\Actions\HumanResources\Workplace\UI;
 
 use App\Actions\Assets\Country\UI\GetAddressData;
 use App\Actions\InertiaAction;
@@ -19,7 +19,7 @@ use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
 use Spatie\LaravelOptions\Options;
 
-class EditWorkingPlace extends InertiaAction
+class EditWorkplace extends InertiaAction
 {
     public function handle(Workplace $workplace): Workplace
     {
@@ -91,7 +91,7 @@ class EditWorkingPlace extends InertiaAction
                                     'value'   => AddressFormFieldsResource::make(
                                         new Address(
                                             [
-                                                'country_id' => customer()->country_id,
+                                                'country_id' => organisation()->country_id,
 
                                             ]
                                         )
@@ -108,7 +108,7 @@ class EditWorkingPlace extends InertiaAction
                     ],
                     'args'      => [
                         'updateRoute' => [
-                            'name'       => 'models.working-place.update',
+                            'name'       => 'models.workplace.update',
                             'parameters' => $workplace->slug
 
                         ],
@@ -122,6 +122,6 @@ class EditWorkingPlace extends InertiaAction
 
     public function getBreadcrumbs(Workplace $workplace): array
     {
-        return ShowWorkingPlace::make()->getBreadcrumbs(workplace: $workplace, suffix: '('.__('editing').')');
+        return ShowWorkplace::make()->getBreadcrumbs(workplace: $workplace, suffix: '('.__('editing').')');
     }
 }

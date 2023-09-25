@@ -5,7 +5,7 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\HumanResources\WorkingPlace\UI;
+namespace App\Actions\HumanResources\Workplace\UI;
 
 use App\Actions\Assets\Country\UI\GetAddressData;
 use App\Actions\InertiaAction;
@@ -18,7 +18,7 @@ use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
 use Spatie\LaravelOptions\Options;
 
-class CreateWorkingPlace extends InertiaAction
+class CreateWorkplace extends InertiaAction
 {
     /**
      * @throws Exception
@@ -38,7 +38,7 @@ class CreateWorkingPlace extends InertiaAction
                             'style' => 'cancel',
                             'label' => __('cancel'),
                             'route' => [
-                                'name'       => 'hr.working-places.index',
+                                'name'       => 'org.hr.workplaces.index',
                                 'parameters' => array_values($this->originalParameters)
                             ],
                         ]
@@ -47,7 +47,7 @@ class CreateWorkingPlace extends InertiaAction
                 'formData' => [
                     'blueprint' => [
                         [
-                            'title'  => __('name'),
+                            'title'  => __('work place'),
                             'fields' => [
                                 'name' => [
                                     'type'          => 'input',
@@ -70,7 +70,7 @@ class CreateWorkingPlace extends InertiaAction
                                     'value'   => AddressFormFieldsResource::make(
                                         new Address(
                                             [
-                                                'country_id' => customer()->country_id,
+                                                'country_id' => organisation()->country_id,
 
                                             ]
                                         )
@@ -86,7 +86,7 @@ class CreateWorkingPlace extends InertiaAction
 
                     ],
                     'route'      => [
-                            'name'       => 'models.working-place.store',
+                            'name'       => 'org.models.workplace.store',
 
                     ]
 
@@ -118,7 +118,7 @@ class CreateWorkingPlace extends InertiaAction
     public function getBreadcrumbs(): array
     {
         return array_merge(
-            IndexWorkingPlaces::make()->getBreadcrumbs(),
+            IndexWorkplaces::make()->getBreadcrumbs(),
             [
                 [
                     'type'          => 'creatingModel',
