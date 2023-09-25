@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import Text from '@/Components/CMS/Workshops/WorkshopComponents/Text.vue'
 import ButtonWorkshop from '@/Components/CMS/Workshops/WorkshopComponents/ButtonWorkshop.vue'
+import ImageWorkshop from '@/Components/CMS/Workshops/WorkshopComponents/ImageWorkshop.vue'
 
 const props = defineProps<{
     dataCTA: any
 }>()
+
 </script>
 
 <template>
@@ -12,19 +14,19 @@ const props = defineProps<{
         <div class="absolute inset-x-0 top-0 hidden h-1/2 bg-gray-50 lg:block" aria-hidden="true" />
         <div class="mx-auto max-w-7xl bg-transparent lg:px-8">
             <div class="lg:grid lg:grid-cols-12">
-                <div class="relative z-10 lg:col-span-4 lg:col-start-1 lg:row-start-1 lg:bg-transparent lg:py-16">
+                <div class="relative z-10 lg:col-span-4 lg:col-start-1 lg:row-start-1 lg:bg-transparent lg:py-10">
                     <div class="absolute inset-x-0 h-1/2 bg-amber-500 lg:hidden" aria-hidden="true" />
                     <div class="mx-auto max-w-md px-6 sm:max-w-3xl lg:max-w-none lg:p-0">
-                        <div class="aspect-h-6 aspect-w-10 sm:aspect-h-1 sm:aspect-w-2 lg:aspect-w-1 bg-blue-300 rounded-3xl overflow-hidden">
-                            <img class=" object-cover object-center shadow-2xl mix-blend-multiply grayscale"
-                                src="https://images.unsplash.com/photo-1525130413817-d45c1d127c42?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1920&q=60"
+                        <div class="aspect-[4/6] relative flex justify-center items-center rounded-3xl overflow-hidden" :style="[`background: ${dataCTA.image.color}`]">
+                            <img class="absolute h-full w-full object-cover mix-blend-multiply grayscale"
+                                :src="dataCTA.image.link"
                                 alt="" />
+                            <ImageWorkshop :dataImage="dataCTA.image" class="" />
                         </div>
                     </div>
                 </div>
 
-                <div
-                    class="relative bg-gray-100 lg:col-span-10 lg:col-start-3 lg:row-start-1 lg:grid lg:grid-cols-10 lg:items-center lg:rounded-3xl">
+                <div class="relative bg-gray-100 lg:col-span-10 lg:col-start-3 lg:row-start-1 lg:grid lg:grid-cols-10 lg:items-center lg:rounded-3xl">
                     <div class="absolute inset-0 hidden overflow-hidden rounded-3xl lg:block" aria-hidden="true">
                         <svg class="absolute bottom-full left-full -translate-x-2/3 translate-y-1/3 transform xl:bottom-auto xl:top-0 xl:translate-y-0"
                             width="404" height="384" fill="none" viewBox="0 0 404 384" aria-hidden="true">

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Ref, ref } from 'vue'
-import axios from 'axios'
+// import axios from 'axios'
 import WebpageColorPicker from '@/Components/CMS/Workshops/WorkshopComponents/WebpageColorPicker.vue'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
