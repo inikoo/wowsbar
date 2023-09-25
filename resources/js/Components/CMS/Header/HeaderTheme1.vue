@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import HyperLink from "../Fields/Hyperlink.vue"
+import Image from "@/Components/Image.vue"
 
 const props = defineProps<{
     data: Object
@@ -7,11 +8,10 @@ const props = defineProps<{
 
 
 
+const emits = defineEmits();
+
 const changeLogo = async (element) => {
-    const file = element.target.files[0];
-    if (file) {
-        props.data.img = URL.createObjectURL(file);
-    }
+    emits('changeLogo',element)
 };
 
 </script>
@@ -23,7 +23,8 @@ const changeLogo = async (element) => {
                 <div class="flex lg:flex-1">
                     <label for="faviconUpload" class="flex justify-center items-center bg-white cursor-pointer">
                         <input type="file" id="faviconUpload" accept="image/*" style="display: none" @change="changeLogo" />
-                        <img class="h-8 w-auto" :src="data.img" alt="" />
+                        <!-- <img class="h-8 w-auto" :src="data.logo" alt="" /> -->
+                        <Image :src="data.logo" class="h-8 w-auto"/>
                     </label>
                 </div>
                 <div class="flex gap-3">

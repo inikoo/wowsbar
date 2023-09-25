@@ -1,8 +1,4 @@
-<template>
-    <div>
-        <component :is="component[theme]" :data="data"/>
-    </div>
-</template>
+
 
 <script setup lang="ts">
 import HeaderTheme1 from './HeaderTheme1.vue';
@@ -13,12 +9,23 @@ const props = defineProps<{
     data: Object
 }>()
 
+const emits = defineEmits();
 
 const component = {
    "simpleSticky": HeaderTheme1,
    "simple": HeaderTheme2,
 }
 
+const changeLogo=(file)=>{
+    emits('changeLogo',file)
+}
+
 </script>
+
+<template>
+    <div>
+        <component :is="component[theme]" :data="data" @changeLogo="changeLogo"/>
+    </div>
+</template>
 
 <style scoped></style>

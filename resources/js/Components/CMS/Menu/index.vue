@@ -18,10 +18,12 @@ const props = defineProps<{
   
 }>()
 
+console.log('asdd',props)
+
 
 const component = {
-    "1": Menu1,
-    "2": Menu2,
+    "simple": Menu1,
+    "simple 2": Menu2,
 }
 
 </script>
