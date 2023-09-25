@@ -10,6 +10,7 @@ use App\Actions\CRM\Customer\UI\EditCustomer;
 use App\Actions\CRM\Customer\UI\IndexCustomers;
 use App\Actions\CRM\Customer\UI\RemoveCustomer;
 use App\Actions\CRM\Customer\UI\ShowCustomer;
+use App\Actions\CRM\Customer\UploadCustomer;
 use App\Actions\CRM\User\UI\CreateUser;
 use App\Actions\CRM\User\UI\EditUser;
 use App\Actions\CRM\User\UI\IndexUsers;
@@ -20,6 +21,7 @@ use App\Actions\Leads\Prospect\UI\IndexProspects;
 use App\Actions\Leads\Prospect\UI\ShowProspect;
 use App\Actions\Organisation\UI\CRM\ShowCRMDashboard;
 use App\Actions\Organisation\UI\CRM\ShowMailroomDashboard;
+use App\Actions\Portfolio\PortfolioWebsite\UploadPortfolioWebsite;
 
 Route::get('/', [ShowCRMDashboard::class, 'inOrganisation'])->name('dashboard');
 
@@ -50,11 +52,14 @@ Route::prefix('shop/{shop}')->as('shop.')->group(function () {
     Route::prefix('customers/{customer}')->as('customers.')->group(function () {
         Route::get('', [ShowCustomer::class, 'inShop'])->name('show');
         Route::get('/edit', [EditCustomer::class, 'inShop'])->name('edit');
+
         Route::get('/web-users', [IndexUsers::class, 'inCustomerInShop'])->name('show.web-users.index');
         Route::get('/web-users/create', [CreateUser::class, 'inCustomerInShop'])->name('show.web-users.create');
         Route::get('/web-users/{user}', [ShowUser::class, 'inCustomerInShop'])->name('show.web-users.show');
         Route::get('/web-users/{user}/edit', [EditUser::class, 'inCustomerInShop'])->name('show.web-users.edit');
     });
+
+
 
     Route::prefix('prospects')->as('prospects.')->group(function () {
         Route::get('/', [IndexProspects::class, 'inShop'])->name('index');

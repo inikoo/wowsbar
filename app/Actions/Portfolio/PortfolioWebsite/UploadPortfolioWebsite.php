@@ -7,11 +7,12 @@
 
 namespace App\Actions\Portfolio\PortfolioWebsite;
 
-use App\Actions\Portfolio\Uploads\StorePortfolioWebsiteUploads;
+use App\Actions\Helpers\Uploads\ConvertUploadedFile;
+use App\Actions\Helpers\Uploads\StoreExcelUploads;
 use App\Imports\WebsiteImport;
-use App\Models\Portfolio\PortfolioWebsite;
+use App\Models\Auth\Guest;
 use Excel;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Console\Command;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
@@ -26,21 +27,11 @@ class UploadPortfolioWebsite
      */
     private bool $asAction = false;
 
-    public function handle(ActionRequest $request): void
+    public function handle($file): void
     {
-        $file     = $request->file('file');
-        $filename = $file->hashName();
+        $websiteUpload = StoreExcelUploads::run($file, Guest::class);
 
-        $path = 'tenants/' . customer()->slug . '/websites';
-        Storage::disk('local')->put($path, $file);
-
-        $websiteUpload = StorePortfolioWebsiteUploads::run(customer(), [
-            'type'              => class_basename(PortfolioWebsite::class),
-            'original_filename' => $file->getClientOriginalName(),
-            'filename'          => $filename
-        ]);
-
-        Excel::import(new WebsiteImport($websiteUpload), $path . '/' . $filename);
+        Excel::import(new WebsiteImport($websiteUpload), storage_path('app/' . $websiteUpload->getFullPath()));
     }
 
     /**
@@ -48,6 +39,15 @@ class UploadPortfolioWebsite
      */
     public function asController(ActionRequest $request): void
     {
-        $this->handle($request);
+        $file = $request->file('file');
+        $this->handle($file);
+    }
+
+    public function asCommand(Command $command): void
+    {
+        $filename = $command->argument('filename');
+        $file     = ConvertUploadedFile::run($filename);
+
+        $this->handle($file);
     }
 }
