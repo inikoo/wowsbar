@@ -34,6 +34,9 @@ use App\Actions\Web\Webpage\StoreArticle;
 use App\Actions\Web\Webpage\StoreWebpage;
 use App\Actions\Web\Website\StoreWebsite;
 use App\Actions\Web\Website\UpdateWebsite;
+use App\Actions\Web\Website\UpdateWebsiteFooter;
+use App\Actions\Web\Website\UpdateWebsiteHeader;
+use App\Actions\Web\Website\UpdateWebsiteLayout;
 use App\Actions\Web\Website\UpdateWebsiteState;
 use App\Actions\Web\Website\UploadImagesToWebsite;
 
@@ -65,6 +68,10 @@ Route::prefix('website')->as('website.')->group(function () {
     Route::patch('{website:id}', UpdateWebsite::class)->name('update');
     Route::patch('{website:id}/state', UpdateWebsiteState::class)->name('state.update');
     Route::post('{website:id}/images', UploadImagesToWebsite::class)->name('images.store');
+    Route::patch('{website:id}/header', UpdateWebsiteHeader::class)->name('header.update');
+    Route::patch('{website:id}/footer', UpdateWebsiteFooter::class)->name('footer.update');
+    Route::patch('{website:id}/layout', UpdateWebsiteLayout::class)->name('layout.update');
+
 });
 
 Route::prefix('webpage')->as('webpage.')->group(function () {
