@@ -32,7 +32,7 @@ const props = defineProps<{
 const headerData = ref({ ...props.data.header });
 const menuData = ref({ ...props.data.header.menu });
 const selected = ref("menu");
-const selectedMenu = ref(0);
+const selectedMenu = ref(null);
 const handtools = ref({ name: "edit", icon: ["fas", "fa-hand-pointer"] });
 
 const changeLogo = async (element) => {

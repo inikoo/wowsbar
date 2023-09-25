@@ -11,6 +11,7 @@ use App\Actions\Helpers\Uploads\ConvertUploadedFile;
 use App\Actions\Helpers\Uploads\StoreExcelUploads;
 use App\Imports\WebsiteImport;
 use App\Models\Auth\Guest;
+use App\Models\CRM\Customer;
 use Excel;
 use Illuminate\Console\Command;
 use Lorisleiva\Actions\ActionRequest;
@@ -27,20 +28,20 @@ class UploadPortfolioWebsite
      */
     private bool $asAction = false;
 
-    public function handle($file): void
+    public function handle(Customer $customer, $file): void
     {
         $websiteUpload = StoreExcelUploads::run($file, Guest::class);
 
-        Excel::import(new WebsiteImport($websiteUpload), storage_path('app/' . $websiteUpload->getFullPath()));
+        Excel::import(new WebsiteImport($websiteUpload, $customer), storage_path('app/' . $websiteUpload->getFullPath()));
     }
 
     /**
      * @throws \Throwable
      */
-    public function asController(ActionRequest $request): void
+    public function asController(Customer $customer, ActionRequest $request): void
     {
         $file = $request->file('file');
-        $this->handle($file);
+        $this->handle($customer, $file);
     }
 
     public function asCommand(Command $command): void
@@ -48,6 +49,6 @@ class UploadPortfolioWebsite
         $filename = $command->argument('filename');
         $file     = ConvertUploadedFile::run($filename);
 
-        $this->handle($file);
+        $this->handle(customer(), $file);
     }
 }

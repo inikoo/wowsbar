@@ -67,7 +67,7 @@ console.log("data", props.data);
                                         <span class="sr-only">{{
                                             child.label
                                         }}</span>
-                                        <SocialMediaPicker :data="child" />
+                                        <SocialMediaPicker :data="child"  @OnDelete="data.social.splice(index,1)"  />
                                     </div>
                                 </template>
                             </draggable>
