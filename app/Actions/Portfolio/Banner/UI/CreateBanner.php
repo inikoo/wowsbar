@@ -125,8 +125,8 @@ class CreateBanner extends InertiaAction
                                 'name' => 'models.banner.store',
                             ],
                             default => [
-                                'name'      => 'models.portfolio-website.banner.store',
-                                'arguments' => [
+                                'name'       => 'models.portfolio-website.banner.store',
+                                'parameters' => [
                                     'portfolioWebsite' => $parent->slug,
                                 ]
                             ],

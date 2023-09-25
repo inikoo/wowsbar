@@ -72,12 +72,12 @@ class CreateClocking extends InertiaAction
                     ],
                     'route' => match ($request->route()->getName()) {
                         'org.hr.workplaces.show.clockings.create' => [
-                            'name'      => 'models.workplace.clocking.store',
-                            'arguments' => [$request->route()->parameters['workplace']->slug]
+                            'name'       => 'models.workplace.clocking.store',
+                            'parameters' => [$request->route()->parameters['workplace']->slug]
                         ],
                         default => [
-                            'name'      => 'models.clocking-machine.clocking.store',
-                            'arguments' => [
+                            'name'       => 'models.clocking-machine.clocking.store',
+                            'parameters' => [
                                 $request->route()->parameters['clockingMachine']->slug
                             ]
                         ]

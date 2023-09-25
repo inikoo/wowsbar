@@ -104,8 +104,8 @@ class CreateArticle extends InertiaAction
 
                     ],
                     'route'     => [
-                        'name'      => 'org.models.article.store',
-                        'arguments' => [$blog->id]
+                        'name'       => 'org.models.article.store',
+                        'parameters' => [$blog->id]
                     ],
 
 

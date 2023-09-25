@@ -8,15 +8,14 @@
 namespace App\Actions\CustomerWebsites\CustomerWebsite;
 
 use App\Actions\CRM\Customer\Hydrators\CustomerHydratePortfolioWebsites;
+use App\Actions\CustomerWebsites\CustomerWebsite\Hydrators\CustomerWebsiteHydrateUniversalSearch;
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateCustomerWebsites;
-use App\Actions\Portfolio\PortfolioWebsite\Hydrators\PortfolioWebsiteHydrateUniversalSearch;
 use App\Models\CRM\Customer;
-use App\Models\Portfolio\PortfolioWebsite;
+use App\Models\CustomerWebsites\CustomerWebsite;
 use App\Rules\CaseSensitive;
 use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Redirect;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -31,13 +30,14 @@ class StoreCustomerWebsite
     private bool $asAction = false;
 
 
-    public function handle(Customer $customer, array $modelData): PortfolioWebsite
+    public function handle(Customer $customer, array $modelData): CustomerWebsite
     {
+        /** @var CustomerWebsite $customerWebsite */
         $customerWebsite = $customer->customerWebsites()->create($modelData);
         $customerWebsite->stats()->create();
         CustomerHydratePortfolioWebsites::dispatch($customerWebsite->customer);
         OrganisationHydrateCustomerWebsites::dispatch();
-        PortfolioWebsiteHydrateUniversalSearch::dispatch($customerWebsite);
+        CustomerWebsiteHydrateUniversalSearch::dispatch($customerWebsite);
 
         return $customerWebsite;
     }
@@ -48,7 +48,7 @@ class StoreCustomerWebsite
             return true;
         }
 
-        return $request->user()->can("portfolio.edit");
+        return $request->user()->can("crm.edit");
     }
 
     public function rules(): array
@@ -60,26 +60,28 @@ class StoreCustomerWebsite
         ];
     }
 
-    public function asController(ActionRequest $request): PortfolioWebsite
+    public function asController(Customer $customer, ActionRequest $request): CustomerWebsite
     {
         $request->validate();
-        return $this->handle($request->validated());
+        return $this->handle($customer, $request->validated());
     }
 
-    public function htmlResponse(PortfolioWebsite $customerWebsite): RedirectResponse
+    public function htmlResponse(CustomerWebsite $customerWebsite): RedirectResponse
     {
-        return Redirect::route('customer.portfolio.websites.show', [
+        return Redirect::route('org.crm.shop.customers.show.customer-websites.show', [
+            $customerWebsite->customer->shop->slug,
+            $customerWebsite->customer->slug,
             $customerWebsite->slug
         ]);
     }
 
-    public function action(array $objectData): PortfolioWebsite
+    public function action(Customer $customer, array $objectData): CustomerWebsite
     {
         $this->asAction = true;
         $this->setRawAttributes($objectData);
         $validatedData = $this->validateAttributes();
 
-        return $this->handle($validatedData);
+        return $this->handle($customer, $validatedData);
     }
 
     public function getCommandSignature(): string
@@ -96,7 +98,6 @@ class StoreCustomerWebsite
             $command->error('Customer not found');
             return 1;
         }
-        Config::set('global.customer_id', $customer->id);
 
         $this->setRawAttributes(
             [
@@ -107,7 +108,7 @@ class StoreCustomerWebsite
         );
         $validatedData = $this->validateAttributes();
 
-        $customerWebsite=$this->handle($validatedData);
+        $customerWebsite=$this->handle($customer, $validatedData);
 
         $command->info("Done! website $customerWebsite->code created 🥳");
         return 0;

@@ -18,7 +18,7 @@ const props = defineProps<{
         blueprint: object;
         route: {
             name: string,
-            arguments?: Array<string>
+            parameters?: Array<string>
         };
     }
 }>()
@@ -65,7 +65,7 @@ const form = useForm(fields);
 const handleFormSubmit = () => {
     form.post(route(
         props.formData.route.name,
-        props.formData.route.arguments
+        props.formData.route.parameters
     ));
 };
 
@@ -132,7 +132,7 @@ onMounted(() => {
                             {{ sectionData.title }}
                         </h3>
                         <p v-show="sectionData['subtitle']" class="max-w-2xl text-sm text-gray-500">
-                            {{ sectionData.subtitle }}
+                            {{ sectionData['subtitle'] }}
                         </p>
                     </div>
 

@@ -8,7 +8,6 @@
 namespace App\Models\CustomerWebsites;
 
 use App\Models\CRM\Customer;
-use App\Models\Leads\Prospect;
 use App\Models\Portfolio\Banner;
 use App\Models\Portfolio\BannerPortfolioWebsite;
 use App\Models\Portfolio\PortfolioWebsiteStats;
@@ -20,7 +19,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\Sluggable\HasSlug;
@@ -47,7 +45,6 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read array $es_audits
  * @property-read PortfolioWebsiteStats|null $stats
  * @property-read \App\Models\Search\UniversalSearch|null $universalSearch
- * @method static Builder|CustomerWebsite dProspects()
  * @method static Builder|CustomerWebsite newModelQuery()
  * @method static Builder|CustomerWebsite newQuery()
  * @method static Builder|CustomerWebsite onlyTrashed()
@@ -102,7 +99,7 @@ class CustomerWebsite extends Model implements Auditable
 
     public function stats(): HasOne
     {
-        return $this->hasOne(PortfolioWebsiteStats::class);
+        return $this->hasOne(PortfolioWebsiteStats::class, 'portfolio_website_id', 'id');
     }
 
     public function banners(): BelongsToMany
@@ -111,10 +108,6 @@ class CustomerWebsite extends Model implements Auditable
             ->withTimestamps();
     }
 
-    public function scopedProspects(): MorphMany
-    {
-        return $this->morphMany(Prospect::class, 'scope');
-    }
 
     public function customer(): BelongsTo
     {

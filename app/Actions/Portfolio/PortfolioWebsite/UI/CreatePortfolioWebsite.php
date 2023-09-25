@@ -7,13 +7,17 @@
 
 namespace App\Actions\Portfolio\PortfolioWebsite\UI;
 
+use App\Actions\CustomerWebsites\CustomerWebsite\UI\IndexCustomerWebsites;
 use App\Actions\InertiaAction;
+use App\Actions\Traits\Fields\WithPortfolioWebsiteFields;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
 
 class CreatePortfolioWebsite extends InertiaAction
 {
+    use WithPortfolioWebsiteFields;
+
     public function authorize(ActionRequest $request): bool
     {
         return $request->user()->can('customer.portfolio.edit');
@@ -54,48 +58,9 @@ class CreatePortfolioWebsite extends InertiaAction
 
                 ],
                 'formData'    => [
-                    'blueprint' => [
-                        [
-                            'title'  => __('domain'),
-                            'fields' => [
-
-                                'domain' => [
-                                    'type'      => 'inputWithAddOn',
-                                    'label'     => __('domain'),
-                                    'leftAddOn' => [
-                                        'label' => 'https://'
-                                    ],
-                                    'required'  => true,
-                                ],
-
-
-                            ]
-                        ],
-                        [
-                            'title'  => __('ID/name'),
-                            'fields' => [
-
-                                'code' => [
-                                    'type'      => 'input',
-                                    'label'     => __('code'),
-                                    'required'  => true,
-                                    'maxLength' => 8
-                                ],
-                                'name' => [
-                                    'type'      => 'input',
-                                    'label'     => __('name'),
-                                    'required'  => true,
-                                    'value'     => '',
-                                ],
-
-
-                            ]
-                        ],
-
-
-                    ],
+                    'blueprint' => $this->getPortfolioWebsiteFields(),
                     'route'     => [
-                        'name' => 'models.portfolio-website.store',
+                        'name' => 'customer.models.portfolio-website.store',
                     ],
 
 
@@ -109,7 +74,7 @@ class CreatePortfolioWebsite extends InertiaAction
     public function getBreadcrumbs(): array
     {
         return array_merge(
-            \App\Actions\CustomerWebsites\CustomerWebsite\UI\IndexCustomerWebsites::make()->getBreadcrumbs(
+            IndexCustomerWebsites::make()->getBreadcrumbs(
                 'customer.portfolio.websites.index',
                 []
             ),

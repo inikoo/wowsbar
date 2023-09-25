@@ -42,6 +42,7 @@ use Illuminate\Support\Carbon;
  * @property int $number_orders_state_packed
  * @property int $number_orders_state_finalised
  * @property int $number_orders_state_settled
+ * @property int $number_customer_websites
  * @property int $number_products
  * @property int $number_deliveries
  * @property int $number_deliveries_type_order
@@ -60,6 +61,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder|ShopStats query()
  * @method static Builder|ShopStats whereCreatedAt($value)
  * @method static Builder|ShopStats whereId($value)
+ * @method static Builder|ShopStats whereNumberCustomerWebsites($value)
  * @method static Builder|ShopStats whereNumberCustomers($value)
  * @method static Builder|ShopStats whereNumberCustomersStateActive($value)
  * @method static Builder|ShopStats whereNumberCustomersStateContacted($value)

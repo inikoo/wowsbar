@@ -102,9 +102,9 @@ class GetLayout
                 ];
             }
 
-            $subSections=[];
-            if($websitesCount==1) {
-                $subSections[]=[
+            $subSections = [];
+            if ($websitesCount == 1) {
+                $subSections[] = [
                     'label' => __('webpages'),
                     'icon'  => ['fal', 'fa-browser'],
                     'route' => [
@@ -115,7 +115,7 @@ class GetLayout
             }
 
             $navigation['websites'] = [
-                'label'   => $websitesCount==1 ? __('website') : __('websites'),
+                'label'   => $websitesCount == 1 ? __('website') : __('websites'),
                 'icon'    => ['fal', 'fa-globe'],
                 'route'   => $route,
                 'topMenu' => [
@@ -126,9 +126,9 @@ class GetLayout
 
         if ($user->can('crm.view') and $organisation->stats->number_shops > 0) {
             $navigation['crm'] = [
-                'label' => __('Customers'),
-                'icon'  => ['fal', 'fa-user'],
-                'route' =>
+                'label'   => __('Customers'),
+                'icon'    => ['fal', 'fa-user'],
+                'route'   =>
                     match ($shopsCount) {
                         1 => [
                             'name'       => 'org.crm.shop.dashboard',
@@ -173,19 +173,27 @@ class GetLayout
                             ],
                             default => []
                         }
-                    ]
+                ]
             ];
         }
 
-        if ($user->can('crm.view')) {
-            $navigation['customer-websites'] = [
-                'scope'   => 'customer-websites',
-                'icon'    => ['fal', 'fa-briefcase'],
-                'label'   => __('Customer Websites'),
-                'route'   => [
-                    'name'       => 'org.customer-websites.index',
-                    'parameters' => []
-                ],
+        if ($user->can('crm.view') and $organisation->stats->number_shops > 0) {
+            $navigation['portfolios'] = [
+                'scope' => 'portfolios',
+                'icon'  => ['fal', 'fa-briefcase'],
+                'label' => __('Portfolios'),
+                'route' =>
+                    match ($shopsCount) {
+                        1 => [
+                            'name'       => 'org.portfolios.shop.dashboard',
+                            'parameters' => $shop->slug
+                        ],
+                        default => [
+                            'name' => 'org.portfolios.index',
+                        ],
+                    },
+
+
                 'topMenu' => [
                     'subSections' => []
                 ]

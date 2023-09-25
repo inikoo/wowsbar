@@ -40,6 +40,7 @@ class ShowCustomer extends InertiaAction
         return $this->handle($customer);
     }
 
+    /** @noinspection PhpUnusedParameterInspection */
     public function inShop(Shop $shop, Customer $customer, ActionRequest $request): Customer
     {
         $this->initialisation($request)->withTab(CustomerTabsEnum::values());
@@ -77,6 +78,18 @@ class ShowCustomer extends InertiaAction
                             'leftIcon' => [
                                 'icon'    => 'fal fa-terminal',
                                 'tooltip' => __('users')
+                            ]
+                        ],
+                        [
+                            'href'     => [
+                                'name'       => $request->route()->getName().'.customer-websites.index',
+                                'parameters' => $request->route()->originalParameters()
+                            ],
+                            'number'   => $customer->stats->number_portfolio_websites,
+                            'label'    => __('Websites'),
+                            'leftIcon' => [
+                                'icon'    => 'fal fa-briefcase',
+                                'tooltip' => __('portfolio websites')
                             ]
                         ],
                     ],
@@ -216,6 +229,7 @@ class ShowCustomer extends InertiaAction
             ),
         };
     }
+
 
     public function getPrevious(Customer $customer, ActionRequest $request): ?array
     {

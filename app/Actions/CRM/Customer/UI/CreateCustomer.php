@@ -43,7 +43,7 @@ class CreateCustomer extends InertiaAction
                             'route' => [
                                 'name'       => match ($request->route()->getName()) {
                                     'shops.show.customers.create' => 'org.shops.customers.index',
-                                    default => preg_replace('/create$/', 'index', $request->route()->getName())
+                                    default                       => preg_replace('/create$/', 'index', $request->route()->getName())
                                 },
                                 'parameters' => array_values($request->route()->originalParameters())
                             ],
@@ -99,12 +99,12 @@ class CreateCustomer extends InertiaAction
                             ]
                         ],
                     'route'     =>
-                        match(class_basename($parent)){
-                            'Shop'=>[
-                                'name'      => 'org.models.shop.customer.store',
-                                'arguments' => [$parent->id]
+                        match(class_basename($parent)) {
+                            'Shop'=> [
+                                'name'       => 'org.models.shop.customer.store',
+                                'parameters' => [$parent->id]
                             ],
-                            default=>[
+                            default=> [
                                 [
                                     'name'      => 'org.models.customer.store',
                                 ]

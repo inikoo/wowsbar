@@ -24,7 +24,7 @@ class CustomerWebsiteSearchResultResource extends JsonResource
             'name'   => $this->name,
             'domain' => $this->domain,
             'route'  => [
-                'name'       => 'org.customer-websites.websites.show',
+                'name'       => 'org.portfolios.websites.show',
                 'parameters' => $this->slug
             ],
             'icon'   => ['fal', 'fa-globe']

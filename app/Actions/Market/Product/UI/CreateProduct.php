@@ -93,8 +93,8 @@ class CreateProduct extends InertiaAction
                         ],
                     'route' => match ($this->routeName) {
                         'org.shops.show.products.create' => [
-                            'name'      => 'org.models.show.product.store',
-                            'arguments' => [$shop->slug]
+                            'name'       => 'org.models.show.product.store',
+                            'parameters' => [$shop->slug]
                         ],
                         default => [
                             'name' => 'org.models.product.store'

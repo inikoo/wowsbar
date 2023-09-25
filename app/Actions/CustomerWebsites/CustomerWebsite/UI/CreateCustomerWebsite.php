@@ -8,34 +8,46 @@
 namespace App\Actions\CustomerWebsites\CustomerWebsite\UI;
 
 use App\Actions\InertiaAction;
+use App\Actions\Traits\Fields\WithPortfolioWebsiteFields;
+use App\Models\CRM\Customer;
+use App\Models\Market\Shop;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
 
 class CreateCustomerWebsite extends InertiaAction
 {
+    use WithPortfolioWebsiteFields;
+
+    public function handle(Customer $customer): Customer
+    {
+        return $customer;
+    }
+
     public function authorize(ActionRequest $request): bool
     {
-        return $request->user()->can('customer.portfolio.edit');
+        return $request->user()->can('crm.edit');
     }
 
 
-    public function asController(ActionRequest $request): ActionRequest
+    /** @noinspection PhpUnusedParameterInspection */
+    public function inCustomerInShop(Shop $shop, Customer $customer, ActionRequest $request): Customer
     {
         $this->initialisation($request);
-        return $request;
-
+        return $customer;
     }
 
 
-    public function htmlResponse(ActionRequest $request): Response
+    public function htmlResponse(Customer $customer, ActionRequest $request): Response
     {
-        $request->route()->getName();
 
         return Inertia::render(
             'CreateModel',
             [
-                'breadcrumbs' => $this->getBreadcrumbs(),
+                'breadcrumbs' => $this->getBreadcrumbs(
+                    $request->route()->getName(),
+                    $request->route()->originalParameters()
+                ),
                 'title'       => __('new website'),
                 'pageHead'    => [
                     'title'        => __('website'),
@@ -54,48 +66,10 @@ class CreateCustomerWebsite extends InertiaAction
 
                 ],
                 'formData'    => [
-                    'blueprint' => [
-                        [
-                            'title'  => __('domain'),
-                            'fields' => [
-
-                                'domain' => [
-                                    'type'      => 'inputWithAddOn',
-                                    'label'     => __('domain'),
-                                    'leftAddOn' => [
-                                        'label' => 'https://'
-                                    ],
-                                    'required'  => true,
-                                ],
-
-
-                            ]
-                        ],
-                        [
-                            'title'  => __('ID/name'),
-                            'fields' => [
-
-                                'code' => [
-                                    'type'      => 'input',
-                                    'label'     => __('code'),
-                                    'required'  => true,
-                                    'maxLength' => 8
-                                ],
-                                'name' => [
-                                    'type'      => 'input',
-                                    'label'     => __('name'),
-                                    'required'  => true,
-                                    'value'     => '',
-                                ],
-
-
-                            ]
-                        ],
-
-
-                    ],
+                    'blueprint' => $this->getPortfolioWebsiteFields(),
                     'route'     => [
-                        'name' => 'models.portfolio-website.store',
+                        'name'       => 'org.models.customer.customer-website.store',
+                         'parameters'=> $customer->id
                     ],
 
 
@@ -106,12 +80,14 @@ class CreateCustomerWebsite extends InertiaAction
     }
 
 
-    public function getBreadcrumbs(): array
+    public function getBreadcrumbs($routeName, $routeParameters): array
     {
+
+
         return array_merge(
-            \App\Actions\CustomerWebsites\CustomerWebsite\UI\IndexCustomerWebsites::make()->getBreadcrumbs(
-                'customer.portfolio.websites.index',
-                []
+            IndexCustomerWebsites::make()->getBreadcrumbs(
+                'org.crm.shop.customers.show.customer-websites.index',
+                $routeParameters
             ),
             [
                 [

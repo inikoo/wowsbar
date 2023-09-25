@@ -108,8 +108,8 @@ class ShowBannerWorkshop extends InertiaAction
                     ]
                 ],
                 'imagesUploadRoute' => [
-                    'name'      => $request->route()->getName().'.images.store',
-                    'arguments' => $request->route()->originalParameters()
+                    'name'       => $request->route()->getName().'.images.store',
+                    'parameters' => $request->route()->originalParameters()
                 ],
 
             ]

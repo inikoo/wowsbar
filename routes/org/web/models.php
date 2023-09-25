@@ -15,6 +15,7 @@ use App\Actions\CRM\Appointment\AssignAppointmentUser;
 use App\Actions\CRM\Appointment\StoreAppointment;
 use App\Actions\CRM\Customer\StoreCustomer;
 use App\Actions\CRM\Customer\UpdateCustomer;
+use App\Actions\CustomerWebsites\CustomerWebsite\StoreCustomerWebsite;
 use App\Actions\HumanResources\Employee\DeleteEmployee;
 use App\Actions\HumanResources\Employee\StoreEmployee;
 use App\Actions\HumanResources\Employee\UpdateEmployee;
@@ -95,4 +96,5 @@ Route::post('/workplace/', StoreWorkplace::class)->name('workplace.store');
 Route::delete('/workplace/{workplace}', DeleteWorkplace::class)->name('workplace.delete');
 
 Route::patch('/customer/{customer:id}', UpdateCustomer::class)->name('customer.update');
-Route::post('/customer/{customer}/websites/upload', UploadPortfolioWebsite::class)->name('customers.websites.upload');
+Route::post('/customer/{customer:id}/websites/upload', UploadPortfolioWebsite::class)->name('customer.website.upload');
+Route::post('/customer/{customer:id}/websites', StoreCustomerWebsite::class)->name('customer.customer-website.store');

@@ -41,6 +41,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $number_orders_state_packed
  * @property int $number_orders_state_finalised
  * @property int $number_orders_state_settled
+ * @property int $number_customer_websites
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Market\Shop $shop
@@ -49,6 +50,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static Builder|ShopCRMStats query()
  * @method static Builder|ShopCRMStats whereCreatedAt($value)
  * @method static Builder|ShopCRMStats whereId($value)
+ * @method static Builder|ShopCRMStats whereNumberCustomerWebsites($value)
  * @method static Builder|ShopCRMStats whereNumberCustomers($value)
  * @method static Builder|ShopCRMStats whereNumberCustomersStateActive($value)
  * @method static Builder|ShopCRMStats whereNumberCustomersStateContacted($value)

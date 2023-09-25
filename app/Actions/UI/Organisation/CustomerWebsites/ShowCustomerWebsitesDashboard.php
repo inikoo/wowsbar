@@ -9,6 +9,8 @@ namespace App\Actions\UI\Organisation\CustomerWebsites;
 
 use App\Actions\UI\Organisation\Dashboard\ShowDashboard;
 use App\Actions\UI\WithInertia;
+use App\Models\Market\Shop;
+use App\Models\Organisation\Organisation;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -18,6 +20,11 @@ class ShowCustomerWebsitesDashboard
 {
     use AsAction;
     use WithInertia;
+
+    public function handle($parent)
+    {
+        return $parent;
+    }
 
     public function authorize(ActionRequest $request): bool
     {
@@ -30,52 +37,82 @@ class ShowCustomerWebsitesDashboard
         $this->validateAttributes();
     }
 
-
-    public function htmlResponse(): Response
+    public function inShop(Shop $shop)
     {
-        $org = organisation();
+        $this->validateAttributes();
+        return $this->handle($shop);
+    }
+
+
+    public function htmlResponse(Organisation|Shop $parent, ActionRequest $request): Response
+    {
 
         return Inertia::render(
             'HumanResources/HumanResourcesDashboard',
             [
-                'breadcrumbs' => $this->getBreadcrumbs(),
-                'title'       => __('human resources'),
+                'breadcrumbs' => $this->getBreadcrumbs(
+                    $request->route()->getName(),
+                    $request->route()->originalParameters()
+                ),
+                'title'       => __('customer portfolios'),
                 'pageHead'    => [
-                    'title' => __('human resources'),
+                    'title' => __('customer portfolios'),
                 ],
                 'stats'       => [
                     [
-                        'name' => __('employees'),
-                        'stat' => $org->humanResourcesStats->number_employees,
-                        'href' => ['name'=>'org.hr.employees.index']
+                        'name' => __("Customer's websites"),
+                        'stat' => $parent->crmStats->number_customer_websites,
+                        'href' => match (class_basename($parent)) {
+                            'Shop'=> [
+                                'name'      => 'org.portfolios.shop.customer-websites.index',
+                                'parameters'=> $request->route()->originalParameters()
+                            ],
+                            default=> [
+                                'name'=> 'org.portfolios.customer-websites.index'
+                            ]
+                        }
                     ],
-                    [
-                        'name' => __('working places'),
-                        'stat' => $org->humanResourcesStats->number_workplaces,
-                        'href' => ['name'=>'org.hr.workplaces.index']
-                    ]
+
                 ]
 
             ]
         );
     }
 
-    public function getBreadcrumbs(): array
+    public function getBreadcrumbs(string $routeName, array $routeParameters): array
     {
         return
-            array_merge(
-                ShowDashboard::make()->getBreadcrumbs(),
-                [
+            match($routeName) {
+                'org.portfolios.show.dashboard'=> array_merge(
+                    ShowDashboard::make()->getBreadcrumbs(),
                     [
-                        'type'   => 'simple',
-                        'simple' => [
-                            'route' => [
-                                'name' => 'org.hr.dashboard'
-                            ],
-                            'label' => __('human resources'),
+                        [
+                            'type'   => 'simple',
+                            'simple' => [
+                                'route' => [
+                                    'name'      => 'org.portfolios.shop.dashboard',
+                                    'parameters'=> $routeParameters
+                                ],
+                                'label' => __('customer websites'),
+                            ]
                         ]
                     ]
-                ]
-            );
+                ),
+                default=> array_merge(
+                    ShowDashboard::make()->getBreadcrumbs(),
+                    [
+                        [
+                            'type'   => 'simple',
+                            'simple' => [
+                                'route' => [
+                                    'name' => 'org.portfolios.dashboard',
+                                ],
+                                'label' => __('customer websites'),
+                            ]
+                        ]
+                    ]
+                )
+            };
+
     }
 }

@@ -112,8 +112,8 @@ class ShowPortfolioWebsite extends InertiaAction
         };
 
         return match ($routeName) {
-            'org.customer-websites.show',
-            'org.customer-websites.edit' =>
+            'org.portfolios.show',
+            'org.portfolios.edit' =>
             array_merge(
                 ShowPortfolio::make()->getBreadcrumbs(),
                 $headCrumb(
@@ -121,11 +121,11 @@ class ShowPortfolioWebsite extends InertiaAction
                     $routeParameters['portfolioWebsite'],
                     [
                         'index' => [
-                            'name'       => 'org.customer-websites.index',
+                            'name'       => 'org.portfolios.index',
                             'parameters' => []
                         ],
                         'model' => [
-                            'name'       => 'org.customer-websites.show',
+                            'name'       => 'org.portfolios.show',
                             'parameters' => [$routeParameters['portfolioWebsite']->slug]
                         ]
                     ],
@@ -158,7 +158,7 @@ class ShowPortfolioWebsite extends InertiaAction
         }
 
         return match ($routeName) {
-            'org.customer-websites.show' => [
+            'org.portfolios.show' => [
                 'label' => $portfolioWebsite->name,
                 'route' => [
                     'name'       => $routeName,

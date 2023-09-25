@@ -30,9 +30,9 @@ function websiteRoute(website: Website) {
             return route(
                 'customer.portfolio.websites.show',
                 [website.slug]);
-        case 'org.customer-websites.index':
+        case 'org.portfolios.index':
             return route(
-                'org.customer-websites.show',
+                'org.portfolios.show',
                 [website.slug]);
     }
 }

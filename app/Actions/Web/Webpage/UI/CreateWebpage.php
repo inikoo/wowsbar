@@ -143,8 +143,8 @@ class CreateWebpage extends InertiaAction
 
                     ],
                     'route'     => [
-                        'name'      => 'org.models.webpage.store',
-                        'arguments' => [$parent->id]
+                        'name'       => 'org.models.webpage.store',
+                        'parameters' => [$parent->id]
                     ],
 
 

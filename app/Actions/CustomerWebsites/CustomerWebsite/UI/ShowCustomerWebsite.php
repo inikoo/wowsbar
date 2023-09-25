@@ -7,12 +7,18 @@
 
 namespace App\Actions\CustomerWebsites\CustomerWebsite\UI;
 
+use App\Actions\CRM\Customer\UI\ShowCustomer;
 use App\Actions\Helpers\History\IndexHistories;
 use App\Actions\InertiaAction;
 use App\Actions\UI\WithInertia;
 use App\Enums\UI\Organisation\CustomerWebsiteTabsEnum;
+use App\Http\Resources\CustomerWebsites\CustomerWebsiteResource;
 use App\Http\Resources\History\HistoryResource;
+use App\Models\CRM\Customer;
 use App\Models\CustomerWebsites\CustomerWebsite;
+use App\Models\Market\Shop;
+use App\Models\Organisation\Organisation;
+use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -24,41 +30,70 @@ class ShowCustomerWebsite extends InertiaAction
     use WithInertia;
 
 
+    private Customer|Shop|Organisation $parent;
+
+    public function handle(Organisation|Shop|Customer $parent, CustomerWebsite $customerWebsite): CustomerWebsite
+    {
+        $this->parent=$parent;
+        return $customerWebsite;
+    }
+
+
     public function authorize(ActionRequest $request): bool
     {
-        $this->canEdit   = $request->user()->can('portfolio.edit');
-        $this->canDelete = $request->user()->can('portfolio.edit');
+        $this->canEdit   = $request->user()->can('crm.edit');
+        $this->canDelete = $request->user()->can('crm.edit');
 
-        return !$request->user()->can('portfolio.view');
+        return $request->user()->can('crm.view');
     }
 
     public function asController(CustomerWebsite $customerWebsite, ActionRequest $request): CustomerWebsite
     {
         $this->initialisation($request)->withTab(CustomerWebsiteTabsEnum::values());
 
-        return $customerWebsite;
+        return $this->handle(organisation(), $customerWebsite);
+    }
+
+    /** @noinspection PhpUnusedParameterInspection */
+    public function inCustomerInShop(Shop $shop, Customer $customer, CustomerWebsite $customerWebsite, ActionRequest $request): CustomerWebsite
+    {
+        $this->initialisation($request)->withTab(CustomerWebsiteTabsEnum::values());
+
+        return $this->handle($customer, $customerWebsite);
     }
 
     public function htmlResponse(CustomerWebsite $customerWebsite, ActionRequest $request): Response
     {
+
+        $scope    =$this->parent;
+        $container=null;
+        if (class_basename($scope) == 'Customer') {
+            $container = [
+                'icon'    => ['fal', 'fa-user'],
+                'tooltip' => __('Customer'),
+                'label'   => Str::possessive($scope->name)
+            ];
+        }
+
         return Inertia::render(
             'CustomerWebsites/CustomerWebsite',
             [
                 'title'       => __('CustomerWebsite'),
                 'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->getName(),
-                    $request->route()->parameters
+                    $request->route()->originalParameters()
                 ),
                 'navigation'  => [
                     'previous' => $this->getPrevious($customerWebsite, $request),
                     'next'     => $this->getNext($customerWebsite, $request),
                 ],
                 'pageHead'    => [
-                    'title'   => $customerWebsite->name,
-                    'icon'    => [
+                    'title'      => __('Website').': '.$customerWebsite->name,
+                    'iconRight'  => [
                         'title' => __('website'),
-                        'icon'  => 'fal fa-globe'
+                        'icon'  => 'fal fa-briefcase'
                     ],
+                    'container'=> $container
                 ],
                 'tabs'        => [
                     'current'    => $this->tab,
@@ -68,11 +103,11 @@ class ShowCustomerWebsite extends InertiaAction
                 CustomerWebsiteTabsEnum::CHANGELOG->value => $this->tab == CustomerWebsiteTabsEnum::CHANGELOG->value ?
                     fn () => HistoryResource::collection(IndexHistories::run($customerWebsite))
                     : Inertia::lazy(fn () => HistoryResource::collection(IndexHistories::run($customerWebsite))),
-/*
-                CustomerWebsiteTabsEnum::BANNERS->value => $this->tab == CustomerWebsiteTabsEnum::BANNERS->value ?
-                    fn () => BannerResource::collection(IndexBanners::run($customerWebsite))
-                    : Inertia::lazy(fn () => BannerResource::collection(IndexBanners::run($customerWebsite)))
-*/
+                /*
+                                CustomerWebsiteTabsEnum::BANNERS->value => $this->tab == CustomerWebsiteTabsEnum::BANNERS->value ?
+                                    fn () => BannerResource::collection(IndexBanners::run($customerWebsite))
+                                    : Inertia::lazy(fn () => BannerResource::collection(IndexBanners::run($customerWebsite)))
+                */
             ]
         )->table(IndexHistories::make()->tableStructure());
     }
@@ -103,30 +138,54 @@ class ShowCustomerWebsite extends InertiaAction
                         'route' => $routeParameters['model'],
                         'label' => $customerWebsite->name
                     ],
-                    'suffix' => $suffix
+                    'suffix'         => $suffix
                 ],
             ];
         };
 
         return match ($routeName) {
-            'org.customer-websites.show',
-            'org.customer-websites.edit' =>
+            'org.crm.shop.customers.show.customer-websites.show',
+            'org.crm.shop.customers.show.customer-websites.edit' =>
+            array_merge(
+                ShowCustomer::make()->getBreadcrumbs(
+                    'org.crm.shop.customers.show',
+                    $routeParameters
+                ),
+                $headCrumb(
+                    'modelWithIndex',
+                    CustomerWebsite::where('slug', $routeParameters['customerWebsite'])->first(),
+                    [
+                        'index' => [
+                            'name'       => 'org.crm.shop.customers.show.customer-websites.index',
+                            'parameters' => $routeParameters
+                        ],
+                        'model' => [
+                            'name'       => 'org.crm.shop.customers.show.customer-websites.show',
+                            'parameters' => $routeParameters
+                        ]
+                    ],
+                    $suffix
+                ),
+            ),
+
+            'org.portfolios.show',
+            'org.portfolios.edit' =>
             array_merge(
                 IndexCustomerWebsites::make()->getBreadcrumbs(
-                    'org.customer-websites.index',
+                    'org.portfolios.index',
                     []
                 ),
                 $headCrumb(
                     'modelWithIndex',
-                    $routeParameters['customerWebsite'],
+                    CustomerWebsite::where('slug', $routeParameters['customerWebsite'])->first(),
                     [
                         'index' => [
-                            'name'       => 'org.customer-websites.index',
+                            'name'       => 'org.portfolios.index',
                             'parameters' => []
                         ],
                         'model' => [
-                            'name'       => 'org.customer-websites.show',
-                            'parameters' => [$routeParameters['customerWebsite']->slug]
+                            'name'       => 'org.portfolios.show',
+                            'parameters' => $routeParameters
                         ]
                     ],
                     $suffix
@@ -158,7 +217,18 @@ class ShowCustomerWebsite extends InertiaAction
         }
 
         return match ($routeName) {
-            'org.customer-websites.show' => [
+            'org.crm.shop.customers.show.customer-websites.show' => [
+                'label' => $customerWebsite->name,
+                'route' => [
+                    'name'       => $routeName,
+                    'parameters' => [
+                        'shop'            => $customerWebsite->customer->shop->slug,
+                        'customer'        => $customerWebsite->customer->slug,
+                        'customerWebsite' => $customerWebsite->slug
+                    ]
+                ]
+            ],
+            'org.portfolios.show' => [
                 'label' => $customerWebsite->name,
                 'route' => [
                     'name'       => $routeName,

@@ -6,33 +6,26 @@
  */
 
 
-use App\Actions\CustomerWebsites\CustomerWebsite\UI\CreateCustomerWebsite;
 use App\Actions\CustomerWebsites\CustomerWebsite\UI\EditCustomerWebsite;
 use App\Actions\CustomerWebsites\CustomerWebsite\UI\IndexCustomerWebsites;
 use App\Actions\CustomerWebsites\CustomerWebsite\UI\RemoveCustomerWebsite;
 use App\Actions\CustomerWebsites\CustomerWebsite\UI\ShowCustomerWebsite;
-use App\Actions\Portfolio\Banner\UI\CreateBanner;
-use App\Actions\Portfolio\Banner\UI\EditBanner;
-use App\Actions\Portfolio\Banner\UI\IndexBanners;
-use App\Actions\Portfolio\Banner\UI\RemoveBanner;
-use App\Actions\Portfolio\Banner\UI\ShowBanner;
-use App\Actions\Portfolio\Banner\UI\ShowBannerWorkshop;
-use App\Actions\Portfolio\Banner\UploadImagesToBanner;
-
-use App\Actions\Portfolio\Snapshot\UI\IndexSnapshots;
-use App\Actions\Portfolio\Snapshot\UI\ShowSnapshot;
 use App\Actions\UI\Organisation\CustomerWebsites\ShowCustomerWebsitesDashboard;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', ['uses'  => ShowCustomerWebsitesDashboard::class, 'icon'  => 'user-hard-hat', 'label' => 'human resources'])->name('dashboard');
+Route::get('/', ['uses' => ShowCustomerWebsitesDashboard::class, 'icon' => 'user-hard-hat', 'label' => 'human resources'])->name('dashboard');
+Route::get('/customer-websites/', ['uses' => IndexCustomerWebsites::class, 'icon' => 'portfolio', 'label' => "customer's websites"])->name('index');
 
-Route::get('/', ['uses'  => IndexCustomerWebsites::class, 'icon'  => 'globe', 'label' => 'websites'])->name('index');
-Route::get('/create', CreateCustomerWebsite::class)->name('create');
-Route::get('/{customerWebsite}', ['uses'  => ShowCustomerWebsite::class, 'icon'  => 'globe', 'label' => 'websites'])->name('show');
+Route::prefix('shop/{shop}')->as('shop.')->group(function () {
+    Route::get('/', ['icon' => 'portfolio', 'label' => "customer's websites"])->uses([ShowCustomerWebsitesDashboard::class,'inShop'])->name('dashboard');
+    Route::get('/customer-websites/', ['icon' => 'globe', 'label' => 'websites'])->uses([IndexCustomerWebsites::class,'inShop'])->name('customer-websites.index');
+    // Route::get('/customer-websites/{customerWebsite}/edit', [EditCustomerWebsite::class,'inShop'])->name('edit');
+    // Route::get('/customer-websites/{customerWebsite}/delete', [RemoveCustomerWebsite::class,'inShop'])->withTrashed()->name('remove');
+    // Route::get('/customer-websites/{customerWebsite}', ['uses' => [ShowCustomerWebsite::class,'inShop'], 'icon' => 'globe', 'label' => 'websites'])->name('show');
+});
 
-Route::get('/{customerWebsite}/edit', EditCustomerWebsite::class)->name('edit');
-Route::get('/{customerWebsite}/delete', RemoveCustomerWebsite::class)->withTrashed()->name('remove');
 
+/*
 Route::get('/{customerWebsite}/banners/create', [CreateBanner::class, 'inCustomerWebsite'])->name('show.banners.create');
 Route::get('/{customerWebsite}/banners', [IndexBanners::class, 'inCustomerWebsite'])->name('show.banners.index');
 
@@ -56,3 +49,4 @@ Route::get('/banners', [IndexBanners::class, 'inCustomer'])->name('banners.index
 
 Route::get('/{customerWebsite}/banners/{banner}/snapshots', [IndexSnapshots::class, 'inWebsite'])->name('snapshots.index');
 Route::get('/{customerWebsite}/banners/{banner}/snapshots/{snapshot}', [ShowSnapshot::class, 'inWebsite'])->name('snapshots.show');
+*/

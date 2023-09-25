@@ -25,7 +25,7 @@ class WebsiteImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wit
     public function __construct(ExcelUpload $websiteUpload, Customer $customer)
     {
         $this->websiteUpload = $websiteUpload;
-        $this->customer = $customer;
+        $this->customer      = $customer;
     }
 
     /**
@@ -42,9 +42,9 @@ class WebsiteImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wit
                 $website = ExcelUploadRecord::create([
                     'excel_upload_id'   => $this->websiteUpload->id,
                     'data'              => json_encode([
-                        'code'   => $website['code'],
-                        'name'   => $website['name'],
-                        'domain' => $website['domain'],
+                        'code'        => $website['code'],
+                        'name'        => $website['name'],
+                        'domain'      => $website['domain'],
                         'customer_id' => $this->customer->id
                     ])
                 ]);

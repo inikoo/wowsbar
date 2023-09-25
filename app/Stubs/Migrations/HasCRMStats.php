@@ -40,6 +40,7 @@ trait HasCRMStats
             $table->unsignedInteger('number_orders_state_'.$orderState->snake())->default(0);
         }
 
+        $table->unsignedInteger('number_customer_websites')->default(0);
 
 
         return $table;
