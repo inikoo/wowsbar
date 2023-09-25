@@ -23,19 +23,25 @@ class IndexUniversalSearch extends InertiaAction
 
     public function handle(string $query): Collection
     {
-        return UniversalSearch::search($query, function (Client $client) {
-            if(customer()) {
-                return $client->search(['body' => ['fields' => [
-                    'customer_id' => customer()->id
-                ]]])->asArray();
-            }
+        dd(customer());
+        return UniversalSearch::search($query, function (Client $client, $body) {
+//            if(customer()) {
+//                return $client->search([
+//                    'body' => [
+//                        'query' => [
+//                            'match' => [
+//                                'customer_id' => customer()->id
+//                            ]
+//                        ]
+//                    ]
+//                ])->asArray();
+//            }
 
-            return $client->search()->asArray();
+            return $client->search(['body' => $body->toArray()])->asArray();
         })
-            ->within(UniversalSearch::make()->searchableAs().'_'.customer()->slug)
+            ->within(UniversalSearch::make()->searchableAs())
             ->get()
             ->load('model');
-
     }
 
     public function asController(ActionRequest $request): AnonymousResourceCollection
