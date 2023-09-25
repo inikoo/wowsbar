@@ -6,6 +6,7 @@
  */
 
 
+use App\Actions\CRM\Customer\UI\CreateCustomer;
 use App\Actions\CRM\Customer\UI\EditCustomer;
 use App\Actions\CRM\Customer\UI\IndexCustomers;
 use App\Actions\CRM\Customer\UI\RemoveCustomer;
@@ -26,6 +27,7 @@ use App\Actions\Portfolio\PortfolioWebsite\UploadPortfolioWebsite;
 Route::get('/', [ShowCRMDashboard::class, 'inOrganisation'])->name('dashboard');
 
 Route::get('customers', IndexCustomers::class)->name('customers.index');
+Route::get('customers/create', CreateCustomer::class)->name('customers.index');
 
 Route::prefix('customers/{customer}')->as('customers.')->group(function () {
     Route::get('', ShowCustomer::class)->name('show');
@@ -47,7 +49,7 @@ Route::prefix('shop/{shop}')->as('shop.')->group(function () {
     Route::get('/', [ShowCRMDashboard::class, 'inShop'])->name('dashboard');
 
     Route::get('customers', [IndexCustomers::class, 'inShop'])->name('customers.index');
-    Route::get('customers/create', [IndexCustomers::class, 'inShop'])->name('customers.create');
+    Route::get('customers/create', [CreateCustomer::class, 'inShop'])->name('customers.create');
 
     Route::prefix('customers/{customer}')->as('customers.')->group(function () {
         Route::get('', [ShowCustomer::class, 'inShop'])->name('show');

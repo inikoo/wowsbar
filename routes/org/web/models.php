@@ -13,6 +13,7 @@ use App\Actions\Accounting\PaymentServiceProvider\DeletePaymentServiceProvider;
 use App\Actions\Accounting\PaymentServiceProvider\UpdatePaymentServiceProvider;
 use App\Actions\CRM\Appointment\AssignAppointmentUser;
 use App\Actions\CRM\Appointment\StoreAppointment;
+use App\Actions\CRM\Customer\StoreCustomer;
 use App\Actions\CRM\Customer\UpdateCustomer;
 use App\Actions\HumanResources\Employee\DeleteEmployee;
 use App\Actions\HumanResources\Employee\StoreEmployee;
@@ -47,6 +48,8 @@ Route::patch('/employee/{employee}', UpdateEmployee::class)->name('employee.upda
 Route::post('/employee/', StoreEmployee::class)->name('employee.store');
 Route::delete('/employee/{employee}', DeleteEmployee::class)->name('employee.delete');
 Route::post('/shop/{shop:id}/website/', StoreWebsite::class)->name('shop.website.store');
+Route::post('/shop/{shop:id}/customer/', [StoreCustomer::class,'inShop'])->name('shop.customer.store');
+
 Route::patch('/organisation', UpdateOrganisation::class)->name('organisation.update');
 
 Route::post('/article/{webpage:id}', StoreArticle::class)->name('article.store');
@@ -91,5 +94,5 @@ Route::patch('/workplace/{workplace}', UpdateWorkplace::class)->name('workplace.
 Route::post('/workplace/', StoreWorkplace::class)->name('workplace.store');
 Route::delete('/workplace/{workplace}', DeleteWorkplace::class)->name('workplace.delete');
 
-Route::patch('/customer/{customer}', UpdateCustomer::class)->name('customer.update');
+Route::patch('/customer/{customer:id}', UpdateCustomer::class)->name('customer.update');
 Route::post('/customer/{customer}/websites/upload', UploadPortfolioWebsite::class)->name('customers.websites.upload');

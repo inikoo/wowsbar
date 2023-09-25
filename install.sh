@@ -52,6 +52,7 @@ php artisan customer:new-user aiku -u aiku -P hello -N 'Mary'
 php artisan customer:new-user aw-advantage -u aiku2 -P hello -N 'Zoe'
 pg_dump -Fc -f "devops/devel/snapshots/customers.dump" ${DB}
 echo "🌱 create test website with a banner"
+
 php artisan customer:new-portfolio-website aiku hello.com hello 'My website 😸'
 php artisan customer:new-banner aiku test1 'My first banner 🫡' hello
 php artisan customer:new-banner aiku test2 'My first banner without website 🫡'

@@ -16,7 +16,9 @@ use App\Models\CRM\Customer;
 use App\Models\Market\Shop;
 use Exception;
 use Illuminate\Console\Command;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Validator;
 use Lorisleiva\Actions\ActionRequest;
@@ -75,7 +77,7 @@ class StoreCustomer
             return true;
         }
 
-        return $request->user()->hasPermissionTo("org.crm.edit");
+        return $request->user()->hasPermissionTo('crm.edit');
     }
 
     public function rules(): array
@@ -103,12 +105,19 @@ class StoreCustomer
     /**
      * @throws Throwable
      */
-    public function asController(Shop $shop, ActionRequest $request): Customer
+    public function inShop(Shop $shop, ActionRequest $request): Customer
     {
         $this->fillFromRequest($request);
         $request->validate();
-
         return $this->handle($shop, $request->validated());
+    }
+
+    public function htmlResponse(Customer $customer): RedirectResponse
+    {
+        return Redirect::route('org.crm.shop.customers.show', [
+            $customer->shop->slug,
+            $customer->slug
+        ]);
     }
 
     /**

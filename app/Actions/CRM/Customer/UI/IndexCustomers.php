@@ -32,20 +32,21 @@ class IndexCustomers extends InertiaAction
     public function asController(ActionRequest $request): LengthAwarePaginator
     {
         $this->initialisation($request);
+
         return $this->handle(organisation());
     }
 
     public function inShop(Shop $shop, ActionRequest $request): LengthAwarePaginator
     {
         $this->initialisation($request);
+
         return $this->handle($shop);
     }
 
 
     public function authorize(ActionRequest $request): bool
     {
-        $this->canEdit       = $request->user()->can('crm.customers.edit');
-        $this->canCreateShop = $request->user()->can('shops.edit');
+        $this->canEdit = $request->user()->can('crm.customers.edit');
 
         return
             (
@@ -57,8 +58,7 @@ class IndexCustomers extends InertiaAction
     /** @noinspection PhpUndefinedMethodInspection */
     public function handle(Organisation|Shop $parent, $prefix = null): LengthAwarePaginator
     {
-
-        $this->parent=$parent;
+        $this->parent = $parent;
 
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
             $query->where(function ($query) use ($value) {
@@ -120,35 +120,9 @@ class IndexCustomers extends InertiaAction
                 ->withGlobalSearch()
                 ->withEmptyState(
                     match (class_basename($parent)) {
-                        'Organisation' => [
-                            'title'       => __("No customers found"),
-//                            'description' => $this->canCreateShop && $parent->marketStats->number_shops == 0 ? __('Get started by creating a shop. ✨')
-//                                : __("In fact, is no even a shop yet 🤷🏽‍♂️"),
-                            'count'       => $parent->crmStats->number_customers,
-//                            'action'      => $this->canCreateShop && $parent->marketStats->number_shops == 0 ? [
-//                                'type'    => 'button',
-//                                'style'   => 'create',
-//                                'tooltip' => __('new shop'),
-//                                'label'   => __('shop'),
-//                                'route'   => [
-//                                    'name' => 'org.shops.create',
-//                                ]
-//                            ] :
-//                                [
-//                                    'type'    => 'button',
-//                                    'style'   => 'create',
-//                                    'tooltip' => __('new customer'),
-//                                    'label'   => __('customer'),
-//                                    'route'   => [
-//                                        'name' => 'org.shops.create',
-//                                    ]
-//                                ]
-
-
-                        ],
                         'Shop' => [
                             'title'       => __("No customers found"),
-                            'description' => __("You can add your customer 🤷🏽‍♂️"),
+                            'description' => $this->canEdit ? __('Get started by creating a new customer.') : null,
                             'count'       => $parent->crmStats->number_customers,
                             'action'      => [
                                 'type'    => 'button',
@@ -156,34 +130,16 @@ class IndexCustomers extends InertiaAction
                                 'tooltip' => __('new customer'),
                                 'label'   => __('customer'),
                                 'route'   => [
-                                    'name'       => 'crm.shops.show.customers.create',
+                                    'name'       => 'org.crm.shop.customers.create',
                                     'parameters' => [$parent->slug]
                                 ]
                             ]
                         ],
-                        default=> null
+                        default => null
                     }
-                    /*
-                    [
-                        'title'       => __('no customers'),
-                        'description' => $this->canEdit ? __('Get started by creating a new customer.') : null,
-                        'count'       => customer()->stats->number_employees,
-                        'action'      => $this->canEdit ? [
-                            'type'    => 'button',
-                            'style'   => 'create',
-                            'tooltip' => __('new customer'),
-                            'label'   => __('customer'),
-                            'route'   => [
-                                'name'       => 'crm.customers.create',
-                                'parameters' => array_values($request->route()->originalParameters())
-                            ]
-                        ] : null
-                    ]
-                    */
                 )
                 ->column(key: 'slug', label: __('code'), canBeHidden: false, sortable: true, searchable: true)
                 ->column(key: 'name', label: __('name'), canBeHidden: false, sortable: true, searchable: true);
-
         };
     }
 
@@ -194,13 +150,9 @@ class IndexCustomers extends InertiaAction
 
     public function htmlResponse(LengthAwarePaginator $customers, ActionRequest $request): Response
     {
-
-
-
-
         $scope     = $this->parent;
         $container = null;
-        if (class_basename($scope) == 'Shop' and organisation()->stats->number_shops>1) {
+        if (class_basename($scope) == 'Shop' and organisation()->stats->number_shops > 1) {
             $container = [
                 'icon'    => ['fal', 'fa-store-alt'],
                 'tooltip' => __('Shop'),
@@ -222,7 +174,20 @@ class IndexCustomers extends InertiaAction
                     'iconRight' => [
                         'icon'  => ['fal', 'fa-user'],
                         'title' => __('customer')
-                    ]
+                    ],
+                    'actions'   =>
+                        [
+                            $this->canEdit ? [
+                                'type'    => 'button',
+                                'style'   => 'create',
+                                'tooltip' => __('new customer'),
+                                'label'   => __('customer'),
+                                'route'   => [
+                                    'name'       => 'org.crm.shop.customers.create',
+                                    'parameters' => array_values($this->originalParameters)
+                                ]
+                            ] : null
+                        ]
                 ],
                 'data'        => CustomerResource::collection($customers),
 
