@@ -14,6 +14,7 @@ use App\Enums\UI\Organisation\CustomerWebsitesTabsEnum;
 use App\Http\Resources\CustomerWebsites\CustomerWebsiteResource;
 use App\Http\Resources\History\HistoryResource;
 use App\InertiaTable\InertiaTable;
+use App\Models\CRM\Customer;
 use App\Models\CustomerWebsites\CustomerWebsite;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -42,7 +43,7 @@ class IndexCustomerWebsites extends InertiaAction
 
 
     /** @noinspection PhpUndefinedMethodInspection */
-    public function handle($prefix = null): LengthAwarePaginator
+    public function handle(Customer $customer = null, $prefix = null): LengthAwarePaginator
     {
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
             $query->where(function ($query) use ($value) {
@@ -56,6 +57,10 @@ class IndexCustomerWebsites extends InertiaAction
         }
 
         $queryBuilder = QueryBuilder::for(CustomerWebsite::class);
+
+        if($customer) {
+            $queryBuilder->where('customer_id', $customer->id);
+        }
 
         return $queryBuilder
             ->select('customers.name as customer_name', 'portfolio_websites.slug', 'portfolio_websites.name', 'domain')
@@ -130,28 +135,6 @@ class IndexCustomerWebsites extends InertiaAction
                     : Inertia::lazy(fn () => HistoryResource::collection(IndexHistories::run(CustomerWebsite::class)))
             ]
         )->table($this->tableStructure(
-            modelOperations: [
-                'createLink' => [
-                    [
-                        'route' => [
-                            'name'       => 'org.shops.show.products.create',
-                            'parameters' => array_values(['$shop->slug'])
-                        ],
-                        'icon'  => 'fal fa-upload',
-                        'label' => 'upload',
-                        'style' => 'secondary'
-                    ],
-                    [
-                        'route' => [
-                            'name'       => 'org.shops.show.products.create',
-                            'parameters' => array_values(['$shop->slug'])
-                        ],
-                        'label' => __('create'),
-                        'style' => 'primary'
-                    ],
-
-                ]
-            ],
             prefix: 'websites',
             exportLinks: [
                 'export' => [

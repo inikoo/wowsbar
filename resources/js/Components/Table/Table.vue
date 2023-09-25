@@ -603,7 +603,7 @@ watch(name, () => {
                                     class="ring-1 ring-gray-300 overflow-hidden"
                                     :class="[queryBuilderProps.modelOperations?.createLink.length > 1 ? 'first:rounded-l last:rounded-r' : '']"
                                 >
-                                    <Button :style="linkButton.style" :icon="linkButton.icon" 
+                                    <Button :style="linkButton.style" :icon="linkButton.icon"
                                         class="h-full capitalize inline-flex items-center rounded-none text-sm border-none font-medium shadow-sm focus:ring-transparent focus:ring-offset-transparent focus:ring-0"
                                     >
                                         <span v-if="linkButton.label" class="">{{ linkButton.label }}</span>
@@ -703,7 +703,7 @@ watch(name, () => {
                                                         </div>
                                                         <span v-else class="capitalize">{{ column.label ? trans(column.label) : '' }}</span>
                                                     </slot>
-                                        
+
                                                     <svg v-if="column.sortable" aria-hidden="true" class="w-3 h-3 ml-2" :class="{
                                                         'text-gray-400': !column.sorted,
                                                         'text-green-500': column.sorted,
@@ -720,7 +720,7 @@ watch(name, () => {
                                                 </span>
                                             </slot>
                                         </template>
-                                 
+
                                     </HeaderCell>
                                 </tr>
                             </thead>

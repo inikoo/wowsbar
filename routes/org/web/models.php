@@ -29,6 +29,7 @@ use App\Actions\Market\Product\UploadProduct;
 use App\Actions\Market\Shop\StoreShop;
 use App\Actions\Organisation\Guest\UploadGuest;
 use App\Actions\Organisation\Organisation\UpdateOrganisation;
+use App\Actions\Portfolio\PortfolioWebsite\UploadPortfolioWebsite;
 use App\Actions\UI\Organisation\Profile\UpdateProfile;
 use App\Actions\Web\Webpage\StoreArticle;
 use App\Actions\Web\Webpage\StoreWebpage;
@@ -91,3 +92,4 @@ Route::post('/workplace/', StoreWorkplace::class)->name('workplace.store');
 Route::delete('/workplace/{workplace}', DeleteWorkplace::class)->name('workplace.delete');
 
 Route::patch('/customer/{customer}', UpdateCustomer::class)->name('customer.update');
+Route::post('/customer/{customer}/websites/upload', UploadPortfolioWebsite::class)->name('customers.websites.upload');
