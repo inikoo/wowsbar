@@ -5,18 +5,19 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\CustomerWebsites\CustomerWebsite\UI;
+namespace App\Actions\Portfolios\CustomerWebsite\UI;
 
 use App\Actions\CRM\Customer\UI\ShowCustomer;
 use App\Actions\Helpers\History\IndexHistories;
 use App\Actions\InertiaAction;
+use App\Actions\UI\Organisation\Portfolios\ShowPortfoliosDashboard;
 use App\Actions\UI\Organisation\Dashboard\ShowDashboard;
 use App\Enums\UI\Organisation\CustomerWebsitesTabsEnum;
 use App\Http\Resources\CustomerWebsites\CustomerWebsiteResource;
 use App\Http\Resources\History\HistoryResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\CRM\Customer;
-use App\Models\CustomerWebsites\CustomerWebsite;
+use App\Models\Portfolios\CustomerWebsite;
 use App\Models\Market\Shop;
 use App\Models\Organisation\Organisation;
 use Closure;
@@ -169,7 +170,7 @@ class IndexCustomerWebsites extends InertiaAction
 
 
         return Inertia::render(
-            'CustomerWebsites/CustomerWebsites',
+            'Portfolios/CustomerWebsites',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->getName(),
@@ -244,7 +245,6 @@ class IndexCustomerWebsites extends InertiaAction
             ];
         };
 
-
         return match ($routeName) {
             'org.crm.shop.customers.show.customer-websites.index' =>
             array_merge(
@@ -259,13 +259,26 @@ class IndexCustomerWebsites extends InertiaAction
                     ]
                 ),
             ),
-            'org.portfolios.index' =>
+            'org.portfolios.customer-websites.index' =>
             array_merge(
                 ShowDashboard::make()->getBreadcrumbs(),
                 $headCrumb(
                     [
-                        'name' => 'org.portfolios.index',
+                        'name' => 'org.portfolios.customer-websites.index',
                         null
+                    ]
+                ),
+            ),
+            'org.portfolios.shop.customer-websites.index' =>
+            array_merge(
+                ShowPortfoliosDashboard::make()->getBreadcrumbs(
+                    'org.portfolios.shop.dashboard',
+                    $routeParameters
+                ),
+                $headCrumb(
+                    [
+                        'name' => 'org.portfolios.shop.customer-websites.index',
+                        'parameters'=>$routeParameters
                     ]
                 ),
             ),

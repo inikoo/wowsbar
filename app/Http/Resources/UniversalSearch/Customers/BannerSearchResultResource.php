@@ -1,7 +1,7 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Mon, 25 Sep 2023 15:26:15 Malaysia Time, Kuala Lumpur, Malysia
+ * Created: Mon, 25 Sep 2023 15:26:15 Malaysia Time, Kuala Lumpur, Malaysia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 

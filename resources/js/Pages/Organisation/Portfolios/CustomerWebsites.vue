@@ -1,6 +1,6 @@
 <!--
   - Author: Raul Perusquia <raul@inikoo.com>
-  - Created: Tue, 19 Sep 2023 13:37:29 Malaysia Time, Pantai Lembeng, Bali, Indonesia
+  - Created: Tue, 26 Sep 2023 02:02:12 Malaysia Time, Kuala Lumpur, Malaysia
   - Copyright (c) 2023, Raul A Perusquia Flores
   -->
 
@@ -30,9 +30,9 @@ library.add(faUpload, falFile, faTimes, faFileDownload, fasFile)
 const props = defineProps<{
     pageHead: any
     title: string
-    websites: object
-    changelog: object
-    uploaded_websites: object
+    websites?: object
+    changelog?: object
+    uploaded_websites?: object
     tabs: {
         current: string;
         navigation: object;

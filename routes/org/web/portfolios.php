@@ -6,22 +6,30 @@
  */
 
 
-use App\Actions\CustomerWebsites\CustomerWebsite\UI\EditCustomerWebsite;
-use App\Actions\CustomerWebsites\CustomerWebsite\UI\IndexCustomerWebsites;
-use App\Actions\CustomerWebsites\CustomerWebsite\UI\RemoveCustomerWebsite;
-use App\Actions\CustomerWebsites\CustomerWebsite\UI\ShowCustomerWebsite;
-use App\Actions\UI\Organisation\CustomerWebsites\ShowCustomerWebsitesDashboard;
+use App\Actions\Portfolios\CustomerWebsite\UI\EditCustomerWebsite;
+use App\Actions\Portfolios\CustomerWebsite\UI\IndexCustomerWebsites;
+use App\Actions\Portfolios\CustomerWebsite\UI\RemoveCustomerWebsite;
+use App\Actions\Portfolios\CustomerWebsite\UI\ShowCustomerWebsite;
+use App\Actions\UI\Organisation\Portfolios\ShowPortfoliosDashboard;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', ['uses' => ShowCustomerWebsitesDashboard::class, 'icon' => 'user-hard-hat', 'label' => 'human resources'])->name('dashboard');
-Route::get('/customer-websites/', ['uses' => IndexCustomerWebsites::class, 'icon' => 'portfolio', 'label' => "customer's websites"])->name('index');
+Route::get('/', ['uses' => ShowPortfoliosDashboard::class, 'icon' => 'user-hard-hat', 'label' => 'human resources'])->name('dashboard');
+Route::prefix('customer-websites')->as('customer-websites.')->group(function () {
+    Route::get('', ['uses' => IndexCustomerWebsites::class, 'icon' => 'portfolio', 'label' => "customer's websites"])->name('index');
+    Route::get('{customerWebsite}/edit', [EditCustomerWebsite::class, 'inShop'])->name('.edit');
+    Route::get('{customerWebsite}/delete', [RemoveCustomerWebsite::class, 'inShop'])->withTrashed()->name('remove');
+    Route::get('{customerWebsite}', ['uses' => ShowCustomerWebsite::class, 'icon' => 'globe', 'label' => 'websites'])->name('show');
+});
 
 Route::prefix('shop/{shop}')->as('shop.')->group(function () {
-    Route::get('/', ['icon' => 'portfolio', 'label' => "customer's websites"])->uses([ShowCustomerWebsitesDashboard::class,'inShop'])->name('dashboard');
-    Route::get('/customer-websites/', ['icon' => 'globe', 'label' => 'websites'])->uses([IndexCustomerWebsites::class,'inShop'])->name('customer-websites.index');
-    // Route::get('/customer-websites/{customerWebsite}/edit', [EditCustomerWebsite::class,'inShop'])->name('edit');
-    // Route::get('/customer-websites/{customerWebsite}/delete', [RemoveCustomerWebsite::class,'inShop'])->withTrashed()->name('remove');
-    // Route::get('/customer-websites/{customerWebsite}', ['uses' => [ShowCustomerWebsite::class,'inShop'], 'icon' => 'globe', 'label' => 'websites'])->name('show');
+    Route::get('/', ['icon' => 'portfolio', 'label' => "customer's websites"])->uses([ShowPortfoliosDashboard::class, 'inShop'])->name('dashboard');
+
+    Route::prefix('customer-websites')->as('customer-websites.')->group(function () {
+        Route::get('', ['icon' => 'globe', 'label' => 'websites'])->uses([IndexCustomerWebsites::class, 'inShop'])->name('index');
+        Route::get('{customerWebsite}/edit', ['icon' => 'globe', 'label' => 'websites'])->uses([EditCustomerWebsite::class, 'inShop'])->name('edit');
+        Route::get('{customerWebsite}/delete', ['icon' => 'globe', 'label' => 'websites'])->withTrashed()->uses([RemoveCustomerWebsite::class, 'inShop'])->name('remove');
+        Route::get('{customerWebsite}', ['icon' => 'globe', 'label' => 'websites'])->uses([ShowCustomerWebsite::class, 'inShop'])->name('show');
+    });
 });
 
 

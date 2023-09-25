@@ -5,7 +5,7 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\CustomerWebsites\CustomerWebsite\UI;
+namespace App\Actions\Portfolios\CustomerWebsite\UI;
 
 use App\Actions\CRM\Customer\UI\ShowCustomer;
 use App\Actions\Helpers\History\IndexHistories;
@@ -15,7 +15,7 @@ use App\Enums\UI\Organisation\CustomerWebsiteTabsEnum;
 use App\Http\Resources\CustomerWebsites\CustomerWebsiteResource;
 use App\Http\Resources\History\HistoryResource;
 use App\Models\CRM\Customer;
-use App\Models\CustomerWebsites\CustomerWebsite;
+use App\Models\Portfolios\CustomerWebsite;
 use App\Models\Market\Shop;
 use App\Models\Organisation\Organisation;
 use Illuminate\Support\Str;
@@ -54,6 +54,13 @@ class ShowCustomerWebsite extends InertiaAction
         return $this->handle(organisation(), $customerWebsite);
     }
 
+    public function inShop(Shop $shop, CustomerWebsite $customerWebsite, ActionRequest $request): CustomerWebsite
+    {
+        $this->initialisation($request)->withTab(CustomerWebsiteTabsEnum::values());
+
+        return $this->handle($shop, $customerWebsite);
+    }
+
     /** @noinspection PhpUnusedParameterInspection */
     public function inCustomerInShop(Shop $shop, Customer $customer, CustomerWebsite $customerWebsite, ActionRequest $request): CustomerWebsite
     {
@@ -76,7 +83,7 @@ class ShowCustomerWebsite extends InertiaAction
         }
 
         return Inertia::render(
-            'CustomerWebsites/CustomerWebsite',
+            'Portfolios/CustomerWebsite',
             [
                 'title'       => __('CustomerWebsite'),
                 'breadcrumbs' => $this->getBreadcrumbs(

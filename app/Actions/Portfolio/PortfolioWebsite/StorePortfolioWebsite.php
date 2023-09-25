@@ -8,11 +8,11 @@
 namespace App\Actions\Portfolio\PortfolioWebsite;
 
 use App\Actions\CRM\Customer\Hydrators\CustomerHydratePortfolioWebsites;
-use App\Actions\CustomerWebsites\CustomerWebsite\Hydrators\CustomerWebsiteHydrateUniversalSearch;
+use App\Actions\Portfolios\CustomerWebsite\Hydrators\CustomerWebsiteHydrateUniversalSearch;
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateCustomerWebsites;
 use App\Actions\Portfolio\PortfolioWebsite\Hydrators\PortfolioWebsiteHydrateUniversalSearch;
 use App\Models\CRM\Customer;
-use App\Models\CustomerWebsites\CustomerWebsite;
+use App\Models\Portfolios\CustomerWebsite;
 use App\Models\Portfolio\PortfolioWebsite;
 use App\Rules\CaseSensitive;
 use Exception;

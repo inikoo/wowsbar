@@ -5,13 +5,13 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\CustomerWebsites\CustomerWebsite;
+namespace App\Actions\Portfolios\CustomerWebsite;
 
 use App\Actions\CRM\Customer\Hydrators\CustomerHydratePortfolioWebsites;
-use App\Actions\CustomerWebsites\CustomerWebsite\Hydrators\CustomerWebsiteHydrateUniversalSearch;
+use App\Actions\Portfolios\CustomerWebsite\Hydrators\CustomerWebsiteHydrateUniversalSearch;
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateCustomerWebsites;
 use App\Models\CRM\Customer;
-use App\Models\CustomerWebsites\CustomerWebsite;
+use App\Models\Portfolios\CustomerWebsite;
 use App\Rules\CaseSensitive;
 use Exception;
 use Illuminate\Console\Command;

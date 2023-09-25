@@ -16,7 +16,16 @@ const props = defineProps<{
 
 
 function websiteRoute(website: Website) {
+
+    console.log(route().current())
     switch (route().current()) {
+        case  'org.portfolios.shop.customer-websites.index':
+            return route(
+                'org.portfolios.shop.customer-websites.show',
+                [
+                    route().params['shop'],
+                    website.slug
+                ]);
         case 'org.crm.shop.customers.show.customer-websites.index':
             return route(
                 'org.crm.shop.customers.show.customer-websites.show',

@@ -8,7 +8,7 @@
 namespace App\Actions\Organisation\Organisation\Hydrators;
 
 use App\Actions\Traits\WithEnumStats;
-use App\Models\CustomerWebsites\CustomerWebsite;
+use App\Models\Portfolios\CustomerWebsite;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class OrganisationHydrateCustomerWebsites

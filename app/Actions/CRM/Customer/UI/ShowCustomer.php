@@ -7,7 +7,7 @@
 
 namespace App\Actions\CRM\Customer\UI;
 
-use App\Actions\CustomerWebsites\CustomerWebsite\UI\IndexCustomerWebsites;
+use App\Actions\Portfolios\CustomerWebsite\UI\IndexCustomerWebsites;
 use App\Actions\InertiaAction;
 use App\Actions\Organisation\UI\CRM\ShowCRMDashboard;
 use App\Enums\UI\Customer\CustomerTabsEnum;

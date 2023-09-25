@@ -6,7 +6,6 @@
  */
 
 
-use App\Actions\CustomerWebsites\CustomerWebsite\UI\IndexCustomerWebsites;
 use App\Actions\Portfolio\Banner\UI\CreateBanner;
 use App\Actions\Portfolio\Banner\UI\EditBanner;
 use App\Actions\Portfolio\Banner\UI\IndexBanners;
@@ -16,6 +15,7 @@ use App\Actions\Portfolio\Banner\UI\ShowBannerWorkshop;
 use App\Actions\Portfolio\Banner\UploadImagesToBanner;
 use App\Actions\Portfolio\PortfolioWebsite\UI\CreatePortfolioWebsite;
 use App\Actions\Portfolio\PortfolioWebsite\UI\EditPortfolioWebsite;
+use App\Actions\Portfolio\PortfolioWebsite\UI\IndexPortfolioWebsites;
 use App\Actions\Portfolio\PortfolioWebsite\UI\RemovePortfolioWebsite;
 use App\Actions\Portfolio\PortfolioWebsite\UI\ShowPortfolioWebsite;
 use App\Actions\Portfolio\Snapshot\UI\IndexSnapshots;
@@ -32,7 +32,7 @@ Route::get('/dashboard', [
 ])->name('dashboard');
 
 Route::get('/websites', [
-    'uses'  => IndexCustomerWebsites::class,
+    'uses'  => IndexPortfolioWebsites::class,
     'icon'  => 'globe',
     'label' => 'websites'
 ])->name('websites.index');

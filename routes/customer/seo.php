@@ -6,7 +6,7 @@
  */
 
 
-use App\Actions\CustomerWebsites\CustomerWebsite\UI\IndexCustomerWebsites;
+use App\Actions\Portfolios\CustomerWebsite\UI\IndexCustomerWebsites;
 use App\Actions\UI\Customer\SEO\ShowSeoDashboard;
 use Illuminate\Support\Facades\Route;
 

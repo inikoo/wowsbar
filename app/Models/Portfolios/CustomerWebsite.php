@@ -5,7 +5,7 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Models\CustomerWebsites;
+namespace App\Models\Portfolios;
 
 use App\Models\CRM\Customer;
 use App\Models\Portfolio\Banner;
@@ -25,7 +25,7 @@ use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
 /**
- * App\Models\CustomerWebsites\CustomerWebsite
+ * App\Models\Portfolios\CustomerWebsite
  *
  * @property int $id
  * @property int $customer_id

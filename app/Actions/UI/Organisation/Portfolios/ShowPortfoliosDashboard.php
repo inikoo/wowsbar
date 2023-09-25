@@ -5,7 +5,7 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\UI\Organisation\CustomerWebsites;
+namespace App\Actions\UI\Organisation\Portfolios;
 
 use App\Actions\UI\Organisation\Dashboard\ShowDashboard;
 use App\Actions\UI\WithInertia;
@@ -16,12 +16,12 @@ use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 
-class ShowCustomerWebsitesDashboard
+class ShowPortfoliosDashboard
 {
     use AsAction;
     use WithInertia;
 
-    public function handle($parent)
+    public function handle(Organisation|Shop $parent): Organisation|Shop
     {
         return $parent;
     }
@@ -32,12 +32,13 @@ class ShowCustomerWebsitesDashboard
     }
 
 
-    public function asController(): void
+    public function asController(): Organisation
     {
         $this->validateAttributes();
+        return $this->handle(organisation());
     }
 
-    public function inShop(Shop $shop)
+    public function inShop(Shop $shop): Shop
     {
         $this->validateAttributes();
         return $this->handle($shop);
@@ -48,7 +49,7 @@ class ShowCustomerWebsitesDashboard
     {
 
         return Inertia::render(
-            'HumanResources/HumanResourcesDashboard',
+            'Portfolios/PortfoliosDashboard',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->getName(),
@@ -93,7 +94,7 @@ class ShowCustomerWebsitesDashboard
                                     'name'      => 'org.portfolios.shop.dashboard',
                                     'parameters'=> $routeParameters
                                 ],
-                                'label' => __('customer websites'),
+                                'label' => __("portfolios"),
                             ]
                         ]
                     ]
@@ -107,7 +108,7 @@ class ShowCustomerWebsitesDashboard
                                 'route' => [
                                     'name' => 'org.portfolios.dashboard',
                                 ],
-                                'label' => __('customer websites'),
+                                'label' => __("portfolios"),
                             ]
                         ]
                     ]

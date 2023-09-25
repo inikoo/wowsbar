@@ -16,7 +16,7 @@ class CustomerWebsiteResource extends JsonResource
 {
     public function toArray($request): array
     {
-        /** @var \App\Models\CustomerWebsites\CustomerWebsite $customerWebsite */
+        /** @var \App\Models\Portfolios\CustomerWebsite $customerWebsite */
         $customerWebsite = $this;
 
 
