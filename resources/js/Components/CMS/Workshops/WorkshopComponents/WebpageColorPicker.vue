@@ -3,8 +3,8 @@
 import { ColorPicker } from 'vue-color-kit'
 import 'vue-color-kit/dist/vue-color-kit.css'
 import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue'
-import { set, get } from 'lodash'
-import { ref, watch } from 'vue'
+import { ref } from 'vue'
+
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faPaintBrushAlt } from '@/../private/pro-regular-svg-icons'
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -15,23 +15,24 @@ interface valueColorPicker {
         r: number
         g: number
         b: number
-        a: number}
+        a: number
+    }
 }
 
 const props = defineProps<{
     modelValue: string
 }>()
 
+// Declare emit
 const emit = defineEmits<{
     (e: 'update:modelValue', value: string): void
 }>()
 
-const colorValue = ref()
+// Emit to v-model on parent
 const changeColor = (value: valueColorPicker) => {
     const { r, g, b, a } = value.rgba
     emit('update:modelValue', `rgba(${r}, ${g}, ${b}, ${a})`)
 }
-
 
 </script>
 

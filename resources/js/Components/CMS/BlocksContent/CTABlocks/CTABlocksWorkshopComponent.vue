@@ -17,6 +17,10 @@ const components = {
 const dataCTA = reactive({
     title: '<p style="text-align: center"><strong><span style="font-size: 44px; color: #171717">Boost your career</span></strong></p>',
     subtitle: '<p style="text-align: center"><span style="font-size: 24px; color: rgb(74, 74, 74)">Elevate your career with a leading company. Uncover your full potential and embark on a rewarding journey with us.</span></p>',
+    image: {
+        link: 'https://images.unsplash.com/photo-1525130413817-d45c1d127c42?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1920&q=60',
+        color: 'rgba(129, 140, 248, 1)'
+    },
     button: {
         background: 'rgba(55, 65, 81, 1)',
         label: '<p><span style="color: #c0c0c0">Join now!</span></p>',
