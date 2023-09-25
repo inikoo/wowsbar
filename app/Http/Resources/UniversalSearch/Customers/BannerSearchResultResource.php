@@ -25,7 +25,7 @@ class BannerSearchResultResource extends JsonResource
             'code'           => $contentBlock->code,
             'name'           => $contentBlock->name,
             'route'          => [
-                'name'       => 'portfolio.websites.show.banners.show',
+                'name'       => 'customer.portfolio.websites.show.banners.show',
                 'parameters' => [
                     $contentBlock->data['website_slug'],
                     $contentBlock->slug
