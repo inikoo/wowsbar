@@ -169,14 +169,14 @@ class IndexProspects extends InertiaAction
                         'name'       => 'org.models.shop.prospects.upload',
                         'parameters' => $this->parent->id
                     ],
-                    'history' => [
-                        'name'       => 'org.models.prospects.upload',
-                        'parameters' => $this->parent->id
-                    ],
-                    'download' => [
-                        'name'       => 'org.crm.prospects.uploads.template.download',
-                        'parameters' => $this->parent->id
-                    ]
+                    // 'history' => [
+                    //     'name'       => 'org.models.prospects.upload',
+                    //     'parameters' => $this->parent->id
+                    // ],
+                    // 'download' => [
+                    //     'name'       => 'org.crm.prospects.uploads.template.download',
+                    //     'parameters' => $this->parent->id
+                    // ]
                 ],
                 'data'         => ProspectResource::collection($prospects),
 

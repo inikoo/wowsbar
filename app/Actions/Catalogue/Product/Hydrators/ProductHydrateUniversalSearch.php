@@ -7,7 +7,7 @@
 
 namespace App\Actions\Catalogue\Product\Hydrators;
 
-use App\Models\Market\Product;
+use App\Models\Catalogue\Product;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class ProductHydrateUniversalSearch

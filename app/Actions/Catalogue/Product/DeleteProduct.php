@@ -7,11 +7,8 @@
 
 namespace App\Actions\Catalogue\Product;
 
-use App\Actions\Market\Shop\Hydrators\ShopHydrateProducts;
 use App\Actions\Traits\WithActionUpdate;
-use App\Models\Market\Product;
-use App\Models\Market\Shop;
-use App\Models\Tenancy\Tenant;
+use App\Models\Catalogue\Product;
 use Illuminate\Console\Command;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
@@ -21,22 +18,12 @@ class DeleteProduct
 {
     use WithActionUpdate;
 
-    public string $commandSignature = 'delete:product {tenant} {id}';
 
-    public function handle(Product $product, array $deletedData = [], bool $skipHydrate = false): Product
+    public function handle(Product $product, array $deletedData = []): Product
     {
         $product->delete();
-        $product->historicRecords()->delete();
         $product = $this->update($product, $deletedData, ['data']);
-        if (!$skipHydrate) {
-            //todo fix this
-            /*
-            if ($product->family_id) {
-                FamilyHydrateProducts::dispatch($product->family);
-            }
-            */
-            ShopHydrateProducts::dispatch($product->shop);
-        }
+        OrganisationHydrateProducts::dispatch();
 
         return $product;
     }
@@ -53,17 +40,11 @@ class DeleteProduct
         return $this->handle($product);
     }
 
-    public function inShop(Shop $shop, Product $product, ActionRequest $request): Product
-    {
-        $request->validate();
-
-        return $this->handle($product);
-    }
+    public string $commandSignature = 'delete:product {product}';
 
     public function asCommand(Command $command): int
     {
-        Tenant::where('slug', $command->argument('tenant'))->first()->makeCurrent();
-        $this->handle(Product::findOrFail($command->argument('id')));
+        $this->handle(Product::where('slug', $command->argument('product'))->firstOrFail());
         return 0;
     }
 

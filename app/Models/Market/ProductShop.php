@@ -10,42 +10,53 @@ namespace App\Models\Market;
 use App\Enums\Catalogue\Product\ProductStateEnum;
 use App\Enums\Catalogue\Product\ProductTypeEnum;
 use App\Models\BI\SalesStats;
-use App\Models\Search\UniversalSearch;
 use App\Models\Traits\HasImages;
 use App\Models\Traits\HasUniversalSearch;
-use Eloquent;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 use Spatie\MediaLibrary\HasMedia;
-use Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
 /**
- * App\Models\Market\Product
+ * App\Models\Market\ProductShop
  *
+ * @property int $id
+ * @property string $slug
+ * @property int|null $product_id
+ * @property int|null $shop_id
+ * @property ProductStateEnum|null $state
+ * @property bool|null $status
+ * @property string $price unit price
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string|null $deleted_at
  * @property ProductTypeEnum $type
- * @property ProductStateEnum $state
- * @property-read Collection<int, \App\Models\Market\HistoricProduct> $historicRecords
- * @property-read int|null $historic_records_count
- * @property-read MediaCollection<int, \App\Models\Media\Media> $media
+ * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \App\Models\Media\Media> $media
  * @property-read int|null $media_count
  * @property-read SalesStats|null $salesStats
- * @property-read \App\Models\Market\Shop $shop
- * @property-read \App\Models\Market\ProductStats|null $stats
- * @property-read UniversalSearch|null $universalSearch
- * @method static Builder|Product newModelQuery()
- * @method static Builder|Product newQuery()
- * @method static Builder|Product query()
- * @mixin Eloquent
+ * @property-read \App\Models\Market\Shop|null $shop
+ * @property-read \App\Models\Market\ProductShopStats|null $stats
+ * @property-read \App\Models\Search\UniversalSearch|null $universalSearch
+ * @method static \Illuminate\Database\Eloquent\Builder|ProductShop newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|ProductShop newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|ProductShop query()
+ * @method static \Illuminate\Database\Eloquent\Builder|ProductShop whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ProductShop whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ProductShop whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ProductShop wherePrice($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ProductShop whereProductId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ProductShop whereShopId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ProductShop whereSlug($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ProductShop whereState($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ProductShop whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ProductShop whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
-class Product extends Pivot implements HasMedia
+class ProductShop extends Pivot implements HasMedia
 {
     use HasSlug;
     use HasUniversalSearch;
@@ -92,14 +103,10 @@ class Product extends Pivot implements HasMedia
         return $this->morphOne(SalesStats::class, 'model')->where('scope', 'sales');
     }
 
-    public function historicRecords(): HasMany
-    {
-        return $this->hasMany(HistoricProduct::class);
-    }
 
     public function stats(): HasOne
     {
-        return $this->hasOne(ProductStats::class);
+        return $this->hasOne(ProductShopStats::class);
     }
 
 

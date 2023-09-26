@@ -29,7 +29,6 @@ return new class () extends Migration {
             $table->boolean('status')->nullable()->index();
 
             $table->unsignedDecimal('price', 18)->comment('unit price');
-            $table->unsignedDecimal('rrp', 12, 3)->nullable()->comment('RRP per outer');
 
             $table->timestampsTz();
             $table->softDeletesTz();

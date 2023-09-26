@@ -8,7 +8,7 @@
 namespace App\Actions\Catalogue\Product\UI;
 
 use App\Actions\InertiaAction;
-use App\Models\Market\Product;
+use App\Models\Market\ProductShop;
 use App\Models\Market\Shop;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -16,7 +16,7 @@ use Lorisleiva\Actions\ActionRequest;
 
 class RemoveProduct extends InertiaAction
 {
-    public function handle(Product $product): Product
+    public function handle(ProductShop $product): ProductShop
     {
         return $product;
     }
@@ -26,7 +26,7 @@ class RemoveProduct extends InertiaAction
         return $request->user()->hasPermissionTo("shops.edit");
     }
 
-    public function inTenant(Product $product, ActionRequest $request): Product
+    public function inTenant(ProductShop $product, ActionRequest $request): ProductShop
     {
         $this->initialisation($request);
 
@@ -36,7 +36,7 @@ class RemoveProduct extends InertiaAction
 
 
     /** @noinspection PhpUnusedParameterInspection */
-    public function inShop(Shop $shop, Product $product, ActionRequest $request): Product
+    public function inShop(Shop $shop, ProductShop $product, ActionRequest $request): ProductShop
     {
         $this->initialisation($request);
 
@@ -54,7 +54,7 @@ class RemoveProduct extends InertiaAction
         ];
     }
 
-    public function htmlResponse(Product $product, ActionRequest $request): Response
+    public function htmlResponse(ProductShop $product, ActionRequest $request): Response
     {
 
         return Inertia::render(

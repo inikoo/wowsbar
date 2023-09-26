@@ -8,7 +8,7 @@
 namespace App\Actions\Market\Shop\Hydrators;
 
 use App\Enums\Catalogue\Product\ProductStateEnum;
-use App\Models\Market\Product;
+use App\Models\Market\ProductShop;
 use App\Models\Market\Shop;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Support\Arr;
@@ -20,7 +20,7 @@ class ShopHydrateProducts implements ShouldBeUnique
 
     public function handle(Shop $shop): void
     {
-        $stateCounts   = Product::where('shop_id', $shop->id)
+        $stateCounts   = ProductShop::where('shop_id', $shop->id)
             ->selectRaw('state, count(*) as total')
             ->groupBy('state')
             ->pluck('total', 'state')->all();
@@ -33,8 +33,8 @@ class ShopHydrateProducts implements ShouldBeUnique
         $shop->stats->update($stats);
     }
 
-    public function getJobUniqueId(Shop $shop): string
+    public function getJobUniqueId(Shop $parameters): string
     {
-        return $shop->id;
+        return $parameters->id;
     }
 }

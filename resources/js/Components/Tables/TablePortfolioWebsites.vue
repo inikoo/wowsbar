@@ -12,14 +12,15 @@ import {computed, ref, watch} from "vue";
 import Pusher from "pusher-js";
 import ModalUpload from "@/Components/Utils/ModalUpload.vue";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
+import { routeType } from '@/types/route'
 
 const props = defineProps<{
     data: object,
     tab?:string,
     uploadRoutes: {
-        upload:object,
-        history:object,
-        download:object
+        upload: routeType
+        history?: routeType
+        download?: routeType
     }
 }>()
 
@@ -74,12 +75,12 @@ watch(compProgressBar, () => {
 
 <template>
     <!-- Modal: Upload -->
-    <ModalUpload
+    <!-- <ModalUpload
         v-model="isModalOpen"
         :routes="uploadRoutes"
         :isUploaded="isUploaded"
         @isUploaded="(val: any) => isUploaded = val"
-    />
+    /> -->
 
     <!-- Progress Bar -->
     <div :class="isUploaded && !isProgress ? 'bottom-12' : '-bottom-12'" class="z-50 fixed right-1/2 translate-x-1/2 transition-all duration-200 ease-in-out flex gap-x-1">

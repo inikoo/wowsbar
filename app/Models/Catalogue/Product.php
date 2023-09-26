@@ -10,21 +10,19 @@ namespace App\Models\Catalogue;
 use App\Enums\Catalogue\Product\ProductStateEnum;
 use App\Enums\Catalogue\Product\ProductTypeEnum;
 use App\Models\BI\SalesStats;
-use App\Models\Market\HistoricProduct;
-use App\Models\Market\ProductStats;
+use App\Models\Market\ProductShopStats;
 use App\Models\Market\Shop;
 use App\Models\Search\UniversalSearch;
 use App\Models\Traits\HasImages;
 use App\Models\Traits\HasUniversalSearch;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 use Spatie\MediaLibrary\HasMedia;
@@ -33,62 +31,47 @@ use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
 /**
- * App\Models\Market\Product
+ * App\Models\Catalogue\Product
  *
  * @property int $id
  * @property string $slug
+ * @property int|null $parent_id
+ * @property string|null $parent_type
  * @property string $code
  * @property string|null $name
  * @property string|null $description
  * @property ProductTypeEnum $type
- * @property int $owner_id
- * @property string $owner_type
- * @property int $parent_id
- * @property string $parent_type
- * @property int|null $current_historic_product_id
- * @property int|null $shop_id
  * @property ProductStateEnum|null $state
  * @property bool|null $status
  * @property string|null $units units per outer
  * @property string $price unit price
- * @property string|null $rrp RRP per outer
- * @property int|null $available
- * @property int|null $image_id
  * @property array $settings
  * @property array $data
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property Carbon|null $deleted_at
- * @property-read Collection<int, HistoricProduct> $historicRecords
- * @property-read int|null $historic_records_count
  * @property-read MediaCollection<int, \App\Models\Media\Media> $media
  * @property-read int|null $media_count
+ * @property-read Model|\Eloquent $parent
  * @property-read SalesStats|null $salesStats
- * @property-read Shop|null $shop
- * @property-read ProductStats|null $stats
+ * @property-read Shop $shop
+ * @property-read ProductShopStats|null $stats
  * @property-read UniversalSearch|null $universalSearch
  * @method static Builder|Product newModelQuery()
  * @method static Builder|Product newQuery()
  * @method static Builder|Product onlyTrashed()
  * @method static Builder|Product query()
- * @method static Builder|Product whereAvailable($value)
  * @method static Builder|Product whereCode($value)
  * @method static Builder|Product whereCreatedAt($value)
- * @method static Builder|Product whereCurrentHistoricProductId($value)
  * @method static Builder|Product whereData($value)
  * @method static Builder|Product whereDeletedAt($value)
  * @method static Builder|Product whereDescription($value)
  * @method static Builder|Product whereId($value)
- * @method static Builder|Product whereImageId($value)
  * @method static Builder|Product whereName($value)
- * @method static Builder|Product whereOwnerId($value)
- * @method static Builder|Product whereOwnerType($value)
  * @method static Builder|Product whereParentId($value)
  * @method static Builder|Product whereParentType($value)
  * @method static Builder|Product wherePrice($value)
- * @method static Builder|Product whereRrp($value)
  * @method static Builder|Product whereSettings($value)
- * @method static Builder|Product whereShopId($value)
  * @method static Builder|Product whereSlug($value)
  * @method static Builder|Product whereState($value)
  * @method static Builder|Product whereStatus($value)
@@ -147,14 +130,14 @@ class Product extends Model implements HasMedia
         return $this->morphOne(SalesStats::class, 'model')->where('scope', 'sales');
     }
 
-    public function historicRecords(): HasMany
-    {
-        return $this->hasMany(HistoricProduct::class);
-    }
-
     public function stats(): HasOne
     {
-        return $this->hasOne(ProductStats::class);
+        return $this->hasOne(ProductShopStats::class);
+    }
+
+    public function parent(): MorphTo
+    {
+        return $this->morphTo();
     }
 
 

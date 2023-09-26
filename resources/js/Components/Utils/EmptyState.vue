@@ -54,8 +54,8 @@ const randomIndex = Math.floor(Math.random() * randomIcon.length)
         </div>
 
         <h3 class="font-logo text-lg font-bold text-gray-600">{{ data?.title ?? trans('No records found') }}</h3>
-        <p v-if="data?.description" class="text-sm mt-2 text-gray-500 mb-4">{{ data?.description }}</p>
-        <Link v-if="data?.action" :href="route(data?.action.route.name, data?.action.route.parameters)" class="">
+        <p v-if="data?.description" class="text-sm text-gray-500 inline-block">{{ data?.description }}</p>
+        <Link v-if="data?.action" :href="route(data?.action.route.name, data?.action.route.parameters)" class="mt-4 block">
             <Button size="xs" :style="data?.action.style"
                 class="capitalize text-gray-600">
                 <FontAwesomeIcon v-if="data?.action.icon" icon="far fa-plus" class="-ml-0.5 mr-1.5 h-5 w-5" aria-hidden="true" />

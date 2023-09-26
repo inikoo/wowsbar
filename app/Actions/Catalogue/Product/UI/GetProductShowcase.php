@@ -7,14 +7,14 @@
 
 namespace App\Actions\Catalogue\Product\UI;
 
-use App\Models\Market\Product;
+use App\Models\Market\ProductShop;
 use Lorisleiva\Actions\Concerns\AsObject;
 
 class GetProductShowcase
 {
     use AsObject;
 
-    public function handle(Product $product): array
+    public function handle(ProductShop $product): array
     {
         return [
             []

@@ -47,7 +47,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read array $es_audits
  * @property-read Model|\Eloquent $parent
  * @property-read ProductCategory|null $productCategory
- * @property-read Collection<int, \App\Models\Market\Product> $products
+ * @property-read Collection<int, \App\Models\Market\ProductShop> $products
  * @property-read int|null $products_count
  * @property-read SalesStats|null $salesStats
  * @property-read \App\Models\Market\Shop|null $shop
@@ -134,6 +134,6 @@ class ProductCategoryShop extends Pivot implements Auditable
 
     public function products(): MorphMany
     {
-        return $this->morphMany(Product::class, 'parent');
+        return $this->morphMany(ProductShop::class, 'parent');
     }
 }

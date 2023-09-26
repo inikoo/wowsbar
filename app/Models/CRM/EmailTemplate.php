@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property int $id
  * @property string $title
+ * @property string $parent_type
+ * @property int $parent_id
  * @property mixed $data
  * @property mixed $compiled
  * @property \Illuminate\Support\Carbon|null $created_at
@@ -21,6 +23,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|EmailTemplate whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|EmailTemplate whereData($value)
  * @method static \Illuminate\Database\Eloquent\Builder|EmailTemplate whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EmailTemplate whereParentId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EmailTemplate whereParentType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|EmailTemplate whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|EmailTemplate whereUpdatedAt($value)
  * @mixin \Eloquent

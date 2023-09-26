@@ -8,9 +8,9 @@
 namespace App\Actions\Catalogue\Product\UI;
 
 use App\Actions\InertiaAction;
-use App\Enums\Market\Product\ProductTypeEnum;
-use App\Models\Market\Product;
-use App\Models\Market\Shop;
+
+use App\Enums\Catalogue\Product\ProductTypeEnum;
+use App\Models\Catalogue\Product;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -25,20 +25,13 @@ class EditProduct extends InertiaAction
 
     public function authorize(ActionRequest $request): bool
     {
-        $this->canEdit = $request->user()->can('shops.products.edit');
+        $this->canEdit = $request->user()->can('catalogue.edit');
 
-        return $request->user()->hasPermissionTo("shops.products.edit");
+        return $request->user()->hasPermissionTo("catalogue.edit");
     }
 
-    public function inTenant(Product $product, ActionRequest $request): Product
-    {
-        $this->initialisation($request);
 
-        return $this->handle($product);
-    }
-
-    /** @noinspection PhpUnusedParameterInspection */
-    public function inShop(Shop $shop, Product $product, ActionRequest $request): Product
+    public function asController(Product $product, ActionRequest $request): Product
     {
         $this->initialisation($request);
 
