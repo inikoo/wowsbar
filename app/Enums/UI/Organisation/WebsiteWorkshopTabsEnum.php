@@ -15,9 +15,9 @@ enum WebsiteWorkshopTabsEnum: string
     use EnumHelperTrait;
     use HasTabs;
 
-    case LAYOUT               = 'layout';
-    case HEADER               = 'header';
-    case FOOTER               = 'footer';
+    case LAYOUT               = 'workshop_layout';
+    case HEADER               = 'workshop_header';
+    case FOOTER               = 'workshop_footer';
 
 
 

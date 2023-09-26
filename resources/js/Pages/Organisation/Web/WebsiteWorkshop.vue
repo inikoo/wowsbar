@@ -6,18 +6,17 @@ import {
 } from "@/../private/pro-light-svg-icons"
 
 import PageHeading from '@/Components/Headings/PageHeading.vue'
-import { computed, defineAsyncComponent, ref } from "vue"
+import { computed, ref } from "vue"
 import { useTabChange } from "@/Composables/tab-change"
 import Tabs from "@/Components/Navigation/Tabs.vue"
 import { capitalize } from "@/Composables/capitalize"
 import FooterWorkshop from "@/Components/CMS/Workshops/FooterWorkshop.vue";
-import MenuWorkshop from "@/Components/CMS/Workshops/MenuWorkshop.vue";
 import HeaderWorkshop from "@/Components/CMS/Workshops/HeaderWorkshop/HeaderTemplateWorkshop.vue";
 import LayoutWorkshop from "@/Components/CMS/Workshops/LayoutWorkshop.vue";
-import GrapeEditor from '@/Components/CMS/Workshops/GrapeEditor/GrapeEditor.vue'
 import Button from '@/Components/Elements/Buttons/Button.vue'
 import { notify } from "@kyvg/vue3-notification"
-import { router,useForm } from '@inertiajs/vue3'
+import { useForm } from '@inertiajs/vue3'
+import {trans} from 'laravel-vue-i18n'
 
 library.add(
     faArrowAltToTop,
@@ -52,10 +51,9 @@ const handleTabUpdate = (tabSlug) => {
 
 const component = computed(() => {
     const components = {
-        'header': HeaderWorkshop,
-        'menu': MenuWorkshop,
-        'footer': FooterWorkshop,
-        'layout': GrapeEditor,
+        'workshop_header': HeaderWorkshop,
+        'workshop_footer': FooterWorkshop,
+        'workshop_layout': LayoutWorkshop,
     }
     return components[currentTab.value]
 })
@@ -71,7 +69,7 @@ const sendDataToServer = async () => {
         onSuccess: async (res) => {
             console.log('res',res)
             notify({
-                title: "Success Update",
+                title: trans("Success Update"),
                 type: "success",
                 text: "Banner already update and publish",
             });
@@ -79,7 +77,7 @@ const sendDataToServer = async () => {
         onError: (errors: any) => {
             console.log(errors)
             notify({
-                title: "Failed to Update Banner",
+                title: trans("Failed to Update Banner"),
                 text: errors,
                 type: "error"
             });
@@ -90,15 +88,7 @@ const sendDataToServer = async () => {
 </script>
 
 
-<template layout="OrgApp"> 
-    <notifications
-        group="custom-style"
-        position="top center"
-        classes="n-light"
-        dangerously-set-inner-html
-        :max="3"
-        :width="400"
-    />
+<template layout="OrgApp">
     <Head :title="capitalize(title)" />
     <PageHeading :data="pageHead"></PageHeading>
     <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate">
