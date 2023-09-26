@@ -50,7 +50,7 @@ php artisan product-category:new sma "Social Media Advertising"
 php artisan product-category:new leads "Prospecting"
 php artisan product-category:new caas "Content as a service"
 
-php artisan product:import products.xlsx
+ php artisan product:import database/seeders/datasets/excel-uploads/real/products.xlsx
 
 echo "🌱 create customer"
 php artisan shop:new-customer awa aiku@inikoo.com -C 'Aiku'
@@ -65,7 +65,7 @@ php artisan customer:new-banner aiku test1 'My first banner 🫡' hello
 php artisan customer:new-banner aiku test2 'My first banner without website 🫡'
 pg_dump -Fc -f "devops/devel/snapshots/portfolio.dump" ${DB}
 php artisan workplace:create "Beach bar" hq
-php artisan employee:import employees.xlsx
+php artisan employee:import database/seeders/datasets/excel-uploads/examples/employees.xlsx
 echo "🌱 All the employees are imported"
-php artisan shop:import-prospects awa prospects.xlsx
+php artisan shop:import-prospects awa database/seeders/datasets/excel-uploads/examples/prospects.xlsx
 echo "🛃 Organisation prospects imported"

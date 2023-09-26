@@ -14,7 +14,7 @@ defineProps(['stats']);
 
 <template>
     <div>
-        <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
+        <dl class="grid grid-cols-1 gap-5 sm:grid-cols-3">
             <div v-for="item in stats" :key="item.name"
                 class="overflow-hidden rounded-lg bg-white dark:bg-gray-600 px-4 py-5 shadow sm:p-6">
                 <dt class="truncate text-sm font-medium text-gray-500 dark:text-gray-400 capitalize">{{ trans(item.name) }}</dt>
