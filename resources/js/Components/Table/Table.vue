@@ -598,17 +598,20 @@ watch(name, () => {
 
                             <!-- Button or Button Group -->
                             <div v-if="queryBuilderProps.modelOperations?.createLink" class="flex">
-                                <Link v-for="linkButton in queryBuilderProps.modelOperations?.createLink"
-                                    :href="route(linkButton.route.name, linkButton.route.parameters)"
-                                    class="ring-1 ring-gray-300 overflow-hidden"
-                                    :class="[queryBuilderProps.modelOperations?.createLink.length > 1 ? 'first:rounded-l last:rounded-r' : '']"
+                                <slot v-for="linkButton in queryBuilderProps.modelOperations?.createLink"
+                                    :name="`button${linkButton.mode}`" :linkButton="linkButton"
                                 >
-                                    <Button :style="linkButton.style" :icon="linkButton.icon"
-                                        class="h-full capitalize inline-flex items-center rounded-none text-sm border-none font-medium shadow-sm focus:ring-transparent focus:ring-offset-transparent focus:ring-0"
+                                    <Link :href="'route(linkButton.route.name, linkButton.route.parameters)'"
+                                        class="ring-1 ring-gray-300 overflow-hidden"
+                                        :class="[queryBuilderProps.modelOperations?.createLink.length > 1 ? 'first:rounded-l last:rounded-r' : '']"
                                     >
-                                        <span v-if="linkButton.label" class="">{{ linkButton.label }}</span>
-                                    </Button>
-                                </Link>
+                                        <Button :style="linkButton.style" :icon="linkButton.icon"
+                                            class="h-full capitalize inline-flex items-center rounded-none text-sm border-none font-medium shadow-sm focus:ring-transparent focus:ring-offset-transparent focus:ring-0"
+                                        >
+                                            <span v-if="linkButton.label" class="">{{ linkButton.label }}</span>
+                                        </Button>
+                                    </Link>
+                                </slot>
 
                             </div>
                             <slot v-if="queryBuilderProps.modelOperations?.uploadFile" name="uploadFile"  id="uploadFile" :item="queryBuilderProps.modelOperations?.uploadFile"/>
