@@ -14,6 +14,7 @@ import FooterWorkshop from "@/Components/CMS/Workshops/FooterWorkshop.vue";
 import MenuWorkshop from "@/Components/CMS/Workshops/MenuWorkshop.vue";
 import HeaderWorkshop from "@/Components/CMS/Workshops/HeaderWorkshop/HeaderTemplateWorkshop.vue";
 import LayoutWorkshop from "@/Components/CMS/Workshops/LayoutWorkshop.vue";
+import GrapeEditor from '@/Components/CMS/Workshops/GrapeEditor/GrapeEditor.vue'
 import Button from '@/Components/Elements/Buttons/Button.vue'
 import { notify } from "@kyvg/vue3-notification"
 import { router,useForm } from '@inertiajs/vue3'
@@ -54,7 +55,7 @@ const component = computed(() => {
         'header': HeaderWorkshop,
         'menu': MenuWorkshop,
         'footer': FooterWorkshop,
-        'layout': LayoutWorkshop,
+        'layout': GrapeEditor,
     }
     return components[currentTab.value]
 })

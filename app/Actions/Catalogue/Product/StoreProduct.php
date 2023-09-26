@@ -9,10 +9,11 @@ namespace App\Actions\Catalogue\Product;
 
 use App\Actions\Catalogue\Product\Hydrators\ProductHydrateUniversalSearch;
 
+use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateProducts;
 use App\Enums\Catalogue\Product\ProductStateEnum;
 use App\Enums\Catalogue\Product\ProductTypeEnum;
 use App\Models\Catalogue\Product;
-use App\Models\Market\ProductCategoryShop;
+use App\Models\Catalogue\ProductCategory;
 use App\Models\Organisation\Organisation;
 use App\Rules\CaseSensitive;
 use Illuminate\Validation\Rule;
@@ -25,7 +26,7 @@ class StoreProduct
     use WithAttributes;
 
 
-    public function handle(Organisation|ProductCategoryShop $parent, array $modelData): Product
+    public function handle(Organisation|ProductCategory $parent, array $modelData): Product
     {
 
         /** @var Product $product */
@@ -55,7 +56,7 @@ class StoreProduct
         ];
     }
 
-    public function action(Organisation|ProductCategoryShop $parent, array $objectData): Product
+    public function action(Organisation|ProductCategory $parent, array $objectData): Product
     {
         $this->setRawAttributes($objectData);
         $validatedData = $this->validateAttributes();

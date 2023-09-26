@@ -16,8 +16,9 @@ class OrganisationHydrateProducts implements ShouldBeUnique
     use AsAction;
 
 
-    public function handle(Organisation $organisation): void
+    public function handle(): void
     {
+        $organisation=organisation();
 
         $stats            = [
             'number_products' => $organisation->products()->count(),

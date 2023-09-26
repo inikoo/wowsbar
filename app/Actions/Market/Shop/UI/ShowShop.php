@@ -7,13 +7,13 @@
 
 namespace App\Actions\Market\Shop\UI;
 
-use App\Actions\InertiaAction;
 use App\Actions\Catalogue\Product\UI\IndexProducts;
+use App\Actions\InertiaAction;
 use App\Actions\UI\Organisation\Dashboard\ShowDashboard;
 use App\Actions\UI\WithInertia;
 use App\Enums\UI\Organisation\ShopTabsEnum;
-use App\Http\Resources\Market\DepartmentResource;
-use App\Http\Resources\Market\ProductResource;
+use App\Http\Resources\Catalogue\DepartmentResource;
+use App\Http\Resources\Catalogue\ProductResource;
 use App\Http\Resources\Market\ShopResource;
 use App\Models\Market\Shop;
 use Inertia\Inertia;
@@ -198,7 +198,7 @@ class ShowShop extends InertiaAction
 
             ]
         )->table(
-            \App\Actions\Catalogue\ProductCategory\UI\IndexDepartments::make()->tableStructure(
+            IndexDepartments::make()->tableStructure(
                 parent: $shop,
                 modelOperations: [
                     'createLink' => $this->canEdit ? [
@@ -213,7 +213,7 @@ class ShowShop extends InertiaAction
                 prefix: 'departments'
             )
         )->table(
-            \App\Actions\Catalogue\Product\UI\IndexProducts::make()->tableStructure(
+            IndexProducts::make()->tableStructure(
                 parent: $shop,
                 modelOperations: [
                     'createLink' => [

@@ -24,7 +24,7 @@ class StoreProductCategory
     use AsAction;
     use WithAttributes;
 
-    private int $hydratorsDelay = 0;
+    private int $hydratorsDelay     = 0;
     public string $commandSignature = 'product-category:new {code} {name}';
 
     public function handle(Organisation|ProductCategory $parent, array $modelData): ProductCategory
@@ -53,10 +53,10 @@ class StoreProductCategory
     public function rules(): array
     {
         return [
-            'code' => ['required', 'unique:product_categories', 'between:2,9', 'alpha_dash', new CaseSensitive('product_categories')],
-            'name' => ['required', 'max:250', 'string'],
-            'image_id' => ['sometimes', 'required', 'exists:media,id'],
-            'state' => ['sometimes', 'required'],
+            'code'        => ['required', 'unique:product_categories', 'between:2,9', 'alpha_dash', new CaseSensitive('product_categories')],
+            'name'        => ['required', 'max:250', 'string'],
+            'image_id'    => ['sometimes', 'required', 'exists:media,id'],
+            'state'       => ['sometimes', 'required'],
             'description' => ['sometimes', 'required', 'max:1500'],
         ];
     }

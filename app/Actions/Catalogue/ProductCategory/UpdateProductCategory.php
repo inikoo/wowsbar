@@ -8,7 +8,7 @@
 namespace App\Actions\Catalogue\ProductCategory;
 
 use App\Actions\Traits\WithActionUpdate;
-use App\Http\Resources\Market\DepartmentResource;
+use App\Http\Resources\Catalogue\DepartmentResource;
 use App\Models\Market\ProductCategoryShop;
 use Lorisleiva\Actions\ActionRequest;
 

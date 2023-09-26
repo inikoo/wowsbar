@@ -13,7 +13,7 @@ use App\Actions\InertiaAction;
 use App\Actions\UI\Organisation\Portfolios\ShowPortfoliosDashboard;
 use App\Actions\UI\Organisation\Dashboard\ShowDashboard;
 use App\Enums\UI\Organisation\CustomerWebsitesTabsEnum;
-use App\Http\Resources\CustomerWebsites\CustomerWebsiteResource;
+use App\Http\Resources\Prospects\CustomerWebsiteResource;
 use App\Http\Resources\History\HistoryResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\CRM\Customer;

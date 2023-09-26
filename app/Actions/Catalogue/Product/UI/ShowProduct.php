@@ -12,7 +12,7 @@ use App\Actions\InertiaAction;
 use App\Actions\Market\Shop\UI\IndexShops;
 use App\Actions\Market\Shop\UI\ShowShop;
 use App\Enums\UI\Organisation\ProductTabsEnum;
-use App\Http\Resources\Market\ProductResource;
+use App\Http\Resources\Catalogue\ProductResource;
 use App\Models\Market\ProductShop;
 use App\Models\Market\Shop;
 use Inertia\Inertia;

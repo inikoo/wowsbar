@@ -27,6 +27,7 @@ const props = defineProps<{
         current: string;
         navigation: object;
     }
+    showcase?:object
     changelog?: object
     banners?: object
 }>()
