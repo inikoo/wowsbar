@@ -28,8 +28,7 @@ class IndexEmailTemplates extends InertiaAction
     {
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
             $query->where(function ($query) use ($value) {
-                $query->whereAnyWordStartWith('contact_name', $value)
-                    ->orWhere('guests.slug', 'ILIKE', "$value%");
+                $query->where('title', 'ILIKE', "$value%");
             });
         });
 
@@ -40,9 +39,9 @@ class IndexEmailTemplates extends InertiaAction
         $queryBuilder = QueryBuilder::for(EmailTemplate::class);
 
         return $queryBuilder
-            ->defaultSort('guests.slug')
-            ->select(['guests.id', 'slug', 'guests.contact_name','guests.email','number_logins','last_login_at','number_failed_logins','last_failed_login_at'])
-            ->allowedSorts(['slug', 'contact_name','email','number_logins','last_login_at','number_failed_logins','last_failed_login_at'])
+            ->defaultSort('title')
+            ->select(['id', 'title'])
+            ->allowedSorts(['title', 'id'])
             ->allowedFilters([$globalSearch])
             ->withPaginator($prefix)
             ->withQueryString();
@@ -61,14 +60,14 @@ class IndexEmailTemplates extends InertiaAction
                 ->withGlobalSearch()
                 ->withEmptyState(
                     [
-                        'title'       => __('no guest'),
-                        'description' => $this->canEdit ? __('Get started by creating a new guest.') : null,
+                        'title'       => __('no email template'),
+                        'description' => $this->canEdit ? __('Get started by creating a template.') : null,
                         'count'       => 0,
                         'action'      => $this->canEdit ? [
                             'type'    => 'button',
                             'style'   => 'create',
-                            'tooltip' => __('new guest'),
-                            'label'   => __('guest'),
+                            'tooltip' => __('new template'),
+                            'label'   => __('email template'),
                             'route'   => [
                                 'name'       => 'sysadmin.guests.create',
                                 'parameters' => array_values($this->originalParameters)
@@ -76,11 +75,10 @@ class IndexEmailTemplates extends InertiaAction
                         ] : null
                     ]
                 )
-                ->column(key: 'slug', label: __('code'), canBeHidden: false, sortable: true, searchable: true)
-                ->column(key: 'contact_name', label: __('name'), canBeHidden: false, sortable: true, searchable: true)
-                ->column(key: 'email', label: __('email'), canBeHidden: false, sortable: true, searchable: true)
+                ->column(key: 'id', label: __('id'), canBeHidden: false, sortable: true, searchable: true)
+                ->column(key: 'title', label: __('title'), canBeHidden: false, sortable: true, searchable: true)
 
-                ->defaultSort('slug');
+                ->defaultSort('title');
         };
     }
 
@@ -108,9 +106,9 @@ class IndexEmailTemplates extends InertiaAction
             'SysAdmin/EmailTemplates',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(),
-                'title'       => __('guests'),
+                'title'       => __('email templates'),
                 'pageHead'    => [
-                    'title'  => __('guests'),
+                    'title'  => __('email templates'),
                     'actions'=> [
                         $this->canEdit ? [
                             'type'    => 'buttonGroup',
