@@ -43,6 +43,7 @@ php artisan shop:create awa 'aw-advantage' 'digital-marketing'
 php artisan shop:new-website awa 'awa.test'
 php artisan website:change-state awa launch
 
+php artisan pc:create
 
 
 echo "🌱 create customer"
