@@ -8,6 +8,7 @@
 namespace App\Actions\Portfolio\PortfolioWebsite;
 
 use App\Actions\CRM\Customer\Hydrators\CustomerHydratePortfolioWebsites;
+use App\Actions\Market\Shop\Hydrators\ShopHydrateCustomerWebsites;
 use App\Actions\Portfolios\CustomerWebsite\Hydrators\CustomerWebsiteHydrateUniversalSearch;
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateCustomerWebsites;
 use App\Actions\Portfolio\PortfolioWebsite\Hydrators\PortfolioWebsiteHydrateUniversalSearch;
@@ -38,12 +39,16 @@ class StorePortfolioWebsite
 
     public function handle(array $modelData): PortfolioWebsite
     {
+        data_set($modelData, 'shop_id', customer()->shop_id);
         $portfolioWebsite = PortfolioWebsite::create($modelData);
         $portfolioWebsite->stats()->create();
         CustomerHydratePortfolioWebsites::dispatch($portfolioWebsite->customer);
+
         PortfolioWebsiteHydrateUniversalSearch::dispatch($portfolioWebsite);
         CustomerWebsiteHydrateUniversalSearch::dispatch(CustomerWebsite::find($portfolioWebsite->id));
+
         OrganisationHydrateCustomerWebsites::dispatch();
+        ShopHydrateCustomerWebsites::dispatch(customer()->shop);
 
         return $portfolioWebsite;
     }

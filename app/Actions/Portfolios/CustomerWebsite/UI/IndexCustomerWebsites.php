@@ -86,7 +86,7 @@ class IndexCustomerWebsites extends InertiaAction
                 $queryBuilder->where('customer_id', $parent->id);
                 break;
             case 'Shop':
-                $queryBuilder->where('shop_id', $parent->id);
+                $queryBuilder->where('portfolio_websites.shop_id', $parent->id);
                 break;
         }
 
@@ -153,7 +153,7 @@ class IndexCustomerWebsites extends InertiaAction
 
         $title = __('customers websites');
 
-        if (class_basename($scope) == 'Shop') {
+        if (class_basename($scope) == 'Shop' and organisation()->stats->number_shops>1) {
             $container = [
                 'icon'    => ['fal', 'fa-store-alt'],
                 'tooltip' => __('Shop'),

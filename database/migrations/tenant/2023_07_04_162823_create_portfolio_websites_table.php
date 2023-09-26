@@ -14,6 +14,8 @@ return new class () extends Migration {
     {
         Schema::create('portfolio_websites', function (Blueprint $table) {
             $table->smallIncrements('id');
+            $table->unsignedInteger('shop_id');
+            $table->foreign('shop_id')->references('id')->on('shops')->onUpdate('cascade')->onDelete('cascade');
             $table->unsignedInteger('customer_id');
             $table->foreign('customer_id')->references('id')->on('customers')->onUpdate('cascade')->onDelete('cascade');
             $table->string('slug')->collation('und_ns');

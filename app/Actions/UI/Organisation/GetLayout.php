@@ -195,7 +195,31 @@ class GetLayout
 
 
                 'topMenu' => [
-                    'subSections' => []
+                    'subSections' =>
+                        match ($shopsCount) {
+                            1 =>
+                            [
+                                [
+                                    'icon'  => ['fal', 'fa-chart-network'],
+                                    'route' => [
+                                        'name'       => 'org.portfolios.shop.dashboard',
+                                        'parameters' => $shop->slug
+                                    ]
+                                ],
+                                [
+
+                                    'label' => __("Customer's websites"),
+                                    'icon'  => ['fal', 'fa-briefcase'],
+                                    'route' => [
+                                        'name'       => 'org.portfolios.shop.customer-websites.index',
+                                        'parameters' => $shop->slug
+                                    ]
+                                ],
+
+                            ],
+                            default => []
+                        }
+
                 ]
             ];
         }
@@ -291,7 +315,6 @@ class GetLayout
                             'icon'  => ['fal', 'fa-chart-network'],
                             'route' => [
                                 'name' => 'org.accounting.dashboard'
-
                             ]
                         ],
                         [

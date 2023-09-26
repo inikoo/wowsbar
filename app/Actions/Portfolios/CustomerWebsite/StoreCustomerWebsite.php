@@ -8,9 +8,12 @@
 namespace App\Actions\Portfolios\CustomerWebsite;
 
 use App\Actions\CRM\Customer\Hydrators\CustomerHydratePortfolioWebsites;
+use App\Actions\Market\Shop\Hydrators\ShopHydrateCustomerWebsites;
+use App\Actions\Portfolio\PortfolioWebsite\Hydrators\PortfolioWebsiteHydrateUniversalSearch;
 use App\Actions\Portfolios\CustomerWebsite\Hydrators\CustomerWebsiteHydrateUniversalSearch;
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateCustomerWebsites;
 use App\Models\CRM\Customer;
+use App\Models\Portfolio\PortfolioWebsite;
 use App\Models\Portfolios\CustomerWebsite;
 use App\Rules\CaseSensitive;
 use Exception;
@@ -32,12 +35,17 @@ class StoreCustomerWebsite
 
     public function handle(Customer $customer, array $modelData): CustomerWebsite
     {
+        data_set($modelData, 'shop_id', $customer->shop_id);
         /** @var CustomerWebsite $customerWebsite */
         $customerWebsite = $customer->customerWebsites()->create($modelData);
         $customerWebsite->stats()->create();
         CustomerHydratePortfolioWebsites::dispatch($customerWebsite->customer);
-        OrganisationHydrateCustomerWebsites::dispatch();
+
+        PortfolioWebsiteHydrateUniversalSearch::dispatch(PortfolioWebsite::find($customerWebsite->id));
         CustomerWebsiteHydrateUniversalSearch::dispatch($customerWebsite);
+
+        OrganisationHydrateCustomerWebsites::dispatch();
+        ShopHydrateCustomerWebsites::dispatch($customer->shop);
 
         return $customerWebsite;
     }

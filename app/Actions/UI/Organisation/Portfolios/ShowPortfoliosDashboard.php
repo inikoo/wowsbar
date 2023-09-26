@@ -84,7 +84,7 @@ class ShowPortfoliosDashboard
     {
         return
             match($routeName) {
-                'org.portfolios.show.dashboard'=> array_merge(
+                'org.portfolios.shop.dashboard'=> array_merge(
                     ShowDashboard::make()->getBreadcrumbs(),
                     [
                         [

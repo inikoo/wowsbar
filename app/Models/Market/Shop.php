@@ -22,6 +22,7 @@ use App\Models\CRM\Customer;
 use App\Models\Helpers\SerialReference;
 use App\Models\Leads\Prospect;
 use App\Models\OMS\Order;
+use App\Models\Portfolios\CustomerWebsite;
 use App\Models\Traits\HasUniversalSearch;
 use App\Models\Web\Website;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -213,6 +214,11 @@ class Shop extends Model
     public function invoices(): HasMany
     {
         return $this->hasMany(Invoice::class);
+    }
+
+    public function customerWebsites(): HasMany
+    {
+        return $this->hasMany(CustomerWebsite::class);
     }
 
 
