@@ -7,6 +7,7 @@
 
 namespace App\Imports\Catalogue;
 
+use App\Actions\Catalogue\Product\StoreProduct;
 use App\Actions\Helpers\Uploads\ImportExcelUploads;
 use App\Actions\Helpers\Uploads\UpdateExcelUploads;
 use App\Enums\Catalogue\Product\ProductStateEnum;
@@ -16,6 +17,7 @@ use App\Models\Media\ExcelUpload;
 use App\Models\Media\ExcelUploadRecord;
 use App\Rules\CaseSensitive;
 use Exception;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Concerns\SkipsFailures;
@@ -50,8 +52,14 @@ class ProductImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wit
                         'data'            => json_encode($product)
                 ]);
 
+                StoreProduct::run(organisation(), [
+                    'code' => Arr::get(json_decode($product->data, true), 'code'),
+                    'name' => Arr::get(json_decode($product->data, true), 'name'),
+                    'price' => Arr::get(json_decode($product->data, true), 'unit_price_gbp'),
+                    'type' => Arr::get(json_decode($product->data, true), 'unit') == 'job' ? ProductTypeEnum::SERVICE : ProductTypeEnum::SUBSCRIPTION,
+                ]);
                 ImportExcelUploads::dispatch($product, count($collection), $totalImported++, Product::class);
-            } catch (Exception) {
+            } catch (Exception $e) {
                 $totalImported--;
             }
         }
@@ -60,14 +68,11 @@ class ProductImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wit
     public function rules(): array
     {
         return [
-            'code'        => ['required', 'unique:products', 'between:2,9', 'alpha_dash', new CaseSensitive('products')],
-            'units'       => ['sometimes', 'required', 'numeric'],
-            'image_id'    => ['sometimes', 'required', 'exists:media,id'],
-            'price'       => ['required', 'numeric'],
+            'department'  => ['required', 'exists:product_categories,code'],
+            'code'        => ['required', 'unique:products', 'between:2,9', 'alpha_dash'],
             'name'        => ['required', 'max:250', 'string'],
-            'state'       => ['sometimes', 'required', Rule::in(ProductStateEnum::values())],
-            'type'        => ['required', Rule::in(ProductTypeEnum::values())],
-            'description' => ['sometimes', 'required', 'max:1500']
+            'units'       => ['sometimes', 'required', 'string'],
+            'unit_price_gbp'       => ['required', 'numeric']
         ];
     }
 }

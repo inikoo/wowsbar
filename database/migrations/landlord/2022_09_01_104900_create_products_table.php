@@ -24,13 +24,12 @@ return new class () extends Migration {
             $table->string('type')->index();
             $table->string('state')->nullable()->index();
             $table->boolean('status')->nullable()->index();
-            $table->unsignedDecimal('units', 12, 3)->nullable()->comment('units per outer');
+            $table->unsignedDecimal('units')->nullable()->comment('units');
             $table->unsignedDecimal('price', 18)->comment('unit price');
             $table->jsonb('settings');
             $table->jsonb('data');
             $table->timestampsTz();
             $table->softDeletesTz();
-            $table->unique(['parent_type', 'parent_id']);
         });
     }
 
