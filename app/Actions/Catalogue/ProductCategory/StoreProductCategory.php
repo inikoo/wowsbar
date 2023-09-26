@@ -76,6 +76,8 @@ class StoreProductCategory
             'name' => $command->argument('name')
         ]);
 
+        echo $command->argument('name') . " added";
+
         return 0;
     }
 }
