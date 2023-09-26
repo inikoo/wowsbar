@@ -5,24 +5,25 @@
   -->
 
 <script setup lang="ts">
-import { Head } from "@inertiajs/vue3";
-import PageHeading from "@/Components/Headings/PageHeading.vue";
-import TableProspects from "@/Components/Tables/TableProspects.vue";
+import { Head } from "@inertiajs/vue3"
+import PageHeading from "@/Components/Headings/PageHeading.vue"
+import TableProspects from "@/Components/Tables/TableProspects.vue"
 import { capitalize } from "@/Composables/capitalize"
-import {computed, ref, watch} from "vue";
-import Pusher from "pusher-js";
-import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
-import Button from "@/Components/Elements/Buttons/Button.vue";
-import ModalUpload from "@/Components/Utils/ModalUpload.vue";
+import {computed, ref, watch} from "vue"
+import Pusher from "pusher-js"
+import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome"
+import Button from "@/Components/Elements/Buttons/Button.vue"
+import ModalUpload from "@/Components/Utils/ModalUpload.vue"
+import { routeType } from "@/types/route"
 
 const props = defineProps<{
     data: object
     title: string
-    pageHead: object,
+    pageHead: object
     uploadRoutes: {
-        upload:object,
-        history:object,
-        download:object
+        upload: routeType
+        history: routeType
+        download: routeType
     }
 }>()
 
@@ -71,6 +72,7 @@ watch(compProgressBar, () => {
             </Button>
         </template>
     </PageHeading>
+
     <!-- Modal: Upload -->
     <ModalUpload
         v-model="isModalOpen"

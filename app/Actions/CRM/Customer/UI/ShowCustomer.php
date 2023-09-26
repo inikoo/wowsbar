@@ -134,7 +134,7 @@ class ShowCustomer extends InertiaAction
                 'createLink' => [
                     [
                         'route' => [
-                            'name'       => 'org.models.customers.websites.upload',
+                            'name'       => 'org.models.customer.website.upload',
                             'parameters' => array_values($this->originalParameters)
                         ],
                         'icon'  => 'fal fa-upload',

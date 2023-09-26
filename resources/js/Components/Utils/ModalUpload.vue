@@ -10,16 +10,16 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import axios from 'axios'
 import { useFormatTime } from '@/Composables/useFormatTime'
 import { toRefs } from 'vue'
+import { routeType } from '@/types/route'
 
 library.add(falFile, faFileDownload)
 
-
 const props = defineProps<{
-    modelValue: Boolean
+    modelValue: boolean
     routes: {
-        upload:object,
-        history:object,
-        download:object
+        upload: routeType
+        history?: routeType
+        download?: routeType
     }
     isUploaded: boolean
 }>()
@@ -54,22 +54,28 @@ const onUploadFile = async (fileUploaded: any) => {
 }
 
 const compVModel = computed(() => {
+    // to Watch purpose
     return props.modelValue
 })
 
 // Fetch data history when Modal is opened
 watch(compVModel, async () => {
     isLoadingHistory.value = true
-    // if(!dataHistory.value.length) { // If dataHistory empty (not fetched yet) then fetch again
-        try {
-            const data = await axios.get(route(props.routes.history.name,props.routes.history.parameters))
-            dataHistory.value = data.data.data
-        } catch (error: any) {
-            dataHistory.value = []
-            console.error(error.message)
-        }
+    if (props.routes.history?.name) {
+        // if(!dataHistory.value.length) { // If dataHistory empty (not fetched yet) then fetch again
+            try {
+                const data = await axios.get(route(props.routes.history?.name, props.routes.history?.parameters))
+                dataHistory.value = data.data.data
+            } catch (error: any) {
+                console.log(props.routes)
+                dataHistory.value = []
+                console.error(error.message)
+            }
+        // }
+    } else {
+        dataHistory.value = []
+    }
     isLoadingHistory.value = false
-    // }
 })
 
 </script>
@@ -109,7 +115,7 @@ watch(compVModel, async () => {
                 </div>
 
                 <!-- Download template -->
-                <a :href="route(routes.download.name,routes.download.parameters)" target="_blank" class="group text-xs text-gray-600 cursor-pointer px-2 w-fit" >
+                <a v-if="routes.download?.name" :href="route(routes.download?.name, routes.download?.parameters)" target="_blank" class="group text-xs text-gray-600 cursor-pointer px-2 w-fit" >
                     <FontAwesomeIcon icon='fas fa-file-download' class='text-gray-400 group-hover:text-gray-600' aria-hidden='true' />
                     Download template .xlsx
                 </a>
@@ -119,7 +125,7 @@ watch(compVModel, async () => {
             <div class="order-last flex items-start gap-x-2 gap-y-2 flex-col">
                 <div class="text-sm text-gray-600">Recent uploaded website:</div>
                 <div v-if="!isLoadingHistory" class="flex flex-wrap gap-x-2 gap-y-2">
-                    <template v-if="dataHistory.length">
+                    <template v-if="dataHistory.length && routes.history">
                         <div v-for="(history, index) in dataHistory" :key="index" class="w-36 bg-gray-100 border-t-[3px] border-gray-500 rounded px-2 py-1 flex flex-col justify-start gap-y-1 cursor-pointer hover:bg-gray-200">
                             <p class="text-lg text-gray-700 font-semibold">{{ history.number_rows }} <span class="text-xs text-gray-500 font-normal">rows</span></p>
                             <span class="text-gray-600 text-xs leading-none">{{ history.original_filename }}</span>
@@ -137,7 +143,3 @@ watch(compVModel, async () => {
         </div>
     </Modal>
 </template>
-
-<style scoped>
-
-</style>
