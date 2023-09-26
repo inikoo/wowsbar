@@ -44,12 +44,11 @@ php artisan shop:new-website awa 'awa.test'
 php artisan website:change-state awa launch
 
 php artisan product-category:new seo "Search Engine Optimization"
-php artisan product-category:new ppc "Paid Per Click"
+php artisan product-category:new ppc "Pay per click"
 php artisan product-category:new smm "Social Media Management"
 php artisan product-category:new sma "Social Media Advertising"
-php artisan product-category:new bun "Bundle"
-php artisan product-category:new cs "Customer Service"
-php artisan product-category:new pr "Prospects"
+php artisan product-category:new leads "Prospecting"
+php artisan product-category:new caas "Content as a service"
 
 php artisan product:import products.xlsx
 
