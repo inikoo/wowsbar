@@ -17,17 +17,17 @@ return new class () extends Migration {
         Schema::create('product_categories', function (Blueprint $table) {
             $table->smallIncrements('id');
             $table->string('slug')->unique()->collation('und_ns');
+            $table->unsignedInteger('parent_id')->nullable();
+            $table->string('parent_type')->nullable();
             $table = $this->assertCodeDescription($table);
-            $table->unsignedBigInteger('image_id')->nullable();
             $table->string('type')->index();
             $table->boolean('is_family')->default(false);
             $table->string('state')->nullable()->index();
             $table->jsonb('data');
             $table->timestampstz();
             $table->softDeletesTz();
-
+            $table->unique(['parent_type','parent_id']);
         });
-        //  DB::statement('CREATE INDEX ON product_categories USING gin (name gin_trgm_ops) ');
     }
 
 

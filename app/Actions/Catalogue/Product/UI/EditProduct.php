@@ -31,7 +31,7 @@ class EditProduct extends InertiaAction
     }
 
 
-    public function asController( Product $product, ActionRequest $request): Product
+    public function asController(Product $product, ActionRequest $request): Product
     {
         $this->initialisation($request);
 

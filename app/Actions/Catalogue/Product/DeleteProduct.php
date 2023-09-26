@@ -19,19 +19,11 @@ class DeleteProduct
     use WithActionUpdate;
 
 
-    public function handle(Product $product, array $deletedData = [], bool $skipHydrate = false): Product
+    public function handle(Product $product, array $deletedData = []): Product
     {
         $product->delete();
         $product = $this->update($product, $deletedData, ['data']);
-        if (!$skipHydrate) {
-            //todo fix this
-            /*
-            if ($product->family_id) {
-                FamilyHydrateProducts::dispatch($product->family);
-            }
-            */
-           // OrganisationHydrateProducts::dispatch();
-        }
+        OrganisationHydrateProducts::dispatch();
 
         return $product;
     }
@@ -52,7 +44,7 @@ class DeleteProduct
 
     public function asCommand(Command $command): int
     {
-        $this->handle(Product::where('slug',$command->argument('product'))->firstOrFail());
+        $this->handle(Product::where('slug', $command->argument('product'))->firstOrFail());
         return 0;
     }
 

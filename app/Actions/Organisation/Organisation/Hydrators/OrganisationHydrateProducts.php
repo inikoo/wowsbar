@@ -1,7 +1,7 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Thu, 21 Sep 2023 11:34:34 Malaysia Time, Pantai Lembeng, Bali, Indonesia
+ * Created: Tue, 26 Sep 2023 10:51:50 Malaysia Time, Kuala Lumpur, Malaysia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
@@ -11,7 +11,7 @@ use App\Models\Organisation\Organisation;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Lorisleiva\Actions\Concerns\AsAction;
 
-class OrganisationHydrateDepartments implements ShouldBeUnique
+class OrganisationHydrateProducts implements ShouldBeUnique
 {
     use AsAction;
 
@@ -20,7 +20,7 @@ class OrganisationHydrateDepartments implements ShouldBeUnique
     {
 
         $stats            = [
-            'number_departments' => $organisation->departments->count(),
+            'number_products' => $organisation->products()->count(),
         ];
 
         $organisation->catalogueStats->update($stats);

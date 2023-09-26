@@ -22,6 +22,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 use Spatie\MediaLibrary\HasMedia;
@@ -34,17 +35,16 @@ use Spatie\Sluggable\SlugOptions;
  *
  * @property int $id
  * @property string $slug
+ * @property int|null $parent_id
+ * @property string|null $parent_type
  * @property string $code
  * @property string|null $name
  * @property string|null $description
  * @property ProductTypeEnum $type
- * @property int|null $shop_id
  * @property ProductStateEnum|null $state
  * @property bool|null $status
  * @property string|null $units units per outer
  * @property string $price unit price
- * @property int|null $available
- * @property int|null $image_id
  * @property array $settings
  * @property array $data
  * @property Carbon|null $created_at
@@ -52,26 +52,26 @@ use Spatie\Sluggable\SlugOptions;
  * @property Carbon|null $deleted_at
  * @property-read MediaCollection<int, \App\Models\Media\Media> $media
  * @property-read int|null $media_count
+ * @property-read Model|\Eloquent $parent
  * @property-read SalesStats|null $salesStats
- * @property-read Shop|null $shop
+ * @property-read Shop $shop
  * @property-read ProductShopStats|null $stats
  * @property-read UniversalSearch|null $universalSearch
  * @method static Builder|Product newModelQuery()
  * @method static Builder|Product newQuery()
  * @method static Builder|Product onlyTrashed()
  * @method static Builder|Product query()
- * @method static Builder|Product whereAvailable($value)
  * @method static Builder|Product whereCode($value)
  * @method static Builder|Product whereCreatedAt($value)
  * @method static Builder|Product whereData($value)
  * @method static Builder|Product whereDeletedAt($value)
  * @method static Builder|Product whereDescription($value)
  * @method static Builder|Product whereId($value)
- * @method static Builder|Product whereImageId($value)
  * @method static Builder|Product whereName($value)
+ * @method static Builder|Product whereParentId($value)
+ * @method static Builder|Product whereParentType($value)
  * @method static Builder|Product wherePrice($value)
  * @method static Builder|Product whereSettings($value)
- * @method static Builder|Product whereShopId($value)
  * @method static Builder|Product whereSlug($value)
  * @method static Builder|Product whereState($value)
  * @method static Builder|Product whereStatus($value)
@@ -133,6 +133,11 @@ class Product extends Model implements HasMedia
     public function stats(): HasOne
     {
         return $this->hasOne(ProductShopStats::class);
+    }
+
+    public function parent(): MorphTo
+    {
+        return $this->morphTo();
     }
 
 

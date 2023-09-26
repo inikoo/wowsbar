@@ -12,25 +12,25 @@ use Illuminate\Support\Facades\Schema;
 
 return new class () extends Migration {
     use HasAssetCodeDescription;
+
     public function up(): void
     {
         Schema::create('products', function (Blueprint $table) {
             $table->increments('id');
             $table->string('slug')->unique()->collation('und_ns');
+            $table->unsignedInteger('parent_id')->nullable();
+            $table->string('parent_type')->nullable();
             $table = $this->assertCodeDescription($table);
             $table->string('type')->index();
-            $table->unsignedSmallInteger('shop_id')->nullable();
-            $table->foreign('shop_id')->references('id')->on('shops');
             $table->string('state')->nullable()->index();
             $table->boolean('status')->nullable()->index();
             $table->unsignedDecimal('units', 12, 3)->nullable()->comment('units per outer');
             $table->unsignedDecimal('price', 18)->comment('unit price');
-            $table->unsignedInteger('available')->default(0)->nullable();
-            $table->unsignedBigInteger('image_id')->nullable();
             $table->jsonb('settings');
             $table->jsonb('data');
             $table->timestampsTz();
             $table->softDeletesTz();
+            $table->unique(['parent_type', 'parent_id']);
         });
     }
 
