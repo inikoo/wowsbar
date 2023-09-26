@@ -7,6 +7,7 @@
 
 namespace App\Imports\Catalogue;
 
+use App\Actions\Catalogue\Product\StoreProduct;
 use App\Actions\Helpers\Uploads\ImportExcelUploads;
 use App\Actions\Helpers\Uploads\UpdateExcelUploads;
 use App\Enums\Catalogue\Product\ProductStateEnum;
@@ -16,6 +17,7 @@ use App\Models\Media\ExcelUpload;
 use App\Models\Media\ExcelUploadRecord;
 use App\Rules\CaseSensitive;
 use Exception;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Concerns\SkipsFailures;
@@ -24,9 +26,9 @@ use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
 
-class ProductImport implements ToCollection, WithHeadingRow, SkipsOnFailure, WithValidation
+class ProductImport implements ToCollection, WithHeadingRow, WithValidation
 {
-    use SkipsFailures;
+//    use SkipsFailures;
 
     public ExcelUpload $productUpload;
     public function __construct(ExcelUpload $productUpload)
@@ -50,6 +52,12 @@ class ProductImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wit
                         'data'            => json_encode($product)
                 ]);
 
+                StoreProduct::run(organisation(), [
+                    'code' => Arr::get($product->data, 'code'),
+                    'name' => Arr::get($product->data, 'name'),
+                    'price' => Arr::get($product->data, 'price'),
+                    'units' => Arr::get($product->data, 'unit')
+                ]);
                 ImportExcelUploads::dispatch($product, count($collection), $totalImported++, Product::class);
             } catch (Exception) {
                 $totalImported--;
@@ -60,15 +68,11 @@ class ProductImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wit
     public function rules(): array
     {
         return [
-            'code'        => ['required', 'unique:products', 'between:2,9', 'alpha_dash', new CaseSensitive('products')],
-            'department'  => ['required', 'exists:product_categories'],
-            'units'       => ['sometimes', 'required', 'string'],
-            'image_id'    => ['sometimes', 'required', 'exists:media,id'],
-            'price'       => ['required', 'numeric'],
+            'department'  => ['required', 'exists:product_categories,code'],
+            'code'        => ['required', 'unique:products', 'between:2,9', 'alpha_dash'],
             'name'        => ['required', 'max:250', 'string'],
-            'state'       => ['sometimes', 'required', Rule::in(ProductStateEnum::values())],
-            'type'        => ['required', Rule::in(ProductTypeEnum::values())],
-            'description' => ['sometimes', 'required', 'max:1500']
+            'units'       => ['sometimes', 'required', 'string'],
+            'price'       => ['required', 'numeric']
         ];
     }
 }

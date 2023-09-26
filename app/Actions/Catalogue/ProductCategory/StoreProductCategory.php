@@ -71,7 +71,7 @@ class StoreProductCategory
 
     public function asCommand(): int
     {
-        $data = ['seo', 'ads', 'social', 'banners'];
+        $data = ['seo', 'ppc', 'smm', 'banners', 'sma', 'cs', 'bun', 'pr'];
 
         foreach ($data as $name) {
             $this->handle(organisation(), [
