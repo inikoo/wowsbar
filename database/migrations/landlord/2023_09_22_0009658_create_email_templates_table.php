@@ -16,12 +16,12 @@ return new class () extends Migration {
             $table->smallIncrements('id');
             $table->string('title');
 
-            // $table->string('title');
+            $table->morphs('parent');
 
             $table->json('data');
             $table->json('compiled');
 
-            $table->timestamps();
+            $table->timestampsTz();
         });
     }
 

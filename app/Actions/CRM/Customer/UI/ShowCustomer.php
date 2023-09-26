@@ -118,6 +118,20 @@ class ShowCustomer extends InertiaAction
                     'navigation' => CustomerTabsEnum::navigation()
 
                 ],
+                'uploadRoutes' => [
+                    'upload' => [
+                        'name'       => 'org.models.customer.website.upload',
+                        'parameters' => $customer->slug
+                    ],
+                    'history' => [
+                        'name'       => 'org.models.customer.website.upload',
+                        'parameters' => $customer->slug
+                    ],
+                    'download' => [
+                        'name'       => 'org.crm.prospects.uploads.template.download',
+                        'parameters' => $customer->slug
+                    ]
+                ],
 
                 CustomerTabsEnum::SHOWCASE->value => $this->tab == CustomerTabsEnum::SHOWCASE->value ?
                     fn () => GetCustomerShowcase::run($customer)
@@ -134,7 +148,7 @@ class ShowCustomer extends InertiaAction
                 'createLink' => [
                     [
                         'route' => [
-                            'name'       => 'org.models.customer.website.upload',
+                            'name'       => 'org.models.customers.websites.upload',
                             'parameters' => array_values($this->originalParameters)
                         ],
                         'icon'  => 'fal fa-upload',
