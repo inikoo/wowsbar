@@ -25,7 +25,7 @@ class StoreProductCategory
     use WithAttributes;
 
     private int $hydratorsDelay = 0;
-    public string $commandSignature = 'pc:create';
+    public string $commandSignature = 'pc:create {code} {name}';
 
     public function handle(Organisation|ProductCategory $parent, array $modelData): ProductCategory
     {
