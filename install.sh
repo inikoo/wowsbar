@@ -51,6 +51,8 @@ php artisan product-category:new bun "Bundle"
 php artisan product-category:new cs "Customer Service"
 php artisan product-category:new pr "Prospects"
 
+php artisan product:import products.xlsx
+
 echo "🌱 create customer"
 php artisan shop:new-customer awa aiku@inikoo.com -C 'Aiku'
 php artisan shop:new-customer awa devs@aw-advantage.com -C 'aw-advantage'
