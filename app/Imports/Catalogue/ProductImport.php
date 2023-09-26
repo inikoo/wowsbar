@@ -66,7 +66,6 @@ class ProductImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wit
                 ]);
                 ImportExcelUploads::dispatch($product, count($collection), $totalImported++, Product::class);
             } catch (Exception $e) {
-                dd($e);
                 $totalImported--;
             }
         }
