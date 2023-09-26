@@ -74,7 +74,7 @@ watch(compProgressBar, () => {
 
 </script>
 
-<template>{{ uploadRoutes }}
+<template>
     <!-- Modal: Upload -->
     <ModalUpload
         v-model="isModalOpen"

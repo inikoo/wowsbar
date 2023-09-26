@@ -96,7 +96,7 @@ const layoutState = useLayoutStore()
 
 <template>
     <div v-if="compDisplayBreadcrumbs" class="transition-all duration-200 ease-in-out"
-        :class="[layoutState.leftSidebar.show ? 'pr-56' : 'pr-0 md:pr-10']"
+        :class="[layoutState.leftSidebar.show ? 'pr-0 md:pr-56' : 'pr-0 md:pr-10']"
     >
         <nav
             class="py-4 md:py-0 flex border-b h-6 text-sm bg-gray-50 text-gray-700 border-gray-200 dark:bg-gray-700 dark:text-gray-400 dark:border-gray-500"
