@@ -10,7 +10,7 @@ namespace App\Models\Catalogue;
 use App\Enums\Catalogue\ProductCategory\ProductCategoryStateEnum;
 use App\Enums\Catalogue\ProductCategory\ProductCategoryTypeEnum;
 use App\Models\BI\SalesStats;
-use App\Models\Market\Product;
+use App\Models\Market\ProductShop;
 use App\Models\Search\UniversalSearch;
 use App\Models\Traits\HasHistory;
 use App\Models\Traits\HasUniversalSearch;
@@ -51,7 +51,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read int|null $departments_count
  * @property-read array $es_audits
  * @property-read Model|\Eloquent $parent
- * @property-read Collection<int, Product> $products
+ * @property-read Collection<int, ProductShop> $products
  * @property-read int|null $products_count
  * @property-read SalesStats|null $salesStats
  * @property-read \App\Models\Catalogue\ProductCategoryStats|null $stats
@@ -134,6 +134,6 @@ class ProductCategory extends Model implements Auditable
 
     public function products(): MorphMany
     {
-        return $this->morphMany(Product::class, 'parent');
+        return $this->morphMany(ProductShop::class, 'parent');
     }
 }

@@ -7,7 +7,7 @@
 
 namespace App\Actions\Catalogue\Product\Hydrators;
 
-use App\Models\Market\Product;
+use App\Models\Market\ProductShop;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Lorisleiva\Actions\Concerns\AsAction;
 
@@ -18,7 +18,7 @@ class ProductInitialiseImageID implements ShouldBeUnique
 {
     use AsAction;
 
-    public function handle(Product $product): void
+    public function handle(ProductShop $product): void
     {
         if ($product->images()->count()) {
             if ($product->image_id) {
@@ -37,7 +37,7 @@ class ProductInitialiseImageID implements ShouldBeUnique
         }
     }
 
-    public function getJobUniqueId(Product $product): string
+    public function getJobUniqueId(ProductShop $product): string
     {
         return $product->id;
     }

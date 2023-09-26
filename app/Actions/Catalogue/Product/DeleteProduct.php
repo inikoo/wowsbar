@@ -9,7 +9,7 @@ namespace App\Actions\Catalogue\Product;
 
 use App\Actions\Market\Shop\Hydrators\ShopHydrateProducts;
 use App\Actions\Traits\WithActionUpdate;
-use App\Models\Market\Product;
+use App\Models\Market\ProductShop;
 use App\Models\Market\Shop;
 use App\Models\Tenancy\Tenant;
 use Illuminate\Console\Command;
@@ -23,10 +23,9 @@ class DeleteProduct
 
     public string $commandSignature = 'delete:product {tenant} {id}';
 
-    public function handle(Product $product, array $deletedData = [], bool $skipHydrate = false): Product
+    public function handle(ProductShop $product, array $deletedData = [], bool $skipHydrate = false): ProductShop
     {
         $product->delete();
-        $product->historicRecords()->delete();
         $product = $this->update($product, $deletedData, ['data']);
         if (!$skipHydrate) {
             //todo fix this
@@ -46,14 +45,14 @@ class DeleteProduct
         return $request->user()->hasPermissionTo("shops.edit");
     }
 
-    public function asController(Product $product, ActionRequest $request): Product
+    public function asController(ProductShop $product, ActionRequest $request): ProductShop
     {
         $request->validate();
 
         return $this->handle($product);
     }
 
-    public function inShop(Shop $shop, Product $product, ActionRequest $request): Product
+    public function inShop(Shop $shop, ProductShop $product, ActionRequest $request): ProductShop
     {
         $request->validate();
 
@@ -63,11 +62,11 @@ class DeleteProduct
     public function asCommand(Command $command): int
     {
         Tenant::where('slug', $command->argument('tenant'))->first()->makeCurrent();
-        $this->handle(Product::findOrFail($command->argument('id')));
+        $this->handle(ProductShop::findOrFail($command->argument('id')));
         return 0;
     }
 
-    public function htmlResponse(Product $product): RedirectResponse
+    public function htmlResponse(ProductShop $product): RedirectResponse
     {
         return Redirect::route('shops.show', $product->shop->slug);
     }

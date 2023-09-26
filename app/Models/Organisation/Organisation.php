@@ -38,6 +38,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property int|null $logo_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\Organisation\OrganisationCatalogueStats|null $catalogueStats
  * @property-read \App\Models\Organisation\OrganisationCrmStats|null $crmStats
  * @property-read Currency $currency
  * @property-read \Illuminate\Database\Eloquent\Collection<int, ProductCategory> $departments

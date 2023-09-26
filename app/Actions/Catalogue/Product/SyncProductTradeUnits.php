@@ -7,14 +7,14 @@
 
 namespace App\Actions\Catalogue\Product;
 
-use App\Models\Market\Product;
+use App\Models\Market\ProductShop;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class SyncProductTradeUnits
 {
     use AsAction;
 
-    public function handle(Product $product, array $tradeUnitsData): Product
+    public function handle(ProductShop $product, array $tradeUnitsData): ProductShop
     {
         $product->tradeUnits()->sync($tradeUnitsData);
 

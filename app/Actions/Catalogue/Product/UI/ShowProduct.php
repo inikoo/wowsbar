@@ -13,7 +13,7 @@ use App\Actions\Market\Shop\UI\IndexShops;
 use App\Actions\Market\Shop\UI\ShowShop;
 use App\Enums\UI\Organisation\ProductTabsEnum;
 use App\Http\Resources\Market\ProductResource;
-use App\Models\Market\Product;
+use App\Models\Market\ProductShop;
 use App\Models\Market\Shop;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -21,7 +21,7 @@ use Lorisleiva\Actions\ActionRequest;
 
 class ShowProduct extends InertiaAction
 {
-    public function handle(Product $product): Product
+    public function handle(ProductShop $product): ProductShop
     {
         return $product;
     }
@@ -34,7 +34,7 @@ class ShowProduct extends InertiaAction
         return $request->user()->hasPermissionTo("shops.products.view");
     }
 
-    public function inTenant(Product $product, ActionRequest $request): Product
+    public function inTenant(ProductShop $product, ActionRequest $request): ProductShop
     {
         $this->initialisation($request)->withTab(ProductTabsEnum::values());
 
@@ -42,14 +42,14 @@ class ShowProduct extends InertiaAction
     }
 
     /** @noinspection PhpUnusedParameterInspection */
-    public function inShop(Shop $shop, Product $product, ActionRequest $request): Product
+    public function inShop(Shop $shop, ProductShop $product, ActionRequest $request): ProductShop
     {
         $this->initialisation($request)->withTab(ProductTabsEnum::values());
 
         return $this->handle($product);
     }
 
-    public function htmlResponse(Product $product, ActionRequest $request): Response
+    public function htmlResponse(ProductShop $product, ActionRequest $request): Response
     {
         return Inertia::render(
             'Market/Product',
@@ -122,14 +122,14 @@ class ShowProduct extends InertiaAction
         //            ->table(IndexMailshots::make()->tableStructure($product));
     }
 
-    public function jsonResponse(Product $product): ProductResource
+    public function jsonResponse(ProductShop $product): ProductResource
     {
         return new ProductResource($product);
     }
 
     public function getBreadcrumbs(string $routeName, array $routeParameters, $suffix = null): array
     {
-        $headCrumb = function (Product $product, array $routeParameters, $suffix) {
+        $headCrumb = function (ProductShop $product, array $routeParameters, $suffix) {
             return [
 
                 [
@@ -196,20 +196,20 @@ class ShowProduct extends InertiaAction
         };
     }
 
-    public function getPrevious(Product $product, ActionRequest $request): ?array
+    public function getPrevious(ProductShop $product, ActionRequest $request): ?array
     {
-        $previous = Product::where('slug', '<', $product->slug)->orderBy('slug', 'desc')->first();
+        $previous = ProductShop::where('slug', '<', $product->slug)->orderBy('slug', 'desc')->first();
         return $this->getNavigation($previous, $request->route()->getName());
 
     }
 
-    public function getNext(Product $product, ActionRequest $request): ?array
+    public function getNext(ProductShop $product, ActionRequest $request): ?array
     {
-        $next = Product::where('slug', '>', $product->slug)->orderBy('slug')->first();
+        $next = ProductShop::where('slug', '>', $product->slug)->orderBy('slug')->first();
         return $this->getNavigation($next, $request->route()->getName());
     }
 
-    private function getNavigation(?Product $product, string $routeName): ?array
+    private function getNavigation(?ProductShop $product, string $routeName): ?array
     {
         if(!$product) {
             return null;

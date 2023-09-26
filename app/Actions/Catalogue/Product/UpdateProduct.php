@@ -10,7 +10,7 @@ namespace App\Actions\Catalogue\Product;
 use App\Actions\Catalogue\Product\Hydrators\ProductHydrateUniversalSearch;
 use App\Actions\Traits\WithActionUpdate;
 use App\Http\Resources\Market\ProductResource;
-use App\Models\Market\Product;
+use App\Models\Market\ProductShop;
 use Lorisleiva\Actions\ActionRequest;
 
 class UpdateProduct
@@ -19,14 +19,10 @@ class UpdateProduct
 
     private bool $asAction=false;
 
-    public function handle(Product $product, array $modelData, bool $skipHistoric=false): Product
+    public function handle(ProductShop $product, array $modelData, bool $skipHistoric=false): ProductShop
     {
         $product= $this->update($product, $modelData, ['data', 'settings']);
-        if (!$skipHistoric and $product->wasChanged(
-            ['price', 'code','name','units']
-        )) {
-            //todo create HistoricProduct and update current_historic_product_id if
-        }
+
         ProductHydrateUniversalSearch::dispatch($product);
 
         return $product;
@@ -46,19 +42,18 @@ class UpdateProduct
             'code'        => ['sometimes','required', 'unique:tenant.products', 'between:2,9', 'alpha_dash'],
             'units'       => ['sometimes', 'required', 'numeric'],
             'price'       => ['sometimes', 'required', 'numeric'],
-            'rrp'         => ['sometimes', 'required', 'numeric'],
             'name'        => ['sometimes','required', 'max:250', 'string'],
             'description' => ['sometimes', 'required', 'max:1500'],
         ];
     }
 
-    public function asController(Product $product, ActionRequest $request): Product
+    public function asController(ProductShop $product, ActionRequest $request): ProductShop
     {
         $request->validate();
         return $this->handle($product, $request->all());
     }
 
-    public function action(Product $product, array $objectData): Product
+    public function action(ProductShop $product, array $objectData): ProductShop
     {
         $this->asAction=true;
         $this->setRawAttributes($objectData);
@@ -67,7 +62,7 @@ class UpdateProduct
         return $this->handle($product, $validatedData);
     }
 
-    public function jsonResponse(Product $product): ProductResource
+    public function jsonResponse(ProductShop $product): ProductResource
     {
         return new ProductResource($product);
     }

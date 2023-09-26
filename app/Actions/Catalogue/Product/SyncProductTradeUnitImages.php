@@ -8,14 +8,14 @@
 namespace App\Actions\Catalogue\Product;
 
 use App\Actions\Catalogue\Product\Hydrators\ProductInitialiseImageID;
-use App\Models\Market\Product;
+use App\Models\Market\ProductShop;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class SyncProductTradeUnitImages
 {
     use AsAction;
 
-    public function handle(Product $product): Product
+    public function handle(ProductShop $product): ProductShop
     {
         $images = [];
 

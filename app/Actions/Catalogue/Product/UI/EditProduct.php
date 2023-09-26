@@ -9,7 +9,7 @@ namespace App\Actions\Catalogue\Product\UI;
 
 use App\Actions\InertiaAction;
 use App\Enums\Market\Product\ProductTypeEnum;
-use App\Models\Market\Product;
+use App\Models\Market\ProductShop;
 use App\Models\Market\Shop;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -18,7 +18,7 @@ use Spatie\LaravelOptions\Options;
 
 class EditProduct extends InertiaAction
 {
-    public function handle(Product $product): Product
+    public function handle(ProductShop $product): ProductShop
     {
         return $product;
     }
@@ -30,7 +30,7 @@ class EditProduct extends InertiaAction
         return $request->user()->hasPermissionTo("shops.products.edit");
     }
 
-    public function inTenant(Product $product, ActionRequest $request): Product
+    public function inTenant(ProductShop $product, ActionRequest $request): ProductShop
     {
         $this->initialisation($request);
 
@@ -38,7 +38,7 @@ class EditProduct extends InertiaAction
     }
 
     /** @noinspection PhpUnusedParameterInspection */
-    public function inShop(Shop $shop, Product $product, ActionRequest $request): Product
+    public function inShop(Shop $shop, ProductShop $product, ActionRequest $request): ProductShop
     {
         $this->initialisation($request);
 
@@ -48,7 +48,7 @@ class EditProduct extends InertiaAction
     /**
      * @throws \Exception
      */
-    public function htmlResponse(Product $product, ActionRequest $request): Response
+    public function htmlResponse(ProductShop $product, ActionRequest $request): Response
     {
         return Inertia::render(
             'EditModel',
@@ -146,20 +146,20 @@ class EditProduct extends InertiaAction
         );
     }
 
-    public function getPrevious(Product $product, ActionRequest $request): ?array
+    public function getPrevious(ProductShop $product, ActionRequest $request): ?array
     {
-        $previous = Product::where('slug', '<', $product->slug)->orderBy('slug', 'desc')->first();
+        $previous = ProductShop::where('slug', '<', $product->slug)->orderBy('slug', 'desc')->first();
         return $this->getNavigation($previous, $request->route()->getName());
 
     }
 
-    public function getNext(Product $product, ActionRequest $request): ?array
+    public function getNext(ProductShop $product, ActionRequest $request): ?array
     {
-        $next = Product::where('slug', '>', $product->slug)->orderBy('slug')->first();
+        $next = ProductShop::where('slug', '>', $product->slug)->orderBy('slug')->first();
         return $this->getNavigation($next, $request->route()->getName());
     }
 
-    private function getNavigation(?Product $product, string $routeName): ?array
+    private function getNavigation(?ProductShop $product, string $routeName): ?array
     {
         if(!$product) {
             return null;

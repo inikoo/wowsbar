@@ -11,7 +11,7 @@ use App\Actions\InertiaAction;
 use App\Actions\Market\Shop\UI\IndexShops;
 use App\Http\Resources\Market\ProductResource;
 use App\InertiaTable\InertiaTable;
-use App\Models\Market\Product;
+use App\Models\Market\ProductShop;
 use App\Models\Market\ProductCategoryShop;
 use App\Models\Market\Shop;
 use App\Models\Organisation\Organisation;
@@ -68,7 +68,7 @@ class IndexProducts extends InertiaAction
             InertiaTable::updateQueryBuilderParameters($prefix);
         }
 
-        $queryBuilder = QueryBuilder::for(Product::class);
+        $queryBuilder = QueryBuilder::for(ProductShop::class);
         foreach ($this->elementGroups as $key => $elementGroup) {
             $queryBuilder->whereElementGroup(
                 prefix: $prefix,

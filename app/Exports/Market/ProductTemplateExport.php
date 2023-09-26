@@ -17,7 +17,7 @@ class ProductTemplateExport extends Factory implements FromArray
     public function array(): array
     {
         $array = [
-            ['Code', 'Unit', 'Price', 'RRP', 'Name', 'State', 'Type', 'Description']
+            ['Code', 'Unit', 'Price', 'Name', 'State', 'Type', 'Description']
         ];
 
         do {
