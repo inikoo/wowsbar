@@ -61,7 +61,8 @@ class ProductImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wit
     {
         return [
             'code'        => ['required', 'unique:products', 'between:2,9', 'alpha_dash', new CaseSensitive('products')],
-            'units'       => ['sometimes', 'required', 'numeric'],
+            'department'  => ['required', 'exists:product_categories'],
+            'units'       => ['sometimes', 'required', 'string'],
             'image_id'    => ['sometimes', 'required', 'exists:media,id'],
             'price'       => ['required', 'numeric'],
             'name'        => ['required', 'max:250', 'string'],

@@ -144,27 +144,6 @@ class ShowCustomer extends InertiaAction
             ]
         )->table(IndexCustomerWebsites::make()->tableStructure(
             parent: $customer,
-            modelOperations: [
-                'createLink' => [
-                    [
-                        'route' => [
-                            'name'       => 'org.models.customers.websites.upload',
-                            'parameters' => array_values($this->originalParameters)
-                        ],
-                        'icon'  => 'fal fa-upload',
-                        'label' => 'upload',
-                        'style' => 'secondary'
-                    ],
-                    [
-                        'route' => [
-                            'name'       => 'org.shops.show.products.create',
-                            'parameters' => array_values($this->originalParameters)
-                        ],
-                        'label' => __('create'),
-                        'style' => 'primary'
-                    ],
-                ]
-            ],
             exportLinks: [
                 'export' => [
                     'route' => [

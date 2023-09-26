@@ -26,7 +26,6 @@ return new class () extends Migration {
             $table->jsonb('data');
             $table->timestampstz();
             $table->softDeletesTz();
-            $table->unique(['parent_type','parent_id']);
         });
     }
 

@@ -15,6 +15,7 @@ use App\Models\Market\Shop;
 use App\Models\Organisation\Organisation;
 use App\Models\Catalogue\ProductCategory;
 use App\Rules\CaseSensitive;
+use Illuminate\Console\Command;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
 
@@ -24,6 +25,7 @@ class StoreProductCategory
     use WithAttributes;
 
     private int $hydratorsDelay =0;
+    public string $commandSignature = 'pc:create';
 
     public function handle(Organisation|ProductCategory $parent, array $modelData): ProductCategory
     {
@@ -42,9 +44,8 @@ class StoreProductCategory
         ]);
 
 
-
         ProductCategoryHydrateUniversalSearch::dispatch($productCategory);
-        OrganisationHydrateDepartments::dispatch();
+        OrganisationHydrateDepartments::dispatch(organisation());
 
         return $productCategory;
     }
@@ -68,6 +69,17 @@ class StoreProductCategory
         return $this->handle($parent, $validatedData);
     }
 
+    public function asCommand(): int
+    {
+        $data = ['seo', 'ads', 'social', 'banners'];
 
+        foreach ($data as $name) {
+            $this->handle(organisation(), [
+                'code' => $name,
+                'name' => $name
+            ]);
+        }
 
+        return 0;
+    }
 }
