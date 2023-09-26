@@ -9,6 +9,7 @@ namespace App\Actions\Accounting\Payment\UI;
 
 use App\Actions\Accounting\PaymentAccount\UI\ShowPaymentAccount;
 use App\Actions\InertiaAction;
+use App\Actions\UI\Organisation\Accounting\AccountingDashboard;
 use App\Http\Resources\Accounting\PaymentResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\Accounting\Payment;
@@ -222,7 +223,7 @@ class IndexPayments extends InertiaAction
 
             'org.accounting.payment-accounts.show.payments.index' =>
             array_merge(
-                (new \App\Actions\Accounting\PaymentAccount\UI\ShowPaymentAccount())->getBreadcrumbs('org.accounting.payment-accounts.show', $routeParameters),
+                (new ShowPaymentAccount())->getBreadcrumbs('org.accounting.payment-accounts.show', $routeParameters),
                 $headCrumb()
             ),
 

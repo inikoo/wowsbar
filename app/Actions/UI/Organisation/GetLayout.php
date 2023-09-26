@@ -287,7 +287,37 @@ class GetLayout
                 ],
                 'topMenu' => [
                     'subSections' => [
+                        [
+                            'icon'  => ['fal', 'fa-chart-network'],
+                            'route' => [
+                                'name' => 'org.accounting.dashboard'
 
+                            ]
+                        ],
+                        [
+                            'label' => __('accounts'),
+                            'icon'  => ['fal', 'fa-money-check-alt'],
+                            'route' => [
+                                'name' => 'org.accounting.payment-accounts.index',
+
+                            ]
+                        ],
+                        [
+                            'label' => __('payments'),
+                            'icon'  => ['fal', 'fa-coins'],
+                            'route' => [
+                                'name' => 'org.accounting.payments.index',
+
+                            ]
+                        ],
+                        [
+                            'label' => __('invoices'),
+                            'icon'  => ['fal', 'fa-file-invoice'],
+                            'route' => [
+                                'name' => 'org.accounting.invoices.index',
+
+                            ]
+                        ],
                     ]
                 ]
 

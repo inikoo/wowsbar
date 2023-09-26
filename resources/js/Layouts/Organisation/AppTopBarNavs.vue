@@ -10,17 +10,18 @@ import {capitalize} from "@/Composables/capitalize";
 import {trans} from "laravel-vue-i18n";
 import {Link} from "@inertiajs/vue3";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
-import { library } from "@fortawesome/fontawesome-svg-core"
+import {library} from "@fortawesome/fontawesome-svg-core"
 import {
     faTerminal, faUserAlien, faCog, faGlobe, faWindowMaximize, faBriefcase, faPhotoVideo, faBrowser,
-    faFolderTree,faCube,faTransporter,faEnvelope
+    faFolderTree, faCube, faTransporter, faEnvelope, faCoins, faFileInvoice,faMoneyCheckAlt,faChartNetwork
 
 } from "@/../private/pro-light-svg-icons"
-import { useLayoutStore } from "@/Stores/layout"
+import {useLayoutStore} from "@/Stores/layout"
 
 library.add(
     faTerminal, faUserAlien, faCog, faGlobe, faWindowMaximize, faBriefcase, faPhotoVideo,
-    faBrowser,faFolderTree,faCube,faTransporter,faEnvelope
+    faBrowser, faFolderTree, faCube, faTransporter, faEnvelope, faCoins, faFileInvoice,faMoneyCheckAlt,
+    faChartNetwork
 )
 
 const layout = useLayoutStore()
