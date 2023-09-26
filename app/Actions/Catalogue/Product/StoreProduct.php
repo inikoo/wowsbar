@@ -36,7 +36,7 @@ class StoreProduct
             'scope' => 'sales'
         ]);
 
-        //OrganisationHydrateProducts::dispatch();
+//        OrganisationHydrateProducts::dispatch();
         ProductHydrateUniversalSearch::dispatch($product);
         return $product;
     }
