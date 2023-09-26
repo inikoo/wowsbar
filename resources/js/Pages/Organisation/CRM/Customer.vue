@@ -5,10 +5,10 @@
   -->
 
 <script setup lang="ts">
-import {Head, useForm} from '@inertiajs/vue3';
-import PageHeading from "@/Components/Headings/PageHeading.vue";
+import {Head, useForm} from '@inertiajs/vue3'
+import PageHeading from "@/Components/Headings/PageHeading.vue"
 import { capitalize } from "@/Composables/capitalize"
-import { library } from "@fortawesome/fontawesome-svg-core";
+import { library } from "@fortawesome/fontawesome-svg-core"
 import {
     faCodeCommit,
     faGlobe,
@@ -16,12 +16,21 @@ import {
     faMoneyBill,
     faPaperclip, faPaperPlane, faStickyNote,
     faTags,faCube,faCodeBranch
-} from "@/../private/pro-light-svg-icons";
-import ModelDetails from "@/Pages/ModelDetails.vue";
-import {useTabChange} from "@/Composables/tab-change";
-import {computed, defineAsyncComponent, ref} from "vue";
-import Tabs from "@/Components/Navigation/Tabs.vue";
-import CustomerShowcase from "@/Components/Showcases/Organisation/CustomerShowcase.vue";
+} from "@/../private/pro-light-svg-icons"
+import ModelDetails from "@/Pages/ModelDetails.vue"
+import {useTabChange} from "@/Composables/tab-change"
+import {computed, defineAsyncComponent, ref} from "vue"
+import Tabs from "@/Components/Navigation/Tabs.vue"
+import CustomerShowcase from "@/Components/Showcases/Organisation/CustomerShowcase.vue"
+import {
+    Dialog,
+    DialogPanel,
+    DialogTitle,
+    TransitionChild,
+    TransitionRoot,
+} from "@headlessui/vue"
+import TablePortfolioWebsites from "@/Components/Tables/TablePortfolioWebsites.vue"
+import { routeType } from '@/types/route'
 
 library.add(
     faStickyNote,
@@ -40,43 +49,42 @@ const ModelChangelog = defineAsyncComponent(() => import('@/Pages/ModelChangelog
 
 const props = defineProps<{
     title: string,
-    pageHead: object,
+    pageHead: any
     tabs: {
-        current: string;
-        navigation: object;
+        current: string
+        navigation: object
     }
     showcase?:object
     portfolio?: object
+    uploadRoutes: {
+        upload: routeType
+        history?: routeType
+        download?: routeType
+    }
 }>()
-let currentTab = ref(props.tabs.current);
-const handleTabUpdate = (tabSlug) => useTabChange(tabSlug, currentTab);
 
+const currentTab = ref(props.tabs.current)
+const handleTabUpdate = (tabSlug) => useTabChange(tabSlug, currentTab)
+
+// List components
+const components = {
+    showcase: CustomerShowcase,
+    details: ModelDetails,
+    history: ModelChangelog,
+    portfolio: TablePortfolioWebsites
+}
+
+// Selected component
 const component = computed(() => {
-
-    const components = {
-        showcase: CustomerShowcase,
-        details: ModelDetails,
-        history: ModelChangelog,
-        portfolio: TablePortfolioWebsites
-    };
-    return components[currentTab.value];
-
-});
-
-import {
-    Dialog,
-    DialogPanel,
-    DialogTitle,
-    TransitionChild,
-    TransitionRoot,
-} from "@headlessui/vue";
-import TablePortfolioWebsites from "@/Components/Tables/TablePortfolioWebsites.vue";
+    return components[currentTab.value]
+})
 
 
-const isOpen = ref(false);
+
+const isOpen = ref(false)
 
 function setIsOpen(value) {
-    isOpen.value = value;
+    isOpen.value = value
 }
 
 const webUserForm = useForm({
@@ -164,5 +172,5 @@ const webUserForm = useForm({
         </Dialog>
     </TransitionRoot>
     <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate"/>
-    <component :is="component" :data="props[currentTab]"></component>
+    <component :is="component" :data="props[currentTab]" :uploadRoutes="uploadRoutes"></component>
 </template>

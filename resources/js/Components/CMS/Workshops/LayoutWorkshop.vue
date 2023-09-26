@@ -100,18 +100,18 @@ const addfavicon= async (element) => {
 };
 
 
-// async function setToFirebase() {
-//     const column = "org/websites/layout";
-//     try {
-//         await setDataFirebase(column, selectedTheme.value);
-//     } catch (error) {
-//         console.log(error);
-//     }
-// }
+async function setToFirebase() {
+    const column = "org/websites/layout";
+    try {
+        await setDataFirebase(column, setData.value);
+    } catch (error) {
+        console.log(error);
+    }
+}
 
-// watch(selectedTheme, setToFirebase, { deep: true });
+watch(setData, setToFirebase, { deep: true });
 
-// setToFirebase();
+setToFirebase();
 
 </script>
 
