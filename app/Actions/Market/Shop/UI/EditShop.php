@@ -11,7 +11,7 @@ use App\Actions\Assets\Country\UI\GetCountriesOptions;
 use App\Actions\Assets\Currency\UI\GetCurrenciesOptions;
 use App\Actions\Assets\Language\UI\GetLanguagesOptions;
 use App\Actions\InertiaAction;
-use App\Enums\Organisation\Market\Shop\ShopTypeEnum;
+use App\Enums\Marketing\Shop\ShopTypeEnum;
 use App\Models\Market\Shop;
 use Exception;
 use Inertia\Inertia;

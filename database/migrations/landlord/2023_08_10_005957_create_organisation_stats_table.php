@@ -5,8 +5,8 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-use App\Enums\Organisation\Market\Shop\ShopStateEnum;
-use App\Enums\Organisation\Market\Shop\ShopTypeEnum;
+use App\Enums\Marketing\Shop\ShopStateEnum;
+use App\Enums\Marketing\Shop\ShopTypeEnum;
 use App\Enums\Organisation\OrganisationUser\OrganisationUserTypeEnum;
 use App\Enums\Organisation\Web\Webpage\WebpagePurposeEnum;
 use App\Enums\Organisation\Web\Webpage\WebpageStateEnum;

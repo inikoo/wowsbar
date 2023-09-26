@@ -10,10 +10,10 @@ namespace App\Actions\Web\WebpageVariant;
 use App\Actions\CRM\Customer\UI\IndexCustomers;
 use App\Actions\InertiaAction;
 use App\Actions\Mail\Mailshot\IndexMailshots;
-use App\Actions\Market\Product\UI\IndexProducts;
+use App\Actions\Catalogue\Product\UI\IndexProducts;
 use App\Enums\UI\WebpageTabsEnum;
 use App\Http\Resources\Web\WebpageResource;
-use App\Models\Market\ProductCategory;
+use App\Models\Market\ProductCategoryShop;
 use App\Models\Market\Shop;
 use App\Models\Web\WebpageVariant;
 use Inertia\Inertia;
@@ -49,7 +49,7 @@ class ShowWebpageVariant extends InertiaAction
         $this->initialisation($request)->withTab(WebpageTabsEnum::values());
         return $this->handle($webpageVariant);
     }
-    public function inShopInDepartment(Shop $shop, ProductCategory $department, WebpageVariant $webpageVariant, ActionRequest $request): WebpageVariant
+    public function inShopInDepartment(Shop $shop, ProductCategoryShop $department, WebpageVariant $webpageVariant, ActionRequest $request): WebpageVariant
     {
         $this->initialisation($request)->withTab(WebpageTabsEnum::values());
         return $this->handle($webpageVariant);

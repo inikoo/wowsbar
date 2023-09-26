@@ -277,8 +277,8 @@ class IndexCustomerWebsites extends InertiaAction
                 ),
                 $headCrumb(
                     [
-                        'name' => 'org.portfolios.shop.customer-websites.index',
-                        'parameters'=>$routeParameters
+                        'name'      => 'org.portfolios.shop.customer-websites.index',
+                        'parameters'=> $routeParameters
                     ]
                 ),
             ),

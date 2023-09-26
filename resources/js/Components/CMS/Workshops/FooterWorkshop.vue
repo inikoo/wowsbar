@@ -20,6 +20,7 @@ import SocialMediaPicker from "@/Components/CMS/Fields/IconPicker/SocialMediaToo
 import { getDbRef, getDataFirebase, setDataFirebase } from '@/Composables/firebase'
 import ToolInTop from '@/Components/CMS/Footer/ToolsInTop.vue'
 library.add(faHandPointer, faHandRock, faPlus, faAlignJustify, faList, faInfoCircle)
+import { notify } from "@kyvg/vue3-notification"
 
 const props = defineProps<{
     data: Object,
@@ -180,9 +181,16 @@ const changeImage = async (file) => {
                 headers: { "Content-Type": "multipart/form-data" },
             }
         );
-        console.log(response)
+        if(response.data.thumbnail){
+            data.logo = response.data.thumbnail
+            }
     } catch (error) {
         console.log(error)
+        notify({
+                title: "Failed to Update Banner",
+                text: error,
+                type: "error"
+            });
     }
 }
 
@@ -333,4 +341,12 @@ const changeImage = async (file) => {
             </div>
         </div>
     </div>
+    <notifications
+        group="custom-style"
+        position="top center"
+        classes="n-light"
+        dangerously-set-inner-html
+        :max="3"
+        :width="400"
+    />
 </template>

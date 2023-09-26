@@ -8,8 +8,7 @@
 namespace App\Actions\Market\Shop\UI;
 
 use App\Actions\InertiaAction;
-use App\Actions\Market\Product\UI\IndexProducts;
-use App\Actions\Market\ProductCategory\UI\IndexDepartments;
+use App\Actions\Catalogue\Product\UI\IndexProducts;
 use App\Actions\UI\Organisation\Dashboard\ShowDashboard;
 use App\Actions\UI\WithInertia;
 use App\Enums\UI\Organisation\ShopTabsEnum;
@@ -169,13 +168,13 @@ class ShowShop extends InertiaAction
                 ShopTabsEnum::DEPARTMENTS->value => $this->tab == ShopTabsEnum::DEPARTMENTS->value
                     ?
                     fn () => DepartmentResource::collection(
-                        IndexDepartments::run(
+                        \App\Actions\Catalogue\ProductCategory\UI\IndexDepartments::run(
                             parent: $shop,
                             prefix: 'departments'
                         )
                     )
                     : Inertia::lazy(fn () => DepartmentResource::collection(
-                        IndexDepartments::run(
+                        \App\Actions\Catalogue\ProductCategory\UI\IndexDepartments::run(
                             parent: $shop,
                             prefix: 'departments'
                         )
@@ -191,7 +190,7 @@ class ShowShop extends InertiaAction
                         )
                     )
                     : Inertia::lazy(fn () => ProductResource::collection(
-                        \App\Actions\Market\Product\UI\IndexProducts::run(
+                        \App\Actions\Catalogue\Product\UI\IndexProducts::run(
                             parent: $shop,
                             prefix: 'products'
                         )
@@ -199,7 +198,7 @@ class ShowShop extends InertiaAction
 
             ]
         )->table(
-            IndexDepartments::make()->tableStructure(
+            \App\Actions\Catalogue\ProductCategory\UI\IndexDepartments::make()->tableStructure(
                 parent: $shop,
                 modelOperations: [
                     'createLink' => $this->canEdit ? [
@@ -214,7 +213,7 @@ class ShowShop extends InertiaAction
                 prefix: 'departments'
             )
         )->table(
-            \App\Actions\Market\Product\UI\IndexProducts::make()->tableStructure(
+            \App\Actions\Catalogue\Product\UI\IndexProducts::make()->tableStructure(
                 parent: $shop,
                 modelOperations: [
                     'createLink' => [

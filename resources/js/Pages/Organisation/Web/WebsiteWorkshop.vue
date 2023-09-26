@@ -109,7 +109,6 @@ const sendDataToServer = async () => {
             </div>
         </template>
     </Tabs>
-    <div @click="()=>console.log(structure)">seeData</div>
     <component :is="component" :data="structure" :imagesUploadRoute="imagesUploadRoute"></component>
 </template>
 
