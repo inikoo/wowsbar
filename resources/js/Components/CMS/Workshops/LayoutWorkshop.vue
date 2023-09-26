@@ -17,10 +17,12 @@ import { faImage, faTimes, faOven } from "@/../private/pro-regular-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { isNull, set } from 'lodash'
 import Image from "@/Components/Image.vue"
+import { notify } from "@kyvg/vue3-notification"
 library.add(faImage, faTimes, faOven);
 
 const props = defineProps<{
 	data: Object,
+    imagesUploadRoute : Object
 }>()
 
 const themeOptions = [
@@ -51,9 +53,16 @@ const addImage = async (element) => {
                     headers: { "Content-Type": "multipart/form-data" },
                 }
             );
-            console.log(response);
+            if(response.data.thumbnail){
+                setData.value.imageLayout = response.data.thumbnail
+            }
         } catch (error) {
             console.log(error);
+            notify({
+                title: "Failed to Update Banner",
+                text: error,
+                type: "error"
+            });
         }
     }
 };
@@ -76,9 +85,16 @@ const addfavicon= async (element) => {
                     headers: { "Content-Type": "multipart/form-data" },
                 }
             );
-            console.log(response);
+            if(response.data.thumbnail){
+                setData.value.favicon = response.data.thumbnail
+            }
         } catch (error) {
             console.log(error);
+            notify({
+                title: "Failed to Update Banner",
+                text: error,
+                type: "error"
+            });
         }
     }
 };
@@ -143,7 +159,7 @@ const addfavicon= async (element) => {
         <div
             class="w-[60%] h-72 flex relative justify-center items-center border-[1px] border-gray-400 rounded-b-md"
             :style="{
-                'background-image': `url(${setData.imageLayout})`,
+                'background-image': `url(${setData.imageLayout?.original})`,
                 'background-color': `${setData.colorLayout}`,
                 'background-repeat': 'no-repeat',
                 'background-size': 'cover'
@@ -183,9 +199,9 @@ const addfavicon= async (element) => {
                             class=""
                         />
                     </div>
-                    <div class="font-xs border rounded-lg py-1 px-2 text-white" :style="`background-color: ${setData?.header?.colorScheme};`">Apoointment</div>
+                    <div class="font-xs border rounded-lg py-1 px-2 text-black" :style="`background-color: ${setData?.header?.colorScheme};`">Apoointment</div>
                     <div :style="`border-left: 1px solid ${setData?.header?.colorScheme};`"></div>
-                    <div class="font-xs border rounded-lg py-1 px-2 text-white" :style="`background-color: ${setData?.header?.colorScheme};`">sign in</div>
+                    <div class="font-xs border rounded-lg py-1 px-2 text-black" :style="`background-color: ${setData?.header?.colorScheme};`">sign in</div>
                     </div>
                 </div>
                 <div
@@ -270,4 +286,12 @@ const addfavicon= async (element) => {
             </div>
         </div>
     </div>
+    <notifications
+        group="custom-style"
+        position="top center"
+        classes="n-light"
+        dangerously-set-inner-html
+        :max="3"
+        :width="400"
+    />
 </template>

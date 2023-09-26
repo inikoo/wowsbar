@@ -22,6 +22,7 @@ import Menu from "@/Components/CMS/Menu/index.vue";
 import sideMenuHeader from "@/Components/CMS/Header/Sidebar.vue";
 import sideMenu from "@/Components/CMS/Menu/SideMenu.vue"
 import { ulid } from 'ulid';
+import { notify } from "@kyvg/vue3-notification"
 
 library.add(faHandPointer, faText, faSearch, faImage, faTrash, faBars);
 const props = defineProps<{
@@ -49,9 +50,16 @@ const changeLogo = async (element) => {
                     headers: { "Content-Type": "multipart/form-data" },
                 }
             );
-            console.log(response);
+            if(response.data.thumbnail){
+                headerData.value.logo = response.data.thumbnail
+            }
         } catch (error) {
             console.log(error);
+            notify({
+                title: "Failed to Update Banner",
+                text: error,
+                type: "error"
+            });
         }
     }
 };
@@ -123,4 +131,12 @@ const addNavigation=()=>{
             </div>
         </div>
     </div>
+    <notifications
+        group="custom-style"
+        position="top center"
+        classes="n-light"
+        dangerously-set-inner-html
+        :max="3"
+        :width="400"
+    />
 </template>

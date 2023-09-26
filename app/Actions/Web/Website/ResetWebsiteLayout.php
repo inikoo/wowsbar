@@ -26,13 +26,15 @@ class ResetWebsiteLayout
             [
                 "layout"      => "full",
                 "favicon"     => $this->getFavicon($website),
-                "colorLayout" => "rgba(55 65 81)",
+                "colorLayout" => "rgba(255 255 255)",
                 "imageLayout" => null,
                 "header"      => [
-                    "color" => "rgba(55 65 81)"
+                    "color" => "rgba(55 65 81)",
+                     "colorScheme" =>  "rgba(255 255 255)"
                 ],
                 "content"     => [
-                    "color" => "rgba(55 65 81)"
+                    "color" => "rgba(55 65 81)",
+                    "colorScheme" =>  "rgba(255 255 255)"
                 ],
                 "footer"      => [
                     "color" => "rgba(55 65 81)"
