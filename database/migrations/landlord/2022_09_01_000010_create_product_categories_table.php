@@ -19,19 +19,13 @@ return new class () extends Migration {
             $table->string('slug')->unique()->collation('und_ns');
             $table = $this->assertCodeDescription($table);
             $table->unsignedBigInteger('image_id')->nullable();
-            $table->unsignedSmallInteger('shop_id')->nullable();
-            $table->foreign('shop_id')->references('id')->on('shops');
-            $table->unsignedInteger('parent_id');
-            $table->string('parent_type');
             $table->string('type')->index();
             $table->boolean('is_family')->default(false);
             $table->string('state')->nullable()->index();
             $table->jsonb('data');
             $table->timestampstz();
             $table->softDeletesTz();
-            $table->unsignedInteger('source_department_id')->nullable()->unique();
-            $table->unsignedInteger('source_family_id')->nullable()->unique();
-            $table->index(['parent_id','parent_type']);
+
         });
         //  DB::statement('CREATE INDEX ON product_categories USING gin (name gin_trgm_ops) ');
     }

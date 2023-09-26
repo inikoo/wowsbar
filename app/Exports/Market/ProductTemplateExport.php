@@ -8,7 +8,7 @@
 namespace App\Exports\Market;
 
 use App\Enums\Market\Product\ProductTypeEnum;
-use App\Enums\Organisation\Market\Product\ProductStateEnum;
+use App\Enums\Catalogue\Product\ProductStateEnum;
 use Faker\Factory;
 use Maatwebsite\Excel\Concerns\FromArray;
 

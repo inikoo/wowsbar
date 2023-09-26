@@ -5,7 +5,7 @@
  *  Copyright (c) 2022, Raul A Perusquia Flores
  */
 
-use App\Enums\Organisation\Market\Product\ProductStateEnum;
+use App\Enums\Catalogue\Product\ProductStateEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;

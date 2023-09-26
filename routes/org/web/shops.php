@@ -6,19 +6,19 @@
  */
 
 
-use App\Actions\Market\Product\DownloadProductsTemplate;
-use App\Actions\Market\Product\UI\CreateProduct;
-use App\Actions\Market\Product\UI\EditProduct;
-use App\Actions\Market\Product\UI\IndexProducts;
-use App\Actions\Market\Product\UI\RemoveProduct;
-use App\Actions\Market\Product\UI\ShowProduct;
-use App\Actions\Market\ProductCategory\UI\CreateDepartment;
-use App\Actions\Market\ProductCategory\UI\IndexDepartments;
 use App\Actions\Market\Shop\UI\CreateShop;
 use App\Actions\Market\Shop\UI\EditShop;
 use App\Actions\Market\Shop\UI\IndexShops;
 use App\Actions\Market\Shop\UI\RemoveShop;
 use App\Actions\Market\Shop\UI\ShowShop;
+use App\Actions\Catalogue\Product\DownloadProductsTemplate;
+use App\Actions\Catalogue\Product\UI\CreateProduct;
+use App\Actions\Catalogue\Product\UI\EditProduct;
+use App\Actions\Catalogue\Product\UI\IndexProducts;
+use App\Actions\Catalogue\Product\UI\RemoveProduct;
+use App\Actions\Catalogue\Product\UI\ShowProduct;
+use App\Actions\Catalogue\ProductCategory\UI\CreateDepartment;
+use App\Actions\Catalogue\ProductCategory\UI\IndexDepartments;
 use App\Actions\Web\Website\UI\CreateWebsite;
 use Illuminate\Support\Facades\Route;
 

@@ -52,7 +52,7 @@ class UpdateShop
             'phone'                    => ['sometimes','nullable'],
             'identity_document_number' => ['sometimes', 'nullable', 'string'],
             'identity_document_type'   => ['sometimes', 'nullable', 'string'],
-            'type'                     => ['sometimes', 'required', Rule::in(\App\Enums\Organisation\Market\Shop\ShopTypeEnum::values())],
+            'type'                     => ['sometimes', 'required', Rule::in(\App\Enums\Marketing\Shop\ShopTypeEnum::values())],
             'currency_id'              => ['sometimes', 'required', 'exists:central.currencies,id'],
             'language_id'              => ['sometimes', 'required', 'exists:central.languages,id'],
             'timezone_id'              => ['sometimes', 'required', 'exists:central.timezones,id'],

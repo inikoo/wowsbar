@@ -10,7 +10,7 @@ use App\Actions\CRM\Customer\StoreCustomer;
 use App\Actions\Market\Shop\StoreShop;
 use App\Actions\Organisation\Organisation\StoreOrganisation;
 use App\Actions\Web\Website\StoreWebsite;
-use App\Enums\Organisation\Market\Shop\ShopTypeEnum;
+use App\Enums\Marketing\Shop\ShopTypeEnum;
 use App\Models\CRM\Customer;
 use App\Models\Organisation\Organisation;
 use Symfony\Component\Process\Process;

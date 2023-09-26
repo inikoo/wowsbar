@@ -33,6 +33,7 @@ class StoreOrganisation
         $organisation->stats()->create();
         $organisation->humanResourcesStats()->create();
         $organisation->crmStats()->create();
+        $organisation->catalogueStats()->create();
 
         AttachImageToOrganisation::run(
             organisation: $organisation,

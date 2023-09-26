@@ -11,6 +11,7 @@ use App\Models\Accounting\PaymentServiceProvider;
 use App\Models\Assets\Currency;
 use App\Models\Auth\OrganisationUser;
 use App\Models\Market\Shop;
+use App\Models\Catalogue\ProductCategory;
 use App\Models\Web\Website;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -18,6 +19,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
@@ -38,6 +40,8 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Organisation\OrganisationCrmStats|null $crmStats
  * @property-read Currency $currency
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, ProductCategory> $departments
+ * @property-read int|null $departments_count
  * @property-read \App\Models\Organisation\OrganisationHumanResourcesStats|null $humanResourcesStats
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \App\Models\Media\Media> $media
  * @property-read int|null $media_count
@@ -99,6 +103,11 @@ class Organisation extends Model implements HasMedia
         return $this->hasOne(OrganisationCrmStats::class);
     }
 
+    public function catalogueStats(): HasOne
+    {
+        return $this->hasOne(OrganisationCatalogueStats::class);
+    }
+
     public function websites(): HasMany
     {
         return $this->hasMany(Website::class);
@@ -124,5 +133,9 @@ class Organisation extends Model implements HasMedia
         return PaymentServiceProvider::where('code', 'accounts')->first();
     }
 
+    public function departments(): MorphMany
+    {
+        return $this->morphMany(ProductCategory::class, 'parent');
+    }
 
 }
