@@ -200,7 +200,7 @@ class GetLayout
             ];
         }
 
-        if ($user->can('products.seo')) {
+        if ($user->can('catalogue.seo.view')) {
             $navigation['seo'] = [
                 'label'   => __('SEO'),
                 'icon'    => ['fab', 'fa-google'],
@@ -215,7 +215,22 @@ class GetLayout
             ];
         }
 
-        if ($user->can('products.google-ads')) {
+        if ($user->can('catalogue.seo.view')) {
+            $navigation['seo'] = [
+                'label'   => __('SEO'),
+                'icon'    => ['fab', 'fa-google'],
+                'route'   => [
+                    'name' => 'org.products.seo.dashboard'
+                ],
+                'topMenu' => [
+                    'subSections' => [
+
+                    ]
+                ]
+            ];
+        }
+
+        if ($user->can('catalogue.google-ads.view')) {
             $navigation['google-ads'] = [
                 'label'   => __('Ads'),
                 'icon'    => ['fal', 'fa-ad'],
@@ -230,7 +245,7 @@ class GetLayout
             ];
         }
 
-        if ($user->can('products.social')) {
+        if ($user->can('catalogue.social.view')) {
             $navigation['social'] = [
                 'label'   => __('Social'),
                 'icon'    => ['fal', 'fa-thumbs-up'],

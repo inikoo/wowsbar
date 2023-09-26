@@ -5,29 +5,29 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-use App\Actions\UI\Organisation\ProductManagement\ShowProductManagementDashboard;
+use App\Actions\UI\Organisation\Catalogue\ShowCatalogueDashboard;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [
-    'uses'  => ShowProductManagementDashboard::class,
+    'uses'  => ShowCatalogueDashboard::class,
     'icon'  => 'globe',
     'label' => 'websites'
 ])->name('dashboard');
 Route::get('/seo', [
-    'uses'  => ShowProductManagementDashboard::class,
+    'uses'  => ShowCatalogueDashboard::class,
     'icon'  => 'globe',
     'label' => 'websites'
 ])->name('seo.dashboard');
 
 Route::get('/social', [
-    'uses'  => ShowProductManagementDashboard::class,
+    'uses'  => ShowCatalogueDashboard::class,
     'icon'  => 'globe',
     'label' => 'websites'
 ])->name('social.dashboard');
 
 
 Route::get('/google-ads', [
-    'uses'  => ShowProductManagementDashboard::class,
+    'uses'  => ShowCatalogueDashboard::class,
     'icon'  => 'globe',
     'label' => 'websites'
 ])->name('google-ads.dashboard');
