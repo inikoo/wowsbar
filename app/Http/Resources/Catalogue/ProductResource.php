@@ -1,11 +1,11 @@
 <?php
 /*
- *  Author: Jonathan lopez <raul@inikoo.com>
- *  Created: Sat, 22 Oct 2022 18:53:15 British Summer Time, Sheffield, UK
- *  Copyright (c) 2022, inikoo
+ * Author: Raul Perusquia <raul@inikoo.com>
+ * Created: Tue, 26 Sep 2023 16:03:19 Malaysia Time, Kuala Lumpur, Malaysia
+ * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Http\Resources\Market;
+namespace App\Http\Resources\Catalogue;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
