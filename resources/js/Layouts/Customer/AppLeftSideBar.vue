@@ -16,14 +16,14 @@ import {
     faBrowser, faRectangleWide, faUserCog, faTachometerAlt,
     faTransporter, faBullseye, faThumbsUp, faEnvelope
 } from "../../../private/pro-light-svg-icons"
-import { faGoogle } from '@fortawesome/free-brands-svg-icons'
+import {faGoogle} from '@fortawesome/free-brands-svg-icons'
 
 import {faChevronLeft} from "../../../private/pro-regular-svg-icons"
 import {useLayoutStore} from "@/Stores/layout.js"
 import {computed} from "vue"
 
 library.add(faBrowser, faRectangleWide, faUserCog, faChevronLeft, faTachometerAlt,
-    faGoogle,faTransporter,faBullseye,faThumbsUp,faEnvelope
+    faGoogle, faTransporter, faBullseye, faThumbsUp, faEnvelope
 )
 
 const layout = useLayoutStore()

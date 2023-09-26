@@ -123,14 +123,14 @@ class ShowCustomer extends InertiaAction
                         'name'       => 'org.models.customer.website.upload',
                         'parameters' => $customer->slug
                     ],
-                    'history' => [
-                        'name'       => 'org.models.customer.website.upload',
-                        'parameters' => $customer->slug
-                    ],
-                    'download' => [
-                        'name'       => 'org.crm.prospects.uploads.template.download',
-                        'parameters' => $customer->slug
-                    ]
+                    // 'history' => [
+                    //     'name'       => 'org.models.customer.website.upload',
+                    //     'parameters' => $customer->slug
+                    // ],
+                    // 'download' => [
+                    //     'name'       => 'org.crm.prospects.uploads.template.download',
+                    //     'parameters' => $customer->slug
+                    // ]
                 ],
 
                 CustomerTabsEnum::SHOWCASE->value => $this->tab == CustomerTabsEnum::SHOWCASE->value ?
@@ -153,7 +153,8 @@ class ShowCustomer extends InertiaAction
                         ],
                         'icon'  => 'fal fa-upload',
                         'label' => 'upload',
-                        'style' => 'secondary'
+                        'style' => 'secondary',
+                        'mode'  => 'upload', // To able to call in parent page as template #buttonupload
                     ],
                     [
                         'route' => [

@@ -12,13 +12,13 @@ import {ref, onMounted, onUnmounted} from 'vue'
 import {router} from '@inertiajs/vue3'
 
 import {library} from "@fortawesome/fontawesome-svg-core"
-import {faBriefcase, faEnvelope, faPuzzlePiece,faThumbsUp,faAd} from "@/../private/pro-light-svg-icons"
-import { faGoogle} from "@fortawesome/free-brands-svg-icons"
+import {faBriefcase, faEnvelope, faPuzzlePiece, faThumbsUp, faAd, faAlbumCollection} from "@/../private/pro-light-svg-icons"
+import {faGoogle} from "@fortawesome/free-brands-svg-icons"
 import {faChevronLeft} from "@/../private/pro-regular-svg-icons"
 import {useLayoutStore} from "@/Stores/layout.js"
 import {computed} from "vue"
 
-library.add(faBriefcase, faPuzzlePiece, faChevronLeft, faEnvelope,faThumbsUp,faAd,faGoogle)
+library.add(faBriefcase, faPuzzlePiece, faChevronLeft, faEnvelope, faThumbsUp, faAd, faGoogle, faAlbumCollection)
 
 const layout = useLayoutStore()
 const isHover = ref(false)
@@ -93,14 +93,16 @@ const handleToggleLeftbar = () => {
                           :aria-current="itemKey === layout.currentModule ? 'page' : undefined"
                     >
                         <div class="flex items-center">
+                            <!--
                             <img v-if="item.name == 'dashboard'" src="@/../images/logo-charcoal-transparent.png" alt="" class="h-4 aspect-square"
                                  :class="[ itemKey === layout.currentModule
 											? 'text-orange-500'
 											: 'text-gray-400 group-hover:text-gray-600',
 										'ml-2 mr-3 flex-shrink-0 h-4 w-4'
 							]">
+							-->
                             <FontAwesomeIcon
-                                v-else
+
                                 aria-hidden="true"
                                 class="text-gray-400 dark:text-gray-200 ml-2 mr-3 flex-shrink-0 h-4 w-4"
                                 :icon="item.icon"/>

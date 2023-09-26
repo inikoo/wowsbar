@@ -200,27 +200,44 @@ class GetLayout
             ];
         }
 
-        if ($user->can('catalogue.seo.view')) {
-            $navigation['seo'] = [
-                'label'   => __('SEO'),
-                'icon'    => ['fab', 'fa-google'],
+
+        if ($user->can('catalogue.view')) {
+            $navigation['catalogue'] = [
+                'label'   => __('catalogue'),
+                'icon'    => ['fal', 'fa-album-collection'],
                 'route'   => [
-                    'name' => 'org.products.seo.dashboard'
+                    'name' => 'org.catalogue.dashboard'
                 ],
                 'topMenu' => [
                     'subSections' => [
+                        [
+                            'label' => __('departments'),
+                            'icon'  => ['fal', 'fa-folder-tree'],
+                            'route' => [
+                                'name' => 'org.catalogue.departments.index',
 
+                            ]
+                        ],
+                        [
+                            'label' => __('products'),
+                            'icon'  => ['fal', 'fa-cube'],
+                            'route' => [
+                                'name' => 'org.catalogue.products.index',
+
+                            ]
+                        ],
                     ]
                 ]
             ];
         }
 
+
         if ($user->can('catalogue.seo.view')) {
             $navigation['seo'] = [
                 'label'   => __('SEO'),
                 'icon'    => ['fab', 'fa-google'],
                 'route'   => [
-                    'name' => 'org.products.seo.dashboard'
+                    'name' => 'org.catalogue.seo.dashboard'
                 ],
                 'topMenu' => [
                     'subSections' => [
@@ -235,7 +252,7 @@ class GetLayout
                 'label'   => __('Ads'),
                 'icon'    => ['fal', 'fa-ad'],
                 'route'   => [
-                    'name' => 'org.products.google-ads.dashboard'
+                    'name' => 'org.catalogue.google-ads.dashboard'
                 ],
                 'topMenu' => [
                     'subSections' => [
@@ -250,7 +267,7 @@ class GetLayout
                 'label'   => __('Social'),
                 'icon'    => ['fal', 'fa-thumbs-up'],
                 'route'   => [
-                    'name' => 'org.products.social.dashboard'
+                    'name' => 'org.catalogue.social.dashboard'
                 ],
                 'topMenu' => [
                     'subSections' => [

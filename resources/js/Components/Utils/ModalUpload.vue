@@ -67,7 +67,6 @@ watch(compVModel, async () => {
                 const data = await axios.get(route(props.routes.history?.name, props.routes.history?.parameters))
                 dataHistory.value = data.data.data
             } catch (error: any) {
-                console.log(props.routes)
                 dataHistory.value = []
                 console.error(error.message)
             }

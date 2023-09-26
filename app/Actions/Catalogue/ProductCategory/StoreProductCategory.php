@@ -15,6 +15,7 @@ use App\Models\Market\Shop;
 use App\Models\Organisation\Organisation;
 use App\Models\Catalogue\ProductCategory;
 use App\Rules\CaseSensitive;
+use Illuminate\Console\Command;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
 
@@ -23,14 +24,15 @@ class StoreProductCategory
     use AsAction;
     use WithAttributes;
 
-    private int $hydratorsDelay =0;
+    private int $hydratorsDelay = 0;
+    public string $commandSignature = 'product-category:new {code} {name}';
 
     public function handle(Organisation|ProductCategory $parent, array $modelData): ProductCategory
     {
         if (class_basename($parent) == 'ProductCategory') {
-            $modelData['type']    = ProductCategoryTypeEnum::BRANCH;
+            $modelData['type'] = ProductCategoryTypeEnum::BRANCH;
         } else {
-            $modelData['type']    = ProductCategoryTypeEnum::ROOT;
+            $modelData['type'] = ProductCategoryTypeEnum::ROOT;
         }
 
         /** @var ProductCategory $productCategory */
@@ -42,9 +44,8 @@ class StoreProductCategory
         ]);
 
 
-
         ProductCategoryHydrateUniversalSearch::dispatch($productCategory);
-        OrganisationHydrateDepartments::dispatch();
+        OrganisationHydrateDepartments::dispatch(organisation());
 
         return $productCategory;
     }
@@ -52,10 +53,10 @@ class StoreProductCategory
     public function rules(): array
     {
         return [
-            'code'        => ['required', 'unique:product_categories', 'between:2,9', 'alpha_dash', new CaseSensitive('product_categories')],
-            'name'        => ['required', 'max:250', 'string'],
-            'image_id'    => ['sometimes', 'required', 'exists:media,id'],
-            'state'       => ['sometimes', 'required'],
+            'code' => ['required', 'unique:product_categories', 'between:2,9', 'alpha_dash', new CaseSensitive('product_categories')],
+            'name' => ['required', 'max:250', 'string'],
+            'image_id' => ['sometimes', 'required', 'exists:media,id'],
+            'state' => ['sometimes', 'required'],
             'description' => ['sometimes', 'required', 'max:1500'],
         ];
     }
@@ -68,6 +69,15 @@ class StoreProductCategory
         return $this->handle($parent, $validatedData);
     }
 
+    public function asCommand(Command $command): int
+    {
+        $this->handle(organisation(), [
+            'code' => $command->argument('code'),
+            'name' => $command->argument('name')
+        ]);
 
+        echo $command->argument('name') . " added \n";
 
+        return 0;
+    }
 }

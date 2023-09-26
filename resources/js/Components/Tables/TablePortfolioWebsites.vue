@@ -5,18 +5,19 @@
   -->
 
 <script setup lang="ts">
-import {Link} from '@inertiajs/vue3';
-import Table from '@/Components/Table/Table.vue';
-import {Website} from "@/types/website";
-import {computed, ref, watch} from "vue";
-import Pusher from "pusher-js";
-import ModalUpload from "@/Components/Utils/ModalUpload.vue";
-import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
+import { Link } from '@inertiajs/vue3'
+import Table from '@/Components/Table/Table.vue'
+import { Website } from "@/types/website"
+import { computed, ref, watch } from "vue"
+import Pusher from "pusher-js"
+import ModalUpload from "@/Components/Utils/ModalUpload.vue"
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { routeType } from '@/types/route'
+import Button from '@/Components/Elements/Buttons/Button.vue'
 
 const props = defineProps<{
-    data: object,
-    tab?:string,
+    data: object
+    tabs?: string
     uploadRoutes: {
         upload: routeType
         history?: routeType
@@ -62,7 +63,7 @@ channel.bind('Prospect', (data: any) => {
 
 // Progress bar for adding website
 const compProgressBar = computed(() => {
-    return dataPusher.value?.data.total_uploads ? dataPusher.value?.data.total_complete/dataPusher.value?.data.total_uploads * 100 : 0
+    return dataPusher.value?.data.total_uploads ? dataPusher.value?.data.total_complete / dataPusher.value?.data.total_uploads * 100 : 0
 })
 
 watch(compProgressBar, () => {
@@ -73,14 +74,14 @@ watch(compProgressBar, () => {
 
 </script>
 
-<template>
+<template>{{ uploadRoutes }}
     <!-- Modal: Upload -->
-    <!-- <ModalUpload
+    <ModalUpload
         v-model="isModalOpen"
         :routes="uploadRoutes"
         :isUploaded="isUploaded"
         @isUploaded="(val: any) => isUploaded = val"
-    /> -->
+    />
 
     <!-- Progress Bar -->
     <div :class="isUploaded && !isProgress ? 'bottom-12' : '-bottom-12'" class="z-50 fixed right-1/2 translate-x-1/2 transition-all duration-200 ease-in-out flex gap-x-1">
@@ -95,11 +96,22 @@ watch(compProgressBar, () => {
             <FontAwesomeIcon icon='fal fa-times' class='text-xs' aria-hidden='true' />
         </div>
     </div>
+    
     <Table :resource="data" :name="tab" class="mt-5">
         <template #cell(slug)="{ item: website }">
             <Link :href="websiteRoute(website)" :id=" website['slug']" class="py-2 px-1">
                 {{ website['slug'] }}
             </Link>
+        </template>
+
+        <!-- Able to call from modelOperations.createLink.mode = upload -->
+        <template #buttonupload="{ linkButton }" >
+            <Button :style="linkButton.style" :icon="linkButton.icon"
+                class="h-full capitalize inline-flex items-center rounded-none text-sm border-none font-medium shadow-sm focus:ring-transparent focus:ring-offset-transparent focus:ring-0"
+                @click="isModalOpen = true"
+            >
+                <span v-if="linkButton.label" class="">{{ linkButton.label }}</span>
+            </Button>
         </template>
     </Table>
 
