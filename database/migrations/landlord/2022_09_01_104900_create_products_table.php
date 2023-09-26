@@ -24,7 +24,7 @@ return new class () extends Migration {
             $table->string('type')->index();
             $table->string('state')->nullable()->index();
             $table->boolean('status')->nullable()->index();
-            $table->string('units')->nullable()->comment('units');
+            $table->unsignedDecimal('units')->nullable()->comment('units');
             $table->unsignedDecimal('price', 18)->comment('unit price');
             $table->jsonb('settings');
             $table->jsonb('data');

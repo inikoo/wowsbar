@@ -132,7 +132,7 @@ class Product extends Model implements HasMedia
 
     public function stats(): HasOne
     {
-        return $this->hasOne(ProductShopStats::class);
+        return $this->hasOne(ProductStats::class);
     }
 
     public function parent(): MorphTo

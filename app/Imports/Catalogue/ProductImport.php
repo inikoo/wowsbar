@@ -26,9 +26,9 @@ use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
 
-class ProductImport implements ToCollection, WithHeadingRow, WithValidation
+class ProductImport implements ToCollection, WithHeadingRow, SkipsOnFailure, WithValidation
 {
-//    use SkipsFailures;
+    use SkipsFailures;
 
     public ExcelUpload $productUpload;
     public function __construct(ExcelUpload $productUpload)
@@ -53,13 +53,13 @@ class ProductImport implements ToCollection, WithHeadingRow, WithValidation
                 ]);
 
                 StoreProduct::run(organisation(), [
-                    'code' => Arr::get($product->data, 'code'),
-                    'name' => Arr::get($product->data, 'name'),
-                    'price' => Arr::get($product->data, 'price'),
-                    'units' => Arr::get($product->data, 'unit')
+                    'code' => Arr::get(json_decode($product->data, true), 'code'),
+                    'name' => Arr::get(json_decode($product->data, true), 'name'),
+                    'price' => Arr::get(json_decode($product->data, true), 'unit_price_gbp'),
+                    'type' => Arr::get(json_decode($product->data, true), 'unit') == 'job' ? ProductTypeEnum::SERVICE : ProductTypeEnum::SUBSCRIPTION,
                 ]);
                 ImportExcelUploads::dispatch($product, count($collection), $totalImported++, Product::class);
-            } catch (Exception) {
+            } catch (Exception $e) {
                 $totalImported--;
             }
         }
@@ -72,7 +72,7 @@ class ProductImport implements ToCollection, WithHeadingRow, WithValidation
             'code'        => ['required', 'unique:products', 'between:2,9', 'alpha_dash'],
             'name'        => ['required', 'max:250', 'string'],
             'units'       => ['sometimes', 'required', 'string'],
-            'price'       => ['required', 'numeric']
+            'unit_price_gbp'       => ['required', 'numeric']
         ];
     }
 }
