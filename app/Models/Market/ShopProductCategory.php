@@ -30,7 +30,7 @@ use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
 /**
- * App\Models\Market\ProductCategoryShop
+ * App\Models\Market\ShopProductCategory
  *
  * @property int $id
  * @property string $slug
@@ -42,35 +42,37 @@ use Spatie\Sluggable\SlugOptions;
  * @property ProductCategoryStateEnum $state
  * @property-read Collection<int, \OwenIt\Auditing\Models\Audit> $audits
  * @property-read int|null $audits_count
- * @property-read Collection<int, ProductCategoryShop> $departments
+ * @property-read Collection<int, ShopProductCategory> $departments
  * @property-read int|null $departments_count
  * @property-read array $es_audits
  * @property-read Model|\Eloquent $parent
  * @property-read ProductCategory|null $productCategory
- * @property-read Collection<int, \App\Models\Market\ProductShop> $products
+ * @property-read Collection<int, \App\Models\Market\ShopProduct> $products
  * @property-read int|null $products_count
  * @property-read SalesStats|null $salesStats
  * @property-read \App\Models\Market\Shop|null $shop
- * @property-read \App\Models\Market\ProductCategoryShopStats|null $stats
+ * @property-read \App\Models\Market\ShopProductCategoryStats|null $stats
  * @property-read UniversalSearch|null $universalSearch
- * @method static Builder|ProductCategoryShop newModelQuery()
- * @method static Builder|ProductCategoryShop newQuery()
- * @method static Builder|ProductCategoryShop query()
- * @method static Builder|ProductCategoryShop whereCreatedAt($value)
- * @method static Builder|ProductCategoryShop whereDeletedAt($value)
- * @method static Builder|ProductCategoryShop whereId($value)
- * @method static Builder|ProductCategoryShop whereProductCategoryId($value)
- * @method static Builder|ProductCategoryShop whereShopId($value)
- * @method static Builder|ProductCategoryShop whereSlug($value)
- * @method static Builder|ProductCategoryShop whereUpdatedAt($value)
+ * @method static Builder|ShopProductCategory newModelQuery()
+ * @method static Builder|ShopProductCategory newQuery()
+ * @method static Builder|ShopProductCategory query()
+ * @method static Builder|ShopProductCategory whereCreatedAt($value)
+ * @method static Builder|ShopProductCategory whereDeletedAt($value)
+ * @method static Builder|ShopProductCategory whereId($value)
+ * @method static Builder|ShopProductCategory whereProductCategoryId($value)
+ * @method static Builder|ShopProductCategory whereShopId($value)
+ * @method static Builder|ShopProductCategory whereSlug($value)
+ * @method static Builder|ShopProductCategory whereUpdatedAt($value)
  * @mixin Eloquent
  */
-class ProductCategoryShop extends Pivot implements Auditable
+class ShopProductCategory extends Pivot implements Auditable
 {
     use HasSlug;
     use HasUniversalSearch;
     use HasFactory;
     use HasHistory;
+
+    protected $table = 'shop_product_category';
 
     protected $guarded = [];
 
@@ -113,7 +115,7 @@ class ProductCategoryShop extends Pivot implements Auditable
 
     public function stats(): HasOne
     {
-        return $this->hasOne(ProductCategoryShopStats::class);
+        return $this->hasOne(ShopProductCategoryStats::class);
     }
 
     public function salesStats(): MorphOne
@@ -129,11 +131,11 @@ class ProductCategoryShop extends Pivot implements Auditable
 
     public function departments(): MorphMany
     {
-        return $this->morphMany(ProductCategoryShop::class, 'parent');
+        return $this->morphMany(ShopProductCategory::class, 'parent');
     }
 
     public function products(): MorphMany
     {
-        return $this->morphMany(ProductShop::class, 'parent');
+        return $this->morphMany(ShopProduct::class, 'parent');
     }
 }

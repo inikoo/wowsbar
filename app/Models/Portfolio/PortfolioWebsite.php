@@ -26,6 +26,7 @@ use Spatie\Sluggable\SlugOptions;
  * App\Models\Portfolio\PortfolioWebsite
  *
  * @property int $id
+ * @property int $shop_id
  * @property int $customer_id
  * @property string $slug
  * @property string $code
@@ -57,6 +58,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|PortfolioWebsite whereDomain($value)
  * @method static Builder|PortfolioWebsite whereId($value)
  * @method static Builder|PortfolioWebsite whereName($value)
+ * @method static Builder|PortfolioWebsite whereShopId($value)
  * @method static Builder|PortfolioWebsite whereSlug($value)
  * @method static Builder|PortfolioWebsite whereUpdatedAt($value)
  * @method static Builder|PortfolioWebsite withTrashed()

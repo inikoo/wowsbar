@@ -5,7 +5,7 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-use App\Enums\Marketing\Shop\ShopStateEnum;
+use App\Enums\Market\Shop\ShopStateEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -32,13 +32,13 @@ return new class () extends Migration {
             $table->date('open_at')->nullable();
             $table->date('closed_at')->nullable();
             $table->unsignedSmallInteger('country_id');
-            $table->foreign('country_id')->references('id')->on('public.countries');
+            $table->foreign('country_id')->references('id')->on('countries');
             $table->unsignedSmallInteger('language_id');
-            $table->foreign('language_id')->references('id')->on('public.languages');
+            $table->foreign('language_id')->references('id')->on('languages');
             $table->unsignedSmallInteger('currency_id');
-            $table->foreign('currency_id')->references('id')->on('public.currencies');
+            $table->foreign('currency_id')->references('id')->on('currencies');
             $table->unsignedSmallInteger('timezone_id');
-            $table->foreign('timezone_id')->references('id')->on('public.timezones');
+            $table->foreign('timezone_id')->references('id')->on('timezones');
             $table->jsonb('data');
             $table->jsonb('settings');
             $table->unsignedSmallInteger('organisation_id');

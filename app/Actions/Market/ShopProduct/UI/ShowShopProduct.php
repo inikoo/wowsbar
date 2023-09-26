@@ -5,9 +5,9 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Catalogue\Product\UI;
+namespace App\Actions\Market\ShopProduct\UI;
 
-use App\Actions\CRM\Customer\UI\IndexCustomers;
+use App\Actions\Catalogue\Product\UI\GetProductShowcase;
 use App\Actions\InertiaAction;
 use App\Actions\Market\Shop\UI\IndexShops;
 use App\Actions\Market\Shop\UI\ShowShop;
@@ -19,32 +19,32 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
 
-class ShowProduct extends InertiaAction
+class ShowShopProduct extends InertiaAction
 {
-    public function handle(ShopProduct $product): ShopProduct
+    public function handle(ShopProduct $shopProduct): ShopProduct
     {
-        return $product;
+        return $shopProduct;
     }
 
     public function authorize(ActionRequest $request): bool
     {
-        $this->canEdit   = $request->user()->can('shops.products.edit');
-        $this->canDelete = $request->user()->can('shops.products.edit');
+        $this->canEdit   = $request->user()->can('shops.edit');
+        $this->canDelete = $request->user()->can('shops.edit');
 
-        return $request->user()->hasPermissionTo("shops.products.view");
+        return $request->user()->hasPermissionTo("shops.view");
     }
 
 
 
     /** @noinspection PhpUnusedParameterInspection */
-    public function inShop(Shop $shop, ShopProduct $product, ActionRequest $request): ShopProduct
+    public function inShop(Shop $shop, ShopProduct $shopProduct, ActionRequest $request): ShopProduct
     {
         $this->initialisation($request)->withTab(ProductTabsEnum::values());
 
-        return $this->handle($product);
+        return $this->handle($shopProduct);
     }
 
-    public function htmlResponse(ShopProduct $product, ActionRequest $request): Response
+    public function htmlResponse(ShopProduct $shopProduct, ActionRequest $request): Response
     {
         return Inertia::render(
             'Market/Product',
@@ -55,11 +55,11 @@ class ShowProduct extends InertiaAction
                     $request->route()->parameters
                 ),
                 'navigation'                            => [
-                    'previous' => $this->getPrevious($product, $request),
-                    'next'     => $this->getNext($product, $request),
+                    'previous' => $this->getPrevious($shopProduct, $request),
+                    'next'     => $this->getNext($shopProduct, $request),
                 ],
                 'pageHead'    => [
-                    'title'   => $product->code,
+                    'title'   => $shopProduct->code,
                     'icon'    =>
                         [
                             'icon'  => ['fal', 'fa-cube'],
@@ -90,41 +90,41 @@ class ShowProduct extends InertiaAction
                 ],
 
                 ProductTabsEnum::SHOWCASE->value => $this->tab == ProductTabsEnum::SHOWCASE->value ?
-                    fn () => GetProductShowcase::run($product)
-                    : Inertia::lazy(fn () => GetProductShowcase::run($product)),
+                    fn () => GetProductShowcase::run($shopProduct)
+                    : Inertia::lazy(fn () => GetProductShowcase::run($shopProduct)),
 
 /*                ProductTabsEnum::ORDERS->value => $this->tab == ProductTabsEnum::ORDERS->value ?
-                    fn () => OrderResource::collection(IndexOrders::run($product))
-                    : Inertia::lazy(fn () => OrderResource::collection(IndexOrders::run($product))),
+                    fn () => OrderResource::collection(IndexOrders::run($shopProduct))
+                    : Inertia::lazy(fn () => OrderResource::collection(IndexOrders::run($shopProduct))),
 
                 ProductTabsEnum::CUSTOMERS->value => $this->tab == ProductTabsEnum::CUSTOMERS->value ?
-                    fn () => CustomerResource::collection(IndexCustomers::run($product))
-                    : Inertia::lazy(fn () => CustomerResource::collection(IndexCustomers::run($product))),
+                    fn () => CustomerResource::collection(IndexCustomers::run($shopProduct))
+                    : Inertia::lazy(fn () => CustomerResource::collection(IndexCustomers::run($shopProduct))),
 
                 ProductTabsEnum::MAILSHOTS->value => $this->tab == ProductTabsEnum::MAILSHOTS->value ?
-                    fn () => MailshotResource::collection(IndexMailshots::run($product))
-                    : Inertia::lazy(fn () => MailshotResource::collection(IndexMailshots::run($product))),*/
+                    fn () => MailshotResource::collection(IndexMailshots::run($shopProduct))
+                    : Inertia::lazy(fn () => MailshotResource::collection(IndexMailshots::run($shopProduct))),*/
 
                 /*
                 ProductTabsEnum::IMAGES->value => $this->tab == ProductTabsEnum::IMAGES->value ?
-                    fn () => ImagesResource::collection(IndexImages::run($product))
-                    : Inertia::lazy(fn () => ImagesResource::collection(IndexImages::run($product))),
+                    fn () => ImagesResource::collection(IndexImages::run($shopProduct))
+                    : Inertia::lazy(fn () => ImagesResource::collection(IndexImages::run($shopProduct))),
                 */
 
             ]
-        )//->table(IndexOrders::make()->tableStructure($product))
-            ->table(IndexCustomers::make()->tableStructure($product));
-        //            ->table(IndexMailshots::make()->tableStructure($product));
+        )//->table(IndexOrders::make()->tableStructure($shopProduct))
+            ->table(IndexCustomers::make()->tableStructure($shopProduct));
+        //            ->table(IndexMailshots::make()->tableStructure($shopProduct));
     }
 
-    public function jsonResponse(ShopProduct $product): ProductResource
+    public function jsonResponse(ShopProduct $shopProduct): ProductResource
     {
-        return new ProductResource($product);
+        return new ProductResource($shopProduct);
     }
 
     public function getBreadcrumbs(string $routeName, array $routeParameters, $suffix = null): array
     {
-        $headCrumb = function (ShopProduct $product, array $routeParameters, $suffix) {
+        $headCrumb = function (ShopProduct $shopProduct, array $routeParameters, $suffix) {
             return [
 
                 [
@@ -136,7 +136,7 @@ class ShowProduct extends InertiaAction
                         ],
                         'model' => [
                             'route' => $routeParameters['model'],
-                            'label' => $product->slug,
+                            'label' => $shopProduct->slug,
                         ],
                     ],
                     'suffix'         => $suffix,
@@ -191,42 +191,42 @@ class ShowProduct extends InertiaAction
         };
     }
 
-    public function getPrevious(ShopProduct $product, ActionRequest $request): ?array
+    public function getPrevious(ShopProduct $shopProduct, ActionRequest $request): ?array
     {
-        $previous = ShopProduct::where('slug', '<', $product->slug)->orderBy('slug', 'desc')->first();
+        $previous = ShopProduct::where('slug', '<', $shopProduct->slug)->orderBy('slug', 'desc')->first();
         return $this->getNavigation($previous, $request->route()->getName());
 
     }
 
-    public function getNext(ShopProduct $product, ActionRequest $request): ?array
+    public function getNext(ShopProduct $shopProduct, ActionRequest $request): ?array
     {
-        $next = ShopProduct::where('slug', '>', $product->slug)->orderBy('slug')->first();
+        $next = ShopProduct::where('slug', '>', $shopProduct->slug)->orderBy('slug')->first();
         return $this->getNavigation($next, $request->route()->getName());
     }
 
-    private function getNavigation(?ShopProduct $product, string $routeName): ?array
+    private function getNavigation(?ShopProduct $shopProduct, string $routeName): ?array
     {
-        if(!$product) {
+        if(!$shopProduct) {
             return null;
         }
         return match ($routeName) {
             'org.shops.products.show'=> [
-                'label'=> $product->name,
+                'label'=> $shopProduct->name,
                 'route'=> [
                     'name'      => $routeName,
                     'parameters'=> [
-                        'product'=> $product->slug
+                        'product'=> $shopProduct->slug
                     ]
 
                 ]
             ],
             'org.shops.show.products.show'=> [
-                'label'=> $product->name,
+                'label'=> $shopProduct->name,
                 'route'=> [
                     'name'      => $routeName,
                     'parameters'=> [
-                        'shop'   => $product->shop->slug,
-                        'product'=> $product->slug
+                        'shop'   => $shopProduct->shop->slug,
+                        'product'=> $shopProduct->slug
                     ]
 
                 ]

@@ -14,7 +14,7 @@ return new class () extends Migration {
     use HasAssetCodeDescription;
     public function up(): void
     {
-        Schema::create('product_category_shop', function (Blueprint $table) {
+        Schema::create('shop_product_category', function (Blueprint $table) {
             $table->smallIncrements('id');
             $table->string('slug')->unique()->collation('und_ns');
 
@@ -32,6 +32,6 @@ return new class () extends Migration {
 
     public function down(): void
     {
-        Schema::dropIfExists('product_category_shop');
+        Schema::dropIfExists('shop_product_category');
     }
 };

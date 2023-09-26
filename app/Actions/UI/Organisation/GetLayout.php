@@ -59,6 +59,14 @@ class GetLayout
                             1 =>
                             [
                                 [
+                                    'label' => __('shop'),
+                                    'icon'  => ['fal', 'fa-store-alt'],
+                                    'route' => [
+                                        'name'       => 'org.shops.show',
+                                        'parameters' => $shop->slug
+                                    ]
+                                ],
+                                [
 
                                     'label' => __('departments'),
                                     'icon'  => ['fal', 'fa-folder-tree'],

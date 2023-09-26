@@ -22,12 +22,12 @@ use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
 /**
- * App\Models\Market\ProductShop
+ * App\Models\Market\ShopProduct
  *
  * @property int $id
  * @property string $slug
- * @property int|null $product_id
  * @property int|null $shop_id
+ * @property int|null $product_id
  * @property ProductStateEnum|null $state
  * @property bool|null $status
  * @property string $price unit price
@@ -39,29 +39,31 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read int|null $media_count
  * @property-read SalesStats|null $salesStats
  * @property-read \App\Models\Market\Shop|null $shop
- * @property-read \App\Models\Market\ProductShopStats|null $stats
+ * @property-read \App\Models\Market\ShopProductStats|null $stats
  * @property-read \App\Models\Search\UniversalSearch|null $universalSearch
- * @method static \Illuminate\Database\Eloquent\Builder|ProductShop newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|ProductShop newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|ProductShop query()
- * @method static \Illuminate\Database\Eloquent\Builder|ProductShop whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ProductShop whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ProductShop whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ProductShop wherePrice($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ProductShop whereProductId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ProductShop whereShopId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ProductShop whereSlug($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ProductShop whereState($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ProductShop whereStatus($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ProductShop whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ShopProduct newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|ShopProduct newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|ShopProduct query()
+ * @method static \Illuminate\Database\Eloquent\Builder|ShopProduct whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ShopProduct whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ShopProduct whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ShopProduct wherePrice($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ShopProduct whereProductId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ShopProduct whereShopId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ShopProduct whereSlug($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ShopProduct whereState($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ShopProduct whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ShopProduct whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-class ProductShop extends Pivot implements HasMedia
+class ShopProduct extends Pivot implements HasMedia
 {
     use HasSlug;
     use HasUniversalSearch;
     use HasImages;
     use HasFactory;
+
+    protected $table = 'shop_product';
 
     protected $casts = [
         'data'                   => 'array',
@@ -106,7 +108,7 @@ class ProductShop extends Pivot implements HasMedia
 
     public function stats(): HasOne
     {
-        return $this->hasOne(ProductShopStats::class);
+        return $this->hasOne(ShopProductStats::class);
     }
 
 

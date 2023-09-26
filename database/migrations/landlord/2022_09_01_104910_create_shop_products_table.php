@@ -14,31 +14,23 @@ return new class () extends Migration {
     use HasAssetCodeDescription;
     public function up(): void
     {
-        Schema::create('product_shop', function (Blueprint $table) {
+        Schema::create('shop_product', function (Blueprint $table) {
             $table->increments('id');
             $table->string('slug')->unique()->collation('und_ns');
-
-
-            $table->unsignedSmallInteger('product_id')->nullable();
-            $table->foreign('product_id')->references('id')->on('products');
-
             $table->unsignedSmallInteger('shop_id')->nullable();
             $table->foreign('shop_id')->references('id')->on('shops');
-
+            $table->unsignedSmallInteger('product_id')->nullable();
+            $table->foreign('product_id')->references('id')->on('products');
             $table->string('state')->nullable()->index();
             $table->boolean('status')->nullable()->index();
-
             $table->unsignedDecimal('price', 18)->comment('unit price');
-
             $table->timestampsTz();
             $table->softDeletesTz();
-
         });
     }
 
-
     public function down(): void
     {
-        Schema::dropIfExists('product_shop');
+        Schema::dropIfExists('shop_product');
     }
 };

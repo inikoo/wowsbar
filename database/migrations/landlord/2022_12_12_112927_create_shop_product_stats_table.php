@@ -12,17 +12,16 @@ use Illuminate\Support\Facades\Schema;
 return new class () extends Migration {
     public function up(): void
     {
-        Schema::create('product_shop_stats', function (Blueprint $table) {
+        Schema::create('shop_product_stats', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('product_shop_id')->index();
-            $table->foreign('product_shop_id')->references('id')->on('product_shop');
+            $table->unsignedInteger('shop_product_id')->index();
+            $table->foreign('shop_product_id')->references('id')->on('shop_product');
             $table->timestampsTz();
         });
     }
 
-
     public function down(): void
     {
-        Schema::dropIfExists('product_shop_stats');
+        Schema::dropIfExists('shop_product_stats');
     }
 };

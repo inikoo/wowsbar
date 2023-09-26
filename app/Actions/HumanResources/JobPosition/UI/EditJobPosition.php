@@ -9,7 +9,7 @@ namespace App\Actions\HumanResources\JobPosition\UI;
 
 use App\Actions\InertiaAction;
 use App\Models\HumanResources\JobPosition;
-use App\Models\Market\ProductCategoryShop;
+use App\Models\Market\ShopProductCategory;
 use Exception;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -80,7 +80,7 @@ class EditJobPosition extends InertiaAction
                                 'department' => [
                                     'type'        => 'select',
                                     'label'       => __('department'),
-                                    'options'     => Options::forModels(ProductCategoryShop::class, label: 'name', value: 'name'),
+                                    'options'     => Options::forModels(ShopProductCategory::class, label: 'name', value: 'name'),
                                     'placeholder' => __('Select a department'),
                                     'mode'        => 'single',
                                     'value'       => $jobPosition->department

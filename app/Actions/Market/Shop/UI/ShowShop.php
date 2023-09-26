@@ -9,6 +9,8 @@ namespace App\Actions\Market\Shop\UI;
 
 use App\Actions\Catalogue\Product\UI\IndexProducts;
 use App\Actions\InertiaAction;
+use App\Actions\Market\ShopProductCategory\UI\IndexShopDepartments;
+use App\Actions\Market\ShopProduct\UI\IndexShopProducts;
 use App\Actions\UI\Organisation\Dashboard\ShowDashboard;
 use App\Actions\UI\WithInertia;
 use App\Enums\UI\Organisation\ShopTabsEnum;
@@ -119,7 +121,7 @@ class ShowShop extends InertiaAction
                             'icon'  => ['fal', 'fa-folder-tree'],
                             'href'  => ['org.shops.show.departments.index', $shop->slug],
                             'index' => [
-                                'number' => $shop->stats->number_departments
+                                'number' => $shop->catalogueStats->number_departments
                             ]
                         ],
 
@@ -168,13 +170,13 @@ class ShowShop extends InertiaAction
                 ShopTabsEnum::DEPARTMENTS->value => $this->tab == ShopTabsEnum::DEPARTMENTS->value
                     ?
                     fn () => DepartmentResource::collection(
-                        \App\Actions\Catalogue\ProductCategory\UI\IndexDepartments::run(
+                        IndexShopDepartments::run(
                             parent: $shop,
                             prefix: 'departments'
                         )
                     )
                     : Inertia::lazy(fn () => DepartmentResource::collection(
-                        \App\Actions\Catalogue\ProductCategory\UI\IndexDepartments::run(
+                        IndexShopDepartments::run(
                             parent: $shop,
                             prefix: 'departments'
                         )
@@ -190,7 +192,7 @@ class ShowShop extends InertiaAction
                         )
                     )
                     : Inertia::lazy(fn () => ProductResource::collection(
-                        \App\Actions\Catalogue\Product\UI\IndexProducts::run(
+                        IndexProducts::run(
                             parent: $shop,
                             prefix: 'products'
                         )
@@ -198,8 +200,7 @@ class ShowShop extends InertiaAction
 
             ]
         )->table(
-            IndexDepartments::make()->tableStructure(
-                parent: $shop,
+            IndexShopDepartments::make()->tableStructure(
                 modelOperations: [
                     'createLink' => $this->canEdit ? [
                         'route' => [
@@ -213,7 +214,7 @@ class ShowShop extends InertiaAction
                 prefix: 'departments'
             )
         )->table(
-            IndexProducts::make()->tableStructure(
+            IndexShopProducts::make()->tableStructure(
                 parent: $shop,
                 modelOperations: [
                     'createLink' => [

@@ -11,7 +11,7 @@ use App\Actions\Accounting\PaymentAccount\StorePaymentAccount;
 use App\Actions\Market\Shop\Hydrators\ShopHydrateUniversalSearch;
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateShops;
 use App\Enums\Helpers\SerialReference\SerialReferenceModelEnum;
-use App\Enums\Marketing\Shop\ShopTypeEnum;
+use App\Enums\Market\Shop\ShopTypeEnum;
 use App\Models\Market\Shop;
 use App\Models\Organisation\Organisation;
 use Exception;
@@ -45,6 +45,7 @@ class StoreShop
         $shop->stats()->create();
         $shop->accountingStats()->create();
         $shop->crmStats()->create();
+        $shop->catalogueStats()->create();
 
         $shop->serialReferences()->create(
             [

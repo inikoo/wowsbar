@@ -28,6 +28,7 @@ use Spatie\Sluggable\SlugOptions;
  * App\Models\Portfolios\CustomerWebsite
  *
  * @property int $id
+ * @property int $shop_id
  * @property int $customer_id
  * @property string $slug
  * @property string $code
@@ -57,6 +58,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|CustomerWebsite whereDomain($value)
  * @method static Builder|CustomerWebsite whereId($value)
  * @method static Builder|CustomerWebsite whereName($value)
+ * @method static Builder|CustomerWebsite whereShopId($value)
  * @method static Builder|CustomerWebsite whereSlug($value)
  * @method static Builder|CustomerWebsite whereUpdatedAt($value)
  * @method static Builder|CustomerWebsite withTrashed()

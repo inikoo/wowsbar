@@ -10,7 +10,6 @@ namespace App\Models\Catalogue;
 use App\Enums\Catalogue\Product\ProductStateEnum;
 use App\Enums\Catalogue\Product\ProductTypeEnum;
 use App\Models\BI\SalesStats;
-use App\Models\Market\ProductShopStats;
 use App\Models\Market\Shop;
 use App\Models\Search\UniversalSearch;
 use App\Models\Traits\HasImages;
@@ -43,7 +42,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property ProductTypeEnum $type
  * @property ProductStateEnum|null $state
  * @property bool|null $status
- * @property string|null $units units per outer
+ * @property string|null $units units
  * @property string $price unit price
  * @property array $settings
  * @property array $data
@@ -55,7 +54,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read Model|\Eloquent $parent
  * @property-read SalesStats|null $salesStats
  * @property-read Shop $shop
- * @property-read ProductShopStats|null $stats
+ * @property-read \App\Models\Catalogue\ProductStats|null $stats
  * @property-read UniversalSearch|null $universalSearch
  * @method static Builder|Product newModelQuery()
  * @method static Builder|Product newQuery()

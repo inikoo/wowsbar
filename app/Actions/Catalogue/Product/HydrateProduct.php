@@ -8,7 +8,7 @@
 namespace App\Actions\Catalogue\Product;
 
 use App\Actions\HydrateModel;
-use App\Models\Market\ProductShop;
+use App\Models\Market\ShopProduct;
 use Illuminate\Support\Collection;
 
 class HydrateProduct extends HydrateModel
@@ -16,18 +16,18 @@ class HydrateProduct extends HydrateModel
     public string $commandSignature = 'hydrate:product {tenants?*} {--i|id=} ';
 
 
-    public function handle(ProductShop $product): void
+    public function handle(ShopProduct $product): void
     {
     }
 
 
-    protected function getModel(int $id): ProductShop
+    protected function getModel(int $id): ShopProduct
     {
-        return ProductShop::find($id);
+        return ShopProduct::find($id);
     }
 
     protected function getAllModels(): Collection
     {
-        return ProductShop::withTrashed()->get();
+        return ShopProduct::withTrashed()->get();
     }
 }

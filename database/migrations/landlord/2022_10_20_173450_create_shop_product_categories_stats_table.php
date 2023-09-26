@@ -13,10 +13,10 @@ use Illuminate\Support\Facades\Schema;
 return new class () extends Migration {
     public function up(): void
     {
-        Schema::create('product_category_stats', function (Blueprint $table) {
+        Schema::create('shop_product_category_stats', function (Blueprint $table) {
             $table->smallIncrements('id');
-            $table->unsignedSmallInteger('product_category_id')->index();
-            $table->foreign('product_category_id')->references('id')->on('product_categories');
+            $table->unsignedSmallInteger('shop_product_category_id')->index();
+            $table->foreign('shop_product_category_id')->references('id')->on('shop_product_category');
             $table->unsignedSmallInteger('number_sub_product_categories')->default(0);
             $table->unsignedSmallInteger('number_families')->default(0);
             $table->unsignedInteger('number_products')->default(0);
@@ -30,6 +30,6 @@ return new class () extends Migration {
 
     public function down(): void
     {
-        Schema::dropIfExists('product_category_stats');
+        Schema::dropIfExists('shop_product_category_stats');
     }
 };
