@@ -17,15 +17,15 @@ return new class () extends Migration {
         Schema::create('shop_product_category', function (Blueprint $table) {
             $table->smallIncrements('id');
             $table->string('slug')->unique()->collation('und_ns');
-
-            $table->unsignedSmallInteger('product_category_id')->nullable();
-            $table->foreign('product_category_id')->references('id')->on('product_categories');
-            $table->unsignedSmallInteger('shop_id')->nullable();
+            $table->unsignedInteger('parent_id')->index()->nullable();
+            $table->string('parent_type')->index()->nullable();
+            $table->unsignedSmallInteger('shop_id')->index()->nullable();
             $table->foreign('shop_id')->references('id')->on('shops');
-
-
+            $table->unsignedSmallInteger('product_category_id')->index()->nullable();
+            $table->foreign('product_category_id')->references('id')->on('product_categories');
             $table->timestampstz();
-            $table->softDeletesTz();
+            $table->index(['parent_type','parent_id']);
+
         });
     }
 

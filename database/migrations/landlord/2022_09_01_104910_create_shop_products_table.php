@@ -17,9 +17,9 @@ return new class () extends Migration {
         Schema::create('shop_product', function (Blueprint $table) {
             $table->increments('id');
             $table->string('slug')->unique()->collation('und_ns');
-            $table->unsignedSmallInteger('shop_id')->nullable();
+            $table->unsignedSmallInteger('shop_id')->index()->nullable();
             $table->foreign('shop_id')->references('id')->on('shops');
-            $table->unsignedSmallInteger('product_id')->nullable();
+            $table->unsignedSmallInteger('product_id')->index()->nullable();
             $table->foreign('product_id')->references('id')->on('products');
             $table->string('state')->nullable()->index();
             $table->boolean('status')->nullable()->index();

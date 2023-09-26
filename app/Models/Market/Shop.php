@@ -18,6 +18,7 @@ use App\Models\Accounting\PaymentServiceProviderShop;
 use App\Models\Assets\Country;
 use App\Models\Assets\Currency;
 use App\Models\Assets\Timezone;
+use App\Models\Catalogue\ProductCategory;
 use App\Models\CRM\Customer;
 use App\Models\Helpers\SerialReference;
 use App\Models\Leads\Prospect;
@@ -74,6 +75,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read int|null $customer_websites_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Customer> $customers
  * @property-read int|null $customers_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, ProductCategory> $departments
+ * @property-read int|null $departments_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Invoice> $invoices
  * @property-read int|null $invoices_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Order> $orders
@@ -186,7 +189,6 @@ class Shop extends Model
         return $this->hasOne(ShopAccountingStats::class);
     }
 
-
     public function customers(): HasMany
     {
         return $this->hasMany(Customer::class);
@@ -202,12 +204,10 @@ class Shop extends Model
         return $this->morphMany(Prospect::class, 'scope');
     }
 
-
     public function orders(): HasMany
     {
         return $this->hasMany(Order::class);
     }
-
 
     public function products(): HasMany
     {
@@ -228,7 +228,6 @@ class Shop extends Model
     {
         return $this->hasMany(CustomerWebsite::class);
     }
-
 
     public function payments(): HasMany
     {
@@ -255,6 +254,7 @@ class Shop extends Model
         return $this->belongsToMany(PaymentServiceProvider::class)->using(PaymentServiceProviderShop::class)
             ->withTimestamps();
     }
+
     public function paymentAccounts(): BelongsToMany
     {
         return $this->belongsToMany(PaymentAccount::class)->using(PaymentAccountShop::class)
@@ -271,6 +271,10 @@ class Shop extends Model
         return $this->morphMany(SerialReference::class, 'container');
     }
 
+    public function departments(): MorphMany
+    {
+        return $this->morphMany(ProductCategory::class, 'parent');
+    }
 
 
 }
