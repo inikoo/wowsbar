@@ -10,7 +10,7 @@ namespace App\Actions\Catalogue\Product\UI;
 use App\Actions\Catalogue\ProductCategory\UI\ShowDepartment;
 use App\Actions\InertiaAction;
 use App\Actions\UI\Organisation\Catalogue\ShowCatalogueDashboard;
-use App\Http\Resources\Market\ProductResource;
+use App\Http\Resources\Catalogue\ProductResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\Catalogue\Product;
 use App\Models\Catalogue\ProductCategory;

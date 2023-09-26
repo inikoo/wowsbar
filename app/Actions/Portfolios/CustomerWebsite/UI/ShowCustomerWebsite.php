@@ -12,7 +12,7 @@ use App\Actions\Helpers\History\IndexHistories;
 use App\Actions\InertiaAction;
 use App\Actions\UI\WithInertia;
 use App\Enums\UI\Organisation\CustomerWebsiteTabsEnum;
-use App\Http\Resources\CustomerWebsites\CustomerWebsiteResource;
+use App\Http\Resources\Prospects\CustomerWebsiteResource;
 use App\Http\Resources\History\HistoryResource;
 use App\Models\CRM\Customer;
 use App\Models\Portfolios\CustomerWebsite;
@@ -106,6 +106,11 @@ class ShowCustomerWebsite extends InertiaAction
                     'current'    => $this->tab,
                     'navigation' => CustomerWebsiteTabsEnum::navigation()
                 ],
+
+                CustomerWebsiteTabsEnum::SHOWCASE->value => $this->tab == CustomerWebsiteTabsEnum::SHOWCASE->value ?
+                    fn () => GetCustomerWebsiteShowcase::run($customerWebsite)
+                    : Inertia::lazy(fn () => GetCustomerWebsiteShowcase::run($customerWebsite)),
+
 
                 CustomerWebsiteTabsEnum::CHANGELOG->value => $this->tab == CustomerWebsiteTabsEnum::CHANGELOG->value ?
                     fn () => HistoryResource::collection(IndexHistories::run($customerWebsite))
