@@ -20,7 +20,7 @@ class ConvertUploadedFile
     public function handle(string $filename): UploadedFile
     {
         $finfo    = new finfo(FILEINFO_MIME_TYPE);
-        $fullPath = base_path('database/seeders/datasets/excel-upload-examples/' . $filename);
+        $fullPath = base_path($filename);
 
         return new UploadedFile(
             $fullPath,

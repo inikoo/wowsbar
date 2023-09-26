@@ -198,7 +198,7 @@ class ShowShop extends InertiaAction
 
             ]
         )->table(
-            \App\Actions\Catalogue\ProductCategory\UI\IndexDepartments::make()->tableStructure(
+            IndexDepartments::make()->tableStructure(
                 parent: $shop,
                 modelOperations: [
                     'createLink' => $this->canEdit ? [
@@ -213,7 +213,7 @@ class ShowShop extends InertiaAction
                 prefix: 'departments'
             )
         )->table(
-            \App\Actions\Catalogue\Product\UI\IndexProducts::make()->tableStructure(
+            IndexProducts::make()->tableStructure(
                 parent: $shop,
                 modelOperations: [
                     'createLink' => [
