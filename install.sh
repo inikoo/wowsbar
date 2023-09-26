@@ -43,13 +43,13 @@ php artisan shop:create awa 'aw-advantage' 'digital-marketing'
 php artisan shop:new-website awa 'awa.test'
 php artisan website:change-state awa launch
 
-php artisan pc:create seo "Search Engine Optimization"
-php artisan pc:create ppc "Paid Per Click"
-php artisan pc:create smm "Social Media Management"
-php artisan pc:create sma "Social Media Advertising"
-php artisan pc:create bun "Bundle"
-php artisan pc:create cs "Customer Service"
-php artisan pc:create pr "Prospects"
+php artisan product-category:new seo "Search Engine Optimization"
+php artisan product-category:new ppc "Paid Per Click"
+php artisan product-category:new smm "Social Media Management"
+php artisan product-category:new sma "Social Media Advertising"
+php artisan product-category:new bun "Bundle"
+php artisan product-category:new cs "Customer Service"
+php artisan product-category:new pr "Prospects"
 
 echo "🌱 create customer"
 php artisan shop:new-customer awa aiku@inikoo.com -C 'Aiku'

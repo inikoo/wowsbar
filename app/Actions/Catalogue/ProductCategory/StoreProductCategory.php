@@ -25,7 +25,7 @@ class StoreProductCategory
     use WithAttributes;
 
     private int $hydratorsDelay = 0;
-    public string $commandSignature = 'pc:create {code} {name}';
+    public string $commandSignature = 'product-category:new {code} {name}';
 
     public function handle(Organisation|ProductCategory $parent, array $modelData): ProductCategory
     {
@@ -76,7 +76,7 @@ class StoreProductCategory
             'name' => $command->argument('name')
         ]);
 
-        echo $command->argument('name') . " added";
+        echo $command->argument('name') . " added \n";
 
         return 0;
     }
