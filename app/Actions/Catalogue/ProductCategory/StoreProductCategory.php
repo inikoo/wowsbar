@@ -24,15 +24,15 @@ class StoreProductCategory
     use AsAction;
     use WithAttributes;
 
-    private int $hydratorsDelay =0;
+    private int $hydratorsDelay = 0;
     public string $commandSignature = 'pc:create';
 
     public function handle(Organisation|ProductCategory $parent, array $modelData): ProductCategory
     {
         if (class_basename($parent) == 'ProductCategory') {
-            $modelData['type']    = ProductCategoryTypeEnum::BRANCH;
+            $modelData['type'] = ProductCategoryTypeEnum::BRANCH;
         } else {
-            $modelData['type']    = ProductCategoryTypeEnum::ROOT;
+            $modelData['type'] = ProductCategoryTypeEnum::ROOT;
         }
 
         /** @var ProductCategory $productCategory */
@@ -53,10 +53,10 @@ class StoreProductCategory
     public function rules(): array
     {
         return [
-            'code'        => ['required', 'unique:product_categories', 'between:2,9', 'alpha_dash', new CaseSensitive('product_categories')],
-            'name'        => ['required', 'max:250', 'string'],
-            'image_id'    => ['sometimes', 'required', 'exists:media,id'],
-            'state'       => ['sometimes', 'required'],
+            'code' => ['required', 'unique:product_categories', 'between:2,9', 'alpha_dash', new CaseSensitive('product_categories')],
+            'name' => ['required', 'max:250', 'string'],
+            'image_id' => ['sometimes', 'required', 'exists:media,id'],
+            'state' => ['sometimes', 'required'],
             'description' => ['sometimes', 'required', 'max:1500'],
         ];
     }
@@ -69,16 +69,12 @@ class StoreProductCategory
         return $this->handle($parent, $validatedData);
     }
 
-    public function asCommand(): int
+    public function asCommand(Command $command): int
     {
-        $data = ['seo', 'ppc', 'smm', 'banners', 'sma', 'cs', 'bun', 'pr'];
-
-        foreach ($data as $name) {
-            $this->handle(organisation(), [
-                'code' => $name,
-                'name' => $name
-            ]);
-        }
+        $this->handle(organisation(), [
+            'code' => $command->argument('code'),
+            'name' => $command->argument('name')
+        ]);
 
         return 0;
     }
