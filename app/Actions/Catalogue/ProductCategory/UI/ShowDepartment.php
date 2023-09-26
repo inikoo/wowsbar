@@ -11,8 +11,10 @@ use App\Actions\Catalogue\Product\UI\IndexProducts;
 use App\Actions\CRM\Customer\UI\IndexCustomers;
 use App\Actions\Helpers\History\IndexHistories;
 use App\Actions\InertiaAction;
-
+use App\Actions\UI\Organisation\Catalogue\ShowCatalogueDashboard;
 use App\Enums\UI\Organisation\DepartmentTabsEnum;
+use App\Http\Resources\CRM\CustomerResource;
+use App\Http\Resources\History\HistoryResource;
 use App\Http\Resources\Market\DepartmentResource;
 use App\Http\Resources\Market\ProductResource;
 use App\Models\Catalogue\ProductCategory;
@@ -49,7 +51,7 @@ class ShowDepartment extends InertiaAction
                 'title'                              => __('department'),
                 'breadcrumbs'                        => $this->getBreadcrumbs(
                     $request->route()->getName(),
-                    $request->route()->parameters
+                    $request->route()->originalParameters()
                 ),
                 'navigation'                            => [
                     'previous' => $this->getPrevious($department, $request),
@@ -92,13 +94,13 @@ class ShowDepartment extends InertiaAction
                 DepartmentTabsEnum::CUSTOMERS->value => $this->tab == DepartmentTabsEnum::CUSTOMERS->value ?
                     fn () => CustomerResource::collection(
                         IndexCustomers::run(
-                            parent: $department->shop,
+                            parent: $department,
                             prefix: 'customers'
                         )
                     )
                     : Inertia::lazy(fn () => CustomerResource::collection(
                         IndexCustomers::run(
-                            parent: $department->shop,
+                            parent: $department,
                             prefix: 'customers'
                         )
                     )),
@@ -134,15 +136,6 @@ class ShowDepartment extends InertiaAction
             ->table(
                 IndexProducts::make()->tableStructure(
                     parent: $department,
-                    modelOperations: [
-                        'createLink' => $this->canEdit ? [
-                            'route' => [
-                                'name'       => 'shops.departments.show.products.create',
-                                'parameters' => array_values([$department->shop->slug])
-                            ],
-                            'label' => __('mailshot')
-                        ] : false
-                    ],
                     prefix: 'products'
                 )
             )
@@ -180,40 +173,19 @@ class ShowDepartment extends InertiaAction
         };
 
         return match ($routeName) {
-            'shops.departments.show' =>
+            'org.catalogue.departments.show' =>
             array_merge(
-                IndexShops::make()->getBreadcrumbs(),
+                ShowCatalogueDashboard::make()->getBreadcrumbs(),
                 $headCrumb(
                     $routeParameters['department'],
                     [
                         'index' => [
-                            'name'       => 'shops.departments.index',
+                            'name'       => 'org.catalogue.departments.index',
                             'parameters' => []
                         ],
                         'model' => [
-                            'name'       => 'shops.departments.show',
+                            'name'       => 'org.catalogue.departments.show',
                             'parameters' => [
-                                $routeParameters['department']->slug
-                            ]
-                        ]
-                    ],
-                    $suffix
-                )
-            ),
-            'shops.show.departments.show' =>
-            array_merge(
-                ShowShop::make()->getBreadcrumbs($routeParameters),
-                $headCrumb(
-                    $routeParameters['department'],
-                    [
-                        'index' => [
-                            'name'       => 'shops.show.departments.index',
-                            'parameters' => [$routeParameters['shop']->slug]
-                        ],
-                        'model' => [
-                            'name'       => 'shops.show.departments.show',
-                            'parameters' => [
-                                $routeParameters['shop']->slug,
                                 $routeParameters['department']->slug
                             ]
                         ]
@@ -244,25 +216,16 @@ class ShowDepartment extends InertiaAction
             return null;
         }
         return match ($routeName) {
-            'shops.departments.show'=> [
+            'org.catalogue.departments.show'=> [
                 'label'=> $department->name,
                 'route'=> [
                     'name'      => $routeName,
                     'parameters'=> [
-                        'department'=> $department->slug
+                        'productCategory'=> $department->slug
                     ]
                 ]
             ],
-            'shops.show.departments.show'=> [
-                'label'=> $department->name,
-                'route'=> [
-                    'name'      => $routeName,
-                    'parameters'=> [
-                        'shop'      => $department->shop->slug,
-                        'department'=> $department->slug
-                    ]
-                ]
-            ],
+
         };
     }
 }
