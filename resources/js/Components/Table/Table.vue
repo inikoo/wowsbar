@@ -9,7 +9,7 @@ import TableAddSearchRow from '@/Components/Table/TableAddSearchRow.vue';
 // import TableColumns from '@/Components/Table/TableColumns.vue';
 import TableFilter from '@/Components/Table/TableFilter.vue';
 import TableSearchRows from '@/Components/Table/TableSearchRows.vue';
-import SearchReset from '@/Components/Table/SearchReset.vue';
+// import SearchReset from '@/Components/Table/SearchReset.vue';
 import Button from '@/Components/Elements/Buttons/Button.vue';
 import EmptyState from '@/Components/Utils/EmptyState.vue'
 import { Link } from "@inertiajs/vue3"
@@ -25,7 +25,7 @@ import forEach from 'lodash-es/forEach';
 import isEqual from 'lodash-es/isEqual';
 import map from 'lodash-es/map';
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { library } from "@fortawesome/fontawesome-svg-core";
+// import { library } from "@fortawesome/fontawesome-svg-core";
 
 
 import {useLocaleStore} from '@/Stores/locale.js';

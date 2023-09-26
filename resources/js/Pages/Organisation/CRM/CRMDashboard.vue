@@ -13,7 +13,7 @@ import Stats from "@/Components/DataDisplay/Stats.vue";
 
 const props = defineProps<{
     title: string,
-    pageHead: object,
+    pageHead: any,
     stats: object,
 }>()
 </script>
@@ -22,5 +22,5 @@ const props = defineProps<{
 <template layout="OrgApp">
     <Head :title="capitalize(title)" />
     <PageHeading :data="pageHead"></PageHeading>
-    <stats class="m-4" :stats="stats"/>
+    <stats class="p-4" :stats="stats"/>
 </template>
