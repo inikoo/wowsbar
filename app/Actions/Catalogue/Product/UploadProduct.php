@@ -9,8 +9,8 @@ namespace App\Actions\Catalogue\Product;
 
 use App\Actions\Helpers\Uploads\ConvertUploadedFile;
 use App\Actions\Helpers\Uploads\StoreExcelUploads;
-use App\Imports\Market\ProductImport;
-use App\Models\Market\Product;
+use App\Imports\Catalogue\ProductImport;
+use App\Models\Catalogue\Product;
 use Excel;
 use Illuminate\Console\Command;
 use Lorisleiva\Actions\ActionRequest;

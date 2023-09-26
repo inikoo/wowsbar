@@ -1,15 +1,21 @@
 <?php
+/*
+ * Author: Raul Perusquia <raul@inikoo.com>
+ * Created: Tue, 26 Sep 2023 10:31:30 Malaysia Time, Kuala Lumpur, Malaysia
+ * Copyright (c) 2023, Raul A Perusquia Flores
+ */
 
-namespace App\Imports\Market;
+namespace App\Imports\Catalogue;
 
 use App\Actions\Helpers\Uploads\ImportExcelUploads;
 use App\Actions\Helpers\Uploads\UpdateExcelUploads;
-use App\Enums\Market\Product\ProductStateEnum;
-use App\Enums\Market\Product\ProductTypeEnum;
-use App\Models\Market\Product;
+use App\Enums\Catalogue\Product\ProductStateEnum;
+use App\Enums\Catalogue\Product\ProductTypeEnum;
+use App\Models\Catalogue\Product;
 use App\Models\Media\ExcelUpload;
 use App\Models\Media\ExcelUploadRecord;
 use App\Rules\CaseSensitive;
+use Exception;
 use Illuminate\Support\Collection;
 use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Concerns\SkipsFailures;
@@ -45,7 +51,7 @@ class ProductImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wit
                 ]);
 
                 ImportExcelUploads::dispatch($product, count($collection), $totalImported++, Product::class);
-            } catch (\Exception $e) {
+            } catch (Exception) {
                 $totalImported--;
             }
         }
@@ -58,7 +64,6 @@ class ProductImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wit
             'units'       => ['sometimes', 'required', 'numeric'],
             'image_id'    => ['sometimes', 'required', 'exists:media,id'],
             'price'       => ['required', 'numeric'],
-            'rrp'         => ['sometimes', 'required', 'numeric'],
             'name'        => ['required', 'max:250', 'string'],
             'state'       => ['sometimes', 'required', Rule::in(ProductStateEnum::values())],
             'type'        => ['required', Rule::in(ProductTypeEnum::values())],

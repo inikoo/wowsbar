@@ -80,7 +80,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read int|null $payment_service_providers_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Payment> $payments
  * @property-read int|null $payments_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Market\Product> $products
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Market\ProductShop> $products
  * @property-read int|null $products_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Prospect> $prospects
  * @property-read int|null $prospects_count
@@ -202,7 +202,7 @@ class Shop extends Model
 
     public function products(): HasMany
     {
-        return $this->hasMany(Product::class);
+        return $this->hasMany(ProductShop::class);
     }
 
     public function website(): HasOne

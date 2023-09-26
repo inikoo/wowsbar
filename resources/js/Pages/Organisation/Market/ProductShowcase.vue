@@ -94,10 +94,7 @@ const product = props.data.data;
                 <td class="px-1 border-b border-gray-200">Price</td>
                 <td class="px-1 border-b border-gray-200">€30.50 (€3.05/bag) margin 67.0%</td>
             </tr>
-            <tr>
-                <td class="px-1 border-b border-gray-200">RRP</td>
-                <td class="px-1 border-b border-gray-200">€7.35/bag margin 58.5%</td>
-            </tr>
+
             <tr>
                 <td class="px-1 border-b border-gray-200">Webpage</td>
                 <td class="px-1 border-b border-gray-200">jsb-03</td>

@@ -10,6 +10,7 @@ namespace App\Models\Organisation;
 use App\Models\Accounting\PaymentServiceProvider;
 use App\Models\Assets\Currency;
 use App\Models\Auth\OrganisationUser;
+use App\Models\Catalogue\Product;
 use App\Models\Market\Shop;
 use App\Models\Catalogue\ProductCategory;
 use App\Models\Web\Website;
@@ -38,6 +39,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property int|null $logo_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\Organisation\OrganisationCatalogueStats|null $catalogueStats
  * @property-read \App\Models\Organisation\OrganisationCrmStats|null $crmStats
  * @property-read Currency $currency
  * @property-read \Illuminate\Database\Eloquent\Collection<int, ProductCategory> $departments
@@ -45,6 +47,8 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property-read \App\Models\Organisation\OrganisationHumanResourcesStats|null $humanResourcesStats
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \App\Models\Media\Media> $media
  * @property-read int|null $media_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Product> $products
+ * @property-read int|null $products_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Shop> $shops
  * @property-read int|null $shops_count
  * @property-read \App\Models\Organisation\OrganisationStats|null $stats
@@ -136,6 +140,11 @@ class Organisation extends Model implements HasMedia
     public function departments(): MorphMany
     {
         return $this->morphMany(ProductCategory::class, 'parent');
+    }
+
+    public function products(): MorphMany
+    {
+        return $this->morphMany(Product::class, 'parent');
     }
 
 }

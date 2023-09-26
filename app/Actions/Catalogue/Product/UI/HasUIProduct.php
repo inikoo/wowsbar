@@ -8,11 +8,11 @@
 namespace App\Actions\Catalogue\Product\UI;
 
 use App\Actions\Market\Shop\UI\IndexShops;
-use App\Models\Market\Product;
+use App\Models\Market\ProductShop;
 
 trait HasUIProduct
 {
-    public function getBreadcrumbs(Product $product): array
+    public function getBreadcrumbs(ProductShop $product): array
     {
         return array_merge(
             (new IndexShops())->getBreadcrumbs(),
