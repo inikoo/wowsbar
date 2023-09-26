@@ -23,7 +23,6 @@ enum CustomerWebsitesTabsEnum: string
         return match ($this) {
             CustomerWebsitesTabsEnum::WEBSITES => [
                 'title' => __('websites'),
-              //  'icon'  => 'fas fa-info-circle',
             ],
             CustomerWebsitesTabsEnum::CHANGELOG => [
                 'title' => __('changelog'),

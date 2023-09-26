@@ -105,6 +105,14 @@ class GetLayout
             $subSections = [];
             if ($websitesCount == 1) {
                 $subSections[] = [
+                    'label' => __('website'),
+                    'icon'  => ['fal', 'fa-globe'],
+                    'route' => [
+                        'name'       => 'org.websites.show',
+                        'parameters' => $shop->website->slug
+                    ]
+                ];
+                $subSections[] = [
                     'label' => __('webpages'),
                     'icon'  => ['fal', 'fa-browser'],
                     'route' => [
@@ -143,6 +151,13 @@ class GetLayout
                         match ($shopsCount) {
                             1 =>
                             [
+                                [
+                                    'icon'  => ['fal', 'fa-chart-network'],
+                                    'route' => [
+                                        'name'       => 'org.crm.shop.dashboard',
+                                        'parameters' => $shop->slug
+                                    ]
+                                ],
                                 [
 
                                     'label' => __('customers'),
@@ -234,6 +249,12 @@ class GetLayout
                 ],
                 'topMenu' => [
                     'subSections' => [
+                        [
+                            'icon'  => ['fal', 'fa-chart-network'],
+                            'route' => [
+                                'name' => 'org.catalogue.dashboard'
+                            ]
+                        ],
                         [
                             'label' => __('departments'),
                             'icon'  => ['fal', 'fa-folder-tree'],
@@ -358,6 +379,12 @@ class GetLayout
                 'topMenu' => [
                     'subSections' => [
                         [
+                            'icon'  => ['fal', 'fa-chart-network'],
+                            'route' => [
+                                'name' => 'org.hr.dashboard'
+                            ]
+                        ],
+                        [
                             'label' => __('job positions'),
                             'icon'  => ['fal', 'fa-network-wired'],
                             'route' => [
@@ -407,9 +434,17 @@ class GetLayout
                 'label'   => __('sysadmin'),
                 'icon'    => ['fal', 'fa-users-cog'],
                 'route'   =>
-                    ['name' => 'org.sysadmin.dashboard'],
+                    [
+                        'name' => 'org.sysadmin.dashboard'
+                    ],
                 'topMenu' => [
                     'subSections' => [
+                        [
+                            'icon'  => ['fal', 'fa-chart-network'],
+                            'route' => [
+                                'name' => 'org.sysadmin.dashboard'
+                            ]
+                        ],
                         [
                             'label' => __('users'),
                             'icon'  => ['fal', 'fa-terminal'],
