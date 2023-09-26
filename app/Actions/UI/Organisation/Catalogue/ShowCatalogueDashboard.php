@@ -39,15 +39,24 @@ class ShowCatalogueDashboard
             'Catalogue/CatalogueDashboard',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(),
-                'title'       => __('product management'),
+                'title'       => __('catalogue'),
                 'pageHead'    => [
-                    'title' => __('product management'),
+                    'title' => __('catalogue'),
                 ],
                 'stats'       => [
                     [
+                        'name' => __('departments'),
+                        'stat' => $org->catalogueStats->number_departments,
+                        'href' => [
+                            'name' => 'org.catalogue.departments.index'
+                        ]
+                    ],
+                    [
                         'name' => __('products'),
-                        'stat' => $org->humanResourcesStats->number_employees,
-                        'href' => ['name'=>'org.hr.employees.index']
+                        'stat' => $org->catalogueStats->number_products,
+                        'href' => [
+                            'name' => 'org.catalogue.products.index'
+                        ]
                     ],
 
                 ]
@@ -66,9 +75,9 @@ class ShowCatalogueDashboard
                         'type'   => 'simple',
                         'simple' => [
                             'route' => [
-                                'name' => 'org.hr.dashboard'
+                                'name' => 'org.catalogue.dashboard'
                             ],
-                            'label' => __('human resources'),
+                            'label' => __('catalogue'),
                         ]
                     ]
                 ]
