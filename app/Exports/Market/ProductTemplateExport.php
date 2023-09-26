@@ -7,8 +7,8 @@
 
 namespace App\Exports\Market;
 
-use App\Enums\Market\Product\ProductTypeEnum;
 use App\Enums\Catalogue\Product\ProductStateEnum;
+use App\Enums\Catalogue\Product\ProductTypeEnum;
 use Faker\Factory;
 use Maatwebsite\Excel\Concerns\FromArray;
 
@@ -28,7 +28,7 @@ class ProductTemplateExport extends Factory implements FromArray
                 fake()->numerify,
                 fake()->name,
                 ProductStateEnum::ACTIVE->value,
-                ProductTypeEnum::PHYSICAL_GOOD->value,
+                ProductTypeEnum::SUBSCRIPTION->value,
                 fake()->text(1500)
             ];
         } while(count($array) <= 5);

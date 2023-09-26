@@ -10,7 +10,7 @@ namespace App\Actions\Catalogue\Product;
 use App\Actions\Catalogue\Product\Hydrators\ProductHydrateUniversalSearch;
 use App\Actions\Traits\WithActionUpdate;
 use App\Http\Resources\Market\ProductResource;
-use App\Models\Market\ProductShop;
+use App\Models\Catalogue\Product;
 use Lorisleiva\Actions\ActionRequest;
 
 class UpdateProduct
@@ -19,7 +19,7 @@ class UpdateProduct
 
     private bool $asAction=false;
 
-    public function handle(ProductShop $product, array $modelData, bool $skipHistoric=false): ProductShop
+    public function handle(Product $product, array $modelData, bool $skipHistoric=false): Product
     {
         $product= $this->update($product, $modelData, ['data', 'settings']);
 
@@ -47,13 +47,13 @@ class UpdateProduct
         ];
     }
 
-    public function asController(ProductShop $product, ActionRequest $request): ProductShop
+    public function asController(Product $product, ActionRequest $request): Product
     {
         $request->validate();
         return $this->handle($product, $request->all());
     }
 
-    public function action(ProductShop $product, array $objectData): ProductShop
+    public function action(Product $product, array $objectData): Product
     {
         $this->asAction=true;
         $this->setRawAttributes($objectData);
@@ -62,7 +62,7 @@ class UpdateProduct
         return $this->handle($product, $validatedData);
     }
 
-    public function jsonResponse(ProductShop $product): ProductResource
+    public function jsonResponse(Product $product): ProductResource
     {
         return new ProductResource($product);
     }

@@ -8,7 +8,6 @@
 namespace App\Actions\Catalogue\Product;
 
 use App\Actions\HydrateModel;
-use App\Actions\Catalogue\Product\Hydrators\ProductInitialiseImageID;
 use App\Models\Market\ProductShop;
 use Illuminate\Support\Collection;
 
@@ -19,7 +18,6 @@ class HydrateProduct extends HydrateModel
 
     public function handle(ProductShop $product): void
     {
-        ProductInitialiseImageID::run($product);
     }
 
 

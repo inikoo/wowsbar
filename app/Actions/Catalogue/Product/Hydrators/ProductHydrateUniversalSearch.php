@@ -7,14 +7,14 @@
 
 namespace App\Actions\Catalogue\Product\Hydrators;
 
-use App\Models\Market\ProductShop;
+use App\Models\Catalogue\Product;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class ProductHydrateUniversalSearch
 {
     use AsAction;
 
-    public function handle(ProductShop $product): void
+    public function handle(Product $product): void
     {
         $product->universalSearch()->updateOrCreate(
             [],

@@ -7,11 +7,8 @@
 
 namespace App\Actions\Catalogue\Product;
 
-use App\Actions\Market\Shop\Hydrators\ShopHydrateProducts;
 use App\Actions\Traits\WithActionUpdate;
-use App\Models\Market\ProductShop;
-use App\Models\Market\Shop;
-use App\Models\Tenancy\Tenant;
+use App\Models\Catalogue\Product;
 use Illuminate\Console\Command;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
@@ -21,9 +18,8 @@ class DeleteProduct
 {
     use WithActionUpdate;
 
-    public string $commandSignature = 'delete:product {tenant} {id}';
 
-    public function handle(ProductShop $product, array $deletedData = [], bool $skipHydrate = false): ProductShop
+    public function handle(Product $product, array $deletedData = [], bool $skipHydrate = false): Product
     {
         $product->delete();
         $product = $this->update($product, $deletedData, ['data']);
@@ -34,7 +30,7 @@ class DeleteProduct
                 FamilyHydrateProducts::dispatch($product->family);
             }
             */
-            ShopHydrateProducts::dispatch($product->shop);
+           // OrganisationHydrateProducts::dispatch();
         }
 
         return $product;
@@ -45,28 +41,22 @@ class DeleteProduct
         return $request->user()->hasPermissionTo("shops.edit");
     }
 
-    public function asController(ProductShop $product, ActionRequest $request): ProductShop
+    public function asController(Product $product, ActionRequest $request): Product
     {
         $request->validate();
 
         return $this->handle($product);
     }
 
-    public function inShop(Shop $shop, ProductShop $product, ActionRequest $request): ProductShop
-    {
-        $request->validate();
-
-        return $this->handle($product);
-    }
+    public string $commandSignature = 'delete:product {product}';
 
     public function asCommand(Command $command): int
     {
-        Tenant::where('slug', $command->argument('tenant'))->first()->makeCurrent();
-        $this->handle(ProductShop::findOrFail($command->argument('id')));
+        $this->handle(Product::where('slug',$command->argument('product'))->firstOrFail());
         return 0;
     }
 
-    public function htmlResponse(ProductShop $product): RedirectResponse
+    public function htmlResponse(Product $product): RedirectResponse
     {
         return Redirect::route('shops.show', $product->shop->slug);
     }

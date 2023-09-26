@@ -10,7 +10,7 @@ namespace App\Actions\Catalogue\Product;
 use App\Actions\Helpers\Uploads\ConvertUploadedFile;
 use App\Actions\Helpers\Uploads\StoreExcelUploads;
 use App\Imports\Catalogue\ProductImport;
-use App\Models\Market\ProductShop;
+use App\Models\Catalogue\Product;
 use Excel;
 use Illuminate\Console\Command;
 use Lorisleiva\Actions\ActionRequest;
@@ -30,7 +30,7 @@ class UploadProduct
 
     public function handle($file): void
     {
-        $upload = StoreExcelUploads::run($file, ProductShop::class);
+        $upload = StoreExcelUploads::run($file, Product::class);
 
         Excel::import(new ProductImport($upload), $upload->getFullPath());
     }

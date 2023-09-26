@@ -33,8 +33,8 @@ class ShopHydrateProducts implements ShouldBeUnique
         $shop->stats->update($stats);
     }
 
-    public function getJobUniqueId(Shop $shop): string
+    public function getJobUniqueId(Shop $parameters): string
     {
-        return $shop->id;
+        return $parameters->id;
     }
 }

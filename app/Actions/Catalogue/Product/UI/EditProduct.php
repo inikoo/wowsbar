@@ -8,9 +8,9 @@
 namespace App\Actions\Catalogue\Product\UI;
 
 use App\Actions\InertiaAction;
-use App\Enums\Market\Product\ProductTypeEnum;
-use App\Models\Market\ProductShop;
-use App\Models\Market\Shop;
+
+use App\Enums\Catalogue\Product\ProductTypeEnum;
+use App\Models\Catalogue\Product;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -18,27 +18,20 @@ use Spatie\LaravelOptions\Options;
 
 class EditProduct extends InertiaAction
 {
-    public function handle(ProductShop $product): ProductShop
+    public function handle(Product $product): Product
     {
         return $product;
     }
 
     public function authorize(ActionRequest $request): bool
     {
-        $this->canEdit = $request->user()->can('shops.products.edit');
+        $this->canEdit = $request->user()->can('catalogue.edit');
 
-        return $request->user()->hasPermissionTo("shops.products.edit");
+        return $request->user()->hasPermissionTo("catalogue.edit");
     }
 
-    public function inTenant(ProductShop $product, ActionRequest $request): ProductShop
-    {
-        $this->initialisation($request);
 
-        return $this->handle($product);
-    }
-
-    /** @noinspection PhpUnusedParameterInspection */
-    public function inShop(Shop $shop, ProductShop $product, ActionRequest $request): ProductShop
+    public function asController( Product $product, ActionRequest $request): Product
     {
         $this->initialisation($request);
 
@@ -48,7 +41,7 @@ class EditProduct extends InertiaAction
     /**
      * @throws \Exception
      */
-    public function htmlResponse(ProductShop $product, ActionRequest $request): Response
+    public function htmlResponse(Product $product, ActionRequest $request): Response
     {
         return Inertia::render(
             'EditModel',
@@ -146,20 +139,20 @@ class EditProduct extends InertiaAction
         );
     }
 
-    public function getPrevious(ProductShop $product, ActionRequest $request): ?array
+    public function getPrevious(Product $product, ActionRequest $request): ?array
     {
-        $previous = ProductShop::where('slug', '<', $product->slug)->orderBy('slug', 'desc')->first();
+        $previous = Product::where('slug', '<', $product->slug)->orderBy('slug', 'desc')->first();
         return $this->getNavigation($previous, $request->route()->getName());
 
     }
 
-    public function getNext(ProductShop $product, ActionRequest $request): ?array
+    public function getNext(Product $product, ActionRequest $request): ?array
     {
-        $next = ProductShop::where('slug', '>', $product->slug)->orderBy('slug')->first();
+        $next = Product::where('slug', '>', $product->slug)->orderBy('slug')->first();
         return $this->getNavigation($next, $request->route()->getName());
     }
 
-    private function getNavigation(?ProductShop $product, string $routeName): ?array
+    private function getNavigation(?Product $product, string $routeName): ?array
     {
         if(!$product) {
             return null;
