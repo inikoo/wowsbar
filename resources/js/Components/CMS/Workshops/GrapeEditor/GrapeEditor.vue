@@ -116,5 +116,33 @@ onMounted(() => {
   box-shadow: 0 0 0 2pt #c5c5c575;
 }
 
+/* We can remove the border we've set at the beginning */
+#gjs {
+  border: none;
+}
+/* Theming */
+
+/* Primary color for the background */
+.gjs-one-bg {
+  background-color: #f9fafb;
+}
+
+/* Secondary color for the text color */
+.gjs-two-color {
+  color: black;
+}
+
+/* Tertiary color for the background */
+.gjs-three-bg {
+  background-color: #f9fafb;
+  color: c7c8c9;
+}
+
+/* Quaternary color for the text color */
+.gjs-four-color,
+.gjs-four-color-h:hover {
+  color: black;
+}
+
 </style>
   
