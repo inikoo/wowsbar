@@ -8,8 +8,8 @@
 import { Link } from "@inertiajs/vue3"
 
 import { library } from "@fortawesome/fontawesome-svg-core"
-import { faEdit, faWindowMaximize, faDraftingCompass, faEmptySet, faMoneyCheckAlt, faPeopleArrows, faSlidersH, faSave, faSuitcase, faBroadcastTower, faUpload } from "@/../private/pro-light-svg-icons"
-import { faRocketLaunch, faPencil, faArrowLeft, faBorderAll, faTrashAlt, faDesktop } from "@/../private/pro-regular-svg-icons"
+import { faEdit, faWindowMaximize, faDraftingCompass, faEmptySet, faMoneyCheckAlt, faPeopleArrows, faSlidersH, faSave, faSuitcase, faBroadcastTower, faUpload ,faLevelUp} from "@/../private/pro-light-svg-icons"
+import { faRocketLaunch, faPencil, faArrowLeft, faBorderAll, faTrashAlt, faDesktop} from "@/../private/pro-regular-svg-icons"
 import { faPlus } from "@/../private/pro-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 
@@ -18,6 +18,7 @@ import { capitalize } from "@/Composables/capitalize"
 // import { useLocaleStore } from "@/Stores/locale.js"
 import { trans } from "laravel-vue-i18n"
 import MetaLabel from "@/Components/Headings/MetaLabel.vue";
+import Container from "@/Components/Headings/Container.vue";
 
 interface Icon {
     icon: string[] | string
@@ -25,7 +26,7 @@ interface Icon {
 
 library.add(faEdit, faWindowMaximize, faRocketLaunch, faDraftingCompass, faEmptySet, faMoneyCheckAlt, faPeopleArrows, faSlidersH, faPlus,
     faPencil, faArrowLeft, faBorderAll, faTrashAlt, faSave, faSuitcase,
-    faBroadcastTower, faUpload, faDesktop
+    faBroadcastTower, faUpload, faDesktop,faLevelUp
 );
 
 const props = defineProps<{
@@ -67,10 +68,17 @@ if (props.dataToSubmit && props.data.actionActualMethod) {
     <div class="mx-4 py-4 md:pb-2 md:pt-3 lg:py-2 grid grid-flow-col justify-between items-center">
         <div class="">
             <h2 class="font-bold text-gray-700 dark:text-gray-300 text-2xl tracking-tight capitalize">
-                <span v-if="data.container" class="text-black-500 font-medium mr-2">
-                    <FontAwesomeIcon v-if="data.container.icon" :title="capitalize(data.container.tooltip)"
-                        aria-hidden="true" :icon="data.container.icon" size="xs"/>
-                    {{ trans(data.container.label) }}
+                <span v-if="data.container" class="text-slate-500 text-lg  mr-2">
+                    <Link v-if="data.container.href"
+                          :href="route(
+                              data.container.href['name'],
+                              data.container.href['parameters']
+                              )">
+                        <Container :data="data.container"/>
+                    </Link>
+                    <Container v-else :data="data.container" />
+
+
                 </span>
 
                 <span class="text-gray-400">
@@ -128,7 +136,7 @@ if (props.dataToSubmit && props.data.actionActualMethod) {
                                     :href="`${route(button['route']['name'], button['route']['parameters'])}`" class="">
                                 <Button :style="button.style" :label="button.label" :icon="button.icon"
                                         class="capitalize inline-flex items-center rounded-none text-sm border-none font-medium shadow-sm focus:ring-transparent focus:ring-offset-transparent focus:ring-0">
-                                    
+
                                 </Button>
                             </Link>
                         </slot>

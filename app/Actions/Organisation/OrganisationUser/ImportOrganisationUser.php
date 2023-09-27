@@ -1,23 +1,24 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Thu, 21 Sep 2023 11:34:12 Malaysia Time, Pantai Lembeng, Bali, Indonesia
+ * Created: Thu, 21 Sep 2023 11:36:36 Malaysia Time, Pantai Lembeng, Bali, Indonesia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\HumanResources\Employee;
+namespace App\Actions\Organisation\OrganisationUser;
 
 use App\Actions\Helpers\Uploads\ConvertUploadedFile;
+use App\Actions\Helpers\Uploads\Hydrators\UploadHydrateExcels;
+use App\Actions\Helpers\Uploads\ImportModel;
 use App\Actions\Helpers\Uploads\StoreExcelUploads;
-use App\Imports\HumanResources\EmployeeImport;
-use App\Models\HumanResources\Employee;
-use Excel;
+use App\Imports\Auth\OrganisationUserImport;
+use App\Models\Auth\OrganisationUser;
 use Illuminate\Console\Command;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
 
-class UploadEmployee
+class ImportOrganisationUser
 {
     use AsAction;
     use WithAttributes;
@@ -26,13 +27,14 @@ class UploadEmployee
      * @var true
      */
     private bool $asAction          = false;
-    public string $commandSignature = 'employee:import {filename}';
+    public string $commandSignature = 'organisation-user:import {filename}';
 
     public function handle($file): void
     {
-        $employeeUpload = StoreExcelUploads::run($file, Employee::class);
+        $upload      = StoreExcelUploads::run($file, OrganisationUser::class);
+        $excelUpload = ImportModel::run(new OrganisationUserImport($upload), $upload);
 
-        Excel::import(new EmployeeImport($employeeUpload), storage_path('app/' . $employeeUpload->getFullPath()));
+        UploadHydrateExcels::dispatch($excelUpload);
     }
 
     /**

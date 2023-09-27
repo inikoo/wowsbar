@@ -3,7 +3,6 @@
 namespace App\Imports\Auth;
 
 use App\Actions\Helpers\Uploads\ImportExcelUploads;
-use App\Actions\Helpers\Uploads\UpdateExcelUploads;
 use App\Actions\Organisation\OrganisationUser\StoreOrganisationUser;
 use App\Models\Auth\OrganisationUser;
 use App\Models\Media\ExcelUpload;
@@ -35,8 +34,6 @@ class OrganisationUserImport implements ToCollection, WithHeadingRow, SkipsOnFai
     {
         $totalImported = 1;
 
-        UpdateExcelUploads::run($this->organisationUserUpload, ['number_rows' => count($collection)]);
-
         foreach ($collection as $organisationUser) {
             try {
                 $organisationUser = ExcelUploadRecord::create([
@@ -45,7 +42,7 @@ class OrganisationUserImport implements ToCollection, WithHeadingRow, SkipsOnFai
                 ]);
 
                 StoreOrganisationUser::run(json_decode($organisationUser->data, true));
-                ImportExcelUploads::dispatch($organisationUser, count($collection), $totalImported++, OrganisationUser::class);
+                ImportExcelUploads::run($organisationUser, count($collection), $totalImported++, OrganisationUser::class);
             } catch (\Exception $e) {
                 $totalImported--;
             }

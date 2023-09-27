@@ -8,18 +8,19 @@
 namespace App\Actions\Leads\Prospect;
 
 use App\Actions\Helpers\Uploads\ConvertUploadedFile;
+use App\Actions\Helpers\Uploads\Hydrators\UploadHydrateExcels;
+use App\Actions\Helpers\Uploads\ImportModel;
 use App\Actions\Helpers\Uploads\StoreExcelUploads;
 use App\Imports\Leads\ProspectImport;
 use App\Models\Leads\Prospect;
 use App\Models\Market\Shop;
-use Excel;
 use Exception;
 use Illuminate\Console\Command;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
 
-class UploadShopProspects
+class ImportShopProspects
 {
     use AsAction;
     use WithAttributes;
@@ -32,10 +33,9 @@ class UploadShopProspects
     public function handle(Shop $shop, $file): void
     {
         $prospectUpload = StoreExcelUploads::run($file, Prospect::class);
+        $excelUpload    = ImportModel::run(new ProspectImport($shop, $prospectUpload), $prospectUpload);
 
-        $importer=new ProspectImport($shop, $prospectUpload);
-
-        Excel::import($importer, storage_path('app/' . $prospectUpload->getFullPath()));
+        UploadHydrateExcels::dispatch($excelUpload);
     }
 
     /**

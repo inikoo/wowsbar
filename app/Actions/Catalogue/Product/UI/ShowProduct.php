@@ -14,12 +14,17 @@ use App\Actions\Market\Shop\UI\IndexShops;
 use App\Enums\UI\Organisation\ProductTabsEnum;
 use App\Http\Resources\Catalogue\ProductResource;
 use App\Models\Catalogue\Product;
+use App\Models\Catalogue\ProductCategory;
+use App\Models\Organisation\Organisation;
+use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
 
 class ShowProduct extends InertiaAction
 {
+    private ProductCategory|Organisation $parent;
+
     public function handle(Product $product): Product
     {
         return $product;
@@ -37,15 +42,40 @@ class ShowProduct extends InertiaAction
     public function asController(Product $product, ActionRequest $request): Product
     {
         $this->initialisation($request)->withTab(ProductTabsEnum::values());
+        $this->parent=organisation();
+        return $this->handle($product);
+    }
 
+    public function inDepartment(ProductCategory $productCategory, Product $product, ActionRequest $request): Product
+    {
+        $this->initialisation($request)->withTab(ProductTabsEnum::values());
+        $this->parent=$productCategory;
         return $this->handle($product);
     }
 
     public function htmlResponse(Product $product, ActionRequest $request): Response
     {
+        $scope    =$this->parent;
+        $container=null;
+        if (class_basename($scope) == 'ProductCategory') {
+            $container = [
+                'href'=> [
+                    'name'      => 'org.catalogue.departments.show',
+                    'parameters'=> [
+                        'productCategory'=> $this->parent->slug,
+                        '_query'         => [
+                            'tab'=> 'products'
+                        ]
+                    ]
+                ],
+                'icon'    => ['fal', 'fa-folder-tree'],
+                'tooltip' => __('Department'),
+                'label'   => Str::possessive($scope->code)
+            ];
+        }
 
         return Inertia::render(
-            'Market/Product',
+            'Catalogue/Product',
             [
                 'title'       => __('product'),
                 'breadcrumbs' => $this->getBreadcrumbs(
@@ -63,6 +93,7 @@ class ShowProduct extends InertiaAction
                             'icon'  => ['fal', 'fa-cube'],
                             'title' => __('product')
                         ],
+                     'container'=> $container,
 
                     'actions_todo' => [
                         $this->canEdit ? [
@@ -150,7 +181,7 @@ class ShowProduct extends InertiaAction
             array_merge(
                 IndexShops::make()->getBreadcrumbs(),
                 $headCrumb(
-                    Product::where('slug',$routeParameters['product'])->first(),
+                    Product::where('slug', $routeParameters['product'])->first(),
                     [
                         'index' => [
                             'name'       => 'org.catalogue.products.index',
@@ -172,7 +203,7 @@ class ShowProduct extends InertiaAction
                     $routeParameters
                 ),
                 $headCrumb(
-                    Product::where('slug',$routeParameters['product'])->first(),
+                    Product::where('slug', $routeParameters['product'])->first(),
                     [
                         'index' => [
                             'name'       => 'org.catalogue.departments.show.products.index',

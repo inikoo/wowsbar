@@ -33,6 +33,7 @@ const props = defineProps<{
 	}
 	tool: Object
 	data: Object
+	layout : Object
 }>()
 
 console.log('themetwo',props)
@@ -40,7 +41,7 @@ console.log('themetwo',props)
 </script>
 
 <template>
-	<footer class="bg-gray-50 px-6" aria-labelledby="footer-heading">
+	<footer class="px-6" aria-labelledby="footer-heading" :style="`background-color: ${layout?.color};`">
 		<h2 id="footer-heading" class="sr-only">Footer</h2>
 
 		<div class="mx-auto max-w-7xl px-6 pb-8 pt-20 sm:pt-24 lg:px-8 lg:pt-12">
@@ -55,18 +56,18 @@ console.log('themetwo',props)
 						<div :class="['space-y-3 w-4/12',
 							get(columSelected,'id') !== element.id ? '' : 'border',
 						]" @click="props.selectedColums(index)">
-							<Input :data="element" keyValue="label" classCss="font-bold text-gray-700 capitalize"/>
+							<Input :data="element" keyValue="label" :classCss="`font-bold text-${layout.colorScheme}-500`"/>
 							<div v-if="element.type == 'list'">
 								<draggable :list="element.items" group="list" itemKey="id"
 									:disabled="tool.name !== 'grab'">
 									<template #item="{ element: child, index: childIndex }">
 										<ul role="list">
-											<li :key="child.name">
+											<li :key="child.name" class="py-1">
 												<HyperLink :formList="{
 													name: 'label',
 													link: 'href',
 												}" :useDelete="true" :data="child" label="label"
-													cssClass="space-y-3 text-sm leading-6 text-gray-600 hover:text-indigo-500"
+													:cssClass="`space-y-3 text-sm leading-6 text-${layout.colorScheme}-500`"
 													@onDelete="() => element.data.splice(childIndex, 1)" />
 											</li>
 										</ul>
@@ -83,15 +84,15 @@ console.log('themetwo',props)
 									<draggable :list="element.items" group="info" itemKey="id" :disabled="tool.name !== 'grab'">
 										<template #item="{ element: child, index: childIndex }">
 											<div class="grid grid-cols-[auto,1fr] gap-4 items-center justify-start gap-y-3 mb-2.5">
-											<div v-if="child.type == 'other'" class="w-full flex items-center justify-center text-gray-400 gap-3">
+											<div v-if="child.type == 'other'" :class="`w-full flex items-center justify-center text-${layout.colorScheme}-500 gap-3`">
 												<div><IconPicker :key="child.title" :data="child.data" /></div>
 												<Input :data="child.data" keyValue="label" />
 											</div>
-											<div v-if="child.type == 'email'" class="w-full flex items-center justify-center text-gray-400 gap-3">
+											<div v-if="child.type == 'email'" :class="`w-full flex items-center justify-center text-${layout.colorScheme}-500 gap-3`">
 												<div><font-awesome-icon :icon="['fas', 'envelope']" /></div>
 												<Input :data="child" keyValue="data" />
 											</div>
-											<div v-if="child.type == 'phone'" class="w-full flex items-center justify-center text-gray-400 gap-3">
+											<div v-if="child.type == 'phone'" :class="`w-full flex items-center justify-center text-${layout.colorScheme}-500 gap-3`">
 												<div><font-awesome-icon :icon="['fas', 'phone']" /></div>
 												<Input :data="child" keyValue="data" />
 											</div>
@@ -110,10 +111,10 @@ console.log('themetwo',props)
 				<div class="md:order-2">
 					<draggable :list="data.social" group="socialMedia" itemKey="id" :class="[
 						tool.name === 'grab' ? 'cursor-grab' : 'cursor-pointer',
-						'text-gray-400 flex space-x-6',
+						`text-${layout.colorScheme}-500 flex space-x-6`,
 					]" :disabled="tool.name !== 'grab'">
 						<template #item="{ element: child, index: childIndex }">
-							<div class="hover:text-gray-500 ">
+							<div>
 								<span class="sr-only">{{ child.label }}</span>
 								<SocialMediaPicker :data="child" @OnDelete="data.social.splice(index,1)" />
 							</div>
@@ -122,7 +123,7 @@ console.log('themetwo',props)
 				</div>
 
 				<div class="flex">
-					<div class="mt-4 text-xs flex leading-6 text-gray-500 md:order-1 md:mt-0"> &copy; 2023 &nbsp;
+					<div :class="`mt-4 text-xs flex leading-6 text-${layout.colorScheme}-500 md:order-1 md:mt-0`"> &copy; 2023 &nbsp;
 						<span class="font-bold">
 							<HyperLink :useDelete="false" :data="data.copyright" label="label" 
 							:formList="{

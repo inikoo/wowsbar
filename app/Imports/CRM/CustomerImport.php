@@ -4,7 +4,6 @@ namespace App\Imports\CRM;
 
 use App\Actions\CRM\Customer\StoreCustomer;
 use App\Actions\Helpers\Uploads\ImportExcelUploads;
-use App\Actions\Helpers\Uploads\UpdateExcelUploads;
 use App\Models\CRM\Customer;
 use App\Models\Market\Shop;
 use App\Models\Media\ExcelUpload;
@@ -34,8 +33,6 @@ class CustomerImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wi
     {
         $totalImported = 1;
 
-        UpdateExcelUploads::run($this->customerUpload, ['number_rows' => count($collection)]);
-
         foreach ($collection as $value) {
             try {
                 $customer = ExcelUploadRecord::create([
@@ -46,7 +43,7 @@ class CustomerImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wi
                 $shop = Shop::where('slug', Arr::get($value, 'shop'))->first();
 
                 StoreCustomer::run($shop, Arr::except(json_decode($customer->data, true), 'shop'));
-                ImportExcelUploads::dispatch($customer, count($collection), $totalImported++, Customer::class);
+                ImportExcelUploads::run($customer, count($collection), $totalImported++, Customer::class);
             } catch (\Exception $e) {
                 $totalImported--;
             }

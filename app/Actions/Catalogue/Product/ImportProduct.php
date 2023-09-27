@@ -1,23 +1,24 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Thu, 21 Sep 2023 11:36:36 Malaysia Time, Pantai Lembeng, Bali, Indonesia
+ * Created: Tue, 26 Sep 2023 08:52:45 Malaysia Time, Kuala Lumpur, Malaysia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Organisation\OrganisationUser;
+namespace App\Actions\Catalogue\Product;
 
 use App\Actions\Helpers\Uploads\ConvertUploadedFile;
+use App\Actions\Helpers\Uploads\Hydrators\UploadHydrateExcels;
+use App\Actions\Helpers\Uploads\ImportModel;
 use App\Actions\Helpers\Uploads\StoreExcelUploads;
-use App\Imports\Auth\OrganisationUserImport;
-use App\Models\Auth\OrganisationUser;
-use Excel;
+use App\Imports\Catalogue\ProductImport;
+use App\Models\Catalogue\Product;
 use Illuminate\Console\Command;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
 
-class UploadOrganisationUser
+class ImportProduct
 {
     use AsAction;
     use WithAttributes;
@@ -26,13 +27,14 @@ class UploadOrganisationUser
      * @var true
      */
     private bool $asAction          = false;
-    public string $commandSignature = 'user:import {filename}';
+    public string $commandSignature = 'product:import {filename}';
 
     public function handle($file): void
     {
-        $upload = StoreExcelUploads::run($file, OrganisationUser::class);
+        $upload      = StoreExcelUploads::run($file, Product::class);
+        $excelUpload = ImportModel::run(new ProductImport($upload), $upload);
 
-        Excel::import(new OrganisationUserImport($upload), $upload->getFullPath());
+        UploadHydrateExcels::dispatch($excelUpload);
     }
 
     /**

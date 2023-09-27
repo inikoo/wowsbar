@@ -350,16 +350,8 @@ setToFirebase();
             <div style="transform: scale(0.8);" class="w-full">
                 <Footer class="lg:col-span-2 lg:row-span-2 rounded-lg" :data="data"
                     :columSelected="data.columns[columSelected]" :theme="selectedTheme" :selectedColums="selectedColums"
-                    :tool="tool" @uploadImage="changeImage" />
+                    :tool="tool" @uploadImage="changeImage"  :layout="props.data.layout.footer"/>
             </div>
         </div>
     </div>
-    <notifications
-        group="custom-style"
-        position="top center"
-        classes="n-light"
-        dangerously-set-inner-html
-        :max="3"
-        :width="400"
-    />
 </template>

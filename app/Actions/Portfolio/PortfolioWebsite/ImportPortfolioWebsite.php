@@ -1,23 +1,24 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Wed, 16 Aug 2023 08:09:28 Malaysia Time, Pantai Lembeng, Bali
+ * Created: Mon, 18 Sep 2023 18:42:14 Malaysia Time, Pantai Lembeng, Bali, Indonesia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Organisation\Guest;
+namespace App\Actions\Portfolio\PortfolioWebsite;
 
 use App\Actions\Helpers\Uploads\ConvertUploadedFile;
 use App\Actions\Helpers\Uploads\StoreExcelUploads;
-use App\Imports\Auth\GuestImport;
+use App\Imports\WebsiteImport;
 use App\Models\Auth\Guest;
+use App\Models\CRM\Customer;
 use Excel;
 use Illuminate\Console\Command;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
 
-class UploadGuest
+class ImportPortfolioWebsite
 {
     use AsAction;
     use WithAttributes;
@@ -25,23 +26,22 @@ class UploadGuest
     /**
      * @var true
      */
-    private bool $asAction          = false;
-    public string $commandSignature = 'guest:import {filename}';
+    private bool $asAction = false;
 
-    public function handle($file): void
+    public function handle(Customer $customer, $file): void
     {
-        $guestUpload = StoreExcelUploads::run($file, Guest::class);
+        $websiteUpload = StoreExcelUploads::run($file, Guest::class);
 
-        Excel::import(new GuestImport($guestUpload), storage_path('app/' . $guestUpload->getFullPath()));
+        Excel::import(new WebsiteImport($websiteUpload, $customer), storage_path('app/' . $websiteUpload->getFullPath()));
     }
 
     /**
      * @throws \Throwable
      */
-    public function asController(ActionRequest $request): void
+    public function asController(Customer $customer, ActionRequest $request): void
     {
         $file = $request->file('file');
-        $this->handle($file);
+        $this->handle($customer, $file);
     }
 
     public function asCommand(Command $command): void
@@ -49,6 +49,6 @@ class UploadGuest
         $filename = $command->argument('filename');
         $file     = ConvertUploadedFile::run($filename);
 
-        $this->handle($file);
+        $this->handle(customer(), $file);
     }
 }

@@ -1,23 +1,24 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Mon, 18 Sep 2023 18:48:13 Malaysia Time, Pantai Lembeng, Bali, Indonesia
+ * Created: Wed, 16 Aug 2023 08:09:28 Malaysia Time, Pantai Lembeng, Bali
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\CRM\Customer;
+namespace App\Actions\Organisation\Guest;
 
 use App\Actions\Helpers\Uploads\ConvertUploadedFile;
+use App\Actions\Helpers\Uploads\Hydrators\UploadHydrateExcels;
+use App\Actions\Helpers\Uploads\ImportModel;
 use App\Actions\Helpers\Uploads\StoreExcelUploads;
-use App\Imports\CRM\CustomerImport;
-use App\Models\CRM\Customer;
-use Excel;
+use App\Imports\Auth\GuestImport;
+use App\Models\Auth\Guest;
 use Illuminate\Console\Command;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
 
-class UploadCustomer
+class ImportGuest
 {
     use AsAction;
     use WithAttributes;
@@ -26,13 +27,14 @@ class UploadCustomer
      * @var true
      */
     private bool $asAction          = false;
-    public string $commandSignature = 'customer:import {filename}';
+    public string $commandSignature = 'guest:import {filename}';
 
     public function handle($file): void
     {
-        $customerUpload = StoreExcelUploads::run($file, Customer::class);
+        $guestUpload = StoreExcelUploads::run($file, Guest::class);
+        $excelUpload = ImportModel::run(new GuestImport($guestUpload), $guestUpload);
 
-        Excel::import(new CustomerImport($customerUpload), storage_path('app/' . $customerUpload->getFullPath()));
+        UploadHydrateExcels::dispatch($excelUpload);
     }
 
     /**
