@@ -7,9 +7,10 @@ import grapesjs from 'grapesjs';
 import Basic from 'grapesjs-blocks-basic';
 import GrapesForm from 'grapesjs-plugin-forms';
 import TailwindComponents from 'grapesjs-tailwind';
+import Webpage from 'grapesjs-preset-webpage';
 import { ref } from 'vue'
+import { panel } from './Panel'
 
-console.log(TailwindComponents)
 
 const data = ref(null)
 
@@ -33,7 +34,8 @@ onMounted(() => {
     plugins: [
       Basic,
       GrapesForm,
-      TailwindComponents
+      TailwindComponents,
+      Webpage
     ],
     // storageManager: {
     //   type: 'remote',
@@ -48,7 +50,7 @@ onMounted(() => {
     //           }
     //         });
     //         const savedData = { id: 'projectID', data, pagesHtml };
-            
+
     //         // Call the save function here with the saved data
     //         save(savedData);
 
@@ -59,17 +61,7 @@ onMounted(() => {
     //   },
     // },
   });
-
-  // editorInstance.Panels.addButton("options", {
-  //   id: "update-theme",
-  //   className: "fa fa-adjust",
-  //   command: "open-update-theme",
-  //   attributes: {
-  //     title: "Update Theme",
-  //     "data-tooltip-pos": "bottom"
-  //   }
-  // });
-
+  editorInstance.Panels.getPanels().reset(panel(editorInstance));
 });
 
 
@@ -78,23 +70,9 @@ onMounted(() => {
 
 <template>
   <div id="gjs"></div>
-  <div id="blocks"></div>
 </template>
   
 <style>
-.panel {
-  width: 90%;
-  max-width: 700px;
-  border-radius: 3px;
-  padding: 30px 20px;
-  margin: 150px auto 0px;
-  background-color: #d983a6;
-  box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.25);
-  color: rgba(255, 255, 255, 0.75);
-  font: caption;
-  font-weight: 100;
-}
-
 .gjs-pn-panel {
   padding: -10px;
 }
@@ -111,38 +89,30 @@ onMounted(() => {
 }
 
 .change-theme-button:focus {
-  /* background-color: yellow; */
   outline: none;
   box-shadow: 0 0 0 2pt #c5c5c575;
 }
 
-/* We can remove the border we've set at the beginning */
 #gjs {
   border: none;
 }
-/* Theming */
 
-/* Primary color for the background */
 .gjs-one-bg {
   background-color: #f9fafb;
 }
 
-/* Secondary color for the text color */
 .gjs-two-color {
   color: black;
 }
 
-/* Tertiary color for the background */
 .gjs-three-bg {
   background-color: #f9fafb;
   color: c7c8c9;
 }
 
-/* Quaternary color for the text color */
 .gjs-four-color,
 .gjs-four-color-h:hover {
   color: black;
 }
-
 </style>
   

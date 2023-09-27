@@ -66,6 +66,7 @@
         "grapesjs-blocks-basic": "^1.0.2",
         "grapesjs-ga": "^1.0.2",
         "grapesjs-plugin-forms": "^2.0.6",
+        "grapesjs-preset-webpage": "^1.0.3",
         "grapesjs-tailwind": "^1.0.10",
         "laravel-vue-i18n": "^2.7.1",
         "lodash-es": "^4.17.21",
