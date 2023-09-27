@@ -33,6 +33,7 @@ class ShowDepartment extends InertiaAction
     {
         $this->canEdit   = $request->user()->can('catalogue.edit');
         $this->canDelete = $request->user()->can('catalogue.edit');
+
         return $request->user()->hasPermissionTo("catalogue.view");
     }
 
@@ -48,22 +49,22 @@ class ShowDepartment extends InertiaAction
         return Inertia::render(
             'Catalogue/Department',
             [
-                'title'                              => __('department'),
-                'breadcrumbs'                        => $this->getBreadcrumbs(
+                'title'       => __('department'),
+                'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->getName(),
                     $request->route()->originalParameters()
                 ),
-                'navigation'                            => [
+                'navigation'  => [
                     'previous' => $this->getPrevious($department, $request),
                     'next'     => $this->getNext($department, $request),
                 ],
-                'pageHead'                           => [
-                    'title' => $department->name,
-                    'icon'  => [
+                'pageHead'    => [
+                    'title'   => $department->name,
+                    'icon'    => [
                         'icon'  => ['fal', 'fa-folder-tree'],
                         'title' => __('department')
                     ],
-                    'actions' => [
+                    'actions_todo' => [
                         $this->canEdit ? [
                             'type'  => 'button',
                             'style' => 'edit',
@@ -82,37 +83,39 @@ class ShowDepartment extends InertiaAction
                         ] : false
                     ]
                 ],
-                'tabs'                               => [
+                'tabs'        => [
                     'current'    => $this->tab,
                     'navigation' => DepartmentTabsEnum::navigation()
                 ],
 
                 DepartmentTabsEnum::SHOWCASE->value => $this->tab == DepartmentTabsEnum::SHOWCASE->value ?
-                    fn () => GetProductCategoryShowcase::run($department)
-                    : Inertia::lazy(fn () => GetProductCategoryShowcase::run($department)),
+                    fn() => GetProductCategoryShowcase::run($department)
+                    : Inertia::lazy(fn() => GetProductCategoryShowcase::run($department)),
 
-                DepartmentTabsEnum::CUSTOMERS->value => $this->tab == DepartmentTabsEnum::CUSTOMERS->value ?
-                    fn () => CustomerResource::collection(
+                DepartmentTabsEnum::CUSTOMERS->value => $this->tab == DepartmentTabsEnum::CUSTOMERS->value
+                    ?
+                    fn() => CustomerResource::collection(
                         IndexCustomers::run(
                             parent: $department,
                             prefix: 'customers'
                         )
                     )
-                    : Inertia::lazy(fn () => CustomerResource::collection(
+                    : Inertia::lazy(fn() => CustomerResource::collection(
                         IndexCustomers::run(
                             parent: $department,
                             prefix: 'customers'
                         )
                     )),
 
-                DepartmentTabsEnum::PRODUCTS->value  => $this->tab == DepartmentTabsEnum::PRODUCTS->value ?
-                    fn () => ProductResource::collection(
+                DepartmentTabsEnum::PRODUCTS->value => $this->tab == DepartmentTabsEnum::PRODUCTS->value
+                    ?
+                    fn() => ProductResource::collection(
                         IndexProducts::run(
                             parent: $department,
                             prefix: 'products'
                         )
                     )
-                    : Inertia::lazy(fn () => ProductResource::collection(
+                    : Inertia::lazy(fn() => ProductResource::collection(
                         IndexProducts::run(
                             parent: $department,
                             prefix: 'products'
@@ -120,10 +123,8 @@ class ShowDepartment extends InertiaAction
                     )),
 
                 DepartmentTabsEnum::HISTORY->value => $this->tab == DepartmentTabsEnum::HISTORY->value ?
-                    fn () => HistoryResource::collection(IndexHistories::run($department))
-                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistories::run($department))),
-
-
+                    fn() => HistoryResource::collection(IndexHistories::run($department))
+                    : Inertia::lazy(fn() => HistoryResource::collection(IndexHistories::run($department))),
 
 
             ]
@@ -177,7 +178,7 @@ class ShowDepartment extends InertiaAction
             array_merge(
                 ShowCatalogueDashboard::make()->getBreadcrumbs(),
                 $headCrumb(
-                    $routeParameters['department'],
+                    ProductCategory::where('slug', $routeParameters['productCategory'])->first(),
                     [
                         'index' => [
                             'name'       => 'org.catalogue.departments.index',
@@ -185,9 +186,7 @@ class ShowDepartment extends InertiaAction
                         ],
                         'model' => [
                             'name'       => 'org.catalogue.departments.show',
-                            'parameters' => [
-                                $routeParameters['department']->slug
-                            ]
+                            'parameters' => $routeParameters
                         ]
                     ],
                     $suffix
@@ -200,32 +199,33 @@ class ShowDepartment extends InertiaAction
     public function getPrevious(ProductCategory $department, ActionRequest $request): ?array
     {
         $previous = ProductCategory::where('code', '<', $department->code)->orderBy('code', 'desc')->first();
-        return $this->getNavigation($previous, $request->route()->getName());
 
+        return $this->getNavigation($previous, $request->route()->getName());
     }
 
     public function getNext(ProductCategory $department, ActionRequest $request): ?array
     {
         $next = ProductCategory::where('code', '>', $department->code)->orderBy('code')->first();
+
         return $this->getNavigation($next, $request->route()->getName());
     }
 
     private function getNavigation(?ProductCategory $department, string $routeName): ?array
     {
-        if(!$department) {
+        if (!$department) {
             return null;
         }
+
         return match ($routeName) {
-            'org.catalogue.departments.show'=> [
-                'label'=> $department->name,
-                'route'=> [
-                    'name'      => $routeName,
-                    'parameters'=> [
-                        'productCategory'=> $department->slug
+            'org.catalogue.departments.show' => [
+                'label' => $department->name,
+                'route' => [
+                    'name'       => $routeName,
+                    'parameters' => [
+                        'productCategory' => $department->slug
                     ]
                 ]
             ],
-
         };
     }
 }
