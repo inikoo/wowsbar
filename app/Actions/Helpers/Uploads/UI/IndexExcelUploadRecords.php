@@ -12,7 +12,7 @@ use App\Actions\UI\Organisation\HumanResources\ShowHumanResourcesDashboard;
 use App\Http\Resources\HumanResources\EmployeeInertiaResource;
 use App\Http\Resources\HumanResources\EmployeeResource;
 use App\InertiaTable\InertiaTable;
-use App\Models\Media\ExcelUploadRecord;
+use App\Models\Helpers\UploadRecord;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -36,7 +36,7 @@ class IndexExcelUploadRecords extends InertiaAction
             InertiaTable::updateQueryBuilderParameters($prefix);
         }
 
-        $queryBuilder=QueryBuilder::for(ExcelUploadRecord::class);
+        $queryBuilder=QueryBuilder::for(UploadRecord::class);
 
         /** @noinspection PhpUndefinedMethodInspection */
         return $queryBuilder

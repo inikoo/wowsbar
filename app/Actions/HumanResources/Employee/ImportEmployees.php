@@ -8,49 +8,72 @@
 namespace App\Actions\HumanResources\Employee;
 
 use App\Actions\Helpers\Uploads\ConvertUploadedFile;
-use App\Actions\Helpers\Uploads\Hydrators\UploadHydrateExcels;
-use App\Actions\Helpers\Uploads\ImportModel;
-use App\Actions\Helpers\Uploads\StoreExcelUploads;
+use App\Actions\Helpers\Uploads\StoreUploads;
+use App\Enums\Helpers\Import\UploadRecordStatusEnum;
 use App\Imports\HumanResources\EmployeeImport;
+use App\Models\Helpers\Upload;
 use App\Models\HumanResources\Employee;
 use Illuminate\Console\Command;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ImportEmployees
 {
     use AsAction;
     use WithAttributes;
 
-    /**
-     * @var true
-     */
-    private bool $asAction          = false;
-    public string $commandSignature = 'employee:upload {filename}';
 
-    public function handle($file): void
+    public function handle($file): Upload
     {
-        $employeeUpload = StoreExcelUploads::run($file, Employee::class);
-        $excelUpload    = ImportModel::run(new EmployeeImport($employeeUpload), $employeeUpload);
+        $upload = StoreUploads::run($file, Employee::class);
 
-        UploadHydrateExcels::dispatch($excelUpload);
+        Excel::import(
+            new EmployeeImport($upload),
+            storage_path('app/'.$upload->getFullPath())
+        );
+
+        $upload->refresh();
+
+        return $upload;
     }
 
-    /**
-     * @throws \Throwable
-     */
+
     public function asController(ActionRequest $request): void
     {
         $file = $request->file('file');
         $this->handle($file);
     }
 
+    public string $commandSignature = 'employee:upload {filename}';
+
     public function asCommand(Command $command): void
     {
         $filename = $command->argument('filename');
         $file     = ConvertUploadedFile::run($filename);
 
-        $this->handle($file);
+        $upload = $this->handle($file);
+
+        $command->table(
+            ['Success', 'Fail'],
+            [
+                [
+                    $upload->number_success,
+                    $upload->number_fails
+                ]
+            ]
+        );
+
+        if ($upload->number_fails) {
+            $failData = [];
+            foreach ($upload->records()->where('status', UploadRecordStatusEnum::FAILED)->get() as $fail) {
+                $failData[] = [$fail->row_number, implode($fail->errors)];
+            }
+            $command->table(
+                ['Row', 'Error'],
+                $failData
+            );
+        }
     }
 }

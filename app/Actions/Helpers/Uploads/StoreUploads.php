@@ -7,14 +7,14 @@
 
 namespace App\Actions\Helpers\Uploads;
 
-use App\Models\Media\ExcelUpload;
+use App\Models\Helpers\Upload;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
 
-class StoreExcelUploads
+class StoreUploads
 {
     use AsAction;
     use WithAttributes;
@@ -30,7 +30,7 @@ class StoreExcelUploads
         $path     = 'org/' . Str::lower($type);
         Storage::disk('local')->put($path, $file);
 
-        return ExcelUpload::create([
+        return Upload::create([
             'organisation_user_id' => $orgUser?->id,
             'type'                 => $type,
             'original_filename'    => $file->getClientOriginalName(),

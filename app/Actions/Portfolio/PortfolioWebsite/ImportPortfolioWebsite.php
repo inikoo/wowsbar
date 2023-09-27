@@ -8,7 +8,7 @@
 namespace App\Actions\Portfolio\PortfolioWebsite;
 
 use App\Actions\Helpers\Uploads\ConvertUploadedFile;
-use App\Actions\Helpers\Uploads\StoreExcelUploads;
+use App\Actions\Helpers\Uploads\StoreUploads;
 use App\Imports\WebsiteImport;
 use App\Models\Auth\Guest;
 use App\Models\CRM\Customer;
@@ -30,7 +30,7 @@ class ImportPortfolioWebsite
 
     public function handle(Customer $customer, $file): void
     {
-        $websiteUpload = StoreExcelUploads::run($file, Guest::class);
+        $websiteUpload = StoreUploads::run($file, Guest::class);
 
         Excel::import(new WebsiteImport($websiteUpload, $customer), storage_path('app/' . $websiteUpload->getFullPath()));
     }

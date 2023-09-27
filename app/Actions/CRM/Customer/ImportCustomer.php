@@ -7,10 +7,10 @@
 
 namespace App\Actions\CRM\Customer;
 
+use App\Actions\Helpers\ExcelUpload\Hydrators\UploadHydrateStats;
 use App\Actions\Helpers\Uploads\ConvertUploadedFile;
-use App\Actions\Helpers\Uploads\Hydrators\UploadHydrateExcels;
 use App\Actions\Helpers\Uploads\ImportModel;
-use App\Actions\Helpers\Uploads\StoreExcelUploads;
+use App\Actions\Helpers\Uploads\StoreUploads;
 use App\Imports\CRM\CustomerImport;
 use App\Models\CRM\Customer;
 use Illuminate\Console\Command;
@@ -31,10 +31,10 @@ class ImportCustomer
 
     public function handle($file): void
     {
-        $customerUpload = StoreExcelUploads::run($file, Customer::class);
+        $customerUpload = StoreUploads::run($file, Customer::class);
         $excelUpload    = ImportModel::run(new CustomerImport($customerUpload), $customerUpload);
 
-        UploadHydrateExcels::dispatch($excelUpload);
+        UploadHydrateStats::dispatch($excelUpload);
     }
 
     /**

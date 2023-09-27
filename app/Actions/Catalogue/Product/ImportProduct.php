@@ -8,9 +8,8 @@
 namespace App\Actions\Catalogue\Product;
 
 use App\Actions\Helpers\Uploads\ConvertUploadedFile;
-use App\Actions\Helpers\Uploads\Hydrators\UploadHydrateExcels;
 use App\Actions\Helpers\Uploads\ImportModel;
-use App\Actions\Helpers\Uploads\StoreExcelUploads;
+use App\Actions\Helpers\Uploads\StoreUploads;
 use App\Imports\Catalogue\ProductImport;
 use App\Models\Catalogue\Product;
 use Illuminate\Console\Command;
@@ -23,23 +22,17 @@ class ImportProduct
     use AsAction;
     use WithAttributes;
 
-    /**
-     * @var true
-     */
-    private bool $asAction          = false;
+
     public string $commandSignature = 'product:import {filename}';
 
-    public function handle($file): void
+    public function handle($file)
     {
-        $upload      = StoreExcelUploads::run($file, Product::class);
-        $excelUpload = ImportModel::run(new ProductImport($upload), $upload);
+        $upload = StoreUploads::run($file, Product::class);
 
-        UploadHydrateExcels::dispatch($excelUpload);
+        return ImportModel::run(new ProductImport($upload), $upload);
     }
 
-    /**
-     * @throws \Throwable
-     */
+
     public function asController(ActionRequest $request): void
     {
         $file = $request->file('file');
@@ -51,6 +44,6 @@ class ImportProduct
         $filename = $command->argument('filename');
         $file     = ConvertUploadedFile::run($filename);
 
-        $this->handle($file);
+        $result=$this->handle($file);
     }
 }

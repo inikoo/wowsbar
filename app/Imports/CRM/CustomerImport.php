@@ -3,11 +3,11 @@
 namespace App\Imports\CRM;
 
 use App\Actions\CRM\Customer\StoreCustomer;
-use App\Actions\Helpers\Uploads\ImportExcelUploads;
+use App\Actions\Helpers\ExcelUpload\ExcelUploadRecord\UpdateImportExcelUploadStatus;
 use App\Models\CRM\Customer;
+use App\Models\Helpers\Upload;
+use App\Models\Helpers\UploadRecord;
 use App\Models\Market\Shop;
-use App\Models\Media\ExcelUpload;
-use App\Models\Media\ExcelUploadRecord;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\SkipsFailures;
@@ -20,8 +20,8 @@ class CustomerImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wi
 {
     use SkipsFailures;
 
-    public ExcelUpload $customerUpload;
-    public function __construct(ExcelUpload $customerUpload)
+    public Upload $customerUpload;
+    public function __construct(Upload $customerUpload)
     {
         $this->customerUpload = $customerUpload;
     }
@@ -35,7 +35,7 @@ class CustomerImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wi
 
         foreach ($collection as $value) {
             try {
-                $customer = ExcelUploadRecord::create([
+                $customer = UploadRecord::create([
                     'excel_upload_id' => $this->customerUpload->id,
                     'data'            => json_encode([
                         'contact_name'    => $value['name'],
@@ -47,7 +47,7 @@ class CustomerImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wi
                 $shop = Shop::where('slug', Arr::get($value, 'shop'))->first();
 
                 StoreCustomer::run($shop, Arr::except(json_decode($customer->data, true), 'shop'));
-                ImportExcelUploads::run($customer, count($collection), $totalImported++, Customer::class);
+                UpdateImportExcelUploadStatus::run($customer, count($collection), $totalImported++, Customer::class);
             } catch (\Exception $e) {
                 $totalImported--;
             }

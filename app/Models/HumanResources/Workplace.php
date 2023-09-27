@@ -131,4 +131,9 @@ class Workplace extends Model
         return $this->hasOne(WorkplaceStats::class);
     }
 
+    public function employees(): HasMany
+    {
+        return $this->hasMany(Employee::class);
+    }
+
 }

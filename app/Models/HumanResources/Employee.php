@@ -16,6 +16,7 @@ use App\Models\Traits\HasPhoto;
 use App\Models\Traits\HasUniversalSearch;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -137,16 +138,11 @@ class Employee extends Model implements HasMedia, Auditable
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
-            ->generateSlugsFrom(function () {
-                return head(explode(' ', trim($this->contact_name)));
-            })
+            ->generateSlugsFrom('alias')
             ->saveSlugsTo('slug')
             ->doNotGenerateSlugsOnUpdate()
             ->slugsShouldBeNoLongerThan(16);
     }
-
-
-
 
     public function jobPositions(): BelongsToMany
     {
@@ -166,5 +162,9 @@ class Employee extends Model implements HasMedia, Auditable
         return 'slug';
     }
 
+    public function workplace(): BelongsTo
+    {
+        return $this->belongsTo(Workplace::class);
+    }
 
 }

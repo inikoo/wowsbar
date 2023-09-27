@@ -1,15 +1,17 @@
 <?php
+/*
+ * Author: Raul Perusquia <raul@inikoo.com>
+ * Created: Wed, 27 Sep 2023 23:37:56 Malaysia Time, Kuala Lumpur, Malaysia
+ * Copyright (c) 2023, Raul A Perusquia Flores
+ */
 
 namespace App\Imports\HumanResources;
 
-use App\Actions\Helpers\Uploads\ImportExcelUploads;
 use App\Actions\HumanResources\Employee\StoreEmployee;
-use App\Models\HumanResources\Employee;
-use App\Models\Media\ExcelUpload;
-use App\Models\Media\ExcelUploadRecord;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Str;
-use Maatwebsite\Excel\Concerns\SkipsFailures;
+use App\Imports\WithImport;
+use App\Models\HumanResources\Workplace;
+use Arr;
+use Exception;
 use Maatwebsite\Excel\Concerns\SkipsOnFailure;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
@@ -17,50 +19,66 @@ use Maatwebsite\Excel\Concerns\WithValidation;
 
 class EmployeeImport implements ToCollection, WithHeadingRow, SkipsOnFailure, WithValidation
 {
-    use SkipsFailures;
+    use WithImport;
 
-    public ExcelUpload $employeeUpload;
 
-    public function __construct(ExcelUpload $employeeUpload)
+    public function storeModel($row, $uploadRecord): void
     {
-        $this->employeeUpload = $employeeUpload;
-    }
+        $parent = organisation();
+        if ($row['workplace'] and $workplace = Workplace::where('slug', $row['workplace'])->first()) {
+            $parent = $workplace;
+        }
 
-    /**
-     * @param Collection $collection
-     */
-    public function collection(Collection $collection): void
-    {
-        $totalImported = 1;
+        $row->put('contact_name', $row->get('name'));
+        $row->put('employment_start_at', $row->get('starting_date'));
 
-        foreach ($collection as $employee) {
-            try {
-                $email    = $employee['workplace'] == 'bb' ? Str::lower($employee['nick_name']) . '@aw-advantage.com' : $employee['email'];
-                $employee = ExcelUploadRecord::create([
-                    'excel_upload_id' => $this->employeeUpload->id,
-                    'data'            => json_encode([
-                        'contact_name' => $employee['nick_name'],
-                        'email'        => $email,
-                        'workplace'    => $employee['workplace'],
-                        'job_position' => $employee['position_code']
-                    ])
-                ]);
 
-                StoreEmployee::run(json_decode($employee->data, true));
-                ImportExcelUploads::run($employee, count($collection), $totalImported++, Employee::class);
-            } catch (\Exception $e) {
-                $totalImported--;
-            }
+        $fields =
+            array_merge(
+                Arr::except(
+                    array_keys($this->rules()),
+                    ['name', 'starting_date', 'workplace', 'position_code']
+                ),
+                [
+                    'contact_name',
+                    'employment_start_at'
+                ]
+            );
+
+
+        try {
+            StoreEmployee::make()->action(
+                $parent,
+                $row->only($fields)->all()
+            );
+            $this->setRecordAsCompleted($uploadRecord);
+        } catch (Exception $e) {
+            $this->setRecordAsFailed($uploadRecord, [$e->getMessage()]);
         }
     }
+
+    public function prepareForValidation($data)
+    {
+        $data['starting_date'] = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($data['starting_date'])->format('Y-m-d');
+
+        return $data;
+    }
+
 
     public function rules(): array
     {
         return [
-            'nick_name'     => ['required', 'max:255'],
+            'worker_number' => ['required', 'max:64', 'unique:employees', 'alpha_dash:ascii'],
+            'date_of_birth' => ['sometimes', 'nullable', 'date', 'before_or_equal:today'],
+            'work_email'    => ['sometimes', 'required', 'email'],
+            'alias'         => ['required', 'string', 'max:16'],
+            'name'          => ['required', 'string', 'max:256'],
+            'job_title'  => ['required', 'string', 'max:256'],
             'position_code' => ['required', 'exists:job_positions,slug'],
-            'workplace'     => ['required', ' string', 'exists:workplaces,slug'],
-            'email'         => ['sometimes', 'required', 'email']
+            'starting_date' => ['required', 'date'],
+            'workplace'     => ['required', 'nullable', 'string', 'exists:workplaces,slug'],
         ];
     }
+
+
 }

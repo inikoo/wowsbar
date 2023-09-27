@@ -7,16 +7,16 @@
 
 namespace App\Actions\Helpers\Uploads;
 
-use App\Models\Media\ExcelUpload;
+use App\Models\Helpers\Upload;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
 
-class UpdateExcelUploads
+class UpdateUploads
 {
     use AsAction;
     use WithAttributes;
 
-    public function handle(ExcelUpload $excelUpload, array $data): ExcelUpload
+    public function handle(Upload $excelUpload, array $data): Upload
     {
         $excelUpload->update($data);
 

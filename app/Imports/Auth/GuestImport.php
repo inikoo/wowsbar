@@ -2,12 +2,12 @@
 
 namespace App\Imports\Auth;
 
-use App\Actions\Helpers\Uploads\ImportExcelUploads;
+use App\Actions\Helpers\ExcelUpload\ExcelUploadRecord\UpdateImportExcelUploadStatus;
 use App\Actions\Organisation\Guest\StoreGuest;
 use App\Enums\Organisation\Guest\GuestTypeEnum;
 use App\Models\Auth\Guest;
-use App\Models\Media\ExcelUpload;
-use App\Models\Media\ExcelUploadRecord;
+use App\Models\Helpers\Upload;
+use App\Models\Helpers\UploadRecord;
 use App\Rules\AlphaDashDot;
 use Illuminate\Support\Collection;
 use Illuminate\Validation\Rule;
@@ -21,8 +21,8 @@ class GuestImport implements ToCollection, WithHeadingRow, SkipsOnFailure, WithV
 {
     use SkipsFailures;
 
-    public ExcelUpload $guestUpload;
-    public function __construct(ExcelUpload $guestUpload)
+    public Upload $guestUpload;
+    public function __construct(Upload $guestUpload)
     {
         $this->guestUpload = $guestUpload;
     }
@@ -36,13 +36,13 @@ class GuestImport implements ToCollection, WithHeadingRow, SkipsOnFailure, WithV
 
         foreach ($collection as $guest) {
             try {
-                $guest = ExcelUploadRecord::create([
+                $guest = UploadRecord::create([
                     'excel_upload_id' => $this->guestUpload->id,
                     'data'            => json_encode($guest)
                 ]);
 
                 StoreGuest::run(json_decode($guest->data, true));
-                ImportExcelUploads::run($guest, count($collection), $totalImported++, Guest::class);
+                UpdateImportExcelUploadStatus::run($guest, count($collection), $totalImported++, Guest::class);
             } catch (\Exception $e) {
                 $totalImported--;
             }

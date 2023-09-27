@@ -8,12 +8,12 @@
 namespace App\Imports\Catalogue;
 
 use App\Actions\Catalogue\Product\StoreProduct;
-use App\Actions\Helpers\Uploads\ImportExcelUploads;
+use App\Actions\Helpers\ExcelUpload\ExcelUploadRecord\UpdateImportExcelUploadStatus;
 use App\Enums\Catalogue\Product\ProductTypeEnum;
 use App\Models\Catalogue\Product;
 use App\Models\Catalogue\ProductCategory;
-use App\Models\Media\ExcelUpload;
-use App\Models\Media\ExcelUploadRecord;
+use App\Models\Helpers\Upload;
+use App\Models\Helpers\UploadRecord;
 use Exception;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
@@ -27,8 +27,8 @@ class ProductImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wit
 {
     use SkipsFailures;
 
-    public ExcelUpload $productUpload;
-    public function __construct(ExcelUpload $productUpload)
+    public Upload $productUpload;
+    public function __construct(Upload $productUpload)
     {
         $this->productUpload = $productUpload;
     }
@@ -42,7 +42,7 @@ class ProductImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wit
 
         foreach ($collection as $product) {
             try {
-                $product = ExcelUploadRecord::create([
+                $product = UploadRecord::create([
                         'excel_upload_id' => $this->productUpload->id,
                         'data'            => json_encode($product)
                 ]);
@@ -61,7 +61,7 @@ class ProductImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wit
                     'price' => Arr::get(json_decode($product->data, true), 'unit_price_gbp'),
                     'type'  => Arr::get(json_decode($product->data, true), 'unit') == 'job' ? ProductTypeEnum::SERVICE : ProductTypeEnum::SUBSCRIPTION,
                 ]);
-                ImportExcelUploads::run($product, count($collection), $totalImported++, Product::class);
+                UpdateImportExcelUploadStatus::run($product, count($collection), $totalImported++, Product::class);
             } catch (Exception $e) {
                 $totalImported--;
             }

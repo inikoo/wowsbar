@@ -7,10 +7,10 @@
 
 namespace App\Actions\Organisation\OrganisationUser;
 
+use App\Actions\Helpers\ExcelUpload\Hydrators\UploadHydrateStats;
 use App\Actions\Helpers\Uploads\ConvertUploadedFile;
-use App\Actions\Helpers\Uploads\Hydrators\UploadHydrateExcels;
 use App\Actions\Helpers\Uploads\ImportModel;
-use App\Actions\Helpers\Uploads\StoreExcelUploads;
+use App\Actions\Helpers\Uploads\StoreUploads;
 use App\Imports\Auth\OrganisationUserImport;
 use App\Models\Auth\OrganisationUser;
 use Illuminate\Console\Command;
@@ -31,10 +31,10 @@ class ImportOrganisationUser
 
     public function handle($file): void
     {
-        $upload      = StoreExcelUploads::run($file, OrganisationUser::class);
+        $upload      = StoreUploads::run($file, OrganisationUser::class);
         $excelUpload = ImportModel::run(new OrganisationUserImport($upload), $upload);
 
-        UploadHydrateExcels::dispatch($excelUpload);
+        UploadHydrateStats::dispatch($excelUpload);
     }
 
     /**
