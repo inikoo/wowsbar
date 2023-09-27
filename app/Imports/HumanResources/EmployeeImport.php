@@ -8,7 +8,6 @@ use App\Actions\HumanResources\Employee\StoreEmployee;
 use App\Models\HumanResources\Employee;
 use App\Models\Media\ExcelUpload;
 use App\Models\Media\ExcelUploadRecord;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Concerns\SkipsFailures;
@@ -39,13 +38,13 @@ class EmployeeImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wi
 
         foreach ($collection as $employee) {
             try {
-                $email = $employee['workplace'] == 'bb' ? Str::lower($employee['nick_name']) . '@aw-advantage.com' : $employee['email'];
+                $email    = $employee['workplace'] == 'bb' ? Str::lower($employee['nick_name']) . '@aw-advantage.com' : $employee['email'];
                 $employee = ExcelUploadRecord::create([
                     'excel_upload_id' => $this->employeeUpload->id,
-                    'data' => json_encode([
+                    'data'            => json_encode([
                         'contact_name' => $employee['nick_name'],
-                        'email' => $email,
-                        'workplace' => $employee['workplace'],
+                        'email'        => $email,
+                        'workplace'    => $employee['workplace'],
                         'job_position' => $employee['position_code']
                     ])
                 ]);
@@ -62,10 +61,10 @@ class EmployeeImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wi
     public function rules(): array
     {
         return [
-            'nick_name' => ['required', 'max:255'],
+            'nick_name'     => ['required', 'max:255'],
             'position_code' => ['required', 'exists:job_positions,slug'],
-            'workplace' => ['required', ' string', 'exists:workplaces,slug'],
-            'email' => ['sometimes', 'required', 'email']
+            'workplace'     => ['required', ' string', 'exists:workplaces,slug'],
+            'email'         => ['sometimes', 'required', 'email']
         ];
     }
 }

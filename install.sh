@@ -51,6 +51,7 @@ php artisan product-category:new leads "Prospecting"
 php artisan product-category:new caas "Content as a service"
 
  php artisan product:import database/seeders/datasets/excel-uploads/real/products.xlsx
+ php artisan employee:import database/seeders/datasets/excel-uploads/real/employees.xlsx
 
 echo "🌱 create customer"
 php artisan shop:new-customer awa aiku@inikoo.com -C 'Aiku'
