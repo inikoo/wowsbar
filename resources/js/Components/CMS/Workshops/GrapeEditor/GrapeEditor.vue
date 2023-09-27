@@ -7,9 +7,10 @@ import grapesjs from 'grapesjs'
 import Basic from 'grapesjs-blocks-basic'
 import GrapesForm from 'grapesjs-plugin-forms'
 import TailwindComponents from 'grapesjs-tailwind'
+import Webpage from 'grapesjs-preset-webpage';
 import { ref } from 'vue'
+import { panel } from './Panel'
 
-console.log(TailwindComponents)
 
 const data = ref(null)
 
@@ -22,55 +23,45 @@ const escapeName = (name) =>
     `${name}`.trim().replace(/([^a-z0-9\w-:/]+)/gi, "-")
 
 onMounted(() => {
-    const editorInstance = grapesjs.init({
-        height: "100%",
-        container: "#gjs",
-        showOffsets: true,
-        fromElement: true,
-        noticeOnUnload: false,
-        storageManager: false,
-        selectorManager: { escapeName },
-        plugins: [
-            Basic,
-            GrapesForm,
-            TailwindComponents
-        ],
-        // storageManager: {
-        //   type: 'remote',
-        //   options: {
-        //     remote: {
-        //       onStore: (data, editor) => {
-        //         const pagesHtml = editor.Pages.getAll().map(page => {
-        //           const component = page.getMainComponent()
-        //           return {
-        //             html: editor.getHtml({ component }),
-        //             css: editor.getCss({ component })
-        //           }
-        //         })
-        //         const savedData = { id: 'projectID', data, pagesHtml };
+  const editorInstance = grapesjs.init({
+    height: "100%",
+    container: "#gjs",
+    showOffsets: true,
+    fromElement: true,
+    noticeOnUnload: false,
+    storageManager: false,
+    selectorManager: { escapeName },
+    plugins: [
+      Basic,
+      GrapesForm,
+      TailwindComponents,
+      Webpage
+    ],
+    // storageManager: {
+    //   type: 'remote',
+    //   options: {
+    //     remote: {
+    //       onStore: (data, editor) => {
+    //         const pagesHtml = editor.Pages.getAll().map(page => {
+    //           const component = page.getMainComponent();
+    //           return {
+    //             html: editor.getHtml({ component }),
+    //             css: editor.getCss({ component })
+    //           }
+    //         });
+    //         const savedData = { id: 'projectID', data, pagesHtml };
 
-        //         // Call the save function here with the saved data
-        //         save(savedData);
+    //         // Call the save function here with the saved data
+    //         save(savedData);
 
-        //         return savedData;
-        //       },
-        //       onLoad: result => result.data,
-        //     }
-        //   },
-        // },
-    });
-
-    // editorInstance.Panels.addButton("options", {
-    //   id: "update-theme",
-    //   className: "fa fa-adjust",
-    //   command: "open-update-theme",
-    //   attributes: {
-    //     title: "Update Theme",
-    //     "data-tooltip-pos": "bottom"
-    //   }
-    // });
-
-    editorInstance.addComponents('<div class="cls">New coddddddddddddddddddddddddddmponent</div>');
+    //         return savedData;
+    //       },
+    //       onLoad: result => result.data,
+    //     }
+    //   },
+    // },
+  });
+  editorInstance.Panels.getPanels().reset(panel(editorInstance));
 });
 
 
@@ -78,8 +69,7 @@ onMounted(() => {
 </script> 
 
 <template>
-    <div id="gjs" class="p-4"></div>
-    <div id="blocks"></div>
+  <div id="gjs"></div>
 </template>
   
 <style lang="scss">
@@ -117,22 +107,18 @@ onMounted(() => {
     box-shadow: 0 0 0 2pt #c5c5c575;
 }
 
-/* We can remove the border we've set at the beginning */
 #gjs {
     border: none;
 }
 
-/* Primary color for the background */
 .gjs-one-bg {
     background-color: #f9fafb;
 }
 
-/* Secondary color for the text color */
 .gjs-two-color {
     @apply text-gray-600
 }
 
-/* Tertiary color for the background */
 .gjs-three-bg {
     background-color: #f9fafb;
     color: #3b3b3b;

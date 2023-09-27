@@ -37,7 +37,11 @@ class CustomerImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wi
             try {
                 $customer = ExcelUploadRecord::create([
                     'excel_upload_id' => $this->customerUpload->id,
-                    'data'            => json_encode($value)
+                    'data'            => json_encode([
+                        'contact_name'    => $value['name'],
+                        'email'           => $value['email'],
+                        'contact_website' => $value['website']
+                    ])
                 ]);
 
                 $shop = Shop::where('slug', Arr::get($value, 'shop'))->first();
