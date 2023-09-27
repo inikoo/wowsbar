@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', ['icon' => 'album-collection', 'label' => 'catalogue'])->uses(ShowCatalogueDashboard::class)->name('dashboard');
 
 Route::get('/departments', ['icon' => 'folder-tree', 'label' => 'departments'])->uses(IndexDepartments::class)->name('departments.index');
-Route::prefix('departments/{productCatalogue}')->as('departments.')->group(function () {
+Route::prefix('departments/{productCategory}')->as('departments.')->group(function () {
     Route::get('/', ['icon' => 'folder-tree', 'label' => 'department'])->uses(ShowDepartment::class)->name('show');
     Route::get('/products', ['icon' => 'cube', 'label' => 'products'])->uses([IndexProducts::class,'inDepartment'])->name('show.products.index');
     Route::get('/products/{product}', ['icon' => 'cube', 'label' => 'product'])->uses([ShowProduct::class,'inDepartment'])->name('show.products.show');
