@@ -25,6 +25,10 @@ return new class () extends Migration {
             $table=$this->contactFields(table:$table, withCompany: false, withPersonalDetails: true);
             $table->string('worker_number')->nullable()->collation('und_ns');
             $table->string('job_title')->nullable()->collation('und_ns');
+
+            $table->string('job_position')->nullable()->collation('und_ns');
+            $table->string('workplace')->nullable()->collation('und_ns');
+
             $table->string('type')->default(EmployeeTypeEnum::EMPLOYEE->value);
             $table->string('state')->default(EmployeeStateEnum::WORKING->value);
             $table->date('employment_start_at')->nullable();
