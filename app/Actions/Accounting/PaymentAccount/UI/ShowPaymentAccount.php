@@ -210,7 +210,7 @@ class ShowPaymentAccount extends InertiaAction
             ),
             'org.accounting.payment-accounts.show' =>
             array_merge(
-                (new  AccountingDashboard())->getBreadcrumbs('org.accounting.dashboard', $routeParameters),
+                (new  AccountingDashboard())->getBreadcrumbs('org.accounting.dashboard.show', $routeParameters),
                 $headCrumb(
                     $routeParameters['paymentAccount'],
                     [

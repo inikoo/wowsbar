@@ -81,15 +81,15 @@ class ShowWebsiteWorkshop extends InertiaAction
                     'parameters' => $website->id
                 ],
                 'updateRoutes' => [
-                    'header'=> [
+                    'workshop_header'=> [
                         'name'       => 'org.models.website.header.update',
                         'parameters' => $website->id
                     ],
-                    'footer'=> [
+                    'workshop_footer'=> [
                         'name'       => 'org.models.website.footer.update',
                         'parameters' => $website->id
                     ],
-                    'layout'=> [
+                    'workshop_layout'=> [
                         'name'       => 'org.models.website.layout.update',
                         'parameters' => $website->id
                     ],

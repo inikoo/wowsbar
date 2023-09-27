@@ -92,8 +92,6 @@ class IndexProducts extends InertiaAction
             ->when($parent, function ($query) use ($parent) {
                 if (class_basename($parent) == 'ProductCategory') {
                     $query->where('products.parent_type', 'ProductCategory')->where('products.parent_id', $parent->id);
-                } elseif (class_basename($parent) == 'Organisation') {
-                    $query->where('products.parent_type', 'Organisation')->where('products.parent_id', $parent->id);
                 }
             })
             ->allowedSorts(['slug', 'name'])

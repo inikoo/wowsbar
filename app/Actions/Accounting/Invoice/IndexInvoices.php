@@ -140,7 +140,7 @@ class IndexInvoices extends InertiaAction
             ),
             'org.accounting.invoices.index' =>
             array_merge(
-                AccountingDashboard::make()->getBreadcrumbs('org.accounting.dashboard', []),
+                AccountingDashboard::make()->getBreadcrumbs('org.accounting.dashboard.show', []),
                 $headCrumb()
             ),
 

@@ -36,10 +36,6 @@ const setData = ref(props.data.layout);
 console.log('data',setData.value)
 
 const addImage = async (element) => { 
-    // const file = element.target.files[0];
-    // if (file) {
-    //     setData.value.imageLayout = URL.createObjectURL(file);
-    //   }
     const file = element.target.files[0];
     if (file) {
         try {
@@ -68,10 +64,6 @@ const addImage = async (element) => {
 };
 
 const addfavicon= async (element) => { 
-    // const file = element.target.files[0];
-    // if (file) {
-    //     setData.value.favicon = URL.createObjectURL(file);
-    //   }
     const file = element.target.files[0];
     if (file) {
         try {

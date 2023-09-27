@@ -336,14 +336,14 @@ class GetLayout
                 'label'   => __('Accounting'),
                 'icon'    => ['fal', 'fa-abacus'],
                 'route'   => [
-                    'name' => 'org.accounting.dashboard'
+                    'name' => 'org.accounting.dashboard.show'
                 ],
                 'topMenu' => [
                     'subSections' => [
                         [
                             'icon'  => ['fal', 'fa-chart-network'],
                             'route' => [
-                                'name' => 'org.accounting.dashboard'
+                                'name' => 'org.accounting.dashboard.show'
                             ]
                         ],
                         [

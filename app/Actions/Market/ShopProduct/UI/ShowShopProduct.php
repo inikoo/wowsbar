@@ -8,6 +8,7 @@
 namespace App\Actions\Market\ShopProduct\UI;
 
 use App\Actions\Catalogue\Product\UI\GetProductShowcase;
+use App\Actions\CRM\Customer\UI\IndexCustomers;
 use App\Actions\InertiaAction;
 use App\Actions\Market\Shop\UI\IndexShops;
 use App\Actions\Market\Shop\UI\ShowShop;
