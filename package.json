@@ -64,6 +64,8 @@
         "firebase": "^9.23.0",
         "grapesjs": "^0.21.7",
         "grapesjs-blocks-basic": "^1.0.2",
+        "grapesjs-ga": "^1.0.2",
+        "grapesjs-plugin-forms": "^2.0.6",
         "grapesjs-tailwind": "^1.0.10",
         "laravel-vue-i18n": "^2.7.1",
         "lodash-es": "^4.17.21",
