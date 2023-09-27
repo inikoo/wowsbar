@@ -76,7 +76,7 @@ trait HasUIPayment
                 )
             ),
             'org.accounting.payments.show' => array_merge(
-                AccountingDashboard::make()->getBreadcrumbs('org.accounting.dashboard', []),
+                AccountingDashboard::make()->getBreadcrumbs('org.accounting.dashboard.show', []),
                 $headCrumb([$routeParameters['payment']->slug])
             ),
             'org.accounting.payment-service-provider.show.payments.show' => array_merge(

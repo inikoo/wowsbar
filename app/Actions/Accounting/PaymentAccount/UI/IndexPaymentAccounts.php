@@ -202,7 +202,7 @@ class IndexPaymentAccounts extends InertiaAction
             'org.accounting.payment-accounts.index',
             'org.accounting.payment-accounts.create' =>
             array_merge(
-                AccountingDashboard::make()->getBreadcrumbs('org.accounting.dashboard', []),
+                AccountingDashboard::make()->getBreadcrumbs('org.accounting.dashboard.show', []),
                 $headCrumb()
             ),
             'org.accounting.payment-service-providers.show.payment-accounts.index' =>
