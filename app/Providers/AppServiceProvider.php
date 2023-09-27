@@ -39,7 +39,9 @@ class AppServiceProvider extends ServiceProvider
                 'Website'          => 'App\Models\Web\Website',
                 'Customer'         => 'App\Models\CRM\Customer',
                 'Prospect'         => 'App\Models\Leads\Prospect',
-                'Workplace'        => 'App\Models\HumanResources\Workplace'
+                'Workplace'        => 'App\Models\HumanResources\Workplace',
+                'Product'          => 'App\Models\Catalogue\Product',
+                'ProductCategory'  => 'App\Models\Catalogue\ProductCategory',
 
             ]
         );

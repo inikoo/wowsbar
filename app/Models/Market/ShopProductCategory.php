@@ -34,11 +34,12 @@ use Spatie\Sluggable\SlugOptions;
  *
  * @property int $id
  * @property string $slug
- * @property int|null $product_category_id
+ * @property int|null $parent_id
+ * @property string|null $parent_type
  * @property int|null $shop_id
+ * @property int|null $product_category_id
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @property string|null $deleted_at
  * @property ProductCategoryStateEnum $state
  * @property-read Collection<int, \OwenIt\Auditing\Models\Audit> $audits
  * @property-read int|null $audits_count
@@ -57,8 +58,9 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|ShopProductCategory newQuery()
  * @method static Builder|ShopProductCategory query()
  * @method static Builder|ShopProductCategory whereCreatedAt($value)
- * @method static Builder|ShopProductCategory whereDeletedAt($value)
  * @method static Builder|ShopProductCategory whereId($value)
+ * @method static Builder|ShopProductCategory whereParentId($value)
+ * @method static Builder|ShopProductCategory whereParentType($value)
  * @method static Builder|ShopProductCategory whereProductCategoryId($value)
  * @method static Builder|ShopProductCategory whereShopId($value)
  * @method static Builder|ShopProductCategory whereSlug($value)

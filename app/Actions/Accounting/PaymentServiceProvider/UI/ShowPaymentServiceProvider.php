@@ -188,7 +188,7 @@ class ShowPaymentServiceProvider extends InertiaAction
     public function getBreadcrumbs(PaymentServiceProvider $paymentServiceProvider, $suffix = null): array
     {
         return array_merge(
-            AccountingDashboard::make()->getBreadcrumbs('org.accounting.dashboard', []),
+            AccountingDashboard::make()->getBreadcrumbs('org.accounting.dashboard.show', []),
             [
                 [
                     'type'           => 'modelWithIndex',

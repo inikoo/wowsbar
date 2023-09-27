@@ -17,8 +17,8 @@ return new class () extends Migration {
         Schema::create('product_categories', function (Blueprint $table) {
             $table->smallIncrements('id');
             $table->string('slug')->unique()->collation('und_ns');
-            $table->unsignedInteger('parent_id')->nullable();
-            $table->string('parent_type')->nullable();
+            $table->unsignedInteger('parent_id')->index()->nullable();
+            $table->string('parent_type')->index()->nullable();
             $table = $this->assertCodeDescription($table);
             $table->string('type')->index();
             $table->boolean('is_family')->default(false);
@@ -26,6 +26,7 @@ return new class () extends Migration {
             $table->jsonb('data');
             $table->timestampstz();
             $table->softDeletesTz();
+            $table->index(['parent_type','parent_id']);
         });
     }
 

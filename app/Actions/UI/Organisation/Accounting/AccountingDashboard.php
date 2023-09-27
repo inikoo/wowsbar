@@ -99,7 +99,7 @@ class AccountingDashboard
                         'type'   => 'simple',
                         'simple' => [
                             'route' => [
-                                'name' => 'org.accounting.dashboard'
+                                'name' => 'org.accounting.dashboard.show'
                             ],
                             'label' => __('accounting'),
                         ]

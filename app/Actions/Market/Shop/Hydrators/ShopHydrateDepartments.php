@@ -7,7 +7,7 @@
 
 namespace App\Actions\Market\Shop\Hydrators;
 
-use App\Enums\Market\ProductCategory\ProductCategoryStateEnum;
+use App\Enums\Catalogue\ProductCategory\ProductCategoryStateEnum;
 use App\Models\Market\ShopProductCategory;
 use App\Models\Market\Shop;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
@@ -21,21 +21,24 @@ class ShopHydrateDepartments implements ShouldBeUnique
 
     public function handle(Shop $shop): void
     {
+
+        $stats            = [
+            'number_departments' => $shop->departments()->count(),
+        ];
+
         $stateCounts      = ShopProductCategory::where('shop_id', $shop->id)
             ->selectRaw('state, count(*) as total')
             ->groupBy('state')
             ->pluck('total', 'state')->all();
-        $stats            = [
-            'number_departments' => $shop->departments->count(),
-        ];
+
         foreach (ProductCategoryStateEnum::cases() as $departmentState) {
             $stats['number_departments_state_'.$departmentState->snake()] = Arr::get($stateCounts, $departmentState->value, 0);
         }
         $shop->stats->update($stats);
     }
 
-    public function getJobUniqueId(Shop $shop): string
+    public function getJobUniqueId(Shop $parameters): string
     {
-        return $shop->id;
+        return $parameters->id;
     }
 }

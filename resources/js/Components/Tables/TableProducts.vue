@@ -17,15 +17,10 @@ const props = defineProps<{
 
 function productRoute(product: Product) {
     switch (route().current()) {
-        case 'org.shops.show':
-        case "shops.show.products.index":
-            return route(
-                'org.shops.show.products.show',
-                [route().params['shop'], product.slug]);
         default:
             return route(
-                'org.shops.show.products.show',
-                [product.shop_slug,product.slug]);
+                'org.catalogue.products.show',
+                [product.slug]);
     }
 }
 
