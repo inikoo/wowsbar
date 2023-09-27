@@ -52,7 +52,6 @@ class EmployeeImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wi
                 StoreEmployee::run(json_decode($employee->data, true));
                 ImportExcelUploads::dispatch($employee, count($collection), $totalImported++, Employee::class);
             } catch (\Exception $e) {
-                dd($e);
                 $totalImported--;
             }
         }
