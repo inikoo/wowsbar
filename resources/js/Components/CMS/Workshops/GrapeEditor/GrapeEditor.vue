@@ -19,14 +19,14 @@ import {
 
 const data = ref(null)
 
-const save = async(newData) => {
-  const column = "org/websites/webpages"
-    try {
-        await setDataFirebase(column,newData);
-    } catch (error) {
-        console.error(error);
-    }
-}
+// const save = async(newData) => {
+//   const column = "org/websites/webpages"
+//     try {
+//         await setDataFirebase(column,newData);
+//     } catch (error) {
+//         console.error(error);
+//     }
+// }
 
 const escapeName = (name) =>
   `${name}`.trim().replace(/([^a-z0-9\w-:/]+)/gi, "-");
@@ -38,7 +38,6 @@ onMounted(() => {
     showOffsets: true,
     fromElement: true,
     noticeOnUnload: false,
-    storageManager: false,
     selectorManager: { escapeName },
     plugins: [
       Basic,
@@ -46,33 +45,33 @@ onMounted(() => {
       TailwindComponents,
       Webpage
     ],
-    storageManager: {
-      type: 'remote',
-      options: {
-        remote: {
-          onStore: (data, editor) => {
-            const pagesHtml = editor.Pages.getAll().map(page => {
-              const component = page.getMainComponent();
-              return {
-                html: editor.getHtml({ component }),
-                css: editor.getCss({ component })
-              }
-            });
-            const savedData = { id: 'projectID', data, pagesHtml };
-            save(savedData);
+    // storageManager: {
+    //   type: 'remote',
+    //   options: {
+    //     remote: {
+    //       onStore: (data, editor) => {
+    //         const pagesHtml = editor.Pages.getAll().map(page => {
+    //           const component = page.getMainComponent();
+    //           return {
+    //             html: editor.getHtml({ component }),
+    //             css: editor.getCss({ component })
+    //           }
+    //         });
+    //         const savedData = { id: 'projectID', data, pagesHtml };
+    //         save(savedData);
 
-            return savedData;
-          },
-          onLoad: async(result) => {
-            const snapshot = await get(getDbRef("org/websites/webpages"))
-            const firebaseData = snapshot.exists() ? snapshot.val() : null
-            result.data = firebaseData.data
-            console.log('inii',firebaseData, result)
-            return firebaseData.data
-          },
-        }
-      },
-    },
+    //         return savedData;
+    //       },
+    //       onLoad: async(result) => {
+    //         const snapshot = await get(getDbRef("org/websites/webpages"))
+    //         const firebaseData = snapshot.exists() ? snapshot.val() : null
+    //         result.data = firebaseData.data
+    //         console.log('inii',firebaseData, result)
+    //         return firebaseData.data
+    //       },
+    //     }
+    //   },
+    // },
   });
 });
 </script> 
