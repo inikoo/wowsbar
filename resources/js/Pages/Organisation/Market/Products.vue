@@ -16,7 +16,7 @@ import {computed, ref, watch} from "vue";
 import Pusher from "pusher-js";
 
 const props = defineProps <{
-    pageHead: object
+    pageHead: any
     data: object
     title: string
 }>()
@@ -52,6 +52,15 @@ watch(compProgressBar, () => {
         isProgress.value = true
     }, 3000) : ''
 })
+
+const routesModalUpload = {
+    upload: {
+        name: props.pageHead.actions[0].buttons[0].route.name
+    },
+    download: {
+        name: 'org.shops.products.uploads.template.download'
+    }
+}
 </script>
 
 <template layout="OrgApp">
@@ -68,9 +77,7 @@ watch(compProgressBar, () => {
     <!-- Modal: Upload -->
     <ModalUpload
         v-model="isModalOpen"
-        :routeUpload="pageHead.actions[0].buttons[0].route.name"
-        :routeHistory="'org.models.products.upload'"
-        :routeDownload="'org.shops.products.uploads.template.download'"
+        :routes="routesModalUpload"
         :isUploaded="isUploaded"
         @isUploaded="(val: any) => isUploaded = val"
     />

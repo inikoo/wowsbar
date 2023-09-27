@@ -50,6 +50,17 @@ watch(compProgressBar, () => {
         isProgress.value = true
     }, 3000) : ''
 })
+
+const routesModalUpload = {
+    upload: {
+        name: props.pageHead.actions[0].buttons[0].route.name
+    },
+    download: {
+        name: 'org.hr.employee.uploads.template.download'
+    }
+}
+
+console.log(props.pageHead.actions[0].buttons[0].route.name)
 </script>
 
 <template layout="OrgApp">
@@ -68,9 +79,7 @@ watch(compProgressBar, () => {
     <!-- Modal: Upload -->
     <ModalUpload
         v-model="isModalOpen"
-        :routeUpload="pageHead.actions[0].buttons[0].route.name"
-        :routeHistory="'org.models.employees.upload'"
-        :routeDownload="'org.hr.employee.uploads.template.download'"
+        :routes="routesModalUpload"
         :isUploaded="isUploaded"
         @isUploaded="(val: any) => isUploaded = val"
     />

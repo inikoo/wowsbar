@@ -37,7 +37,7 @@ const onUploadFile = async (fileUploaded: any) => {
     isLoadingUpload.value = true
     try {
         await axios.post(
-            route(props.routes.upload.name,props.routes.upload.parameters),
+            route(props.routes.upload.name, props.routes.upload.parameters),
             {
                 file: fileUploaded.target.files[0],
             },
@@ -46,7 +46,6 @@ const onUploadFile = async (fileUploaded: any) => {
             }
         )
     } catch (error: any) {
-        // console.error("===========================")
         console.error(error.message)
     }
     isLoadingUpload.value = false
@@ -61,7 +60,7 @@ const compVModel = computed(() => {
 // Fetch data history when Modal is opened
 watch(compVModel, async () => {
     isLoadingHistory.value = true
-    if (props.routes.history?.name) {
+    if (props.routes?.history?.name) {
         // if(!dataHistory.value.length) { // If dataHistory empty (not fetched yet) then fetch again
             try {
                 const data = await axios.get(route(props.routes.history?.name, props.routes.history?.parameters))
@@ -114,7 +113,7 @@ watch(compVModel, async () => {
                 </div>
 
                 <!-- Download template -->
-                <a v-if="routes.download?.name" :href="route(routes.download?.name, routes.download?.parameters)" target="_blank" class="group text-xs text-gray-600 cursor-pointer px-2 w-fit" >
+                <a v-if="routes?.download?.name" :href="route(routes?.download?.name, routes?.download?.parameters)" target="_blank" class="group text-xs text-gray-600 cursor-pointer px-2 w-fit" >
                     <FontAwesomeIcon icon='fas fa-file-download' class='text-gray-400 group-hover:text-gray-600' aria-hidden='true' />
                     Download template .xlsx
                 </a>
@@ -124,7 +123,7 @@ watch(compVModel, async () => {
             <div class="order-last flex items-start gap-x-2 gap-y-2 flex-col">
                 <div class="text-sm text-gray-600">Recent uploaded website:</div>
                 <div v-if="!isLoadingHistory" class="flex flex-wrap gap-x-2 gap-y-2">
-                    <template v-if="dataHistory.length && routes.history">
+                    <template v-if="dataHistory.length && routes?.history">
                         <div v-for="(history, index) in dataHistory" :key="index" class="w-36 bg-gray-100 border-t-[3px] border-gray-500 rounded px-2 py-1 flex flex-col justify-start gap-y-1 cursor-pointer hover:bg-gray-200">
                             <p class="text-lg text-gray-700 font-semibold">{{ history.number_rows }} <span class="text-xs text-gray-500 font-normal">rows</span></p>
                             <span class="text-gray-600 text-xs leading-none">{{ history.original_filename }}</span>
