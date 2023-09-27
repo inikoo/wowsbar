@@ -13,10 +13,8 @@ use App\Models\Helpers\UploadRecord;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Validators\Failure;
 
-
 trait WithImport
 {
-
     public Upload $upload;
 
     public function __construct(Upload $upload)
@@ -43,9 +41,9 @@ trait WithImport
     public function collection(Collection $collection): void
     {
         foreach ($collection as $row) {
-            $row = $this->cleanRow($row);
+            $row          = $this->cleanRow($row);
             $uploadRecord = $this->createUploadRecord($row);
-            $this->storeModel($row,$uploadRecord);
+            $this->storeModel($row, $uploadRecord);
         }
     }
 

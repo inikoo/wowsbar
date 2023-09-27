@@ -22,8 +22,10 @@ class CaseSensitive implements ValidationRule
 
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
+
         $query         = DB::table($this->tableName);
         $column        = $query->getGrammar()->wrap($attribute);
+
         if ($query->whereRaw("lower($column) = lower(?)", [$value])->count() >= 1) {
             $fail('The '.$attribute.' has already been taken.');
         }

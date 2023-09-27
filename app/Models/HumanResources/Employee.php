@@ -30,6 +30,7 @@ use Spatie\Sluggable\SlugOptions;
  *
  * @property int $id
  * @property string $slug
+ * @property string $alias
  * @property string|null $work_email
  * @property string|null $contact_name
  * @property string|null $email
@@ -41,7 +42,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property string|null $worker_number
  * @property string|null $job_title
  * @property string|null $job_position
- * @property string|null $workplace
+ * @property int|null $workplace_id
  * @property EmployeeTypeEnum $type
  * @property EmployeeStateEnum $state
  * @property string|null $employment_start_at
@@ -65,10 +66,12 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read int|null $media_count
  * @property-read OrganisationUser|null $organisationUser
  * @property-read \App\Models\Search\UniversalSearch|null $universalSearch
+ * @property-read \App\Models\HumanResources\Workplace|null $workplace
  * @method static \Illuminate\Database\Eloquent\Builder|Employee newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Employee newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Employee onlyTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|Employee query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Employee whereAlias($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Employee whereContactName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Employee whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Employee whereData($value)
@@ -96,7 +99,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|Employee whereWorkEmail($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Employee whereWorkerNumber($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Employee whereWorkingHours($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Employee whereWorkplace($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Employee whereWorkplaceId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Employee withTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|Employee withoutTrashed()
  * @mixin \Eloquent

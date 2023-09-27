@@ -42,7 +42,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property ProductTypeEnum $type
  * @property ProductStateEnum|null $state
  * @property bool|null $status
- * @property string|null $units units
+ * @property string|null $unit
  * @property string $price unit price
  * @property array $settings
  * @property array $data
@@ -75,7 +75,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Product whereState($value)
  * @method static Builder|Product whereStatus($value)
  * @method static Builder|Product whereType($value)
- * @method static Builder|Product whereUnits($value)
+ * @method static Builder|Product whereUnit($value)
  * @method static Builder|Product whereUpdatedAt($value)
  * @method static Builder|Product withTrashed()
  * @method static Builder|Product withoutTrashed()

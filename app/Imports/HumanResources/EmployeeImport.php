@@ -73,7 +73,7 @@ class EmployeeImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wi
             'work_email'    => ['sometimes', 'required', 'email'],
             'alias'         => ['required', 'string', 'max:16'],
             'name'          => ['required', 'string', 'max:256'],
-            'job_title'  => ['required', 'string', 'max:256'],
+            'job_title'     => ['required', 'string', 'max:256'],
             'position_code' => ['required', 'exists:job_positions,slug'],
             'starting_date' => ['required', 'date'],
             'workplace'     => ['required', 'nullable', 'string', 'exists:workplaces,slug'],

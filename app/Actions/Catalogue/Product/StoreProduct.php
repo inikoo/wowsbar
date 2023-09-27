@@ -28,7 +28,6 @@ class StoreProduct
 
     public function handle(Organisation|ProductCategory $parent, array $modelData): Product
     {
-
         /** @var Product $product */
         $product = $parent->products()->create($modelData);
         $product->stats()->create();
@@ -39,6 +38,7 @@ class StoreProduct
 
         //        OrganisationHydrateProducts::dispatch();
         ProductHydrateUniversalSearch::dispatch($product);
+
         return $product;
     }
 
@@ -46,12 +46,11 @@ class StoreProduct
     {
         return [
             'code'        => ['required', 'unique:products', 'between:2,9', 'alpha_dash', new CaseSensitive('products')],
-            'units'       => ['sometimes', 'required', 'numeric'],
-            'image_id'    => ['sometimes', 'required', 'exists:media,id'],
+            'unit'        => ['required', 'string'],
             'price'       => ['required', 'numeric'],
             'name'        => ['required', 'max:250', 'string'],
-            'state'       => ['sometimes', 'required', Rule::in(ProductStateEnum::values())],
             'type'        => ['required', Rule::in(ProductTypeEnum::values())],
+            'state'       => ['sometimes', 'required', Rule::in(ProductStateEnum::values())],
             'description' => ['sometimes', 'required', 'max:1500']
         ];
     }
@@ -63,7 +62,6 @@ class StoreProduct
 
         return $this->handle($parent, $validatedData);
     }
-
 
 
 }

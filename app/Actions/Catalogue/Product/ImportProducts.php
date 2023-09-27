@@ -1,34 +1,33 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Thu, 21 Sep 2023 11:34:12 Malaysia Time, Pantai Lembeng, Bali, Indonesia
+ * Created: Tue, 26 Sep 2023 08:52:45 Malaysia Time, Kuala Lumpur, Malaysia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\HumanResources\Employee;
+namespace App\Actions\Catalogue\Product;
 
 use App\Actions\Helpers\Uploads\StoreUploads;
 use App\Actions\Traits\WithImportModel;
-use App\Imports\HumanResources\EmployeeImport;
+use App\Imports\Catalogue\ProductImport;
+use App\Models\Catalogue\Product;
 use App\Models\Helpers\Upload;
-use App\Models\HumanResources\Employee;
 use Lorisleiva\Actions\ActionRequest;
 
-class ImportEmployees
+class ImportProducts
 {
     use WithImportModel;
 
     public function handle($file): Upload
     {
-        $upload = StoreUploads::run($file, Employee::class);
+        $upload = StoreUploads::run($file, Product::class);
 
         return $this->init(
             $upload,
-            new EmployeeImport($upload)
+            new ProductImport($upload)
         );
-
-
     }
+
 
     public function asController(ActionRequest $request): void
     {
@@ -36,7 +35,7 @@ class ImportEmployees
         $this->handle($file);
     }
 
-    public string $commandSignature = 'employee:upload {filename}';
+    public string $commandSignature = 'product:import {filename}';
 
 
 }

@@ -31,7 +31,7 @@ class StoreEmployee
     {
         $employee = match (class_basename($parent)) {
             'Workplace' => $parent->employees()->create($modelData),
-            default => Employee::create($modelData)
+            default     => Employee::create($modelData)
         };
 
 

@@ -31,7 +31,7 @@ use App\Actions\Portfolio\PortfolioWebsite\ImportPortfolioWebsite;
 use App\Actions\Portfolios\CustomerWebsite\StoreCustomerWebsite;
 use App\Actions\Catalogue\Product\StoreProduct;
 use App\Actions\Catalogue\Product\UpdateProduct;
-use App\Actions\Catalogue\Product\ImportProduct;
+use App\Actions\Catalogue\Product\ImportProducts;
 use App\Actions\UI\Organisation\Profile\UpdateProfile;
 use App\Actions\Web\Webpage\StoreArticle;
 use App\Actions\Web\Webpage\StoreWebpage;
@@ -58,7 +58,7 @@ Route::post('/employees/imports/upload', ImportEmployees::class)->name('employee
 Route::post('/shop/{shop:id}/prospect/upload', ImportShopProspects::class)->name('shop.prospect.upload');
 Route::delete('/prospect/{prospect:id}', RemoveProspect::class)->name('prospect.remove');
 
-Route::post('/products/imports/upload', ImportProduct::class)->name('products.upload');
+Route::post('/products/imports/upload', ImportProducts::class)->name('products.upload');
 Route::post('/guests/imports/upload', ImportGuest::class)->name('guests.upload');
 Route::patch('/provider/{paymentServiceProvider}', UpdatePaymentServiceProvider::class)->name('payment-service-provider.update');
 Route::delete('/provider/{paymentServiceProvider}', DeletePaymentServiceProvider::class)->name('payment-service-provider.delete');
