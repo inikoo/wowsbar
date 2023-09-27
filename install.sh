@@ -50,8 +50,7 @@ php artisan product-category:new sma "Social Media Advertising"
 php artisan product-category:new leads "Prospecting"
 php artisan product-category:new caas "Content as a service"
 
- php artisan product:import database/seeders/datasets/excel-uploads/real/products.xlsx
- php artisan employee:import database/seeders/datasets/excel-uploads/real/employees.xlsx
+php artisan product:import database/seeders/datasets/excel-uploads/real/products.xlsx
 
 echo "🌱 create customer"
 php artisan shop:new-customer awa aiku@inikoo.com -C 'Aiku'
@@ -69,3 +68,6 @@ php artisan workplace:create "Beach bar" hq
 echo "🌱 All the employees are imported"
 php artisan shop:import-prospects awa database/seeders/datasets/excel-uploads/examples/prospects.xlsx
 echo "🛃 Organisation prospects imported"
+
+php artisan employee:upload database/seeders/datasets/excel-uploads/real/employees.xlsx
+echo "🌱 employees uploaded"
