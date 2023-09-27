@@ -10,13 +10,22 @@ import TailwindComponents from 'grapesjs-tailwind';
 import Webpage from 'grapesjs-preset-webpage';
 import { ref } from 'vue'
 import { panel } from './Panel'
+import {  get } from "firebase/database"
+import {
+    getDbRef,
+    setDataFirebase,
+} from "@/Composables/firebase";
 
 
 const data = ref(null)
 
-const save = (newData) => {
-  console.log(newData)
-  data.value = newData
+const save = async(newData) => {
+  const column = "org/websites/webpages"
+    try {
+        await setDataFirebase(column,newData);
+    } catch (error) {
+        console.error(error);
+    }
 }
 
 const escapeName = (name) =>
@@ -37,35 +46,35 @@ onMounted(() => {
       TailwindComponents,
       Webpage
     ],
-    // storageManager: {
-    //   type: 'remote',
-    //   options: {
-    //     remote: {
-    //       onStore: (data, editor) => {
-    //         const pagesHtml = editor.Pages.getAll().map(page => {
-    //           const component = page.getMainComponent();
-    //           return {
-    //             html: editor.getHtml({ component }),
-    //             css: editor.getCss({ component })
-    //           }
-    //         });
-    //         const savedData = { id: 'projectID', data, pagesHtml };
+    storageManager: {
+      type: 'remote',
+      options: {
+        remote: {
+          onStore: (data, editor) => {
+            const pagesHtml = editor.Pages.getAll().map(page => {
+              const component = page.getMainComponent();
+              return {
+                html: editor.getHtml({ component }),
+                css: editor.getCss({ component })
+              }
+            });
+            const savedData = { id: 'projectID', data, pagesHtml };
+            save(savedData);
 
-    //         // Call the save function here with the saved data
-    //         save(savedData);
-
-    //         return savedData;
-    //       },
-    //       onLoad: result => result.data,
-    //     }
-    //   },
-    // },
+            return savedData;
+          },
+          onLoad: async(result) => {
+            const snapshot = await get(getDbRef("org/websites/webpages"))
+            const firebaseData = snapshot.exists() ? snapshot.val() : null
+            result.data = firebaseData.data
+            console.log('inii',firebaseData, result)
+            return firebaseData.data
+          },
+        }
+      },
+    },
   });
-  editorInstance.Panels.getPanels().reset(panel(editorInstance));
 });
-
-
-
 </script> 
 
 <template>
