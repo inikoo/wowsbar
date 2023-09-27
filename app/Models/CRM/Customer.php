@@ -12,6 +12,7 @@ use App\Enums\CRM\Customer\CustomerStatusEnum;
 use App\Enums\CRM\Customer\CustomerTradeStateEnum;
 use App\Models\Assets\Currency;
 use App\Models\Auth\User;
+use App\Models\Portfolios\CustomerSocialAccount;
 use App\Models\Portfolios\CustomerWebsite;
 use App\Models\Leads\Prospect;
 use App\Models\Market\Shop;
@@ -83,6 +84,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read Collection<int, Snapshot> $snapshots
  * @property-read int|null $snapshots_count
  * @property-read \App\Models\CRM\CustomerStats|null $stats
+ * @property-read CustomerSocialAccount $socialAccounts
  * @property-read UniversalSearch|null $universalSearch
  * @property-read Collection<int, User> $users
  * @property-read int|null $users_count
@@ -247,4 +249,8 @@ class Customer extends Model implements HasMedia
         return $this->morphMany(Prospect::class, 'scope');
     }
 
+    public function socialAccounts(): HasMany
+    {
+        return $this->hasMany(CustomerSocialAccount::class);
+    }
 }
