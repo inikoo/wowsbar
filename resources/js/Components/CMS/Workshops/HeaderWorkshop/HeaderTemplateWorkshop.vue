@@ -139,11 +139,13 @@ setToFirebase();
                         :data="headerData"
                         @changeLogo="changeLogo"
                         @click="selected = 'header'"
+                        :layout="data.layout.header"
                     />
                     <Menu
                         :theme="menuData.type"
                         :navigation="menuData"
                         :tool="handtools"
+                        :layout="data.layout.header"
                         :selectedNav="menuData.items[selectedMenu]"
                         :changeNavActive="changeNavActive"
                         @click="selected = 'menu'"
@@ -152,12 +154,4 @@ setToFirebase();
             </div>
         </div>
     </div>
-    <notifications
-        group="custom-style"
-        position="top center"
-        classes="n-light"
-        dangerously-set-inner-html
-        :max="3"
-        :width="400"
-    />
 </template>

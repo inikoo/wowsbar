@@ -20,6 +20,7 @@ const props = defineProps<{
     };
     tool: Object;
     data: Object;
+    layout : Object
 }>();
 
 const emits = defineEmits();
@@ -29,18 +30,17 @@ const UploadImage = (file) => {
     emits("uploadImage", fileData);
 };
 
-console.log("data", props.data);
 </script>
 
 <template>
-    <div class="w-full text-gray-400">
-        <footer class="bg-gray-900" aria-labelledby="footer-heading">
+    <div class="w-full">
+        <footer :style="`background-color: ${layout?.color};`" aria-labelledby="footer-heading">
             <h2 id="footer-heading" class="sr-only">Footer</h2>
             <div class="mx-auto max-w-7xl px-6 pb-8 pt-16 sm:pt-24 lg:px-8 lg:pt-32">
                 <div class="xl:grid xl:grid-cols-3 xl:gap-20 items-start">
                     <!-- Box -->
                     <div
-                        class="grid justify-center space-y-5 rounded-xl bg-gray-950 border border-indigo-500 py-4 mb-8 xl:mb-0">
+                        :class="`grid justify-center space-y-5 rounded-xl bg-${layout.colorScheme}-500 border border-indigo-500 py-4 mb-8 xl:mb-0`">
                         <div class="flex justify-center">
                             <label for="Upload" class="cursor-pointer">
                                 <input type="file" id="Upload" accept="image/*" style="display: none"
@@ -49,7 +49,7 @@ console.log("data", props.data);
                             </label>
                         </div>
                         <div class="flex justify-center">
-                            <div class="text-gray-100 border-t border-gray-500 w-10/12" />
+                            <div :class="`text-${layout.colorScheme}-100 border-t border-gray-500 w-10/12`" />
                         </div>
 
                         <div class="flex justify-center space-x-6">
@@ -57,7 +57,7 @@ console.log("data", props.data);
                                 tool.name === 'grab'
                                     ? 'cursor-grab'
                                     : 'cursor-pointer',
-                                'text-gray-400 hover:text-gray-500 flex space-x-6',
+                              `text-${layout.colorScheme}-400 hover:text-${layout.colorScheme}-500 flex space-x-6`,
                             ]" :disabled="tool.name !== 'grab'">
                                 <template #item="{
                                     element: child,
@@ -90,8 +90,8 @@ console.log("data", props.data);
                                         ? ''
                                         : 'border',
                                 ]" @click="props.selectedColums(index)">
-                                    <!-- <h3 class="text-sm font-bold leading-6 text-gray-700 capitalize">{{ element.title }}</h3> -->
-                                    <Input :data="element" keyValue="label" classCss="font-bold text-gray-300 capitalize" />
+                                    <!-- <h3 class="text-sm font-bold leading-6 text-${layout.colorScheme}-500-700 capitalize">{{ element.title }}</h3> -->
+                                    <Input :data="element" keyValue="label" :classCss="`font-bold text-${layout.colorScheme}-500`" />
 
                                     <!-- If the data type is List -->
                                     <div v-if="element.type == 'list'">
@@ -107,7 +107,7 @@ console.log("data", props.data);
                                                             name: 'label',
                                                             link: 'href',
                                                         }" :useDelete="true" :data="child" label="label"
-                                                            cssClass="hover:text-gray-200 pr-2 py-3" @onDelete="() =>
+                                                            :cssClass="`text-${layout.colorScheme}-400 pr-2 py-3`" @onDelete="() =>
                                                                     element.data.splice(
                                                                         childIndex,
                                                                         1
@@ -133,15 +133,15 @@ console.log("data", props.data);
                                                 index: childIndex,
                                             }">
                                             <div class="grid grid-cols-[auto,1fr] gap-4 items-center justify-start gap-y-3 mb-2.5">
-											<div v-if="child.type == 'other'" class="w-full flex items-center justify-center text-gray-400 gap-3">
+											<div v-if="child.type == 'other'" :class="`w-full flex items-center justify-center text-${layout.colorScheme}-400 gap-3`">
 												<div><IconPicker :key="child.title" :data="child.data" /></div>
 												<Input :data="child.data" keyValue="label" />
 											</div>
-											<div v-if="child.type == 'email'" class="w-full flex items-center justify-center text-gray-400 gap-3">
+											<div v-if="child.type == 'email'" :class="`w-full flex items-center justify-center text-${layout.colorScheme}-400 gap-3`">
 												<div><font-awesome-icon :icon="['fas', 'envelope']" /></div>
 												<Input :data="child" keyValue="data" />
 											</div>
-											<div v-if="child.type == 'phone'" class="w-full flex items-center justify-center text-gray-400 gap-3">
+											<div v-if="child.type == 'phone'" :class="`w-full flex items-center justify-center text-${layout.colorScheme}-400 gap-3`">
 												<div><font-awesome-icon :icon="['fas', 'phone']" /></div>
 												<Input :data="child" keyValue="data" />
 											</div>
@@ -155,7 +155,7 @@ console.log("data", props.data);
                     </div>
                 </div>
                 <div class="mt-16 border-t border-white/10 pt-8 sm:mt-20 lg:mt-24 text-center">
-                    <div class="text-xs flex justify-center leading-5 text-gray-400">
+                    <div :class="`text-xs flex justify-center leading-5 text-${layout.colorScheme}-400`">
                         &copy; 2023&nbsp;<span class="font-semibold">
                             <HyperLink :useDelete="false" :data="data.copyright" label="label" :formList="{
                                 label: 'label',

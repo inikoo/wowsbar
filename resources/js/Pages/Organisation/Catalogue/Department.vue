@@ -8,10 +8,8 @@
 import {Head} from '@inertiajs/vue3';
 import {library} from '@fortawesome/fontawesome-svg-core';
 import {
-    faBox,
-    faBullhorn, faCameraRetro,
     faCube,
-    faFolder, faMoneyBillWave, faProjectDiagram, faRoad, faShoppingCart, faStream, faUsers
+    faFolder, faMoneyBillWave, faRoad
 } from "@/../private/pro-light-svg-icons";
 import PageHeading from '@/Components/Headings/PageHeading.vue';
 import ModelDetails from "@/Pages/ModelDetails.vue";
@@ -19,20 +17,14 @@ import {useTabChange} from "@/Composables/tab-change";
 import {computed, defineAsyncComponent, ref} from "vue";
 import Tabs from "@/Components/Navigation/Tabs.vue";
 import DepartmentShowcase from "@/Components/Showcases/Organisation/DepartmentShowcase.vue";
+import TableProducts from "@/Components/Tables/TableProducts.vue";
 
 import { capitalize } from "@/Composables/capitalize"
 
 library.add(
     faFolder,
     faCube,
-    faStream,
     faMoneyBillWave,
-    faShoppingCart,
-    faUsers,
-    faBullhorn,
-    faProjectDiagram,
-    faBox,
-    faCameraRetro,
     faRoad
 );
 
@@ -45,6 +37,7 @@ const props = defineProps<{
         current: string;
         navigation: object;
     }
+    products?:object
     showcase?: object
 }>()
 
@@ -56,6 +49,7 @@ const component = computed(() => {
 
     const components = {
         showcase: DepartmentShowcase,
+        products: TableProducts,
         details: ModelDetails,
         history: ModelChangelog,
     };
@@ -70,6 +64,6 @@ const component = computed(() => {
     <Head :title="capitalize(title)"/>
     <PageHeading :data="pageHead"></PageHeading>
     <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate"/>
-    <component :is="component" :data="props[currentTab]"></component>
+    <component :is="component" :tab="currentTab"  :data="props[currentTab]"></component>
 </template>
 
