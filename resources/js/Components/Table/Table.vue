@@ -601,7 +601,7 @@ watch(name, () => {
                                 <slot v-for="linkButton in queryBuilderProps.modelOperations?.createLink"
                                     :name="`button${linkButton.mode}`" :linkButton="linkButton"
                                 >
-                                    <Link :href="'route(linkButton.route.name, linkButton.route.parameters)'"
+                                    <Link v-if="linkButton?.route?.name" :href="route(linkButton?.route?.name, linkButton?.route?.parameters)"
                                         class="ring-1 ring-gray-300 overflow-hidden"
                                         :class="[queryBuilderProps.modelOperations?.createLink.length > 1 ? 'first:rounded-l last:rounded-r' : '']"
                                     >
