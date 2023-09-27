@@ -13,12 +13,12 @@ import {
 } from "@/Composables/firebase";
 import ColorPicker from "@/Components/Workshop/Fields/ColorPicker.vue";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faImage, faTimes, faOven } from "@/../private/pro-regular-svg-icons";
+import { faImage, faTimes, faOven, faText } from "@/../private/pro-regular-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { isNull, set } from 'lodash'
 import Image from "@/Components/Image.vue"
 import { notify } from "@kyvg/vue3-notification"
-library.add(faImage, faTimes, faOven);
+library.add(faImage, faTimes, faOven, faText);
 
 const props = defineProps<{
 	data: Object,
@@ -185,15 +185,16 @@ setToFirebase();
                         style="transform: scale(0.7)"
                     >
                         <ColorPicker
-                            :color="setData?.header?.color"
+                            :color="setData?.header?.colorScheme"
                             @onChange="(color)=>set(setData,['header','colorScheme'],color)"
                             :colorSuggestions="false"
+                            mode="scheme"
                             class=""
                         />
                     </div>
-                    <div class="font-xs border rounded-lg py-1 px-2 text-black" :style="`background-color: ${setData?.header?.colorScheme};`">Apoointment</div>
+                    <div class="font-xs border rounded-lg py-2 px-2 text-black" :class="`bg-${setData?.header?.colorScheme}-500`">Apoointment</div>
                     <div :style="`border-left: 1px solid ${setData?.header?.colorScheme};`"></div>
-                    <div class="font-xs border rounded-lg py-1 px-2 text-black" :style="`background-color: ${setData?.header?.colorScheme};`">sign in</div>
+                    <div class="font-xs border rounded-lg py-2 px-2 text-black"  :class="`bg-${setData?.header?.colorScheme}-500`">sign in</div>
                     </div>
                 </div>
                 <div
@@ -215,18 +216,17 @@ setToFirebase();
                         class="absolute right-0 top-5 flex gap-2"
                         :style="`color: ${setData?.content?.colorScheme};`"
                     >
-                    <div
-                        style="transform: scale(0.5)"
-                    >
+                    <div style="transform: scale(0.5)">
                         <ColorPicker
                             :color="setData?.header?.color"
                             @onChange="(color)=>set(setData,['content','colorScheme'],color)"
                             :colorSuggestions="false"
+                            mode="scheme"
                             class=""
                         />
                     </div>
-                    <font-awesome-icon :icon="['far', 'oven']" class="w-40 h-14" />
-
+                        <font-awesome-icon :icon="['far', 'oven']" class="w-40 h-14"  :class="`text-${setData?.content?.colorScheme}-500`" />
+                 
                     </div>
                 </div>
                 <div
@@ -243,6 +243,22 @@ setToFirebase();
                             @onChange="(color)=>set(setData,['footer','color'],color)"
                             class=""
                         />
+                    </div>
+                    <div
+                        class="absolute right-0 top-5 flex gap-2"
+                        :style="`color: ${setData?.content?.colorScheme};`"
+                    >
+                    <div style="transform: scale(0.5)">
+                        <ColorPicker
+                            :color="setData?.header?.color"
+                            @onChange="(color)=>set(setData,['footer','colorScheme'],color)"
+                            :colorSuggestions="false"
+                            mode="scheme"
+                            class=""
+                        />
+                    </div>
+                      <font-awesome-icon :icon="['far', 'text']"  class="w-40 h-14"  :class="`text-${setData?.footer?.colorScheme}-500`" />
+                 
                     </div>
                 </div>
             </div>
@@ -278,12 +294,4 @@ setToFirebase();
             </div>
         </div>
     </div>
-    <notifications
-        group="custom-style"
-        position="top center"
-        classes="n-light"
-        dangerously-set-inner-html
-        :max="3"
-        :width="400"
-    />
 </template>
