@@ -26,7 +26,7 @@ class ImportEmployees
      * @var true
      */
     private bool $asAction          = false;
-    public string $commandSignature = 'employee:import {filename}';
+    public string $commandSignature = 'employee:upload {filename}';
 
     public function handle($file): void
     {
