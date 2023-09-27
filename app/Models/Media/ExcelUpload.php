@@ -16,16 +16,22 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string $filename
  * @property string $path
  * @property int $number_rows
+ * @property int $number_success
+ * @property int $number_fails
  * @property string $uploaded_at
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Media\ExcelUploadRecord> $records
+ * @property-read int|null $records_count
  * @method static \Illuminate\Database\Eloquent\Builder|ExcelUpload newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|ExcelUpload newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|ExcelUpload query()
  * @method static \Illuminate\Database\Eloquent\Builder|ExcelUpload whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ExcelUpload whereFilename($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ExcelUpload whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ExcelUpload whereNumberFails($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ExcelUpload whereNumberRows($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ExcelUpload whereNumberSuccess($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ExcelUpload whereOrganisationUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ExcelUpload whereOriginalFilename($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ExcelUpload wherePath($value)

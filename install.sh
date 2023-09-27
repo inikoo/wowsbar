@@ -30,8 +30,7 @@ php artisan cache:clear
 redis-cli KEYS "wowsbar_database_*" | xargs redis-cli DEL
 echo "🌱 Migrating and seeding database"
 php artisan migrate --database=backup --path=database/migrations/backup
-php artisan migrate --path=database/migrations/landlord
-php artisan migrate --path=database/migrations/tenant
+php artisan migrate
 php artisan db:seed
 php artisan telescope:clear
 pg_dump -Fc -f "devops/devel/snapshots/fresh.dump" ${DB}

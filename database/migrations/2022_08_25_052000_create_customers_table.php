@@ -1,8 +1,8 @@
 <?php
 /*
- *  Author: Raul Perusquia <raul@inikoo.com>
- *  Created: Mon, 29 Aug 2022 12:29:00 Malaysia Time, Kuala Lumpur, Malaysia
- *  Copyright (c) 2022, Raul A Perusquia F
+ * Author: Raul Perusquia <raul@inikoo.com>
+ * Created: Wed, 27 Sep 2023 18:30:00 Malaysia Time, Kuala Lumpur, Malaysia
+ * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
 use App\Enums\CRM\Customer\CustomerStateEnum;
@@ -46,14 +46,10 @@ return new class () extends Migration {
             $table->timestampsTz();
             $table->softDeletesTz();
         });
-
-
     }
 
     public function down(): void
     {
-
         Schema::dropIfExists('customers');
-
     }
 };

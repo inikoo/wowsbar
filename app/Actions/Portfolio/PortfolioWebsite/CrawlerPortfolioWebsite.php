@@ -11,11 +11,8 @@ use App\Models\Portfolio\PortfolioWebpage;
 use App\Models\Portfolio\PortfolioWebsite;
 use GuzzleHttp\Exception\RequestException;
 use Illuminate\Console\Command;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Redirect;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsCommand;
-use Lorisleiva\Actions\Concerns\AsController;
 use Lorisleiva\Actions\Concerns\WithAttributes;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\UriInterface;
@@ -56,14 +53,14 @@ class CrawlerPortfolioWebsite extends CrawlObserver
         return 0;
     }
 
-    public function crawled(UriInterface $url, ResponseInterface $response, UriInterface $foundOnUrl = null, string $linkText = null,): void
+    public function crawled(UriInterface $url, ResponseInterface $response, UriInterface $foundOnUrl = null, string $linkText = null): void
     {
         PortfolioWebpage::create([
             'layout' => $response
         ]);
     }
 
-    public function crawlFailed(UriInterface $url, RequestException $requestException, UriInterface $foundOnUrl = null, string $linkText = null,): void
+    public function crawlFailed(UriInterface $url, RequestException $requestException, UriInterface $foundOnUrl = null, string $linkText = null): void
     {
         // TODO: Implement crawlFailed() method.
     }

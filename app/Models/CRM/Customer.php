@@ -83,8 +83,9 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read Shop $shop
  * @property-read Collection<int, Snapshot> $snapshots
  * @property-read int|null $snapshots_count
+ * @property-read Collection<int, CustomerSocialAccount> $socialAccounts
+ * @property-read int|null $social_accounts_count
  * @property-read \App\Models\CRM\CustomerStats|null $stats
- * @property-read CustomerSocialAccount $socialAccounts
  * @property-read UniversalSearch|null $universalSearch
  * @property-read Collection<int, User> $users
  * @property-read int|null $users_count

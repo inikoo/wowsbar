@@ -39,6 +39,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property GenderEnum|null $gender
  * @property string|null $worker_number
  * @property string|null $job_title
+ * @property string|null $job_position
+ * @property string|null $workplace
  * @property EmployeeTypeEnum $type
  * @property EmployeeStateEnum $state
  * @property string|null $employment_start_at
@@ -80,6 +82,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|Employee whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Employee whereIdentityDocumentNumber($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Employee whereIdentityDocumentType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Employee whereJobPosition($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Employee whereJobPositionScopes($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Employee whereJobTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Employee wherePhone($value)
@@ -92,6 +95,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|Employee whereWorkEmail($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Employee whereWorkerNumber($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Employee whereWorkingHours($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Employee whereWorkplace($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Employee withTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|Employee withoutTrashed()
  * @mixin \Eloquent
