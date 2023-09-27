@@ -17,7 +17,7 @@ use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
 
-class UploadCustomer
+class ImportCustomer
 {
     use AsAction;
     use WithAttributes;

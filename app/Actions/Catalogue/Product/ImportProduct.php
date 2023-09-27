@@ -1,23 +1,23 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Wed, 16 Aug 2023 08:09:28 Malaysia Time, Pantai Lembeng, Bali
+ * Created: Tue, 26 Sep 2023 08:52:45 Malaysia Time, Kuala Lumpur, Malaysia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Organisation\Guest;
+namespace App\Actions\Catalogue\Product;
 
 use App\Actions\Helpers\Uploads\ConvertUploadedFile;
 use App\Actions\Helpers\Uploads\StoreExcelUploads;
-use App\Imports\Auth\GuestImport;
-use App\Models\Auth\Guest;
+use App\Imports\Catalogue\ProductImport;
+use App\Models\Catalogue\Product;
 use Excel;
 use Illuminate\Console\Command;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
 
-class UploadGuest
+class ImportProduct
 {
     use AsAction;
     use WithAttributes;
@@ -26,13 +26,13 @@ class UploadGuest
      * @var true
      */
     private bool $asAction          = false;
-    public string $commandSignature = 'guest:import {filename}';
+    public string $commandSignature = 'product:import {filename}';
 
     public function handle($file): void
     {
-        $guestUpload = StoreExcelUploads::run($file, Guest::class);
+        $upload = StoreExcelUploads::run($file, Product::class);
 
-        Excel::import(new GuestImport($guestUpload), storage_path('app/' . $guestUpload->getFullPath()));
+        Excel::import(new ProductImport($upload), $upload->getFullPath());
     }
 
     /**

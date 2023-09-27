@@ -1,23 +1,23 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Tue, 26 Sep 2023 08:52:45 Malaysia Time, Kuala Lumpur, Malaysia
+ * Created: Thu, 21 Sep 2023 11:34:12 Malaysia Time, Pantai Lembeng, Bali, Indonesia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Catalogue\Product;
+namespace App\Actions\HumanResources\Employee;
 
 use App\Actions\Helpers\Uploads\ConvertUploadedFile;
 use App\Actions\Helpers\Uploads\StoreExcelUploads;
-use App\Imports\Catalogue\ProductImport;
-use App\Models\Catalogue\Product;
+use App\Imports\HumanResources\EmployeeImport;
+use App\Models\HumanResources\Employee;
 use Excel;
 use Illuminate\Console\Command;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
 
-class UploadProduct
+class ImportEmployees
 {
     use AsAction;
     use WithAttributes;
@@ -26,13 +26,12 @@ class UploadProduct
      * @var true
      */
     private bool $asAction          = false;
-    public string $commandSignature = 'product:import {filename}';
+    public string $commandSignature = 'employee:upload {filename}';
 
     public function handle($file): void
     {
-        $upload = StoreExcelUploads::run($file, Product::class);
-
-        Excel::import(new ProductImport($upload), $upload->getFullPath());
+        $employeeUpload = StoreExcelUploads::run($file, Employee::class);
+        Excel::import(new EmployeeImport($employeeUpload), storage_path('app/' . $employeeUpload->getFullPath()));
     }
 
     /**

@@ -1,24 +1,23 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Mon, 18 Sep 2023 18:42:14 Malaysia Time, Pantai Lembeng, Bali, Indonesia
+ * Created: Thu, 21 Sep 2023 11:36:36 Malaysia Time, Pantai Lembeng, Bali, Indonesia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Portfolio\PortfolioWebsite;
+namespace App\Actions\Organisation\OrganisationUser;
 
 use App\Actions\Helpers\Uploads\ConvertUploadedFile;
 use App\Actions\Helpers\Uploads\StoreExcelUploads;
-use App\Imports\WebsiteImport;
-use App\Models\Auth\Guest;
-use App\Models\CRM\Customer;
+use App\Imports\Auth\OrganisationUserImport;
+use App\Models\Auth\OrganisationUser;
 use Excel;
 use Illuminate\Console\Command;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
 
-class UploadPortfolioWebsite
+class ImportOrganisationUser
 {
     use AsAction;
     use WithAttributes;
@@ -26,22 +25,23 @@ class UploadPortfolioWebsite
     /**
      * @var true
      */
-    private bool $asAction = false;
+    private bool $asAction          = false;
+    public string $commandSignature = 'organisation-user:import {filename}';
 
-    public function handle(Customer $customer, $file): void
+    public function handle($file): void
     {
-        $websiteUpload = StoreExcelUploads::run($file, Guest::class);
+        $upload = StoreExcelUploads::run($file, OrganisationUser::class);
 
-        Excel::import(new WebsiteImport($websiteUpload, $customer), storage_path('app/' . $websiteUpload->getFullPath()));
+        Excel::import(new OrganisationUserImport($upload), $upload->getFullPath());
     }
 
     /**
      * @throws \Throwable
      */
-    public function asController(Customer $customer, ActionRequest $request): void
+    public function asController(ActionRequest $request): void
     {
         $file = $request->file('file');
-        $this->handle($customer, $file);
+        $this->handle($file);
     }
 
     public function asCommand(Command $command): void
@@ -49,6 +49,6 @@ class UploadPortfolioWebsite
         $filename = $command->argument('filename');
         $file     = ConvertUploadedFile::run($filename);
 
-        $this->handle(customer(), $file);
+        $this->handle($file);
     }
 }
