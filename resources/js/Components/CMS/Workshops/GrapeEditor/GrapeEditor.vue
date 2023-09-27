@@ -121,28 +121,44 @@ onMounted(() => {
 }
 
 .gjs-one-bg {
-    background-color: #f9fafb;
-}
-
-.gjs-two-color {
-    @apply text-gray-600
+    background-color: #f9fafb !important;
 }
 
 .gjs-three-bg {
-    background-color: #f9fafb;
-    color: #3b3b3b;
+    background-color: rgb(107 114 128) !important;
+    @apply text-gray-100
 }
 
+.gjs-two-color {
+    color: rgb(75 85 99) !important;
+}
+
+.gjs-clm-header-label {
+    @apply text-gray-600
+}
+
+// Layer: active state
+.gjs-layer.gjs-selected .gjs-layer-title {
+    @apply bg-gray-300 hover:bg-gray-200
+}
+
+// Layer: on hover
+.gjs-hovered {
+    background-color: rgb(0, 94, 255) !important;
+}
 
 // Panel: Button
 .gjs-pn-btn {
-    @apply hover:ring-1 hover:ring-gray-400;
+    @apply hover:ring-1 hover:ring-gray-400 text-gray-500;
     
     &.gjs-pn-active {
         @apply shadow-none bg-gray-300 ring-1 ring-gray-400 text-gray-600 hover:text-gray-700
     }
 }
 
+.gjs-four-color-h:hover {
+    @apply hover:text-gray-600
+}
 
 // Box in select Blocks
 .gjs-block {
@@ -163,4 +179,25 @@ onMounted(() => {
 .gjs-sm-stack #gjs-sm-add {
     @apply text-gray-500
 }
+
+.gjs-field input:focus {
+    @apply text-gray-600
+}
+
+#gjs-clm-states {
+    @apply text-xs
+}
+
+.gjs-field {
+    @apply bg-gray-300 text-gray-700;
+
+    &input#gjs-clm-new {
+        @apply text-gray-500
+    }
+}
+
+.gjs-clm-tags #gjs-clm-new {
+    @apply text-gray-600
+}
+
 </style>
