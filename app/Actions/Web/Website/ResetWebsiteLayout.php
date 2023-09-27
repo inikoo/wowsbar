@@ -29,16 +29,16 @@ class ResetWebsiteLayout
                 "colorLayout" => "rgba(255 255 255)",
                 "imageLayout" => null,
                 "header"      => [
-                    "color"        => "rgba(55 65 81)",
+                    "color"        =>  "rgba(255 255 255)",
                      "colorScheme" => "gray"
                 ],
                 "content"     => [
-                    "color"       => "rgba(55 65 81)",
-                    "colorScheme" => "red"
+                    "color"       =>  "rgba(255 255 255)",
+                    "colorScheme" => "gray"
                 ],
                 "footer"      => [
-                    "color" => "rgba(55 65 81)",
-                    "colorScheme" => "red"
+                    "color" =>  "rgba(255 255 255)",
+                    "colorScheme" => "gray"
                 ]
             ]
         );
