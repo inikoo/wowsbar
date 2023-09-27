@@ -36,11 +36,11 @@ class ShowDepartment extends InertiaAction
         return $request->user()->hasPermissionTo("catalogue.view");
     }
 
-    public function asController(ProductCategory $department, ActionRequest $request): ProductCategory
+    public function asController(ProductCategory $productCategory, ActionRequest $request): ProductCategory
     {
         $this->initialisation($request)->withTab(DepartmentTabsEnum::values());
 
-        return $this->handle($department);
+        return $this->handle($productCategory);
     }
 
     public function htmlResponse(ProductCategory $department, ActionRequest $request): Response
