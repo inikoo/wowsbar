@@ -48,14 +48,13 @@ php artisan product-category:new smm "Social Media Management"
 php artisan product-category:new sma "Social Media Advertising"
 php artisan product-category:new leads "Prospecting"
 php artisan product-category:new caas "Content as a service"
-
 php artisan product:import database/seeders/datasets/excel-uploads/real/products.xlsx
 
-echo "🌱 create customer"
-#php artisan customer:import database/seeders/datasets/excel-uploads/real/customers.xlsx
-echo "🌱 customers uploaded"
+php artisan customer:import database/seeders/datasets/excel-uploads/real/customers.xlsx
 php artisan shop:new-customer awa aiku@inikoo.com -C 'Aiku'
 php artisan shop:new-customer awa devs@aw-advantage.com -C 'aw-advantage'
+echo "🌱 customers uploaded/added"
+
 php artisan customer:new-user aiku -u aiku -P hello -N 'Mary'
 php artisan customer:new-user aw-advantage -u aiku2 -P hello -N 'Zoe'
 pg_dump -Fc -f "devops/devel/snapshots/customers.dump" ${DB}

@@ -21,7 +21,6 @@ class EmployeeImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wi
 {
     use WithImport;
 
-
     public function storeModel($row, $uploadRecord): void
     {
         $parent = organisation();
