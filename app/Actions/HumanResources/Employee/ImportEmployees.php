@@ -8,6 +8,8 @@
 namespace App\Actions\HumanResources\Employee;
 
 use App\Actions\Helpers\Uploads\ConvertUploadedFile;
+use App\Actions\Helpers\Uploads\Hydrators\UploadHydrateExcels;
+use App\Actions\Helpers\Uploads\ImportModel;
 use App\Actions\Helpers\Uploads\StoreExcelUploads;
 use App\Imports\HumanResources\EmployeeImport;
 use App\Models\HumanResources\Employee;
@@ -31,7 +33,9 @@ class ImportEmployees
     public function handle($file): void
     {
         $employeeUpload = StoreExcelUploads::run($file, Employee::class);
-        Excel::import(new EmployeeImport($employeeUpload), storage_path('app/' . $employeeUpload->getFullPath()));
+        $excelUpload = ImportModel::run(new EmployeeImport($employeeUpload), $employeeUpload);
+
+        UploadHydrateExcels::dispatch($excelUpload);
     }
 
     /**

@@ -35,8 +35,6 @@ class GuestImport implements ToCollection, WithHeadingRow, SkipsOnFailure, WithV
     {
         $totalImported = 1;
 
-        UpdateExcelUploads::run($this->guestUpload, ['number_rows' => count($collection)]);
-
         foreach ($collection as $guest) {
             try {
                 $guest = ExcelUploadRecord::create([
@@ -45,7 +43,7 @@ class GuestImport implements ToCollection, WithHeadingRow, SkipsOnFailure, WithV
                 ]);
 
                 StoreGuest::run(json_decode($guest->data, true));
-                ImportExcelUploads::dispatch($guest, count($collection), $totalImported++, Guest::class);
+                ImportExcelUploads::run($guest, count($collection), $totalImported++, Guest::class);
             } catch (\Exception $e) {
                 $totalImported--;
             }

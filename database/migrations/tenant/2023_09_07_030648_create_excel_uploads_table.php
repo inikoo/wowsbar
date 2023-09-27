@@ -21,6 +21,8 @@ return new class () extends Migration {
             $table->string('filename');
             $table->string('path');
             $table->smallInteger('number_rows')->default(0);
+            $table->smallInteger('number_success')->default(0);
+            $table->smallInteger('number_fails')->default(0);
             $table->dateTimeTz('uploaded_at');
             $table->timestamps();
         });

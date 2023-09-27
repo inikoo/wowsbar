@@ -8,8 +8,11 @@
 namespace App\Actions\Catalogue\Product;
 
 use App\Actions\Helpers\Uploads\ConvertUploadedFile;
+use App\Actions\Helpers\Uploads\Hydrators\UploadHydrateExcels;
+use App\Actions\Helpers\Uploads\ImportModel;
 use App\Actions\Helpers\Uploads\StoreExcelUploads;
 use App\Imports\Catalogue\ProductImport;
+use App\Imports\CRM\CustomerImport;
 use App\Models\Catalogue\Product;
 use Excel;
 use Illuminate\Console\Command;
@@ -31,8 +34,9 @@ class ImportProduct
     public function handle($file): void
     {
         $upload = StoreExcelUploads::run($file, Product::class);
+        $excelUpload = ImportModel::run(new ProductImport($upload), $upload);
 
-        Excel::import(new ProductImport($upload), $upload->getFullPath());
+        UploadHydrateExcels::dispatch($excelUpload);
     }
 
     /**

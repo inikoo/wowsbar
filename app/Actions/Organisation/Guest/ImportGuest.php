@@ -8,8 +8,11 @@
 namespace App\Actions\Organisation\Guest;
 
 use App\Actions\Helpers\Uploads\ConvertUploadedFile;
+use App\Actions\Helpers\Uploads\Hydrators\UploadHydrateExcels;
+use App\Actions\Helpers\Uploads\ImportModel;
 use App\Actions\Helpers\Uploads\StoreExcelUploads;
 use App\Imports\Auth\GuestImport;
+use App\Imports\CRM\CustomerImport;
 use App\Models\Auth\Guest;
 use Excel;
 use Illuminate\Console\Command;
@@ -31,8 +34,9 @@ class ImportGuest
     public function handle($file): void
     {
         $guestUpload = StoreExcelUploads::run($file, Guest::class);
+        $excelUpload = ImportModel::run(new GuestImport($guestUpload), $guestUpload);
 
-        Excel::import(new GuestImport($guestUpload), storage_path('app/' . $guestUpload->getFullPath()));
+        UploadHydrateExcels::dispatch($excelUpload);
     }
 
     /**

@@ -4,6 +4,7 @@ namespace App\Models\Media;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * App\Models\ExcelUpload
@@ -42,5 +43,10 @@ class ExcelUpload extends Model
     public function getFullPath(): string
     {
         return $this->path . '/' . $this->filename;
+    }
+
+    public function records(): HasMany
+    {
+        return $this->hasMany(ExcelUploadRecord::class);
     }
 }

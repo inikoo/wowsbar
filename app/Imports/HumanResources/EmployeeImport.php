@@ -34,8 +34,6 @@ class EmployeeImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wi
     {
         $totalImported = 1;
 
-        UpdateExcelUploads::run($this->employeeUpload, ['number_rows' => count($collection)]);
-
         foreach ($collection as $employee) {
             try {
                 $email    = $employee['workplace'] == 'bb' ? Str::lower($employee['nick_name']) . '@aw-advantage.com' : $employee['email'];
@@ -50,7 +48,7 @@ class EmployeeImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wi
                 ]);
 
                 StoreEmployee::run(json_decode($employee->data, true));
-                ImportExcelUploads::dispatch($employee, count($collection), $totalImported++, Employee::class);
+                ImportExcelUploads::run($employee, count($collection), $totalImported++, Employee::class);
             } catch (\Exception $e) {
                 $totalImported--;
             }
