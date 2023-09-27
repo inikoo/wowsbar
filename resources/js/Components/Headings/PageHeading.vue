@@ -136,6 +136,7 @@ if (props.dataToSubmit && props.data.actionActualMethod) {
 
                     <slot v-if="action.type === 'modal'" name="modal" :data="{...props }"/>
                 </div>
+                <slot name="other" :dataPageHead="{...props }"/>
             </div>
         </slot>
     </div>
