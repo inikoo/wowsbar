@@ -8,10 +8,11 @@
 namespace App\Actions\Organisation\OrganisationUser;
 
 use App\Actions\Helpers\Uploads\ConvertUploadedFile;
+use App\Actions\Helpers\Uploads\Hydrators\UploadHydrateExcels;
+use App\Actions\Helpers\Uploads\ImportModel;
 use App\Actions\Helpers\Uploads\StoreExcelUploads;
 use App\Imports\Auth\OrganisationUserImport;
 use App\Models\Auth\OrganisationUser;
-use Excel;
 use Illuminate\Console\Command;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -30,9 +31,10 @@ class ImportOrganisationUser
 
     public function handle($file): void
     {
-        $upload = StoreExcelUploads::run($file, OrganisationUser::class);
+        $upload      = StoreExcelUploads::run($file, OrganisationUser::class);
+        $excelUpload = ImportModel::run(new OrganisationUserImport($upload), $upload);
 
-        Excel::import(new OrganisationUserImport($upload), $upload->getFullPath());
+        UploadHydrateExcels::dispatch($excelUpload);
     }
 
     /**

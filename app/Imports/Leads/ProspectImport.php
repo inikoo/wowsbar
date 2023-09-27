@@ -8,7 +8,6 @@
 namespace App\Imports\Leads;
 
 use App\Actions\Helpers\Uploads\ImportExcelUploads;
-use App\Actions\Helpers\Uploads\UpdateExcelUploads;
 use App\Actions\Leads\Prospect\StoreProspect;
 use App\Models\CRM\Customer;
 use App\Models\Leads\Prospect;
@@ -44,8 +43,6 @@ class ProspectImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wi
     {
         $totalImported = 1;
 
-        UpdateExcelUploads::run($this->prospectUpload, ['number_rows' => count($collection)]);
-
         foreach ($collection as $prospect) {
             try {
                 $prospect = ExcelUploadRecord::create([
@@ -53,9 +50,8 @@ class ProspectImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wi
                     'data'            => json_encode(Arr::except($prospect, 'code'))
                 ]);
 
-
                 StoreProspect::run($this->scope, json_decode($prospect->data, true));
-                ImportExcelUploads::dispatch($prospect, count($collection), $totalImported++, Prospect::class);
+                ImportExcelUploads::run($prospect, count($collection), $totalImported++, Prospect::class);
             } catch (Exception $e) {
                 $totalImported--;
             }

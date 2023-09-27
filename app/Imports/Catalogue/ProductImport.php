@@ -9,7 +9,6 @@ namespace App\Imports\Catalogue;
 
 use App\Actions\Catalogue\Product\StoreProduct;
 use App\Actions\Helpers\Uploads\ImportExcelUploads;
-use App\Actions\Helpers\Uploads\UpdateExcelUploads;
 use App\Enums\Catalogue\Product\ProductTypeEnum;
 use App\Models\Catalogue\Product;
 use App\Models\Catalogue\ProductCategory;
@@ -41,8 +40,6 @@ class ProductImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wit
     {
         $totalImported = 1;
 
-        UpdateExcelUploads::run($this->productUpload, ['number_rows' => count($collection)]);
-
         foreach ($collection as $product) {
             try {
                 $product = ExcelUploadRecord::create([
@@ -64,7 +61,7 @@ class ProductImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wit
                     'price' => Arr::get(json_decode($product->data, true), 'unit_price_gbp'),
                     'type'  => Arr::get(json_decode($product->data, true), 'unit') == 'job' ? ProductTypeEnum::SERVICE : ProductTypeEnum::SUBSCRIPTION,
                 ]);
-                ImportExcelUploads::dispatch($product, count($collection), $totalImported++, Product::class);
+                ImportExcelUploads::run($product, count($collection), $totalImported++, Product::class);
             } catch (Exception $e) {
                 $totalImported--;
             }
