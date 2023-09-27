@@ -8,14 +8,12 @@
 namespace App\Actions\Catalogue\ProductCategory\UI;
 
 use App\Actions\Catalogue\Product\UI\IndexProducts;
-use App\Actions\CRM\Customer\UI\IndexCustomers;
 use App\Actions\Helpers\History\IndexHistories;
 use App\Actions\InertiaAction;
 use App\Actions\UI\Organisation\Catalogue\ShowCatalogueDashboard;
 use App\Enums\UI\Organisation\DepartmentTabsEnum;
 use App\Http\Resources\Catalogue\DepartmentResource;
 use App\Http\Resources\Catalogue\ProductResource;
-use App\Http\Resources\CRM\CustomerResource;
 use App\Http\Resources\History\HistoryResource;
 use App\Models\Catalogue\ProductCategory;
 use Inertia\Inertia;
@@ -59,28 +57,10 @@ class ShowDepartment extends InertiaAction
                     'next'     => $this->getNext($department, $request),
                 ],
                 'pageHead'    => [
-                    'title'   => $department->name,
-                    'icon'    => [
+                    'title'        => $department->name,
+                    'icon'         => [
                         'icon'  => ['fal', 'fa-folder-tree'],
                         'title' => __('department')
-                    ],
-                    'actions_todo' => [
-                        $this->canEdit ? [
-                            'type'  => 'button',
-                            'style' => 'edit',
-                            'route' => [
-                                'name'       => preg_replace('/show$/', 'edit', $this->routeName),
-                                'parameters' => $request->route()->originalParameters()
-                            ]
-                        ] : false,
-                        $this->canDelete ? [
-                            'type'  => 'button',
-                            'style' => 'delete',
-                            'route' => [
-                                'name'       => 'shops.show.departments.remove',
-                                'parameters' => $request->route()->originalParameters()
-                            ]
-                        ] : false
                     ]
                 ],
                 'tabs'        => [
@@ -89,33 +69,19 @@ class ShowDepartment extends InertiaAction
                 ],
 
                 DepartmentTabsEnum::SHOWCASE->value => $this->tab == DepartmentTabsEnum::SHOWCASE->value ?
-                    fn() => GetProductCategoryShowcase::run($department)
-                    : Inertia::lazy(fn() => GetProductCategoryShowcase::run($department)),
+                    fn () => GetProductCategoryShowcase::run($department)
+                    : Inertia::lazy(fn () => GetProductCategoryShowcase::run($department)),
 
-                DepartmentTabsEnum::CUSTOMERS->value => $this->tab == DepartmentTabsEnum::CUSTOMERS->value
-                    ?
-                    fn() => CustomerResource::collection(
-                        IndexCustomers::run(
-                            parent: $department,
-                            prefix: 'customers'
-                        )
-                    )
-                    : Inertia::lazy(fn() => CustomerResource::collection(
-                        IndexCustomers::run(
-                            parent: $department,
-                            prefix: 'customers'
-                        )
-                    )),
 
                 DepartmentTabsEnum::PRODUCTS->value => $this->tab == DepartmentTabsEnum::PRODUCTS->value
                     ?
-                    fn() => ProductResource::collection(
+                    fn () => ProductResource::collection(
                         IndexProducts::run(
                             parent: $department,
                             prefix: 'products'
                         )
                     )
-                    : Inertia::lazy(fn() => ProductResource::collection(
+                    : Inertia::lazy(fn () => ProductResource::collection(
                         IndexProducts::run(
                             parent: $department,
                             prefix: 'products'
@@ -123,23 +89,17 @@ class ShowDepartment extends InertiaAction
                     )),
 
                 DepartmentTabsEnum::HISTORY->value => $this->tab == DepartmentTabsEnum::HISTORY->value ?
-                    fn() => HistoryResource::collection(IndexHistories::run($department))
-                    : Inertia::lazy(fn() => HistoryResource::collection(IndexHistories::run($department))),
+                    fn () => HistoryResource::collection(IndexHistories::run($department))
+                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistories::run($department))),
 
 
             ]
         )->table(
-            IndexCustomers::make()->tableStructure(
+            IndexProducts::make()->tableStructure(
                 parent: $department,
-                prefix: 'customers'
+                prefix: 'products'
             )
         )
-            ->table(
-                IndexProducts::make()->tableStructure(
-                    parent: $department,
-                    prefix: 'products'
-                )
-            )
             ->table(IndexHistories::make()->tableStructure());
     }
 

@@ -68,6 +68,7 @@ class IndexProducts extends InertiaAction
             InertiaTable::updateQueryBuilderParameters($prefix);
         }
 
+
         $queryBuilder = QueryBuilder::for(Product::class);
         foreach ($this->elementGroups as $key => $elementGroup) {
             $queryBuilder->whereElementGroup(
@@ -77,6 +78,8 @@ class IndexProducts extends InertiaAction
                 engine: $elementGroup['engine']
             );
         }
+
+
 
         return $queryBuilder
             ->defaultSort('products.slug')
