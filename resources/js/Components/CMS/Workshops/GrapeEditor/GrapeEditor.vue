@@ -10,14 +10,23 @@ import TailwindComponents from 'grapesjs-tailwind';
 import Webpage from 'grapesjs-preset-webpage';
 import { ref } from 'vue'
 import { panel } from './Panel'
+import {  get } from "firebase/database"
+import {
+    getDbRef,
+    setDataFirebase,
+} from "@/Composables/firebase";
 
 
 const data = ref(null)
 
-const save = (newData) => {
-  console.log(newData)
-  data.value = newData
-}
+// const save = async(newData) => {
+//   const column = "org/websites/webpages"
+//     try {
+//         await setDataFirebase(column,newData);
+//     } catch (error) {
+//         console.error(error);
+//     }
+// }
 
 const escapeName = (name) =>
   `${name}`.trim().replace(/([^a-z0-9\w-:/]+)/gi, "-");
@@ -29,7 +38,6 @@ onMounted(() => {
     showOffsets: true,
     fromElement: true,
     noticeOnUnload: false,
-    storageManager: false,
     selectorManager: { escapeName },
     plugins: [
       Basic,
@@ -50,22 +58,22 @@ onMounted(() => {
     //           }
     //         });
     //         const savedData = { id: 'projectID', data, pagesHtml };
-
-    //         // Call the save function here with the saved data
     //         save(savedData);
 
     //         return savedData;
     //       },
-    //       onLoad: result => result.data,
+    //       onLoad: async(result) => {
+    //         const snapshot = await get(getDbRef("org/websites/webpages"))
+    //         const firebaseData = snapshot.exists() ? snapshot.val() : null
+    //         result.data = firebaseData.data
+    //         console.log('inii',firebaseData, result)
+    //         return firebaseData.data
+    //       },
     //     }
     //   },
     // },
   });
-  editorInstance.Panels.getPanels().reset(panel(editorInstance));
 });
-
-
-
 </script> 
 
 <template>
