@@ -5,20 +5,24 @@ import { onMounted } from "vue";
 import 'grapesjs/dist/css/grapes.min.css';
 import grapesjs from 'grapesjs';
 import basic from 'grapesjs-blocks-basic';
+import plugin from 'grapesjs-preset-webpage'
 import TailwindComponents from 'grapesjs-tailwind';
 import { ref } from  'vue'
 
-const save=(data)=>{
- console.log(data)
-}
+
 
 const data = ref(null)
+
+const save = (newData) => {
+  console.log(newData)
+  data.value = newData
+}
 
 onMounted(() => {
   console.log(grapesjs.version);
   const editorInstance = grapesjs.init({
     fromElement: true,
-    height: "100vh",
+    height: "100%",
     container: "#gjs",
     forceClass: false,
     plugins: [basic, TailwindComponents],
@@ -54,14 +58,21 @@ onMounted(() => {
 
 <template>
   <div id="gjs"></div>
-  <div>
-  </div>
 </template>
   
 <style>
-#gjs {
-  border: 3px solid #444;
-}
+ .panel {
+      width: 90%;
+      max-width: 700px;
+      border-radius: 3px;
+      padding: 30px 20px;
+      margin: 150px auto 0px;
+      background-color: #d983a6;
+      box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.25);
+      color: rgba(255, 255, 255, 0.75);
+      font: caption;
+      font-weight: 100;
+    }
 
 .gjs-pn-panel {
   padding: 0px;

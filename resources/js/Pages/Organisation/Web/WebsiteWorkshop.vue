@@ -62,8 +62,16 @@ console.log('props', props)
 
 const RouteActive = ref(props.updateRoutes[currentTab.value])
 
+const setForm = () => {
+    let form = null
+    if(currentTab.value == 'workshop_header') form = useForm(props.structure['header'])
+    if(currentTab.value == 'workshop_footer') form = useForm(props.structure['footer'])
+    if(currentTab.value == 'workshop_layout') form = useForm(props.structure['layout'])
+   return form
+}
+
 const sendDataToServer = async () => {
-    const form = useForm(props.structure[currentTab.value]);
+    const form = setForm()
     form.patch(
         route(RouteActive.value.name,RouteActive.value.parameters), {
         onSuccess: async (res) => {
@@ -90,16 +98,18 @@ const sendDataToServer = async () => {
 
 <template layout="OrgApp">
     <Head :title="capitalize(title)" />
-    <PageHeading :data="pageHead"></PageHeading>
-    <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate">
-        <template #content>
-            <div class="flex justify-center align-middle">
-                <div class="h-6 m-auto">
+    <PageHeading :data="pageHead">
+        <template #other="{ dataPageHead: head }">
+            <div class="flex items-center gap-2">
+                <span>
                     <Button @click="sendDataToServer">save</Button>
-                </div>
+                </span>
             </div>
         </template>
-    </Tabs>
+    </PageHeading>
+
+    <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate"/>
+
     <component :is="component" :data="structure" :imagesUploadRoute="imagesUploadRoute"></component>
 </template>
 
