@@ -9,7 +9,6 @@ namespace App\Imports\Catalogue;
 
 use App\Actions\Catalogue\Product\StoreProduct;
 use App\Actions\Helpers\Uploads\ImportExcelUploads;
-use App\Actions\Helpers\Uploads\UpdateExcelUploads;
 use App\Enums\Catalogue\Product\ProductTypeEnum;
 use App\Models\Catalogue\Product;
 use App\Models\Catalogue\ProductCategory;

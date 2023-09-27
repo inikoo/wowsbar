@@ -12,9 +12,7 @@ use App\Actions\Helpers\Uploads\Hydrators\UploadHydrateExcels;
 use App\Actions\Helpers\Uploads\ImportModel;
 use App\Actions\Helpers\Uploads\StoreExcelUploads;
 use App\Imports\CRM\CustomerImport;
-use App\Imports\HumanResources\EmployeeImport;
 use App\Models\CRM\Customer;
-use Excel;
 use Illuminate\Console\Command;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -34,7 +32,7 @@ class ImportCustomer
     public function handle($file): void
     {
         $customerUpload = StoreExcelUploads::run($file, Customer::class);
-        $excelUpload = ImportModel::run(new CustomerImport($customerUpload), $customerUpload);
+        $excelUpload    = ImportModel::run(new CustomerImport($customerUpload), $customerUpload);
 
         UploadHydrateExcels::dispatch($excelUpload);
     }

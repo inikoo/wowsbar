@@ -23,7 +23,6 @@ use Lorisleiva\Actions\ActionRequest;
 
 class ShowProduct extends InertiaAction
 {
-
     private ProductCategory|Organisation $parent;
 
     public function handle(Product $product): Product
@@ -47,7 +46,7 @@ class ShowProduct extends InertiaAction
         return $this->handle($product);
     }
 
-    public function inDepartment(ProductCategory $productCategory,Product $product, ActionRequest $request): Product
+    public function inDepartment(ProductCategory $productCategory, Product $product, ActionRequest $request): Product
     {
         $this->initialisation($request)->withTab(ProductTabsEnum::values());
         $this->parent=$productCategory;
@@ -60,12 +59,12 @@ class ShowProduct extends InertiaAction
         $container=null;
         if (class_basename($scope) == 'ProductCategory') {
             $container = [
-                'href'=>[
-                    'name'=>'org.catalogue.departments.show',
-                    'parameters'=>[
-                        'productCategory'=>$this->parent->slug,
-                        '_query'=>[
-                            'tab'=>'products'
+                'href'=> [
+                    'name'      => 'org.catalogue.departments.show',
+                    'parameters'=> [
+                        'productCategory'=> $this->parent->slug,
+                        '_query'         => [
+                            'tab'=> 'products'
                         ]
                     ]
                 ],
@@ -94,7 +93,7 @@ class ShowProduct extends InertiaAction
                             'icon'  => ['fal', 'fa-cube'],
                             'title' => __('product')
                         ],
-                     'container'=>$container,
+                     'container'=> $container,
 
                     'actions_todo' => [
                         $this->canEdit ? [

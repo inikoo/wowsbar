@@ -12,9 +12,7 @@ use App\Actions\Helpers\Uploads\Hydrators\UploadHydrateExcels;
 use App\Actions\Helpers\Uploads\ImportModel;
 use App\Actions\Helpers\Uploads\StoreExcelUploads;
 use App\Imports\Catalogue\ProductImport;
-use App\Imports\CRM\CustomerImport;
 use App\Models\Catalogue\Product;
-use Excel;
 use Illuminate\Console\Command;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -33,7 +31,7 @@ class ImportProduct
 
     public function handle($file): void
     {
-        $upload = StoreExcelUploads::run($file, Product::class);
+        $upload      = StoreExcelUploads::run($file, Product::class);
         $excelUpload = ImportModel::run(new ProductImport($upload), $upload);
 
         UploadHydrateExcels::dispatch($excelUpload);

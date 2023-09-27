@@ -19,9 +19,9 @@ class UploadHydrateExcels implements ShouldBeUnique
     public function handle(ExcelUpload $excelUpload): void
     {
         $stats = [
-            'number_rows' => $excelUpload->records()->count(),
+            'number_rows'    => $excelUpload->records()->count(),
             'number_success' => $excelUpload->records()->where('status', UploadRecordStatusEnum::COMPLETE)->count(),
-            'number_fails' => $excelUpload->records()->where('status', UploadRecordStatusEnum::FAILED)->count(),
+            'number_fails'   => $excelUpload->records()->where('status', UploadRecordStatusEnum::FAILED)->count(),
         ];
 
         $excelUpload->update($stats);

@@ -13,7 +13,6 @@ use App\Actions\Helpers\Uploads\ImportModel;
 use App\Actions\Helpers\Uploads\StoreExcelUploads;
 use App\Imports\HumanResources\EmployeeImport;
 use App\Models\HumanResources\Employee;
-use Excel;
 use Illuminate\Console\Command;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -33,7 +32,7 @@ class ImportEmployees
     public function handle($file): void
     {
         $employeeUpload = StoreExcelUploads::run($file, Employee::class);
-        $excelUpload = ImportModel::run(new EmployeeImport($employeeUpload), $employeeUpload);
+        $excelUpload    = ImportModel::run(new EmployeeImport($employeeUpload), $employeeUpload);
 
         UploadHydrateExcels::dispatch($excelUpload);
     }
