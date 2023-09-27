@@ -19,37 +19,37 @@ const save = (newData) => {
 }
 
 onMounted(() => {
-  console.log(grapesjs.version);
   const editorInstance = grapesjs.init({
     fromElement: true,
     height: "100%",
     container: "#gjs",
     forceClass: false,
     plugins: [basic, TailwindComponents],
-    storageManager: {
-      type: 'remote',
-      options: {
-        remote: {
-          onStore: (data, editor) => {
-            const pagesHtml = editor.Pages.getAll().map(page => {
-              const component = page.getMainComponent();
-              return {
-                html: editor.getHtml({ component }),
-                css: editor.getCss({ component })
-              }
-            });
-            const savedData = { id: 'projectID', data, pagesHtml };
+    // storageManager: {
+    //   type: 'remote',
+    //   options: {
+    //     remote: {
+    //       onStore: (data, editor) => {
+    //         const pagesHtml = editor.Pages.getAll().map(page => {
+    //           const component = page.getMainComponent();
+    //           return {
+    //             html: editor.getHtml({ component }),
+    //             css: editor.getCss({ component })
+    //           }
+    //         });
+    //         const savedData = { id: 'projectID', data, pagesHtml };
             
-            // Call the save function here with the saved data
-            save(savedData);
+    //         // Call the save function here with the saved data
+    //         save(savedData);
 
-            return savedData;
-          },
-          onLoad: result => result.data,
-        }
-      },
-    },
+    //         return savedData;
+    //       },
+    //       onLoad: result => result.data,
+    //     }
+    //   },
+    // },
   });
+  editorInstance.runCommand('get-tailwindCss');
 });
 
 
