@@ -4,9 +4,10 @@ import Image from "@/Components/Image.vue"
 
 const props = defineProps<{
     data: Object
+    layout : Object
 }>()
 
-
+console.log('inii',props.layout)
 
 const emits = defineEmits();
 
@@ -17,34 +18,23 @@ const changeLogo = async (element) => {
 </script>
 
 <template>
-    <div class="bg-white">
+    <div  :style="`background-color: ${layout?.color};`">
         <header class="pa">
             <nav class="mx-auto flex  items-center justify-between p-6 lg:px-8" aria-label="Global">
                 <div class="flex lg:flex-1">
-                    <label for="faviconUpload" class="flex justify-center items-center bg-white cursor-pointer">
+                    <label for="faviconUpload" class="flex justify-center items-center  cursor-pointer">
                         <input type="file" id="faviconUpload" accept="image/*" style="display: none" @change="changeLogo" />
-                        <!-- <img class="h-8 w-auto" :src="data.logo" alt="" /> -->
                         <Image :src="data.logo" class="h-8 w-auto"/>
                     </label>
                 </div>
                 <div class="flex gap-3">
-                    <div class="hidden lg:flex lg:flex-1 lg:justify-end">
+                    <div  :class="`text-${layout.colorScheme}-500 lg:flex lg:flex-1 lg:justify-end`" >
                     appointment
-                        <!-- <HyperLink :formList="{
-                            label: 'label',
-                            link: 'link',
-                        }" label="label" :data="data.appointment" :useDelete="false"
-                            cssClass="text-sm font-semibold leading-6 text-gray-900" /> -->
                     </div>
-                    <div class="text-gray-300">|</div>
-                    <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-                        <a href="#" class="text-sm font-semibold leading-6 text-gray-900">
+                    <div :class="`text-${layout.colorScheme}-500`">|</div>
+                    <div class="lg:flex lg:flex-1 lg:justify-end">
+                        <a href="#" :class="`text-${layout.colorScheme}-500 text-sm font-semibold leading-6`">
                         sign in
-                            <!-- <HyperLink :formList="{
-                                label: 'label',
-                                link: 'link',
-                            }" label="label" :data="data.logIn" :useDelete="false"
-                                cssClass="text-sm font-semibold leading-6 text-gray-900" /> -->
                         </a>
                     </div>
                 </div>

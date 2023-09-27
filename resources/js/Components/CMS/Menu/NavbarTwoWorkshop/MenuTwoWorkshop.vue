@@ -29,13 +29,14 @@ const props = defineProps({
         type: Function,
         required: true,
     },
+    layout : Object
 });
 const openNav = ref(null);
 const mobileMenuOpen = ref(false);
 </script>
 
 <template>
-    <div class="relative bg-gray-900">
+    <div :class="`bg-${layout.colorScheme}-500 relative`">
         <div aria-hidden="true" class="absolute inset-0 bg-gray-900 opacity-50"/>
         <header class="relative z-10">
             <nav aria-label="Top">

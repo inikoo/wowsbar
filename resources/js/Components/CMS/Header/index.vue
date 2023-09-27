@@ -7,10 +7,10 @@ import HeaderTheme2 from './HeaderTheme2.vue';
 const props = defineProps<{
     theme: String,
     data: Object
+    layout : Object
 }>()
 
 const emits = defineEmits();
-
 const component = {
    "simpleSticky": HeaderTheme1,
    "simple": HeaderTheme2,
@@ -24,7 +24,7 @@ const changeLogo=(file)=>{
 
 <template>
     <div>
-        <component :is="component[theme]" :data="data" @changeLogo="changeLogo"/>
+        <component :is="component[theme]" :data="data" @changeLogo="changeLogo" :layout="layout"/>
     </div>
 </template>
 

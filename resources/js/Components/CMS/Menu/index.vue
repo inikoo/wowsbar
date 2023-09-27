@@ -1,6 +1,6 @@
 <template>
     <div>
-        <component :is="component[theme]" :navigation="navigation"  :tool="tool" :selectedNav="selectedNav" :changeNavActive ="changeNavActive" />
+        <component :is="component[theme]" :navigation="navigation"  :tool="tool" :selectedNav="selectedNav" :changeNavActive ="changeNavActive" :layout="layout"/>
     </div>
 </template>
 
@@ -15,10 +15,9 @@ const props = defineProps<{
     tool:Object
     selectedNav?:Object
     changeNavActive : Function
+    layout : Object
   
 }>()
-
-console.log('asdd',props)
 
 
 const component = {
