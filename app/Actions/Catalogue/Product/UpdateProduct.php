@@ -39,7 +39,7 @@ class UpdateProduct
     public function rules(): array
     {
         return [
-            'code'        => ['sometimes','required', 'unique:tenant.products', 'between:2,9', 'alpha_dash'],
+            'code'        => ['sometimes','required', 'iunique:products', 'between:2,9', 'alpha_dash'],
             'units'       => ['sometimes', 'required', 'numeric'],
             'price'       => ['sometimes', 'required', 'numeric'],
             'name'        => ['sometimes','required', 'max:250', 'string'],

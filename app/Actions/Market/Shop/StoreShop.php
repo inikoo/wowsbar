@@ -108,7 +108,7 @@ class StoreShop
     {
         return [
             'name'                     => ['required', 'string', 'max:255'],
-            'code'                     => ['required', 'unique:shops', 'between:2,6', 'alpha_dash'],
+            'code'                     => ['required', 'iunique:shops', 'between:2,6', 'alpha_dash'],
             'contact_name'             => ['nullable', 'string', 'max:255'],
             'company_name'             => ['nullable', 'string', 'max:255'],
             'email'                    => ['nullable', 'email'],

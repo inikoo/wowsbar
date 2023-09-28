@@ -15,7 +15,6 @@ use App\Actions\Portfolio\PortfolioWebsite\Hydrators\PortfolioWebsiteHydrateUniv
 use App\Models\CRM\Customer;
 use App\Models\Portfolios\CustomerWebsite;
 use App\Models\Portfolio\PortfolioWebsite;
-use App\Rules\CaseSensitive;
 use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Http\RedirectResponse;
@@ -65,8 +64,8 @@ class StorePortfolioWebsite
     public function rules(): array
     {
         return [
-            'domain' => ['required', new CaseSensitive('portfolio_websites')],
-            'code'   => ['required', 'unique:portfolio_websites', 'max:8'],
+            'domain' => ['required'],
+            'code'   => ['required', 'iunique:portfolio_websites', 'max:8'],
             'name'   => ['required']
         ];
     }

@@ -15,7 +15,6 @@ use App\Enums\Catalogue\Product\ProductTypeEnum;
 use App\Models\Catalogue\Product;
 use App\Models\Catalogue\ProductCategory;
 use App\Models\Organisation\Organisation;
-use App\Rules\CaseSensitive;
 use Illuminate\Validation\Rule;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
@@ -45,7 +44,7 @@ class StoreProduct
     public function rules(): array
     {
         return [
-            'code'        => ['required', 'unique:products', 'between:2,9', 'alpha_dash', new CaseSensitive('products')],
+            'code'        => ['required', 'iunique:products', 'between:2,9', 'alpha_dash'],
             'unit'        => ['required', 'string'],
             'price'       => ['required', 'numeric'],
             'name'        => ['required', 'max:250', 'string'],

@@ -10,7 +10,6 @@ namespace App\Actions\HumanResources\ClockingMachine;
 use App\Actions\HumanResources\ClockingMachine\Hydrators\ClockingMachineHydrateUniversalSearch;
 use App\Models\HumanResources\ClockingMachine;
 use App\Models\HumanResources\Workplace;
-use App\Rules\CaseSensitive;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
 use Lorisleiva\Actions\ActionRequest;
@@ -45,7 +44,7 @@ class StoreClockingMachine
     public function rules(): array
     {
         return [
-            'code'  => ['required', 'unique:clocking_machines', 'between:2,64', 'alpha_dash', new CaseSensitive('clocking_machines')],
+            'code'  => ['required', 'iunique:clocking_machines', 'between:2,64', 'alpha_dash'],
         ];
     }
 

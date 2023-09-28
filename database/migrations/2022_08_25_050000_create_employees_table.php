@@ -42,6 +42,8 @@ return new class () extends Migration {
             $table->timestampsTz();
             $table->softDeletesTz();
         });
+        DB::statement("CREATE INDEX ON employees (lower('worker_number')) ");
+        DB::statement("CREATE INDEX ON employees (lower('alias')) ");
 
         //DB::statement('CREATE INDEX ON employees USING gin (contact_name gin_trgm_ops) ');
     }

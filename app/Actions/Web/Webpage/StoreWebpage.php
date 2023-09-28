@@ -12,7 +12,6 @@ use App\Enums\Organisation\Web\Webpage\WebpagePurposeEnum;
 use App\Enums\Organisation\Web\Webpage\WebpageTypeEnum;
 use App\Models\Web\Webpage;
 use App\Models\Web\Website;
-use App\Rules\CaseSensitive;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Redirect;
@@ -85,7 +84,7 @@ class StoreWebpage
     public function rules(): array
     {
         return [
-            'url'     => ['required', new CaseSensitive('webpages'), 'max:255', 'alpha_dash:ascii'],
+            'url'     => ['required', 'iunique:webpages', 'max:255', 'alpha_dash:ascii'],
             'code'    => ['required', 'unique:webpages', 'max:64', 'alpha_dash:ascii',
                           Rule::notIn(
                               [

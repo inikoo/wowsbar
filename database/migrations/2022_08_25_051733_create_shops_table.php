@@ -46,6 +46,8 @@ return new class () extends Migration {
             $table->timestampsTz();
             $table->softDeletesTz();
         });
+        DB::statement("CREATE INDEX ON shops (lower('code')) ");
+
     }
 
     public function down(): void

@@ -27,6 +27,8 @@ return new class () extends Migration {
             $table->decimal('share_work_time', 7, 6)->nullable();
             $table->timestampsTz();
         });
+        DB::statement("CREATE INDEX ON job_positions (lower('code')) ");
+
     }
 
 

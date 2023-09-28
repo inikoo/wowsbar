@@ -15,7 +15,6 @@ use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateCustomerW
 use App\Models\CRM\Customer;
 use App\Models\Portfolio\PortfolioWebsite;
 use App\Models\Portfolios\CustomerWebsite;
-use App\Rules\CaseSensitive;
 use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Http\RedirectResponse;
@@ -62,7 +61,7 @@ class StoreCustomerWebsite
     public function rules(): array
     {
         return [
-            'domain' => ['required', new CaseSensitive('portfolio_websites')],
+            'domain' => ['required'],
             'code'   => ['required', 'unique:portfolio_websites', 'max:8'],
             'name'   => ['required']
         ];

@@ -31,6 +31,8 @@ return new class () extends Migration {
             $table->timestampsTz();
             $table->softDeletesTz();
         });
+        DB::statement("CREATE INDEX ON products (lower('code')) ");
+
     }
 
 

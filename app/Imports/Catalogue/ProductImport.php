@@ -60,7 +60,7 @@ class ProductImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wit
     {
         return [
             'department' => ['nullable', 'exists:product_categories,code'],
-            'code'       => ['required', 'unique:products', 'between:2,9', 'alpha_dash'],
+            'code'       => ['required', 'iunique:products', 'between:2,9', 'alpha_dash'],
             'unit'       => ['required', 'string'],
             'price'      => ['required', 'numeric'],
             'name'       => ['required', 'max:250', 'string'],
