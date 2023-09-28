@@ -58,12 +58,12 @@ class CustomerImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wi
     public function rules(): array
     {
         return [
-            'shop' => ['required', 'exists:shops,slug'],
+            'shop'         => ['required', 'exists:shops,slug'],
             'contact_name' => ['nullable', 'string', 'max:255'],
-            'company' => ['nullable', 'string', 'max:255'],
-            'email' => ['nullable', 'email','unique:customers'],
-            'phone' => ['nullable'],
-            'website' => ['nullable']
+            'company'      => ['nullable', 'string', 'max:255'],
+            'email'        => ['nullable', 'email','unique:customers'],
+            'phone'        => ['nullable'],
+            'website'      => ['nullable']
         ];
     }
 }

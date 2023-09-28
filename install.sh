@@ -42,13 +42,11 @@ php artisan shop:create awa 'aw-advantage' 'digital-marketing'
 php artisan shop:new-website awa 'awa.test'
 php artisan website:change-state awa launch
 
-php artisan product-category:new seo "Search Engine Optimization"
-php artisan product-category:new ppc "Pay per click"
-php artisan product-category:new smm "Social Media Management"
-php artisan product-category:new sma "Social Media Advertising"
-php artisan product-category:new leads "Prospecting"
-php artisan product-category:new caas "Content as a service"
-php artisan product:import database/seeders/datasets/excel-uploads/real/products.xlsx
+pg_dump -Fc -f "devops/devel/snapshots/tmp.dump" ${DB}
+
+php artisan department:import database/seeders/uploads/local/departments.xlsx
+
+php artisan product:import database/seeders/uploads/local/products.xlsx
 
 php artisan customer:import database/seeders/datasets/excel-uploads/real/customers.xlsx
 php artisan shop:new-customer awa aiku@inikoo.com -C 'Aiku'

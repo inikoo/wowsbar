@@ -41,9 +41,10 @@ trait WithImportModel
         $upload = $this->handle($file);
 
         $command->table(
-            ['Success', 'Fail'],
+            ['','Success', 'Fail'],
             [
                 [
+                    $command->getName(),
                     $upload->number_success,
                     $upload->number_fails
                 ]

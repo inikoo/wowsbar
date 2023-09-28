@@ -10,6 +10,7 @@ namespace App\Imports;
 use App\Enums\Helpers\Import\UploadRecordStatusEnum;
 use App\Models\Helpers\Upload;
 use App\Models\Helpers\UploadRecord;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Validators\Failure;
 
@@ -102,6 +103,17 @@ trait WithImport
                 'number_success' => $this->upload->records()->where('status', UploadRecordStatusEnum::COMPLETE)->count(),
                 'number_fails'   => $this->upload->records()->where('status', UploadRecordStatusEnum::FAILED)->count(),
             ]
+        );
+    }
+
+    protected function getFieldsFromRules($remove=[], $add=[]): array
+    {
+        return array_merge(
+            Arr::except(
+                array_keys($this->rules()),
+                $remove
+            ),
+            $add
         );
     }
 

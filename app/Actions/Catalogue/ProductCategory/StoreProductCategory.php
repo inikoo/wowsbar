@@ -11,7 +11,6 @@ use App\Actions\Catalogue\ProductCategory\Hydrators\ProductCategoryHydrateUniver
 
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateDepartments;
 use App\Enums\Catalogue\ProductCategory\ProductCategoryTypeEnum;
-use App\Models\Market\Shop;
 use App\Models\Organisation\Organisation;
 use App\Models\Catalogue\ProductCategory;
 use Illuminate\Console\Command;
@@ -54,13 +53,12 @@ class StoreProductCategory
         return [
             'code'        => ['required', 'iunique:product_categories', 'between:2,9', 'alpha_dash'],
             'name'        => ['required', 'max:250', 'string'],
-            'image_id'    => ['sometimes', 'required', 'exists:media,id'],
             'state'       => ['sometimes', 'required'],
             'description' => ['sometimes', 'required', 'max:1500'],
         ];
     }
 
-    public function action(Shop|ProductCategory $parent, array $objectData): ProductCategory
+    public function action(Organisation|ProductCategory $parent, array $objectData): ProductCategory
     {
         $this->setRawAttributes($objectData);
         $validatedData = $this->validateAttributes();
