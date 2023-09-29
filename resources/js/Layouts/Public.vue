@@ -13,17 +13,16 @@ import { ref, computed } from 'vue'
 import HeaderThemeOne from '@/Components/Header/Public/HeaderThemeOne.vue'
 import MenuOne from '@/Components/Menu/Public/MenuOne.vue'
 import MenuTwo from '@/Components/Menu/Public/MenuTwo.vue'
-import FooterThemeOne from '@/Components/Footer/Public/FooterThemeOne.vue'
+import FooterOne from '@/Components/Public/Footer/FooterOne.vue'
 import FooterThemeTwo from '@/Components/Footer/Public/FooterThemeTwo.vue'
-import FooterThemeThree from '@/Components/Footer/Public/FooterThemeThree.vue'
 
 const isTabActive = ref(false)
 
-console.log(usePage().props.structure.header)
 const props = defineProps([
     'layout',
     'structure'
 ])
+console.log(props.structure.footer)
 
 // const footerLogo = usePage().props.art.footer_logo
 
@@ -35,24 +34,23 @@ const getHeaderComponent = computed(() => {
     return componentList[props.structure.header.type]
 })
 
-const getMenuComponent = computed(() => {
-    const componentList = {
-        'simple': MenuOne,
-        'MenuTwo': MenuTwo
-    }
-
-    return componentList[props.layout?.menu?.component ?? 'MenuTwo']
-})
-
-// const getFooterComponent = computed(() => {
+// const getMenuComponent = computed(() => {
 //     const componentList = {
-//         'FooterThemeOne': FooterThemeOne,
-//         'FooterThemeTwo': FooterThemeTwo,
-//         'FooterThemeThree': FooterThemeThree,
+//         'simple': MenuOne,
+//         'MenuTwo': MenuTwo
 //     }
 
-//     return componentList[props.layout?.footer?.component ?? 'FooterThemeOne']
+//     return componentList[props.layout?.menu?.component ?? 'MenuTwo']
 // })
+
+const getFooterComponent = computed(() => {
+    const componentList = {
+        'simple': FooterOne,
+        'FooterThemeTwo': FooterThemeTwo,
+    }
+
+    return componentList[props.structure?.footer?.type ?? 'simple']
+})
 
 
 </script>
@@ -63,19 +61,16 @@ const getMenuComponent = computed(() => {
             :class="[structure.layout.layout !== 'center' ? 'mx-auto max-w-5xl' : '']"
         >
             <!-- Header -->
-            <!-- <pre>{{ structure.layout }}</pre> -->
+            <!-- <pre>{{ structure }}</pre> -->
             <component :is="getHeaderComponent" :data="structure.header"></component>
 
             <!-- Menu -->
             <!-- <component :is="getMenuComponent" :data="structure.header.menu"></component> -->
 
-
-
-
-            <!-- Main content of page -->
             <slot />
 
-            <!-- <component :is="getFooterComponent" :data="publicData.footer.data" />-->
+            <!-- Footer -->
+            <component :is="getFooterComponent" :dataFooter="structure.footer" :dataLayout="structure.layout" />
         </section>
     </div>
 
