@@ -43,6 +43,7 @@ const props = defineProps<{
     updateRoutes: Object
 }>()
 
+
 let currentTab = ref(props.tabs.current)
 
 const handleTabUpdate = (tabSlug) => {

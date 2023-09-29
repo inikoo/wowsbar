@@ -21,7 +21,20 @@ class UpdateWebsiteFooter
 
     public function handle(Website $website, array $modelData): Website
     {
-        return $this->update($website, $modelData, ['data']);
+
+        $website->update(
+            [
+                'footer'=>$modelData
+            ]
+        );
+        $website->update(
+            [
+                'compiled_structure' => $website->getCompiledStructure()
+            ]
+        );
+
+        return $website;
+
     }
 
     public function authorize(ActionRequest $request): bool
@@ -46,7 +59,6 @@ class UpdateWebsiteFooter
 
     public function asController(Website $website, ActionRequest $request): Website
     {
-        dd($request->all());
         $request->validate();
 
         return $this->handle($website, $request->validated());

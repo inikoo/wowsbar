@@ -86,7 +86,6 @@ const tool = ref({ name: 'edit', icon: ['fas', 'fa-hand-pointer'] })
 
 
 const data = reactive(props.data.footer)
-console.log('setet',data)
 
 // async function setToFirebase() {
 //     const columns = 'org/websites/footer';
