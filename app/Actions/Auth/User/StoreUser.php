@@ -7,15 +7,14 @@
 
 namespace App\Actions\Auth\User;
 
+use App\Actions\Auth\CustomerUser\StoreCustomerUser;
 use App\Actions\Auth\User\Hydrators\UserHydrateUniversalSearch;
 use App\Actions\Auth\User\UI\SetUserAvatar;
 use App\Actions\CRM\Customer\Hydrators\CustomerHydrateUniversalSearch;
 use App\Actions\CRM\Customer\Hydrators\CustomerHydrateUsers;
-use App\Models\Auth\Role;
 use App\Models\Auth\User;
 use App\Models\CRM\Customer;
 use App\Models\Web\Website;
-use App\Rules\AlphaDashDot;
 use Arr;
 use Exception;
 use Illuminate\Console\Command;
@@ -23,7 +22,6 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
-use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -42,7 +40,9 @@ class StoreUser
         data_set($modelData, 'ulid', Str::ulid());
         data_set($modelData, 'website_id', $website->id);
         /** @var User $user */
-        $user = $customer->users()->create($modelData);
+        $user = User::create(Arr::except($modelData, ['is_root']));
+
+        $customerUser=StoreCustomerUser::run($customer, $user, Arr::only($modelData, ['is_root']));
 
         if (!$customer->website_id) {
             $customer->update(
@@ -52,6 +52,7 @@ class StoreUser
         }
 
         $user->stats()->create();
+
 
         SetUserAvatar::run($user);
 
@@ -68,21 +69,21 @@ class StoreUser
             return true;
         }
 
-        return $request->user()->can("sysadmin.edit");
+        return $request->user()->hasPermissionTo("sysadmin.edit");
     }
 
     public function rules(): array
     {
         return [
-            'username'     => ['required', new AlphaDashDot(), 'unique:users,username', Rule::notIn(['export', 'create']), 'min:4'],
             'password'     =>
                 [
                     'sometimes',
                     'required',
                     app()->isLocal() || app()->environment('testing') ? null : Password::min(8)->uncompromised()
                 ],
-            'contact_name' => ['required', 'string', 'max:255'],
-            'email'        => 'required|string|email|max:255|unique:'.User::class,
+            'contact_name' => ['sometimes', 'nullable', 'string', 'max:255'],
+            'email'        => 'required|iunique:users|email|max:255',
+            'is_root'      => ['sometimes','required', 'boolean']
         ];
     }
 
@@ -96,7 +97,7 @@ class StoreUser
     public function htmlResponse(User $user): RedirectResponse
     {
         return Redirect::route('sysadmin.users.show', [
-            $user->username
+            $user->slug
         ]);
     }
 
@@ -112,7 +113,7 @@ class StoreUser
 
     public function getCommandSignature(): string
     {
-        return 'customer:new-user {customer} {--e|email=} {--u|username=} {--P|password=} {--N|name=}';
+        return 'customer:new-user {customer} {email} {--P|password=} {--N|name=}';
     }
 
     public function asCommand(Command $command): int
@@ -135,16 +136,14 @@ class StoreUser
 
         Config::set('global.customer_id', $customer->id);
 
-        $email    = $command->option('email')    ?? $customer->email;
-        $username = $command->option('username') ?? $email;
-        $name     = $command->option('name')     ?? $customer->contact_name;
+        $email = $command->option('email') ?? $customer->email;
+        $name  = $command->option('name')  ?? $customer->contact_name;
 
         $this->setRawAttributes(
             [
                 'website_id'   => $website->id,
                 'contact_name' => $name,
                 'email'        => $email,
-                'username'     => $username,
                 'password'     => $command->option('password') ?? (app()->isLocal() ? 'hello' : wordwrap(Str::random(), 4, '-', true))
             ]
         );
@@ -152,8 +151,7 @@ class StoreUser
         $validatedData = $this->validateAttributes();
         $user          = $this->handle($website, $customer, $validatedData);
 
-        $superAdminRole = Role::where('guard_name', 'customer')->where('name', 'super-admin')->firstOrFail();
-        $user->assignRole($superAdminRole);
+
 
         $command->line("Public user $user->email created successfully");
 

@@ -31,9 +31,9 @@ library.add(faUpload, falFile, faTimes, faFileDownload, fasFile)
 const props = defineProps<{
     pageHead: any
     title: string
-    websites: object
-    changelog: object
-    uploaded_websites: object
+    websites?: object
+    changelog?: object
+    uploaded_websites?: object
     tabs: {
         current: string;
         navigation: object;

@@ -119,12 +119,12 @@ class IndexOrganisationUsers extends InertiaAction
 
     public function authorize(ActionRequest $request): bool
     {
-        $this->canEdit = $request->user()->can('sysadmin.edit');
+        $this->canEdit = $request->user()->hasPermissionTo('sysadmin.edit');
 
         return
             (
                 $request->user()->tokenCan('root') or
-                $request->user()->can('sysadmin.view')
+                $request->user()->hasPermissionTo('sysadmin.view')
             );
     }
 

@@ -41,10 +41,10 @@ class ShowCustomerWebsite extends InertiaAction
 
     public function authorize(ActionRequest $request): bool
     {
-        $this->canEdit   = $request->user()->can('crm.edit');
-        $this->canDelete = $request->user()->can('crm.edit');
+        $this->canEdit   = $request->user()->hasPermissionTo('crm.edit');
+        $this->canDelete = $request->user()->hasPermissionTo('crm.edit');
 
-        return $request->user()->can('crm.view');
+        return $request->user()->hasPermissionTo('crm.view');
     }
 
     public function asController(CustomerWebsite $customerWebsite, ActionRequest $request): CustomerWebsite

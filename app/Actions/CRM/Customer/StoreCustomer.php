@@ -7,6 +7,7 @@
 
 namespace App\Actions\CRM\Customer;
 
+use App\Actions\Auth\User\StoreUser;
 use App\Actions\CRM\Customer\Hydrators\CustomerHydrateUniversalSearch;
 use App\Actions\Helpers\SerialReference\GetSerialReference;
 use App\Actions\Market\Shop\Hydrators\ShopHydrateCustomers;
@@ -17,9 +18,11 @@ use App\Models\Market\Shop;
 use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rules\Password;
 use Illuminate\Validation\Validator;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -90,7 +93,13 @@ class StoreCustomer
             'identity_document_number' => ['nullable', 'string'],
             'contact_website'          => ['nullable', 'active_url'],
             'timezone_id'              => ['nullable', 'exists:timezones,id'],
-            'language_id'              => ['nullable', 'exists:languages,id']
+            'language_id'              => ['nullable', 'exists:languages,id'],
+            'password'                 =>
+                [
+                    'sometimes',
+                    'required',
+                    app()->isLocal() || app()->environment('testing') ? null : Password::min(8)->uncompromised()
+                ],
 
         ];
     }
@@ -151,11 +160,25 @@ class StoreCustomer
         }
 
 
-        $this->setRawAttributes([
+        $attributes = [
             'contact_name' => $command->option('contact_name'),
             'company_name' => $command->option('company'),
             'email'        => $command->argument('email'),
-        ]);
+        ];
+
+
+        if ($command->option('password')) {
+            $attributes['password'] = $command->option('password');
+
+            if (!$shop->website) {
+                $command->error('Shop dont have website');
+
+                return 1;
+            }
+        }
+
+
+        $this->setRawAttributes($attributes);
 
         try {
             $validatedData = $this->validateAttributes();
@@ -165,7 +188,16 @@ class StoreCustomer
             return 1;
         }
 
-        $customer = $this->handle($shop, $validatedData);
+        $customer = $this->handle($shop, Arr::except($validatedData, ['password']));
+
+        if ($command->option('password')) {
+            $validatedData['is_root']=true;
+            StoreUser::make()->action(
+                $shop->website,
+                $customer,
+                Arr::only($validatedData, ['is_root','email', 'password', 'contact_name'])
+            );
+        }
 
         $command->info("Customer $customer->slug created successfully 🎉");
 

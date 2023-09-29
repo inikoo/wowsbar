@@ -167,12 +167,12 @@ class IndexBanners extends InertiaAction
 
     public function authorize(ActionRequest $request): bool
     {
-        $this->canEdit = $request->user()->can('portfolio.edit');
+        $this->canEdit = $request->get('customerUser')->hasPermissionTo('portfolio.edit');
 
         return
             (
                 $request->user()->tokenCan('root') or
-                $request->user()->can('portfolio.view')
+                $request->get('customerUser')->hasPermissionTo('portfolio.view')
             );
     }
 

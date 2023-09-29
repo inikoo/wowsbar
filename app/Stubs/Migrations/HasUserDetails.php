@@ -11,24 +11,11 @@ use Illuminate\Database\Schema\Blueprint;
 
 trait HasUserDetails
 {
-    public function userDetailsColumns(Blueprint $table, string $usernameField): Blueprint
+    public function userDetailsColumns(Blueprint $table): Blueprint
     {
-
-        if($usernameField=='username') {
-            $table->string('username')->index()->collation('und_ns');
-        }
 
         $table->boolean('status')->default(true);
         $table->string('contact_name')->nullable()->collation('und_ns');
-
-        if($usernameField=='email') {
-            $table->string('email')->index()->unique()->collation('und_ns');
-            $table->timestamp('email_verified_at')->nullable();
-        } else {
-            $table->string('email')->index()->nullable()->collation('und_ns');
-        }
-
-
         $table->string('password');
         $table->rememberToken();
         $table->string('about')->nullable();

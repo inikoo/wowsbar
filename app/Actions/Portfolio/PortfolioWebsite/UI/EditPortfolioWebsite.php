@@ -24,8 +24,8 @@ class EditPortfolioWebsite extends InertiaAction
 
     public function authorize(ActionRequest $request): bool
     {
-        $this->canEdit = $request->user()->can('portfolio.edit');
-        return $request->user()->can("portfolio.edit");
+        $this->canEdit = $request->get('customerUser')->hasPermissionTo('portfolio.edit');
+        return $request->get('customerUser')->hasPermissionTo("portfolio.edit");
 
     }
 

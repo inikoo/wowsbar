@@ -87,7 +87,7 @@ class PublishBanner
             return true;
         }
 
-        return $request->user()->can("portfolio.edit");
+        return $request->get('customerUser')->hasPermissionTo("portfolio.edit");
     }
 
     public function rules(): array

@@ -27,7 +27,7 @@ class EditUser extends InertiaAction
 
     public function authorize(ActionRequest $request): bool
     {
-        return $request->user()->can("crm.edit");
+        return $request->user()->hasPermissionTo("crm.edit");
     }
 
     public function asController(User $user, ActionRequest $request): User

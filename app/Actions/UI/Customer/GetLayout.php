@@ -7,6 +7,7 @@
 
 namespace App\Actions\UI\Customer;
 
+use App\Models\Auth\CustomerUser;
 use App\Models\Auth\User;
 use Lorisleiva\Actions\Concerns\AsAction;
 
@@ -14,7 +15,7 @@ class GetLayout
 {
     use AsAction;
 
-    public function handle(User $user): array
+    public function handle(CustomerUser $customerUser): array
     {
         $navigation = [];
 
@@ -31,7 +32,7 @@ class GetLayout
 
         ];
 
-        if ($user->can('portfolio.view')) {
+        if ($customerUser->hasPermissionTo('portfolio.view')) {
             $navigation['portfolio'] = [
                 'scope'   => 'portfolio',
                 'icon'    => ['fal', 'fa-briefcase'],
@@ -62,7 +63,7 @@ class GetLayout
             ];
         }
 
-        if ($user->can('portfolio.view')) {
+        if ($customerUser->hasPermissionTo('portfolio.view')) {
             $navigation['prospects'] = [
                 'scope'   => 'prospects',
                 'icon'    => ['fal', 'fa-transporter'],
@@ -76,7 +77,7 @@ class GetLayout
             ];
         }
 
-        if ($user->can('portfolio.view')) {
+        if ($customerUser->hasPermissionTo('portfolio.view')) {
             $navigation['seo'] = [
                 'scope'   => 'seo',
                 'icon'    => ['fab', 'fa-google'],
@@ -96,7 +97,7 @@ class GetLayout
             ];
         }
 
-        if ($user->can('portfolio.view')) {
+        if ($customerUser->hasPermissionTo('portfolio.view')) {
             $navigation['google-ads'] = [
                 'scope'   => 'google-ads',
                 'icon'    => ['fal', 'fa-bullseye'],
@@ -116,7 +117,7 @@ class GetLayout
             ];
         }
 
-        if ($user->can('portfolio.view')) {
+        if ($customerUser->hasPermissionTo('portfolio.view')) {
             $navigation['social'] = [
                 'scope'   => 'social',
                 'icon'    => ['fal', 'fa-thumbs-up'],
@@ -131,7 +132,7 @@ class GetLayout
         }
 
 
-        if ($user->can('portfolio.view')) {
+        if ($customerUser->hasPermissionTo('portfolio.view')) {
             $navigation['banners'] = [
                 'scope'   => 'banners',
                 'icon'    => ['fal', 'fa-rectangle-wide'],
@@ -170,7 +171,7 @@ class GetLayout
             ];
         }
 
-        if ($user->can('sysadmin')) {
+        if ($customerUser->hasPermissionTo('sysadmin')) {
             $navigation['sysadmin'] = [
                 'label'   => __('Manage account'),
                 'icon'    => ['fal', 'fa-users-cog'],

@@ -18,6 +18,8 @@ use App\Models\Web\Website;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -25,19 +27,19 @@ use Laravel\Sanctum\HasApiTokens;
 use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
-use Spatie\Permission\Traits\HasRoles;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 /**
  * App\Models\Auth\User
  *
  * @property int $id
- * @property int|null $customer_id
- * @property int $website_id
- * @property string|null $username
- * @property bool $status
- * @property string|null $contact_name
+ * @property string $slug
  * @property string $email
  * @property \Illuminate\Support\Carbon|null $email_verified_at
+ * @property int $website_id
+ * @property bool $status
+ * @property string|null $contact_name
  * @property mixed $password
  * @property string|null $remember_token
  * @property string|null $about
@@ -52,17 +54,16 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \OwenIt\Auditing\Models\Audit> $audits
  * @property-read int|null $audits_count
  * @property-read Media|null $avatar
- * @property-read Customer|null $customer
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Auth\CustomerUser> $customerUsers
+ * @property-read int|null $customer_users_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Customer> $customers
+ * @property-read int|null $customers_count
  * @property-read array $es_audits
  * @property-read Language $language
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, Media> $media
  * @property-read int|null $media_count
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Permission\Models\Permission> $permissions
- * @property-read int|null $permissions_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Permission\Models\Role> $roles
- * @property-read int|null $roles_count
  * @property-read \App\Models\Auth\UserStats|null $stats
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Laravel\Sanctum\PersonalAccessToken> $tokens
  * @property-read int|null $tokens_count
@@ -71,14 +72,11 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static \Database\Factories\Auth\UserFactory factory($count = null, $state = [])
  * @method static Builder|User newModelQuery()
  * @method static Builder|User newQuery()
- * @method static Builder|User permission($permissions)
  * @method static Builder|User query()
- * @method static Builder|User role($roles, $guard = null)
  * @method static Builder|User whereAbout($value)
  * @method static Builder|User whereAvatarId($value)
  * @method static Builder|User whereContactName($value)
  * @method static Builder|User whereCreatedAt($value)
- * @method static Builder|User whereCustomerId($value)
  * @method static Builder|User whereData($value)
  * @method static Builder|User whereDeletedAt($value)
  * @method static Builder|User whereEmail($value)
@@ -88,10 +86,10 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static Builder|User wherePassword($value)
  * @method static Builder|User whereRememberToken($value)
  * @method static Builder|User whereSettings($value)
+ * @method static Builder|User whereSlug($value)
  * @method static Builder|User whereStatus($value)
  * @method static Builder|User whereUlid($value)
  * @method static Builder|User whereUpdatedAt($value)
- * @method static Builder|User whereUsername($value)
  * @method static Builder|User whereWebsiteId($value)
  * @mixin \Eloquent
  */
@@ -101,11 +99,11 @@ class User extends Authenticatable implements HasMedia, Auditable
     use HasApiTokens;
     use HasFactory;
     use Notifiable;
-    use HasRoles;
+
     use InteractsWithMedia;
     use HasUniversalSearch;
     use HasHistory;
-
+    use HasSlug;
 
     protected $casts = [
         'data'              => 'array',
@@ -127,9 +125,19 @@ class User extends Authenticatable implements HasMedia, Auditable
         'remember_token',
     ];
 
+    public function getSlugOptions(): SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom(function () {
+                return head(explode('@', trim($this->email)));
+            })
+            ->saveSlugsTo('slug')
+            ->slugsShouldBeNoLongerThan(16);
+    }
+
     public function getRouteKeyName(): string
     {
-        return 'username';
+        return 'slug';
     }
 
     public function stats(): HasOne
@@ -142,10 +150,18 @@ class User extends Authenticatable implements HasMedia, Auditable
         return $this->belongsTo(Website::class);
     }
 
-    public function customer(): BelongsTo
+    public function customers(): HasManyThrough
     {
-        return $this->belongsTo(Customer::class);
+        return $this->hasManyThrough(Customer::class, CustomerUser::class);
     }
+
+
+    public function customerUsers(): HasMany
+    {
+        return $this->hasMany(CustomerUser::class);
+    }
+
+
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('avatar')

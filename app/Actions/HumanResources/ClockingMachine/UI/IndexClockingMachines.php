@@ -95,7 +95,7 @@ class IndexClockingMachines extends InertiaAction
 
     public function authorize(ActionRequest $request): bool
     {
-        $this->canEdit = $request->user()->can('hr.workplaces.edit');
+        $this->canEdit = $request->user()->hasPermissionTo('hr.workplaces.edit');
 
         return
             (

@@ -21,3 +21,5 @@ if (! function_exists('customer')) {
         return Customer::where('id', config('global.customer_id'))->firstOrFail();
     }
 }
+
+

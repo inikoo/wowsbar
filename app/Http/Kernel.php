@@ -21,7 +21,7 @@ use App\Http\Middleware\OrgAuthenticate;
 use App\Http\Middleware\PreventRequestsDuringMaintenance;
 use App\Http\Middleware\PublicAuthenticate;
 use App\Http\Middleware\RedirectIfAuthenticated;
-use App\Http\Middleware\SetCustomerID;
+use App\Http\Middleware\SetUserCustomerMiddleware;
 use App\Http\Middleware\TrimStrings;
 use App\Http\Middleware\TrustProxies;
 use App\Http\Middleware\ValidateSignature;
@@ -104,7 +104,7 @@ class Kernel extends HttpKernel
             ShareErrorsFromSession::class,
             VerifyCsrfToken::class,
             SubstituteBindings::class,
-            SetCustomerID::class,
+            SetUserCustomerMiddleware::class,
             HandleCustomerInertiaRequests::class,
             AddLinkHeadersForPreloadedAssets::class,
             LogUserFirebaseMiddleware::class,

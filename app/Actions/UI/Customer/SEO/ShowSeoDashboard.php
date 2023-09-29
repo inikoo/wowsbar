@@ -21,7 +21,7 @@ class ShowSeoDashboard extends InertiaAction
 {
     public function authorize(ActionRequest $request): bool
     {
-        return $request->user()->can("portfolio.view");
+        return $request->get('customerUser')->hasPermissionTo("portfolio.view");
     }
 
 

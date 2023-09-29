@@ -11,6 +11,7 @@ use App\Enums\CRM\Customer\CustomerStateEnum;
 use App\Enums\CRM\Customer\CustomerStatusEnum;
 use App\Enums\CRM\Customer\CustomerTradeStateEnum;
 use App\Models\Assets\Currency;
+use App\Models\Auth\CustomerUser;
 use App\Models\Auth\User;
 use App\Models\Portfolios\CustomerSocialAccount;
 use App\Models\Portfolios\CustomerWebsite;
@@ -31,6 +32,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -72,6 +74,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read Collection<int, Banner> $banners
  * @property-read int|null $banners_count
  * @property-read Currency $currency
+ * @property-read Collection<int, CustomerUser> $customerUsers
+ * @property-read int|null $customer_users_count
  * @property-read Collection<int, CustomerWebsite> $customerWebsites
  * @property-read int|null $customer_websites_count
  * @property-read Media|null $logo
@@ -188,9 +192,15 @@ class Customer extends Model implements HasMedia
         return $this->hasOne(CustomerPortfolioStats::class);
     }
 
-    public function users(): HasMany
+
+    public function users(): HasManyThrough
     {
-        return $this->hasMany(User::class);
+        return $this->hasManyThrough(User::class, CustomerUser::class);
+    }
+
+    public function customerUsers(): HasMany
+    {
+        return $this->hasMany(CustomerUser::class);
     }
 
 

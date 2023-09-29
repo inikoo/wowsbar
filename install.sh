@@ -6,6 +6,7 @@
 
 DB=wowsbar
 BACKUP_DB=wowsbar_backup
+IMPORT_DIR=production
 
 echo -e "🧼 Cleaning storage"
 rm -rf public/tenants
@@ -41,23 +42,20 @@ echo "🌱 create shop/website"
 php artisan shop:create awa 'aw-advantage' 'digital-marketing'
 php artisan shop:new-website awa 'awa.test'
 php artisan website:change-state awa launch
+echo "🌱 create catalogue"
+php artisan department:import database/seeders/uploads/${IMPORT_DIR}/departments.xlsx
+php artisan product:import database/seeders/uploads/${IMPORT_DIR}/products.xlsx
+pg_dump -Fc -f "devops/devel/snapshots/catalogue.dump" ${DB}
 
-pg_dump -Fc -f "devops/devel/snapshots/tmp.dump" ${DB}
+echo "🌱 create customers"
 
-php artisan department:import database/seeders/uploads/local/departments.xlsx
-
-php artisan product:import database/seeders/uploads/local/products.xlsx
-
-php artisan customer:import database/seeders/datasets/excel-uploads/real/customers.xlsx
-php artisan shop:new-customer awa aiku@inikoo.com -C 'Aiku'
-php artisan shop:new-customer awa devs@aw-advantage.com -C 'aw-advantage'
-echo "🌱 customers uploaded/added"
-
-php artisan customer:new-user aiku -u aiku -P hello -N 'Mary'
-php artisan customer:new-user aw-advantage -u aiku2 -P hello -N 'Zoe'
+php artisan customer:import database/seeders/uploads/${IMPORT_DIR}/customers.xlsx
+php artisan shop:new-customer awa aiku@inikoo.com -C 'Aiku' -P hello
+php artisan shop:new-customer awa devs@aw-advantage.com -C 'aw-advantage' -P hello
+#php artisan customer:new-user aiku -P hello -N 'Mary'
+#php artisan customer:new-user aw-advantage  -P hello -N 'Zoe'
 pg_dump -Fc -f "devops/devel/snapshots/customers.dump" ${DB}
 echo "🌱 create test website with a banner"
-
 php artisan customer:new-portfolio-website aiku hello.com hello 'My website 😸'
 php artisan customer:new-banner aiku test1 'My first banner 🫡' hello
 php artisan customer:new-banner aiku test2 'My first banner without website 🫡'
