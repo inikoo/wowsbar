@@ -10,10 +10,14 @@ namespace App\Actions\Traits;
 use App\Actions\Helpers\Uploads\ConvertUploadedFile;
 use App\Enums\Helpers\Import\UploadRecordStatusEnum;
 use App\Models\Helpers\Upload;
+use Exception;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Storage;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
 use Maatwebsite\Excel\Facades\Excel;
+use Google\Client;
+use Google\Service\Drive;
 
 trait WithImportModel
 {
@@ -35,7 +39,11 @@ trait WithImportModel
 
     public function asCommand(Command $command): void
     {
-        $filename = $command->argument('filename');
+        $filename = $command->option('filename');
+        if($command->option('google')) {
+            $filename = $this->downloadFromGoogle($command->option('google'));
+        }
+
         $file     = ConvertUploadedFile::run($filename);
 
         $upload = $this->handle($file);
@@ -60,6 +68,27 @@ trait WithImportModel
                 ['Row', 'Error'],
                 $failData
             );
+        }
+    }
+
+    public function downloadFromGoogle(string $url)
+    {
+        try {
+            $client = new Client();
+            $client->useApplicationDefaultCredentials();
+            $client->addScope(Drive::DRIVE);
+            $driveService = new Drive($client);
+
+            $fileId = explode('/', $url)[5];
+
+            $response = $driveService->files->get($fileId, array(
+                'alt' => 'media'));
+
+            Storage::disk('local')->put("tmp/$fileId.xlsx", $response->getBody()->getContents());
+
+            return "storage/app/tmp/$fileId.xlsx";
+        } catch(Exception $e) {
+            return $e;
         }
     }
 }
