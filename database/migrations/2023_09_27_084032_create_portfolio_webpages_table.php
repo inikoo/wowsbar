@@ -18,8 +18,8 @@ return new class () extends Migration {
             $table->unsignedInteger('portfolio_website_id')->index()->nullable();
             $table->foreign('portfolio_website_id')->references('id')->on('portfolio_websites')->onUpdate('cascade')->onDelete('cascade');
 
-            $table->jsonb('data');
-            $table->jsonb('layout');
+            $table->string('title');
+            $table->longText('layout');
 
             $table->timestampsTz();
         });
