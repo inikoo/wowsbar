@@ -66,6 +66,20 @@ class StorePortfolioWebsite
         ];
     }
 
+    public function prepareForValidation(ActionRequest $request): void
+    {
+
+        if($request->get('url')){
+            $request->merge(
+                [
+                    'url' => 'https://'.$request->get('url'),
+                ]
+            );
+        }
+
+
+    }
+
     public function asController(ActionRequest $request): PortfolioWebsite
     {
         $request->validate();
