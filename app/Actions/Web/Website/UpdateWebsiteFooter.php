@@ -8,9 +8,7 @@
 namespace App\Actions\Web\Website;
 
 use App\Actions\Traits\WithActionUpdate;
-use App\Enums\Organisation\Web\Website\WebsiteStateEnum;
 use App\Models\Web\Website;
-use Illuminate\Validation\Rules\Enum;
 use Lorisleiva\Actions\ActionRequest;
 
 class UpdateWebsiteFooter
@@ -24,7 +22,7 @@ class UpdateWebsiteFooter
 
         $website->update(
             [
-                'footer'=>$modelData
+                'footer'=> $modelData
             ]
         );
         $website->update(
@@ -49,11 +47,11 @@ class UpdateWebsiteFooter
     public function rules(): array
     {
         return [
-            'logo' => ['required','integer'],
-            'type'=>['required','string'],
-            'social'=>['required','array'],
-            'columns'=>['required','array'],
-            'copyright'=>['required','array'],
+            'logo'     => ['required','integer'],
+            'type'     => ['required','string'],
+            'social'   => ['required','array'],
+            'columns'  => ['required','array'],
+            'copyright'=> ['required','array'],
         ];
     }
 

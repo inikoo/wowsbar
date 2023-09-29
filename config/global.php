@@ -7,7 +7,7 @@
 
 
 return [
-    'customer_id'=> null,
+    'customer_id'     => null,
     'customer_user_id'=> null
 
 ];

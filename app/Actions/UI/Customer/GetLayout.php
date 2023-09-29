@@ -8,7 +8,6 @@
 namespace App\Actions\UI\Customer;
 
 use App\Models\Auth\CustomerUser;
-use App\Models\Auth\User;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class GetLayout
