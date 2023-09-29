@@ -1,8 +1,8 @@
 <?php
 /*
- *  Author: Raul Perusquia <raul@inikoo.com>
- *  Created: Thu, 01 Sept 2022 18:55:29 Malaysia Time, Kuala Lumpur, Malaysia
- *  Copyright (c) 2022, Raul A Perusquia Flores
+ * Author: Raul Perusquia <raul@inikoo.com>
+ * Created: Thu, 28 Sep 2023 00:42:44 Malaysia Time, Kuala Lumpur, Malaysia
+ * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
 use App\Stubs\Migrations\HasAssetCodeDescription;
@@ -24,13 +24,15 @@ return new class () extends Migration {
             $table->string('type')->index();
             $table->string('state')->nullable()->index();
             $table->boolean('status')->nullable()->index();
-            $table->unsignedDecimal('units')->nullable()->comment('units');
+            $table->string('unit')->nullable();
             $table->unsignedDecimal('price', 18)->comment('unit price');
             $table->jsonb('settings');
             $table->jsonb('data');
             $table->timestampsTz();
             $table->softDeletesTz();
         });
+        DB::statement("CREATE INDEX ON products (lower('code')) ");
+
     }
 
 

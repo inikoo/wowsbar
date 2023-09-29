@@ -15,7 +15,6 @@ use App\Enums\Catalogue\Product\ProductTypeEnum;
 use App\Models\Catalogue\Product;
 use App\Models\Catalogue\ProductCategory;
 use App\Models\Organisation\Organisation;
-use App\Rules\CaseSensitive;
 use Illuminate\Validation\Rule;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
@@ -28,7 +27,6 @@ class StoreProduct
 
     public function handle(Organisation|ProductCategory $parent, array $modelData): Product
     {
-
         /** @var Product $product */
         $product = $parent->products()->create($modelData);
         $product->stats()->create();
@@ -39,19 +37,19 @@ class StoreProduct
 
         //        OrganisationHydrateProducts::dispatch();
         ProductHydrateUniversalSearch::dispatch($product);
+
         return $product;
     }
 
     public function rules(): array
     {
         return [
-            'code'        => ['required', 'unique:products', 'between:2,9', 'alpha_dash', new CaseSensitive('products')],
-            'units'       => ['sometimes', 'required', 'numeric'],
-            'image_id'    => ['sometimes', 'required', 'exists:media,id'],
+            'code'        => ['required', 'iunique:products', 'between:2,9', 'alpha_dash'],
+            'unit'        => ['required', 'string'],
             'price'       => ['required', 'numeric'],
             'name'        => ['required', 'max:250', 'string'],
-            'state'       => ['sometimes', 'required', Rule::in(ProductStateEnum::values())],
             'type'        => ['required', Rule::in(ProductTypeEnum::values())],
+            'state'       => ['sometimes', 'required', Rule::in(ProductStateEnum::values())],
             'description' => ['sometimes', 'required', 'max:1500']
         ];
     }
@@ -63,7 +61,6 @@ class StoreProduct
 
         return $this->handle($parent, $validatedData);
     }
-
 
 
 }

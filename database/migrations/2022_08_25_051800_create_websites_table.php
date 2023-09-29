@@ -32,7 +32,6 @@ return new class () extends Migration {
             $table->jsonb('footer');
             $table->jsonb('layout');
             $table->jsonb('compiled_structure');
-
             $table->unsignedSmallInteger('current_layout_id')->index()->nullable();
             $table->unsignedSmallInteger('organisation_id');
             $table->foreign('organisation_id')->references('id')->on('organisations')->onUpdate('cascade')->onDelete('cascade');
@@ -41,6 +40,9 @@ return new class () extends Migration {
             $table->timestampTz('closed_at')->nullable();
             $table->softDeletesTz();
         });
+        DB::statement("CREATE INDEX ON websites (lower('code')) ");
+        DB::statement("CREATE INDEX ON websites (lower('domain')) ");
+
     }
 
 

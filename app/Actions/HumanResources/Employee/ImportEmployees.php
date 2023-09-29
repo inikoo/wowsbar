@@ -7,50 +7,35 @@
 
 namespace App\Actions\HumanResources\Employee;
 
-use App\Actions\Helpers\Uploads\ConvertUploadedFile;
-use App\Actions\Helpers\Uploads\Hydrators\UploadHydrateExcels;
-use App\Actions\Helpers\Uploads\ImportModel;
-use App\Actions\Helpers\Uploads\StoreExcelUploads;
+use App\Actions\Helpers\Uploads\StoreUploads;
+use App\Actions\Traits\WithImportModel;
 use App\Imports\HumanResources\EmployeeImport;
+use App\Models\Helpers\Upload;
 use App\Models\HumanResources\Employee;
-use Illuminate\Console\Command;
 use Lorisleiva\Actions\ActionRequest;
-use Lorisleiva\Actions\Concerns\AsAction;
-use Lorisleiva\Actions\Concerns\WithAttributes;
 
 class ImportEmployees
 {
-    use AsAction;
-    use WithAttributes;
+    use WithImportModel;
 
-    /**
-     * @var true
-     */
-    private bool $asAction          = false;
-    public string $commandSignature = 'employee:upload {filename}';
-
-    public function handle($file): void
+    public function handle($file): Upload
     {
-        $employeeUpload = StoreExcelUploads::run($file, Employee::class);
-        $excelUpload    = ImportModel::run(new EmployeeImport($employeeUpload), $employeeUpload);
+        $upload = StoreUploads::run($file, Employee::class);
 
-        UploadHydrateExcels::dispatch($excelUpload);
+        return $this->init(
+            $upload,
+            new EmployeeImport($upload)
+        );
+
     }
 
-    /**
-     * @throws \Throwable
-     */
     public function asController(ActionRequest $request): void
     {
         $file = $request->file('file');
         $this->handle($file);
     }
 
-    public function asCommand(Command $command): void
-    {
-        $filename = $command->argument('filename');
-        $file     = ConvertUploadedFile::run($filename);
+    public string $commandSignature = 'employee:upload {filename}';
 
-        $this->handle($file);
-    }
+
 }

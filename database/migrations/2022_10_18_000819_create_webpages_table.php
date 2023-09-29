@@ -34,6 +34,8 @@ return new class () extends Migration {
             $table->softDeletesTz();
         });
 
+        DB::statement("CREATE INDEX ON webpages (lower('url')) ");
+
         Schema::table('websites', function ($table) {
             $table->unsignedInteger('home_id')->index()->nullable();
             $table->foreign('home_id')->references('id')->on('webpages')->onUpdate('cascade')->onDelete('cascade');

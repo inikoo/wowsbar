@@ -7,7 +7,7 @@
 
 namespace App\Actions\Portfolio\Uploads;
 
-use App\Models\Media\ExcelUpload;
+use App\Models\Helpers\Upload;
 use Illuminate\Database\Eloquent\Model;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
@@ -24,7 +24,7 @@ class StorePortfolioWebsiteUploads
 
     public function handle(array $modelData): Model
     {
-        return ExcelUpload::create([
+        return Upload::create([
             'original_filename' => $modelData['original_filename'],
             'filename'          => $modelData['filename'],
             'uploaded_at'       => now()

@@ -1,16 +1,17 @@
 <?php
+/*
+ * Author: Raul Perusquia <raul@inikoo.com>
+ * Created: Thu, 28 Sep 2023 01:20:30 Malaysia Time, Kuala Lumpur, Malaysia
+ * Copyright (c) 2023, Raul A Perusquia Flores
+ */
 
 namespace App\Imports\CRM;
 
 use App\Actions\CRM\Customer\StoreCustomer;
-use App\Actions\Helpers\Uploads\ImportExcelUploads;
-use App\Models\CRM\Customer;
+use App\Imports\WithImport;
 use App\Models\Market\Shop;
-use App\Models\Media\ExcelUpload;
-use App\Models\Media\ExcelUploadRecord;
+use Exception;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Collection;
-use Maatwebsite\Excel\Concerns\SkipsFailures;
 use Maatwebsite\Excel\Concerns\SkipsOnFailure;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
@@ -18,50 +19,51 @@ use Maatwebsite\Excel\Concerns\WithValidation;
 
 class CustomerImport implements ToCollection, WithHeadingRow, SkipsOnFailure, WithValidation
 {
-    use SkipsFailures;
+    use WithImport;
 
-    public ExcelUpload $customerUpload;
-    public function __construct(ExcelUpload $customerUpload)
+    public function storeModel($row, $uploadRecord): void
     {
-        $this->customerUpload = $customerUpload;
-    }
+        $shop = Shop::where('slug', $row->get('shop'))->first();
 
-    /**
-    * @param Collection $collection
-    */
-    public function collection(Collection $collection): void
-    {
-        $totalImported = 1;
 
-        foreach ($collection as $value) {
-            try {
-                $customer = ExcelUploadRecord::create([
-                    'excel_upload_id' => $this->customerUpload->id,
-                    'data'            => json_encode([
-                        'contact_name'    => $value['name'],
-                        'email'           => $value['email'],
-                        'contact_website' => $value['website']
-                    ])
-                ]);
+        $row->put('company_name', $row->get('company'));
 
-                $shop = Shop::where('slug', Arr::get($value, 'shop'))->first();
+        $row->put('contact_website', $row->get('website'));
 
-                StoreCustomer::run($shop, Arr::except(json_decode($customer->data, true), 'shop'));
-                ImportExcelUploads::run($customer, count($collection), $totalImported++, Customer::class);
-            } catch (\Exception $e) {
-                $totalImported--;
-            }
+        $fields =
+            array_merge(
+                Arr::except(
+                    array_keys($this->rules()),
+                    ['shop', 'name', 'website']
+                ),
+                [
+                    'company_name',
+                    'contact_website'
+                ]
+            );
+
+
+        try {
+            StoreCustomer::make()->action(
+                $shop,
+                $row->only($fields)->all()
+            );
+            $this->setRecordAsCompleted($uploadRecord);
+        } catch (Exception $e) {
+            $this->setRecordAsFailed($uploadRecord, [$e->getMessage()]);
         }
     }
+
 
     public function rules(): array
     {
         return [
-            'contact_name'             => ['nullable', 'string', 'max:255'],
-            'company_name'             => ['nullable', 'string', 'max:255'],
-            'email'                    => ['nullable', 'email'],
-            'phone'                    => ['nullable'],
-            'contact_website'          => ['nullable']
+            'shop'         => ['required', 'exists:shops,slug'],
+            'contact_name' => ['nullable', 'string', 'max:255'],
+            'company'      => ['nullable', 'string', 'max:255'],
+            'email'        => ['nullable', 'email','unique:customers'],
+            'phone'        => ['nullable'],
+            'website'      => ['nullable']
         ];
     }
 }

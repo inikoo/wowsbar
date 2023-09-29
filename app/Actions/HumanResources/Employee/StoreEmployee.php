@@ -7,9 +7,12 @@
 
 namespace App\Actions\HumanResources\Employee;
 
+use App\Actions\HumanResources\Employee\Hydrators\EmployeeHydrateUniversalSearch;
 use App\Actions\HumanResources\Employee\Hydrators\EmployeeHydrateWeekWorkingHours;
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateEmployees;
 use App\Models\HumanResources\Employee;
+use App\Models\HumanResources\Workplace;
+use App\Models\Organisation\Organisation;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
 use Lorisleiva\Actions\ActionRequest;
@@ -21,30 +24,58 @@ class StoreEmployee
     use AsAction;
     use WithAttributes;
 
-    public function handle(array $modelData): Employee
+    private bool $asAction = false;
+
+
+    public function handle(Organisation|Workplace $parent, array $modelData): Employee
     {
-        $employee = Employee::create($modelData);
+        $employee = match (class_basename($parent)) {
+            'Workplace' => $parent->employees()->create($modelData),
+            default     => Employee::create($modelData)
+        };
+
+
         EmployeeHydrateWeekWorkingHours::run($employee);
         OrganisationHydrateEmployees::dispatch();
+        //if($employee->workplace_id){}
 
-        //        EmployeeHydrateUniversalSearch::dispatch($employee);
+        EmployeeHydrateUniversalSearch::dispatch($employee);
+
         return $employee;
     }
 
     public function authorize(ActionRequest $request): bool
     {
+        if ($this->asAction) {
+            return true;
+        }
+
         return $request->user()->hasPermissionTo("hr.edit");
     }
 
 
+    public function action(Organisation|Workplace $parent, $objectData): Employee
+    {
+        $this->asAction = true;
+        $this->setRawAttributes($objectData);
+        $validatedData = $this->validateAttributes();
+
+        return $this->handle($parent, $validatedData);
+    }
+
     public function rules(): array
     {
         return [
-            'contact_name'      => ['required', 'max:255'],
-            'date_of_birth'     => ['nullable', 'date', 'before_or_equal:today'],
-            'job_title'         => ['sometimes','required'],
-            'state'             => ['sometimes','required'],
-            'email'             => ['sometimes','required', 'email'],
+            'worker_number'       => ['required', 'max:64', 'iunique:employees', 'alpha_dash:ascii'],
+            'employment_start_at' => ['sometimes', 'nullable', 'date'],
+            'work_email'          => ['sometimes', 'required', 'email'],
+            'alias'               => ['required', 'iunique:employees', 'string', 'max:16'],
+            'contact_name'        => ['required', 'string', 'max:256'],
+            'date_of_birth'       => ['sometimes', 'nullable', 'date', 'before_or_equal:today'],
+            'job_title'           => ['required', 'string', 'max:256'],
+            'state'               => ['sometimes', 'required'],
+            'email'               => ['sometimes', 'required', 'email'],
+
         ];
     }
 
@@ -52,7 +83,7 @@ class StoreEmployee
     {
         $request->validate();
 
-        return $this->handle($request->validated());
+        return $this->handle(organisation(), $request->validated());
     }
 
     public function htmlResponse(Employee $employee): RedirectResponse

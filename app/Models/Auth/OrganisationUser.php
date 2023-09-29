@@ -7,7 +7,7 @@
 
 namespace App\Models\Auth;
 
-use App\Models\Media\ExcelUpload;
+use App\Models\Helpers\Upload;
 use App\Models\Traits\HasHistory;
 use App\Models\Traits\HasRoles;
 use App\Models\Traits\HasUniversalSearch;
@@ -46,7 +46,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \OwenIt\Auditing\Models\Audit> $audits
  * @property-read int|null $audits_count
  * @property-read \App\Models\Media\Media|null $avatar
- * @property-read \Illuminate\Database\Eloquent\Collection<int, ExcelUpload> $excelUploads
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Upload> $excelUploads
  * @property-read int|null $excel_uploads_count
  * @property-read array $es_audits
  * @property-read \App\Models\Assets\Language $language
@@ -136,7 +136,7 @@ class OrganisationUser extends Authenticatable implements HasMedia, Auditable
 
     public function excelUploads(): HasMany
     {
-        return $this->hasMany(ExcelUpload::class);
+        return $this->hasMany(Upload::class);
     }
 
 }

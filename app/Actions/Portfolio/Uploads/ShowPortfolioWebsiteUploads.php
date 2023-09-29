@@ -9,7 +9,7 @@ namespace App\Actions\Portfolio\Uploads;
 
 use App\Http\Resources\Portfolio\WebsiteUploadedRecordResource;
 use App\InertiaTable\InertiaTable;
-use App\Models\Media\ExcelUploadRecord;
+use App\Models\Helpers\UploadRecord;
 use Closure;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -36,7 +36,7 @@ class ShowPortfolioWebsiteUploads
             InertiaTable::updateQueryBuilderParameters($prefix);
         }
 
-        $queryBuilder = QueryBuilder::for(ExcelUploadRecord::class);
+        $queryBuilder = QueryBuilder::for(UploadRecord::class);
 
         return $queryBuilder
             ->allowedFilters([$globalSearch])

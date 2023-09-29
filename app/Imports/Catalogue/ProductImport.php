@@ -8,16 +8,12 @@
 namespace App\Imports\Catalogue;
 
 use App\Actions\Catalogue\Product\StoreProduct;
-use App\Actions\Helpers\Uploads\ImportExcelUploads;
 use App\Enums\Catalogue\Product\ProductTypeEnum;
-use App\Models\Catalogue\Product;
+use App\Imports\WithImport;
 use App\Models\Catalogue\ProductCategory;
-use App\Models\Media\ExcelUpload;
-use App\Models\Media\ExcelUploadRecord;
 use Exception;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Collection;
-use Maatwebsite\Excel\Concerns\SkipsFailures;
+use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Concerns\SkipsOnFailure;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
@@ -25,57 +21,51 @@ use Maatwebsite\Excel\Concerns\WithValidation;
 
 class ProductImport implements ToCollection, WithHeadingRow, SkipsOnFailure, WithValidation
 {
-    use SkipsFailures;
+    use WithImport;
 
-    public ExcelUpload $productUpload;
-    public function __construct(ExcelUpload $productUpload)
+
+    public function storeModel($row, $uploadRecord): void
     {
-        $this->productUpload = $productUpload;
-    }
+        $departmentSlug = $row->get('department');
+        if ($departmentSlug) {
+            $parent = ProductCategory::where('slug', $departmentSlug)->first();
+        } else {
+            $parent = organisation();
+        }
 
-    /**
-    * @param Collection $collection
-    */
-    public function collection(Collection $collection): void
-    {
-        $totalImported = 1;
 
-        foreach ($collection as $product) {
-            try {
-                $product = ExcelUploadRecord::create([
-                        'excel_upload_id' => $this->productUpload->id,
-                        'data'            => json_encode($product)
-                ]);
+        $fields =
+            array_merge(
+                Arr::except(
+                    array_keys($this->rules()),
+                    ['department']
+                ),
+                []
+            );
 
-                $departmentSlug=Arr::get(json_decode($product->data, true), 'department');
-                if($departmentSlug) {
-                    $parent=ProductCategory::where('slug', $departmentSlug)->first();
-                    //=== deal when department not found
-                } else {
-                    $parent=organisation();
-                }
 
-                StoreProduct::run($parent, [
-                    'code'  => Arr::get(json_decode($product->data, true), 'code'),
-                    'name'  => Arr::get(json_decode($product->data, true), 'name'),
-                    'price' => Arr::get(json_decode($product->data, true), 'unit_price_gbp'),
-                    'type'  => Arr::get(json_decode($product->data, true), 'unit') == 'job' ? ProductTypeEnum::SERVICE : ProductTypeEnum::SUBSCRIPTION,
-                ]);
-                ImportExcelUploads::run($product, count($collection), $totalImported++, Product::class);
-            } catch (Exception $e) {
-                $totalImported--;
-            }
+        try {
+            StoreProduct::make()->action(
+                $parent,
+                $row->only($fields)->all()
+            );
+            $this->setRecordAsCompleted($uploadRecord);
+        } catch (Exception $e) {
+            $this->setRecordAsFailed($uploadRecord, [$e->getMessage()]);
         }
     }
+
 
     public function rules(): array
     {
         return [
-            'department'           => ['required', 'exists:product_categories,code'],
-            'code'                 => ['required', 'unique:products', 'between:2,9', 'alpha_dash'],
-            'name'                 => ['required', 'max:250', 'string'],
-            'units'                => ['sometimes', 'required', 'string'],
-            'unit_price_gbp'       => ['required', 'numeric']
+            'department' => ['nullable', 'exists:product_categories,code'],
+            'code'       => ['required', 'iunique:products', 'between:2,9', 'alpha_dash'],
+            'unit'       => ['required', 'string'],
+            'price'      => ['required', 'numeric'],
+            'name'       => ['required', 'max:250', 'string'],
+            'type'       => ['required', Rule::in(ProductTypeEnum::values())],
+
         ];
     }
 }

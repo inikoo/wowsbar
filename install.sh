@@ -30,8 +30,7 @@ php artisan cache:clear
 redis-cli KEYS "wowsbar_database_*" | xargs redis-cli DEL
 echo "🌱 Migrating and seeding database"
 php artisan migrate --database=backup --path=database/migrations/backup
-php artisan migrate --path=database/migrations/landlord
-php artisan migrate --path=database/migrations/tenant
+php artisan migrate
 php artisan db:seed
 php artisan telescope:clear
 pg_dump -Fc -f "devops/devel/snapshots/fresh.dump" ${DB}
@@ -43,20 +42,17 @@ php artisan shop:create awa 'aw-advantage' 'digital-marketing'
 php artisan shop:new-website awa 'awa.test'
 php artisan website:change-state awa launch
 
-php artisan product-category:new seo "Search Engine Optimization"
-php artisan product-category:new ppc "Pay per click"
-php artisan product-category:new smm "Social Media Management"
-php artisan product-category:new sma "Social Media Advertising"
-php artisan product-category:new leads "Prospecting"
-php artisan product-category:new caas "Content as a service"
+pg_dump -Fc -f "devops/devel/snapshots/tmp.dump" ${DB}
 
-php artisan product:import database/seeders/datasets/excel-uploads/real/products.xlsx
+php artisan department:import database/seeders/uploads/local/departments.xlsx
 
-echo "🌱 create customer"
+php artisan product:import database/seeders/uploads/local/products.xlsx
+
 php artisan customer:import database/seeders/datasets/excel-uploads/real/customers.xlsx
-echo "🌱 customers uploaded"
 php artisan shop:new-customer awa aiku@inikoo.com -C 'Aiku'
 php artisan shop:new-customer awa devs@aw-advantage.com -C 'aw-advantage'
+echo "🌱 customers uploaded/added"
+
 php artisan customer:new-user aiku -u aiku -P hello -N 'Mary'
 php artisan customer:new-user aw-advantage -u aiku2 -P hello -N 'Zoe'
 pg_dump -Fc -f "devops/devel/snapshots/customers.dump" ${DB}
@@ -67,9 +63,11 @@ php artisan customer:new-banner aiku test1 'My first banner 🫡' hello
 php artisan customer:new-banner aiku test2 'My first banner without website 🫡'
 pg_dump -Fc -f "devops/devel/snapshots/portfolio.dump" ${DB}
 php artisan workplace:create "Beach bar" hq
+php artisan employee:upload database/seeders/datasets/excel-uploads/real/employees.xlsx
 echo "🌱 All the employees are imported"
-php artisan shop:import-prospects awa database/seeders/datasets/excel-uploads/examples/prospects.xlsx
+pg_dump -Fc -f "devops/devel/snapshots/hr.dump" ${DB}
+
+#php artisan shop:import-prospects awa database/seeders/datasets/excel-uploads/examples/prospects.xlsx
 echo "🛃 Organisation prospects imported"
 
-php artisan employee:upload database/seeders/datasets/excel-uploads/real/employees.xlsx
-echo "🌱 employees uploaded"
+

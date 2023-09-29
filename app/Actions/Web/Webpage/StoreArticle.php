@@ -12,7 +12,6 @@ use App\Enums\Organisation\Web\Webpage\WebpagePurposeEnum;
 use App\Enums\Organisation\Web\Webpage\WebpageTypeEnum;
 use App\Models\Web\Webpage;
 use App\Models\Web\Website;
-use App\Rules\CaseSensitive;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Redirect;
@@ -49,7 +48,7 @@ class StoreArticle
 
     public function getLevel($parent_id): int
     {
-        /** @var \App\Models\Web\Webpage $parent */
+        /** @var Webpage $parent */
         if ($parent_id && $parent = Webpage::where('id', $parent_id)->first()) {
             return $parent->level + 1;
         }
@@ -71,7 +70,7 @@ class StoreArticle
     public function rules(): array
     {
         return [
-            'url'      => ['required', new CaseSensitive('webpages'), 'max:255'],
+            'url'      => ['required', 'iunique:webpages', 'max:255'],
             'code'     => ['required', 'unique:webpages', 'max:64'],
             'type'     => ['required', new Enum(WebpageTypeEnum::class)],
             'purpose'  => ['required', new Enum(WebpagePurposeEnum::class)],

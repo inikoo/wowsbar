@@ -28,6 +28,9 @@ return new class () extends Migration {
             $table->softDeletesTz();
             $table->index(['parent_type','parent_id']);
         });
+
+        DB::statement("CREATE INDEX ON product_categories (lower('code')) ");
+
     }
 
 

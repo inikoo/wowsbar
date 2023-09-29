@@ -2,11 +2,11 @@
 
 namespace App\Imports\Auth;
 
-use App\Actions\Helpers\Uploads\ImportExcelUploads;
+use App\Actions\Helpers\ExcelUpload\ExcelUploadRecord\UpdateImportExcelUploadStatus;
 use App\Actions\Organisation\OrganisationUser\StoreOrganisationUser;
 use App\Models\Auth\OrganisationUser;
-use App\Models\Media\ExcelUpload;
-use App\Models\Media\ExcelUploadRecord;
+use App\Models\Helpers\Upload;
+use App\Models\Helpers\UploadRecord;
 use App\Rules\AlphaDashDot;
 use Illuminate\Support\Collection;
 use Illuminate\Validation\Rule;
@@ -21,8 +21,8 @@ class OrganisationUserImport implements ToCollection, WithHeadingRow, SkipsOnFai
 {
     use SkipsFailures;
 
-    public ExcelUpload $organisationUserUpload;
-    public function __construct(ExcelUpload $organisationUserUpload)
+    public Upload $organisationUserUpload;
+    public function __construct(Upload $organisationUserUpload)
     {
         $this->organisationUserUpload = $organisationUserUpload;
     }
@@ -36,13 +36,13 @@ class OrganisationUserImport implements ToCollection, WithHeadingRow, SkipsOnFai
 
         foreach ($collection as $organisationUser) {
             try {
-                $organisationUser = ExcelUploadRecord::create([
+                $organisationUser = UploadRecord::create([
                     'excel_upload_id' => $this->organisationUserUpload->id,
                     'data'            => json_encode($organisationUser)
                 ]);
 
                 StoreOrganisationUser::run(json_decode($organisationUser->data, true));
-                ImportExcelUploads::run($organisationUser, count($collection), $totalImported++, OrganisationUser::class);
+                UpdateImportExcelUploadStatus::run($organisationUser, count($collection), $totalImported++, OrganisationUser::class);
             } catch (\Exception $e) {
                 $totalImported--;
             }

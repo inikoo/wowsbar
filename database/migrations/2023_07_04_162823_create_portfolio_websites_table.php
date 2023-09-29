@@ -28,8 +28,10 @@ return new class () extends Migration {
             $table->unique(['customer_id','slug']);
             $table->unique(['customer_id','code']);
             $table->unique(['customer_id','domain']);
-
         });
+        DB::statement("CREATE INDEX ON portfolio_websites (lower('code')) ");
+        DB::statement("CREATE INDEX ON portfolio_websites (lower('domain')) ");
+
     }
 
 

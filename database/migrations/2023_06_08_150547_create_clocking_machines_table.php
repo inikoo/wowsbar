@@ -22,6 +22,8 @@ return new class () extends Migration {
             $table->timestampsTz();
             $table->softDeletes();
         });
+        DB::statement("CREATE INDEX ON clocking_machines (lower('code')) ");
+
     }
 
 

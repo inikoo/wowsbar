@@ -7,10 +7,10 @@
 
 namespace App\Actions\Leads\Prospect;
 
+use App\Actions\Helpers\ExcelUpload\Hydrators\UploadHydrateStats;
 use App\Actions\Helpers\Uploads\ConvertUploadedFile;
-use App\Actions\Helpers\Uploads\Hydrators\UploadHydrateExcels;
 use App\Actions\Helpers\Uploads\ImportModel;
-use App\Actions\Helpers\Uploads\StoreExcelUploads;
+use App\Actions\Helpers\Uploads\StoreUploads;
 use App\Imports\Leads\ProspectImport;
 use App\Models\Leads\Prospect;
 use App\Models\Market\Shop;
@@ -32,10 +32,10 @@ class ImportShopProspects
 
     public function handle(Shop $shop, $file): void
     {
-        $prospectUpload = StoreExcelUploads::run($file, Prospect::class);
+        $prospectUpload = StoreUploads::run($file, Prospect::class);
         $excelUpload    = ImportModel::run(new ProspectImport($shop, $prospectUpload), $prospectUpload);
 
-        UploadHydrateExcels::dispatch($excelUpload);
+        UploadHydrateStats::dispatch($excelUpload);
     }
 
     /**

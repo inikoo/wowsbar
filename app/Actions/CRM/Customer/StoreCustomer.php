@@ -85,7 +85,7 @@ class StoreCustomer
         return [
             'contact_name'             => ['nullable', 'string', 'max:255'],
             'company_name'             => ['nullable', 'string', 'max:255'],
-            'email'                    => ['nullable', 'email'],
+            'email'                    => ['nullable', 'email', 'unique:customers'],
             'phone'                    => ['nullable', 'phone:AUTO'],
             'identity_document_number' => ['nullable', 'string'],
             'contact_website'          => ['nullable', 'active_url'],
@@ -109,6 +109,7 @@ class StoreCustomer
     {
         $this->fillFromRequest($request);
         $request->validate();
+
         return $this->handle($shop, $request->validated());
     }
 

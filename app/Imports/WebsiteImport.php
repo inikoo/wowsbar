@@ -2,12 +2,12 @@
 
 namespace App\Imports;
 
-use App\Actions\Helpers\Uploads\ImportExcelUploads;
+use App\Actions\Helpers\ExcelUpload\ExcelUploadRecord\UpdateImportExcelUploadStatus;
 use App\Actions\Portfolio\PortfolioWebsite\StorePortfolioWebsite;
 use App\Actions\Portfolio\Uploads\UpdatePortfolioWebsiteUploads;
 use App\Models\CRM\Customer;
-use App\Models\Media\ExcelUpload;
-use App\Models\Media\ExcelUploadRecord;
+use App\Models\Helpers\Upload;
+use App\Models\Helpers\UploadRecord;
 use App\Models\Portfolio\PortfolioWebsite;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\SkipsFailures;
@@ -20,9 +20,9 @@ class WebsiteImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wit
 {
     use SkipsFailures;
 
-    public ExcelUpload $websiteUpload;
+    public Upload $websiteUpload;
     public Customer $customer;
-    public function __construct(ExcelUpload $websiteUpload, Customer $customer)
+    public function __construct(Upload $websiteUpload, Customer $customer)
     {
         $this->websiteUpload = $websiteUpload;
         $this->customer      = $customer;
@@ -39,7 +39,7 @@ class WebsiteImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wit
 
         foreach ($collection as $website) {
             try {
-                $website = ExcelUploadRecord::create([
+                $website = UploadRecord::create([
                     'excel_upload_id'   => $this->websiteUpload->id,
                     'data'              => json_encode([
                         'code'        => $website['code'],
@@ -50,7 +50,7 @@ class WebsiteImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wit
                 ]);
 
                 StorePortfolioWebsite::run(json_decode($website->data, true));
-                ImportExcelUploads::dispatch($website, count($collection), $totalImported++, PortfolioWebsite::class);
+                UpdateImportExcelUploadStatus::dispatch($website, count($collection), $totalImported++, PortfolioWebsite::class);
             } catch (\Exception $e) {
                 $totalImported--;
             }

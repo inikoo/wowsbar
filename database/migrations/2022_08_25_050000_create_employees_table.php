@@ -1,8 +1,8 @@
 <?php
 /*
- *  Author: Raul Perusquia <raul@inikoo.com>
- *  Created: Thu, 25 Aug 2022 14:07:20 Malaysia Time, Kuala Lumpur, Malaysia
- *  Copyright (c) 2022, Raul A Perusquia F
+ * Author: Raul Perusquia <raul@inikoo.com>
+ * Created: Wed, 27 Sep 2023 19:54:57 Malaysia Time, Kuala Lumpur, Malaysia
+ * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
 use App\Enums\HumanResources\Employee\EmployeeStateEnum;
@@ -20,15 +20,14 @@ return new class () extends Migration {
         Schema::create('employees', function (Blueprint $table) {
             $table->smallIncrements('id');
             $table->string('slug')->unique()->collation('und_ns');
+            $table->string('alias')->collation('und_ns');
             $table->string('work_email')->nullable()->collation('und_ns');
-
             $table=$this->contactFields(table:$table, withCompany: false, withPersonalDetails: true);
             $table->string('worker_number')->nullable()->collation('und_ns');
             $table->string('job_title')->nullable()->collation('und_ns');
-
             $table->string('job_position')->nullable()->collation('und_ns');
-            $table->string('workplace')->nullable()->collation('und_ns');
-
+            $table->unsignedSmallInteger('workplace_id')->nullable()->index();
+            $table->foreign('workplace_id')->references('id')->on('workplaces');
             $table->string('type')->default(EmployeeTypeEnum::EMPLOYEE->value);
             $table->string('state')->default(EmployeeStateEnum::WORKING->value);
             $table->date('employment_start_at')->nullable();
@@ -43,6 +42,8 @@ return new class () extends Migration {
             $table->timestampsTz();
             $table->softDeletesTz();
         });
+        DB::statement("CREATE INDEX ON employees (lower('worker_number')) ");
+        DB::statement("CREATE INDEX ON employees (lower('alias')) ");
 
         //DB::statement('CREATE INDEX ON employees USING gin (contact_name gin_trgm_ops) ');
     }

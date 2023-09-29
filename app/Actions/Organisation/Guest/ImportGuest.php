@@ -7,10 +7,10 @@
 
 namespace App\Actions\Organisation\Guest;
 
+use App\Actions\Helpers\ExcelUpload\Hydrators\UploadHydrateStats;
 use App\Actions\Helpers\Uploads\ConvertUploadedFile;
-use App\Actions\Helpers\Uploads\Hydrators\UploadHydrateExcels;
 use App\Actions\Helpers\Uploads\ImportModel;
-use App\Actions\Helpers\Uploads\StoreExcelUploads;
+use App\Actions\Helpers\Uploads\StoreUploads;
 use App\Imports\Auth\GuestImport;
 use App\Models\Auth\Guest;
 use Illuminate\Console\Command;
@@ -31,10 +31,10 @@ class ImportGuest
 
     public function handle($file): void
     {
-        $guestUpload = StoreExcelUploads::run($file, Guest::class);
+        $guestUpload = StoreUploads::run($file, Guest::class);
         $excelUpload = ImportModel::run(new GuestImport($guestUpload), $guestUpload);
 
-        UploadHydrateExcels::dispatch($excelUpload);
+        UploadHydrateStats::dispatch($excelUpload);
     }
 
     /**

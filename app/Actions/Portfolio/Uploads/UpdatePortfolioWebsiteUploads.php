@@ -7,7 +7,7 @@
 
 namespace App\Actions\Portfolio\Uploads;
 
-use App\Models\Media\ExcelUpload;
+use App\Models\Helpers\Upload;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
 
@@ -16,7 +16,7 @@ class UpdatePortfolioWebsiteUploads
     use AsAction;
     use WithAttributes;
 
-    public function handle(ExcelUpload $websiteUpload, array $data): ExcelUpload
+    public function handle(Upload $websiteUpload, array $data): Upload
     {
         $websiteUpload->update($data);
 

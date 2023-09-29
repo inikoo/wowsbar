@@ -11,7 +11,6 @@ use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateWebsites;
 use App\Actions\Web\Website\Hydrators\WebsiteHydrateUniversalSearch;
 use App\Models\Market\Shop;
 use App\Models\Web\Website;
-use App\Rules\CaseSensitive;
 use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Http\RedirectResponse;
@@ -37,11 +36,6 @@ class StoreWebsite
         data_set($modelData, 'code', $shop->code, overwrite: false);
         data_set($modelData, 'name', $shop->name, overwrite: false);
         data_set($modelData, 'type', 'marketing', overwrite: false);
-
-
-
-
-
 
 
         /** @var Website $website */
@@ -73,10 +67,10 @@ class StoreWebsite
     public function rules(): array
     {
         return [
-            'domain' => ['required', new CaseSensitive('websites')],
+            'domain' => ['required', 'iunique:websites'],
             'code'   => [
                 'required',
-                'unique:websites',
+                'iunique:websites',
                 'max:64',
                 'alpha_dash:ascii',
                 Rule::notIn(

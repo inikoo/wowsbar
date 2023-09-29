@@ -44,6 +44,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\HumanResources\Clocking> $clockings
  * @property-read int|null $clockings_count
  * @property-read \App\Models\Assets\Country $country
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\HumanResources\Employee> $employees
+ * @property-read int|null $employees_count
  * @property-read string $formatted_address
  * @property-read Model|\Eloquent $owner
  * @property-read WorkplaceStats|null $stats
@@ -129,6 +131,11 @@ class Workplace extends Model
     public function stats(): HasOne
     {
         return $this->hasOne(WorkplaceStats::class);
+    }
+
+    public function employees(): HasMany
+    {
+        return $this->hasMany(Employee::class);
     }
 
 }

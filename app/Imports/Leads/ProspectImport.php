@@ -7,13 +7,13 @@
 
 namespace App\Imports\Leads;
 
-use App\Actions\Helpers\Uploads\ImportExcelUploads;
+use App\Actions\Helpers\ExcelUpload\ExcelUploadRecord\UpdateImportExcelUploadStatus;
 use App\Actions\Leads\Prospect\StoreProspect;
 use App\Models\CRM\Customer;
+use App\Models\Helpers\Upload;
+use App\Models\Helpers\UploadRecord;
 use App\Models\Leads\Prospect;
 use App\Models\Market\Shop;
-use App\Models\Media\ExcelUpload;
-use App\Models\Media\ExcelUploadRecord;
 use App\Models\Portfolio\PortfolioWebsite;
 use Exception;
 use Illuminate\Support\Arr;
@@ -28,10 +28,10 @@ class ProspectImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wi
 {
     use SkipsFailures;
 
-    public ExcelUpload $prospectUpload;
+    public Upload $prospectUpload;
     private Shop|Customer|PortfolioWebsite $scope;
 
-    public function __construct(Shop|Customer|PortfolioWebsite $scope, ExcelUpload $prospectUpload)
+    public function __construct(Shop|Customer|PortfolioWebsite $scope, Upload $prospectUpload)
     {
         $this->scope          =$scope;
         $this->prospectUpload = $prospectUpload;
@@ -45,13 +45,13 @@ class ProspectImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wi
 
         foreach ($collection as $prospect) {
             try {
-                $prospect = ExcelUploadRecord::create([
+                $prospect = UploadRecord::create([
                     'excel_upload_id' => $this->prospectUpload->id,
                     'data'            => json_encode(Arr::except($prospect, 'code'))
                 ]);
 
                 StoreProspect::run($this->scope, json_decode($prospect->data, true));
-                ImportExcelUploads::run($prospect, count($collection), $totalImported++, Prospect::class);
+                UpdateImportExcelUploadStatus::run($prospect, count($collection), $totalImported++, Prospect::class);
             } catch (Exception $e) {
                 $totalImported--;
             }
