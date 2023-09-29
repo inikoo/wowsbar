@@ -182,7 +182,7 @@ const changeImage = async (file) => {
             }
         );
         if(response.data.thumbnail){
-            data.logo = response.data.thumbnail
+            data.logo = {...response.data.thumbnail, id : response.data.id, name : response.data.name }
             }
     } catch (error) {
         console.log(error)
