@@ -18,13 +18,13 @@ const changeLogo = async (element) => {
 </script>
 
 <template>
-    <div  :style="`background-color: ${layout?.color};`">
-        <header class="pa">
+    <div :style="`background-color: ${layout?.color};`">
+        <header class="">
             <nav class="mx-auto flex  items-center justify-between p-6 lg:px-8" aria-label="Global">
                 <div class="flex lg:flex-1">
                     <label for="faviconUpload" class="flex justify-center items-center  cursor-pointer">
                         <input type="file" id="faviconUpload" accept="image/*" style="display: none" @change="changeLogo" />
-                        <Image :src="data.logo" class="h-8 w-auto"/>
+                        <Image :src="data.logoSrc" class="h-8 w-auto"/>
                     </label>
                 </div>
                 <div class="flex gap-3">
@@ -42,4 +42,3 @@ const changeLogo = async (element) => {
         </header>
     </div>
 </template>
-  

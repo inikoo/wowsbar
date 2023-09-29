@@ -102,7 +102,7 @@ const getActionIcon = (icon: any) => {
             case "edit":
                 return ["far", "fa-pencil"]
             case "save":
-                return ["fa", "fa-save"]
+                return ["fas", "fa-save"]
             case "cancel":
             case "exit":
                 return ["far", "fa-arrow-left"]
@@ -127,12 +127,9 @@ const getActionIcon = (icon: any) => {
         styleClass,
         sizeClass
     ]">
-        <FontAwesomeIcon v-if="icon"  aria-hidden="true" :icon="icon" size="sm"  class="" />
         <slot>
-            <div class="">
-                <FontAwesomeIcon v-if="getActionIcon(icon)" :icon="getActionIcon(icon)" class="" aria-hidden="true"/>
-                <span class="ml-2">{{ getActionLabel(label) }}</span>
-            </div>
+            <FontAwesomeIcon v-if="getActionIcon(icon)" :icon="getActionIcon(icon)" class="" aria-hidden="true"/>
+            <span class="">{{ getActionLabel(label) }}</span>
         </slot>
     </button>
 </template>

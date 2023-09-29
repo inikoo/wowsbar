@@ -25,7 +25,7 @@ class EditUser extends InertiaAction
 
     public function authorize(ActionRequest $request): bool
     {
-        return $request->user()->can("sysadmin.view");
+        return $request->user()->hasPermissionTo("sysadmin.view");
     }
 
     public function asController(User $user, ActionRequest $request): User

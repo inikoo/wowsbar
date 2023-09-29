@@ -27,7 +27,10 @@ class UpdateUser
         $user = $this->update($user, $modelData, 'settings');
 
         if ($user->wasChanged('status')) {
-            CustomerHydrateUsers::run($user->customer);
+
+            foreach ($user->customers as $customer) {
+                CustomerHydrateUsers::run($customer);
+            }
         }
 
         return $user;
@@ -38,7 +41,7 @@ class UpdateUser
         if ($this->asAction) {
             return true;
         }
-        return $request->user()->can('sysadmin.edit');
+        return $request->user()->hasPermissionTo('sysadmin.edit');
 
     }
 

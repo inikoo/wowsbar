@@ -26,7 +26,7 @@ class DeleteUploadedImage
 
     public function authorize(ActionRequest $request): bool
     {
-        return $request->user()->can("portfolio.edit");
+        return $request->get('customerUser')->hasPermissionTo("portfolio.edit");
     }
 
     public function htmlResponse(): RedirectResponse

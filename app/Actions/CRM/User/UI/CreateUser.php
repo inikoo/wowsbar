@@ -79,7 +79,7 @@ class CreateUser extends InertiaAction
 
     public function authorize(ActionRequest $request): bool
     {
-        return $request->user()->can('sysadmin.users.edit');
+        return $request->user()->hasPermissionTo('sysadmin.users.edit');
     }
 
 

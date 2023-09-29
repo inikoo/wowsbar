@@ -22,12 +22,10 @@ class WebsiteFooterResource extends JsonResource
     public function toArray($request): array
     {
         $footerData = (array)$request;
-
         $media = Media::find(Arr::get($footerData, 'logo'));
         if ($media) {
             $logo = (new Image())->make($media->getImgProxyFilename())->resize(0, 120);
-
-            $footerData = array_merge($footerData, ['logo' => GetPictureSources::run($logo)]);
+            $footerData = array_merge($footerData, ['logoSrc' => GetPictureSources::run($logo)]);
         }
 
         return $footerData;

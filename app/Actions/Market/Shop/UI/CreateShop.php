@@ -157,7 +157,7 @@ class CreateShop extends InertiaAction
 
     public function authorize(ActionRequest $request): bool
     {
-        return $request->user()->can('shops.edit');
+        return $request->user()->hasPermissionTo('shops.edit');
     }
 
 

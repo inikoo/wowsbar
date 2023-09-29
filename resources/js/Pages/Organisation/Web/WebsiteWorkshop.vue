@@ -43,6 +43,7 @@ const props = defineProps<{
     updateRoutes: Object
 }>()
 
+
 let currentTab = ref(props.tabs.current)
 
 const handleTabUpdate = (tabSlug) => {
@@ -75,17 +76,16 @@ const sendDataToServer = async () => {
     form.patch(
         route(RouteActive.value.name,RouteActive.value.parameters), {
         onSuccess: async (res) => {
-            console.log('res',res)
             notify({
-                title: trans("Success Update"),
+                title: trans("Success"),
                 type: "success",
-                text: "Banner already update and publish",
+                text: "",
             });
         },
         onError: (errors: any) => {
             console.log(errors)
             notify({
-                title: trans("Failed to Update Banner"),
+                title: trans("Error"),
                 text: errors,
                 type: "error"
             });
@@ -116,7 +116,7 @@ setToFirebase();
         <template #other="{ dataPageHead: head }">
             <div class="flex items-center gap-2">
                 <span>
-                    <Button @click="sendDataToServer">save</Button>
+                    <Button @click="sendDataToServer" :label="'Save'" :style="'save'"></Button>
                 </span>
             </div>
         </template>

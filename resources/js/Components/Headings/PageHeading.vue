@@ -122,7 +122,7 @@ if (props.dataToSubmit && props.data.actionActualMethod) {
                         :data="action.method !== 'get' ? dataToSubmit : null"
                     >
 
-                        <Button size="xs" :style="action.style" :label="action.label"
+                        <Button :style="action.style" :label="action.label" :icon="action.icon"
                             class="capitalize inline-flex items-center rounded-md text-sm font-medium shadow-sm gap-x-2"
                         >
                         </Button>

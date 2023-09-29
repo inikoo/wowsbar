@@ -12,7 +12,9 @@ use App\Actions\UI\WithLogo;
 use App\Http\Resources\Assets\LanguageResource;
 use App\Http\Resources\UI\CustomerAppResource;
 use App\Models\Assets\Language;
+use App\Models\Auth\CustomerUser;
 use App\Models\Auth\User;
+use App\Models\CRM\Customer;
 use Exception;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cache;
@@ -27,10 +29,10 @@ class GetFirstLoadProps
      * @throws \Psr\Container\ContainerExceptionInterface
      * @throws \Psr\Container\NotFoundExceptionInterface
      */
-    public function handle(?User $user): array
+    public function handle(?CustomerUser $customerUser): array
     {
-        if ($user) {
-            $language = $user->language;
+        if ($customerUser) {
+            $language = $customerUser->user->language;
         } else {
             $language = Language::where('code', App::currentLocale())->first();
         }
@@ -41,18 +43,18 @@ class GetFirstLoadProps
         $firebaseAuthToken = null;
 
 
-        if ($user) {
-            $firebaseAuthToken = Cache::remember('customer_firebase_auth_token_'.$user->id, 3600, function () use ($user) {
+        if ($customerUser) {
+            $firebaseAuthToken = Cache::remember('customer_firebase_auth_token_'.$customerUser->user->id, 3600, function () use ($customerUser) {
                 try {
                     $auth        = app('firebase.auth');
-                    $customer    = customer();
+                    $customer    = $customerUser->customer;
 
 
                     $customToken = $auth
-                        ->createCustomToken('wow-user-'.$user->ulid, [
+                        ->createCustomToken('wow-user-'.$customerUser->user->ulid, [
                             'scope'         => 'customer',
                             'customer-ulid' => $customer->ulid,
-                            'ulid'          => $user->ulid
+                            'ulid'          => $customerUser->user->ulid
                         ]);
 
                     $auth->signInWithCustomToken($customToken);
@@ -67,7 +69,11 @@ class GetFirstLoadProps
 
 
         $app                 =CustomerAppResource::make(request()->get('website'))->getArray();
-        $app['showLiveUsers']= $user && $user->customer->stats->number_users_status_active > 1;
+
+        if($customerUser and $customer=Customer::find(session('customer_id'))) {
+            $app['showLiveUsers']= $customer->stats->number_users_status_active > 1;
+        }
+
 
 
         return [
@@ -80,9 +86,9 @@ class GetFirstLoadProps
 
             'art'    => $this->getArt(),
             'app'    => $app,
-            'layout' => function () use ($user) {
-                if ($user) {
-                    return GetLayout::run($user);
+            'layout' => function () use ($customerUser) {
+                if ($customerUser) {
+                    return GetLayout::run($customerUser);
                 } else {
                     return [
                         'publicUrl' => config('app.url')

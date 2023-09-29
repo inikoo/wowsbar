@@ -145,7 +145,7 @@ class IndexClockings extends InertiaAction
 
     public function authorize(ActionRequest $request): bool
     {
-        $this->canEdit = $request->user()->can('hr.clockings.edit');
+        $this->canEdit = $request->user()->hasPermissionTo('hr.clockings.edit');
 
         return
             (

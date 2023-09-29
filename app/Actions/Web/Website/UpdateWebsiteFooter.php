@@ -21,7 +21,20 @@ class UpdateWebsiteFooter
 
     public function handle(Website $website, array $modelData): Website
     {
-        return $this->update($website, $modelData, ['data']);
+
+        $website->update(
+            [
+                'footer'=>$modelData
+            ]
+        );
+        $website->update(
+            [
+                'compiled_structure' => $website->getCompiledStructure()
+            ]
+        );
+
+        return $website;
+
     }
 
     public function authorize(ActionRequest $request): bool
@@ -36,8 +49,11 @@ class UpdateWebsiteFooter
     public function rules(): array
     {
         return [
-            'state' => ['sometimes', new Enum(WebsiteStateEnum::class)],
-
+            'logo' => ['required','integer'],
+            'type'=>['required','string'],
+            'social'=>['required','array'],
+            'columns'=>['required','array'],
+            'copyright'=>['required','array'],
         ];
     }
 

@@ -6,6 +6,7 @@
   -->
 
 <script setup lang="ts">
+import {trans} from 'laravel-vue-i18n'
 import { ref, reactive, watch } from 'vue'
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { RadioGroup, RadioGroupLabel, RadioGroupOption } from '@headlessui/vue'
@@ -85,7 +86,6 @@ const tool = ref({ name: 'edit', icon: ['fas', 'fa-hand-pointer'] })
 
 
 const data = reactive(props.data.footer)
-
 
 // async function setToFirebase() {
 //     const columns = 'org/websites/footer';
@@ -182,13 +182,13 @@ const changeImage = async (file) => {
             }
         );
         if(response.data.thumbnail){
-            data.logo = response.data.thumbnail
+            data.logo =  response.data.id
+            data.logoSrc =  response.data.thumbnail
             }
     } catch (error) {
-        console.log(error)
         notify({
-                title: "Failed to Update Banner",
-                text: error,
+            title: trans('Failed to upload image'),
+            text: trans('Please contact support'),
                 type: "error"
             });
     }

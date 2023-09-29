@@ -32,8 +32,8 @@ class ShowGuest extends InertiaAction
 
     public function authorize(ActionRequest $request): bool
     {
-        $this->canEdit   = $request->user()->can('sysadmin.users.edit');
-        $this->canDelete = $request->user()->can('sysadmin.users.edit');
+        $this->canEdit   = $request->user()->hasPermissionTo('sysadmin.users.edit');
+        $this->canDelete = $request->user()->hasPermissionTo('sysadmin.users.edit');
         return $request->user()->hasPermissionTo("sysadmin.view");
     }
 
