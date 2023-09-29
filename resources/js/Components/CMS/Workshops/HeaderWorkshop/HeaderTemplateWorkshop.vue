@@ -65,7 +65,7 @@ const changeLogo = async (element) => {
             console.log(error);
             notify({
                 title: "Failed to Update Banner",
-                text: 'Sorry, failed to upload image, due to several reasons',,
+                text: 'Sorry, failed to upload image, due to several reasons',
                 type: "error"
             });
         }
