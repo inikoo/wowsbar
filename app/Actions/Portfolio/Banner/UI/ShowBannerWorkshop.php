@@ -20,10 +20,10 @@ class ShowBannerWorkshop extends InertiaAction
 {
     public function authorize(ActionRequest $request): bool
     {
-        $this->canEdit   = $request->user()->hasPermissionTo('portfolio.edit');
-        $this->canDelete = $request->user()->hasPermissionTo('portfolio.edit');
+        $this->canEdit   = $request->get('customerUser')->hasPermissionTo('portfolio.edit');
+        $this->canDelete = $request->get('customerUser')->hasPermissionTo('portfolio.edit');
 
-        return $request->user()->hasPermissionTo("portfolio.view");
+        return $request->get('customerUser')->hasPermissionTo("portfolio.view");
     }
 
     public function inCustomer(Banner $banner, ActionRequest $request): Banner

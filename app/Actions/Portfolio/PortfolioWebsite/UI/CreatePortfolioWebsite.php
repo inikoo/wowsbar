@@ -20,7 +20,7 @@ class CreatePortfolioWebsite extends InertiaAction
 
     public function authorize(ActionRequest $request): bool
     {
-        return $request->user()->hasPermissionTo('customer.portfolio.edit');
+        return $request->get('customerUser')->hasPermissionTo('customer.portfolio.edit');
     }
 
 

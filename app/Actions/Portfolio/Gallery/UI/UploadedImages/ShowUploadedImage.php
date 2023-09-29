@@ -18,12 +18,12 @@ class ShowUploadedImage extends InertiaAction
 {
     public function authorize(ActionRequest $request): bool
     {
-        $this->canEdit = $request->user()->hasPermissionTo('portfolio.images.edit');
+        $this->canEdit = $request->get('customerUser')->hasPermissionTo('portfolio.images.edit');
 
         return
             (
                 $request->user()->tokenCan('root') or
-                $request->user()->hasPermissionTo('portfolio.images.view')
+                $request->get('customerUser')->hasPermissionTo('portfolio.images.view')
             );
     }
 

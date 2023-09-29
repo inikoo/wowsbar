@@ -24,7 +24,7 @@ class IndexSnapshots extends InertiaAction
         return
             (
                 $request->user()->tokenCan('root') or
-                $request->user()->hasPermissionTo('portfolio.images.view')
+                $request->get('customerUser')->hasPermissionTo('portfolio.images.view')
             );
     }
 

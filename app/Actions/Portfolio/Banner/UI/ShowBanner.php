@@ -26,13 +26,13 @@ class ShowBanner extends InertiaAction
 {
     public function authorize(ActionRequest $request): bool
     {
-        $this->canEdit   = $request->user()->hasPermissionTo('portfolio.edit');
-        $this->canDelete = $request->user()->hasPermissionTo('portfolio.edit');
+        $this->canEdit   = $request->get('customerUser')->hasPermissionTo('portfolio.edit');
+        $this->canDelete = $request->get('customerUser')->hasPermissionTo('portfolio.edit');
 
         return
             (
                 $request->user()->tokenCan('root') or
-                $request->user()->hasPermissionTo('portfolio.view')
+                $request->get('customerUser')->hasPermissionTo('portfolio.view')
             );
     }
 

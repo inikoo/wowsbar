@@ -34,7 +34,7 @@ class UpdatePortfolioSocialAccount
             return true;
         }
 
-        return $request->user()->hasPermissionTo("crm.edit");
+        return $request->get('customerUser')->hasPermissionTo("crm.edit");
     }
 
     public function rules(): array

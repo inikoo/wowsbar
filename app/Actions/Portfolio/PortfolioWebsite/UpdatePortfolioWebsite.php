@@ -28,7 +28,7 @@ class UpdatePortfolioWebsite
 
     public function authorize(ActionRequest $request): bool
     {
-        return $request->user()->hasPermissionTo("portfolio.edit");
+        return $request->get('customerUser')->hasPermissionTo("portfolio.edit");
     }
 
 

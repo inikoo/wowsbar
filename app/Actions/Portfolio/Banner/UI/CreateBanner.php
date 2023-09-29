@@ -21,7 +21,7 @@ class CreateBanner extends InertiaAction
 {
     public function authorize(ActionRequest $request): bool
     {
-        return $request->user()->hasPermissionTo('portfolio.edit');
+        return $request->get('customerUser')->hasPermissionTo('portfolio.edit');
     }
 
     public function inCustomer(ActionRequest $request): Response|RedirectResponse
