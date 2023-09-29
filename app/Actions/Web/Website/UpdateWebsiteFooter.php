@@ -36,14 +36,19 @@ class UpdateWebsiteFooter
     public function rules(): array
     {
         return [
-            'state' => ['sometimes', new Enum(WebsiteStateEnum::class)],
-
+            'logo' => ['required','integer'],
+            'type'=>['required','string'],
+            'social'=>['required','array'],
+            'columns'=>['required','array'],
+            'copyright'=>['required','array'],
         ];
     }
 
     public function asController(Website $website, ActionRequest $request): Website
     {
         $request->validate();
+
+      //  dd($request->validated());
 
         return $this->handle($website, $request->validated());
     }
