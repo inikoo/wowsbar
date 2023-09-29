@@ -116,7 +116,7 @@ setToFirebase();
         <template #other="{ dataPageHead: head }">
             <div class="flex items-center gap-2">
                 <span>
-                    <Button @click="sendDataToServer">save</Button>
+                    <Button @click="sendDataToServer" :label="'Save'" :style="'save'"></Button>
                 </span>
             </div>
         </template>
