@@ -92,18 +92,18 @@ const addfavicon= async (element) => {
 };
 
 
-async function setToFirebase() {
-    const column = "org/websites/layout";
-    try {
-        await setDataFirebase(column, setData.value);
-    } catch (error) {
-        console.log(error);
-    }
-}
+// async function setToFirebase() {
+//     const column = "org/websites/layout";
+//     try {
+//         await setDataFirebase(column, setData.value);
+//     } catch (error) {
+//         console.log(error);
+//     }
+// }
 
-watch(setData, setToFirebase, { deep: true });
+// watch(setData, setToFirebase, { deep: true });
 
-setToFirebase();
+// setToFirebase();
 
 </script>
 
@@ -192,9 +192,9 @@ setToFirebase();
                             class=""
                         />
                     </div>
-                    <div class="font-xs border rounded-lg py-2 px-2 text-black" :class="`bg-${setData?.header?.colorScheme}-500`">Apoointment</div>
-                    <div :style="`border-left: 1px solid ${setData?.header?.colorScheme};`"></div>
-                    <div class="font-xs border rounded-lg py-2 px-2 text-black"  :class="`bg-${setData?.header?.colorScheme}-500`">sign in</div>
+                    <div class="font-xs border rounded-lg py-2 px-2 text-black hidden md:block" :class="`bg-${setData?.header?.colorScheme}-500`">Apoointment</div>
+                    <div :style="`border-left: 1px solid ${setData?.header?.colorScheme} hidden md:block`"></div>
+                    <div class="font-xs border rounded-lg py-2 px-2 text-black hidden md:block" :class="`bg-${setData?.header?.colorScheme}-500`">sign in</div>
                     </div>
                 </div>
                 <div
@@ -225,8 +225,7 @@ setToFirebase();
                             class=""
                         />
                     </div>
-                        <font-awesome-icon :icon="['far', 'oven']" class="w-40 h-14"  :class="`text-${setData?.content?.colorScheme}-500`" />
-                 
+                        <font-awesome-icon :icon="['far', 'oven']" class="w-40 h-14"  :class="`text-${setData?.content?.colorScheme}-500  hidden md:block`" />
                     </div>
                 </div>
                 <div
@@ -257,8 +256,7 @@ setToFirebase();
                             class=""
                         />
                     </div>
-                      <font-awesome-icon :icon="['far', 'text']"  class="w-40 h-14"  :class="`text-${setData?.footer?.colorScheme}-500`" />
-                 
+                      <font-awesome-icon :icon="['far', 'text']"  class="w-40 h-14"  :class="`text-${setData?.footer?.colorScheme}-500  hidden md:block`" />
                     </div>
                 </div>
             </div>
