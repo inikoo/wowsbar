@@ -7,17 +7,25 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Auth\CustomerUser;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
 use Symfony\Component\HttpFoundation\Response;
 
-class SetCustomerID
+class SetUserCustomerMiddleware
 {
     public function handle(Request $request, Closure $next): Response
     {
-        if($request->user()) {
-            Config::set('global.customer_id', $request->user()->customer_id);
+        if ($request->user()) {
+            Config::set('global.customer_id', session('customer_id'));
+            Config::set('global.customer_user_id', session('customer_user_id'));
+
+            $request->merge(
+                [
+                    'customerUser' => CustomerUser::find(session('customer_user_id'))
+                ]
+            );
         }
 
         return $next($request);

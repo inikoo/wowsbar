@@ -30,9 +30,9 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property int|null $parent_id
  * @property string|null $parent_type
  * @property string $username
+ * @property string|null $email
  * @property bool $status
  * @property string|null $contact_name
- * @property string|null $email
  * @property mixed $password
  * @property string|null $remember_token
  * @property string|null $about

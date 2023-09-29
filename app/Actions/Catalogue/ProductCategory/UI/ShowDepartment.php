@@ -29,8 +29,8 @@ class ShowDepartment extends InertiaAction
 
     public function authorize(ActionRequest $request): bool
     {
-        $this->canEdit   = $request->user()->can('catalogue.edit');
-        $this->canDelete = $request->user()->can('catalogue.edit');
+        $this->canEdit   = $request->user()->hasPermissionTo('catalogue.edit');
+        $this->canDelete = $request->user()->hasPermissionTo('catalogue.edit');
 
         return $request->user()->hasPermissionTo("catalogue.view");
     }

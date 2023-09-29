@@ -153,7 +153,7 @@ class ShowProfile
                 "type"   => "simple",
                 "simple" => [
                     "route" => [
-                        "name" => "profile.show",
+                        "name" => "customer.profile.show",
                     ],
                     "label" => __("my profile"),
                 ],

@@ -28,8 +28,8 @@ class ShowCustomer extends InertiaAction
 
     public function authorize(ActionRequest $request): bool
     {
-        $this->canEdit   = $request->user()->can('crm.customers.edit');
-        $this->canDelete = $request->user()->can('crm.customers.edit');
+        $this->canEdit   = $request->user()->hasPermissionTo('crm.customers.edit');
+        $this->canDelete = $request->user()->hasPermissionTo('crm.customers.edit');
 
         return $request->user()->hasPermissionTo("shops.customers.view");
     }

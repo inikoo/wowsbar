@@ -38,7 +38,7 @@ class GetLayout
         }
 
 
-        if ($user->can('shops.view')) {
+        if ($user->hasPermissionTo('shops.view')) {
             $navigation['shops'] = [
                 'label' => $shopsCount == 1 ? __('shop') : __('shops'),
                 'icon'  => ['fal', 'fa-store-alt'],
@@ -91,7 +91,7 @@ class GetLayout
             ];
         }
 
-        if ($user->can('websites.view') and $shopsCount > 0) {
+        if ($user->hasPermissionTo('websites.view') and $shopsCount > 0) {
             if ($shopsCount == 1) {
                 if ($shop->website) {
                     $route = [
@@ -140,7 +140,7 @@ class GetLayout
             ];
         }
 
-        if ($user->can('crm.view') and $organisation->stats->number_shops > 0) {
+        if ($user->hasPermissionTo('crm.view') and $organisation->stats->number_shops > 0) {
             $navigation['crm'] = [
                 'label'   => __('Customers'),
                 'icon'    => ['fal', 'fa-user'],
@@ -200,7 +200,7 @@ class GetLayout
             ];
         }
 
-        if ($user->can('crm.view') and $organisation->stats->number_shops > 0) {
+        if ($user->hasPermissionTo('crm.view') and $organisation->stats->number_shops > 0) {
             $navigation['portfolios'] = [
                 'scope' => 'portfolios',
                 'icon'  => ['fal', 'fa-briefcase'],
@@ -248,7 +248,7 @@ class GetLayout
         }
 
 
-        if ($user->can('catalogue.view')) {
+        if ($user->hasPermissionTo('catalogue.view')) {
             $navigation['catalogue'] = [
                 'label'   => __('catalogue'),
                 'icon'    => ['fal', 'fa-album-collection'],
@@ -285,7 +285,7 @@ class GetLayout
         }
 
 
-        if ($user->can('catalogue.seo.view')) {
+        if ($user->hasPermissionTo('catalogue.seo.view')) {
             $navigation['seo'] = [
                 'label'   => __('SEO'),
                 'icon'    => ['fab', 'fa-google'],
@@ -300,7 +300,7 @@ class GetLayout
             ];
         }
 
-        if ($user->can('catalogue.google-ads.view')) {
+        if ($user->hasPermissionTo('catalogue.google-ads.view')) {
             $navigation['google-ads'] = [
                 'label'   => __('Ads'),
                 'icon'    => ['fal', 'fa-ad'],
@@ -315,7 +315,7 @@ class GetLayout
             ];
         }
 
-        if ($user->can('catalogue.social.view')) {
+        if ($user->hasPermissionTo('catalogue.social.view')) {
             $navigation['social'] = [
                 'label'   => __('Social'),
                 'icon'    => ['fal', 'fa-thumbs-up'],
@@ -331,7 +331,7 @@ class GetLayout
         }
 
 
-        if ($user->can('accounting.view')) {
+        if ($user->hasPermissionTo('accounting.view')) {
             $navigation['accounting'] = [
                 'label'   => __('Accounting'),
                 'icon'    => ['fal', 'fa-abacus'],
@@ -377,7 +377,7 @@ class GetLayout
             ];
         }
 
-        if ($user->can('hr.view')) {
+        if ($user->hasPermissionTo('hr.view')) {
             $navigation['hr'] = [
                 'label'   => __('human resources'),
                 'icon'    => ['fal', 'fa-user-hard-hat'],
@@ -437,7 +437,7 @@ class GetLayout
             ];
         }
 
-        if ($user->can('sysadmin.view')) {
+        if ($user->hasPermissionTo('sysadmin.view')) {
             $navigation['sysadmin'] = [
                 'label'   => __('sysadmin'),
                 'icon'    => ['fal', 'fa-users-cog'],

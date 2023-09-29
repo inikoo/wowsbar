@@ -40,7 +40,7 @@ class StorePortfolioSocialAccount
             return true;
         }
 
-        return $request->user()->can("crm.edit");
+        return $request->get('customerUser')->hasPermissionTo("crm.edit");
     }
 
     public function rules(): array

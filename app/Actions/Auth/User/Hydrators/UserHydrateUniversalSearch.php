@@ -21,10 +21,9 @@ class UserHydrateUniversalSearch
                 'in_organisation' => true,
                 'website_id'      => $user->website_id,
                 'shop_id'         => $user->website->shop_id,
-                'customer_id'     => $user->customer_id,
                 'section'         => 'sysadmin',
-                'title'           => $user->username,
-                'description'     => trim($user->email.' '.$user->contact_name)
+                'title'           => $user->email,
+                'description'     => $user->contact_name
             ]
         );
     }

@@ -23,7 +23,7 @@ class RemoveCustomerWebsite extends InertiaAction
 
     public function authorize(ActionRequest $request): bool
     {
-        return $request->user()->can("inventory.edit");
+        return $request->user()->hasPermissionTo("inventory.edit");
     }
 
     public function asController(PortfolioWebsite $portfolioWebsite, ActionRequest $request): PortfolioWebsite

@@ -9,6 +9,7 @@ namespace App\Actions\Portfolio\PortfolioWebsite;
 
 use App\Models\Portfolio\PortfolioWebpage;
 use App\Models\Portfolio\PortfolioWebsite;
+use DOMDocument;
 use GuzzleHttp\Exception\RequestException;
 use Illuminate\Console\Command;
 use Lorisleiva\Actions\ActionRequest;
@@ -25,11 +26,14 @@ class CrawlerPortfolioWebsite extends CrawlObserver
     use AsCommand;
 
     public string $commandSignature = 'portfolio-website:crawler {url}';
+    public ?string $content = null;
 
     public function handle(string $url): int
     {
         try {
             Crawler::create()
+                ->acceptNofollowLinks()
+                ->ignoreRobots()
                 ->setCrawlObserver($this)
                 ->startCrawling($url);
 
@@ -55,13 +59,26 @@ class CrawlerPortfolioWebsite extends CrawlObserver
 
     public function crawled(UriInterface $url, ResponseInterface $response, UriInterface $foundOnUrl = null, string $linkText = null): void
     {
-        PortfolioWebpage::create([
-            'layout' => $response
-        ]);
+        try {
+            $doc = new DOMDocument();
+            if (!blank($response->getBody())) {
+                @$doc->loadHTML($response->getBody());
+                $title = $doc->getElementsByTagName("title")[0]->nodeValue;
+                $html = $doc->saveHTML();
+
+                PortfolioWebpage::create([
+                    'title' => $title,
+                    'layout' => $html
+                ]);
+
+                echo "🫡 " . $title . " success crawled \n";
+            }
+        } catch (\Exception $e) {
+        }
     }
 
     public function crawlFailed(UriInterface $url, RequestException $requestException, UriInterface $foundOnUrl = null, string $linkText = null): void
     {
-        // TODO: Implement crawlFailed() method.
+        //
     }
 }

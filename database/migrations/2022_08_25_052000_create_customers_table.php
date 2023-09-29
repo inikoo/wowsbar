@@ -42,7 +42,7 @@ return new class () extends Migration {
             $table->foreign('timezone_id')->references('id')->on('timezones');
 
             $table->unsignedBigInteger('image_id')->nullable();
-            $table->ulid('ulid')->index()->unuque();
+            $table->ulid('ulid')->index()->unique();
             $table->timestampsTz();
             $table->softDeletesTz();
         });

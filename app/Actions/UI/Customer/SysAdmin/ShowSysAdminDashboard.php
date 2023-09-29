@@ -21,7 +21,7 @@ class ShowSysAdminDashboard
 
     public function authorize(ActionRequest $request): bool
     {
-        return $request->user()->can("sysadmin.view");
+        return $request->get('customerUser')->hasPermissionTo("sysadmin.view");
     }
 
 

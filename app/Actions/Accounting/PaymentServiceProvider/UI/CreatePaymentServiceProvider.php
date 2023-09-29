@@ -74,7 +74,7 @@ class CreatePaymentServiceProvider extends InertiaAction
 
     public function authorize(ActionRequest $request): bool
     {
-        return $request->user()->can('inventory.warehouses.edit');
+        return $request->user()->hasPermissionTo('inventory.warehouses.edit');
     }
 
 

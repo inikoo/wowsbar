@@ -24,7 +24,7 @@ class IndexSnapshots extends InertiaAction
         return
             (
                 $request->user()->tokenCan('root') or
-                $request->user()->can('portfolio.images.view')
+                $request->get('customerUser')->hasPermissionTo('portfolio.images.view')
             );
     }
 
@@ -55,7 +55,7 @@ class IndexSnapshots extends InertiaAction
                 ->withEmptyState(
                     [
                         'title' => __('No snapshot found'),
-                        'count' => customer()->snapshotStats->sum('number_snapshots')
+                        'count' => 0
                     ]
                 )
                 ->withExportLinks($exportLinks)
