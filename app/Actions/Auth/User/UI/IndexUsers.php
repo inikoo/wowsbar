@@ -13,9 +13,10 @@ use App\Actions\InertiaAction;
 use App\Actions\UI\Customer\SysAdmin\ShowSysAdminDashboard;
 use App\Enums\UI\UsersTabsEnum;
 use App\Http\Resources\Auth\UserRequestLogsResource;
-use App\Http\Resources\Auth\UserResource;
+use App\Http\Resources\Auth\CustomerUserResource;
 use App\Http\Resources\History\HistoryResource;
 use App\InertiaTable\InertiaTable;
+use App\Models\Auth\CustomerUser;
 use App\Models\Auth\User;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -59,7 +60,7 @@ class IndexUsers extends InertiaAction
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
             $query->where(function ($query) use ($value) {
                 $query->whereAnyWordStartWith('contact_name', $value)
-                    ->orWhere('users.username', 'ILIKE', "$value%");
+                    ->orWhere('users.email', 'ILIKE', "$value%");
             });
         });
 
@@ -69,7 +70,8 @@ class IndexUsers extends InertiaAction
         }
 
 
-        $queryBuilder = QueryBuilder::for(User::class);
+        $queryBuilder = QueryBuilder::for(CustomerUser::class);
+        $queryBuilder->where('customer_id', customer()->id);
         foreach ($this->getElementGroups() as $key => $elementGroup) {
             $queryBuilder->whereElementGroup(
                 prefix: $prefix,
@@ -81,9 +83,10 @@ class IndexUsers extends InertiaAction
 
 
         return $queryBuilder
-            ->defaultSort('username')
-            ->allowedSorts(['username', 'email', 'contact_name'])
-            ->allowedFilters([$globalSearch,'email','contact_name','username'])
+            ->defaultSort('slug')
+            ->leftJoin('users', 'users.id', 'customer_user.user_id')
+            ->allowedSorts(['slug', 'email', 'contact_name'])
+            ->allowedFilters([$globalSearch,'email','contact_name','slug'])
             ->withPaginator($prefix)
             ->withQueryString();
     }
@@ -110,31 +113,30 @@ class IndexUsers extends InertiaAction
                 ->withModelOperations($modelOperations)
                 ->withExportLinks($exportLinks)
                 ->column(key: 'avatar', label: ['fal', 'fa-user-circle'])
-                ->column(key: 'username', label: __('username'), canBeHidden: false, sortable: true, searchable: true)
+                ->column(key: 'slug', label: __('code'), canBeHidden: false, sortable: true, searchable: true)
                 ->column(key: 'contact_name', label: __('name'), canBeHidden: false, sortable: true, searchable: true)
                 ->column(key: 'email', label: __('email'), canBeHidden: false, sortable: true, searchable: true)
                 ->column(key: 'status', label: __('status'), canBeHidden: false, sortable: true)
                 ->column(key: 'roles', label: __('roles'), canBeHidden: false, sortable: true)
                 ->column(key: 'permissions', label: __('permissions'), canBeHidden: false, sortable: true)
-                ->defaultSort('username');
+                ->defaultSort('slug');
         };
     }
 
     public function authorize(ActionRequest $request): bool
     {
-        $this->canEdit = $request->user()->hasPermissionTo('sysadmin.edit');
+        $this->canEdit = $request->get('customerUser')->hasPermissionTo('sysadmin.edit');
 
         return
             (
-                $request->user()->tokenCan('root') or
-                $request->user()->hasPermissionTo('sysadmin.view')
+                $request->get('customerUser')->hasPermissionTo('sysadmin.view')
             );
     }
 
 
     public function jsonResponse(LengthAwarePaginator $users): AnonymousResourceCollection
     {
-        return UserResource::collection($users);
+        return CustomerUserResource::collection($users);
     }
 
 
@@ -167,9 +169,7 @@ class IndexUsers extends InertiaAction
                 ],
 
 
-                'labels' => [
-                    'usernameNoSet' => __('username no set')
-                ],
+
 
                 'tabs' => [
                     'current'    => $this->tab,
@@ -177,8 +177,8 @@ class IndexUsers extends InertiaAction
                 ],
 
                 UsersTabsEnum::USERS->value => $this->tab == UsersTabsEnum::USERS->value ?
-                    fn () => UserResource::collection($users)
-                    : Inertia::lazy(fn () => UserResource::collection($users)),
+                    fn () => CustomerUserResource::collection($users)
+                    : Inertia::lazy(fn () => CustomerUserResource::collection($users)),
 
                 UsersTabsEnum::USERS_REQUESTS->value => $this->tab == UsersTabsEnum::USERS_REQUESTS->value ?
                     fn () => UserRequestLogsResource::collection(IndexUserRequestLogs::run($request->get('sort')))

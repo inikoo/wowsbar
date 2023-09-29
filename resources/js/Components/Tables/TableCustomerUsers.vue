@@ -1,6 +1,6 @@
 <!--
   - Author: Raul Perusquia <raul@inikoo.com>
-  - Created: Mon, 20 Mar 2023 23:18:59 Malaysia Time, Kuala Lumpur, Malaysia
+  - Created: Fri, 29 Sep 2023 20:16:51 Malaysia Time, Kuala Lumpur, Malaysia
   - Copyright (c) 2023, Raul A Perusquia Flores
   -->
 
@@ -20,18 +20,9 @@ const props = defineProps<{
 
 
 function userRoute(user: User) {
-    console.log(route().current())
-    switch (route().current()) {
-        case 'org.crm.shop.customers.show.web-users.index':
-            return route(
-                'org.crm.shop.customers.show.web-users.show',
-                [route().params['shop'],route().params['customer'],user.username]);
-        case 'org.crm.customers.show.web-users.index':
-            return route(
-                'org.crm.customers.show.web-users.show',
-                [route().params['customer'],user.username]);
-
-    }
+    return route(
+        'customer.sysadmin.users.show',
+        [user.slug]);
 }
 
 function setColor(status: status) {
@@ -47,10 +38,9 @@ function setColor(status: status) {
 
 <template>
     <Table :resource="data" :name="tab" class="mt-5">
-        <template #cell(username)="{ item: user }">
-                <Link :href="userRoute(user)" class="w-full h-full py-2" :id="user['username'].replace(' ','-')">
-                    <template v-if="user['username']">{{ user['username'] }}</template>
-                    <span v-else class="italic">{{ trans('Not set') }}</span>
+        <template #cell(slug)="{ item: user }">
+                <Link :href="userRoute(user)" class="w-full h-full py-2" :id="user['slug']">
+                    {{ user['slug'] }}
                 </Link>
         </template>
 
