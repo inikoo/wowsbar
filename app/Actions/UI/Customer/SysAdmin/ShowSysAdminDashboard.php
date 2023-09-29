@@ -21,7 +21,7 @@ class ShowSysAdminDashboard
 
     public function authorize(ActionRequest $request): bool
     {
-        return $request->user()>hasPermissionTo("sysadmin.view");
+        return $request->user()->hasPermissionTo("sysadmin.view");
     }
 
 

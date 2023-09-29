@@ -29,7 +29,7 @@ class IndexStockImages extends InertiaAction
         return
             (
                 $request->user()->tokenCan('root') or
-                $request->user()>hasPermissionTo('portfolio.images.view')
+                $request->user()->hasPermissionTo('portfolio.images.view')
             );
     }
 

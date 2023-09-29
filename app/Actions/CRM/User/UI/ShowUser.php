@@ -65,9 +65,9 @@ class ShowUser extends InertiaAction
 
     public function authorize(ActionRequest $request): bool
     {
-        $this->canEdit = $request->user()>hasPermissionTo('crm.edit');
+        $this->canEdit = $request->user()->hasPermissionTo('crm.edit');
 
-        return $request->user()>hasPermissionTo("crm.view");
+        return $request->user()->hasPermissionTo("crm.view");
     }
 
     public function htmlResponse(User $user, ActionRequest $request): Response

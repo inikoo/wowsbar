@@ -55,7 +55,7 @@ class StoreCustomerWebsite
             return true;
         }
 
-        return $request->user()>hasPermissionTo("crm.edit");
+        return $request->user()->hasPermissionTo("crm.edit");
     }
 
     public function rules(): array

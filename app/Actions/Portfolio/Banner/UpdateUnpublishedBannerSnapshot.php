@@ -75,7 +75,7 @@ class UpdateUnpublishedBannerSnapshot
             return true;
         }
 
-        return $request->user()>hasPermissionTo("portfolio.edit");
+        return $request->user()->hasPermissionTo("portfolio.edit");
     }
 
     public function rules(): array

@@ -69,7 +69,7 @@ class StoreUser
             return true;
         }
 
-        return $request->user()>hasPermissionTo("sysadmin.edit");
+        return $request->user()->hasPermissionTo("sysadmin.edit");
     }
 
     public function rules(): array

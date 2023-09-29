@@ -18,7 +18,7 @@ class CreateWebsite extends InertiaAction
 {
     public function authorize(ActionRequest $request): bool
     {
-        return $request->user()>hasPermissionTo('websites.edit');
+        return $request->user()->hasPermissionTo('websites.edit');
     }
 
 

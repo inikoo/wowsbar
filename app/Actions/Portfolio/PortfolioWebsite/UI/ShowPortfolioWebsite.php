@@ -30,10 +30,10 @@ class ShowPortfolioWebsite extends InertiaAction
 
     public function authorize(ActionRequest $request): bool
     {
-        $this->canEdit   = $request->user()>hasPermissionTo('portfolio.edit');
-        $this->canDelete = $request->user()>hasPermissionTo('portfolio.edit');
+        $this->canEdit   = $request->user()->hasPermissionTo('portfolio.edit');
+        $this->canDelete = $request->user()->hasPermissionTo('portfolio.edit');
 
-        return $request->user()>hasPermissionTo('portfolio.view');
+        return $request->user()->hasPermissionTo('portfolio.view');
     }
 
     public function asController(PortfolioWebsite $portfolioWebsite, ActionRequest $request): PortfolioWebsite

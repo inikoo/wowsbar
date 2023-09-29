@@ -34,8 +34,8 @@ class ShowWorkplace extends InertiaAction
 
     public function authorize(ActionRequest $request): bool
     {
-        $this->canEdit   = $request->user()>hasPermissionTo('hr.edit');
-        $this->canDelete = $request->user()>hasPermissionTo('hr.edit');
+        $this->canEdit   = $request->user()->hasPermissionTo('hr.edit');
+        $this->canDelete = $request->user()->hasPermissionTo('hr.edit');
 
         return $request->user()->hasPermissionTo("hr.view");
     }

@@ -37,9 +37,9 @@ class ShowShop extends InertiaAction
 
     public function authorize(ActionRequest $request): bool
     {
-        $this->canEdit       = $request->user()>hasPermissionTo('shops.edit');
-        $this->canDelete     = $request->user()>hasPermissionTo('shops.edit');
-        $this->createWebsite = $request->user()>hasPermissionTo('websites.edit');
+        $this->canEdit       = $request->user()->hasPermissionTo('shops.edit');
+        $this->canDelete     = $request->user()->hasPermissionTo('shops.edit');
+        $this->createWebsite = $request->user()->hasPermissionTo('websites.edit');
 
         return $request->user()->hasPermissionTo("shops.view");
     }
@@ -237,8 +237,8 @@ class ShowShop extends InertiaAction
     {
         $this->fillFromRequest($request);
 
-        $this->set('canEdit', $request->user()>hasPermissionTo('hr.edit'));
-        $this->set('canViewUsers', $request->user()>hasPermissionTo('users.view'));
+        $this->set('canEdit', $request->user()->hasPermissionTo('hr.edit'));
+        $this->set('canViewUsers', $request->user()->hasPermissionTo('users.view'));
     }
 
     public function jsonResponse(Shop $shop): ShopResource

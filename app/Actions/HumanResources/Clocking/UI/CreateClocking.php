@@ -90,7 +90,7 @@ class CreateClocking extends InertiaAction
 
     public function authorize(ActionRequest $request): bool
     {
-        return $request->user()>hasPermissionTo('hr');
+        return $request->user()->hasPermissionTo('hr');
     }
 
 

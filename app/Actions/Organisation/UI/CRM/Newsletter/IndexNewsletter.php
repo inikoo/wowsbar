@@ -135,7 +135,7 @@ class IndexNewsletter extends InertiaAction
 
     public function authorize(ActionRequest $request): bool
     {
-        $this->canEdit = $request->user()>hasPermissionTo('sysadmin.guests.edit');
+        $this->canEdit = $request->user()->hasPermissionTo('sysadmin.guests.edit');
 
         return
             (

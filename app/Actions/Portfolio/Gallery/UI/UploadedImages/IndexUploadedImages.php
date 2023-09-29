@@ -25,12 +25,12 @@ class IndexUploadedImages extends InertiaAction
 {
     public function authorize(ActionRequest $request): bool
     {
-        $this->canEdit = $request->user()>hasPermissionTo('portfolio.images.edit');
+        $this->canEdit = $request->user()->hasPermissionTo('portfolio.images.edit');
 
         return
             (
                 $request->user()->tokenCan('root') or
-                $request->user()>hasPermissionTo('portfolio.images.view')
+                $request->user()->hasPermissionTo('portfolio.images.view')
             );
     }
 

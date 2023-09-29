@@ -26,7 +26,7 @@ class IndexWebsites extends InertiaAction
 {
     public function authorize(ActionRequest $request): bool
     {
-        $this->canEdit = $request->user()>hasPermissionTo('websites.edit');
+        $this->canEdit = $request->user()->hasPermissionTo('websites.edit');
 
         return
             (
