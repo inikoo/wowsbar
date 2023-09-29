@@ -48,7 +48,9 @@ const calcPercentage = (total: number, amount: number) => {
 
 <template>
     <!-- <pre>{{ data }}</pre> -->
-    <Image :src="data.logo" />
+    <div class="w-16">
+        <Image :src="data.logo" />
+    </div>
     <div class="mt-24 bg-gray-100 fixed z-10 flex justify-center items-center"
         :class="`w-full`"
     >
