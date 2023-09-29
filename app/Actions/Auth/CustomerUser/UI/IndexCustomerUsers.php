@@ -1,19 +1,19 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Mon, 18 Sep 2023 18:36:51 Malaysia Time, Pantai Lembeng, Bali, Indonesia
+ * Created: Fri, 29 Sep 2023 20:41:50 Malaysia Time, Kuala Lumpur, Malaysia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Auth\User\UI;
+namespace App\Actions\Auth\CustomerUser\UI;
 
 use App\Actions\Auth\UserRequest\IndexUserRequestLogs;
 use App\Actions\Helpers\History\IndexHistories;
 use App\Actions\InertiaAction;
 use App\Actions\UI\Customer\SysAdmin\ShowSysAdminDashboard;
 use App\Enums\UI\UsersTabsEnum;
-use App\Http\Resources\Auth\UserRequestLogsResource;
 use App\Http\Resources\Auth\CustomerUserResource;
+use App\Http\Resources\Auth\UserRequestLogsResource;
 use App\Http\Resources\History\HistoryResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\Auth\CustomerUser;
@@ -27,7 +27,7 @@ use Lorisleiva\Actions\ActionRequest;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
-class IndexUsers extends InertiaAction
+class IndexCustomerUsers extends InertiaAction
 {
     protected function getElementGroups(): array
     {
@@ -83,8 +83,7 @@ class IndexUsers extends InertiaAction
 
 
         return $queryBuilder
-            ->defaultSort('slug')
-            ->leftJoin('users', 'users.id', 'customer_user.user_id')
+            ->defaultSort('customer_user.slug')
             ->allowedSorts(['slug', 'email', 'contact_name'])
             ->allowedFilters([$globalSearch,'email','contact_name','slug'])
             ->withPaginator($prefix)
@@ -143,7 +142,7 @@ class IndexUsers extends InertiaAction
     public function htmlResponse(LengthAwarePaginator $users, ActionRequest $request): Response
     {
         return Inertia::render(
-            'SysAdmin/Users',
+            'SysAdmin/CustomerUsers',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->getName(),
@@ -235,12 +234,12 @@ class IndexUsers extends InertiaAction
         };
 
         return match ($routeName) {
-            'sysadmin.users.index' =>
+            'customer.sysadmin.users.index' =>
             array_merge(
                 ShowSysAdminDashboard::make()->getBreadcrumbs(),
                 $headCrumb(
                     [
-                        'name' => 'sysadmin.users.index',
+                        'name' => 'customer.sysadmin.users.index',
                         null
                     ]
                 ),

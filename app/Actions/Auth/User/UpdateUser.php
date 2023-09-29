@@ -7,7 +7,7 @@
 
 namespace App\Actions\Auth\User;
 
-use App\Actions\CRM\Customer\Hydrators\CustomerHydrateUsers;
+use App\Actions\CRM\Customer\Hydrators\CustomerHydrateCustomerUsers;
 use App\Actions\Traits\WithActionUpdate;
 use App\Http\Resources\Auth\UserResource;
 use App\Models\Auth\User;
@@ -29,7 +29,7 @@ class UpdateUser
         if ($user->wasChanged('status')) {
 
             foreach ($user->customers as $customer) {
-                CustomerHydrateUsers::run($customer);
+                CustomerHydrateCustomerUsers::run($customer);
             }
         }
 

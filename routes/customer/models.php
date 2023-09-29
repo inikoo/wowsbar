@@ -6,8 +6,8 @@
  */
 
 
+use App\Actions\Auth\CustomerUser\UpdateCustomerUser;
 use App\Actions\Auth\User\StoreUser;
-use App\Actions\Auth\User\UpdateUser;
 use App\Actions\Media\ImageGenerator;
 use App\Actions\Portfolio\Banner\DeleteBanner;
 use App\Actions\Portfolio\Banner\FetchFirebaseSnapshot;
@@ -43,7 +43,7 @@ Route::patch('/images/{media}', UpdateUploadedImage::class)->name('images.update
 
 Route::post('/user', StoreUser::class)->name('user.store');
 
-Route::patch('/user/{user:username}', UpdateUser::class)->name('user.update');
+Route::patch('/user/{customerUser:id}', UpdateCustomerUser::class)->name('user.update');
 Route::patch('/profile', UpdateProfile::class)->name('profile.update');
 
 //Route::patch('/system-settings', UpdateSystemSettings::class)->name('system-settings.update');

@@ -11,7 +11,7 @@ use App\Models\CRM\Customer;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Lorisleiva\Actions\Concerns\AsAction;
 
-class CustomerHydrateUsers implements ShouldBeUnique
+class CustomerHydrateCustomerUsers implements ShouldBeUnique
 {
     use AsAction;
 

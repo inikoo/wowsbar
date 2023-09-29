@@ -7,6 +7,7 @@
 
 namespace App\Actions\Auth\User\UI;
 
+use App\Actions\Auth\CustomerUser\UI\IndexCustomerUsers;
 use App\Actions\InertiaAction;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -90,7 +91,7 @@ class CreateUser extends InertiaAction
     public function getBreadcrumbs(string $routeName): array
     {
         return array_merge(
-            IndexUsers::make()->getBreadcrumbs(
+            IndexCustomerUsers::make()->getBreadcrumbs(
                 routeName: preg_replace('/create$/', 'index', $routeName),
             ),
             [

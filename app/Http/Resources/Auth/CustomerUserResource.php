@@ -23,7 +23,7 @@ class CustomerUserResource extends JsonResource
 
         return [
             'id'                 => $customerUser->id,
-            'slug'               => $customerUser->user->slug,
+            'slug'               => $customerUser->slug,
             'email'              => $customerUser->user->email,
             'avatar'             => $customerUser->user->avatarImageSources(48, 48),
             'contact_name'       => $customerUser->user->contact_name,

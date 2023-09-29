@@ -5,7 +5,7 @@
   -->
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
+import { ref, onMounted, onBeforeUnmount } from 'vue'
 import Button from '@/Components/Elements/Buttons/Button.vue'
 import Action from '@/Components/Forms/Fields/Action.vue'
 
@@ -14,9 +14,9 @@ import { library } from "@fortawesome/fontawesome-svg-core"
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { faGoogle} from "@fortawesome/free-brands-svg-icons"
 
-import { faEdit,faUserLock,faBell,faCopyright, faUserCircle, faKey, faClone, faPaintBrush, faMoonStars, faLightbulbOn, faCheck, faPhone, faIdCard, faFingerprint,faLanguage,faAddressBook,faTrashAlt } from "@/../private/pro-light-svg-icons"
+import { faToggleOn,faEdit,faUserLock,faBell,faCopyright, faUserCircle, faKey, faClone, faPaintBrush, faMoonStars, faLightbulbOn, faCheck, faPhone, faIdCard, faFingerprint,faLanguage,faAddressBook,faTrashAlt } from "@/../private/pro-light-svg-icons"
 
-library.add(faEdit,faUserLock,faBell,faCopyright,faUserCircle, faKey, faClone, faPaintBrush, faMoonStars, faLightbulbOn, faCheck, faPhone, faIdCard, faFingerprint,faLanguage,faAddressBook,faTrashAlt, faGoogle)
+library.add(faToggleOn,faEdit,faUserLock,faBell,faCopyright,faUserCircle, faKey, faClone, faPaintBrush, faMoonStars, faLightbulbOn, faCheck, faPhone, faIdCard, faFingerprint,faLanguage,faAddressBook,faTrashAlt, faGoogle)
 
 const props = defineProps<{
 
@@ -97,6 +97,7 @@ onBeforeUnmount(() => {
                 </nav>
             </aside>
 
+
             <!-- Content of forms -->
             <div class="px-4 sm:px-6 md:px-4 col-span-9">
                 <div class="divide-y divide-gray-200 dark:divide-gray-500 flex flex-col">
@@ -111,7 +112,7 @@ onBeforeUnmount(() => {
                         <FieldForm v-else :key="field" :field="field" :fieldData="fieldData" :args="formData.args" :id="fieldData.name"/>
                     </div>
 
-                    <!-- Button for Authorize Google Drive -->
+
                     <div class="py-2 px-3 flex justify-end max-w-2xl" v-if="formData.blueprint[current].button"  :id="formData.title">
                         <component :is="formData.blueprint[current].button.disable ? 'div' : 'a'"
                             :href="formData.blueprint[current].button.route" target="_blank" rel="noopener noreferrer"
@@ -146,7 +147,7 @@ onBeforeUnmount(() => {
                     </div>
                 </li>
             </ul>
-        
+
         </div>
     </div>
 </template>
