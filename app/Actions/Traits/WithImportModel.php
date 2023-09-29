@@ -39,8 +39,8 @@ trait WithImportModel
 
     public function asCommand(Command $command): void
     {
-        $filename = $command->option('filename');
-        if($command->option('google')) {
+        $filename = $command->argument('filename');
+        if(! $filename) {
             $filename = $this->downloadFromGoogle($command->option('google'));
         }
 
@@ -71,7 +71,7 @@ trait WithImportModel
         }
     }
 
-    public function downloadFromGoogle(string $url)
+    public function downloadFromGoogle(string $url): Exception|string
     {
         try {
             $client = new Client();

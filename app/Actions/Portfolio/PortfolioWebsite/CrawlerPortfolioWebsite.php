@@ -26,7 +26,7 @@ class CrawlerPortfolioWebsite extends CrawlObserver
     use AsCommand;
 
     public string $commandSignature = 'portfolio-website:crawler {url}';
-    public ?string $content = null;
+    public ?string $content         = null;
 
     public function handle(string $url): int
     {
@@ -64,10 +64,10 @@ class CrawlerPortfolioWebsite extends CrawlObserver
             if (!blank($response->getBody())) {
                 @$doc->loadHTML($response->getBody());
                 $title = $doc->getElementsByTagName("title")[0]->nodeValue;
-                $html = $doc->saveHTML();
+                $html  = $doc->saveHTML();
 
                 PortfolioWebpage::create([
-                    'title' => $title,
+                    'title'  => $title,
                     'layout' => $html
                 ]);
 

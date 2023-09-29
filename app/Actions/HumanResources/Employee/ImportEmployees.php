@@ -35,7 +35,7 @@ class ImportEmployees
         $this->handle($file);
     }
 
-    public string $commandSignature = 'employee:upload {--L|filename=} {--G|google=}';
+    public string $commandSignature = 'employee:upload {--G|google=} {filename?}';
 
 
 }
