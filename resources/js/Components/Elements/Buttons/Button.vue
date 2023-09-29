@@ -128,10 +128,8 @@ const getActionIcon = (icon: any) => {
         sizeClass
     ]">
         <slot>
-            <div class="space-x-2">
-                <FontAwesomeIcon v-if="getActionIcon(icon)" :icon="getActionIcon(icon)" class="" aria-hidden="true"/>
-                <span class="">{{ getActionLabel(label) }}</span>
-            </div>
+            <FontAwesomeIcon v-if="getActionIcon(icon)" :icon="getActionIcon(icon)" class="" aria-hidden="true"/>
+            <span class="">{{ getActionLabel(label) }}</span>
         </slot>
     </button>
 </template>

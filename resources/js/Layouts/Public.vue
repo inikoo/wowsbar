@@ -59,9 +59,11 @@ const getMenuComponent = computed(() => {
 
 <template>
     <div class="relative ">
-        <section class="relative isolate overflow-hidden bg-gray-100">
+        <section class="relative isolate overflow-hidden bg-gray-100"
+            :class="[structure.layout.layout !== 'center' ? 'mx-auto max-w-5xl' : '']"
+        >
             <!-- Header -->
-            <pre>{{ structure }}</pre>
+            <!-- <pre>{{ structure.layout }}</pre> -->
             <component :is="getHeaderComponent" :data="structure.header"></component>
 
             <!-- Menu -->
