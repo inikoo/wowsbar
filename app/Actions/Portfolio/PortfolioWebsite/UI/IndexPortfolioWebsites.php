@@ -61,7 +61,7 @@ class IndexPortfolioWebsites extends InertiaAction
         return $queryBuilder
             ->defaultSort('portfolio_websites.code')
             ->with(['stats'])
-            ->allowedSorts(['slug', 'code', 'name','number_banners','domain'])
+            ->allowedSorts(['slug', 'code', 'name', 'number_banners', 'domain'])
             ->allowedFilters([$globalSearch])
             ->withPaginator($prefix)
             ->withQueryString();
@@ -115,8 +115,21 @@ class IndexPortfolioWebsites extends InertiaAction
                         'title' => __('website'),
                         'icon'  => 'fal fa-globe'
                     ],
+                    'actions'   => [
+                        $this->canEdit ? [
+                            'type'  => 'button',
+                            'style' => 'create',
+                            'label' => __('Create website'),
+                            'route' => [
+                                'name'       => 'customer.portfolio.websites.create',
+                                'parameters' => $request->route()->originalParameters()
+                            ],
+
+                        ] : null
+                    ]
+
                 ],
-                'tabs' => [
+                'tabs'        => [
                     'current'    => $this->tab,
                     'navigation' => PortfolioWebsitesTabsEnum::navigation()
                 ],
@@ -129,38 +142,18 @@ class IndexPortfolioWebsites extends InertiaAction
                     fn () => HistoryResource::collection(IndexHistories::run(PortfolioWebsite::class))
                     : Inertia::lazy(fn () => HistoryResource::collection(IndexHistories::run(PortfolioWebsite::class)))
             ]
-        )->table($this->tableStructure(
-            modelOperations: [
-                'createLink' => [
-                    [
+        )->table(
+            $this->tableStructure(
+                prefix: 'websites',
+                exportLinks: [
+                    'export' => [
                         'route' => [
-                            'name'       => 'customer.portfolio.websites.create',
-                            'parameters' => $request->route()->originalParameters()
-                        ],
-                        'icon'  => 'fal fa-upload',
-                        'label' => __('upload'),
-                        'style' => 'secondary'
-                    ],
-                    [
-                        'route' => [
-                            'name'       => 'customer.portfolio.websites.create',
-                            'parameters' => $request->route()->originalParameters()
-                        ],
-                        'label' => __('create'),
-                        'style' => 'primary'
-                    ],
-
-                ]
-            ],
-            prefix: 'websites',
-            exportLinks: [
-                'export' => [
-                    'route' => [
-                        'name' => 'export.websites.index'
+                            'name' => 'export.websites.index'
+                        ]
                     ]
                 ]
-            ]
-        ))->table(IndexHistories::make()->tableStructure());
+            )
+        )->table(IndexHistories::make()->tableStructure());
     }
 
     /** @noinspection PhpUnusedParameterInspection */
