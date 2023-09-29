@@ -10,6 +10,7 @@ namespace App\Actions\Auth\User;
 use App\Actions\Auth\User\Hydrators\UserHydrateFailLogin;
 use App\Actions\Auth\User\Hydrators\UserHydrateLogin;
 use App\Actions\Organisation\OrganisationUser\Hydrators\OrganisationUserHydrateFailLogin;
+use App\Models\Auth\CustomerUser;
 use App\Models\Auth\User;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Http\RedirectResponse;
@@ -54,9 +55,9 @@ class Login
         /** @var User $user */
         $user = Auth::guard($this->gate)->user();
 
-
-        $customer=$user->activeCustomers()->first();
-        if(!$customer) {
+        /** @var CustomerUser $customerUser */
+        $customerUser=$user->customerUsers()->where('status',true)->first();
+        if(!$customerUser) {
             RateLimiter::hit($this->throttleKey($request));
             $this->userFailLogin();
 
@@ -70,10 +71,13 @@ class Login
         }
 
 
-        Config::set('global.customer_id', $customer->id);
+        Config::set('global.customer_id', $customerUser->customer->id);
+        Config::set('global.customer_user_id', $customerUser->id);
+
         session([
-            'customer_id'  => $customer->id,
-            'customer_slug'=> $customer->slug
+            'customer_user_id'=>$customerUser->id,
+            'customer_id'  => $customerUser->customer->id,
+            'customer_slug'=> $customerUser->customer->slug
         ]);
         UserHydrateLogin::dispatch(Auth::guard($this->gate)->user(), request()->ip(), now());
 

@@ -20,11 +20,9 @@ return new class () extends Migration {
             $table->string('slug')->index()->unique();
             $table->string('email')->index()->collation('und_ns');
             $table->timestamp('email_verified_at')->nullable();
-
             $table->unsignedInteger('website_id')->index();
             $table->foreign('website_id')->references('id')->on('websites');
             $table = $this->userDetailsColumns($table);
-
             $table->ulid('ulid')->index()->unique();
             $table->timestampsTz();
             $table->softDeletesTz();

@@ -29,9 +29,9 @@ class IndexPortfolioWebsites extends InertiaAction
 {
     public function authorize(ActionRequest $request): bool
     {
-        $this->canEdit = $request->user()->can('portfolio');
+        $this->canEdit = $request->user()>hasPermissionTo('portfolio');
 
-        return $request->user()->can('portfolio');
+        return $request->user()>hasPermissionTo('portfolio');
     }
 
     public function asController(ActionRequest $request): LengthAwarePaginator

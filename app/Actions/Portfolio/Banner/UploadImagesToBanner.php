@@ -56,7 +56,7 @@ class UploadImagesToBanner
 
     public function authorize(ActionRequest $request): bool
     {
-        return $request->user()->can("portfolio.edit");
+        return $request->user()>hasPermissionTo("portfolio.edit");
     }
 
     public function rules(): array

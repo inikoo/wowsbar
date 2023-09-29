@@ -22,7 +22,7 @@ class EditOrganisation
 
     public function authorize(ActionRequest $request): bool
     {
-        return $request->user()->can("sysadmin.edit");
+        return $request->user()>hasPermissionTo("sysadmin.edit");
     }
 
 

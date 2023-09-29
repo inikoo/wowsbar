@@ -31,8 +31,8 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -74,6 +74,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read Collection<int, Banner> $banners
  * @property-read int|null $banners_count
  * @property-read Currency $currency
+ * @property-read Collection<int, CustomerUser> $customerUsers
+ * @property-read int|null $customer_users_count
  * @property-read Collection<int, CustomerWebsite> $customerWebsites
  * @property-read int|null $customer_websites_count
  * @property-read Media|null $logo
@@ -190,11 +192,15 @@ class Customer extends Model implements HasMedia
         return $this->hasOne(CustomerPortfolioStats::class);
     }
 
-    public function users(): BelongsToMany
+
+    public function users(): HasManyThrough
     {
-        return $this->belongsToMany(User::class)
-            ->using(CustomerUser::class)
-            ->withPivot('status')->withTimestamps();
+        return $this->hasManyThrough(User::class, CustomerUser::class);
+    }
+
+    public function customerUsers(): HasMany
+    {
+        return $this->hasMany(CustomerUser::class);
     }
 
 

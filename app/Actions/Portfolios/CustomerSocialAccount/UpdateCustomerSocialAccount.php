@@ -34,7 +34,7 @@ class UpdateCustomerSocialAccount
             return true;
         }
 
-        return $request->user()->can("crm.edit");
+        return $request->user()>hasPermissionTo("crm.edit");
     }
 
     public function rules(): array

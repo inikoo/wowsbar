@@ -5,7 +5,7 @@
   -->
 
 <script setup lang="ts">
-import { Head, Link } from '@inertiajs/vue3'
+import { Head } from '@inertiajs/vue3'
 import { capitalize } from "@/Composables/capitalize"
 import Input from '@/Components/Forms/Fields/Input.vue'
 

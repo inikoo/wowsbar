@@ -110,7 +110,7 @@ class IndexPayments extends InertiaAction
 
     public function authorize(ActionRequest $request): bool
     {
-        $this->canEdit = $request->user()->can('accounting.edit');
+        $this->canEdit = $request->user()>hasPermissionTo('accounting.edit');
         return
             (
                 $request->user()->tokenCan('root') or

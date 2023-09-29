@@ -191,10 +191,11 @@ class StoreCustomer
         $customer = $this->handle($shop, Arr::except($validatedData, ['password']));
 
         if ($command->option('password')) {
+            $validatedData['is_root']=true;
             StoreUser::make()->action(
                 $shop->website,
                 $customer,
-                Arr::only($validatedData, ['email', 'password', 'contact_name'])
+                Arr::only($validatedData, ['is_root','email', 'password', 'contact_name'])
             );
         }
 

@@ -65,7 +65,7 @@ class CreatePaymentAccount extends InertiaAction
 
     public function authorize(ActionRequest $request): bool
     {
-        return !$request->user()->can('accounting.edit');
+        return !$request->user()>hasPermissionTo('accounting.edit');
     }
 
 

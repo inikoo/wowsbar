@@ -98,8 +98,8 @@ class ShowInvoice extends InertiaAction
     {
         $this->fillFromRequest($request);
 
-        $this->set('canEdit', $request->user()->can('hr.edit'));
-        $this->set('canViewUsers', $request->user()->can('users.view'));
+        $this->set('canEdit', $request->user()>hasPermissionTo('hr.edit'));
+        $this->set('canViewUsers', $request->user()>hasPermissionTo('users.view'));
     }
 
     #[Pure] public function jsonResponse(Invoice $invoice): InvoiceResource

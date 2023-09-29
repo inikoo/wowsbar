@@ -21,7 +21,7 @@ class ShowProspectsDashboard extends InertiaAction
 {
     public function authorize(ActionRequest $request): bool
     {
-        return $request->user()->can("portfolio.view");
+        return $request->user()>hasPermissionTo("portfolio.view");
     }
 
 

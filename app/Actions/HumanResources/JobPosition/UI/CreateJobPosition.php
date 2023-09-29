@@ -84,7 +84,7 @@ class CreateJobPosition extends InertiaAction
 
     public function authorize(ActionRequest $request): bool
     {
-        return $request->user()->can('hr.edit');
+        return $request->user()>hasPermissionTo('hr.edit');
     }
 
 

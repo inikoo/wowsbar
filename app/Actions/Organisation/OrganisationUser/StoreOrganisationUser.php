@@ -44,7 +44,7 @@ class StoreOrganisationUser
             return true;
         }
 
-        return $request->user()->can("sysadmin.edit");
+        return $request->user()>hasPermissionTo("sysadmin.edit");
     }
 
     public function rules(): array

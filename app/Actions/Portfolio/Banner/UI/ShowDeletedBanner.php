@@ -24,12 +24,12 @@ class ShowDeletedBanner extends InertiaAction
 {
     public function authorize(ActionRequest $request): bool
     {
-        $this->canRestore   = $request->user()->can('portfolio.edit');
+        $this->canRestore   = $request->user()>hasPermissionTo('portfolio.edit');
 
         return
             (
                 $request->user()->tokenCan('root') or
-                $request->user()->can('portfolio.view')
+                $request->user()>hasPermissionTo('portfolio.view')
             );
     }
 

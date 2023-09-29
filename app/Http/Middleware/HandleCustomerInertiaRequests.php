@@ -21,13 +21,13 @@ class HandleCustomerInertiaRequests extends Middleware
 
     public function share(Request $request): array
     {
-        $user = $request->user();
+
 
         $firstLoadOnlyProps = [];
         if ((!$request->inertia()
             or
             Session::get('reloadLayout'))) {
-            $firstLoadOnlyProps = GetFirstLoadProps::run($user);
+            $firstLoadOnlyProps = GetFirstLoadProps::run($request->get('customerUser'));
 
             $firstLoadOnlyProps['ziggy'] = function () use ($request) {
                 return array_merge((new Ziggy())->toArray(), [

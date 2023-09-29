@@ -59,7 +59,7 @@ class CreateClockingMachine extends InertiaAction
 
     public function authorize(ActionRequest $request): bool
     {
-        return $request->user()->can('hr.clocking-machines.edit');
+        return $request->user()>hasPermissionTo('hr.clocking-machines.edit');
     }
 
 

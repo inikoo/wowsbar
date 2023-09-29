@@ -29,7 +29,7 @@ class IndexProspects extends InertiaAction
 
     public function authorize(ActionRequest $request): bool
     {
-        $this->canEdit = $request->user()->can('crm.prospects.edit');
+        $this->canEdit = $request->user()>hasPermissionTo('crm.prospects.edit');
 
         return
             (
