@@ -56,7 +56,7 @@ class Login
         $user = Auth::guard($this->gate)->user();
 
         /** @var CustomerUser $customerUser */
-        $customerUser=$user->customerUsers()->where('status',true)->first();
+        $customerUser=$user->customerUsers()->where('status', true)->first();
         if(!$customerUser) {
             RateLimiter::hit($this->throttleKey($request));
             $this->userFailLogin();
@@ -75,9 +75,9 @@ class Login
         Config::set('global.customer_user_id', $customerUser->id);
 
         session([
-            'customer_user_id'=>$customerUser->id,
-            'customer_id'  => $customerUser->customer->id,
-            'customer_slug'=> $customerUser->customer->slug
+            'customer_user_id'=> $customerUser->id,
+            'customer_id'     => $customerUser->customer->id,
+            'customer_slug'   => $customerUser->customer->slug
         ]);
         UserHydrateLogin::dispatch(Auth::guard($this->gate)->user(), request()->ip(), now());
 

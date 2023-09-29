@@ -13,7 +13,6 @@ use App\Http\Resources\Assets\LanguageResource;
 use App\Http\Resources\UI\CustomerAppResource;
 use App\Models\Assets\Language;
 use App\Models\Auth\CustomerUser;
-use App\Models\Auth\User;
 use App\Models\CRM\Customer;
 use Exception;
 use Illuminate\Support\Facades\App;

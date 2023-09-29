@@ -8,9 +8,7 @@
 namespace App\Actions\Web\Website;
 
 use App\Actions\Traits\WithActionUpdate;
-use App\Enums\Organisation\Web\Website\WebsiteStateEnum;
 use App\Models\Web\Website;
-use Illuminate\Validation\Rules\Enum;
 use Lorisleiva\Actions\ActionRequest;
 
 class UpdateWebsiteHeader
@@ -21,7 +19,21 @@ class UpdateWebsiteHeader
 
     public function handle(Website $website, array $modelData): Website
     {
-        return $this->update($website, $modelData, ['data']);
+
+        $website->update(
+            [
+                'header'=> $modelData
+            ]
+        );
+        $website->update(
+            [
+                'compiled_structure' => $website->getCompiledStructure()
+            ]
+        );
+
+        return $website;
+
+
     }
 
     public function authorize(ActionRequest $request): bool
@@ -36,7 +48,9 @@ class UpdateWebsiteHeader
     public function rules(): array
     {
         return [
-            'state' => ['sometimes', new Enum(WebsiteStateEnum::class)],
+            'logo' => ['required','integer'],
+            'type' => ['required','string'],
+            'menu' => ['required','array'],
 
         ];
     }
