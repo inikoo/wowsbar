@@ -27,6 +27,8 @@ return new class () extends Migration {
             $table->unsignedSmallInteger('website_id')->index();
             $table->foreign('website_id')->references('id')->on('websites');
             $table->unsignedInteger('main_variant_id')->index()->nullable();
+            $table->jsonb('blocks');
+            $table->jsonb('compiled_content');
 
             $table->jsonb('data');
             $table->jsonb('settings');

@@ -35,6 +35,7 @@ use App\Actions\Catalogue\Product\ImportProducts;
 use App\Actions\UI\Organisation\Profile\UpdateProfile;
 use App\Actions\Web\Webpage\StoreArticle;
 use App\Actions\Web\Webpage\StoreWebpage;
+use App\Actions\Web\Webpage\UpdateWebpageBlocks;
 use App\Actions\Web\Website\StoreWebsite;
 use App\Actions\Web\Website\UpdateWebsite;
 use App\Actions\Web\Website\UpdateWebsiteFooter;
@@ -81,6 +82,8 @@ Route::prefix('website')->as('website.')->group(function () {
 
 Route::prefix('webpage')->as('webpage.')->group(function () {
     Route::post('{webpage:id}', StoreWebpage::class)->name('store');
+    Route::patch('{website:id}/blocks', UpdateWebpageBlocks::class)->name('blocks.update');
+
     //Route::patch('{webpage:id}', UpdateWebsite::class)->name('update');
     //Route::patch('{webpage:id}/state', UpdateWebsiteState::class)->name('state.update');
     //Route::post('{webpage:id}/images', UploadImagesToWebsite::class)->name('images.store');

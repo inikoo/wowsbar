@@ -9,6 +9,7 @@ namespace App\Models\Web;
 
 use App\Enums\Organisation\Web\Webpage\WebpagePurposeEnum;
 use App\Enums\Organisation\Web\Webpage\WebpageTypeEnum;
+use App\Http\Resources\Web\WebpageBlocksResource;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -30,6 +31,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property int|null $parent_id
  * @property int $website_id
  * @property int|null $main_variant_id
+ * @property array $blocks
+ * @property array $compiled_content
  * @property array $data
  * @property array $settings
  * @property \Illuminate\Support\Carbon|null $created_at
@@ -42,7 +45,9 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Webpage newModelQuery()
  * @method static Builder|Webpage newQuery()
  * @method static Builder|Webpage query()
+ * @method static Builder|Webpage whereBlocks($value)
  * @method static Builder|Webpage whereCode($value)
+ * @method static Builder|Webpage whereCompiledContent($value)
  * @method static Builder|Webpage whereCreatedAt($value)
  * @method static Builder|Webpage whereData($value)
  * @method static Builder|Webpage whereDeletedAt($value)
@@ -64,16 +69,20 @@ class Webpage extends Model
     use HasSlug;
 
     protected $casts = [
-        'data'     => 'array',
-        'settings' => 'array',
-        'type'     => WebpageTypeEnum::class,
-        'purpose'  => WebpagePurposeEnum::class,
+        'data'             => 'array',
+        'settings'         => 'array',
+        'blocks'           => 'array',
+        'compiled_content' => 'array',
+        'type'             => WebpageTypeEnum::class,
+        'purpose'          => WebpagePurposeEnum::class,
 
     ];
 
     protected $attributes = [
-        'data'     => '{}',
-        'settings' => '{}',
+        'data'             => '{}',
+        'settings'         => '{}',
+        'blocks'           => '{}',
+        'compiled_content' => '{}',
     ];
 
     protected $guarded = [];
@@ -104,5 +113,12 @@ class Webpage extends Model
     public function variants(): HasMany
     {
         return $this->hasMany(WebpageVariant::class);
+    }
+
+    public function getCompiledContent(): array
+    {
+        data_set($compiled, 'blocks', WebpageBlocksResource::make($this->blocks)->getArray());
+
+        return $compiled;
     }
 }
