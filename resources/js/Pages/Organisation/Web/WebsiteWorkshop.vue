@@ -75,17 +75,16 @@ const sendDataToServer = async () => {
     form.patch(
         route(RouteActive.value.name,RouteActive.value.parameters), {
         onSuccess: async (res) => {
-            console.log('res',res)
             notify({
-                title: trans("Success Update"),
+                title: trans("Success"),
                 type: "success",
-                text: "Banner already update and publish",
+                text: "",
             });
         },
         onError: (errors: any) => {
             console.log(errors)
             notify({
-                title: trans("Failed to Update Banner"),
+                title: trans("Error"),
                 text: errors,
                 type: "error"
             });

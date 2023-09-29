@@ -5,12 +5,7 @@
 -->
 
 <script setup lang="ts">
-import { ref, watch } from "vue";
-import {
-    getDbRef,
-    getDataFirebase,
-    setDataFirebase,
-} from "@/Composables/firebase";
+import {trans} from 'laravel-vue-i18n'
 import ColorPicker from "@/Components/Workshop/Fields/ColorPicker.vue";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faImage, faTimes, faOven, faText } from "@/../private/pro-regular-svg-icons";
@@ -35,7 +30,7 @@ const setData = props.data.layout;
 
 console.log('data',setData)
 
-const addImage = async (element) => { 
+const addImage = async (element) => {
     const file = element.target.files[0];
     if (file) {
         try {
@@ -54,17 +49,16 @@ const addImage = async (element) => {
                 setData.imageLayoutSrc = response.data.thumbnail
             }
         } catch (error) {
-            console.log(error);
             notify({
-                title: "Failed to Update Banner",
-                text: 'Sorry, failed to upload image, due to several reasons',,
+                title: trans("Failed to upload image"),
+                text: trans('Please contact support'),
                 type: "error"
             });
         }
     }
 };
 
-const addfavicon= async (element) => { 
+const addfavicon= async (element) => {
     const file = element.target.files[0];
     if (file) {
         try {
@@ -83,10 +77,9 @@ const addfavicon= async (element) => {
                 setData.faviconSrc = response.data.thumbnail
             }
         } catch (error) {
-            console.log(error);
             notify({
-                title: "Failed to Update Banner",
-                text: 'Sorry, failed to upload image, due to several reasons',,
+                title: trans('Failed to upload image'),
+                text: trans('Please contact support'),
                 type: "error"
             });
         }
@@ -136,7 +129,7 @@ const addfavicon= async (element) => {
                     for="faviconUpload"
                     class="flex justify-center items-center bg-white cursor-pointer"
                 >
-                    <input 
+                    <input
                         type="file"
                         id="faviconUpload"
                         accept="image/*"
@@ -282,7 +275,7 @@ const addfavicon= async (element) => {
                     v-if="isNull(setData?.imageLayout)"
                     class="border border-slate-300 rounded-full w-10 h-10 flex justify-center items-center bg-white mt-2 cursor-pointer"
                 >
-                    <input 
+                    <input
                         type="file"
                         id="imageUpload"
                         accept="image/*"
