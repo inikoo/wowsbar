@@ -35,8 +35,10 @@ const props = defineProps<{
     imagesUploadRoute: object;
 }>();
 
-const headerData = ref({ ...props.data.header });
-const menuData = ref({ ...props.data.header.menu });
+console.log('dddd',props)
+
+const headerData = ref(props.data.header);
+const menuData = ref(props.data.header.menu);
 const selected = ref("menu");
 const selectedMenu = ref(null);
 const handtools = ref({ name: "edit", icon: ["fas", "fa-hand-pointer"] });
@@ -56,7 +58,7 @@ const changeLogo = async (element) => {
                 }
             );
             if(response.data.thumbnail){
-                headerData.value.logo = response.data.thumbnail
+                headerData.value.logo =  {...response.data.thumbnail, id : response.data.id, name : response.data.name }
             }
         } catch (error) {
             console.log(error);

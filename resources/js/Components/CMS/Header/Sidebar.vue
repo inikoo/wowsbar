@@ -21,6 +21,8 @@ const changeLogo = async (element) => {
   <template>
       <div class="bg-white">
               <div class="w-[100px] sm:w-[200px] p-6 overflow-y-auto overflow-x-hidden h-[46rem]">
+              <div class="font-medium text-2xl mb-2">Header Tools</div>
+              <hr class="my-5" />
                   <div class="flex items-center justify-between">
                       <h2 class="text-sm font-medium text-gray-900">Logo</h2>
                   </div>
