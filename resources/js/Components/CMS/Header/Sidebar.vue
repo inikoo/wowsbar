@@ -28,7 +28,7 @@ const changeLogo = async (element) => {
                   </div>
                   <label for="faviconUpload" class="flex justify-center items-center bg-white cursor-pointer">
                       <input type="file" id="faviconUpload" accept="image/*" style="display: none" @change="changeLogo" />
-                      <Image :src="data.logo" class="inline-block h-14 w-auto rounded-md my-2" />
+                      <Image :src="data.logoSrc" class="inline-block h-14 w-auto rounded-md my-2" />
                   </label>
   
                   <hr class="mt-5" />

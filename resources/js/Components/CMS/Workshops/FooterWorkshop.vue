@@ -85,7 +85,7 @@ const tool = ref({ name: 'edit', icon: ['fas', 'fa-hand-pointer'] })
 
 
 const data = reactive(props.data.footer)
-
+console.log('setet',data)
 
 // async function setToFirebase() {
 //     const columns = 'org/websites/footer';
@@ -182,13 +182,14 @@ const changeImage = async (file) => {
             }
         );
         if(response.data.thumbnail){
-            data.logo = {...response.data.thumbnail, id : response.data.id, name : response.data.name }
+            data.logo =  response.data.id
+            data.logoSrc =  response.data.thumbnail
             }
     } catch (error) {
         console.log(error)
         notify({
                 title: "Failed to Update Banner",
-                text: error,
+                text: 'Sorry, failed to upload image, due to several reasons',
                 type: "error"
             });
     }

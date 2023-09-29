@@ -24,7 +24,7 @@ const changeLogo = async (element) => {
         <span class="sr-only">Your Company</span>
         <label for="faviconUpload" class="flex justify-center items-center cursor-pointer">
           <input type="file" id="faviconUpload" accept="image/*" style="display: none" @change="changeLogo" />
-          <Image :src="data.logo" class="h-8 w-auto"/>
+          <Image :src="data.logoSrc" class="h-8 w-auto"/>
         </label>
       </a>
       <div class="flex gap-3">

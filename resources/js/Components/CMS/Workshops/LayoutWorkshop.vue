@@ -31,9 +31,9 @@ const themeOptions = [
 ];
 
 
-const setData = ref(props.data.layout);
+const setData = props.data.layout;
 
-console.log('data',setData.value)
+console.log('data',setData)
 
 const addImage = async (element) => { 
     const file = element.target.files[0];
@@ -50,13 +50,14 @@ const addImage = async (element) => {
                 }
             );
             if(response.data.thumbnail){
-                setData.value.imageLayout = response.data.thumbnail
+                setData.imageLayout =  response.data.id
+                setData.imageLayoutSrc = response.data.thumbnail
             }
         } catch (error) {
             console.log(error);
             notify({
                 title: "Failed to Update Banner",
-                text: error,
+                text: 'Sorry, failed to upload image, due to several reasons',,
                 type: "error"
             });
         }
@@ -78,13 +79,14 @@ const addfavicon= async (element) => {
                 }
             );
             if(response.data.thumbnail){
-                setData.value.favicon = response.data.thumbnail
+                setData.favicon =  response.data.id
+                setData.faviconSrc = response.data.thumbnail
             }
         } catch (error) {
             console.log(error);
             notify({
                 title: "Failed to Update Banner",
-                text: error,
+                text: 'Sorry, failed to upload image, due to several reasons',,
                 type: "error"
             });
         }
@@ -141,7 +143,7 @@ const addfavicon= async (element) => {
                         style="display: none"
                         @change="addfavicon"
                     />
-                    <Image :src="setData.favicon" class="w-[20px]"/>
+                    <Image :src="setData.faviconSrc" class="w-[20px]"/>
                 </label>
                 ~ Website ~
             </div>
@@ -151,7 +153,7 @@ const addfavicon= async (element) => {
         <div
             class="w-[60%] h-72 flex relative justify-center items-center border-[1px] border-gray-400 rounded-b-md"
             :style="{
-                'background-image': `url(${setData.imageLayout?.original})`,
+                'background-image': `url(${setData.imageLayoutSrc?.original})`,
                 'background-color': `${setData.colorLayout}`,
                 'background-repeat': 'no-repeat',
                 'background-size': 'cover'

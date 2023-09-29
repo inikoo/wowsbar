@@ -45,7 +45,7 @@ const UploadImage = (file) => {
                             <label for="Upload" class="cursor-pointer">
                                 <input type="file" id="Upload" accept="image/*" style="display: none"
                                     @change="UploadImage" />
-                                <Image :src="data.logo" class="h-21" />
+                                <Image :src="data.logoSrc" class="h-21" />
                             </label>
                         </div>
                         <div class="flex justify-center">

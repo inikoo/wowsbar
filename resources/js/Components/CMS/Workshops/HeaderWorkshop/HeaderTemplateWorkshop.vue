@@ -58,13 +58,14 @@ const changeLogo = async (element) => {
                 }
             );
             if(response.data.thumbnail){
-                headerData.value.logo =  {...response.data.thumbnail, id : response.data.id, name : response.data.name }
+                headerData.value.logo =  response.data.id
+                headerData.value.logoSrc =  response.data.thumbnail
             }
         } catch (error) {
             console.log(error);
             notify({
                 title: "Failed to Update Banner",
-                text: error,
+                text: 'Sorry, failed to upload image, due to several reasons',,
                 type: "error"
             });
         }
