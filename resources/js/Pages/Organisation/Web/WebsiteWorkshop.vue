@@ -6,7 +6,7 @@ import {
 } from "@/../private/pro-light-svg-icons"
 
 import PageHeading from '@/Components/Headings/PageHeading.vue'
-import { computed, ref } from "vue"
+import { computed, ref, watch } from "vue"
 import { useTabChange } from "@/Composables/tab-change"
 import Tabs from "@/Components/Navigation/Tabs.vue"
 import { capitalize } from "@/Composables/capitalize"
@@ -17,6 +17,7 @@ import Button from '@/Components/Elements/Buttons/Button.vue'
 import { notify } from "@kyvg/vue3-notification"
 import { useForm } from '@inertiajs/vue3'
 import {trans} from 'laravel-vue-i18n'
+import { getDbRef, getDataFirebase, setDataFirebase } from '@/Composables/firebase'
 
 library.add(
     faArrowAltToTop,
@@ -58,7 +59,6 @@ const component = computed(() => {
     return components[currentTab.value]
 })
 
-console.log('props', props)
 
 const RouteActive = ref(props.updateRoutes[currentTab.value])
 
@@ -92,6 +92,20 @@ const sendDataToServer = async () => {
         },
     })
 }
+
+
+async function setToFirebase() {
+    const column = "org/websites/structure";
+    try {
+        await setDataFirebase(column,props.structure);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+watch(props.structure, setToFirebase, { deep: true });
+
+setToFirebase();
 
 </script>
 

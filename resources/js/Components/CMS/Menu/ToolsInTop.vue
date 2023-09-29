@@ -61,7 +61,7 @@ const columChange = (index) => {
 
 <template>
   <div class="h-[40px] bg-white p-[5px] w-full flex">
-    <div class="w-1/2 flex justify-start items-center">
+    <div class="w-1/2  justify-start items-center hidden sm:flex">
       <div v-for="item in Bluprint().filter((item) => item.position === 'right')" :key="item.name">
         <div v-if="item.name === 'handTool'" v-for="t of item.optionsData.tools" :key="t.name"
           class="inline-block bg-gray-300 py-1 px-2 rounded-md text-[11px] mx-1"
@@ -82,7 +82,7 @@ const columChange = (index) => {
       </div>
     </div>
 
-    <div class="w-1/2 flex justify-end items-center">
+    <div class="w-full flex justify-end items-cente sm:w-1/2 ">
       <div v-for="item in Bluprint().filter((item) => item.position === 'left')" :key="item.name">
         <select v-model="theme" @change="emits('changeTheme',theme)" v-if="item.name === 'theme'"
           class="px-2 py-1 rounded-md border-gray-300 border w-[200px]">
