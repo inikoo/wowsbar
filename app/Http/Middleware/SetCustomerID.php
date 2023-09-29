@@ -17,7 +17,7 @@ class SetCustomerID
     public function handle(Request $request, Closure $next): Response
     {
         if($request->user()) {
-            Config::set('global.customer_id', $request->user()->customer_id);
+            Config::set('global.customer_id', session('customer_id'));
         }
 
         return $next($request);

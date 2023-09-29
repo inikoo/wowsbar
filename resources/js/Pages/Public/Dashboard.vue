@@ -22,7 +22,7 @@ const fieldData = {
 }
 </script>
 
-<template layout="PublicApp">
+<template layout="Public">
     <Head :title="capitalize(title)" />
     <div class="max-w-2xl lg:mx-0 lg:max-w-none">
     <Input class="pt-4 sm:pt-5 px-6" :form="{name:'test'}" fieldName="name"

@@ -18,7 +18,7 @@ class CustomerHydrateUsers implements ShouldBeUnique
     public function handle(Customer $customer): void
     {
         $numberUsers       = $customer->users()->count();
-        $numberActiveUsers = $customer->users()->where('status', true)->count();
+        $numberActiveUsers = $customer->users()->where('users.status', true)->count();
 
         $stats = [
             'number_users'                 => $numberUsers,

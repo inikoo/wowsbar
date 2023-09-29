@@ -17,20 +17,22 @@ return new class () extends Migration {
     {
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('customer_id')->index()->nullable();
-            $table->foreign('customer_id')->references('id')->on('customers');
+            $table->string('slug')->index()->unique();
+            $table->string('email')->index()->collation('und_ns');
+            $table->timestamp('email_verified_at')->nullable();
+
             $table->unsignedInteger('website_id')->index();
             $table->foreign('website_id')->references('id')->on('websites');
-            $table->string('username')->unique()->nullable()->index()->collation('und_ns');
+            $table = $this->userDetailsColumns($table);
 
-            $table = $this->userDetailsColumns($table, 'email');
-
-            $table->ulid('ulid')->index()->unuque();
-
+            $table->ulid('ulid')->index()->unique();
             $table->timestampsTz();
             $table->softDeletesTz();
-
+            $table->unique(['website_id', 'email']);
         });
+
+        DB::statement("CREATE INDEX ON users (lower('email')) ");
+
     }
 
 

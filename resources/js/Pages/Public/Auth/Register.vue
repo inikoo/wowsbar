@@ -26,7 +26,7 @@ const submit = () => {
 }
 </script>
 
-<template layout="LandlordAuthActions">
+<template layout="Public">
     <Head title="Register" />
 
     <form @submit.prevent="submit" class="space-y-6">

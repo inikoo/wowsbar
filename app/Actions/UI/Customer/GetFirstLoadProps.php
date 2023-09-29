@@ -13,6 +13,7 @@ use App\Http\Resources\Assets\LanguageResource;
 use App\Http\Resources\UI\CustomerAppResource;
 use App\Models\Assets\Language;
 use App\Models\Auth\User;
+use App\Models\CRM\Customer;
 use Exception;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cache;
@@ -67,7 +68,11 @@ class GetFirstLoadProps
 
 
         $app                 =CustomerAppResource::make(request()->get('website'))->getArray();
-        $app['showLiveUsers']= $user && $user->customer->stats->number_users_status_active > 1;
+
+        if($user and $customer=Customer::find(session('customer_id'))) {
+            $app['showLiveUsers']= $customer->stats->number_users_status_active > 1;
+        }
+
 
 
         return [

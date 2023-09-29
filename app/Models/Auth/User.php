@@ -18,6 +18,7 @@ use App\Models\Web\Website;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -26,18 +27,17 @@ use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Permission\Traits\HasRoles;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 /**
  * App\Models\Auth\User
  *
  * @property int $id
- * @property int|null $customer_id
+ * @property string $slug
  * @property int $website_id
- * @property string|null $username
  * @property bool $status
  * @property string|null $contact_name
- * @property string $email
- * @property \Illuminate\Support\Carbon|null $email_verified_at
  * @property mixed $password
  * @property string|null $remember_token
  * @property string|null $about
@@ -45,14 +45,19 @@ use Spatie\Permission\Traits\HasRoles;
  * @property array $settings
  * @property int $language_id
  * @property int|null $avatar_id
+ * @property string $email
+ * @property \Illuminate\Support\Carbon|null $email_verified_at
  * @property string $ulid
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string|null $deleted_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Customer> $activeCustomers
+ * @property-read int|null $active_customers_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \OwenIt\Auditing\Models\Audit> $audits
  * @property-read int|null $audits_count
  * @property-read Media|null $avatar
- * @property-read Customer|null $customer
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Customer> $customers
+ * @property-read int|null $customers_count
  * @property-read array $es_audits
  * @property-read Language $language
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, Media> $media
@@ -78,7 +83,6 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static Builder|User whereAvatarId($value)
  * @method static Builder|User whereContactName($value)
  * @method static Builder|User whereCreatedAt($value)
- * @method static Builder|User whereCustomerId($value)
  * @method static Builder|User whereData($value)
  * @method static Builder|User whereDeletedAt($value)
  * @method static Builder|User whereEmail($value)
@@ -88,10 +92,10 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static Builder|User wherePassword($value)
  * @method static Builder|User whereRememberToken($value)
  * @method static Builder|User whereSettings($value)
+ * @method static Builder|User whereSlug($value)
  * @method static Builder|User whereStatus($value)
  * @method static Builder|User whereUlid($value)
  * @method static Builder|User whereUpdatedAt($value)
- * @method static Builder|User whereUsername($value)
  * @method static Builder|User whereWebsiteId($value)
  * @mixin \Eloquent
  */
@@ -105,7 +109,7 @@ class User extends Authenticatable implements HasMedia, Auditable
     use InteractsWithMedia;
     use HasUniversalSearch;
     use HasHistory;
-
+    use HasSlug;
 
     protected $casts = [
         'data'              => 'array',
@@ -127,9 +131,19 @@ class User extends Authenticatable implements HasMedia, Auditable
         'remember_token',
     ];
 
+    public function getSlugOptions(): SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom(function () {
+                return head(explode('@', trim($this->email)));
+            })
+            ->saveSlugsTo('slug')
+            ->slugsShouldBeNoLongerThan(16);
+    }
+
     public function getRouteKeyName(): string
     {
-        return 'username';
+        return 'slug';
     }
 
     public function stats(): HasOne
@@ -142,10 +156,23 @@ class User extends Authenticatable implements HasMedia, Auditable
         return $this->belongsTo(Website::class);
     }
 
-    public function customer(): BelongsTo
+    public function customers(): BelongsToMany
     {
-        return $this->belongsTo(Customer::class);
+        return $this->belongsToMany(Customer::class)
+            ->using(CustomerUser::class)
+            ->withPivot('status')
+            ->withTimestamps();
     }
+
+    public function activeCustomers(): BelongsToMany
+    {
+        return $this->belongsToMany(Customer::class)
+            ->using(CustomerUser::class)
+            ->wherePivot('status', true)
+            ->withTimestamps();
+    }
+
+
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('avatar')

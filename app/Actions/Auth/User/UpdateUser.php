@@ -27,7 +27,10 @@ class UpdateUser
         $user = $this->update($user, $modelData, 'settings');
 
         if ($user->wasChanged('status')) {
-            CustomerHydrateUsers::run($user->customer);
+
+            foreach ($user->customers as $customer) {
+                CustomerHydrateUsers::run($customer);
+            }
         }
 
         return $user;

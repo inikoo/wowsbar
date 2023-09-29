@@ -26,7 +26,9 @@ class UpdateUserStatus
                 'status' => $status
             ]
         );
-        CustomerHydrateUsers::dispatch($user->customer);
+        foreach ($user->customers as $customer) {
+            CustomerHydrateUsers::run($customer);
+        }
 
         return $user;
     }
