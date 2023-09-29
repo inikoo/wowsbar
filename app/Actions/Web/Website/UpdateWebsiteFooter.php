@@ -46,9 +46,8 @@ class UpdateWebsiteFooter
 
     public function asController(Website $website, ActionRequest $request): Website
     {
+        dd($request->all());
         $request->validate();
-
-      //  dd($request->validated());
 
         return $this->handle($website, $request->validated());
     }
