@@ -15,8 +15,7 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 
 import Button from "@/Components/Elements/Buttons/Button.vue"
 import { capitalize } from "@/Composables/capitalize"
-// import { useLocaleStore } from "@/Stores/locale.js"
-import { trans } from "laravel-vue-i18n"
+
 import MetaLabel from "@/Components/Headings/MetaLabel.vue";
 import Container from "@/Components/Headings/Container.vue";
 
@@ -113,7 +112,6 @@ if (props.dataToSubmit && props.data.actionActualMethod) {
         <slot name="button" :dataPageHead="{...props }">
             <div class="flex items-center gap-2">
                 <div v-for="action in data.actions">
-                    {{ action.final }}
 
                     <!-- Button -->
                     <Link v-if="action.type === 'button'" as="button"
