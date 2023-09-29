@@ -16,7 +16,7 @@ import {
     faBars,
 } from "@/../private/pro-solid-svg-icons";
 import ToolsTopHeader from "@/Components/CMS/Header/ToolsTop.vue";
-import ToolTopMenu from "@/Components/CMS/Menu/ToolsInTop.vue";
+import ToolsTopMenu from "@/Components/CMS/Menu/ToolsInTop.vue";
 import Header from "@/Components/CMS/Header/index.vue";
 import Menu from "@/Components/CMS/Menu/index.vue";
 import sideMenuHeader from "@/Components/CMS/Header/Sidebar.vue";
@@ -127,7 +127,7 @@ const addNavigation=()=>{
                     @changeTheme="changeThemeHeader"
                     @click="(e) => e.stopPropagation()"
                 />
-                <ToolTopMenu
+                <ToolsTopMenu
                     v-if="selected == 'menu'"
                     :tool="handtools"
                     @changeTheme="changeThemeMenu"
@@ -136,13 +136,15 @@ const addNavigation=()=>{
                     @setColumnSelected="changeNavActive"
                     @addNavigation="addNavigation"
                 />
-                <div style="transform: scale(0.8)" class="w-full">
+                <div style="transform: scale(0.8)" class="isolate w-full">
                     <Header
                         :theme="headerData.type"
                         :data="headerData"
                         @changeLogo="changeLogo"
                         @click="selected = 'header'"
                         :layout="data.layout.header"
+                        class="border-2 "
+                        :class="[selected == 'header' ? 'z-20 rounded-sm relative border-gray-500' : 'border-dashed border-gray-300']"
                     />
                     <Menu
                         :theme="menuData.type"
@@ -152,6 +154,8 @@ const addNavigation=()=>{
                         :selectedNav="menuData.items[selectedMenu]"
                         :changeNavActive="changeNavActive"
                         @click="selected = 'menu'"
+                        class="border-2"
+                        :class="[selected == 'menu' ? 'z-20 rounded-sm relative border-gray-500' : 'border-dashed border-gray-400']"
                     />
                 </div>
             </div>

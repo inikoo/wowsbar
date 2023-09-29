@@ -32,17 +32,17 @@ const getHeaderComponent = computed(() => {
         'simpleSticky': HeaderThemeOne
     }
 
-    return componentList[props.structure.header.component]
+    return componentList[props.structure.header.type]
 })
 
-// const getMenuComponent = computed(() => {
-//     const componentList = {
-//         'MenuOne': MenuOne,
-//         'MenuTwo': MenuTwo
-//     }
+const getMenuComponent = computed(() => {
+    const componentList = {
+        'simple': MenuOne,
+        'MenuTwo': MenuTwo
+    }
 
-//     return componentList[props.layout?.menu?.component ?? 'MenuTwo']
-// })
+    return componentList[props.layout?.menu?.component ?? 'MenuTwo']
+})
 
 // const getFooterComponent = computed(() => {
 //     const componentList = {
@@ -59,34 +59,24 @@ const getHeaderComponent = computed(() => {
 
 <template>
     <div class="relative ">
-    <!-- <pre>{{ props }}</pre> -->
         <section class="relative isolate overflow-hidden bg-gray-100">
-           <component :is="getHeaderComponent" :data="structure.header"></component>
+            <!-- Header -->
+            <pre>{{ structure }}</pre>
+            <component :is="getHeaderComponent" :data="structure.header"></component>
 
-            <!--
-           <component :is="getMenuComponent" :data="publicData.menu"></component>
+            <!-- Menu -->
+            <!-- <component :is="getMenuComponent" :data="structure.header.menu"></component> -->
 
-           -->
 
-            <!-- Background: Square line -->
-            <svg class="absolute inset-0 -z-10 h-full w-full stroke-gray-200 [mask-image:radial-gradient(100%_100%_at_top_right,white,transparent)]"
-                aria-hidden="true">
-                <defs>
-                    <pattern id="0787a7c5-978c-4f66-83c7-11c213f99cb7" width="200" height="200" x="50%" y="-1"
-                        patternUnits="userSpaceOnUse">
-                        <path d="M.5 200V.5H200" fill="none" />
-                    </pattern>
-                </defs>
-                <rect width="100%" height="100%" stroke-width="0" fill="url(#0787a7c5-978c-4f66-83c7-11c213f99cb7)" />
-            </svg>
+
 
             <!-- Main content of page -->
             <slot />
 
             <!-- <component :is="getFooterComponent" :data="publicData.footer.data" />-->
-       </section>
-   </div>
+        </section>
+    </div>
 
-   <!-- <Cookies /> -->
+    <!-- <Cookies /> -->
 </template>
 
