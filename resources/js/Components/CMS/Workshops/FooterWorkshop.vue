@@ -6,6 +6,7 @@
   -->
 
 <script setup lang="ts">
+import {trans} from 'laravel-vue-i18n'
 import { ref, reactive, watch } from 'vue'
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { RadioGroup, RadioGroupLabel, RadioGroupOption } from '@headlessui/vue'
@@ -186,10 +187,9 @@ const changeImage = async (file) => {
             data.logoSrc =  response.data.thumbnail
             }
     } catch (error) {
-        console.log(error)
         notify({
-                title: "Failed to Update Banner",
-                text: 'Sorry, failed to upload image, due to several reasons',
+            title: trans('Failed to upload image'),
+            text: trans('Please contact support'),
                 type: "error"
             });
     }

@@ -5,12 +5,7 @@
 -->
 
 <script setup lang="ts">
-import { ref, watch } from "vue";
-import {
-    getDbRef,
-    getDataFirebase,
-    setDataFirebase,
-} from "@/Composables/firebase";
+import {trans} from 'laravel-vue-i18n'
 import ColorPicker from "@/Components/Workshop/Fields/ColorPicker.vue";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faImage, faTimes, faOven, faText } from "@/../private/pro-regular-svg-icons";
@@ -54,10 +49,9 @@ const addImage = async (element) => {
                 setData.imageLayoutSrc = response.data.thumbnail
             }
         } catch (error) {
-            console.log(error);
             notify({
-                title: "Failed to Update Banner",
-                text: 'Sorry, failed to upload image, due to several reasons',
+                title: trans("Failed to upload image"),
+                text: trans('Please contact support'),
                 type: "error"
             });
         }
@@ -83,10 +77,9 @@ const addfavicon = async (element) => {
                 setData.faviconSrc = response.data.thumbnail
             }
         } catch (error) {
-            console.log(error);
             notify({
-                title: "Failed to Update Banner",
-                text: 'Sorry, failed to upload image, due to several reasons',
+                title: trans('Failed to upload image'),
+                text: trans('Please contact support'),
                 type: "error"
             });
         }
