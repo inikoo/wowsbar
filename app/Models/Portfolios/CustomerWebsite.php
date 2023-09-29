@@ -32,7 +32,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property int $customer_id
  * @property string $slug
  * @property string $code
- * @property string $domain
+ * @property string $url
  * @property string $name
  * @property array $data
  * @property \Illuminate\Support\Carbon|null $created_at
@@ -55,12 +55,12 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|CustomerWebsite whereCustomerId($value)
  * @method static Builder|CustomerWebsite whereData($value)
  * @method static Builder|CustomerWebsite whereDeletedAt($value)
- * @method static Builder|CustomerWebsite whereDomain($value)
  * @method static Builder|CustomerWebsite whereId($value)
  * @method static Builder|CustomerWebsite whereName($value)
  * @method static Builder|CustomerWebsite whereShopId($value)
  * @method static Builder|CustomerWebsite whereSlug($value)
  * @method static Builder|CustomerWebsite whereUpdatedAt($value)
+ * @method static Builder|CustomerWebsite whereUrl($value)
  * @method static Builder|CustomerWebsite withTrashed()
  * @method static Builder|CustomerWebsite withoutTrashed()
  * @mixin \Eloquent

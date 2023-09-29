@@ -20,8 +20,9 @@ class UpdatePortfolioWebsite
 
     public function handle(PortfolioWebsite $portfolioWebsite, array $modelData): PortfolioWebsite
     {
-        $portfolioWebsite=$this->update($portfolioWebsite, $modelData, ['data']);
+        $portfolioWebsite = $this->update($portfolioWebsite, $modelData, ['data']);
         PortfolioWebsiteHydrateUniversalSearch::dispatch($portfolioWebsite);
+
         return $portfolioWebsite;
     }
 
@@ -35,16 +36,17 @@ class UpdatePortfolioWebsite
     public function rules(): array
     {
         return [
-            'domain' => ['sometimes','required'],
-            'code'   => ['sometimes','required', 'unique:portfolio_websites','max:8'],
-            'name'   => ['sometimes','required']
+            'url'  => ['sometimes', 'required', 'url', 'max:500'],
+            'code' => ['sometimes', 'required', 'alpha_dash:ascii', 'iunique:portfolio_websites', 'max:16'],
+            'name' => ['sometimes', 'required', 'string', 'max:128']
         ];
     }
 
     public function asController(PortfolioWebsite $portfolioWebsite, ActionRequest $request): PortfolioWebsite
     {
-        $this->fillFromRequest($request);
-        return $this->handle($portfolioWebsite, $this->validateAttributes());
+        $request->validate();
+
+        return $this->handle($portfolioWebsite, $request->validated());
     }
 
 

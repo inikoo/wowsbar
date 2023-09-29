@@ -48,7 +48,7 @@ class IndexPortfolioWebsites extends InertiaAction
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
             $query->where(function ($query) use ($value) {
                 $query->whereAnyWordStartWith('portfolio_websites.name', $value)
-                    ->orWhere('portfolio_websites.domain', 'ilike', "%$value%")
+                    ->orWhere('portfolio_websites.url', 'ilike', "%$value%")
                     ->orWhere('portfolio_websites.code', 'ilike', "$value%");
             });
         });
@@ -61,7 +61,7 @@ class IndexPortfolioWebsites extends InertiaAction
         return $queryBuilder
             ->defaultSort('portfolio_websites.code')
             ->with(['stats'])
-            ->allowedSorts(['slug', 'code', 'name', 'number_banners', 'domain'])
+            ->allowedSorts(['slug', 'code', 'name', 'number_banners', 'url'])
             ->allowedFilters([$globalSearch])
             ->withPaginator($prefix)
             ->withQueryString();
@@ -88,7 +88,7 @@ class IndexPortfolioWebsites extends InertiaAction
                 ->withExportLinks($exportLinks)
                 ->column(key: 'slug', label: __('code'), sortable: true)
                 ->column(key: 'name', label: __('name'), sortable: true)
-                ->column(key: 'domain', label: __('domain'), sortable: true)
+                ->column(key: 'url', label: __('url'), sortable: true)
                 ->column(key: 'number_banners', label: __('banners'), sortable: true)
                 ->defaultSort('slug');
         };

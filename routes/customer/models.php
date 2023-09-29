@@ -23,8 +23,8 @@ use App\Actions\Portfolio\PortfolioWebsite\ImportPortfolioWebsite;
 use App\Actions\UI\Customer\Profile\UpdateProfile;
 
 Route::post('/portfolio-website', StorePortfolioWebsite::class)->name('portfolio-website.store');
-Route::patch('/portfolio-website/{portfolioWebsite}', UpdatePortfolioWebsite::class)->name('portfolio-website.update');
-Route::delete('/portfolio-website/{portfolioWebsite}', DeletePortfolioWebsite::class)->name('portfolio-website.delete');
+Route::patch('/portfolio-website/{portfolioWebsite:id}', UpdatePortfolioWebsite::class)->name('portfolio-website.update');
+Route::delete('/portfolio-website/{portfolioWebsite:id}', DeletePortfolioWebsite::class)->name('portfolio-website.delete');
 
 Route::post('/portfolio-website/{portfolioWebsite}/banners', [StoreBanner::class, 'inPortfolioWebsite'])->name('portfolio-website.banner.store');
 Route::post('/portfolio-website/{portfolioWebsite}/banners/gallery', [StoreBanner::class, 'inPortfolioWebsiteFromGallery'])->name('portfolio-website.banner.gallery.store');
