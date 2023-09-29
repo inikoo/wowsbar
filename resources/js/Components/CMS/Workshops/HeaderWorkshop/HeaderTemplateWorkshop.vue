@@ -95,18 +95,18 @@ const addNavigation=()=>{
 }
 
 
-async function setToFirebase() {
-    const column = "org/websites/header";
-    try {
-        await setDataFirebase(column, props.data.header);
-    } catch (error) {
-        console.log(error);
-    }
-}
+// async function setToFirebase() {
+//     const column = "org/websites/header";
+//     try {
+//         await setDataFirebase(column, props.data.header);
+//     } catch (error) {
+//         console.log(error);
+//     }
+// }
 
-watch(props.data.header, setToFirebase, { deep: true });
+// watch(props.data.header, setToFirebase, { deep: true });
 
-setToFirebase();
+// setToFirebase();
 
 
 </script>

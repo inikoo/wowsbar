@@ -14,7 +14,7 @@
   import AppTopBar from "@/Layouts/Customer/AppTopBar.vue"
   import Breadcrumbs from "@/Components/Navigation/Breadcrumbs.vue"
   import { library } from "@fortawesome/fontawesome-svg-core"
-  import { initialiseApp } from "@/Composables/initialiseApp"
+  import { initialiseCustomerApp } from "@/Composables/initialiseCustomerApp"
   import { useLayoutStore } from "@/Stores/layout"
   import { useAuthFirebase } from "@/Composables/firebaseAuth"
 
@@ -42,7 +42,7 @@
   )
 
   const sidebarOpen = ref(false)
-  const layout = initialiseApp()
+  const layout = initialiseCustomerApp()
 
 
   if (usePage().props.firebaseAuthToken) {

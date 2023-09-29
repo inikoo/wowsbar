@@ -194,18 +194,18 @@ const changeImage = async (file) => {
     }
 }
 
-async function setToFirebase() {
-    const column = "org/websites/footer";
-    try {
-        await setDataFirebase(column,data);
-    } catch (error) {
-        console.log(error);
-    }
-}
+// async function setToFirebase() {
+//     const column = "org/websites/footer";
+//     try {
+//         await setDataFirebase(column,data);
+//     } catch (error) {
+//         console.log(error);
+//     }
+// }
 
-watch(data, setToFirebase, { deep: true });
+// watch(data, setToFirebase, { deep: true });
 
-setToFirebase();
+// setToFirebase();
 
 
 </script>

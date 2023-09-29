@@ -73,13 +73,13 @@ const addNewSubMenu = () => {
   
 <template>
     <div class="bg-white">
-        <div class="w-[200px] p-6 overflow-y-auto overflow-x-hidden h-[46rem]">
+        <div class="w-[100px] sm:w-[200px] p-6 overflow-y-auto overflow-x-hidden h-[46rem]">
             <div class="mt-2">
                 <div class="flex items-center justify-between">
                     <h2 class="text-sm font-medium text-gray-900">Menu Type</h2>
                 </div>
                 <RadioGroup class="mt-2">
-                    <div class="flex justify-start gap-3">
+                    <div class="flex justify-start gap-3 flex-wrap sm">
                         <RadioGroupOption as="template" v-for="option in toolsData.menuType" :key="option.value"
                             :value="option" :title="option.name">
                             <div @click="changeMenuType(option)" :class="{
@@ -98,7 +98,7 @@ const addNewSubMenu = () => {
 
             <hr class="mt-5" />
 
-            <div v-if="!isNull(selectedMenu)">
+            <div v-if="!isNull(selectedMenu)" class="hidden sm:block">
                 <!-- type group -->
                 <div class="mt-8" v-if="data.items[selectedMenu].type == 'group'">
                     <div class="flex items-center justify-between">

@@ -4,14 +4,14 @@ import { usePage } from "@inertiajs/vue3"
 import { loadLanguageAsync } from "laravel-vue-i18n"
 import { watchEffect } from "vue"
 
-
-export const initialiseApp = () => {
+export const initialiseCustomerApp = () => {
     const layout = useLayoutStore()
     const locale = useLocaleStore()
 
     if (usePage().props.localeData) {
         loadLanguageAsync(usePage().props.localeData.language.code)
     }
+
     watchEffect(() => {
         // Set data of Navigation
         if (usePage().props.layout) {
@@ -60,5 +60,6 @@ export const initialiseApp = () => {
             layout.avatar_thumbnail = usePage().props.auth.user.avatar_thumbnail
         }
     })
+
     return layout
 }
