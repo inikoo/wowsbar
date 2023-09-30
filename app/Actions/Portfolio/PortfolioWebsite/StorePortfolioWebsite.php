@@ -14,8 +14,11 @@ use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateCustomerW
 use App\Actions\Portfolio\PortfolioWebsite\Hydrators\PortfolioWebsiteHydrateUniversalSearch;
 use App\Models\Portfolios\CustomerWebsite;
 use App\Models\Portfolio\PortfolioWebsite;
+use App\Rules\IUnique;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Validation\Rule;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
@@ -60,29 +63,44 @@ class StorePortfolioWebsite
     public function rules(): array
     {
         return [
-            'url'    => ['required', 'url', 'max:500'],
-            'code'   => ['required', 'alpha_dash:ascii', 'iunique:portfolio_websites', 'max:16'],
-            'name'   => ['required', 'string', 'max:128']
+            'url'  => ['required', 'url', 'max:500',
+                       new IUnique(
+                           table: 'portfolio_websites',
+                           extraConditions: [
+                               ['column' => 'customer_id', 'value' => customer()->id],
+                           ]
+                       ),
+                ],
+            'code' => [
+                'required',
+                'alpha_dash:ascii',
+                'max:16',
+                new IUnique(
+                    table: 'portfolio_websites',
+                    extraConditions: [
+                        ['column' => 'customer_id', 'value' => customer()->id],
+                    ]
+                ),
+            ],
+            'name' => ['required', 'string', 'max:128']
         ];
     }
 
     public function prepareForValidation(ActionRequest $request): void
     {
-
-        if($request->get('url')){
+        if ($request->get('url')) {
             $request->merge(
                 [
                     'url' => 'https://'.$request->get('url'),
                 ]
             );
         }
-
-
     }
 
     public function asController(ActionRequest $request): PortfolioWebsite
     {
         $request->validate();
+
         return $this->handle($request->validated());
     }
 

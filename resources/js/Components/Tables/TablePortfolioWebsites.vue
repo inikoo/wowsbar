@@ -21,10 +21,6 @@ function websiteRoute(website: Website) {
             return route(
                 'customer.portfolio.websites.show',
                 [website.slug]);
-        case 'org.portfolios.index':
-            return route(
-                'org.portfolios.show',
-                [website.slug]);
     }
 }
 
@@ -36,9 +32,9 @@ function websiteRoute(website: Website) {
 <template>
 
     <Table :resource="data" :name="tab" class="mt-5">
-        <template #cell(slug)="{ item: website }">
-            <Link :href="websiteRoute(website)" :id=" website['slug']" class="py-2 px-1">
-                {{ website['slug'] }}
+        <template #cell(code)="{ item: website }">
+            <Link :href="websiteRoute(website)" :id="website['slug']" class="py-2 px-1">
+                {{ website['code'] }}
             </Link>
         </template>
     </Table>

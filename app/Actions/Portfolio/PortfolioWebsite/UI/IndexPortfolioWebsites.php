@@ -86,7 +86,7 @@ class IndexPortfolioWebsites extends InertiaAction
                     ]
                 )
                 ->withExportLinks($exportLinks)
-                ->column(key: 'slug', label: __('code'), sortable: true)
+                ->column(key: 'code', label: __('code'), sortable: true)
                 ->column(key: 'name', label: __('name'), sortable: true)
                 ->column(key: 'url', label: __('url'), sortable: true)
                 ->column(key: 'number_banners', label: __('banners'), sortable: true)

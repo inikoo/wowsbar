@@ -25,7 +25,7 @@ class PortfolioWebsiteResource extends JsonResource
             'customer_name'  => $websitePortfolio->customer->name,
             'code'           => $websitePortfolio->code,
             'name'           => $websitePortfolio->name,
-            'url'            => preg_replace('/^https?:\/\//','',$websitePortfolio->url),
+            'url'            => preg_replace('/^https?:\/\//', '', $websitePortfolio->url),
             'number_banners' => $websitePortfolio->stats->number_banners
         ];
     }

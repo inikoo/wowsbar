@@ -11,6 +11,7 @@ use App\Actions\Portfolio\PortfolioWebsite\Hydrators\PortfolioWebsiteHydrateUniv
 use App\Actions\Traits\WithActionUpdate;
 use App\Http\Resources\Portfolio\PortfolioWebsiteResource;
 use App\Models\Portfolio\PortfolioWebsite;
+use App\Rules\IUnique;
 use Lorisleiva\Actions\ActionRequest;
 
 class UpdatePortfolioWebsite
@@ -33,11 +34,38 @@ class UpdatePortfolioWebsite
     }
 
 
-    public function rules(): array
+    public function rules(ActionRequest $request): array
     {
+        $currentID = $request->route()->parameters()['portfolioWebsite']->id;
+
         return [
-            'url'  => ['sometimes', 'required', 'url', 'max:500'],
-            'code' => ['sometimes', 'required', 'alpha_dash:ascii', 'iunique:portfolio_websites', 'max:16'],
+            'url'  => [
+                'sometimes',
+                'required',
+                'url',
+                'max:500',
+                new IUnique(
+                    table: 'portfolio_websites',
+                    extraConditions: [
+                        ['column' => 'customer_id', 'value' => customer()->id],
+                        ['column' => 'id', 'operator' => '!=', 'value' => $currentID]
+                    ]
+                ),
+
+            ],
+            'code' => [
+                'sometimes',
+                'required',
+                'alpha_dash:ascii',
+                'max:16',
+                new IUnique(
+                    table: 'portfolio_websites',
+                    extraConditions: [
+                        ['column' => 'customer_id', 'value' => customer()->id],
+                        ['column' => 'id', 'operator' => '!=', 'value' => $currentID]
+                    ]
+                ),
+            ],
             'name' => ['sometimes', 'required', 'string', 'max:128']
         ];
     }
