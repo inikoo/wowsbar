@@ -1,33 +1,32 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Wed, 16 Aug 2023 08:04:26 Malaysia Time, Pantai Lembeng, Bali
+ * Created: Sun, 01 Oct 2023 00:59:58 Malaysia Time, Kuala Lumpur, Malaysia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-
-use App\Stubs\Migrations\HasBannerStats;
 use App\Stubs\Migrations\HasPortfolioWebsitesStats;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class () extends Migration {
-    use HasBannerStats;
     use HasPortfolioWebsitesStats;
+
     public function up(): void
     {
-        Schema::create('customer_portfolio_stats', function (Blueprint $table) {
-            $table->increments('id');
-            $table->unsignedInteger('customer_id');
-            $table->foreign('customer_id')->references('id')->on('customers');
+        Schema::create('organisation_portfolios_stats', function (Blueprint $table) {
+            $table->smallIncrements('id');
+            $table->unsignedInteger('organisation_id');
+            $table->foreign('organisation_id')->references('id')->on('organisations');
             $table=$this->portfolioWebsiteStats($table);
             $table->timestampsTz();
         });
     }
 
+
     public function down(): void
     {
-        Schema::dropIfExists('customer_portfolio_stats');
+        Schema::dropIfExists('organisation_portfolios_stats');
     }
 };

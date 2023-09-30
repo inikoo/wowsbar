@@ -46,6 +46,7 @@ class StoreShop
         $shop->accountingStats()->create();
         $shop->crmStats()->create();
         $shop->catalogueStats()->create();
+        $shop->portfoliosStats()->create();
 
         $shop->serialReferences()->create(
             [

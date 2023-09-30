@@ -87,7 +87,9 @@ class ShowPortfolioWebsite extends InertiaAction
                     fn () => BannerResource::collection(IndexBanners::run($portfolioWebsite))
                     : Inertia::lazy(fn () => BannerResource::collection(IndexBanners::run($portfolioWebsite)))
             ]
-        )->table(IndexHistories::make()->tableStructure());
+        )
+            ->table(IndexBanners::make()->tableStructure($portfolioWebsite))
+            ->table(IndexHistories::make()->tableStructure());
     }
 
     public function jsonResponse(PortfolioWebsite $portfolioWebsite): PortfolioWebsiteResource

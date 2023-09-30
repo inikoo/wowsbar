@@ -68,7 +68,8 @@ class ShowPortfolio extends InertiaAction
 
     private function getDashboard(): array
     {
-        $tenant=customer();
+        $customer=customer();
+
 
         return [
             'flatTreeMaps' => [
@@ -78,7 +79,7 @@ class ShowPortfolio extends InertiaAction
                         'icon'  => ['fal', 'fa-globe'],
                         'href'  => ['customer.portfolio.websites.index'],
                         'index' => [
-                            'number' => $tenant->stats->number_websites
+                            'number' => $customer->portfolioStats->number_portfolio_websites
                         ]
                     ],
                 ]

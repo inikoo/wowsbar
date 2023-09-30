@@ -21,7 +21,6 @@ use Illuminate\Support\Carbon;
  * @property int $number_users
  * @property int $number_users_status_active
  * @property int $number_users_status_inactive
- * @property int $number_portfolio_websites
  * @property int $number_images
  * @property int $filesize_images
  * @property int $number_attachments
@@ -49,7 +48,6 @@ use Illuminate\Support\Carbon;
  * @method static Builder|CustomerStats whereNumberInvoices($value)
  * @method static Builder|CustomerStats whereNumberInvoicesTypeInvoice($value)
  * @method static Builder|CustomerStats whereNumberInvoicesTypeRefund($value)
- * @method static Builder|CustomerStats whereNumberPortfolioWebsites($value)
  * @method static Builder|CustomerStats whereNumberUsers($value)
  * @method static Builder|CustomerStats whereNumberUsersStatusActive($value)
  * @method static Builder|CustomerStats whereNumberUsersStatusInactive($value)

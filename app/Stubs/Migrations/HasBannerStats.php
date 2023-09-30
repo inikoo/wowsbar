@@ -11,9 +11,9 @@ use App\Enums\Portfolio\Banner\BannerStateEnum;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Str;
 
-trait HasPortfolioStats
+trait HasBannerStats
 {
-    public function portfolioStats(Blueprint $table): Blueprint
+    public function bannerStats(Blueprint $table): Blueprint
     {
         $table->unsignedSmallInteger('number_banners')->default(0);
         $table->unsignedSmallInteger('number_historic_snapshots')->default(0);

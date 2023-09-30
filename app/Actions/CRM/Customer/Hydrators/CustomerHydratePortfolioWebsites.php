@@ -20,7 +20,7 @@ class CustomerHydratePortfolioWebsites
         $stats = [
             'number_portfolio_websites'       => $customer->portfolioWebsites()->count(),
         ];
-        $customer->stats()->update($stats);
+        $customer->portfolioStats()->update($stats);
     }
 
 }
