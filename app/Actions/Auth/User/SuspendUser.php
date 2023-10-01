@@ -7,28 +7,27 @@
 
 namespace App\Actions\Auth\User;
 
+use App\Actions\Auth\CustomerUser\UpdateCustomerUser;
 use App\Actions\CRM\Customer\Hydrators\CustomerHydrateCustomerUsers;
 use App\Actions\Traits\WithActionUpdate;
 use App\Http\Resources\Auth\UserResource;
 use App\Models\Auth\User;
 use Lorisleiva\Actions\ActionRequest;
 
-class UpdateUserStatus
+class SuspendUser
 {
     use WithActionUpdate;
 
     private bool $asAction = false;
 
-    public function handle(User $user, bool $status): User
+    public function handle(User $user): User
     {
-        $user->update(
-            [
-                'status' => $status
-            ]
-        );
-        foreach ($user->customers as $customer) {
-            CustomerHydrateCustomerUsers::run($customer);
+        foreach ($user->customerUsers as $customerUser) {
+            UpdateCustomerUser::run($customerUser, [
+                'status' => false
+            ]);
         }
+
 
         return $user;
     }
@@ -54,14 +53,14 @@ class UpdateUserStatus
     {
         $request->validate();
 
-        return $this->handle($user, $request->validated());
+        return $this->handle($user);
     }
 
-    public function action(User $user, bool $status): User
+    public function action(User $user): User
     {
         $this->asAction = true;
 
-        return $this->handle($user, $status);
+        return $this->handle($user);
     }
 
     public function jsonResponse(User $user): UserResource

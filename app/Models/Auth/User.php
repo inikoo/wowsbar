@@ -150,10 +150,6 @@ class User extends Authenticatable implements HasMedia, Auditable
         return $this->belongsTo(Website::class);
     }
 
-    public function customers(): HasManyThrough
-    {
-        return $this->hasManyThrough(Customer::class, CustomerUser::class);
-    }
 
 
     public function customerUsers(): HasMany

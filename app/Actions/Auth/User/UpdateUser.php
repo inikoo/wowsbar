@@ -28,8 +28,8 @@ class UpdateUser
 
         if ($user->wasChanged('status')) {
 
-            foreach ($user->customers as $customer) {
-                CustomerHydrateCustomerUsers::run($customer);
+            foreach ($user->customerUsers as $customerUser) {
+                CustomerHydrateCustomerUsers::run($customerUser->customer);
             }
         }
 

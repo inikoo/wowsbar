@@ -28,14 +28,13 @@ class UpdateCustomerUser
         $customerUser = $this->update($customerUser, Arr::only($modelData, ['status']));
 
         if ($customerUser->wasChanged('status')) {
-            foreach ($customerUser->customers as $customer) {
-                CustomerHydrateCustomerUsers::run($customer);
-            }
+            CustomerHydrateCustomerUsers::run($customerUser->customer);
         }
 
         UpdateUser::run($customerUser->user, Arr::only($modelData, ['contact_name', 'email', 'password']));
 
         $customerUser->refresh();
+
         return $customerUser;
     }
 

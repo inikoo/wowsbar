@@ -5,7 +5,7 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Helpers\ExcelUpload\ExcelUploadRecord;
+namespace App\Actions\Helpers\UploadRecord;
 
 use App\Actions\Traits\WithExportData;
 use App\Enums\Helpers\Import\UploadRecordStatusEnum;
