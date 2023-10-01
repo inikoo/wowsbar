@@ -122,7 +122,7 @@ class ShowGallery extends InertiaAction
                 exportLinks: [
                     'export' => [
                         'route' => [
-                            'name' => 'export.stock.images.index'
+                            'name' => 'customer.export.stock.images.index'
                         ]
                     ]
                 ]
@@ -147,12 +147,12 @@ class ShowGallery extends InertiaAction
         };
 
         return match ($routeName) {
-            'customer.portfolio.gallery' =>
+            'customer.banners.gallery' =>
             array_merge(
                 ShowPortfolio::make()->getBreadcrumbs(),
                 $headCrumb(
                     [
-                        'name' => 'customer.portfolio.gallery',
+                        'name' => 'customer.banners.gallery',
                         null
                     ]
                 ),

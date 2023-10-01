@@ -117,7 +117,7 @@ class IndexUploadedImages extends InertiaAction
             exportLinks: [
             'export' => [
                 'route' => [
-                    'name' => 'export.stock.images.index'
+                    'name' => 'customer.export.stock.images.index'
                 ]
             ]
         ]

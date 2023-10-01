@@ -72,17 +72,7 @@ Route::get('/banners/{banner}/snapshots/{snapshot}', [ShowSnapshot::class, 'inBa
 
 //Route::get('/banners/{banner}/delete', [RemoveBanner::class,'inCustomer'])->name('banners.remove');
 
-Route::prefix('gallery')->group(function () {
-    Route::get('/', ShowGallery::class)->name('gallery');
-    Route::get('/images/{media}', ShowUploadedImage::class)->name('images.show');
-    Route::get('/images/{media}/edit', EditUploadedImage::class)->name('images.edit');
-    Route::get('/images/{media}/delete', DeleteUploadedImage::class)->name('images.remove');
-    Route::post('/images', UploadImagesToGallery::class)->name('images.upload');
 
-
-    Route::get('/uploaded/images', IndexUploadedImages::class)->name('uploaded.images');
-    Route::get('/stock/images', IndexStockImages::class)->name('stock.images');
-});
 
 //Route::get('/images', IndexImages::class)->name('images.index');
 

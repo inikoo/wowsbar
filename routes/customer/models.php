@@ -27,10 +27,11 @@ Route::post('/portfolio-website', StorePortfolioWebsite::class)->name('portfolio
 Route::patch('/portfolio-website/{portfolioWebsite:id}', UpdatePortfolioWebsite::class)->name('portfolio-website.update');
 Route::delete('/portfolio-website/{portfolioWebsite:id}', DeletePortfolioWebsite::class)->name('portfolio-website.delete');
 
-Route::post('/portfolio-website/{portfolioWebsite}/banners', [StoreBanner::class, 'inPortfolioWebsite'])->name('portfolio-website.banner.store');
-Route::post('/portfolio-website/{portfolioWebsite}/banners/gallery', [StoreBanner::class, 'inPortfolioWebsiteFromGallery'])->name('portfolio-website.banner.gallery.store');
+Route::post('/portfolio-website/{portfolioWebsite:id}/banner', [StoreBanner::class, 'inPortfolioWebsite'])->name('portfolio-website.banner.store');
 
-Route::post('/customer/banners/gallery', [StoreBanner::class, 'inTenantFromGallery'])->name('customer.banner.gallery.store');
+
+//Route::post('/portfolio-website/{portfolioWebsite}/banners/gallery', [StoreBanner::class, 'inPortfolioWebsiteFromGallery'])->name('portfolio-website.banner.gallery.store');
+//Route::post('/customer/banners/gallery', [StoreBanner::class, 'inTenantFromGallery'])->name('customer.banner.gallery.store');
 
 
 Route::prefix('/banner')->name('banner.')->group(function () {
