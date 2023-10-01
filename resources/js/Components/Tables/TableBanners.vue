@@ -39,6 +39,10 @@ function bannerRoute(banner: Banner) {
             return route(
                 'customer.portfolio.websites.show.banners.show',
                 [route().params['portfolioWebsite'], banner.slug])
+        default:
+            return route(
+                'customer.banners.show',
+                [banner.slug])
     }
 }
 
@@ -62,15 +66,15 @@ function bannerRoute(banner: Banner) {
             </div>
         </template>
 
-        <template #cell(created_at)="{ item }">
+        <template #cell(created_at)="{ item:banner }">
             <div class="text-gray-500">
-                {{ useFormatTime(item.created_at, locale.language.code) }}
+                {{ useFormatTime(banner['created_at'], locale.language.code) }}
             </div>
         </template>
 
-        <template #cell(updated_at)="{ item }">
+        <template #cell(updated_at)="{ item:banner }">
             <div class="text-gray-500">
-                {{ useFormatTime(item.updated_at, locale.language.code) }}
+                {{ useFormatTime(banner['updated_at'], locale.language.code) }}
             </div>
         </template>
     </Table>

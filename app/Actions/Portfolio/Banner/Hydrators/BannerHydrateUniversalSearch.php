@@ -23,7 +23,7 @@ class BannerHydrateUniversalSearch
                 'website_id'      => $banner->customer->website_id,
                 'customer_id'     => $banner->customer_id,
                 'section'         => 'portfolio',
-                'title'           => trim($banner->code.' '.$banner->name),
+                'title'           => trim($banner->slug.' '.$banner->name),
                 'description'     => ''
             ]
         );

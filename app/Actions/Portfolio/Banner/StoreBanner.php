@@ -57,7 +57,7 @@ class StoreBanner
             "components" => [
             ]
         ];
-        list($layout, $slides, $hash) = ParseBannerLayout::run($layout);
+        list($layout, $slides) = ParseBannerLayout::run($layout);
 
         data_set($modelData, 'data.website_slug', $parent->slug);
         data_set($modelData, 'ulid', Str::ulid());
@@ -122,8 +122,7 @@ class StoreBanner
     {
         return [
             'portfolio_website_id' => ['sometimes', 'nullable', 'exists:portfolio_websites,id'],
-            'code'                 => ['required', 'unique:banners', 'max:8'],
-            'name'                 => ['required']
+            'name'                 => ['required','string','max:255']
         ];
     }
 
@@ -161,7 +160,7 @@ class StoreBanner
 
     public function getCommandSignature(): string
     {
-        return 'customer:new-banner {customer} {code} {name} {portfolio-website?}';
+        return 'customer:new-banner {customer} {name} {portfolio-website?}';
     }
 
     public function asCommand(Command $command): int
@@ -182,7 +181,6 @@ class StoreBanner
         $this->asAction = true;
         $this->setRawAttributes(
             [
-                'code'                 => $command->argument('code'),
                 'name'                 => $command->argument('name'),
                 'portfolio_website_id' => $portfolioWebsite->id ?? null
             ]
@@ -191,7 +189,7 @@ class StoreBanner
 
         $banner = $this->handle($portfolioWebsite ?? $customer, $validatedData);
 
-        $command->info("Done! Content block $banner->code created 🎉");
+        $command->info("Done! Banner $banner->slug created 🎉");
         return 0;
     }
 
@@ -208,7 +206,7 @@ class StoreBanner
         }
 
         return redirect()->route(
-            'customer.portfolio.banners.workshop',
+            'customer.banners.workshop',
             [
                 $banner->slug
             ]

@@ -100,14 +100,13 @@ const props = defineProps<{
 }>()
 
 const user = ref(usePage().props.auth.user)
-const tenant = useLayoutStore().tenant
 const isModalOpen = ref(false)
 const comment = ref('')
 const loadingState = ref(false)
 const routeSave = ref()
 const isSetData = ref(false)
 const routeExit = ref()
-const dbPath = 'tenants' + '/' + tenant.slug + '/banner_workshop/' + props.banner.slug
+const dbPath = 'customers' + '/' + useLayoutStore().user.customer_slug + '/banner_workshop/' + props.banner.slug
 const data = reactive(cloneDeep(props.bannerLayout))
 let timeoutId: any
 
@@ -133,7 +132,7 @@ const sendDataToServer = async () => {
         },
         onError: (errors: any) => {
             notify({
-                title: "Failed to Update Banner",
+                title: "Failed to update banner",
                 text: errors,
                 type: "error"
             });
@@ -168,12 +167,15 @@ const fetchInitialData = async () => {
 
 
     } catch (error) {
+
         Object.assign(data, cloneDeep(props.bannerLayout))
         notify({
             title: "Failed to get realtime data",
             text: 'please reload and make sure your internet connection is stable',
             type: "error"
         });
+
+
     } finally {
         isSetData.value = false
         loadingState.value = false
@@ -275,6 +277,7 @@ onBeforeUnmount(() => {
 <template layout="CustomerApp">
     <Head :title="capitalize(title)" />
     <PageHeading :data="pageHead">
+        <!--
         <template #button="{ dataPageHead: head }">
             <div class="flex items-center gap-2">
 
@@ -287,12 +290,13 @@ onBeforeUnmount(() => {
                             style="--fa-primary-color: #f3f3f3; --fa-secondary-color: #ff6600; --fa-secondary-opacity: 1;"
                             size="sm" :class="[action.iconClass]" />
                         <FontAwesomeIcon :icon="head.getActionIcon(action)" aria-hidden="true" />
-                        {{ trans(head.getActionLabel(action)) }}
+                        {{ head.getActionLabel(action) }}
                     </Button>
                         {{ saveRouteValue(action) }}
                 </span>
             </div>
         </template>
+        -->
 
         <Modal :isOpen="isModalOpen" @onClose="isModalOpen = false">
             <div>

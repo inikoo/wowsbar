@@ -67,14 +67,9 @@ class UploadImagesToBanner
         ];
     }
 
-    /** @noinspection PhpUnusedParameterInspection */
-    public function inBannerInPortfolioWebsite(PortfolioWebsite $portfolioWebsite, Banner $banner, ActionRequest $request): Collection
-    {
-        $request->validate();
-        return $this->handle($banner, $request->validated('images'));
-    }
 
-    public function inBanner(Banner $banner, ActionRequest $request): Collection
+
+    public function asController(Banner $banner, ActionRequest $request): Collection
     {
         $request->validate();
         return $this->handle($banner, $request->validated('images'));

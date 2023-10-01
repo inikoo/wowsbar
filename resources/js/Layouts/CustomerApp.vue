@@ -11,7 +11,7 @@
   import Footer from "@/Layouts/Customer/Footer.vue"
   import AppLeftSideBar from "@/Layouts/Customer/AppLeftSideBar.vue"
   import AppRightSideBar from "@/Layouts/Customer/AppRightSideBar.vue"
-  import AppTopBar from "@/Layouts/Customer/AppTopBar.vue"
+  import TopBar from "@/Layouts/Customer/TopBar.vue"
   import Breadcrumbs from "@/Components/Navigation/Breadcrumbs.vue"
   import { library } from "@fortawesome/fontawesome-svg-core"
   import { initialiseCustomerApp } from "@/Composables/initialiseCustomerApp"
@@ -59,14 +59,13 @@
       <div class="relative min-h-full transition-all duration-200 ease-in-out"
           :class="[Object.values(layout.rightSidebar).some(value => value.show) ? 'mr-44' : 'mr-0']"
       >
-          <!-- Topbar -->
-          <AppTopBar @sidebarOpen="(value: boolean) => sidebarOpen = value" :sidebarOpen="sidebarOpen" :logoRoute="`customer.dashboard.show`" urlPrefix="customer.">
+          <TopBar @sidebarOpen="(value: boolean) => sidebarOpen = value" :sidebarOpen="sidebarOpen" :logoRoute="`customer.dashboard.show`" urlPrefix="customer.">
 
 
               <span class="hidden leading-none md:inline font-bold xl:truncate text-gray-800 dark:text-gray-300">
                   {{ layout.app.name}}
               </span>
-          </AppTopBar>
+          </TopBar>
 
           <!-- Breadcrumbs -->
           <Breadcrumbs class="fixed top-11 z-[19] w-full md:top-11 lg:top-10 "

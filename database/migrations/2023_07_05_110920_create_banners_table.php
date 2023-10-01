@@ -21,7 +21,6 @@ return new class () extends Migration {
             $table->unsignedSmallInteger('portfolio_website_id')->nullable()->index();
             $table->foreign('portfolio_website_id')->references('id')->on('portfolio_websites');
             $table->string('slug')->collation('und_ns');
-            $table->string('code')->collation('und_ns_ci');
             $table->string('name')->collation('und_ns_ci');
             $table->string('state')->default(BannerStateEnum::UNPUBLISHED->value);
             $table->unsignedSmallInteger('unpublished_snapshot_id')->nullable()->index();

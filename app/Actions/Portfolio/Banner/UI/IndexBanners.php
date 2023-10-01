@@ -54,7 +54,7 @@ class IndexBanners extends InertiaAction
     public function handle(Customer|PortfolioWebsite $parent, $prefix = null): LengthAwarePaginator
     {
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
-            $query->where('banners.code', "%$value%");
+            $query->where('banners.slug', "%$value%");
         });
 
         if ($prefix) {
@@ -80,9 +80,8 @@ class IndexBanners extends InertiaAction
 
 
         return $queryBuilder
-            ->defaultSort('banners.code')
-            //            ->select(['banners.code', 'banners.name', 'banners.slug'])
-            ->allowedSorts(['slug', 'code', 'name', 'created_at', 'updated_at'])
+            ->defaultSort('banners.slug')
+            ->allowedSorts(['slug', 'name', 'created_at', 'updated_at'])
             ->allowedFilters([$globalSearch])
             ->withPaginator($prefix)
             ->withQueryString();
@@ -114,7 +113,7 @@ class IndexBanners extends InertiaAction
 
             $description = null;
             if ($canEdit) {
-                if (customer()->stats->number_websites == 0) {
+                if (customer()->portfolioStats->number_portfolio_websites == 0) {
                     $description = __('Before creating your first banner you need a website').' 😉';
 
                     $action = [
@@ -131,7 +130,7 @@ class IndexBanners extends InertiaAction
 
             $emptyState = [
                 'title'       => __('No banners found'),
-                'count'       => customer()->stats->number_content_blocks_web_block_type_banner,
+                'count'       => customer()->portfolioStats->number_banners,
                 'description' => $description,
                 'action'      => $action
                 /*
@@ -159,8 +158,8 @@ class IndexBanners extends InertiaAction
                 ->column(key: 'name', label: __('name'), sortable: true)
                 ->column(key: 'image_thumbnail', label: ['fal', 'fa-image'])
                 ->column(key: 'websites', label: __('websites'))
-                ->column(key: 'created_at', label: __('Date Created'), sortable: true)
-                ->column(key: 'updated_at', label: __('Date Updated'), sortable: true)
+                ->column(key: 'created_at', label: __('Date created'), sortable: true)
+                ->column(key: 'updated_at', label: __('Date updated'), sortable: true)
                 ->defaultSort('slug');
         };
     }
@@ -221,27 +220,17 @@ class IndexBanners extends InertiaAction
                         'title' => __('banner'),
                         'icon'  => 'fal fa-window-maximize'
                     ],
-                    'actions'   => [
-                        match (customer()->stats->number_websites) {
-                            1 => [
+                    'actions'   =>
+                        [
+                            [
                                 'type'  => 'button',
                                 'style' => 'create',
                                 'label' => __('create banner'),
                                 'route' => [
-                                    'name'       => 'customer.portfolio.websites.show.banners.create',
-                                    'parameters' => customer()->portfolioWebsites()->first()->slug
-                                ]
-                            ],
-                            default => [
-                                'type'  => 'button',
-                                'style' => 'create',
-                                'label' => __('create banner'),
-                                'route' => [
-                                    'name' => 'customer.portfolio.banners.create',
+                                    'name' => 'customer.banners.create',
                                 ]
                             ]
-                        }
-                    ]
+                        ]
 
                 ],
 
@@ -291,12 +280,12 @@ class IndexBanners extends InertiaAction
         };
 
         return match ($routeName) {
-            'customer.portfolio.banners.index' =>
+            'customer.banners.index' =>
             array_merge(
                 ShowPortfolio::make()->getBreadcrumbs(),
                 $headCrumb(
                     [
-                        'name' => 'customer.portfolio.banners.index'
+                        'name' => 'customer.banners.index'
                     ]
                 ),
             ),

@@ -14,7 +14,6 @@ class BannerFactory extends Factory
     public function definition(): array
     {
         return [
-            'code'   => fake()->lexify(),
             'name'   => fake()->company(),
         ];
     }

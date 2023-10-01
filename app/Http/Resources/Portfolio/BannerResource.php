@@ -35,7 +35,6 @@ class BannerResource extends JsonResource
             'id'              => $banner->id,
             'ulid'            => $banner->ulid,
             'slug'            => $banner->slug,
-            'code'            => $banner->code,
             'name'            => $banner->name,
             'state'           => $banner->state,
             'state_label'     => $banner->state->labels()[$banner->state->value],

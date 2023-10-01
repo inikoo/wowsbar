@@ -47,8 +47,7 @@ class UpdateBanner
     public function rules(): array
     {
         return [
-            'code'                 => ['sometimes', 'required', 'unique:portfolio_websites', 'max:8'],
-            'name'                 => ['sometimes', 'required'],
+            'name'                 => ['sometimes', 'required','string','max:255'],
             'portfolio_website_id' => ['nullable']
         ];
     }

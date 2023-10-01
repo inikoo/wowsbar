@@ -15,6 +15,7 @@ use App\Actions\Portfolio\Banner\PublishBanner;
 use App\Actions\Portfolio\Banner\StoreBanner;
 use App\Actions\Portfolio\Banner\UpdateBanner;
 use App\Actions\Portfolio\Banner\UpdateBannerState;
+use App\Actions\Portfolio\Banner\UploadImagesToBanner;
 use App\Actions\Portfolio\Gallery\UpdateUploadedImage;
 use App\Actions\Portfolio\PortfolioWebsite\DeletePortfolioWebsite;
 use App\Actions\Portfolio\PortfolioWebsite\StorePortfolioWebsite;
@@ -31,14 +32,18 @@ Route::post('/portfolio-website/{portfolioWebsite}/banners/gallery', [StoreBanne
 
 Route::post('/customer/banners/gallery', [StoreBanner::class, 'inTenantFromGallery'])->name('customer.banner.gallery.store');
 
-Route::post('/banner', [StoreBanner::class, 'inCustomer'])->name('banner.store');
-Route::patch('/banner/{banner}', UpdateBanner::class)->name('banner.update');
-Route::patch('/banner/{banner}/publish', PublishBanner::class)->name('banner.publish');
-Route::patch('/banner/{banner}/fetch-firebase', FetchFirebaseSnapshot::class)->name('banner.fetch-firebase');
 
-Route::patch('/banner/{banner}/state/{state}', UpdateBannerState::class)->name('banner.update-state');
-Route::delete('/banner/{banner}', DeleteBanner::class)->name('content-block.delete');
-
+Route::prefix('/banner')->name('banner.')->group(function () {
+    Route::post('', [StoreBanner::class, 'inCustomer'])->name('store');
+    Route::prefix('{banner:id}')->group(function () {
+        Route::patch('', UpdateBanner::class)->name('update');
+        Route::patch('publish', PublishBanner::class)->name('publish');
+        Route::patch('fetch-firebase', FetchFirebaseSnapshot::class)->name('fetch-firebase');
+        Route::post('images', UploadImagesToBanner::class)->name('images.store');
+        Route::patch('state/{state}', UpdateBannerState::class)->name('update-state');
+        Route::delete('', DeleteBanner::class)->name('delete');
+    });
+});
 Route::patch('/images/{media}', UpdateUploadedImage::class)->name('images.update');
 
 Route::post('/user', StoreUser::class)->name('user.store');

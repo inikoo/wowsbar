@@ -28,8 +28,6 @@ use Lorisleiva\Actions\ActionRequest;
 
 class ShowBanner extends InertiaAction
 {
-
-
     private Customer|Shop|PortfolioWebsite|Organisation $parent;
 
     public function handle(Organisation|Shop|Customer|PortfolioWebsite $parent, Banner $banner): Banner
@@ -51,11 +49,11 @@ class ShowBanner extends InertiaAction
             );
     }
 
-    public function inCustomer(Banner $banner, ActionRequest $request): Banner
+    public function asController(Banner $banner, ActionRequest $request): Banner
     {
         $this->initialisation($request)->withTab(BannerTabsEnum::values());
 
-        return $this->handle(\customer(), $banner);
+        return $this->handle(customer(), $banner);
     }
 
     public function inPortfolioWebsite(PortfolioWebsite $portfolioWebsite, Banner $banner, ActionRequest $request): Banner
@@ -64,7 +62,6 @@ class ShowBanner extends InertiaAction
 
         return $this->handle($portfolioWebsite, $banner);
     }
-
 
     public function htmlResponse(Banner $banner, ActionRequest $request): Response
     {
@@ -84,8 +81,12 @@ class ShowBanner extends InertiaAction
                     $request->route()->getName(),
                     $request->route()->originalParameters()
                 ),
-                'title'                                   => $banner->code,
-                'banner'                                  => $banner->only(['slug', 'ulid', 'id', 'code', 'name', 'state']),
+                'navigation'                              => [
+                    'previous' => $this->getPrevious($banner, $request),
+                    'next'     => $this->getNext($banner, $request),
+                ],
+                'title'                                   => $banner->name,
+                'banner'                                  => $banner->only(['slug', 'ulid', 'id', 'name', 'state']),
                 'pageHead'                                => [
                     'title'     => $banner->name,
                     'icon'      => [
@@ -164,24 +165,24 @@ class ShowBanner extends InertiaAction
                 ],
                 PortfolioWebsiteTabsEnum::SHOWCASE->value => $this->tab == PortfolioWebsiteTabsEnum::SHOWCASE->value
                     ?
-                    fn() => [
+                    fn () => [
                         'banner' => $banner->compiled_layout,
                         'url'    => 'xxx'
                     ]
                     : Inertia::lazy(
-                        fn() => [
+                        fn () => [
                             'banner' => $banner->compiled_layout,
                             'url'    => 'xxx'
                         ]
                     ),
 
                 BannerTabsEnum::SNAPSHOTS->value => $this->tab == BannerTabsEnum::SNAPSHOTS->value ?
-                    fn() => SnapshotResource::collection(\App\Actions\Portfolio\Snapshot\UI\IndexSnapshots::run($banner))
-                    : Inertia::lazy(fn() => SnapshotResource::collection(\App\Actions\Portfolio\Snapshot\UI\IndexSnapshots::run($banner))),
+                    fn () => SnapshotResource::collection(\App\Actions\Portfolio\Snapshot\UI\IndexSnapshots::run($banner))
+                    : Inertia::lazy(fn () => SnapshotResource::collection(\App\Actions\Portfolio\Snapshot\UI\IndexSnapshots::run($banner))),
 
                 BannerTabsEnum::CHANGELOG->value => $this->tab == BannerTabsEnum::CHANGELOG->value ?
-                    fn() => HistoryResource::collection(IndexHistories::run($banner))
-                    : Inertia::lazy(fn() => HistoryResource::collection(IndexHistories::run($banner))),
+                    fn () => HistoryResource::collection(IndexHistories::run($banner))
+                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistories::run($banner))),
 
             ]
         )->table(
@@ -237,13 +238,13 @@ class ShowBanner extends InertiaAction
 
 
         return match ($routeName) {
-            'customer.portfolio.banners.show',
-            'customer.portfolio.banners.edit' =>
+            'customer.banners.show',
+            'customer.banners.edit' =>
             array_merge(
                 ShowPortfolio::make()->getBreadcrumbs(),
                 $headCrumb(
                     'modelWithIndex',
-                    $routeParameters['banner'],
+                    Banner::firstWhere('slug', $routeParameters['banner']),
                     [
                         'index' => [
                             'name'       => 'customer.portfolio.banners.index',
@@ -251,7 +252,7 @@ class ShowBanner extends InertiaAction
                         ],
                         'model' => [
                             'name'       => 'customer.portfolio.banners.show',
-                            'parameters' => [$routeParameters['banner']->slug]
+                            'parameters' => $routeParameters
                         ]
                     ],
                     $suffix
@@ -284,4 +285,40 @@ class ShowBanner extends InertiaAction
             default => []
         };
     }
+
+    public function getPrevious(Banner $banner, ActionRequest $request): ?array
+    {
+        $previous = Banner::where('slug', '<', $banner->slug)->orderBy('slug', 'desc')->first();
+
+        return $this->getNavigation($previous, $request->route()->getName());
+    }
+
+    public function getNext(Banner $banner, ActionRequest $request): ?array
+    {
+        $next = Banner::where('slug', '>', $banner->slug)->orderBy('slug')->first();
+
+        return $this->getNavigation($next, $request->route()->getName());
+    }
+
+    private function getNavigation(?Banner $banner, string $routeName): ?array
+    {
+        if (!$banner) {
+            return null;
+        }
+
+
+        return match ($routeName) {
+            'customer.banners.show',
+            'customer.banners.edit' => [
+                'label' => $banner->slug,
+                'route' => [
+                    'name'       => $routeName,
+                    'parameters' => [
+                        'banner' => $banner->slug
+                    ]
+                ]
+            ]
+        };
+    }
+
 }

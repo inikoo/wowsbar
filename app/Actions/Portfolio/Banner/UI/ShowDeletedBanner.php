@@ -58,7 +58,7 @@ class ShowDeletedBanner extends InertiaAction
                     $request->route()->getName(),
                     $request->route()->parameters
                 ),
-                'title'                          => $banner->code,
+                'title'                          => $banner->name,
                 'pageHead'                       => [
                     'title'   => $banner->name,
                     'icon'    => [
