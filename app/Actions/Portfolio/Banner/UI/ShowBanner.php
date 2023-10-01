@@ -16,14 +16,29 @@ use App\Enums\UI\Customer\BannerTabsEnum;
 use App\Enums\UI\Customer\PortfolioWebsiteTabsEnum;
 use App\Http\Resources\History\HistoryResource;
 use App\Http\Resources\Portfolio\SnapshotResource;
+use App\Models\CRM\Customer;
+use App\Models\Market\Shop;
+use App\Models\Organisation\Organisation;
 use App\Models\Portfolio\Banner;
 use App\Models\Portfolio\PortfolioWebsite;
+use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
 
 class ShowBanner extends InertiaAction
 {
+
+
+    private Customer|Shop|PortfolioWebsite|Organisation $parent;
+
+    public function handle(Organisation|Shop|Customer|PortfolioWebsite $parent, Banner $banner): Banner
+    {
+        $this->parent = $parent;
+
+        return $banner;
+    }
+
     public function authorize(ActionRequest $request): bool
     {
         $this->canEdit   = $request->get('customerUser')->hasPermissionTo('portfolio.edit');
@@ -39,59 +54,70 @@ class ShowBanner extends InertiaAction
     public function inCustomer(Banner $banner, ActionRequest $request): Banner
     {
         $this->initialisation($request)->withTab(BannerTabsEnum::values());
-        return $banner;
+
+        return $this->handle(\customer(), $banner);
     }
 
     public function inPortfolioWebsite(PortfolioWebsite $portfolioWebsite, Banner $banner, ActionRequest $request): Banner
     {
-
         $this->initialisation($request)->withTab(BannerTabsEnum::values());
-        return $banner;
+
+        return $this->handle($portfolioWebsite, $banner);
     }
 
 
     public function htmlResponse(Banner $banner, ActionRequest $request): Response
     {
+        $container = null;
+        if (class_basename($this->parent) == 'PortfolioWebsite') {
+            $container = [
+                'icon'    => ['fal', 'fa-globe'],
+                'tooltip' => __('Website'),
+                'label'   => Str::possessive($this->parent->code)
+            ];
+        }
+
         return Inertia::render(
             'Portfolio/Banner',
             [
-                'breadcrumbs'                    => $this->getBreadcrumbs(
+                'breadcrumbs'                             => $this->getBreadcrumbs(
                     $request->route()->getName(),
-                    $request->route()->parameters
+                    $request->route()->originalParameters()
                 ),
-                'title'                          => $banner->code,
-                'banner'                         => $banner->only(['slug', 'ulid', 'id', 'code', 'name','state']),
-                'pageHead'                       => [
-                    'title'   => $banner->name,
-                    'icon'    => [
+                'title'                                   => $banner->code,
+                'banner'                                  => $banner->only(['slug', 'ulid', 'id', 'code', 'name', 'state']),
+                'pageHead'                                => [
+                    'title'     => $banner->name,
+                    'icon'      => [
                         'tooltip' => __('banner'),
                         'icon'    => 'fal fa-window-maximize'
                     ],
-                    'iconRight'    =>
-                        match($banner->state) {
-                            BannerStateEnum::LIVE=> [
+                    'container' => $container,
+                    'iconRight' =>
+                        match ($banner->state) {
+                            BannerStateEnum::LIVE => [
 
-                                    'tooltip' => __('live'),
-                                    'icon'    => 'fal fa-broadcast-tower',
-                                    'class'   => 'text-green-600'
-
-                            ],
-                            BannerStateEnum::UNPUBLISHED=> [
-
-                                    'tooltip' => __('unpublished'),
-                                    'icon'    => 'fal fa-seedling'
+                                'tooltip' => __('live'),
+                                'icon'    => 'fal fa-broadcast-tower',
+                                'class'   => 'text-green-600'
 
                             ],
-                            BannerStateEnum::RETIRED=> [
+                            BannerStateEnum::UNPUBLISHED => [
 
-                                    'tooltip' => __('retired'),
-                                    'icon'    => 'fal fa-eye-slash'
+                                'tooltip' => __('unpublished'),
+                                'icon'    => 'fal fa-seedling'
+
+                            ],
+                            BannerStateEnum::RETIRED => [
+
+                                'tooltip' => __('retired'),
+                                'icon'    => 'fal fa-eye-slash'
 
                             ]
                         }
 
-                       ,
-                    'actions' => [
+                    ,
+                    'actions'   => [
                         $this->canDelete ? [
                             'type'  => 'button',
                             'style' => 'delete',
@@ -132,51 +158,53 @@ class ShowBanner extends InertiaAction
                         ] : false,
                     ],
                 ],
-                'tabs' => [
+                'tabs'                                    => [
                     'current'    => $this->tab,
                     'navigation' => BannerTabsEnum::navigation()
                 ],
-                PortfolioWebsiteTabsEnum::SHOWCASE->value => $this->tab == PortfolioWebsiteTabsEnum::SHOWCASE->value ?
-                    fn () => [
-                        'banner'=> $banner->compiled_layout,
-                        'url'   => 'xxx'
+                PortfolioWebsiteTabsEnum::SHOWCASE->value => $this->tab == PortfolioWebsiteTabsEnum::SHOWCASE->value
+                    ?
+                    fn() => [
+                        'banner' => $banner->compiled_layout,
+                        'url'    => 'xxx'
                     ]
                     : Inertia::lazy(
-                        fn () =>
-                    [
-                        'banner'=> $banner->compiled_layout,
-                        'url'   => 'xxx'
-                    ]
+                        fn() => [
+                            'banner' => $banner->compiled_layout,
+                            'url'    => 'xxx'
+                        ]
                     ),
 
                 BannerTabsEnum::SNAPSHOTS->value => $this->tab == BannerTabsEnum::SNAPSHOTS->value ?
-                    fn () => SnapshotResource::collection(\App\Actions\Portfolio\Snapshot\UI\IndexSnapshots::run($banner))
-                    : Inertia::lazy(fn () => SnapshotResource::collection(\App\Actions\Portfolio\Snapshot\UI\IndexSnapshots::run($banner))),
+                    fn() => SnapshotResource::collection(\App\Actions\Portfolio\Snapshot\UI\IndexSnapshots::run($banner))
+                    : Inertia::lazy(fn() => SnapshotResource::collection(\App\Actions\Portfolio\Snapshot\UI\IndexSnapshots::run($banner))),
 
                 BannerTabsEnum::CHANGELOG->value => $this->tab == BannerTabsEnum::CHANGELOG->value ?
-                    fn () => HistoryResource::collection(IndexHistories::run($banner))
-                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistories::run($banner))),
+                    fn() => HistoryResource::collection(IndexHistories::run($banner))
+                    : Inertia::lazy(fn() => HistoryResource::collection(IndexHistories::run($banner))),
 
             ]
-        )->table(IndexHistories::make()->tableStructure(
-            exportLinks: [
-                'export' => [
-                    'route' => [
-                        'name' => 'export.histories.index'
+        )->table(
+            IndexHistories::make()->tableStructure(
+                exportLinks: [
+                    'export' => [
+                        'route' => [
+                            'name' => 'export.histories.index'
+                        ]
                     ]
                 ]
-            ]
-        ))->table(
+            )
+        )->table(
             \App\Actions\Portfolio\Snapshot\UI\IndexSnapshots::make()->tableStructure(
                 null,
                 'sht',
                 exportLinks: [
-                'export' => [
-                    'route' => [
-                        'name' => 'export.snapshots.index'
+                    'export' => [
+                        'route' => [
+                            'name' => 'export.snapshots.index'
+                        ]
                     ]
                 ]
-            ]
             )
         );
     }
@@ -202,10 +230,9 @@ class ShowBanner extends InertiaAction
                         'route' => $routeParameters['model'],
                         'label' => $banner->name
                     ],
-                    'suffix' => $suffix
+                    'suffix'         => $suffix
                 ],
             ];
-
         };
 
 
@@ -231,19 +258,19 @@ class ShowBanner extends InertiaAction
                 ),
             ),
             'customer.portfolio.websites.show.banners.show',
-            'customer.portfolio.websites.show.banners.edit'=>
+            'customer.portfolio.websites.show.banners.edit' =>
             array_merge(
                 ShowPortfolioWebsite::make()->getBreadcrumbs(
                     'customer.portfolio.websites.show',
-                    ['portfolioWebsite' => $routeParameters['portfolioWebsite']]
+                    $routeParameters
                 ),
                 $headCrumb(
                     'modelWithIndex',
-                    $routeParameters['banner'],
+                    Banner::firstWhere('slug', $routeParameters['banner']),
                     [
                         'index' => [
                             'name'       => 'customer.portfolio.websites.show.banners.index',
-                            'parameters' => [$routeParameters['portfolioWebsite']->slug]
+                            'parameters' => $routeParameters
                         ],
                         'model' => [
                             'name'       => 'customer.portfolio.websites.show.banners.show',

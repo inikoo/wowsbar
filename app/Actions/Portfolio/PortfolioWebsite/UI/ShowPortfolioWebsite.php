@@ -63,7 +63,7 @@ class ShowPortfolioWebsite extends InertiaAction
                         'title' => __('website'),
                         'icon'  => 'fal fa-globe'
                     ],
-                    'actions'   => [
+                    'actions' => [
                         $this->canEdit ? [
                             'type'  => 'button',
                             'style' => 'edit',
@@ -80,15 +80,17 @@ class ShowPortfolioWebsite extends InertiaAction
                 ],
 
                 PortfolioWebsiteTabsEnum::CHANGELOG->value => $this->tab == PortfolioWebsiteTabsEnum::CHANGELOG->value ?
-                    fn () => HistoryResource::collection(IndexHistories::run($portfolioWebsite))
-                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistories::run($portfolioWebsite))),
+                    fn() => HistoryResource::collection(IndexHistories::run($portfolioWebsite))
+                    : Inertia::lazy(fn() => HistoryResource::collection(IndexHistories::run($portfolioWebsite))),
 
                 PortfolioWebsiteTabsEnum::BANNERS->value => $this->tab == PortfolioWebsiteTabsEnum::BANNERS->value ?
-                    fn () => BannerResource::collection(IndexBanners::run($portfolioWebsite))
-                    : Inertia::lazy(fn () => BannerResource::collection(IndexBanners::run($portfolioWebsite)))
+                    fn() => BannerResource::collection(IndexBanners::run($portfolioWebsite, 'banners'))
+                    : Inertia::lazy(fn() => BannerResource::collection(IndexBanners::run($portfolioWebsite, 'banners')))
             ]
         )
-            ->table(IndexBanners::make()->tableStructure($portfolioWebsite))
+            ->table(IndexBanners::make()->tableStructure(
+                parent:$portfolioWebsite,prefix: 'banners'
+            ))
             ->table(IndexHistories::make()->tableStructure());
     }
 
@@ -118,7 +120,7 @@ class ShowPortfolioWebsite extends InertiaAction
                         'route' => $routeParameters['model'],
                         'label' => $portfolioWebsite->code
                     ],
-                    'suffix' => $suffix
+                    'suffix'         => $suffix
                 ],
             ];
         };
@@ -172,7 +174,7 @@ class ShowPortfolioWebsite extends InertiaAction
 
         return match ($routeName) {
             'customer.portfolio.websites.show',
-            'customer.portfolio.websites.edit'=> [
+            'customer.portfolio.websites.edit' => [
                 'label' => $portfolioWebsite->code,
                 'route' => [
                     'name'       => $routeName,

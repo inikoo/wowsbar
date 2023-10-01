@@ -148,8 +148,8 @@ class GetLayout
                             ]
                         ],
                         [
-                            'icon'  => ['fal', 'fa-browser'],
-                            'label' => __('websites'),
+                            'icon'  => ['fal', 'fa-briefcase'],
+                            'label' => __('portfolio'),
                             'route' => [
                                 'name' => 'customer.banners.websites.index',
                             ]
