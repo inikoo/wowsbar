@@ -26,6 +26,7 @@ class ImageResource extends JsonResource
         $image          = (new Image())->make($media->getImgProxyFilename(), $media->is_animated);
         $imageThumbnail = (new Image())->make($media->getImgProxyFilename(), $media->is_animated)->resize(0, 48);
 
+
         return [
             'id'         => $media->id,
             'slug'       => $media->slug,

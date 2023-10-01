@@ -8,7 +8,7 @@
 namespace App\Actions\Portfolio\Gallery\UI\UploadedImages;
 
 use App\Actions\InertiaAction;
-use App\Actions\UI\Customer\Portfolio\ShowPortfolio;
+use App\Actions\UI\Customer\Banners\ShowBannersDashboard;
 use App\Models\Media\Media;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -40,17 +40,17 @@ class ShowUploadedImage extends InertiaAction
     public function htmlResponse(Media $media, ActionRequest $request): Response
     {
         return Inertia::render(
-            'Portfolio/Image',
+            'Banners/Image',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->getName(),
-                    $request->route()->parameters
+                    $request->route()->originalParameters()
                 ),
                 'tabs' => [
                     'current'    => $this->tab,
                     'navigation' => [],
                 ],
-                'title'    => __('images'),
+                'title'    => __('image'),
                 'pageHead' => [
                     'title'     => __($media->name),
                     'iconRight' => [
@@ -71,7 +71,7 @@ class ShowUploadedImage extends InertiaAction
                             'type'  => 'button',
                             'style' => 'delete',
                             'route' => [
-                                'name'       => 'customer.portfolio.images.remove',
+                                'name'       => 'customer.banners.images.remove',
                                 'parameters' => [$media->slug]
                             ]
                         ]
@@ -90,20 +90,19 @@ class ShowUploadedImage extends InertiaAction
                     'type'   => 'simple',
                     'simple' => [
                         'route' => $routeParameters,
-                        'label' => __('images'),
+                        'label' => __('gallery'),
                         'icon'  => 'fal fa-bars'
                     ],
                 ],
             ];
         };
-
         return match ($routeName) {
-            'customer.portfolio.images.index' =>
+            'customer.banners.images.show' =>
             array_merge(
-                ShowPortfolio::make()->getBreadcrumbs(),
+                ShowBannersDashboard::make()->getBreadcrumbs(),
                 $headCrumb(
                     [
-                        'name' => 'customer.portfolio.images.index',
+                        'name' => 'customer.banners.gallery',
                         null
                     ]
                 ),

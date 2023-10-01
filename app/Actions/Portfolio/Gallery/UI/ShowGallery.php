@@ -9,7 +9,7 @@ namespace App\Actions\Portfolio\Gallery\UI;
 
 use App\Actions\InertiaAction;
 use App\Actions\Portfolio\Gallery\UI\UploadedImages\IndexUploadedImages;
-use App\Actions\UI\Customer\Portfolio\ShowPortfolio;
+use App\Actions\UI\Customer\Banners\ShowBannersDashboard;
 use App\Enums\UI\Customer\GalleryTabsEnum;
 use App\Http\Resources\Gallery\ImageResource;
 use Inertia\Inertia;
@@ -40,7 +40,7 @@ class ShowGallery extends InertiaAction
     public function htmlResponse(ActionRequest $request): Response
     {
         return Inertia::render(
-            'Portfolio/Gallery',
+            'Banners/Gallery',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->getName(),
@@ -100,7 +100,7 @@ class ShowGallery extends InertiaAction
                 modelOperations: [
                     'uploadFile' => $this->canEdit ? [
                         'route' => [
-                            'name'       => 'customer.portfolio.images.upload',
+                            'name'       => 'customer.models.gallery.images.upload',
                             'parameters' => []
                         ],
                         'label' => __('Upload image'),
@@ -149,7 +149,7 @@ class ShowGallery extends InertiaAction
         return match ($routeName) {
             'customer.banners.gallery' =>
             array_merge(
-                ShowPortfolio::make()->getBreadcrumbs(),
+                ShowBannersDashboard::make()->getBreadcrumbs(),
                 $headCrumb(
                     [
                         'name' => 'customer.banners.gallery',

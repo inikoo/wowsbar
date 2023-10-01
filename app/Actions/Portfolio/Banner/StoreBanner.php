@@ -33,6 +33,7 @@ class StoreBanner
     private bool $asAction = false;
 
     private Customer|PortfolioWebsite $parent;
+    private string $scope;
 
 
     public function handle(Customer|PortfolioWebsite $parent, array $modelData): Banner
@@ -130,6 +131,25 @@ class StoreBanner
     public function inCustomer(ActionRequest $request): Banner
     {
 
+        $this->scope='customer';
+
+        $parent = customer();
+        $request->validate();
+
+        $validatedData=$request->validated();
+
+        if($portfolioWebsiteId=Arr::get($validatedData, 'portfolio_website_id')) {
+            $parent=PortfolioWebsite::find($portfolioWebsiteId);
+        }
+
+        return $this->handle($parent, $request->validated());
+    }
+
+    public function fromGallery(ActionRequest $request): Banner
+    {
+
+        $this->scope='gallery';
+
         $parent = customer();
         $request->validate();
 
@@ -144,8 +164,8 @@ class StoreBanner
 
     public function inPortfolioWebsite(PortfolioWebsite $portfolioWebsite, ActionRequest $request): Banner
     {
+        $this->scope='portfolioWebsite';
         $request->validate();
-
         return $this->handle($portfolioWebsite, $request->validated());
     }
 
@@ -195,6 +215,8 @@ class StoreBanner
 
     public function htmlResponse(Banner $banner): RedirectResponse
     {
+
+
         if (class_basename($this->parent) == 'PortfolioWebsite') {
             return redirect()->route(
                 'customer.portfolio.websites.show.banners.workshop',

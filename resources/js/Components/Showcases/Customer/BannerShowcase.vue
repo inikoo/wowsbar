@@ -1,6 +1,6 @@
 <!--
   - Author: Raul Perusquia <raul@inikoo.com>
-  - Created: Fri, 14 Jul 2023 15:19:45 Malaysia Time, Kuala Lumpur, Malaysia
+  - Created: Mon, 02 Oct 2023 03:23:49 Malaysia Time, Kuala Lumpur, Malaysia
   - Copyright (c) 2023, Raul A Perusquia Flores
   -->
 
@@ -12,7 +12,7 @@ import Slider from "@/Components/Slider/Slider.vue"
 import { trans } from "laravel-vue-i18n"
 
 
-import { faWindowMaximize, faGlobe } from "@/../private/pro-light-svg-icons"
+import { faWindowMaximize, faGlobe } from "../../../../private/pro-light-svg-icons"
 import EmptyState from '@/Components/Utils/EmptyState.vue'
 import { cloneDeep } from 'lodash'
 

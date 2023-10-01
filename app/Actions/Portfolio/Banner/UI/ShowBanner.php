@@ -10,7 +10,8 @@ namespace App\Actions\Portfolio\Banner\UI;
 use App\Actions\Helpers\History\IndexHistories;
 use App\Actions\InertiaAction;
 use App\Actions\Portfolio\PortfolioWebsite\UI\ShowPortfolioWebsite;
-use App\Actions\UI\Customer\Portfolio\ShowPortfolio;
+use App\Actions\Portfolio\Snapshot\UI\IndexSnapshots;
+use App\Actions\UI\Customer\Banners\ShowBannersDashboard;
 use App\Enums\Portfolio\Banner\BannerStateEnum;
 use App\Enums\UI\Customer\BannerTabsEnum;
 use App\Enums\UI\Customer\PortfolioWebsiteTabsEnum;
@@ -75,7 +76,7 @@ class ShowBanner extends InertiaAction
         }
 
         return Inertia::render(
-            'Portfolio/Banner',
+            'Banners/Banner',
             [
                 'breadcrumbs'                             => $this->getBreadcrumbs(
                     $request->route()->getName(),
@@ -177,8 +178,8 @@ class ShowBanner extends InertiaAction
                     ),
 
                 BannerTabsEnum::SNAPSHOTS->value => $this->tab == BannerTabsEnum::SNAPSHOTS->value ?
-                    fn () => SnapshotResource::collection(\App\Actions\Portfolio\Snapshot\UI\IndexSnapshots::run($banner))
-                    : Inertia::lazy(fn () => SnapshotResource::collection(\App\Actions\Portfolio\Snapshot\UI\IndexSnapshots::run($banner))),
+                    fn () => SnapshotResource::collection(IndexSnapshots::run($banner))
+                    : Inertia::lazy(fn () => SnapshotResource::collection(IndexSnapshots::run($banner))),
 
                 BannerTabsEnum::CHANGELOG->value => $this->tab == BannerTabsEnum::CHANGELOG->value ?
                     fn () => HistoryResource::collection(IndexHistories::run($banner))
@@ -196,7 +197,7 @@ class ShowBanner extends InertiaAction
                 ]
             )
         )->table(
-            \App\Actions\Portfolio\Snapshot\UI\IndexSnapshots::make()->tableStructure(
+            IndexSnapshots::make()->tableStructure(
                 null,
                 'sht',
                 exportLinks: [
@@ -241,7 +242,7 @@ class ShowBanner extends InertiaAction
             'customer.banners.show',
             'customer.banners.edit' =>
             array_merge(
-                ShowPortfolio::make()->getBreadcrumbs(),
+                ShowBannersDashboard::make()->getBreadcrumbs(),
                 $headCrumb(
                     'modelWithIndex',
                     Banner::firstWhere('slug', $routeParameters['banner']),

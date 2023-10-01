@@ -17,6 +17,7 @@ use App\Actions\Portfolio\Banner\UpdateBanner;
 use App\Actions\Portfolio\Banner\UpdateBannerState;
 use App\Actions\Portfolio\Banner\UploadImagesToBanner;
 use App\Actions\Portfolio\Gallery\UpdateUploadedImage;
+use App\Actions\Portfolio\Gallery\UploadImagesToGallery;
 use App\Actions\Portfolio\PortfolioWebsite\DeletePortfolioWebsite;
 use App\Actions\Portfolio\PortfolioWebsite\StorePortfolioWebsite;
 use App\Actions\Portfolio\PortfolioWebsite\UpdatePortfolioWebsite;
@@ -36,6 +37,8 @@ Route::post('/portfolio-website/{portfolioWebsite:id}/banner', [StoreBanner::cla
 
 Route::prefix('/banner')->name('banner.')->group(function () {
     Route::post('', [StoreBanner::class, 'inCustomer'])->name('store');
+    Route::post('from-gallery', [StoreBanner::class, 'fromGallery'])->name('store.from-gallery');
+
     Route::prefix('{banner:id}')->group(function () {
         Route::patch('', UpdateBanner::class)->name('update');
         Route::patch('publish', PublishBanner::class)->name('publish');
@@ -56,3 +59,6 @@ Route::patch('/profile', UpdateProfile::class)->name('profile.update');
 Route::post('/generator', ImageGenerator::class)->name('image.generate');
 
 Route::post('/portfolio-websites/imports/upload', ImportPortfolioWebsite::class)->name('websites.upload');
+
+
+Route::post('/gallery/images/upload', UploadImagesToGallery::class)->name('gallery.images.upload');

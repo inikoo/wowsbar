@@ -1,6 +1,6 @@
 <!--
   - Author: Raul Perusquia <raul@inikoo.com>
-  - Created: Tue, 19 Sep 2023 13:37:29 Malaysia Time, Pantai Lembeng, Bali, Indonesia
+  - Created: Mon, 02 Oct 2023 03:20:36 Malaysia Time, Kuala Lumpur, Malaysia
   - Copyright (c) 2023, Raul A Perusquia Flores
   -->
 
@@ -14,9 +14,9 @@ import ModelDetails from "@/Pages/ModelDetails.vue";
 import Tabs from "@/Components/Navigation/Tabs.vue";
 import {capitalize} from "@/Composables/capitalize"
 import TableHistories from "@/Components/Tables/TableHistories.vue";
-import BannerShowcase from "@/Pages/Customer/Portfolio/BannerShowcase.vue";
+import BannerShowcase from "@/Components/Showcases/Customer/BannerShowcase.vue";
 
-import {faWindowMaximize, faGlobe, faPencil, faSeedling, faPaste} from "@/../private/pro-light-svg-icons"
+import {faWindowMaximize, faGlobe, faPencil, faSeedling, faPaste} from "../../../../private/pro-light-svg-icons"
 import TableSnapshots from '@/Components/Tables/TableSnapshots.vue';
 
 library.add(faWindowMaximize, faGlobe, faPencil,faSeedling, faPaste)

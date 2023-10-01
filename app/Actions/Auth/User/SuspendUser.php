@@ -8,7 +8,6 @@
 namespace App\Actions\Auth\User;
 
 use App\Actions\Auth\CustomerUser\UpdateCustomerUser;
-use App\Actions\CRM\Customer\Hydrators\CustomerHydrateCustomerUsers;
 use App\Actions\Traits\WithActionUpdate;
 use App\Http\Resources\Auth\UserResource;
 use App\Models\Auth\User;

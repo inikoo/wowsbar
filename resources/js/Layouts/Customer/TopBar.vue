@@ -7,7 +7,7 @@
 <script setup lang="ts">
 import { Link, router } from "@inertiajs/vue3"
 import { useLayoutStore } from "@/Stores/layout"
-import AppTopBarNavs from "@/Layouts/Customer/AppTopBarNavs.vue"
+import TopBarNavs from "@/Layouts/Customer/TopBarNavs.vue"
 import { ref, onMounted } from "vue"
 import { useSignoutFirebase } from "@/Composables/firebaseAuth"
 
@@ -100,7 +100,7 @@ const logoutAuth = () => {
                             >
                                 <slot />
                             </Link>
-                            <AppTopBarNavs />
+                            <TopBarNavs />
                         </div>
                     </div>
 

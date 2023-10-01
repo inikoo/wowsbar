@@ -54,7 +54,7 @@ class ShowBannerWorkshop extends InertiaAction
     public function htmlResponse(Banner $banner, ActionRequest $request): Response
     {
         return Inertia::render(
-            'Portfolio/BannerWorkshop',
+            'Banners/BannerWorkshop',
             [
                 'title'             => __("Banner's workshop"),
                 'breadcrumbs'       => $this->getBreadcrumbs(

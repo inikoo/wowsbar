@@ -1,6 +1,6 @@
 <!--
   - Author: Raul Perusquia <raul@inikoo.com>
-  - Created: Tue, 19 Sep 2023 13:37:29 Malaysia Time, Pantai Lembeng, Bali, Indonesia
+  - Created: Mon, 02 Oct 2023 03:26:44 Malaysia Time, Kuala Lumpur, Malaysia
   - Copyright (c) 2023, Raul A Perusquia Flores
   -->
 
@@ -13,8 +13,8 @@ import { computed, ref, Ref } from "vue"
 import { trans } from 'laravel-vue-i18n'
 import Select from '@/Components/Forms/Fields/Primitive/PrimitiveSelect.vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faImagePolaroid, faCloudUpload, faTimes } from '@/../private/pro-light-svg-icons'
-import { faSpinnerThird } from '@/../private/pro-duotone-svg-icons'
+import { faImagePolaroid, faCloudUpload, faTimes } from '../../../../private/pro-light-svg-icons'
+import { faSpinnerThird } from '../../../../private/pro-duotone-svg-icons'
 import { library } from '@fortawesome/fontawesome-svg-core'
 
 import { useTabChange } from "@/Composables/tab-change"
@@ -104,7 +104,7 @@ const createBanner = async () => {
 
         if(!fieldWebsite.value){
             await axios.post(
-                route('models.customer.banner.gallery.store'),
+                route('customer.models.banner.store.from-gallery'),
                 {
                     images: selectedImagesFlat.value,
                     name: fieldName.value
@@ -168,20 +168,20 @@ console.log('debug:',props.uploaded_images,props.stock_images)
         <template #button>
             <!-- Button: Initial state -->
             <Button v-if="!isSelectImage" @click="isSelectImage = true" size="xs" :style="`tertiary`" id="select-images">
-                Select images
+                {{trans('Choose images for a new banner')}}
             </Button>
 
             <!-- Button: Create Banner -->
             <div v-if="isSelectImage" class="flex gap-x-2">
                 <Button :style="'delete'" @click="isSelectImage = false" size="xs" id="cancel-select">
-                    Cancel select
+                    {{trans('Cancel')}}
                 </Button>
                 <Button :key="combinedImages.length" size="xs" :style="combinedImages.length > 0 ? 'primary' : 'disabled'"
                     :class="[combinedImages.length > 0 ? '' : 'cursor-not-allowed']"
                     @click="combinedImages.length > 0 ? isModalOpen = true : false"
                     id="create-banner"
                     >
-                    Create Banner ({{ combinedImages.length }})
+                    {{trans('Next')}} ({{ combinedImages.length }})
                 </Button>
             </div>
         </template>
@@ -204,20 +204,14 @@ console.log('debug:',props.uploaded_images,props.stock_images)
             <div class="flex flex-col gap-y-4">
                 <div class="max-w-full">
                     <!-- Field: Website -->
-                    <div>Select website</div>
+                    <div>{{trans('Select website')}}</div>
                     <Select :value="fieldWebsite" :fieldData="{options : compWebsitesList}" @onChange="(newValue)=>fieldWebsite = newValue"/>
                 </div>
 
-                 <!-- Field: code -->
-                 <div class="max-w-full">
-                    <div>Code</div>
-                    <input v-model.trim="fieldCode" placeholder="Enter name for new banner"
-                        class="block w-full shadow-sm rounded-md text-gray-600 dark:bg-gray-600 dark:text-gray-400 focus:ring-gray-500 focus:border-gray-500 sm:text-sm border-gray-300 dark:border-gray-500 read-only:bg-gray-100 read-only:ring-0 read-only:ring-transparent read-only:text-gray-500" />
-                </div>
 
                 <!-- Field: Name -->
                 <div class="max-w-full">
-                    <div>Name</div>
+                    <div>{{trans('Name')}}</div>
                     <input v-model.trim="fieldName" placeholder="Enter name for new banner"
                         class="block w-full shadow-sm rounded-md text-gray-600 dark:bg-gray-600 dark:text-gray-400 focus:ring-gray-500 focus:border-gray-500 sm:text-sm border-gray-300 dark:border-gray-500 read-only:bg-gray-100 read-only:ring-0 read-only:ring-transparent read-only:text-gray-500" />
                 </div>

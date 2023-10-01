@@ -60,7 +60,6 @@ Route::get('/banners/create', [CreateBanner::class, 'inCustomer'])->name('banner
 Route::get('/banners/{banner}', [ShowBanner::class, 'inCustomer'])->name('banners.show');
 Route::get('/banners/{banner}/edit', EditBanner::class)->name('banners.edit');
 Route::get('/banners/{banner}/workshop', [ShowBannerWorkshop::class, 'inCustomer'])->name('banners.workshop');
-Route::post('/banners/{banner}/workshop/images', [UploadImagesToBanner::class, 'inBanner'])->name('banners.workshop.images.store');
 
 Route::get('/banners/{banner}/delete', [RemoveBanner::class, 'inCustomer'])->name('banners.remove');
 Route::get('/banners/{banner}/deleted', [ShowDeletedBanner::class, 'inCustomer'])->withTrashed()->name('banners.deleted');
