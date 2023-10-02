@@ -28,8 +28,8 @@ class Login
     use AsController;
 
     private string $credentialHandler = 'email';
-    private string $home = 'auth/dashboard';
-    private string $gate = 'customer';
+    private string $home              = 'auth/dashboard';
+    private string $gate              = 'customer';
 
 
     /**

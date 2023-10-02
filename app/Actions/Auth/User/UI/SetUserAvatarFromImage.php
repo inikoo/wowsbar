@@ -33,7 +33,7 @@ class SetUserAvatarFromImage
                 ->preservingOriginal()
                 ->withProperties(
                     [
-                        'checksum'  => $checksum,
+                        'checksum'    => $checksum,
                         'customer_id' => customer()->id
                     ]
                 )

@@ -8,15 +8,15 @@
 namespace App\Actions\Portfolio\Banner;
 
 use App\Actions\Traits\WithActionUpdate;
-use App\Models\CRM\Customer;
 use App\Models\Portfolio\Banner;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Config;
 use Lorisleiva\Actions\ActionRequest;
 
 class FetchFirebaseSnapshot
 {
     use WithActionUpdate;
+    use HasBannerCommand;
+
 
     public function handle(Banner $banner): bool
     {
@@ -47,23 +47,28 @@ class FetchFirebaseSnapshot
 
     public function getCommandSignature(): string
     {
-        return 'banner:fetch-firebase {customer} {slug}';
+        return 'banner:fetch-firebase {slug}';
     }
 
-    public function asCommand(Command $command): void
+    public function asCommand(Command $command): int
     {
-        $customer = Customer::where('slug', $command->argument('customer'))->firstOrFail();
 
-        Config::set('global.customer_id', $customer->id);
-
-        $banner = Banner::where('slug', $command->argument('slug'))->firstOrFail();
-
-        $result = $this->handle($banner);
-        if ($result) {
-            $command->info("Done! banner  $banner->slug unpublished slide from 🔥 updated 🥳");
-        } else {
-            $command->error("Banner $banner->slug not found in firebase 😱");
+        if($banner=$this->getBanner($command)) {
+            $result = $this->handle($banner);
+            if ($result) {
+                $command->info("Done! banner  $banner->slug unpublished slide from 🔥 updated 🥳");
+            } else {
+                $command->error("Banner $banner->slug not found in firebase 😱");
+            }
+            return 0;
         }
+        return 1;
+
+
+
     }
+
+
+
 
 }

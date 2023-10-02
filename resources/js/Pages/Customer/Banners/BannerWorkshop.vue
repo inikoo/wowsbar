@@ -9,7 +9,7 @@ import { Head } from "@inertiajs/vue3"
 import { router } from '@inertiajs/vue3'
 import { useForm } from '@inertiajs/vue3'
 import { notify } from "@kyvg/vue3-notification"
-import { ref, reactive, onBeforeMount, watch, onBeforeUnmount, computed } from "vue"
+import { ref, reactive, onBeforeMount, watch, onBeforeUnmount } from "vue"
 import PageHeading from "@/Components/Headings/PageHeading.vue"
 import { capitalize } from "@/Composables/capitalize"
 import { faUser, faUserFriends } from "../../../../private/pro-light-svg-icons"
@@ -18,7 +18,7 @@ import { trans } from "laravel-vue-i18n"
 import Button from "@/Components/Elements/Buttons/Button.vue"
 import BannerWorkshopComponent from '@/Components/Workshop/BannerWorkshopComponent.vue'
 import { useLayoutStore } from "@/Stores/layout"
-import { cloneDeep, isEqual, set as setLodash } from "lodash"
+import { cloneDeep, set as setLodash } from "lodash"
 import { set, onValue, get } from "firebase/database"
 import { getDbRef } from '@/Composables/firebase'
 import Modal from '@/Components/Utils/Modal.vue'
@@ -253,15 +253,9 @@ const autoSave = () => {
     const form = useForm(deleteUser());
     form.patch(
         route(props.autoSaveRoute.name, props.autoSaveRoute.parameters), {
-        onSuccess: async (res) => {
-            console.log('autosave succesc')
-        },
+        onSuccess: async (res) => {},
         onError: (errors: any) => {
-            notify({
-                title: "Failed to autosave",
-                text: errors,
-                type: "error"
-            });
+            console.log(errors)
         },
     })
 }

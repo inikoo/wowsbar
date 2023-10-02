@@ -120,6 +120,7 @@ class ShowBannerWorkshop extends InertiaAction
                     'parameters' => $banner->id
                 ],
 
+
             ]
         );
     }
