@@ -14,7 +14,6 @@ use App\Actions\Portfolio\Snapshot\UI\IndexSnapshots;
 use App\Actions\UI\Customer\Banners\ShowBannersDashboard;
 use App\Enums\Portfolio\Banner\BannerStateEnum;
 use App\Enums\UI\Customer\BannerTabsEnum;
-use App\Enums\UI\Customer\PortfolioWebsiteTabsEnum;
 use App\Http\Resources\History\HistoryResource;
 use App\Http\Resources\Portfolio\SnapshotResource;
 use App\Models\CRM\Customer;
@@ -74,6 +73,7 @@ class ShowBanner extends InertiaAction
                 'label'   => Str::possessive($this->parent->code)
             ];
         }
+
 
         return Inertia::render(
             'Banners/Banner',
@@ -164,7 +164,7 @@ class ShowBanner extends InertiaAction
                     'current'    => $this->tab,
                     'navigation' => BannerTabsEnum::navigation()
                 ],
-                PortfolioWebsiteTabsEnum::SHOWCASE->value => $this->tab == PortfolioWebsiteTabsEnum::SHOWCASE->value
+                BannerTabsEnum::SHOWCASE->value => $this->tab == BannerTabsEnum::SHOWCASE->value
                     ?
                     fn () => [
                         'banner' => $banner->compiled_layout,

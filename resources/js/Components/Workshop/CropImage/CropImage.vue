@@ -6,8 +6,6 @@
 
 <script setup lang="ts">
 import { ref } from "vue"
-// import { Swiper, SwiperSlide } from "swiper/vue"
-// import { Pagination, Navigation } from "swiper/modules"
 import "swiper/css"
 import "swiper/css/navigation"
 
@@ -24,14 +22,17 @@ import CropComponents from "@/Components/Workshop/CropImage/CropComponents.vue"
 
 const props = withDefaults(defineProps<{
     data: FileList;
-    imagesUploadRoute: object;
-    respone : Function
+    imagesUploadRoute: {
+        name:string,
+        parameters: Array<string>
+    };
+    response : Function
     ratio?:  {
         w: number
         h: number
-    }, 
+    },
 }>(), {
-    ratio: { w : 4, h : 1 } 
+    ratio: { w : 4, h : 1 }
 })
 
 const setData2 = () => {
@@ -102,24 +103,20 @@ const addComponent = async () => {
             }
         );
         form.value = new FormData()
-        props.respone(response.data)
+        props.response(response.data)
         loadingState.value = false
     } catch (error) {
         console.log(error)
         form.value = new FormData()
         catchError.value = error
-        // props.respone(error.response)
+        // props.response(error.response)
         loadingState.value = false
     }
 }
 
-// const swiperRef = ref()
 const current = ref(0)
 
-// watch(current, (newVal) => {
-//     console.log(current)
-//     swiperRef.value.$el.swiper.slideToLoop(newVal, 0, false)
-// })
+
 
 const generateGif = (file) => {
 		let fileSrc = URL.createObjectURL(file)
@@ -127,36 +124,15 @@ const generateGif = (file) => {
 			URL.revokeObjectURL(fileSrc)
 		}, 1000)
 		return fileSrc
-	} 
+	}
 
-console.log('sssss',setData)
 
 </script>
 
 <template>
     <!-- Preview cropped image -->
     <div class="mb-6 relative w-full flex justify-center">
-        <!-- <Swiper
-            ref="swiperRef"
-            :slideToClickedSlide="true"
-            :spaceBetween="-1"
-            :slidesPerView="1"
-            :centeredSlides="true"
-            :loop="true"
-            :navigation="false"
-            :modules="[Pagination, Navigation]"
-            class="mySwiper"
-        >
-            <SwiperSlide v-for="(component, index) in setData" :key="index">
-                <div class="relative w-full h-full overflow-hidden">
-                    <img
-                        :src="generateThumbnail(component)"
-                        alt=""
-                        class="absolute"
-                    />
-                </div>
-            </SwiperSlide>
-        </Swiper> -->
+
         <div class="flex items-center border-2 border-gray-500 shadow-md"
             :class="[
                 ratio ? `aspect-[${ratio.w}/${ratio.h}]` : 'aspect-[2/1] md:aspect-[3/1] lg:aspect-[4/1]',

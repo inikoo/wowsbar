@@ -45,21 +45,22 @@ class GetFirstLoadProps
         if ($customerUser) {
             $firebaseAuthToken = Cache::remember('customer_firebase_auth_token_'.$customerUser->user->id, 3600, function () use ($customerUser) {
                 try {
-                    $auth        = app('firebase.auth');
-                    $customer    = $customerUser->customer;
+                    $auth     = app('firebase.auth');
+                    $customer = $customerUser->customer;
+
 
 
                     $customToken = $auth
                         ->createCustomToken('wow-user-'.$customerUser->user->ulid, [
-                            'scope'         => 'customer',
-                            'customer-ulid' => $customer->ulid,
-                            'ulid'          => $customerUser->user->ulid
+                            'scope'                       => 'customer',
+                            'customer_ulid'               => $customer->ulid,
+                            'customer_user_ulid'          => $customerUser->user->ulid
                         ]);
 
                     $auth->signInWithCustomToken($customToken);
                     $token = $customToken->toString();
                 } catch (Exception) {
-                    $token='';
+                    $token = '';
                 }
 
                 return $token;
@@ -67,12 +68,11 @@ class GetFirstLoadProps
         }
 
 
-        $app                 =CustomerAppResource::make(request()->get('website'))->getArray();
+        $app = CustomerAppResource::make(request()->get('website'))->getArray();
 
-        if($customerUser and $customer=Customer::find(session('customer_id'))) {
-            $app['showLiveUsers']= $customer->stats->number_users_status_active > 1;
+        if ($customerUser and $customer = Customer::find(session('customer_id'))) {
+            $app['showLiveUsers'] = $customer->stats->number_users_status_active > 1;
         }
-
 
 
         return [

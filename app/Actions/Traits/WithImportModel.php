@@ -29,7 +29,7 @@ trait WithImportModel
 
         Excel::import(
             $import,
-            storage_path('app/'.$upload->getFullPath())
+            storage_path('app/' . $upload->getFullPath())
         );
 
         $upload->refresh();
@@ -40,16 +40,16 @@ trait WithImportModel
     public function asCommand(Command $command): void
     {
         $filename = $command->argument('filename');
-        if(! $filename) {
+        if (!$filename) {
             $filename = $this->downloadFromGoogle($command->option('google'));
         }
 
-        $file     = ConvertUploadedFile::run($filename);
+        $file = ConvertUploadedFile::run($filename);
 
         $upload = $this->handle($file);
 
         $command->table(
-            ['','Success', 'Fail'],
+            ['', 'Success', 'Fail'],
             [
                 [
                     $command->getName(),
@@ -81,14 +81,28 @@ trait WithImportModel
 
             $fileId = explode('/', $url)[5];
 
-            $response = $driveService->files->get($fileId, array(
+            $this->downloadType($driveService, $fileId);
+        } catch (Exception $e) {
+            dd($e->getMessage());
+        }
+
+        return "storage/app/tmp/$fileId.xlsx";
+    }
+
+    public function downloadType($driveService, $fileId): void
+    {
+        try {
+            $response = $driveService->files->export($fileId, 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', array(
                 'alt' => 'media'));
 
             Storage::disk('local')->put("tmp/$fileId.xlsx", $response->getBody()->getContents());
+        } catch (Exception $e) {
+            if($e->getCode() == 403) {
+                $response = $driveService->files->get($fileId, array(
+                    'alt' => 'media'));
 
-            return "storage/app/tmp/$fileId.xlsx";
-        } catch(Exception $e) {
-            return $e;
+                Storage::disk('local')->put("tmp/$fileId.xlsx", $response->getBody()->getContents());
+            }
         }
     }
 }

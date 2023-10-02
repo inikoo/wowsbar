@@ -47,6 +47,7 @@ const avatarUploaded = (file) => {
             </div>
         </div>
 
+
         <!-- Avatar Button: Large view -->
         <div class="relative hidden overflow-hidden rounded-full lg:block">
             <img class="relative h-40 w-40 rounded-full" :src="temporaryAvatar" alt="" />

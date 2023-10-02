@@ -65,7 +65,7 @@ class ShowProfile
                             "avatar" => [
                                 "type"  => "avatar",
                                 "label" => __("photo"),
-                                "value" => $user->avatar_id ? route('media.show', $user->avatar_id) : null,
+                                "value" => !blank($user->avatar_id) ? $user->avatarImageSources(0, 48) : null,
                             ],
 
                         ],
@@ -139,7 +139,7 @@ class ShowProfile
                 ],
                 "args"      => [
                     "updateRoute" => [
-                        "name"       => "models.profile.update"
+                        "name"       => "customer.models.profile.update"
                     ],
                 ],
             ],

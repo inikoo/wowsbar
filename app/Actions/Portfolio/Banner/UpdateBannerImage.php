@@ -10,7 +10,6 @@ namespace App\Actions\Portfolio\Banner;
 use App\Enums\Portfolio\Banner\BannerStateEnum;
 use App\Models\Portfolio\Banner;
 use App\Models\Portfolio\Slide;
-use App\Models\Tenancy\Tenant;
 use Illuminate\Console\Command;
 use Illuminate\Support\Arr;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -18,6 +17,7 @@ use Lorisleiva\Actions\Concerns\AsAction;
 class UpdateBannerImage
 {
     use AsAction;
+    use HasBannerCommand;
 
 
     public function handle(Banner $banner): Banner
@@ -36,6 +36,7 @@ class UpdateBannerImage
         }
 
 
+
         $banner->image_id = $image_id;
         $banner->saveQuietly();
 
@@ -44,19 +45,20 @@ class UpdateBannerImage
 
     public function getCommandSignature(): string
     {
-        return 'banner:image {customer} {slug}';
+        return 'banner:set-image {slug}';
     }
 
-    public function asCommand(Command $command): void
+    public function asCommand(Command $command): int
     {
-        $tenant = Tenant::where('slug', $command->argument('customer'))->firstOrFail();
-        $tenant->makeCurrent();
 
-        $banner = Banner::where('slug', $command->argument('slug'))->firstOrFail();
+        if($banner=$this->getBanner($command)) {
+            $banner = $this->handle($banner);
 
-        $banner = $this->handle($banner);
+            $command->info("Done! banner $banner->name image updated  🥳");
+            return 0;
+        }
+        return 1;
 
-        $command->info("Done! banner $banner->name image updated  🥳");
     }
 
 }

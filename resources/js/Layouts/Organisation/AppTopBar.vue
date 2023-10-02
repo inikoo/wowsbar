@@ -9,7 +9,7 @@ import { Link, router } from "@inertiajs/vue3"
 import { useLayoutStore } from "@/Stores/layout"
 import AppTopBarNavs from "@/Layouts/Organisation/AppTopBarNavs.vue"
 import { ref, onMounted } from "vue"
-import { useSignoutFirebase } from "@/Composables/firebaseAuth"
+import { useSignOutFirebase } from "@/Composables/firebaseAuth"
 
 import {
     Menu,
@@ -70,7 +70,7 @@ onMounted(() => {
 const logoutAuth = () => {
     // Signout from app and Firebase
     router.post(route(props.urlPrefix + 'logout'))
-    useSignoutFirebase()
+    useSignOutFirebase()
 }
 
 </script>

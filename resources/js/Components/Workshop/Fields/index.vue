@@ -21,7 +21,7 @@
           blueprint: object;
           route: {
               name: string,
-              arguments?: Array<string>
+              parameters?: Array<string>
           };
       }
   }>()
