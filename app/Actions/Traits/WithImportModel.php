@@ -73,14 +73,18 @@ trait WithImportModel
 
     public function downloadFromGoogle(string $url): Exception|string
     {
-        $client = new Client();
-        $client->useApplicationDefaultCredentials();
-        $client->addScope(Drive::DRIVE);
-        $driveService = new Drive($client);
+        try {
+            $client = new Client();
+            $client->useApplicationDefaultCredentials();
+            $client->addScope(Drive::DRIVE);
+            $driveService = new Drive($client);
 
-        $fileId = explode('/', $url)[5];
+            $fileId = explode('/', $url)[5];
 
-        $this->downloadType($driveService, $fileId);
+            $this->downloadType($driveService, $fileId);
+        } catch (Exception $e) {
+            dd($e->getMessage());
+        }
 
         return "storage/app/tmp/$fileId.xlsx";
     }

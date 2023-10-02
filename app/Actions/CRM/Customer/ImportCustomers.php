@@ -36,6 +36,6 @@ class ImportCustomers
         $this->handle($file);
     }
 
-    public string $commandSignature = 'customer:import {filename}';
+    public string $commandSignature = 'customer:import {--G|google=} {filename?}';
 
 }
