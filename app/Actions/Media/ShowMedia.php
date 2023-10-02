@@ -7,6 +7,8 @@
 
 namespace App\Actions\Media;
 
+use App\Actions\Helpers\Images\GetPictureSources;
+use App\Helpers\ImgProxy\Image;
 use App\Models\Media\Media;
 use Lorisleiva\Actions\Concerns\AsAction;
 
@@ -15,15 +17,24 @@ class ShowMedia
     use AsAction;
 
 
-    public function asController(Media $media): Media
+    public function handle(Media $media,$width,$height)
     {
-        return $media;
+        $image = (new Image())->make($this->avatar->getImgProxyFilename())->resize($width, $height);
+        return GetPictureSources::run($image);
+    }
+
+
+    public function asController(Media $media, string $preset): Media
+    {
+        $width=0;
+        $height=0;
+
+        return $this->handle($media,$width,$height);
     }
 
 
     public function htmlResponse(Media $media)
     {
-
         $headers = [
             'Content-Type'   => $media->mime_type,
             'Content-Length' => $media->size,
