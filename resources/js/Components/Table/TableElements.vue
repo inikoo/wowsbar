@@ -79,7 +79,7 @@ onMounted(() => {
 
 <template>
     <!-- If props.element not empty -->
-    <div v-if="!!selectedGroup" class="px-4 py-1 xl:py-2 -mt-2 flex items-center text-xs justify-between border-b border-gray-200">
+    <div v-if="!!selectedGroup" class="flex items-center text-xs justify-between">
         <div class="text-2xl flex items-center gap-x-2">
             <FontAwesomeIcon v-if="title.leftIcon" :icon="title.leftIcon" aria-hidden="true" />
             <p class="inline font-semibold leading-none capitalize">{{ title.title ? (title.title) : '' }}</p>
@@ -108,8 +108,8 @@ onMounted(() => {
             <!-- Button: Select state -->
             <Menu as="div" class="relative inline-block text-left" v-slot="{ open }">
                 <!-- Initial button -->
-                <div v-if="props.elements" class="w-min bg-gray-200 rounded-r ring-1 ring-gray-400">
-                    <MenuButton class="inline-flex relative w-full justify-start items-center py-1 px-1 xl:py-2 font-medium text-gray-600 capitalize focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-500 focus-visible:ring-opacity-75"
+                <div v-if="props.elements" class="w-min bg-gray-200 rounded-r ring-1 ring-gray-300">
+                    <MenuButton class="inline-flex relative w-full justify-start items-center py-2 px-1 xl:py-2.5 font-medium text-gray-600 capitalize focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-500 focus-visible:ring-opacity-75"
                         :class="[Object.keys(props.elements).length > 1 ? '' : 'cursor-default']"
                     >
                         <span v-if="Object.keys(props.elements).length > 1" class="pl-2 flex items-center justify-center">

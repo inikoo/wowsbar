@@ -2,13 +2,13 @@
 <script setup>
 import Pagination from '@/Components/Table/Pagination.vue';
 import HeaderCell from '@/Components/Table/HeaderCell.vue';
-import TableGlobalSearch from '@/Components/Table/TableGlobalSearch.vue';
+import TableFilterSearch from '@/Components/Table/TableFilterSearch.vue';
 import TableElements from '@/Components/Table/TableElements.vue';
 import TableWrapper from '@/Components/Table/TableWrapper.vue';
-import TableAddSearchRow from '@/Components/Table/TableAddSearchRow.vue';
+// import TableFilterColumn from '@/Components/Table/TableFilterColumn.vue';
 // import TableColumns from '@/Components/Table/TableColumns.vue';
-import TableFilter from '@/Components/Table/TableFilter.vue';
-import TableSearchRows from '@/Components/Table/TableSearchRows.vue';
+// import TableAdvancedFilter from '@/Components/Table/TableAdvancedFilter.vue';
+// import TableSearchRows from '@/Components/Table/TableSearchRows.vue';
 // import SearchReset from '@/Components/Table/SearchReset.vue';
 import Button from '@/Components/Elements/Buttons/Button.vue';
 import EmptyState from '@/Components/Utils/EmptyState.vue'
@@ -581,9 +581,6 @@ watch(name, () => {
         <fieldset v-else ref="tableFieldset" :key="`table-${name}`" :dusk="`table-${name}`" class="min-w-0" :class="{ 'opacity-75': isVisiting }">
             <div class="my-2">
             <!-- Wrapper -->
-                <div class="mb-2" @checkboxChanged="handleElementsChange">
-                    <TableElements v-if="queryBuilderProps.elementGroups" :elements="queryBuilderProps.elementGroups" @checkboxChanged="handleElementsChange" :title="queryBuilderData.title" :name="props.name"/>
-                </div>
                 <div class="grid grid-flow-col justify-between flex-nowrap px-4">
 
                     <!-- Left Section: Records, -->
@@ -619,27 +616,34 @@ watch(name, () => {
                     </div>
 
                     <!-- Search Group -->
-                    <div class="flex flex-row justify-end items-start flex-nowrap space-x-2">
-                        <div class="order-2 sm:order-1 mr-2 sm:mr-4" v-if="queryBuilderProps.hasFilters">
-                            <slot name="tableFilter" :has-filters="queryBuilderProps.hasFilters"
+                    <div class="flex flex-row justify-end items-center flex-nowrap space-x-2">
+                        <!-- <div class="order-2 sm:order-1 mr-2 sm:mr-4" v-if="queryBuilderProps.hasFilters">
+                            <slot name="tableAdvancedFilter" :has-filters="queryBuilderProps.hasFilters"
                                 :has-enabled-filters="queryBuilderProps.hasEnabledFilters" :filters="queryBuilderProps.filters"
                                 :on-filter-change="changeFilterValue">
-                                <TableFilter :has-enabled-filters="queryBuilderProps.hasEnabledFilters"
+                                <TableAdvancedFilter :has-enabled-filters="queryBuilderProps.hasEnabledFilters"
                                     :filters="queryBuilderProps.filters" :on-filter-change="changeFilterValue" />
                             </slot>
-                        </div>
+                        </div> -->
+
+                        
 
                         <!-- Search Input Button -->
                         <div v-if="queryBuilderProps.globalSearch && compResourceMeta.total >= 5"
-                            class="flex flex-row w-64 order-1 md:order-2 transition-all ease-in-out duration-100">
-                            <slot name="tableGlobalSearch" :has-global-search="queryBuilderProps.globalSearch"
+                            class="flex flex-row w-64">
+                            <slot name="tableFilterSearch" :has-global-search="queryBuilderProps.globalSearch"
                                 :label="queryBuilderProps.globalSearch ? queryBuilderProps.globalSearch.label : null"
                                 :value="queryBuilderProps.globalSearch ? queryBuilderProps.globalSearch.value : null"
                                 :on-change="changeGlobalSearchValue">
-                                <TableGlobalSearch v-if="queryBuilderProps.globalSearch" class="flex-grow"  @resetSearch="() => resetQuery()"
+                                <TableFilterSearch v-if="queryBuilderProps.globalSearch" class="flex-grow"  @resetSearch="() => resetQuery()"
                                     :label="queryBuilderProps.globalSearch.label" :value="queryBuilderProps.globalSearch.value"
                                     :on-change="changeGlobalSearchValue" />
                             </slot>
+                        </div>
+
+                        <!-- Element Filter -->
+                        <div class="" @checkboxChanged="handleElementsChange">
+                            <TableElements v-if="queryBuilderProps.elementGroups" :elements="queryBuilderProps.elementGroups" @checkboxChanged="handleElementsChange" :title="queryBuilderData.title" :name="props.name"/>
                         </div>
 
                         <!-- Button: Reset -->
@@ -651,13 +655,13 @@ watch(name, () => {
                         </slot> -->
 
                         <!-- Button: Filter table -->
-                        <slot name="tableAddSearchRow" :has-search-inputs="queryBuilderProps.hasSearchInputs"
+                        <!-- <slot name="tableFilterColumn" :has-search-inputs="queryBuilderProps.hasSearchInputs"
                             :has-search-inputs-without-value="queryBuilderProps.hasSearchInputsWithoutValue"
                             :search-inputs="queryBuilderProps.searchInputsWithoutGlobal" :on-add="showSearchInput">
-                            <TableAddSearchRow v-if="queryBuilderProps.hasSearchInputs" class="order-4"
+                            <TableFilterColumn v-if="queryBuilderProps.hasSearchInputs" class="order-4"
                                 :search-inputs="queryBuilderProps.searchInputsWithoutGlobal" :has-search-inputs-without-value="queryBuilderProps.hasSearchInputsWithoutValue
                                     " :on-add="showSearchInput" />
-                        </slot>
+                        </slot> -->
 
 
 
@@ -673,7 +677,7 @@ watch(name, () => {
                 </div>
 
                 <!-- Field: search by column of table-->
-                <slot name="tableSearchRows" :has-search-rows-with-value="queryBuilderProps.hasSearchInputsWithValue"
+                <!-- <slot name="tableSearchRows" :has-search-rows-with-value="queryBuilderProps.hasSearchInputsWithValue"
                     :search-inputs="queryBuilderProps.searchInputsWithoutGlobal"
                     :forced-visible-search-inputs="forcedVisibleSearchInputs" :on-change="changeSearchInputValue">
                     <TableSearchRows v-if="queryBuilderProps.hasSearchInputsWithValue ||
@@ -681,7 +685,7 @@ watch(name, () => {
                         " :search-inputs="queryBuilderProps.searchInputsWithoutGlobal"
                         :forced-visible-search-inputs="forcedVisibleSearchInputs" :on-change="changeSearchInputValue"
                         :on-remove="disableSearchInput" />
-                </slot>
+                </slot> -->
 
             </div>
 
