@@ -5,6 +5,7 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
+use App\Enums\Portfolio\Webpage\WebpageStatusEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -19,7 +20,11 @@ return new class () extends Migration {
             $table->foreign('portfolio_website_id')->references('id')->on('portfolio_websites')->onUpdate('cascade')->onDelete('cascade');
 
             $table->string('title');
+            $table->string('url');
             $table->longText('layout');
+
+            $table->string('status')->default(WebpageStatusEnum::SUCCESS);
+            $table->string('message')->nullable();
 
             $table->timestampsTz();
         });
