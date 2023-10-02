@@ -114,7 +114,7 @@ const screenViewChange = (value) => {
         <Modal :isOpen="isOpenCropModal" @onClose="closeModalisOpenCropModal">
             <div>
                 <CropImage :data="addFiles" :imagesUploadRoute="props.fieldData.uploadRoute"
-                    :respone="uploadImageRespone" :ratio="ratio"/>
+                    :response="uploadImageRespone" :ratio="ratio"/>
             </div>
         </Modal>
 
