@@ -67,7 +67,37 @@ class ShowProfile
                                 "label" => __("photo"),
                                 "value" => !blank($user->avatar_id) ? $user->avatarImageSources(0, 48) : null,
                             ],
-
+                            "avatar" => [
+                                "type"  => "avatar",
+                                "label" => __("photo"),
+                                "value" => !blank($user->avatar_id) ? $user->avatarImageSources(0, 48) : null,
+                            ],
+                            "checkcheckbox" => [
+                                "type" => "checkbox",
+                                "label" => __("checkbox test"),
+                                "value" => [
+                                    [
+                                        "label" => "checkbox 1",
+                                        "value" => true
+                                    ],
+                                    [
+                                        "label" => "checkbox 2",
+                                        "value" => false
+                                    ],
+                                    [
+                                        "label" => "checkbox 3",
+                                        "value" => false
+                                    ],
+                                    [
+                                        "label" => "checkbox 4",
+                                        "value" => true
+                                    ],
+                                    [
+                                        "label" => "checkbox 5",
+                                        "value" => false
+                                    ],
+                                ]
+                            ]
                         ],
                     ],
                     [
