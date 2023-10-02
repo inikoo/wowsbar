@@ -8,7 +8,7 @@ library.add(faHandPointer, faHandRock, faPlus)
 const props = defineProps({
   tool: Object,
   theme: String,
-  columSelected: {
+  columnSelected: {
     type: Number,
     required: false,
   },
@@ -73,7 +73,7 @@ const columChange = (index) => {
         <div v-if="item.name === 'activeColumn' && theme.value != 3"
           v-for="(columnItem, columnIndex) in item.optionsData.column" :key="columnIndex"
           @click="columChange(columnIndex)" class="inline-block bg-gray-300 py-1 px-2 rounded-md text-xs mx-1"
-          :class="{ 'outline outline-2': columnItem - 1 == columSelected }">
+          :class="{ 'outline outline-2': columnItem - 1 == columnSelected }">
           {{ columnItem }}
         </div>
       </div>

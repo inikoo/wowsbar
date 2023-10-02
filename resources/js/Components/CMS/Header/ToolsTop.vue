@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { faHandPointer, faHandRock, faPlus } from '@/../private/pro-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { toRefs, ref } from 'vue'
+import {  ref } from 'vue'
 
 library.add(faHandPointer, faHandRock, faPlus)
 const props = defineProps({
@@ -25,13 +24,6 @@ const Bluprint = [
     }
   },
 ]
-
-
-// const setTheme=(value)=>{
-//   console.log(value)
-//   const data = themeOption.find((item)=> item.value == value)
-//     props.theme = data
-// }
 
 
 </script>

@@ -64,7 +64,6 @@ const component = computed(()=>{
     <ButtonTheme v-model="CardTheme" :label="['Simple', 'wide', 'image']"/>
       <component :is="component" :data="people" :pageHead="pageHead"/>
   </div>
-  <div @click="()=>console.log('asdd',people,pageHead)">asdff</div>
 </template>
 
 <style scoped></style>

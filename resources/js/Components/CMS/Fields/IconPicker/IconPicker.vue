@@ -25,7 +25,6 @@ const props = defineProps({
   }
 })
 
-console.log('icon',props)
 const filterText = ref('')
 const activeGlyph = ref(props.data.icon)
 

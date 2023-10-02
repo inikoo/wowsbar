@@ -5,7 +5,7 @@
   -->
 
 <script setup lang="ts">
-import { ref, reactive, watch } from "vue";
+import { ref } from "vue";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
     faHandPointer,
@@ -23,11 +23,7 @@ import sideMenuHeader from "@/Components/CMS/Header/Sidebar.vue";
 import sideMenu from "@/Components/CMS/Menu/SideMenu.vue"
 import { ulid } from 'ulid';
 import { notify } from "@kyvg/vue3-notification"
-import {
-    getDbRef,
-    getDataFirebase,
-    setDataFirebase,
-} from "@/Composables/firebase";
+
 
 library.add(faHandPointer, faText, faSearch, faImage, faTrash, faBars);
 const props = defineProps<{
@@ -35,7 +31,6 @@ const props = defineProps<{
     imagesUploadRoute: object;
 }>();
 
-console.log('dddd',props)
 
 const headerData = ref(props.data.header);
 const menuData = ref(props.data.header.menu);
@@ -97,21 +92,6 @@ const addNavigation=()=>{
     )
 }
 
-
-// async function setToFirebase() {
-//     const column = "org/websites/header";
-//     try {
-//         await setDataFirebase(column, props.data.header);
-//     } catch (error) {
-//         console.log(error);
-//     }
-// }
-
-// watch(props.data.header, setToFirebase, { deep: true });
-
-// setToFirebase();
-
-
 </script>
 
 <template>
@@ -132,7 +112,7 @@ const addNavigation=()=>{
                     :tool="handtools"
                     @changeTheme="changeThemeMenu"
                     :navigation="menuData"
-                    :columSelected="selectedMenu"
+                    :columnSelected="selectedMenu"
                     @setColumnSelected="changeNavActive"
                     @addNavigation="addNavigation"
                 />

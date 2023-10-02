@@ -28,7 +28,6 @@ const themeOptions = [
 
 const setData = props.data.layout;
 
-console.log('data',setData)
 
 const addImage = async (element) => {
     const file = element.target.files[0];
@@ -86,19 +85,6 @@ const addfavicon = async (element) => {
     }
 };
 
-
-// async function setToFirebase() {
-//     const column = "org/websites/layout";
-//     try {
-//         await setDataFirebase(column, setData.value);
-//     } catch (error) {
-//         console.log(error);
-//     }
-// }
-
-// watch(setData, setToFirebase, { deep: true });
-
-// setToFirebase();
 
 </script>
 

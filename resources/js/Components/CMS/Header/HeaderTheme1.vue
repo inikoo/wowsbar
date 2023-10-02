@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import HyperLink from "../Fields/Hyperlink.vue"
 import Image from "@/Components/Image.vue"
 
 const props = defineProps<{
@@ -7,7 +6,6 @@ const props = defineProps<{
     layout : Object
 }>()
 
-console.log('inii',props.layout)
 
 const emits = defineEmits();
 

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref } from "vue"
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import draggable from "vuedraggable"
 import HyperLink from '@/Components/CMS/Fields/Hyperlink.vue'
 import SubMenu from "../SubMenu.vue"
@@ -8,7 +7,7 @@ import { get } from 'lodash'
 import IconPicker from "@/Components/CMS/Fields/IconPicker/IconPicker.vue";
 import { faUser, faHeart, faShoppingCart, faSignOut } from '../../../../../private/pro-solid-svg-icons';
 import { library } from "@fortawesome/fontawesome-svg-core";
-import Popover from "@/Components/Utils/Popover.vue";
+
 library.add(faUser, faHeart, faShoppingCart, faSignOut)
 
 const props = defineProps({
@@ -32,7 +31,6 @@ const props = defineProps({
 });
 
 const openNav = ref(null)
-console.log('ini',props.layout)
 
 </script>
 
