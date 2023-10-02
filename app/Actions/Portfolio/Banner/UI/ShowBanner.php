@@ -14,7 +14,6 @@ use App\Actions\Portfolio\Snapshot\UI\IndexSnapshots;
 use App\Actions\UI\Customer\Banners\ShowBannersDashboard;
 use App\Enums\Portfolio\Banner\BannerStateEnum;
 use App\Enums\UI\Customer\BannerTabsEnum;
-use App\Enums\UI\Customer\PortfolioWebsiteTabsEnum;
 use App\Http\Resources\History\HistoryResource;
 use App\Http\Resources\Portfolio\SnapshotResource;
 use App\Models\CRM\Customer;
