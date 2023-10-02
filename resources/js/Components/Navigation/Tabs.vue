@@ -28,8 +28,6 @@ library.add(faInfoCircle, faTachometerAlt, faRoad, faWallet, faClock, faDatabase
 const props = defineProps<{
     navigation: any
     current: string
-    selectedRow?: any // Because dynamic key-value object
-    isSelectImage?: boolean
 }>()
 
 defineEmits(['update:tab']);
@@ -79,13 +77,9 @@ const tabIconClass = (current: string | boolean, type: string, align: string, ex
                                 <FontAwesomeIcon v-if="tab.icon" :icon="tab.icon" :class="tabIconClass(tabSlug === currentTab, tab.type, tab.align, tab.iconClass ?? '')" aria-hidden="true"/>
                                 <span v-if="tab.type !== 'icon'" class="capitalize">
                                     {{ trans(tab.title) }}
-                                    {{
-                                        isSelectImage
-                                        ? selectedRow[tabSlug]?.length
-                                            ? trans(`(${selectedRow[tabSlug]?.length})`)
-                                            : trans(`(0)`)
-                                        : ''
-                                    }}
+                                    <slot name="addTitle" :tabSlug="tabSlug">
+                                        
+                                    </slot>
                                 </span>
                             </button>
                             <div class="absolute h-0.5 rounded-full bottom-0 left-[50%] translate-x-[-50%] mx-auto transition-all duration-200 ease-in-out"
