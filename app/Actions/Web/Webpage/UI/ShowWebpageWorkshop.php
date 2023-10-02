@@ -49,6 +49,7 @@ class ShowWebpageWorkshop extends InertiaAction
                 'pageHead'    => [
 
                     'title' => $webpage->code,
+                    'actionActualMethod' => 'patch',
                     'icon'  => [
                         'title' => __('webpage'),
                         'icon'  => 'fal fa-browser'
@@ -71,20 +72,18 @@ class ShowWebpageWorkshop extends InertiaAction
                         ],
                         [
                             'type'  => 'button',
-                            'style' => 'exit',
-                            'icon'  => 'far fa-desktop',
-                            'label' => __('Preview'),
+                            'label' => __('save'),
                             'route' => [
-                                'name'       => preg_replace('/workshop$/', 'preview', $request->route()->getName()),
-                                'parameters' => array_values($request->route()->originalParameters())
+                                'name'       => 'org.models.webpage.blocks.update',
+                                'parameters' => $webpage->id
                             ]
-                        ]
+                        ],
                     ],
                 ],
-                'updateRoute'=> [
-                    'name'       => 'org.models.webpage.blocks.update',
-                    'parameters' => $webpage->id
-                ],
+                // 'updateRoute'=> [
+                //     'name'       => 'org.models.webpage.blocks.update',
+                //     'parameters' => $webpage->id
+                // ],
 
 
             ]
