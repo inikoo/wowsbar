@@ -9,12 +9,9 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { useTruncate } from '@/Composables/useTruncate'
 import { useRangeFromNow } from '@/Composables/useFormatTime'
 import { useLocaleStore } from "@/Stores/locale"
-import { format } from 'date-fns'
 
-// console.log(format(new Date(2014, 1, 11), 'MM/dd/yyyy'))
 const locale = useLocaleStore()
 
-// console.log(locale.language.code)
 
 library.add(faBroadcastTower, faSeedling)
 

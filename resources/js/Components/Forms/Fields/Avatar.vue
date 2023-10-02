@@ -27,7 +27,6 @@ const avatarUploaded = (file) => {
 </script>
 
 <template>
-    <!-- <pre>{{temporaryAvatar}}</pre> -->
     <div class=" w-fit">
         <!-- Avatar Button: Small view -->
         <div class="mt-1 lg:hidden">

@@ -7,6 +7,7 @@
 
 namespace App\Actions\Portfolio\PortfolioWebsite;
 
+use App\Enums\Portfolio\Webpage\WebpageStatusEnum;
 use App\Models\Portfolio\PortfolioWebpage;
 use App\Models\Portfolio\PortfolioWebsite;
 use DOMDocument;
@@ -26,7 +27,7 @@ class CrawlerPortfolioWebsite extends CrawlObserver
     use AsCommand;
 
     public string $commandSignature = 'portfolio-website:crawler {url}';
-    public ?string $content         = null;
+    public ?string $content = null;
 
     public function handle(string $url): int
     {
@@ -59,26 +60,30 @@ class CrawlerPortfolioWebsite extends CrawlObserver
 
     public function crawled(UriInterface $url, ResponseInterface $response, UriInterface $foundOnUrl = null, string $linkText = null): void
     {
-        try {
-            $doc = new DOMDocument();
-            if (!blank($response->getBody())) {
-                @$doc->loadHTML($response->getBody());
-                $title = $doc->getElementsByTagName("title")[0]->nodeValue;
-                $html  = $doc->saveHTML();
+        $doc = new DOMDocument();
+        if (!blank($response->getBody())) {
+            @$doc->loadHTML($response->getBody());
+            $title = $doc->getElementsByTagName("title")[0]->nodeValue;
+            $html = $doc->saveHTML();
 
-                PortfolioWebpage::create([
-                    'title'  => $title,
-                    'layout' => $html
-                ]);
+            PortfolioWebpage::create([
+                'title' => $title,
+                'url' => $url,
+                'layout' => $html
+            ]);
 
-                echo "🫡 " . $title . " success crawled \n";
-            }
-        } catch (\Exception $e) {
+            echo "🫡 " . $title . " success crawled \n";
         }
     }
 
     public function crawlFailed(UriInterface $url, RequestException $requestException, UriInterface $foundOnUrl = null, string $linkText = null): void
     {
-        //
+        PortfolioWebpage::create([
+            'title' => '',
+            'url' => $url,
+            'layout' => [],
+            'status' => WebpageStatusEnum::FAILED,
+            'message' => $requestException->getMessage()
+        ]);
     }
 }

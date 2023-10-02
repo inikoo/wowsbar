@@ -62,7 +62,7 @@ class CustomerImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wi
             'contact_name' => ['nullable', 'string', 'max:255'],
             'company'      => ['nullable', 'string', 'max:255'],
             'email'        => ['nullable', 'email','unique:customers'],
-            'phone'        => ['nullable'],
+            'phone'        => ['nullable', 'phone:AUTO'],
             'website'      => ['nullable']
         ];
     }

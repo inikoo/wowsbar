@@ -8,6 +8,7 @@
 namespace App\Actions\Portfolio\Banner;
 
 use App\Actions\CRM\Customer\AttachImageToCustomer;
+use App\Enums\Portfolio\Banner\BannerStateEnum;
 use App\Http\Resources\Gallery\ImageResource;
 use App\Models\Portfolio\Banner;
 use App\Models\Portfolio\PortfolioWebsite;
@@ -28,11 +29,9 @@ class UploadImagesToBanner
 
     public function handle(Banner $banner, array $imageFiles): Collection
     {
-
-        $medias=[];
+        $medias = [];
         foreach ($imageFiles as $imageFile) {
-
-            $media =AttachImageToCustomer::run(
+            $media = AttachImageToCustomer::run(
                 customer: customer(),
                 collection: 'content_block',
                 imagePath: $imageFile->getPathName(),
@@ -40,14 +39,31 @@ class UploadImagesToBanner
                 extension: $imageFile->guessClientExtension()
             );
 
-            $medias[]=$media;
+            $medias[] = $media;
 
-            $banner->images()->attach(
-                $media->id,
-                [
-                    'scope'=> 'tmp'
-                ]
-            );
+
+            $scope = 'unpublished-slide';
+            $count = $banner->images()->wherePivot('scope', $scope)->count();
+
+            if ($count == 0) {
+                $banner->images()->attach(
+                    $media->id,
+                    [
+                        'scope' => $scope
+                    ]
+                );
+
+                if($banner->state == BannerStateEnum::UNPUBLISHED) {
+                    $banner->update(
+                        [
+                            'data->unpublished_image_id'=> $media->id
+                        ]
+                    );
+                }
+
+            }
+
+
 
         }
 
@@ -68,10 +84,10 @@ class UploadImagesToBanner
     }
 
 
-
     public function asController(Banner $banner, ActionRequest $request): Collection
     {
         $request->validate();
+
         return $this->handle($banner, $request->validated('images'));
     }
 

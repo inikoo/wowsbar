@@ -9,7 +9,7 @@ import { Head } from "@inertiajs/vue3"
 import { router } from '@inertiajs/vue3'
 import { useForm } from '@inertiajs/vue3'
 import { notify } from "@kyvg/vue3-notification"
-import { ref, reactive, onBeforeMount, watch, onBeforeUnmount, computed } from "vue"
+import { ref, reactive, onBeforeMount, watch } from "vue"
 import PageHeading from "@/Components/Headings/PageHeading.vue"
 import { capitalize } from "@/Composables/capitalize"
 import { faUser, faUserFriends } from "../../../../private/pro-light-svg-icons"
@@ -18,7 +18,7 @@ import { trans } from "laravel-vue-i18n"
 import Button from "@/Components/Elements/Buttons/Button.vue"
 import BannerWorkshopComponent from '@/Components/Workshop/BannerWorkshopComponent.vue'
 import { useLayoutStore } from "@/Stores/layout"
-import { cloneDeep, isEqual, set as setLodash } from "lodash"
+import { cloneDeep, set as setLodash } from "lodash"
 import { set, onValue, get } from "firebase/database"
 import { getDbRef } from '@/Composables/firebase'
 import Modal from '@/Components/Utils/Modal.vue'
@@ -114,6 +114,8 @@ console.log(dbPath)
 const data = reactive(cloneDeep(props.bannerLayout))
 let timeoutId: any
 
+console.log('props',data)
+
 const sendDataToServer = async () => {
     // When click 'Publish'
     const formValues = {
@@ -125,7 +127,7 @@ const sendDataToServer = async () => {
     form.patch(
         route(routeSave.value['route']['name'], routeSave.value['route']['parameters']), {
         onSuccess: async (res) => {
-            await set(getDbRef(dbPath), { publishedHash: data.hash })
+            // await set(getDbRef(dbPath), { publishedHash: data.hash })
             isModalOpen.value = false
             router.visit(route(routeExit.value['route']['name'], routeExit.value['route']['parameters']))
             notify({
@@ -135,6 +137,7 @@ const sendDataToServer = async () => {
             });
         },
         onError: (errors: any) => {
+            console.log(errors)
             notify({
                 title: "Failed to update banner",
                 text: errors,
@@ -144,19 +147,8 @@ const sendDataToServer = async () => {
     })
 }
 
-const routeButton = (action: Action) => {
-    if (action.style == "exit") {
-        router.visit(route(action['route']['name'], action['route']['parameters']))
-    } if (action.style == "save") {
-        if (props.banner.state != 'unpublished') isModalOpen.value = true
-        else sendDataToServer()
-    }
-}
 
 const fetchInitialData = async () => {
-    // Fetch data from Firebase
-    // Running on before mount
-    console.log("Fetch initial Data")
     try {
         isSetData.value = true
         loadingState.value = true
@@ -186,22 +178,8 @@ const fetchInitialData = async () => {
     }
 }
 
-const saveRouteValue = (action: Action) => {
-    if (action.style == "exit") {
-        routeExit.value = action
-    } if (action.style == "save") {
-        routeSave.value = action
-    }
-}
 
 onBeforeMount(fetchInitialData)
-
-const setDataBeforeLeave = () => {
-    const set = deleteUser()
-    Object.assign(data, set)  // Assigning the modified 'set' object back to 'data'
-    updateData()  // This line should help you see the modified 'data' object
-    autoSave()
-}
 
 const deleteUser = () => {
     const set = { ...data }  // Creating a copy of the data object
@@ -253,15 +231,9 @@ const autoSave = () => {
     const form = useForm(deleteUser());
     form.patch(
         route(props.autoSaveRoute.name, props.autoSaveRoute.parameters), {
-        onSuccess: async (res) => {
-            console.log('autosave succesc')
-        },
+        onSuccess: async (res) => {},
         onError: (errors: any) => {
-            notify({
-                title: "Failed to autosave",
-                text: errors,
-                type: "error"
-            });
+            console.log(errors)
         },
     })
 }
@@ -269,58 +241,43 @@ const autoSave = () => {
 watch(data, updateData, { deep: true })
 
 
-window.addEventListener('beforeunload', setDataBeforeLeave)// When user close the tab
-onBeforeUnmount(() => {
-    // When user navigate to another page
-    setDataBeforeLeave()
-})
+const saveRouteValue = (action: Action) => {
+    if (action.style == "exit") {
+        routeExit.value = action
+    } if (action.style == "save") {
+        routeSave.value = action
+    }
+}
+
+const routeButton=(action)=>{
+    if (action.style == "save") {
+        if(props.banner.state !== 'live') sendDataToServer()
+        else isModalOpen.value = true
+    }else router.visit(route(routeExit.value['route']['name'], routeExit.value['route']['parameters']))
+}
 
 </script>
 
 
 <template layout="CustomerApp">
     <Head :title="capitalize(title)" />
-    <PageHeading :data="pageHead">
-        <!--
+    <PageHeading :data="pageHead"> 
         <template #button="{ dataPageHead: head }">
             <div class="flex items-center gap-2">
-
                 <span v-for="action in head.data.actions">
                     <Button size="xs" :style="action.style" @click="routeButton(action)"
-                        :id="head.getActionLabel(action).replace(' ', '-')"
                         class="capitalize inline-flex items-center rounded-md text-sm font-medium shadow-sm gap-x-2">
                         <FontAwesomeIcon v-if="action.icon && action.icon == 'fad fa-save'" aria-hidden="true"
                             :icon="['fad', 'save']"
                             style="--fa-primary-color: #f3f3f3; --fa-secondary-color: #ff6600; --fa-secondary-opacity: 1;"
                             size="sm" :class="[action.iconClass]" />
-                        <FontAwesomeIcon :icon="head.getActionIcon(action)" aria-hidden="true" />
-                        {{ head.getActionLabel(action) }}
+                        <FontAwesomeIcon :icon="action.icon" aria-hidden="true" />
+                        {{ action.label }}
                     </Button>
                         {{ saveRouteValue(action) }}
                 </span>
             </div>
         </template>
-        -->
-
-        <Modal :isOpen="isModalOpen" @onClose="isModalOpen = false">
-            <div>
-                <div class="inline-flex items-start leading-none">
-                    <FontAwesomeIcon :icon="['fas fa-asterisk']" class="font-light text-[12px] text-red-400 mr-1" />
-                    <span>{{ trans('Comment') }}</span>
-                </div>
-                <div class="py-2.5">
-                    <textarea rows="3" v-model="comment"
-                        class="block w-full rounded-md shadow-sm dark:bg-gray-600 dark:text-gray-400 border-gray-300 dark:border-gray-500 focus:border-gray-500 focus:ring-gray-500 sm:text-sm" />
-                </div>
-                <div class="flex justify-end">
-                    <Button size="xs" @click="sendDataToServer"
-                        class="capitalize inline-flex items-center rounded-md text-sm font-medium shadow-sm gap-x-2">
-                        <FontAwesomeIcon :icon="['far', 'fa-rocket-launch']" />
-                        {{ trans('Publish') }}
-                    </Button>
-                </div>
-            </div>
-        </Modal>
     </PageHeading>
 
     <notifications
@@ -345,4 +302,25 @@ onBeforeUnmount(() => {
             />
         </div>
     </section>
+
+    <Modal :isOpen="isModalOpen" @onClose="isModalOpen = false">
+            <div>
+                <div class="inline-flex items-start leading-none">
+                    <FontAwesomeIcon :icon="['fas fa-asterisk']" class="font-light text-[12px] text-red-400 mr-1" />
+                    <span>{{ trans('Comment') }}</span>
+                </div>
+                <div class="py-2.5">
+                    <textarea rows="3" v-model="comment"
+                        class="block w-full rounded-md shadow-sm dark:bg-gray-600 dark:text-gray-400 border-gray-300 dark:border-gray-500 focus:border-gray-500 focus:ring-gray-500 sm:text-sm" />
+                </div>
+                <div class="flex justify-end">
+                    <Button size="xs" @click="sendDataToServer"
+                        class="capitalize inline-flex items-center rounded-md text-sm font-medium shadow-sm gap-x-2">
+                        <FontAwesomeIcon :icon="['far', 'fa-rocket-launch']" />
+                        {{ trans('Publish') }}
+                    </Button>
+                </div>
+            </div>
+    </Modal>
+
 </template>

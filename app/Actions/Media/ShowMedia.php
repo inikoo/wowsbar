@@ -17,7 +17,7 @@ class ShowMedia
     use AsAction;
 
 
-    public function handle(Media $media,$width,$height)
+    public function handle(Media $media, $width, $height)
     {
         $image = (new Image())->make($this->avatar->getImgProxyFilename())->resize($width, $height);
         return GetPictureSources::run($image);
@@ -26,10 +26,10 @@ class ShowMedia
 
     public function asController(Media $media, string $preset): Media
     {
-        $width=0;
+        $width =0;
         $height=0;
 
-        return $this->handle($media,$width,$height);
+        return $this->handle($media, $width, $height);
     }
 
 
