@@ -24,9 +24,11 @@ class LoggedUserResource extends JsonResource
             'username'         => $user->email,
             'name'             => $user->contact_name,
             'avatar_thumbnail' => !blank($user->avatar_id) ? $user->avatarImageSources(0, 48) : null,
-            'customer_slug'    => session('customer_slug'),
-            'customer_name'    => session('customer_name'),
-
+            'customer'         => [
+                'slug' => session('customer_slug'),
+                'name' => session('customer_name'),
+                'ulid' => session('customer_ulid'),
+            ]
         ];
     }
 }

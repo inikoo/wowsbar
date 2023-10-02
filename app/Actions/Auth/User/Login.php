@@ -28,8 +28,8 @@ class Login
     use AsController;
 
     private string $credentialHandler = 'email';
-    private string $home              = 'auth/dashboard';
-    private string $gate              = 'customer';
+    private string $home = 'auth/dashboard';
+    private string $gate = 'customer';
 
 
     /**
@@ -78,7 +78,8 @@ class Login
             'customer_user_id' => $customerUser->id,
             'customer_id'      => $customerUser->customer->id,
             'customer_slug'    => $customerUser->customer->slug,
-            'customer_name'    => $customerUser->customer->name
+            'customer_name'    => $customerUser->customer->name,
+            'customer_ulid'    => $customerUser->customer->ulid
         ]);
         UserHydrateLogin::dispatch(Auth::guard($this->gate)->user(), request()->ip(), now());
 

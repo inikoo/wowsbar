@@ -99,6 +99,8 @@ const props = defineProps<{
     }
 }>()
 
+console.log(useLayoutStore().user)
+
 const user = ref(usePage().props.auth.user)
 const isModalOpen = ref(false)
 const comment = ref('')
@@ -106,7 +108,9 @@ const loadingState = ref(false)
 const routeSave = ref()
 const isSetData = ref(false)
 const routeExit = ref()
-const dbPath = 'customers' + '/' + useLayoutStore().user.customer_slug + '/banner_workshop/' + props.banner.slug
+const dbPath = 'customers' + '/' + useLayoutStore().user.customer.ulid + '/banner_workshop/' + props.banner.slug
+
+console.log(dbPath)
 const data = reactive(cloneDeep(props.bannerLayout))
 let timeoutId: any
 
