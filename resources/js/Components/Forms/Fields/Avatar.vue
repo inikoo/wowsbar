@@ -18,20 +18,22 @@ const avatarUploaded = (file) => {
     const reader = new FileReader()
     reader.readAsDataURL(file)
     reader.onload = (e) => {
-        temporaryAvatar.value = e.target.result
+        temporaryAvatar.value = {
+            original: e.target.result
+        }
     }
 }
 
 </script>
 
 <template>
-    {{form}}
+    <!-- <pre>{{temporaryAvatar}}</pre> -->
     <div class=" w-fit">
         <!-- Avatar Button: Small view -->
         <div class="mt-1 lg:hidden">
             <div class="flex items-center">
                 <div class="inline-block h-12 w-12 flex-shrink-0 overflow-hidden rounded-full" aria-hidden="true">
-                    <img id="avatar_mobile" class="h-full w-full rounded-full" :src="temporaryAvatar" alt="" />
+                    <Image id="avatar_mobile" class="h-full w-full rounded-full" :src="temporaryAvatar" alt="" />
                 </div>
                 <div class="ml-5 rounded-md shadow-sm">
                     <div
@@ -50,8 +52,8 @@ const avatarUploaded = (file) => {
 
 
         <!-- Avatar Button: Large view -->
-        <div class="relative hidden overflow-hidden rounded-full lg:block">
-            <img class="relative h-40 w-40 rounded-full" :src="temporaryAvatar" alt="" />
+        <div class="relative hidden overflow-hidden h-40 aspect-square rounded-full lg:inline-block">
+            <Image class="h-full rounded-full" :src="temporaryAvatar" alt="" />
         <!-- <div class="relative hidden h-40 w-40 overflow-hidden rounded-full lg:flex lg:items-center lg:justify-center">
             <img class="relative min-h-full min-w-max" :src="temporaryAvatar" alt="" /> -->
             <label id="input-avatar-large-mask" for="input-avatar-large"
