@@ -202,7 +202,7 @@ const addfavicon = async (element) => {
                 </div>
             </div>
 
-            <div v-if="setData.layout === 'margin'" class="absolute bottom-0 left-0" style="transform: scale(0.7)">
+            <div v-if="setData.layout === 'center'" class="absolute bottom-0 left-0" style="transform: scale(0.7)">
                 <ColorPicker :color="setData?.colorLayout" @onChange="(color) => set(setData, ['colorLayout'], color)"
                     :colorSuggestions="false" />
                 <div v-if="!isNull(setData.imageLayout)"

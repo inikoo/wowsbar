@@ -1,12 +1,10 @@
 <script setup lang="ts">
 import { Head } from '@inertiajs/vue3'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import {
-    faArrowAltToTop, faArrowAltToBottom, faBars, faBrowser, faCube, faPalette, faCookieBite, faLayerGroup
-} from "@/../private/pro-light-svg-icons"
+import { faArrowAltToTop, faArrowAltToBottom, faBars, faBrowser, faCube, faPalette, faCookieBite, faLayerGroup } from "@/../private/pro-light-svg-icons"
 
 import PageHeading from '@/Components/Headings/PageHeading.vue'
-import { computed, ref, watch } from "vue"
+import { computed, ref, watch, reactive } from "vue"
 import { useTabChange } from "@/Composables/tab-change"
 import Tabs from "@/Components/Navigation/Tabs.vue"
 import { capitalize } from "@/Composables/capitalize"
@@ -17,7 +15,7 @@ import Button from '@/Components/Elements/Buttons/Button.vue'
 import { notify } from "@kyvg/vue3-notification"
 import { useForm } from '@inertiajs/vue3'
 import {trans} from 'laravel-vue-i18n'
-import { getDbRef, getDataFirebase, setDataFirebase } from '@/Composables/firebase'
+import {  setDataFirebase } from '@/Composables/firebase'
 
 library.add(
     faArrowAltToTop,
@@ -46,6 +44,8 @@ const props = defineProps<{
 
 let currentTab = ref(props.tabs.current)
 
+const structure = ref(props.structure)
+
 const handleTabUpdate = (tabSlug) => {
     useTabChange(tabSlug, currentTab)
     RouteActive.value = props.updateRoutes[tabSlug]
@@ -65,9 +65,9 @@ const RouteActive = ref(props.updateRoutes[currentTab.value])
 
 const setForm = () => {
     let form = null
-    if(currentTab.value == 'workshop_header') form = useForm(props.structure['header'])
-    if(currentTab.value == 'workshop_footer') form = useForm(props.structure['footer'])
-    if(currentTab.value == 'workshop_layout') form = useForm(props.structure['layout'])
+    if(currentTab.value == 'workshop_header') form = useForm(structure.value['header'])
+    if(currentTab.value == 'workshop_footer') form = useForm(structure.value['footer'])
+    if(currentTab.value == 'workshop_layout') form = useForm(structure.value['layout'])
    return form
 }
 
@@ -103,7 +103,7 @@ async function setToFirebase() {
     }
 }
 
-watch(props.structure, setToFirebase, { deep: true });
+// watch(structure,(newValue)=> structure.value = newValue, { deep: true });
 
 setToFirebase();
 

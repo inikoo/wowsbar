@@ -6,7 +6,6 @@
   -->
 
 <script setup lang="ts">
-import {trans} from 'laravel-vue-i18n'
 import { ref, reactive, watch } from 'vue'
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { RadioGroup, RadioGroupLabel, RadioGroupOption } from '@headlessui/vue'
@@ -15,10 +14,9 @@ import { faHandPointer, faHandRock, faPlus, faAlignJustify, faList, faInfoCircle
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { ulid } from "ulid";
 import HyperlinkTools from '@/Components/CMS/Fields/Hyperlinktools.vue'
-import { get } from 'lodash'
+import { get, set } from 'lodash'
 import HyperInfoTools from '@/Components/CMS/Fields/InfoFieldTools.vue'
 import SocialMediaPicker from "@/Components/CMS/Fields/IconPicker/SocialMediaTools.vue"
-import { getDbRef, getDataFirebase, setDataFirebase } from '@/Composables/firebase'
 import ToolInTop from '@/Components/CMS/Footer/ToolsInTop.vue'
 library.add(faHandPointer, faHandRock, faPlus, faAlignJustify, faList, faInfoCircle)
 import { notify } from "@kyvg/vue3-notification"
@@ -87,19 +85,6 @@ const tool = ref({ name: 'edit', icon: ['fas', 'fa-hand-pointer'] })
 
 const data = reactive(props.data.footer)
 
-// async function setToFirebase() {
-//     const columns = 'org/websites/footer';
-//     try {
-//         await setDataFirebase(columns, { data: data, theme: selectedTheme.value });
-//     } catch (error) {
-//         console.log(error)
-//     }
-// }
-
-// watch(data, setToFirebase, { deep: true })
-// watch(selectedTheme, setToFirebase, { deep: true })
-
-// setToFirebase()
 
 const columSelected = ref(null);
 
@@ -114,7 +99,7 @@ const handleColumsTypeChange = (value) => {
         const set = { ...DummyColums[indexDummy], id: ulid() }
         data.columns[indexColums] = set
         selectedColums(data)
-    } else { cosnole.log('salah') }
+    }
 
 }
 
@@ -186,27 +171,19 @@ const changeImage = async (file) => {
             data.logoSrc =  response.data.thumbnail
             }
     } catch (error) {
+        console.log(error)
         notify({
-            title: trans('Failed to upload image'),
-            text: trans('Please contact support'),
+                title: "Failed to Update Banner",
+                text: 'Sorry, failed to upload image, due to several reasons',
                 type: "error"
             });
     }
 }
 
-// async function setToFirebase() {
-//     const column = "org/websites/footer";
-//     try {
-//         await setDataFirebase(column,data);
-//     } catch (error) {
-//         console.log(error);
-//     }
-// }
-
-// watch(data, setToFirebase, { deep: true });
-
-// setToFirebase();
-
+const changeTheme=(value)=>{
+    Object.assign(data, {...data,type : value})
+    selectedTheme.value = value
+}
 
 </script>
 
@@ -345,7 +322,7 @@ const changeImage = async (file) => {
         </div>
 
         <div class=" w-full bg-gray-200  items-center justify-center">
-            <ToolInTop :tool="tool" :theme="selectedTheme" @changeTheme="(val) => selectedTheme = val"
+            <ToolInTop :tool="tool" :theme="selectedTheme" @changeTheme="changeTheme"
                 :columSelected="columSelected" @setColumnSelected="selectedColums" />
             <div style="transform: scale(0.8);" class="w-full">
                 <Footer class="lg:col-span-2 lg:row-span-2 rounded-lg" :data="data"
@@ -353,5 +330,7 @@ const changeImage = async (file) => {
                     :tool="tool" @uploadImage="changeImage"  :layout="props.data.layout.footer"/>
             </div>
         </div>
+        <div @click="console.log(data)">cekDAta</div>
     </div>
+  
 </template>

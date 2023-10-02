@@ -36,7 +36,6 @@ const props = defineProps<{
 	layout : Object
 }>()
 
-console.log('themetwo',props)
 
 </script>
 

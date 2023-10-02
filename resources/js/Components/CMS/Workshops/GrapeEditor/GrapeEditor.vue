@@ -3,12 +3,13 @@
 <script setup lang="ts">
 import { onMounted } from "vue"
 import 'grapesjs/dist/css/grapes.min.css'
-import grapesjs from 'grapesjs'
+import grapesjs, { usePlugin } from 'grapesjs'
 import Basic from 'grapesjs-blocks-basic'
 import GrapesForm from 'grapesjs-plugin-forms'
 import TailwindComponents from 'grapesjs-tailwind'
 import Webpage from 'grapesjs-preset-webpage';
 import { ref } from 'vue'
+import grapesjsIcons from 'grapesjs-icons'
 import { panel } from './Panel'
 import {  get } from "firebase/database"
 import {
@@ -28,6 +29,15 @@ const data = ref(null)
 //     }
 // }
 
+const options = {
+  collections: [
+    'ri', 
+    'mdi',
+    'uim',
+    'streamline-emojis'
+  ]
+}
+
 const escapeName = (name) =>
     `${name}`.trim().replace(/([^a-z0-9\w-:/]+)/gi, "-")
 
@@ -43,7 +53,8 @@ onMounted(() => {
       Basic,
       GrapesForm,
       TailwindComponents,
-      Webpage
+      Webpage,
+      usePlugin(grapesjsIcons, options)
     ],
     // storageManager: {
     //   type: 'remote',
@@ -73,6 +84,11 @@ onMounted(() => {
     //   },
     // },
   });
+
+  console.log(editorInstance.BlockManager)
+
+  editorInstance.BlockManager.get('icon').attributes = {...editorInstance.BlockManager.get('icon').attributes, label : 'test'}
+       
 });
 </script> 
 
