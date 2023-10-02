@@ -231,15 +231,16 @@ console.log('debug:', props.uploaded_images, props.stock_images)
                 </div>
             </div>
 
-            <div class="max-w-full">Images Banner
-                <div class="flex">
+            <div class="max-w-full">
+                Images Banner
+                <div class="flex flex-wrap gap-x-2 gap-y-2">
                     <div v-for="image in allImageFlat" :key="image.id" class="relative">
-                        <Image :src="image.thumbnail"
-                            class="flex items-center justify-center py-1 h-12 w-20 border border-solid border-gray-300 p-1 m-2" />
+                        <Image :src="image.thumbnail" class="flex items-center justify-center h-7 shadow " />
                         <button
-                            class="absolute top-0 text-xs right-0 px-1 bg-gray-500 text-white rounded-full h-[20px] w-[20px]"
-                            @click="() => deleteImageSelected(image.id)"><font-awesome-icon
-                                :icon="['fal', 'times']" /></button>
+                            class="absolute top-0 text-xs right-0 translate-x-1/2 -translate-y-1/2 flex items-center justify-center px-1 bg-gray-200 hover:bg-gray-300 p-1 text-red-500 rounded-full h-2.5 w-2.5"
+                            @click="() => deleteImageSelected(image.id)">
+                            <FontAwesomeIcon :icon="['fal', 'times']" class="text-[7px] leading-none"/>
+                        </button>
                     </div>
                 </div>
             </div>
