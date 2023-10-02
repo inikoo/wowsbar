@@ -102,7 +102,7 @@ const selectedComponent = ref(dataComponent.value[0])
 <template layout="OrgApp">
     <!--suppress HtmlRequiredTitleElement -->
 
-    <Head :title="capitalize(title)" />
+    <Head :title="capitalize(title)" :dataToSubmit="{data : 'test'}"/>
     <PageHeading :data="pageHead"></PageHeading>
     <GrapeEditor />
     <!-- <div id="webpageWorkshop"> 

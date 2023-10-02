@@ -94,7 +94,7 @@ const addComponent = async () => {
         const response = await axios.post(
             route(
                 props.imagesUploadRoute.name,
-                props.imagesUploadRoute.arguments
+                props.imagesUploadRoute.parameters
             ),
             { images: SendData },
             {
