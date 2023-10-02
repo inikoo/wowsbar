@@ -75,6 +75,7 @@ class ShowBanner extends InertiaAction
             ];
         }
 
+
         return Inertia::render(
             'Banners/Banner',
             [
@@ -164,7 +165,7 @@ class ShowBanner extends InertiaAction
                     'current'    => $this->tab,
                     'navigation' => BannerTabsEnum::navigation()
                 ],
-                PortfolioWebsiteTabsEnum::SHOWCASE->value => $this->tab == PortfolioWebsiteTabsEnum::SHOWCASE->value
+                BannerTabsEnum::SHOWCASE->value => $this->tab == BannerTabsEnum::SHOWCASE->value
                     ?
                     fn () => [
                         'banner' => $banner->compiled_layout,

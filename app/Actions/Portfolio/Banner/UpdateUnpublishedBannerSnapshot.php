@@ -7,12 +7,12 @@
 
 namespace App\Actions\Portfolio\Banner;
 
+use App\Actions\CRM\Customer\Hydrators\CustomerHydrateBanners;
 use App\Actions\Portfolio\Banner\Hydrators\BannerHydrateUniversalSearch;
 use App\Actions\Portfolio\Banner\UI\ParseBannerLayout;
 use App\Actions\Portfolio\PortfolioWebsite\Hydrators\PortfolioWebsiteHydrateBanners;
 use App\Actions\Portfolio\Slide\StoreSlide;
 use App\Actions\Portfolio\Slide\UpdateSlide;
-use App\Actions\Tenant\Portfolio\Banner\CustomerHydrateBanners;
 use App\Actions\Traits\WithActionUpdate;
 use App\Http\Resources\Portfolio\BannerResource;
 use App\Models\Portfolio\Banner;
@@ -55,10 +55,20 @@ class UpdateUnpublishedBannerSnapshot
         }
 
 
-        $this->update($snapshot, $modelData, ['layout']);
+        $snapshot=$this->update($snapshot, $modelData, ['layout']);
 
         /** @var Banner $banner */
         $banner = $snapshot->parent;
+
+
+        $banner->update(
+            [
+                'compiled_layout'        => $snapshot->compiledLayout()
+            ]
+        );
+
+        UpdateBannerImage::run($banner);
+
         BannerHydrateUniversalSearch::dispatch($banner);
         CustomerHydrateBanners::dispatch(customer());
 

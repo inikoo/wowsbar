@@ -22,7 +22,9 @@ trait HasBannerCommand
 
             return null;
         }
-        Config::set('globals.customer_id', $bannerData->customer_id);
+
+
+        Config::set('global.customer_id', $bannerData->customer_id);
 
         return Banner::find($bannerData->id);
     }

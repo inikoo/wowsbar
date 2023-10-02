@@ -22,7 +22,7 @@ class FetchFirebaseSnapshot
     {
         $customer  = customer();
         $database  = app('firebase.database');
-        $reference = $database->getReference('tenants/'.$customer->slug.'/banner_workshop/'.$banner->slug);
+        $reference = $database->getReference('customers/'.$customer->ulid.'/banner_workshop/'.$banner->slug);
         $value     = $reference->getValue();
         if ($value) {
             $modelData = [
@@ -47,7 +47,7 @@ class FetchFirebaseSnapshot
 
     public function getCommandSignature(): string
     {
-        return 'banner:fetch-firebase {slug}';
+        return 'banner:fetch-from-firebase {slug}';
     }
 
     public function asCommand(Command $command): int
