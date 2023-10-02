@@ -101,7 +101,7 @@ const uploadImageRespone = (res) => {
 <template layout="CustomerApp">
     <Modal :isOpen="isOpen" @onClose="closeModal">
         <div>
-            <CropImage :data="addFiles" :imagesUploadRoute="props.imagesUploadRoute" :respone="uploadImageRespone" />
+            <CropImage :data="addFiles" :imagesUploadRoute="props.imagesUploadRoute" :response="uploadImageRespone" />
         </div>
     </Modal>
     <Modal :isOpen="isOpenGalleryImages" @onClose="()=>isOpenGalleryImages = false">

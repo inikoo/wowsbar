@@ -96,7 +96,7 @@ const uploadImageRespone = (res: any) => {
 
             <Modal :isOpen="isOpen" @onClose="closeModal">
                 <div>
-                    <CropImage :data="addFiles" :imagesUploadRoute="item.route" :respone="uploadImageRespone"/>
+                    <CropImage :data="addFiles" :imagesUploadRoute="item.route" :response="uploadImageRespone"/>
                 </div>
             </Modal>
         </template>

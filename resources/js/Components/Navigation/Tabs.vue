@@ -28,8 +28,6 @@ library.add(faInfoCircle, faTachometerAlt, faRoad, faWallet, faClock, faDatabase
 const props = defineProps<{
     navigation: any
     current: string
-    selectedRow?: any // Because dynamic key-value object
-    isSelectImage?: boolean
 }>()
 
 defineEmits(['update:tab']);
@@ -40,7 +38,7 @@ const changeTab = (tabSlug: any) => {
     currentTab.value = tabSlug;
 }
 
-const tabIconClass = (current: string, type: string, align: string, extraClass: string) => {
+const tabIconClass = (current: string | boolean, type: string, align: string, extraClass: string) => {
     let iconClass = '-ml-0.5 h-5 w-5   ' + extraClass;
     iconClass += current ? '' : 'text-gray-400 dark:text-gray-500 group-hover:text-gray-500 ';
     iconClass += (type == 'icon' && align == 'right') ? 'ml-2 ' : 'mr-2 '
@@ -51,13 +49,18 @@ const tabIconClass = (current: string, type: string, align: string, extraClass: 
 
 <template>
     <div>
-        <div class="sm:hidden">
+        <!-- Tabs: Mobile view -->
+        <div class="sm:hidden px-3 pt-2">
             <label for="tabs" class="sr-only">Select a tab</label>
             <!-- Use an "onChange" listener to redirect the user to the selected tab URL. -->
-            <select id="tabs" name="tabs" class="block w-full rounded-md border-gray-300 focus:border-orange-500 focus:ring-orange-500">
-                <option v-for="(tab, tabSlug) in navigation" :key="tabSlug" :selected="currentTab">{{ tab.title }}</option>
+            <select id="tabs" name="tabs" class="block w-full capitalize rounded-md border-gray-300 focus:border-gray-500 focus:ring-gray-500"
+                @input="(val: any) => { $emit('update:tab', val.target.value), changeTab(val.target.value) }"
+            >
+                <option v-for="(tab, tabSlug) in navigation" :key="tabSlug" :selected="tabSlug == currentTab" :value="tabSlug" class="capitalize">{{ tab.title }}</option>
             </select>
         </div>
+
+        <!-- Tabs: Large view -->
         <div class="hidden sm:block">
             <div class="border-b border-gray-200 dark:border-gray-500 flex text-gray-500">
 
@@ -74,13 +77,9 @@ const tabIconClass = (current: string, type: string, align: string, extraClass: 
                                 <FontAwesomeIcon v-if="tab.icon" :icon="tab.icon" :class="tabIconClass(tabSlug === currentTab, tab.type, tab.align, tab.iconClass ?? '')" aria-hidden="true"/>
                                 <span v-if="tab.type !== 'icon'" class="capitalize">
                                     {{ trans(tab.title) }}
-                                    {{
-                                        isSelectImage
-                                        ? selectedRow[tabSlug]?.length
-                                            ? trans(`(${selectedRow[tabSlug]?.length})`)
-                                            : trans(`(0)`)
-                                        : ''
-                                    }}
+                                    <slot name="addTitle" :tabSlug="tabSlug">
+                                        
+                                    </slot>
                                 </span>
                             </button>
                             <div class="absolute h-0.5 rounded-full bottom-0 left-[50%] translate-x-[-50%] mx-auto transition-all duration-200 ease-in-out"

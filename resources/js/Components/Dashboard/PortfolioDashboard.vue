@@ -6,7 +6,7 @@
 
 <script setup>
 import FlatTreeMap from '@/Components/Navigation/FlatTreeMap.vue'
-defineProps(['data'])
+defineProps(['data', 'tab'])
 </script>
 <template>
     <FlatTreeMap class="mx-4 mt-4" v-for="(treeMap, idx) in data.flatTreeMaps" :key="idx" :nodes="treeMap" />
