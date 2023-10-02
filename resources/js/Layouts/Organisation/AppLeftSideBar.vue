@@ -107,7 +107,7 @@ const handleToggleLeftbar = () => {
                                 class="text-gray-400 dark:text-gray-200 ml-2 mr-3 flex-shrink-0 h-4 w-4"
                                 :icon="item.icon"/>
                         </div>
-                        <span class="capitalize text-gray-600" :class="[layout.leftSidebar.show ? 'block md:block' : 'block md:hidden']">{{ trans(item.label) }}</span>
+                        <span class="capitalize text-gray-600 leading-none whitespace-nowrap" :class="[layout.leftSidebar.show ? 'block md:block' : 'block md:hidden']">{{ trans(item.label) }}</span>
                     </Link>
                 </nav>
             </div>
