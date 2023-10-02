@@ -19,7 +19,7 @@ class UpdateWebpageBlocks
 
     public function handle(Webpage $webpage, array $blocks): Webpage
     {
-        dd($webpage,$blocks);
+        dd($webpage, $blocks);
         $webpage->update(
             [
                 'blocks' => $blocks

@@ -91,7 +91,7 @@ trait WithImportModel
             $driveService = new Drive($client);
 
             $filename = now()->timestamp;
-            $fileId = explode('/', $url)[5];
+            $fileId   = explode('/', $url)[5];
 
             $this->downloadType($driveService, $fileId, $filename);
         } catch (Exception $e) {

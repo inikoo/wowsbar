@@ -48,9 +48,9 @@ class ShowWebpageWorkshop extends InertiaAction
                 ),
                 'pageHead'    => [
 
-                    'title' => $webpage->code,
+                    'title'              => $webpage->code,
                     'actionActualMethod' => 'patch',
-                    'icon'  => [
+                    'icon'               => [
                         'title' => __('webpage'),
                         'icon'  => 'fal fa-browser'
                     ],
