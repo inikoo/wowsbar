@@ -47,6 +47,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property-read \App\Models\Organisation\OrganisationHumanResourcesStats|null $humanResourcesStats
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \App\Models\Media\Media> $media
  * @property-read int|null $media_count
+ * @property-read \App\Models\Organisation\OrganisationPortfoliosStats|null $portfoliosStats
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Product> $products
  * @property-read int|null $products_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Shop> $shops
@@ -110,6 +111,11 @@ class Organisation extends Model implements HasMedia
     public function catalogueStats(): HasOne
     {
         return $this->hasOne(OrganisationCatalogueStats::class);
+    }
+
+    public function portfoliosStats(): HasOne
+    {
+        return $this->hasOne(OrganisationPortfoliosStats::class);
     }
 
     public function websites(): HasMany

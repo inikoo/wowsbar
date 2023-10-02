@@ -32,7 +32,6 @@ class AppServiceProvider extends ServiceProvider
                 $wrapped       = DB::connection($connection)->getQueryGrammar()->wrap($parameters[1]);
                 $parameters[1] = DB::raw("lower($wrapped)");
             }
-
             return $validator->validateUnique($attribute, Str::lower($value), $parameters);
         }, trans('validation.iunique'));
 

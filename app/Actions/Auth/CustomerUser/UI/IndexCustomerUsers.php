@@ -1,21 +1,22 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Mon, 18 Sep 2023 18:36:51 Malaysia Time, Pantai Lembeng, Bali, Indonesia
+ * Created: Fri, 29 Sep 2023 20:41:50 Malaysia Time, Kuala Lumpur, Malaysia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Auth\User\UI;
+namespace App\Actions\Auth\CustomerUser\UI;
 
 use App\Actions\Auth\UserRequest\IndexUserRequestLogs;
 use App\Actions\Helpers\History\IndexHistories;
 use App\Actions\InertiaAction;
 use App\Actions\UI\Customer\SysAdmin\ShowSysAdminDashboard;
 use App\Enums\UI\UsersTabsEnum;
+use App\Http\Resources\Auth\CustomerUserResource;
 use App\Http\Resources\Auth\UserRequestLogsResource;
-use App\Http\Resources\Auth\UserResource;
 use App\Http\Resources\History\HistoryResource;
 use App\InertiaTable\InertiaTable;
+use App\Models\Auth\CustomerUser;
 use App\Models\Auth\User;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -26,7 +27,7 @@ use Lorisleiva\Actions\ActionRequest;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
-class IndexUsers extends InertiaAction
+class IndexCustomerUsers extends InertiaAction
 {
     protected function getElementGroups(): array
     {
@@ -59,7 +60,7 @@ class IndexUsers extends InertiaAction
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
             $query->where(function ($query) use ($value) {
                 $query->whereAnyWordStartWith('contact_name', $value)
-                    ->orWhere('users.username', 'ILIKE', "$value%");
+                    ->orWhere('users.email', 'ILIKE', "$value%");
             });
         });
 
@@ -69,7 +70,8 @@ class IndexUsers extends InertiaAction
         }
 
 
-        $queryBuilder = QueryBuilder::for(User::class);
+        $queryBuilder = QueryBuilder::for(CustomerUser::class);
+        $queryBuilder->where('customer_id', customer()->id);
         foreach ($this->getElementGroups() as $key => $elementGroup) {
             $queryBuilder->whereElementGroup(
                 prefix: $prefix,
@@ -81,9 +83,9 @@ class IndexUsers extends InertiaAction
 
 
         return $queryBuilder
-            ->defaultSort('username')
-            ->allowedSorts(['username', 'email', 'contact_name'])
-            ->allowedFilters([$globalSearch,'email','contact_name','username'])
+            ->defaultSort('customer_user.slug')
+            ->allowedSorts(['slug', 'email', 'contact_name'])
+            ->allowedFilters([$globalSearch,'email','contact_name','slug'])
             ->withPaginator($prefix)
             ->withQueryString();
     }
@@ -110,38 +112,37 @@ class IndexUsers extends InertiaAction
                 ->withModelOperations($modelOperations)
                 ->withExportLinks($exportLinks)
                 ->column(key: 'avatar', label: ['fal', 'fa-user-circle'])
-                ->column(key: 'username', label: __('username'), canBeHidden: false, sortable: true, searchable: true)
+                ->column(key: 'slug', label: __('code'), canBeHidden: false, sortable: true, searchable: true)
                 ->column(key: 'contact_name', label: __('name'), canBeHidden: false, sortable: true, searchable: true)
                 ->column(key: 'email', label: __('email'), canBeHidden: false, sortable: true, searchable: true)
                 ->column(key: 'status', label: __('status'), canBeHidden: false, sortable: true)
                 ->column(key: 'roles', label: __('roles'), canBeHidden: false, sortable: true)
                 ->column(key: 'permissions', label: __('permissions'), canBeHidden: false, sortable: true)
-                ->defaultSort('username');
+                ->defaultSort('slug');
         };
     }
 
     public function authorize(ActionRequest $request): bool
     {
-        $this->canEdit = $request->user()->hasPermissionTo('sysadmin.edit');
+        $this->canEdit = $request->get('customerUser')->hasPermissionTo('sysadmin.edit');
 
         return
             (
-                $request->user()->tokenCan('root') or
-                $request->user()->hasPermissionTo('sysadmin.view')
+                $request->get('customerUser')->hasPermissionTo('sysadmin.view')
             );
     }
 
 
     public function jsonResponse(LengthAwarePaginator $users): AnonymousResourceCollection
     {
-        return UserResource::collection($users);
+        return CustomerUserResource::collection($users);
     }
 
 
     public function htmlResponse(LengthAwarePaginator $users, ActionRequest $request): Response
     {
         return Inertia::render(
-            'SysAdmin/Users',
+            'SysAdmin/CustomerUsers',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->getName(),
@@ -167,9 +168,7 @@ class IndexUsers extends InertiaAction
                 ],
 
 
-                'labels' => [
-                    'usernameNoSet' => __('username no set')
-                ],
+
 
                 'tabs' => [
                     'current'    => $this->tab,
@@ -177,8 +176,8 @@ class IndexUsers extends InertiaAction
                 ],
 
                 UsersTabsEnum::USERS->value => $this->tab == UsersTabsEnum::USERS->value ?
-                    fn () => UserResource::collection($users)
-                    : Inertia::lazy(fn () => UserResource::collection($users)),
+                    fn () => CustomerUserResource::collection($users)
+                    : Inertia::lazy(fn () => CustomerUserResource::collection($users)),
 
                 UsersTabsEnum::USERS_REQUESTS->value => $this->tab == UsersTabsEnum::USERS_REQUESTS->value ?
                     fn () => UserRequestLogsResource::collection(IndexUserRequestLogs::run($request->get('sort')))
@@ -235,12 +234,12 @@ class IndexUsers extends InertiaAction
         };
 
         return match ($routeName) {
-            'sysadmin.users.index' =>
+            'customer.sysadmin.users.index' =>
             array_merge(
                 ShowSysAdminDashboard::make()->getBreadcrumbs(),
                 $headCrumb(
                     [
-                        'name' => 'sysadmin.users.index',
+                        'name' => 'customer.sysadmin.users.index',
                         null
                     ]
                 ),

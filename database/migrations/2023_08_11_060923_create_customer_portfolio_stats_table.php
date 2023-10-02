@@ -6,26 +6,22 @@
  */
 
 
-use App\Enums\Portfolio\Snapshot\SnapshotStateEnum;
-use App\Stubs\Migrations\HasPortfolioStats;
+use App\Stubs\Migrations\HasBannerStats;
+use App\Stubs\Migrations\HasPortfolioWebsitesStats;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class () extends Migration {
-    use HasPortfolioStats;
+    use HasBannerStats;
+    use HasPortfolioWebsitesStats;
     public function up(): void
     {
         Schema::create('customer_portfolio_stats', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
             $table->unsignedInteger('customer_id');
-            $table->foreign('customer_id')->references('id')->on('customers')->onUpdate('cascade')->onDelete('cascade');
-            $table->unsignedSmallInteger('number_banners_no_website')->default(0);
-            $table=$this->portfolioStats($table);
-            $table->unsignedSmallInteger('number_snapshots')->default(0);
-            foreach (SnapshotStateEnum::cases() as $state) {
-                $table->unsignedSmallInteger('number_snapshots_state_'.Str::replace('-', '_', $state->snake()))->default(0);
-            }
+            $table->foreign('customer_id')->references('id')->on('customers');
+            $table=$this->portfolioWebsiteStats($table);
             $table->timestampsTz();
         });
     }

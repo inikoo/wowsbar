@@ -10,8 +10,7 @@ namespace App\Actions\CRM\Customer;
 use App\Actions\CRM\Customer\Hydrators\CustomerHydrateBanners;
 use App\Actions\CRM\Customer\Hydrators\CustomerHydrateInvoices;
 use App\Actions\CRM\Customer\Hydrators\CustomerHydratePortfolioWebsites;
-use App\Actions\CRM\Customer\Hydrators\CustomerHydrateUniversalSearch;
-use App\Actions\CRM\Customer\Hydrators\CustomerHydrateUsers;
+use App\Actions\CRM\Customer\Hydrators\CustomerHydrateCustomerUsers;
 use App\Models\CRM\Customer;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Config;
@@ -25,16 +24,15 @@ class HydrateCustomer
 
     public function handle(Customer $customer): void
     {
-        CustomerHydrateInvoices::run($customer);
-        CustomerHydrateUniversalSearch::run($customer);
-        CustomerHydrateUsers::run($customer);
+        //CustomerHydrateInvoices::run($customer);
+        CustomerHydrateCustomerUsers::run($customer);
         CustomerHydrateBanners::run($customer);
-        CustomerHydratePortfolioWebsites::run();
+        CustomerHydratePortfolioWebsites::run($customer);
     }
 
 
 
-    public string $commandSignature = 'hydrate:customer {customers?*}';
+    public string $commandSignature = 'hydrate:customers {customers?*}';
 
     public function asCommand(Command $command): int
     {

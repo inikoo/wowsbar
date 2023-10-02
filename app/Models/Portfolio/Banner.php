@@ -7,6 +7,7 @@
 
 namespace App\Models\Portfolio;
 
+use App\Actions\Utils\Abbreviate;
 use App\Concerns\BelongsToCustomer;
 use App\Enums\Portfolio\Banner\BannerStateEnum;
 use App\Models\Media\Media;
@@ -35,7 +36,6 @@ use Spatie\Sluggable\SlugOptions;
  * @property int $customer_id
  * @property int|null $portfolio_website_id
  * @property string $slug
- * @property string $code
  * @property string $name
  * @property BannerStateEnum $state
  * @property int|null $unpublished_snapshot_id
@@ -72,7 +72,6 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Banner onlyTrashed()
  * @method static Builder|Banner query()
  * @method static Builder|Banner whereChecksum($value)
- * @method static Builder|Banner whereCode($value)
  * @method static Builder|Banner whereCompiledLayout($value)
  * @method static Builder|Banner whereCreatedAt($value)
  * @method static Builder|Banner whereCustomerId($value)
@@ -128,10 +127,12 @@ class Banner extends Model implements HasMedia, Auditable
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
-            ->generateSlugsFrom('code')
+            ->generateSlugsFrom(function () {
+                return Abbreviate::run(string:$this->name);
+            })
             ->doNotGenerateSlugsOnUpdate()
             ->saveSlugsTo('slug')
-            ->slugsShouldBeNoLongerThan(64);
+            ->slugsShouldBeNoLongerThan(16);
     }
 
     public function snapshots(): MorphMany

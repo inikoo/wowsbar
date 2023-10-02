@@ -7,7 +7,7 @@
 
 use App\Actions\Auth\User\StoreUser;
 use App\Actions\Auth\User\UpdateUser;
-use App\Actions\Auth\User\UpdateUserStatus;
+use App\Actions\Auth\User\SuspendUser;
 use App\Models\Auth\User;
 
 beforeAll(function () {
@@ -42,9 +42,8 @@ test('update user', function ($user) {
 
 test('deactivate a user', function ($user) {
     $customer = customer();
-    $user     = UpdateUserStatus::make()->action($user, false);
+    $user     = SuspendUser::make()->action($user);
     expect($user)->toBeInstanceOf(User::class)
-        ->and($user->status)->toBeFalse()
         ->and($customer->stats->number_users)->toBe(1)
         ->and($customer->stats->number_users_status_active)->toBe(0)
         ->and($customer->stats->number_users_status_inactive)->toBe(1);

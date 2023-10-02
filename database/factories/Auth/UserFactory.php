@@ -18,7 +18,6 @@ class UserFactory extends Factory
         $language = Language::inRandomOrder()->first();
 
         return [
-            'username'       => fake()->userName,
             'status'         => fake()->boolean,
             'contact_name'   => fake()->name,
             'email'          => fake()->email,

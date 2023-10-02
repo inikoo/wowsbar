@@ -4,47 +4,46 @@
  *  Copyright (c) 2022, Raul A Perusquia F
  */
 
-import { defineStore } from "pinia";
+import {defineStore} from 'pinia';
 
-export const useLayoutStore = defineStore("layout", {
+export const useLayoutStore = defineStore('layout', {
     state: () => (
         {
-            booted:  false,
+            booted                : false,
             navigation            : [],
-            app: {
-                slug: '',
-                name: '',
-                showLiveUsers:false,
+            app                   : {
+                slug         : '',
+                name         : '',
+                showLiveUsers: false,
             },
-            currentRoute          : "",
+            currentRoute          : '',
             currentRouteParameters: {},
-            currentModule         : "",
-            leftSidebar: {
-                show: true
+            currentModule         : '',
+            leftSidebar           : {
+                show: true,
             },
-            rightSidebar: {
+            rightSidebar          : {
                 activeUsers: {
                     users: [],
                     count: 0,
-                    show: false
+                    show : false,
                 },
-                language: {
-                    show: false
+                language   : {
+                    show: false,
                 },
             },
-            avatar_thumbnail: null,
-            organisation: {
-            },
-            user: {
+            avatar_thumbnail      : null,
+            organisation          : {},
+            user                  : {
                 username: '',
-                name: '',
-                avatar: {
-                    id: ''
-                }
+                name    : '',
+                avatar_thumbnail  : null,
+                customer_slug: null,
+                customer_name: null,
 
-            }
+            },
         }
-    )
+    ),
 
 });
 

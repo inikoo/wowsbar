@@ -60,7 +60,7 @@ class IndexUploadedImages extends InertiaAction
         return $queryBuilder
             ->defaultSort('media.name')
             ->where('collection_name', 'content_block')
-            ->select(['media.name','media.id','size','mime_type','file_name','disk','media.slug', 'media.created_at'])
+            ->select(['media.name','media.id','size','mime_type','file_name','disk','media.slug', 'media.created_at','media.is_animated'])
             ->allowedSorts(['name','size', 'created_at'])
             ->allowedFilters([$globalSearch])
             ->withPaginator($prefix)
@@ -117,7 +117,7 @@ class IndexUploadedImages extends InertiaAction
             exportLinks: [
             'export' => [
                 'route' => [
-                    'name' => 'export.stock.images.index'
+                    'name' => 'customer.export.stock.images.index'
                 ]
             ]
         ]

@@ -1,6 +1,6 @@
 <!--
   - Author: Raul Perusquia <raul@inikoo.com>
-  - Created: Tue, 19 Sep 2023 13:37:29 Malaysia Time, Pantai Lembeng, Bali, Indonesia
+  - Created: Mon, 02 Oct 2023 03:20:36 Malaysia Time, Kuala Lumpur, Malaysia
   - Copyright (c) 2023, Raul A Perusquia Flores
   -->
 
@@ -10,7 +10,7 @@ import { ref } from 'vue'
 import PageHeading from '@/Components/Headings/PageHeading.vue'
 import { capitalize } from "@/Composables/capitalize"
 import { library } from "@fortawesome/fontawesome-svg-core"
-import { faGlobe,faImage } from "@/../private/pro-light-svg-icons"
+import { faGlobe,faImage } from "../../../../private/pro-light-svg-icons"
 import TableBanners from "@/Components/Tables/TableBanners.vue"
 
 library.add(faGlobe,faImage)

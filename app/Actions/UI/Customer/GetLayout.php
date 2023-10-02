@@ -136,10 +136,16 @@ class GetLayout
                 'scope'   => 'banners',
                 'icon'    => ['fal', 'fa-rectangle-wide'],
                 'label'   => __('Banners'),
-                'route'   => 'customer.banners.index',
+                'route'   => 'customer.banners.dashboard',
                 'topMenu' => [
                     'subSections' => [
 
+                        [
+                            'icon'  => ['fal', 'fa-chart-network'],
+                            'route' => [
+                                'name' => 'customer.banners.dashboard',
+                            ]
+                        ],
                         [
                             'icon'  => ['fal', 'fa-rectangle-wide'],
                             'label' => __('banners'),
@@ -148,8 +154,8 @@ class GetLayout
                             ]
                         ],
                         [
-                            'icon'  => ['fal', 'fa-browser'],
-                            'label' => __('websites'),
+                            'icon'  => ['fal', 'fa-briefcase'],
+                            'label' => __('portfolio'),
                             'route' => [
                                 'name' => 'customer.banners.websites.index',
                             ]

@@ -39,9 +39,9 @@ class ShowSysAdminDashboard
             'SysAdmin/SysAdminDashboard',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(),
-                'title'       => __('system administration'),
+                'title'       => __('account management'),
                 'pageHead'    => [
-                    'title' => __('system administration'),
+                    'title' => __('account management'),
                 ],
                 'stats' => [
                     [
@@ -70,7 +70,7 @@ class ShowSysAdminDashboard
                             'route' => [
                                 'name' => 'customer.sysadmin.dashboard'
                             ],
-                            'label'  => __('system administration'),
+                            'label'  => __('account management'),
                         ]
                     ]
                 ]

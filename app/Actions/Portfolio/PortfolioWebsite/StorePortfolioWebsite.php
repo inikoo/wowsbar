@@ -12,13 +12,10 @@ use App\Actions\Market\Shop\Hydrators\ShopHydrateCustomerWebsites;
 use App\Actions\Portfolios\CustomerWebsite\Hydrators\CustomerWebsiteHydrateUniversalSearch;
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateCustomerWebsites;
 use App\Actions\Portfolio\PortfolioWebsite\Hydrators\PortfolioWebsiteHydrateUniversalSearch;
-use App\Models\CRM\Customer;
 use App\Models\Portfolios\CustomerWebsite;
 use App\Models\Portfolio\PortfolioWebsite;
-use Exception;
-use Illuminate\Console\Command;
+use App\Rules\IUnique;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Redirect;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -64,10 +61,38 @@ class StorePortfolioWebsite
     public function rules(): array
     {
         return [
-            'domain' => ['required'],
-            'code'   => ['required', 'iunique:portfolio_websites', 'max:8'],
-            'name'   => ['required']
+            'url'  => ['required', 'url', 'max:500',
+                       new IUnique(
+                           table: 'portfolio_websites',
+                           extraConditions: [
+                               ['column' => 'customer_id', 'value' => customer()->id],
+                           ]
+                       ),
+                ],
+            'code' => [
+                'required',
+                'alpha_dash:ascii',
+                'max:16',
+                new IUnique(
+                    table: 'portfolio_websites',
+                    extraConditions: [
+                        ['column' => 'customer_id', 'value' => customer()->id],
+                    ]
+                ),
+            ],
+            'name' => ['required', 'string', 'max:128']
         ];
+    }
+
+    public function prepareForValidation(ActionRequest $request): void
+    {
+        if ($request->get('url')) {
+            $request->merge(
+                [
+                    'url' => 'https://'.$request->get('url'),
+                ]
+            );
+        }
     }
 
     public function asController(ActionRequest $request): PortfolioWebsite
@@ -93,36 +118,5 @@ class StorePortfolioWebsite
         return $this->handle($validatedData);
     }
 
-    public function getCommandSignature(): string
-    {
-        return 'customer:new-portfolio-website {customer} {domain} {code} {name}';
-    }
 
-    public function asCommand(Command $command): int
-    {
-        $this->asAction = true;
-        try {
-            $customer = Customer::where('slug', $command->argument('customer'))->firstOrFail();
-        } catch (Exception) {
-            $command->error('Customer not found');
-
-            return 1;
-        }
-        Config::set('global.customer_id', $customer->id);
-
-        $this->setRawAttributes(
-            [
-                'domain' => $command->argument('domain'),
-                'code'   => $command->argument('code'),
-                'name'   => $command->argument('name')
-            ]
-        );
-        $validatedData = $this->validateAttributes();
-
-        $portfolioWebsite = $this->handle($validatedData);
-
-        $command->info("Done! website $portfolioWebsite->code created 🥳");
-
-        return 0;
-    }
 }

@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import FooterThemeOne from './FooterThemeOneWorkshop.vue'
+// import FooterThemeOne from './FooterThemeOneWorkshop.vue'
 import FooterThemeTwo from './FooterThemeTwoWorkshop.vue'
+import FooterThemeOne from '@/Components/Footer/Public/FooterThemeOne.vue'
 
 const props = defineProps<{
     selectedColums: Function,

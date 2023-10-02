@@ -26,7 +26,7 @@ class RemoveBanner extends InertiaAction
         return $request->get('customerUser')->hasPermissionTo("banners.edit");
     }
 
-    public function inCustomer(Banner $banner, ActionRequest $request): Banner
+    public function asController(Banner $banner, ActionRequest $request): Banner
     {
         $this->initialisation($request);
 
@@ -59,7 +59,7 @@ class RemoveBanner extends InertiaAction
                 'title'       => __('delete banner'),
                 'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->getName(),
-                    $request->route()->parameters
+                    $request->route()->originalParameters()
                 ),
                 'pageHead'    => [
                     'icon'    =>
@@ -82,9 +82,9 @@ class RemoveBanner extends InertiaAction
                 ],
                 'data'        => $this->getAction(
                     route: [
-                        'name'       => 'models.banner.delete',
+                        'name'       => 'customer.models.banner.delete',
                         'parameters' => [
-                            'banner' => $request->route()->originalParameters()['banner']
+                            'banner' => $banner->id
                         ]
                     ]
                 )

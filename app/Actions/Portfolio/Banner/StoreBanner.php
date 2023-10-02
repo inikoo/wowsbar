@@ -33,6 +33,7 @@ class StoreBanner
     private bool $asAction = false;
 
     private Customer|PortfolioWebsite $parent;
+    private string $scope;
 
 
     public function handle(Customer|PortfolioWebsite $parent, array $modelData): Banner
@@ -57,7 +58,7 @@ class StoreBanner
             "components" => [
             ]
         ];
-        list($layout, $slides, $hash) = ParseBannerLayout::run($layout);
+        list($layout, $slides) = ParseBannerLayout::run($layout);
 
         data_set($modelData, 'data.website_slug', $parent->slug);
         data_set($modelData, 'ulid', Str::ulid());
@@ -122,14 +123,32 @@ class StoreBanner
     {
         return [
             'portfolio_website_id' => ['sometimes', 'nullable', 'exists:portfolio_websites,id'],
-            'code'                 => ['required', 'unique:banners', 'max:8'],
-            'name'                 => ['required']
+            'name'                 => ['required','string','max:255']
         ];
     }
 
 
     public function inCustomer(ActionRequest $request): Banner
     {
+
+        $this->scope='customer';
+
+        $parent = customer();
+        $request->validate();
+
+        $validatedData=$request->validated();
+
+        if($portfolioWebsiteId=Arr::get($validatedData, 'portfolio_website_id')) {
+            $parent=PortfolioWebsite::find($portfolioWebsiteId);
+        }
+
+        return $this->handle($parent, $request->validated());
+    }
+
+    public function fromGallery(ActionRequest $request): Banner
+    {
+
+        $this->scope='gallery';
 
         $parent = customer();
         $request->validate();
@@ -145,8 +164,8 @@ class StoreBanner
 
     public function inPortfolioWebsite(PortfolioWebsite $portfolioWebsite, ActionRequest $request): Banner
     {
+        $this->scope='portfolioWebsite';
         $request->validate();
-
         return $this->handle($portfolioWebsite, $request->validated());
     }
 
@@ -161,7 +180,7 @@ class StoreBanner
 
     public function getCommandSignature(): string
     {
-        return 'customer:new-banner {customer} {code} {name} {portfolio-website?}';
+        return 'customer:new-banner {customer} {name} {portfolio-website?}';
     }
 
     public function asCommand(Command $command): int
@@ -182,7 +201,6 @@ class StoreBanner
         $this->asAction = true;
         $this->setRawAttributes(
             [
-                'code'                 => $command->argument('code'),
                 'name'                 => $command->argument('name'),
                 'portfolio_website_id' => $portfolioWebsite->id ?? null
             ]
@@ -191,12 +209,14 @@ class StoreBanner
 
         $banner = $this->handle($portfolioWebsite ?? $customer, $validatedData);
 
-        $command->info("Done! Content block $banner->code created 🎉");
+        $command->info("Done! Banner $banner->slug created 🎉");
         return 0;
     }
 
     public function htmlResponse(Banner $banner): RedirectResponse
     {
+
+
         if (class_basename($this->parent) == 'PortfolioWebsite') {
             return redirect()->route(
                 'customer.portfolio.websites.show.banners.workshop',
@@ -208,7 +228,7 @@ class StoreBanner
         }
 
         return redirect()->route(
-            'customer.portfolio.banners.workshop',
+            'customer.banners.workshop',
             [
                 $banner->slug
             ]

@@ -11,7 +11,7 @@ use App\Actions\Auth\CustomerUser\StoreCustomerUser;
 use App\Actions\Auth\User\Hydrators\UserHydrateUniversalSearch;
 use App\Actions\Auth\User\UI\SetUserAvatar;
 use App\Actions\CRM\Customer\Hydrators\CustomerHydrateUniversalSearch;
-use App\Actions\CRM\Customer\Hydrators\CustomerHydrateUsers;
+use App\Actions\CRM\Customer\Hydrators\CustomerHydrateCustomerUsers;
 use App\Models\Auth\User;
 use App\Models\CRM\Customer;
 use App\Models\Web\Website;
@@ -58,7 +58,7 @@ class StoreUser
 
         UserHydrateUniversalSearch::dispatch($user);
 
-        CustomerHydrateUsers::dispatch($customer);
+        CustomerHydrateCustomerUsers::dispatch($customer);
 
         return $user;
     }

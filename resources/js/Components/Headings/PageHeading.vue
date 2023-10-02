@@ -15,8 +15,7 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 
 import Button from "@/Components/Elements/Buttons/Button.vue"
 import { capitalize } from "@/Composables/capitalize"
-// import { useLocaleStore } from "@/Stores/locale.js"
-import { trans } from "laravel-vue-i18n"
+
 import MetaLabel from "@/Components/Headings/MetaLabel.vue";
 import Container from "@/Components/Headings/Container.vue";
 
@@ -32,6 +31,7 @@ library.add(faEdit, faWindowMaximize, faRocketLaunch, faDraftingCompass, faEmpty
 const props = defineProps<{
     data: {
         title: string
+        noCapitalise?:boolean
         icon: {
             icon: Icon
             tooltip: string
@@ -67,7 +67,7 @@ if (props.dataToSubmit && props.data.actionActualMethod) {
 <template>
     <div class="mx-4 py-4 md:pb-2 md:pt-3 lg:py-2 grid grid-flow-col justify-between items-center">
         <div class="">
-            <h2 class="font-bold text-gray-700 dark:text-gray-300 text-2xl tracking-tight capitalize">
+            <h2 class="font-bold text-gray-700 dark:text-gray-300 text-2xl tracking-tight ">
                 <span v-if="data.container" class="text-slate-500 text-lg  mr-2">
                     <Link v-if="data.container.href"
                           :href="route(
@@ -87,8 +87,7 @@ if (props.dataToSubmit && props.data.actionActualMethod) {
                 <FontAwesomeIcon v-if="data.iconBis" :title="capitalize(data.iconBis.tooltip ?? '')" aria-hidden="true"
                     :icon="data.iconBis.icon" size="sm" class="pr-2" :class="data.iconBis.class"/>
                 </span>
-
-                <span>{{ trans(data.title) }}</span>
+                <span :class="!data.noCapitalise? 'capitalize':''">{{ data.title }}</span>
                 <FontAwesomeIcon v-if="data.iconRight" :title="capitalize(data.iconRight.tooltip ?? '')" aria-hidden="true"
                     :icon="data.iconRight.icon" class="pl-1 h-4 mb-0.5" :class="data.iconRight.class"/>
             </h2>
@@ -113,7 +112,6 @@ if (props.dataToSubmit && props.data.actionActualMethod) {
         <slot name="button" :dataPageHead="{...props }">
             <div class="flex items-center gap-2">
                 <div v-for="action in data.actions">
-                    {{ action.final }}
 
                     <!-- Button -->
                     <Link v-if="action.type === 'button'" as="button"

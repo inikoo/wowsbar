@@ -61,15 +61,16 @@ class StoreCustomerWebsite
     public function rules(): array
     {
         return [
-            'domain' => ['required'],
-            'code'   => ['required', 'unique:portfolio_websites', 'max:8'],
-            'name'   => ['required']
+            'url'  => ['required', 'url', 'max:500'],
+            'code' => ['required', 'alpha_dash:ascii', 'iunique:portfolio_websites', 'max:16'],
+            'name' => ['required', 'string', 'max:128']
         ];
     }
 
     public function asController(Customer $customer, ActionRequest $request): CustomerWebsite
     {
         $request->validate();
+
         return $this->handle($customer, $request->validated());
     }
 
@@ -93,7 +94,7 @@ class StoreCustomerWebsite
 
     public function getCommandSignature(): string
     {
-        return 'customer:new-portfolio-website {customer} {domain} {code} {name}';
+        return 'customer:new-portfolio-website {customer} {url} {code} {name}';
     }
 
     public function asCommand(Command $command): int
@@ -103,21 +104,23 @@ class StoreCustomerWebsite
             $customer = Customer::where('slug', $command->argument('customer'))->firstOrFail();
         } catch (Exception) {
             $command->error('Customer not found');
+
             return 1;
         }
 
         $this->setRawAttributes(
             [
-                'domain' => $command->argument('domain'),
+                'url'    => $command->argument('url'),
                 'code'   => $command->argument('code'),
                 'name'   => $command->argument('name')
             ]
         );
         $validatedData = $this->validateAttributes();
 
-        $customerWebsite=$this->handle($customer, $validatedData);
+        $customerWebsite = $this->handle($customer, $validatedData);
 
         $command->info("Done! website $customerWebsite->code created 🥳");
+
         return 0;
     }
 }

@@ -1,6 +1,6 @@
 <!--
   - Author: Raul Perusquia <raul@inikoo.com>
-  - Created: Tue, 19 Sep 2023 13:37:29 Malaysia Time, Pantai Lembeng, Bali, Indonesia
+  - Created: Mon, 02 Oct 2023 03:25:31 Malaysia Time, Kuala Lumpur, Malaysia
   - Copyright (c) 2023, Raul A Perusquia Flores
   -->
 
@@ -12,7 +12,7 @@ import { notify } from "@kyvg/vue3-notification"
 import { ref, reactive, onBeforeMount, watch, onBeforeUnmount, computed } from "vue"
 import PageHeading from "@/Components/Headings/PageHeading.vue"
 import { capitalize } from "@/Composables/capitalize"
-import { faUser, faUserFriends } from "@/../private/pro-light-svg-icons"
+import { faUser, faUserFriends } from "../../../../private/pro-light-svg-icons"
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { trans } from "laravel-vue-i18n"
 import Button from "@/Components/Elements/Buttons/Button.vue"
@@ -26,9 +26,9 @@ import { useBannerHash } from "@/Composables/useBannerHash"
 import { usePage } from "@inertiajs/vue3"
 
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
-import { faRocketLaunch } from "@/../private/pro-regular-svg-icons"
-import { faAsterisk } from "@/../private/pro-solid-svg-icons"
-import { faSpinnerThird } from '@/../private/pro-duotone-svg-icons'
+import { faRocketLaunch } from "../../../../private/pro-regular-svg-icons"
+import { faAsterisk } from "../../../../private/pro-solid-svg-icons"
+import { faSpinnerThird } from '../../../../private/pro-duotone-svg-icons'
 library.add( faAsterisk, faRocketLaunch, faUser, faUserFriends, faSpinnerThird );
 
 interface Action {
@@ -100,14 +100,13 @@ const props = defineProps<{
 }>()
 
 const user = ref(usePage().props.auth.user)
-const tenant = useLayoutStore().tenant
 const isModalOpen = ref(false)
 const comment = ref('')
 const loadingState = ref(false)
 const routeSave = ref()
 const isSetData = ref(false)
 const routeExit = ref()
-const dbPath = 'tenants' + '/' + tenant.slug + '/banner_workshop/' + props.banner.slug
+const dbPath = 'customers' + '/' + useLayoutStore().user.customer_slug + '/banner_workshop/' + props.banner.slug
 const data = reactive(cloneDeep(props.bannerLayout))
 let timeoutId: any
 
@@ -133,7 +132,7 @@ const sendDataToServer = async () => {
         },
         onError: (errors: any) => {
             notify({
-                title: "Failed to Update Banner",
+                title: "Failed to update banner",
                 text: errors,
                 type: "error"
             });
@@ -168,12 +167,15 @@ const fetchInitialData = async () => {
 
 
     } catch (error) {
+
         Object.assign(data, cloneDeep(props.bannerLayout))
         notify({
             title: "Failed to get realtime data",
             text: 'please reload and make sure your internet connection is stable',
             type: "error"
         });
+
+
     } finally {
         isSetData.value = false
         loadingState.value = false
@@ -275,6 +277,7 @@ onBeforeUnmount(() => {
 <template layout="CustomerApp">
     <Head :title="capitalize(title)" />
     <PageHeading :data="pageHead">
+        <!--
         <template #button="{ dataPageHead: head }">
             <div class="flex items-center gap-2">
 
@@ -287,12 +290,13 @@ onBeforeUnmount(() => {
                             style="--fa-primary-color: #f3f3f3; --fa-secondary-color: #ff6600; --fa-secondary-opacity: 1;"
                             size="sm" :class="[action.iconClass]" />
                         <FontAwesomeIcon :icon="head.getActionIcon(action)" aria-hidden="true" />
-                        {{ trans(head.getActionLabel(action)) }}
+                        {{ head.getActionLabel(action) }}
                     </Button>
                         {{ saveRouteValue(action) }}
                 </span>
             </div>
         </template>
+        -->
 
         <Modal :isOpen="isModalOpen" @onClose="isModalOpen = false">
             <div>

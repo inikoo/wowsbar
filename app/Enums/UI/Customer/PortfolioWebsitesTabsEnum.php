@@ -16,7 +16,6 @@ enum PortfolioWebsitesTabsEnum: string
     use HasTabs;
 
     case WEBSITES             = 'websites';
-    case UPLOADED_WEBSITES    = 'uploaded_websites';
     case CHANGELOG            = 'changelog';
 
     public function blueprint(): array
@@ -26,10 +25,7 @@ enum PortfolioWebsitesTabsEnum: string
                 'title' => __('websites'),
                 'icon'  => 'fas fa-info-circle',
             ],
-            PortfolioWebsitesTabsEnum::UPLOADED_WEBSITES => [
-                'title' => __('uploaded websites'),
-                'icon'  => 'fal fa-window-maximize',
-            ],
+
             PortfolioWebsitesTabsEnum::CHANGELOG => [
                 'title' => __('changelog'),
                 'icon'  => 'fal fa-clock',

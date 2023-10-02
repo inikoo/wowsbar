@@ -51,7 +51,7 @@ class ShowPortfolioWebsite extends InertiaAction
                 'title'       => __('PortfolioWebsite'),
                 'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->getName(),
-                    $request->route()->parameters
+                    $request->route()->originalParameters()
                 ),
                 'navigation'  => [
                     'previous' => $this->getPrevious($portfolioWebsite, $request),
@@ -63,6 +63,16 @@ class ShowPortfolioWebsite extends InertiaAction
                         'title' => __('website'),
                         'icon'  => 'fal fa-globe'
                     ],
+                    'actions' => [
+                        $this->canEdit ? [
+                            'type'  => 'button',
+                            'style' => 'edit',
+                            'route' => [
+                                'name'       => preg_replace('/show$/', 'edit', $request->route()->getName()),
+                                'parameters' => array_values($request->route()->originalParameters())
+                            ]
+                        ] : null
+                    ]
                 ],
                 'tabs'        => [
                     'current'    => $this->tab,
@@ -74,10 +84,15 @@ class ShowPortfolioWebsite extends InertiaAction
                     : Inertia::lazy(fn () => HistoryResource::collection(IndexHistories::run($portfolioWebsite))),
 
                 PortfolioWebsiteTabsEnum::BANNERS->value => $this->tab == PortfolioWebsiteTabsEnum::BANNERS->value ?
-                    fn () => BannerResource::collection(IndexBanners::run($portfolioWebsite))
-                    : Inertia::lazy(fn () => BannerResource::collection(IndexBanners::run($portfolioWebsite)))
+                    fn () => BannerResource::collection(IndexBanners::run($portfolioWebsite, 'banners'))
+                    : Inertia::lazy(fn () => BannerResource::collection(IndexBanners::run($portfolioWebsite, 'banners')))
             ]
-        )->table(IndexHistories::make()->tableStructure());
+        )
+            ->table(IndexBanners::make()->tableStructure(
+                parent:$portfolioWebsite,
+                prefix: 'banners'
+            ))
+            ->table(IndexHistories::make()->tableStructure());
     }
 
     public function jsonResponse(PortfolioWebsite $portfolioWebsite): PortfolioWebsiteResource
@@ -98,35 +113,35 @@ class ShowPortfolioWebsite extends InertiaAction
                         ],
                         'model' => [
                             'route' => $routeParameters['model'],
-                            'label' => $portfolioWebsite->name,
+                            'label' => $portfolioWebsite->code,
                         ],
 
                     ],
                     'simple'         => [
                         'route' => $routeParameters['model'],
-                        'label' => $portfolioWebsite->name
+                        'label' => $portfolioWebsite->code
                     ],
-                    'suffix' => $suffix
+                    'suffix'         => $suffix
                 ],
             ];
         };
 
         return match ($routeName) {
-            'org.portfolios.show',
-            'org.portfolios.edit' =>
+            'customer.portfolio.websites.show',
+            'customer.portfolio.websites.edit' =>
             array_merge(
                 ShowPortfolio::make()->getBreadcrumbs(),
                 $headCrumb(
                     'modelWithIndex',
-                    $routeParameters['portfolioWebsite'],
+                    PortfolioWebsite::firstWhere('slug', $routeParameters['portfolioWebsite']),
                     [
                         'index' => [
-                            'name'       => 'org.portfolios.index',
+                            'name'       => 'customer.portfolio.websites.index',
                             'parameters' => []
                         ],
                         'model' => [
-                            'name'       => 'org.portfolios.show',
-                            'parameters' => [$routeParameters['portfolioWebsite']->slug]
+                            'name'       => 'customer.portfolio.websites.show',
+                            'parameters' => $routeParameters
                         ]
                     ],
                     $suffix
@@ -150,16 +165,17 @@ class ShowPortfolioWebsite extends InertiaAction
 
         return $this->getNavigation($next, $request->route()->getName());
     }
-
     private function getNavigation(?PortfolioWebsite $portfolioWebsite, string $routeName): ?array
     {
         if (!$portfolioWebsite) {
             return null;
         }
 
+
         return match ($routeName) {
-            'org.portfolios.show' => [
-                'label' => $portfolioWebsite->name,
+            'customer.portfolio.websites.show',
+            'customer.portfolio.websites.edit' => [
+                'label' => $portfolioWebsite->code,
                 'route' => [
                     'name'       => $routeName,
                     'parameters' => [

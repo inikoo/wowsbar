@@ -23,7 +23,7 @@ class Abbreviate
 
     public function handle(
         string $string,
-        $maximumLength = 3,
+        int $maximumLength = 3,
         $case = 'upper',
         $digits = false,
         $removeAbbreviations = true

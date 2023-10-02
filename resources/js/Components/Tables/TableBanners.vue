@@ -5,23 +5,23 @@
   -->
 
 <script setup lang="ts">
-import { Link } from '@inertiajs/vue3'
-import { library } from "@fortawesome/fontawesome-svg-core"
+import {Link} from '@inertiajs/vue3'
+import {library} from "@fortawesome/fontawesome-svg-core"
 import Table from '@/Components/Table/Table.vue'
-import { Banner } from "@/types/banner"
+import {Banner} from "@/types/banner"
 import Icon from '@/Components/Icon.vue'
-import { faSeedling, faBroadcastTower } from "../../../private/pro-light-svg-icons"
+import {faSeedling, faBroadcastTower, faImage} from "../../../private/pro-light-svg-icons"
 import Image from "@/Components/Image.vue"
-import { useFormatTime } from '@/Composables/useFormatTime'
-import { useLocaleStore } from '@/Stores/locale'
+import {useFormatTime} from '@/Composables/useFormatTime'
+import {useLocaleStore} from '@/Stores/locale'
 
 const locale = useLocaleStore()
 
-library.add(faSeedling, faBroadcastTower)
+library.add(faSeedling, faBroadcastTower, faImage)
 
 const props = defineProps<{
     data: object,
-    tab?:string
+    tab?: string
 }>()
 
 
@@ -34,11 +34,15 @@ function bannerRoute(banner: Banner) {
         case 'customer.portfolio.websites.show':
             return route(
                 'customer.portfolio.websites.show.banners.show',
-                [route().params['portfolioWebsite'],banner.slug])
+                [route().params['portfolioWebsite'], banner.slug])
         case 'customer.portfolio.websites.show.banners.index':
             return route(
                 'customer.portfolio.websites.show.banners.show',
-                [route().params['portfolioWebsite'],banner.slug])
+                [route().params['portfolioWebsite'], banner.slug])
+        default:
+            return route(
+                'customer.banners.show',
+                [banner.slug])
     }
 }
 
@@ -62,15 +66,15 @@ function bannerRoute(banner: Banner) {
             </div>
         </template>
 
-        <template #cell(created_at)="{ item }">
+        <template #cell(created_at)="{ item:banner }">
             <div class="text-gray-500">
-                {{ useFormatTime(item.created_at, locale.language.code) }}
+                {{ useFormatTime(banner['created_at'], locale.language.code) }}
             </div>
         </template>
 
-        <template #cell(updated_at)="{ item }">
+        <template #cell(updated_at)="{ item:banner }">
             <div class="text-gray-500">
-                {{ useFormatTime(item.updated_at, locale.language.code) }}
+                {{ useFormatTime(banner['updated_at'], locale.language.code) }}
             </div>
         </template>
     </Table>

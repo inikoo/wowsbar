@@ -41,6 +41,7 @@ class AttachImageToCustomer
                 ->usingName($originalFilename)
                 ->usingFileName($filename)
                 ->toMediaCollection($collection);
+            $media->refresh();
         }
         return $media;
     }

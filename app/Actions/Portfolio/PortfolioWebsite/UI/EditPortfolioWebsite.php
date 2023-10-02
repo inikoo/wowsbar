@@ -10,7 +10,6 @@ namespace App\Actions\Portfolio\PortfolioWebsite\UI;
 use App\Actions\InertiaAction;
 use App\Models\Portfolio\PortfolioWebsite;
 use Exception;
-use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -46,19 +45,19 @@ class EditPortfolioWebsite extends InertiaAction
                     'title'       => __("PortfolioWebsite's settings"),
                     'breadcrumbs' => $this->getBreadcrumbs(
                         $request->route()->getName(),
-                        $request->route()->parameters()
+                        $request->route()->originalParameters()
                     ),
                     'navigation'   => [
                         'previous' => $this->getPrevious($portfolioWebsite, $request),
                         'next'     => $this->getNext($portfolioWebsite, $request),
                     ],
                     'pageHead'    => [
-                        'title'     => __('Edit website'),
-                        'container' => [
-                            'icon'    => ['fal', 'fa-globe'],
-                            'tooltip' => __('PortfolioWebsite'),
-                            'label'   => Str::possessive($portfolioWebsite->name)
+                        'title'   => $portfolioWebsite->name,
+                        'icon'    => [
+                            'title' => __('website'),
+                            'icon'  => 'fal fa-globe'
                         ],
+
 
                         'iconRight'    =>
                             [
@@ -96,14 +95,11 @@ class EditPortfolioWebsite extends InertiaAction
                                         'value'    => $portfolioWebsite->name,
                                         'required' => true,
                                     ],
-                                    'domain' => [
+                                    'url' => [
                                         'type'      => 'inputWithAddOn',
-                                        'label'     => __('domain'),
-                                        'leftAddOn' => [
-                                            'label'=> 'http://www.'
-                                        ],
-                                        'value'    => $portfolioWebsite->domain,
-                                        'required' => true,
+                                        'label'     => __('url'),
+                                        'value'     => $portfolioWebsite->url,
+                                        'required'  => true,
                                     ],
                                 ]
                             ],
@@ -111,8 +107,8 @@ class EditPortfolioWebsite extends InertiaAction
                     ],
                         'args'      => [
                             'updateRoute' => [
-                                'name'       => 'models.portfolio-website.update',
-                                'parameters' => $portfolioWebsite->slug
+                                'name'       => 'customer.models.portfolio-website.update',
+                                'parameters' => $portfolioWebsite->id
                             ],
                         ]
                     ],

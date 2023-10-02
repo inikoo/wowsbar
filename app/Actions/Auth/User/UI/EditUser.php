@@ -7,6 +7,7 @@
 
 namespace App\Actions\Auth\User\UI;
 
+use App\Actions\Auth\CustomerUser\UI\ShowCustomerUser;
 use App\Actions\InertiaAction;
 use App\Actions\Traits\Fields\WithUserFields;
 use App\Models\Auth\User;
@@ -77,7 +78,7 @@ class EditUser extends InertiaAction
 
     public function getBreadcrumbs(string $routeName, array $routeParameters): array
     {
-        return ShowUser::make()->getBreadcrumbs(
+        return ShowCustomerUser::make()->getBreadcrumbs(
             routeName: preg_replace('/edit$/', 'show', $routeName),
             routeParameters: $routeParameters,
             suffix: '('.__('editing').')'

@@ -15,9 +15,9 @@ trait WithPortfolioWebsiteFields
             [
                 'title'  => __('domain'),
                 'fields' => [
-                    'domain' => [
+                    'url' => [
                         'type'      => 'inputWithAddOn',
-                        'label'     => __('domain'),
+                        'label'     => __('url'),
                         'leftAddOn' => [
                             'label' => 'https://'
                         ],

@@ -11,6 +11,7 @@ use App\Actions\Portfolio\PortfolioWebsite\Hydrators\PortfolioWebsiteHydrateUniv
 use App\Actions\Traits\WithActionUpdate;
 use App\Http\Resources\Portfolio\PortfolioWebsiteResource;
 use App\Models\Portfolio\PortfolioWebsite;
+use App\Rules\IUnique;
 use Lorisleiva\Actions\ActionRequest;
 
 class UpdatePortfolioWebsite
@@ -20,8 +21,9 @@ class UpdatePortfolioWebsite
 
     public function handle(PortfolioWebsite $portfolioWebsite, array $modelData): PortfolioWebsite
     {
-        $portfolioWebsite=$this->update($portfolioWebsite, $modelData, ['data']);
+        $portfolioWebsite = $this->update($portfolioWebsite, $modelData, ['data']);
         PortfolioWebsiteHydrateUniversalSearch::dispatch($portfolioWebsite);
+
         return $portfolioWebsite;
     }
 
@@ -32,19 +34,47 @@ class UpdatePortfolioWebsite
     }
 
 
-    public function rules(): array
+    public function rules(ActionRequest $request): array
     {
+        $currentID = $request->route()->parameters()['portfolioWebsite']->id;
+
         return [
-            'domain' => ['sometimes','required'],
-            'code'   => ['sometimes','required', 'unique:portfolio_websites','max:8'],
-            'name'   => ['sometimes','required']
+            'url'  => [
+                'sometimes',
+                'required',
+                'url',
+                'max:500',
+                new IUnique(
+                    table: 'portfolio_websites',
+                    extraConditions: [
+                        ['column' => 'customer_id', 'value' => customer()->id],
+                        ['column' => 'id', 'operator' => '!=', 'value' => $currentID]
+                    ]
+                ),
+
+            ],
+            'code' => [
+                'sometimes',
+                'required',
+                'alpha_dash:ascii',
+                'max:16',
+                new IUnique(
+                    table: 'portfolio_websites',
+                    extraConditions: [
+                        ['column' => 'customer_id', 'value' => customer()->id],
+                        ['column' => 'id', 'operator' => '!=', 'value' => $currentID]
+                    ]
+                ),
+            ],
+            'name' => ['sometimes', 'required', 'string', 'max:128']
         ];
     }
 
     public function asController(PortfolioWebsite $portfolioWebsite, ActionRequest $request): PortfolioWebsite
     {
-        $this->fillFromRequest($request);
-        return $this->handle($portfolioWebsite, $this->validateAttributes());
+        $request->validate();
+
+        return $this->handle($portfolioWebsite, $request->validated());
     }
 
 

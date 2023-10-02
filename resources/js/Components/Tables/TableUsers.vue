@@ -30,10 +30,7 @@ function userRoute(user: User) {
             return route(
                 'org.crm.customers.show.web-users.show',
                 [route().params['customer'],user.username]);
-        case 'sysadmin.users.index':
-            return route(
-                'sysadmin.users.show',
-                [user.username]);
+
     }
 }
 
@@ -64,7 +61,7 @@ function setColor(status: status) {
         </template>
 
         <template #cell(status)="{ item: user }">
-            <Tag :color="setColor(user['status'])">{{ user.status }}</Tag>
+            <Tag :color="setColor(user['status'])">{{ user['status'] }}</Tag>
         </template>
     </Table>
 </template>

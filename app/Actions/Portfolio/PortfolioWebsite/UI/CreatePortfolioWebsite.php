@@ -7,7 +7,6 @@
 
 namespace App\Actions\Portfolio\PortfolioWebsite\UI;
 
-use App\Actions\Portfolios\CustomerWebsite\UI\IndexCustomerWebsites;
 use App\Actions\InertiaAction;
 use App\Actions\Traits\Fields\WithPortfolioWebsiteFields;
 use Inertia\Inertia;
@@ -20,7 +19,7 @@ class CreatePortfolioWebsite extends InertiaAction
 
     public function authorize(ActionRequest $request): bool
     {
-        return $request->get('customerUser')->hasPermissionTo('customer.portfolio.edit');
+        return $request->get('customerUser')->hasPermissionTo('portfolio.edit');
     }
 
 
@@ -74,7 +73,7 @@ class CreatePortfolioWebsite extends InertiaAction
     public function getBreadcrumbs(): array
     {
         return array_merge(
-            IndexCustomerWebsites::make()->getBreadcrumbs(
+            IndexPortfolioWebsites::make()->getBreadcrumbs(
                 'customer.portfolio.websites.index',
                 []
             ),

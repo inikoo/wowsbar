@@ -15,13 +15,6 @@ use App\Actions\Portfolio\Banner\UI\ShowBanner;
 use App\Actions\Portfolio\Banner\UI\ShowBannerWorkshop;
 use App\Actions\Portfolio\Banner\UI\ShowDeletedBanner;
 use App\Actions\Portfolio\Banner\UploadImagesToBanner;
-use App\Actions\Portfolio\Gallery\DeleteUploadedImage;
-use App\Actions\Portfolio\Gallery\UI\IndexStockImages;
-use App\Actions\Portfolio\Gallery\UI\ShowGallery;
-use App\Actions\Portfolio\Gallery\UI\UploadedImages\EditUploadedImage;
-use App\Actions\Portfolio\Gallery\UI\UploadedImages\IndexUploadedImages;
-use App\Actions\Portfolio\Gallery\UI\UploadedImages\ShowUploadedImage;
-use App\Actions\Portfolio\Gallery\UploadImagesToGallery;
 use App\Actions\Portfolio\PortfolioWebsite\UI\CreatePortfolioWebsite;
 use App\Actions\Portfolio\PortfolioWebsite\UI\EditPortfolioWebsite;
 use App\Actions\Portfolio\PortfolioWebsite\UI\IndexPortfolioWebsites;
@@ -46,11 +39,7 @@ Route::get('/websites/{portfolioWebsite}/banners/create', [CreateBanner::class, 
 Route::get('/websites/{portfolioWebsite}/banners', [IndexBanners::class, 'inPortfolioWebsite'])->name('websites.show.banners.index');
 
 
-Route::get('/websites/{portfolioWebsite}/banners/{banner}', [
-    'uses'  => ShowBanner::class . '@inPortfolioWebsite',
-    'icon'  => 'globe',
-    'label' => 'banner'
-])->name('websites.show.banners.show');
+Route::get('/websites/{portfolioWebsite}/banners/{banner}', ['icon'  => 'globe', 'label' => 'banner'])->uses([ShowBanner::class,'inPortfolioWebsite'])->name('websites.show.banners.show');
 
 Route::get('/websites/{portfolioWebsite}/banners/{banner}/edit', [
     'uses'  => EditBanner::class,
@@ -71,7 +60,6 @@ Route::get('/banners/create', [CreateBanner::class, 'inCustomer'])->name('banner
 Route::get('/banners/{banner}', [ShowBanner::class, 'inCustomer'])->name('banners.show');
 Route::get('/banners/{banner}/edit', EditBanner::class)->name('banners.edit');
 Route::get('/banners/{banner}/workshop', [ShowBannerWorkshop::class, 'inCustomer'])->name('banners.workshop');
-Route::post('/banners/{banner}/workshop/images', [UploadImagesToBanner::class, 'inBanner'])->name('banners.workshop.images.store');
 
 Route::get('/banners/{banner}/delete', [RemoveBanner::class, 'inCustomer'])->name('banners.remove');
 Route::get('/banners/{banner}/deleted', [ShowDeletedBanner::class, 'inCustomer'])->withTrashed()->name('banners.deleted');
@@ -83,17 +71,7 @@ Route::get('/banners/{banner}/snapshots/{snapshot}', [ShowSnapshot::class, 'inBa
 
 //Route::get('/banners/{banner}/delete', [RemoveBanner::class,'inCustomer'])->name('banners.remove');
 
-Route::prefix('gallery')->group(function () {
-    Route::get('/', ShowGallery::class)->name('gallery');
-    Route::get('/images/{media}', ShowUploadedImage::class)->name('images.show');
-    Route::get('/images/{media}/edit', EditUploadedImage::class)->name('images.edit');
-    Route::get('/images/{media}/delete', DeleteUploadedImage::class)->name('images.remove');
-    Route::post('/images', UploadImagesToGallery::class)->name('images.upload');
 
-
-    Route::get('/uploaded/images', IndexUploadedImages::class)->name('uploaded.images');
-    Route::get('/stock/images', IndexStockImages::class)->name('stock.images');
-});
 
 //Route::get('/images', IndexImages::class)->name('images.index');
 

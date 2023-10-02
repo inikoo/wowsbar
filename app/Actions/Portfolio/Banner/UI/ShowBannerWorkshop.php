@@ -9,6 +9,7 @@ namespace App\Actions\Portfolio\Banner\UI;
 
 use App\Actions\InertiaAction;
 use App\Http\Resources\Portfolio\BannerResource;
+use App\Models\CRM\Customer;
 use App\Models\Portfolio\Banner;
 use App\Models\Portfolio\PortfolioWebsite;
 use Illuminate\Support\Str;
@@ -18,6 +19,15 @@ use Lorisleiva\Actions\ActionRequest;
 
 class ShowBannerWorkshop extends InertiaAction
 {
+    private Customer|PortfolioWebsite $parent;
+
+    public function handler(Customer|PortfolioWebsite $parent, Banner $banner): Banner
+    {
+        $this->parent = $parent;
+
+        return $banner;
+    }
+
     public function authorize(ActionRequest $request): bool
     {
         $this->canEdit   = $request->get('customerUser')->hasPermissionTo('portfolio.edit');
@@ -26,32 +36,30 @@ class ShowBannerWorkshop extends InertiaAction
         return $request->get('customerUser')->hasPermissionTo("portfolio.view");
     }
 
-    public function inCustomer(Banner $banner, ActionRequest $request): Banner
+    public function asController(Banner $banner, ActionRequest $request): Banner
     {
         $this->initialisation($request);
 
-        return $banner;
+        return $this->handler(customer(), $banner);
     }
 
-    /** @noinspection PhpUnusedParameterInspection */
     public function inPortfolioWebsite(PortfolioWebsite $portfolioWebsite, Banner $banner, ActionRequest $request): Banner
     {
         $this->initialisation($request);
 
-        return $banner;
+        return $this->handler($portfolioWebsite, $banner);
     }
 
 
     public function htmlResponse(Banner $banner, ActionRequest $request): Response
     {
-
         return Inertia::render(
-            'Portfolio/BannerWorkshop',
+            'Banners/BannerWorkshop',
             [
                 'title'             => __("Banner's workshop"),
                 'breadcrumbs'       => $this->getBreadcrumbs(
                     $request->route()->getName(),
-                    $request->route()->parameters
+                    $request->route()->originalParameters()
                 ),
                 'navigation'        => [
                     'previous' => $this->getPrevious($banner, $request),
@@ -88,9 +96,9 @@ class ShowBannerWorkshop extends InertiaAction
                             'label'  => __('Publish'),
                             'icon'   => 'far fa-rocket-launch',
                             'route'  => [
-                                'name'       => 'models.banner.publish',
+                                'name'       => 'customer.models.banner.publish',
                                 'parameters' => [
-                                    'banner' => $banner->slug
+                                    'banner' => $banner->id
                                 ]
                             ],
                             'method' => 'post',
@@ -102,14 +110,14 @@ class ShowBannerWorkshop extends InertiaAction
                 'bannerLayout'      => $banner->compiled_layout,
                 'banner'            => BannerResource::make($banner)->getArray(),
                 'autoSaveRoute'     => [
-                    'name'       => 'models.banner.fetch-firebase',
+                    'name'       => 'customer.models.banner.fetch-firebase',
                     'parameters' => [
-                        'banner' => $banner->slug
+                        'banner' => $banner->id
                     ]
                 ],
                 'imagesUploadRoute' => [
-                    'name'       => $request->route()->getName().'.images.store',
-                    'parameters' => $request->route()->originalParameters()
+                    'name'       => 'customer.models.banner.images.store',
+                    'parameters' => $banner->id
                 ],
 
             ]
@@ -128,18 +136,17 @@ class ShowBannerWorkshop extends InertiaAction
 
     public function getPrevious(Banner $banner, ActionRequest $request): ?array
     {
-        $previous = Banner::where('code', '<', $banner->code)->orderBy('code', 'desc')->first();
+        $previous = Banner::where('slug', '<', $banner->slug)->orderBy('slug', 'desc')->first();
 
         return $this->getNavigation($previous, $request->route()->getName(), $request->route()->parameters);
     }
 
     public function getNext(Banner $banner, ActionRequest $request): ?array
     {
-        $next = Banner::where('code', '>', $banner->code)->orderBy('code')->first();
+        $next = Banner::where('slug', '>', $banner->slug)->orderBy('slug')->first();
 
         return $this->getNavigation($next, $request->route()->getName(), $request->route()->parameters);
     }
-
     private function getNavigation(?Banner $banner, string $routeName, array $routeParameters): ?array
     {
         if (!$banner) {
@@ -147,7 +154,8 @@ class ShowBannerWorkshop extends InertiaAction
         }
 
         return match ($routeName) {
-            'customer.portfolio.banners.workshop', 'customer.portfolio.websites.show.banners.workshop' => [
+            'customer.banners.workshop',
+            'customer.portfolio.websites.show.banners.workshop' => [
                 'label' => $banner->name,
                 'route' => [
                     'name'       => $routeName,

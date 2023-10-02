@@ -7,16 +7,20 @@
 
 namespace App\Models\Auth;
 
+use App\Actions\Utils\Abbreviate;
 use App\Models\CRM\Customer;
 use App\Models\Traits\HasUniversalSearch;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\Permission\Traits\HasRoles;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 /**
  * App\Models\Auth\CustomerUser
  *
  * @property int $id
+ * @property string|null $slug
  * @property bool $is_root
  * @property bool $status
  * @property int $customer_id
@@ -39,6 +43,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerUser whereCustomerId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerUser whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerUser whereIsRoot($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerUser whereSlug($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerUser whereStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerUser whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerUser whereUserId($value)
@@ -48,10 +53,28 @@ class CustomerUser extends Model
 {
     use HasUniversalSearch;
     use HasRoles;
+    use HasSlug;
 
     protected $table='customer_user';
 
     protected $guarded = [];
+
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
+
+    public function getSlugOptions(): SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom(function () {
+                return $this->user->slug.'-'.Abbreviate::run($this->customer->slug);
+            })
+            ->saveSlugsTo('slug')
+            ->slugsShouldBeNoLongerThan(24);
+    }
+
+
 
     public function user(): BelongsTo
     {

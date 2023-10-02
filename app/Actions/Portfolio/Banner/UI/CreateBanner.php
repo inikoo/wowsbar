@@ -12,7 +12,6 @@ use App\Actions\Portfolio\PortfolioWebsite\UI\GetPortfolioWebsitesOptions;
 use App\Models\CRM\Customer;
 use App\Models\Portfolio\PortfolioWebsite;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -41,35 +40,13 @@ class CreateBanner extends InertiaAction
 
     public function handle(Customer|PortfolioWebsite $parent, ActionRequest $request): Response
     {
+        $fields = [];
 
-        $fields=[];
-
-        $fields[]= [
-            'title'  => __('ID/name'),
-            'fields' => [
-
-                'code' => [
-                    'type'          => 'input',
-                    'label'         => __('code'),
-                    'placeholder'   => __('Input unique code'),
-                    'required'      => true,
-                    'value'         => Str::random(3)
-                ],
-                'name' => [
-                    'type'          => 'input',
-                    'label'         => __('name'),
-                    'placeholder'   => __('Name for new banner'),
-                    'required'      => true,
-                    'value'         => '',
-                ],
-            ]
-        ];
-
-        if(class_basename($parent)=='Customer') {
-            $fields[]= [
+        if (class_basename($parent) == 'Customer' and $parent->portfolioStats->number_portfolio_websites > 1) {
+            $fields[] = [
                 'title'  => __('Website'),
                 'fields' => [
-                    'portfolio_website_id'  => [
+                    'portfolio_website_id' => [
                         'type'        => 'select',
                         'label'       => __('website'),
                         'placeholder' => __('Select a website'),
@@ -83,12 +60,35 @@ class CreateBanner extends InertiaAction
             ];
         }
 
+        $fields[] = [
+            'title'  => __('name'),
+            'fields' => [
+                /*
+                                'code' => [
+                                    'type'          => 'input',
+                                    'label'         => __('code'),
+                                    'placeholder'   => __('Input unique code'),
+                                    'required'      => true,
+                                    'value'         => Str::random(3)
+                                ],
+                */
+                'name' => [
+                    'type'        => 'input',
+                    'label'       => __('name'),
+                    'placeholder' => __('Name for new banner'),
+                    'required'    => true,
+                    'value'       => '',
+                ],
+            ]
+        ];
+
+
         return Inertia::render(
             'CreateModel',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->getName(),
-                    $request->route()->parameters()
+                    $request->route()->originalParameters()
                 ),
                 'title'       => __('new banner'),
                 'pageHead'    => [
@@ -121,13 +121,13 @@ class CreateBanner extends InertiaAction
                     'route'     =>
 
                         match (class_basename($parent)) {
-                            'Authenticated' => [
-                                'name' => 'models.banner.store',
+                            'Customer' => [
+                                'name' => 'customer.models.banner.store',
                             ],
                             default => [
-                                'name'       => 'models.portfolio-website.banner.store',
+                                'name'       => 'customer.models.portfolio-website.banner.store',
                                 'parameters' => [
-                                    'portfolioWebsite' => $parent->slug,
+                                    'portfolioWebsite' => $parent->id,
                                 ]
                             ],
                         }
@@ -149,7 +149,7 @@ class CreateBanner extends InertiaAction
                     $routeParameters
                 ),
                 default => IndexBanners::make()->getBreadcrumbs(
-                    'customer.portfolio.websites.show.banners.index',
+                    'customer.banners.index',
                     $routeParameters
                 )
             },

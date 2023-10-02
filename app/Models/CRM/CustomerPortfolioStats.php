@@ -7,7 +7,6 @@
 
 namespace App\Models\CRM;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -15,6 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property int $id
  * @property int $customer_id
+ * @property int $number_portfolio_websites
  * @property int $number_banners_no_website
  * @property int $number_banners
  * @property int $number_historic_snapshots
@@ -39,6 +39,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerPortfolioStats whereNumberBannersStateRetired($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerPortfolioStats whereNumberBannersStateUnpublished($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerPortfolioStats whereNumberHistoricSnapshots($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerPortfolioStats whereNumberPortfolioWebsites($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerPortfolioStats whereNumberSnapshots($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerPortfolioStats whereNumberSnapshotsStateHistoric($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerPortfolioStats whereNumberSnapshotsStateLive($value)
@@ -48,7 +49,5 @@ use Illuminate\Database\Eloquent\Model;
  */
 class CustomerPortfolioStats extends Model
 {
-    use HasFactory;
-
     protected $guarded = [];
 }
