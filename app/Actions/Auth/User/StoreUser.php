@@ -12,6 +12,7 @@ use App\Actions\Auth\User\Hydrators\UserHydrateUniversalSearch;
 use App\Actions\Auth\User\UI\SetUserAvatar;
 use App\Actions\CRM\Customer\Hydrators\CustomerHydrateUniversalSearch;
 use App\Actions\CRM\Customer\Hydrators\CustomerHydrateCustomerUsers;
+use App\Models\Auth\CustomerUser;
 use App\Models\Auth\User;
 use App\Models\CRM\Customer;
 use App\Models\Web\Website;
@@ -35,14 +36,14 @@ class StoreUser
     private bool $asAction = false;
 
 
-    public function handle(Website $website, Customer $customer, array $modelData = []): User
+    public function handle(Website $website, Customer $customer, array $modelData = []): CustomerUser
     {
         data_set($modelData, 'ulid', Str::ulid());
         data_set($modelData, 'website_id', $website->id);
         /** @var User $user */
         $user = User::create(Arr::except($modelData, ['is_root']));
 
-        $customerUser=StoreCustomerUser::run($customer, $user, Arr::only($modelData, ['is_root']));
+        $customerUser = StoreCustomerUser::run($customer, $user, Arr::only($modelData, ['is_root']));
 
         if (!$customer->website_id) {
             $customer->update(
@@ -60,7 +61,7 @@ class StoreUser
 
         CustomerHydrateCustomerUsers::dispatch($customer);
 
-        return $user;
+        return $customerUser;
     }
 
     public function authorize(ActionRequest $request): bool
@@ -69,7 +70,7 @@ class StoreUser
             return true;
         }
 
-        return $request->user()->hasPermissionTo("sysadmin.edit");
+        return $request->get('customerUser')->hasPermissionTo("sysadmin.edit");
     }
 
     public function rules(): array
@@ -81,27 +82,28 @@ class StoreUser
                     'required',
                     app()->isLocal() || app()->environment('testing') ? null : Password::min(8)->uncompromised()
                 ],
-            'contact_name' => ['sometimes', 'nullable', 'string', 'max:255'],
+            'contact_name' => ['required', 'string', 'max:255'],
             'email'        => 'required|iunique:users|email|max:255',
-            'is_root'      => ['sometimes','required', 'boolean']
+            'is_root'      => ['sometimes', 'required', 'boolean']
         ];
     }
 
-    public function asController(Website $website, Customer $customer, ActionRequest $request): User
+    public function asController(ActionRequest $request): CustomerUser
     {
         $request->validate();
+        $customer = customer();
 
-        return $this->handle($website, $customer, $request->validated());
+        return $this->handle($customer->website, $customer, $request->validated());
     }
 
-    public function htmlResponse(User $user): RedirectResponse
+    public function htmlResponse(CustomerUser $customerUser): RedirectResponse
     {
-        return Redirect::route('sysadmin.users.show', [
-            $user->slug
+        return Redirect::route('customer.sysadmin.users.show', [
+            $customerUser->slug
         ]);
     }
 
-    public function action(Website $website, Customer $customer, ?array $modelData = []): User
+    public function action(Website $website, Customer $customer, ?array $modelData = []): CustomerUser
     {
         $this->asAction = true;
         $this->setRawAttributes($modelData);
@@ -136,8 +138,8 @@ class StoreUser
 
         Config::set('global.customer_id', $customer->id);
 
-        $email = $command->option('email') ?? $customer->email;
-        $name  = $command->option('name')  ?? $customer->contact_name;
+        $email = $command->argument('email');
+        $name  = $command->option('name') ?? $customer->contact_name;
 
         $this->setRawAttributes(
             [
@@ -148,12 +150,11 @@ class StoreUser
             ]
         );
 
-        $validatedData = $this->validateAttributes();
-        $user          = $this->handle($website, $customer, $validatedData);
+        $validatedData         = $this->validateAttributes();
+        $customerUser          = $this->handle($website, $customer, $validatedData);
 
 
-
-        $command->line("Public user $user->email created successfully");
+        $command->line("Public user $customerUser->slug created successfully");
 
         return 0;
     }

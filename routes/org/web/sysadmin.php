@@ -6,8 +6,8 @@
  */
 
 
+use App\Actions\Auth\CustomerUser\UI\CreateCustomerUser;
 use App\Actions\Auth\User\ExportUsers;
-use App\Actions\Auth\User\UI\CreateUser;
 use App\Actions\Auth\User\UI\EditUser;
 use App\Actions\Organisation\Guest\DownloadGuestsTemplate;
 use App\Actions\Organisation\Organisation\UI\EditOrganisation;
@@ -22,7 +22,7 @@ Route::get('/system-settings', EditOrganisation::class)->name('organisation.edit
 Route::get('/users', IndexOrganisationUsers::class)->name('users.index');
 Route::get('/users/export', ExportUsers::class)->name('users.export');
 
-Route::get('/users/create', CreateUser::class)->name('users.create');
+Route::get('/users/create', CreateCustomerUser::class)->name('users.create');
 Route::get('/users/{organisationUser}', ShowOrganisationUser::class)->name('users.show');
 Route::get('/users/{user:username}/edit', EditUser::class)->name('users.edit');
 

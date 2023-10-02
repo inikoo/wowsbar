@@ -2,26 +2,43 @@
     {
         "name":"super-admin",
         "permissions": [
-            "sysadmin","portfolio","banners","gallery"
+            "sysadmin","portfolio","sysadmin"
         ]
     },
     {
-        "name":"creator",
+        "name":"portfolio",
         "permissions": [
-            "portfolio","banners","gallery"
+            "portfolio"
         ]
     },
     {
-        "name":"artist",
+        "name":"banners",
         "permissions": [
-            "portfolio.gallery","portfolio.view"
+            "portfolio.view","portfolio.banners"
         ]
     },
     {
-        "name":"editor",
+        "name":"social",
         "permissions": [
-            "portfolio","banners","gallery"
+            "portfolio.social"
+        ]
+    },
+    {
+        "name":"seo",
+        "permissions": [
+            "portfolio.seo"
+        ]
+    },
+    {
+        "name":"ads",
+        "permissions": [
+            "portfolio.ads"
+        ]
+    },
+    {
+        "name":"prospects",
+        "permissions": [
+            "portfolio.prospects"
         ]
     }
-
 ]

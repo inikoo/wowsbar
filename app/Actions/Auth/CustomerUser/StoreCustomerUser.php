@@ -12,6 +12,7 @@ use App\Models\Auth\CustomerUser;
 use App\Models\Auth\Role;
 use App\Models\Auth\User;
 use App\Models\CRM\Customer;
+use Illuminate\Validation\Rules\Password;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class StoreCustomerUser
@@ -40,4 +41,23 @@ class StoreCustomerUser
         return $customerUser;
 
     }
+
+    public function rules(): array
+    {
+        return [
+            'password'     =>
+                [
+                    'sometimes',
+                    'required',
+                    app()->isLocal() || app()->environment('testing') ? null : Password::min(8)->uncompromised()
+                ],
+            'contact_name' => ['sometimes', 'nullable', 'string', 'max:255'],
+            'email'        => 'required|iunique:users|email|max:255',
+        ];
+    }
+
+
+
+
+
 }

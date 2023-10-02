@@ -1,11 +1,11 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Mon, 18 Sep 2023 18:36:51 Malaysia Time, Pantai Lembeng, Bali, Indonesia
+ * Created: Mon, 02 Oct 2023 20:25:00 Malaysia Time, Kuala Lumpur, Malaysia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Auth\User\UI;
+namespace App\Actions\Organisation\OrganisationUser\UI;
 
 use App\Actions\Auth\CustomerUser\UI\IndexCustomerUsers;
 use App\Actions\InertiaAction;
@@ -13,7 +13,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
 
-class CreateUser extends InertiaAction
+class CreateOrganisationUser extends InertiaAction
 {
     public function handle(ActionRequest $request): Response
     {

@@ -14,9 +14,9 @@ class PortfolioWebsiteFactory extends Factory
     public function definition(): array
     {
         return [
-            'code'   => fake()->lexify(),
-            'name'   => fake()->company(),
-            'domain' => fake()->domainName()
+            'code' => fake()->lexify(),
+            'name' => fake()->company(),
+            'url'  => 'https://'.fake()->domainName()
         ];
     }
 }
