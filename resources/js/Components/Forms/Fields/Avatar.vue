@@ -48,7 +48,7 @@ const avatarUploaded = (file) => {
                 </div>
             </div>
         </div>
-
+z
 
         <!-- Avatar Button: Large view -->
         <div class="relative hidden overflow-hidden h-40 aspect-square rounded-full lg:inline-block">

@@ -65,15 +65,11 @@ class ShowProfile
                             "avatar" => [
                                 "type"  => "avatar",
                                 "label" => __("photo"),
-                                "value" => !blank($user->avatar_id) ? $user->avatarImageSources(0, 48) : null,
+                                "value" => !blank($user->avatar_id) ? $user->avatarImageSources(320, 320) : null,
                             ],
-                            "avatar" => [
-                                "type"  => "avatar",
-                                "label" => __("photo"),
-                                "value" => !blank($user->avatar_id) ? $user->avatarImageSources(0, 48) : null,
-                            ],
+
                             "checkcheckbox" => [
-                                "type" => "checkbox",
+                                "type"  => "checkbox",
                                 "label" => __("checkbox test"),
                                 "value" => [
                                     [
@@ -116,11 +112,11 @@ class ShowProfile
                         "icon"   => "fal fa-language",
                         "fields" => [
                             "language_id" => [
-                                "type"    => "language",
-                                "label"   => __("language"),
-                                "value"   => $user->language_id,
-                                "options" => GetLanguagesOptions::make()->translated(),
-                                "canClear"=> false
+                                "type"     => "language",
+                                "label"    => __("language"),
+                                "value"    => $user->language_id,
+                                "options"  => GetLanguagesOptions::make()->translated(),
+                                "canClear" => false
                             ],
                         ],
                     ],
@@ -169,7 +165,7 @@ class ShowProfile
                 ],
                 "args"      => [
                     "updateRoute" => [
-                        "name"       => "customer.models.profile.update"
+                        "name" => "customer.models.profile.update"
                     ],
                 ],
             ],
