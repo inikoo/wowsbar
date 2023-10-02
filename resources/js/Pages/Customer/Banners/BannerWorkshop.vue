@@ -99,7 +99,6 @@ const props = defineProps<{
     }
 }>()
 
-console.log(useLayoutStore().user)
 
 const user = ref(usePage().props.auth.user)
 const isModalOpen = ref(false)
@@ -109,12 +108,9 @@ const routeSave = ref()
 const isSetData = ref(false)
 const routeExit = ref()
 const dbPath = 'customers' + '/' + useLayoutStore().user.customer.ulid + '/banner_workshop/' + props.banner.slug
-
-console.log(dbPath)
 const data = reactive(cloneDeep(props.bannerLayout))
 let timeoutId: any
 
-console.log('props',data)
 
 const sendDataToServer = async () => {
     // When click 'Publish'
@@ -205,7 +201,6 @@ const updateData = async () => {
             const snapshot = await get(getDbRef(dbPath))
             if (snapshot.exists()) {
                 const firebaseData = snapshot.val()
-                // console.log("Update Firebase")
                 await set(getDbRef(dbPath), { ...firebaseData, ...data })
                 if (props.banner.state == 'unpublished') {
                     clearTimeout(timeoutId)

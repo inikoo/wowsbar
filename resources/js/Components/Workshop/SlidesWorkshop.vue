@@ -497,6 +497,7 @@ const setCommonEdit = () => {
 };
 
 const uploadImageRespone = (res) => {
+    console.log('inii',res)
     let setData = [];
     for (const set of res.data) {
         setData.push({
@@ -650,7 +651,7 @@ const uploadImageRespone = (res) => {
         <!-- Modal: Crop (add slide) -->
         <Modal :isOpen="isOpenCropModal" @onClose="closeModalisOpenCropModal">
             <div>
-                <CropImage :data="uploadedFilesList" :imagesUploadRoute="props.imagesUploadRoute" :respone="uploadImageRespone" />
+                <CropImage :data="uploadedFilesList" :imagesUploadRoute="props.imagesUploadRoute" :response="uploadImageRespone" />
             </div>
         </Modal>
     </div>
