@@ -9,4 +9,4 @@
 use App\Actions\Media\ShowMedia;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/{media:id}', ShowMedia::class)->name('show');
+Route::get('/{media:id}/{preset?}', ShowMedia::class)->name('show')->whereIn('preset', ['thumbnail']);

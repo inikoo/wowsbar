@@ -15,7 +15,8 @@ use App\Http\Middleware\HandleDeliveryInertiaRequests;
 use App\Http\Middleware\HandleCustomerInertiaRequests;
 use App\Http\Middleware\HandleOrgInertiaRequests;
 use App\Http\Middleware\HandlePublicInertiaRequests;
-use App\Http\Middleware\LogUserFirebaseMiddleware;
+use App\Http\Middleware\LogLiveOrganisationUsersMiddleware;
+use App\Http\Middleware\LogLiveUsersMiddleware;
 use App\Http\Middleware\LogUserRequestMiddleware;
 use App\Http\Middleware\OrgAuthenticate;
 use App\Http\Middleware\PreventRequestsDuringMaintenance;
@@ -79,7 +80,7 @@ class Kernel extends HttpKernel
             SubstituteBindings::class,
             HandleOrgInertiaRequests::class,
             AddLinkHeadersForPreloadedAssets::class,
-            LogUserFirebaseMiddleware::class,
+            LogLiveOrganisationUsersMiddleware::class,
             LogUserRequestMiddleware::class
         ],
         'public' => [
@@ -107,7 +108,7 @@ class Kernel extends HttpKernel
             SetUserCustomerMiddleware::class,
             HandleCustomerInertiaRequests::class,
             AddLinkHeadersForPreloadedAssets::class,
-            LogUserFirebaseMiddleware::class,
+            LogLiveUsersMiddleware::class,
             LogUserRequestMiddleware::class
         ],
 

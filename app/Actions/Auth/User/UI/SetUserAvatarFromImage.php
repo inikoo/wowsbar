@@ -33,8 +33,8 @@ class SetUserAvatarFromImage
                 ->preservingOriginal()
                 ->withProperties(
                     [
-                        'checksum'  => $checksum,
-                        'tenant_id' => customer()->id
+                        'checksum'    => $checksum,
+                        'customer_id' => customer()->id
                     ]
                 )
                 ->usingName($originalFilename)
