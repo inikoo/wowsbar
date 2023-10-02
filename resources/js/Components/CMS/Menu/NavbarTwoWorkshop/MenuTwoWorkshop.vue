@@ -32,7 +32,6 @@ const props = defineProps({
     layout : Object
 });
 const openNav = ref(null);
-const mobileMenuOpen = ref(false);
 </script>
 
 <template>

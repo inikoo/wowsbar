@@ -10,4 +10,3 @@ use App\Actions\UI\Customer\Profile\ShowProfile;
 use App\Actions\UI\Customer\Profile\UpdateProfile;
 
 Route::get('/', ShowProfile::class)->name('show');
-Route::post('/', UpdateProfile::class)->name('update');

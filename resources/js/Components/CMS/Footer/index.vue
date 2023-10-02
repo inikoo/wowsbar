@@ -1,11 +1,11 @@
 <script setup lang="ts">
 // import FooterThemeOne from './FooterThemeOneWorkshop.vue'
 import FooterThemeTwo from './FooterThemeTwoWorkshop.vue'
-import FooterThemeOne from '@/Components/Footer/Public/FooterThemeOne.vue'
+import FooterThemeOne from '@/Components/CMS/Footer/FooterThemeOneWorkshop.vue'
 
 const props = defineProps<{
-    selectedColums: Function,
-    columSelected: {
+    selectedColumn: Function,
+    columnSelected: {
         type: Object,
         required: false,
     }
@@ -28,8 +28,8 @@ const component = {
     <div>
         <component 
           :is="component[theme]" 
-          :columSelected="columSelected" 
-          :selectedColums="selectedColums" 
+          :columnSelected="columnSelected" 
+          :selectedColumn="selectedColumn" 
           :data=data 
           :tool="tool" 
           :layout="layout"

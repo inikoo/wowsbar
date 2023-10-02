@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import Button from '@/Components/Elements/Buttons/Button.vue'
-import HyperLink from "../Fields/Hyperlink.vue"
 import Image from "@/Components/Image.vue"
 
 const props = defineProps<{

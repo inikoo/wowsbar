@@ -1,4 +1,9 @@
 <?php
+/*
+ * Author: Raul Perusquia <raul@inikoo.com>
+ * Created: Mon, 02 Oct 2023 11:27:25 Malaysia Time, Kuala Lumpur, Malaysia
+ * Copyright (c) 2023, Raul A Perusquia Flores
+ */
 
 namespace App\Http\Middleware;
 
@@ -20,8 +25,8 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                if($guard=='org') {
-                    $redirectTo='/dashboard';
+                if($guard=='customer') {
+                    $redirectTo='/auth/dashboard';
                 } else {
                     $redirectTo='/dashboard';
                 }

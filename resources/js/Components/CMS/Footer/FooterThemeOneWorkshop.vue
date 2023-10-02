@@ -13,8 +13,8 @@ import { faEnvelope, faPhone } from '@/../private/pro-solid-svg-icons';
 library.add( faEnvelope, faPhone )
 
 const props = defineProps<{
-    selectedColums: Function;
-    columSelected: {
+    selectedColumn: Function;
+    columnSelected: {
         type: Object;
         required: false;
     };
@@ -86,10 +86,10 @@ const UploadImage = (file) => {
                             <template #item="{ element, index }">
                                 <div :class="[
                                     'space-y-3 w-4/12',
-                                    get(columSelected, 'id') !== element.id
+                                    get(columnSelected, 'id') !== element.id
                                         ? ''
                                         : 'border',
-                                ]" @click="props.selectedColums(index)">
+                                ]" @click="props.selectedColumn(index)">
                                     <!-- <h3 class="text-sm font-bold leading-6 text-${layout.colorScheme}-500-700 capitalize">{{ element.title }}</h3> -->
                                     <Input :data="element" keyValue="label" :classCss="`font-bold text-${layout.colorScheme}-500`" />
 
@@ -157,10 +157,10 @@ const UploadImage = (file) => {
                 <div class="mt-16 border-t border-white/10 pt-8 sm:mt-20 lg:mt-24 text-center">
                     <div :class="`text-xs flex justify-center leading-5 text-${layout.colorScheme}-400`">
                         &copy; 2023&nbsp;<span class="font-semibold">
-                            <HyperLink :useDelete="false" :data="data.copyright" label="label" :formList="{
+                            <Input :data="data.copyright" keyValue="label" />
+                            <!-- <HyperLink :useDelete="false" :data="data.copyright" label="label" :formList="{
                                 label: 'label',
-                                link: 'link',
-                            }" />
+                            }" /> -->
                         </span>, Inc. All rights reserved.
                     </div>
                 </div>

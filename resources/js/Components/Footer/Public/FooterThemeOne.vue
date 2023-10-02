@@ -97,9 +97,9 @@ const props = defineProps<{
 
 				<!-- Footer: Copyright -->
 				<div class="mt-16 border-t border-white/10 pt-8 sm:mt-20 lg:mt-24 text-center">
-					<div class="text-xs flex justify-center leading-5 text-gray-400">
+					<!-- <div class="text-xs flex justify-center leading-5 text-gray-400">
 						&copy; 2023 &nbsp;<Link :href="data.copyRight.link" class="font-semibold">{{ data.copyRight.label }}</Link>. All rights reserved.
-					</div>
+					</div> -->
 				</div>
 			</div>
 		</footer>

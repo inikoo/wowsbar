@@ -26,8 +26,8 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 library.add( faEnvelope, faPhone )
 
 const props = defineProps<{
-	selectedColums: Function
-	columSelected:{
+	selectedColumn: Function
+	columnSelected:{
 		type: Object,
 		required: false,
 	}
@@ -36,7 +36,6 @@ const props = defineProps<{
 	layout : Object
 }>()
 
-console.log('themetwo',props)
 
 </script>
 
@@ -54,8 +53,8 @@ console.log('themetwo',props)
 				]">
 					<template #item="{ element, index }">
 						<div :class="['space-y-3 w-4/12',
-							get(columSelected,'id') !== element.id ? '' : 'border',
-						]" @click="props.selectedColums(index)">
+							get(columnSelected,'id') !== element.id ? '' : 'border',
+						]" @click="props.selectedColumn(index)">
 							<Input :data="element" keyValue="label" :classCss="`font-bold text-${layout.colorScheme}-500`"/>
 							<div v-if="element.type == 'list'">
 								<draggable :list="element.items" group="list" itemKey="id"
@@ -125,11 +124,11 @@ console.log('themetwo',props)
 				<div class="flex">
 					<div :class="`mt-4 text-xs flex leading-6 text-${layout.colorScheme}-500 md:order-1 md:mt-0`"> &copy; 2023 &nbsp;
 						<span class="font-bold">
-							<HyperLink :useDelete="false" :data="data.copyright" label="label" 
+							<Input :data="data.copyright" keyValue="label" />
+							<!-- <HyperLink :useDelete="false" :data="data.copyright" label="label" 
 							:formList="{
 								label: 'label',
-								link: 'link',
-							}" />
+							}" /> -->
 						</span>, Inc. All rights reserved.
 					</div>
 				</div>

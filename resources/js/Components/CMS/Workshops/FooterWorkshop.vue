@@ -6,7 +6,6 @@
   -->
 
 <script setup lang="ts">
-import {trans} from 'laravel-vue-i18n'
 import { ref, reactive, watch } from 'vue'
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { RadioGroup, RadioGroupLabel, RadioGroupOption } from '@headlessui/vue'
@@ -15,10 +14,9 @@ import { faHandPointer, faHandRock, faPlus, faAlignJustify, faList, faInfoCircle
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { ulid } from "ulid";
 import HyperlinkTools from '@/Components/CMS/Fields/Hyperlinktools.vue'
-import { get } from 'lodash'
+import { get, set } from 'lodash'
 import HyperInfoTools from '@/Components/CMS/Fields/InfoFieldTools.vue'
 import SocialMediaPicker from "@/Components/CMS/Fields/IconPicker/SocialMediaTools.vue"
-import { getDbRef, getDataFirebase, setDataFirebase } from '@/Composables/firebase'
 import ToolInTop from '@/Components/CMS/Footer/ToolsInTop.vue'
 library.add(faHandPointer, faHandRock, faPlus, faAlignJustify, faList, faInfoCircle)
 import { notify } from "@kyvg/vue3-notification"
@@ -30,14 +28,6 @@ const props = defineProps<{
 
 
 const Dummy = {
-    images: [
-        {
-            id: 1,
-            imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-01-featured-product-shot.jpg',
-            imageAlt: "Back of women's Basic Tee in black.",
-            primary: true,
-        },
-    ],
     columsType: [
         { name: 'Description', value: 'description', icon: ['fas', 'align-justify'] },
         { name: 'List', value: 'list', icon: ['fas', 'list'] },
@@ -51,8 +41,8 @@ const DummyColums = [
         type: "list",
         id: ulid(),
         items: [
-            { label: 'sub Menu 1', link: '#', id: ulid() },
-            { label: 'sub Menu 2', link: '#' },
+            { label: 'sub Menu 1', href: '#', id: ulid() },
+            { label: 'sub Menu 2', href: '#', id: ulid() },
         ],
     },
     {
@@ -82,48 +72,30 @@ const DummyColums = [
 const selectedTheme = ref(props.data.footer.type)
 const columsTypeTheme = ref(Dummy.columsType[0])
 const tool = ref({ name: 'edit', icon: ['fas', 'fa-hand-pointer'] })
-
-
-
 const data = reactive(props.data.footer)
+const columnSelected = ref(null);
 
-// async function setToFirebase() {
-//     const columns = 'org/websites/footer';
-//     try {
-//         await setDataFirebase(columns, { data: data, theme: selectedTheme.value });
-//     } catch (error) {
-//         console.log(error)
-//     }
-// }
-
-// watch(data, setToFirebase, { deep: true })
-// watch(selectedTheme, setToFirebase, { deep: true })
-
-// setToFirebase()
-
-const columSelected = ref(null);
-
-const selectedColums = (value) => {
-    columSelected.value = value
+const selectedColumn = (value) => {
+    columnSelected.value = value
 }
 
 const handleColumsTypeChange = (value) => {
-    if (value.label !== data.columns[columSelected.value].type) {
+    if (value.label !== data.columns[columnSelected.value].type) {
         let indexDummy = DummyColums.findIndex((item) => item.type === value.value);
-        let indexColums = data.columns.findIndex((item) => item.id === data.columns[columSelected.value].id);
+        let indexColumn = data.columns.findIndex((item) => item.id === data.columns[columnSelected.value].id);
         const set = { ...DummyColums[indexDummy], id: ulid() }
-        data.columns[indexColums] = set
-        selectedColums(data)
-    } else { cosnole.log('salah') }
+        data.columns[indexColumn] = set
+        selectedColumn(data)
+    }
 
 }
 
 const columItemLinkChange = (value) => {
     const set = data.columns
     if (value.value == 'add') {
-        const index = set.findIndex((item) => item.id == data.columns[columSelected.value].id)
-        if (data.columns[columSelected.value].type == 'list') set[index].items.push({ label: 'sub Menu', link: '#', id: ulid() },)
-        else if (data.columns[columSelected.value].type == 'info') set[index].items.push(
+        const index = set.findIndex((item) => item.id == data.columns[columnSelected.value].id)
+        if (data.columns[columnSelected.value].type == 'list') set[index].items.push({ label: 'sub Menu', link: '#', id: ulid() },)
+        else if (data.columns[columnSelected.value].type == 'info') set[index].items.push(
             {
                 data: {
                     icon: 'far fa-dot-circle',
@@ -164,8 +136,8 @@ const addSocial = () => {
 }
 
 const changeColumnFromSelectedColumn = () => {
-    const index = data.columns.findIndex((item) => item.id == data.columns[columSelected.value].id)
-    if (index >= 0) data.columns[index] = data.columns[columSelected.value]
+    const index = data.columns.findIndex((item) => item.id == data.columns[columnSelected.value].id)
+    if (index >= 0) data.columns[index] = data.columns[columnSelected.value]
 }
 
 
@@ -186,27 +158,19 @@ const changeImage = async (file) => {
             data.logoSrc =  response.data.thumbnail
             }
     } catch (error) {
+        console.log(error)
         notify({
-            title: trans('Failed to upload image'),
-            text: trans('Please contact support'),
+                title: "Failed to Update Banner",
+                text: 'Sorry, failed to upload image, due to several reasons',
                 type: "error"
             });
     }
 }
 
-// async function setToFirebase() {
-//     const column = "org/websites/footer";
-//     try {
-//         await setDataFirebase(column,data);
-//     } catch (error) {
-//         console.log(error);
-//     }
-// }
-
-// watch(data, setToFirebase, { deep: true });
-
-// setToFirebase();
-
+const changeTheme=(value)=>{
+    Object.assign(data, {...data,type : value})
+    selectedTheme.value = value
+}
 
 </script>
 
@@ -222,8 +186,8 @@ const changeImage = async (file) => {
                     <div class="flex justify-start gap-3">
                         <RadioGroupOption as="template" v-for="option in Dummy.columsType" :key="option.value">
                             <div :label="option.name" :class="{
-                                'cursor-not-allowed': get(data.columns[columSelected], 'type') == option.value,
-                                'bg-gray-300 text-gray-600': get(data.columns[columSelected], 'type') == option.value,
+                                'cursor-not-allowed': get(data.columns[columnSelected], 'type') == option.value,
+                                'bg-gray-300 text-gray-600': get(data.columns[columnSelected], 'type') == option.value,
                                 'flex items-center justify-center rounded-md border py-1 px-2 text-sm font-medium uppercase w-fit cursor-pointer': true
                             }" @click="handleColumsTypeChange(option)">
                                 <RadioGroupLabel as="span" class="w-fit"><font-awesome-icon :icon="option.icon" />
@@ -236,17 +200,17 @@ const changeImage = async (file) => {
             <!-- end Column Type -->
 
             <!-- columns tools -->
-            <div v-if="data.columns[columSelected]">
-                <div class="mt-2" v-if="data.columns[columSelected].type == 'list'">
+            <div v-if="data.columns[columnSelected]">
+                <div class="mt-2" v-if="data.columns[columnSelected].type == 'list'">
                     <div class="flex items-center justify-between">
-                        <h2 class="text-xs font-medium text-gray-900">{{ `${data.columns[columSelected].label}` }}</h2>
+                        <h2 class="text-xs font-medium text-gray-900">{{ `${data.columns[columnSelected].label}` }}</h2>
                     </div>
                     <div>
                         <div class="flex gap-2 mt-2">
                             <div class="w-[90%]">
                                 <div
                                     class="shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md rounded-md">
-                                    <input type="text" v-model="data.columns[columSelected].label"
+                                    <input type="text" v-model="data.columns[columnSelected].label"
                                         @input="changeColumnFromSelectedColumn"
                                         class="flex-1 border-0 bg-transparent text-gray-900 text-xs placeholder:text-gray-400 focus:ring-0 text-xs sm:text-sm sm:leading-6 w-full overflow-hidden"
                                         placeholder="xs" />
@@ -262,8 +226,8 @@ const changeImage = async (file) => {
                         </div>
 
 
-                        <div v-for="(set, index) in data.columns[columSelected].items" :key="set.id">
-                            <HyperlinkTools :data="set" @OnDelete="() => data.columns[columSelected].items.splice(index, 1)"
+                        <div v-for="(set, index) in data.columns[columnSelected].items" :key="set.id">
+                            <HyperlinkTools :data="set" @OnDelete="() => data.columns[columnSelected].items.splice(index, 1)"
                                 :formList="{
                                     name: 'label',
                                     link: 'href',
@@ -272,17 +236,17 @@ const changeImage = async (file) => {
                     </div>
 
                 </div>
-                <div class="mt-2" v-if="data.columns[columSelected].type == 'info'">
+                <div class="mt-2" v-if="data.columns[columnSelected].type == 'info'">
                     <div class="flex items-center justify-between">
                         <h2 class="text-sm font-medium text-gray-900">{{ `Colums tools
-                            ${data.columns[columSelected].label}`
+                            ${data.columns[columnSelected].label}`
                         }}</h2>
                     </div>
                     <div>
                         <div class="flex gap-2 mt-2">
                             <div style="width:85%;"
                                 class="shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md rounded-md">
-                                <input type="text" v-model="data.columns[columSelected].label"
+                                <input type="text" v-model="data.columns[columnSelected].label"
                                     @input="changeColumnFromSelectedColumn"
                                     class="flex-1 border-0 bg-transparent text-gray-900 text-xs placeholder:text-gray-400 focus:ring-0 text-xs sm:text-sm sm:leading-6 w-full overflow-hidden"
                                     placeholder="label" />
@@ -297,10 +261,10 @@ const changeImage = async (file) => {
 
                         </div>
 
-                        <div v-for="(set, index) in data.columns[columSelected].items" :key="set.id">
+                        <div v-for="(set, index) in data.columns[columnSelected].items" :key="set.id">
                             <div v-if="set.type == 'other'">
                                 <HyperInfoTools :data="set.data"
-                                    @OnDelete="() => data.columns[columSelected].items.splice(index, 1)" />
+                                    @OnDelete="() => data.columns[columnSelected].items.splice(index, 1)" />
                             </div>
 
                         </div>
@@ -345,13 +309,14 @@ const changeImage = async (file) => {
         </div>
 
         <div class=" w-full bg-gray-200  items-center justify-center">
-            <ToolInTop :tool="tool" :theme="selectedTheme" @changeTheme="(val) => selectedTheme = val"
-                :columSelected="columSelected" @setColumnSelected="selectedColums" />
+            <ToolInTop :tool="tool" :theme="selectedTheme" @changeTheme="changeTheme"
+                :columnSelected="columnSelected" @setColumnSelected="selectedColumn" />
             <div style="transform: scale(0.8);" class="w-full">
                 <Footer class="lg:col-span-2 lg:row-span-2 rounded-lg" :data="data"
-                    :columSelected="data.columns[columSelected]" :theme="selectedTheme" :selectedColums="selectedColums"
+                    :columnSelected="data.columns[columnSelected]" :theme="selectedTheme" :selectedColumn="selectedColumn"
                     :tool="tool" @uploadImage="changeImage"  :layout="props.data.layout.footer"/>
             </div>
         </div>
     </div>
+  
 </template>

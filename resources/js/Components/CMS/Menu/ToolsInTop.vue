@@ -2,17 +2,15 @@
 import { faHandPointer, faHandRock, faPlus } from '@/../private/pro-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { toRefs, ref } from 'vue'
-import { NULL } from 'sass';
+import { ref } from 'vue'
 
 library.add(faHandPointer, faHandRock, faPlus)
 const props = defineProps({
   tool: Object,
-  columSelected: Number,
+  columnSelected: Number,
   navigation: Object
 });
 
-console.log('tooltopmenu', props)
 
 const emits = defineEmits();
 const theme = ref(props.navigation.type)
@@ -72,7 +70,7 @@ const columChange = (index) => {
         <div v-if="item.name === 'activeColumn'"
           v-for="(columnItem, columnIndex) in item.optionsData.column" :key="columnIndex"
           @click="columChange(columnIndex)" class="inline-block bg-gray-300 py-1 px-2 rounded-md text-xs mx-1"
-          :class="{ 'outline outline-2': columnIndex == columSelected }">
+          :class="{ 'outline outline-2': columnIndex == columnSelected }">
           {{ columnItem }}
         </div>
         <div v-if="item.name === 'activeColumn'" @click="emits('addNavigation')"
