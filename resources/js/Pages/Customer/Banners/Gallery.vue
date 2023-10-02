@@ -158,7 +158,7 @@ watch(isModalOpen, async () => {
 
 const allImageFlat = ref(selectedImage());
 
-console.log('debug:', props.uploaded_images, props.stock_images)
+// console.log('debug:', props.uploaded_images, props.stock_images)
 
 </script>
 
