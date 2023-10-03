@@ -1,6 +1,6 @@
 <!--
   - Author: Raul Perusquia <raul@inikoo.com>
-  - Created: Mon, 20 Mar 2023 23:18:59 Malaysia Time, Kuala Lumpur, Malaysia
+  - Created: Tue, 03 Oct 2023 15:21:06 Malaysia Time, Kuala Lumpur, Malaysia
   - Copyright (c) 2023, Raul A Perusquia Flores
   -->
 
@@ -8,7 +8,6 @@
 import { Link } from '@inertiajs/vue3'
 import Table from '@/Components/Table/Table.vue'
 import { Website } from "@/types/website"
-import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 
 const props = defineProps<{
     data: object
@@ -19,15 +18,11 @@ const props = defineProps<{
 function websiteRoute(website: Website) {
     switch (route().current()) {
         case 'customer.banners.websites.index':
-        case 'customer.portfolio.websites.index':
             return route(
                 'customer.portfolio.websites.show',
                 [website.slug]);
     }
 }
-
-
-
 
 </script>
 
@@ -38,10 +33,6 @@ function websiteRoute(website: Website) {
             <Link :href="websiteRoute(website)" :id="website['slug']" class="py-2 px-1">
                 {{ website['code'] }}
             </Link>
-        </template>
-
-        <template #cell(google-ads)="{ item: website }">
-            <font-awesome-icon icon="fal fa-circle-check"></font-awesome-icon>
         </template>
     </Table>
 

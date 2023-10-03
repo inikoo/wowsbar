@@ -9,9 +9,11 @@ namespace App\Models\Auth;
 
 use App\Actions\Utils\Abbreviate;
 use App\Models\CRM\Customer;
+use App\Models\Traits\HasHistory;
 use App\Models\Traits\HasUniversalSearch;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\Permission\Traits\HasRoles;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
@@ -49,11 +51,12 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerUser whereUserId($value)
  * @mixin \Eloquent
  */
-class CustomerUser extends Model
+class CustomerUser extends Model implements Auditable
 {
     use HasUniversalSearch;
     use HasRoles;
     use HasSlug;
+    use HasHistory;
 
     protected $table='customer_user';
 

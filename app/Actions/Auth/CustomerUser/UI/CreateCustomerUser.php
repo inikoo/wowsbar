@@ -40,7 +40,7 @@ class CreateCustomerUser extends InertiaAction
                         [
                             'title'   => __('credentials'),
                             'icon'    => 'fal fa-key',
-                            'fields' => [
+                            'fields'  => [
 
                                 'email' => [
                                     'type'  => 'input',
@@ -67,7 +67,7 @@ class CreateCustomerUser extends InertiaAction
                                 'roles' => [
                                     'type'    => 'customerRoles',
                                     'label'   => __('roles'),
-                                    'value'   =>[]
+                                    'value'   => []
                                 ],
                             ]
                         ],

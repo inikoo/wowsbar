@@ -41,7 +41,7 @@ class UpdateBanner
             return true;
         }
 
-        return $request->get('customerUser')->hasPermissionTo("portfolio.edit");
+        return $request->get('customerUser')->hasPermissionTo("portfolio.banners.edit");
     }
 
     public function rules(): array
