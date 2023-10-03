@@ -70,7 +70,7 @@ class IndexHistories
                 ->column(key: 'old_values', label: __('Old Values'), canBeHidden: false, sortable: true)
                 ->column(key: 'new_values', label: __('New Values'), canBeHidden: false, sortable: true)
                 ->column(key: 'event', label: __('Action'), canBeHidden: false, sortable: true)
-                ->column(key: 'auditable_type', label: __('Module'), canBeHidden: false)
+        //        ->column(key: 'auditable_type', label: __('Module'), canBeHidden: false)
                 ->column(key: 'datetime', label: __('Date & Time'), canBeHidden: false, sortable: true)
                 ->defaultSort('ip_address');
         };

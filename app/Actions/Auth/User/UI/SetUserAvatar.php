@@ -13,50 +13,58 @@ use Exception;
 use Illuminate\Console\Command;
 use Lorisleiva\Actions\Concerns\AsAction;
 
+/**
+ * @property \Exception $exception
+ */
 class SetUserAvatar
 {
     use AsAction;
 
-    public function handle(User $user): User
+    private Exception $exception;
+
+    public function handle(User $user): ?User
     {
+        $seed = $user->id;
         try {
-            $seed = $user->id;
             /** @var Media $media */
-            $media = $user->addMediaFromUrl("https://avatars.dicebear.com/api/identicon/$seed.svg")
+            $media = $user->addMediaFromUrl("https://api.dicebear.com/7.x/identicon/svg?seed=".$user->slug)
                 ->preservingOriginal()
-                ->withProperties(
-                    [
-                        'customer_id' => customer()->id
-                    ]
-                )
-                ->usingName($user->username."-avatar")
-                ->usingFileName($user->username."-avatar.sgv")
+                ->usingName($user->slug."-avatar")
+                ->usingFileName($user->slug."-avatar.sgv")
                 ->toMediaCollection('avatar');
 
             $avatarID = $media->id;
 
             $user->avatar_id = $avatarID;
             $user->saveQuietly();
-        } catch (Exception) {
-            //
+        } catch (Exception $e) {
+            $this->exception = $e;
+
+            return null;
         }
 
         return $user;
     }
 
 
-    public string $commandSignature = 'user:reset-avatar {username : User username}';
+    public string $commandSignature = 'user:reset-avatar {slug : User slug}';
 
     public function asCommand(Command $command): int
     {
-
-        $user = User::where('username', $command->argument('username'))->first();
+        $user = User::where('slug', $command->argument('slug'))->first();
 
         if (!$user) {
             $command->error('User not found');
+
             return 1;
+        }
+        $res = $this->handle($user);
+        if ($res) {
+            $command->line('Avatar set up');
         } else {
-            $this->handle($user);
+            $command->error($this->exception->getMessage());
+
+            return 1;
         }
 
 

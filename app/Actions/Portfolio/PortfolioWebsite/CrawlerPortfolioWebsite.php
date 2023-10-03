@@ -27,7 +27,7 @@ class CrawlerPortfolioWebsite extends CrawlObserver
     use AsCommand;
 
     public string $commandSignature = 'portfolio-website:crawler {url}';
-    public ?string $content = null;
+    public ?string $content         = null;
 
     public function handle(string $url): int
     {
@@ -64,11 +64,11 @@ class CrawlerPortfolioWebsite extends CrawlObserver
         if (!blank($response->getBody())) {
             @$doc->loadHTML($response->getBody());
             $title = $doc->getElementsByTagName("title")[0]->nodeValue;
-            $html = $doc->saveHTML();
+            $html  = $doc->saveHTML();
 
             PortfolioWebpage::create([
-                'title' => $title,
-                'url' => $url,
+                'title'  => $title,
+                'url'    => $url,
                 'layout' => $html
             ]);
 
@@ -79,10 +79,10 @@ class CrawlerPortfolioWebsite extends CrawlObserver
     public function crawlFailed(UriInterface $url, RequestException $requestException, UriInterface $foundOnUrl = null, string $linkText = null): void
     {
         PortfolioWebpage::create([
-            'title' => '',
-            'url' => $url,
-            'layout' => [],
-            'status' => WebpageStatusEnum::FAILED,
+            'title'   => '',
+            'url'     => $url,
+            'layout'  => [],
+            'status'  => WebpageStatusEnum::FAILED,
             'message' => $requestException->getMessage()
         ]);
     }

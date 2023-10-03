@@ -9,7 +9,6 @@ namespace App\Models\Auth;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\Assets\Language;
-use App\Models\CRM\Customer;
 use App\Models\Media\Media;
 use App\Models\Traits\HasHistory;
 use App\Models\Traits\HasUniversalSearch;
@@ -55,8 +54,6 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read Media|null $avatar
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Auth\CustomerUser> $customerUsers
  * @property-read int|null $customer_users_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, Customer> $customers
- * @property-read int|null $customers_count
  * @property-read array $es_audits
  * @property-read Language $language
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, Media> $media

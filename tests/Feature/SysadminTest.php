@@ -8,6 +8,7 @@
 use App\Actions\Auth\User\StoreUser;
 use App\Actions\Auth\User\UpdateUser;
 use App\Actions\Auth\User\SuspendUser;
+use App\Models\Auth\CustomerUser;
 use App\Models\Auth\User;
 
 beforeAll(function () {
@@ -24,14 +25,14 @@ beforeEach(
 );
 
 test('create user', function () {
-    $customer = customer();
-    $user     = StoreUser::make()->action($customer->shop->website, $customer, User::factory()->definition());
-    expect($user)->toBeInstanceOf(User::class)
+    $customer         = customer();
+    $customerUser     = StoreUser::make()->action($customer->shop->website, $customer, User::factory()->definition());
+    expect($customerUser)->toBeInstanceOf(CustomerUser::class)
         ->and($customer->stats->number_users)->toBe(1)
         ->and($customer->stats->number_users_status_active)->toBe(1)
         ->and($customer->stats->number_users_status_inactive)->toBe(0);
 
-    return $user;
+    return $customerUser->user;
 });
 
 test('update user', function ($user) {

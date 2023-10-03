@@ -39,14 +39,18 @@ trait WithImportModel
 
     public function asCommand(Command $command): void
     {
-        $filename = $command->argument('filename');
-        if (!$filename) {
+        $filename = null;
+        $filePath = $command->argument('filename');
+        if (!$filePath) {
             $filename = $this->downloadFromGoogle($command->option('google'));
+            $filePath = "storage/app/tmp/" . $filename;
         }
 
-        $file = ConvertUploadedFile::run($filename);
+        $file = ConvertUploadedFile::run($filePath);
 
         $upload = $this->handle($file);
+
+        Storage::disk('local')->delete("tmp/" . $filename);
 
         $command->table(
             ['', 'Success', 'Fail'],
@@ -76,32 +80,40 @@ trait WithImportModel
         try {
             $client = new Client();
             $client->useApplicationDefaultCredentials();
-            $client->addScope(Drive::DRIVE);
+            $client->addScope([
+                Drive::DRIVE,
+                Drive::DRIVE_FILE,
+                Drive::DRIVE_METADATA,
+                Drive::DRIVE_METADATA_READONLY,
+                Drive::DRIVE_APPDATA,
+                Drive::DRIVE_READONLY
+            ]);
             $driveService = new Drive($client);
 
-            $fileId = explode('/', $url)[5];
+            $filename = now()->timestamp;
+            $fileId   = explode('/', $url)[5];
 
-            $this->downloadType($driveService, $fileId);
+            $this->downloadType($driveService, $fileId, $filename);
         } catch (Exception $e) {
             dd($e->getMessage());
         }
 
-        return "storage/app/tmp/$fileId.xlsx";
+        return "$filename.xlsx";
     }
 
-    public function downloadType($driveService, $fileId): void
+    public function downloadType($driveService, $fileId, $filename): void
     {
         try {
             $response = $driveService->files->export($fileId, 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', array(
                 'alt' => 'media'));
 
-            Storage::disk('local')->put("tmp/$fileId.xlsx", $response->getBody()->getContents());
+            Storage::disk('local')->put("tmp/$filename.xlsx", $response->getBody()->getContents());
         } catch (Exception $e) {
-            if($e->getCode() == 403) {
+            if ($e->getCode() == 403) {
                 $response = $driveService->files->get($fileId, array(
                     'alt' => 'media'));
 
-                Storage::disk('local')->put("tmp/$fileId.xlsx", $response->getBody()->getContents());
+                Storage::disk('local')->put("tmp/$filename.xlsx", $response->getBody()->getContents());
             }
         }
     }

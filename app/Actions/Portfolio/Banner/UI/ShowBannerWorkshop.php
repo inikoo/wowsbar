@@ -19,34 +19,29 @@ use Lorisleiva\Actions\ActionRequest;
 
 class ShowBannerWorkshop extends InertiaAction
 {
-    private Customer|PortfolioWebsite $parent;
-
     public function handler(Customer|PortfolioWebsite $parent, Banner $banner): Banner
     {
-        $this->parent = $parent;
-
+        //$this->parent = $parent;
         return $banner;
     }
 
     public function authorize(ActionRequest $request): bool
     {
-        $this->canEdit   = $request->get('customerUser')->hasPermissionTo('portfolio.edit');
-        $this->canDelete = $request->get('customerUser')->hasPermissionTo('portfolio.edit');
+        $this->canEdit   = $request->get('customerUser')->hasPermissionTo('portfolio.banners.edit');
+        $this->canDelete = $request->get('customerUser')->hasPermissionTo('portfolio.banners.edit');
 
-        return $request->get('customerUser')->hasPermissionTo("portfolio.view");
+        return $request->get('customerUser')->hasPermissionTo("portfolio.banners,view");
     }
 
     public function asController(Banner $banner, ActionRequest $request): Banner
     {
         $this->initialisation($request);
-
         return $this->handler(customer(), $banner);
     }
 
     public function inPortfolioWebsite(PortfolioWebsite $portfolioWebsite, Banner $banner, ActionRequest $request): Banner
     {
         $this->initialisation($request);
-
         return $this->handler($portfolioWebsite, $banner);
     }
 

@@ -21,7 +21,7 @@ class ShowBannersDashboard extends InertiaAction
 {
     public function authorize(ActionRequest $request): bool
     {
-        return $request->get('customerUser')->hasPermissionTo("portfolio.view");
+        return $request->get('customerUser')->hasPermissionTo("portfolio.banners.view");
     }
 
 

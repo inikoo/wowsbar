@@ -5,14 +5,21 @@
     "sysadmin.edit",
     "sysadmin.delete",
     "sysadmin.look-and-field",
+
     "portfolio",
     "portfolio.view",
     "portfolio.edit",
-    "portfolio.gallery",
-    "portfolio.gallery.view",
-    "portfolio.gallery.edit",
-    "banners",
-    "banners.view",
-    "banners.edit",
-    "banners.publish"
+    "portfolio.banners",
+    "portfolio.banners.view",
+    "portfolio.banners.edit",
+
+    "portfolio.seo",
+    "portfolio.google-ads",
+    "portfolio.social",
+    "portfolio.prospects",
+
+    "portfolio.seo.view",
+    "portfolio.google-ads.view",
+    "portfolio.social.view",
+    "portfolio.prospects.view"
 ]

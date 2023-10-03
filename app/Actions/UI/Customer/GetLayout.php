@@ -62,7 +62,7 @@ class GetLayout
             ];
         }
 
-        if ($customerUser->hasPermissionTo('portfolio.view')) {
+        if ($customerUser->hasPermissionTo('portfolio.prospects.view')) {
             $navigation['prospects'] = [
                 'scope'   => 'prospects',
                 'icon'    => ['fal', 'fa-transporter'],
@@ -76,7 +76,7 @@ class GetLayout
             ];
         }
 
-        if ($customerUser->hasPermissionTo('portfolio.view')) {
+        if ($customerUser->hasPermissionTo('portfolio.seo.view')) {
             $navigation['seo'] = [
                 'scope'   => 'seo',
                 'icon'    => ['fab', 'fa-google'],
@@ -96,7 +96,7 @@ class GetLayout
             ];
         }
 
-        if ($customerUser->hasPermissionTo('portfolio.view')) {
+        if ($customerUser->hasPermissionTo('portfolio.google-ads.view')) {
             $navigation['google-ads'] = [
                 'scope'   => 'google-ads',
                 'icon'    => ['fal', 'fa-bullseye'],
@@ -116,7 +116,7 @@ class GetLayout
             ];
         }
 
-        if ($customerUser->hasPermissionTo('portfolio.view')) {
+        if ($customerUser->hasPermissionTo('portfolio.social.view')) {
             $navigation['social'] = [
                 'scope'   => 'social',
                 'icon'    => ['fal', 'fa-thumbs-up'],
@@ -131,7 +131,7 @@ class GetLayout
         }
 
 
-        if ($customerUser->hasPermissionTo('portfolio.view')) {
+        if ($customerUser->hasPermissionTo('portfolio.banners.view')) {
             $navigation['banners'] = [
                 'scope'   => 'banners',
                 'icon'    => ['fal', 'fa-rectangle-wide'],
@@ -176,13 +176,19 @@ class GetLayout
             ];
         }
 
-        if ($customerUser->hasPermissionTo('sysadmin')) {
+        if ($customerUser->hasPermissionTo('sysadmin.view')) {
             $navigation['sysadmin'] = [
                 'label'   => __('Manage account'),
                 'icon'    => ['fal', 'fa-users-cog'],
                 'route'   => 'customer.sysadmin.dashboard',
                 'topMenu' => [
                     'subSections' => [
+                        [
+                            'icon'  => ['fal', 'fa-chart-network'],
+                            'route' => [
+                                'name' => 'customer.sysadmin.dashboard',
+                            ]
+                        ],
                         [
                             'label' => __('users'),
                             'icon'  => ['fal', 'fa-terminal'],

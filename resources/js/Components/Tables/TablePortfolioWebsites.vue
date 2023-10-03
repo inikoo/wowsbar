@@ -17,6 +17,7 @@ const props = defineProps<{
 
 function websiteRoute(website: Website) {
     switch (route().current()) {
+        case 'customer.banners.websites.index':
         case 'customer.portfolio.websites.index':
             return route(
                 'customer.portfolio.websites.show',

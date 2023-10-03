@@ -12,7 +12,7 @@ use App\Actions\Market\Shop\StoreShop;
 use App\Actions\Organisation\Organisation\StoreOrganisation;
 use App\Actions\Web\Website\StoreWebsite;
 use App\Enums\Market\Shop\ShopTypeEnum;
-use App\Models\Auth\User;
+use App\Models\Auth\CustomerUser;
 use App\Models\CRM\Customer;
 use App\Models\Market\Shop;
 use App\Models\Organisation\Organisation;
@@ -73,7 +73,7 @@ test('create customer user', function ($customer) {
     Config::set('global.customer_id', $customer->id);
 
 
-    $user = StoreUser::make()->action(
+    $customerUser = StoreUser::make()->action(
         $customer->shop->website,
         $customer,
         [
@@ -83,5 +83,5 @@ test('create customer user', function ($customer) {
             'password'     => fake()->password
         ]
     );
-    expect($user)->toBeInstanceOf(User::class);
+    expect($customerUser)->toBeInstanceOf(CustomerUser::class);
 })->depends('create customer');
