@@ -52,6 +52,13 @@ class GetLayout
                                 'name' => 'customer.portfolio.websites.index',
                             ]
                         ],
+                        [
+                            'icon'  => ['fal', 'fa-user'],
+                            'label' => __('social media account'),
+                            'route' => [
+                                'name' => 'customer.portfolio.social.account.index',
+                            ]
+                        ],
 
 
                     ],

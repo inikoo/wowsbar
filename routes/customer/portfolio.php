@@ -15,6 +15,7 @@ use App\Actions\Portfolio\Banner\UI\ShowBanner;
 use App\Actions\Portfolio\Banner\UI\ShowBannerWorkshop;
 use App\Actions\Portfolio\Banner\UI\ShowDeletedBanner;
 use App\Actions\Portfolio\Banner\UploadImagesToBanner;
+use App\Actions\Portfolio\PortfolioSocialAccount\UI\IndexPortfolioSocialAccount;
 use App\Actions\Portfolio\PortfolioWebsite\UI\CreatePortfolioWebsite;
 use App\Actions\Portfolio\PortfolioWebsite\UI\EditPortfolioWebsite;
 use App\Actions\Portfolio\PortfolioWebsite\UI\IndexPortfolioWebsites;
@@ -78,3 +79,6 @@ Route::get('/banners/{banner}/snapshots/{snapshot}', [ShowSnapshot::class, 'inBa
 
 Route::get('/portfolio-websites/uploads/history', IndexPortfolioWebsiteUploads::class)->name('website.uploads.history');
 Route::get('/portfolio-websites/uploads/template/download', DownloadPortfolioWebsiteUploadsTemplate::class)->name('website.uploads.template.download');
+
+
+Route::get('/social-account', IndexPortfolioSocialAccount::class)->name('social.account.index');

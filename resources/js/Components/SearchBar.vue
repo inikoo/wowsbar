@@ -6,6 +6,7 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
+import Image from '@/Components/Image.vue'
 import {
     Combobox,
     ComboboxOptions,
@@ -21,8 +22,9 @@ import { Ref } from 'vue'
 import { trans } from 'laravel-vue-i18n'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faSpinnerThird } from '@/../private/pro-duotone-svg-icons'
+import { faSeedling } from '@/../private/pro-light-svg-icons'
 import { library } from '@fortawesome/fontawesome-svg-core'
-library.add(faSpinnerThird)
+library.add(faSpinnerThird, faSeedling)
 
 const open = ref(true)
 const query = ref('')
@@ -106,18 +108,35 @@ function handleKeyDown() {
                                         <!-- Looping: Results -->
                                         <ComboboxOption v-if="resultsSearch?.data.length > 0" v-for="item in resultsSearch?.data" :key="item.id" :value="item" as="template" v-slot="{ active }">
                                             <div>
-                                                <Link v-if="item.model?.route?.name" :href="`${route(item.model?.route?.name, item.model?.route?.parameters)}`" :class="['group flex cursor-pointer select-none items-center rounded-md p-2', active && 'bg-gray-100 text-gray-600']">
-                                                    <!-- <img :src="item.imageUrl" alt="" class="h-6 w-6 flex-none rounded-full" /> -->
+                                                <Link v-if="item.model?.route?.name" :href="`${route(item.model?.route?.name, item.model?.route?.parameters)}`"
+                                                    class="group flex relative cursor-pointer select-none items-center rounded p-2 gap-x-2" :class="[active ? 'bg-gray-100 text-gray-600' : '']">
                                                     <FontAwesomeIcon :icon='item.model.icon' class='' aria-hidden='true' />
-                                                    <span class="ml-3 flex-auto truncate">{{ item.model.name }}</span>
-                                                    <FontAwesomeIcon icon="fa-regular fa-chevron-right" v-if="active" class="ml-3 h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
+                                                    <div class="w-full">
+                                                        <div v-if="item.model_type == 'CustomerUser'">
+                                                            <span class="truncate">{{ item.model.contact_name }}</span>
+                                                        </div>
+                                                        <div v-else-if="item.model_type == 'Banner'" class="truncate">
+                                                            {{ item.model.name }}
+                                                        </div>
+                                                        <div v-else-if="item.model_type == 'PortfolioWebsite'" class="truncate">
+                                                            {{ item.model.name }}
+                                                        </div>
+                                                        <div v-else-if="item.model_type == 'CustomerWebsite'" class="truncate">
+                                                            {{ item.model.name }}aaaaaa
+                                                        </div>
+                                                        <div v-else="">
+                                                            ddddddddddddd
+                                                        </div>
+                                                    </div>
+                                                    <FontAwesomeIcon icon="fa-regular fa-chevron-right" v-if="active" class="relative h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
+
+                                                    
                                                 </Link>
                                             </div>
                                         </ComboboxOption>
 
                                         <!-- Loading: fetching -->
                                         <div v-else-if="loadingState" class="">
-                                            <!-- Skeleton Loader -->
                                             <div class="space-y-2">
                                                 <div class="w-full rounded-md flex pl-0.5 gap-x-1 overflow-hidden">
                                                     <div class="w-8 h-9 skeleton rounded-l-md" />
@@ -141,7 +160,6 @@ function handleKeyDown() {
                                 <div class="hidden h-96 w-1/2 flex-none flex-col divide-y divide-gray-100 overflow-y-auto sm:flex">
                                     <!-- Loading: fetching -->
                                     <div v-if="loadingState">
-                                        <!-- Loading: Avatar -->
                                         <div class="flex-none p-6 text-center">
                                             <div class="mx-auto h-16 w-16 rounded-full skeleton" />
                                             <div class="mt-3 skeleton w-1/2 mx-auto h-5" />
@@ -157,22 +175,48 @@ function handleKeyDown() {
                                     <!-- Hover the result -->
                                     <div v-else-if="activeOption">
                                         <div class="flex-none p-6 text-center">
-                                            <FontAwesomeIcon :icon='activeOption.model.icon' class='mx-auto h-16 w-16 text-gray-500' aria-hidden='true' />
-                                            <!-- <img :src="activeOption.imageUrl" :alt="activeOption.model.code" class="bg-gray-400 mx-auto h-16 w-16 rounded-full" /> -->
-                                            <h2 class="mt-3 font-semibold text-gray-600">
-                                                {{ activeOption.model.name }}
+                                            <div v-if="activeOption.model_type == 'Banner'" class="bg-gray-100 ring-2 shadow mx-auto h-16 w-16 rounded-full overflow-hidden"
+                                                :class="activeOption.model.state_icon.tooltip == 'unpublished' ? 'ring-indigo-300' : activeOption.model.state_icon.tooltip == 'live' ? 'ring-green-500' : 'ring-gray-500'">
+                                                <Image :src="activeOption.model.avatar" :alt="activeOption.model.code" />
+                                            </div>
+                                            <div v-else class="bg-gray-100 ring-2 ring-gray-300 shadow mx-auto h-16 w-16 rounded-full overflow-hidden">
+                                                <Image :src="activeOption.model.avatar" :alt="activeOption.model.code" />
+                                            </div>
+                                            <h2 v-if="activeOption.model_type == 'CustomerUser'" class="mt-3 font-semibold text-gray-600">
+                                                {{ activeOption.model.contact_name }}
                                             </h2>
-                                            <p class="text-sm leading-6 text-gray-500">{{ activeOption.role }}</p>
                                         </div>
                                         <div class="flex flex-auto flex-col justify-between p-6">
-                                            <dl v-if="activeOption.model_type == 'PortfolioWebsite'" class="grid grid-cols-1 gap-x-6 gap-y-3 text-sm text-gray-600">
-                                                <dt class="col-end-1 font-semibold text-gray-600">Domain</dt>
-                                                <dd>{{ activeOption.model.domain }}</dd>
-                                                <dt class="col-end-1 font-semibold text-gray-600">Code</dt>
-                                                <dd class="truncate">
-                                                    {{ activeOption.model.code }}
-                                                </dd>
+                                            <!-- CustomerUser -->
+                                            <dl v-if="activeOption.model_type == 'CustomerUser'" class="grid grid-cols-1 gap-x-6 gap-y-3 text-sm text-gray-600">
+                                                <dt class="col-end-1 font-semibold text-gray-600">Email:</dt>
+                                                <dd>{{ activeOption.model.email }}</dd>
+                                                <dt class="col-end-1 font-semibold text-gray-600">Roles:</dt>
+                                                <dd>{{ activeOption.model.roles }}</dd>
                                             </dl>
+
+                                            <!-- Banner -->
+                                            <dl v-if="activeOption.model_type == 'Banner'" class="grid grid-cols-1 gap-x-6 gap-y-3 text-sm text-gray-600">
+                                                <dt class="col-end-1 font-semibold text-gray-600">Name:</dt>
+                                                <dd>{{ activeOption.model.name }}</dd>
+                                                <dt class="col-end-1 font-semibold text-gray-600">Status:</dt>
+                                                <dd class="capitalize space-x-1">
+                                                    <span>{{ activeOption.model.state_icon.tooltip }}</span>
+                                                    <FontAwesomeIcon :icon='activeOption.model.state_icon.icon' aria-hidden='true' :class="[activeOption.model.state_icon.class]" />
+                                                </dd>
+                                                <dt class="col-end-1 font-semibold text-gray-600">Website:</dt>
+                                                <dd>{{ activeOption.model.website }}</dd>
+                                            </dl>
+
+                                            <!-- Website -->
+                                            <dl v-if="activeOption.model_type == 'PortfolioWebsite'" class="grid grid-cols-1 gap-x-6 gap-y-3 text-sm text-gray-600">
+                                                <dt class="col-end-1 font-semibold text-gray-600">Name:</dt>
+                                                <dd>{{ activeOption.model.name }}</dd>
+                                                <dt class="col-end-1 font-semibold text-gray-600">Banners count:</dt>
+                                                <dd>{{ activeOption.model.banner }}</dd>
+                                            </dl>
+
+
                                             <!-- <button type="button" class="mt-6 w-full rounded-md bg-gray-600 py-2 px-3 text-sm font-semibold text-white shadow-sm hover:bg-gray-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600">Send message</button> -->
                                         </div>
                                     </div>

@@ -27,7 +27,8 @@ class CustomerUserSearchResultResource extends JsonResource
                 'name'       => 'customer.sysadmin.users.show',
                 'parameters' => $customerUser->slug
             ],
-            'icon'         => ['fal', 'fa-terminal']
+            'icon'         => ['fal', 'fa-terminal'],
+            'roles'        => __('xxxxxxxxxx')
         ];
     }
 }

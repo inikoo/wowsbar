@@ -5,16 +5,18 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Portfolio\PortfolioWebsite\UI;
+namespace App\Actions\Portfolio\PortfolioSocialAccount\UI;
 
 use App\Actions\Helpers\History\IndexHistories;
 use App\Actions\InertiaAction;
 use App\Actions\UI\Customer\Portfolio\ShowPortfolio;
+use App\Enums\UI\Customer\PortfolioSocialAccountTabsEnum;
 use App\Enums\UI\Customer\PortfolioWebsitesTabsEnum;
 use App\Enums\UI\Organisation\CustomerWebsitesTabsEnum;
 use App\Http\Resources\History\HistoryResource;
 use App\Http\Resources\Portfolio\PortfolioWebsiteResource;
 use App\InertiaTable\InertiaTable;
+use App\Models\Portfolio\PortfolioSocialAccount;
 use App\Models\Portfolio\PortfolioWebsite;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -25,7 +27,7 @@ use Lorisleiva\Actions\ActionRequest;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
-class IndexPortfolioWebsites extends InertiaAction
+class IndexPortfolioSocialAccount extends InertiaAction
 {
     public function authorize(ActionRequest $request): bool
     {
@@ -49,20 +51,18 @@ class IndexPortfolioWebsites extends InertiaAction
             $query->where(function ($query) use ($value) {
                 $query->whereAnyWordStartWith('portfolio_websites.name', $value)
                     ->orWhere('portfolio_websites.url', 'ilike', "%$value%")
-                    ->orWhere('portfolio_websites.slug', 'ilike', "$value%")
-                    ->orWhere('portfolio_websites.name', 'ilike', "$value%");
+                    ->orWhere('portfolio_websites.code', 'ilike', "$value%");
             });
         });
         if ($prefix) {
             InertiaTable::updateQueryBuilderParameters($prefix);
         }
 
-        $queryBuilder = QueryBuilder::for(PortfolioWebsite::class);
+        $queryBuilder = QueryBuilder::for(PortfolioSocialAccount::class);
 
         return $queryBuilder
-            ->defaultSort('portfolio_websites.name')
-            ->with(['stats'])
-            ->allowedSorts(['slug', 'name', 'url'])
+            ->defaultSort('username')
+            ->allowedSorts(['username', 'type'])
             ->allowedFilters([$globalSearch])
             ->withPaginator($prefix)
             ->withQueryString();
@@ -82,20 +82,15 @@ class IndexPortfolioWebsites extends InertiaAction
                 ->withGlobalSearch()
                 ->withEmptyState(
                     [
-                        'title' => __('No websites found'),
+                        'title' => __('No social account found'),
                         'count' => 0
                     ]
                 )
                 ->withExportLinks($exportLinks)
-                ->column(key: 'name', label: __('name'), sortable: true)
-                ->column(key: 'url', label: __('url'), sortable: true)
-                ->column(key: 'leads', label: __('Leads'), sortable: false)
-                ->column(key: 'seo', label: __('SEO'), sortable: false)
-                ->column(key: 'google-ads', label: __('Google Ads'), sortable: false)
-                ->column(key: 'social', label: __('Social'), sortable: false)
-
-                ->column(key: 'banners', label: __('banners'), sortable: false)
-                ->defaultSort('slug');
+                ->column(key: 'username', label: __('username'), sortable: true)
+                ->column(key: 'type', label: __('type'), sortable: true)
+                ->column(key: 'profile_url', label: __('profile url'), sortable: true)
+                ->defaultSort('username');
         };
     }
 
@@ -107,24 +102,24 @@ class IndexPortfolioWebsites extends InertiaAction
     public function htmlResponse(LengthAwarePaginator $websites, ActionRequest $request): Response
     {
         return Inertia::render(
-            'Portfolio/PortfolioWebsites',
+            'Portfolio/PortfolioSocialAccounts',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->getName(),
                     $request->route()->parameters
                 ),
-                'title'       => __('websites'),
+                'title'       => __('social account'),
                 'pageHead'    => [
-                    'title'     => __('websites'),
+                    'title'     => __('social account'),
                     'iconRight' => [
-                        'title' => __('website'),
+                        'title' => __('social account'),
                         'icon'  => 'fal fa-globe'
                     ],
                     'actions'   => [
                         $this->canEdit ? [
                             'type'  => 'button',
                             'style' => 'create',
-                            'label' => __('Add website'),
+                            'label' => __('Create social account'),
                             'route' => [
                                 'name'       => 'customer.portfolio.websites.create',
                                 'parameters' => $request->route()->originalParameters()
@@ -136,20 +131,20 @@ class IndexPortfolioWebsites extends InertiaAction
                 ],
                 'tabs'        => [
                     'current'    => $this->tab,
-                    'navigation' => PortfolioWebsitesTabsEnum::navigation()
+                    'navigation' => PortfolioSocialAccountTabsEnum::navigation()
                 ],
 
-                PortfolioWebsitesTabsEnum::WEBSITES->value => $this->tab == PortfolioWebsitesTabsEnum::WEBSITES->value ?
+                PortfolioSocialAccountTabsEnum::ACCOUNTS->value => $this->tab == PortfolioSocialAccountTabsEnum::ACCOUNTS->value ?
                     fn () => PortfolioWebsiteResource::collection($websites)
                     : Inertia::lazy(fn () => PortfolioWebsiteResource::collection($websites)),
 
-                PortfolioWebsitesTabsEnum::CHANGELOG->value => $this->tab == PortfolioWebsitesTabsEnum::CHANGELOG->value ?
+                PortfolioSocialAccountTabsEnum::CHANGELOG->value => $this->tab == PortfolioSocialAccountTabsEnum::CHANGELOG->value ?
                     fn () => HistoryResource::collection(IndexHistories::run(PortfolioWebsite::class))
                     : Inertia::lazy(fn () => HistoryResource::collection(IndexHistories::run(PortfolioWebsite::class)))
             ]
         )->table(
             $this->tableStructure(
-                prefix: 'websites',
+                prefix: 'accounts',
                 exportLinks: [
                     'export' => [
                         'route' => [
@@ -170,7 +165,7 @@ class IndexPortfolioWebsites extends InertiaAction
                     'type'   => 'simple',
                     'simple' => [
                         'route' => $routeParameters,
-                        'label' => __('websites'),
+                        'label' => __('accounts'),
                         'icon'  => 'fal fa-bars'
                     ],
                 ],
