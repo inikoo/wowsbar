@@ -263,7 +263,7 @@ onBeforeUnmount(() => {
 const  startInterval=()=>{
     intervalAutoSave.value = setInterval(() => {
         autoSave();
-      }, 5000);
+      }, 600000);
     }
 
 
