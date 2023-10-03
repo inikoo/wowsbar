@@ -9,7 +9,7 @@ import { Head } from "@inertiajs/vue3"
 import { router } from '@inertiajs/vue3'
 import { useForm } from '@inertiajs/vue3'
 import { notify } from "@kyvg/vue3-notification"
-import { ref, reactive, onBeforeMount, watch } from "vue"
+import { ref, reactive, onBeforeMount, watch, onBeforeUnmount } from "vue"
 import PageHeading from "@/Components/Headings/PageHeading.vue"
 import { capitalize } from "@/Composables/capitalize"
 import { faUser, faUserFriends } from "../../../../private/pro-light-svg-icons"
@@ -171,6 +171,9 @@ const fetchInitialData = async () => {
     } finally {
         isSetData.value = false
         loadingState.value = false
+        if(props.banner.state == 'live'){
+            startInterval()
+        } 
     }
 }
 
@@ -251,6 +254,23 @@ const routeButton=(action)=>{
     }else router.visit(route(routeExit.value['route']['name'], routeExit.value['route']['parameters']))
 }
 
+const intervalAutoSave = ref(null)
+
+onBeforeUnmount(() => {
+    stopInterval()
+})
+
+const  startInterval=()=>{
+    intervalAutoSave.value = setInterval(() => {
+        autoSave();
+      }, 5000);
+    }
+
+
+const stopInterval=()=>{
+      clearInterval(intervalAutoSave.value);
+    }
+
 </script>
 
 
@@ -274,15 +294,6 @@ const routeButton=(action)=>{
             </div>
         </template>
     </PageHeading>
-
-    <notifications
-        group="custom-style"
-        position="top center"
-        classes="n-light"
-        dangerously-set-inner-html
-        :max="3"
-        :width="400"
-    />
 
     <section>
         <div v-if="loadingState" class="w-full min-h-screen flex justify-center items-center">
