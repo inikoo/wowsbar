@@ -16,9 +16,9 @@ import {capitalize} from "@/Composables/capitalize"
 import TableHistories from "@/Components/Tables/TableHistories.vue";
 import TableBanners from "@/Components/Tables/TableBanners.vue";
 
-import {faWindowMaximize, faGlobe} from "@/../private/pro-light-svg-icons"
+import {faRectangleWide, faGlobe} from "@/../private/pro-light-svg-icons"
 
-library.add(faWindowMaximize, faGlobe)
+library.add(faRectangleWide, faGlobe)
 
 const props = defineProps<{
     title: string,

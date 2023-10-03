@@ -64,7 +64,7 @@ class ShowBannerWorkshop extends InertiaAction
 
                     'title'     => __('Workshop'),
                     'container' => [
-                        'icon'    => ['fal', 'fa-window-maximize'],
+                        'icon'    => ['fal', 'fa-rectangle-wide'],
                         'tooltip' => __('Banner'),
                         'label'   => Str::possessive($banner->name)
                     ],

@@ -91,7 +91,7 @@ class ShowBanner extends InertiaAction
                     'title'     => $banner->name,
                     'icon'      => [
                         'tooltip' => __('banner'),
-                        'icon'    => 'fal fa-window-maximize'
+                        'icon'    => 'fal fa-rectangle-wide'
                     ],
                     'container' => $container,
                     'iconRight' =>

@@ -12,11 +12,11 @@ import Slider from "@/Components/Slider/Slider.vue"
 import { trans } from "laravel-vue-i18n"
 
 
-import { faWindowMaximize, faGlobe } from "../../../../private/pro-light-svg-icons"
+import { faRectangleWide, faGlobe } from "../../../../private/pro-light-svg-icons"
 import EmptyState from '@/Components/Utils/EmptyState.vue'
 import { cloneDeep } from 'lodash'
 
-library.add(faWindowMaximize, faGlobe)
+library.add(faRectangleWide, faGlobe)
 
 const props = defineProps<{
     data: {

@@ -8,7 +8,7 @@
 import {Head} from '@inertiajs/vue3';
 import PageHeading from '@/Components/Headings/PageHeading.vue';
 import { capitalize } from "@/Composables/capitalize"
-import {faWindowMaximize} from "@/../private/pro-light-svg-icons"
+import {faRectangleWide} from "@/../private/pro-light-svg-icons"
 import {library} from "@fortawesome/fontawesome-svg-core";
 import TableImages from "@/Components/Tables/TableImages.vue";
 library.add(faWindowMaximize)
