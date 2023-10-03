@@ -47,9 +47,7 @@ class ShowWebpageWorkshop extends InertiaAction
                     $request->route()->originalParameters()
                 ),
                 'pageHead'    => [
-
                     'title'              => $webpage->code,
-                    'actionActualMethod' => 'patch',
                     'icon'               => [
                         'title' => __('webpage'),
                         'icon'  => 'fal fa-browser'
@@ -73,6 +71,7 @@ class ShowWebpageWorkshop extends InertiaAction
                         [
                             'type'  => 'button',
                             'label' => __('save'),
+                            'method'=> 'patch',
                             'route' => [
                                 'name'       => 'org.models.webpage.blocks.update',
                                 'parameters' => $webpage->id
