@@ -8,7 +8,10 @@
 import { Link } from '@inertiajs/vue3'
 import Table from '@/Components/Table/Table.vue'
 import { Website } from "@/types/website"
-import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { faCheckCircle, faTimesCircle } from '@/../private/pro-light-svg-icons'
+import { library } from '@fortawesome/fontawesome-svg-core'
+library.add(faCheckCircle, faTimesCircle)
 
 const props = defineProps<{
     data: object
@@ -26,7 +29,13 @@ function websiteRoute(website: Website) {
     }
 }
 
-
+const dummyData = {
+    leads: true,
+    seo: false,
+    googleAds: true,
+    social: true,
+    banners: false,
+}
 
 
 </script>
@@ -40,8 +49,39 @@ function websiteRoute(website: Website) {
             </Link>
         </template>
 
+        <template #cell(leads)="{ item: website }">
+            <div class="text-center">
+                <FontAwesomeIcon v-if="dummyData.leads" icon="fal fa-check-circle" class="text-green-500"></FontAwesomeIcon>
+                <FontAwesomeIcon v-else icon="fal fa-times-circle" class="text-red-500"></FontAwesomeIcon>
+            </div>
+        </template>
+
+        <template #cell(seo)="{ item: website }">
+            <div class="text-center">
+                <FontAwesomeIcon v-if="dummyData.seo" icon="fal fa-check-circle" class="text-green-500"></FontAwesomeIcon>
+                <FontAwesomeIcon v-else icon="fal fa-times-circle" class="text-red-500"></FontAwesomeIcon>
+            </div>
+        </template>
+
         <template #cell(google-ads)="{ item: website }">
-            <font-awesome-icon icon="fal fa-circle-check"></font-awesome-icon>
+            <div class="text-center">
+                <FontAwesomeIcon v-if="dummyData.googleAds" icon="fal fa-check-circle" class="text-green-500"></FontAwesomeIcon>
+                <FontAwesomeIcon v-else icon="fal fa-times-circle" class="text-red-500"></FontAwesomeIcon>
+            </div>
+        </template>
+
+        <template #cell(social)="{ item: website }">
+            <div class="text-center">
+                <FontAwesomeIcon v-if="dummyData.social" icon="fal fa-check-circle" class="text-green-500"></FontAwesomeIcon>
+                <FontAwesomeIcon v-else icon="fal fa-times-circle" class="text-red-500"></FontAwesomeIcon>
+            </div>
+        </template>
+
+        <template #cell(banners)="{ item: website }">
+            <div class="text-center">
+                <FontAwesomeIcon v-if="dummyData.banners" icon="fal fa-check-circle" class="text-green-500"></FontAwesomeIcon>
+                <FontAwesomeIcon v-else icon="fal fa-times-circle" class="text-red-500"></FontAwesomeIcon>
+            </div>
         </template>
     </Table>
 

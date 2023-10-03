@@ -27,7 +27,8 @@ class PortfolioWebsiteSearchResultResource extends JsonResource
                 'name'       => 'customer.portfolio.websites.show',
                 'parameters' => $this->slug
             ],
-            'icon'   => ['fal', 'fa-globe']
+            'icon'   => ['fal', 'fa-globe'],
+            'banner' => 4
 
 
         ];
