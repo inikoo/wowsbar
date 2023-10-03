@@ -16,15 +16,16 @@ class CustomerUserHydrateUniversalSearch
 
     public function handle(CustomerUser $customerUser): void
     {
-        $customerUser->universalSearch()->create(
+        $customerUser->universalSearch()->updateOrCreate(
+            [],
             [
                 'in_organisation' => true,
                 'website_id'      => $customerUser->user->website_id,
                 'shop_id'         => $customerUser->user->website->shop_id,
                 'section'         => 'sysadmin',
                 'customer_id'     => $customerUser->customer_id,
-                'title'           => $customerUser->user->email,
-                'description'     => $customerUser->user->contact_name
+                'title'           => join(' ', [$customerUser->slug, $customerUser->user->email, $customerUser->user->contact_name]),
+                'description'     => $customerUser->user->about
             ]
         );
     }

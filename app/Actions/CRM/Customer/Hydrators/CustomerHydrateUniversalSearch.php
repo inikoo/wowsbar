@@ -24,7 +24,7 @@ class CustomerHydrateUniversalSearch
                 'website_id'      => $customer->website_id,
                 'section'         => 'crm',
                 'title'           => trim($customer->email.' '.$customer->contact_name.' '.$customer->company_name),
-                'customer_id'     => $customer->id
+                'customer_id'     => null,
             ]
         );
     }

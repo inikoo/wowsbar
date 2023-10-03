@@ -7,6 +7,7 @@
 
 namespace App\Actions\Auth\CustomerUser;
 
+use App\Actions\Auth\CustomerUser\Hydrators\CustomerUserHydrateUniversalSearch;
 use App\Actions\Auth\User\UpdateUser;
 use App\Actions\CRM\Customer\Hydrators\CustomerHydrateCustomerUsers;
 use App\Actions\Traits\WithActionUpdate;
@@ -34,6 +35,7 @@ class UpdateCustomerUser
         UpdateUser::run($customerUser->user, Arr::only($modelData, ['contact_name', 'email', 'password']));
 
         $customerUser->refresh();
+        CustomerUserHydrateUniversalSearch::dispatch($customerUser);
 
         return $customerUser;
     }

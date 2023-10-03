@@ -95,7 +95,6 @@ class User extends Authenticatable implements HasMedia, Auditable
     use HasApiTokens;
     use HasFactory;
     use Notifiable;
-
     use InteractsWithMedia;
     use HasUniversalSearch;
     use HasHistory;
