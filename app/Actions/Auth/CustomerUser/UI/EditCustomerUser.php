@@ -8,7 +8,7 @@
 namespace App\Actions\Auth\CustomerUser\UI;
 
 use App\Actions\InertiaAction;
-use App\Actions\Traits\Fields\WithUserFields;
+use App\Actions\Traits\Fields\WithCustomerUserFields;
 use App\Models\Auth\CustomerUser;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -16,7 +16,7 @@ use Lorisleiva\Actions\ActionRequest;
 
 class EditCustomerUser extends InertiaAction
 {
-    use WithUserFields;
+    use WithCustomerUserFields;
 
     public function handle(CustomerUser $customerUser): CustomerUser
     {
@@ -94,12 +94,10 @@ class EditCustomerUser extends InertiaAction
                         'icon'    => 'fal fa-user-lock',
                         'current' => false,
                         'fields'  => [
-                            'permissions' => [
-                                'type'    => 'select',
-                                'label'   => __('permissions'),
-                                'options' => $customerUser->getRoleNames(),
+                            'roles' => [
+                                'type'    => 'customerRoles',
+                                'label'   => __('roles'),
                                 'value'   => $customerUser->getRoleNames(),
-                                // 'fullComponentArea' => true,
                             ],
                         ]
                     ],

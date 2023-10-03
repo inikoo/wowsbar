@@ -38,7 +38,8 @@ class CreateCustomerUser extends InertiaAction
                 'formData' => [
                     'blueprint' => [
                         [
-                            'title'  => __('create user'),
+                            'title'   => __('credentials'),
+                            'icon'    => 'fal fa-key',
                             'fields' => [
 
                                 'email' => [
@@ -58,7 +59,19 @@ class CreateCustomerUser extends InertiaAction
                                 ],
 
                             ]
-                        ]
+                        ],
+                        [
+                            'title'   => __('Permissions'),
+                            'icon'    => 'fal fa-user-lock',
+                            'current' => false,
+                            'fields'  => [
+                                'roles' => [
+                                    'type'    => 'customerRoles',
+                                    'label'   => __('roles'),
+                                    'value'   =>[]
+                                ],
+                            ]
+                        ],
                     ],
                     'route'      => [
                         'name'       => 'customer.models.user.store',

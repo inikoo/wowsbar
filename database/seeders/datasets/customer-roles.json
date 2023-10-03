@@ -30,9 +30,9 @@
         ]
     },
     {
-        "name":"ads",
+        "name":"google-ads",
         "permissions": [
-            "portfolio.ads"
+            "portfolio.google-ads"
         ]
     },
     {

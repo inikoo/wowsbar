@@ -9,7 +9,7 @@ namespace App\Actions\Auth\User\UI;
 
 use App\Actions\Auth\CustomerUser\UI\ShowCustomerUser;
 use App\Actions\InertiaAction;
-use App\Actions\Traits\Fields\WithUserFields;
+use App\Actions\Traits\Fields\WithCustomerUserFields;
 use App\Models\Auth\User;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -17,7 +17,7 @@ use Lorisleiva\Actions\ActionRequest;
 
 class EditUser extends InertiaAction
 {
-    use WithUserFields;
+    use WithCustomerUserFields;
 
     public function handle(User $user): User
     {
@@ -49,7 +49,7 @@ class EditUser extends InertiaAction
                     $request->route()->parameters
                 ),
                 'pageHead'    => [
-                    'title'     => $user->username,
+                    'title'     => $user->email,
                     'actions'   => [
                       [
                           'type'  => 'button',
@@ -63,11 +63,11 @@ class EditUser extends InertiaAction
                 ],
 
                 'formData' => [
-                    'blueprint' => $this->getUserFields($user),
+                    'blueprint' => $this->getCustomerUserFields($user),
                     'args'      => [
                         'updateRoute' => [
                             'name'      => 'models.user.update',
-                            'parameters'=> [$user->username]
+                            'parameters'=> [$user->id]
 
                         ],
                     ]

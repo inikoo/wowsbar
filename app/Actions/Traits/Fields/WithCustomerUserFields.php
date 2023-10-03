@@ -7,9 +7,9 @@
 
 namespace App\Actions\Traits\Fields;
 
-trait WithUserFields
+trait WithCustomerUserFields
 {
-    protected function getUserFields($user): array
+    protected function getCustomerUserFields($user): array
     {
         return  [
             [
@@ -17,11 +17,7 @@ trait WithUserFields
                 'icon'     => 'fal fa-user',
                 'current'  => true,
                 'fields'   => [
-                    'contact_name' => [
-                        'type'  => 'input',
-                        'label' => __('name'),
-                        'value' => $user->contact_name
-                    ],
+
                     'username' => [
                         'type'  => 'input',
                         'label' => __('username'),
@@ -31,6 +27,11 @@ trait WithUserFields
                         'type'  => 'input',
                         'label' => __('email'),
                         'value' => $user->email
+                    ],
+                    'contact_name' => [
+                        'type'  => 'input',
+                        'label' => __('name'),
+                        'value' => $user->contact_name
                     ],
 
                 ]

@@ -8,7 +8,7 @@
 namespace App\Actions\CRM\User\UI;
 
 use App\Actions\InertiaAction;
-use App\Actions\Traits\Fields\WithUserFields;
+use App\Actions\Traits\Fields\WithCustomerUserFields;
 use App\Models\Auth\User;
 use App\Models\CRM\Customer;
 use App\Models\Market\Shop;
@@ -18,7 +18,7 @@ use Lorisleiva\Actions\ActionRequest;
 
 class EditUser extends InertiaAction
 {
-    use WithUserFields;
+    use WithCustomerUserFields;
 
     public function handle(User $user): User
     {
@@ -75,7 +75,7 @@ class EditUser extends InertiaAction
                 ],
 
                 'formData' => [
-                    'blueprint' => $this->getUserFields($user),
+                    'blueprint' => $this->getCustomerUserFields($user),
                     'args'      => [
                         'updateRoute' => [
                             'name'      => 'models.user.update',
