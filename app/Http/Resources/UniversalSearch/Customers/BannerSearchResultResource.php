@@ -31,8 +31,8 @@ class BannerSearchResultResource extends JsonResource
         }
 
         return [
-            'code'           => $banner->slug,
-            'name'           => $banner->name,
+            'code'            => $banner->slug,
+            'name'            => $banner->name,
             'image_thumbnail' => $imageThumbnail ? GetPictureSources::run($imageThumbnail) : null,
 
             'state_icon'      => match ($banner->state) {
