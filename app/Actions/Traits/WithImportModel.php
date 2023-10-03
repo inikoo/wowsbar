@@ -81,6 +81,10 @@ trait WithImportModel
         try {
             $client = new Client();
             $client->useApplicationDefaultCredentials();
+//
+//            $client->setClientId('');
+//            $client->setClientSecret('');
+
             $client->addScope([
                 Drive::DRIVE,
                 Drive::DRIVE_FILE,
