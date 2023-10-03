@@ -120,6 +120,15 @@ class User extends Authenticatable implements HasMedia, Auditable
         'remember_token',
     ];
 
+    protected $auditExclude = [
+        'password',
+        'id',
+        'slug',
+        'settings',
+        'website_id',
+        'data'
+    ];
+
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
