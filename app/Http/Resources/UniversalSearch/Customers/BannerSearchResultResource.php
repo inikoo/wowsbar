@@ -37,25 +37,18 @@ class BannerSearchResultResource extends JsonResource
 
             'state_icon'      => match ($banner->state) {
                 BannerStateEnum::LIVE => [
-
                     'tooltip' => __('live'),
                     'icon'    => 'fal fa-broadcast-tower',
                     'class'   => 'text-green-600 animate-pulse'
-
                 ],
                 BannerStateEnum::UNPUBLISHED => [
-
                     'tooltip' => __('unpublished'),
                     'icon'    => 'fal fa-seedling',
                     'class'   => 'text-indigo-500'
-
-
                 ],
                 BannerStateEnum::RETIRED => [
-
                     'tooltip' => __('retired'),
                     'icon'    => 'fal fa-eye-slash'
-
                 ]
             },
             'route'          => [
@@ -64,7 +57,8 @@ class BannerSearchResultResource extends JsonResource
                     $banner->slug
                 ]
             ],
-            'icon'   => ['fal', 'fa-window-maximize']
+            'icon'   => ['fal', 'fa-window-maximize'],
+            'website'=> _('sssssssss')
         ];
     }
 }
