@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Head } from '@inertiajs/vue3'
-import { ref } from "vue"
+import { ref, watch, reactive } from "vue"
 
 import WebpageBlocksOrder from "@/Components/Workshop/Webpage/WebpageBlocksOrder.vue"
 import WebpageBlocksContent from "@/Components/CMS/Workshops/WebpageBlocksContent.vue"
@@ -95,16 +95,19 @@ const dataComponent = ref([
 
 const loadingState = ref(false)
 const selectedComponent = ref(dataComponent.value[0])
+const data = ref()
 
+
+watch(data,(newValue) => {console.log('ininini',newValue)})
 
 </script>
 
 <template layout="OrgApp">
     <!--suppress HtmlRequiredTitleElement -->
 
-    <Head :title="capitalize(title)" :dataToSubmit="{data : 'test'}"/>
-    <PageHeading :data="pageHead"></PageHeading>
-    <GrapeEditor />
+    <Head :title="capitalize(title)"/>
+    <PageHeading :data="pageHead"  :dataToSubmit="data"></PageHeading>
+    <GrapeEditor :data="data" @changeData="(value)=>data = value"/>
     <!-- <div id="webpageWorkshop"> 
         <div v-if="loadingState" class="w-full min-h-screen flex justify-center items-center">
             <FontAwesomeIcon icon='fad fa-spinner-third' class='animate-spin h-12  text-gray-600' aria-hidden='true' />
