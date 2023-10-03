@@ -9,6 +9,7 @@
     "portfolio",
     "portfolio.view",
     "portfolio.edit",
+
     "portfolio.banners",
     "portfolio.banners.view",
     "portfolio.banners.edit",

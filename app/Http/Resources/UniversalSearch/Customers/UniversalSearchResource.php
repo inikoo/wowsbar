@@ -20,10 +20,10 @@ class UniversalSearchResource extends JsonResource
             'model_type' => $this->model_type,
             'model'      => $this->when(true, function () {
                 return match (class_basename($this->resource->model)) {
-                    'PortfolioWebsite'      => new PortfolioWebsiteSearchResultResource($this->resource->model),
-                    'Banner'                => new BannerSearchResultResource($this->resource->model),
+                    'PortfolioWebsite'              => new PortfolioWebsiteSearchResultResource($this->resource->model),
+                    'Banner'                        => new BannerSearchResultResource($this->resource->model),
                     'CustomerUser'                  => new CustomerUserSearchResultResource($this->resource->model),
-                    default                 => [],
+                    default                         => [],
                 };
             }),
 

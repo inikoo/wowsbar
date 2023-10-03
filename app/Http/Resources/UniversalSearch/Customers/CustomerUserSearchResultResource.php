@@ -11,7 +11,6 @@ use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Http\Resources\Json\JsonResource;
 use JsonSerializable;
 
-
 class CustomerUserSearchResultResource extends JsonResource
 {
     public function toArray($request): array|Arrayable|JsonSerializable
@@ -21,7 +20,7 @@ class CustomerUserSearchResultResource extends JsonResource
 
         return [
             'slug'         => $customerUser->slug,
-            'avatar'       => $customerUser->user->avatarImageSources(0,180),
+            'avatar'       => $customerUser->user->avatarImageSources(0, 180),
             'email'        => $customerUser->user->email,
             'contact_name' => $customerUser->user->contact_name,
             'route'        => [
