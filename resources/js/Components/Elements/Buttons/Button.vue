@@ -9,6 +9,7 @@ import { trans } from 'laravel-vue-i18n'
 import { faSave as fadSave } from "@/../private/pro-duotone-svg-icons"
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faDownload } from '@/../private/pro-light-svg-icons';
+import { faArrowLeft } from '@/../private/pro-regular-svg-icons';
 import { faPlus, faSave, faUpload } from '@/../private/pro-solid-svg-icons';
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
@@ -29,7 +30,7 @@ interface Icon {
     icon: string[] | string
 }
 
-library.add(faPlus, faSave, fadSave, faUpload, faDownload);
+library.add(faPlus, faSave, fadSave, faUpload, faDownload, faArrowLeft)
 
 let styleClass = ''
 let iconClass = ''

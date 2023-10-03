@@ -65,7 +65,8 @@ onMounted(() => {
         action: {
             label: trans('Workshop'),
             route: props.pageHead.route,
-            tooltip: trans('Workshop')
+            tooltip: trans('Workshop'),
+            icon: 'fal fa-drafting-compass'
         }
     }" />
     <div v-if="banner.state !== 'unpublished'" :class="['p-2.5', !data.banner?.components?.length ?  'flex justify-center' : '' ]">

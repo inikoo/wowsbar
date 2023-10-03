@@ -123,7 +123,7 @@ const sendDataToServer = async () => {
     form.patch(
         route(routeSave.value['route']['name'], routeSave.value['route']['parameters']), {
         onSuccess: async (res) => {
-            // await set(getDbRef(dbPath), { publishedHash: data.hash })
+            await set(getDbRef(dbPath), { publishedHash: data.hash })
             isModalOpen.value = false
             router.visit(route(routeExit.value['route']['name'], routeExit.value['route']['parameters']))
             notify({
@@ -261,13 +261,15 @@ const routeButton=(action)=>{
             <div class="flex items-center gap-2">
                 <span v-for="action in head.data.actions">
                     <Button size="xs" :style="action.style" @click="routeButton(action)"
+                        :icon="action.icon" :label="action.label"
                         class="capitalize inline-flex items-center rounded-md text-sm font-medium shadow-sm gap-x-2">
-                        <FontAwesomeIcon v-if="action.icon && action.icon == 'fad fa-save'" aria-hidden="true"
-                            :icon="['fad', 'save']"
-                            style="--fa-primary-color: #f3f3f3; --fa-secondary-color: #ff6600; --fa-secondary-opacity: 1;"
-                            size="sm" :class="[action.iconClass]" />
-                        <FontAwesomeIcon :icon="action.icon" aria-hidden="true" />
-                        {{ action.label }}
+                        <div v-if="action.icon && action.icon == 'fad fa-save'">
+                            <FontAwesomeIcon aria-hidden="true"
+                                :icon="['fad', 'save']"
+                                style="--fa-primary-color: #f3f3f3; --fa-secondary-color: #ff6600; --fa-secondary-opacity: 1;"
+                                size="sm" :class="[action.iconClass]" />
+                            {{ action.label }}
+                        </div>
                     </Button>
                         {{ saveRouteValue(action) }}
                 </span>
@@ -301,7 +303,7 @@ const routeButton=(action)=>{
     <Modal :isOpen="isModalOpen" @onClose="isModalOpen = false">
             <div>
                 <div class="inline-flex items-start leading-none">
-                    <FontAwesomeIcon :icon="['fas fa-asterisk']" class="font-light text-[12px] text-red-400 mr-1" />
+                    <FontAwesomeIcon :icon="'fas fa-asterisk'" class="font-light text-[12px] text-red-400 mr-1" />
                     <span>{{ trans('Comment') }}</span>
                 </div>
                 <div class="py-2.5">
@@ -309,11 +311,7 @@ const routeButton=(action)=>{
                         class="block w-full rounded-md shadow-sm dark:bg-gray-600 dark:text-gray-400 border-gray-300 dark:border-gray-500 focus:border-gray-500 focus:ring-gray-500 sm:text-sm" />
                 </div>
                 <div class="flex justify-end">
-                    <Button size="xs" @click="sendDataToServer"
-                        class="capitalize inline-flex items-center rounded-md text-sm font-medium shadow-sm gap-x-2">
-                        <FontAwesomeIcon :icon="['far', 'fa-rocket-launch']" />
-                        {{ trans('Publish') }}
-                    </Button>
+                    <Button size="xs" @click="sendDataToServer" icon="far fa-rocket-launch" label="Publish" />
                 </div>
             </div>
     </Modal>

@@ -2,7 +2,7 @@
 import { ref } from "vue"
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
-import { faImage } from "@/../private/pro-light-svg-icons"
+import { faImage, faPhotoVideo } from "@/../private/pro-light-svg-icons"
 import { ulid } from "ulid"
 import { trans } from "laravel-vue-i18n"
 import Modal from '@/Components/Utils/Modal.vue'
@@ -10,7 +10,7 @@ import CropImage from "./CropImage/CropImage.vue"
 import Button from "../Elements/Buttons/Button.vue"
 import GalleryImages from "@/Components/Workshop/GalleryImages.vue"
 
-library.add(faImage)
+library.add(faImage, faPhotoVideo)
 const props = defineProps<{
     data: {
         common: {
@@ -127,10 +127,8 @@ const uploadImageRespone = (res) => {
                 <p class="text-[0.7rem]">
                     {{ trans("PNG, JPG, GIF up to 10MB") }}
                 </p>
-                <Button id="gallery" :style="`primary`" icon="fal fa-photo-video" size="xs" class="relative m-2.5"
-                    @click="()=>isOpenGalleryImages=true">
-                    {{ trans("Gallery") }}
-                </Button>
+                <Button id="gallery" :style="`primary`" :icon="'fal fa-photo-video'" label="Gallery" size="xs" class="relative m-2.5"
+                    @click="()=>isOpenGalleryImages=true" />
             </div>
         </div>
         <div class="text-xs text-gray-400 py-1">{{ trans("The recommended image size is 1800 x 450") }}</div>
