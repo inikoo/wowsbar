@@ -23,7 +23,7 @@ class RemoveBanner extends InertiaAction
 
     public function authorize(ActionRequest $request): bool
     {
-        return $request->get('customerUser')->hasPermissionTo("banners.edit");
+        return $request->get('customerUser')->hasPermissionTo("portfolio.banners.edit");
     }
 
     public function asController(Banner $banner, ActionRequest $request): Banner
