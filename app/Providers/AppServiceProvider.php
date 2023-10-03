@@ -28,10 +28,11 @@ class AppServiceProvider extends ServiceProvider
     {
         Validator::extend('iunique', function ($attribute, $value, $parameters, $validator) {
             if (isset($parameters[1])) {
-                [$connection]  = $validator->parseTable($parameters[0]);
+                [$connection] = $validator->parseTable($parameters[0]);
                 $wrapped       = DB::connection($connection)->getQueryGrammar()->wrap($parameters[1]);
                 $parameters[1] = DB::raw("lower($wrapped)");
             }
+
             return $validator->validateUnique($attribute, Str::lower($value), $parameters);
         }, trans('validation.iunique'));
 
@@ -42,7 +43,6 @@ class AppServiceProvider extends ServiceProvider
             [
                 'Organisation'     => 'App\Models\Organisation\Organisation',
                 'User'             => 'App\Models\Auth\User',
-                'CustomerWebsite'  => 'App\Models\CustomerWebsites\CustomerWebsite',
                 'PortfolioWebsite' => 'App\Models\Portfolio\PortfolioWebsite',
                 'Banner'           => 'App\Models\Portfolio\Banner',
                 'OrganisationUser' => 'App\Models\Auth\OrganisationUser',
@@ -54,7 +54,9 @@ class AppServiceProvider extends ServiceProvider
                 'Workplace'        => 'App\Models\HumanResources\Workplace',
                 'Product'          => 'App\Models\Catalogue\Product',
                 'ProductCategory'  => 'App\Models\Catalogue\ProductCategory',
-                'CustomerUser'     => 'App\Models\Auth\CustomerUser'
+                'CustomerUser'     => 'App\Models\Auth\CustomerUser',
+                'Employee'         => 'App\Models\HumanResources\Employee',
+                'CustomerWebsite'  => 'App\Models\Portfolios\CustomerWebsite'
 
             ]
         );

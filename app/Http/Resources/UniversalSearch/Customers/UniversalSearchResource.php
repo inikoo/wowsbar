@@ -22,7 +22,7 @@ class UniversalSearchResource extends JsonResource
                 return match (class_basename($this->resource->model)) {
                     'PortfolioWebsite'      => new PortfolioWebsiteSearchResultResource($this->resource->model),
                     'Banner'                => new BannerSearchResultResource($this->resource->model),
-                    'User'                  => new UserSearchResultResource($this->resource->model),
+                    'CustomerUser'                  => new CustomerUserSearchResultResource($this->resource->model),
                     default                 => [],
                 };
             }),
