@@ -7,6 +7,9 @@
 
 namespace App\Http\Resources\UniversalSearch\Customers;
 
+use App\Actions\Helpers\Images\GetPictureSources;
+use App\Enums\Portfolio\Banner\BannerStateEnum;
+use App\Helpers\ImgProxy\Image;
 use App\Models\Portfolio\Banner;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -19,16 +22,46 @@ class BannerSearchResultResource extends JsonResource
 {
     public function toArray($request): array
     {
-        /** @var Banner $contentBlock */
-        $contentBlock=$this;
+        /** @var Banner $banner */
+        $banner=$this;
+
+        $imageThumbnail = null;
+        if ($banner->image) {
+            $imageThumbnail = (new Image())->make($banner->image->getImgProxyFilename())->resize(0, 48);
+        }
+
         return [
-            'code'           => $contentBlock->code,
-            'name'           => $contentBlock->name,
+            'code'           => $banner->slug,
+            'name'           => $banner->name,
+            'image_thumbnail' => $imageThumbnail ? GetPictureSources::run($imageThumbnail) : null,
+
+            'state_icon'      => match ($banner->state) {
+                BannerStateEnum::LIVE => [
+
+                    'tooltip' => __('live'),
+                    'icon'    => 'fal fa-broadcast-tower',
+                    'class'   => 'text-green-600 animate-pulse'
+
+                ],
+                BannerStateEnum::UNPUBLISHED => [
+
+                    'tooltip' => __('unpublished'),
+                    'icon'    => 'fal fa-seedling',
+                    'class'   => 'text-indigo-500'
+
+
+                ],
+                BannerStateEnum::RETIRED => [
+
+                    'tooltip' => __('retired'),
+                    'icon'    => 'fal fa-eye-slash'
+
+                ]
+            },
             'route'          => [
-                'name'       => 'customer.portfolio.websites.show.banners.show',
+                'name'       => 'customer.banners.show',
                 'parameters' => [
-                    $contentBlock->data['website_slug'],
-                    $contentBlock->slug
+                    $banner->slug
                 ]
             ],
             'icon'   => ['fal', 'fa-window-maximize']
