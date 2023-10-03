@@ -56,8 +56,7 @@ class CreateCustomerUser extends InertiaAction
                                     'type'  => 'input',
                                     'label' => __('name'),
                                     'value' => ''
-                                ],
-
+                                ]
                             ]
                         ],
                         [

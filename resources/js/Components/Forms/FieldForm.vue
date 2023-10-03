@@ -28,6 +28,7 @@ import Permissions from "@/Components/Forms/Fields/Permissions.vue"
 import InputWithAddOn from '@/Components/Forms/Fields/InputWithAddOn.vue'
 import Checkbox from '@/Components/Forms/Fields/Checkbox.vue'
 import ToggleSquare from './Fields/ToggleSquare.vue'
+import CustomerRoles from '@/Components/Forms/Fields/CustomerRoles.vue'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faSave as fadSave } from '@/../private/pro-duotone-svg-icons'
@@ -79,7 +80,8 @@ const components = {
     'language': Language,
     'permissions': Permissions,
     'toggleSquare': ToggleSquare,
-    'checkbox': Checkbox
+    'checkbox': Checkbox,
+    'customerRoles': CustomerRoles
 };
 
 const getComponent = (componentName) => {
