@@ -44,7 +44,7 @@ class UploadImagesToGallery
     public function authorize(ActionRequest $request): bool
     {
 
-        return $request->get('customerUser')->hasPermissionTo("portfolio.gallery.edit");
+        return $request->get('customerUser')->hasPermissionTo("portfolio.banners.edit");
     }
 
     public function rules(): array
