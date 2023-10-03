@@ -26,9 +26,9 @@ class EditBanner extends InertiaAction
 
     public function authorize(ActionRequest $request): bool
     {
-        $this->canEdit = $request->get('customerUser')->hasPermissionTo('portfolio.edit');
+        $this->canEdit = $request->get('customerUser')->hasPermissionTo('portfolio.banners.edit');
 
-        return $request->get('customerUser')->hasPermissionTo("portfolio.edit");
+        return $request->get('customerUser')->hasPermissionTo("portfolio.banners.edit");
     }
 
     public function asController(PortfolioWebsite $portfolioWebsite, Banner $banner, ActionRequest $request): Banner

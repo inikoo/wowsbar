@@ -89,7 +89,9 @@ class IndexPortfolioWebsites extends InertiaAction
                 ->column(key: 'code', label: __('code'), sortable: true)
                 ->column(key: 'name', label: __('name'), sortable: true)
                 ->column(key: 'url', label: __('url'), sortable: true)
-                ->column(key: 'number_banners', label: __('banners'), sortable: true)
+                ->column(key: 'google-ads', label: __('Google Ads'), sortable: true)
+
+                ->column(key: 'banners', label: __('banners'), sortable: true)
                 ->defaultSort('slug');
         };
     }

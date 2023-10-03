@@ -110,27 +110,13 @@ const closeModalisOpenCropModal = () => {
 
 const addComponent = async (element) => {
     uploadedFilesList.value = element.target.files;
-    console.log(uploadedFilesList.value)
     isOpenCropModal.value = true;
 };
 
 const removeComponent = (file) => {
     const index = props.data.components.findIndex((item) => item.ulid === file.ulid);
     if (index !== -1) {
-        // if (
-        //     currentComponentBeenEdited.value &&
-        //     currentComponentBeenEdited.value.ulid === props.data.components[index].ulid
-        // ) {
-        //     const nextIndex = index + 1;
-        //     selectComponentForEdition(
-        //         nextIndex < props.data.components.length
-        //             ? props.data.components[nextIndex]
-        //             : props.data.components.filter((item) => item.ulid !== null)[0]
-        //     );
-        // }
         props.data.components.splice(index,1)
-    } else {
-        console.log("Index not found");
     }
 };
 
@@ -497,7 +483,6 @@ const setCommonEdit = () => {
 };
 
 const uploadImageRespone = (res) => {
-    console.log('inii',res)
     let setData = [];
     for (const set of res.data) {
         setData.push({
@@ -538,7 +523,7 @@ const uploadImageRespone = (res) => {
                 <FontAwesomeIcon v-else="
                     props.data.common.user == props.user || !props.data.common.user
                     " :icon="['fal', 'lock']" class="" aria-hidden="true" />
-                <span class="text-gray-600 text-sm">{{ trans("Common properties") }}</span>
+                <span class="text-gray-600 text-sm hidden sm:inline">{{ trans("Common properties") }}</span>
             </div>
 
             <!-- Slides/Drag area -->
