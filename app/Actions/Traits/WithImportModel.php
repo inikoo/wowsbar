@@ -11,6 +11,7 @@ use App\Actions\Helpers\Uploads\ConvertUploadedFile;
 use App\Enums\Helpers\Import\UploadRecordStatusEnum;
 use App\Models\Helpers\Upload;
 use Exception;
+use Google\Service\Sheets;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -86,8 +87,14 @@ trait WithImportModel
                 Drive::DRIVE_METADATA,
                 Drive::DRIVE_METADATA_READONLY,
                 Drive::DRIVE_APPDATA,
+                Sheets::DRIVE_FILE,
+                Sheets::SPREADSHEETS,
+                Sheets::DRIVE_READONLY,
+                Sheets::DRIVE,
+                Sheets::SPREADSHEETS_READONLY,
                 Drive::DRIVE_READONLY
             ]);
+            $client->setAccessType('offline');
             $driveService = new Drive($client);
 
             $filename = now()->timestamp;
