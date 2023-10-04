@@ -5,19 +5,19 @@
  * Copyright (c) 2023, Inikoo LTD
  */
 
-namespace App\Enums\Auth\CustomerUser;
+namespace App\Enums\UI\Organisation;
 
 use App\Enums\EnumHelperTrait;
 use App\Enums\HasTabs;
 
-enum CustomerUserTabsEnum: string
+enum GuestTabsEnum: string
 {
     use EnumHelperTrait;
     use HasTabs;
 
     case SHOWCASE                       = 'showcase';
     case HISTORY                        = 'history';
-    case REQUEST_LOGS                   = 'request_logs';
+    case DATA                           = 'data';
 
 
     public function blueprint(): array
@@ -25,19 +25,22 @@ enum CustomerUserTabsEnum: string
         return match ($this) {
 
 
-            CustomerUserTabsEnum::HISTORY => [
+
+            GuestTabsEnum::DATA => [
+                'title' => __('database'),
+                'icon'  => 'fal fa-database',
+                'type'  => 'icon',
+                'align' => 'right',
+            ],
+            GuestTabsEnum::HISTORY => [
                 'title' => __('history'),
                 'icon'  => 'fal fa-clock',
                 'type'  => 'icon',
                 'align' => 'right',
             ],
-            CustomerUserTabsEnum::SHOWCASE => [
-                'title' => __('user'),
+            GuestTabsEnum::SHOWCASE => [
+                'title' => __('guest'),
                 'icon'  => 'fas fa-info-circle',
-            ],
-            CustomerUserTabsEnum::REQUEST_LOGS => [
-                'title' => __('visit logs'),
-                'icon'  => 'fal fa-road',
             ],
         };
     }

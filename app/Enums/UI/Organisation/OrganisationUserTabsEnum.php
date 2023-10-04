@@ -5,18 +5,19 @@
  * Copyright (c) 2023, Inikoo LTD
  */
 
-namespace App\Enums\Auth\CustomerUser;
+namespace App\Enums\UI\Organisation;
 
 use App\Enums\EnumHelperTrait;
 use App\Enums\HasTabs;
 
-enum CustomerUserTabsEnum: string
+enum OrganisationUserTabsEnum: string
 {
     use EnumHelperTrait;
     use HasTabs;
 
     case SHOWCASE                       = 'showcase';
     case HISTORY                        = 'history';
+    case DATA                           = 'data';
     case REQUEST_LOGS                   = 'request_logs';
 
 
@@ -24,18 +25,23 @@ enum CustomerUserTabsEnum: string
     {
         return match ($this) {
 
-
-            CustomerUserTabsEnum::HISTORY => [
+            OrganisationUserTabsEnum::DATA => [
+                'title' => __('database'),
+                'icon'  => 'fal fa-database',
+                'type'  => 'icon',
+                'align' => 'right',
+            ],
+            OrganisationUserTabsEnum::HISTORY => [
                 'title' => __('history'),
                 'icon'  => 'fal fa-clock',
                 'type'  => 'icon',
                 'align' => 'right',
             ],
-            CustomerUserTabsEnum::SHOWCASE => [
+            OrganisationUserTabsEnum::SHOWCASE => [
                 'title' => __('user'),
                 'icon'  => 'fas fa-info-circle',
             ],
-            CustomerUserTabsEnum::REQUEST_LOGS => [
+            OrganisationUserTabsEnum::REQUEST_LOGS => [
                 'title' => __('visit logs'),
                 'icon'  => 'fal fa-road',
             ],

@@ -462,6 +462,14 @@ class GetLayout
                             ]
                         ],
                         [
+                            'label' => __('guests'),
+                            'icon'  => ['fal', 'fa-user-alien'],
+                            'route' => [
+                                'name' => 'org.sysadmin.guests.index',
+
+                            ]
+                        ],
+                        [
                             'label' => __('system settings'),
                             'icon'  => ['fal', 'fa-cog'],
                             'route' => [

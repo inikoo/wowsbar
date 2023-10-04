@@ -30,7 +30,7 @@ trait IsUser
     {
         if($this->avatar) {
             $avatarThumbnail = (new Image())->make($this->avatar->getImgProxyFilename())->resize($width, $height);
-       //     dd($this->avatar->getImgProxyFilename());
+            //     dd($this->avatar->getImgProxyFilename());
             return GetPictureSources::run($avatarThumbnail);
         }
         return null;

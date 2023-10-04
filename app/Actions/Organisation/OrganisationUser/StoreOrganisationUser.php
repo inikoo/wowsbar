@@ -7,6 +7,8 @@
 
 namespace App\Actions\Organisation\OrganisationUser;
 
+use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateUsers;
+use App\Actions\Organisation\OrganisationUser\Hydrators\OrganisationUserHydrateUniversalSearch;
 use App\Actions\Organisation\OrganisationUser\UI\SetOrganisationUserAvatar;
 use App\Models\Auth\Guest;
 use App\Models\Auth\OrganisationUser;
@@ -33,8 +35,8 @@ class StoreOrganisationUser
         $organisationUser->stats()->create();
         SetOrganisationUserAvatar::run($organisationUser);
 
-        // UserHydrateUniversalSearch::dispatch($organisationUser);
-        //OrganisationHydrateUsers::dispatch();
+        OrganisationUserHydrateUniversalSearch::dispatch($organisationUser);
+        OrganisationHydrateUsers::dispatch();
         return $organisationUser;
     }
 
@@ -52,7 +54,7 @@ class StoreOrganisationUser
         return [
             'username'     => ['required', new AlphaDashDot(), 'unique:organisation_users,username', Rule::notIn(['export', 'create'])],
             'password'     => ['required', app()->isLocal() || app()->environment('testing') ? null : Password::min(8)->uncompromised()],
-            'email'        => ['sometimes', 'required', 'email', 'unique:organisation_users,email'],
+            'email'        => ['sometimes', 'nullable', 'email', 'unique:organisation_users,email'],
             'contact_name' => ['required', 'string', 'max:255'],
 
         ];

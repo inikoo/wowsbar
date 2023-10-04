@@ -44,13 +44,12 @@ class StoreGuest
         StoreOrganisationUser::make()->action(
             $guest,
             [
-                'username' => Arr::get($modelData, 'username'),
-                'password' => (app()->isLocal() ? 'hello' : wordwrap(Str::random(), 4, '-', true)),
-                'contact_name'=>$guest->contact_name,
-                'email'=>$guest->email
+                'username'    => Arr::get($modelData, 'username'),
+                'password'    => (app()->isLocal() ? 'hello' : wordwrap(Str::random(), 4, '-', true)),
+                'contact_name'=> $guest->contact_name,
+                'email'       => $guest->email
             ]
         );
-
 
         return $guest;
     }
@@ -75,7 +74,7 @@ class StoreGuest
     {
         return [
             'type'         => ['required', Rule::in(GuestTypeEnum::values())],
-            'username'     => ['required', new AlphaDashDot(), 'unique:App\Models\Auth\OrganisationUser,username', Rule::notIn(['export', 'create'])],
+            'username'     => ['sometimes', new AlphaDashDot(), 'unique:App\Models\Auth\OrganisationUser,username', Rule::notIn(['export', 'create'])],
             'company_name' => ['nullable', 'string', 'max:255'],
             'contact_name' => ['required', 'string', 'max:255'],
             'phone'        => ['nullable', 'phone:AUTO'],
@@ -88,6 +87,7 @@ class StoreGuest
         $request->validate();
 
         $modelData = $request->validated();
+
 
         return $this->handle(Arr::except($modelData, ['username']));
     }

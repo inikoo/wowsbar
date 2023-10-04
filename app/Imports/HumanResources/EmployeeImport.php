@@ -7,11 +7,15 @@
 
 namespace App\Imports\HumanResources;
 
+use App\Actions\HumanResources\AttachJobPosition;
 use App\Actions\HumanResources\Employee\StoreEmployee;
+use App\Actions\Organisation\OrganisationUser\StoreOrganisationUser;
 use App\Imports\WithImport;
+use App\Models\HumanResources\JobPosition;
 use App\Models\HumanResources\Workplace;
 use Arr;
 use Exception;
+use Illuminate\Support\Str;
 use Maatwebsite\Excel\Concerns\SkipsOnFailure;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
@@ -36,7 +40,7 @@ class EmployeeImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wi
             array_merge(
                 Arr::except(
                     array_keys($this->rules()),
-                    ['name', 'starting_date', 'workplace', 'position_code']
+                    ['name', 'starting_date', 'workplace', 'position_code','username','password']
                 ),
                 [
                     'contact_name',
@@ -46,11 +50,35 @@ class EmployeeImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wi
 
 
         try {
-            StoreEmployee::make()->action(
+            $employee=StoreEmployee::make()->action(
                 $parent,
                 $row->only($fields)->all()
             );
             $this->setRecordAsCompleted($uploadRecord);
+
+            if($row->has('position_code')) {
+                $jobPosition=JobPosition::firstWhere('slug', $row->get('position_code'));
+                AttachJobPosition::run($employee, $jobPosition);
+            }
+
+
+            if($row->has('username')) {
+
+                StoreOrganisationUser::make()->action(
+                    $employee,
+                    [
+                        'username'=> $row->get('username'),
+                        'password'=> $row->get(
+                            'password',
+                            (app()->isLocal() ? 'hello' : wordwrap(Str::random(), 4, '-', true))
+                        ),
+                        'contact_name'=> $employee->contact_name,
+                        'email'       => $employee->work_email
+                    ]
+                );
+            }
+
+
         } catch (Exception $e) {
             $this->setRecordAsFailed($uploadRecord, [$e->getMessage()]);
         }
@@ -59,6 +87,14 @@ class EmployeeImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wi
     public function prepareForValidation($data)
     {
         $data['starting_date'] = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($data['starting_date'])->format('Y-m-d');
+
+        if(Arr::exists($data, 'username')) {
+            $data['username'] = Str::lower($data['username']);
+
+        }
+
+
+
 
         return $data;
     }
@@ -76,6 +112,8 @@ class EmployeeImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wi
             'position_code' => ['required', 'exists:job_positions,slug'],
             'starting_date' => ['required', 'date'],
             'workplace'     => ['required', 'nullable', 'string', 'exists:workplaces,slug'],
+            'username'      => ['sometimes', 'iunique:organisation_users','alpha_dash:ascii'],
+            'password'      => ['sometimes', 'string', 'min:8', 'max:64']
         ];
     }
 

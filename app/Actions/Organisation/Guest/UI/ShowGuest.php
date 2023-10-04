@@ -9,6 +9,8 @@ namespace App\Actions\Organisation\Guest\UI;
 
 use App\Actions\Elasticsearch\History\IndexHistories;
 use App\Actions\InertiaAction;
+use App\Actions\UI\Organisation\SysAdmin\ShowSysAdminDashboard;
+use App\Enums\UI\Organisation\GuestTabsEnum;
 use App\Http\Resources\History\HistoryResource;
 use App\Http\Resources\SysAdmin\GuestResource;
 use App\Models\Auth\Guest;
@@ -66,7 +68,7 @@ class ShowGuest extends InertiaAction
                             'type'  => 'button',
                             'style' => 'delete',
                             'route' => [
-                                'name'       => 'sysadmin.guests.remove',
+                                'name'       => 'org.sysadmin.guests.remove',
                                 'parameters' => array_values($request->route()->originalParameters())
                             ]
                         ] : false
@@ -111,20 +113,20 @@ class ShowGuest extends InertiaAction
         };
 
         return match ($routeName) {
-            'sysadmin.guests.show',
-            'sysadmin.guests.edit' =>
+            'org.sysadmin.guests.show',
+            'org.sysadmin.guests.edit' =>
 
             array_merge(
-                SysAdminDashboard::make()->getBreadcrumbs(),
+                ShowSysAdminDashboard::make()->getBreadcrumbs(),
                 $headCrumb(
                     $routeParameters['guest'],
                     [
                         'index' => [
-                            'name'       => 'sysadmin.guests.index',
+                            'name'       => 'org.sysadmin.guests.index',
                             'parameters' => []
                         ],
                         'model' => [
-                            'name'       => 'sysadmin.guests.show',
+                            'name'       => 'org.sysadmin.guests.show',
                             'parameters' => [$routeParameters['guest']->slug]
                         ]
                     ],
@@ -155,7 +157,7 @@ class ShowGuest extends InertiaAction
             return null;
         }
         return match ($routeName) {
-            'sysadmin.guests.show'=> [
+            'org.sysadmin.guests.show'=> [
                 'label'=> $guest->contact_name,
                 'route'=> [
                     'name'      => $routeName,
