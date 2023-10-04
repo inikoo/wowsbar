@@ -85,29 +85,19 @@ class ShowBannerWorkshop extends InertiaAction
                                 'parameters' => array_values($request->route()->originalParameters()),
                             ]
                         ],
-                        [
-                            'type'   => 'button',
-                            'style'  => 'save',
-                            'label'  => __('Publish'),
-                            'icon'   => 'far fa-rocket-launch',
-                            'route'  => [
-                                'name'       => 'customer.models.banner.publish',
-                                'parameters' => [
-                                    'banner' => $banner->id
-                                ]
-                            ],
-                            'method' => 'post',
-
-                        ]
                     ],
                 ],
-                'firebase'          => true,
                 'bannerLayout'      => $banner->compiled_layout,
                 'banner'            => BannerResource::make($banner)->getArray(),
                 'autoSaveRoute'     => [
                     'name'       => 'customer.models.banner.fetch-firebase',
                     'parameters' => [
                         'banner' => $banner->id
+                    ]
+                ],
+                'publishRoute'   => [
+                    'name'       => 'customer.models.banner.publish',
+                    'parameters' => ['banner' => $banner->id
                     ]
                 ],
                 'imagesUploadRoute' => [

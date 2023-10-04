@@ -75,7 +75,6 @@ const getComponent = (componentName: any) => {
     return components[componentName] ?? null;
 };
 
-console.log(props.corner)
 </script>
 
 <template>
