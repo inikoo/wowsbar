@@ -42,10 +42,16 @@
         ]
     },
     {
-        "name": "human-resources",
+        "name": "human-resources-supervisor",
         "permissions": [
             "hr",
             "hr-supervisor"
+        ]
+    },
+    {
+        "name": "human-resources",
+        "permissions": [
+            "hr"
         ]
     },
     {
@@ -66,12 +72,46 @@
         ]
     },
     {
+        "name": "services",
+        "permissions": [
+            "crm",
+            "catalogue",
+            "websites",
+            "shops"
+        ]
+    },
+    {
+        "name": "google-ads-supervisor",
+        "permissions": [
+            "crm",
+            "catalogue.google-ads",
+            "supervisor.catalogue.google-ads"
+        ]
+    },
+    {
+        "name": "seo-supervisor",
+        "permissions": [
+            "crm",
+            "catalogue.seo",
+            "supervisor.catalogue.seo"
+        ]
+    },
+    {
+        "name": "social-supervisor",
+        "permissions": [
+            "crm",
+            "catalogue.social",
+            "supervisor.catalogue.social"
+        ]
+    },
+    {
         "name": "google-ads",
         "permissions": [
             "crm",
             "catalogue.google-ads"
         ]
     },
+
     {
         "name": "seo",
         "permissions": [
