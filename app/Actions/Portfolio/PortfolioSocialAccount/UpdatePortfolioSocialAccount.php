@@ -40,7 +40,7 @@ class UpdatePortfolioSocialAccount
     public function rules(): array
     {
         return [
-            'username'  => ['sometimes', 'string'],
+            'username'   => ['sometimes', 'string'],
             'url'        => ['sometimes', 'active_url'],
             'provider'   => ['sometimes', 'string', Rule::in(SocialAccountProviderEnum::values())]
         ];

@@ -57,21 +57,23 @@ class EmployeeImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wi
             $this->setRecordAsCompleted($uploadRecord);
 
             if($row->has('position_code')) {
-                $jobPosition=JobPosition::firstWhere('slug',$row->get('position_code'));
-                AttachJobPosition::run($employee,$jobPosition);
+                $jobPosition=JobPosition::firstWhere('slug', $row->get('position_code'));
+                AttachJobPosition::run($employee, $jobPosition);
             }
 
 
-            if($row->has('username')){
+            if($row->has('username')) {
 
-                StoreOrganisationUser::make()->action($employee,
+                StoreOrganisationUser::make()->action(
+                    $employee,
                     [
-                        'username'=>$row->get('username'),
-                        'password'=>$row->get('password',
+                        'username'=> $row->get('username'),
+                        'password'=> $row->get(
+                            'password',
                             (app()->isLocal() ? 'hello' : wordwrap(Str::random(), 4, '-', true))
                         ),
-                        'contact_name'=>$employee->contact_name,
-                        'email'=>$employee->work_email
+                        'contact_name'=> $employee->contact_name,
+                        'email'       => $employee->work_email
                     ]
                 );
             }
@@ -86,7 +88,7 @@ class EmployeeImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wi
     {
         $data['starting_date'] = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($data['starting_date'])->format('Y-m-d');
 
-        if(Arr::exists($data,'username')){
+        if(Arr::exists($data, 'username')) {
             $data['username'] = Str::lower($data['username']);
 
         }

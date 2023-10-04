@@ -7,7 +7,6 @@
 
 namespace App\Actions\Organisation\OrganisationUser\Hydrators;
 
-use App\Models\Auth\Guest;
 use App\Models\Auth\OrganisationUser;
 use Lorisleiva\Actions\Concerns\AsAction;
 

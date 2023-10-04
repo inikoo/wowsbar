@@ -64,14 +64,14 @@ class IndexGuest extends InertiaAction
 
         $queryBuilder = QueryBuilder::for(Guest::class);
 
-//            ->leftJoin(
-//                'users',
-//                function ($leftJoin) {
-//                    $leftJoin
-//                        ->on('users.parent_id', '=', 'guests.id')
-//                        ->where('users.parent_type', '=', 'Guest');
-//                }
-//            )->leftJoin('user_stats', 'user_stats.user_id', 'users.id');
+        //            ->leftJoin(
+        //                'users',
+        //                function ($leftJoin) {
+        //                    $leftJoin
+        //                        ->on('users.parent_id', '=', 'guests.id')
+        //                        ->where('users.parent_type', '=', 'Guest');
+        //                }
+        //            )->leftJoin('user_stats', 'user_stats.user_id', 'users.id');
 
         foreach ($this->getElementGroups() as $key => $elementGroup) {
             $queryBuilder->whereElementGroup(

@@ -127,7 +127,7 @@ class ShowOrganisationUser extends InertiaAction
             array_merge(
                 ShowSysAdminDashboard::make()->getBreadcrumbs(),
                 $headCrumb(
-                    OrganisationUser::firstWhere('username',$routeParameters['organisationUser']),
+                    OrganisationUser::firstWhere('username', $routeParameters['organisationUser']),
                     [
                         'index' => [
                             'name'       => 'org.sysadmin.users.index',
