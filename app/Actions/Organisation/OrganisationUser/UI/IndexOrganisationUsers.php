@@ -143,38 +143,14 @@ class IndexOrganisationUsers extends InertiaAction
                 'title'       => __('users'),
                 'pageHead'    => [
                     'title'   => __('users'),
-                    'actions_old' => [
-                        $this->canEdit ? [
-                            'type'    => 'buttonGroup',
-                            'buttons' => [
-                                [
-                                    'style' => 'secondary',
-                                    'icon'  => ['fal', 'fa-upload'],
-                                    'label' => 'upload',
-                                    'route' => [
-                                        'name' => 'org.models.users.upload'
-                                    ],
-                                ],
-                                [
-                                    'type'  => 'button',
-                                    'style' => 'create',
-                                    'label' => __('employee'),
-                                    'route' => [
-                                        'name'       => 'org.sysadmin.employees.create',
-                                        'parameters' => array_values($this->originalParameters)
-                                    ]
-                                ]
-                            ]
-                        ] : false
-                    ],
                     'actions'   => [
                         $this->canEdit ? [
                             'type'  => 'button',
                             'style' => 'create',
-                            'label' => __('create user'),
+                            'label' => __('create user (guest)'),
                             'route' => [
-                                'name'       => preg_replace('/index$/', 'create', $request->route()->getName()),
-                                'parameters' => array_values($request->route()->originalParameters())
+                                'name'       => 'org.sysadmin.guests.create',
+                                'parameters' => []
                             ]
                         ] : null
                     ]

@@ -10,7 +10,7 @@ return [
 
     'positions' => [
 
-        'dir'      => [
+        'dir'   => [
             'code'       => 'dir',
             'name'       => 'Director',
             'department' => 'admin',
@@ -18,72 +18,72 @@ return [
                 'super-admin'
             ]
         ],
-        'hr-m'     => [
+        'hr-m'  => [
             'code'       => 'hr-m',
             'grade'      => 'manager',
             'department' => 'admin',
             'name'       => 'Human resources supervisor',
             'roles'      => [
-                'human-resources-admin'
+                'human-resources-supervisor'
             ]
         ],
-        'hr-c'     => [
+        'hr-c'  => [
             'code'       => 'hr-c',
             'name'       => 'Human resources clerk',
             'department' => 'admin',
             'grade'      => 'clerk',
             'roles'      => [
-                'human-resources-clerk'
+                'human-resources'
             ]
         ],
-        'acc'      => [
+        'acc'   => [
             'code'       => 'acc',
             'department' => 'admin',
             'name'       => 'Accounts',
             'roles'      => [
-                'guest'
+                'accounting'
             ]
         ],
-        'mrk-m'    => [
+        'mrk-m' => [
             'code'       => 'mrk-m',
             'grade'      => 'manager',
             'department' => 'marketing',
             'name'       => 'Marketing supervisor',
             'roles'      => [
-                'guest'
+                'services-manager'
             ]
         ],
-        'mrk-c'    => [
+        'mrk-c' => [
             'code'       => 'mrk-c',
             'grade'      => 'clerk',
             'department' => 'marketing',
             'name'       => 'Marketing clerk',
             'roles'      => [
-                'guest'
+                'services'
             ]
         ],
-        'web-m'    => [
+        'web-m' => [
             'code'       => 'web-m',
             'grade'      => 'manager',
             'department' => 'marketing',
             'name'       => 'Webmaster supervisor',
             'roles'      => [
-                'guest'
+                'web-master'
             ]
         ],
-        'web-c'    => [
+
+        'web-c' => [
             'code'       => 'web-c',
             'grade'      => 'clerk',
             'department' => 'marketing',
             'name'       => 'Webmaster clerk',
             'roles'      => [
-                'guest'
+                'web-editor'
             ]
         ],
 
 
-
-        'seo-m'   => [
+        'seo-m'       => [
             'code'       => 'seo-m',
             'team'       => 'seo',
             'department' => 'content',
@@ -92,7 +92,7 @@ return [
                 'guest'
             ]
         ],
-        'seo-w'   => [
+        'seo-w'       => [
             'code'       => 'seo-w',
             'team'       => 'seo',
             'department' => 'content',
@@ -101,43 +101,43 @@ return [
                 'guest'
             ]
         ],
-        'ppc-m'   => [
+        'ppc-m'       => [
             'code'       => 'ppc-m',
             'team'       => 'ppc',
             'department' => 'content',
             'name'       => 'PPC supervisor',
             'roles'      => [
-                'guest'
+                'google-ads-supervisor'
             ]
         ],
-        'ppc-w'   => [
+        'ppc-w'       => [
             'code'       => 'ppc-w',
             'team'       => 'ppc',
             'department' => 'content',
             'name'       => 'PPC',
             'roles'      => [
-                'guest'
+                'google-ads'
             ]
         ],
-        'social-m'   => [
+        'social-m'    => [
             'code'       => 'social-m',
             'team'       => 'social',
             'department' => 'content',
             'name'       => 'Social media supervisor',
             'roles'      => [
-                'guest'
+                'social-supervisor'
             ]
         ],
-        'social-w'   => [
+        'social-w'    => [
             'code'       => 'social-w',
             'team'       => 'social',
             'department' => 'content',
             'name'       => 'Social media',
             'roles'      => [
-                'guest'
+                'social'
             ]
         ],
-        'developer-m'   => [
+        'developer-m' => [
             'code'       => 'dev-m',
             'team'       => 'developer',
             'department' => 'development',
@@ -146,7 +146,7 @@ return [
                 'guest'
             ]
         ],
-        'developer-w'   => [
+        'developer-w' => [
             'code'       => 'dev-w',
             'team'       => 'developer',
             'department' => 'development',
@@ -155,22 +155,22 @@ return [
                 'guest'
             ]
         ],
-        'cus-m'    => [
+        'cus-m'       => [
             'code'       => 'cus-m',
             'grade'      => 'manager',
             'department' => 'customer-services',
             'name'       => 'Customer service supervisor',
             'roles'      => [
-                'guest'
+                'customer-services-supervisor'
             ]
         ],
-        'cus-c'    => [
+        'cus-c'       => [
             'code'       => 'cus-c',
             'grade'      => 'clerk',
             'department' => 'customer-services',
             'name'       => 'Customer service',
             'roles'      => [
-                'guest'
+                'customer-services'
             ]
         ],
     ],

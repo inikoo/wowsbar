@@ -54,8 +54,9 @@ class StoreOrganisationUser
         return [
             'username'     => ['required', new AlphaDashDot(), 'unique:organisation_users,username', Rule::notIn(['export', 'create'])],
             'password'     => ['required', app()->isLocal() || app()->environment('testing') ? null : Password::min(8)->uncompromised()],
-            'email'        => ['sometimes', 'required', 'email', 'unique:organisation_users,email'],
-            'contact_name' => ['required', 'string', 'max:255']
+            'email'        => ['sometimes', 'nullable', 'email', 'unique:organisation_users,email'],
+            'contact_name' => ['required', 'string', 'max:255'],
+
         ];
     }
 
