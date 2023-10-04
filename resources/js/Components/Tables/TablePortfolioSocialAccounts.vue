@@ -16,17 +16,25 @@ const props = defineProps<{
 }>()
 
 
+function accountRoute(account) {
+    switch (route().current()) {
+        case 'customer.portfolio.social-account.index':
+            return route(
+                'customer.portfolio.social-account.show',
+                [account.slug]);
+    }
+}
+
 </script>
 
 <template>
 
     <Table :resource="data" :name="tab" class="mt-5">
-<!--        <template #cell(google-ads)="{ item: website }">-->
-<!--            <font-awesome-icon icon="fal fa-circle-check"></font-awesome-icon>-->
-<!--        </template>-->
+        <template #cell(username)="{ item: account }">
+            <Link :href="accountRoute(account)" :id="account['slug']" class="py-2 px-1">
+                {{ account['username'] }}
+            </Link>
+        </template>
     </Table>
 
-
 </template>
-
-
