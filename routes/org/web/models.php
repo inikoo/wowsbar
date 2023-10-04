@@ -66,7 +66,7 @@ Route::post('/products/imports/upload', ImportProducts::class)->name('products.u
 
 Route::post('/guests/imports/upload', ImportGuest::class)->name('guests.upload');
 Route::patch('/guest/{guest}', UpdateGuest::class)->name('guests.update');
-Route::post('/guest/', StoreGuest::class)->name('guests.store');
+Route::post('/guest', StoreGuest::class)->name('guests.store');
 Route::delete('/guest/{guest}', DeleteGuest::class)->name('guests.delete');
 
 Route::patch('/provider/{paymentServiceProvider}', UpdatePaymentServiceProvider::class)->name('payment-service-provider.update');

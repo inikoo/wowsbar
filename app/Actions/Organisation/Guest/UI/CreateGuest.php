@@ -34,7 +34,7 @@ class CreateGuest extends InertiaAction
                             'style' => 'cancel',
                             'label' => __('cancel'),
                             'route' => [
-                                'name'       => 'sysadmin.guests.index',
+                                'name'       => 'org.sysadmin.guests.index',
                                 'parameters' => array_values($request->route()->originalParameters())
                             ],
                         ]
@@ -55,7 +55,7 @@ class CreateGuest extends InertiaAction
                                 ],
                                 'guestCredentials' => [
                                     'type'    => 'guest-credentials',
-                                    'apiUrl'  => route('json.group-users.index') . '?filter[contact_name]=',
+                                    'apiUrl'  => '/', // route('json.group-users.index') . '?filter[contact_name]=',
                                     'label'   => 'Guest Credentials',
                                     'value'   => 'newGroupUser',
                                     'options' => [
@@ -63,7 +63,7 @@ class CreateGuest extends InertiaAction
                                             'label'             => __('Create new user'),
                                             'hooks'             => [
                                                 'route' => [
-                                                    'name' => 'models.guest.store',
+                                                    'name' => 'org.models.guest.store',
                                                 ],
                                                 'field' => [
                                                     'username' => [
@@ -78,7 +78,7 @@ class CreateGuest extends InertiaAction
                                                 'label' => __('Use existing user from other aiku account'),
                                                 'hooks' => [
                                                     'route' => [
-                                                        'name' => 'models.group-user.guest.store',
+                                                        'name' => 'org.models.group-user.guest.store',
                                                     ],
                                                 ],
                                                 'field' => [
@@ -129,7 +129,7 @@ class CreateGuest extends InertiaAction
 
                     ],
                     'route'     => [
-                        'name' => 'models.guest.store',
+                        'name' => 'org.models.guests.store',
 
                     ]
 

@@ -51,7 +51,6 @@ class StoreGuest
             ]
         );
 
-
         return $guest;
     }
 
@@ -75,7 +74,7 @@ class StoreGuest
     {
         return [
             'type'         => ['required', Rule::in(GuestTypeEnum::values())],
-            'username'     => ['required', new AlphaDashDot(), 'unique:App\Models\Auth\OrganisationUser,username', Rule::notIn(['export', 'create'])],
+            'username'     => ['sometimes', new AlphaDashDot(), 'unique:App\Models\Auth\OrganisationUser,username', Rule::notIn(['export', 'create'])],
             'company_name' => ['nullable', 'string', 'max:255'],
             'contact_name' => ['required', 'string', 'max:255'],
             'phone'        => ['nullable', 'phone:AUTO'],
@@ -88,6 +87,7 @@ class StoreGuest
         $request->validate();
 
         $modelData = $request->validated();
+
 
         return $this->handle(Arr::except($modelData, ['username']));
     }
