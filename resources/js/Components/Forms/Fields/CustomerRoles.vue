@@ -74,9 +74,9 @@ watch(() => optionsRoles2.value.value, () => {
 
 watchEffect(() => {
     props.form[props.fieldName] = optionsRoles1.value.value
-        ? optionsRoles1.value.name
+        ? [optionsRoles1.value.name]
         : optionsRoles2.value.value
-            ? optionsRoles2.value.name
+            ? [optionsRoles2.value.name]
             : optionsRoles3.filter(item => item.value === true).map(item => item.name)
 })
 </script>
