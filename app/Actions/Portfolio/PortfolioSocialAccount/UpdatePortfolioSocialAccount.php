@@ -7,6 +7,7 @@
 
 namespace App\Actions\Portfolio\PortfolioSocialAccount;
 
+use App\Actions\Traits\WithActionUpdate;
 use App\Enums\SocialAccount\SocialAccountProviderEnum;
 use App\Models\Portfolio\PortfolioSocialAccount;
 use Illuminate\Validation\Rule;
@@ -18,14 +19,13 @@ class UpdatePortfolioSocialAccount
 {
     use AsAction;
     use WithAttributes;
+    use WithActionUpdate;
 
     private bool $asAction = false;
 
     public function handle(PortfolioSocialAccount $portfolioSocialAccount, array $modelData): PortfolioSocialAccount
     {
-        $portfolioSocialAccount->update($modelData);
-
-        return $portfolioSocialAccount;
+        return $this->update($portfolioSocialAccount, $modelData);
     }
 
     public function authorize(ActionRequest $request): bool
@@ -34,14 +34,15 @@ class UpdatePortfolioSocialAccount
             return true;
         }
 
-        return $request->get('customerUser')->hasPermissionTo("crm.edit");
+        return $request->get('customerUser')->hasPermissionTo("portfolio.edit");
     }
 
     public function rules(): array
     {
         return [
-            'url'        => ['required', 'active_url'],
-            'provider'   => ['required', 'string', Rule::in(SocialAccountProviderEnum::values())]
+            'username'  => ['sometimes', 'string'],
+            'url'        => ['sometimes', 'active_url'],
+            'provider'   => ['sometimes', 'string', Rule::in(SocialAccountProviderEnum::values())]
         ];
     }
 
