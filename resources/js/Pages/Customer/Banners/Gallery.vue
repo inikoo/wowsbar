@@ -9,7 +9,7 @@ import { Head } from '@inertiajs/vue3'
 import PageHeading from '@/Components/Headings/PageHeading.vue'
 import Tabs from "@/Components/Navigation/Tabs.vue"
 import Input from '@/Components/Forms/Fields/Input.vue'
-import { computed, ref, Ref } from "vue"
+import { computed, ref, Ref, reactive } from "vue"
 import { trans } from 'laravel-vue-i18n'
 import Select from '@/Components/Forms/Fields/Primitive/PrimitiveSelect.vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -56,7 +56,10 @@ const component = computed(() => {
     return components[currentTab.value]
 })
 
-const selectedImages: Ref<any> = ref({})
+const selectedImages: {uploaded_images: number[], stock_images: number[]} = reactive({
+    uploaded_images: [],
+    stock_images: []
+})
 const isSelectImage = ref(false)
 const loadingState = ref(false)
 const websitesList = ref([])
@@ -64,25 +67,30 @@ const isModalOpen = ref(false)
 const fieldWebsite = ref()
 const fieldName = ref()
 
-const combinedImages: Ref<any> = computed(() => {
-    return Object.values(selectedImages.value).reduce((accumulator: any, currentValue) => {
+// To flat the 2 array (only the image id)
+const compCombinedImages: Ref<any> = computed(() => {
+    let abcdef = Object.values(selectedImages).reduce((accumulator: any, currentValue) => {
         if (Array.isArray(currentValue)) {
             return accumulator.concat(currentValue)
         } else {
             return accumulator
         }
     }, [])
+    return abcdef 
 })
 
 const compWebsitesList = computed(() => {
     return websitesList.value.map(obj => { return obj.slug })
 })
 
-const selectedImagesFlat = computed(() => {
-    // To return the double array to flat
-    return [].concat(...(Object.values(selectedImages.value)))
+// Retrieve the image object from image id
+const compSelectedImage = computed(() => {
+    const allImage = [...get(props, ["uploaded_images", 'data'], []), ...get(props, ['stock_images', 'data'], [])];
+    let allImageTemp = allImage.filter((item) => compCombinedImages.value.includes(item.id))
+    return allImageTemp
 })
 
+// On click create in Modal
 const createBanner = async () => {
     loadingState.value = true
     try {
@@ -90,7 +98,7 @@ const createBanner = async () => {
             await axios.post(
                 route('customer.models.banner.store.from-gallery', fieldWebsite.value),
                 {
-                    images: selectedImagesFlat.value,
+                    images: compCombinedImages.value,
                     name: fieldName.value
                 },
                 {
@@ -108,7 +116,7 @@ const createBanner = async () => {
             await axios.post(
                 route('customer.models.banner.store.from-gallery'),
                 {
-                    images: selectedImagesFlat.value,
+                    images: compCombinedImages.value,
                     name: fieldName.value
                 },
                 {
@@ -128,27 +136,22 @@ const createBanner = async () => {
     }
 }
 
-const selectedImage = () => {
-    const allImage = [...get(props, ["uploaded_images", 'data'], []), ...get(props, ['stock_images', 'data'], [])];
-    return allImage.filter((item) => get(selectedImages, ['value', 'stock_images'], []).includes(item.id));
-};
-
-const deleteImageSelected = (image) => {
-    const index = selectedImages.value.stock_images.findIndex((item) => item == image);
-    if (index !== -1) {
-        selectedImages.value.stock_images.splice(index, 1);
-        allImageFlat.value = selectedImage();
+// Modal: delete Selected Images 
+const deleteImageSelected = (imageId: number) => {
+    if(selectedImages.uploaded_images?.includes(imageId)){
+        let indexDeletedImageId = selectedImages.uploaded_images.indexOf(imageId)
+        indexDeletedImageId !== -1 ? selectedImages.uploaded_images.splice(indexDeletedImageId, 1) : ''
+    } else {
+        let indexDeletedImageId = selectedImages.stock_images.indexOf(imageId)
+        indexDeletedImageId !== -1 ? selectedImages.stock_images.splice(indexDeletedImageId, 1) : ''
     }
-};
+}
 
-
-// Fetch website list
+// Fetch website list on Modal
 watch(isModalOpen, async () => {
     try {
         const response = await axios.get(route('customer.portfolio.websites.index'))
         websitesList.value = response.data.data
-        allImageFlat.value = selectedImage();
-        // fieldWebsite.value = websitesList.value[0].slug
         loadingState.value = false
     } catch (error) {
         console.log(error)
@@ -156,9 +159,6 @@ watch(isModalOpen, async () => {
     }
 })
 
-const allImageFlat = ref(selectedImage());
-
-// console.log('debug:', props.uploaded_images, props.stock_images)
 
 </script>
 
@@ -179,11 +179,11 @@ const allImageFlat = ref(selectedImage());
                     <FontAwesomeIcon icon='fal fa-times' class='' aria-hidden='true' />
                     {{ trans('Cancel') }}
                 </Button>
-                <Button :key="combinedImages.length" size="xs" :style="combinedImages.length > 0 ? 'primary' : 'disabled'"
-                    :class="[combinedImages.length > 0 ? '' : 'cursor-not-allowed']"
-                    @click="combinedImages.length > 0 ? isModalOpen = true : false" id="create-banner">
-                    {{ trans('Next') }} ({{ combinedImages.length }})
-                    <FontAwesomeIcon v-if="combinedImages.length" icon='far fa-arrow-right' class='' aria-hidden='true' />
+                <Button :key="compCombinedImages.length" size="xs" :style="compCombinedImages.length > 0 ? 'primary' : 'disabled'"
+                    :class="[compCombinedImages.length > 0 ? '' : 'cursor-not-allowed']"
+                    @click="compCombinedImages.length > 0 ? isModalOpen = true : false" id="create-banner">
+                    {{ trans('Next') }} ({{ compCombinedImages.length }})
+                    <FontAwesomeIcon v-if="compCombinedImages.length" icon='far fa-arrow-right' class='' aria-hidden='true' />
                 </Button>
             </div>
         </template>
@@ -206,13 +206,13 @@ const allImageFlat = ref(selectedImage());
     <!-- Content: Table from the Tab -->
     <KeepAlive>
         <component :isSelectImage="isSelectImage" :is="component" :key="currentTab"
-            @selected-row="(value: any) => selectedImages[currentTab] = value[currentTab]" :tab="currentTab"
+            @selectedRow="(value: any) => selectedImages[currentTab] = value[currentTab]" :tab="currentTab"
             :data="props[currentTab]" />
     </KeepAlive>
 
     <!-- Popup: select Website to create Banner -->
     <Modal :isOpen="isModalOpen" @onClose="isModalOpen = false" width="w-2/5">
-        <div class="flex flex-col gap-y-4">
+        <div class="flex flex-col gap-y-4 text-gray-700">
             <!-- Field -->
             <div class="flex flex-col gap-y-4">
                 <div class="max-w-full">
@@ -233,14 +233,15 @@ const allImageFlat = ref(selectedImage());
 
             <div class="max-w-full">
                 Images Banner
+                <!-- <pre>{{ compCombinedImages }}</pre> -->
                 <div class="flex flex-wrap gap-x-2 gap-y-2">
-                    <div v-for="image in allImageFlat" :key="image.id" class="relative">
+                    <div v-for="image in compSelectedImage" :key="image.id" class="relative">
                         <Image :src="image.thumbnail" class="flex items-center justify-center h-7 shadow " />
-                        <button
-                            class="absolute top-0 text-xs right-0 translate-x-1/2 -translate-y-1/2 flex items-center justify-center px-1 bg-gray-200 hover:bg-gray-300 p-1 text-red-500 rounded-full h-2.5 w-2.5"
+                        <div
+                            class="cursor-pointer absolute top-0 text-xs right-0 translate-x-1/2 -translate-y-1/2 flex items-center justify-center px-1 bg-gray-200 hover:bg-gray-300 p-1 text-red-500 rounded-full h-2.5 w-2.5"
                             @click="() => deleteImageSelected(image.id)">
                             <FontAwesomeIcon :icon="['fal', 'times']" class="text-[7px] leading-none"/>
-                        </button>
+                        </div>
                     </div>
                 </div>
             </div>
