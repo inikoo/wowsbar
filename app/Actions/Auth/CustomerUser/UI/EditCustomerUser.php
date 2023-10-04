@@ -71,6 +71,8 @@ class EditCustomerUser extends InertiaAction
                 ]
             ],
         ];
+
+
         if (!$customerUser->is_root) {
             $fields = array_merge(
                 $fields,
@@ -97,7 +99,7 @@ class EditCustomerUser extends InertiaAction
                             'roles' => [
                                 'type'    => 'customerRoles',
                                 'label'   => __('roles'),
-                                'value'   => $customerUser->getRoleNames(),
+                                'value'   => $customerUser->getRoleNames()->all(),
                             ],
                         ]
                     ],

@@ -5,7 +5,7 @@
   -->
 
 <script setup lang="ts">
-import { Link } from '@inertiajs/vue3'
+import {Link} from '@inertiajs/vue3'
 import Table from '@/Components/Table/Table.vue'
 import { Website } from "@/types/website"
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -18,10 +18,8 @@ const props = defineProps<{
     tab?: string
 }>()
 
-
 function websiteRoute(website: Website) {
     switch (route().current()) {
-        case 'customer.banners.websites.index':
         case 'customer.portfolio.websites.index':
             return route(
                 'customer.portfolio.websites.show',
@@ -43,9 +41,9 @@ const dummyData = {
 <template>
 
     <Table :resource="data" :name="tab" class="mt-5">
-        <template #cell(code)="{ item: website }">
+        <template #cell(name)="{ item: website }">
             <Link :href="websiteRoute(website)" :id="website['slug']" class="py-2 px-1">
-                {{ website['code'] }}
+                {{ website['name'] }}
             </Link>
         </template>
 

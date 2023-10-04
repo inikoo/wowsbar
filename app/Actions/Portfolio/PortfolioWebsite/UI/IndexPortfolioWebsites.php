@@ -49,7 +49,8 @@ class IndexPortfolioWebsites extends InertiaAction
             $query->where(function ($query) use ($value) {
                 $query->whereAnyWordStartWith('portfolio_websites.name', $value)
                     ->orWhere('portfolio_websites.url', 'ilike', "%$value%")
-                    ->orWhere('portfolio_websites.code', 'ilike', "$value%");
+                    ->orWhere('portfolio_websites.slug', 'ilike', "$value%")
+                    ->orWhere('portfolio_websites.name', 'ilike', "$value%");
             });
         });
         if ($prefix) {
@@ -59,9 +60,9 @@ class IndexPortfolioWebsites extends InertiaAction
         $queryBuilder = QueryBuilder::for(PortfolioWebsite::class);
 
         return $queryBuilder
-            ->defaultSort('portfolio_websites.code')
+            ->defaultSort('portfolio_websites.name')
             ->with(['stats'])
-            ->allowedSorts(['slug', 'code', 'name', 'number_banners', 'url'])
+            ->allowedSorts(['slug', 'name', 'url'])
             ->allowedFilters([$globalSearch])
             ->withPaginator($prefix)
             ->withQueryString();
@@ -86,7 +87,6 @@ class IndexPortfolioWebsites extends InertiaAction
                     ]
                 )
                 ->withExportLinks($exportLinks)
-                ->column(key: 'code', label: __('code'), sortable: true)
                 ->column(key: 'name', label: __('name'), sortable: true)
                 ->column(key: 'url', label: __('url'), sortable: true)
                 ->column(key: 'leads', label: __('Leads'), sortable: false)
@@ -124,7 +124,7 @@ class IndexPortfolioWebsites extends InertiaAction
                         $this->canEdit ? [
                             'type'  => 'button',
                             'style' => 'create',
-                            'label' => __('Create website'),
+                            'label' => __('Add website'),
                             'route' => [
                                 'name'       => 'customer.portfolio.websites.create',
                                 'parameters' => $request->route()->originalParameters()

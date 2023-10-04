@@ -13,8 +13,9 @@ use App\Actions\Portfolio\Banner\UI\RemoveBanner;
 use App\Actions\Portfolio\Banner\UI\ShowBanner;
 use App\Actions\Portfolio\Banner\UI\ShowBannerWorkshop;
 use App\Actions\Portfolio\Gallery\DeleteUploadedImage;
-use App\Actions\Portfolio\Gallery\UI\IndexStockImages;
 use App\Actions\Portfolio\Gallery\UI\ShowGallery;
+use App\Actions\Portfolio\Gallery\UI\StockImages\IndexStockImages;
+use App\Actions\Portfolio\Gallery\UI\StockImages\ShowStockImage;
 use App\Actions\Portfolio\Gallery\UI\UploadedImages\EditUploadedImage;
 use App\Actions\Portfolio\Gallery\UI\UploadedImages\IndexUploadedImages;
 use App\Actions\Portfolio\Gallery\UI\UploadedImages\ShowUploadedImage;
@@ -24,17 +25,23 @@ use App\Actions\Portfolio\Snapshot\UI\ShowSnapshot;
 use App\Actions\UI\Customer\Banners\ShowBannersDashboard;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/dashboard', ['icon'  => 'rectangle-wide', 'label' => 'banners dashboard'])->uses(ShowBannersDashboard::class)->name('dashboard');
+Route::get('/dashboard', ['icon' => 'rectangle-wide', 'label' => 'banners dashboard'])->uses(ShowBannersDashboard::class)->name('dashboard');
 Route::get('/websites', ['icon' => 'globe', 'label' => 'websites'])->uses(IndexBannerPortfolioWebsites::class)->name('websites.index');
 
 
-Route::prefix('gallery')->group(function () {
-    Route::get('/', ShowGallery::class)->name('gallery');
-    Route::get('/images/{media}', ShowUploadedImage::class)->name('images.show');
-    Route::get('/images/{media}/edit', EditUploadedImage::class)->name('images.edit');
-    Route::get('/images/{media}/delete', DeleteUploadedImage::class)->name('images.remove');
-    Route::get('/uploaded/images', IndexUploadedImages::class)->name('uploaded.images');
-    Route::get('/stock/images', IndexStockImages::class)->name('stock.images');
+Route::prefix('gallery')->name('gallery')->group(function () {
+    Route::get('/', ShowGallery::class);
+    Route::prefix('uploaded-images')->name('.uploaded-images')->group(function () {
+        Route::get('', IndexUploadedImages::class);
+        Route::get('{media}', ShowUploadedImage::class)->name('.show');
+        Route::get('{media}/edit', EditUploadedImage::class)->name('.edit');
+        Route::get('{media}/delete', DeleteUploadedImage::class)->name('.remove');
+    });
+    Route::prefix('stock-images')->name('.stock-images')->group(function () {
+        Route::get('', IndexStockImages::class);
+        Route::get('{media}', ShowStockImage::class)->name('.show');
+    });
+
 });
 
 Route::get('', [IndexBanners::class, 'inCustomer'])->name('index');

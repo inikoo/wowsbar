@@ -21,7 +21,6 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { useTabChange } from "@/Composables/tab-change"
 import { capitalize } from "@/Composables/capitalize"
 import Button from '@/Components/Elements/Buttons/Button.vue'
-import TableImages from "@/Components/Tables/TableImages.vue"
 import { get } from 'lodash'
 import Image from '@/Components/Image.vue'
 
@@ -29,6 +28,8 @@ import Image from '@/Components/Image.vue'
 import { watch } from 'vue'
 import Modal from '@/Components/Utils/Modal.vue'
 import axios from 'axios'
+import TableUploadedImages from "@/Components/Tables/TableUploadedImages.vue";
+import TableStockImages from "@/Components/Tables/TableStockImages.vue";
 
 library.add(faImagePolaroid, faCloudUpload, faSpinnerThird, faTimes, faArrowRight)
 
@@ -49,8 +50,8 @@ const handleTabUpdate = (tabSlug: string) => useTabChange(tabSlug, currentTab)
 // Component: Tabs
 const component = computed(() => {
     const components: any = {
-        uploaded_images: TableImages,
-        stock_images: TableImages,
+        uploaded_images: TableUploadedImages,
+        stock_images: TableStockImages,
     }
     return components[currentTab.value]
 })
@@ -62,7 +63,6 @@ const websitesList = ref([])
 const isModalOpen = ref(false)
 const fieldWebsite = ref()
 const fieldName = ref()
-const fieldCode = ref()
 
 const combinedImages: Ref<any> = computed(() => {
     return Object.values(selectedImages.value).reduce((accumulator: any, currentValue) => {
@@ -88,7 +88,7 @@ const createBanner = async () => {
     try {
         if (fieldWebsite.value) {
             await axios.post(
-                route('models.portfolio-website.banner.gallery.store', fieldWebsite.value),
+                route('customer.models.banner.store.from-gallery', fieldWebsite.value),
                 {
                     images: selectedImagesFlat.value,
                     name: fieldName.value

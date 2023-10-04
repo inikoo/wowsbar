@@ -69,17 +69,6 @@ class StorePortfolioWebsite
                            ]
                        ),
                 ],
-            'code' => [
-                'required',
-                'alpha_dash:ascii',
-                'max:16',
-                new IUnique(
-                    table: 'portfolio_websites',
-                    extraConditions: [
-                        ['column' => 'customer_id', 'value' => customer()->id],
-                    ]
-                ),
-            ],
             'name' => ['required', 'string', 'max:128']
         ];
     }

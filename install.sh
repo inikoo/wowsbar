@@ -49,15 +49,15 @@ pg_dump -Fc -f "devops/devel/snapshots/catalogue.dump" ${DB}
 
 echo "🌱 create customers"
 
-php artisan customer:import database/seeders/uploads/${IMPORT_DIR}/customers.xlsx
+#php artisan customer:import database/seeders/uploads/${IMPORT_DIR}/customers.xlsx
 php artisan shop:new-customer awa aiku@inikoo.com -C 'Aiku' -P hello -N 'Mr Aiku'
 php artisan shop:new-customer awa devs@aw-advantage.com -C 'aw-advantage' -P hello -N 'Mr Dev'
 #php artisan customer:new-user aiku -P hello -N 'Mary'
 #php artisan customer:new-user aw-advantage  -P hello -N 'Zoe'
 pg_dump -Fc -f "devops/devel/snapshots/customers.dump" ${DB}
 echo "🌱 create test website with a banner"
-php artisan customer:new-portfolio-website aiku http://hello.com hello 'My website 😸'
-php artisan customer:new-banner aiku 'My first banner 🫡' hello
+php artisan customer:new-portfolio-website aiku http://hello.com 'My website 😸'
+php artisan customer:new-banner aiku 'My first banner 🫡' mw
 php artisan customer:new-banner aiku 'My first banner without website 🫡'
 pg_dump -Fc -f "devops/devel/snapshots/portfolio.dump" ${DB}
 php artisan workplace:create "Beach bar" hq

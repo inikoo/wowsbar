@@ -34,7 +34,7 @@ function imageRoute(image) {
     switch (route().current()) {
         case 'customer.banners.gallery':
             return route(
-                'customer.banners.images.show',
+                'customer.banners.gallery.uploaded-images.show',
                 [image.slug])
     }
 }

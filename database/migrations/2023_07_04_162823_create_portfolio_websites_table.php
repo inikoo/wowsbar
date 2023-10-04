@@ -18,18 +18,14 @@ return new class () extends Migration {
             $table->foreign('shop_id')->references('id')->on('shops')->onUpdate('cascade')->onDelete('cascade');
             $table->unsignedInteger('customer_id');
             $table->foreign('customer_id')->references('id')->on('customers')->onUpdate('cascade')->onDelete('cascade');
-            $table->string('slug')->collation('und_ns')->index();
-            $table->string('code')->collation('und_ns')->index();
+            $table->string('slug')->collation('und_ns')->unique()->index();
             $table->string('url')->collation('und_ns');
             $table->string('name')->collation('und_ns');
             $table->jsonb('data');
             $table->timestampsTz();
             $table->softDeletesTz();
-            $table->unique(['customer_id','slug']);
-            $table->unique(['customer_id','code']);
             $table->unique(['customer_id','url']);
         });
-        DB::statement("CREATE INDEX ON portfolio_websites (lower('code')) ");
         DB::statement("CREATE INDEX ON portfolio_websites (lower('url')) ");
 
     }

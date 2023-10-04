@@ -23,8 +23,8 @@ class PortfolioWebsiteHydrateUniversalSearch
                 'website_id'      => $portfolioWebsite->customer->website_id,
                 'customer_id'     => $portfolioWebsite->customer_id,
                 'section'         => 'portfolio',
-                'title'           => trim($portfolioWebsite->code.' '.$portfolioWebsite->name),
-                'description'     => $portfolioWebsite->domain
+                'title'           => join(' ', [$portfolioWebsite->slug,$portfolioWebsite->name,$portfolioWebsite->url]),
+                'description'     => null
             ]
         );
     }
