@@ -4,9 +4,11 @@ namespace App\Models\Portfolio;
 
 use App\Models\CRM\Customer;
 use App\Models\Market\Shop;
+use App\Models\Traits\HasHistory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
@@ -43,10 +45,11 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|PortfolioSocialAccount whereUsername($value)
  * @mixin \Eloquent
  */
-class PortfolioSocialAccount extends Model
+class PortfolioSocialAccount extends Model implements Auditable
 {
     use HasFactory;
     use HasSlug;
+    use HasHistory;
 
     protected $guarded = [];
 
@@ -57,6 +60,8 @@ class PortfolioSocialAccount extends Model
     protected $attributes = [
         'data' => '{}'
     ];
+
+    protected $auditExclude = ['id', 'slug', 'shop_id', 'data', 'customer_id', 'created_at', 'updated_at'];
 
     public function getSlugOptions(): SlugOptions
     {

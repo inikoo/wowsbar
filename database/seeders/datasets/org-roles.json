@@ -1,27 +1,89 @@
 [
     {
-        "name":"customer-services",
+        "name": "super-admin",
         "permissions": [
-            "crm","websites.view"
+            "sysadmin",
+            "shops",
+            "websites",
+            "crm",
+            "hr",
+            "supervisor",
+            "accounting",
+            "catalogue"
         ]
     },
     {
-        "name":"web-editor",
+        "name": "customer-services-supervisor",
+        "permissions": [
+            "crm",
+            "supervisor.crm",
+            "websites.view"
+        ]
+    },
+    {
+        "name": "customer-services",
+        "permissions": [
+            "crm",
+            "supervisor.catalogue",
+            "websites.view"
+        ]
+    },
+    {
+        "name": "web-master",
+        "permissions": [
+            "websites",
+            "supervisor.website"
+        ]
+    },
+    {
+        "name": "web-editor",
         "permissions": [
             "websites"
         ]
     },
     {
-        "name":"web-master",
+        "name": "human-resources",
         "permissions": [
-            "websites","supervisor.website"
+            "hr",
+            "hr-supervisor"
         ]
     },
     {
-        "name":"super-admin",
+        "name": "accounting",
         "permissions": [
-            "sysadmin","shops","websites","crm","hr","supervisor","accounting","catalogue"
+            "accounting",
+            "supervisor.accounting"
+        ]
+    },
+    {
+        "name": "services-manager",
+        "permissions": [
+            "crm",
+            "catalogue",
+            "supervisor.catalogue",
+            "websites",
+            "shops"
+        ]
+    },
+    {
+        "name": "google-ads",
+        "permissions": [
+            "crm",
+            "catalogue.google-ads"
+        ]
+    },
+    {
+        "name": "seo",
+        "permissions": [
+            "crm",
+            "catalogue.seo"
+        ]
+    },
+    {
+        "name": "social",
+        "permissions": [
+            "crm",
+            "catalogue.social"
         ]
     }
-
 ]
