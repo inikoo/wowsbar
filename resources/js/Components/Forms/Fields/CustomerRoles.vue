@@ -87,70 +87,71 @@ watchEffect(() => {
 
 <template>
     <div>
-        <tbody class="divide-y divide-gray-200">
-            <tr>
-                <td class="">
-                    <label :for="optionsRoles1.name"
-                        class="whitespace-nowrap block py-2 pl-4 pr-3 text-sm font-medium cursor-pointer"
-                        :class="[optionsRoles1.disabled ? 'text-gray-300' : 'text-gray-500 hover:text-gray-600']"
-                    >
-                        {{ optionsRoles1.label }}
-                    </label>
-                </td>
-                <td class="whitespace-nowrap px-3 text-sm text-gray-500">
-                    <input v-model="optionsRoles1.value" :id="optionsRoles1.name"
-                        :name="optionsRoles1.name" type="checkbox"
-                        :titles="`I'm Interested in ${optionsRoles1.label}`"
-                        :disabled="optionsRoles1.disabled"
-                        class="h-5 w-5 rounded cursor-pointer disabled:text-green-400 border-gray-300 hover:border-gray-500 text-green-500 focus:ring-green-500"
-                    />
-                </td>
-            </tr>
+        <table class="w-fit divide-y divide-red-300">
+            <tbody class="">
+                <tr class="border-b border-gray-300">
+                    <td class="">
+                        <label :for="optionsRoles1.name"
+                            class="whitespace-nowrap block py-2 pl-4 pr-3 text-sm font-medium cursor-pointer"
+                            :class="[optionsRoles1.disabled ? 'text-gray-300' : 'text-gray-500 hover:text-gray-600']"
+                        >
+                            {{ optionsRoles1.label }}
+                        </label>
+                    </td>
+                    <td class="whitespace-nowrap px-3 text-sm text-gray-500">
+                        <input v-model="optionsRoles1.value" :id="optionsRoles1.name"
+                            :name="optionsRoles1.name" type="checkbox"
+                            :titles="`I'm Interested in ${optionsRoles1.label}`"
+                            :disabled="optionsRoles1.disabled"
+                            class="h-5 w-5 rounded cursor-pointer disabled:text-green-400 border-gray-300 hover:border-green-500 text-green-500 focus:ring-green-500"
+                        />
+                    </td>
+                </tr>
             
-            <tr>
-                <td class="">
-                    <label :for="optionsRoles2.name"
-                        class="whitespace-nowrap block py-2 pl-4 pr-3 text-sm font-medium cursor-pointer"
-                        :class="[optionsRoles1.value ? 'text-gray-400' : 'text-gray-500 hover:text-gray-600']"
-                    >
-                        {{ optionsRoles2.label }}
-                    </label>
-                </td>
-                <td class="whitespace-nowrap px-3 text-sm text-gray-500">
-                    <div class="flex items-center gap-x-2">
-                        <input v-model="optionsRoles2.value" :id="optionsRoles2.name"
-                            :name="optionsRoles2.name" type="checkbox"
-                            :titles="`I'm Interested in ${optionsRoles2.label}`"
-                            :disabled="optionsRoles1.value"
-                            class="h-5 w-5 rounded cursor-pointer disabled:text-green-400 border-gray-300 hover:border-gray-500 text-green-500 focus:ring-green-500"
-                        />
-                        <FontAwesomeIcon v-if="optionsRoles1.value" icon='fal fa-lock' class='' aria-hidden='true' />
-                    </div>
-                </td>
-            </tr>
-
-            <tr v-for="(option, index) in optionsRoles3" :key="index">
-                <td class="">
-                    <label :for="option.name"
-                        class="whitespace-nowrap block py-2 pl-4 pr-3 text-sm font-medium cursor-pointer"
-                        :class="[optionsRoles2.value ? 'text-gray-400' : 'text-gray-500 hover:text-gray-600']"
-                    >
-                        {{ option.label }}
-                    </label>
-                </td>
-                <td class="whitespace-nowrap px-3 text-sm text-gray-500 text-center">
-                    <div class="flex items-center gap-x-2">
-                        <input v-model="option.value" :id="option.name"
-                            :name="option.name" type="checkbox"
-                            :titles="`I'm Interested in ${option.label}`"
-                            :disabled="optionsRoles2.value"
-                            class="h-5 w-5 rounded cursor-pointer disabled:text-green-400 border-gray-300 hover:border-gray-500 text-green-500 focus:ring-green-500"
-                        />
-                        <FontAwesomeIcon v-if="optionsRoles2.value" icon='fal fa-lock' class='' aria-hidden='true' />
-                    </div>
-                </td>
-            </tr>
-        </tbody>
+                <tr class="border-b border-gray-300">
+                    <td class="">
+                        <label :for="optionsRoles2.name"
+                            class="whitespace-nowrap block py-2 pl-4 pr-3 text-sm font-medium cursor-pointer"
+                            :class="[optionsRoles1.value ? 'text-gray-400' : 'text-gray-500 hover:text-gray-600']"
+                        >
+                            {{ optionsRoles2.label }}
+                        </label>
+                    </td>
+                    <td class="whitespace-nowrap px-3 text-sm text-gray-500">
+                        <div class="flex items-center gap-x-2">
+                            <input v-model="optionsRoles2.value" :id="optionsRoles2.name"
+                                :name="optionsRoles2.name" type="checkbox"
+                                :titles="`I'm Interested in ${optionsRoles2.label}`"
+                                :disabled="optionsRoles1.value"
+                                class="h-5 w-5 rounded cursor-pointer disabled:text-green-400 border-gray-300 hover:border-green-500 text-green-500 focus:ring-green-500"
+                            />
+                            <FontAwesomeIcon v-if="optionsRoles1.value" icon='fal fa-lock' class='' aria-hidden='true' />
+                        </div>
+                    </td>
+                </tr>
+                <tr v-for="(option, index) in optionsRoles3" :key="index">
+                    <td class="">
+                        <label :for="option.name"
+                            class="whitespace-nowrap block py-2 pl-4 pr-3 text-sm font-medium cursor-pointer"
+                            :class="[optionsRoles2.value ? 'text-gray-400' : 'text-gray-500 hover:text-gray-600']"
+                        >
+                            {{ option.label }}
+                        </label>
+                    </td>
+                    <td class="whitespace-nowrap px-3 text-sm text-gray-500 text-center">
+                        <div class="flex items-center gap-x-2">
+                            <input v-model="option.value" :id="option.name"
+                                :name="option.name" type="checkbox"
+                                :titles="`I'm Interested in ${option.label}`"
+                                :disabled="optionsRoles2.value"
+                                class="h-5 w-5 rounded cursor-pointer disabled:text-green-400 border-gray-300 hover:border-green-500 text-green-500 focus:ring-green-500"
+                            />
+                            <FontAwesomeIcon v-if="optionsRoles2.value" icon='fal fa-lock' class='' aria-hidden='true' />
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     <!-- <pre>{{ form[fieldName] }}</pre>
     <pre>{{ form }}</pre> -->
     <!-- <pre>{{ realValue }}</pre> -->
