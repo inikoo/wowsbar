@@ -10,12 +10,15 @@ namespace App\Actions\Portfolio\PortfolioSocialAccount\UI;
 use App\Actions\Helpers\History\IndexHistories;
 use App\Actions\InertiaAction;
 use App\Actions\UI\Customer\Portfolio\ShowPortfolio;
-use App\Enums\UI\Customer\PortfolioSocialAccountTabsEnum;
+use App\Enums\UI\Customer\PortfolioSocialAccountsTabsEnum;
+use App\Enums\UI\Customer\PortfolioWebsitesTabsEnum;
+use App\Enums\UI\Organisation\CustomerWebsitesTabsEnum;
 use App\Http\Resources\History\HistoryResource;
 use App\Http\Resources\Portfolio\PortfolioSocialAccountResource;
 use App\Http\Resources\Portfolio\PortfolioWebsiteResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\Portfolio\PortfolioSocialAccount;
+use App\Models\Portfolio\PortfolioWebsite;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -36,7 +39,7 @@ class IndexPortfolioSocialAccount extends InertiaAction
 
     public function asController(ActionRequest $request): LengthAwarePaginator
     {
-        $this->initialisation($request)->withTab(PortfolioSocialAccountTabsEnum::values());
+        $this->initialisation($request)->withTab(PortfolioSocialAccountsTabsEnum::values());
 
         return $this->handle();
     }
@@ -131,14 +134,14 @@ class IndexPortfolioSocialAccount extends InertiaAction
                 ],
                 'tabs'        => [
                     'current'    => $this->tab,
-                    'navigation' => PortfolioSocialAccountTabsEnum::navigation()
+                    'navigation' => PortfolioSocialAccountsTabsEnum::navigation()
                 ],
 
-                PortfolioSocialAccountTabsEnum::ACCOUNTS->value => $this->tab == PortfolioSocialAccountTabsEnum::ACCOUNTS->value ?
+                PortfolioSocialAccountsTabsEnum::ACCOUNTS->value => $this->tab == PortfolioSocialAccountsTabsEnum::ACCOUNTS->value ?
                     fn () => PortfolioSocialAccountResource::collection($socialAccounts)
                     : Inertia::lazy(fn () => PortfolioSocialAccountResource::collection($socialAccounts)),
 
-                PortfolioSocialAccountTabsEnum::CHANGELOG->value => $this->tab == PortfolioSocialAccountTabsEnum::CHANGELOG->value ?
+                PortfolioSocialAccountsTabsEnum::CHANGELOG->value => $this->tab == PortfolioSocialAccountsTabsEnum::CHANGELOG->value ?
                     fn () => HistoryResource::collection(IndexHistories::run(PortfolioSocialAccount::class))
                     : Inertia::lazy(fn () => HistoryResource::collection(IndexHistories::run(PortfolioSocialAccount::class)))
             ]

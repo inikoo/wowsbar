@@ -10,23 +10,23 @@ namespace App\Enums\UI\Customer;
 use App\Enums\EnumHelperTrait;
 use App\Enums\HasTabs;
 
-enum PortfolioSocialAccountTabsEnum: string
+enum PortfolioSocialAccountsTabsEnum: string
 {
     use EnumHelperTrait;
     use HasTabs;
 
-    case ACCOUNT             = 'account';
+    case ACCOUNTS             = 'accounts';
     case CHANGELOG            = 'changelog';
 
     public function blueprint(): array
     {
         return match ($this) {
-            PortfolioSocialAccountTabsEnum::ACCOUNT => [
-                'title' => __('account'),
+            PortfolioSocialAccountsTabsEnum::ACCOUNTS => [
+                'title' => __('accounts'),
                 'icon'  => 'fas fa-info-circle',
             ],
 
-            PortfolioSocialAccountTabsEnum::CHANGELOG => [
+            PortfolioSocialAccountsTabsEnum::CHANGELOG => [
                 'title' => __('changelog'),
                 'icon'  => 'fal fa-clock',
                 'type'  => 'icon',

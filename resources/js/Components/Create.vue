@@ -73,13 +73,13 @@ const handleFormSubmit = () => {
 };
 
 const current = null
+const buttonRefs = ref([])
+const tabActive = ref({})
 
 const handleIntersection = (element: Element, index: number) => (entries) => {
     const [entry] = entries;
     tabActive.value[`${index}`] = entry.isIntersecting;
 }
-const buttonRefs = ref([])
-const tabActive = ref({})
 
 onMounted(() => {
     // To indicate active state that on viewport
@@ -111,14 +111,15 @@ onMounted(() => {
                     <div v-for="(item, key) in formData['blueprint']" @click="jumpToElement(`field${key}`)" :class="[
                         tabActive[key]
                             ? 'tabNavigationActive'
-                            : 'border-transparent text-gray-600 hover:bg-gray-100 hover:text-gray-700',
+                            : 'tabNavigation text-gray-600 hover:bg-gray-100 hover:text-gray-700',
                         'cursor-pointer group border-l-4 px-3 py-2 flex items-center text-sm font-medium',
                         ]">
-                        <FontAwesomeIcon v-if="item.icon" aria-hidden="true" :class="[key === current
-                            ? 'text-orange-500 group-hover:text-orange-500'
-                            : 'text-gray-400 group-hover:text-gray-500',
-                            'flex-shrink-0 -ml-1 mr-3 h-6 w-6',
-                        ]" :icon="item.icon" />
+                        <FontAwesomeIcon v-if="item.icon" aria-hidden="true" class="flex-shrink-0 -ml-1 mr-3 h-6 w-6"
+                            :class="[tabActive[key]
+                                ? 'text-gray-400 group-hover:text-gray-500'
+                                : 'text-gray-400',
+                            ]"
+                            :icon="item.icon" />
                         <span class="capitalize truncate">{{ item.title }}</span>
                     </div>
                 </div>
@@ -130,12 +131,15 @@ onMounted(() => {
                 <div v-for="(sectionData, sectionIdx ) in formData['blueprint']" :key="sectionIdx" class="relative py-4">
                     <!-- Helper: Section click -->
                     <div class="sr-only absolute -top-16" :id="`field${sectionIdx}`" />
-                    <div v-if="sectionData.title || sectionData.subtitle" class="space-y-1"  ref="buttonRefs">
-                        <h3 class="text-lg leading-6 font-medium text-gray-800 capitalize">
+                    
+                    <!-- Title -->
+                    <div class="flex items-center gap-x-2"  ref="buttonRefs">
+                        <FontAwesomeIcon :icon='sectionData.icon' class='' aria-hidden='true' />
+                        <h3 v-if="sectionData.title" class="text-lg leading-6 font-medium text-gray-700 capitalize">
                             {{ sectionData.title }}
                         </h3>
-                        <p v-show="sectionData['subtitle']" class="max-w-2xl text-sm text-gray-500">
-                            {{ sectionData['subtitle'] }}
+                        <p v-if="sectionData.subtitle" class="max-w-2xl text-sm text-gray-500">
+                            {{ sectionData.subtitle }}
                         </p>
                     </div>
 

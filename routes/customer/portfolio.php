@@ -16,7 +16,9 @@ use App\Actions\Portfolio\Banner\UI\ShowBannerWorkshop;
 use App\Actions\Portfolio\Banner\UI\ShowDeletedBanner;
 use App\Actions\Portfolio\Banner\UploadImagesToBanner;
 use App\Actions\Portfolio\PortfolioSocialAccount\UI\CreatePortfolioSocialAccount;
+use App\Actions\Portfolio\PortfolioSocialAccount\UI\EditPortfolioSocialAccount;
 use App\Actions\Portfolio\PortfolioSocialAccount\UI\IndexPortfolioSocialAccount;
+use App\Actions\Portfolio\PortfolioSocialAccount\UI\ShowPortfolioSocialAccount;
 use App\Actions\Portfolio\PortfolioWebsite\UI\CreatePortfolioWebsite;
 use App\Actions\Portfolio\PortfolioWebsite\UI\EditPortfolioWebsite;
 use App\Actions\Portfolio\PortfolioWebsite\UI\IndexPortfolioWebsites;
@@ -84,3 +86,5 @@ Route::get('/portfolio-websites/uploads/template/download', DownloadPortfolioWeb
 
 Route::get('/social-account', IndexPortfolioSocialAccount::class)->name('social.account.index');
 Route::get('/social-account/create', CreatePortfolioSocialAccount::class)->name('social.account.create');
+Route::get('/social-account/{portfolioSocialAccount}', ShowPortfolioSocialAccount::class)->name('social.account.show');
+Route::get('/social-account/{portfolioSocialAccount}/edit', EditPortfolioSocialAccount::class)->name('social.account.edit');
