@@ -12,6 +12,7 @@ return new class () extends Migration {
     {
         Schema::create('portfolio_social_accounts', function (Blueprint $table) {
             $table->smallIncrements('id');
+            $table->string('slug');
             $table->string('username');
             $table->string('url');
             $table->string('provider');

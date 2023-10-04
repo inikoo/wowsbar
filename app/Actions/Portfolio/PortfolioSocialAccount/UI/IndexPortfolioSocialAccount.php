@@ -14,6 +14,7 @@ use App\Enums\UI\Customer\PortfolioSocialAccountTabsEnum;
 use App\Enums\UI\Customer\PortfolioWebsitesTabsEnum;
 use App\Enums\UI\Organisation\CustomerWebsitesTabsEnum;
 use App\Http\Resources\History\HistoryResource;
+use App\Http\Resources\Portfolio\PortfolioSocialAccountResource;
 use App\Http\Resources\Portfolio\PortfolioWebsiteResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\Portfolio\PortfolioSocialAccount;
@@ -38,7 +39,7 @@ class IndexPortfolioSocialAccount extends InertiaAction
 
     public function asController(ActionRequest $request): LengthAwarePaginator
     {
-        $this->initialisation($request)->withTab(CustomerWebsitesTabsEnum::values());
+        $this->initialisation($request)->withTab(PortfolioSocialAccountTabsEnum::values());
 
         return $this->handle();
     }
@@ -49,9 +50,9 @@ class IndexPortfolioSocialAccount extends InertiaAction
     {
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
             $query->where(function ($query) use ($value) {
-                $query->whereAnyWordStartWith('portfolio_websites.name', $value)
-                    ->orWhere('portfolio_websites.url', 'ilike', "%$value%")
-                    ->orWhere('portfolio_websites.code', 'ilike', "$value%");
+                $query->whereAnyWordStartWith('username', $value)
+                    ->orWhere('url', 'ilike', "%$value%")
+                    ->orWhere('username', 'ilike', "$value%");
             });
         });
         if ($prefix) {
@@ -62,7 +63,7 @@ class IndexPortfolioSocialAccount extends InertiaAction
 
         return $queryBuilder
             ->defaultSort('username')
-            ->allowedSorts(['username', 'type'])
+            ->allowedSorts(['username', 'provider', 'number_followers', 'number_posts'])
             ->allowedFilters([$globalSearch])
             ->withPaginator($prefix)
             ->withQueryString();
@@ -88,8 +89,10 @@ class IndexPortfolioSocialAccount extends InertiaAction
                 )
                 ->withExportLinks($exportLinks)
                 ->column(key: 'username', label: __('username'), sortable: true)
-                ->column(key: 'type', label: __('type'), sortable: true)
-                ->column(key: 'profile_url', label: __('profile url'), sortable: true)
+                ->column(key: 'provider', label: __('type'), sortable: true)
+                ->column(key: 'url', label: __('profile url'), sortable: true)
+                ->column(key: 'number_posts', label: __('number posts'), sortable: true)
+                ->column(key: 'number_followers', label: __('number followers'), sortable: true)
                 ->defaultSort('username');
         };
     }
@@ -99,7 +102,7 @@ class IndexPortfolioSocialAccount extends InertiaAction
         return PortfolioWebsiteResource::collection($this->handle());
     }
 
-    public function htmlResponse(LengthAwarePaginator $websites, ActionRequest $request): Response
+    public function htmlResponse(LengthAwarePaginator $socialAccounts, ActionRequest $request): Response
     {
         return Inertia::render(
             'Portfolio/PortfolioSocialAccounts',
@@ -135,12 +138,12 @@ class IndexPortfolioSocialAccount extends InertiaAction
                 ],
 
                 PortfolioSocialAccountTabsEnum::ACCOUNTS->value => $this->tab == PortfolioSocialAccountTabsEnum::ACCOUNTS->value ?
-                    fn () => PortfolioWebsiteResource::collection($websites)
-                    : Inertia::lazy(fn () => PortfolioWebsiteResource::collection($websites)),
+                    fn () => PortfolioSocialAccountResource::collection($socialAccounts)
+                    : Inertia::lazy(fn () => PortfolioSocialAccountResource::collection($socialAccounts)),
 
                 PortfolioSocialAccountTabsEnum::CHANGELOG->value => $this->tab == PortfolioSocialAccountTabsEnum::CHANGELOG->value ?
-                    fn () => HistoryResource::collection(IndexHistories::run(PortfolioWebsite::class))
-                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistories::run(PortfolioWebsite::class)))
+                    fn () => HistoryResource::collection(IndexHistories::run(PortfolioSocialAccount::class))
+                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistories::run(PortfolioSocialAccount::class)))
             ]
         )->table(
             $this->tableStructure(
