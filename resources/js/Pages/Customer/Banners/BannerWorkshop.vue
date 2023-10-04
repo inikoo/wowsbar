@@ -22,13 +22,13 @@ import { cloneDeep, set as setLodash } from "lodash"
 import { set, onValue, get } from "firebase/database"
 import { getDbRef } from '@/Composables/firebase'
 import Modal from '@/Components/Utils/Modal.vue'
-// import { useBannerHash } from "@/Composables/useBannerHash.ts"
+import { useBannerHash } from "@/Composables/useBannerHash"
 import { usePage } from "@inertiajs/vue3"
 
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
-import { faRocketLaunch } from "../../../../private/pro-regular-svg-icons"
-import { faAsterisk } from "../../../../private/pro-solid-svg-icons"
-import { faSpinnerThird } from '../../../../private/pro-duotone-svg-icons'
+import { faRocketLaunch } from "@/../private/pro-regular-svg-icons"
+import { faAsterisk } from "@/../private/pro-solid-svg-icons"
+import { faSpinnerThird } from '@/../private/pro-duotone-svg-icons'
 library.add( faAsterisk, faRocketLaunch, faUser, faUserFriends, faSpinnerThird );
 
 interface Action {
@@ -125,7 +125,7 @@ const sendDataToServer = async () => {
     form.patch(
         route(props.publishRoute['name'], props.publishRoute['parameters']), {
         onSuccess: async (res) => {
-            // await set(getDbRef(dbPath), { publishedHash: data.hash })
+            await set(getDbRef(dbPath), { publishedHash: data.hash })
             isModalOpen.value = false
             router.visit(route(routeExit['route']['name'], routeExit['route']['parameters']))
             notify({
@@ -201,7 +201,7 @@ const updateData = async () => {
     try {
         handleKeyDown()
         if (data && isSetData.value === false) {
-            // setLodash(data,'hash',useBannerHash(data)) // Generate new hash based on data page
+            setLodash(data,'hash',useBannerHash(data)) // Generate new hash based on data page
             const snapshot = await get(getDbRef(dbPath))
             if (snapshot.exists()) {
                 const firebaseData = snapshot.val()
