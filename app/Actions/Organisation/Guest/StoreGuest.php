@@ -44,10 +44,10 @@ class StoreGuest
         StoreOrganisationUser::make()->action(
             $guest,
             [
-                'username' => Arr::get($modelData, 'username'),
-                'password' => (app()->isLocal() ? 'hello' : wordwrap(Str::random(), 4, '-', true)),
-                'contact_name'=>$guest->contact_name,
-                'email'=>$guest->email
+                'username'    => Arr::get($modelData, 'username'),
+                'password'    => (app()->isLocal() ? 'hello' : wordwrap(Str::random(), 4, '-', true)),
+                'contact_name'=> $guest->contact_name,
+                'email'       => $guest->email
             ]
         );
 

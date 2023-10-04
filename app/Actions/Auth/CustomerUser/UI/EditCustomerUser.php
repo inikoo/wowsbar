@@ -111,7 +111,7 @@ class EditCustomerUser extends InertiaAction
         return Inertia::render(
             'EditModel',
             [
-                'title'       => __('user'),
+                'title'       => __('edit user'),
                 'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->getName(),
                     $request->route()->originalParameters()

@@ -42,7 +42,7 @@ enum UserTabsEnum: string
                 'icon'  => 'fas fa-info-circle',
             ],
             UserTabsEnum::REQUEST_LOGS => [
-                'title' => __('Visit Logs'),
+                'title' => __('visit logs'),
                 'icon'  => 'fal fa-road',
             ],
         };

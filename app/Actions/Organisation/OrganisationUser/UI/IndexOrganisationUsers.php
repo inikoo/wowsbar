@@ -142,7 +142,7 @@ class IndexOrganisationUsers extends InertiaAction
                 ),
                 'title'       => __('users'),
                 'pageHead'    => [
-                    'title'   => __('users'),
+                    'title'     => __('users'),
                     'actions'   => [
                         $this->canEdit ? [
                             'type'  => 'button',
@@ -166,8 +166,8 @@ class IndexOrganisationUsers extends InertiaAction
                 ],
 
                 UsersTabsEnum::USERS->value => $this->tab == UsersTabsEnum::USERS->value ?
-                    fn() => OrganisationUserResource::collection($organisationUsers)
-                    : Inertia::lazy(fn() => OrganisationUserResource::collection($organisationUsers)),
+                    fn () => OrganisationUserResource::collection($organisationUsers)
+                    : Inertia::lazy(fn () => OrganisationUserResource::collection($organisationUsers)),
 
                 /*
                 UsersTabsEnum::USERS_REQUESTS->value => $this->tab == UsersTabsEnum::USERS_REQUESTS->value ?
@@ -181,7 +181,7 @@ class IndexOrganisationUsers extends InertiaAction
                 prefix: 'users'
             )
         )//  ->table(IndexUserRequestLogs::make()->tableStructure())
-            ;
+        ;
     }
 
     public function asController(ActionRequest $request): LengthAwarePaginator

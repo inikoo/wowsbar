@@ -42,7 +42,8 @@ use App\Actions\HumanResources\Workplace\UI\ShowWorkplace;
 use App\Actions\UI\Organisation\HumanResources\ShowHumanResourcesDashboard;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', ['uses'  => ShowHumanResourcesDashboard::class, 'icon'  => 'user-hard-hat', 'label' => 'human resources'])->name('dashboard');
+Route::get('/', function () {return redirect('/hr/dashboard');});
+Route::get('/dashboard', ['uses'  => ShowHumanResourcesDashboard::class, 'icon'  => 'user-hard-hat', 'label' => 'human resources'])->name('dashboard');
 Route::get('/employees', IndexEmployees::class)->name('employees.index');
 Route::get('/employees/create', CreateEmployee::class)->name('employees.create');
 

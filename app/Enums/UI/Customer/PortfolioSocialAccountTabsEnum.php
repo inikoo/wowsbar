@@ -15,7 +15,7 @@ enum PortfolioSocialAccountTabsEnum: string
     use EnumHelperTrait;
     use HasTabs;
 
-    case ACCOUNT             = 'account';
+    case ACCOUNT              = 'account';
     case CHANGELOG            = 'changelog';
 
     public function blueprint(): array

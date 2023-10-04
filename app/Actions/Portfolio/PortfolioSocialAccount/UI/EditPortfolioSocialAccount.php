@@ -11,7 +11,6 @@ use App\Actions\InertiaAction;
 use App\Actions\Portfolio\PortfolioWebsite\UI\ShowPortfolioWebsite;
 use App\Enums\SocialAccount\SocialAccountProviderEnum;
 use App\Models\Portfolio\PortfolioSocialAccount;
-use App\Models\Portfolio\PortfolioWebsite;
 use Exception;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -85,7 +84,7 @@ class EditPortfolioSocialAccount extends InertiaAction
                     'formData' => [
                         'blueprint' => [
                             [
-                                'title' => __('Account'),
+                                'title'  => __('Account'),
                                 'fields' => [
                                     'provider' => [
                                         'type'          => 'select',
@@ -93,20 +92,20 @@ class EditPortfolioSocialAccount extends InertiaAction
                                         'placeholder'   => 'Select Account Provider',
                                         'options'       => Options::forEnum(SocialAccountProviderEnum::class)->toArray(),
                                         'required'      => true,
-                                        'value' => $portfolioSocialAccount->provider,
+                                        'value'         => $portfolioSocialAccount->provider,
                                         'mode'          => 'single'
                                     ],
                                     'username' => [
-                                        'type' => 'input',
-                                        'label' => __('username'),
+                                        'type'     => 'input',
+                                        'label'    => __('username'),
                                         'required' => true,
-                                        'value' => $portfolioSocialAccount->username
+                                        'value'    => $portfolioSocialAccount->username
                                     ],
                                     'url' => [
-                                        'type' => 'input',
-                                        'label' => __('url'),
+                                        'type'     => 'input',
+                                        'label'    => __('url'),
                                         'required' => true,
-                                        'value' => $portfolioSocialAccount->url
+                                        'value'    => $portfolioSocialAccount->url
                                     ]
                                 ]
                             ],

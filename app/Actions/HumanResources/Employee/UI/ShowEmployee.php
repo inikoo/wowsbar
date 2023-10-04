@@ -46,7 +46,7 @@ class ShowEmployee extends InertiaAction
         $meta = [];
         if ($employee->worker_number) {
             $meta[] = [
-                'label'    => $employee->worker_number,
+                'label'    => is_numeric($employee->worker_number) ? str_pad($employee->worker_number, 4, '0', STR_PAD_LEFT) : $employee->worker_number ,
                 'leftIcon' => [
                     'icon'    => 'fal fa-id-card',
                     'tooltip' => __('Worker number')
@@ -55,9 +55,13 @@ class ShowEmployee extends InertiaAction
         }
         if ($employee->organisationUser) {
             $meta[] = [
+                'href'=> [
+                  'name'      => 'org.sysadmin.users.show',
+                  'parameters'=> [$employee->organisationUser->username]
+                ],
                 'label'    => $employee->organisationUser->username,
                 'leftIcon' => [
-                    'icon'    => 'fal fa-user',
+                    'icon'    => 'fal fa-terminal',
                     'tooltip' => __('User')
                 ]
             ];

@@ -118,6 +118,12 @@ class OrganisationUser extends Authenticatable implements HasMedia, Auditable
         'remember_token',
     ];
 
+    public function getRouteKeyName(): string
+    {
+        return 'username';
+    }
+
+
     public function stats(): HasOne
     {
         return $this->hasOne(OrganisationUserStats::class);
