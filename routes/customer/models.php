@@ -18,11 +18,14 @@ use App\Actions\Portfolio\Banner\UpdateBannerState;
 use App\Actions\Portfolio\Banner\UploadImagesToBanner;
 use App\Actions\Portfolio\Gallery\UpdateUploadedImage;
 use App\Actions\Portfolio\Gallery\UploadImagesToGallery;
+use App\Actions\Portfolio\PortfolioSocialAccount\StorePortfolioSocialAccount;
 use App\Actions\Portfolio\PortfolioWebsite\DeletePortfolioWebsite;
 use App\Actions\Portfolio\PortfolioWebsite\StorePortfolioWebsite;
 use App\Actions\Portfolio\PortfolioWebsite\UpdatePortfolioWebsite;
 use App\Actions\Portfolio\PortfolioWebsite\ImportPortfolioWebsite;
 use App\Actions\UI\Customer\Profile\UpdateProfile;
+
+Route::post('/portfolio-social-account', StorePortfolioSocialAccount::class)->name('portfolio-social-account.store');
 
 Route::post('/portfolio-website', StorePortfolioWebsite::class)->name('portfolio-website.store');
 Route::patch('/portfolio-website/{portfolioWebsite:id}', UpdatePortfolioWebsite::class)->name('portfolio-website.update');
@@ -30,9 +33,6 @@ Route::delete('/portfolio-website/{portfolioWebsite:id}', DeletePortfolioWebsite
 
 Route::post('/portfolio-website/{portfolioWebsite:id}/banner', [StoreBanner::class, 'inPortfolioWebsite'])->name('portfolio-website.banner.store');
 
-
-//Route::post('/portfolio-website/{portfolioWebsite}/banners/gallery', [StoreBanner::class, 'inPortfolioWebsiteFromGallery'])->name('portfolio-website.banner.gallery.store');
-//Route::post('/customer/banners/gallery', [StoreBanner::class, 'inTenantFromGallery'])->name('customer.banner.gallery.store');
 
 
 Route::prefix('/banner')->name('banner.')->group(function () {

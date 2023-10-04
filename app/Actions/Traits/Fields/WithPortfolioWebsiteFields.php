@@ -11,11 +11,11 @@ trait WithPortfolioWebsiteFields
 {
     protected function getPortfolioWebsiteFields(): array
     {
-        return  [
+        return [
             [
-                'title'  => __('domain'),
+                'title'  => __('ID/URL'),
                 'fields' => [
-                    'url' => [
+                    'url'  => [
                         'type'      => 'inputWithAddOn',
                         'label'     => __('url'),
                         'leftAddOn' => [
@@ -23,28 +23,15 @@ trait WithPortfolioWebsiteFields
                         ],
                         'required'  => true,
                     ],
-                ]
-            ],
-            [
-                'title'  => __('ID/name'),
-                'fields' => [
-
-                    'code' => [
-                        'type'      => 'input',
-                        'label'     => __('code'),
-                        'required'  => true,
-                        'maxLength' => 8
-                    ],
                     'name' => [
-                        'type'      => 'input',
-                        'label'     => __('name'),
-                        'required'  => true,
-                        'value'     => '',
+                        'type'     => 'input',
+                        'label'    => __('name'),
+                        'required' => true,
+                        'value'    => '',
                     ],
-
-
                 ]
             ],
+
 
         ];
     }

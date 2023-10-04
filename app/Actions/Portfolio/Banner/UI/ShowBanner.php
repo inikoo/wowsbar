@@ -51,7 +51,6 @@ class ShowBanner extends InertiaAction
     public function asController(Banner $banner, ActionRequest $request): Banner
     {
         $this->initialisation($request)->withTab(BannerTabsEnum::values());
-
         return $this->handle(customer(), $banner);
     }
 
@@ -91,7 +90,7 @@ class ShowBanner extends InertiaAction
                     'title'     => $banner->name,
                     'icon'      => [
                         'tooltip' => __('banner'),
-                        'icon'    => 'fal fa-window-maximize'
+                        'icon'    => 'fal fa-rectangle-wide'
                     ],
                     'container' => $container,
                     'iconRight' =>

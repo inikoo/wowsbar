@@ -15,9 +15,11 @@ use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateCustomerW
 use App\Models\CRM\Customer;
 use App\Models\Portfolio\PortfolioWebsite;
 use App\Models\Portfolios\CustomerWebsite;
+use App\Rules\IUnique;
 use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Redirect;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -61,8 +63,14 @@ class StoreCustomerWebsite
     public function rules(): array
     {
         return [
-            'url'  => ['required', 'url', 'max:500'],
-            'code' => ['required', 'alpha_dash:ascii', 'iunique:portfolio_websites', 'max:16'],
+            'url'  => ['required', 'url', 'max:500',
+                       new IUnique(
+                           table: 'portfolio_websites',
+                           extraConditions: [
+                               ['column' => 'customer_id', 'value' => customer()->id],
+                           ]
+                       ),
+            ],
             'name' => ['required', 'string', 'max:128']
         ];
     }
@@ -94,7 +102,7 @@ class StoreCustomerWebsite
 
     public function getCommandSignature(): string
     {
-        return 'customer:new-portfolio-website {customer} {url} {code} {name}';
+        return 'customer:new-portfolio-website {customer} {url} {name}';
     }
 
     public function asCommand(Command $command): int
@@ -108,10 +116,11 @@ class StoreCustomerWebsite
             return 1;
         }
 
+        Config::set('global.customer_id', $customer->id);
+
         $this->setRawAttributes(
             [
                 'url'    => $command->argument('url'),
-                'code'   => $command->argument('code'),
                 'name'   => $command->argument('name')
             ]
         );
@@ -119,7 +128,7 @@ class StoreCustomerWebsite
 
         $customerWebsite = $this->handle($customer, $validatedData);
 
-        $command->info("Done! website $customerWebsite->code created 🥳");
+        $command->info("Done! website $customerWebsite->slug created 🥳");
 
         return 0;
     }

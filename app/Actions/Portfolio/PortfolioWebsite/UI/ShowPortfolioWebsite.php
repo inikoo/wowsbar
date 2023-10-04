@@ -113,13 +113,13 @@ class ShowPortfolioWebsite extends InertiaAction
                         ],
                         'model' => [
                             'route' => $routeParameters['model'],
-                            'label' => $portfolioWebsite->code,
+                            'label' => $portfolioWebsite->slug,
                         ],
 
                     ],
                     'simple'         => [
                         'route' => $routeParameters['model'],
-                        'label' => $portfolioWebsite->code
+                        'label' => $portfolioWebsite->slug
                     ],
                     'suffix'         => $suffix
                 ],
@@ -154,14 +154,14 @@ class ShowPortfolioWebsite extends InertiaAction
 
     public function getPrevious(PortfolioWebsite $portfolioWebsite, ActionRequest $request): ?array
     {
-        $previous = PortfolioWebsite::where('code', '<', $portfolioWebsite->code)->orderBy('code', 'desc')->first();
+        $previous = PortfolioWebsite::where('slug', '<', $portfolioWebsite->slug)->orderBy('slug', 'desc')->first();
 
         return $this->getNavigation($previous, $request->route()->getName());
     }
 
     public function getNext(PortfolioWebsite $portfolioWebsite, ActionRequest $request): ?array
     {
-        $next = PortfolioWebsite::where('code', '>', $portfolioWebsite->code)->orderBy('code')->first();
+        $next = PortfolioWebsite::where('slug', '>', $portfolioWebsite->slug)->orderBy('slug')->first();
 
         return $this->getNavigation($next, $request->route()->getName());
     }
@@ -175,7 +175,7 @@ class ShowPortfolioWebsite extends InertiaAction
         return match ($routeName) {
             'customer.portfolio.websites.show',
             'customer.portfolio.websites.edit' => [
-                'label' => $portfolioWebsite->code,
+                'label' => $portfolioWebsite->slug,
                 'route' => [
                     'name'       => $routeName,
                     'parameters' => [

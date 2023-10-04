@@ -7,11 +7,14 @@ use App\Models\Market\Shop;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 /**
  * App\Models\Portfolio\PortfolioSocialAccount
  *
  * @property int $id
+ * @property string $slug
  * @property string $username
  * @property string $url
  * @property string $provider
@@ -43,8 +46,26 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class PortfolioSocialAccount extends Model
 {
     use HasFactory;
+    use HasSlug;
 
     protected $guarded = [];
+
+    protected $casts = [
+        'data'        => 'array',
+    ];
+
+    protected $attributes = [
+        'data' => '{}'
+    ];
+
+    public function getSlugOptions(): SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom('username')
+            ->saveSlugsTo('slug')
+            ->slugsShouldBeNoLongerThan(12)
+            ->doNotGenerateSlugsOnCreate();
+    }
 
     public function shop(): BelongsTo
     {

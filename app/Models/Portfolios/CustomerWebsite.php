@@ -9,20 +9,18 @@ namespace App\Models\Portfolios;
 
 use App\Models\CRM\Customer;
 use App\Models\Portfolio\Banner;
-use App\Models\Portfolio\BannerPortfolioWebsite;
 use App\Models\Portfolio\PortfolioWebsiteStats;
 use App\Models\Traits\HasHistory;
 use App\Models\Traits\HasUniversalSearch;
+use App\Models\Traits\IsWebsitePortfolio;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\Sluggable\HasSlug;
-use Spatie\Sluggable\SlugOptions;
 
 /**
  * App\Models\Portfolios\CustomerWebsite
@@ -72,7 +70,7 @@ class CustomerWebsite extends Model implements Auditable
     use HasUniversalSearch;
     use HasFactory;
     use HasHistory;
-
+    use IsWebsitePortfolio;
 
     protected $table='portfolio_websites';
 
@@ -86,30 +84,10 @@ class CustomerWebsite extends Model implements Auditable
 
     protected $guarded = [];
 
-    public function getRouteKeyName(): string
-    {
-        return 'slug';
-    }
-
-    public function getSlugOptions(): SlugOptions
-    {
-        return SlugOptions::create()
-            ->generateSlugsFrom('code')
-            ->doNotGenerateSlugsOnUpdate()
-            ->saveSlugsTo('slug');
-    }
-
     public function stats(): HasOne
     {
         return $this->hasOne(PortfolioWebsiteStats::class, 'portfolio_website_id', 'id');
     }
-
-    public function banners(): BelongsToMany
-    {
-        return $this->belongsToMany(Banner::class)->using(BannerPortfolioWebsite::class)
-            ->withTimestamps();
-    }
-
 
     public function customer(): BelongsTo
     {

@@ -13,6 +13,7 @@ use App\Actions\Auth\User\UI\SetUserAvatar;
 use App\Actions\CRM\Customer\Hydrators\CustomerHydrateUniversalSearch;
 use App\Actions\CRM\Customer\Hydrators\CustomerHydrateCustomerUsers;
 use App\Models\Auth\CustomerUser;
+use App\Models\Auth\Role;
 use App\Models\Auth\User;
 use App\Models\CRM\Customer;
 use App\Models\Web\Website;
@@ -41,9 +42,17 @@ class StoreUser
         data_set($modelData, 'ulid', Str::ulid());
         data_set($modelData, 'website_id', $website->id);
         /** @var User $user */
-        $user = User::create(Arr::except($modelData, ['is_root']));
+        $user = User::create(Arr::except($modelData, ['is_root','roles']));
 
         $customerUser = StoreCustomerUser::run($customer, $user, Arr::only($modelData, ['is_root']));
+
+        foreach(Arr::get($modelData,'roles') as $roleName){
+            $role = Role::where('guard_name', 'customer')->where('name', $roleName)->first();
+            if($role){
+                $customerUser->assignRole($role);
+            }
+        }
+
 
         if (!$customer->website_id) {
             $customer->update(
@@ -84,7 +93,8 @@ class StoreUser
                 ],
             'contact_name' => ['required', 'string', 'max:255'],
             'email'        => 'required|iunique:users|email|max:255',
-            'is_root'      => ['sometimes', 'required', 'boolean']
+            'is_root'      => ['sometimes', 'required', 'boolean'],
+            'roles'        => ['required', 'array']
         ];
     }
 
@@ -92,6 +102,7 @@ class StoreUser
     {
         $request->validate();
         $customer = customer();
+
 
         return $this->handle($customer->website, $customer, $request->validated());
     }
@@ -150,8 +161,8 @@ class StoreUser
             ]
         );
 
-        $validatedData         = $this->validateAttributes();
-        $customerUser          = $this->handle($website, $customer, $validatedData);
+        $validatedData = $this->validateAttributes();
+        $customerUser  = $this->handle($website, $customer, $validatedData);
 
 
         $command->line("Public user $customerUser->slug created successfully");

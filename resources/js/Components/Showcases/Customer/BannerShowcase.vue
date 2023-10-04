@@ -5,18 +5,18 @@
   -->
 
 <script setup lang="ts">
-import { computed, onMounted } from 'vue'
+import { onMounted } from 'vue'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import Input from '@/Components/Forms/Fields/Input.vue'
 import Slider from "@/Components/Slider/Slider.vue"
 import { trans } from "laravel-vue-i18n"
 
 
-import { faWindowMaximize, faGlobe } from "../../../../private/pro-light-svg-icons"
+import { faRectangleWide, faGlobe } from "../../../../private/pro-light-svg-icons"
 import EmptyState from '@/Components/Utils/EmptyState.vue'
 import { cloneDeep } from 'lodash'
 
-library.add(faWindowMaximize, faGlobe)
+library.add(faRectangleWide, faGlobe)
 
 const props = defineProps<{
     data: {

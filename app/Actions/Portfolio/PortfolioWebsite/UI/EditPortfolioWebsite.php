@@ -80,15 +80,9 @@ class EditPortfolioWebsite extends InertiaAction
                     'formData' => [
                         'blueprint' => [
                             [
-                                'title'  => __('ID/domain'),
+                                'title'  => __('ID/URL'),
                                 'icon'   => 'fa-light fa-id-card',
                                 'fields' => [
-                                    'code' => [
-                                        'type'     => 'input',
-                                        'label'    => __('code'),
-                                        'value'    => $portfolioWebsite->code,
-                                        'required' => true,
-                                    ],
                                     'name' => [
                                         'type'     => 'input',
                                         'label'    => __('name'),
@@ -129,14 +123,14 @@ class EditPortfolioWebsite extends InertiaAction
 
     public function getPrevious(PortfolioWebsite $portfolioWebsite, ActionRequest $request): ?array
     {
-        $previous = PortfolioWebsite::where('code', '<', $portfolioWebsite->code)->orderBy('code', 'desc')->first();
+        $previous = PortfolioWebsite::where('slug', '<', $portfolioWebsite->slug)->orderBy('slug', 'desc')->first();
 
         return $this->getNavigation($previous, $request->route()->getName());
     }
 
     public function getNext(PortfolioWebsite $portfolioWebsite, ActionRequest $request): ?array
     {
-        $next = PortfolioWebsite::where('code', '>', $portfolioWebsite->code)->orderBy('code')->first();
+        $next = PortfolioWebsite::where('slug', '>', $portfolioWebsite->slug)->orderBy('slug')->first();
 
         return $this->getNavigation($next, $request->route()->getName());
     }

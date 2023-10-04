@@ -12,11 +12,12 @@ return new class () extends Migration {
     {
         Schema::create('portfolio_social_accounts', function (Blueprint $table) {
             $table->smallIncrements('id');
+            $table->string('slug')->unique()->collation('und_ns')->nullable();
             $table->string('username');
             $table->string('url');
             $table->string('provider');
-            $table->unsignedBigInteger('number_followers');
-            $table->unsignedBigInteger('number_posts');
+            $table->unsignedBigInteger('number_followers')->default(0);
+            $table->unsignedBigInteger('number_posts')->default(0);
 
             $table->unsignedInteger('customer_id')->index();
             $table->foreign('customer_id')->references('id')->on('customers')->onUpdate('cascade')->onDelete('cascade');

@@ -11,16 +11,15 @@ use App\Concerns\BelongsToCustomer;
 use App\Models\Leads\Prospect;
 use App\Models\Traits\HasHistory;
 use App\Models\Traits\HasUniversalSearch;
+use App\Models\Traits\IsWebsitePortfolio;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\Sluggable\HasSlug;
-use Spatie\Sluggable\SlugOptions;
 
 /**
  * App\Models\Portfolio\PortfolioWebsite
@@ -73,6 +72,7 @@ class PortfolioWebsite extends Model implements Auditable
     use HasFactory;
     use BelongsToCustomer;
     use HasHistory;
+    use IsWebsitePortfolio;
 
     protected $casts = [
         'data' => 'array',
@@ -84,29 +84,14 @@ class PortfolioWebsite extends Model implements Auditable
 
     protected $guarded = [];
 
-    public function getRouteKeyName(): string
-    {
-        return 'slug';
-    }
 
-    public function getSlugOptions(): SlugOptions
-    {
-        return SlugOptions::create()
-            ->generateSlugsFrom('code')
-            ->doNotGenerateSlugsOnUpdate()
-            ->saveSlugsTo('slug');
-    }
 
     public function stats(): HasOne
     {
         return $this->hasOne(PortfolioWebsiteStats::class);
     }
 
-    public function banners(): BelongsToMany
-    {
-        return $this->belongsToMany(Banner::class)->using(BannerPortfolioWebsite::class)
-            ->withTimestamps();
-    }
+
 
     public function scopedProspects(): MorphMany
     {

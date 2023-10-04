@@ -12,6 +12,7 @@ use App\Models\CRM\Customer;
 use App\Models\Portfolio\PortfolioSocialAccount;
 use Exception;
 use Illuminate\Console\Command;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Validation\Rule;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -24,14 +25,22 @@ class StorePortfolioSocialAccount
 
     private bool $asAction = false;
 
-    public function handle(Customer $customer, array $modelData): PortfolioSocialAccount
+    public function handle(array $modelData): PortfolioSocialAccount
     {
+        $customer = customer();
+
         data_set($modelData, 'shop_id', $customer->shop_id);
+        data_set($modelData, 'customer_id', $customer->id);
 
         /** @var PortfolioSocialAccount $portfolioSocialAccount */
-        $portfolioSocialAccount = $customer->socialAccounts()->create($modelData);
+        $portfolioSocialAccount = PortfolioSocialAccount::create($modelData);
 
         return $portfolioSocialAccount;
+    }
+
+    public function htmlResponse(): RedirectResponse
+    {
+        return redirect()->route('customer.portfolio.social.account.index');
     }
 
     public function authorize(ActionRequest $request): bool
@@ -40,31 +49,32 @@ class StorePortfolioSocialAccount
             return true;
         }
 
-        return $request->get('customerUser')->hasPermissionTo("crm.edit");
+        return $request->get('customerUser')->hasPermissionTo("portfolio.edit");
     }
 
     public function rules(): array
     {
         return [
+            'username'   => ['required', 'string'],
             'url'        => ['required', 'active_url'],
             'provider'   => ['required', 'string', Rule::in(SocialAccountProviderEnum::values())]
         ];
     }
 
-    public function asController(Customer $customer, ActionRequest $request): PortfolioSocialAccount
+    public function asController(ActionRequest $request): PortfolioSocialAccount
     {
         $request->validate();
 
-        return $this->handle($customer, $request->validated());
+        return $this->handle($request->validated());
     }
 
-    public function action(Customer $customer, array $objectData): PortfolioSocialAccount
+    public function action(array $objectData): PortfolioSocialAccount
     {
         $this->asAction = true;
         $this->setRawAttributes($objectData);
         $validatedData = $this->validateAttributes();
 
-        return $this->handle($customer, $validatedData);
+        return $this->handle($validatedData);
     }
 
     public function getCommandSignature(): string
@@ -91,7 +101,7 @@ class StorePortfolioSocialAccount
         );
         $validatedData = $this->validateAttributes();
 
-        $portfolioSocialAccount = $this->handle($customer, $validatedData);
+        $portfolioSocialAccount = $this->handle($validatedData);
 
         $command->info("Done! Account $portfolioSocialAccount->username created 🥳");
 

@@ -35,7 +35,7 @@ enum PortfolioWebsiteTabsEnum: string
             ],
             PortfolioWebsiteTabsEnum::BANNERS => [
                 'title' => __('banners'),
-                'icon'  => 'fal fa-window-maximize',
+                'icon'  => 'fal fa-rectangle-wide',
             ],
             PortfolioWebsiteTabsEnum::LEADS => [
                 'title' => __('leads'),

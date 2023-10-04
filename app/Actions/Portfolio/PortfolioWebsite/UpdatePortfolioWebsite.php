@@ -53,19 +53,6 @@ class UpdatePortfolioWebsite
                 ),
 
             ],
-            'code' => [
-                'sometimes',
-                'required',
-                'alpha_dash:ascii',
-                'max:16',
-                new IUnique(
-                    table: 'portfolio_websites',
-                    extraConditions: [
-                        ['column' => 'customer_id', 'value' => customer()->id],
-                        ['column' => 'id', 'operator' => '!=', 'value' => $currentID]
-                    ]
-                ),
-            ],
             'name' => ['sometimes', 'required', 'string', 'max:128']
         ];
     }
@@ -73,7 +60,6 @@ class UpdatePortfolioWebsite
     public function asController(PortfolioWebsite $portfolioWebsite, ActionRequest $request): PortfolioWebsite
     {
         $request->validate();
-
         return $this->handle($portfolioWebsite, $request->validated());
     }
 

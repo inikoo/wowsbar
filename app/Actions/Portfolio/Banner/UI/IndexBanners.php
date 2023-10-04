@@ -218,7 +218,7 @@ class IndexBanners extends InertiaAction
                     'container' => $container,
                     'iconRight' => [
                         'title' => __('banner'),
-                        'icon'  => 'fal fa-window-maximize'
+                        'icon'  => 'fal fa-rectangle-wide'
                     ],
                     'actions'   =>
                         [

@@ -1,6 +1,6 @@
 <!--
   - Author: Raul Perusquia <raul@inikoo.com>
-  - Created: Tue, 19 Sep 2023 13:37:29 Malaysia Time, Pantai Lembeng, Bali, Indonesia
+  - Created: Wed, 04 Oct 2023 08:09:05 Malaysia Time, Kuala Lumpur, Malaysia
   - Copyright (c) 2023, Raul A Perusquia Flores
   -->
 
@@ -10,7 +10,7 @@ import PageHeading from '@/Components/Headings/PageHeading.vue';
 import { capitalize } from "@/Composables/capitalize"
 import {faRectangleWide} from "@/../private/pro-light-svg-icons"
 import {library} from "@fortawesome/fontawesome-svg-core";
-import TableUploadedImages from "@/Components/Tables/TableUploadedImages.vue";
+import TableStockImages from "@/Components/Tables/TableStockImages.vue";
 library.add(faRectangleWide)
 
 const props = defineProps <{
@@ -23,6 +23,6 @@ const props = defineProps <{
 <template layout="CustomerApp">
     <Head :title="capitalize(title)"/>
     <PageHeading :data="pageHead"></PageHeading>
-    <TableUploadedImages :data="data"  :is-select-image="false" />
+    <TableStockImages :data="data" :is-select-image="false" />
 </template>
 
