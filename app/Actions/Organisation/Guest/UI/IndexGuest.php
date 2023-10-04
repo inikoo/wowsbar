@@ -63,6 +63,7 @@ class IndexGuest extends InertiaAction
         }
 
         $queryBuilder = QueryBuilder::for(Guest::class);
+
 //            ->leftJoin(
 //                'users',
 //                function ($leftJoin) {
@@ -71,6 +72,7 @@ class IndexGuest extends InertiaAction
 //                        ->where('users.parent_type', '=', 'Guest');
 //                }
 //            )->leftJoin('user_stats', 'user_stats.user_id', 'users.id');
+
         foreach ($this->getElementGroups() as $key => $elementGroup) {
             $queryBuilder->whereElementGroup(
                 prefix: $prefix,
@@ -82,8 +84,8 @@ class IndexGuest extends InertiaAction
 
         return $queryBuilder
             ->defaultSort('guests.slug')
-            ->select(['guests.id', 'slug', 'guests.contact_name','guests.email','number_logins','last_login_at','number_failed_logins','last_failed_login_at'])
-            ->allowedSorts(['slug', 'contact_name','email','number_logins','last_login_at','number_failed_logins','last_failed_login_at'])
+            ->select(['guests.id', 'slug', 'guests.contact_name','guests.email'])
+            ->allowedSorts(['slug', 'contact_name','email'])
             ->allowedFilters([$globalSearch])
             ->withPaginator($prefix)
             ->withQueryString();
@@ -112,14 +114,14 @@ class IndexGuest extends InertiaAction
                     [
                         'title'       => __('no guest'),
                         'description' => $this->canEdit ? __('Get started by creating a new guest.') : null,
-                        'count'       => customer()->stats->number_guests_status_active,
+                        'count'       => 0,
                         'action'      => $this->canEdit ? [
                             'type'    => 'button',
                             'style'   => 'create',
                             'tooltip' => __('new guest'),
                             'label'   => __('guest'),
                             'route'   => [
-                                'name'       => 'sysadmin.guests.create',
+                                'name'       => 'org.sysadmin.guests.create',
                                 'parameters' => array_values($this->originalParameters)
                             ]
                         ] : null
@@ -177,7 +179,7 @@ class IndexGuest extends InertiaAction
                                     'style' => 'create',
                                     'label' => __('guest'),
                                     'route' => [
-                                        'name'       => 'sysadmin.guests.create',
+                                        'name'       => 'org.sysadmin.guests.create',
                                         'parameters' => array_values($request->route()->originalParameters())
                                     ]
                                 ]
@@ -207,7 +209,7 @@ class IndexGuest extends InertiaAction
                     'type'   => 'simple',
                     'simple' => [
                         'route' => [
-                            'name' => 'sysadmin.guests.index',
+                            'name' => 'org.sysadmin.guests.index',
                         ],
                         'label' => __('guests'),
                         'icon'  => 'fal fa-bars',

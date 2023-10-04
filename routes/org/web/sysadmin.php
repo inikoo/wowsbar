@@ -14,6 +14,7 @@ use App\Actions\Organisation\Guest\ExportGuest;
 use App\Actions\Organisation\Guest\UI\CreateGuest;
 use App\Actions\Organisation\Guest\UI\EditGuest;
 use App\Actions\Organisation\Guest\UI\IndexGuest;
+use App\Actions\Organisation\Guest\UI\RemoveGuest;
 use App\Actions\Organisation\Guest\UI\ShowGuest;
 use App\Actions\Organisation\Organisation\UI\EditOrganisation;
 use App\Actions\Organisation\OrganisationUser\UI\CreateOrganisationUser;
@@ -39,7 +40,7 @@ Route::prefix('guests')->name('guests.')->group(function () {
     Route:: get('/create', CreateGuest::class)->name('create');
     Route:: get('/{guest}', ShowGuest::class)->name('show');
     Route:: get('/{guest}/edit', EditGuest::class)->name('edit');
+    Route::get('/guests/{guest}/delete', RemoveGuest::class)->name('remove');
 });
-
 
 //Route::get('/guests/uploads/template/download', DownloadGuestsTemplate::class)->name('guest.uploads.template.download');

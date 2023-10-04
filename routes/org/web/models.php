@@ -25,7 +25,10 @@ use App\Actions\HumanResources\Workplace\UpdateWorkplace;
 use App\Actions\Leads\Prospect\RemoveProspect;
 use App\Actions\Leads\Prospect\ImportShopProspects;
 use App\Actions\Market\Shop\StoreShop;
+use App\Actions\Organisation\Guest\DeleteGuest;
 use App\Actions\Organisation\Guest\ImportGuest;
+use App\Actions\Organisation\Guest\StoreGuest;
+use App\Actions\Organisation\Guest\UpdateGuest;
 use App\Actions\Organisation\Organisation\UpdateOrganisation;
 use App\Actions\Portfolio\PortfolioWebsite\ImportPortfolioWebsite;
 use App\Actions\Portfolios\CustomerWebsite\StoreCustomerWebsite;
@@ -60,7 +63,12 @@ Route::post('/shop/{shop:id}/prospect/upload', ImportShopProspects::class)->name
 Route::delete('/prospect/{prospect:id}', RemoveProspect::class)->name('prospect.remove');
 
 Route::post('/products/imports/upload', ImportProducts::class)->name('products.upload');
+
 Route::post('/guests/imports/upload', ImportGuest::class)->name('guests.upload');
+Route::patch('/guest/{guest}', UpdateGuest::class)->name('guests.update');
+Route::post('/guest/', StoreGuest::class)->name('guests.store');
+Route::delete('/guest/{guest}', DeleteGuest::class)->name('guests.delete');
+
 Route::patch('/provider/{paymentServiceProvider}', UpdatePaymentServiceProvider::class)->name('payment-service-provider.update');
 Route::delete('/provider/{paymentServiceProvider}', DeletePaymentServiceProvider::class)->name('payment-service-provider.delete');
 Route::patch('/payment/{payment}', UpdatePayment::class)->name('payment.update');

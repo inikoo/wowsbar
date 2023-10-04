@@ -52,7 +52,7 @@ class EditGuest extends InertiaAction
                     'actions'   => [
                         [
                             'type'  => 'button',
-                            'style' => 'exitEdit',
+                            'style' => 'cancel',
                             'route' => [
                                 'name'       => preg_replace('/edit$/', 'show', $request->route()->getName()),
                                 'parameters' => array_values($request->route()->originalParameters())
@@ -89,9 +89,8 @@ class EditGuest extends InertiaAction
                     ],
                     'args' => [
                         'updateRoute' => [
-                            'name'      => 'models.guest.update',
+                            'name'      => 'org.models.guests.update',
                             'parameters'=> $guest->slug
-
                         ],
                     ]
                 ]
