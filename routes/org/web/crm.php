@@ -15,6 +15,7 @@ use App\Actions\CRM\User\UI\CreateUser;
 use App\Actions\CRM\User\UI\EditUser;
 use App\Actions\CRM\User\UI\IndexUsers;
 use App\Actions\CRM\User\UI\ShowUser;
+use App\Actions\Leads\Prospect\UI\CreateProspect;
 use App\Actions\Portfolios\CustomerWebsite\UI\CreateCustomerWebsite;
 use App\Actions\Portfolios\CustomerWebsite\UI\EditCustomerWebsite;
 use App\Actions\Portfolios\CustomerWebsite\UI\IndexCustomerWebsites;
@@ -26,7 +27,8 @@ use App\Actions\Leads\Prospect\UI\ShowProspect;
 use App\Actions\Organisation\UI\CRM\ShowCRMDashboard;
 use App\Actions\Organisation\UI\CRM\ShowMailroomDashboard;
 
-Route::get('/', [ShowCRMDashboard::class, 'inOrganisation'])->name('dashboard');
+Route::get('/', function () {return redirect('/crm/dashboard');});
+Route::get('/dashboard', [ShowCRMDashboard::class, 'inOrganisation'])->name('dashboard');
 
 Route::get('customers', IndexCustomers::class)->name('customers.index');
 Route::get('customers/create', CreateCustomer::class)->name('customers.index');
@@ -48,7 +50,8 @@ Route::prefix('prospects')->as('prospects.')->group(function () {
 });
 
 Route::prefix('shop/{shop}')->as('shop.')->group(function () {
-    Route::get('/', [ShowCRMDashboard::class, 'inShop'])->name('dashboard');
+    Route::get('/', function ($shop) {return redirect()->route('org.crm.shop.dashboard', [$shop]);});
+    Route::get('/dashboard', [ShowCRMDashboard::class, 'inShop'])->name('dashboard');
 
     Route::get('customers', [IndexCustomers::class, 'inShop'])->name('customers.index');
     Route::get('customers/create', [CreateCustomer::class, 'inShop'])->name('customers.create');
@@ -72,7 +75,8 @@ Route::prefix('shop/{shop}')->as('shop.')->group(function () {
 
     Route::prefix('prospects')->as('prospects.')->group(function () {
         Route::get('/', [IndexProspects::class, 'inShop'])->name('index');
-        Route::get('/create', [IndexProspects::class, 'inShop'])->name('create');
+        Route::get('/create', [CreateProspect::class, 'inShop'])->name('create');
+
         Route::get('/{prospect}', [ShowProspect::class, 'inShop'])->name('show');
         Route::get('/{prospect}/edit', [EditProspect::class, 'inShop'])->name('edit');
         Route::get('/{prospect}/delete', [RemoveProspect::class, 'inShop'])->name('remove');

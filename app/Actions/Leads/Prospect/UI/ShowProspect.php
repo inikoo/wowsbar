@@ -64,7 +64,7 @@ class ShowProspect extends InertiaAction
                 'pageHead'    => [
                     'title'   => $prospect->name,
                     'icon'    => [
-                        'icon'  => ['fal', 'fa-user'],
+                        'icon'  => ['fal', 'fa-transporter'],
                         'title' => __('Prospect')
                     ],
                     'actions' => [

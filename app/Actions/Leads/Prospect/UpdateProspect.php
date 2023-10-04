@@ -11,6 +11,8 @@ use App\Actions\Leads\Prospect\Hydrators\ProspectHydrateUniversalSearch;
 use App\Actions\Traits\WithActionUpdate;
 use App\Http\Resources\CRM\ProspectResource;
 use App\Models\Leads\Prospect;
+use App\Models\Market\Shop;
+use App\Rules\IUnique;
 use Lorisleiva\Actions\ActionRequest;
 
 class UpdateProspect
@@ -19,7 +21,7 @@ class UpdateProspect
 
     private bool $asAction = false;
 
-    public function handle(Prospect $prospect, array $modelData): Prospect
+    public function handle(Shop $scope, Prospect $prospect, array $modelData): Prospect
     {
         $prospect = $this->update($prospect, $modelData, ['data']);
         ProspectHydrateUniversalSearch::dispatch($prospect);
@@ -36,31 +38,75 @@ class UpdateProspect
         return $request->user()->hasPermissionTo("shops.customers.edit");
     }
 
-    public function rules(): array
+    public function prepareForValidation(ActionRequest $request): void
     {
+        if ($request->get('contact_website')) {
+            $request->merge(
+                [
+                    'contact_website' => 'https://'.$request->get('contact_website'),
+                ]
+            );
+        }
+    }
+
+    public function rules(ActionRequest $request): array
+    {
+        $currentID = $request->route()->parameters()['prospect']->id;
+
+        $extraConditions = match ($request->route()->getName()) {
+            'org.models.shop.prospects.update' => [
+                ['column' => 'shop_id', 'value' => $request->route()->parameters()['shop']],
+                ['column' => 'id', 'operator' => '!=', 'value' => $currentID]
+
+            ],
+            default => [
+                ['column' => 'id', 'operator' => '!=', 'value' => $currentID]
+            ]
+        };
+
         return [
-            'contact_name'    => ['sometimes'],
-            'company_name'    => ['sometimes'],
-            'phone'           => ['sometimes', 'nullable', 'phone:AUTO'],
-            'contact_website' => ['sometimes', 'nullable', 'active_url'],
-            'email'           => ['sometimes', 'nullable', 'email'],
+            'contact_name'    => ['sometimes', 'nullable', 'string', 'max:255'],
+            'company_name'    => ['sometimes', 'nullable', 'string', 'max:255'],
+            'email'           => [
+                'sometimes',
+                'required_without:phone',
+                'email',
+                'max:500',
+                new IUnique(
+                    table: 'prospects',
+                    extraConditions: $extraConditions
+                ),
+
+            ],
+            'phone'           => [
+                'sometimes',
+                'required_without:email',
+                'nullable',
+                'phone:AUTO',
+                new IUnique(
+                    table: 'prospects',
+                    extraConditions: $extraConditions
+                ),
+            ],
+            'contact_website' => ['sometimes', 'nullable', 'iunique:prospects', 'active_url'],
         ];
     }
 
-    public function asController(Prospect $prospect, ActionRequest $request): Prospect
+
+    public function inShop(Shop $shop, Prospect $prospect, ActionRequest $request): Prospect
     {
         $request->validate();
 
-        return $this->handle($prospect, $request->validated());
+        return $this->handle($shop, $prospect, $request->validated());
     }
 
-    public function action(Prospect $prospect, $objectData): Prospect
+    public function action(Shop $scope, Prospect $prospect, $objectData): Prospect
     {
         $this->asAction = true;
         $this->setRawAttributes($objectData);
         $validatedData = $this->validateAttributes();
 
-        return $this->handle($prospect, $validatedData);
+        return $this->handle($scope, $prospect, $validatedData);
     }
 
     public function jsonResponse(Prospect $prospect): ProspectResource

@@ -8,13 +8,12 @@
 namespace App\Stubs\Migrations;
 
 use App\Enums\CRM\Customer\CustomerStateEnum;
-use App\Enums\CRM\Prospect\ProspectStateEnum;
-use App\Enums\Miscellaneous\GenderEnum;
 use App\Enums\OMS\Order\OrderStateEnum;
 use Illuminate\Database\Schema\Blueprint;
 
 trait HasCRMStats
 {
+    use HasProspectStats;
     public function crmStats(Blueprint $table): Blueprint
     {
 
@@ -24,16 +23,6 @@ trait HasCRMStats
             $table->unsignedInteger("number_customers_state_{$customerState->snake()}")->default(0);
         }
 
-
-        $table->unsignedInteger('number_prospects')->default(0);
-
-        foreach (ProspectStateEnum::cases() as $prospectState) {
-            $table->unsignedInteger("number_prospects_state_{$prospectState->snake()}")->default(0);
-        }
-
-        foreach (GenderEnum::cases() as $case) {
-            $table->unsignedSmallInteger('number_prospects_gender_'.$case->snake())->default(0);
-        }
 
         $table->unsignedInteger('number_orders')->default(0);
         foreach (OrderStateEnum::cases() as $orderState) {

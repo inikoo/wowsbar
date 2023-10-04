@@ -24,8 +24,8 @@ class OrganisationHydrateUsers
         $numberUserTypeGuest     = OrganisationUser::where('parent_type', class_basename(Guest::class))->count();
 
         $stats = [
-            'number_organisation_users' => $numberUsers,
-            'number_organisation_users_status_active' => $numberActiveUsers,
+            'number_organisation_users'                 => $numberUsers,
+            'number_organisation_users_status_active'   => $numberActiveUsers,
             'number_organisation_users_status_inactive' => $numberUsers - $numberActiveUsers,
             'number_organisation_users_type_employee'   => $numberUserTypeEmployees,
             'number_organisation_users_type_guest'      => $numberUserTypeGuest

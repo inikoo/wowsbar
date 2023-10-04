@@ -57,8 +57,6 @@ class EditPortfolioWebsite extends InertiaAction
                             'title' => __('website'),
                             'icon'  => 'fal fa-globe'
                         ],
-
-
                         'iconRight'    =>
                             [
                                 'icon'  => ['fal', 'fa-edit'],
@@ -91,8 +89,11 @@ class EditPortfolioWebsite extends InertiaAction
                                     ],
                                     'url' => [
                                         'type'      => 'inputWithAddOn',
+                                        'leftAddOn' => [
+                                            'label' => 'https://'
+                                        ],
                                         'label'     => __('url'),
-                                        'value'     => $portfolioWebsite->url,
+                                        'value'=>preg_replace('/^https?:\/\//', '', $portfolioWebsite->url),
                                         'required'  => true,
                                     ],
                                 ]

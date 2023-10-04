@@ -14,6 +14,7 @@ use Illuminate\Support\Str;
 trait HasPortfolioWebsitesStats
 {
     use HasBannerStats;
+    use HasProspectStats;
 
     public function portfolioWebsiteStats(Blueprint $table): Blueprint
     {
@@ -21,6 +22,8 @@ trait HasPortfolioWebsitesStats
 
         $table->unsignedSmallInteger('number_banners_no_website')->default(0);
         $table=$this->bannerStats($table);
+        $table=$this->prospectsStats($table);
+
         $table->unsignedSmallInteger('number_snapshots')->default(0);
         foreach (SnapshotStateEnum::cases() as $state) {
             $table->unsignedSmallInteger('number_snapshots_state_'.Str::replace('-', '_', $state->snake()))->default(0);

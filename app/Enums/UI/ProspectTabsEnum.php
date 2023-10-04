@@ -16,30 +16,32 @@ enum ProspectTabsEnum: string
     use HasTabs;
 
 
-    case ITEMS                 = 'items';
-    case PAYMENTS              = 'payments';
-    case PROPERTIES_OPERATIONS = 'properties_operations';
+    case SHOWCASE = 'showcase';
 
-    case CHANGELOG             = 'changelog';
+    case DATA = 'data';
 
+    case HISTORY = 'history';
 
 
     public function blueprint(): array
     {
         return match ($this) {
-            ProspectTabsEnum::ITEMS => [
-                'title' => __('data'),
+            ProspectTabsEnum::SHOWCASE => [
+                'title' => __('prospect'),
+                'icon'  => 'fas fa-info-circle',
+            ],
+
+            ProspectTabsEnum::HISTORY => [
+                'title' => __('history'),
+                'icon'  => 'fal fa-clock',
+                'type'  => 'icon',
+                'align' => 'right',
+            ],
+            ProspectTabsEnum::DATA => [
+                'title' => __('database'),
                 'icon'  => 'fal fa-database',
-            ],
-            ProspectTabsEnum::PAYMENTS => [
-                'title' => __('subcategories'),
-            ],
-            ProspectTabsEnum::PROPERTIES_OPERATIONS => [
-                'title' => __('sales'),
-                'icon'  => 'fal fa-money-bill-wave',
-            ],ProspectTabsEnum::CHANGELOG => [
-                'title' => __('customers'),
-                'icon'  => 'fal fa-user',
+                'type'  => 'icon',
+                'align' => 'right',
             ],
         };
     }

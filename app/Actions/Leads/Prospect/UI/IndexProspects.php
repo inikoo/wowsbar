@@ -122,7 +122,7 @@ class IndexProspects extends InertiaAction
             [
                 'breadcrumbs'  => $this->getBreadcrumbs(
                     $request->route()->getName(),
-                    $request->route()->parameters(),
+                    $request->route()->originalParameters(),
                 ),
                 'title'        => __('prospects'),
                 'pageHead'     => [
@@ -213,15 +213,15 @@ class IndexProspects extends InertiaAction
                     ]
                 ),
             ),
-            'org.crm.shops.show.prospects.index' =>
+            'org.crm.shop.prospects.index' =>
             array_merge(
                 (new ShowCRMDashboard())->getBreadcrumbs(
-                    'crm.shops.show.dashboard',
+                    'crm.shop.dashboard',
                     $routeParameters
                 ),
                 $headCrumb(
                     [
-                        'name'       => 'org.crm.shops.show.prospects.index',
+                        'name'       => 'org.crm.shop.prospects.index',
                         'parameters' => $routeParameters
                     ]
                 )

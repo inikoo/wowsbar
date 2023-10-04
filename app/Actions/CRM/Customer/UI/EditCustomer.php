@@ -52,18 +52,34 @@ class EditCustomer extends InertiaAction
                     $request->route()->getName(),
                     $request->route()->originalParameters()
                 ),
-                'navigation'                            => [
+                'navigation'  => [
                     'previous' => $this->getPrevious($customer, $request),
                     'next'     => $this->getNext($customer, $request),
                 ],
                 'pageHead'    => [
-                    'title'    => $customer->name,
-                    'exitEdit' => [
-                        'route' => [
-                            'name'       => preg_replace('/edit$/', 'show', $request->route()->getName()),
-                            'parameters' => array_values($request->route()->originalParameters()),
-                        ]
+                    'title'     => $customer->name,
+                    'icon'      => [
+                        'title' => __('customer'),
+                        'icon'  => 'fal fa-user'
                     ],
+                    'iconRight' =>
+                        [
+                            'icon'  => ['fal', 'fa-edit'],
+                            'title' => __("Editing customer")
+                        ],
+
+                    'actions' => [
+                        [
+                            'type'  => 'button',
+                            'style' => 'exit',
+                            'label' => __('Exit edit'),
+                            'route' => [
+                                'name'       => preg_replace('/edit$/', 'show', $request->route()->getName()),
+                                'parameters' => array_values($request->route()->originalParameters())
+                            ]
+                        ]
+                    ]
+
                 ],
 
                 'formData' => [
@@ -117,7 +133,6 @@ class EditCustomer extends InertiaAction
 
     public function getPrevious(Customer $customer, ActionRequest $request): ?array
     {
-
         $previous = Customer::where('slug', '<', $customer->slug)->when(true, function ($query) use ($customer, $request) {
             if ($request->route()->getName() == 'org.shops.show.customers.show') {
                 $query->where('customers.shop_id', $customer->shop_id);
@@ -125,7 +140,6 @@ class EditCustomer extends InertiaAction
         })->orderBy('slug', 'desc')->first();
 
         return $this->getNavigation($previous, $request->route()->getName());
-
     }
 
     public function getNext(Customer $customer, ActionRequest $request): ?array
@@ -141,16 +155,16 @@ class EditCustomer extends InertiaAction
 
     private function getNavigation(?Customer $customer, string $routeName): ?array
     {
-        if(!$customer) {
+        if (!$customer) {
             return null;
         }
 
         return match ($routeName) {
             'org.crm.shop.customers.edit' => [
-                'label'=> $customer->name,
-                'route'=> [
-                    'name'      => $routeName,
-                    'parameters'=> $this->originalParameters
+                'label' => $customer->name,
+                'route' => [
+                    'name'       => $routeName,
+                    'parameters' => $this->originalParameters
                 ]
             ]
         };

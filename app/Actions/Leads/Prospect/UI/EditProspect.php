@@ -16,8 +16,13 @@ use Lorisleiva\Actions\ActionRequest;
 
 class EditProspect extends InertiaAction
 {
-    public function handle(Prospect $prospect): Prospect
+
+    private Shop $scope;
+
+    public function handle(Shop $scope, Prospect $prospect): Prospect
     {
+        $this->scope = $scope;
+
         return $prospect;
     }
 
@@ -32,11 +37,13 @@ class EditProspect extends InertiaAction
     {
         $this->initialisation($request);
 
-        return $this->handle($prospect);
+        return $this->handle($shop, $prospect);
     }
 
     public function htmlResponse(Prospect $prospect, ActionRequest $request): Response
     {
+        class_basename($this->scope);
+
         return Inertia::render(
             'EditModel',
             [
@@ -45,18 +52,33 @@ class EditProspect extends InertiaAction
                     $request->route()->getName(),
                     $request->route()->originalParameters()
                 ),
-                'navigation'                            => [
+                'navigation'  => [
                     'previous' => $this->getPrevious($prospect, $request),
                     'next'     => $this->getNext($prospect, $request),
                 ],
                 'pageHead'    => [
                     'title'    => $prospect->name,
-                    'exitEdit' => [
-                        'route' => [
-                            'name'       => preg_replace('/edit$/', 'show', $request->route()->getName()),
-                            'parameters' => array_values($request->route()->originalParameters()),
+                    'icon'    => [
+                        'title' => __('prospect'),
+                        'icon'  => 'fal fa-transporter'
+                    ],
+                    'iconRight'    =>
+                        [
+                            'icon'  => ['fal', 'fa-edit'],
+                            'title' => __("Editing prospect")
+                        ],
+                    'actions'   => [
+                        [
+                            'type'  => 'button',
+                            'style' => 'exit',
+                            'label' => __('Exit edit'),
+                            'route' => [
+                                'name'       => preg_replace('/edit$/', 'show', $request->route()->getName()),
+                                'parameters' => array_values($request->route()->originalParameters())
+                            ]
                         ]
                     ],
+
                 ],
 
                 'formData' => [
@@ -64,29 +86,43 @@ class EditProspect extends InertiaAction
                         [
                             'title'  => __('contact information'),
                             'fields' => [
-                                'contact_name' => [
+                                'contact_name'    => [
                                     'type'  => 'input',
                                     'label' => __('contact name'),
                                     'value' => $prospect->contact_name
                                 ],
-                                'company_name' => [
+                                'company_name'    => [
                                     'type'  => 'input',
                                     'label' => __('company'),
                                     'value' => $prospect->company_name
                                 ],
-                                'phone'        => [
+                                'email'           => [
+                                    'type'  => 'input',
+                                    'label' => __('email'),
+                                    'value' => $prospect->email
+                                ],
+                                'phone'           => [
                                     'type'  => 'phone',
                                     'label' => __('phone'),
                                     'value' => $prospect->phone
+                                ],
+                                'contact_website' => [
+                                    'type'      => 'inputWithAddOn',
+                                    'label'     => __('website'),
+                                    'leftAddOn' => [
+                                        'label' => 'https://'
+                                    ],
+                                    'value'     => preg_replace('/^https?:\/\//', '', $prospect->contact_website)
                                 ],
                             ]
                         ]
                     ],
                     'args'      => [
-                        'updateRoute' => [
-                            'name'       => 'org.models.customer.update',
-                            'parameters' => $prospect->slug
-                        ],
+                        'updateRoute' =>
+                            [
+                                'name'       => 'org.models.shop.prospect.update',
+                                'parameters' => [$this->scope->id, $prospect->id]
+                            ]
                     ]
 
                 ],
@@ -107,7 +143,6 @@ class EditProspect extends InertiaAction
 
     public function getPrevious(Prospect $prospect, ActionRequest $request): ?array
     {
-
         $previous = Prospect::where('slug', '<', $prospect->slug)->when(true, function ($query) use ($prospect, $request) {
             if ($request->route()->getName() == 'org.shops.show.customers.show') {
                 $query->where('customers.shop_id', $prospect->shop_id);
@@ -115,7 +150,6 @@ class EditProspect extends InertiaAction
         })->orderBy('slug', 'desc')->first();
 
         return $this->getNavigation($previous, $request->route()->getName());
-
     }
 
     public function getNext(Prospect $prospect, ActionRequest $request): ?array
@@ -131,16 +165,16 @@ class EditProspect extends InertiaAction
 
     private function getNavigation(?Prospect $prospect, string $routeName): ?array
     {
-        if(!$prospect) {
+        if (!$prospect) {
             return null;
         }
 
         return match ($routeName) {
             'org.crm.shop.prospects.edit' => [
-                'label'=> $prospect->name,
-                'route'=> [
-                    'name'      => $routeName,
-                    'parameters'=> $this->originalParameters
+                'label' => $prospect->name,
+                'route' => [
+                    'name'       => $routeName,
+                    'parameters' => $this->originalParameters
                 ]
             ]
         };
