@@ -23,8 +23,8 @@ use App\Actions\Organisation\OrganisationUser\UI\IndexOrganisationUsers;
 use App\Actions\Organisation\OrganisationUser\UI\ShowOrganisationUser;
 use App\Actions\UI\Organisation\SysAdmin\ShowSysAdminDashboard;
 use Illuminate\Support\Facades\Route;
-
-Route::get('/', ShowSysAdminDashboard::class)->name('dashboard');
+Route::get('/', function () {return redirect('/sysadmin/dashboard');});
+Route::get('/dashboard', ShowSysAdminDashboard::class)->name('dashboard');
 Route::get('/system-settings', EditOrganisation::class)->name('organisation.edit');
 
 Route::prefix('users')->name('users.')->group(function () {

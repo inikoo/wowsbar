@@ -7,7 +7,7 @@
 <script setup lang="ts">
 import { Head } from '@inertiajs/vue3';
 import {library} from '@fortawesome/fontawesome-svg-core';
-import { faUserSlash,faUser, faPaperclip, faCameraRetro} from "@/../private/pro-light-svg-icons";
+import { faUserSlash,faUser, faPaperclip, faCameraRetro,faIdCard} from "@/../private/pro-light-svg-icons";
 import { router } from '@inertiajs/vue3'
 import { capitalize } from "@/Composables/capitalize"
 
@@ -26,7 +26,7 @@ library.add(
     faUserSlash,
     faUser,
     faPaperclip,
-    faCameraRetro
+    faCameraRetro,faIdCard
 )
 
 const createEmployeeUser = () =>{
