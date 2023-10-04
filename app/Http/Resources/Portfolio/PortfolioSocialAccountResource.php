@@ -21,6 +21,7 @@ class PortfolioSocialAccountResource extends JsonResource
         $socialAccount = $this;
 
         return [
+            'slug'       => $socialAccount->slug,
             'username'       => $socialAccount->username,
             'provider'  => $socialAccount->provider,
             'url'           => $socialAccount->url,

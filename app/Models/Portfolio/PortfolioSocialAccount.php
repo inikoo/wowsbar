@@ -68,8 +68,12 @@ class PortfolioSocialAccount extends Model implements Auditable
         return SlugOptions::create()
             ->generateSlugsFrom('username')
             ->saveSlugsTo('slug')
-            ->slugsShouldBeNoLongerThan(12)
-            ->doNotGenerateSlugsOnCreate();
+            ->slugsShouldBeNoLongerThan(12);
+    }
+
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
     }
 
     public function shop(): BelongsTo
