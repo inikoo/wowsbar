@@ -49,15 +49,9 @@ const getComponent = (componentName: string) => {
 
 const current = ref(0);
 
-defineExpose({
-    current,
-});
-
-
-const setCurrent=(key)=>{
-    if(props.blueprint[key].title == 'delete') props.remove(props.currentComponentBeenEdited)
-    else current.value = key
-}
+// defineExpose({
+//     current,
+// });
 
 </script>
 
@@ -68,7 +62,7 @@ const setCurrent=(key)=>{
         <aside class="py-0 lg:col-span-3 lg:h-full">
             <nav role="navigation" class="space-y-1">
                 <ul class="flex sm:block">
-                    <li v-for="(item, key) in blueprint" @click="setCurrent(key)"
+                    <li v-for="(item, key) in blueprint" @click="current = key"
                         :class="[
                             'group cursor-pointer px-6 sm:px-3 py-2 flex items-center justify-center sm:justify-start text-sm font-medium',
                             key == current
