@@ -124,7 +124,7 @@ class IndexPortfolioSocialAccount extends InertiaAction
                             'style' => 'create',
                             'label' => __('Create social account'),
                             'route' => [
-                                'name'       => 'customer.portfolio.websites.create',
+                                'name'       => 'customer.portfolio.social.account.create',
                                 'parameters' => $request->route()->originalParameters()
                             ],
 

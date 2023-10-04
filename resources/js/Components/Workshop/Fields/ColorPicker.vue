@@ -20,7 +20,7 @@ const props = withDefaults(defineProps<{
     };
     data?: Object;
     color?: String;
-    colorSuggestions: Boolean
+    colorSuggestions?: Boolean
     stylePanel?: any
     mode?: String
 }>(), {

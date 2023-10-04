@@ -32,13 +32,13 @@ Route::get('/websites', ['icon' => 'globe', 'label' => 'websites'])->uses(IndexB
 Route::prefix('gallery')->name('gallery')->group(function () {
     Route::get('/', ShowGallery::class);
     Route::prefix('uploaded-images')->name('.uploaded-images')->group(function () {
-        Route::get('', IndexUploadedImages::class);
+        Route::get('', IndexUploadedImages::class)->name('.index');
         Route::get('{media}', ShowUploadedImage::class)->name('.show');
         Route::get('{media}/edit', EditUploadedImage::class)->name('.edit');
         Route::get('{media}/delete', DeleteUploadedImage::class)->name('.remove');
     });
     Route::prefix('stock-images')->name('.stock-images')->group(function () {
-        Route::get('', IndexStockImages::class);
+        Route::get('', IndexStockImages::class)->name('.index');
         Route::get('{media}', ShowStockImage::class)->name('.show');
     });
 

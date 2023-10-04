@@ -42,13 +42,13 @@ class StoreUser
         data_set($modelData, 'ulid', Str::ulid());
         data_set($modelData, 'website_id', $website->id);
         /** @var User $user */
-        $user = User::create(Arr::except($modelData, ['is_root','roles']));
+        $user = User::create(Arr::except($modelData, ['is_root', 'roles']));
 
         $customerUser = StoreCustomerUser::run($customer, $user, Arr::only($modelData, ['is_root']));
 
-        foreach(Arr::get($modelData,'roles') as $roleName){
+        foreach (Arr::get($modelData, 'roles', []) as $roleName) {
             $role = Role::where('guard_name', 'customer')->where('name', $roleName)->first();
-            if($role){
+            if ($role) {
                 $customerUser->assignRole($role);
             }
         }
@@ -94,7 +94,7 @@ class StoreUser
             'contact_name' => ['required', 'string', 'max:255'],
             'email'        => 'required|iunique:users|email|max:255',
             'is_root'      => ['sometimes', 'required', 'boolean'],
-            'roles'        => ['required', 'array']
+            'roles'        => ['sometimes', 'required', 'array']
         ];
     }
 

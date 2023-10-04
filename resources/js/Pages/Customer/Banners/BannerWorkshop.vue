@@ -22,7 +22,7 @@ import { cloneDeep, set as setLodash } from "lodash"
 import { set, onValue, get } from "firebase/database"
 import { getDbRef } from '@/Composables/firebase'
 import Modal from '@/Components/Utils/Modal.vue'
-import { useBannerHash } from "@/Composables/useBannerHash"
+// import { useBannerHash } from "@/Composables/useBannerHash.ts"
 import { usePage } from "@inertiajs/vue3"
 
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
@@ -48,7 +48,6 @@ interface Action {
 const props = defineProps<{
     title: string
     pageHead: any
-    firebase: Boolean,
     banner: {
         slug: string,
         ulid: string,
@@ -96,6 +95,10 @@ const props = defineProps<{
     autoSaveRoute : {
         name: string
         parameters?: Array<string>
+    },
+    publishRoute : {
+        name: string
+        parameters?: Array<string>
     }
 }>()
 
@@ -104,9 +107,8 @@ const user = ref(usePage().props.auth.user)
 const isModalOpen = ref(false)
 const comment = ref('')
 const loadingState = ref(false)
-const routeSave = ref()
 const isSetData = ref(false)
-const routeExit = ref()
+const routeExit =  props.pageHead.actions.find((item)=> item.style == "exit")
 const dbPath = 'customers' + '/' + useLayoutStore().user.customer.ulid + '/banner_workshop/' + props.banner.slug
 const data = reactive(cloneDeep(props.bannerLayout))
 let timeoutId: any
@@ -121,11 +123,11 @@ const sendDataToServer = async () => {
 
     const form = useForm(formValues);
     form.patch(
-        route(routeSave.value['route']['name'], routeSave.value['route']['parameters']), {
+        route(props.publishRoute['name'], props.publishRoute['parameters']), {
         onSuccess: async (res) => {
-            await set(getDbRef(dbPath), { publishedHash: data.hash })
+            // await set(getDbRef(dbPath), { publishedHash: data.hash })
             isModalOpen.value = false
-            router.visit(route(routeExit.value['route']['name'], routeExit.value['route']['parameters']))
+            router.visit(route(routeExit['route']['name'], routeExit['route']['parameters']))
             notify({
                 title: "success Update",
                 type: "success",
@@ -199,8 +201,7 @@ const updateData = async () => {
     try {
         handleKeyDown()
         if (data && isSetData.value === false) {
-            // console.log("Update setLodash")
-            setLodash(data, 'hash', useBannerHash(data)) // Generate new hash based on data page
+            // setLodash(data,'hash',useBannerHash(data)) // Generate new hash based on data page
             const snapshot = await get(getDbRef(dbPath))
             if (snapshot.exists()) {
                 const firebaseData = snapshot.val()
@@ -239,19 +240,9 @@ const autoSave = () => {
 watch(data, updateData, { deep: true })
 
 
-const saveRouteValue = (action: Action) => {
-    if (action.style == "exit") {
-        routeExit.value = action
-    } if (action.style == "save") {
-        routeSave.value = action
-    }
-}
-
-const routeButton=(action)=>{
-    if (action.style == "save") {
-        if(props.banner.state !== 'live') sendDataToServer()
-        else isModalOpen.value = true
-    }else router.visit(route(routeExit.value['route']['name'], routeExit.value['route']['parameters']))
+const validationState=()=>{
+    if(props.banner.state !== 'live') sendDataToServer()
+    else isModalOpen.value = true
 }
 
 const intervalAutoSave = ref(null)
@@ -266,7 +257,6 @@ const  startInterval=()=>{
       }, 600000);
     }
 
-
 const stopInterval=()=>{
       clearInterval(intervalAutoSave.value);
     }
@@ -277,22 +267,11 @@ const stopInterval=()=>{
 <template layout="CustomerApp">
     <Head :title="capitalize(title)" />
     <PageHeading :data="pageHead"> 
-        <template #button="{ dataPageHead: head }">
+        <template #other="{ dataPageHead: head }">
             <div class="flex items-center gap-2">
-                <span v-for="action in head.data.actions">
-                    <Button size="xs" :style="action.style" @click="routeButton(action)"
-                        :icon="action.icon" :label="action.label"
-                        class="capitalize inline-flex items-center rounded-md text-sm font-medium shadow-sm gap-x-2">
-                        <div v-if="action.icon && action.icon == 'fad fa-save'">
-                            <FontAwesomeIcon aria-hidden="true"
-                                :icon="['fad', 'save']"
-                                style="--fa-primary-color: #f3f3f3; --fa-secondary-color: #ff6600; --fa-secondary-opacity: 1;"
-                                size="sm" :class="[action.iconClass]" />
-                            {{ action.label }}
-                        </div>
-                    </Button>
-                        {{ saveRouteValue(action) }}
-                </span>
+                <Button  label="Publish"  :icon="['far', 'rocket-launch']" @click="validationState()"
+                    class="capitalize inline-flex items-center rounded-md text-sm border-none font-medium shadow-sm focus:ring-transparent focus:ring-offset-transparent focus:ring-0">
+                </Button>
             </div>
         </template>
     </PageHeading>
