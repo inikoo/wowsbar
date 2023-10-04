@@ -39,6 +39,8 @@ class AppServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             Actions::registerCommands();
         }
+
+
         Relation::morphMap(
             [
                 'Organisation'     => 'App\Models\Organisation\Organisation',

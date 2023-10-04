@@ -24,7 +24,6 @@ class SetUserAvatar
 
     public function handle(User $user): ?User
     {
-        $seed = $user->id;
         try {
             /** @var Media $media */
             $media = $user->addMediaFromUrl("https://api.dicebear.com/7.x/identicon/svg?seed=".$user->slug)

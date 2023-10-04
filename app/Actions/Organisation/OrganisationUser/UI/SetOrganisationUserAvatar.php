@@ -17,12 +17,14 @@ class SetOrganisationUserAvatar
 {
     use AsAction;
 
-    public function handle(OrganisationUser $organisationUser): OrganisationUser
+    private Exception $exception;
+
+
+    public function handle(OrganisationUser $organisationUser): ?OrganisationUser
     {
         try {
-            $seed = 'org-'.$organisationUser->id;
             /** @var Media $media */
-            $media = $organisationUser->addMediaFromUrl("https://avatars.dicebear.com/api/identicon/$seed.svg")
+            $media = $organisationUser->addMediaFromUrl("https://api.dicebear.com/7.x/identicon/svg?seed=".'org-'.$organisationUser->username)
                 ->preservingOriginal()
                 ->usingName($organisationUser->username."-avatar")
                 ->usingFileName($organisationUser->username."-avatar.sgv")
@@ -31,9 +33,12 @@ class SetOrganisationUserAvatar
             $avatarID = $media->id;
 
             $organisationUser->update(['avatar_id' => $avatarID]);
-        } catch(Exception) {
-            //
+        } catch (Exception $e) {
+            $this->exception = $e;
+
+            return null;
         }
+
         return $organisationUser;
     }
 
@@ -42,15 +47,23 @@ class SetOrganisationUserAvatar
 
     public function asCommand(Command $command): int
     {
-
         $organisationUser = OrganisationUser::where('username', $command->argument('username'))->first();
         if (!$organisationUser) {
             $command->error('Organisation user not found');
+
             return 1;
-        } else {
-            $this->handle($organisationUser);
         }
+        $res = $this->handle($organisationUser);
+        if ($res) {
+            $command->line('Avatar set up');
+        } else {
+            $command->error($this->exception->getMessage());
+
+            return 1;
+        }
+
 
         return 0;
     }
+
 }

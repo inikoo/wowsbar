@@ -41,16 +41,16 @@ class CreatePortfolioSocialAccount extends InertiaAction
             'CreateModel',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(),
-                'title' => __('new social account'),
-                'pageHead' => [
-                    'title' => __('social account'),
+                'title'       => __('new social account'),
+                'pageHead'    => [
+                    'title'   => __('social account'),
                     'actions' => [
                         [
-                            'type' => 'button',
+                            'type'  => 'button',
                             'style' => 'cancel',
                             'label' => __('cancel'),
                             'route' => [
-                                'name' => preg_replace('/create$/', 'index', $request->route()->getName()),
+                                'name'       => preg_replace('/create$/', 'index', $request->route()->getName()),
                                 'parameters' => array_values($request->route()->originalParameters())
                             ],
                         ]
@@ -61,7 +61,7 @@ class CreatePortfolioSocialAccount extends InertiaAction
                 'formData' => [
                     'blueprint' => [
                         [
-                            'title' => __('Account'),
+                            'title'  => __('Account'),
                             'fields' => [
                                 'provider' => [
                                     'type'          => 'select',
@@ -72,16 +72,16 @@ class CreatePortfolioSocialAccount extends InertiaAction
                                     'mode'          => 'single'
                                 ],
                                 'username' => [
-                                    'type' => 'input',
-                                    'label' => __('username'),
+                                    'type'     => 'input',
+                                    'label'    => __('username'),
                                     'required' => true,
-                                    'value' => '',
+                                    'value'    => '',
                                 ],
                                 'url' => [
-                                    'type' => 'input',
-                                    'label' => __('url'),
+                                    'type'     => 'input',
+                                    'label'    => __('url'),
                                     'required' => true,
-                                    'value' => '',
+                                    'value'    => '',
                                 ]
                             ]
                         ],
@@ -105,7 +105,7 @@ class CreatePortfolioSocialAccount extends InertiaAction
             ),
             [
                 [
-                    'type' => 'creatingModel',
+                    'type'          => 'creatingModel',
                     'creatingModel' => [
                         'label' => __("creating social account"),
                     ]

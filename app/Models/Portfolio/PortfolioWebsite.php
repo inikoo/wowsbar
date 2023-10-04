@@ -28,7 +28,6 @@ use Spatie\Sluggable\HasSlug;
  * @property int $shop_id
  * @property int $customer_id
  * @property string $slug
- * @property string $code
  * @property string $url
  * @property string $name
  * @property array $data
@@ -49,7 +48,6 @@ use Spatie\Sluggable\HasSlug;
  * @method static Builder|PortfolioWebsite newQuery()
  * @method static Builder|PortfolioWebsite onlyTrashed()
  * @method static Builder|PortfolioWebsite query()
- * @method static Builder|PortfolioWebsite whereCode($value)
  * @method static Builder|PortfolioWebsite whereCreatedAt($value)
  * @method static Builder|PortfolioWebsite whereCustomerId($value)
  * @method static Builder|PortfolioWebsite whereData($value)

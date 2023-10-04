@@ -28,7 +28,7 @@ class ShowStockImage extends InertiaAction
 
         return
             (
-            $request->get('customerUser')->hasPermissionTo('portfolio.banners.view')
+                $request->get('customerUser')->hasPermissionTo('portfolio.banners.view')
             );
     }
 

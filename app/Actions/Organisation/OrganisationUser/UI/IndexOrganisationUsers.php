@@ -10,7 +10,7 @@ namespace App\Actions\Organisation\OrganisationUser\UI;
 use App\Actions\InertiaAction;
 use App\Actions\UI\Organisation\SysAdmin\ShowSysAdminDashboard;
 use App\Enums\UI\UsersTabsEnum;
-use App\Http\Resources\Auth\UserResource;
+use App\Http\Resources\Auth\OrganisationUserResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\Auth\OrganisationUser;
 use Closure;
@@ -27,26 +27,26 @@ class IndexOrganisationUsers extends InertiaAction
     protected function getElementGroups(): array
     {
         return
-             [
-                 'status' => [
-                     'label'    => __('Status'),
-                     'elements' => [
-                         'active'    =>
-                             [
-                                 __('Active'),
-                                 organisation()->stats->number_organisation_users_status_active
-                             ],
-                         'suspended' => [
-                             __('Suspended'),
-                             organisation()->stats->number_organisation_users_status_inactive
-                         ]
-                     ],
-                     'engine'   => function ($query, $elements) {
-                         $query->where('status', array_pop($elements) === 'active');
-                     }
+            [
+                'status' => [
+                    'label'    => __('Status'),
+                    'elements' => [
+                        'active'    =>
+                            [
+                                __('Active'),
+                                organisation()->stats->number_organisation_users_status_active
+                            ],
+                        'suspended' => [
+                            __('Suspended'),
+                            organisation()->stats->number_organisation_users_status_inactive
+                        ]
+                    ],
+                    'engine'   => function ($query, $elements) {
+                        $query->where('status', array_pop($elements) === 'active');
+                    }
 
-                 ]
-             ];
+                ]
+            ];
     }
 
 
@@ -78,7 +78,6 @@ class IndexOrganisationUsers extends InertiaAction
 
         return $queryBuilder
             ->defaultSort('username')
-            ->select(['username', 'email', 'contact_name', 'avatar_id'])
             ->allowedSorts(['username', 'email', 'contact_name'])
             ->allowedFilters([$globalSearch])
             ->withPaginator($prefix)
@@ -104,7 +103,6 @@ class IndexOrganisationUsers extends InertiaAction
 
 
             $table
-                ->withTitle(title: __('users'))
                 ->withGlobalSearch()
                 ->withModelOperations($modelOperations)
                 ->column(key: 'avatar', label: ['fal', 'fa-user-circle'])
@@ -112,7 +110,6 @@ class IndexOrganisationUsers extends InertiaAction
                 ->column(key: 'contact_name', label: __('name'), canBeHidden: false, sortable: true, searchable: true)
                 ->column(key: 'email', label: __('email'), canBeHidden: false, sortable: true, searchable: true)
                 ->column(key: 'roles', label: __('roles'), canBeHidden: false, sortable: true, searchable: true)
-                ->column(key: 'permissions', label: __('permissions'), canBeHidden: false, sortable: true, searchable: true)
                 ->defaultSort('username');
         };
     }
@@ -131,7 +128,7 @@ class IndexOrganisationUsers extends InertiaAction
 
     public function jsonResponse(LengthAwarePaginator $organisationUsers): AnonymousResourceCollection
     {
-        return UserResource::collection($organisationUsers);
+        return OrganisationUserResource::collection($organisationUsers);
     }
 
 
@@ -145,8 +142,8 @@ class IndexOrganisationUsers extends InertiaAction
                 ),
                 'title'       => __('users'),
                 'pageHead'    => [
-                    'title'  => __('users'),
-                    'actions'=> [
+                    'title'   => __('users'),
+                    'actions_old' => [
                         $this->canEdit ? [
                             'type'    => 'buttonGroup',
                             'buttons' => [
@@ -155,7 +152,7 @@ class IndexOrganisationUsers extends InertiaAction
                                     'icon'  => ['fal', 'fa-upload'],
                                     'label' => 'upload',
                                     'route' => [
-                                        'name'       => 'org.models.users.upload'
+                                        'name' => 'org.models.users.upload'
                                     ],
                                 ],
                                 [
@@ -169,6 +166,17 @@ class IndexOrganisationUsers extends InertiaAction
                                 ]
                             ]
                         ] : false
+                    ],
+                    'actions'   => [
+                        $this->canEdit ? [
+                            'type'  => 'button',
+                            'style' => 'create',
+                            'label' => __('create user'),
+                            'route' => [
+                                'name'       => preg_replace('/index$/', 'create', $request->route()->getName()),
+                                'parameters' => array_values($request->route()->originalParameters())
+                            ]
+                        ] : null
                     ]
                 ],
 
@@ -182,8 +190,8 @@ class IndexOrganisationUsers extends InertiaAction
                 ],
 
                 UsersTabsEnum::USERS->value => $this->tab == UsersTabsEnum::USERS->value ?
-                    fn () => UserResource::collection($organisationUsers)
-                    : Inertia::lazy(fn () => UserResource::collection($organisationUsers)),
+                    fn() => OrganisationUserResource::collection($organisationUsers)
+                    : Inertia::lazy(fn() => OrganisationUserResource::collection($organisationUsers)),
 
                 /*
                 UsersTabsEnum::USERS_REQUESTS->value => $this->tab == UsersTabsEnum::USERS_REQUESTS->value ?
@@ -196,9 +204,8 @@ class IndexOrganisationUsers extends InertiaAction
             $this->tableStructure(
                 prefix: 'users'
             )
-        )
-            //  ->table(IndexUserRequestLogs::make()->tableStructure())
-        ;
+        )//  ->table(IndexUserRequestLogs::make()->tableStructure())
+            ;
     }
 
     public function asController(ActionRequest $request): LengthAwarePaginator

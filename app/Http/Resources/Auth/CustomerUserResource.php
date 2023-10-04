@@ -29,8 +29,8 @@ class CustomerUserResource extends JsonResource
             'contact_name'       => $customerUser->user->contact_name,
             'status'             => $customerUser->is_root ? 'Account admin' : ($customerUser->status ? 'Active' : 'Suspended'),
             'roles'              => Arr::join($customerUser->getRoleNames()->toArray(), ', '),
-            'direct-permissions' => $customerUser->getDirectPermissions(),
-            'permissions'        => Arr::join($customerUser->getAllPermissions()->pluck('name')->toArray(), ', '),
+            //'direct-permissions' => $customerUser->getDirectPermissions(),
+            //'permissions'        => Arr::join($customerUser->getAllPermissions()->pluck('name')->toArray(), ', '),
 
         ];
     }

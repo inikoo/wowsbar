@@ -48,7 +48,11 @@ class ShowSysAdminDashboard
                         'stat' => organisation()->stats->number_organisation_users_status_active,
                         'href' => ['name'=>'org.sysadmin.users.index']
                     ],
-
+                    [
+                        'name' => __('guests'),
+                        'stat' => organisation()->stats->number_guests_status_active,
+                        'href' => ['name'=>'org.sysadmin.guests.index']
+                    ],
                 ]
 
             ]

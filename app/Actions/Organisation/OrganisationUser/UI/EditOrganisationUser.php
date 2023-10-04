@@ -13,24 +13,24 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
 
-class CreateOrganisationUser extends InertiaAction
+class EditOrganisationUser extends InertiaAction
 {
     public function handle(ActionRequest $request): Response
     {
         return Inertia::render(
-            'CreateModel',
+            'EditModel',
             [
                 'breadcrumbs' => $this->getBreadcrumbs($request->route()->getName()),
-                'title'       => __('new user'),
+                'title'       => __('edit user'),
                 'pageHead'    => [
-                    'title'        => __('new user'),
+                    'title'        => __('edit user'),
                     'actions'      => [
                         [
                             'type'  => 'button',
                             'style' => 'cancel',
                             'label' => __('cancel'),
                             'route' => [
-                                'name'       => 'org.sysadmin.users.index',
+                                'name'       => 'org.sysadmin.users.edit',
                                 'parameters' => array_values($request->route()->originalParameters())
                             ],
                         ]
@@ -39,7 +39,7 @@ class CreateOrganisationUser extends InertiaAction
                 'formData' => [
                     'blueprint' => [
                         [
-                            'title'  => __('create user'),
+                            'title'  => __('edit user'),
                             'fields' => [
 
                                 'username' => [
@@ -66,7 +66,8 @@ class CreateOrganisationUser extends InertiaAction
                         ]
                     ],
                     'route'      => [
-                        'name'       => 'models.user.store',
+                        'name'       => 'models.user.update',
+                        'parameters' => [$this->originalParameters]
                     ]
                 ],
 
@@ -92,13 +93,13 @@ class CreateOrganisationUser extends InertiaAction
     {
         return array_merge(
             IndexCustomerUsers::make()->getBreadcrumbs(
-                routeName: preg_replace('/create$/', 'index', $routeName),
+                routeName: preg_replace('/edit$/', 'index', $routeName),
             ),
             [
                 [
-                    'type'          => 'creatingModel',
+                    'type'          => 'editingModel',
                     'creatingModel' => [
-                        'label' => __('creating user'),
+                        'label' => __('editing user'),
                     ]
                 ]
             ]

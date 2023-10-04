@@ -19,6 +19,7 @@ use App\Actions\Portfolio\Banner\UploadImagesToBanner;
 use App\Actions\Portfolio\Gallery\UpdateUploadedImage;
 use App\Actions\Portfolio\Gallery\UploadImagesToGallery;
 use App\Actions\Portfolio\PortfolioSocialAccount\StorePortfolioSocialAccount;
+use App\Actions\Portfolio\PortfolioSocialAccount\UpdatePortfolioSocialAccount;
 use App\Actions\Portfolio\PortfolioWebsite\DeletePortfolioWebsite;
 use App\Actions\Portfolio\PortfolioWebsite\StorePortfolioWebsite;
 use App\Actions\Portfolio\PortfolioWebsite\UpdatePortfolioWebsite;
@@ -26,6 +27,7 @@ use App\Actions\Portfolio\PortfolioWebsite\ImportPortfolioWebsite;
 use App\Actions\UI\Customer\Profile\UpdateProfile;
 
 Route::post('/portfolio-social-account', StorePortfolioSocialAccount::class)->name('portfolio-social-account.store');
+Route::patch('/portfolio-social-account/{portfolioSocialAccount}', UpdatePortfolioSocialAccount::class)->name('portfolio-social-account.update');
 
 Route::post('/portfolio-website', StorePortfolioWebsite::class)->name('portfolio-website.store');
 Route::patch('/portfolio-website/{portfolioWebsite:id}', UpdatePortfolioWebsite::class)->name('portfolio-website.update');

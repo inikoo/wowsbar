@@ -14,7 +14,7 @@ use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
-class ExportGuests
+class ExportGuest
 {
     use AsAction;
     use WithAttributes;

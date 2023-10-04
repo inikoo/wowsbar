@@ -29,7 +29,6 @@ use Spatie\Sluggable\HasSlug;
  * @property int $shop_id
  * @property int $customer_id
  * @property string $slug
- * @property string $code
  * @property string $url
  * @property string $name
  * @property array $data
@@ -48,7 +47,6 @@ use Spatie\Sluggable\HasSlug;
  * @method static Builder|CustomerWebsite newQuery()
  * @method static Builder|CustomerWebsite onlyTrashed()
  * @method static Builder|CustomerWebsite query()
- * @method static Builder|CustomerWebsite whereCode($value)
  * @method static Builder|CustomerWebsite whereCreatedAt($value)
  * @method static Builder|CustomerWebsite whereCustomerId($value)
  * @method static Builder|CustomerWebsite whereData($value)
