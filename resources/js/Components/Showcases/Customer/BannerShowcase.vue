@@ -5,7 +5,7 @@
   -->
 
 <script setup lang="ts">
-import { computed, onMounted } from 'vue'
+import { onMounted } from 'vue'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import Input from '@/Components/Forms/Fields/Input.vue'
 import Slider from "@/Components/Slider/Slider.vue"

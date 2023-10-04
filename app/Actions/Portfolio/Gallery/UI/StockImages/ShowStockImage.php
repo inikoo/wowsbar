@@ -1,21 +1,21 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Mon, 18 Sep 2023 18:42:14 Malaysia Time, Pantai Lembeng, Bali, Indonesia
+ * Created: Wed, 04 Oct 2023 08:09:05 Malaysia Time, Kuala Lumpur, Malaysia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Portfolio\Gallery\UI\UploadedImages;
+namespace App\Actions\Portfolio\Gallery\UI\StockImages;
 
 use App\Actions\InertiaAction;
 use App\Actions\Portfolio\Gallery\UI\ShowGallery;
-use App\Enums\UI\Customer\UploadedImageTabsEnum;
+use App\Enums\UI\Customer\StockImageTabsEnum;
 use App\Models\Media\Media;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
 
-class ShowUploadedImage extends InertiaAction
+class ShowStockImage extends InertiaAction
 {
     public function handle(Media $media): Media
     {
@@ -28,14 +28,13 @@ class ShowUploadedImage extends InertiaAction
 
         return
             (
-                $request->user()->tokenCan('root') or
-                $request->get('customerUser')->hasPermissionTo('portfolio.banners.view')
+            $request->get('customerUser')->hasPermissionTo('portfolio.banners.view')
             );
     }
 
     public function asController(Media $media, ActionRequest $request): Media
     {
-        $this->initialisation($request)->withTab(UploadedImageTabsEnum::values());
+        $this->initialisation($request)->withTab(StockImageTabsEnum::values());
 
         return $this->handle($media);
     }
@@ -44,42 +43,24 @@ class ShowUploadedImage extends InertiaAction
     public function htmlResponse(Media $media, ActionRequest $request): Response
     {
         return Inertia::render(
-            'Banners/UploadedImage',
+            'Banners/StockImage',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->getName(),
                     $request->route()->originalParameters()
                 ),
+                'title'       => __('stock image'),
+                'pageHead'    => [
+                    'title' => __($media->name),
+                    'icon'  => [
+                        'title' => __('image'),
+                        'icon'  => 'fal fa-image-polaroid'
+                    ],
+
+                ],
                 'tabs'        => [
                     'current'    => $this->tab,
                     'navigation' => [],
-                ],
-                'title'       => __('image'),
-                'pageHead'    => [
-                    'title'   => __($media->name),
-                    'icon'    => [
-                        'title' => __('image'),
-                        'icon'  => 'fal fa-cloud-upload'
-                    ],
-                    'actions' => [
-                        [
-                            'type'  => 'button',
-                            'style' => 'edit',
-                            'label' => __('edit'),
-                            'route' => [
-                                'name'       => preg_replace('/show$/', 'edit', $request->route()->getName()),
-                                'parameters' => [$media->slug]
-                            ]
-                        ],
-                        [
-                            'type'  => 'button',
-                            'style' => 'delete',
-                            'route' => [
-                                'name'       => 'customer.banners.gallery.uploaded-images.remove',
-                                'parameters' => [$media->slug]
-                            ]
-                        ]
-                    ],
                 ],
             ]
         );
@@ -100,7 +81,7 @@ class ShowUploadedImage extends InertiaAction
         };
 
         return match ($routeName) {
-            'customer.banners.gallery.uploaded-images.show' =>
+            'customer.banners.gallery.stock-images.show' =>
             array_merge(
                 ShowGallery::make()->getBreadcrumbs(
                     'customer.banners.gallery',
@@ -109,7 +90,7 @@ class ShowUploadedImage extends InertiaAction
                 $headCrumb(
                     Media::firstWhere('slug', $routeParameters['media']),
                     [
-                        'name'       => 'customer.banners.gallery.uploaded-images.show',
+                        'name'       => 'customer.banners.gallery.stock-images.show',
                         'parameters' => $routeParameters
                     ]
                 ),

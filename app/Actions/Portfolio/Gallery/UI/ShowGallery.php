@@ -8,6 +8,7 @@
 namespace App\Actions\Portfolio\Gallery\UI;
 
 use App\Actions\InertiaAction;
+use App\Actions\Portfolio\Gallery\UI\StockImages\IndexStockImages;
 use App\Actions\Portfolio\Gallery\UI\UploadedImages\IndexUploadedImages;
 use App\Actions\UI\Customer\Banners\ShowBannersDashboard;
 use App\Enums\UI\Customer\GalleryTabsEnum;
