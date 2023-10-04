@@ -30,7 +30,7 @@ class CreateOrganisationUser extends InertiaAction
                             'style' => 'cancel',
                             'label' => __('cancel'),
                             'route' => [
-                                'name'       => 'sysadmin.users.index',
+                                'name'       => 'org.sysadmin.users.index',
                                 'parameters' => array_values($request->route()->originalParameters())
                             ],
                         ]

@@ -7,7 +7,6 @@
 
 namespace App\Http\Resources\Portfolio;
 
-use App\Models\Portfolio\PortfolioWebsite;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
@@ -21,10 +20,10 @@ class PortfolioSocialAccountResource extends JsonResource
         $socialAccount = $this;
 
         return [
-            'username'       => $socialAccount->username,
-            'provider'  => $socialAccount->provider,
-            'url'           => $socialAccount->url,
-            'number_posts' => $socialAccount->number_posts,
+            'username'         => $socialAccount->username,
+            'provider'         => $socialAccount->provider,
+            'url'              => $socialAccount->url,
+            'number_posts'     => $socialAccount->number_posts,
             'number_followers' => $socialAccount->number_followers
         ];
     }

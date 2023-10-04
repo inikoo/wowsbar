@@ -50,9 +50,11 @@ class StoreOrganisationUser
     public function rules(): array
     {
         return [
-            'username' => ['required', new AlphaDashDot(), 'unique:org_users,username', Rule::notIn(['export', 'create'])],
-            'password' => ['required', app()->isLocal() || app()->environment('testing') ? null : Password::min(8)->uncompromised()],
-            'email'    => ['sometimes', 'required', 'email', 'unique:org_users,email']
+            'username'     => ['required', new AlphaDashDot(), 'unique:organisation_users,username', Rule::notIn(['export', 'create'])],
+            'password'     => ['required', app()->isLocal() || app()->environment('testing') ? null : Password::min(8)->uncompromised()],
+            'email'        => ['sometimes', 'required', 'email', 'unique:organisation_users,email'],
+            'contact_name' => ['required', 'string', 'max:255'],
+
         ];
     }
 

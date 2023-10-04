@@ -34,6 +34,9 @@ return new class () extends Migration {
                 $table->unsignedSmallInteger('number_organisation_users_type_'.$userType->snake())->default(0);
             }
 
+
+
+
             $table->unsignedSmallInteger('number_images')->default(0);
             $table->unsignedBigInteger('filesize_images')->default(0);
             $table->unsignedSmallInteger('number_attachments')->default(0);

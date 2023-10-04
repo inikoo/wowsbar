@@ -16,7 +16,7 @@ use Spatie\Sluggable\SlugOptions;
  * App\Models\Portfolio\PortfolioSocialAccount
  *
  * @property int $id
- * @property string $slug
+ * @property string|null $slug
  * @property string $username
  * @property string $url
  * @property string $provider
@@ -24,10 +24,13 @@ use Spatie\Sluggable\SlugOptions;
  * @property int $number_posts
  * @property int $customer_id
  * @property int $shop_id
- * @property mixed $data
+ * @property array $data
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \OwenIt\Auditing\Models\Audit> $audits
+ * @property-read int|null $audits_count
  * @property-read Customer $customer
+ * @property-read array $es_audits
  * @property-read Shop $shop
  * @method static \Illuminate\Database\Eloquent\Builder|PortfolioSocialAccount newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|PortfolioSocialAccount newQuery()
@@ -40,6 +43,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|PortfolioSocialAccount whereNumberPosts($value)
  * @method static \Illuminate\Database\Eloquent\Builder|PortfolioSocialAccount whereProvider($value)
  * @method static \Illuminate\Database\Eloquent\Builder|PortfolioSocialAccount whereShopId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PortfolioSocialAccount whereSlug($value)
  * @method static \Illuminate\Database\Eloquent\Builder|PortfolioSocialAccount whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|PortfolioSocialAccount whereUrl($value)
  * @method static \Illuminate\Database\Eloquent\Builder|PortfolioSocialAccount whereUsername($value)

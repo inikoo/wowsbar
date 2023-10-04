@@ -37,7 +37,7 @@ php artisan telescope:clear
 pg_dump -Fc -f "devops/devel/snapshots/fresh.dump" ${DB}
 echo "🏢 create organisation"
 php artisan org:create wowsbar Wowsbar ID GBP
-php artisan org:create-guest aiku aiku external_administrator
+php artisan org:create-guest 'Mr Aiku' aiku external_administrator -e aiku@inikoo.com
 echo "🌱 create shop/website"
 php artisan shop:create awa 'aw-advantage' 'digital-marketing'
 php artisan shop:new-website awa 'awa.test'
