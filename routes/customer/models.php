@@ -31,9 +31,6 @@ Route::delete('/portfolio-website/{portfolioWebsite:id}', DeletePortfolioWebsite
 Route::post('/portfolio-website/{portfolioWebsite:id}/banner', [StoreBanner::class, 'inPortfolioWebsite'])->name('portfolio-website.banner.store');
 
 
-//Route::post('/portfolio-website/{portfolioWebsite}/banners/gallery', [StoreBanner::class, 'inPortfolioWebsiteFromGallery'])->name('portfolio-website.banner.gallery.store');
-//Route::post('/customer/banners/gallery', [StoreBanner::class, 'inTenantFromGallery'])->name('customer.banner.gallery.store');
-
 
 Route::prefix('/banner')->name('banner.')->group(function () {
     Route::post('', [StoreBanner::class, 'inCustomer'])->name('store');

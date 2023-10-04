@@ -63,7 +63,6 @@ const websitesList = ref([])
 const isModalOpen = ref(false)
 const fieldWebsite = ref()
 const fieldName = ref()
-const fieldCode = ref()
 
 const combinedImages: Ref<any> = computed(() => {
     return Object.values(selectedImages.value).reduce((accumulator: any, currentValue) => {
@@ -89,7 +88,7 @@ const createBanner = async () => {
     try {
         if (fieldWebsite.value) {
             await axios.post(
-                route('models.portfolio-website.banner.gallery.store', fieldWebsite.value),
+                route('customer.models.banner.store.from-gallery', fieldWebsite.value),
                 {
                     images: selectedImagesFlat.value,
                     name: fieldName.value
