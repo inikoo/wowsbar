@@ -7,6 +7,8 @@
 
 namespace App\Actions\Organisation\OrganisationUser;
 
+use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateUsers;
+use App\Actions\Organisation\OrganisationUser\Hydrators\OrganisationUserHydrateUniversalSearch;
 use App\Actions\Organisation\OrganisationUser\UI\SetOrganisationUserAvatar;
 use App\Models\Auth\Guest;
 use App\Models\Auth\OrganisationUser;
@@ -33,8 +35,8 @@ class StoreOrganisationUser
         $organisationUser->stats()->create();
         SetOrganisationUserAvatar::run($organisationUser);
 
-        // UserHydrateUniversalSearch::dispatch($organisationUser);
-        //OrganisationHydrateUsers::dispatch();
+        OrganisationUserHydrateUniversalSearch::dispatch($organisationUser);
+        OrganisationHydrateUsers::dispatch();
         return $organisationUser;
     }
 
