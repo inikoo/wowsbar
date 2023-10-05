@@ -6,7 +6,7 @@
  */
 
 
-use App\Actions\Portfolios\CustomerWebsite\UI\IndexCustomerWebsites;
+use App\Actions\Portfolio\PortfolioWebsite\UI\IndexGoogleAdsPortfolioWebsites;
 use App\Actions\UI\Customer\GoogleAds\ShowGoogleAdsDashboard;
 use Illuminate\Support\Facades\Route;
 
@@ -17,7 +17,7 @@ Route::get('/dashboard', [
 ])->name('dashboard');
 
 Route::get('/websites', [
-    'uses'  => IndexCustomerWebsites::class,
+    'uses'  => IndexGoogleAdsPortfolioWebsites::class,
     'icon'  => 'globe',
     'label' => 'websites'
 ])->name('websites.index');
