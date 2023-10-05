@@ -52,7 +52,7 @@ const handleIconClick = (columnData: {name: string, label: string, value: string
 
 const submitState = async (websiteSlug: string, selectedColumnName: string, stateName: string) => {
     try {
-        const response = await axios.post(
+        await axios.post(
             route('customer.models.portfolio-website.interest.store', websiteSlug),
             {
                 division: selectedColumnName,
@@ -63,8 +63,8 @@ const submitState = async (websiteSlug: string, selectedColumnName: string, stat
             }
         )
         
-        // For manipulation data in client side (without refresh the page)
-        props.data.data[0][selectedColumn.value.name].value = stateName
+        // For manipulation data in client side (data change without refresh the page)
+        props.data.data.forEach(item => item.slug == selectedWebsiteSlug.value ? item[selectedColumn.value.name].value = stateName : '')
 
         // To add Toast on success
         notify({
@@ -74,9 +74,7 @@ const submitState = async (websiteSlug: string, selectedColumnName: string, stat
         })
 
         // To close the modal
-        setTimeout(() => {
-            isModalOpen.value = false
-        }, 500)
+        isModalOpen.value = false
 
     } catch (error: any) {
         notify({
@@ -89,7 +87,8 @@ const submitState = async (websiteSlug: string, selectedColumnName: string, stat
 </script>
 
 <template>
-<!-- <pre>{{ data.data[0] }}</pre> -->
+<!-- <pre>{{ props.data.data.forEach(item => item.slug == 'mw-1' ? item.code = 'abc' : item.url = 'def') }}</pre> -->
+<!-- <pre>{{ props.data.data }}</pre> -->
     <Table :resource="data" :name="tab" class="mt-5">
         <template #cell(name)="{ item: website }">
             <Link :href="websiteRoute(website)" :id="website['slug']" class="py-2 px-1">
