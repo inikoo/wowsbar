@@ -33,7 +33,7 @@ class StoreOrganisationUser
         /** @var \App\Models\Auth\OrganisationUser $organisationUser */
         $organisationUser = $parent->organisationUser()->create($objectData);
         $organisationUser->stats()->create();
-        SetOrganisationUserAvatar::run($organisationUser);
+        SetOrganisationUserAvatar::dispatch($organisationUser);
 
         OrganisationUserHydrateUniversalSearch::dispatch($organisationUser);
         OrganisationHydrateUsers::dispatch();
