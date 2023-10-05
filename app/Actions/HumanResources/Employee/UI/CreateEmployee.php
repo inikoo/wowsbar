@@ -29,8 +29,8 @@ class CreateEmployee extends InertiaAction
                 'breadcrumbs' => $this->getBreadcrumbs(),
                 'title'       => __('new employee'),
                 'pageHead'    => [
-                    'title'        => __('new employee'),
-                    'actions'      => [
+                    'title'   => __('new employee'),
+                    'actions' => [
                         [
                             'type'  => 'button',
                             'style' => 'cancel',
@@ -42,12 +42,12 @@ class CreateEmployee extends InertiaAction
                         ]
                     ]
                 ],
-                'formData' => [
+                'formData'    => [
                     'blueprint' => [
                         [
                             'title'  => __('personal information'),
                             'fields' => [
-                                'contact_name' => [
+                                'contact_name'  => [
                                     'type'     => 'input',
                                     'label'    => __('name'),
                                     'required' => true,
@@ -57,7 +57,54 @@ class CreateEmployee extends InertiaAction
                                     'label' => __('date of birth'),
                                     'value' => ''
                                 ],
+                                'email'         => [
+                                    'type'  => 'input',
+                                    'label' => __('personal email'),
+                                ],
 
+                            ]
+                        ],
+                        [
+                            'title'  => __('Employment'),
+                            'fields' => [
+                                'worker_number'       => [
+                                    'type'     => 'input',
+                                    'label'    => __('worker number'),
+                                    'required' => true,
+                                ],
+                                'alias'               => [
+                                    'type'     => 'input',
+                                    'label'    => __('alias'),
+                                    'required' => true,
+                                ],
+                                'work_email'          => [
+                                    'type'  => 'input',
+                                    'label' => __('work email'),
+                                ],
+                                'state'               => [
+                                    'type'    => 'radio',
+                                    'mode'    => 'card',
+                                    'label'   => '',
+                                    'value'   => EmployeeStateEnum::HIRED->value,
+                                    'options' => [
+                                        [
+                                            'title'       => __('Hired'),
+                                            'description' => __('Will start in future date'),
+                                            'value'       => EmployeeStateEnum::HIRED->value
+                                        ],
+                                        [
+                                            'title'       => __('Working'),
+                                            'description' => __('Employee already working'),
+                                            'value'       => EmployeeStateEnum::WORKING->value
+                                        ],
+                                    ]
+                                ],
+                                'employment_start_at' => [
+                                    'type'     => 'date',
+                                    'label'    => __('employment start at'),
+                                    'value'    => '',
+                                    'required' => true
+                                ],
 
                             ]
                         ],
@@ -65,7 +112,7 @@ class CreateEmployee extends InertiaAction
                             'title'  => __('job'),
                             'fields' => [
 
-                                'position' => [
+                                'positions' => [
                                     'type'        => 'select',
                                     'label'       => __('position'),
                                     'options'     => Options::forModels(JobPosition::class, label: 'name', value: 'name'),
@@ -79,30 +126,33 @@ class CreateEmployee extends InertiaAction
                                     'placeholder' => __('Job title'),
                                     'searchable'  => true
                                 ],
+                                'required'  => true
 
 
                             ]
                         ],
                         [
-                            'title'  => __('state'),
+                            'title'  => __('User credentials'),
                             'fields' => [
 
+                                'username' => [
+                                    'type'  => 'input',
+                                    'label' => __('username'),
 
-                                'state' => [
-                                    'type'        => 'select',
-                                    'label'       => __('state'),
-                                    'options'     => Options::forEnum(EmployeeStateEnum::class),
-                                    'placeholder' => __('Select a state'),
-                                    'mode'        => 'single',
-                                    'searchable'  => true
-                                ]
+                                ],
+                                'password' => [
+                                    'type'  => 'password',
+                                    'label' => __('password'),
+
+                                ],
 
                             ]
-                        ]
+                        ],
+
 
                     ],
-                    'route'      => [
-                            'name'       => 'org.models.employee.store',
+                    'route'     => [
+                        'name' => 'org.models.employee.store',
 
                     ]
 
