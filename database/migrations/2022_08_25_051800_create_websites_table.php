@@ -31,6 +31,11 @@ return new class () extends Migration {
             $table->jsonb('menu');
             $table->jsonb('footer');
             $table->jsonb('layout');
+
+            $table->jsonb('header_content');
+            $table->jsonb('footer_content');
+
+
             $table->jsonb('compiled_structure');
             $table->unsignedSmallInteger('current_layout_id')->index()->nullable();
             $table->unsignedSmallInteger('organisation_id');

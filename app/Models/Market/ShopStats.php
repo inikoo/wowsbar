@@ -25,16 +25,6 @@ use Illuminate\Support\Carbon;
  * @property int $number_customers_state_active
  * @property int $number_customers_state_losing
  * @property int $number_customers_state_lost
- * @property int $number_prospects
- * @property int $number_prospects_state_no_contacted
- * @property int $number_prospects_state_contacted
- * @property int $number_prospects_state_not_interested
- * @property int $number_prospects_state_registered
- * @property int $number_prospects_state_invoiced
- * @property int $number_prospects_state_bounced
- * @property int $number_prospects_gender_male
- * @property int $number_prospects_gender_female
- * @property int $number_prospects_gender_other
  * @property int $number_orders
  * @property int $number_orders_state_creating
  * @property int $number_orders_state_submitted
@@ -86,16 +76,6 @@ use Illuminate\Support\Carbon;
  * @method static Builder|ShopStats whereNumberPaymentServiceProviders($value)
  * @method static Builder|ShopStats whereNumberPayments($value)
  * @method static Builder|ShopStats whereNumberProducts($value)
- * @method static Builder|ShopStats whereNumberProspects($value)
- * @method static Builder|ShopStats whereNumberProspectsGenderFemale($value)
- * @method static Builder|ShopStats whereNumberProspectsGenderMale($value)
- * @method static Builder|ShopStats whereNumberProspectsGenderOther($value)
- * @method static Builder|ShopStats whereNumberProspectsStateBounced($value)
- * @method static Builder|ShopStats whereNumberProspectsStateContacted($value)
- * @method static Builder|ShopStats whereNumberProspectsStateInvoiced($value)
- * @method static Builder|ShopStats whereNumberProspectsStateNoContacted($value)
- * @method static Builder|ShopStats whereNumberProspectsStateNotInterested($value)
- * @method static Builder|ShopStats whereNumberProspectsStateRegistered($value)
  * @method static Builder|ShopStats whereShopId($value)
  * @method static Builder|ShopStats whereUpdatedAt($value)
  * @mixin Eloquent

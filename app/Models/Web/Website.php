@@ -47,6 +47,8 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property array $menu
  * @property array $footer
  * @property array $layout
+ * @property array $header_content
+ * @property array $footer_content
  * @property array $compiled_structure
  * @property int|null $current_layout_id
  * @property int $organisation_id
@@ -82,7 +84,9 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @method static Builder|Website whereDeletedAt($value)
  * @method static Builder|Website whereDomain($value)
  * @method static Builder|Website whereFooter($value)
+ * @method static Builder|Website whereFooterContent($value)
  * @method static Builder|Website whereHeader($value)
+ * @method static Builder|Website whereHeaderContent($value)
  * @method static Builder|Website whereHomeId($value)
  * @method static Builder|Website whereId($value)
  * @method static Builder|Website whereLaunchedAt($value)
@@ -115,6 +119,8 @@ class Website extends Model implements Auditable, HasMedia
         'settings'           => 'array',
         'header'             => 'array',
         'footer'             => 'array',
+        'header_content'     => 'array',
+        'footer_content'     => 'array',
         'menu'               => 'array',
         'layout'             => 'array',
         'compiled_structure' => 'array',
@@ -126,6 +132,8 @@ class Website extends Model implements Auditable, HasMedia
         'settings'           => '{}',
         'header'             => '{}',
         'footer'             => '{}',
+        'header_content'     => '{}',
+        'footer_content'     => '{}',
         'menu'               => '{}',
         'layout'             => '{}',
         'compiled_structure' => '{}',
@@ -186,6 +194,7 @@ class Website extends Model implements Auditable, HasMedia
         data_set($compiledLayout, 'header', WebsiteHeaderResource::make($this->header)->getArray());
         data_set($compiledLayout, 'footer', WebsiteFooterResource::make($this->footer)->getArray());
         data_set($compiledLayout, 'layout', WebsiteLayoutResource::make($this->layout)->getArray());
+
         return $compiledLayout;
     }
 

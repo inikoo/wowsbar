@@ -24,16 +24,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $number_customers_state_active
  * @property int $number_customers_state_losing
  * @property int $number_customers_state_lost
- * @property int $number_prospects
- * @property int $number_prospects_state_no_contacted
- * @property int $number_prospects_state_contacted
- * @property int $number_prospects_state_not_interested
- * @property int $number_prospects_state_registered
- * @property int $number_prospects_state_invoiced
- * @property int $number_prospects_state_bounced
- * @property int $number_prospects_gender_male
- * @property int $number_prospects_gender_female
- * @property int $number_prospects_gender_other
  * @property int $number_orders
  * @property int $number_orders_state_creating
  * @property int $number_orders_state_submitted
@@ -65,16 +55,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static Builder|ShopCRMStats whereNumberOrdersStatePacked($value)
  * @method static Builder|ShopCRMStats whereNumberOrdersStateSettled($value)
  * @method static Builder|ShopCRMStats whereNumberOrdersStateSubmitted($value)
- * @method static Builder|ShopCRMStats whereNumberProspects($value)
- * @method static Builder|ShopCRMStats whereNumberProspectsGenderFemale($value)
- * @method static Builder|ShopCRMStats whereNumberProspectsGenderMale($value)
- * @method static Builder|ShopCRMStats whereNumberProspectsGenderOther($value)
- * @method static Builder|ShopCRMStats whereNumberProspectsStateBounced($value)
- * @method static Builder|ShopCRMStats whereNumberProspectsStateContacted($value)
- * @method static Builder|ShopCRMStats whereNumberProspectsStateInvoiced($value)
- * @method static Builder|ShopCRMStats whereNumberProspectsStateNoContacted($value)
- * @method static Builder|ShopCRMStats whereNumberProspectsStateNotInterested($value)
- * @method static Builder|ShopCRMStats whereNumberProspectsStateRegistered($value)
  * @method static Builder|ShopCRMStats whereShopId($value)
  * @method static Builder|ShopCRMStats whereUpdatedAt($value)
  * @mixin Eloquent
