@@ -19,15 +19,23 @@ class PortfolioWebsiteResource extends JsonResource
     {
         /** @var PortfolioWebsite $websitePortfolio */
         $websitePortfolio = $this;
+        $divisions = [];
 
-        return [
+        foreach ($websitePortfolio->divisions as $value) {
+            $divisions[$value->slug] = [
+                'name' => $value->slug,
+                'label' => $value->name,
+                'value' => $value->pivot->interest
+            ];
+        }
+
+        return array_merge([
             'slug'           => $websitePortfolio->slug,
             'customer_name'  => $websitePortfolio->customer->name,
             'code'           => $websitePortfolio->code,
             'name'           => $websitePortfolio->name,
             'url'            => preg_replace('/^https?:\/\//', '', $websitePortfolio->url),
-            'number_banners' => $websitePortfolio->stats->number_banners,
-            PortfolioWebsiteDivisionResource::collection($websitePortfolio->divisions)
-        ];
+            'number_banners' => $websitePortfolio->stats->number_banners
+        ], $divisions);
     }
 }
