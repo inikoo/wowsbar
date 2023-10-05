@@ -13,11 +13,34 @@ export const IconBlock = (editor : Any) => {
 }
 
 export const HeaderCategories = (editor: any) => {
-    editor.BlockManager.get("header-block-1").attributes.content = headerBlock1().content
-    editor.BlockManager.get("header-block-2").attributes.content = headerBlock2().content
-    editor.BlockManager.get("header-block-3").attributes.content = headerBlock3().content
-    editor.BlockManager.get("header-block-4").attributes.content = headerBlock4().content
+    console.log(editor.BlockManager.get("footer-block-1"))
+    // const headerBlock1Instance = editor.BlockManager.get("header-block-1");
+    // const headerBlock2Instance = editor.BlockManager.get("header-block-2");
+    // const headerBlock3Instance = editor.BlockManager.get("header-block-3");
+    // const headerBlock4Instance = editor.BlockManager.get("header-block-4");
+    // console.log(headerBlock2Instance)
+    // if (headerBlock2Instance) {
+    //     headerBlock1Instance.attributes.content = headerBlock1().content;
+    // }
+    // if (headerBlock2Instance) {
+    //     headerBlock2Instance.attributes.content = headerBlock2().content;
+    // }
+    // if (headerBlock3Instance) {
+    //     headerBlock3Instance.attributes.content = headerBlock3().content;
+    // }
+    // if (headerBlock4Instance) {
+    //     headerBlock4Instance.attributes.content = headerBlock4().content;
+    // }
 };
+
+export const HeaderPlugins = (editor: any) => {
+    const header = [headerBlock1(),headerBlock2(),headerBlock3(),headerBlock4()]
+    header.map((item,index)=>{
+        editor.Blocks.add(`header-block-${index}`,item);
+    })
+}
+
+
 
 export const addNewBlocks  = (editor: any, blocks : Array) => {
     const bm = editor.BlockManager;

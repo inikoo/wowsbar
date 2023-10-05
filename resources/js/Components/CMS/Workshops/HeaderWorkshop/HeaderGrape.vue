@@ -5,12 +5,14 @@ import { faEye, faEyeSlash } from '@/../private/pro-solid-svg-icons'
 import { faRectangleWide } from "@/../private/pro-duotone-svg-icons"
 import { library } from '@fortawesome/fontawesome-svg-core'
 import GrapeEditor from '@/Components/CMS/Workshops/GrapeEditor/GrapeEditor.vue'
-import Basic from "grapesjs-blocks-basic";
-import grapesjsIcons from "grapesjs-icons";
-import { usePlugin } from "grapesjs";
-import GrapesForm from "grapesjs-plugin-forms";
-import { headerBlock1, headerBlock2, headerBlock3, headerBlock4 } from '@/Components/CMS/Workshops/GrapeEditor/CustomBlocks/Header/Header'
 
+import { HeaderPlugins } from "@/Components/CMS/Workshops/GrapeEditor/CustomBlocks/CustomBlock";
+
+
+const props = defineProps<{
+    imagesUploadRoute: Object 
+    updateRoutes: Array
+}>();
 
 library.add(
     faArrowAltToTop,
@@ -24,10 +26,10 @@ library.add(
 )
 
 
+
 </script>
 
 <template layout="OrgApp">
-    <GrapeEditor :data="data" @changeData="(value) => data = value" :plugins="[Basic, usePlugin(grapesjsIcons, options), GrapesForm]"
-        :customBlocks="[headerBlock1(), headerBlock2(), headerBlock3(), headerBlock4()]" />
+    <GrapeEditor :data="data" @changeData="(value) => data = value" :plugins="[HeaderPlugins]" :updateRoute="updateRoutes.workshop_header" :loadRoute="updateRoutes.workshop_header" />
 </template>
 

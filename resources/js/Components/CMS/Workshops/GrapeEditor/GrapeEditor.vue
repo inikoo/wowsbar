@@ -4,10 +4,9 @@ import "grapesjs/dist/css/grapes.min.css";
 import grapesjs, { usePlugin } from "grapesjs";
 import Webpage from "grapesjs-preset-webpage";
 import { router } from '@inertiajs/vue3'
-import {
-    CustomBlock,
-    addNewBlocks,
-} from "@/Components/CMS/Workshops/GrapeEditor/CustomBlocks/CustomBlock";
+import Basic from "grapesjs-blocks-basic";
+import grapesjsIcons from "grapesjs-icons";
+import { CustomBlock } from "@/Components/CMS/Workshops/GrapeEditor/CustomBlocks/CustomBlock";
 
 
 const emits = defineEmits();
@@ -20,46 +19,50 @@ const props = defineProps<{
 }>();
 
 
-console.log('porps',props.updateRoute)
 const editorInstance = ref(null);
-const options = {
-    ...{
-      i18n: {},
-      // default options
-      tailwindPlayCdn: 'https://cdn.tailwindcss.com',
-      plugins: [],
-      config: {},
-      cover: `.object-cover { filter: sepia(1) hue-rotate(190deg) opacity(.46) grayscale(.7) !important; }`,
-      changeThemeText: 'Change Theme',
-      openCategory: 'Blog',
-    },
-  };
-
-  const Store = async (data, editor) => {
+const options = { collections: ["ri", "mdi", "uim", "streamline-emojis"]};
+const Store = async (data, editor) => {
     const pagesHtml = editor.Pages.getAll().map(page => {
-            const component = page.getMainComponent();
-            return {
-              html: editor.getHtml({ component }),
-              css: editor.getCss({ component })
-            }
-          });
-        try {
-            const response = await axios.post(
-                route(
-                    props.updateRoute.name,
-                    props.updateRoute.parameters
-                ),
-                { data, pagesHtml },
-            );
-            if(response){
-               console.log(response)
-            }
-        } catch (error) {
-          console.log(error)
+        const component = page.getMainComponent();
+        return {
+            html: editor.getHtml({ component }),
+            css: editor.getCss({ component })
         }
+    });
+    try {
+        const response = await axios.post(
+            route(
+                props.updateRoute.name,
+                props.updateRoute.parameters
+            ),
+            { data, pagesHtml },
+        );
+        if (response) {
+            console.log('saving......')
+        }
+    } catch (error) {
+        console.log(error)
     }
+}
 
- 
+const Load = async (data) => {
+    try {
+        const response = await axios.get(
+            route(
+                props.loadRoute.name,
+                props.loadRoute.parameters
+            ),
+        )
+        if (response) {
+           return response.data.data
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+
 
 
 onMounted(() => {
@@ -69,31 +72,27 @@ onMounted(() => {
         showOffsets: true,
         fromElement: true,
         noticeOnUnload: false,
-        plugins: [Webpage, ...props.plugins],
+        plugins: [Webpage, Basic, usePlugin(grapesjsIcons, options),...props.plugins],
+        canvas: {
+            styles: ['https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css']
+        },
         storageManager: {
-    type: 'remote',
+            type: 'remote',
         }
     });
-
-    editorInstance.value.Storage.add('remote', {async load() {return await axios.get( route(
-                    props.loadRoute.name,
-                    props.loadRoute.parameters
-                ),)},
-    async store(data) {return Store(data,editorInstance.value)},
-});
-console.log(editorInstance.value.Storage)
-    // if (props.customBlocks) {
-    //     addNewBlocks(editorInstance.value, props.customBlocks);
-    // }
-
-    CustomBlock(editorInstance.value);
+    editorInstance.value.Storage.add('remote', {
+        async load() {
+          
+            return Load()
+        },
+        async store(data) { return Store(data, editorInstance.value) },
+    });
+   
 });
 </script>
 
 <template>
-     <div @click="test()">test</div>
     <div id="gjs"></div>
-   
 </template>
 
 <style lang="scss">

@@ -4,11 +4,9 @@ import { ref, watch, reactive } from "vue"
 import { capitalize } from "@/Composables/capitalize"
 import PageHeading from '@/Components/Headings/PageHeading.vue'
 import GrapeEditor from '@/Components/CMS/Workshops/GrapeEditor/GrapeEditor.vue'
-import Basic from "grapesjs-blocks-basic";
 import GrapesForm from "grapesjs-plugin-forms";
 import TailwindComponents from "grapesjs-tailwind";
-import { usePlugin } from "grapesjs";
-import grapesjsIcons from "grapesjs-icons";
+
 
 
 const props = defineProps<{
@@ -32,7 +30,7 @@ const data = ref()
     <GrapeEditor
      :data="data" 
      @changeData="(value)=>data = value"
-     :plugins="[Basic,GrapesForm,TailwindComponents,usePlugin(grapesjsIcons, options)]"
+     :plugins="[GrapesForm,TailwindComponents]"
      :updateRoute="updateRoute"
      :loadRoute="loadRoute"
      />

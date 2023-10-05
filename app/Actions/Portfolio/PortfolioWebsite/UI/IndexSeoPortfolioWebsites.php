@@ -10,6 +10,8 @@ namespace App\Actions\Portfolio\PortfolioWebsite\UI;
 use App\Actions\Helpers\History\IndexHistories;
 use App\Actions\InertiaAction;
 use App\Actions\UI\Customer\Banners\ShowBannersDashboard;
+use App\Actions\UI\Customer\GoogleAds\ShowGoogleAdsDashboard;
+use App\Actions\UI\Customer\SEO\ShowSeoDashboard;
 use App\Enums\UI\Customer\PortfolioWebsitesTabsEnum;
 use App\Enums\UI\Organisation\CustomerWebsitesTabsEnum;
 use App\Http\Resources\History\HistoryResource;
@@ -28,7 +30,7 @@ use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 use function Clue\StreamFilter\fun;
 
-class IndexBannerPortfolioWebsites extends InertiaAction
+class IndexSeoPortfolioWebsites extends InertiaAction
 {
     public function authorize(ActionRequest $request): bool
     {
@@ -47,11 +49,11 @@ class IndexBannerPortfolioWebsites extends InertiaAction
     /** @noinspection PhpUndefinedMethodInspection */
     public function handle($prefix = null): LengthAwarePaginator
     {
-        $divisionId = Cache::get('banners');
+        $divisionId = Cache::get('seo');
 
         if(! $divisionId) {
-            $divisionId = Division::firstWhere('slug', 'banners')->id;
-            Cache::put('banners', $divisionId);
+            $divisionId = Division::firstWhere('slug', 'seo')->id;
+            Cache::put('seo', $divisionId);
         }
 
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
@@ -113,7 +115,7 @@ class IndexBannerPortfolioWebsites extends InertiaAction
     public function htmlResponse(LengthAwarePaginator $websites, ActionRequest $request): Response
     {
         return Inertia::render(
-            'Banners/BannersPortfolioWebsites',
+            'SEO/SeoPortfolioWebsites',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->getName(),
@@ -173,12 +175,12 @@ class IndexBannerPortfolioWebsites extends InertiaAction
         };
 
         return match ($routeName) {
-            'customer.banners.websites.index' =>
+            'customer.seo.websites.index' =>
             array_merge(
-                ShowBannersDashboard::make()->getBreadcrumbs(),
+                ShowSeoDashboard::make()->getBreadcrumbs(),
                 $headCrumb(
                     [
-                        'name' => 'customer.banners.websites.index',
+                        'name' => 'customer.seo.websites.index',
                         null
                     ]
                 ),
