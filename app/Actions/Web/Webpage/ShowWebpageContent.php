@@ -40,6 +40,7 @@ class ShowWebpageContent
 
     public function asController(Webpage $webpage, ActionRequest $request): Webpage
     {
+        dd('zzzzz');
         $request->validate();
 
         return $this->handle($webpage);

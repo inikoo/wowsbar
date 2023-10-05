@@ -10,18 +10,21 @@ namespace App\Actions\Web\Webpage;
 use App\Actions\Traits\WithActionUpdate;
 use App\Models\Web\Webpage;
 use Lorisleiva\Actions\ActionRequest;
+use Lorisleiva\Actions\Concerns\AsAction;
+use Lorisleiva\Actions\Concerns\WithAttributes;
 
 class UpdateWebpageContent
 {
-    use WithActionUpdate;
+    use AsAction;
+    use WithAttributes;
 
-    private bool $asAction = false;
 
-    public function handle(Webpage $webpage, array $content): Webpage
+    public function handle(Webpage $webpage, array $data): Webpage
     {
         $webpage->update(
             [
-                'content' => $content
+                'content' => $data[''],
+                'compiled_content'
             ]
         );
         $webpage->update(
@@ -35,9 +38,6 @@ class UpdateWebpageContent
 
     public function authorize(ActionRequest $request): bool
     {
-        if ($this->asAction) {
-            return true;
-        }
 
         return $request->user()->hasPermissionTo("websites.edit");
     }
@@ -45,15 +45,18 @@ class UpdateWebpageContent
     public function rules(): array
     {
         return [
-            'blocks' => ['required', 'array'],
+            'data' => ['required', 'array'],
+            'pagesHtml' => ['required', 'array'],
 
         ];
     }
 
     public function asController(Webpage $webpage, ActionRequest $request): Webpage
     {
+        dd('caca');
         $request->validate();
 
+        dd($request->validated());
         return $this->handle($webpage, $request->validated());
     }
 

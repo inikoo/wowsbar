@@ -74,7 +74,7 @@ class Webpage extends Model
         'data'             => 'array',
         'settings'         => 'array',
         'blocks'           => 'array',
-        'content'          => 'content',
+        'content'          => 'array',
         'compiled_content' => 'array',
         'type'             => WebpageTypeEnum::class,
         'purpose'          => WebpagePurposeEnum::class,
