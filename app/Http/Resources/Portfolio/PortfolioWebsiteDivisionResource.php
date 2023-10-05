@@ -18,8 +18,11 @@ class PortfolioWebsiteDivisionResource extends JsonResource
         $division = $this;
 
         return [
-            'name' => $division->slug,
-            'interest' => $division->pivot->interest
+            $division->slug => [
+                'name' => $division->slug,
+                'label' => $division->name,
+                'value' => $division->pivot->interest
+            ]
         ];
     }
 }
