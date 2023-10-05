@@ -609,9 +609,21 @@ watch(name, () => {
                                         </Button>
                                     </Link>
                                 </slot>
-
                             </div>
                             <slot v-if="queryBuilderProps.modelOperations?.uploadFile" name="uploadFile"  id="uploadFile" :item="queryBuilderProps.modelOperations?.uploadFile"/>
+
+                            <!-- Search Input Button -->
+                            <div v-if="queryBuilderProps.globalSearch && compResourceMeta.total >= 5"
+                                class="flex flex-row">
+                                <slot name="tableFilterSearch" :has-global-search="queryBuilderProps.globalSearch"
+                                    :label="queryBuilderProps.globalSearch ? queryBuilderProps.globalSearch.label : null"
+                                    :value="queryBuilderProps.globalSearch ? queryBuilderProps.globalSearch.value : null"
+                                    :on-change="changeGlobalSearchValue">
+                                    <TableFilterSearch v-if="queryBuilderProps.globalSearch" class=""  @resetSearch="() => resetQuery()"
+                                        :label="queryBuilderProps.globalSearch.label" :value="queryBuilderProps.globalSearch.value"
+                                        :on-change="changeGlobalSearchValue" />
+                                </slot>
+                            </div>
                         </div>
                     </div>
 
@@ -628,18 +640,7 @@ watch(name, () => {
 
                         
 
-                        <!-- Search Input Button -->
-                        <div v-if="queryBuilderProps.globalSearch && compResourceMeta.total >= 5"
-                            class="flex flex-row w-64">
-                            <slot name="tableFilterSearch" :has-global-search="queryBuilderProps.globalSearch"
-                                :label="queryBuilderProps.globalSearch ? queryBuilderProps.globalSearch.label : null"
-                                :value="queryBuilderProps.globalSearch ? queryBuilderProps.globalSearch.value : null"
-                                :on-change="changeGlobalSearchValue">
-                                <TableFilterSearch v-if="queryBuilderProps.globalSearch" class="flex-grow"  @resetSearch="() => resetQuery()"
-                                    :label="queryBuilderProps.globalSearch.label" :value="queryBuilderProps.globalSearch.value"
-                                    :on-change="changeGlobalSearchValue" />
-                            </slot>
-                        </div>
+                        
 
                         <!-- Element Filter -->
                         <div class="" @checkboxChanged="handleElementsChange">

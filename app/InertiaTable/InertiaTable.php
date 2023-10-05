@@ -45,7 +45,7 @@ class InertiaTable
         }
     }
 
-    public static function defaultGlobalSearch(bool|string $label = 'Search...'): void
+    public static function defaultGlobalSearch(bool|string $label = 'Search on table...'): void
     {
         static::$defaultGlobalSearch = $label !== false ? __($label) : false;
     }
@@ -276,7 +276,7 @@ class InertiaTable
 
     public function withGlobalSearch(string $label = null): self
     {
-        return $this->searchInput('global', $label ?: __('Search...'));
+        return $this->searchInput('global', $label ?: __('Search on table...'));
     }
 
     public function withModelOperations(array $modelOperations = null): self
