@@ -8,7 +8,7 @@
 import { Link } from '@inertiajs/vue3'
 import { ref } from 'vue'
 import Table from '@/Components/Table/Table.vue'
-import ModalConfirmation from '@/Components/Utils/ModalConfirmation.vue'
+import Modal from '@/Components/Utils/Modal.vue'
 import Button from '@/Components/Elements/Buttons/Button.vue'
 import IconGroupInterested from '@/Components/Table/IconGroupInterested.vue'
 import { Website } from "@/types/website"
@@ -22,7 +22,9 @@ import axios from 'axios'
 library.add(faCheckCircle, faTimesCircle, fasCheckCircle, faCircle)
 
 const props = defineProps<{
-    data: object
+    data: {
+        data: {}
+    }
     tab?: string
 }>()
 
@@ -60,7 +62,9 @@ const submitState = async (websiteSlug: string, selectedColumnName: string, stat
                 headers: { "Content-Type": "multipart/form-data" },
             }
         )
-        props.data.data[0][selectedColumn.value.name].value = stateName  // For manipulation data without refresh the page
+        
+        // For manipulation data in client side (without refresh the page)
+        props.data.data[0][selectedColumn.value.name].value = stateName
 
         // To add Toast on success
         notify({
@@ -126,7 +130,7 @@ const submitState = async (websiteSlug: string, selectedColumnName: string, stat
     </Table>
 
     <!-- Popup: for confirmation -->
-    <ModalConfirmation :isOpen="isModalOpen" @onClose="isModalOpen = false">
+    <Modal :isOpen="isModalOpen" @onClose="isModalOpen = false">
         <Button class="sr-only" /> <!-- Helper: to focused on popup Modal -->
         <div class="space-y-4">
             <p class="text-gray-600 text-center">Do you want to change the <span class="font-bold">{{ selectedColumn.label }}</span> status of <span class="font-bold">{{ selectedWebsite }}</span>?</p>
@@ -136,7 +140,5 @@ const submitState = async (websiteSlug: string, selectedColumnName: string, stat
                 <Button v-if="data.data[0][selectedColumn.name].value != 'interested'" @click="submitState(selectedWebsiteSlug, selectedColumn.name, 'interested')" :style="'tertiary'" label="Interested" icon="fal fa-check-circle" class="border-green-500 text-green-500 focus:ring-green-500 hover:bg-green-50" />
             </div>
         </div>
-    </ModalConfirmation>
+    </Modal>
 </template>
-
-
