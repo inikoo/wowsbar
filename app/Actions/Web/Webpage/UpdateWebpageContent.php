@@ -11,18 +11,17 @@ use App\Actions\Traits\WithActionUpdate;
 use App\Models\Web\Webpage;
 use Lorisleiva\Actions\ActionRequest;
 
-class UpdateWebpageBlocks
+class UpdateWebpageContent
 {
     use WithActionUpdate;
 
     private bool $asAction = false;
 
-    public function handle(Webpage $webpage, array $blocks): Webpage
+    public function handle(Webpage $webpage, array $content): Webpage
     {
-        dd($webpage, $blocks);
         $webpage->update(
             [
-                'blocks' => $blocks
+                'content' => $content
             ]
         );
         $webpage->update(

@@ -21,7 +21,7 @@ use App\Actions\Web\Website\UI\ShowWebsiteWorkshopPreview;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', IndexWebsites::class)->name('index');
-Route::get('/{website}', ShowWebsite::class)->name('show');
+Route::get('/{website}/show', ShowWebsite::class)->name('show');
 Route::get('/{website}/edit', EditWebsite::class)->name('edit');
 Route::get('/{website}/workshop', ShowWebsiteWorkshop::class)->name('workshop');
 
