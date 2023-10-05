@@ -7,6 +7,7 @@
 
 namespace App\Actions\UI\Public;
 
+use App\Models\Web\Webpage;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -18,12 +19,15 @@ class ShowHome
 
     public function handle(ActionRequest $request): Response
     {
-
+        $webpage = Webpage::where('slug', 'home')->first();
 
         return Inertia::render(
             'Home',
             [
-                'blocks' => []
+                'content' => [
+                    'data'      => $webpage->content,
+                    'pagesHtml' => $webpage->compiled_content
+                ]
             ]
         );
     }
