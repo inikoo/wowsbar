@@ -15,7 +15,12 @@ library.add(faExclamationCircle, faAsterisk, faCheckCircle)
 
 const props = defineProps<{
     formData: {
-        blueprint: object;
+        blueprint: {
+            title?: string
+            subtitle?: string
+            icon?: string | string[]
+            fields: any  // dynamic key
+        }[]
         route: {
             name: string,
             parameters?: Array<string>
@@ -39,7 +44,7 @@ import CustomerRoles from '@/Components/Forms/Fields/CustomerRoles.vue'
 import { ref, onMounted } from 'vue'
 
 const getComponent = (componentName: string) => {
-    const components = {
+    const components: any = {
         'input': Input,
         'inputWithAddOn': InputWithAddOn,
         'phone': Phone,
@@ -56,12 +61,12 @@ const getComponent = (componentName: string) => {
 
 };
 
-let fields = {};
+let fields: any = {};
 Object.entries(props.formData.blueprint).forEach(([, val]) => {
-    Object.entries(val['fields']).forEach(([fieldName, fieldData]) => {
-        fields[fieldName] = fieldData['value'];
-    });
-});
+    Object.entries(val.fields).forEach(([fieldName, fieldData]: any) => {
+        fields[fieldName] = fieldData.value
+    })
+})
 
 const form = useForm(fields);
 
@@ -72,18 +77,17 @@ const handleFormSubmit = () => {
     ));
 };
 
-const current = null
 const buttonRefs = ref([])
-const tabActive = ref({})
+const tabActive: any = ref({})
 
-const handleIntersection = (element: Element, index: number) => (entries) => {
+const handleIntersection = (element: Element, index: number) => (entries: any) => {
     const [entry] = entries;
     tabActive.value[`${index}`] = entry.isIntersecting;
 }
 
 onMounted(() => {
     // To indicate active state that on viewport
-    buttonRefs.value.forEach((element, index) => {
+    buttonRefs.value.forEach((element: any, index) => {
         const observer = new IntersectionObserver(handleIntersection(element, index));
         observer.observe(element);
 
@@ -95,7 +99,7 @@ onMounted(() => {
 
     // Clean up all the observers when the component is unmounted
     return () => {
-        buttonRefs.value.forEach((button) => button.cleanupObserver());
+        buttonRefs.value.forEach((button: any) => button.cleanupObserver());
     };
 });
 
@@ -133,8 +137,8 @@ onMounted(() => {
                     <div class="sr-only absolute -top-16" :id="`field${sectionIdx}`" />
                     
                     <!-- Title -->
-                    <div class="flex items-center gap-x-2"  ref="buttonRefs">
-                        <FontAwesomeIcon :icon='sectionData.icon' class='' aria-hidden='true' />
+                    <div class="flex items-center gap-x-2" ref="buttonRefs">
+                        <FontAwesomeIcon v-if="sectionData.icon" :icon='sectionData.icon' class='' aria-hidden='true' />
                         <h3 v-if="sectionData.title" class="text-lg leading-6 font-medium text-gray-700 capitalize">
                             {{ sectionData.title }}
                         </h3>
@@ -168,12 +172,6 @@ onMounted(() => {
                                                     :fieldData="fieldData" :key="index">
                                                 </component>
                                             </div>
-                                            <!-- <span class="ml-4 flex-shrink-0 w-5 bg-red-500">
-
-                                            </span>
-                                            <span class="ml-2 flex-shrink-0">
-
-                                            </span> -->
                                         </div>
                                     </dd>
                                 </div>
