@@ -27,7 +27,7 @@ class SyncDivisionPortfolioWebsite
     {
         $divisions = Division::where('slug', $modelData['division'])->get();
 
-        $portfolioWebsite->divisions()->attach($divisions->pluck('id'), [
+        $portfolioWebsite->divisions()->updateExistingPivot($divisions->pluck('id'), [
             'interest' => $modelData['interest']
         ]);
     }
