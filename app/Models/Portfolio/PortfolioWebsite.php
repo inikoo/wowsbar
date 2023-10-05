@@ -93,11 +93,6 @@ class PortfolioWebsite extends Model implements Auditable
         return $this->hasOne(PortfolioWebsiteStats::class);
     }
 
-    public function divisions(): BelongsToMany
-    {
-        return $this->belongsToMany(Division::class, 'division_portfolio_websites')->withPivot('interest');
-    }
-
     public function scopedProspects(): MorphMany
     {
         return $this->morphMany(Prospect::class, 'scope');
