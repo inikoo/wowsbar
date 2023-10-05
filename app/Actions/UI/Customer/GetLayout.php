@@ -77,7 +77,13 @@ class GetLayout
                 'route'   => 'customer.prospects.dashboard',
                 'topMenu' => [
                     'subSections' => [
-
+                        [
+                            'icon'  => ['fal', 'fa-globe'],
+                            'label' => __('websites'),
+                            'route' => [
+                                'name' => 'customer.prospects.websites.index',
+                            ]
+                        ],
                     ],
                 ]
             ];
@@ -131,7 +137,13 @@ class GetLayout
                 'route'   => 'customer.social.dashboard',
                 'topMenu' => [
                     'subSections' => [
-
+                        [
+                            'icon'  => ['fal', 'fa-globe'],
+                            'label' => __('websites'),
+                            'route' => [
+                                'name' => 'customer.social.websites.index',
+                            ]
+                        ],
                     ],
                 ]
             ];

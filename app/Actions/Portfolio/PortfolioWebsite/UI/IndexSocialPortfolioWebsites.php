@@ -10,6 +10,9 @@ namespace App\Actions\Portfolio\PortfolioWebsite\UI;
 use App\Actions\Helpers\History\IndexHistories;
 use App\Actions\InertiaAction;
 use App\Actions\UI\Customer\Banners\ShowBannersDashboard;
+use App\Actions\UI\Customer\GoogleAds\ShowGoogleAdsDashboard;
+use App\Actions\UI\Customer\SEO\ShowSeoDashboard;
+use App\Actions\UI\Customer\Social\ShowSocialDashboard;
 use App\Enums\UI\Customer\PortfolioWebsitesTabsEnum;
 use App\Enums\UI\Organisation\CustomerWebsitesTabsEnum;
 use App\Http\Resources\History\HistoryResource;
@@ -28,7 +31,7 @@ use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 use function Clue\StreamFilter\fun;
 
-class IndexBannerPortfolioWebsites extends InertiaAction
+class IndexSocialPortfolioWebsites extends InertiaAction
 {
     public function authorize(ActionRequest $request): bool
     {
@@ -47,11 +50,11 @@ class IndexBannerPortfolioWebsites extends InertiaAction
     /** @noinspection PhpUndefinedMethodInspection */
     public function handle($prefix = null): LengthAwarePaginator
     {
-        $divisionId = Cache::get('banners');
+        $divisionId = Cache::get('social');
 
         if(! $divisionId) {
-            $divisionId = Division::firstWhere('slug', 'banners')->id;
-            Cache::put('banners', $divisionId);
+            $divisionId = Division::firstWhere('slug', 'social')->id;
+            Cache::put('social', $divisionId);
         }
 
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
@@ -113,7 +116,7 @@ class IndexBannerPortfolioWebsites extends InertiaAction
     public function htmlResponse(LengthAwarePaginator $websites, ActionRequest $request): Response
     {
         return Inertia::render(
-            'Banners/BannersPortfolioWebsites',
+            'Social/SocialPortfolioWebsites',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->getName(),
@@ -173,12 +176,12 @@ class IndexBannerPortfolioWebsites extends InertiaAction
         };
 
         return match ($routeName) {
-            'customer.banners.websites.index' =>
+            'customer.social.websites.index' =>
             array_merge(
-                ShowBannersDashboard::make()->getBreadcrumbs(),
+                ShowSocialDashboard::make()->getBreadcrumbs(),
                 $headCrumb(
                     [
-                        'name' => 'customer.banners.websites.index',
+                        'name' => 'customer.social.websites.index',
                         null
                     ]
                 ),
