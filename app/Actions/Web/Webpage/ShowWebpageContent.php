@@ -17,9 +17,12 @@ class ShowWebpageContent
 
     private bool $asAction = false;
 
-    public function handle(Webpage $webpage): Webpage
+    public function handle(Webpage $webpage): array
     {
-        return $webpage->content;
+        return [
+            'data'      => $webpage->content,
+            'pagesHtml' => $webpage->compiled_content
+        ];
     }
 
 
@@ -38,9 +41,8 @@ class ShowWebpageContent
     }
 
 
-    public function asController(Webpage $webpage, ActionRequest $request): Webpage
+    public function asController(Webpage $webpage, ActionRequest $request): array
     {
-        dd('zzzzz');
         $request->validate();
 
         return $this->handle($webpage);

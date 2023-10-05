@@ -18,12 +18,12 @@ class UpdateWebpageContent
     use WithAttributes;
 
 
-    public function handle(Webpage $webpage, array $data): Webpage
+    public function handle(Webpage $webpage, array $data): void
     {
         $webpage->update(
             [
-                'content' => $data[''],
-                'compiled_content'
+                'content'          => $data['data'],
+                'compiled_content' => $data['pagesHtml']
             ]
         );
         $webpage->update(
@@ -32,12 +32,10 @@ class UpdateWebpageContent
             ]
         );
 
-        return $webpage;
     }
 
     public function authorize(ActionRequest $request): bool
     {
-
         return $request->user()->hasPermissionTo("websites.edit");
     }
 
@@ -50,13 +48,13 @@ class UpdateWebpageContent
         ];
     }
 
-    public function asController(Webpage $webpage, ActionRequest $request): Webpage
+    public function asController(Webpage $webpage, ActionRequest $request): string
     {
-        dd('caca');
         $request->validate();
 
-        dd($request->validated());
-        return $this->handle($webpage, $request->validated());
+         $this->handle($webpage, $request->validated());
+
+         return '👍';
     }
 
 

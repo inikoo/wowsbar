@@ -6,7 +6,7 @@
  */
 
 
-use App\Actions\Portfolios\CustomerWebsite\UI\IndexCustomerWebsites;
+use App\Actions\Portfolio\PortfolioWebsite\UI\IndexSeoPortfolioWebsites;
 use App\Actions\UI\Customer\SEO\ShowSeoDashboard;
 use Illuminate\Support\Facades\Route;
 
@@ -17,7 +17,7 @@ Route::get('/dashboard', [
 ])->name('dashboard');
 
 Route::get('/websites', [
-    'uses'  => IndexCustomerWebsites::class,
+    'uses'  => IndexSeoPortfolioWebsites::class,
     'icon'  => 'globe',
     'label' => 'websites'
 ])->name('websites.index');
