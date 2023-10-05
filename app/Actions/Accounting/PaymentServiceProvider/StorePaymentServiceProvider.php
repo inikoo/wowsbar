@@ -20,7 +20,7 @@ class StorePaymentServiceProvider
     public function handle(array $modelData): PaymentServiceProvider
     {
 
-        /** @var \App\Models\Accounting\PaymentServiceProvider $paymentServiceProvider */
+        /** @var PaymentServiceProvider $paymentServiceProvider */
         $paymentServiceProvider = PaymentServiceProvider::create($modelData);
 
         $paymentServiceProvider->stats()->create();

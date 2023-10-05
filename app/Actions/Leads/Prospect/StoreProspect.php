@@ -83,8 +83,8 @@ class StoreProspect
 
     public function rules(ActionRequest $request): array
     {
-        $extraConditions=match($request->route()->getName()){
-            'org.models.shop.prospects.store'=>[
+        $extraConditions=match($request->route()->getName()) {
+            'org.models.shop.prospects.store'=> [
                 ['column' => 'shop_id', 'value' => $request->route()->parameters()['shop']],
             ],
             default=> []
