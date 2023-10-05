@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 // library.add()
 
 const props = defineProps<{
-    columnValue: string
+    columnValue?: string
 }>()
 </script>
 
@@ -13,7 +13,7 @@ const props = defineProps<{
     <div>
         <FontAwesomeIcon v-if="columnValue == 'paid'" icon="fas fa-check-circle" class="text-green-500" title="Paid" />
         <FontAwesomeIcon v-else-if="columnValue == 'interested'" icon="fal fa-check-circle" class="text-green-500" title="Interested"/>
-        <FontAwesomeIcon v-else-if="columnValue == 'uninterested'" icon="fal fa-times-circle" class="text-red-500" title="Not interested"/>
-        <FontAwesomeIcon v-else icon="fas fa-circle" class="text-gray-300" title="Not sure" />
+        <FontAwesomeIcon v-else-if="columnValue == 'not_interested'" icon="fal fa-times-circle" class="text-red-500" title="Not interested"/>
+        <FontAwesomeIcon v-else icon="far fa-circle" class="text-gray-500" title="Not sure" />
     </div>
 </template>

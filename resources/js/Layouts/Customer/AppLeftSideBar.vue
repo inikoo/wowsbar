@@ -98,16 +98,7 @@ const handleToggleLeftbar = () => {
                           :aria-current="itemKey === layout.currentModule ? 'page' : undefined"
                     >
                         <div class="flex items-center">
-                            <!--
-                            <img v-if="item.name == 'dashboard'" src="../../../../art/logo" alt="" class="h-4 aspect-square"
-                                 :class="[ itemKey === layout.currentModule
-											? 'text-orange-500'
-											: 'text-gray-400 group-hover:text-gray-600',
-										'ml-2 mr-3 flex-shrink-0 h-4 w-4'
-							]">
-							 -->
                             <FontAwesomeIcon
-
                                 aria-hidden="true"
                                 class="text-gray-400 dark:text-gray-200 ml-2 mr-3 flex-shrink-0 h-4 w-4"
                                 :icon="item.icon"/>
