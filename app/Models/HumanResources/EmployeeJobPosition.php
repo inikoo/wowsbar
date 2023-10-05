@@ -40,21 +40,7 @@ class EmployeeJobPosition extends Pivot
 
     protected $guarded = [];
 
-    protected static function booted(): void
-    {
-        static::created(
-            function (EmployeeJobPosition $employeeJobPosition) {
-                EmployeeHydrateJobPositionsShare::run($employeeJobPosition->employee);
-                HydrateJobPosition::run($employeeJobPosition->jobPosition);
-            }
-        );
-        static::deleted(
-            function (EmployeeJobPosition $employeeJobPosition) {
-                EmployeeHydrateJobPositionsShare::run($employeeJobPosition->employee);
-                HydrateJobPosition::run($employeeJobPosition->jobPosition);
-            }
-        );
-    }
+
 
     public function employee(): BelongsTo
     {

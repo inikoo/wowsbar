@@ -98,6 +98,11 @@ class OrganisationUser extends Authenticatable implements HasMedia, Auditable
 
     protected string $guard_name = 'org';
 
+    public function guardName(): string
+    {
+        return 'org';
+    }
+
     protected $casts = [
         'data'              => 'array',
         'settings'          => 'array',

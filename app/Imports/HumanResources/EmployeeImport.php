@@ -10,12 +10,14 @@ namespace App\Imports\HumanResources;
 use App\Actions\HumanResources\AttachJobPosition;
 use App\Actions\HumanResources\Employee\StoreEmployee;
 use App\Actions\Organisation\OrganisationUser\StoreOrganisationUser;
+use App\Enums\HumanResources\Employee\EmployeeStateEnum;
 use App\Imports\WithImport;
 use App\Models\HumanResources\JobPosition;
 use App\Models\HumanResources\Workplace;
 use Arr;
 use Exception;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rules\Enum;
 use Maatwebsite\Excel\Concerns\SkipsOnFailure;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
@@ -40,7 +42,7 @@ class EmployeeImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wi
             array_merge(
                 Arr::except(
                     array_keys($this->rules()),
-                    ['name', 'starting_date', 'workplace', 'position_code','username','password']
+                    ['name', 'starting_date', 'workplace', 'position_code', 'username', 'password']
                 ),
                 [
                     'contact_name',
@@ -50,34 +52,16 @@ class EmployeeImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wi
 
 
         try {
-            $employee=StoreEmployee::make()->action(
+            $modelData = $row->only($fields)->all();
+            data_set($modelData, 'work_email', null, overwrite: false);
+            data_set($modelData, 'email', null, overwrite: false);
+
+
+            StoreEmployee::make()->action(
                 $parent,
-                $row->only($fields)->all()
+                $modelData
             );
             $this->setRecordAsCompleted($uploadRecord);
-
-            if($row->has('position_code')) {
-                $jobPosition=JobPosition::firstWhere('slug', $row->get('position_code'));
-                AttachJobPosition::run($employee, $jobPosition);
-            }
-
-
-            if($row->has('username')) {
-
-                StoreOrganisationUser::make()->action(
-                    $employee,
-                    [
-                        'username'=> $row->get('username'),
-                        'password'=> $row->get(
-                            'password',
-                            (app()->isLocal() ? 'hello' : wordwrap(Str::random(), 4, '-', true))
-                        ),
-                        'contact_name'=> $employee->contact_name,
-                        'email'       => $employee->work_email
-                    ]
-                );
-            }
-
 
         } catch (Exception $e) {
             $this->setRecordAsFailed($uploadRecord, [$e->getMessage()]);
@@ -88,12 +72,14 @@ class EmployeeImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wi
     {
         $data['starting_date'] = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($data['starting_date'])->format('Y-m-d');
 
-        if(Arr::exists($data, 'username')) {
+        if (Arr::exists($data, 'username')) {
             $data['username'] = Str::lower($data['username']);
-
+        }
+        if (!Arr::exists($data, 'state')) {
+            $data['state'] = EmployeeStateEnum::WORKING->value;
         }
 
-
+        $data['positions'] = explode(',', Arr::get($data, 'positions'));
 
 
         return $data;
@@ -109,11 +95,13 @@ class EmployeeImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wi
             'alias'         => ['required', 'iunique:employees', 'string', 'max:16'],
             'name'          => ['required', 'string', 'max:256'],
             'job_title'     => ['required', 'string', 'max:256'],
-            'position_code' => ['required', 'exists:job_positions,slug'],
+            'positions'     => ['required', 'array'],
+            'positions.*'   => ['exists:job_positions,slug'],
             'starting_date' => ['required', 'date'],
             'workplace'     => ['required', 'nullable', 'string', 'exists:workplaces,slug'],
-            'username'      => ['sometimes', 'iunique:organisation_users','alpha_dash:ascii'],
-            'password'      => ['sometimes', 'string', 'min:8', 'max:64']
+            'username'      => ['sometimes', 'iunique:organisation_users', 'alpha_dash:ascii'],
+            'password'      => ['sometimes', 'string', 'min:8', 'max:64'],
+            'state'         => ['required', new Enum(EmployeeStateEnum::class)]
         ];
     }
 

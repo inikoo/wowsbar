@@ -19,9 +19,9 @@ trait HasRoles
 
     public function assignJoBPositionRoles(JobPosition $jobPosition): void
     {
-        foreach ($jobPosition->roles as $roleID) {
-            $this->assignRole($roleID);
-            $this->roles()->updateExistingPivot($roleID, ['job_position_role' => true]);
+        foreach ($jobPosition->roles as $role) {
+            $this->assignRole($role);
+            $this->roles()->updateExistingPivot($role->id, ['job_position_role' => true]);
         }
     }
 
