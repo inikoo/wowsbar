@@ -12,6 +12,7 @@ use App\Actions\Market\Shop\Hydrators\ShopHydrateCustomerWebsites;
 use App\Actions\Portfolios\CustomerWebsite\Hydrators\CustomerWebsiteHydrateUniversalSearch;
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateCustomerWebsites;
 use App\Actions\Portfolio\PortfolioWebsite\Hydrators\PortfolioWebsiteHydrateUniversalSearch;
+use App\Models\Organisation\Division;
 use App\Models\Portfolios\CustomerWebsite;
 use App\Models\Portfolio\PortfolioWebsite;
 use App\Rules\IUnique;
@@ -38,6 +39,7 @@ class StorePortfolioWebsite
         data_set($modelData, 'shop_id', customer()->shop_id);
         $portfolioWebsite = PortfolioWebsite::create($modelData);
         $portfolioWebsite->stats()->create();
+
         CustomerHydratePortfolioWebsites::dispatch($portfolioWebsite->customer);
 
         PortfolioWebsiteHydrateUniversalSearch::dispatch($portfolioWebsite);

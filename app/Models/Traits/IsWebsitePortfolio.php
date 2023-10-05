@@ -8,6 +8,7 @@
 namespace App\Models\Traits;
 
 use App\Actions\Utils\Abbreviate;
+use App\Models\Organisation\Division;
 use App\Models\Portfolio\Banner;
 use App\Models\Portfolio\BannerPortfolioWebsite;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -35,5 +36,10 @@ trait IsWebsitePortfolio
     {
         return $this->belongsToMany(Banner::class)->using(BannerPortfolioWebsite::class)
             ->withTimestamps();
+    }
+
+    public function divisions(): BelongsToMany
+    {
+        return $this->belongsToMany(Division::class, 'division_portfolio_websites', 'portfolio_website_id')->withPivot('interest');
     }
 }
