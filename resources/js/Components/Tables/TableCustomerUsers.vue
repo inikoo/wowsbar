@@ -76,8 +76,8 @@ const splitRoles = (word: string) => {
         </template>
 
         <template #cell(avatar)="{ item: user }">
-            <div class="flex justify-center">
-                <Image :src="user.avatar" class="w-6 aspect-square rounded-full" :alt="user.contact_name" />
+            <div class="flex justify-center" :title="user.contact_name">
+                <Image :src="user.avatar" class="w-6 aspect-square rounded-full overflow-hidden shadow ring-1 ring-gray-100" :alt="user.contact_name" />
             </div>
         </template>
 
