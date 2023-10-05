@@ -17,6 +17,7 @@ use App\Models\Traits\IsWebsitePortfolio;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -91,9 +92,9 @@ class PortfolioWebsite extends Model implements Auditable
         return $this->hasOne(PortfolioWebsiteStats::class);
     }
 
-    public function divisions()
+    public function divisions(): BelongsToMany
     {
-        return $this->belongsToMany(DivisionPortfolioWebsite::class);
+        return $this->belongsToMany(Division::class, 'division_portfolio_websites');
     }
 
     public function scopedProspects(): MorphMany
