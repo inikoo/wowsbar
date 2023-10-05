@@ -38,6 +38,12 @@ trait WithImportModel
 
     }
 
+    public function rumImport($file, $command): Upload
+    {
+        return $this->handle($file);
+
+    }
+
     public function asCommand(Command $command): void
     {
         $filename = null;
@@ -49,7 +55,7 @@ trait WithImportModel
 
         $file = ConvertUploadedFile::run($filePath);
 
-        $upload = $this->handle($file);
+        $upload = $this->rumImport($file, $command);
 
         Storage::disk('local')->delete("tmp/" . $filename);
 

@@ -7,67 +7,46 @@
 
 namespace App\Actions\Leads\Prospect;
 
-use App\Actions\Helpers\ExcelUpload\Hydrators\UploadHydrateStats;
-use App\Actions\Helpers\Uploads\ConvertUploadedFile;
-use App\Actions\Helpers\Uploads\ImportModel;
 use App\Actions\Helpers\Uploads\StoreUploads;
+use App\Actions\Traits\WithImportModel;
 use App\Imports\Leads\ProspectImport;
+use App\Models\Helpers\Upload;
 use App\Models\Leads\Prospect;
 use App\Models\Market\Shop;
-use Exception;
-use Illuminate\Console\Command;
 use Lorisleiva\Actions\ActionRequest;
-use Lorisleiva\Actions\Concerns\AsAction;
-use Lorisleiva\Actions\Concerns\WithAttributes;
 
 class ImportShopProspects
 {
-    use AsAction;
-    use WithAttributes;
+    use WithImportModel;
 
-    /**
-     * @var true
-     */
-    private bool $asAction          = false;
-
-    public function handle(Shop $shop, $file): void
+    public function handle(Shop $scope, $file): Upload
     {
-        $prospectUpload = StoreUploads::run($file, Prospect::class);
-        $excelUpload    = ImportModel::run(new ProspectImport($shop, $prospectUpload), $prospectUpload);
+        $upload = StoreUploads::run($file, Prospect::class);
 
-        UploadHydrateStats::dispatch($excelUpload);
+        return $this->init(
+            $upload,
+            new ProspectImport($scope,$upload)
+        );
+
     }
 
-    /**
-     * @throws \Throwable
-     */
+
     public function asController(Shop $shop, ActionRequest $request): void
     {
         $file = $request->file('file');
         $this->handle($shop, $file);
     }
 
-    public string $commandSignature = 'shop:import-prospects {shop} {filename}';
+    public string $commandSignature = 'shop:import-prospects {shop} {--G|google=} {filename}';
 
-    public function asCommand(Command $command): int
+    public function rumImport($file, $command): Upload
     {
 
-        try {
-            $shop = Shop::where('slug', $command->argument('shop'))->firstOrFail();
-        } catch (Exception $e) {
-            $command->error($e->getMessage());
+        $shop=Shop::where('slug', $command->argument('shop'))->firstOrFail();
 
-            return 1;
-        }
+        return $this->handle($shop, $file);
 
-
-        $filename = $command->argument('filename');
-        $file     = ConvertUploadedFile::run($filename);
-
-        $this->handle($shop, $file);
-
-        $command->line('Prospect imported');
-
-        return 0;
     }
+
+
 }

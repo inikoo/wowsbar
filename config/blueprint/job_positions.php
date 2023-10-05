@@ -89,7 +89,7 @@ return [
             'department' => 'content',
             'name'       => 'Seo supervisor',
             'roles'      => [
-                'guest'
+                'seo-supervisor'
             ]
         ],
         'seo-w'       => [
@@ -98,7 +98,7 @@ return [
             'department' => 'content',
             'name'       => 'SEO',
             'roles'      => [
-                'guest'
+                'seo'
             ]
         ],
         'ppc-m'       => [
