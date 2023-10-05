@@ -17,6 +17,7 @@ use App\Models\Traits\IsWebsitePortfolio;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -41,6 +42,7 @@ use Spatie\Sluggable\HasSlug;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Portfolio\Banner> $banners
  * @property-read int|null $banners_count
  * @property-read \App\Models\CRM\Customer $customer
+ * @property-read Division $divisions
  * @property-read array $es_audits
  * @property-read \App\Models\Portfolio\PortfolioWebsiteStats|null $stats
  * @property-read \App\Models\Search\UniversalSearch|null $universalSearch
@@ -91,9 +93,9 @@ class PortfolioWebsite extends Model implements Auditable
         return $this->hasOne(PortfolioWebsiteStats::class);
     }
 
-    public function divisions()
+    public function divisions(): BelongsToMany
     {
-        return $this->belongsToMany(DivisionPortfolioWebsite::class);
+        return $this->belongsToMany(Division::class, 'division_portfolio_websites')->withPivot('interest');
     }
 
     public function scopedProspects(): MorphMany
