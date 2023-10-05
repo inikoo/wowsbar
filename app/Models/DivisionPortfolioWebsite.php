@@ -9,5 +9,7 @@ class DivisionPortfolioWebsite extends Model
 {
     use HasFactory;
 
+    protected $table = 'division_portfolio_websites';
+
     protected $guarded = [];
 }

@@ -42,6 +42,7 @@ use Spatie\Sluggable\HasSlug;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Portfolio\Banner> $banners
  * @property-read int|null $banners_count
  * @property-read \App\Models\CRM\Customer $customer
+ * @property-read Division $divisions
  * @property-read array $es_audits
  * @property-read \App\Models\Portfolio\PortfolioWebsiteStats|null $stats
  * @property-read \App\Models\Search\UniversalSearch|null $universalSearch
@@ -94,7 +95,7 @@ class PortfolioWebsite extends Model implements Auditable
 
     public function divisions(): BelongsToMany
     {
-        return $this->belongsToMany(Division::class, 'division_portfolio_websites');
+        return $this->belongsToMany(Division::class, 'division_portfolio_websites')->withPivot('interest');
     }
 
     public function scopedProspects(): MorphMany

@@ -26,7 +26,8 @@ class PortfolioWebsiteResource extends JsonResource
             'code'           => $websitePortfolio->code,
             'name'           => $websitePortfolio->name,
             'url'            => preg_replace('/^https?:\/\//', '', $websitePortfolio->url),
-            'number_banners' => $websitePortfolio->stats->number_banners
+            'number_banners' => $websitePortfolio->stats->number_banners,
+            'divisions' => PortfolioWebsiteDivisionResource::collection($websitePortfolio->divisions)
         ];
     }
 }
