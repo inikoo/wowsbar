@@ -1,5 +1,7 @@
 import defaultTheme from 'tailwindcss/defaultTheme';
 import forms from '@tailwindcss/forms';
+import colors from 'tailwindcss/colors';
+
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -22,6 +24,7 @@ export default {
             },
             colors: {
                 'regal-pink': '#EDBBBA',
+                'customers': colors.lime
             },
             keyframes: {
                 shimmer: {

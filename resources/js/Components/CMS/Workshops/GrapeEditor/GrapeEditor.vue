@@ -22,6 +22,45 @@ const props = defineProps<{
 
 console.log('porps',props.updateRoute)
 const editorInstance = ref(null);
+const options = {
+    ...{
+      i18n: {},
+      // default options
+      tailwindPlayCdn: 'https://cdn.tailwindcss.com',
+      plugins: [],
+      config: {},
+      cover: `.object-cover { filter: sepia(1) hue-rotate(190deg) opacity(.46) grayscale(.7) !important; }`,
+      changeThemeText: 'Change Theme',
+      openCategory: 'Blog',
+    },
+  };
+
+  const Store = async (data, editor) => {
+    const pagesHtml = editor.Pages.getAll().map(page => {
+            const component = page.getMainComponent();
+            return {
+              html: editor.getHtml({ component }),
+              css: editor.getCss({ component })
+            }
+          });
+        try {
+            const response = await axios.post(
+                route(
+                    props.updateRoute.name,
+                    props.updateRoute.parameters
+                ),
+                { data, pagesHtml },
+            );
+            if(response){
+               console.log(response)
+            }
+        } catch (error) {
+          console.log(error)
+        }
+    }
+
+ 
+
 
 onMounted(() => {
     editorInstance.value = grapesjs.init({
@@ -32,35 +71,29 @@ onMounted(() => {
         noticeOnUnload: false,
         plugins: [Webpage, ...props.plugins],
         storageManager: {
-            type: "remote",
-            options: {
-                remote: {
-                    urlLoad: route(props.loadRoute.name, props.loadRoute.parameters),
-                    urlStore: route(props.updateRoute.name, props.updateRoute.parameters),
-                    onStore: (data, editor) => {
-                        const pagesHtml = editor.Pages.getAll().map((page) => {
-                            const component = page.getMainComponent();
-                            return {
-                                html: editor.getHtml({ component }),
-                                css: editor.getCss({ component }),
-                            };
-                        });
-                        return { data, pagesHtml };
-                    },
-                    onLoad: (result) => result.data,
-                },
-            },
-        },
+    type: 'remote',
+        }
     });
-    if (props.customBlocks) {
-        addNewBlocks(editorInstance.value, props.customBlocks);
-    }
+
+    editorInstance.value.Storage.add('remote', {async load() {return await axios.get( route(
+                    props.loadRoute.name,
+                    props.loadRoute.parameters
+                ),)},
+    async store(data) {return Store(data,editorInstance.value)},
+});
+console.log(editorInstance.value.Storage)
+    // if (props.customBlocks) {
+    //     addNewBlocks(editorInstance.value, props.customBlocks);
+    // }
+
     CustomBlock(editorInstance.value);
 });
 </script>
 
 <template>
+     <div @click="test()">test</div>
     <div id="gjs"></div>
+   
 </template>
 
 <style lang="scss">
