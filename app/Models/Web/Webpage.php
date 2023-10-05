@@ -31,7 +31,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property int|null $parent_id
  * @property int $website_id
  * @property int|null $main_variant_id
- * @property mixed $content
+ * @property array $content
  * @property array $blocks
  * @property array $compiled_content
  * @property array $data

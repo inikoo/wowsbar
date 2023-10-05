@@ -24,7 +24,7 @@ class AttachJobPosition
         $model->jobPositions()->attach($jobPosition->id);
         $model->organisationUser?->assignJoBPositionRoles($jobPosition);
 
-        if(class_basename($model)=='Employee'){
+        if(class_basename($model)=='Employee') {
             EmployeeHydrateJobPositionsShare::dispatch($model);
             HydrateJobPosition::dispatch($jobPosition);
         }

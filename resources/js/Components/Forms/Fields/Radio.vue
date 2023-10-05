@@ -66,18 +66,17 @@ const compareObjects = (objA, objB) => {
                         <RadioGroupOption as="template" v-for="(option, index) in fieldData.options" :key="option.value" :value="option" v-slot="{ active, checked }">
                             <div :class="[
                                 'relative flex cursor-pointer rounded-lg border bg-white py-2 px-3 shadow-sm focus:outline-none',
-                                active ? 'border-orange-600 ring-2 ring-orange-600' : 'border-gray-300'
+                                active ? 'ring-2 ring-gray-600' : 'border-gray-300'
                             ]">
-                            <!-- {{ compareObjects(form[fieldName], option) }} -->
                                 <span class="flex flex-1">
                                     <span class="flex flex-col">
-                                    <RadioGroupLabel as="span" class="block text-sm font-medium text-gray-700 capitalize">{{ option.title }}</RadioGroupLabel>
-                                    <RadioGroupDescription as="span" class="mt-1 flex items-center text-xs text-gray-400">{{ option.description }}</RadioGroupDescription>
-                                    <RadioGroupDescription as="span" class="mt-6 text-xs font-medium text-gray-600">{{ option.label }}</RadioGroupDescription>
+                                    <RadioGroupLabel v-if="option.title" as="span" class="block text-sm font-medium text-gray-700 capitalize">{{ option.title }}</RadioGroupLabel>
+                                    <RadioGroupDescription v-if="option.description" as="span" class="mt-1 flex items-center text-xs text-gray-400">{{ option.description }}</RadioGroupDescription>
+                                    <RadioGroupDescription v-if="option.label" as="span" class="mt-6 text-xs font-medium text-gray-600">{{ option.label }}</RadioGroupDescription>
                                     </span>
                                 </span>
-                                <!-- <FontAwesomeIcon icon='far fa-check' :class="[!checked ? 'invisible' : '', 'h-4 w-4 text-orange-600']" aria-hidden="true" /> -->
-                                <span :class="[active ? 'border' : 'border-2', compareObjects(form[fieldName], option) ? 'border-orange-600' : 'border-transparent', 'pointer-events-none absolute -inset-px rounded-lg']" aria-hidden="true" />
+                                <!-- <FontAwesomeIcon icon='far fa-check' :class="[!checked ? 'invisible' : '', 'h-4 w-4 text-gray-600']" aria-hidden="true" /> -->
+                                <span :class="[active ? 'border' : 'border-2', compareObjects(form[fieldName], option) ? 'border-gray-600' : 'border-transparent', 'pointer-events-none absolute -inset-px rounded-lg']" aria-hidden="true" />
                             </div>
                         </RadioGroupOption>
                         </div>

@@ -7,18 +7,13 @@
 
 namespace App\Imports\Leads;
 
-use App\Actions\Helpers\ExcelUpload\ExcelUploadRecord\UpdateImportExcelUploadStatus;
 use App\Actions\Leads\Prospect\StoreProspect;
-use App\Models\CRM\Customer;
+use App\Imports\WithImport;
 use App\Models\Helpers\Upload;
-use App\Models\Helpers\UploadRecord;
-use App\Models\Leads\Prospect;
 use App\Models\Market\Shop;
-use App\Models\Portfolio\PortfolioWebsite;
+use App\Rules\IUnique;
 use Exception;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Collection;
-use Maatwebsite\Excel\Concerns\SkipsFailures;
 use Maatwebsite\Excel\Concerns\SkipsOnFailure;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
@@ -26,46 +21,92 @@ use Maatwebsite\Excel\Concerns\WithValidation;
 
 class ProspectImport implements ToCollection, WithHeadingRow, SkipsOnFailure, WithValidation
 {
-    use SkipsFailures;
+    use WithImport;
 
-    public Upload $prospectUpload;
-    private Shop|Customer|PortfolioWebsite $scope;
-
-    public function __construct(Shop|Customer|PortfolioWebsite $scope, Upload $prospectUpload)
+    protected Shop $scope;
+    public function __construct(Shop $scope, Upload $upload)
     {
-        $this->scope          =$scope;
-        $this->prospectUpload = $prospectUpload;
+        $this->scope  = $scope;
+        $this->upload = $upload;
     }
 
 
-
-    public function collection(Collection $collection): void
+    public function storeModel($row, $uploadRecord): void
     {
-        $totalImported = 1;
 
-        foreach ($collection as $prospect) {
-            try {
-                $prospect = UploadRecord::create([
-                    'excel_upload_id' => $this->prospectUpload->id,
-                    'data'            => json_encode(Arr::except($prospect, 'code'))
-                ]);
+        $fields =
+            array_merge(
+                Arr::except(
+                    array_keys($this->rules()),
+                    []
+                ),
+                [
+                ]
+            );
 
-                StoreProspect::run($this->scope, json_decode($prospect->data, true));
-                UpdateImportExcelUploadStatus::run($prospect, count($collection), $totalImported++, Prospect::class);
-            } catch (Exception $e) {
-                $totalImported--;
-            }
+
+        try {
+            $modelData = $row->only($fields)->all();
+            data_set($modelData, 'phone', null, overwrite: false);
+            data_set($modelData, 'contact_website', null, overwrite: false);
+
+
+            StoreProspect::make()->action(
+                $this->scope,
+                $modelData
+            );
+            $this->setRecordAsCompleted($uploadRecord);
+        } catch (Exception $e) {
+            $this->setRecordAsFailed($uploadRecord, [$e->getMessage()]);
         }
     }
 
+    public function prepareForValidation($data)
+    {
+
+        if (Arr::get($data, 'contact_website')) {
+
+            if(!preg_match('/^https?:\/\//','')){
+                $data['contact_website'] = 'https://'.$data['contact_website'];
+
+            }
+        }
+
+
+
+        return $data;
+    }
+
+
+
     public function rules(): array
     {
+
+        $extraConditions = match (class_basename($this->scope)) {
+            'Shop' => [
+                ['column' => 'shop_id', 'value' => $this->scope->id],
+            ],
+            default => []
+        };
+
         return [
             'contact_name'    => ['required', 'nullable', 'string', 'max:255'],
             'company_name'    => ['required', 'nullable', 'string', 'max:255'],
-            'email'           => ['required', 'nullable', 'email'],
-            'phone'           => ['required', 'nullable'],
-            'contact_website' => ['required', 'nullable'],
+            'email'           => [
+                'present','nullable',
+                'email',
+                'max:500',
+
+
+            ],
+            'phone'           => [
+                'present',
+                'nullable',
+                'phone:AUTO',
+            ],
+            'contact_website' => ['nullable', 'url',
+
+            ],
         ];
     }
 }

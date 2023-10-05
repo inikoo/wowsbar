@@ -7,8 +7,6 @@
 
 namespace App\Models\HumanResources;
 
-use App\Actions\HumanResources\Employee\Hydrators\EmployeeHydrateJobPositionsShare;
-use App\Actions\HumanResources\JobPosition\HydrateJobPosition;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 

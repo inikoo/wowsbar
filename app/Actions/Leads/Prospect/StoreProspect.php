@@ -27,8 +27,12 @@ class StoreProspect
     use WithAttributes;
 
     private bool $asAction = false;
+    /**
+     * @var \App\Models\Market\Shop|\App\Models\Portfolio\PortfolioWebsite
+     */
+    private PortfolioWebsite|Shop $scope;
 
-    public function handle(Shop|PortfolioWebsite $scope, array $modelData, array $addressesData = []): Prospect
+    public function handle(Shop|PortfolioWebsite $scope, array $modelData): Prospect
     {
         if (class_basename($scope) == 'PortfolioWebsite') {
             data_set($modelData, 'customer_id', $scope->customer_id);
@@ -43,7 +47,6 @@ class StoreProspect
 
         if (class_basename($scope) == 'PortfolioWebsite') {
             PortfolioWebsiteHydrateProspects::dispatch();
-
         } elseif (class_basename($scope) == 'Shop') {
             ProspectHydrateUniversalSearch::dispatch($prospect);
             OrganisationHydrateProspects::dispatch();
@@ -65,8 +68,10 @@ class StoreProspect
 
     public function inShop(Shop $shop, ActionRequest $request): Prospect
     {
+        $this->scope = $shop;
         $this->fillFromRequest($request);
         $request->validate();
+
         return $this->handle($shop, $request->validated());
     }
 
@@ -83,41 +88,54 @@ class StoreProspect
 
     public function rules(ActionRequest $request): array
     {
-        $extraConditions=match($request->route()->getName()) {
-            'org.models.shop.prospects.store'=> [
-                ['column' => 'shop_id', 'value' => $request->route()->parameters()['shop']],
+        $extraConditions = match (class_basename($this->scope)) {
+            'Shop' => [
+                ['column' => 'shop_id', 'value' => $this->scope->id],
             ],
-            default=> []
+            default => []
         };
 
 
         return [
-            'contact_name'    => ['nullable',  'string', 'max:255'],
-            'company_name'    => ['nullable',  'string', 'max:255'],
-            'email'           => ['required_without:phone','email', 'max:500',
-                                  new IUnique(
-                                      table: 'prospects',
-                                      extraConditions:$extraConditions
-                                  ),
+            'contact_name'    => ['nullable', 'string', 'max:255'],
+            'company_name'    => ['nullable', 'string', 'max:255'],
+            'email'           => [
+                'required_without:phone',
+                'email',
+                'max:500',
+                new IUnique(
+                    table: 'prospects',
+                    extraConditions: $extraConditions
+                ),
 
             ],
-            'phone'           => ['required_without:email', 'nullable', 'phone:AUTO',
+            'phone'           => [
+                'required_without:email',
+                'nullable',
+                'phone:AUTO',
+                new IUnique(
+                    table: 'prospects',
+                    extraConditions: $extraConditions
+                ),
+            ],
+            'contact_website' => ['nullable', 'url',
                                   new IUnique(
                                       table: 'prospects',
-                                      extraConditions:$extraConditions
+                                      extraConditions: $extraConditions
                                   ),
                 ],
-            'contact_website' => ['nullable','iunique:prospects', 'active_url'],
         ];
     }
 
-    public function action(Shop|PortfolioWebsite $scope, array $objectData, array $addressesData): Prospect
+    public function action(Shop|PortfolioWebsite $scope, array $objectData): Prospect
     {
+        $this->scope = $scope;
+
         $this->asAction = true;
         $this->setRawAttributes($objectData);
         $validatedData = $this->validateAttributes();
 
-        return $this->handle($scope, $validatedData, $addressesData);
+        return $this->handle($scope, $validatedData);
     }
 
     public function htmlResponse(Prospect $prospect): RedirectResponse

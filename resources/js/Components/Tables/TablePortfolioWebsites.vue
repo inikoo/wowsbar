@@ -32,6 +32,7 @@ const isModalOpen = ref(false)
 const selectedWebsite = ref()
 const selectedColumn = ref()
 const selectedWebsiteSlug = ref()
+const indexSelectedWebsite = ref(0)
 
 function websiteRoute(website: Website) {
     switch (route().current()) {
@@ -43,11 +44,12 @@ function websiteRoute(website: Website) {
 }
 
 // When click on the icon
-const handleIconClick = (columnData: {name: string, label: string, value: string}, website: string, websiteSlug: string) => {
-    selectedColumn.value = columnData
-    selectedWebsite.value = website
-    selectedWebsiteSlug.value = websiteSlug
-    isModalOpen.value = true
+const handleIconClick = (columnData: {name: string, label: string, value: string}, websiteName: string, websiteSlug: string) => {
+    selectedColumn.value = columnData  // To retrieve divisions data (name, label, value)
+    selectedWebsite.value = websiteName  // To retrieve website name (string)
+    selectedWebsiteSlug.value = websiteSlug  // To retrieve website slug (string)
+    indexSelectedWebsite.value = props.data.data.findIndex(item => item.slug == selectedWebsiteSlug.value) // To check index selected website from props.data.data
+    isModalOpen.value = true  // To open the modal
 }
 
 const submitState = async (websiteSlug: string, selectedColumnName: string, stateName: string) => {
@@ -64,7 +66,7 @@ const submitState = async (websiteSlug: string, selectedColumnName: string, stat
         )
         
         // For manipulation data in client side (data change without refresh the page)
-        props.data.data.forEach(item => item.slug == selectedWebsiteSlug.value ? item[selectedColumn.value.name].value = stateName : '')
+        props.data.data[indexSelectedWebsite.value][selectedColumn.value.name].value = stateName
 
         // To add Toast on success
         notify({
@@ -87,8 +89,6 @@ const submitState = async (websiteSlug: string, selectedColumnName: string, stat
 </script>
 
 <template>
-<!-- <pre>{{ props.data.data.forEach(item => item.slug == 'mw-1' ? item.code = 'abc' : item.url = 'def') }}</pre> -->
-<!-- <pre>{{ props.data.data }}</pre> -->
     <Table :resource="data" :name="tab" class="mt-5">
         <template #cell(name)="{ item: website }">
             <Link :href="websiteRoute(website)" :id="website['slug']" class="py-2 px-1">
@@ -96,31 +96,35 @@ const submitState = async (websiteSlug: string, selectedColumnName: string, stat
             </Link>
         </template>
 
+        <!-- Leads -->
         <template #cell(leads)="{ item: website }">
             <div class="cursor-pointer" @click="handleIconClick(website.prospects, website.name, website.slug)">
                 <IconGroupInterested :columnValue="website.prospects?.value" />
             </div>
         </template>
 
+        <!-- SEO -->
         <template #cell(seo)="{ item: website }">
             <div class="cursor-pointer" @click="handleIconClick(website.seo, website.name, website.slug)">
                 <IconGroupInterested :columnValue="website.seo?.value" />
             </div>
         </template>
 
+        <!-- Google Ads -->
         <template #cell(google-ads)="{ item: website }">
-        <!-- <pre>{{ website }}</pre> -->
             <div class="cursor-pointer" @click="handleIconClick(website['google-ads'], website.name, website.slug)">
                 <IconGroupInterested :columnValue="website['google-ads'].value" />
             </div>
         </template>
 
+        <!-- Social -->
         <template #cell(social)="{ item: website }">
             <div class="cursor-pointer" @click="handleIconClick(website.social, website.name, website.slug)">
                 <IconGroupInterested :columnValue="website.social?.value" />
             </div>
         </template>
 
+        <!-- Banners -->
         <template #cell(banners)="{ item: website }">
             <div class="cursor-pointer" @click="handleIconClick(website.banners, website.name, website.slug)">
                 <IconGroupInterested :columnValue="website.banners?.value" />
@@ -134,9 +138,9 @@ const submitState = async (websiteSlug: string, selectedColumnName: string, stat
         <div class="space-y-4">
             <p class="text-gray-600 text-center">Do you want to change the <span class="font-bold">{{ selectedColumn.label }}</span> status of <span class="font-bold">{{ selectedWebsite }}</span>?</p>
             <div class="flex justify-center gap-x-3">
-                <Button v-if="data.data[0][selectedColumn.name].value != 'not_sure' && data.data[0][selectedColumn.name].value != null" @click="submitState(selectedWebsiteSlug, selectedColumn.name, 'not_sure')" :style="'tertiary'" label="Not sure" icon="far fa-circle" class="text-slate-500" />
-                <Button v-if="data.data[0][selectedColumn.name].value != 'not_interested'" @click="submitState(selectedWebsiteSlug, selectedColumn.name, 'not_interested')" :style="'negative'" label="Not Interested" icon="fal fa-times-circle" />
-                <Button v-if="data.data[0][selectedColumn.name].value != 'interested'" @click="submitState(selectedWebsiteSlug, selectedColumn.name, 'interested')" :style="'tertiary'" label="Interested" icon="fal fa-check-circle" class="border-green-500 text-green-500 focus:ring-green-500 hover:bg-green-50" />
+                <Button v-if="data.data[indexSelectedWebsite][selectedColumn.name].value != 'not_sure' && data.data[indexSelectedWebsite][selectedColumn.name].value != null" @click="submitState(selectedWebsiteSlug, selectedColumn.name, 'not_sure')" :style="'tertiary'" label="Not sure" icon="far fa-circle" class="text-slate-500" />
+                <Button v-if="data.data[indexSelectedWebsite][selectedColumn.name].value != 'not_interested'" @click="submitState(selectedWebsiteSlug, selectedColumn.name, 'not_interested')" :style="'negative'" label="Not Interested" icon="fal fa-times-circle" />
+                <Button v-if="data.data[indexSelectedWebsite][selectedColumn.name].value != 'interested'" @click="submitState(selectedWebsiteSlug, selectedColumn.name, 'interested')" :style="'tertiary'" label="Interested" icon="fal fa-check-circle" class="border-green-500 text-green-500 focus:ring-green-500 hover:bg-green-50" />
             </div>
         </div>
     </Modal>

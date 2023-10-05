@@ -19,11 +19,11 @@ class PortfolioWebsiteResource extends JsonResource
     {
         /** @var PortfolioWebsite $websitePortfolio */
         $websitePortfolio = $this;
-        $divisions = [];
+        $divisions        = [];
 
         foreach ($websitePortfolio->divisions as $value) {
             $divisions[$value->slug] = [
-                'name' => $value->slug,
+                'name'  => $value->slug,
                 'label' => $value->name,
                 'value' => $value->pivot->interest
             ];

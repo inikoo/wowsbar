@@ -51,6 +51,7 @@ class CreateEmployee extends InertiaAction
                                     'type'     => 'input',
                                     'label'    => __('name'),
                                     'required' => true,
+                                    'value'    => ''
                                 ],
                                 'date_of_birth' => [
                                     'type'  => 'date',
@@ -60,8 +61,8 @@ class CreateEmployee extends InertiaAction
                                 'email'         => [
                                     'type'  => 'input',
                                     'label' => __('personal email'),
+                                    'value' => ''
                                 ],
-
                             ]
                         ],
                         [
@@ -71,15 +72,18 @@ class CreateEmployee extends InertiaAction
                                     'type'     => 'input',
                                     'label'    => __('worker number'),
                                     'required' => true,
+                                    'value' => ''
                                 ],
                                 'alias'               => [
                                     'type'     => 'input',
                                     'label'    => __('alias'),
                                     'required' => true,
+                                    'value' => ''
                                 ],
                                 'work_email'          => [
                                     'type'  => 'input',
                                     'label' => __('work email'),
+                                    'value' => ''
                                 ],
                                 'state'               => [
                                     'type'    => 'radio',
@@ -105,30 +109,27 @@ class CreateEmployee extends InertiaAction
                                     'value'    => '',
                                     'required' => true
                                 ],
-
                             ]
                         ],
                         [
                             'title'  => __('job'),
                             'fields' => [
-
                                 'positions' => [
                                     'type'        => 'select',
                                     'label'       => __('position'),
                                     'options'     => Options::forModels(JobPosition::class, label: 'name', value: 'name'),
                                     'placeholder' => __('Select a job position'),
-                                    'mode'        => 'single',
-                                    'searchable'  => true
+                                    'mode'        => 'multiple',
+                                    'searchable'  => true,
+                                    'value'       => [],
                                 ],
                                 'job_title' => [
                                     'type'        => 'input',
                                     'label'       => __('job title'),
                                     'placeholder' => __('Job title'),
-                                    'searchable'  => true
+                                    'searchable'  => true,
+                                    'value' => ''
                                 ],
-                                'required'  => true
-
-
                             ]
                         ],
                         [
@@ -138,18 +139,16 @@ class CreateEmployee extends InertiaAction
                                 'username' => [
                                     'type'  => 'input',
                                     'label' => __('username'),
+                                    'value' => ''
 
                                 ],
                                 'password' => [
                                     'type'  => 'password',
                                     'label' => __('password'),
-
+                                    'value' => ''
                                 ],
-
                             ]
                         ],
-
-
                     ],
                     'route'     => [
                         'name' => 'org.models.employee.store',
