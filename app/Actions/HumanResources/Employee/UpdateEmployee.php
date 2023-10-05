@@ -33,6 +33,9 @@ class UpdateEmployee
     public function rules(): array
     {
         return [
+            'worker_number'       => ['sometimes','required', 'max:64', 'iunique:employees', 'alpha_dash:ascii'],
+            'employment_start_at' => ['sometimes', 'nullable', 'date'],
+
             'contact_name'  => ['sometimes','required'],
             'date_of_birth' => ['sometimes','date'],
             'job_title'     => ['sometimes','required'],

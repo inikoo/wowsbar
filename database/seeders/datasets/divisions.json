@@ -1,0 +1,22 @@
+[
+    {
+        "slug": "seo",
+        "name": "SEO"
+    },
+    {
+        "slug": "google-ads",
+        "name": "PPC"
+    },
+    {
+        "slug": "social",
+        "name": "Social"
+    },
+    {
+        "slug": "prospects",
+        "name": "Prospects"
+    },
+    {
+        "slug": "banners",
+        "name": "Banners"
+    }
+]

@@ -8,7 +8,9 @@
 namespace App\Models\Portfolio;
 
 use App\Concerns\BelongsToCustomer;
+use App\Models\DivisionPortfolioWebsite;
 use App\Models\Leads\Prospect;
+use App\Models\Organisation\Division;
 use App\Models\Traits\HasHistory;
 use App\Models\Traits\HasUniversalSearch;
 use App\Models\Traits\IsWebsitePortfolio;
@@ -89,7 +91,10 @@ class PortfolioWebsite extends Model implements Auditable
         return $this->hasOne(PortfolioWebsiteStats::class);
     }
 
-
+    public function divisions()
+    {
+        return $this->belongsToMany(DivisionPortfolioWebsite::class);
+    }
 
     public function scopedProspects(): MorphMany
     {

@@ -18,6 +18,7 @@ use App\Actions\Portfolio\Banner\UpdateBannerState;
 use App\Actions\Portfolio\Banner\UploadImagesToBanner;
 use App\Actions\Portfolio\Gallery\UpdateUploadedImage;
 use App\Actions\Portfolio\Gallery\UploadImagesToGallery;
+use App\Actions\Portfolio\PortfolioDivision\SyncDivisionPortfolioWebsite;
 use App\Actions\Portfolio\PortfolioSocialAccount\StorePortfolioSocialAccount;
 use App\Actions\Portfolio\PortfolioSocialAccount\UpdatePortfolioSocialAccount;
 use App\Actions\Portfolio\PortfolioWebsite\DeletePortfolioWebsite;
@@ -34,6 +35,8 @@ Route::patch('/portfolio-website/{portfolioWebsite:id}', UpdatePortfolioWebsite:
 Route::delete('/portfolio-website/{portfolioWebsite:id}', DeletePortfolioWebsite::class)->name('portfolio-website.delete');
 
 Route::post('/portfolio-website/{portfolioWebsite:id}/banner', [StoreBanner::class, 'inPortfolioWebsite'])->name('portfolio-website.banner.store');
+Route::post('/portfolio-website/{portfolioWebsite}/interest', SyncDivisionPortfolioWebsite::class)->name('portfolio-website.interest.store');
+
 
 
 

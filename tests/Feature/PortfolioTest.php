@@ -31,17 +31,9 @@ test('create portfolio websites', function () {
     $customer  = customer();
     $modelData = PortfolioWebsite::factory()->definition();
 
-    $website   = StorePortfolioWebsite::make()->action(
-        array_merge(
-            $modelData,
-            [
-                'code' => 'web1'
-            ]
-        )
-    );
+    $website   = StorePortfolioWebsite::make()->action($modelData);
     $customer->refresh();
     expect($website)->toBeInstanceOf(PortfolioWebsite::class)
-        ->and($website->slug)->toBe('web1')
         ->and($customer->portfolioStats->number_portfolio_websites)->toBe(1);
     $modelData = PortfolioWebsite::factory()->definition();
     $website2  = StorePortfolioWebsite::make()->action($modelData);
@@ -49,7 +41,7 @@ test('create portfolio websites', function () {
     expect($website2)->toBeInstanceOf(PortfolioWebsite::class)
         ->and($customer->portfolioStats->number_portfolio_websites)->toBe(2);
 
-    $this->artisan("customer:new-portfolio-website $customer->slug https://hello-world.com HI Hello")->assertExitCode(0);
+    $this->artisan("customer:new-portfolio-website $customer->slug https://hello-world.com  Hello")->assertExitCode(0);
     $customer->refresh();
     expect($customer->portfolioStats->number_portfolio_websites)->toBe(3);
 
@@ -71,7 +63,7 @@ test('create banners', function ($website) {
         ->and($customer->portfolioStats->number_banners_state_live)->toBe(0)
         ->and($customer->portfolioStats->number_banners_state_retired)->toBe(0);
 
-    $this->artisan("customer:new-banner $customer->slug  'My first banner' web1 ")->assertExitCode(0);
+    $this->artisan("customer:new-banner $customer->slug  'My first banner' $website->slug ")->assertExitCode(0);
 
     // without website
     $this->artisan("customer:new-banner $customer->slug  'My first banner'")->assertExitCode(0);

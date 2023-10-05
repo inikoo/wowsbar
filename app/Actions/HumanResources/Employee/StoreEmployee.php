@@ -15,6 +15,7 @@ use App\Models\HumanResources\Workplace;
 use App\Models\Organisation\Organisation;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Validation\Rules\Password;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
@@ -31,9 +32,8 @@ class StoreEmployee
     {
         $employee = match (class_basename($parent)) {
             'Workplace' => $parent->employees()->create($modelData),
-            default     => Employee::create($modelData)
+            default => Employee::create($modelData)
         };
-
 
         EmployeeHydrateWeekWorkingHours::run($employee);
         OrganisationHydrateEmployees::dispatch();
@@ -67,20 +67,25 @@ class StoreEmployee
     {
         return [
             'worker_number'       => ['required', 'max:64', 'iunique:employees', 'alpha_dash:ascii'],
-            'employment_start_at' => ['sometimes', 'nullable', 'date'],
-            'work_email'          => ['sometimes', 'required', 'email'],
-            'alias'               => ['required', 'iunique:employees', 'string', 'max:16'],
+            'employment_start_at' => ['required', 'nullable', 'date'],
+            'work_email'          => ['nullable','required', 'email', 'iunique:employees'],
+            'alias'               => ['required', 'iunique:employees', 'string', 'max:12'],
             'contact_name'        => ['required', 'string', 'max:256'],
             'date_of_birth'       => ['sometimes', 'nullable', 'date', 'before_or_equal:today'],
             'job_title'           => ['required', 'string', 'max:256'],
-            'state'               => ['sometimes', 'required'],
-            'email'               => ['sometimes', 'required', 'email'],
+            'state'               => ['required', 'required'],
+            'email'               => ['present', 'nullable','email'],
+            'positions'           => ['required', 'array'],
+            'username'            => ['sometimes', 'required', 'iunique:organisation_users'],
+            'password'            => ['sometimes', 'required', 'max:255', app()->isLocal() || app()->environment('testing') ? null : Password::min(8)->uncompromised()],
+
 
         ];
     }
 
     public function asController(ActionRequest $request): Employee
     {
+        dd($request->all());
         $request->validate();
 
         return $this->handle(organisation(), $request->validated());

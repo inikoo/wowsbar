@@ -93,7 +93,7 @@ class EditPortfolioWebsite extends InertiaAction
                                             'label' => 'https://'
                                         ],
                                         'label'     => __('url'),
-                                        'value'=>preg_replace('/^https?:\/\//', '', $portfolioWebsite->url),
+                                        'value'     => preg_replace('/^https?:\/\//', '', $portfolioWebsite->url),
                                         'required'  => true,
                                     ],
                                 ]

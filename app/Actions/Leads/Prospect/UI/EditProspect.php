@@ -16,7 +16,6 @@ use Lorisleiva\Actions\ActionRequest;
 
 class EditProspect extends InertiaAction
 {
-
     private Shop $scope;
 
     public function handle(Shop $scope, Prospect $prospect): Prospect
@@ -58,7 +57,7 @@ class EditProspect extends InertiaAction
                 ],
                 'pageHead'    => [
                     'title'    => $prospect->name,
-                    'icon'    => [
+                    'icon'     => [
                         'title' => __('prospect'),
                         'icon'  => 'fal fa-transporter'
                     ],
