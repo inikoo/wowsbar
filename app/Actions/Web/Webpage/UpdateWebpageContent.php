@@ -20,17 +20,16 @@ class UpdateWebpageContent
 
     public function handle(Webpage $webpage, array $data): void
     {
+
+
+
         $webpage->update(
             [
                 'content'          => $data['data'],
                 'compiled_content' => $data['pagesHtml']
             ]
         );
-        $webpage->update(
-            [
-                'compiled_content' => $webpage->getCompiledContent()
-            ]
-        );
+
 
     }
 
