@@ -91,7 +91,7 @@ class IndexCustomerWebsites extends InertiaAction
         }
 
         return $queryBuilder
-            ->select('customers.name as customer_name', 'portfolio_websites.slug', 'portfolio_websites.name', 'url','customers.slug as customer_slug')
+            ->select('customers.name as customer_name', 'portfolio_websites.slug', 'portfolio_websites.name', 'url', 'customers.slug as customer_slug')
             ->defaultSort('portfolio_websites.slug')
             ->leftJoin('customers', 'customer_id', 'customers.id')
             ->allowedSorts(['slug', 'name', 'number_banners', 'url'])
@@ -139,12 +139,12 @@ class IndexCustomerWebsites extends InertiaAction
                 ->withExportLinks($exportLinks)
                 ->column(key: 'slug', label: __('code'), sortable: true);
 
-                if(class_basename($parent)!='Customer') {
-                    $table->column(key: 'customer_name', label: __('customer'), sortable: true);
-                }
-                $table->column(key: 'name', label: __('name'), sortable: true)
-                ->column(key: 'url', label: __('url'), sortable: true)
-                ->defaultSort('slug');
+            if(class_basename($parent)!='Customer') {
+                $table->column(key: 'customer_name', label: __('customer'), sortable: true);
+            }
+            $table->column(key: 'name', label: __('name'), sortable: true)
+            ->column(key: 'url', label: __('url'), sortable: true)
+            ->defaultSort('slug');
         };
     }
 

@@ -26,7 +26,6 @@ use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
-use function Clue\StreamFilter\fun;
 
 class IndexBannerPortfolioWebsites extends InertiaAction
 {
