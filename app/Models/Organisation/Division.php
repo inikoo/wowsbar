@@ -9,6 +9,11 @@ namespace App\Models\Organisation;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ *
+ * @mixin \Eloquent
+ */
+
 class Division extends Model
 {
     public function getRouteKeyName(): string
