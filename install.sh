@@ -66,7 +66,7 @@ php artisan employee:upload database/seeders/uploads/${IMPORT_DIR}/employees.xls
 echo "🌱 All the employees are imported"
 pg_dump -Fc -f "devops/devel/snapshots/hr.dump" ${DB}
 
-#php artisan shop:import-prospects awa database/seeders/datasets/excel-uploads/examples/prospects.xlsx
+php artisan shop:import-prospects awa database/seeders/uploads/local/prospects.xlsx
 echo "🛃 Organisation prospects imported"
 
 

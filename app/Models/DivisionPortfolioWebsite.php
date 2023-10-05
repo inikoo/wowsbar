@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property int $division_id
  * @property int $portfolio_website_id
- * @property string $interest
+ * @property string|null $interest
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @method static \Illuminate\Database\Eloquent\Builder|DivisionPortfolioWebsite newModelQuery()

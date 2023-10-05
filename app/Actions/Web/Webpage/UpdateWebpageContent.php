@@ -7,7 +7,6 @@
 
 namespace App\Actions\Web\Webpage;
 
-use App\Actions\Traits\WithActionUpdate;
 use App\Models\Web\Webpage;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -45,7 +44,7 @@ class UpdateWebpageContent
     public function rules(): array
     {
         return [
-            'data' => ['required', 'array'],
+            'data'      => ['required', 'array'],
             'pagesHtml' => ['required', 'array'],
 
         ];

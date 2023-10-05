@@ -45,7 +45,7 @@ class JobPositionSeeder extends Seeder
 
             $roles = [];
             foreach ($jobPositionData['roles'] as $roleName) {
-                if ($role = (new Role())->where('name', $roleName)->where('guard_name','org')->first()) {
+                if ($role = (new Role())->where('name', $roleName)->where('guard_name', 'org')->first()) {
                     $roles[] = $role->id;
                 }
             }
