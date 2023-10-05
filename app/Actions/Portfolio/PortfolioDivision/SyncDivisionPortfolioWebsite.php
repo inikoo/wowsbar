@@ -23,11 +23,11 @@ class SyncDivisionPortfolioWebsite
 
     public string $commandSignature = 'division:sync {website} {division} {interest}';
 
-    public function handle(PortfolioWebsite $portfolioWebsite, array $modelData): array
+    public function handle(PortfolioWebsite $portfolioWebsite, array $modelData): void
     {
         $divisions = Division::where('slug', $modelData['division'])->get();
 
-        return $portfolioWebsite->divisions()->syncWithPivotValues($divisions->pluck('id'), [
+        $portfolioWebsite->divisions()->attach($divisions->pluck('id'), [
             'interest' => $modelData['interest']
         ]);
     }
@@ -40,11 +40,11 @@ class SyncDivisionPortfolioWebsite
         ];
     }
 
-    public function asController(PortfolioWebsite $portfolioWebsite, ActionRequest $request): array
+    public function asController(PortfolioWebsite $portfolioWebsite, ActionRequest $request): void
     {
         $request->validate();
 
-        return $this->handle($portfolioWebsite, $request->validated());
+        $this->handle($portfolioWebsite, $request->validated());
     }
 
     public function asCommand(Command $command): int

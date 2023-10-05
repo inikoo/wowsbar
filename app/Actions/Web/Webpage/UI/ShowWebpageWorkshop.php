@@ -68,6 +68,7 @@ class ShowWebpageWorkshop extends InertiaAction
                                 'parameters' => array_values($request->route()->originalParameters()),
                             ]
                         ],
+                        /*
                         [
                             'type'  => 'button',
                             'label' => __('save'),
@@ -77,12 +78,17 @@ class ShowWebpageWorkshop extends InertiaAction
                                 'parameters' => $webpage->id
                             ]
                         ],
+                        */
                     ],
                 ],
-                // 'updateRoute'=> [
-                //     'name'       => 'org.models.webpage.blocks.update',
-                //     'parameters' => $webpage->id
-                // ],
+                 'updateRoute'=> [
+                     'name'       => 'org.models.webpage.content.update',
+                     'parameters' => $webpage->id
+                 ],
+                'loadRoute'=> [
+                    'name'       => 'org.models.webpage.content.show',
+                    'parameters' => $webpage->id
+                ],
 
 
             ]
