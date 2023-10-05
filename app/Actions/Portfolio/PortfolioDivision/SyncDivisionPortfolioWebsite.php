@@ -23,15 +23,13 @@ class SyncDivisionPortfolioWebsite
 
     public string $commandSignature = 'division:sync {website} {division} {interest}';
 
-    public function handle(PortfolioWebsite $portfolioWebsite, array $modelData): PortfolioWebsite
+    public function handle(PortfolioWebsite $portfolioWebsite, array $modelData): array
     {
         $divisions = Division::where('slug', $modelData['division'])->get();
 
-        $portfolioWebsite->divisions()->syncWithPivotValues($divisions->pluck('id'), [
+        return $portfolioWebsite->divisions()->syncWithPivotValues($divisions->pluck('id'), [
             'interest' => $modelData['interest']
         ]);
-
-        return $portfolioWebsite;
     }
 
     public function rules(): array
@@ -42,7 +40,7 @@ class SyncDivisionPortfolioWebsite
         ];
     }
 
-    public function asController(PortfolioWebsite $portfolioWebsite, ActionRequest $request): PortfolioWebsite
+    public function asController(PortfolioWebsite $portfolioWebsite, ActionRequest $request): array
     {
         $request->validate();
 
