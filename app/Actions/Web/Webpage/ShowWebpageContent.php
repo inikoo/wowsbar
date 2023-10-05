@@ -19,7 +19,10 @@ class ShowWebpageContent
 
     public function handle(Webpage $webpage): array
     {
-        return $webpage->content;
+        return [
+            'data'      => $webpage->content,
+            'pagesHtml' => $webpage->compiled_content
+        ];
     }
 
 
