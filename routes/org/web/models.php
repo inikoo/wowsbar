@@ -134,5 +134,3 @@ Route::prefix('customer/{customer:id}')->as('customer.')->group(function () {
     Route::post('websites/upload', ImportPortfolioWebsite::class)->name('website.upload');
     Route::post('websites', StoreCustomerWebsite::class)->name('customer-website.store');
 });
-
-

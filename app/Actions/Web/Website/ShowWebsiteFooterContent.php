@@ -8,8 +8,6 @@
 namespace App\Actions\Web\Website;
 
 use App\Actions\Traits\WithActionUpdate;
-use App\Http\Resources\Accounting\PaymentResource;
-use App\Models\Accounting\Payment;
 use App\Models\Web\Website;
 use Lorisleiva\Actions\ActionRequest;
 
@@ -19,7 +17,7 @@ class ShowWebsiteFooterContent
 
     private bool $asAction = false;
 
-    public function handle(Website $website): Website
+    public function handle(Website $website): array
     {
         return $website->footer_content;
     }
@@ -40,7 +38,7 @@ class ShowWebsiteFooterContent
     }
 
 
-    public function asController(Website $website, ActionRequest $request): Website
+    public function asController(Website $website, ActionRequest $request): array
     {
         $request->validate();
 

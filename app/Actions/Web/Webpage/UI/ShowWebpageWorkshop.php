@@ -81,7 +81,7 @@ class ShowWebpageWorkshop extends InertiaAction
                         */
                     ],
                 ],
-                 'webpageID'=>$webpage->id,
+                 'webpageID'  => $webpage->id,
                  'updateRoute'=> [
                      'name'       => 'org.models.webpage.content.update',
                      'parameters' => $webpage->id

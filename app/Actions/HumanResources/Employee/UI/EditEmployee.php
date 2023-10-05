@@ -81,7 +81,7 @@ class EditEmployee extends InertiaAction
                                     'label'       => __('name'),
                                     'placeholder' => __('Name'),
                                     'value'       => $employee->contact_name,
-                                    'required'=>true
+                                    'required'    => true
                                 ],
                                 'date_of_birth' => [
                                     'type'        => 'date',

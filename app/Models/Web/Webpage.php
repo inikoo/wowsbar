@@ -82,11 +82,11 @@ class Webpage extends Model
     ];
 
     protected $attributes = [
-        'data'             => '{}',
-        'settings'         => '{}',
-        'blocks'           => '{}',
+        'data'              => '{}',
+        'settings'          => '{}',
+        'blocks'            => '{}',
         'content'           => '{}',
-        'compiled_content' => '{}',
+        'compiled_content'  => '{}',
     ];
 
     protected $guarded = [];
