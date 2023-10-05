@@ -1,16 +1,16 @@
 <script setup>
 import { trans } from 'laravel-vue-i18n'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faSearch, faTimesCircle } from "@/../private/pro-regular-svg-icons"
+import { faFilter, faTimesCircle } from "@/../private/pro-regular-svg-icons"
 import { library } from '@fortawesome/fontawesome-svg-core'
-library.add(faSearch,faTimesCircle)
+library.add(faFilter, faTimesCircle)
 
 const emit = defineEmits(['resetSearch'])
 
 defineProps({
     label: {
         type: String,
-        default: "Search...",
+        default: "Search on table...",
         required: false,
     },
 
@@ -32,15 +32,15 @@ const clear =()=>{
 </script>
 
 <template>
-   <div class="relative">
+    <div class="group relative" :title="trans('Search on table')">
         <input
-            class="dark:bg-gray-600 block w-full pl-9 pr-9 text-sm rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500 dark:focus:border-gray-400 border-gray-300 dark:border-gray-500"
+            class="dark:bg-gray-600 block pl-9 pr-0.5 w-0 group-focus-within:w-full group-focus-within:pr-9 text-sm rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500 dark:focus:border-gray-400 border-gray-300 dark:border-gray-500 transition-all duration-150 ease-in-out"
             :placeholder="trans(label)" :value="value" type="text" name="global" @input="onChange($event.target.value)">
         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-            <FontAwesomeIcon icon="far fa-search" class="h-4 w-4 text-gray-400" aria-hidden="true" />
+            <FontAwesomeIcon icon="far fa-filter" class="h-4 w-4 text-gray-400" aria-hidden="true" />
         </div>
-        <div v-if="value" class="absolute inset-y-0 right-2 flex items-center pointer-events-auto cursor-pointer" @click="emit('resetSearch', true)">
-            <font-awesome-icon :icon="['far', 'times-circle']" class="h-4 w-4 text-gray-400" aria-hidden="true" />
+        <div v-if="value" tabindex="0" class="hidden group-focus-within:flex absolute inset-y-0 right-2  items-center pointer-events-auto cursor-pointer" @click="emit('resetSearch', true)">
+            <FontAwesomeIcon icon="far fa-times-circle" class="h-4 w-4 text-gray-400" aria-hidden="true" />
         </div>
     </div>
 </template>
