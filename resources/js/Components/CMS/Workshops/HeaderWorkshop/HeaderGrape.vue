@@ -9,6 +9,11 @@ import GrapeEditor from '@/Components/CMS/Workshops/GrapeEditor/GrapeEditor.vue'
 import { HeaderPlugins } from "@/Components/CMS/Workshops/GrapeEditor/CustomBlocks/CustomBlock";
 
 
+const props = defineProps<{
+    imagesUploadRoute: Object 
+    updateRoutes: Array
+}>();
+
 library.add(
     faArrowAltToTop,
     faArrowAltToBottom,
@@ -21,9 +26,10 @@ library.add(
 )
 
 
+
 </script>
 
 <template layout="OrgApp">
-    <GrapeEditor :data="data" @changeData="(value) => data = value" :plugins="[HeaderPlugins]"/>
+    <GrapeEditor :data="data" @changeData="(value) => data = value" :plugins="[HeaderPlugins]" :updateRoute="updateRoutes.workshop_header" :loadRoute="updateRoutes.workshop_header" />
 </template>
 

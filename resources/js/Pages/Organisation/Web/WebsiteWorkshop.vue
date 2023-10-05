@@ -124,6 +124,6 @@ setToFirebase();
 
     <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate"/>
 
-    <component :is="component" :data="structure" :imagesUploadRoute="imagesUploadRoute"></component>
+    <component :is="component" :data="structure" :imagesUploadRoute="imagesUploadRoute" :updateRoutes="updateRoutes"></component>
 </template>
 
