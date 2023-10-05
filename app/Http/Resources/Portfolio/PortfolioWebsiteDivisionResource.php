@@ -7,7 +7,6 @@
 
 namespace App\Http\Resources\Portfolio;
 
-use App\Models\Portfolio\PortfolioWebsite;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class PortfolioWebsiteDivisionResource extends JsonResource
@@ -19,7 +18,7 @@ class PortfolioWebsiteDivisionResource extends JsonResource
 
         return [
             $division->slug => [
-                'name' => $division->slug,
+                'name'  => $division->slug,
                 'label' => $division->name,
                 'value' => $division->pivot->interest
             ]

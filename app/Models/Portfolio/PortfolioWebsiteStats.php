@@ -21,6 +21,16 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $number_banners_state_unpublished
  * @property int $number_banners_state_live
  * @property int $number_banners_state_retired
+ * @property int $number_prospects
+ * @property int $number_prospects_state_no_contacted
+ * @property int $number_prospects_state_contacted
+ * @property int $number_prospects_state_not_interested
+ * @property int $number_prospects_state_registered
+ * @property int $number_prospects_state_invoiced
+ * @property int $number_prospects_state_bounced
+ * @property int $number_prospects_gender_male
+ * @property int $number_prospects_gender_female
+ * @property int $number_prospects_gender_other
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Portfolio\PortfolioWebsite $website
@@ -34,6 +44,16 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static Builder|PortfolioWebsiteStats whereNumberBannersStateRetired($value)
  * @method static Builder|PortfolioWebsiteStats whereNumberBannersStateUnpublished($value)
  * @method static Builder|PortfolioWebsiteStats whereNumberHistoricSnapshots($value)
+ * @method static Builder|PortfolioWebsiteStats whereNumberProspects($value)
+ * @method static Builder|PortfolioWebsiteStats whereNumberProspectsGenderFemale($value)
+ * @method static Builder|PortfolioWebsiteStats whereNumberProspectsGenderMale($value)
+ * @method static Builder|PortfolioWebsiteStats whereNumberProspectsGenderOther($value)
+ * @method static Builder|PortfolioWebsiteStats whereNumberProspectsStateBounced($value)
+ * @method static Builder|PortfolioWebsiteStats whereNumberProspectsStateContacted($value)
+ * @method static Builder|PortfolioWebsiteStats whereNumberProspectsStateInvoiced($value)
+ * @method static Builder|PortfolioWebsiteStats whereNumberProspectsStateNoContacted($value)
+ * @method static Builder|PortfolioWebsiteStats whereNumberProspectsStateNotInterested($value)
+ * @method static Builder|PortfolioWebsiteStats whereNumberProspectsStateRegistered($value)
  * @method static Builder|PortfolioWebsiteStats wherePortfolioWebsiteId($value)
  * @method static Builder|PortfolioWebsiteStats whereUpdatedAt($value)
  * @mixin \Eloquent

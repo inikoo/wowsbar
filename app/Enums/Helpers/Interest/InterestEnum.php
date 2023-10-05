@@ -13,8 +13,8 @@ enum InterestEnum: string
 {
     use EnumHelperTrait;
 
-    case NOT_SURE = 'not_sure';
-    case INTERESTED   = 'interested';
+    case NOT_SURE           = 'not_sure';
+    case INTERESTED         = 'interested';
     case NOT_INTERESTED     = 'not_interested';
-    case CUSTOMER     = 'customer';
+    case CUSTOMER           = 'customer';
 }

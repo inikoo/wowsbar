@@ -8,7 +8,6 @@
 namespace App\Models\Portfolio;
 
 use App\Concerns\BelongsToCustomer;
-use App\Models\DivisionPortfolioWebsite;
 use App\Models\Leads\Prospect;
 use App\Models\Organisation\Division;
 use App\Models\Traits\HasHistory;
@@ -42,7 +41,8 @@ use Spatie\Sluggable\HasSlug;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Portfolio\Banner> $banners
  * @property-read int|null $banners_count
  * @property-read \App\Models\CRM\Customer $customer
- * @property-read Division $divisions
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Division> $divisions
+ * @property-read int|null $divisions_count
  * @property-read array $es_audits
  * @property-read \App\Models\Portfolio\PortfolioWebsiteStats|null $stats
  * @property-read \App\Models\Search\UniversalSearch|null $universalSearch

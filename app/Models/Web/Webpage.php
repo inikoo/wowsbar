@@ -31,6 +31,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property int|null $parent_id
  * @property int $website_id
  * @property int|null $main_variant_id
+ * @property mixed $content
  * @property array $blocks
  * @property array $compiled_content
  * @property array $data
@@ -48,6 +49,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Webpage whereBlocks($value)
  * @method static Builder|Webpage whereCode($value)
  * @method static Builder|Webpage whereCompiledContent($value)
+ * @method static Builder|Webpage whereContent($value)
  * @method static Builder|Webpage whereCreatedAt($value)
  * @method static Builder|Webpage whereData($value)
  * @method static Builder|Webpage whereDeletedAt($value)
@@ -72,7 +74,7 @@ class Webpage extends Model
         'data'             => 'array',
         'settings'         => 'array',
         'blocks'           => 'array',
-        'content'          => 'content',
+        'content'          => 'array',
         'compiled_content' => 'array',
         'type'             => WebpageTypeEnum::class,
         'purpose'          => WebpagePurposeEnum::class,
@@ -80,11 +82,11 @@ class Webpage extends Model
     ];
 
     protected $attributes = [
-        'data'             => '{}',
-        'settings'         => '{}',
-        'blocks'           => '{}',
+        'data'              => '{}',
+        'settings'          => '{}',
+        'blocks'            => '{}',
         'content'           => '{}',
-        'compiled_content' => '{}',
+        'compiled_content'  => '{}',
     ];
 
     protected $guarded = [];

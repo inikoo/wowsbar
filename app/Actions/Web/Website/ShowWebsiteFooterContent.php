@@ -1,25 +1,25 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Fri, 29 Sep 2023 17:24:31 Malaysia Time, Kuala Lumpur, Malaysia
+ * Created: Thu, 05 Oct 2023 10:45:41 Malaysia Time, Office, Bali, Indonesia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Web\Webpage;
+namespace App\Actions\Web\Website;
 
 use App\Actions\Traits\WithActionUpdate;
-use App\Models\Web\Webpage;
+use App\Models\Web\Website;
 use Lorisleiva\Actions\ActionRequest;
 
-class ShowWebpageContent
+class ShowWebsiteFooterContent
 {
     use WithActionUpdate;
 
     private bool $asAction = false;
 
-    public function handle(Webpage $webpage): Webpage
+    public function handle(Website $website): array
     {
-        return $webpage->content;
+        return $website->footer_content;
     }
 
 
@@ -38,12 +38,11 @@ class ShowWebpageContent
     }
 
 
-    public function asController(Webpage $webpage, ActionRequest $request): Webpage
+    public function asController(Website $website, ActionRequest $request): array
     {
-        dd('zzzzz');
         $request->validate();
 
-        return $this->handle($webpage);
+        return $this->handle($website);
     }
 
 

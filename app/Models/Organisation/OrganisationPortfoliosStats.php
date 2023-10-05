@@ -21,6 +21,16 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $number_banners_state_unpublished
  * @property int $number_banners_state_live
  * @property int $number_banners_state_retired
+ * @property int $number_prospects
+ * @property int $number_prospects_state_no_contacted
+ * @property int $number_prospects_state_contacted
+ * @property int $number_prospects_state_not_interested
+ * @property int $number_prospects_state_registered
+ * @property int $number_prospects_state_invoiced
+ * @property int $number_prospects_state_bounced
+ * @property int $number_prospects_gender_male
+ * @property int $number_prospects_gender_female
+ * @property int $number_prospects_gender_other
  * @property int $number_snapshots
  * @property int $number_snapshots_state_unpublished
  * @property int $number_snapshots_state_live
@@ -39,6 +49,16 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationPortfoliosStats whereNumberBannersStateUnpublished($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationPortfoliosStats whereNumberHistoricSnapshots($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationPortfoliosStats whereNumberPortfolioWebsites($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrganisationPortfoliosStats whereNumberProspects($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrganisationPortfoliosStats whereNumberProspectsGenderFemale($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrganisationPortfoliosStats whereNumberProspectsGenderMale($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrganisationPortfoliosStats whereNumberProspectsGenderOther($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrganisationPortfoliosStats whereNumberProspectsStateBounced($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrganisationPortfoliosStats whereNumberProspectsStateContacted($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrganisationPortfoliosStats whereNumberProspectsStateInvoiced($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrganisationPortfoliosStats whereNumberProspectsStateNoContacted($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrganisationPortfoliosStats whereNumberProspectsStateNotInterested($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrganisationPortfoliosStats whereNumberProspectsStateRegistered($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationPortfoliosStats whereNumberSnapshots($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationPortfoliosStats whereNumberSnapshotsStateHistoric($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationPortfoliosStats whereNumberSnapshotsStateLive($value)
