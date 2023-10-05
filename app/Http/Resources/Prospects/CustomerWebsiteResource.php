@@ -11,6 +11,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
  * @property string $customer_name
+ * @property string $customer_slug
  */
 class CustomerWebsiteResource extends JsonResource
 {
@@ -23,9 +24,10 @@ class CustomerWebsiteResource extends JsonResource
         return [
             'slug'           => $customerWebsite->slug,
             'customer_name'  => $this->customer_name,
-            'code'           => $customerWebsite->code,
+            'customer_slug'  => $this->customer_slug,
+
             'name'           => $customerWebsite->name,
-            'domain'         => $customerWebsite->domain,
+            'url'         => $customerWebsite->url,
            // 'number_banners' => $customerWebsite->stats->number_banners
         ];
     }

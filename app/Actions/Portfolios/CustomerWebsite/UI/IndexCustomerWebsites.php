@@ -71,8 +71,8 @@ class IndexCustomerWebsites extends InertiaAction
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
             $query->where(function ($query) use ($value) {
                 $query->whereAnyWordStartWith('portfolio_websites.name', $value)
-                    ->orWhere('portfolio_websites.domain', 'ilike', "%$value%")
-                    ->orWhere('portfolio_websites.code', 'ilike', "$value%");
+                    ->orWhere('portfolio_websites.url', 'ilike', "%$value%")
+                    ->orWhere('portfolio_websites.slug', 'ilike', "$value%");
             });
         });
         if ($prefix) {
@@ -91,10 +91,10 @@ class IndexCustomerWebsites extends InertiaAction
         }
 
         return $queryBuilder
-            ->select('customers.name as customer_name', 'portfolio_websites.slug', 'portfolio_websites.name', 'domain')
-            ->defaultSort('portfolio_websites.code')
+            ->select('customers.name as customer_name', 'portfolio_websites.slug', 'portfolio_websites.name', 'url','customers.slug as customer_slug')
+            ->defaultSort('portfolio_websites.slug')
             ->leftJoin('customers', 'customer_id', 'customers.id')
-            ->allowedSorts(['slug', 'code', 'name', 'number_banners', 'domain'])
+            ->allowedSorts(['slug', 'name', 'number_banners', 'url'])
             ->allowedFilters([$globalSearch])
             ->withPaginator($prefix)
             ->withQueryString();
@@ -117,7 +117,7 @@ class IndexCustomerWebsites extends InertiaAction
                         'Customer' => [
                             'title'       => __("This customer don't have any website"),
                             'description' => $this->canEdit ? __('New website.') : null,
-                            'count'       => $parent->stats->number_portfolio_websites,
+                            'count'       => $parent->portfolioStats->number_portfolio_websites,
                             'action'      => [
                                 'type'    => 'button',
                                 'style'   => 'create',
@@ -137,10 +137,13 @@ class IndexCustomerWebsites extends InertiaAction
                     }
                 )
                 ->withExportLinks($exportLinks)
-                ->column(key: 'slug', label: __('code'), sortable: true)
-                ->column(key: 'customer_name', label: __('customer'), sortable: true)
-                ->column(key: 'name', label: __('name'), sortable: true)
-                ->column(key: 'domain', label: __('domain'), sortable: true)
+                ->column(key: 'slug', label: __('code'), sortable: true);
+
+                if(class_basename($parent)!='Customer') {
+                    $table->column(key: 'customer_name', label: __('customer'), sortable: true);
+                }
+                $table->column(key: 'name', label: __('name'), sortable: true)
+                ->column(key: 'url', label: __('url'), sortable: true)
                 ->defaultSort('slug');
         };
     }

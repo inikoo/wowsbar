@@ -210,14 +210,14 @@ class ShowCustomerWebsite extends InertiaAction
 
     public function getPrevious(CustomerWebsite $customerWebsite, ActionRequest $request): ?array
     {
-        $previous = CustomerWebsite::where('code', '<', $customerWebsite->code)->orderBy('code', 'desc')->first();
+        $previous = CustomerWebsite::where('slug', '<', $customerWebsite->slug)->orderBy('slug', 'desc')->first();
 
         return $this->getNavigation($previous, $request->route()->getName());
     }
 
     public function getNext(CustomerWebsite $customerWebsite, ActionRequest $request): ?array
     {
-        $next = CustomerWebsite::where('code', '>', $customerWebsite->code)->orderBy('code')->first();
+        $next = CustomerWebsite::where('slug', '>', $customerWebsite->slug)->orderBy('slug')->first();
 
         return $this->getNavigation($next, $request->route()->getName());
     }

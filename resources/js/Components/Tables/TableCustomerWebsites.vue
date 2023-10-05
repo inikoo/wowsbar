@@ -41,6 +41,20 @@ function websiteRoute(website: Website) {
     }
 }
 
+function customerRoute(website: Website) {
+
+    switch (route().current()) {
+        case  'org.portfolios.shop.customer-websites.index':
+            return route(
+                'org.crm.shop.customers.show',
+                [
+                    route().params['shop'],
+                    website.customer_slug
+                ]);
+
+    }
+}
+
 </script>
 
 <template>
@@ -48,6 +62,11 @@ function websiteRoute(website: Website) {
         <template #cell(slug)="{ item: website }">
             <Link :href="websiteRoute(website)" :id=" website['slug']" class="py-2 px-1">
                 {{ website['slug'] }}
+            </Link>
+        </template>
+        <template #cell(customer_name)="{ item: website }">
+            <Link :href="customerRoute(website)" :id=" website['customer_slug']" class="py-2 px-1">
+                {{ website['customer_name'] }}
             </Link>
         </template>
     </Table>
