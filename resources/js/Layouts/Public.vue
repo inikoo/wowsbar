@@ -9,12 +9,15 @@
 import { usePage } from "@inertiajs/vue3"
 
 const header = usePage().props.structure.header;
+const footer = usePage().props.structure.footer;
 console.log(usePage().props)
 </script>
 
 <template>
-    <div class="relative ">
-        <section class="relative isolate overflow-hidden bg-gray-100"
+    <div class="relative">
+    <!-- <pre>{{ header }}</pre> -->
+    <div v-html="header[0].html"></div>
+        <!-- <section class="relative isolate overflow-hidden bg-gray-100"
             :class="[structure.layout.layout !== 'center' ? 'mx-auto max-w-5xl' : '']"
         >
 
@@ -23,7 +26,9 @@ console.log(usePage().props)
 
 
 
-        </section>
+        </section> -->
+        <slot />
+        <div v-html="footer[0].html"></div>
     </div>
 
     <!-- <Cookies /> -->
