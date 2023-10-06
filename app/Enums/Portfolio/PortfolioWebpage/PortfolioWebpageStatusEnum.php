@@ -5,11 +5,11 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Enums\Portfolio\Webpage;
+namespace App\Enums\Portfolio\PortfolioWebpage;
 
 use App\Enums\EnumHelperTrait;
 
-enum WebpageStatusEnum: string
+enum PortfolioWebpageStatusEnum: string
 {
     use EnumHelperTrait;
 

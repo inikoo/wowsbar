@@ -5,7 +5,7 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-use App\Enums\Portfolio\Webpage\WebpageStatusEnum;
+use App\Enums\Portfolio\PortfolioWebpage\PortfolioWebpageStatusEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -23,7 +23,7 @@ return new class () extends Migration {
             $table->string('url');
             $table->longText('layout');
 
-            $table->string('status')->default(WebpageStatusEnum::SUCCESS);
+            $table->string('status')->default(PortfolioWebpageStatusEnum::SUCCESS);
             $table->string('message')->nullable();
 
             $table->timestampsTz();
