@@ -38,7 +38,6 @@ use Spatie\Sluggable\SlugOptions;
  * @property int|null $portfolio_website_id
  * @property string $slug
  * @property string $name
- * @property string $published_hash
  * @property BannerStateEnum $state
  * @property int|null $unpublished_snapshot_id
  * @property int|null $live_snapshot_id

@@ -27,7 +27,8 @@ use App\Actions\Accounting\PaymentServiceProvider\UI\ShowPaymentServiceProvider;
 use App\Actions\UI\Organisation\Accounting\AccountingDashboard;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', AccountingDashboard::class)->name('dashboard.show');
+Route::get('/', function () {return redirect('/accounting/dashboard');});
+Route::get('/dashboard', AccountingDashboard::class)->name('dashboard.show');
 
 Route::get('/providers/{paymentServiceProvider}/accounts/{paymentAccount}/payments/create', [IndexPayments::class, 'inPaymentAccountInPaymentServiceProvider'])->name('payment-service-providers.show.payment-accounts.show.payments.create');
 Route::get('/providers/{paymentServiceProvider}/payments/create', [IndexPayments::class, 'inPaymentServiceProvider'])->name('payment-service-providers.show.payments.create');

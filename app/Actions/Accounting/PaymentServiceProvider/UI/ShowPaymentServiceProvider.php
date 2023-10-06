@@ -35,7 +35,7 @@ class ShowPaymentServiceProvider extends InertiaAction
         $this->canEdit   = $request->user()->hasPermissionTo('accounting.edit');
         $this->canDelete = $request->user()->hasPermissionTo('accounting.edit');
 
-        return !$request->user()->hasPermissionTo("accounting.view");
+        return $request->user()->hasPermissionTo("accounting.view");
     }
 
     public function asController(PaymentServiceProvider $paymentServiceProvider, ActionRequest $request): PaymentServiceProvider

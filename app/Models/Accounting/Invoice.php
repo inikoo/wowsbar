@@ -7,9 +7,11 @@
 
 namespace App\Models\Accounting;
 
-use App\Actions\CRM\Customer\Hydrators\CustomerHydrateInvoices;
+use App\Enums\Accounting\Invoice\InvoiceTypeEnum;
 use App\Models\Assets\Currency;
 use App\Models\CRM\Customer;
+use App\Models\Market\Shop;
+use App\Models\OMS\Order;
 use App\Models\Traits\HasUniversalSearch;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -21,6 +23,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
+
 /**
  * App\Models\Accounting\Invoice
  *
@@ -28,7 +31,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property string $slug
  * @property string $number
  * @property int $customer_id
- * @property mixed $type
+ * @property InvoiceTypeEnum $type
  * @property int $currency_id
  * @property string $exchange
  * @property string $net
@@ -43,6 +46,10 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read Customer $customer
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Accounting\InvoiceTransaction> $invoiceTransactions
  * @property-read int|null $invoice_transactions_count
+ * @property-read Order|null $order
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Order> $orders
+ * @property-read int|null $orders_count
+ * @property-read Shop|null $shop
  * @property-read \App\Models\Accounting\InvoiceStats|null $stats
  * @property-read \App\Models\Search\UniversalSearch|null $universalSearch
  * @method static \Illuminate\Database\Eloquent\Builder|Invoice newModelQuery()
@@ -93,15 +100,6 @@ class Invoice extends Model
             ->doNotGenerateSlugsOnUpdate();
     }
 
-    protected static function booted()
-    {
-        static::deleted(
-            function (Invoice $invoice) {
-                CustomerHydrateInvoices::dispatch($invoice->customer);
-                ShopHydrateInvoices::dispatch($invoice->shop);
-            }
-        );
-    }
 
     protected $guarded = [];
 
@@ -125,11 +123,7 @@ class Invoice extends Model
         return $this->belongsToMany(Order::class);
     }
 
-    /**
-     * Relation to main order, usually the only one, used no avoid looping over orders
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
+
     public function order(): BelongsTo
     {
         return $this->belongsTo(Order::class);
@@ -142,7 +136,7 @@ class Invoice extends Model
 
 
     /** @noinspection PhpUnused */
-    public function setExchangeAttribute($val)
+    public function setExchangeAttribute($val): void
     {
         $this->attributes['exchange'] = sprintf('%.6f', $val);
     }

@@ -31,7 +31,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $number_orders_state_settled
  * @property int $number_customer_websites
  * @property int $number_customer_websites_seo
- * @property int $number_customer_websites_google-ads
+ * @property int $number_customer_websites_google_ads
  * @property int $number_customer_websites_social
  * @property int $number_customer_websites_prospects
  * @property int $number_customer_websites_banners
