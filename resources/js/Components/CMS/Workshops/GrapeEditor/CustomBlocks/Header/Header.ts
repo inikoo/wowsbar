@@ -7,12 +7,6 @@ export const headerBlock1 = () => {
       id: "header-block-1",
       content : `<body id="ixli">
       <header class="text-gray-600 body-font">
-      </header>
-      <header class="text-gray-600 body-font">
-      </header>
-      <header class="text-gray-600 body-font">
-      </header>
-      <header class="text-gray-600 body-font">
         <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
           <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0"><img src="https://dummyimage.com/45x30" class="w-10 h-10 text-white p-2 bg-indigo-500 rounded-md" alt="Description of the image">
             <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5">
@@ -25,7 +19,7 @@ export const headerBlock1 = () => {
             <a class="mr-5 hover:text-gray-900">Fourth Link</a>
           </nav>
           <button id="appointmentButton" data-gjs-editable="false" data-gjs-removable="false" type="button" class="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" onclick="window.location.href='/appointment'"><span data-gjs-editable="false" data-gjs-removable="false">Appointment<span></button>
-          <button data-gjs-editable="false" data-gjs-removable="false" type="button" class="ml-3 inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"><span data-gjs-editable="false" data-gjs-removable="false">Log in<span></button>
+ <button data-gjs-editable="false" data-gjs-removable="false" type="button" class="ml-3 inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"  onclick="window.location.href='/auth/login'"><span data-gjs-editable="false" data-gjs-removable="false">Log in<span></button>
         </div>
       </header>
       <header class="text-gray-600 body-font">
@@ -49,8 +43,8 @@ export  const headerBlock2 = () => {
     md:border-gray-400\tflex flex-wrap items-center text-base justify-center"><a class="mr-5 hover:text-gray-900">First Link</a><a class="mr-5 hover:text-gray-900">Second Link</a><a 
     class="mr-5 hover:text-gray-900">Third Link
     /a><a class="mr-5 hover:text-gray-900">Fourth Link</a></nav>
-    <button type="button" class="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Appointment</button>
-    <button type="button" class="ml-3 inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Log In</button>
+    <button id="appointmentButton" data-gjs-editable="false" data-gjs-removable="false" type="button" class="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" onclick="window.location.href='/appointment'"><span data-gjs-editable="false" data-gjs-removable="false">Appointment<span></button>
+    <button data-gjs-editable="false" data-gjs-removable="false" type="button" class="ml-3 inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"  onclick="window.location.href='/auth/login'"><span data-gjs-editable="false" data-gjs-removable="false">Log in<span></button>
     </div>
     </header>'`
 
@@ -66,34 +60,20 @@ export const headerBlock3 = () => {
     id: "header-block-3",
     content : `<body id="ixli">
     <header class="text-gray-600 body-font">
-    </header>
-    <header class="text-gray-600 body-font">
-    </header>
-    <header class="text-gray-600 body-font">
-    </header>
-    <header class="text-gray-600 body-font">
-    </header>
-    <header class="text-gray-600 body-font">
-    </header>
-    <header class="text-gray-600 body-font">
-    </header>
-    <header class="text-gray-600 body-font">
       <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
-        <nav class="flex lg:w-2/5 flex-wrap items-center text-base md:ml-auto">
-          <a class="mr-5 hover:text-gray-900">First Link</a>
-          <a class="mr-5 hover:text-gray-900">Second Link</a>
-          <a class="mr-5 hover:text-gray-900">Third Link</a>
-          <a class="hover:text-gray-900">Fourth Link</a>
-        </nav>
-        <a class="flex order-first lg:order-none lg:w-1/5 title-font font-medium items-center text-gray-900 lg:items-center lg:justify-center mb-4 md:mb-0"><img src="https://dummyimage.com/45x30" class="w-10 h-10 text-white p-2 bg-indigo-500 rounded-md" alt="Description of the image">
-        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"><span class="ml-3 text-xl">Tailblocks</span></a>
-        <div class="lg:w-2/5 inline-flex lg:justify-end ml-5 lg:ml-0">
-        <button type="button" class="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Appointment</button>
-        <button type="button" class="ml-3 inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Log In</button>
-        </div>
+      <nav class=" flex flex-wrap items-center text-base justify-center">
+      <a class="mr-5 hover:text-gray-900">First Link</a>
+      <a class="mr-5 hover:text-gray-900">Second Link</a>
+      <a class="mr-5 hover:text-gray-900">Third Link</a>
+      <a class="mr-5 hover:text-gray-900">Fourth Link</a>
+    </nav>
+        <a class="flex m-auto title-font font-medium items-center text-gray-900 mb-4 md:mb-0"><img src="https://dummyimage.com/45x30" class="w-10 h-10 text-white p-2 bg-indigo-500 rounded-md" alt="Description of the image"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"><span class="ml-3 text-xl">Tailblocks</span></a>
+        <button id="appointmentButton" data-gjs-editable="false" data-gjs-removable="false" type="button" class="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" onclick="window.location.href='/appointment'"><span data-gjs-editable="false" data-gjs-removable="false">Appointment<span></button>
+        <button data-gjs-editable="false" data-gjs-removable="false" type="button" class="ml-3 inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"  onclick="window.location.href='/auth/login'"><span data-gjs-editable="false" data-gjs-removable="false">Log in<span></button>
       </div>
     </header>
-  </body>`
+  </body>
+`
   }
 };
 
@@ -107,20 +87,6 @@ export const headerBlock4 = () => {
       id: "header-block-4",
       content : `<body id="ixli">
       <header class="text-gray-600 body-font">
-      </header>
-      <header class="text-gray-600 body-font">
-      </header>
-      <header class="text-gray-600 body-font">
-      </header>
-      <header class="text-gray-600 body-font">
-      </header>
-      <header class="text-gray-600 body-font">
-      </header>
-      <header class="text-gray-600 body-font">
-      </header>
-      <header class="text-gray-600 body-font">
-      </header>
-      <header class="text-gray-600 body-font">
         <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
           <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0"><img src="https://dummyimage.com/45x30" class="w-10 h-10 text-white p-2 bg-indigo-500 rounded-md" alt="Description of the image">
           <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"><span class="ml-3 text-xl">Tailblocks</span></a>
@@ -130,8 +96,8 @@ export const headerBlock4 = () => {
             <a class="mr-5 hover:text-gray-900">Third Link</a>
             <a class="mr-5 hover:text-gray-900">Fourth Link</a>
           </nav>
-          <button type="button" class="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Appointment</button>
-          <button type="button" class="ml-3 inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Log In</button>
+          <button id="appointmentButton" data-gjs-editable="false" data-gjs-removable="false" type="button" class="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" onclick="window.location.href='/appointment'"><span data-gjs-editable="false" data-gjs-removable="false">Appointment<span></button>
+          <button data-gjs-editable="false" data-gjs-removable="false" type="button" class="ml-3 inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"  onclick="window.location.href='/auth/login'"><span data-gjs-editable="false" data-gjs-removable="false">Log in<span></button>
         </div>
       </header>
     </body>`
