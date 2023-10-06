@@ -123,7 +123,8 @@ class StoreBanner
     {
         return [
             'portfolio_website_id' => ['sometimes', 'nullable', 'exists:portfolio_websites,id'],
-            'name'                 => ['required','string','max:255']
+            'name'                 => ['required','string','max:255'],
+            'published_hash'       => ['nullable','string','max:255']
         ];
     }
 

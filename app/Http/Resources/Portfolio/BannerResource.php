@@ -37,6 +37,7 @@ class BannerResource extends JsonResource
             'slug'            => $banner->slug,
             'name'            => $banner->name,
             'state'           => $banner->state,
+            'published_hash'  => $banner->published_hash,
             'state_label'     => $banner->state->labels()[$banner->state->value],
             'state_icon'      => match ($banner->state) {
                 BannerStateEnum::LIVE => [

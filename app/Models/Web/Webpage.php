@@ -19,7 +19,6 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
-
 /**
  * App\Models\Web\Webpage
  *
@@ -84,7 +83,7 @@ class Webpage extends Model
     protected $casts = [
         'data'             => 'array',
         'settings'         => 'array',
-        'compiled_layout' => 'array',
+        'compiled_layout'  => 'array',
         'type'             => WebpageTypeEnum::class,
         'purpose'          => WebpagePurposeEnum::class,
         'state'            => WebpageStateEnum::class,
@@ -94,7 +93,7 @@ class Webpage extends Model
     protected $attributes = [
         'data'             => '{}',
         'settings'         => '{}',
-        'compiled_layout' => '{}',
+        'compiled_layout'  => '{}',
     ];
 
     protected $guarded = [];

@@ -19,7 +19,7 @@ class ShowWebsiteFooterContent
 
     public function handle(Website $website): array
     {
-        return $website->footer_content;
+        return $website->unpublishedFooterSnapshot->layout;
     }
 
 

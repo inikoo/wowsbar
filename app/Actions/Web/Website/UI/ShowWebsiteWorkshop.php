@@ -80,6 +80,21 @@ class ShowWebsiteWorkshop extends InertiaAction
                     'name'       => 'org.models.website.images.store',
                     'parameters' => $website->id
                 ],
+                'websiteState'=>$website->state,
+                'publishRoutes' => [
+                    'workshop_header'=> [
+                        'name'       => 'org.models.website.header.content.update',
+                        'parameters' => $website->id
+                    ],
+                    'workshop_footer'=> [
+                        'name'       => 'org.models.website.footer.content.update',
+                        'parameters' => $website->id
+                    ],
+                    'workshop_layout'=> [
+                        'name'       => 'org.models.website.layout.update',
+                        'parameters' => $website->id
+                    ],
+                ],
                 'updateRoutes' => [
                     'workshop_header'=> [
                         'name'       => 'org.models.website.header.content.update',

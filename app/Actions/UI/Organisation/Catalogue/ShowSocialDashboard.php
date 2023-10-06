@@ -45,17 +45,10 @@ class ShowSocialDashboard
                 ],
                 'stats'       => [
                     [
-                        'name' => __('webpages'),
-                        'stat' => $org->catalogueStats->number_departments,
+                        'name' => __('websites'),
+                        'stat' => $org->crmStats->number_customer_websites_social,
                         'href' => [
-                            'name' => 'org.catalogue.departments.index'
-                        ]
-                    ],
-                    [
-                        'name' => __('products'),
-                        'stat' => $org->catalogueStats->number_products,
-                        'href' => [
-                            'name' => 'org.catalogue.products.index'
+                            'name' => 'org.google-ads.websites.index'
                         ]
                     ],
 

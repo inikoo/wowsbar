@@ -9,7 +9,7 @@ namespace App\Actions\Portfolios\CustomerWebsite\UI;
 
 use App\Actions\Helpers\History\IndexHistories;
 use App\Actions\InertiaAction;
-use App\Actions\UI\Organisation\Catalogue\ShowSeoDashboard;
+use App\Actions\UI\Organisation\Catalogue\ShowGoogleAdsDashboard;
 use App\Enums\UI\Organisation\CustomerWebsitesTabsEnum;
 use App\Http\Resources\History\HistoryResource;
 use App\Http\Resources\Prospects\CustomerWebsiteResource;
@@ -27,13 +27,13 @@ use Lorisleiva\Actions\ActionRequest;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
-class IndexSeoCustomerWebsites extends InertiaAction
+class IndexGoogleAdsCustomerWebsites extends InertiaAction
 {
     public function authorize(ActionRequest $request): bool
     {
-        $this->canEdit = $request->user()->hasPermissionTo('catalogue.seo.edit');
+        $this->canEdit = $request->user()->hasPermissionTo('catalogue.google-ads.edit');
 
-        return $request->user()->hasPermissionTo('catalogue.seo.view');
+        return $request->user()->hasPermissionTo('catalogue.google-ads.view');
     }
 
     public function asController(ActionRequest $request): LengthAwarePaginator
@@ -46,11 +46,11 @@ class IndexSeoCustomerWebsites extends InertiaAction
     /** @noinspection PhpUndefinedMethodInspection */
     public function handle($prefix = null): LengthAwarePaginator
     {
-        $divisionId = Cache::get('seo');
+        $divisionId = Cache::get('google-ads');
 
         if(! $divisionId) {
-            $divisionId = Division::firstWhere('slug', 'seo')->id;
-            Cache::put('seo', $divisionId);
+            $divisionId = Division::firstWhere('slug', 'google-ads')->id;
+            Cache::put('google-ads', $divisionId);
         }
 
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
@@ -112,7 +112,7 @@ class IndexSeoCustomerWebsites extends InertiaAction
     public function htmlResponse(LengthAwarePaginator $websites, ActionRequest $request): Response
     {
         return Inertia::render(
-            'Catalogue/Seo/SeoCustomerWebsites',
+            'Catalogue/GoogleAds/GoogleAdsCustomerWebsites',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->getName(),
@@ -172,12 +172,12 @@ class IndexSeoCustomerWebsites extends InertiaAction
         };
 
         return match ($routeName) {
-            'org.seo.websites.index' =>
+            'org.google-ads.websites.index' =>
             array_merge(
-                ShowSeoDashboard::make()->getBreadcrumbs(),
+                ShowGoogleAdsDashboard::make()->getBreadcrumbs(),
                 $headCrumb(
                     [
-                        'name' => 'org.seo.websites.index',
+                        'name' => 'org.google-ads.websites.index',
                         null
                     ]
                 ),
