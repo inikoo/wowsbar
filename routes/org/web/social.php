@@ -5,8 +5,15 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
+use App\Actions\Portfolios\CustomerWebsite\UI\IndexSocialCustomerWebsites;
 use App\Actions\UI\Organisation\Catalogue\ShowSocialDashboard;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {return redirect('/social/dashboard');});
 Route::get('/dashboard', ['icon'  => 'thumbs-up', 'label' => 'social'])->uses(ShowSocialDashboard::class)->name('dashboard');
+
+Route::get('/websites', [
+    'uses'  => IndexSocialCustomerWebsites::class,
+    'icon'  => 'globe',
+    'label' => 'websites'
+])->name('websites.index');

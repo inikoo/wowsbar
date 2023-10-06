@@ -9,7 +9,9 @@ namespace App\Actions\Portfolios\CustomerWebsite\UI;
 
 use App\Actions\Helpers\History\IndexHistories;
 use App\Actions\InertiaAction;
+use App\Actions\UI\Organisation\Catalogue\ShowGoogleAdsDashboard;
 use App\Actions\UI\Organisation\Catalogue\ShowSeoDashboard;
+use App\Actions\UI\Organisation\Catalogue\ShowSocialDashboard;
 use App\Enums\UI\Organisation\CustomerWebsitesTabsEnum;
 use App\Http\Resources\History\HistoryResource;
 use App\Http\Resources\Prospects\CustomerWebsiteResource;
@@ -27,13 +29,13 @@ use Lorisleiva\Actions\ActionRequest;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
-class IndexSeoCustomerWebsites extends InertiaAction
+class IndexSocialCustomerWebsites extends InertiaAction
 {
     public function authorize(ActionRequest $request): bool
     {
-        $this->canEdit = $request->user()->hasPermissionTo('catalogue.seo.edit');
+        $this->canEdit = $request->user()->hasPermissionTo('catalogue.social.edit');
 
-        return $request->user()->hasPermissionTo('catalogue.seo.view');
+        return $request->user()->hasPermissionTo('catalogue.social.view');
     }
 
     public function asController(ActionRequest $request): LengthAwarePaginator
@@ -46,11 +48,11 @@ class IndexSeoCustomerWebsites extends InertiaAction
     /** @noinspection PhpUndefinedMethodInspection */
     public function handle($prefix = null): LengthAwarePaginator
     {
-        $divisionId = Cache::get('seo');
+        $divisionId = Cache::get('social');
 
         if(! $divisionId) {
-            $divisionId = Division::firstWhere('slug', 'seo')->id;
-            Cache::put('seo', $divisionId);
+            $divisionId = Division::firstWhere('slug', 'social')->id;
+            Cache::put('social', $divisionId);
         }
 
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
@@ -112,7 +114,7 @@ class IndexSeoCustomerWebsites extends InertiaAction
     public function htmlResponse(LengthAwarePaginator $websites, ActionRequest $request): Response
     {
         return Inertia::render(
-            'Catalogue/Seo/SeoCustomerWebsites',
+            'Catalogue/Social/SocialCustomerWebsites',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->getName(),
@@ -172,12 +174,12 @@ class IndexSeoCustomerWebsites extends InertiaAction
         };
 
         return match ($routeName) {
-            'org.seo.websites.index' =>
+            'org.social.websites.index' =>
             array_merge(
-                ShowSeoDashboard::make()->getBreadcrumbs(),
+                ShowSocialDashboard::make()->getBreadcrumbs(),
                 $headCrumb(
                     [
-                        'name' => 'org.seo.websites.index',
+                        'name' => 'org.social.websites.index',
                         null
                     ]
                 ),
