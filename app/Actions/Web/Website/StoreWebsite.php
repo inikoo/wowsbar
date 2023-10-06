@@ -7,6 +7,7 @@
 
 namespace App\Actions\Web\Website;
 
+use App\Actions\Helpers\Snapshot\StoreWebsiteSnapshot;
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateWebsites;
 use App\Actions\Web\Website\Hydrators\WebsiteHydrateUniversalSearch;
 use App\Models\Market\Shop;
@@ -39,9 +40,41 @@ class StoreWebsite
 
 
         /** @var Website $website */
-        $website = $shop->website()->create($modelData);
-        $website->webStats()->create();
+        $website        = $shop->website()->create($modelData);
+        $headerSnapshot = StoreWebsiteSnapshot::run(
+            $website,
+            [
+                'scope'  => 'header',
+                'layout' => [
+                    'src'  => null,
+                    'html' => ''
+                ]
+            ],
+        );
+        $footerSnapshot = StoreWebsiteSnapshot::run(
+            $website,
+            [
+                'scope'  => 'footer',
+                'layout' => [
+                    'src'  => null,
+                    'html' => ''
 
+                ]
+            ],
+        );
+
+        $website->update(
+            [
+                'unpublished_header_snapshot_id' => $headerSnapshot->id,
+                'unpublished_footer_snapshot_id' => $footerSnapshot->id,
+                'compiled_layout'                => [
+                    'header'=> $headerSnapshot->compiledLayout(),
+                    'footer'=> $footerSnapshot->compiledLayout()
+                ]
+            ]
+        );
+
+        $website->webStats()->create();
 
 
         OrganisationHydrateWebsites::run();
@@ -50,7 +83,7 @@ class StoreWebsite
 
         WebsiteHydrateUniversalSearch::dispatch($website);
 
-        $website = ResetWebsiteStructure::run($website);
+        // $website = ResetWebsiteStructure::run($website);
 
         return SeedWebsiteFixedWebpages::run($website);
     }
@@ -105,7 +138,7 @@ class StoreWebsite
     public function action(Shop $shop, array $objectData): Website
     {
         $this->asAction = true;
-        $this->shop     =$shop;
+        $this->shop     = $shop;
         $this->setRawAttributes($objectData);
         $validatedData = $this->validateAttributes();
 

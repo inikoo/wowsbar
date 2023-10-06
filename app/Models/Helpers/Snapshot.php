@@ -1,24 +1,26 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Thu, 24 Aug 2023 16:02:11 Malaysia Time, Kuala Lumpur, Malaysia
+ * Created: Fri, 06 Oct 2023 09:32:00 Malaysia Time, Office, Bali, Indonesia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Models\Portfolio;
+namespace App\Models\Helpers;
 
 use App\Concerns\BelongsToCustomer;
 use App\Enums\Portfolio\Snapshot\SnapshotStateEnum;
 use App\Http\Resources\Portfolio\SlideResource;
+use App\Models\Portfolio\Slide;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Support\Arr;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
 /**
- * App\Models\Portfolio\Snapshot
+ * App\Models\Helpers\Snapshot
  *
  * @property int $id
  * @property string|null $slug
@@ -26,7 +28,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property int|null $user_id
  * @property string|null $parent_type
  * @property int|null $parent_id
- * @property int $customer_id
+ * @property int|null $customer_id
+ * @property string|null $scope
  * @property SnapshotStateEnum $state
  * @property string|null $published_at
  * @property string|null $published_until
@@ -35,9 +38,9 @@ use Spatie\Sluggable\SlugOptions;
  * @property string|null $comment
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Models\CRM\Customer $customer
+ * @property-read \App\Models\CRM\Customer|null $customer
  * @property-read Model|\Eloquent $parent
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Portfolio\Slide> $slides
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Slide> $slides
  * @property-read int|null $slides_count
  * @method static Builder|Snapshot newModelQuery()
  * @method static Builder|Snapshot newQuery()
@@ -52,6 +55,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Snapshot whereParentType($value)
  * @method static Builder|Snapshot wherePublishedAt($value)
  * @method static Builder|Snapshot wherePublishedUntil($value)
+ * @method static Builder|Snapshot whereScope($value)
  * @method static Builder|Snapshot whereSlug($value)
  * @method static Builder|Snapshot whereState($value)
  * @method static Builder|Snapshot whereUpdatedAt($value)
@@ -109,12 +113,22 @@ class Snapshot extends Model
     public function compiledLayout(): array
     {
 
-        $slides=$this->slides()->where('visibility', true)->get();
+        switch (class_basename($this->parent)) {
+            case 'Banner':
+                $slides         =$this->slides()->where('visibility', true)->get();
+                $compiledLayout = $this->layout;
+                data_set($compiledLayout, 'components', json_decode(SlideResource::collection($slides)->toJson(), true));
+                return $compiledLayout;
+            case 'Website':
+                return [
+                    'header'=> Arr::get($this->layout, 'header.html'),
+                    'footer'=> Arr::get($this->layout, 'footer.html'),
+                ];
+            default:
+                return [];
+        }
 
-        $compiledLayout = $this->layout;
-        data_set($compiledLayout, 'components', json_decode(SlideResource::collection($slides)->toJson(), true));
 
-        return $compiledLayout;
     }
 
 

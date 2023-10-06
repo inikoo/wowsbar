@@ -34,9 +34,16 @@ return new class () extends Migration {
 
             $table->jsonb('header_content');
             $table->jsonb('footer_content');
-
-
             $table->jsonb('compiled_structure');
+
+            $table->jsonb('compiled_layout');
+
+            $table->unsignedSmallInteger('unpublished_header_snapshot_id')->nullable()->index();
+            $table->unsignedSmallInteger('live_header_snapshot_id')->nullable()->index();
+
+            $table->unsignedSmallInteger('unpublished_footer_snapshot_id')->nullable()->index();
+            $table->unsignedSmallInteger('live_footer_snapshot_id')->nullable()->index();
+
             $table->unsignedSmallInteger('current_layout_id')->index()->nullable();
             $table->unsignedSmallInteger('organisation_id');
             $table->foreign('organisation_id')->references('id')->on('organisations')->onUpdate('cascade')->onDelete('cascade');

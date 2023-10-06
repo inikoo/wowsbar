@@ -26,19 +26,19 @@ class DeleteBanner
     public bool $isAction                 = false;
     public PortfolioWebsite|null $website = null;
 
-    public function handle(Banner $contentBlock): Banner
+    public function handle(Banner $banner): Banner
     {
-        $contentBlock->delete();
+        $banner->delete();
 
         CustomerHydrateBanners::dispatch(customer());
 
-        if(class_basename($contentBlock->portfolioWebsite) == 'PortfolioWebsite') {
-            PortfolioWebsiteHydrateBanners::dispatch($contentBlock->portfolioWebsite);
+        if(class_basename($banner->portfolioWebsite) == 'PortfolioWebsite') {
+            PortfolioWebsiteHydrateBanners::dispatch($banner->portfolioWebsite);
         }
 
-        // DeleteBannerElasticsearch::run($contentBlock);
+        // DeleteBannerElasticsearch::run($banner);
 
-        return $contentBlock;
+        return $banner;
     }
 
     public function authorize(ActionRequest $request): bool
@@ -50,9 +50,9 @@ class DeleteBanner
         return $request->get('customerUser')->hasPermissionTo("portfolio.banners.edit");
     }
 
-    public function action(Banner $contentBlock): Banner
+    public function action(Banner $banner): Banner
     {
-        return $this->handle($contentBlock);
+        return $this->handle($banner);
     }
 
     public function asController(Banner $banner, ActionRequest $request): Banner

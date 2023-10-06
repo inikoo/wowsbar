@@ -10,7 +10,6 @@ namespace App\Actions\Catalogue\ProductCategory;
 use App\Actions\Traits\WithActionUpdate;
 use App\Http\Resources\Catalogue\DepartmentResource;
 use App\Models\Catalogue\ProductCategory;
-use App\Models\Market\ShopProductCategory;
 use Lorisleiva\Actions\ActionRequest;
 
 class UpdateProductCategory

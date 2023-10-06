@@ -8,18 +8,18 @@
 namespace App\Actions\Portfolio\Banner;
 
 use App\Actions\CRM\Customer\Hydrators\CustomerHydrateBanners;
+use App\Actions\Helpers\Snapshot\StoreBannerSnapshot;
+use App\Actions\Helpers\Snapshot\UpdateSnapshot;
 use App\Actions\Portfolio\Banner\Elasticsearch\StoreBannerElasticsearch;
 use App\Actions\Portfolio\Banner\Hydrators\BannerHydrateUniversalSearch;
 use App\Actions\Portfolio\Banner\UI\ParseBannerLayout;
 use App\Actions\Portfolio\PortfolioWebsite\Hydrators\PortfolioWebsiteHydrateBanners;
-use App\Actions\Portfolio\Snapshot\StoreSnapshot;
-use App\Actions\Portfolio\Snapshot\UpdateSnapshot;
 use App\Actions\Traits\WithActionUpdate;
 use App\Enums\Portfolio\Banner\BannerStateEnum;
 use App\Enums\Portfolio\Snapshot\SnapshotStateEnum;
 use App\Http\Resources\Portfolio\BannerResource;
+use App\Models\Helpers\Snapshot;
 use App\Models\Portfolio\Banner;
-use App\Models\Portfolio\Snapshot;
 use Illuminate\Support\Arr;
 use Lorisleiva\Actions\ActionRequest;
 
@@ -42,7 +42,7 @@ class PublishBanner
         list($layout, $slides, $hash) = ParseBannerLayout::run($layout);
 
         /** @var Snapshot $snapshot */
-        $snapshot = StoreSnapshot::run(
+        $snapshot = StoreBannerSnapshot::run(
             $banner,
             [
                 'state'        => SnapshotStateEnum::LIVE,

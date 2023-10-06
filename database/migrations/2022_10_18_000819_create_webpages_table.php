@@ -5,6 +5,7 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
+use App\Enums\Organisation\Web\Webpage\WebpageStateEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -18,6 +19,9 @@ return new class () extends Migration {
             $table->string('code')->index()->collation('und_ns');
             $table->string('url')->index()->collation('und_ns');
             $table->unsignedSmallInteger('level')->index();
+            $table->boolean('is_fixed')->default(false);
+            $table->string('state')->index()->default(WebpageStateEnum::IN_PROCESS);
+
             $table->string('type')->index();
             $table->string('purpose')->index();
 
@@ -26,10 +30,15 @@ return new class () extends Migration {
 
             $table->unsignedSmallInteger('website_id')->index();
             $table->foreign('website_id')->references('id')->on('websites');
-            $table->unsignedInteger('main_variant_id')->index()->nullable();
-            $table->jsonb('content');
-            $table->jsonb('blocks');
-            $table->jsonb('compiled_content');
+
+            $table->unsignedSmallInteger('unpublished_snapshot_id')->nullable()->index();
+            $table->unsignedSmallInteger('live_snapshot_id')->nullable()->index();
+            $table->jsonb('compiled_layout');
+
+
+            $table->dateTimeTz('ready_at')->nullable();
+            $table->dateTimeTz('live_at')->nullable();
+            $table->dateTimeTz('closed_at')->nullable();
 
             $table->jsonb('data');
             $table->jsonb('settings');

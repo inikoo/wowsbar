@@ -8,6 +8,7 @@
 namespace App\Models\Portfolio;
 
 use App\Concerns\BelongsToCustomer;
+use App\Models\Helpers\Snapshot;
 use App\Models\Media\Media;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -36,7 +37,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property-read Media|null $imageTablet
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, Media> $media
  * @property-read int|null $media_count
- * @property-read \App\Models\Portfolio\Snapshot $snapshot
+ * @property-read Snapshot $snapshot
  * @method static Builder|Slide newModelQuery()
  * @method static Builder|Slide newQuery()
  * @method static Builder|Slide query()

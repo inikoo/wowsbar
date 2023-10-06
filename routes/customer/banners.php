@@ -6,6 +6,8 @@
  */
 
 
+use App\Actions\Helpers\Snapshot\UI\IndexSnapshots;
+use App\Actions\Helpers\Snapshot\UI\ShowSnapshot;
 use App\Actions\Portfolio\Banner\UI\CreateBanner;
 use App\Actions\Portfolio\Banner\UI\EditBanner;
 use App\Actions\Portfolio\Banner\UI\IndexBanners;
@@ -20,8 +22,6 @@ use App\Actions\Portfolio\Gallery\UI\UploadedImages\EditUploadedImage;
 use App\Actions\Portfolio\Gallery\UI\UploadedImages\IndexUploadedImages;
 use App\Actions\Portfolio\Gallery\UI\UploadedImages\ShowUploadedImage;
 use App\Actions\Portfolio\PortfolioWebsite\UI\IndexBannerPortfolioWebsites;
-use App\Actions\Portfolio\Snapshot\UI\IndexSnapshots;
-use App\Actions\Portfolio\Snapshot\UI\ShowSnapshot;
 use App\Actions\UI\Customer\Banners\ShowBannersDashboard;
 use Illuminate\Support\Facades\Route;
 

@@ -9,6 +9,7 @@ namespace App\Actions\Web\Website;
 
 use App\Actions\Traits\WithActionUpdate;
 use App\Actions\Web\Webpage\StoreWebpage;
+use App\Enums\Organisation\Web\Webpage\WebpageStateEnum;
 use App\Models\Web\Website;
 use Exception;
 use Illuminate\Console\Command;
@@ -24,22 +25,34 @@ class SeedWebsiteFixedWebpages
     public function handle(Website $website): Website
     {
         $home = StoreWebpage::run($website, [
-            'code'    => 'home',
-            'url'     => '',
-            'type'    => 'storefront',
-            'purpose' => 'storefront',
+            'code'     => 'home',
+            'url'      => '',
+            'type'     => 'storefront',
+            'purpose'  => 'storefront',
+            'is_fixed' => true,
+            'state'    => WebpageStateEnum::READY
         ]);
 
         $website->update(
             [
-                'home_id'=> $home->id
+                'home_id' => $home->id
             ]
         );
 
         foreach (Storage::disk('datasets')->files('webpages/'.$website->type) as $file) {
             $modelData = json_decode(Storage::disk('datasets')->get($file), true);
             data_set($modelData, 'parent_id', $home->id, overwrite: false);
-            StoreWebpage::run($website, $modelData);
+            StoreWebpage::run(
+                $website,
+                array_merge(
+                    $modelData,
+                    [
+                        'is_fixed' => true,
+                        'ready_at' => now(),
+                        'state'    => WebpageStateEnum::READY
+                    ]
+                )
+            );
         }
 
 
@@ -65,13 +78,14 @@ class SeedWebsiteFixedWebpages
     {
         return 'website:seed-fixed-webpages {website}';
     }
+
     public function asCommand(Command $command): int
     {
-
         try {
-            $website=Website::where('slug', $command->argument('website'))->firstOrFail();
+            $website = Website::where('slug', $command->argument('website'))->firstOrFail();
         } catch (Exception $e) {
             $command->error($e->getMessage());
+
             return 1;
         }
 

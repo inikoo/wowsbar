@@ -7,8 +7,8 @@
 
 namespace App\Actions\Portfolio\Slide;
 
+use App\Models\Helpers\Snapshot;
 use App\Models\Portfolio\Slide;
-use App\Models\Portfolio\Snapshot;
 use Illuminate\Support\Str;
 use Lorisleiva\Actions\Concerns\AsAction;
 
