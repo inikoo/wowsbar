@@ -6,19 +6,10 @@
 
 <script setup>
 
+import { usePage } from "@inertiajs/vue3"
 
-
-
-
-
-
-const props = defineProps([
-    'layout',
-    'structure'
-])
-
-
-
+const header = usePage().props.structure.header;
+console.log(usePage().props)
 </script>
 
 <template>
@@ -26,12 +17,12 @@ const props = defineProps([
         <section class="relative isolate overflow-hidden bg-gray-100"
             :class="[structure.layout.layout !== 'center' ? 'mx-auto max-w-5xl' : '']"
         >
-           
-         
+
+
             <slot />
 
-        
-         
+
+
         </section>
     </div>
 

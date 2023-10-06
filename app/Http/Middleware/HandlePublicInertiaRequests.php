@@ -25,7 +25,9 @@ class HandlePublicInertiaRequests extends Middleware
         };
 
 
-        $firstLoadOnlyProps['structure']=$request->get('website')->compiled_structure;
+
+        $firstLoadOnlyProps['structure']=$request->get('website')->compiled_layout;
+
         return array_merge(
             $firstLoadOnlyProps,
             parent::share($request),
