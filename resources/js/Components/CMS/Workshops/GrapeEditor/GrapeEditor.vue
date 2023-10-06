@@ -54,7 +54,7 @@ const Load = async (data) => {
             ),
         )
         if (response) {
-           return response.data.data
+           return response.data.src
         }
     } catch (error) {
         console.log(error)
