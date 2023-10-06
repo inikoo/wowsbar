@@ -82,7 +82,7 @@ Route::post('/payment-account', StorePaymentAccount::class)->name('payment-accou
 Route::patch('/product/{product}', UpdateProduct::class)->name('product.update');
 Route::delete('/product/{product}', UpdateProduct::class)->name('product.delete');
 
-Route::patch('/product-category/{productCategory}', UpdateProductCategory::class)->name('product-category.update');
+Route::patch('product-category/{productCategory}', UpdateProductCategory::class)->name('product-category.update');
 
 Route::prefix('shop')->as('shop.')->group(function () {
     Route::post('', StoreShop::class)->name('store');

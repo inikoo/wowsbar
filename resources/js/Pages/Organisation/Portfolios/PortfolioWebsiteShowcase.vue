@@ -14,9 +14,6 @@ const handleRadioChanged = async (itemId: number, itemValue: string, itemSlug: s
             route('org.models.product-category.update', itemSlug),
             {
                 state: itemValue
-            },
-            {
-                headers: { "Content-Type": "multipart/form-data" },
             }
         ).then(data => {
             console.log(data)

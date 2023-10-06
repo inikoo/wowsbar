@@ -44,6 +44,7 @@ class UpdateProductCategory
             'name'        => ['sometimes', 'max:250', 'string'],
             'image_id'    => ['sometimes', 'required', 'exists:media,id'],
             'state'       => ['sometimes', 'required'],
+            'interest'    => ['sometimes', 'required'],
             'description' => ['sometimes', 'required', 'max:1500'],
         ];
     }
@@ -58,7 +59,8 @@ class UpdateProductCategory
 
     public function asController(ProductCategory $productCategory, ActionRequest $request): ProductCategory
     {
-        return $this->handle($productCategory, $request->all());
+        $request->validate();
+        return $this->handle($productCategory, $request->validated());
     }
 
     public function jsonResponse(ProductCategory $productCategory): DepartmentResource
