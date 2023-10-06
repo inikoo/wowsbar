@@ -1,7 +1,7 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Mon, 25 Sep 2023 08:44:53 Malaysia Time, Kuala Lumpur, Malaysia
+ * Created: Thu, 05 Oct 2023 19:09:06 Malaysia Time, Sanur, Bali, Indonesia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
@@ -14,14 +14,14 @@ use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 
-class ShowCatalogueDashboard
+class ShowGoogleAdsDashboard
 {
     use AsAction;
     use WithInertia;
 
     public function authorize(ActionRequest $request): bool
     {
-        return $request->user()->hasPermissionTo("catalogue.view");
+        return $request->user()->hasPermissionTo("catalogue.google-ads.view");
     }
 
 
@@ -39,9 +39,9 @@ class ShowCatalogueDashboard
             'Catalogue/CatalogueDashboard',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(),
-                'title'       => __('catalogue'),
+                'title'       => __('google ads dashboard'),
                 'pageHead'    => [
-                    'title' => __('catalogue'),
+                    'title' => __('Google ads dashboard'),
                 ],
                 'stats'       => [
                     [
@@ -75,9 +75,9 @@ class ShowCatalogueDashboard
                         'type'   => 'simple',
                         'simple' => [
                             'route' => [
-                                'name' => 'org.catalogue.dashboard'
+                                'name' => 'org.google-ads.dashboard'
                             ],
-                            'label' => __('catalogue'),
+                            'label' => __('ads'),
                         ]
                     ]
                 ]

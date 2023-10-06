@@ -1,7 +1,7 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Mon, 25 Sep 2023 08:44:53 Malaysia Time, Kuala Lumpur, Malaysia
+ * Created: Thu, 05 Oct 2023 19:07:01 Malaysia Time, Sanur, Bali, Indonesia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
@@ -14,14 +14,14 @@ use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 
-class ShowCatalogueDashboard
+class ShowSeoDashboard
 {
     use AsAction;
     use WithInertia;
 
     public function authorize(ActionRequest $request): bool
     {
-        return $request->user()->hasPermissionTo("catalogue.view");
+        return $request->user()->hasPermissionTo("catalogue.seo.view");
     }
 
 
@@ -39,25 +39,19 @@ class ShowCatalogueDashboard
             'Catalogue/CatalogueDashboard',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(),
-                'title'       => __('catalogue'),
+                'title'       => __('SEO dashboard'),
                 'pageHead'    => [
-                    'title' => __('catalogue'),
+                    'title' => __('SEO dashboard'),
                 ],
                 'stats'       => [
                     [
-                        'name' => __('departments'),
+                        'name' => __('websites'),
                         'stat' => $org->catalogueStats->number_departments,
                         'href' => [
                             'name' => 'org.catalogue.departments.index'
                         ]
                     ],
-                    [
-                        'name' => __('products'),
-                        'stat' => $org->catalogueStats->number_products,
-                        'href' => [
-                            'name' => 'org.catalogue.products.index'
-                        ]
-                    ],
+
 
                 ]
 
@@ -75,9 +69,9 @@ class ShowCatalogueDashboard
                         'type'   => 'simple',
                         'simple' => [
                             'route' => [
-                                'name' => 'org.catalogue.dashboard'
+                                'name' => 'org.seo.dashboard'
                             ],
-                            'label' => __('catalogue'),
+                            'label' => __('seo'),
                         ]
                     ]
                 ]

@@ -12,13 +12,13 @@ import {ref, onMounted, onUnmounted} from 'vue'
 import {router} from '@inertiajs/vue3'
 
 import {library} from "@fortawesome/fontawesome-svg-core"
-import {faBriefcase, faEnvelope, faPuzzlePiece, faThumbsUp, faAd, faAlbumCollection} from "@/../private/pro-light-svg-icons"
+import {faShapes, faBriefcase, faEnvelope, faPuzzlePiece, faThumbsUp, faAd, faAlbumCollection} from "@/../private/pro-light-svg-icons"
 import {faGoogle} from "@fortawesome/free-brands-svg-icons"
 import {faChevronLeft} from "@/../private/pro-regular-svg-icons"
 import {useLayoutStore} from "@/Stores/layout.js"
 import {computed} from "vue"
 
-library.add(faBriefcase, faPuzzlePiece, faChevronLeft, faEnvelope, faThumbsUp, faAd, faGoogle, faAlbumCollection)
+library.add(faShapes, faBriefcase, faPuzzlePiece, faChevronLeft, faEnvelope, faThumbsUp, faAd, faGoogle, faAlbumCollection)
 
 const layout = useLayoutStore()
 const isHover = ref(false)

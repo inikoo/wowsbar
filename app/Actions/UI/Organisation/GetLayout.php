@@ -290,7 +290,7 @@ class GetLayout
                 'label'   => __('SEO'),
                 'icon'    => ['fab', 'fa-google'],
                 'route'   => [
-                    'name' => 'org.catalogue.seo.dashboard'
+                    'name' => 'org.seo.dashboard'
                 ],
                 'topMenu' => [
                     'subSections' => [
@@ -305,7 +305,7 @@ class GetLayout
                 'label'   => __('Ads'),
                 'icon'    => ['fal', 'fa-ad'],
                 'route'   => [
-                    'name' => 'org.catalogue.google-ads.dashboard'
+                    'name' => 'org.google-ads.dashboard'
                 ],
                 'topMenu' => [
                     'subSections' => [
@@ -320,7 +320,22 @@ class GetLayout
                 'label'   => __('Social'),
                 'icon'    => ['fal', 'fa-thumbs-up'],
                 'route'   => [
-                    'name' => 'org.catalogue.social.dashboard'
+                    'name' => 'org.social.dashboard'
+                ],
+                'topMenu' => [
+                    'subSections' => [
+
+                    ]
+                ]
+            ];
+        }
+
+        if ($user->hasPermissionTo('catalogue.caas.view')) {
+            $navigation['caas'] = [
+                'label'   => __('CaaS'),
+                'icon'    => ['fal', 'fa-shapes'],
+                'route'   => [
+                    'name' => 'org.caas.dashboard'
                 ],
                 'topMenu' => [
                     'subSections' => [
