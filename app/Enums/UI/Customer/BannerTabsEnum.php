@@ -33,7 +33,7 @@ enum BannerTabsEnum: string
             ],
             BannerTabsEnum::SNAPSHOTS => [
                 'title' => __('snapshots'),
-                'icon'  => 'fal fa-wallet',
+                'icon'  => 'fal fa-layer-group',
             ],
             BannerTabsEnum::DATA => [
                 'title' => __('data'),

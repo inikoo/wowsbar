@@ -3,7 +3,7 @@ import { footerBlock1, footerBlock2, footerBlock3, footerBlock4, footerBlock5 } 
 
 export const CustomBlock = (editor : Any) => {
     IconBlock(editor)
-    HeaderCategories(editor)
+    // HeaderCategories(editor)
 }
 
 export const IconBlock = (editor : Any) => {
@@ -37,55 +37,15 @@ export const HeaderCategories = (editor: any) => {
 export const HeaderPlugins = (editor: any) => {
     const header = [headerBlock1(),headerBlock2(),headerBlock3(),headerBlock4()]
     header.map((item,index)=>{
-        editor.Blocks.add(`header-block-${index}`,item);
+        editor.Blocks.add(item.id,item);
     })
 }
 
 export const FooterPlugins = (editor: any) => {
-    const sources = [
-        {
-            id: 'footer-block-1',
-            class: '',
-            label: footerBlock1().icon,
-            content: footerBlock1().content,
-            category: 'Footer',
-            // order: 1
-          },
-          {
-            id: 'footer-block-2',
-            class: '',
-            label: footerBlock2().icon,
-            content: footerBlock2().content,
-            category: 'Footer',
-            // order: 1
-          },
-          {
-            id: 'footer-block-3',
-            class: '',
-            label: footerBlock3().icon,
-            content: footerBlock3().content,
-            category: 'Footer',
-            // order: 1
-          },
-          {
-            id: 'footer-block-4',
-            class: '',
-            label: footerBlock4().icon,
-            content: footerBlock4().content,
-            category: 'Footer',
-            // order: 1
-          },
-          {
-            id: 'footer-block-5',
-            class: '',
-            label: footerBlock5().icon,
-            content: footerBlock5().content,
-            category: 'Footer',
-            // order: 1
-          },
-        ]
-        const bm = editor.BlockManager;
-        sources.map((item)=>bm.add(item.id,item))
+  const footer = [footerBlock1(),footerBlock2(),footerBlock3(),footerBlock4(),footerBlock5()]
+  footer.map((item,index)=>{
+    editor.Blocks.add(item.id,item);
+})
 }
 
 

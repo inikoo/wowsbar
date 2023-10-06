@@ -87,7 +87,7 @@ onMounted(() => {
         },
         async store(data) { return Store(data, editorInstance.value) },
     });
-   
+    CustomBlock(editorInstance.value)
 });
 </script>
 

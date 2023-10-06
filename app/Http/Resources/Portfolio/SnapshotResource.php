@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Portfolio;
 
+use App\Enums\Portfolio\Banner\BannerStateEnum;
 use App\Enums\Portfolio\Snapshot\SnapshotStateEnum;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -17,6 +18,16 @@ class SnapshotResource extends JsonResource
     {
         /** @var \App\Models\Helpers\Snapshot $snapshot */
         $snapshot = $this;
+
+
+        $comment=$snapshot->comment;
+
+        if(!$comment and  $snapshot->state==SnapshotStateEnum::LIVE){
+            $comment=__('First commit');
+        }
+
+
+
 
         return [
             'slug'            => $snapshot->slug,
@@ -40,7 +51,7 @@ class SnapshotResource extends JsonResource
                     'icon'    => 'fal fa-eye-slash'
                 ]
             },
-            'comment'         => $snapshot->comment,
+            'comment'         => $comment,
         ];
     }
 }

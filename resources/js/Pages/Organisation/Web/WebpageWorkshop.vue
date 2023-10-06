@@ -6,7 +6,7 @@ import PageHeading from '@/Components/Headings/PageHeading.vue'
 import GrapeEditor from '@/Components/CMS/Workshops/GrapeEditor/GrapeEditor.vue'
 import GrapesForm from "grapesjs-plugin-forms";
 import TailwindComponents from "grapesjs-tailwind";
-import { HeaderPlugins } from "@/Components/CMS/Workshops/GrapeEditor/CustomBlocks/CustomBlock";
+import { HeaderPlugins, FooterPlugins } from "@/Components/CMS/Workshops/GrapeEditor/CustomBlocks/CustomBlock";
 
 
 
@@ -31,7 +31,7 @@ const data = ref()
     <GrapeEditor
      :data="data" 
      @changeData="(value)=>data = value"
-     :plugins="[GrapesForm,HeaderPlugins]"
+     :plugins="[HeaderPlugins,FooterPlugins,TailwindComponents]"
      :updateRoute="updateRoute"
      :loadRoute="loadRoute"
      />

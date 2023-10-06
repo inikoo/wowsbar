@@ -40,7 +40,6 @@ const props = defineProps<{
         workshopRoute: any
     }
     tab?: string
-    pageHead: Object
     banner: {
         'slug': string,
         'ulid': string,

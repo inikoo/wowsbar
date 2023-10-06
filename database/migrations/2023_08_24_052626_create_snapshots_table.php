@@ -29,6 +29,7 @@ return new class () extends Migration {
             $table->string('checksum');
             $table->jsonb('layout');
             $table->string('comment')->nullable();
+            $table->boolean('first_commit')->default(false);
             $table->timestampsTz();
             $table->index(['parent_type', 'parent_id']);
             $table->index(['parent_type', 'parent_id','scope']);
