@@ -39,8 +39,8 @@ class UpdateProductCategory
     public function rules(): array
     {
         return [
-            'code'        => ['required', 'unique:product_categories', 'between:2,9', 'alpha'],
-            'name'        => ['required', 'max:250', 'string'],
+            'code'        => ['sometimes', 'unique:product_categories', 'between:2,9', 'alpha'],
+            'name'        => ['sometimes', 'max:250', 'string'],
             'image_id'    => ['sometimes', 'required', 'exists:media,id'],
             'state'       => ['sometimes', 'required'],
             'description' => ['sometimes', 'required', 'max:1500'],

@@ -8,7 +8,6 @@
 namespace App\Actions\Portfolios\CustomerWebsite\UI;
 
 use App\Http\Resources\Catalogue\BasketResource;
-use App\Http\Resources\Portfolio\PortfolioWebsiteResource;
 use App\Models\Catalogue\ProductCategory;
 use App\Models\Portfolios\CustomerWebsite;
 use Lorisleiva\Actions\Concerns\AsObject;
@@ -22,8 +21,8 @@ class GetCustomerWebsiteShowcase
         $departments = ProductCategory::all();
 
         return [
-            'basket' => BasketResource::collection($departments),
-            'website' => new PortfolioWebsiteResource($customerWebsite)
+
+            'basket' => BasketResource::collection($departments)
         ];
     }
 }
