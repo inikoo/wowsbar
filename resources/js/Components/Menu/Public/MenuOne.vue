@@ -43,10 +43,9 @@ const mobileMenuOpen = ref(false)
 									class="-m-2 inline-flex items-center justify-center rounded-md p-2 text-gray-400"
 									@click="mobileMenuOpen = false">
 									<span class="sr-only">Close menu</span>
-									saasd
 								</button>
 							</div>
-							
+
 							<!-- Links -->
 							<TabGroup as="div" class="mt-2">
 								<div class="border-b border-gray">
@@ -93,7 +92,7 @@ const mobileMenuOpen = ref(false)
 					</TransitionChild>
 				</div>
 			</Dialog>
-		</TransitionRoot> 
+		</TransitionRoot>
 		<!-- Mobile menu -->
 
 		<!-- Desktop -->

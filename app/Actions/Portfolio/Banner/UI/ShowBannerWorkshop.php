@@ -140,7 +140,7 @@ class ShowBannerWorkshop extends InertiaAction
         }
 
         return match ($routeName) {
-            'customer.banners.workshop',
+            'customer.caas.banners.workshop',
             'customer.portfolio.websites.show.banners.workshop' => [
                 'label' => $banner->name,
                 'route' => [

@@ -5,7 +5,7 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\UI\Customer\Banners;
+namespace App\Actions\UI\Customer\CaaS;
 
 use App\Actions\Helpers\History\IndexHistories;
 use App\Actions\InertiaAction;
@@ -17,7 +17,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
 
-class ShowBannersDashboard extends InertiaAction
+class ShowCaaSDashboard extends InertiaAction
 {
     public function authorize(ActionRequest $request): bool
     {
@@ -41,12 +41,12 @@ class ShowBannersDashboard extends InertiaAction
             'Banners/BannersDashboard',
             [
                 'breadcrumbs'  => $this->getBreadcrumbs(),
-                'title'        => __('banners'),
+                'title'        => __('content as a service'),
                 'pageHead'     => [
-                    'title'             => __('banners'),
+                    'title'             => __('content as a service dashboard'),
                     'icon'              => [
-                        'icon'    => ['fal', 'fa-rectangle-wide'],
-                        'tooltip' => __('banners')
+                        'icon'    => ['fal', 'fa-shapes'],
+                        'tooltip' => __('CaaS')
                     ],
                 ],
 
@@ -77,7 +77,7 @@ class ShowBannersDashboard extends InertiaAction
                     [
                         'name'  => __('banners'),
                         'icon'  => ['fal', 'fa-rectangle-wide'],
-                        'href'  => ['customer.banners.index'],
+                        'href'  => ['customer.caas.banners.index'],
                         'index' => [
                             'number' => $customer->portfolioStats->number_banners
                         ]
@@ -97,9 +97,9 @@ class ShowBannersDashboard extends InertiaAction
                         'type'   => 'simple',
                         'simple' => [
                             'route' => [
-                                'name' => 'customer.banners.dashboard'
+                                'name' => 'customer.caas.dashboard'
                             ],
-                            'label' => __('banners dashboard'),
+                            'label' => __('CaaS dashboard'),
                         ]
                     ]
                 ]
