@@ -21,6 +21,7 @@ enum WebpageTabsEnum: string
     case ANALYTICS = 'analytics';
 
     case WEBPAGES = 'webpages';
+    case SNAPSHOTS = 'snapshots';
 
 
     case CHANGELOG = 'changelog';
@@ -71,6 +72,10 @@ enum WebpageTabsEnum: string
             WebpageTabsEnum::WEBPAGES => [
                 'title' => __('Webpages'),
                 'icon'  => 'fal fa-level-down',
+            ],
+            WebpageTabsEnum::SNAPSHOTS => [
+                'title' => __('Snapshots'),
+                'icon'  => 'fal fa-layer-group',
             ],
 
             WebpageTabsEnum::DATA => [
