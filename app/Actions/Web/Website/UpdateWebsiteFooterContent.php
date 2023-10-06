@@ -17,15 +17,17 @@ class UpdateWebsiteFooterContent
 
     private bool $asAction = false;
 
-    public function handle(Website $website, array $content): Website
+    public function handle(Website $website, array $content): void
     {
 
-        $website->update(
-            [
-                'footer_content'=> $content
+        $snapshot = $website->unpublishedFooterSnapshot;
+        $snapshot->update([
+                'layout' => [
+                    'src'=>$content['data'],
+                    'html'=>$content['pagesHtml'],
+                ]
             ]
         );
-        return $website;
 
 
     }
@@ -42,14 +44,16 @@ class UpdateWebsiteFooterContent
     public function rules(): array
     {
         return [
-            'data' => ['required','array'],
+            'data' => ['required', 'array'],
+            'pagesHtml' => ['required', 'array'],
         ];
     }
 
-    public function asController(Website $website, ActionRequest $request): Website
+    public function asController(Website $website, ActionRequest $request): string
     {
         $request->validate();
-        return $this->handle($website, $request->validated());
+        $this->handle($website, $request->validated());
+        return "👍";
     }
 
 
