@@ -8,6 +8,8 @@
 namespace App\Actions\Web\Website;
 
 use App\Actions\Traits\WithActionUpdate;
+use App\Actions\Web\Webpage\PublishWebpage;
+use App\Enums\Organisation\Web\Webpage\WebpageStateEnum;
 use App\Enums\Organisation\Web\Website\WebsiteStateEnum;
 use App\Models\Web\Website;
 use Exception;
@@ -29,6 +31,11 @@ class LaunchWebsite
 
         PublishWebsiteMarginal::run($website, 'header', ['layout' => $website->unpublishedHeaderSnapshot->layout]);
         PublishWebsiteMarginal::run($website, 'footer', ['layout' => $website->unpublishedFooterSnapshot->layout]);
+
+        foreach ($website->webpages()->where('state', WebpageStateEnum::READY)->get() as $webpage) {
+            PublishWebpage::run($webpage, ['layout' => $webpage->unpublishedSnapshot->layout]);
+        }
+
 
         $modelData = [
             'state'       => WebsiteStateEnum::LIVE,
@@ -53,7 +60,7 @@ class LaunchWebsite
         if (!$request->exists('status') and $request->has('state')) {
             $status = match ($request->get('state')) {
                 WebsiteStateEnum::LIVE->value => true,
-                default                       => false
+                default => false
             };
             $request->merge(['status' => $status]);
         }
