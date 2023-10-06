@@ -12,6 +12,7 @@ use App\Enums\Portfolio\Snapshot\SnapshotStateEnum;
 use App\InertiaTable\InertiaTable;
 use App\Models\Helpers\Snapshot;
 use App\Models\Portfolio\Banner;
+use App\Models\Web\Webpage;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Lorisleiva\Actions\ActionRequest;
@@ -29,14 +30,17 @@ class IndexSnapshots extends InertiaAction
     }
 
     /** @noinspection PhpUndefinedMethodInspection */
-    public function handle(Banner $parent, $prefix = null): LengthAwarePaginator
+    public function handle(Banner|Webpage $parent, $prefix = null): LengthAwarePaginator
     {
         $queryBuilder = QueryBuilder::for(Snapshot::class);
         $queryBuilder->where('state', '!=', SnapshotStateEnum::UNPUBLISHED->value);
 
         if (class_basename($parent) == 'Banner') {
             $queryBuilder->where('parent_id', $parent->id)->where('parent_type', 'Banner');
+        }
 
+        if (class_basename($parent) == 'Webpage') {
+            $queryBuilder->where('parent_id', $parent->id)->where('parent_type', 'Webpage');
         }
 
         return $queryBuilder
@@ -46,7 +50,7 @@ class IndexSnapshots extends InertiaAction
             ->withQueryString();
     }
 
-    public function tableStructure(Banner $parent, ?array $modelOperations = null, $prefix = null, ?array $exportLinks = null): Closure
+    public function tableStructure(Banner|Webpage $parent, ?array $modelOperations = null, $prefix = null, ?array $exportLinks = null): Closure
     {
         return function (InertiaTable $table) use ($modelOperations, $prefix, $exportLinks) {
             if ($prefix) {

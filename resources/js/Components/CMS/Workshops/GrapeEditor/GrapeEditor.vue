@@ -11,7 +11,6 @@ import { CustomBlock } from "@/Components/CMS/Workshops/GrapeEditor/CustomBlocks
 
 const emits = defineEmits();
 const props = defineProps<{
-    data: Object;
     plugins: Array;
     customBlocks?: Array;
     updateRoute?: Object;
@@ -54,7 +53,7 @@ const Load = async (data) => {
             ),
         )
         if (response) {
-           return response.data.data
+           return response.data.src
         }
     } catch (error) {
         console.log(error)

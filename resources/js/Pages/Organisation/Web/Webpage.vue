@@ -19,11 +19,21 @@ import Tabs from "@/Components/Navigation/Tabs.vue";
 import {library} from '@fortawesome/fontawesome-svg-core';
 
 import {
-    faAnalytics, faBrowser,
-    faChartLine, faDraftingCompass, faRoad, faSlidersH,faClock,faLevelDown,faShapes,faSortAmountDownAlt
+    faAnalytics,
+    faBrowser,
+    faChartLine,
+    faDraftingCompass,
+    faRoad,
+    faSlidersH,
+    faClock,
+    faLevelDown,
+    faShapes,
+    faSortAmountDownAlt,
+    faLayerGroup
 } from "@/../private/pro-light-svg-icons";
 import WebpageShowcase from "@/Pages/Organisation/Web/WebpageShowcase.vue";
 import WebpageAnalytics from "@/Pages/Organisation/Web/WebpageAnalytics.vue";
+import TableSnapshots from "@/Components/Tables/TableSnapshots.vue";
 
 
 
@@ -34,6 +44,7 @@ library.add(
     faDraftingCompass,
     faSlidersH,
     faRoad,
+    faLayerGroup,
     faBrowser,faLevelDown,faShapes,faSortAmountDownAlt
 );
 
@@ -47,6 +58,7 @@ const props = defineProps<{
     webpages?: object
     changelog?: object
     showcase?: any
+    snapshots?: object,
 }>()
 
 
@@ -59,7 +71,8 @@ const component = computed(() => {
         'changelog': TableHistories,
         'showcase': WebpageShowcase,
         'analytics': WebpageAnalytics,
-        'webpages': TableWebpages
+        'webpages': TableWebpages,
+        'snapshots': TableSnapshots
     }
 
     return components[currentTab.value]

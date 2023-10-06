@@ -4,6 +4,11 @@ import { footerBlock1, footerBlock2, footerBlock3, footerBlock4, footerBlock5 } 
 export const CustomBlock = (editor : Any) => {
     IconBlock(editor)
     // HeaderCategories(editor)
+
+    setTimeout(()=>{
+      let categories = editor.BlockManager.getCategories();
+      categories.each((category)=>category.set("open",false))
+    },500)
 }
 
 export const IconBlock = (editor : Any) => {

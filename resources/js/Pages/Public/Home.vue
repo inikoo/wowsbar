@@ -5,6 +5,8 @@ const props = defineProps<{
   content: object
 }>()
 
+console.log(props)
+
 const parseCSSString = (cssString) => {
   const styles = {};
   const rules = cssString.split('}');

@@ -39,10 +39,12 @@ use App\Actions\Catalogue\Product\StoreProduct;
 use App\Actions\Catalogue\Product\UpdateProduct;
 use App\Actions\Catalogue\Product\ImportProducts;
 use App\Actions\UI\Organisation\Profile\UpdateProfile;
+use App\Actions\Web\Webpage\PublishWebpage;
 use App\Actions\Web\Webpage\ShowWebpageContent;
 use App\Actions\Web\Webpage\StoreArticle;
 use App\Actions\Web\Webpage\StoreWebpage;
 use App\Actions\Web\Webpage\UpdateWebpageContent;
+use App\Actions\Web\Website\PublishWebsiteMarginal;
 use App\Actions\Web\Website\ShowWebsiteFooterContent;
 use App\Actions\Web\Website\ShowWebsiteHeaderContent;
 use App\Actions\Web\Website\StoreWebsite;
@@ -105,9 +107,13 @@ Route::prefix('website')->as('website.')->group(function () {
     Route::patch('{website:id}/layout', UpdateWebsiteLayout::class)->name('layout.update');
 
     Route::post('{website:id}/header/content', UpdateWebsiteHeaderContent::class)->name('header.content.update');
+    Route::post('{website:id}/header/publish', [PublishWebsiteMarginal::class,'header'])->name('header.content.publish');
+
     Route::get('{website:id}/header/content', ShowWebsiteHeaderContent::class)->name('header.content.show');
 
     Route::post('{website:id}/footer/content', UpdateWebsiteFooterContent::class)->name('footer.content.update');
+    Route::post('{website:id}/footer/publish', [PublishWebsiteMarginal::class,'footer'])->name('footer.content.publish');
+
     Route::get('{website:id}/footer/content', ShowWebsiteFooterContent::class)->name('footer.content.show');
 
 
@@ -116,6 +122,8 @@ Route::prefix('website')->as('website.')->group(function () {
 Route::prefix('webpage')->as('webpage.')->group(function () {
     Route::post('{webpage:id}', StoreWebpage::class)->name('store');
     Route::post('{webpage:id}/content', UpdateWebpageContent::class)->name('content.update');
+    Route::post('{webpage:id}/publish', PublishWebpage::class)->name('content.publish');
+
     Route::get('{webpage:id}/content', ShowWebpageContent::class)->name('content.show');
 
     //Route::patch('{webpage:id}', UpdateWebsite::class)->name('update');

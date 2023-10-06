@@ -21,6 +21,9 @@ return new class () extends Migration {
             $table->foreign('customer_id')->references('id')->on('customers')->onUpdate('cascade')->onDelete('cascade');
             $table->unsignedInteger('banner_id')->index();
             $table->foreign('banner_id')->references('id')->on('banners')->onUpdate('cascade')->onDelete('cascade');
+
+            $table->string('published_hash')->nullable();
+
             $table->timestampsTz();
         });
     }

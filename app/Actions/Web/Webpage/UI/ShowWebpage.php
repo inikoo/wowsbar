@@ -7,6 +7,7 @@
 
 namespace App\Actions\Web\Webpage\UI;
 
+use App\Actions\Helpers\Snapshot\UI\IndexSnapshots;
 use App\Actions\InertiaAction;
 use App\Actions\UI\WithInertia;
 use App\Actions\Web\HasWorkshopAction;
@@ -15,6 +16,7 @@ use App\Actions\Web\Website\UI\ShowWebsite;
 use App\Enums\Organisation\Web\Webpage\WebpagePurposeEnum;
 use App\Enums\Organisation\Web\Webpage\WebpageTypeEnum;
 use App\Enums\UI\Organisation\WebpageTabsEnum;
+use App\Http\Resources\Portfolio\SnapshotResource;
 use App\Http\Resources\Web\WebpageResource;
 use App\Models\Web\Webpage;
 use App\Models\Web\Website;
@@ -146,6 +148,9 @@ class ShowWebpage extends InertiaAction
                     fn () => WebpageResource::make($webpage)->getArray()
                     : Inertia::lazy(fn () => WebpageResource::make($webpage)->getArray()),
 
+                WebpageTabsEnum::SNAPSHOTS->value => $this->tab == WebpageTabsEnum::SNAPSHOTS->value ?
+                    fn () => SnapshotResource::collection(IndexSnapshots::run(parent:$webpage, prefix:'snapshots'))
+                    : Inertia::lazy(fn () => SnapshotResource::collection(IndexSnapshots::run(parent:$webpage, prefix:'snapshots'))),
 
                 WebpageTabsEnum::WEBPAGES->value => $this->tab == WebpageTabsEnum::WEBPAGES->value
                     ?
@@ -173,7 +178,12 @@ class ShowWebpage extends InertiaAction
             ]
         )->table(
             IndexWebpages::make()->tableStructure(parent: $webpage, prefix: 'webpages')
-        );
+        )->table(
+        IndexSnapshots::make()->tableStructure(
+            parent: $webpage,
+            prefix:'snapshots'
+        )
+    );
     }
 
     public function getBreadcrumbs(array $routeParameters, string $suffix = ''): array

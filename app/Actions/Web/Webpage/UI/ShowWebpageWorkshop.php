@@ -27,6 +27,7 @@ class ShowWebpageWorkshop extends InertiaAction
     public function asController(Webpage $webpage, ActionRequest $request): Webpage
     {
         $this->initialisation($request);
+
         return $webpage;
     }
 
@@ -34,6 +35,7 @@ class ShowWebpageWorkshop extends InertiaAction
     public function inWebsite(Website $website, Webpage $webpage, ActionRequest $request): Webpage
     {
         $this->initialisation($request);
+
         return $webpage;
     }
 
@@ -42,13 +44,13 @@ class ShowWebpageWorkshop extends InertiaAction
         return Inertia::render(
             'Web/WebpageWorkshop',
             [
-                'title'       => __("Webpage's workshop"),
-                'breadcrumbs' => $this->getBreadcrumbs(
+                'title'        => __("Webpage's workshop"),
+                'breadcrumbs'  => $this->getBreadcrumbs(
                     $request->route()->originalParameters()
                 ),
-                'pageHead'    => [
-                    'title'              => $webpage->code,
-                    'icon'               => [
+                'pageHead'     => [
+                    'title'     => $webpage->code,
+                    'icon'      => [
                         'title' => __('webpage'),
                         'icon'  => 'fal fa-browser'
                     ],
@@ -81,12 +83,23 @@ class ShowWebpageWorkshop extends InertiaAction
                         */
                     ],
                 ],
-                 'webpageID'  => $webpage->id,
-                 'updateRoute'=> [
-                     'name'       => 'org.models.webpage.content.update',
-                     'parameters' => $webpage->id
-                 ],
-                'loadRoute'=> [
+                'webpageID'    => $webpage->id,
+                'websiteState' => $webpage->website->state,
+                'webpageState' => $webpage->state,
+
+                'publishRoute' => [
+                    'name'       => 'org.models.webpage.content.publish',
+                    'parameters' => $webpage->id
+                ],
+                'setAsReadyRoute' => [
+                    'name'       => 'org.models.webpage.content.publish',
+                    'parameters' => $webpage->id
+                ],
+                'updateRoute'  => [
+                    'name'       => 'org.models.webpage.content.update',
+                    'parameters' => $webpage->id
+                ],
+                'loadRoute'    => [
                     'name'       => 'org.models.webpage.content.show',
                     'parameters' => $webpage->id
                 ],
