@@ -48,7 +48,7 @@ class ShowCaaSDashboard
                         'name' => __('websites'),
                         'stat' => $org->crmStats->number_customer_websites_banners,
                         'href' => [
-                            'name' => 'org.catalogue.departments.index'
+                            'name' => 'org.caas.websites.index'
                         ]
                     ],
                 ]
