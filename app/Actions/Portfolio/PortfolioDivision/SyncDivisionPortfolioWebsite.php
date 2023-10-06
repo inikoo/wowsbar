@@ -7,6 +7,7 @@
 
 namespace App\Actions\Portfolio\PortfolioDivision;
 
+use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateCustomerWebsites;
 use App\Enums\Helpers\Interest\InterestEnum;
 use App\Models\Organisation\Division;
 use App\Models\Portfolio\PortfolioWebsite;
@@ -30,6 +31,8 @@ class SyncDivisionPortfolioWebsite
         $portfolioWebsite->divisions()->updateExistingPivot($divisions->pluck('id'), [
             'interest' => $modelData['interest']
         ]);
+
+        OrganisationHydrateCustomerWebsites::dispatch();
     }
 
     public function rules(): array
