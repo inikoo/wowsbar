@@ -17,7 +17,6 @@ const props = defineProps<{
 
 function websiteRoute(website: Website) {
 
-    console.log(route().current())
     switch (route().current()) {
         case  'org.portfolios.shop.customer-websites.index':
             return route(

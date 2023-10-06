@@ -18,13 +18,11 @@ class GetCustomerWebsiteShowcase
 
     public function handle(CustomerWebsite $customerWebsite): array
     {
-        $departments = ProductCategory::all();
+        $departments = ProductCategory::orderBy('id', 'DESC')->get();
 
         return [
 
             'basket' => BasketResource::collection($departments)
-
-
         ];
     }
 }

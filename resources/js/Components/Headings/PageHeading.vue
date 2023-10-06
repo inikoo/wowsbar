@@ -8,7 +8,7 @@
 import { Link } from "@inertiajs/vue3"
 
 import { library } from "@fortawesome/fontawesome-svg-core"
-import { faEdit, faWindowMaximize, faDraftingCompass, faEmptySet, faMoneyCheckAlt, faPeopleArrows, faSlidersH, faSave, faSuitcase, faBroadcastTower, faUpload ,faLevelUp} from "@/../private/pro-light-svg-icons"
+import { faEdit, faWindowMaximize, faDraftingCompass, faEmptySet, faMoneyCheckAlt, faPeopleArrows, faSlidersH, faSave, faSuitcase, faBroadcastTower, faUpload, faLevelUp, faUserPlus, faTimes, faClock} from "@/../private/pro-light-svg-icons"
 import { faRocketLaunch, faPencil, faArrowLeft, faBorderAll, faTrashAlt, faDesktop} from "@/../private/pro-regular-svg-icons"
 import { faPlus } from "@/../private/pro-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
@@ -25,8 +25,8 @@ interface Icon {
 
 library.add(faEdit, faWindowMaximize, faRocketLaunch, faDraftingCompass, faEmptySet, faMoneyCheckAlt, faPeopleArrows, faSlidersH, faPlus,
     faPencil, faArrowLeft, faBorderAll, faTrashAlt, faSave, faSuitcase,
-    faBroadcastTower, faUpload, faDesktop,faLevelUp
-);
+    faBroadcastTower, faUpload, faDesktop,faLevelUp, faUserPlus, faTimes, faClock
+)
 
 const props = defineProps<{
     data: {
@@ -119,11 +119,9 @@ if (props.dataToSubmit && props.data.actionActualMethod) {
                         :method="action.method ?? 'get'"
                         :data="action.method !== 'get' ? dataToSubmit : null"
                     >
-
                         <Button :style="action.style" :label="action.label" :icon="action.icon"
                             class="capitalize inline-flex items-center rounded-md text-sm font-medium shadow-sm gap-x-2"
-                        >
-                        </Button>
+                        />
                     </Link>
 
                     <!--suppress HtmlUnknownTag -->

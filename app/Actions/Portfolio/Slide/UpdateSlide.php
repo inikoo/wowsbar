@@ -15,13 +15,13 @@ class UpdateSlide
     use WithActionUpdate;
 
 
-    public function handle(Slide $contentBlockComponent, array $modelData): Slide
+    public function handle(Slide $slide, array $modelData): Slide
     {
 
-        $this->update($contentBlockComponent, $modelData, ['layout']);
+        $this->update($slide, $modelData, ['layout']);
 
 
-        return $contentBlockComponent;
+        return $slide;
     }
 
 

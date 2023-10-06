@@ -15,7 +15,7 @@ class SnapshotResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        /** @var \App\Models\Portfolio\Snapshot $snapshot */
+        /** @var \App\Models\Helpers\Snapshot $snapshot */
         $snapshot = $this;
 
         return [

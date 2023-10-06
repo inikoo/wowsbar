@@ -76,7 +76,7 @@ const logoutAuth = () => {
 </script>
 
 <template>
-    <Disclosure as="nav" class=" fixed top-0 z-20 w-full bg-gray-50 text-gray-700 dark:bg-gray-800 dark:text-gray-200" v-slot="{ open }">
+    <Disclosure as="nav" class=" fixed top-0 z-[21] w-full bg-gray-50 text-gray-700 dark:bg-gray-800 dark:text-gray-200" v-slot="{ open }">
         <div class="px-0">
             <div class="flex h-11 lg:h-10 flex-shrink-0 border-b border-gray-200 dark:border-gray-500 ">
                 <div class="flex flex-1">

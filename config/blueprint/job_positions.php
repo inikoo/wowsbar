@@ -137,22 +137,22 @@ return [
                 'social'
             ]
         ],
-        'developer-m' => [
+        'deve-m' => [
             'code'       => 'dev-m',
             'team'       => 'developer',
             'department' => 'development',
             'name'       => 'Developer supervisor',
             'roles'      => [
-                'guest'
+                'caas-supervisor'
             ]
         ],
-        'developer-w' => [
+        'deve' => [
             'code'       => 'dev-w',
             'team'       => 'developer',
             'department' => 'development',
             'name'       => 'Developer',
             'roles'      => [
-                'guest'
+                'caas'
             ]
         ],
         'cus-m'       => [

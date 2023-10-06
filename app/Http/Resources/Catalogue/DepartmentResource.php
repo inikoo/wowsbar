@@ -29,12 +29,13 @@ class DepartmentResource extends JsonResource
             'shop_slug'       => $this->whenHas('shop_slug'),
 
             //'department_slug' => $this->department_slug,
-            'code'            => $this->code,
-            'name'            => $this->name,
-            'state'           => $this->state,
-            'description'     => $this->description,
-            'created_at'      => $this->created_at,
-            'updated_at'      => $this->updated_at,
+            'code'               => $this->code,
+            'name'               => $this->name,
+            'state'              => $this->state,
+            'interest'           => $this->interest,
+            'description'        => $this->description,
+            'created_at'         => $this->created_at,
+            'updated_at'         => $this->updated_at,
         ];
     }
 }

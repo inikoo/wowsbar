@@ -87,6 +87,7 @@ class ShowProfile
                                 "label"   => __("language"),
                                 "value"   => $user->language_id,
                                 'options' => GetLanguagesOptions::make()->translated(),
+                                "canClear"=> false
 
                             ],
                         ],

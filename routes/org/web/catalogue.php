@@ -23,23 +23,3 @@ Route::prefix('departments/{productCategory}')->as('departments.')->group(functi
 
 Route::get('/products', ['icon' => 'cube', 'label' => 'products'])->uses(IndexProducts::class)->name('products.index');
 Route::get('/products/{product}', ['icon' => 'cube', 'label' => 'product'])->uses(ShowProduct::class)->name('products.show');
-
-
-Route::get('/seo', [
-    'uses'  => ShowCatalogueDashboard::class,
-    'icon'  => 'globe',
-    'label' => 'websites'
-])->name('seo.dashboard');
-
-Route::get('/social', [
-    'uses'  => ShowCatalogueDashboard::class,
-    'icon'  => 'globe',
-    'label' => 'websites'
-])->name('social.dashboard');
-
-
-Route::get('/google-ads', [
-    'uses'  => ShowCatalogueDashboard::class,
-    'icon'  => 'globe',
-    'label' => 'websites'
-])->name('google-ads.dashboard');

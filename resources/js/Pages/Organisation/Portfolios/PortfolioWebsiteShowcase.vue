@@ -1,17 +1,30 @@
 <script setup lang="ts">
+import axios from 'axios'
 
 const props = defineProps<{
     data: any
 }>()
 
-// When the checkbox is updated
-const handleInputChanged = (id: number, val: string) => {
-    console.log(props.data.basket.data[id-1])
+props.data.basket.data.map((item: any) => {if(item.interest == null) { item.interest = 'not_sure'}})
+
+// When the radio is updated
+const handleRadioChanged = async (itemValue: string, itemSlug: string) => {
+    try {
+        await axios.patch(
+            route('org.models.product-category.update', itemSlug),
+            {
+                interest: itemValue
+            }
+        )
+    } catch (error: any) {
+        console.error(error.message)
+    }
 }
 </script>
 
 <template>
-    <div class="max-w-lg px-4 sm:px-6 lg:px-8 pt-4">
+    <!-- <pre>{{ data }}</pre> -->
+    <div class="max-w-xl px-4 sm:px-6 lg:px-8 pt-4">
         <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
                 <table class="min-w-full divide-y divide-gray-300">
@@ -20,21 +33,35 @@ const handleInputChanged = (id: number, val: string) => {
                             <th scope="col" class="py-3.5 pl-4 pr-3 text-left font-semibold tracking-wide">
                                 Name
                             </th>
-                            <th scope="col" class="px-3 py-3.5 font-semibold tracking-wide text-center">
-                                Interested?
+                            <th scope="col" class="px-3 py-3.5 font-semibold tracking-wide text-center cursor-pointer">
+                                Interested
+                            </th>
+                            <th scope="col" class="px-3 py-3.5 font-semibold tracking-wide text-center cursor-pointer">
+                                Not interested
+                            </th>
+                            <th scope="col" class="px-3 py-3.5 font-semibold tracking-wide text-center cursor-pointer">
+                                Not sure
                             </th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200">
-                        <tr v-for="item in data.basket.data" :key="item.email">
+                        <tr v-for="item in data.basket.data" :key="item.email" class="hover:bg-gray-100">
                             <td class="">
-                                <label :for="`item-${item.id}`" class="whitespace-nowrap block py-2 pl-4 pr-3 text-sm font-medium text-gray-500 hover:text-gray-600 cursor-pointer">
+                                <div class="whitespace-nowrap block py-2 pl-4 pr-3 text-sm font-medium text-gray-500 hover:text-gray-600">
                                     {{ item.name }}
-                                </label>
+                                </div>
                             </td>
                             <td class="whitespace-nowrap px-3 text-sm text-gray-500 text-center">
-                                <input v-model="item.state" :id="`item-${item.id}`" @change="() => handleInputChanged(item.id, item.state)" :name="`item-${item.id}`" type="checkbox" :titles="`I'm Interested in ${item.name}`"
-                                    class="h-6 w-6 rounded cursor-pointer border-gray-300 hover:border-gray-500 text-gray-600 focus:ring-gray-600" />
+                                <input v-model="item.interest" value="interested" :id="`item-${item.id}`" @change="() => handleRadioChanged(item.interest, item.slug)" :name="`item-${item.id}`" type="radio" :title="`I'm Interested in ${item.name}.`"
+                                    class="h-6 w-6 rounded cursor-pointer border-gray-300 hover:border-lime-500 text-lime-500 focus:ring-lime-600" />
+                            </td>
+                            <td class="whitespace-nowrap px-3 text-sm text-gray-500 text-center">
+                                <input v-model="item.interest" value="not_interested" :id="`item-${item.id}`" @change="() => handleRadioChanged(item.interest, item.slug)" :name="`item-${item.id}`" type="radio" :title="`I'm not interested in ${item.name}.`"
+                                    class="h-6 w-6 rounded cursor-pointer border-gray-300 hover:border-rose-500 text-rose-500 focus:ring-rose-600" />
+                            </td>
+                            <td class="whitespace-nowrap px-3 text-sm text-gray-500 text-center">
+                                <input v-model="item.interest" value="not_sure" :id="`item-${item.id}`" @change="() => handleRadioChanged(item.interest, item.slug)" :name="`item-${item.id}`" type="radio" :title="`I'm not sure.`"
+                                    class="h-6 w-6 rounded cursor-pointer border-gray-300 hover:border-gray-500 text-gray-400 focus:ring-gray-600" />
                             </td>
                         </tr>
                     </tbody>
@@ -43,5 +70,3 @@ const handleInputChanged = (id: number, val: string) => {
         </div>
     </div>
 </template>
-
-<style scoped></style>

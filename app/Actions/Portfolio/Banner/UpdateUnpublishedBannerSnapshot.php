@@ -15,9 +15,9 @@ use App\Actions\Portfolio\Slide\StoreSlide;
 use App\Actions\Portfolio\Slide\UpdateSlide;
 use App\Actions\Traits\WithActionUpdate;
 use App\Http\Resources\Portfolio\BannerResource;
+use App\Models\Helpers\Snapshot;
 use App\Models\Portfolio\Banner;
 use App\Models\Portfolio\Slide;
-use App\Models\Portfolio\Snapshot;
 use Illuminate\Support\Arr;
 use Lorisleiva\Actions\ActionRequest;
 

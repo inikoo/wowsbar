@@ -10,6 +10,7 @@ namespace App\Models\Portfolio;
 use App\Actions\Utils\Abbreviate;
 use App\Concerns\BelongsToCustomer;
 use App\Enums\Portfolio\Banner\BannerStateEnum;
+use App\Models\Helpers\Snapshot;
 use App\Models\Media\Media;
 use App\Models\Traits\HasHistory;
 use App\Models\Traits\HasUniversalSearch;
@@ -56,16 +57,16 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read Media|null $image
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, Media> $images
  * @property-read int|null $images_count
- * @property-read \App\Models\Portfolio\Snapshot|null $liveSnapshot
+ * @property-read Snapshot|null $liveSnapshot
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, Media> $media
  * @property-read int|null $media_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Portfolio\PortfolioWebsite> $portfolioWebsite
  * @property-read int|null $portfolio_website_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Portfolio\Snapshot> $snapshots
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Snapshot> $snapshots
  * @property-read int|null $snapshots_count
  * @property-read \App\Models\Portfolio\BannerStats|null $stats
  * @property-read \App\Models\Search\UniversalSearch|null $universalSearch
- * @property-read \App\Models\Portfolio\Snapshot|null $unpublishedSnapshot
+ * @property-read Snapshot|null $unpublishedSnapshot
  * @method static \Database\Factories\Portfolio\BannerFactory factory($count = null, $state = [])
  * @method static Builder|Banner newModelQuery()
  * @method static Builder|Banner newQuery()

@@ -20,7 +20,8 @@ return new class () extends Migration {
             $table->unsignedSmallInteger('user_id')->nullable();
             $table->string('parent_type')->nullable();
             $table->unsignedInteger('parent_id')->nullable();
-            $table->unsignedInteger('customer_id');
+            $table->unsignedInteger('customer_id')->nullable();
+            $table->string('scope')->index()->nullable();
             $table->foreign('customer_id')->references('id')->on('customers')->onUpdate('cascade')->onDelete('cascade');
             $table->string('state')->default(SnapshotStateEnum::UNPUBLISHED->value);
             $table->dateTimeTz('published_at')->nullable();
@@ -30,8 +31,16 @@ return new class () extends Migration {
             $table->string('comment')->nullable();
             $table->timestampsTz();
             $table->index(['parent_type', 'parent_id']);
+            $table->index(['parent_type', 'parent_id','scope']);
             $table->index(['user_id', 'user_type']);
 
+        });
+
+        Schema::table('websites', function (Blueprint $table) {
+            $table->foreign('unpublished_header_snapshot_id')->references('id')->on('snapshots');
+            $table->foreign('live_header_snapshot_id')->references('id')->on('snapshots');
+            $table->foreign('unpublished_footer_snapshot_id')->references('id')->on('snapshots');
+            $table->foreign('live_footer_snapshot_id')->references('id')->on('snapshots');
         });
         Schema::table('banners', function (Blueprint $table) {
             $table->foreign('unpublished_snapshot_id')->references('id')->on('snapshots');
@@ -50,6 +59,9 @@ return new class () extends Migration {
         });
         Schema::table('banners', function (Blueprint $table) {
             $table->dropForeign(['live_snapshot_id', 'unpublished_snapshot_id']);
+        });
+        Schema::table('websites', function (Blueprint $table) {
+            $table->dropForeign(['live_header_snapshot_id', 'unpublished_header_snapshot_id','live_footer_snapshot_id', 'unpublished_footer_snapshot_id']);
         });
         Schema::dropIfExists('snapshots');
     }

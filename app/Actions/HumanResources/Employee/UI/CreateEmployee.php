@@ -72,13 +72,13 @@ class CreateEmployee extends InertiaAction
                                     'type'     => 'input',
                                     'label'    => __('worker number'),
                                     'required' => true,
-                                    'value' => ''
+                                    'value'    => ''
                                 ],
                                 'alias'               => [
                                     'type'     => 'input',
                                     'label'    => __('alias'),
                                     'required' => true,
-                                    'value' => ''
+                                    'value'    => ''
                                 ],
                                 'work_email'          => [
                                     'type'  => 'input',
@@ -128,7 +128,7 @@ class CreateEmployee extends InertiaAction
                                     'label'       => __('job title'),
                                     'placeholder' => __('Job title'),
                                     'searchable'  => true,
-                                    'value' => ''
+                                    'value'       => ''
                                 ],
                             ]
                         ],

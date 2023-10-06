@@ -51,6 +51,7 @@ class AppServiceProvider extends ServiceProvider
                 'Guest'            => 'App\Models\Auth\Guest',
                 'Shop'             => 'App\Models\Market\Shop',
                 'Website'          => 'App\Models\Web\Website',
+                'Webpage'          => 'App\Models\Web\Webpage',
                 'Customer'         => 'App\Models\CRM\Customer',
                 'Prospect'         => 'App\Models\Leads\Prospect',
                 'Workplace'        => 'App\Models\HumanResources\Workplace',

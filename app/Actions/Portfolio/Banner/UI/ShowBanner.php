@@ -8,9 +8,9 @@
 namespace App\Actions\Portfolio\Banner\UI;
 
 use App\Actions\Helpers\History\IndexHistories;
+use App\Actions\Helpers\Snapshot\UI\IndexSnapshots;
 use App\Actions\InertiaAction;
 use App\Actions\Portfolio\PortfolioWebsite\UI\ShowPortfolioWebsite;
-use App\Actions\Portfolio\Snapshot\UI\IndexSnapshots;
 use App\Actions\UI\Customer\Banners\ShowBannersDashboard;
 use App\Enums\Portfolio\Banner\BannerStateEnum;
 use App\Enums\UI\Customer\BannerTabsEnum;
@@ -177,7 +177,7 @@ class ShowBanner extends InertiaAction
 
                 BannerTabsEnum::SNAPSHOTS->value => $this->tab == BannerTabsEnum::SNAPSHOTS->value ?
                     fn () => SnapshotResource::collection(IndexSnapshots::run($banner))
-                    : Inertia::lazy(fn () => SnapshotResource::collection(IndexSnapshots::run($banner))),
+                    : Inertia::lazy(fn () => SnapshotResource::collection(\App\Actions\Helpers\Snapshot\UI\IndexSnapshots::run($banner))),
 
                 BannerTabsEnum::CHANGELOG->value => $this->tab == BannerTabsEnum::CHANGELOG->value ?
                     fn () => HistoryResource::collection(IndexHistories::run($banner))

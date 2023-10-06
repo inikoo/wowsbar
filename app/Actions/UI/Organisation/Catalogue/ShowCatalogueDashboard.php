@@ -21,7 +21,7 @@ class ShowCatalogueDashboard
 
     public function authorize(ActionRequest $request): bool
     {
-        return $request->user()->hasPermissionTo("hr.view");
+        return $request->user()->hasPermissionTo("catalogue.view");
     }
 
 

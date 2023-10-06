@@ -23,6 +23,7 @@ return new class () extends Migration {
             $table->string('type')->index();
             $table->boolean('is_family')->default(false);
             $table->string('state')->nullable()->index();
+            $table->string('interest')->nullable()->index();
             $table->jsonb('data');
             $table->timestampstz();
             $table->softDeletesTz();

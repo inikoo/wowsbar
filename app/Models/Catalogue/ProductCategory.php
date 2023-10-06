@@ -41,6 +41,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property ProductCategoryTypeEnum $type
  * @property bool $is_family
  * @property ProductCategoryStateEnum|null $state
+ * @property string|null $interest
  * @property array $data
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
@@ -66,6 +67,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|ProductCategory whereDeletedAt($value)
  * @method static Builder|ProductCategory whereDescription($value)
  * @method static Builder|ProductCategory whereId($value)
+ * @method static Builder|ProductCategory whereInterest($value)
  * @method static Builder|ProductCategory whereIsFamily($value)
  * @method static Builder|ProductCategory whereName($value)
  * @method static Builder|ProductCategory whereParentId($value)

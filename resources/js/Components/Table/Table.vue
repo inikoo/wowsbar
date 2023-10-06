@@ -637,11 +637,7 @@ watch(name, () => {
                                     :filters="queryBuilderProps.filters" :on-filter-change="changeFilterValue" />
                             </slot>
                         </div> -->
-
                         
-
-                        
-
                         <!-- Element Filter -->
                         <div class="" @checkboxChanged="handleElementsChange">
                             <TableElements v-if="queryBuilderProps.elementGroups" :elements="queryBuilderProps.elementGroups" @checkboxChanged="handleElementsChange" :title="queryBuilderData.title" :name="props.name"/>
