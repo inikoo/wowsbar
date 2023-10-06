@@ -54,7 +54,7 @@ class EditWorkplace extends InertiaAction
                     'actions'  => [
                         [
                             'type'  => 'button',
-                            'style' => 'exitEdit',
+                            'style' => 'cancel',
                             'route' => [
                                 'name'       => preg_replace('/edit$/', 'show', $request->route()->getName()),
                                 'parameters' => array_values($this->originalParameters)

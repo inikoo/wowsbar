@@ -33,7 +33,6 @@ const props = defineProps<{
     banners?: object
 }>()
 
-console.log(props.showcase)
 let currentTab = ref(props.tabs.current);
 const handleTabUpdate = (tabSlug) => useTabChange(tabSlug, currentTab);
 

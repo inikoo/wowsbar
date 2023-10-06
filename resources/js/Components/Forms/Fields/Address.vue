@@ -73,7 +73,7 @@ const handleChange = () => props.form.clearErrors();
                             v-model="addressValues['administrative_area']" />
                         <input v-else v-model="addressValues['administrative_area']" type="text" name="administrative_area"
                             id="administrative_area" autocomplete="password"
-                            class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+                            class="mt-1 focus:ring-gray-500 focus:border-gray-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
                     </div>
                     <div v-else>
                         <label :for="`${addressField}`" class="capitalize block text-xs font-medium text-gray-700">
@@ -82,7 +82,7 @@ const handleChange = () => props.form.clearErrors();
                         </label>
                         <input @input="handleChange()" v-model="addressValues[addressField]" type="text"
                             name="address_line_2" :id="`${addressField}`" autocomplete="password"
-                            class="mt-1 focus:ring-orange-500 focus:border-orange-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+                            class="mt-1 focus:ring-gray-500 focus:border-gray-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
                     </div>
                 </div>
                 <div class="w-5 self-end">

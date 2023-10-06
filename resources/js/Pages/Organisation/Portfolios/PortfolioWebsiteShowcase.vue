@@ -45,9 +45,9 @@ const handleRadioChanged = async (itemValue: string, itemSlug: string) => {
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200">
-                        <tr v-for="item in data.basket.data" :key="item.email">
+                        <tr v-for="item in data.basket.data" :key="item.email" class="hover:bg-gray-100">
                             <td class="">
-                                <div class="whitespace-nowrap block py-2 pl-4 pr-3 text-sm font-medium text-gray-500 hover:text-gray-600 cursor-pointer">
+                                <div class="whitespace-nowrap block py-2 pl-4 pr-3 text-sm font-medium text-gray-500 hover:text-gray-600">
                                     {{ item.name }}
                                 </div>
                             </td>
