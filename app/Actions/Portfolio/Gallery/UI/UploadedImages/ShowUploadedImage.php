@@ -75,7 +75,7 @@ class ShowUploadedImage extends InertiaAction
                             'type'  => 'button',
                             'style' => 'delete',
                             'route' => [
-                                'name'       => 'customer.banners.gallery.uploaded-images.remove',
+                                'name'       => 'customer.caas.gallery.uploaded-images.remove',
                                 'parameters' => [$media->slug]
                             ]
                         ]
@@ -100,16 +100,16 @@ class ShowUploadedImage extends InertiaAction
         };
 
         return match ($routeName) {
-            'customer.banners.gallery.uploaded-images.show' =>
+            'customer.caas.gallery.uploaded-images.show' =>
             array_merge(
                 ShowGallery::make()->getBreadcrumbs(
-                    'customer.banners.gallery',
+                    'customer.caas.gallery',
                     []
                 ),
                 $headCrumb(
                     Media::firstWhere('slug', $routeParameters['media']),
                     [
-                        'name'       => 'customer.banners.gallery.uploaded-images.show',
+                        'name'       => 'customer.caas.gallery.uploaded-images.show',
                         'parameters' => $routeParameters
                     ]
                 ),

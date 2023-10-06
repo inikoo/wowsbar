@@ -11,7 +11,7 @@ use App\Actions\Helpers\History\IndexHistories;
 use App\Actions\Helpers\Snapshot\UI\IndexSnapshots;
 use App\Actions\InertiaAction;
 use App\Actions\Portfolio\PortfolioWebsite\UI\ShowPortfolioWebsite;
-use App\Actions\UI\Customer\Banners\ShowBannersDashboard;
+use App\Actions\UI\Customer\CaaS\ShowCaaSDashboard;
 use App\Enums\Portfolio\Banner\BannerStateEnum;
 use App\Enums\UI\Customer\BannerTabsEnum;
 use App\Http\Resources\History\HistoryResource;
@@ -68,7 +68,7 @@ class ShowBanner extends InertiaAction
             $container = [
                 'icon'    => ['fal', 'fa-globe'],
                 'tooltip' => __('Website'),
-                'label'   => Str::possessive($this->parent->code)
+                'label'   => Str::possessive($this->parent->name)
             ];
         }
 
@@ -166,18 +166,26 @@ class ShowBanner extends InertiaAction
                     ?
                     fn () => [
                         'banner' => $banner->compiled_layout,
-                        'url'    => 'xxx'
+                        'url'    => 'xxx',
+                        'workshopRoute'  => [
+                            'name'       => 'customer.caas.banners.workshop',
+                            'parameters' => array_values($request->route()->originalParameters())
+                        ]
                     ]
                     : Inertia::lazy(
                         fn () => [
                             'banner' => $banner->compiled_layout,
-                            'url'    => 'xxx'
+                            'url'    => 'xxx',
+                            'workshopRoute'  => [
+                                'name'       => 'customer.caas.banners.workshop',
+                                'parameters' => array_values($request->route()->originalParameters())
+                            ]
                         ]
                     ),
 
                 BannerTabsEnum::SNAPSHOTS->value => $this->tab == BannerTabsEnum::SNAPSHOTS->value ?
-                    fn () => SnapshotResource::collection(IndexSnapshots::run($banner))
-                    : Inertia::lazy(fn () => SnapshotResource::collection(\App\Actions\Helpers\Snapshot\UI\IndexSnapshots::run($banner))),
+                    fn () => SnapshotResource::collection(IndexSnapshots::run(parent:$banner,prefix:'snapshots'))
+                    : Inertia::lazy(fn () => SnapshotResource::collection(IndexSnapshots::run(parent:$banner,prefix:'snapshots'))),
 
                 BannerTabsEnum::CHANGELOG->value => $this->tab == BannerTabsEnum::CHANGELOG->value ?
                     fn () => HistoryResource::collection(IndexHistories::run($banner))
@@ -196,15 +204,9 @@ class ShowBanner extends InertiaAction
             )
         )->table(
             IndexSnapshots::make()->tableStructure(
-                null,
-                'sht',
-                exportLinks: [
-                    'export' => [
-                        'route' => [
-                            'name' => 'export.snapshots.index'
-                        ]
-                    ]
-                ]
+                parent: $banner,
+                prefix:'snapshots'
+
             )
         );
     }
@@ -237,10 +239,10 @@ class ShowBanner extends InertiaAction
 
 
         return match ($routeName) {
-            'customer.banners.show',
-            'customer.banners.edit' =>
+            'customer.caas.banners.show',
+            'customer.caas.banners.edit' =>
             array_merge(
-                ShowBannersDashboard::make()->getBreadcrumbs(),
+                ShowCaaSDashboard::make()->getBreadcrumbs(),
                 $headCrumb(
                     'modelWithIndex',
                     Banner::firstWhere('slug', $routeParameters['banner']),
@@ -287,14 +289,27 @@ class ShowBanner extends InertiaAction
 
     public function getPrevious(Banner $banner, ActionRequest $request): ?array
     {
-        $previous = Banner::where('slug', '<', $banner->slug)->orderBy('slug', 'desc')->first();
+        if(class_basename($this->parent)=='PortfolioWebsite'){
+            // todo, need to use a join
+            $previous=null;
+        }else{
+            $previous = Banner::where('slug', '<', $banner->slug)->orderBy('slug')->first();
+
+        }
 
         return $this->getNavigation($previous, $request->route()->getName());
     }
 
     public function getNext(Banner $banner, ActionRequest $request): ?array
     {
-        $next = Banner::where('slug', '>', $banner->slug)->orderBy('slug')->first();
+        if(class_basename($this->parent)=='PortfolioWebsite'){
+            // todo, need to use a join
+            $next=null;
+        }else{
+            $next = Banner::where('slug', '>', $banner->slug)->orderBy('slug')->first();
+
+        }
+
 
         return $this->getNavigation($next, $request->route()->getName());
     }
@@ -307,12 +322,23 @@ class ShowBanner extends InertiaAction
 
 
         return match ($routeName) {
-            'customer.banners.show',
-            'customer.banners.edit' => [
+            'customer.caas.banners.show',
+            'customer.caas.banners.edit' => [
                 'label' => $banner->slug,
                 'route' => [
                     'name'       => $routeName,
                     'parameters' => [
+                        'banner' => $banner->slug
+                    ]
+                ]
+            ],
+            'customer.portfolio.websites.show.banners.show',
+            'customer.portfolio.websites.show.banners.edit' => [
+                'label' => $banner->slug,
+                'route' => [
+                    'name'       => $routeName,
+                    'parameters' => [
+                        'portfolioWebsite'=>$this->parent->slug,
                         'banner' => $banner->slug
                     ]
                 ]

@@ -39,7 +39,12 @@ class ShowPortfolioWebsite extends InertiaAction
     public function asController(PortfolioWebsite $portfolioWebsite, ActionRequest $request): PortfolioWebsite
     {
         $this->initialisation($request)->withTab(PortfolioWebsiteTabsEnum::values());
+        return $portfolioWebsite;
+    }
 
+    public function inCass(PortfolioWebsite $portfolioWebsite, ActionRequest $request): PortfolioWebsite
+    {
+        $this->initialisation($request)->withTab(PortfolioWebsiteTabsEnum::values());
         return $portfolioWebsite;
     }
 

@@ -1,7 +1,7 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Mon, 25 Sep 2023 12:19:07 Malaysia Time, Kuala Lumpur, Malaysia
+ * Created: Tue, 03 Oct 2023 14:53:46 Malaysia Time, Kuala Lumpur, Malaysia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
@@ -9,35 +9,36 @@ namespace App\Actions\Portfolio\PortfolioWebsite\UI;
 
 use App\Actions\Helpers\History\IndexHistories;
 use App\Actions\InertiaAction;
-use App\Actions\UI\Customer\Portfolio\ShowPortfolio;
+use App\Actions\UI\Customer\CaaS\ShowCaaSDashboard;
 use App\Enums\UI\Customer\PortfolioWebsitesTabsEnum;
 use App\Enums\UI\Organisation\CustomerWebsitesTabsEnum;
 use App\Http\Resources\History\HistoryResource;
 use App\Http\Resources\Portfolio\PortfolioWebsiteResource;
 use App\InertiaTable\InertiaTable;
+use App\Models\Organisation\Division;
 use App\Models\Portfolio\PortfolioWebsite;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Facades\Cache;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
-class IndexPortfolioWebsites extends InertiaAction
+class IndexCaasPortfolioWebsites extends InertiaAction
 {
     public function authorize(ActionRequest $request): bool
     {
-        $this->canEdit = $request->get('customerUser')->hasPermissionTo('portfolio');
+        $this->canEdit = $request->get('customerUser')->hasPermissionTo('portfolio.banners.edit');
 
-        return $request->get('customerUser')->hasPermissionTo('portfolio');
+        return $request->get('customerUser')->hasPermissionTo('portfolio.banners.view');
     }
 
     public function asController(ActionRequest $request): LengthAwarePaginator
     {
         $this->initialisation($request)->withTab(CustomerWebsitesTabsEnum::values());
-
         return $this->handle();
     }
 
@@ -45,6 +46,13 @@ class IndexPortfolioWebsites extends InertiaAction
     /** @noinspection PhpUndefinedMethodInspection */
     public function handle($prefix = null): LengthAwarePaginator
     {
+        $divisionId = Cache::get('banners');
+
+        if(! $divisionId) {
+            $divisionId = Division::firstWhere('slug', 'banners')->id;
+            Cache::put('banners', $divisionId);
+        }
+
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
             $query->where(function ($query) use ($value) {
                 $query->whereAnyWordStartWith('portfolio_websites.name', $value)
@@ -61,8 +69,10 @@ class IndexPortfolioWebsites extends InertiaAction
 
         return $queryBuilder
             ->defaultSort('portfolio_websites.name')
-            ->with(['stats'])
-            ->allowedSorts(['slug', 'name', 'url'])
+            ->join('division_portfolio_websites', 'portfolio_websites.id', 'division_portfolio_websites.portfolio_website_id')
+            ->join('portfolio_website_stats', 'portfolio_websites.id', 'portfolio_website_stats.portfolio_website_id')
+            ->allowedSorts(['slug', 'name', 'number_banners', 'url'])
+            ->where('division_portfolio_websites.division_id', $divisionId)
             ->allowedFilters([$globalSearch])
             ->withPaginator($prefix)
             ->withQueryString();
@@ -89,12 +99,7 @@ class IndexPortfolioWebsites extends InertiaAction
                 ->withExportLinks($exportLinks)
                 ->column(key: 'name', label: __('name'), sortable: true)
                 ->column(key: 'url', label: __('url'), sortable: true)
-                ->column(key: 'leads', label: __('Leads'), sortable: false)
-                ->column(key: 'seo', label: __('SEO'), sortable: false)
-                ->column(key: 'google-ads', label: __('Google Ads'), sortable: false)
-                ->column(key: 'social', label: __('Social'), sortable: false)
-
-                ->column(key: 'banners', label: __('banners'), sortable: false)
+                ->column(key: 'number_banners', label: __('banners'), sortable: true)
                 ->defaultSort('slug');
         };
     }
@@ -107,7 +112,7 @@ class IndexPortfolioWebsites extends InertiaAction
     public function htmlResponse(LengthAwarePaginator $websites, ActionRequest $request): Response
     {
         return Inertia::render(
-            'Portfolio/PortfolioWebsites',
+            'Banners/BannersPortfolioWebsites',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->getName(),
@@ -120,18 +125,7 @@ class IndexPortfolioWebsites extends InertiaAction
                         'title' => __('website'),
                         'icon'  => 'fal fa-globe'
                     ],
-                    'actions'   => [
-                        $this->canEdit ? [
-                            'type'  => 'button',
-                            'style' => 'create',
-                            'label' => __('Add website'),
-                            'route' => [
-                                'name'       => 'customer.portfolio.websites.create',
-                                'parameters' => $request->route()->originalParameters()
-                            ],
 
-                        ] : null
-                    ]
 
                 ],
                 'tabs'        => [
@@ -177,14 +171,13 @@ class IndexPortfolioWebsites extends InertiaAction
             ];
         };
 
-
         return match ($routeName) {
-            'customer.portfolio.websites.index' =>
+            'customer.caas.websites.index' =>
             array_merge(
-                ShowPortfolio::make()->getBreadcrumbs(),
+                ShowCaaSDashboard::make()->getBreadcrumbs(),
                 $headCrumb(
                     [
-                        'name' => 'customer.portfolio.websites.index',
+                        'name' => 'customer.caas.websites.index',
                         null
                     ]
                 ),

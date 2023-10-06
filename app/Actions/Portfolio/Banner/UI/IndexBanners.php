@@ -9,7 +9,7 @@ namespace App\Actions\Portfolio\Banner\UI;
 
 use App\Actions\InertiaAction;
 use App\Actions\Portfolio\PortfolioWebsite\UI\ShowPortfolioWebsite;
-use App\Actions\UI\Customer\Banners\ShowBannersDashboard;
+use App\Actions\UI\Customer\CaaS\ShowCaaSDashboard;
 use App\Enums\Portfolio\Banner\BannerStateEnum;
 use App\Http\Resources\Portfolio\BannerResource;
 use App\InertiaTable\InertiaTable;
@@ -227,7 +227,7 @@ class IndexBanners extends InertiaAction
                                 'style' => 'create',
                                 'label' => __('create banner'),
                                 'route' => [
-                                    'name' => 'customer.banners.create',
+                                    'name' => 'customer.caas.banners.create',
                                 ]
                             ]
                         ]
@@ -280,12 +280,12 @@ class IndexBanners extends InertiaAction
         };
 
         return match ($routeName) {
-            'customer.banners.index' =>
+            'customer.caas.banners.index' =>
             array_merge(
-                ShowBannersDashboard::make()->getBreadcrumbs(),
+                ShowCaaSDashboard::make()->getBreadcrumbs(),
                 $headCrumb(
                     [
-                        'name' => 'customer.banners.index'
+                        'name' => 'customer.caas.banners.index'
                     ]
                 ),
             ),

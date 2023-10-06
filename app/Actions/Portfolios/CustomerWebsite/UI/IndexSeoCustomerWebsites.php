@@ -5,18 +5,18 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Portfolio\PortfolioWebsite\UI;
+namespace App\Actions\Portfolios\CustomerWebsite\UI;
 
 use App\Actions\Helpers\History\IndexHistories;
 use App\Actions\InertiaAction;
-use App\Actions\UI\Customer\Banners\ShowBannersDashboard;
-use App\Enums\UI\Customer\PortfolioWebsitesTabsEnum;
+use App\Actions\UI\Organisation\Catalogue\ShowSeoDashboard;
 use App\Enums\UI\Organisation\CustomerWebsitesTabsEnum;
 use App\Http\Resources\History\HistoryResource;
-use App\Http\Resources\Portfolio\PortfolioWebsiteResource;
+use App\Http\Resources\Prospects\CustomerWebsiteResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\Organisation\Division;
 use App\Models\Portfolio\PortfolioWebsite;
+use App\Models\Portfolios\CustomerWebsite;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -27,13 +27,13 @@ use Lorisleiva\Actions\ActionRequest;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
-class IndexBannerPortfolioWebsites extends InertiaAction
+class IndexSeoCustomerWebsites extends InertiaAction
 {
     public function authorize(ActionRequest $request): bool
     {
-        $this->canEdit = $request->get('customerUser')->hasPermissionTo('portfolio.banners.edit');
+        $this->canEdit = $request->user()->hasPermissionTo('catalogue.seo.edit');
 
-        return $request->get('customerUser')->hasPermissionTo('portfolio.banners.view');
+        return $request->user()->hasPermissionTo('catalogue.seo.view');
     }
 
     public function asController(ActionRequest $request): LengthAwarePaginator
@@ -46,11 +46,11 @@ class IndexBannerPortfolioWebsites extends InertiaAction
     /** @noinspection PhpUndefinedMethodInspection */
     public function handle($prefix = null): LengthAwarePaginator
     {
-        $divisionId = Cache::get('banners');
+        $divisionId = Cache::get('seo');
 
         if(! $divisionId) {
-            $divisionId = Division::firstWhere('slug', 'banners')->id;
-            Cache::put('banners', $divisionId);
+            $divisionId = Division::firstWhere('slug', 'seo')->id;
+            Cache::put('seo', $divisionId);
         }
 
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
@@ -65,7 +65,7 @@ class IndexBannerPortfolioWebsites extends InertiaAction
             InertiaTable::updateQueryBuilderParameters($prefix);
         }
 
-        $queryBuilder = QueryBuilder::for(PortfolioWebsite::class);
+        $queryBuilder = QueryBuilder::for(CustomerWebsite::class);
 
         return $queryBuilder
             ->defaultSort('portfolio_websites.name')
@@ -106,13 +106,13 @@ class IndexBannerPortfolioWebsites extends InertiaAction
 
     public function jsonResponse(): AnonymousResourceCollection
     {
-        return PortfolioWebsiteResource::collection($this->handle());
+        return CustomerWebsiteResource::collection($this->handle());
     }
 
     public function htmlResponse(LengthAwarePaginator $websites, ActionRequest $request): Response
     {
         return Inertia::render(
-            'Banners/BannersPortfolioWebsites',
+            'Catalogue/Seo/SeoCustomerWebsites',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->getName(),
@@ -130,14 +130,14 @@ class IndexBannerPortfolioWebsites extends InertiaAction
                 ],
                 'tabs'        => [
                     'current'    => $this->tab,
-                    'navigation' => PortfolioWebsitesTabsEnum::navigation()
+                    'navigation' => CustomerWebsitesTabsEnum::navigation()
                 ],
 
-                PortfolioWebsitesTabsEnum::WEBSITES->value => $this->tab == PortfolioWebsitesTabsEnum::WEBSITES->value ?
-                    fn () => PortfolioWebsiteResource::collection($websites)
-                    : Inertia::lazy(fn () => PortfolioWebsiteResource::collection($websites)),
+                CustomerWebsitesTabsEnum::WEBSITES->value => $this->tab == CustomerWebsitesTabsEnum::WEBSITES->value ?
+                    fn () => CustomerWebsiteResource::collection($websites)
+                    : Inertia::lazy(fn () => CustomerWebsiteResource::collection($websites)),
 
-                PortfolioWebsitesTabsEnum::CHANGELOG->value => $this->tab == PortfolioWebsitesTabsEnum::CHANGELOG->value ?
+                CustomerWebsitesTabsEnum::CHANGELOG->value => $this->tab == CustomerWebsitesTabsEnum::CHANGELOG->value ?
                     fn () => HistoryResource::collection(IndexHistories::run(PortfolioWebsite::class))
                     : Inertia::lazy(fn () => HistoryResource::collection(IndexHistories::run(PortfolioWebsite::class)))
             ]
@@ -172,12 +172,12 @@ class IndexBannerPortfolioWebsites extends InertiaAction
         };
 
         return match ($routeName) {
-            'customer.banners.websites.index' =>
+            'customer.seo.websites.index' =>
             array_merge(
-                ShowBannersDashboard::make()->getBreadcrumbs(),
+                ShowSeoDashboard::make()->getBreadcrumbs(),
                 $headCrumb(
                     [
-                        'name' => 'customer.banners.websites.index',
+                        'name' => 'org.seo.websites.index',
                         null
                     ]
                 ),

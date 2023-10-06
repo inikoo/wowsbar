@@ -294,7 +294,13 @@ class GetLayout
                 ],
                 'topMenu' => [
                     'subSections' => [
-
+                        [
+                            'icon'  => ['fal', 'fa-globe'],
+                            'label' => __('websites'),
+                            'route' => [
+                                'name' => 'customer.prospects.websites.index',
+                            ]
+                        ],
                     ]
                 ]
             ];
@@ -309,7 +315,13 @@ class GetLayout
                 ],
                 'topMenu' => [
                     'subSections' => [
-
+                        [
+                            'icon'  => ['fal', 'fa-globe'],
+                            'label' => __('websites'),
+                            'route' => [
+                                'name' => 'customer.prospects.websites.index',
+                            ]
+                        ],
                     ]
                 ]
             ];
@@ -324,7 +336,13 @@ class GetLayout
                 ],
                 'topMenu' => [
                     'subSections' => [
-
+                        [
+                            'icon'  => ['fal', 'fa-globe'],
+                            'label' => __('websites'),
+                            'route' => [
+                                'name' => 'customer.prospects.websites.index',
+                            ]
+                        ],
                     ]
                 ]
             ];
@@ -339,7 +357,13 @@ class GetLayout
                 ],
                 'topMenu' => [
                     'subSections' => [
-
+                        [
+                            'icon'  => ['fal', 'fa-globe'],
+                            'label' => __('websites'),
+                            'route' => [
+                                'name' => 'customer.prospects.websites.index',
+                            ]
+                        ],
                     ]
                 ]
             ];

@@ -56,9 +56,6 @@ const component = computed(() => {
 
 });
 
-const findRoute=()=>{
-    return props.pageHead.actions.find((item) => item.label == "workshop")
-}
 
 </script>
 
@@ -67,6 +64,6 @@ const findRoute=()=>{
     <Head :title="capitalize(title)"/>
     <PageHeading :data="pageHead"></PageHeading>
     <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate"/>
-    <component :is="component" :tab="currentTab" :data="props[currentTab]" :pageHead="findRoute()" :banner="banner"></component>
+    <component :is="component" :tab="currentTab" :data="props[currentTab]"  :banner="banner"></component>
 </template>
 

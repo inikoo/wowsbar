@@ -35,12 +35,22 @@ const selectedWebsiteSlug = ref()
 const indexSelectedWebsite = ref(0)
 
 function websiteRoute(website: Website) {
+    return route(
+        'customer.portfolio.websites.show',
+        [website.slug]);
+    /*
     switch (route().current()) {
+        case 'customer.caas.websites.index':
+            return route(
+                'customer.caas.websites.show',
+                [website.slug]);
         case 'customer.portfolio.websites.index':
             return route(
                 'customer.portfolio.websites.show',
                 [website.slug]);
     }
+
+     */
 }
 
 // When click on the icon
@@ -64,7 +74,7 @@ const submitState = async (websiteSlug: string, selectedColumnName: string, stat
                 headers: { "Content-Type": "multipart/form-data" },
             }
         )
-        
+
         // For manipulation data in client side (data change without refresh the page)
         props.data.data[indexSelectedWebsite.value][selectedColumn.value.name].value = stateName
 
