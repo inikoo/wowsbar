@@ -10,7 +10,10 @@ namespace App\Models\Helpers;
 use App\Concerns\BelongsToCustomer;
 use App\Enums\Portfolio\Snapshot\SnapshotStateEnum;
 use App\Http\Resources\Portfolio\SlideResource;
+use App\Models\Portfolio\Banner;
 use App\Models\Portfolio\Slide;
+use App\Models\Web\Webpage;
+use App\Models\Web\Website;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -86,7 +89,14 @@ class Snapshot extends Model
     {
         return SlugOptions::create()
             ->generateSlugsFrom(function () {
-                return $this->parent->slug.'-'.now()->isoFormat('YYMMDD');
+
+                /** @var Webpage|Website|Banner $parent */
+                $parent=$this->parent;
+                $slug=$parent->slug;
+                if($this->scope){
+                    $slug.=" $this->scope";
+                }
+                return $slug.'-'.now()->isoFormat('YYMMDD');
             })
             ->saveSlugsTo('slug')
             ->doNotGenerateSlugsOnCreate()
@@ -110,7 +120,7 @@ class Snapshot extends Model
         return $this->hasMany(Slide::class);
     }
 
-    public function compiledLayout(): array
+    public function compiledLayout(): array|string
     {
 
         switch (class_basename($this->parent)) {
@@ -120,10 +130,8 @@ class Snapshot extends Model
                 data_set($compiledLayout, 'components', json_decode(SlideResource::collection($slides)->toJson(), true));
                 return $compiledLayout;
             case 'Website':
-                return [
-                    'header'=> Arr::get($this->layout, 'header.html'),
-                    'footer'=> Arr::get($this->layout, 'footer.html'),
-                ];
+            case 'Webpage':
+                return Arr::get($this->layout, 'html');
             default:
                 return [];
         }

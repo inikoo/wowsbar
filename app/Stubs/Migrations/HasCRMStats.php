@@ -10,6 +10,7 @@ namespace App\Stubs\Migrations;
 use App\Enums\CRM\Customer\CustomerStateEnum;
 use App\Enums\OMS\Order\OrderStateEnum;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Str;
 
 trait HasCRMStats
 {
@@ -31,6 +32,9 @@ trait HasCRMStats
 
         $table->unsignedInteger('number_customer_websites')->default(0);
 
+        foreach (json_decode(file_get_contents(base_path('database/seeders/datasets/divisions.json')), true) as $division) {
+            $table->unsignedInteger('number_customer_websites_' . Str::snake($division['slug']))->default(0);
+        }
 
         return $table;
     }
