@@ -85,4 +85,8 @@ Route::prefix('shop/{shop}')->as('shop.')->group(function () {
     });
 
     Route::get('mailroom', ShowMailroomDashboard::class)->name('mailroom.dashboard');
+
+    Route::prefix('appointments')->as('appointments.')->group(function () {
+        Route::get('/', ShowMailroomDashboard::class)->name('mailroom.dashboard');
+    });
 });

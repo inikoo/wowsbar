@@ -192,6 +192,15 @@ class GetLayout
                                         'name'       => 'org.crm.shop.mailroom.dashboard',
                                         'parameters' => $shop->slug
                                     ]
+                                ],
+                                [
+
+                                    'label' => __('appointment'),
+                                    'icon'  => ['fal', 'fa-handshake'],
+                                    'route' => [
+                                        'name'       => 'org.crm.shop.mailroom.dashboard',
+                                        'parameters' => $shop->slug
+                                    ]
                                 ]
                             ],
                             default => []
