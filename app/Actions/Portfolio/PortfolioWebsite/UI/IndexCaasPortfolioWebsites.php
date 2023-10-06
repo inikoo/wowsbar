@@ -9,7 +9,7 @@ namespace App\Actions\Portfolio\PortfolioWebsite\UI;
 
 use App\Actions\Helpers\History\IndexHistories;
 use App\Actions\InertiaAction;
-use App\Actions\UI\Customer\Banners\ShowBannersDashboard;
+use App\Actions\UI\Customer\CaaS\ShowCaaSDashboard;
 use App\Enums\UI\Customer\PortfolioWebsitesTabsEnum;
 use App\Enums\UI\Organisation\CustomerWebsitesTabsEnum;
 use App\Http\Resources\History\HistoryResource;
@@ -27,7 +27,7 @@ use Lorisleiva\Actions\ActionRequest;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
-class IndexBannerPortfolioWebsites extends InertiaAction
+class IndexCaasPortfolioWebsites extends InertiaAction
 {
     public function authorize(ActionRequest $request): bool
     {
@@ -172,12 +172,12 @@ class IndexBannerPortfolioWebsites extends InertiaAction
         };
 
         return match ($routeName) {
-            'customer.banners.websites.index' =>
+            'customer.caas.websites.index' =>
             array_merge(
-                ShowBannersDashboard::make()->getBreadcrumbs(),
+                ShowCaaSDashboard::make()->getBreadcrumbs(),
                 $headCrumb(
                     [
-                        'name' => 'customer.banners.websites.index',
+                        'name' => 'customer.caas.websites.index',
                         null
                     ]
                 ),

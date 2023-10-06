@@ -228,7 +228,7 @@ class StoreBanner
         }
 
         return redirect()->route(
-            'customer.banners.workshop',
+            'customer.caas.banners.workshop',
             [
                 $banner->slug
             ]

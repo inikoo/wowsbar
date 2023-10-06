@@ -43,9 +43,9 @@ Route::middleware([
             ->name("social.")
             ->group(__DIR__."/social.php");
 
-        Route::prefix("banners")
-            ->name("banners.")
-            ->group(__DIR__."/banners.php");
+        Route::prefix("caas")
+            ->name("caas.")
+            ->group(__DIR__."/caas.php");
         Route::prefix("media")
             ->name("media.")
             ->group(__DIR__."/media.php");

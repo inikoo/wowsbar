@@ -26,6 +26,10 @@ const props = defineProps<{
 
 
 function bannerRoute(banner: Banner) {
+    return route(
+        'customer.caas.banners.show',
+        [banner.slug]);
+    /*
     switch (route().current()) {
         case 'customer.portfolio.banners.index':
             return route(
@@ -41,9 +45,11 @@ function bannerRoute(banner: Banner) {
                 [route().params['portfolioWebsite'], banner.slug])
         default:
             return route(
-                'customer.banners.show',
+                'customer.caas.banners.show',
                 [banner.slug])
-    }
+                }
+     */
+
 }
 
 </script>
