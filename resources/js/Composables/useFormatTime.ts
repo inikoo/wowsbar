@@ -6,7 +6,7 @@ const localesCode = { zhCN, enUS, fr, de, id, ja, sk, es }
 
 // Basic formating
 export const useFormatTime = (dateIso: string, localeCode?: string, time?: boolean) => {
-    let tempLocaleCode = localeCode === 'zh-Hans' ? 'zhCN' : 'localeCode'
+    let tempLocaleCode = localeCode === 'zh-Hans' ? 'zhCN' : localeCode ?? 'enUS'
     let tempDateIso = new Date(dateIso)
 
     if (!dateIso) return '-'  // If the provided data date is null

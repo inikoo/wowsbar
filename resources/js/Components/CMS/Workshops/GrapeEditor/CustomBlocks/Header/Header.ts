@@ -24,8 +24,8 @@ export const headerBlock1 = () => {
             <a class="mr-5 hover:text-gray-900">Third Link</a>
             <a class="mr-5 hover:text-gray-900">Fourth Link</a>
           </nav>
-          <button type="button" class="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Appointment</button>
-      <button type="button" class="ml-3 inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Log In</button>
+          <button id="appointmentButton" data-gjs-editable="false" data-gjs-removable="false" type="button" class="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" onclick="window.location.href='/appointment'"><span data-gjs-editable="false" data-gjs-removable="false">Appointment<span></button>
+          <button data-gjs-editable="false" data-gjs-removable="false" type="button" class="ml-3 inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"><span data-gjs-editable="false" data-gjs-removable="false">Log in<span></button>
         </div>
       </header>
       <header class="text-gray-600 body-font">

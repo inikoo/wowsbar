@@ -5,8 +5,8 @@
 -->
 
 <script setup lang="ts">
-import { ref, onBeforeMount } from 'vue';
-// import moment from 'moment';
+import { useFormatTime } from '@/Composables/useFormatTime'
+import { ref, onBeforeMount } from 'vue'
 
 const props = defineProps<{
     data: {
@@ -40,13 +40,12 @@ const props = defineProps<{
 let newData = ref([])
 
 const setValue = (key) => {
-    if (key.endsWith('_at')) {
-        // const date = moment(props.data[key]).format('MMMM Do YYYY, h:mm')
-        // return date == 'Invalid date' ? '-' : date
-        return 'moment jsss'
+    if (key.endsWith('_at')) { // created_at, updated_at, deleted_at
+        useFormatTime(props.data[key])
+        return useFormatTime(props.data[key])
     }
-    return props.data[key];
-};
+    return props.data[key]
+}
 
 
 const setDataToObject = () => {

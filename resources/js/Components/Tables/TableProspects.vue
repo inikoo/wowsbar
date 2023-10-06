@@ -16,7 +16,7 @@ const props = defineProps<{
 
 
 function prospectRoute(prospect: Prospect) {
-    console.log(route().current());
+    // console.log(route().current());
     switch (route().current()) {
         case 'org.crm.shop.prospects.index':
             return route(
