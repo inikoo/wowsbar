@@ -24,6 +24,7 @@ class HandlePublicInertiaRequests extends Middleware
             ]);
         };
 
+
         $firstLoadOnlyProps['structure']=$request->get('website')->compiled_structure;
         return array_merge(
             $firstLoadOnlyProps,
