@@ -43,7 +43,8 @@ class PublishWebpage
                 'state'        => SnapshotStateEnum::LIVE,
                 'published_at' => now(),
                 'layout'       => $layout
-            ]);
+            ]
+        );
 
 
         $compiledLayout = $snapshot->compiledLayout();

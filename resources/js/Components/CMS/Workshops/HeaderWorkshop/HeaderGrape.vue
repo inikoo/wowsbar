@@ -10,8 +10,8 @@ import { HeaderPlugins } from "@/Components/CMS/Workshops/GrapeEditor/CustomBloc
 
 
 const props = defineProps<{
-    imagesUploadRoute: Object 
-    updateRoutes: Array
+    imagesUploadRoute: Object
+    updateRoutes: Object
 }>();
 
 library.add(
@@ -30,6 +30,6 @@ library.add(
 </script>
 
 <template layout="OrgApp">
-    <GrapeEditor :data="data" @changeData="(value) => data = value" :plugins="[HeaderPlugins]" :updateRoute="updateRoutes.workshop_header" :loadRoute="updateRoutes.workshop_header" />
+    <GrapeEditor :plugins="[HeaderPlugins]" :updateRoute="updateRoutes.workshop_header" :loadRoute="updateRoutes.workshop_header" />
 </template>
 
