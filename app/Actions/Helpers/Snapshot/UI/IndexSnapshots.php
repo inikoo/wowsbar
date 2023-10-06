@@ -42,7 +42,7 @@ class IndexSnapshots extends InertiaAction
         }
 
         return $queryBuilder
-            ->defaultSort('published_at')
+            ->defaultSort('-published_at')
             ->allowedSorts(['published_at', 'published_until'])
             ->withPaginator($prefix)
             ->withQueryString();

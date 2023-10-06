@@ -33,6 +33,11 @@ use Illuminate\Support\Carbon;
  * @property int $number_orders_state_finalised
  * @property int $number_orders_state_settled
  * @property int $number_customer_websites
+ * @property int $number_customer_websites_seo
+ * @property int $number_customer_websites_google-ads
+ * @property int $number_customer_websites_social
+ * @property int $number_customer_websites_prospects
+ * @property int $number_customer_websites_banners
  * @property int $number_products
  * @property int $number_deliveries
  * @property int $number_deliveries_type_order
@@ -52,6 +57,11 @@ use Illuminate\Support\Carbon;
  * @method static Builder|ShopStats whereCreatedAt($value)
  * @method static Builder|ShopStats whereId($value)
  * @method static Builder|ShopStats whereNumberCustomerWebsites($value)
+ * @method static Builder|ShopStats whereNumberCustomerWebsitesBanners($value)
+ * @method static Builder|ShopStats whereNumberCustomerWebsitesGoogleAds($value)
+ * @method static Builder|ShopStats whereNumberCustomerWebsitesProspects($value)
+ * @method static Builder|ShopStats whereNumberCustomerWebsitesSeo($value)
+ * @method static Builder|ShopStats whereNumberCustomerWebsitesSocial($value)
  * @method static Builder|ShopStats whereNumberCustomers($value)
  * @method static Builder|ShopStats whereNumberCustomersStateActive($value)
  * @method static Builder|ShopStats whereNumberCustomersStateContacted($value)

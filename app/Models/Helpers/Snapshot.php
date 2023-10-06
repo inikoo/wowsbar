@@ -39,6 +39,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property string $checksum
  * @property array $layout
  * @property string|null $comment
+ * @property bool $first_commit
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\CRM\Customer|null $customer
@@ -52,6 +53,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Snapshot whereComment($value)
  * @method static Builder|Snapshot whereCreatedAt($value)
  * @method static Builder|Snapshot whereCustomerId($value)
+ * @method static Builder|Snapshot whereFirstCommit($value)
  * @method static Builder|Snapshot whereId($value)
  * @method static Builder|Snapshot whereLayout($value)
  * @method static Builder|Snapshot whereParentId($value)
