@@ -6,13 +6,14 @@
 <script setup lang="ts">
 
 const props = defineProps<{
-    blocks: []
+    content: object
 }>()
 
-
+console.log(props.content)
 </script>
 
 <template layout="Public">
-     <Head title="Home"/>
-    hi
+     <div v-html="content.pagesHtml[0].html"></div>
+     <div v-html="content.pagesHtml[0].html"></div>
+     <div v-html="content.pagesHtml[0].html"></div>
 </template>
