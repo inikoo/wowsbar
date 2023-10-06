@@ -83,11 +83,11 @@ class ShowWebsiteWorkshop extends InertiaAction
                 'websiteState'=>$website->state,
                 'publishRoutes' => [
                     'workshop_header'=> [
-                        'name'       => 'org.models.website.header.content.update',
+                        'name'       => 'org.models.website.header.content.publish',
                         'parameters' => $website->id
                     ],
                     'workshop_footer'=> [
-                        'name'       => 'org.models.website.footer.content.update',
+                        'name'       => 'org.models.website.footer.content.publish',
                         'parameters' => $website->id
                     ],
                     'workshop_layout'=> [

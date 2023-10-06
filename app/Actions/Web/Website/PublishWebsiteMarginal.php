@@ -25,6 +25,13 @@ class PublishWebsiteMarginal
 
     public function handle(Website $website, string $marginal, array $modelData): Website
     {
+        $compiledLayout = '';
+        if ($marginal == 'header') {
+            $compiledLayout = Arr::get($website->unpublishedHeaderSnapshot->layout, 'html');
+        } elseif ($marginal == 'footer') {
+            $compiledLayout = Arr::get($website->unpublishedFooterSnapshot->layout, 'html');
+        }
+
         foreach ($website->snapshots()->where('scope', $marginal)->where('state', SnapshotStateEnum::LIVE)->get() as $liveSnapshot) {
             UpdateSnapshot::run($liveSnapshot, [
                 'state'           => SnapshotStateEnum::HISTORIC,
@@ -39,8 +46,9 @@ class PublishWebsiteMarginal
             [
                 'state'        => SnapshotStateEnum::LIVE,
                 'published_at' => now(),
-                'layout'       => Arr::get($modelData, 'layout'),
-                'scope'        => $marginal
+                'layout'       => $compiledLayout,
+                'scope'        => $marginal,
+                'comment'      => Arr::get($modelData, 'comment')
             ],
         );
 
@@ -69,7 +77,6 @@ class PublishWebsiteMarginal
     public function rules(): array
     {
         return [
-            'layout'  => ['required', 'array:delay,common,components'],
             'comment' => ['sometimes', 'required', 'string', 'max:1024']
         ];
     }
