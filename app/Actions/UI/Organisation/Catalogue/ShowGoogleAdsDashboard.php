@@ -45,17 +45,10 @@ class ShowGoogleAdsDashboard
                 ],
                 'stats'       => [
                     [
-                        'name' => __('departments'),
-                        'stat' => $org->catalogueStats->number_departments,
+                        'name' => __('websites'),
+                        'stat' => $org->crmStats->number_customer_websites_google_ads,
                         'href' => [
-                            'name' => 'org.catalogue.departments.index'
-                        ]
-                    ],
-                    [
-                        'name' => __('products'),
-                        'stat' => $org->catalogueStats->number_products,
-                        'href' => [
-                            'name' => 'org.catalogue.products.index'
+                            'name' => 'org.google-ads.websites.index'
                         ]
                     ],
 

@@ -319,7 +319,7 @@ class GetLayout
                             'icon'  => ['fal', 'fa-globe'],
                             'label' => __('websites'),
                             'route' => [
-                                'name' => 'customer.prospects.websites.index',
+                                'name' => 'org.google-ads.websites.index',
                             ]
                         ],
                     ]
@@ -340,7 +340,7 @@ class GetLayout
                             'icon'  => ['fal', 'fa-globe'],
                             'label' => __('websites'),
                             'route' => [
-                                'name' => 'customer.prospects.websites.index',
+                                'name' => 'org.social.websites.index',
                             ]
                         ],
                     ]

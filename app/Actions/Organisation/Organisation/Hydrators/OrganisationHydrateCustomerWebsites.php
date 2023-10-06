@@ -36,7 +36,7 @@ class OrganisationHydrateCustomerWebsites
             $customerWebsiteCount = CustomerWebsite::join('division_portfolio_websites', 'portfolio_websites.id', 'division_portfolio_websites.portfolio_website_id')
                 ->where('division_portfolio_websites.division_id', $divisionId)->count();
 
-            $stats['number_customer_websites_' . Str::snake($division['slug'])] = $customerWebsiteCount;
+            $stats['number_customer_websites_' . Str::replace('-', '_', $division['slug'])] = $customerWebsiteCount;
         }
 
         organisation()->crmStats()->update($stats);
