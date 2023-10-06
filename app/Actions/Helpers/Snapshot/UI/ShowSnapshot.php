@@ -1,18 +1,18 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Mon, 18 Sep 2023 18:42:14 Malaysia Time, Pantai Lembeng, Bali, Indonesia
+ * Created: Fri, 06 Oct 2023 08:55:04 Malaysia Time, Office, Bali, Indonesia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Portfolio\Snapshot\UI;
+namespace App\Actions\Helpers\Snapshot\UI;
 
 use App\Actions\InertiaAction;
 use App\Actions\UI\Customer\Portfolio\ShowPortfolio;
 use App\Http\Resources\Portfolio\SnapshotResource;
+use App\Models\Helpers\Snapshot;
 use App\Models\Portfolio\Banner;
 use App\Models\Portfolio\PortfolioWebsite;
-use App\Models\Portfolio\Snapshot;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;

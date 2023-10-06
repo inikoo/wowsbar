@@ -32,6 +32,8 @@ class StoreWebpage
 
         /** @var Webpage $webpage */
         $webpage = $website->webpages()->create($modelData);
+
+
         $webpage->stats()->create();
 
         StoreWebpageVariant::run($webpage, $webpageVariantData);

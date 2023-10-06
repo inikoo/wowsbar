@@ -8,10 +8,10 @@
 namespace App\Actions\Portfolio\Banner;
 
 use App\Actions\CRM\Customer\Hydrators\CustomerHydrateBanners;
+use App\Actions\Helpers\Snapshot\StoreBannerSnapshot;
 use App\Actions\Portfolio\Banner\Hydrators\BannerHydrateUniversalSearch;
 use App\Actions\Portfolio\Banner\UI\ParseBannerLayout;
 use App\Actions\Portfolio\PortfolioWebsite\Hydrators\PortfolioWebsiteHydrateBanners;
-use App\Actions\Portfolio\Snapshot\StoreSnapshot;
 use App\Models\CRM\Customer;
 use App\Models\Portfolio\Banner;
 use App\Models\Portfolio\PortfolioWebsite;
@@ -68,7 +68,7 @@ class StoreBanner
 
         /** @var Banner $banner */
         $banner  = Banner::create($modelData);
-        $snapshot=StoreSnapshot::run(
+        $snapshot=StoreBannerSnapshot::run(
             $banner,
             [
                 'layout'=> $layout

@@ -7,7 +7,7 @@
 
 namespace App\Exports\Snapshot;
 
-use App\Models\Portfolio\Snapshot;
+use App\Models\Helpers\Snapshot;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Database\Query\Builder;
 use Maatwebsite\Excel\Concerns\FromQuery;

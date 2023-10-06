@@ -41,7 +41,7 @@ php artisan org:create-guest 'Mr Aiku' aiku external_administrator -e aiku@iniko
 echo "🌱 create shop/website"
 php artisan shop:create awa 'aw-advantage' 'digital-marketing'
 php artisan shop:new-website awa 'awa.test'
-php artisan website:change-state awa launch
+php artisan website:launch awa
 echo "🌱 create catalogue"
 php artisan department:import database/seeders/uploads/${IMPORT_DIR}/departments.xlsx
 php artisan product:import database/seeders/uploads/${IMPORT_DIR}/products.xlsx

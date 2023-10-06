@@ -24,6 +24,11 @@ class UpdateWebsiteState
 
     public function handle(Website $website, array $modelData): Website
     {
+        if ($website->state == WebsiteStateEnum::IN_PROCESS) {
+            abort(419);
+        }
+
+
         if ($website->state == WebsiteStateEnum::IN_PROCESS and Arr::get($modelData, 'state') == WebsiteStateEnum::LIVE->value) {
             data_set($modelData, 'launched_at', now());
         }
@@ -92,6 +97,15 @@ class UpdateWebsiteState
 
             return 1;
         }
+
+        if ($website->state == WebsiteStateEnum::IN_PROCESS) {
+            $command->error('Can not change state of in process website, launch instead');
+
+            return 1;
+        }
+
+
+
         $status = null;
         $state  = $command->argument('state');
 
@@ -99,10 +113,7 @@ class UpdateWebsiteState
             $state  = WebsiteStateEnum::LIVE->value;
             $status = false;
         }
-        if (in_array($state, ['on', 'up', 'launch'])) {
-            $state  = WebsiteStateEnum::LIVE->value;
-            $status = true;
-        }
+
 
         if (is_null($status)) {
             $status = match ($state) {

@@ -1,6 +1,6 @@
 {
     "code": "register",
-    "url": "register",
+    "url": "auth/register",
     "type": "auth",
     "purpose": "register"
 }

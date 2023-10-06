@@ -1,4 +1,5 @@
-<?php
+<?php /** @noinspection PhpUnused */
+
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
  * Created: Sun, 17 Sep 2023 22:12:21 Malaysia Time, Pantai Lembeng, Bali, Indonesia
@@ -11,6 +12,7 @@ use App\Enums\Organisation\Web\Website\WebsiteStateEnum;
 use App\Http\Resources\Web\WebsiteFooterResource;
 use App\Http\Resources\Web\WebsiteHeaderResource;
 use App\Http\Resources\Web\WebsiteLayoutResource;
+use App\Models\Helpers\Snapshot;
 use App\Models\Market\Shop;
 use App\Models\Media\Media;
 use App\Models\Traits\HasHistory;
@@ -21,13 +23,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
-use Spatie\MediaLibrary\InteractsWithMedia;
 
 /**
  * App\Models\Web\Website
@@ -50,6 +53,11 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property array $header_content
  * @property array $footer_content
  * @property array $compiled_structure
+ * @property array $compiled_layout
+ * @property int|null $unpublished_header_snapshot_id
+ * @property int|null $live_header_snapshot_id
+ * @property int|null $unpublished_footer_snapshot_id
+ * @property int|null $live_footer_snapshot_id
  * @property int|null $current_layout_id
  * @property int $organisation_id
  * @property \Illuminate\Support\Carbon|null $created_at
@@ -64,10 +72,15 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property-read \App\Models\Web\Webpage|null $home
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, Media> $images
  * @property-read int|null $images_count
+ * @property-read Snapshot $liveSnapshot
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, Media> $media
  * @property-read int|null $media_count
  * @property-read Shop $shop
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Snapshot> $snapshots
+ * @property-read int|null $snapshots_count
  * @property-read \App\Models\Search\UniversalSearch|null $universalSearch
+ * @property-read Snapshot|null $unpublishedFooterSnapshot
+ * @property-read Snapshot|null $unpublishedHeaderSnapshot
  * @property-read \App\Models\Web\WebsiteStats|null $webStats
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Web\Webpage> $webpages
  * @property-read int|null $webpages_count
@@ -77,6 +90,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @method static Builder|Website query()
  * @method static Builder|Website whereClosedAt($value)
  * @method static Builder|Website whereCode($value)
+ * @method static Builder|Website whereCompiledLayout($value)
  * @method static Builder|Website whereCompiledStructure($value)
  * @method static Builder|Website whereCreatedAt($value)
  * @method static Builder|Website whereCurrentLayoutId($value)
@@ -91,6 +105,8 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @method static Builder|Website whereId($value)
  * @method static Builder|Website whereLaunchedAt($value)
  * @method static Builder|Website whereLayout($value)
+ * @method static Builder|Website whereLiveFooterSnapshotId($value)
+ * @method static Builder|Website whereLiveHeaderSnapshotId($value)
  * @method static Builder|Website whereMenu($value)
  * @method static Builder|Website whereName($value)
  * @method static Builder|Website whereOrganisationId($value)
@@ -100,6 +116,8 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @method static Builder|Website whereState($value)
  * @method static Builder|Website whereStatus($value)
  * @method static Builder|Website whereType($value)
+ * @method static Builder|Website whereUnpublishedFooterSnapshotId($value)
+ * @method static Builder|Website whereUnpublishedHeaderSnapshotId($value)
  * @method static Builder|Website whereUpdatedAt($value)
  * @method static Builder|Website withTrashed()
  * @method static Builder|Website withoutTrashed()
@@ -124,7 +142,9 @@ class Website extends Model implements Auditable, HasMedia
         'menu'               => 'array',
         'layout'             => 'array',
         'compiled_structure' => 'array',
-        'state'              => WebsiteStateEnum::class,
+        'compiled_layout'    => 'array',
+
+        'state' => WebsiteStateEnum::class,
     ];
 
     protected $attributes = [
@@ -137,6 +157,7 @@ class Website extends Model implements Auditable, HasMedia
         'menu'               => '{}',
         'layout'             => '{}',
         'compiled_structure' => '{}',
+        'compiled_layout'    => '{}'
     ];
 
     protected $guarded = [];
@@ -203,4 +224,25 @@ class Website extends Model implements Auditable, HasMedia
     {
         return $this->morphToMany(Media::class, 'model', 'model_has_media');
     }
+
+    public function snapshots(): MorphMany
+    {
+        return $this->morphMany(Snapshot::class, 'parent');
+    }
+
+    public function unpublishedHeaderSnapshot(): BelongsTo
+    {
+        return $this->belongsTo(Snapshot::class, 'unpublished_header_snapshot_id');
+    }
+
+    public function unpublishedFooterSnapshot(): BelongsTo
+    {
+        return $this->belongsTo(Snapshot::class, 'unpublished_footer_snapshot_id');
+    }
+
+    public function liveSnapshot(): BelongsTo
+    {
+        return $this->belongsTo(Snapshot::class, 'live_snapshot_id');
+    }
+
 }

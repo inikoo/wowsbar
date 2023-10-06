@@ -8,7 +8,9 @@
 namespace App\Models\Web;
 
 use App\Enums\Organisation\Web\Webpage\WebpagePurposeEnum;
+use App\Enums\Organisation\Web\Webpage\WebpageStateEnum;
 use App\Enums\Organisation\Web\Webpage\WebpageTypeEnum;
+use App\Enums\Portfolio\Webpage\WebpageStatusEnum;
 use App\Http\Resources\Web\WebpageBlocksResource;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -78,15 +80,16 @@ class Webpage extends Model
         'compiled_content' => 'array',
         'type'             => WebpageTypeEnum::class,
         'purpose'          => WebpagePurposeEnum::class,
+        'state'            => WebpageStateEnum::class,
 
     ];
 
     protected $attributes = [
-        'data'              => '{}',
-        'settings'          => '{}',
-        'blocks'            => '{}',
-        'content'           => '{}',
-        'compiled_content'  => '{}',
+        'data'             => '{}',
+        'settings'         => '{}',
+        'blocks'           => '{}',
+        'content'          => '{}',
+        'compiled_content' => '{}',
     ];
 
     protected $guarded = [];
