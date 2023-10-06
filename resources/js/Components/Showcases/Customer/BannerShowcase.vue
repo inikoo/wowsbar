@@ -37,6 +37,7 @@ const props = defineProps<{
             }
         },
         url: String
+        workshopRoute: any
     }
     tab?: string
     pageHead: Object
@@ -64,7 +65,7 @@ onMounted(() => {
         description: trans('Create new slides in the workshop to get started'),
         action: {
             label: trans('Workshop'),
-            route: props.pageHead.route,
+            route: props.data.workshopRoute,
             tooltip: trans('Workshop'),
             icon: 'fal fa-drafting-compass'
         }

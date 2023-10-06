@@ -166,12 +166,20 @@ class ShowBanner extends InertiaAction
                     ?
                     fn () => [
                         'banner' => $banner->compiled_layout,
-                        'url'    => 'xxx'
+                        'url'    => 'xxx',
+                        'workshopRoute'  => [
+                            'name'       => 'customer.caas.banners.workshop',
+                            'parameters' => array_values($request->route()->originalParameters())
+                        ]
                     ]
                     : Inertia::lazy(
                         fn () => [
                             'banner' => $banner->compiled_layout,
-                            'url'    => 'xxx'
+                            'url'    => 'xxx',
+                            'workshopRoute'  => [
+                                'name'       => 'customer.caas.banners.workshop',
+                                'parameters' => array_values($request->route()->originalParameters())
+                            ]
                         ]
                     ),
 
