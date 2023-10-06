@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources\Portfolio;
 
-use App\Enums\Portfolio\Banner\BannerStateEnum;
 use App\Enums\Portfolio\Snapshot\SnapshotStateEnum;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -22,7 +21,7 @@ class SnapshotResource extends JsonResource
 
         $comment=$snapshot->comment;
 
-        if($snapshot->first_commit){
+        if($snapshot->first_commit) {
             $comment=__('First commit');
         }
 

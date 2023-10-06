@@ -94,8 +94,8 @@ class Snapshot extends Model
 
                 /** @var Webpage|Website|Banner $parent */
                 $parent=$this->parent;
-                $slug=$parent->slug;
-                if($this->scope){
+                $slug  =$parent->slug;
+                if($this->scope) {
                     $slug.=" $this->scope";
                 }
                 return $slug.'-'.now()->isoFormat('YYMMDD');

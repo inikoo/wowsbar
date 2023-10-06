@@ -59,5 +59,3 @@ Route::prefix('banners')->name('banners')->group(function () {
         Route::get('snapshots/{snapshot}', [ShowSnapshot::class, 'inBanner'])->name('.show.snapshots.show');
     });
 });
-
-
