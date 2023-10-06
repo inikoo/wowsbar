@@ -44,7 +44,7 @@ const props = defineProps<{
     websiteState:String
 }>()
 
-console.log(props.publishRoutes)
+console.log(props.websiteState)
 
 let currentTab = ref(props.tabs.current)
 
@@ -111,8 +111,11 @@ const chekIsLive  = ()=>{
     <PageHeading :data="pageHead">
         <template #other="{ dataPageHead: head }">
             <div class="flex items-center gap-2">
-                <span>
+                <span v-if="websiteState !== 'in-process'">
                     <Button @click="chekIsLive" :label="'Publish'" :style="'save'" icon="far fa-rocket-launch"></Button>
+                </span>
+                <span v-else>
+                    <Button :label="'Set to Ready'"></Button>
                 </span>
             </div>
         </template>

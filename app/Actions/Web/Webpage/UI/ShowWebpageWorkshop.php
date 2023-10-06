@@ -91,6 +91,10 @@ class ShowWebpageWorkshop extends InertiaAction
                     'name'       => 'org.models.webpage.content.publish',
                     'parameters' => $webpage->id
                 ],
+                'setAsReadyRoute' => [
+                    'name'       => 'org.models.webpage.content.publish',
+                    'parameters' => $webpage->id
+                ],
                 'updateRoute'  => [
                     'name'       => 'org.models.webpage.content.update',
                     'parameters' => $webpage->id

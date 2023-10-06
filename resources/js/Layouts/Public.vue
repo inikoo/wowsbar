@@ -17,7 +17,7 @@ const props = defineProps([
     'structure'
 ])
 
-
+console.log(props.structure)
 
 </script>
 

@@ -11,7 +11,6 @@ import { CustomBlock } from "@/Components/CMS/Workshops/GrapeEditor/CustomBlocks
 
 const emits = defineEmits();
 const props = defineProps<{
-    data: Object;
     plugins: Array;
     customBlocks?: Array;
     updateRoute?: Object;
