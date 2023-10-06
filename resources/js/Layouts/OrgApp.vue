@@ -30,7 +30,7 @@ import {
     faAbacus,
     faChevronDown,
     faGlobe,
-    faLanguage, faUsers,faNetworkWired,faCalendar,faStopwatch,faBuilding
+    faLanguage, faUsers, faNetworkWired, faCalendar, faStopwatch, faBuilding, faHandshake
 } from "@/../private/pro-light-svg-icons"
 import { faSearch, faBell} from "../../private/pro-regular-svg-icons"
 
@@ -55,7 +55,8 @@ library.add(
     faNetworkWired,
     faCalendar,
     faStopwatch,
-    faBuilding
+    faBuilding,
+    faHandshake
 )
 
 const sidebarOpen = ref(false)

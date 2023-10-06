@@ -19,11 +19,7 @@ class ParseBannerLayout
     {
         $slides = [];
 
-        $hash=Arr::pull($layout, 'hash');
-        Arr::forget($layout, 'publishedHash');
-
         foreach (Arr::get($layout, 'components') as $key => $slideData) {
-
             $slides[Arr::get($slideData, 'ulid', $key)] = [
                 'layout'            => Arr::get($slideData, 'layout'),
                 'visibility'        => Arr::get($slideData, 'visibility'),
@@ -33,12 +29,9 @@ class ParseBannerLayout
             ];
         }
 
-
         return [
             Arr::except($layout, ['components', 'images']),
             $slides,
-            $hash
-
         ];
     }
 
