@@ -51,9 +51,9 @@ class UpdateWebpageContent
     {
         $request->validate();
 
-         $this->handle($webpage, $request->validated());
+        $this->handle($webpage, $request->validated());
 
-         return '👍';
+        return '👍';
     }
 
 

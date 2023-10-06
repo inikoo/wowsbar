@@ -35,11 +35,12 @@ beforeEach(function () {
 
 test('create employee successful', function () {
     $arrayData = [
-        'alias'         => 'artha',
-        'contact_name'  => 'artha',
-        'date_of_birth' => '2019-01-01',
-        'job_title'     => 'director',
-        'state'         => EmployeeStateEnum::WORKING
+        'alias'             => 'artha',
+        'contact_name'      => 'artha',
+        'date_of_birth'     => '2019-01-01',
+        'job_title'         => 'director',
+        'state'             => EmployeeStateEnum::WORKING,
+        'positions'         => ['acc']
     ];
 
     $employee = StoreEmployee::run(organisation(), $arrayData);

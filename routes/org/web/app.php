@@ -32,6 +32,18 @@ Route::middleware(["org-web"])->group(function () {
         Route::prefix("catalogue")
             ->name("catalogue.")
             ->group(__DIR__."/catalogue.php");
+        Route::prefix("social")
+            ->name("social.")
+            ->group(__DIR__."/social.php");
+        Route::prefix("caas")
+            ->name("caas.")
+            ->group(__DIR__."/caas.php");
+        Route::prefix("seo")
+            ->name("seo.")
+            ->group(__DIR__."/seo.php");
+        Route::prefix("google-ads")
+            ->name("google-ads.")
+            ->group(__DIR__."/google-ads.php");
         Route::prefix("media")
             ->name("media.")
             ->group(__DIR__."/media.php");

@@ -27,7 +27,7 @@ class CustomerWebsiteResource extends JsonResource
             'customer_slug'  => $this->customer_slug,
 
             'name'           => $customerWebsite->name,
-            'url'         => $customerWebsite->url,
+            'url'            => $customerWebsite->url,
            // 'number_banners' => $customerWebsite->stats->number_banners
         ];
     }

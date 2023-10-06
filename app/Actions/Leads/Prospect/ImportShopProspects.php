@@ -25,7 +25,7 @@ class ImportShopProspects
 
         return $this->init(
             $upload,
-            new ProspectImport($scope,$upload)
+            new ProspectImport($scope, $upload)
         );
 
     }
