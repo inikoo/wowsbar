@@ -8,8 +8,8 @@ import { computed, ref, watch, reactive } from "vue"
 import { useTabChange } from "@/Composables/tab-change"
 import Tabs from "@/Components/Navigation/Tabs.vue"
 import { capitalize } from "@/Composables/capitalize"
-import FooterWorkshop from "@/Components/CMS/Workshops/FooterWorkshop.vue";
 import HeaderGrape from '@/Components/CMS/Workshops/HeaderWorkshop/HeaderGrape.vue'
+import FooterGrape from '@/Components/CMS/Workshops/FooterWorkshop/FooterGrape.vue'
 import LayoutWorkshop from "@/Components/CMS/Workshops/LayoutWorkshop.vue";
 import Button from '@/Components/Elements/Buttons/Button.vue'
 import { notify } from "@kyvg/vue3-notification"
@@ -54,7 +54,7 @@ const handleTabUpdate = (tabSlug) => {
 const component = computed(() => {
     const components = {
         'workshop_header': HeaderGrape,
-        'workshop_footer': FooterWorkshop,
+        'workshop_footer': FooterGrape,
         'workshop_layout': LayoutWorkshop,
     }
     return components[currentTab.value]
