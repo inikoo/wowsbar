@@ -21,10 +21,11 @@ class UpdateWebsiteHeaderContent
     {
 
         $snapshot = $website->unpublishedHeaderSnapshot;
-        $snapshot->update([
+        $snapshot->update(
+            [
                 'layout' => [
-                    'src'=>$content['data'],
-                    'html'=>$content['pagesHtml'],
+                    'src' => $content['data'],
+                    'html'=> $content['pagesHtml'],
                 ]
             ]
         );
@@ -44,7 +45,7 @@ class UpdateWebsiteHeaderContent
     public function rules(): array
     {
         return [
-            'data' => ['required', 'array'],
+            'data'      => ['required', 'array'],
             'pagesHtml' => ['required', 'array'],
         ];
     }
