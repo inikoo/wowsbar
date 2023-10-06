@@ -325,7 +325,7 @@ const layoutState = useLayoutStore()
             <div v-if="props.navigation.previous || props.navigation.next" class="grid grid-flow-col justify-end items-center pr-2 space-x-2 text-sm text-gray-700 font-semibold">
                 <!-- Button: Previous -->
                 <div class="flex justify-center items-center w-8">
-                    <Link v-if="props.navigation.previous" :href="route(props.navigation.previous?.route.name, props.navigation.previous?.route.parameters)  + urlParameter" class="rounded w-full h-full flex items-center justify-center opacity-70 hover:opacity-100 hover:cursor-pointer hover:text-gray-800"
+                    <Link v-if="props.navigation.previous" :href="route(props.navigation.previous?.route.name, props.navigation.previous?.route.parameters)  + urlParameter" class="rounded w-full h-full flex items-center justify-center opacity-60 hover:opacity-100 hover:cursor-pointer hover:text-gray-800"
                           :title="capitalize(props.navigation.previous?.label)"
                     >
                         <FontAwesomeIcon icon="fas fa-arrow-left" class="" aria-hidden="true" />
@@ -335,7 +335,7 @@ const layoutState = useLayoutStore()
 
                 <!-- Button: Next -->
                 <div class="flex justify-center items-center w-8">
-                    <Link v-if="props.navigation.next" class="rounded w-full h-full flex items-center justify-center opacity-70 hover:opacity-100 hover:cursor-pointer hover:text-orange-800"
+                    <Link v-if="props.navigation.next" class="rounded w-full h-full flex items-center justify-center opacity-60 hover:opacity-100 hover:cursor-pointer hover:text-gray-800"
                           :title="capitalize(props.navigation.next?.label)"
                           :href="route(props.navigation.next?.route.name, props.navigation.next?.route.parameters) + urlParameter"
                     >
