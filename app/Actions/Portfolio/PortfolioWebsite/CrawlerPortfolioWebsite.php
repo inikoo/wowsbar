@@ -7,7 +7,7 @@
 
 namespace App\Actions\Portfolio\PortfolioWebsite;
 
-use App\Enums\Portfolio\Webpage\WebpageStatusEnum;
+use App\Enums\Portfolio\PortfolioWebpage\PortfolioWebpageStatusEnum;
 use App\Models\Portfolio\PortfolioWebpage;
 use App\Models\Portfolio\PortfolioWebsite;
 use DOMDocument;
@@ -82,7 +82,7 @@ class CrawlerPortfolioWebsite extends CrawlObserver
             'title'   => '',
             'url'     => $url,
             'layout'  => [],
-            'status'  => WebpageStatusEnum::FAILED,
+            'status'  => PortfolioWebpageStatusEnum::FAILED,
             'message' => $requestException->getMessage()
         ]);
     }
