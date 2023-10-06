@@ -11,6 +11,7 @@ use App\Actions\InertiaAction;
 use App\Http\Resources\Portfolio\SnapshotResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\Helpers\Snapshot;
+use App\Models\Portfolio\Banner;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -29,24 +30,29 @@ class IndexSnapshots extends InertiaAction
     }
 
     /** @noinspection PhpUndefinedMethodInspection */
-    public function handle($prefix = null): LengthAwarePaginator
+    public function handle(Banner $parent, $prefix = null): LengthAwarePaginator
     {
         $queryBuilder = QueryBuilder::for(Snapshot::class);
 
+        if (class_basename($parent) == 'Banner') {
+            // $queryBuilder->where('parent_id',$parent->id)->where('parent_type','Banner');
+
+        }
+
         return $queryBuilder
             ->defaultSort('published_at')
-            ->allowedSorts(['published_at','published_until'])
+            ->allowedSorts(['published_at', 'published_until'])
             ->withPaginator($prefix)
             ->withQueryString();
     }
 
-    public function tableStructure(?array $modelOperations = null, $prefix = null, ?array $exportLinks = null): Closure
+    public function tableStructure(Banner $parent, ?array $modelOperations = null, $prefix = null, ?array $exportLinks = null): Closure
     {
         return function (InertiaTable $table) use ($modelOperations, $prefix, $exportLinks) {
             if ($prefix) {
                 $table
                     ->name($prefix)
-                    ->pageName($prefix . 'Page');
+                    ->pageName($prefix.'Page');
             }
 
             $table
@@ -57,9 +63,13 @@ class IndexSnapshots extends InertiaAction
                         'title' => __('No snapshot found'),
                         'count' => 0
                     ]
-                )
-                ->withExportLinks($exportLinks)
-                ->column(key: 'state', label: ['fal', 'fa-yin-yang'])
+                );
+            if ($exportLinks) {
+                $table->withExportLinks($exportLinks);
+            }
+
+
+            $table->column(key: 'state', label: ['fal', 'fa-yin-yang'])
                 ->column(key: 'published_at', label: __('date published'), sortable: true)
                 ->column(key: 'published_until', label: __('published until'))
                 ->column(key: 'comment', label: __('comment'))

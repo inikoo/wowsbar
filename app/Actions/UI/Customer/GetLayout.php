@@ -151,39 +151,39 @@ class GetLayout
 
 
         if ($customerUser->hasPermissionTo('portfolio.banners.view')) {
-            $navigation['banners'] = [
-                'scope'   => 'banners',
+            $navigation['caas'] = [
+                'scope'   => 'caas',
                 'icon'    => ['fal', 'fa-rectangle-wide'],
                 'label'   => __('Banners'),
-                'route'   => 'customer.banners.dashboard',
+                'route'   => 'customer.caas.banners.index',
                 'topMenu' => [
                     'subSections' => [
 
                         [
                             'icon'  => ['fal', 'fa-chart-network'],
                             'route' => [
-                                'name' => 'customer.banners.dashboard',
+                                'name' => 'customer.caas.dashboard',
                             ]
                         ],
                         [
                             'icon'  => ['fal', 'fa-rectangle-wide'],
                             'label' => __('banners'),
                             'route' => [
-                                'name' => 'customer.banners.index',
+                                'name' => 'customer.caas.banners.index',
                             ]
                         ],
                         [
                             'icon'  => ['fal', 'fa-globe'],
                             'label' => __('websites'),
                             'route' => [
-                                'name' => 'customer.banners.websites.index',
+                                'name' => 'customer.caas.websites.index',
                             ]
                         ],
                         [
                             'icon'  => ['fal', 'fa-photo-video'],
                             'label' => __('gallery'),
                             'route' => [
-                                'name' => 'customer.banners.gallery',
+                                'name' => 'customer.caas.gallery',
                             ]
                         ],
 

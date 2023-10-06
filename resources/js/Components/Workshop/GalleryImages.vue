@@ -59,9 +59,9 @@ const getData = async (tabName: string, routeUrl: string) => {
 // Use watch to fetch at first load
 watch(activeSidebar, (newSidebar: string) => {
     if(newSidebar == 'uploaded_images') {
-        galleryStore[newSidebar].length === 0 ? getData(newSidebar, 'customer.banners.gallery.uploaded-images.index') : false
+        galleryStore[newSidebar].length === 0 ? getData(newSidebar, 'customer.caas.gallery.uploaded-images.index') : false
     } else if (newSidebar == 'stock_images') {
-        galleryStore[newSidebar].length === 0 ? getData(newSidebar, 'customer.banners.gallery.stock-images.index') : false
+        galleryStore[newSidebar].length === 0 ? getData(newSidebar, 'customer.caas.gallery.stock-images.index') : false
     }
 }, { immediate: true })
 
