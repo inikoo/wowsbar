@@ -19,7 +19,7 @@ class ShowWebsiteHeaderContent
 
     public function handle(Website $website): array
     {
-        return $website->header_content;
+        return    $website->unpublishedHeaderSnapshot->layout;
     }
 
 
