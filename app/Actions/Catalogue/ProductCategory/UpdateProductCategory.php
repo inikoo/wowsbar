@@ -9,6 +9,7 @@ namespace App\Actions\Catalogue\ProductCategory;
 
 use App\Actions\Traits\WithActionUpdate;
 use App\Http\Resources\Catalogue\DepartmentResource;
+use App\Models\Catalogue\ProductCategory;
 use App\Models\Market\ShopProductCategory;
 use Lorisleiva\Actions\ActionRequest;
 
@@ -19,7 +20,7 @@ class UpdateProductCategory
 
     private bool $asAction=false;
 
-    public function handle(ShopProductCategory $productCategory, array $modelData): ShopProductCategory
+    public function handle(ProductCategory $productCategory, array $modelData): ProductCategory
     {
         $productCategory = $this->update($productCategory, $modelData, ['data']);
         //ProductCategoryHydrateUniversalSearch::dispatch($productCategory);
@@ -47,7 +48,7 @@ class UpdateProductCategory
         ];
     }
 
-    public function action(ShopProductCategory $productCategory, array $objectData): ShopProductCategory
+    public function action(ProductCategory $productCategory, array $objectData): ProductCategory
     {
         $this->asAction=true;
         $this->setRawAttributes($objectData);
@@ -55,13 +56,13 @@ class UpdateProductCategory
         return $this->handle($productCategory, $validatedData);
     }
 
-    public function asController(ShopProductCategory $productCategory, ActionRequest $request): ShopProductCategory
+    public function asController(ProductCategory $productCategory, ActionRequest $request): ProductCategory
     {
         $productCategory = $productCategory::where('slug', $request->route()->parameters)->first();
         return $this->handle($productCategory, $request->all());
     }
 
-    public function jsonResponse(ShopProductCategory $productCategory): DepartmentResource
+    public function jsonResponse(ProductCategory $productCategory): DepartmentResource
     {
         return new DepartmentResource($productCategory);
     }
