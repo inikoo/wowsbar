@@ -146,6 +146,7 @@ class ShowCustomer extends InertiaAction
             parent: $customer,
             modelOperations: [
                 'createLink' => [
+                    /*
                     [
                         'route' => [
                             'name'       => 'org.models.customers.websites.upload',
@@ -154,11 +155,12 @@ class ShowCustomer extends InertiaAction
                         'icon'  => 'fal fa-upload',
                         'label' => 'upload',
                         'style' => 'secondary',
-                        'mode'  => 'upload', // To able to call in parent page as template #buttonupload
+                        'mode'  => 'upload', // To be able to call in parent page as template #buttonupload
                     ],
+                    */
                     [
                         'route' => [
-                            'name'       => 'org.shops.show.products.create',
+                            'name'       => 'org.crm.shop.customers.show.customer-websites.create',
                             'parameters' => array_values($this->originalParameters)
                         ],
                         'label' => __('create'),
