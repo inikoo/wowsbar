@@ -11,6 +11,7 @@ use App\Actions\Accounting\PaymentAccount\StorePaymentAccount;
 use App\Actions\Accounting\PaymentAccount\UpdatePaymentAccount;
 use App\Actions\Accounting\PaymentServiceProvider\DeletePaymentServiceProvider;
 use App\Actions\Accounting\PaymentServiceProvider\UpdatePaymentServiceProvider;
+use App\Actions\Catalogue\ProductCategory\UpdateProductCategory;
 use App\Actions\CRM\Appointment\AssignAppointmentUser;
 use App\Actions\CRM\Appointment\StoreAppointment;
 use App\Actions\CRM\Customer\StoreCustomer;
@@ -80,6 +81,8 @@ Route::patch('/payment-account/{paymentAccount}', UpdatePaymentAccount::class)->
 Route::post('/payment-account', StorePaymentAccount::class)->name('payment-account.store');
 Route::patch('/product/{product}', UpdateProduct::class)->name('product.update');
 Route::delete('/product/{product}', UpdateProduct::class)->name('product.delete');
+
+Route::patch('/product-category/{productCategory}', UpdateProductCategory::class)->name('product-category.update');
 
 Route::prefix('shop')->as('shop.')->group(function () {
     Route::post('', StoreShop::class)->name('store');
