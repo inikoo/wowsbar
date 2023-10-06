@@ -23,14 +23,15 @@ class PublishWebsiteMarginal
 
     public bool $isAction = false;
 
-    public function handle(Website $website, string $marginal, array $modelData): Website
+    public function handle(Website $website, string $marginal, array $modelData): void
     {
-        $compiledLayout = '';
+        $layout = [];
         if ($marginal == 'header') {
-            $compiledLayout = Arr::get($website->unpublishedHeaderSnapshot->layout, 'html');
+            $layout=$website->unpublishedHeaderSnapshot->layout;
         } elseif ($marginal == 'footer') {
-            $compiledLayout = Arr::get($website->unpublishedFooterSnapshot->layout, 'html');
+            $layout = $website->unpublishedFooterSnapshot->layout;
         }
+
 
         foreach ($website->snapshots()->where('scope', $marginal)->where('state', SnapshotStateEnum::LIVE)->get() as $liveSnapshot) {
             UpdateSnapshot::run($liveSnapshot, [
@@ -46,23 +47,19 @@ class PublishWebsiteMarginal
             [
                 'state'        => SnapshotStateEnum::LIVE,
                 'published_at' => now(),
-                'layout'       => $compiledLayout,
+                'layout'       => $layout,
                 'scope'        => $marginal,
                 'comment'      => Arr::get($modelData, 'comment')
             ],
         );
 
 
-        $compiledLayout = $snapshot->compiledLayout();
         $updateData     = [
             "live_{$marginal}_snapshot_id" => $snapshot->id,
-            "compiled_layout->$marginal"   => $compiledLayout
+            "compiled_layout->$marginal"   => $snapshot->compiledLayout()
         ];
 
         $website->update($updateData);
-
-
-        return $website;
     }
 
     public function authorize(ActionRequest $request): bool
@@ -71,7 +68,7 @@ class PublishWebsiteMarginal
             return true;
         }
 
-        return $request->user()->hasPermissionTo("website.edit");
+        return $request->user()->hasPermissionTo("websites.edit");
     }
 
     public function rules(): array
@@ -82,27 +79,32 @@ class PublishWebsiteMarginal
     }
 
 
-    public function header(Website $website, ActionRequest $request): Website
+    public function header(Website $website, ActionRequest $request): string
     {
         $request->validate();
 
-        return $this->handle($website, 'header', $request->validated());
+        $this->handle($website, 'header', $request->validated());
+
+        return "🚀";
     }
 
-    public function footer(Website $website, ActionRequest $request): Website
+    public function footer(Website $website, ActionRequest $request): string
     {
         $request->validate();
+        $this->handle($website, 'footer', $request->validated());
 
-        return $this->handle($website, 'footer', $request->validated());
+        return "🚀";
     }
 
-    public function action(Website $website, $marginal, $modelData): Website
+    public function action(Website $website, $marginal, $modelData): string
     {
         $this->isAction = true;
         $this->setRawAttributes($modelData);
         $validatedData = $this->validateAttributes();
 
-        return $this->handle($website, $marginal, $validatedData);
+        $this->handle($website, $marginal, $validatedData);
+
+        return "🚀";
     }
 
 
