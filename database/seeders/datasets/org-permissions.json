@@ -34,6 +34,7 @@
     "supervisor.catalogue.seo",
     "supervisor.catalogue.google-ads",
     "supervisor.catalogue.social",
+    "supervisor.catalogue.caas",
     "accounting",
     "accounting.view",
     "accounting.edit",
@@ -46,5 +47,7 @@
     "catalogue.social.view",
     "catalogue.social.edit",
     "catalogue.google-ads.view",
-    "catalogue.google-ads.edit"
+    "catalogue.google-ads.edit",
+    "catalogue.caas.view",
+    "catalogue.caas.edit"
 ]

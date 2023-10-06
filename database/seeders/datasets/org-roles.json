@@ -105,6 +105,14 @@
         ]
     },
     {
+        "name": "caas-supervisor",
+        "permissions": [
+            "crm",
+            "catalogue.caas",
+            "supervisor.catalogue.caas"
+        ]
+    },
+    {
         "name": "google-ads",
         "permissions": [
             "crm",
@@ -124,6 +132,13 @@
         "permissions": [
             "crm",
             "catalogue.social"
+        ]
+    },
+    {
+        "name": "caas",
+        "permissions": [
+            "crm",
+            "catalogue.caas"
         ]
     }
 ]
