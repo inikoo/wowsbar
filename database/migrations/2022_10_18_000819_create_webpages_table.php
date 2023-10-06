@@ -30,10 +30,15 @@ return new class () extends Migration {
 
             $table->unsignedSmallInteger('website_id')->index();
             $table->foreign('website_id')->references('id')->on('websites');
-            $table->unsignedInteger('main_variant_id')->index()->nullable();
-            $table->jsonb('content');
-            $table->jsonb('blocks');
-            $table->jsonb('compiled_content');
+
+            $table->unsignedSmallInteger('unpublished_snapshot_id')->nullable()->index();
+            $table->unsignedSmallInteger('live_snapshot_id')->nullable()->index();
+            $table->jsonb('compiled_layout');
+
+
+            $table->dateTimeTz('ready_at')->nullable();
+            $table->dateTimeTz('live_at')->nullable();
+            $table->dateTimeTz('closed_at')->nullable();
 
             $table->jsonb('data');
             $table->jsonb('settings');

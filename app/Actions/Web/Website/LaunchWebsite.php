@@ -53,7 +53,7 @@ class LaunchWebsite
         if (!$request->exists('status') and $request->has('state')) {
             $status = match ($request->get('state')) {
                 WebsiteStateEnum::LIVE->value => true,
-                default => false
+                default                       => false
             };
             $request->merge(['status' => $status]);
         }

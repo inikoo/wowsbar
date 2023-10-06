@@ -48,6 +48,7 @@ class SeedWebsiteFixedWebpages
                     $modelData,
                     [
                         'is_fixed' => true,
+                        'ready_at' => now(),
                         'state'    => WebpageStateEnum::READY
                     ]
                 )

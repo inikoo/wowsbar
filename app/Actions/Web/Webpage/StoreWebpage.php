@@ -7,7 +7,7 @@
 
 namespace App\Actions\Web\Webpage;
 
-use App\Actions\Web\WebpageVariant\StoreWebpageVariant;
+use App\Actions\Helpers\Snapshot\StoreWebpageSnapshot;
 use App\Enums\Organisation\Web\Webpage\WebpagePurposeEnum;
 use App\Enums\Organisation\Web\Webpage\WebpageTypeEnum;
 use App\Models\Web\Webpage;
@@ -25,7 +25,7 @@ class StoreWebpage
 {
     use AsAction;
 
-    public function handle(Website $website, array $modelData, array $webpageVariantData = []): Webpage
+    public function handle(Website $website, array $modelData): Webpage
     {
         data_set($modelData, 'level', $this->getLevel(Arr::get($modelData, 'parent_id')));
 
@@ -33,10 +33,27 @@ class StoreWebpage
         /** @var Webpage $webpage */
         $webpage = $website->webpages()->create($modelData);
 
+        $snapshot = StoreWebpageSnapshot::run(
+            $webpage,
+            [
+                'layout' => [
+                    'src'  => null,
+                    'html' => ''
+                ]
+            ],
+        );
+
+        $webpage->update(
+            [
+                'unpublished_snapshot_id' => $snapshot->id,
+                'compiled_layout'         => $snapshot->compiledLayout(),
+
+            ]
+        );
+
 
         $webpage->stats()->create();
 
-        StoreWebpageVariant::run($webpage, $webpageVariantData);
 
         return $webpage;
     }
