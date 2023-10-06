@@ -163,11 +163,7 @@ const fetchInitialData = async () => {
     } catch (error) {
 
         Object.assign(data, cloneDeep(props.bannerLayout))
-        notify({
-            title: "Failed to get realtime data",
-            text: 'please reload and make sure your internet connection is stable',
-            type: "error"
-        });
+
 
 
     } finally {
@@ -175,7 +171,7 @@ const fetchInitialData = async () => {
         loadingState.value = false
         if(props.banner.state == 'live'){
             startInterval()
-        } 
+        }
     }
 }
 
@@ -266,7 +262,7 @@ const stopInterval=()=>{
 
 <template layout="CustomerApp">
     <Head :title="capitalize(title)" />
-    <PageHeading :data="pageHead"> 
+    <PageHeading :data="pageHead">
         <template #other="{ dataPageHead: head }">
             <div class="flex items-center gap-2">
                 <Button  label="Publish"  :icon="['far', 'rocket-launch']" @click="validationState()"

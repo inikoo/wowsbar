@@ -7,7 +7,7 @@
 
     <!-- Button: Download Table -->
     <slot name="tableDownload" class="">
-      <TableDownload :exportLinks="exportLinks"/>
+      <TableDownload v-if="exportLinks" :exportLinks="exportLinks"/>
     </slot>
 
     <!-- simple and mobile -->

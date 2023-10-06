@@ -31,6 +31,10 @@ class PublishBanner
 
     public function handle(Banner $banner, array $modelData): Banner
     {
+        $firstCommit = false;
+        if ($banner->state == BannerStateEnum::UNPUBLISHED) {
+            $firstCommit = true;
+        }
         foreach ($banner->snapshots()->where('state', SnapshotStateEnum::LIVE)->get() as $liveSnapshot) {
             UpdateSnapshot::run($liveSnapshot, [
                 'state'           => SnapshotStateEnum::HISTORIC,
@@ -38,7 +42,7 @@ class PublishBanner
             ]);
         }
 
-        $layout                       = Arr::pull($modelData, 'layout');
+        $layout = Arr::pull($modelData, 'layout');
         list($layout, $slides, $hash) = ParseBannerLayout::run($layout);
 
         /** @var Snapshot $snapshot */
@@ -47,14 +51,16 @@ class PublishBanner
             [
                 'state'        => SnapshotStateEnum::LIVE,
                 'published_at' => now(),
-                'layout'       => $layout
+                'layout'       => $layout,
+                'first_commit' => $firstCommit,
+                'comment'      => Arr::get($modelData, 'comment')
+
             ],
             $slides
         );
 
 
         $compiledLayout = $snapshot->compiledLayout();
-
 
 
         $updateData = [
