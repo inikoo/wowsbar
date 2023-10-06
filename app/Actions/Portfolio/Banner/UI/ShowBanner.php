@@ -165,8 +165,8 @@ class ShowBanner extends InertiaAction
                 BannerTabsEnum::SHOWCASE->value => $this->tab == BannerTabsEnum::SHOWCASE->value
                     ?
                     fn () => [
-                        'banner' => $banner->compiled_layout,
-                        'url'    => 'xxx',
+                        'banner'         => $banner->compiled_layout,
+                        'url'            => 'xxx',
                         'workshopRoute'  => [
                             'name'       => 'customer.caas.banners.workshop',
                             'parameters' => array_values($request->route()->originalParameters())
@@ -174,8 +174,8 @@ class ShowBanner extends InertiaAction
                     ]
                     : Inertia::lazy(
                         fn () => [
-                            'banner' => $banner->compiled_layout,
-                            'url'    => 'xxx',
+                            'banner'         => $banner->compiled_layout,
+                            'url'            => 'xxx',
                             'workshopRoute'  => [
                                 'name'       => 'customer.caas.banners.workshop',
                                 'parameters' => array_values($request->route()->originalParameters())
@@ -184,8 +184,8 @@ class ShowBanner extends InertiaAction
                     ),
 
                 BannerTabsEnum::SNAPSHOTS->value => $this->tab == BannerTabsEnum::SNAPSHOTS->value ?
-                    fn () => SnapshotResource::collection(IndexSnapshots::run(parent:$banner,prefix:'snapshots'))
-                    : Inertia::lazy(fn () => SnapshotResource::collection(IndexSnapshots::run(parent:$banner,prefix:'snapshots'))),
+                    fn () => SnapshotResource::collection(IndexSnapshots::run(parent:$banner, prefix:'snapshots'))
+                    : Inertia::lazy(fn () => SnapshotResource::collection(IndexSnapshots::run(parent:$banner, prefix:'snapshots'))),
 
                 BannerTabsEnum::CHANGELOG->value => $this->tab == BannerTabsEnum::CHANGELOG->value ?
                     fn () => HistoryResource::collection(IndexHistories::run($banner))
@@ -206,7 +206,6 @@ class ShowBanner extends InertiaAction
             IndexSnapshots::make()->tableStructure(
                 parent: $banner,
                 prefix:'snapshots'
-
             )
         );
     }
@@ -289,10 +288,10 @@ class ShowBanner extends InertiaAction
 
     public function getPrevious(Banner $banner, ActionRequest $request): ?array
     {
-        if(class_basename($this->parent)=='PortfolioWebsite'){
+        if(class_basename($this->parent)=='PortfolioWebsite') {
             // todo, need to use a join
             $previous=null;
-        }else{
+        } else {
             $previous = Banner::where('slug', '<', $banner->slug)->orderBy('slug')->first();
 
         }
@@ -302,10 +301,10 @@ class ShowBanner extends InertiaAction
 
     public function getNext(Banner $banner, ActionRequest $request): ?array
     {
-        if(class_basename($this->parent)=='PortfolioWebsite'){
+        if(class_basename($this->parent)=='PortfolioWebsite') {
             // todo, need to use a join
             $next=null;
-        }else{
+        } else {
             $next = Banner::where('slug', '>', $banner->slug)->orderBy('slug')->first();
 
         }
@@ -338,8 +337,8 @@ class ShowBanner extends InertiaAction
                 'route' => [
                     'name'       => $routeName,
                     'parameters' => [
-                        'portfolioWebsite'=>$this->parent->slug,
-                        'banner' => $banner->slug
+                        'portfolioWebsite'=> $this->parent->slug,
+                        'banner'          => $banner->slug
                     ]
                 ]
             ]

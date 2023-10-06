@@ -9,13 +9,11 @@ namespace App\Actions\Helpers\Snapshot\UI;
 
 use App\Actions\InertiaAction;
 use App\Enums\Portfolio\Snapshot\SnapshotStateEnum;
-use App\Http\Resources\Portfolio\SnapshotResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\Helpers\Snapshot;
 use App\Models\Portfolio\Banner;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Lorisleiva\Actions\ActionRequest;
 use Spatie\QueryBuilder\QueryBuilder;
 
@@ -34,15 +32,15 @@ class IndexSnapshots extends InertiaAction
     public function handle(Banner $parent, $prefix = null): LengthAwarePaginator
     {
         $queryBuilder = QueryBuilder::for(Snapshot::class);
-        $queryBuilder->where('state','!=',SnapshotStateEnum::UNPUBLISHED->value);
+        $queryBuilder->where('state', '!=', SnapshotStateEnum::UNPUBLISHED->value);
 
         if (class_basename($parent) == 'Banner') {
-            $queryBuilder->where('parent_id',$parent->id)->where('parent_type','Banner');
+            $queryBuilder->where('parent_id', $parent->id)->where('parent_type', 'Banner');
 
         }
 
         return $queryBuilder
-            ->defaultSort('published_at')
+            ->defaultSort('-published_at')
             ->allowedSorts(['published_at', 'published_until'])
             ->withPaginator($prefix)
             ->withQueryString();
@@ -79,8 +77,5 @@ class IndexSnapshots extends InertiaAction
         };
     }
 
-    public function jsonResponse(): AnonymousResourceCollection
-    {
-        return SnapshotResource::collection($this->handle());
-    }
+
 }

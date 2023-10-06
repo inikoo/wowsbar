@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources\Portfolio;
 
-use App\Enums\Portfolio\Banner\BannerStateEnum;
 use App\Enums\Portfolio\Snapshot\SnapshotStateEnum;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -22,7 +21,7 @@ class SnapshotResource extends JsonResource
 
         $comment=$snapshot->comment;
 
-        if(!$comment and  $snapshot->state==SnapshotStateEnum::LIVE){
+        if($snapshot->first_commit) {
             $comment=__('First commit');
         }
 
@@ -31,7 +30,6 @@ class SnapshotResource extends JsonResource
 
         return [
             'slug'            => $snapshot->slug,
-            'current'         => $snapshot->current,
             'published_at'    => $snapshot->published_at,
             'published_until' => $snapshot->published_until,
             'layout'          => $snapshot->layout,
@@ -48,7 +46,7 @@ class SnapshotResource extends JsonResource
                 ],
                 SnapshotStateEnum::HISTORIC => [
                     'tooltip' => __('retired'),
-                    'icon'    => 'fal fa-eye-slash'
+                    'icon'    => 'fal fa-ghost'
                 ]
             },
             'comment'         => $comment,

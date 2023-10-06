@@ -10,7 +10,6 @@ namespace App\Actions\Portfolios\CustomerWebsite\UI;
 use App\Actions\Helpers\History\IndexHistories;
 use App\Actions\InertiaAction;
 use App\Actions\UI\Organisation\Catalogue\ShowCaaSDashboard;
-use App\Actions\UI\Organisation\Catalogue\ShowSeoDashboard;
 use App\Enums\UI\Organisation\CustomerWebsitesTabsEnum;
 use App\Http\Resources\History\HistoryResource;
 use App\Http\Resources\Prospects\CustomerWebsiteResource;

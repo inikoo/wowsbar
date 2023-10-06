@@ -9,8 +9,6 @@ namespace App\Actions\Portfolios\CustomerWebsite\UI;
 
 use App\Actions\Helpers\History\IndexHistories;
 use App\Actions\InertiaAction;
-use App\Actions\UI\Organisation\Catalogue\ShowGoogleAdsDashboard;
-use App\Actions\UI\Organisation\Catalogue\ShowSeoDashboard;
 use App\Actions\UI\Organisation\Catalogue\ShowSocialDashboard;
 use App\Enums\UI\Organisation\CustomerWebsitesTabsEnum;
 use App\Http\Resources\History\HistoryResource;
