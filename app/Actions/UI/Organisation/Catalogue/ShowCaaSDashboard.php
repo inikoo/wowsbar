@@ -51,10 +51,7 @@ class ShowCaaSDashboard
                             'name' => 'org.catalogue.departments.index'
                         ]
                     ],
-
-
                 ]
-
             ]
         );
     }

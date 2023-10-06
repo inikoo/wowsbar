@@ -48,7 +48,7 @@ class ShowSeoDashboard
                         'name' => __('websites'),
                         'stat' => $org->crmStats->number_customer_websites_seo,
                         'href' => [
-                            'name' => 'org.catalogue.departments.index'
+                            'name' => 'org.seo.websites.index'
                         ]
                     ],
 
