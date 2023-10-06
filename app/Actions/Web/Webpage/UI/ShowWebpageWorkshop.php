@@ -84,6 +84,9 @@ class ShowWebpageWorkshop extends InertiaAction
                     ],
                 ],
                 'webpageID'    => $webpage->id,
+                'websiteState' => $webpage->website->state,
+                'webpageState' => $webpage->state,
+
                 'publishRoute' => [
                     'name'       => 'org.models.webpage.content.publish',
                     'parameters' => $webpage->id
