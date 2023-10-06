@@ -8,7 +8,6 @@
 import { useLayoutStore } from '@/Stores/layout'
 import { usePage } from '@inertiajs/vue3'
 import { loadLanguageAsync } from 'laravel-vue-i18n'
-import { watchEffect } from 'vue'
 import Image from '@/Components/Image.vue'
 
 const layout = useLayoutStore()
