@@ -37,6 +37,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property string|null $parent_type
  * @property string $code
  * @property string|null $name
+ * @property string|null $interest
  * @property string|null $description
  * @property ProductCategoryTypeEnum $type
  * @property bool $is_family

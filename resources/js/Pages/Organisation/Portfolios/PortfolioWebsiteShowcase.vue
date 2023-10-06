@@ -13,7 +13,7 @@ const handleRadioChanged = async (itemId: number, itemValue: string, itemSlug: s
         await axios.patch(
             route('org.models.product-category.update', itemSlug),
             {
-                state: itemValue
+                interest: itemValue
             }
         ).then(data => {
             console.log(data)
@@ -55,15 +55,15 @@ const handleRadioChanged = async (itemId: number, itemValue: string, itemSlug: s
                                 </div>
                             </td>
                             <td class="whitespace-nowrap px-3 text-sm text-gray-500 text-center">
-                                <input v-model="item.state" value="interested" :id="`item-${item.id}`" @change="() => handleRadioChanged(item.id, item.state, item.slug)" :name="`item-${item.id}`" type="radio" :title="`I'm Interested in ${item.name}.`"
+                                <input v-model="item.state" value="interested" :id="`item-${item.id}`" @change="() => handleRadioChanged(item.id, item.interest, item.slug)" :name="`item-${item.id}`" type="radio" :title="`I'm Interested in ${item.name}.`"
                                     class="h-6 w-6 rounded cursor-pointer border-gray-300 hover:border-lime-500 text-lime-500 focus:ring-lime-600" />
                             </td>
                             <td class="whitespace-nowrap px-3 text-sm text-gray-500 text-center">
-                                <input v-model="item.state" value="not_interested" :id="`item-${item.id}`" @change="() => handleRadioChanged(item.id, item.state, item.slug)" :name="`item-${item.id}`" type="radio" :title="`I'm not interested in ${item.name}.`"
+                                <input v-model="item.state" value="not_interested" :id="`item-${item.id}`" @change="() => handleRadioChanged(item.id, item.interest, item.slug)" :name="`item-${item.id}`" type="radio" :title="`I'm not interested in ${item.name}.`"
                                     class="h-6 w-6 rounded cursor-pointer border-gray-300 hover:border-rose-500 text-rose-500 focus:ring-rose-600" />
                             </td>
                             <td class="whitespace-nowrap px-3 text-sm text-gray-500 text-center">
-                                <input v-model="item.state" value="not_sure" :id="`item-${item.id}`" @change="() => handleRadioChanged(item.id, item.state, item.slug)" :name="`item-${item.id}`" type="radio" :title="`I'm not sure.`"
+                                <input v-model="item.state" value="not_sure" :id="`item-${item.id}`" @change="() => handleRadioChanged(item.id, item.interest, item.slug)" :name="`item-${item.id}`" type="radio" :title="`I'm not sure.`"
                                     class="h-6 w-6 rounded cursor-pointer border-gray-300 hover:border-gray-500 text-gray-400 focus:ring-gray-600" />
                             </td>
                         </tr>

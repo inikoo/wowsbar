@@ -32,6 +32,7 @@ class DepartmentResource extends JsonResource
             'code'            => $this->code,
             'name'            => $this->name,
             'state'           => $this->state,
+            'interest'           => $this->interest,
             'description'     => $this->description,
             'created_at'      => $this->created_at,
             'updated_at'      => $this->updated_at,
