@@ -5,27 +5,31 @@ const props = defineProps<{
     data: any
 }>()
 
+// props.data.basket.data.map(item => {if(item.state == null) { item.state = 'not_sure'}})
+
 // When the checkbox is updated
-const handleRadioChanged = async (itemId: number, itemValue: string) => {
-    // try {
-    //     await axios.patch(
-    //         route('xxx'),
-    //         {
-    //             id: itemId,
-    //             value: itemValue
-    //         },
-    //         {
-    //             headers: { "Content-Type": "multipart/form-data" },
-    //         }
-    //     )
-    // } catch (error: any) {
-    //     console.error(error.message)
-    // }
-    console.log(itemId, itemValue)
+const handleRadioChanged = async (itemId: number, itemValue: string, itemSlug: string) => {
+    try {
+        await axios.patch(
+            route('org.models.product-category.update', itemSlug),
+            {
+                state: itemValue
+            },
+            {
+                headers: { "Content-Type": "multipart/form-data" },
+            }
+        ).then(data => {
+            console.log(data)
+        })
+    } catch (error: any) {
+        console.error(error.message)
+    }
+    console.log(itemSlug)
 }
 </script>
 
 <template>
+    <pre>{{ data }}</pre>
     <div class="max-w-xl px-4 sm:px-6 lg:px-8 pt-4">
         <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
@@ -54,15 +58,15 @@ const handleRadioChanged = async (itemId: number, itemValue: string) => {
                                 </div>
                             </td>
                             <td class="whitespace-nowrap px-3 text-sm text-gray-500 text-center">
-                                <input v-model="item.state" value="interested" :id="`item-${item.id}`" @change="() => handleRadioChanged(item.id, item.state)" :name="`item-${item.id}`" type="radio" :title="`I'm Interested in ${item.name}.`"
+                                <input v-model="item.state" value="interested" :id="`item-${item.id}`" @change="() => handleRadioChanged(item.id, item.state, item.slug)" :name="`item-${item.id}`" type="radio" :title="`I'm Interested in ${item.name}.`"
                                     class="h-6 w-6 rounded cursor-pointer border-gray-300 hover:border-lime-500 text-lime-500 focus:ring-lime-600" />
                             </td>
                             <td class="whitespace-nowrap px-3 text-sm text-gray-500 text-center">
-                                <input v-model="item.state" value="not interested" :id="`item-${item.id}`" @change="() => handleRadioChanged(item.id, item.state)" :name="`item-${item.id}`" type="radio" :title="`I'm not interested in ${item.name}.`"
+                                <input v-model="item.state" value="not_interested" :id="`item-${item.id}`" @change="() => handleRadioChanged(item.id, item.state, item.slug)" :name="`item-${item.id}`" type="radio" :title="`I'm not interested in ${item.name}.`"
                                     class="h-6 w-6 rounded cursor-pointer border-gray-300 hover:border-rose-500 text-rose-500 focus:ring-rose-600" />
                             </td>
                             <td class="whitespace-nowrap px-3 text-sm text-gray-500 text-center">
-                                <input v-model="item.state" value="not sure" :id="`item-${item.id}`" @change="() => handleRadioChanged(item.id, item.state)" :name="`item-${item.id}`" type="radio" :title="`I'm not sure.`"
+                                <input v-model="item.state" value="not_sure" :id="`item-${item.id}`" @change="() => handleRadioChanged(item.id, item.state, item.slug)" :name="`item-${item.id}`" type="radio" :title="`I'm not sure.`"
                                     class="h-6 w-6 rounded cursor-pointer border-gray-300 hover:border-gray-500 text-gray-400 focus:ring-gray-600" />
                             </td>
                         </tr>
