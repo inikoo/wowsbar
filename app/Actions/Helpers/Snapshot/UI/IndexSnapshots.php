@@ -8,6 +8,7 @@
 namespace App\Actions\Helpers\Snapshot\UI;
 
 use App\Actions\InertiaAction;
+use App\Enums\Portfolio\Snapshot\SnapshotStateEnum;
 use App\Http\Resources\Portfolio\SnapshotResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\Helpers\Snapshot;
@@ -33,9 +34,10 @@ class IndexSnapshots extends InertiaAction
     public function handle(Banner $parent, $prefix = null): LengthAwarePaginator
     {
         $queryBuilder = QueryBuilder::for(Snapshot::class);
+        $queryBuilder->where('state','!=',SnapshotStateEnum::UNPUBLISHED->value);
 
         if (class_basename($parent) == 'Banner') {
-            // $queryBuilder->where('parent_id',$parent->id)->where('parent_type','Banner');
+            $queryBuilder->where('parent_id',$parent->id)->where('parent_type','Banner');
 
         }
 
@@ -60,7 +62,7 @@ class IndexSnapshots extends InertiaAction
                 ->withGlobalSearch()
                 ->withEmptyState(
                     [
-                        'title' => __('No snapshot found'),
+                        'title' => __('Banner has not been published yet'),
                         'count' => 0
                     ]
                 );

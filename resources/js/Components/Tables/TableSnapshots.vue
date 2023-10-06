@@ -16,13 +16,14 @@ const locale = useLocaleStore()
 
 library.add(faSeedling, faEyeSlash, faBroadcastTower);
 const props = defineProps<{
-    data: object
+    data: object,
+    tab?: string
 }>()
 
 </script>
 
 <template>
-    <Table :resource="data" class="mt-5" name="sht">
+    <Table :resource="data" class="mt-5" :name="tab">
         <template #cell(published_at)="{ item: user }">
             {{ useFormatTime(user.published_at, locale.language.code, true) }}
         </template>

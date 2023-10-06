@@ -16,10 +16,10 @@ import {capitalize} from "@/Composables/capitalize"
 import TableHistories from "@/Components/Tables/TableHistories.vue";
 import BannerShowcase from "@/Components/Showcases/Customer/BannerShowcase.vue";
 
-import {faRectangleWide, faGlobe, faPencil, faSeedling, faPaste} from "../../../../private/pro-light-svg-icons"
+import {faRectangleWide, faGlobe, faPencil, faSeedling, faPaste,faLayerGroup} from "../../../../private/pro-light-svg-icons"
 import TableSnapshots from '@/Components/Tables/TableSnapshots.vue';
 
-library.add(faRectangleWide, faGlobe, faPencil,faSeedling, faPaste)
+library.add(faRectangleWide, faGlobe, faPencil,faSeedling, faPaste,faLayerGroup)
 
 const props = defineProps<{
     title: string,
