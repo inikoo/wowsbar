@@ -18,7 +18,7 @@ export const useBannerHash = (bannerObject: any) => {
         delete component.layout
     })
 
-    delete dataFiltered.publishedHash
+    delete dataFiltered.published_hash
     delete dataFiltered.hash
 
 

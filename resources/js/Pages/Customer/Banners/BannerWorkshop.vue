@@ -9,10 +9,10 @@ import { Head } from "@inertiajs/vue3"
 import { router } from '@inertiajs/vue3'
 import { useForm } from '@inertiajs/vue3'
 import { notify } from "@kyvg/vue3-notification"
-import { ref, reactive, onBeforeMount, watch, onBeforeUnmount } from "vue"
+import { ref, reactive, onBeforeMount, watch, onBeforeUnmount, computed } from "vue"
 import PageHeading from "@/Components/Headings/PageHeading.vue"
 import { capitalize } from "@/Composables/capitalize"
-import { faUser, faUserFriends } from "../../../../private/pro-light-svg-icons"
+import { faUser, faUserFriends } from "@/../private/pro-light-svg-icons"
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { trans } from "laravel-vue-i18n"
 import Button from "@/Components/Elements/Buttons/Button.vue"
@@ -21,9 +21,10 @@ import { useLayoutStore } from "@/Stores/layout"
 import { cloneDeep, set as setLodash } from "lodash"
 import { set, onValue, get } from "firebase/database"
 import { getDbRef } from '@/Composables/firebase'
-import Modal from '@/Components/Utils/Modal.vue'
+// import Modal from '@/Components/Utils/Modal.vue'
 import { useBannerHash } from "@/Composables/useBannerHash"
 import { usePage } from "@inertiajs/vue3"
+import Popover from "@/Components/Utils/Popover.vue"
 
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { faRocketLaunch } from "@/../private/pro-regular-svg-icons"
@@ -86,7 +87,7 @@ const props = defineProps<{
             image_id: number
             image_source: string
         }[]
-        hash: number
+        published_hash: string
     }
     imagesUploadRoute: {
         name: string
@@ -104,7 +105,7 @@ const props = defineProps<{
 
 
 const user = ref(usePage().props.auth.user)
-const isModalOpen = ref(false)
+const isPopoverOpen = ref(false)
 const comment = ref('')
 const loadingState = ref(false)
 const isSetData = ref(false)
@@ -113,20 +114,24 @@ const dbPath = 'customers' + '/' + useLayoutStore().user.customer.ulid + '/banne
 const data = reactive(cloneDeep(props.bannerLayout))
 let timeoutId: any
 
+const compCurrentHash = computed(() => {
+    return useBannerHash(data)
+})
 
+// When click 'Publish'
 const sendDataToServer = async () => {
-    // When click 'Publish'
     const formValues = {
         ...deleteUser(),
         ...(props.banner.state !== 'unpublished' && { comment: comment.value }),
-    };
+        published_hash: compCurrentHash.value  // include Hash to save to server
+    }
 
-    const form = useForm(formValues);
+    const form = useForm(formValues)
     form.patch(
         route(props.publishRoute['name'], props.publishRoute['parameters']), {
         onSuccess: async (res) => {
-            await set(getDbRef(dbPath), { publishedHash: data.hash })
-            isModalOpen.value = false
+            await set(getDbRef(dbPath), { published_hash: compCurrentHash.value })
+            // isPopoverOpen.value = false
             router.visit(route(routeExit['route']['name'], routeExit['route']['parameters']))
             notify({
                 title: "success Update",
@@ -197,7 +202,6 @@ const updateData = async () => {
     try {
         handleKeyDown()
         if (data && isSetData.value === false) {
-            setLodash(data,'hash',useBannerHash(data)) // Generate new hash based on data page
             const snapshot = await get(getDbRef(dbPath))
             if (snapshot.exists()) {
                 const firebaseData = snapshot.val()
@@ -238,7 +242,7 @@ watch(data, updateData, { deep: true })
 
 const validationState=()=>{
     if(props.banner.state !== 'live') sendDataToServer()
-    else isModalOpen.value = true
+    else isPopoverOpen.value = true
 }
 
 const intervalAutoSave = ref(null)
@@ -264,10 +268,37 @@ const stopInterval=()=>{
     <Head :title="capitalize(title)" />
     <PageHeading :data="pageHead">
         <template #other="{ dataPageHead: head }">
-            <div class="flex items-center gap-2">
-                <Button  label="Publish"  :icon="['far', 'rocket-launch']" @click="validationState()"
-                    class="capitalize inline-flex items-center rounded-md text-sm border-none font-medium shadow-sm focus:ring-transparent focus:ring-offset-transparent focus:ring-0">
-                </Button>
+            <div class="flex items-center gap-2 relative">
+                <Popover >
+                    <template #button>
+                        <!-- 'fd186208ae9dab06d40e49141f34bef9' is Hash from empty data -->
+                        <Button label="Publish" :style="compCurrentHash == 'fd186208ae9dab06d40e49141f34bef9' ? 'disabled' : compCurrentHash == data.published_hash ? 'disabled' : 'primary'" :key="compCurrentHash" :icon="['far', 'rocket-launch']" @click="validationState()"
+                            class="">
+                        </Button>
+                    </template>
+
+                    <template v-if="banner.state == 'unpublished'" #popup>
+                        <div></div>
+                        <!-- Call template to replace the Popover (so the popup isn't appear) -->
+                    </template>
+
+                    <!-- Popover: if already live, add comment to publish it again  -->
+                    <template v-if="banner.state == 'live'" #content>
+                        <div>
+                            <div class="inline-flex items-start leading-none">
+                                <FontAwesomeIcon :icon="'fas fa-asterisk'" class="font-light text-[12px] text-red-400 mr-1" />
+                                <span>{{ trans('Comment') }}</span>
+                            </div>
+                            <div class="py-2.5">
+                                <textarea rows="3" cols="20" v-model="comment"
+                                    class="block rounded-md shadow-sm dark:bg-gray-600 dark:text-gray-400 border-gray-300 dark:border-gray-500 focus:border-gray-500 focus:ring-gray-500 sm:text-sm" />
+                            </div>
+                            <div class="flex justify-end">
+                                <Button size="xs" @click="sendDataToServer" icon="far fa-rocket-launch" label="Publish" :key="comment.length" :style="comment.length ? 'primary' : 'disabled'"/>
+                            </div>
+                        </div>
+                    </template>
+                </Popover>
             </div>
         </template>
     </PageHeading>
@@ -285,21 +316,5 @@ const stopInterval=()=>{
             />
         </div>
     </section>
-
-    <Modal :isOpen="isModalOpen" @onClose="isModalOpen = false">
-            <div>
-                <div class="inline-flex items-start leading-none">
-                    <FontAwesomeIcon :icon="'fas fa-asterisk'" class="font-light text-[12px] text-red-400 mr-1" />
-                    <span>{{ trans('Comment') }}</span>
-                </div>
-                <div class="py-2.5">
-                    <textarea rows="3" v-model="comment"
-                        class="block w-full rounded-md shadow-sm dark:bg-gray-600 dark:text-gray-400 border-gray-300 dark:border-gray-500 focus:border-gray-500 focus:ring-gray-500 sm:text-sm" />
-                </div>
-                <div class="flex justify-end">
-                    <Button size="xs" @click="sendDataToServer" icon="far fa-rocket-launch" label="Publish" />
-                </div>
-            </div>
-    </Modal>
 
 </template>
