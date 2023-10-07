@@ -105,7 +105,7 @@ const props = defineProps<{
 
 
 const user = ref(usePage().props.auth.user)
-const isPopoverOpen = ref(false)
+const isLoading = ref(false)
 const comment = ref('')
 const loadingState = ref(false)
 const isSetData = ref(false)
@@ -120,18 +120,19 @@ const compCurrentHash = computed(() => {
 
 // When click 'Publish'
 const sendDataToServer = async () => {
+    isLoading.value = true
     const formValues = {
         ...deleteUser(),
         ...(props.banner.state !== 'unpublished' && { comment: comment.value }),
         published_hash: compCurrentHash.value  // include Hash to save to server
     }
-
     const form = useForm(formValues)
+
     form.patch(
         route(props.publishRoute['name'], props.publishRoute['parameters']), {
         onSuccess: async (res) => {
             await set(getDbRef(dbPath), { published_hash: compCurrentHash.value })
-            // isPopoverOpen.value = false
+            isLoading.value = false
             router.visit(route(routeExit['route']['name'], routeExit['route']['parameters']))
             notify({
                 title: "success Update",
@@ -240,10 +241,10 @@ const autoSave = () => {
 watch(data, updateData, { deep: true })
 
 
-const validationState=()=>{
-    if(props.banner.state !== 'live') sendDataToServer()
-    else isPopoverOpen.value = true
-}
+// const validationState=()=>{
+//     if(props.banner.state !== 'live') sendDataToServer()
+//     else isPopoverOpen.value = true
+// }
 
 const intervalAutoSave = ref(null)
 
@@ -269,17 +270,31 @@ const stopInterval=()=>{
     <PageHeading :data="pageHead">
         <template #other="{ dataPageHead: head }">
             <div class="flex items-center gap-2 relative">
-                <Popover >
-                    <template #button>
-                        <!-- 'fd186208ae9dab06d40e49141f34bef9' is Hash from empty data -->
-                        <Button label="Publish" :style="compCurrentHash == 'fd186208ae9dab06d40e49141f34bef9' ? 'disabled' : compCurrentHash == data.published_hash ? 'disabled' : 'primary'" :key="compCurrentHash" :icon="['far', 'rocket-launch']" @click="validationState()"
-                            class="">
-                        </Button>
-                    </template>
 
-                    <template v-if="banner.state == 'unpublished'" #popup>
-                        <div></div>
-                        <!-- Call template to replace the Popover (so the popup isn't appear) -->
+                <!-- 'fd186208ae9dab06d40e49141f34bef9' is Hash from empty data -->
+                <Button v-if="banner.state == 'unpublished'"
+                    label="Publish"
+                    :style="compCurrentHash == 'fd186208ae9dab06d40e49141f34bef9' ? 'disabled' : compCurrentHash == data.published_hash ? 'disabled' : 'primary'"
+                    :key="compCurrentHash"
+                    icon="far fa-rocket-launch"
+                    @click="sendDataToServer()"
+                />
+
+                <!-- If banner already Live, then appear Popover 'comment' before publish -->
+                <Popover v-else>
+                    <template #button="{ isOpen }">
+                        <Button v-if="!isOpen" label="Publish"
+                            :style="compCurrentHash == 'fd186208ae9dab06d40e49141f34bef9'
+                                ? 'disabled'
+                                : compCurrentHash == data.published_hash
+                                    ? 'disabled'
+                                    : isOpen
+                                        ? 'cancel'
+                                        : 'primary'"
+                            :key="compCurrentHash"
+                            icon="far fa-rocket-launch"
+                        />
+                        <Button v-else :style="`cancel`" icon="fal fa-times" label="Cancel" />
                     </template>
 
                     <!-- Popover: if already live, add comment to publish it again  -->
@@ -294,7 +309,12 @@ const stopInterval=()=>{
                                     class="block rounded-md shadow-sm dark:bg-gray-600 dark:text-gray-400 border-gray-300 dark:border-gray-500 focus:border-gray-500 focus:ring-gray-500 sm:text-sm" />
                             </div>
                             <div class="flex justify-end">
-                                <Button size="xs" @click="sendDataToServer" icon="far fa-rocket-launch" label="Publish" :key="comment.length" :style="comment.length ? 'primary' : 'disabled'"/>
+                                <Button size="xs" @click="sendDataToServer" icon="far fa-rocket-launch" label="Publish" :key="comment.length" :style="comment.length ? 'primary' : 'disabled'">
+                                    <template #icon>
+                                        <FontAwesomeIcon v-if="isLoading" icon='fad fa-spinner-third' class='animate-spin' aria-hidden='true' />
+                                        <FontAwesomeIcon v-else icon='far fa-rocket-launch' class='' aria-hidden='true' />
+                                    </template>
+                                </Button>
                             </div>
                         </div>
                     </template>
