@@ -4,22 +4,15 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { faArrowAltToTop, faArrowAltToBottom, faBars, faBrowser, faCube, faPalette, faCookieBite, faLayerGroup } from "@/../private/pro-light-svg-icons"
 
 import PageHeading from '@/Components/Headings/PageHeading.vue'
-import { computed, ref, watch, reactive } from "vue"
+import { computed, ref } from "vue"
 import { useTabChange } from "@/Composables/tab-change"
 import Tabs from "@/Components/Navigation/Tabs.vue"
 import { capitalize } from "@/Composables/capitalize"
 import HeaderGrape from '@/Components/CMS/Workshops/HeaderWorkshop/HeaderGrape.vue'
 import FooterGrape from '@/Components/CMS/Workshops/FooterWorkshop/FooterGrape.vue'
-import LayoutWorkshop from "@/Components/CMS/Workshops/LayoutWorkshop.vue";
-import Button from '@/Components/Elements/Buttons/Button.vue'
-import Modal from '@/Components/Utils/Modal.vue'
 import Publish from '@/Components/Utils/Publish.vue'
-import { notify } from "@kyvg/vue3-notification"
-import { useForm } from '@inertiajs/vue3'
-import {trans} from 'laravel-vue-i18n'
-import {  setDataFirebase } from '@/Composables/firebase'
 import axios from 'axios'
-import { useBannerHash } from "@/Composables/useBannerHash"
+import Edit from '@/Components/Edit.vue';
 
 library.add(
     faArrowAltToTop,
@@ -62,7 +55,7 @@ const component = computed(() => {
     const components = {
         'workshop_header': HeaderGrape,
         'workshop_footer': FooterGrape,
-        'workshop_layout': LayoutWorkshop,
+        'workshop_layout': Edit,
     }
     return components[currentTab.value]
 })

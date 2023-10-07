@@ -51,6 +51,7 @@ use App\Actions\Web\Website\StoreWebsite;
 use App\Actions\Web\Website\UpdateWebsite;
 use App\Actions\Web\Website\UpdateWebsiteFooterContent;
 use App\Actions\Web\Website\UpdateWebsiteHeaderContent;
+use App\Actions\Web\Website\UpdateWebsiteLayout;
 use App\Actions\Web\Website\UpdateWebsiteState;
 use App\Actions\Web\Website\UploadImagesToWebsite;
 
@@ -98,6 +99,8 @@ Route::prefix('shop')->as('shop.')->group(function () {
 Route::prefix('website')->as('website.')->group(function () {
     Route::patch('{website:id}', UpdateWebsite::class)->name('update');
     Route::patch('{website:id}/state', UpdateWebsiteState::class)->name('state.update');
+    Route::patch('{website:id}/layout', UpdateWebsiteLayout::class)->name('layout.update');
+
     Route::post('{website:id}/images/header', [UploadImagesToWebsite::class,'header'])->name('header.images.store');
     Route::post('{website:id}/images/footer', [UploadImagesToWebsite::class,'footer'])->name('footer.images.store');
     Route::post('{website:id}/images/favicon', [UploadImagesToWebsite::class,'favicon'])->name('favicon.images.store');

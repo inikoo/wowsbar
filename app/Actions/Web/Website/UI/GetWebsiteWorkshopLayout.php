@@ -7,6 +7,7 @@
 
 namespace App\Actions\Web\Website\UI;
 
+use App\Actions\Assets\Language\UI\GetLanguagesOptions;
 use App\Models\Web\Website;
 use Illuminate\Support\Arr;
 use Lorisleiva\Actions\Concerns\AsObject;
@@ -18,8 +19,35 @@ class GetWebsiteWorkshopLayout
     public function handle(Website $website): array
     {
         return [
-            Arr::get($website->structure, 'layout')
+            "formData" => [
+                "blueprint" => [
+                    [
+                        "title"   => __("profile"),
+                        "icon"    => "fa-light fa-user-circle",
+                        "notes"   => __("This information will be synchronised in all your workspaces."),
+                        "current" => true,
+                        "fields"  => [
+                            "about"  => [
+                                "type"  => "textarea",
+                                "label" => __("about"),
+                                "value" => ''
+                            ],
+                            "avatar" => [
+                                "type"  => "avatar",
+                                "label" => __("photo"),
+                                "value" => ''
+                            ],
 
+                        ],
+                    ],
+
+                ],
+                "args"      => [
+                    "updateRoute" => [
+                        "name"       => "org.models.website.layout.update"
+                    ],
+                ],
+            ],
         ];
     }
 }
