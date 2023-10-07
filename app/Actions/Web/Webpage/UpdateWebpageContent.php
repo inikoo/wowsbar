@@ -59,7 +59,7 @@ class UpdateWebpageContent
         ];
     }
 
-    public function asController(Webpage $webpage, ActionRequest $request): string
+    public function asController(Webpage $webpage, ActionRequest $request): array
     {
         $request->validate();
 
