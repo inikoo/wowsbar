@@ -8,6 +8,7 @@ import GrapesForm from "grapesjs-plugin-forms";
 import TailwindComponents from "grapesjs-tailwind";
 import { HeaderPlugins, FooterPlugins } from "@/Components/CMS/Workshops/GrapeEditor/CustomBlocks/CustomBlock";
 import Button from '@/Components/Elements/Buttons/Button.vue'
+import { trans } from "laravel-vue-i18n"
 
 
 const props = defineProps<{
