@@ -4,6 +4,7 @@ namespace App\Http\Resources\Portfolio;
 
 use App\Enums\Portfolio\Snapshot\SnapshotStateEnum;
 use App\Models\Auth\CustomerUser;
+use App\Models\Auth\OrganisationUser;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -27,13 +28,26 @@ class SnapshotResource extends JsonResource
         }
 
         $publisher        = '';
-        $publisher_avatar = null;
+        $publisherAvatar = null;
         if ($snapshot->publisher_id) {
-            /** @var CustomerUser $customerUser */
-            $customerUser = $snapshot->publisher;
 
-            $publisher        = $customerUser->user->contact_name;
-            $publisher_avatar = $customerUser->user->avatarImageSources(48, 48);
+            switch ($snapshot->publisher_type){
+                case 'CustomerUser':
+                    /** @var CustomerUser $customerUser */
+                    $customerUser = $snapshot->publisher;
+
+                    $publisher        = $customerUser->user->contact_name;
+                    $publisherAvatar = $customerUser->user->avatarImageSources(48, 48);
+                    break;
+                case 'OrganisationUser':
+                    /** @var OrganisationUser $organisationUser */
+                    $organisationUser = $snapshot->publisher;
+
+                    $publisher        = $organisationUser->contact_name;
+                    $publisherAvatar = $organisationUser->avatarImageSources(48, 48);
+            }
+
+
         }
 
 
@@ -43,7 +57,7 @@ class SnapshotResource extends JsonResource
             'published_until'  => $snapshot->published_until,
             'layout'           => $snapshot->layout,
             'publisher'        => $publisher,
-            'publisher_avatar' => $publisher_avatar,
+            'publisher_avatar' => $publisherAvatar,
             'state'            => match ($snapshot->state) {
                 SnapshotStateEnum::LIVE => [
                     'tooltip' => __('live'),
