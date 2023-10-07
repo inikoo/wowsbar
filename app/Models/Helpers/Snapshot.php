@@ -46,6 +46,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read Model|\Eloquent $parent
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Slide> $slides
  * @property-read int|null $slides_count
+ * @property-read Model|\Eloquent $user
  * @method static Builder|Snapshot newModelQuery()
  * @method static Builder|Snapshot newQuery()
  * @method static Builder|Snapshot query()
@@ -116,6 +117,10 @@ class Snapshot extends Model
         return $this->morphTo();
     }
 
+    public function user(): MorphTo
+    {
+        return $this->morphTo();
+    }
 
     public function slides(): HasMany
     {

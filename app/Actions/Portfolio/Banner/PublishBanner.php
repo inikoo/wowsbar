@@ -42,8 +42,8 @@ class PublishBanner
             ]);
         }
 
-        $layout                       = Arr::pull($modelData, 'layout');
-        list($layout, $slides)        = ParseBannerLayout::run($layout);
+        $layout                = Arr::pull($modelData, 'layout');
+        list($layout, $slides) = ParseBannerLayout::run($layout);
 
         /** @var Snapshot $snapshot */
         $snapshot = StoreBannerSnapshot::run(
@@ -53,7 +53,10 @@ class PublishBanner
                 'published_at' => now(),
                 'layout'       => $layout,
                 'first_commit' => $firstCommit,
-                'comment'      => Arr::get($modelData, 'comment')
+                'comment'      => Arr::get($modelData, 'comment'),
+                'user_id'      => Arr::get($modelData, 'user_id'),
+                'user_type'    => Arr::get($modelData, 'user_type'),
+
 
             ],
             $slides
@@ -98,8 +101,10 @@ class PublishBanner
     public function rules(): array
     {
         return [
-            'layout'  => ['required', 'array:delay,common,components'],
-            'comment' => ['sometimes', 'required', 'string', 'max:1024']
+            'layout'    => ['required', 'array:delay,common,components'],
+            'comment'   => ['sometimes', 'required', 'string', 'max:1024'],
+            'user_id'   => ['sometimes'],
+            'user_type' => ['sometimes', 'string'],
         ];
     }
 
@@ -107,7 +112,9 @@ class PublishBanner
     {
         $request->merge(
             [
-                'layout' => $request->only(['delay', 'common', 'components']),
+                'layout'    => $request->only(['delay', 'common', 'components']),
+                'user_id'   => $request->get('customerUser')->id,
+                'user_type' => 'CustomerUser'
             ]
         );
     }

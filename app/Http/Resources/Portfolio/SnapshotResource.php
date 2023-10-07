@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Portfolio;
 
 use App\Enums\Portfolio\Snapshot\SnapshotStateEnum;
+use App\Models\Auth\CustomerUser;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -19,21 +20,31 @@ class SnapshotResource extends JsonResource
         $snapshot = $this;
 
 
-        $comment=$snapshot->comment;
+        $comment = $snapshot->comment;
 
-        if($snapshot->first_commit) {
-            $comment=__('First commit');
+        if ($snapshot->first_commit) {
+            $comment = __('First commit');
+        }
+
+        $publisher        = '';
+        $publisher_avatar = null;
+        if ($snapshot->user_id) {
+            /** @var CustomerUser $customerUser */
+            $customerUser = $snapshot->user;
+
+            $publisher        = $customerUser->user->contact_name;
+            $publisher_avatar = $customerUser->user->avatarImageSources(48, 48);
         }
 
 
-
-
         return [
-            'slug'            => $snapshot->slug,
-            'published_at'    => $snapshot->published_at,
-            'published_until' => $snapshot->published_until,
-            'layout'          => $snapshot->layout,
-            'state'           => match ($snapshot->state) {
+            'slug'             => $snapshot->slug,
+            'published_at'     => $snapshot->published_at,
+            'published_until'  => $snapshot->published_until,
+            'layout'           => $snapshot->layout,
+            'publisher'        => $publisher,
+            'publisher_avatar' => $publisher_avatar,
+            'state'            => match ($snapshot->state) {
                 SnapshotStateEnum::LIVE => [
                     'tooltip' => __('live'),
                     'icon'    => 'fal fa-broadcast-tower',
@@ -49,7 +60,7 @@ class SnapshotResource extends JsonResource
                     'icon'    => 'fal fa-ghost'
                 ]
             },
-            'comment'         => $comment,
+            'comment'          => $comment,
         ];
     }
 }
