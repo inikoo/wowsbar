@@ -76,8 +76,18 @@ class ShowWebsiteWorkshop extends InertiaAction
                     'navigation' => WebsiteWorkshopTabsEnum::navigation(),
                 ],
                 'imagesUploadRoute' => [
-                    'name'       => 'org.models.website.images.store',
-                    'parameters' => $website->id
+
+                    'workshop_header'=> [
+                        'name'       => 'org.models.website.header.images.store',
+                        'parameters' => $website->id
+                    ],
+                    'workshop_footer'=> [
+                        'name'       => 'org.models.website.footer.images.store',
+                        'parameters' => $website->id
+                    ],
+
+
+
                 ],
                 'websiteState'  => $website->state,
                 'publishRoutes' => [

@@ -98,10 +98,9 @@ Route::prefix('shop')->as('shop.')->group(function () {
 Route::prefix('website')->as('website.')->group(function () {
     Route::patch('{website:id}', UpdateWebsite::class)->name('update');
     Route::patch('{website:id}/state', UpdateWebsiteState::class)->name('state.update');
-    Route::post('{website:id}/images', UploadImagesToWebsite::class)->name('images.store');
-    Route::patch('{website:id}/header', UpdateWebsiteHeader::class)->name('header.update');
-    Route::patch('{website:id}/footer', UpdateWebsiteFooter::class)->name('footer.update');
-    Route::patch('{website:id}/layout', UpdateWebsiteLayout::class)->name('layout.update');
+    Route::post('{website:id}/images/header', [UploadImagesToWebsite::class,'header'])->name('header.images.store');
+    Route::post('{website:id}/images/footer', [UploadImagesToWebsite::class,'footer'])->name('footer.images.store');
+    Route::post('{website:id}/images/favicon', [UploadImagesToWebsite::class,'favicon'])->name('favicon.images.store');
 
     Route::post('{website:id}/header/content', UpdateWebsiteHeaderContent::class)->name('header.content.update');
     Route::post('{website:id}/header/publish', [PublishWebsiteMarginal::class,'header'])->name('header.content.publish');

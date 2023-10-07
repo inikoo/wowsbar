@@ -21,7 +21,7 @@ class UploadImagesToWebsite
     use WithAttributes;
 
 
-    public function handle(Website $website, UploadedFile $imageFile): Media
+    public function handle(Website $website, string $scope, UploadedFile $imageFile): Media
     {
         $media = AttachImageToWebsite::run(
             website: $website,
@@ -32,12 +32,11 @@ class UploadImagesToWebsite
         );
 
 
-        $scope        = 'tmp';
         $existing_ids = $website->images()->where('scope', $scope)->whereIn('media_id', [$media->id])->pluck('media_id');
         $website->images()->attach(
             collect([$media->id])->diff($existing_ids),
             [
-                'scope' => 'tmp'
+                'scope' => $scope
             ]
         );
 
@@ -59,11 +58,22 @@ class UploadImagesToWebsite
     }
 
 
-    public function asController(Website $website, ActionRequest $request): Media
+    public function header(Website $website, ActionRequest $request): Media
     {
         $request->validate();
+        return $this->handle($website, 'header', $request->validated('images'));
+    }
 
-        return $this->handle($website, $request->validated('images'));
+    public function footer(Website $website, ActionRequest $request): Media
+    {
+        $request->validate();
+        return $this->handle($website, 'footer', $request->validated('images'));
+    }
+
+    public function favicon(Website $website, ActionRequest $request): Media
+    {
+        $request->validate();
+        return $this->handle($website, 'favicon', $request->validated('images'));
     }
 
     public function jsonResponse(Media $media): array
