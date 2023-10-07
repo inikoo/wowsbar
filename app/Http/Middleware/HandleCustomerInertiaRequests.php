@@ -35,6 +35,7 @@ class HandleCustomerInertiaRequests extends Middleware
                 ]);
             };
 
+            $firstLoadOnlyProps['structure']=$request->get('website')->compiled_layout;
 
             if (Session::get('reloadLayout') == 'remove') {
                 Session::forget('reloadLayout');

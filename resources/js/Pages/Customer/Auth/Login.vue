@@ -43,7 +43,7 @@ const submit = () => {
 const condition: Ref<string | boolean> = ref(false)
 </script>
 
-<template >
+<template layout="Public">
     <Head title="Login"/>
 
     <div class="mt-16 sm:mx-auto sm:w-full sm:max-w-md">
@@ -89,7 +89,6 @@ const condition: Ref<string | boolean> = ref(false)
                     </p>
                 </div>
             </form>
-
             <!-- Forgot Password: if click the 'forgot password' -->
             <div v-show="condition === 'forgotPassword'" class="space-y-4">
                 <div class="flex items-center gap-x-1 text-gray-500 cursor-pointer hover:text-gray-700" @click="condition = false">
