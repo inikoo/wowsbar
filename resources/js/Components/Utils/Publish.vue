@@ -1,8 +1,10 @@
 <script setup lang="ts">
+// This file is called in BannerWorkshop, WebsiteWorkshop
 import { trans } from 'laravel-vue-i18n'
 import Popover from "@/Components/Utils/Popover.vue"
 import Button from '@/Components/Elements/Buttons/Button.vue'
-import { watch } from 'vue'
+import { computed, ref } from 'vue'
+import md5 from 'md5'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faSpinnerThird } from '@/../private/pro-duotone-svg-icons'
@@ -13,16 +15,19 @@ library.add(faSpinnerThird, faAsterisk, faRocketLaunch)
 
 const props = defineProps<{
     isHashSame: boolean  // is current Hash is same with published Hash
-    currentHashData: string
-    emptyDataHash: string  // md5 hash from empty data
-    isLoading: boolean
+    isLoading?: boolean
     saveFunction: Function
     modelValue: string
     firstPublish: boolean  // Boolean state for indicate first publish or not
+    isDataFirstTimeCreated: boolean  // if data first time created and the data is not changed yet
 }>()
 
+const compRandomKey = computed(() => {
+    return md5(JSON.stringify(props))
+})
+
 const emits = defineEmits<{
-    (e: 'update:modelValue', value: string): void
+    (e: 'update:modelValue', value: any): void
 }>()
 
 </script>
@@ -31,21 +36,24 @@ const emits = defineEmits<{
     <div class="flex items-center gap-2 relative" tabindex="-1">
 
         <!-- If first time Publishing, the Popover is not appear -->
-        <Button v-if="firstPublish" label="Publish"
-            :style="currentHashData == emptyDataHash ? 'disabled' : isHashSame ? 'disabled' : 'primary'"
-            :key="currentHashData" icon="far fa-rocket-launch" @click="saveFunction()" />
+        <Button v-if="firstPublish" :label="isDataFirstTimeCreated ? 'No change made' : 'Publish'"
+            :style="isDataFirstTimeCreated ? 'disabled' : isHashSame ? 'disabled' : 'primary'"
+            :key="compRandomKey" :icon="isDataFirstTimeCreated ? '' : 'far fa-rocket-launch'" @click="saveFunction()" />
 
         <!-- Popover (comment section) is appear if it 2nd publishing or more -->
         <Popover v-else>
             <template #button="{ isOpen }">
                 <!-- Style: Compare the hash from current data with hash from empty data -->
-                <Button v-if="!isOpen" label="Publish" :style="currentHashData == 'emptyDataHash'
-                    ? 'disabled'
-                    : isHashSame
-                        ? 'disabled'
-                        : isOpen
-                            ? 'cancel'
-                            : 'primary'" :key="currentHashData" icon="far fa-rocket-launch" />
+                <Button v-if="!isOpen"
+                    :label="isHashSame ? 'No change made' : 'Publish'"
+                    :style="isHashSame
+                            ? 'disabled'
+                            : isOpen
+                                ? 'cancel'
+                                : 'primary'"
+                    :key="compRandomKey"
+                    :icon="isHashSame ? '' : 'far fa-rocket-launch'"
+                />
                 <Button v-else :style="`cancel`" icon="fal fa-times" label="Cancel" />
             </template>
 

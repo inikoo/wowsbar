@@ -13,10 +13,13 @@ import FooterGrape from '@/Components/CMS/Workshops/FooterWorkshop/FooterGrape.v
 import LayoutWorkshop from "@/Components/CMS/Workshops/LayoutWorkshop.vue";
 import Button from '@/Components/Elements/Buttons/Button.vue'
 import Modal from '@/Components/Utils/Modal.vue'
+import Publish from '@/Components/Utils/Publish.vue'
 import { notify } from "@kyvg/vue3-notification"
 import { useForm } from '@inertiajs/vue3'
 import {trans} from 'laravel-vue-i18n'
 import {  setDataFirebase } from '@/Composables/firebase'
+import axios from 'axios'
+import { useBannerHash } from "@/Composables/useBannerHash"
 
 library.add(
     faArrowAltToTop,
@@ -68,6 +71,7 @@ const component = computed(() => {
 const RouteActive = ref(props.publishRoutes[currentTab.value])
 const isModalOpen = ref(false)
 const comment = ref('')
+const isLoading = ref(false)
 
 // const setForm = () => {
 //     let form = null
@@ -78,7 +82,7 @@ const comment = ref('')
 // }
 
 const sendDataToServer = async () => {
-    console.log(RouteActive.value)
+    isLoading.value = true
     try {
         const response = await axios.post(
             route(
@@ -95,6 +99,7 @@ const sendDataToServer = async () => {
         comment.value = ''
         console.log(error)
     }
+    isLoading.value = false
 }
 
 
@@ -110,14 +115,24 @@ const chekIsLive  = ()=>{
     <Head :title="capitalize(title)" />
     <PageHeading :data="pageHead">
         <template #other="{ dataPageHead: head }">
-            <div class="flex items-center gap-2">
+            <!-- <div class="flex items-center gap-2">
                 <span v-if="websiteState !== 'in-process'">
                     <Button @click="chekIsLive" :label="'Publish'" :style="'save'" icon="far fa-rocket-launch"></Button>
                 </span>
                 <span v-else>
                     <Button :label="'Set to Ready'"></Button>
                 </span>
-            </div>
+            </div> -->
+            
+            <Publish 
+                v-model="comment"
+                :isHashSame="false"
+                :currentHashData="compCurrentHash"
+                emptyDataHash="fd186208ae9dab06d40e49141f34bef9"
+                :isLoading="isLoading"
+                :saveFunction="sendDataToServer"
+                :firstPublish="websiteState != 'live'"
+            />
         </template>
     </PageHeading>
 
@@ -125,7 +140,7 @@ const chekIsLive  = ()=>{
 
     <component :is="component" :data="structure" :imagesUploadRoute="imagesUploadRoute" :updateRoutes="updateRoutes"></component>
 
-    <Modal :isOpen="isModalOpen" @onClose="isModalOpen = false">
+    <!-- <Modal :isOpen="isModalOpen" @onClose="isModalOpen = false">
             <div>
                 <div class="inline-flex items-start leading-none">
                     <FontAwesomeIcon :icon="'fas fa-asterisk'" class="font-light text-[12px] text-red-400 mr-1" />
@@ -139,6 +154,6 @@ const chekIsLive  = ()=>{
                     <Button size="xs" @click="sendDataToServer" icon="far fa-rocket-launch" label="Publish" />
                 </div>
             </div>
-    </Modal>
+    </Modal> -->
 </template>
 

@@ -103,7 +103,7 @@ const props = defineProps<{
 
 const user = ref(usePage().props.auth.user)
 const isLoading = ref(false)
-const comment = ref('abcc')
+const comment = ref('')
 const loadingState = ref(false)
 const isSetData = ref(false)
 
@@ -271,6 +271,11 @@ const compIsHashSame = computed(() => {
     return compCurrentHash.value == data.published_hash
 })
 
+const compIsDataFirstTimeCreated = computed(() => {
+    // Check no changes made after created the data (compared to hash from initial data)
+    return compCurrentHash.value == "fd186208ae9dab06d40e49141f34bef9"
+})
+
 </script>
 
 
@@ -281,8 +286,7 @@ const compIsHashSame = computed(() => {
             <Publish 
                 v-model="comment"
                 :isHashSame="compIsHashSame"
-                :currentHashData="compCurrentHash"
-                emptyDataHash="fd186208ae9dab06d40e49141f34bef9"
+                :isDataFirstTimeCreated="compIsDataFirstTimeCreated"
                 :isLoading="isLoading"
                 :saveFunction="sendDataToServer"
                 :firstPublish="banner.state == 'unpublished'"
