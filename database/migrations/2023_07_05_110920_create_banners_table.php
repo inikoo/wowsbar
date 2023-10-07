@@ -29,7 +29,6 @@ return new class () extends Migration {
             $table->dateTimeTz('retired_at')->nullable();
             $table->jsonb('compiled_layout');
             $table->jsonb('data');
-            $table->string('checksum')->index()->nullable();
             $table->unsignedInteger('image_id')->nullable();
             $table->foreign('image_id')->references('id')->on('media');
             $table->timestampsTz();

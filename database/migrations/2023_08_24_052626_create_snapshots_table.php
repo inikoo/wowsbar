@@ -26,7 +26,7 @@ return new class () extends Migration {
             $table->string('state')->default(SnapshotStateEnum::UNPUBLISHED->value);
             $table->dateTimeTz('published_at')->nullable();
             $table->dateTimeTz('published_until')->nullable();
-            $table->string('checksum');
+            $table->string('checksum')->index();
             $table->jsonb('layout');
             $table->string('comment')->nullable();
             $table->boolean('first_commit')->default(false);
