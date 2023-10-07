@@ -131,7 +131,13 @@ const sendDataToServer = async () => {
     form.patch(
         route(props.publishRoute['name'], props.publishRoute['parameters']), {
         onSuccess: async (res) => {
-            await set(getDbRef(dbPath), { published_hash: compCurrentHash.value })
+            try {
+                await set(getDbRef(dbPath), { published_hash: compCurrentHash.value })
+            }
+            catch (error) {
+                console.log("============")
+                console.log(error)
+            }
             isLoading.value = false
             router.visit(route(routeExit['route']['name'], routeExit['route']['parameters']))
             notify({
