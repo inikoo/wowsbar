@@ -1,11 +1,5 @@
 <script setup lang="ts">
-import { ref, watch } from "vue";
-import { StarIcon } from "@heroicons/vue/20/solid";
-import { RadioGroup, RadioGroupLabel, RadioGroupOption } from "@headlessui/vue";
-import {
-    CurrencyDollarIcon,
-    GlobeAmericasIcon,
-} from "@heroicons/vue/24/outline";
+import { ref } from "vue";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
     faRocketLaunch,
@@ -18,9 +12,8 @@ import { useFormatTime } from "@/Composables/useFormatTime";
 
 library.add(faRocketLaunch, faClock, faVideo);
 
-const data = {
-    description:
-        "The Basic tee is an honest new take on a classic. The tee uses super soft, pre-shrunk cotton for true comfort and a dependable fit",
+const Book = {
+    description: "The Basic tee is an honest new take on a classic. The tee uses super soft, pre-shrunk cotton for true comfort and a dependable fit",
     meet: {
         customerService: "Arya",
         duration: "30 mnt",
@@ -105,7 +98,7 @@ const getDate = () => {
     return ""; // Handle when no date is selected
 };
 </script>
-<template>
+<template layout="Public">
     <div class="bg-white">
         <div class="pb-16 pt-6 sm:pb-24">
             <div
@@ -126,7 +119,7 @@ const getDate = () => {
                         </div>
                         <hr />
                         <div class="text-lg text-slate-400">
-                            {{ data.meet.customerService }}
+                            {{ Book.meet.customerService }}
                         </div>
                         <div class="text-4xl font-medium">
                             {{ data.title }}
@@ -163,34 +156,6 @@ const getDate = () => {
                         </div>
                     </div>
 
-                    <div class="mt-8 lg:col-span-7">
-                        <span class="text-lg font-medium text-gray-900"
-                            >Select a Date & Time</span
-                        >
-                        <div class="p-2.5">
-                            <VCalendar
-                                expanded
-                                :attributes="attrs"
-                                @dayclick="handleDateClick"
-                            />
-                        </div>
-                        <div v-if="!isNull(selectedDate)">
-                            <div class="px-2.5">{{ getDate() }}</div>
-                            <div class="px-2.5 my-4">
-                                <div class="flex flex-wrap justify-start gap-3">
-                                    <!-- Create buttons for hours using a v-for loop -->
-                                    <button
-                                        v-for="hour in hours"
-                                        :key="hour"
-                                        @click="selectHour(hour)"
-                                        class="rounded-md border border-transparent bg-indigo-600 px-2 py-1 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                                    >
-                                        {{ hour }}
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

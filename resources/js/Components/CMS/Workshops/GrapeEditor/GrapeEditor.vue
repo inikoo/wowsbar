@@ -15,8 +15,10 @@ const props = defineProps<{
     customBlocks?: Array;
     updateRoute?: Object;
     loadRoute?: Object;
+    imagesUploadRoute?:Object
 }>();
 
+console.log(props.imagesUploadRoute)
 
 const editorInstance = ref(null);
 const options = { collections: ["ri", "mdi", "uim", "streamline-emojis"]};
@@ -78,7 +80,29 @@ onMounted(() => {
         },
         storageManager: {
             type: 'remote',
-        }
+        },
+        assetManager: {
+            uploadFile: async function (e) {
+                var files = e.dataTransfer ? e.dataTransfer.files : e.target.files;
+                console.log('test',files)
+             try {
+             const response = await axios.post(
+                route(
+                    props.imagesUploadRoute.name,
+                    props.imagesUploadRoute.parameters
+                ),
+                { images: files },
+                {
+                    headers: { "Content-Type": "multipart/form-data" },
+                }
+            );
+                console.log(response)
+                } catch (error) {
+                    console.log(error)
+                }
+                },
+            }
+
     });
     editorInstance.value.Storage.add('remote', {
         async load() {

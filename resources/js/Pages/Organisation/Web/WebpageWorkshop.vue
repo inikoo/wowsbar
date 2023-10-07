@@ -43,6 +43,7 @@ const sendDataToServer = async () => {
         if (response) {
             console.log('saving......')
             comment.value = ''
+            isModalOpen.value = false
         }
     } catch (error) {
         comment.value = ''

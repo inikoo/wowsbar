@@ -24,10 +24,7 @@ class ShowHome
         return Inertia::render(
             'Home',
             [
-                'content' => [
-                    'data'      => $webpage->content,
-                    'pagesHtml' => $webpage->compiled_content
-                ]
+                'content' => $webpage->compiled_layout
             ]
         );
     }
