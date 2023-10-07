@@ -36,7 +36,7 @@ class UpdateWebsiteHeaderContent
 
         $website->update(
             [
-                'is_dirty' => $isDirty
+                'header_is_dirty' => $isDirty
             ]
         );
 

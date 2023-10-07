@@ -36,7 +36,7 @@ class UpdateWebsiteFooterContent
 
         $website->update(
             [
-                'is_dirty' => $isDirty
+                'footer_is_dirty' => $isDirty
             ]
         );
 
