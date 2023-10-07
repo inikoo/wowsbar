@@ -45,7 +45,6 @@ use Spatie\Sluggable\SlugOptions;
  * @property string|null $retired_at
  * @property array $compiled_layout
  * @property array $data
- * @property string|null $checksum
  * @property int|null $image_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -72,7 +71,6 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Banner newQuery()
  * @method static Builder|Banner onlyTrashed()
  * @method static Builder|Banner query()
- * @method static Builder|Banner whereChecksum($value)
  * @method static Builder|Banner whereCompiledLayout($value)
  * @method static Builder|Banner whereCreatedAt($value)
  * @method static Builder|Banner whereCustomerId($value)
