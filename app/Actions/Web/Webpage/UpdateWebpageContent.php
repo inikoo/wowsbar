@@ -18,7 +18,7 @@ class UpdateWebpageContent
     use WithAttributes;
 
 
-    public function handle(Webpage $webpage, array $content): void
+    public function handle(Webpage $webpage, array $content): Webpage
     {
         $snapshot = $webpage->unpublishedSnapshot;
 
@@ -30,6 +30,19 @@ class UpdateWebpageContent
                 ]
             ]
         );
+
+        $isDirty = true;
+        if ($webpage->published_checksum == md5(json_encode($snapshot->layout))) {
+            $isDirty = false;
+        }
+
+        $webpage->update(
+            [
+                'is_dirty' => $isDirty
+            ]
+        );
+
+        return $webpage;
     }
 
     public function authorize(ActionRequest $request): bool
@@ -50,9 +63,11 @@ class UpdateWebpageContent
     {
         $request->validate();
 
-        $this->handle($webpage, $request->validated());
+        $webpage = $this->handle($webpage, $request->validated());
 
-        return '👍';
+        return [
+            'isDirty' => $webpage->is_dirty
+        ];
     }
 
 

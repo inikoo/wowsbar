@@ -39,6 +39,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property string|null $ready_at
  * @property string|null $live_at
  * @property string|null $closed_at
+ * @property string|null $published_checksum
+ * @property bool $is_dirty
  * @property array $data
  * @property array $settings
  * @property \Illuminate\Support\Carbon|null $created_at
@@ -59,11 +61,13 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Webpage whereData($value)
  * @method static Builder|Webpage whereDeletedAt($value)
  * @method static Builder|Webpage whereId($value)
+ * @method static Builder|Webpage whereIsDirty($value)
  * @method static Builder|Webpage whereIsFixed($value)
  * @method static Builder|Webpage whereLevel($value)
  * @method static Builder|Webpage whereLiveAt($value)
  * @method static Builder|Webpage whereLiveSnapshotId($value)
  * @method static Builder|Webpage whereParentId($value)
+ * @method static Builder|Webpage wherePublishedChecksum($value)
  * @method static Builder|Webpage wherePurpose($value)
  * @method static Builder|Webpage whereReadyAt($value)
  * @method static Builder|Webpage whereSettings($value)

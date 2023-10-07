@@ -28,23 +28,23 @@ class SnapshotResource extends JsonResource
         }
 
         $publisher        = '';
-        $publisherAvatar = null;
+        $publisherAvatar  = null;
         if ($snapshot->publisher_id) {
 
-            switch ($snapshot->publisher_type){
+            switch ($snapshot->publisher_type) {
                 case 'CustomerUser':
                     /** @var CustomerUser $customerUser */
                     $customerUser = $snapshot->publisher;
 
                     $publisher        = $customerUser->user->contact_name;
-                    $publisherAvatar = $customerUser->user->avatarImageSources(48, 48);
+                    $publisherAvatar  = $customerUser->user->avatarImageSources(48, 48);
                     break;
                 case 'OrganisationUser':
                     /** @var OrganisationUser $organisationUser */
                     $organisationUser = $snapshot->publisher;
 
                     $publisher        = $organisationUser->contact_name;
-                    $publisherAvatar = $organisationUser->avatarImageSources(48, 48);
+                    $publisherAvatar  = $organisationUser->avatarImageSources(48, 48);
             }
 
 

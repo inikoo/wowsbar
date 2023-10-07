@@ -12,7 +12,6 @@ use App\Actions\Helpers\Snapshot\UpdateSnapshot;
 use App\Actions\Traits\WithActionUpdate;
 use App\Enums\Organisation\Web\Webpage\WebpageStateEnum;
 use App\Enums\Portfolio\Snapshot\SnapshotStateEnum;
-use App\Http\Resources\Web\WebpageResource;
 use App\Models\Helpers\Snapshot;
 use App\Models\Web\Webpage;
 use Illuminate\Support\Arr;
@@ -60,9 +59,10 @@ class PublishWebpage
 
 
         $updateData = [
-            'live_snapshot_id' => $snapshot->id,
-            'compiled_layout'  => $compiledLayout,
-            'state'            => WebpageStateEnum::LIVE,
+            'live_snapshot_id'   => $snapshot->id,
+            'compiled_layout'    => $compiledLayout,
+            'published_checksum' => md5(json_encode($snapshot->layout)),
+            'state'              => WebpageStateEnum::LIVE,
         ];
 
         if ($webpage->state == WebpageStateEnum::IN_PROCESS or $webpage->state == WebpageStateEnum::READY) {
@@ -118,7 +118,6 @@ class PublishWebpage
 
         return $this->handle($webpage, $validatedData);
     }
-
 
 
 }

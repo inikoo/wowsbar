@@ -19,7 +19,7 @@ class ShowWebpageContent
 
     public function handle(Webpage $webpage): array
     {
-      return $webpage->unpublishedSnapshot->layout;
+        return $webpage->unpublishedSnapshot->layout;
     }
 
 
