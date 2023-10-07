@@ -38,26 +38,25 @@ class PublishWebpage
             ]);
         }
 
-        $layout                       = Arr::get($modelData, 'layout');
+        $layout = $webpage->unpublishedSnapshot->layout;
 
 
         /** @var Snapshot $snapshot */
         $snapshot = StoreWebpageSnapshot::run(
             $webpage,
             [
-                'state'             => SnapshotStateEnum::LIVE,
-                'published_at'      => now(),
-                'layout'            => $layout,
-                'first_commit'      => $firstCommit,
-                'comment'           => Arr::get($modelData, 'comment'),
-                'publisher_id'      => Arr::get($modelData, 'publisher_id'),
-                'publisher_type'    => Arr::get($modelData, 'publisher_type'),
+                'state'          => SnapshotStateEnum::LIVE,
+                'published_at'   => now(),
+                'layout'         => $layout,
+                'first_commit'   => $firstCommit,
+                'comment'        => Arr::get($modelData, 'comment'),
+                'publisher_id'   => Arr::get($modelData, 'publisher_id'),
+                'publisher_type' => Arr::get($modelData, 'publisher_type'),
             ]
         );
 
 
         $compiledLayout = $snapshot->compiledLayout();
-
 
 
         $updateData = [
@@ -71,7 +70,6 @@ class PublishWebpage
         }
 
         $webpage->update($updateData);
-
 
         return $webpage;
     }
@@ -88,7 +86,6 @@ class PublishWebpage
     public function rules(): array
     {
         return [
-            'layout'         => ['required', 'array:delay,common,components'],
             'comment'        => ['sometimes', 'required', 'string', 'max:1024'],
             'publisher_id'   => ['sometimes'],
             'publisher_type' => ['sometimes', 'string'],
@@ -99,18 +96,18 @@ class PublishWebpage
     {
         $request->merge(
             [
-                'layout'         => $request->only(['delay', 'common', 'components']),
                 'publisher_id'   => $request->user()->id,
                 'publisher_type' => 'OrganisationUser'
             ]
         );
     }
 
-    public function asController(Webpage $webpage, ActionRequest $request): Webpage
+    public function asController(Webpage $webpage, ActionRequest $request): string
     {
         $request->validate();
+        $this->handle($webpage, $request->validated());
 
-        return $this->handle($webpage, $request->validated());
+        return "🚀";
     }
 
     public function action(Webpage $webpage, $modelData): Webpage
@@ -122,9 +119,6 @@ class PublishWebpage
         return $this->handle($webpage, $validatedData);
     }
 
-    public function jsonResponse(Webpage $webpage): WebpageResource
-    {
-        return new WebpageResource($webpage);
-    }
+
 
 }
