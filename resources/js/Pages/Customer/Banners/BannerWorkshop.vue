@@ -5,14 +5,11 @@
   -->
 
 <script setup lang="ts">
-import { Head } from "@inertiajs/vue3"
-import { router } from '@inertiajs/vue3'
-import { useForm } from '@inertiajs/vue3'
+import { Head, router, useForm, usePage } from "@inertiajs/vue3"
 import { notify } from "@kyvg/vue3-notification"
-import { ref, reactive, onBeforeMount, watch, onBeforeUnmount, computed } from "vue"
+import { ref, reactive, onBeforeMount, watch, onBeforeUnmount, computed, nextTick } from "vue"
 import PageHeading from "@/Components/Headings/PageHeading.vue"
 import { capitalize } from "@/Composables/capitalize"
-import { faUser, faUserFriends } from "@/../private/pro-light-svg-icons"
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { trans } from "laravel-vue-i18n"
 import Button from "@/Components/Elements/Buttons/Button.vue"
@@ -23,10 +20,10 @@ import { set, onValue, get } from "firebase/database"
 import { getDbRef } from '@/Composables/firebase'
 // import Modal from '@/Components/Utils/Modal.vue'
 import { useBannerHash } from "@/Composables/useBannerHash"
-import { usePage } from "@inertiajs/vue3"
 import Popover from "@/Components/Utils/Popover.vue"
 
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
+import { faUser, faUserFriends } from "@/../private/pro-light-svg-icons"
 import { faRocketLaunch } from "@/../private/pro-regular-svg-icons"
 import { faAsterisk } from "@/../private/pro-solid-svg-icons"
 import { faSpinnerThird } from '@/../private/pro-duotone-svg-icons'
@@ -109,6 +106,8 @@ const isLoading = ref(false)
 const comment = ref('')
 const loadingState = ref(false)
 const isSetData = ref(false)
+const _comment = ref()
+
 const routeExit =  props.pageHead.actions.find((item)=> item.style == "exit")
 const dbPath = 'customers' + '/' + useLayoutStore().user.customer.ulid + '/banner_workshop/' + props.banner.slug
 const data = reactive(cloneDeep(props.bannerLayout))
@@ -275,7 +274,7 @@ const stopInterval=()=>{
     <Head :title="capitalize(title)" />
     <PageHeading :data="pageHead">
         <template #other="{ dataPageHead: head }">
-            <div class="flex items-center gap-2 relative">
+            <div class="flex items-center gap-2 relative" tabindex="-1">
 
                 <!-- 'fd186208ae9dab06d40e49141f34bef9' is Hash from empty data -->
                 <Button v-if="banner.state == 'unpublished'"
@@ -311,8 +310,9 @@ const stopInterval=()=>{
                                 <span>{{ trans('Comment') }}</span>
                             </div>
                             <div class="py-2.5">
-                                <textarea rows="3" cols="20" v-model="comment"
-                                    class="block rounded-md shadow-sm dark:bg-gray-600 dark:text-gray-400 border-gray-300 dark:border-gray-500 focus:border-gray-500 focus:ring-gray-500 sm:text-sm" />
+                                <textarea
+                                    rows="3" v-model="comment"
+                                    class="block w-64 lg:w-96 rounded-md shadow-sm dark:bg-gray-600 dark:text-gray-400 border-gray-300 dark:border-gray-500 focus:border-gray-500 focus:ring-gray-500 sm:text-sm" />
                             </div>
                             <div class="flex justify-end">
                                 <Button size="xs" @click="sendDataToServer" icon="far fa-rocket-launch" label="Publish" :key="comment.length" :style="comment.length ? 'primary' : 'disabled'">
