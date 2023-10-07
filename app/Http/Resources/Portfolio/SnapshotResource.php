@@ -52,6 +52,7 @@ class SnapshotResource extends JsonResource
             'slug'             => $snapshot->slug,
             'published_at'     => $snapshot->published_at,
             'published_until'  => $snapshot->published_until,
+            'first_commit'     => $snapshot->first_commit,
             'recyclable'       => $snapshot->recyclable,
             'recyclable_tag'   => $snapshot->recyclable_tag,
             'layout'           => $snapshot->layout,
