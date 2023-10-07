@@ -18,19 +18,18 @@ class UpdateWebpageContent
     use WithAttributes;
 
 
-    public function handle(Webpage $webpage, array $data): void
+    public function handle(Webpage $webpage, array $content): void
     {
+        $snapshot = $webpage->unpublishedSnapshot;
 
-
-
-        $webpage->update(
+        $snapshot->update(
             [
-                'content'          => $data['data'],
-                'compiled_content' => $data['pagesHtml']
+                'layout' => [
+                    'src'  => $content['data'],
+                    'html' => $content['pagesHtml'],
+                ]
             ]
         );
-
-
     }
 
     public function authorize(ActionRequest $request): bool

@@ -19,10 +19,7 @@ class ShowWebpageContent
 
     public function handle(Webpage $webpage): array
     {
-        return [
-            'data'      => $webpage->content,
-            'pagesHtml' => $webpage->compiled_content
-        ];
+      return $webpage->unpublishedSnapshot->layout;
     }
 
 
