@@ -52,7 +52,7 @@ const condition: Ref<string | boolean> = ref(false)
                 <div>
                     <label for="login" class="block text-sm font-medium text-gray-600">{{ trans('Email') }}</label>
                     <div class="mt-1">
-                        <input v-model="form.email" id="email" name="email" autocomplete="email"  required
+                        <input v-model="form.email" id="email" name="email" autocomplete="email" required autofocus
                                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-gray-500 focus:border-gray-500 sm:text-sm"/>
                     </div>
                 </div>
@@ -89,6 +89,7 @@ const condition: Ref<string | boolean> = ref(false)
                     </p>
                 </div>
             </form>
+
             <!-- Forgot Password: if click the 'forgot password' -->
             <div v-show="condition === 'forgotPassword'" class="space-y-4">
                 <div class="flex items-center gap-x-1 text-gray-500 cursor-pointer hover:text-gray-700" @click="condition = false">
