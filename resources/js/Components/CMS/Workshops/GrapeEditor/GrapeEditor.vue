@@ -21,6 +21,26 @@ const props = defineProps<{
 
 const editorInstance = ref(null);
 const options = { collections: ["ri", "mdi", "uim", "streamline-emojis"]};
+
+const deleteImageStore = (data) => {
+    console.log(data)
+    const am = editorInstance.value.AssetManager;
+    const allImages = data.assets;
+    const usageImages = editorInstance.value.DomComponents.getWrapper().find('img');
+    const deleteImages = []
+    console.log(allImages,usageImages)
+    allImages.forEach((image) => {
+        console.log(image.id)
+        usageImages.find((item) => console.log(item.attributes.src,image.src) )
+        const hasImages = usageImages.find((item) => item.attributes.src == image.src)
+        if (hasImages) {
+            console.log(image)
+            deleteImages.push(image)
+        }
+    });
+    data.asset = deleteImages
+};
+ 
 const Store = async (data, editor) => {
     const pagesHtml = editor.Pages.getAll().map(page => {
         const component = page.getMainComponent();
@@ -29,6 +49,7 @@ const Store = async (data, editor) => {
             css: editor.getCss({ component })
         }
     });
+    deleteImageStore(data)
     try {
         const response = await axios.post(
             route(
@@ -83,6 +104,7 @@ onMounted(() => {
             type: 'remote',
         },
         assetManager: {
+            storeAfterUpload  : false,
             uploadFile: async function (e) {
                 var files = e.dataTransfer ? e.dataTransfer.files : e.target.files;
                 console.log('test',files)
@@ -97,7 +119,16 @@ onMounted(() => {
                     headers: { "Content-Type": "multipart/form-data" },
                 }
             );
-                console.log(response)
+                for(const image of response.data.data){
+                    let imageToStore = 
+                        {
+                        src: image.thumbnail.original,
+                        type: 'image',
+                        id: image.id
+                }
+                editorInstance.value.AssetManager.add(imageToStore);
+            }
+              
                 } catch (error) {
                     console.log(error)
                 }
