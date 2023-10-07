@@ -16,8 +16,8 @@ return new class () extends Migration {
         Schema::create('snapshots', function (Blueprint $table) {
             $table->mediumIncrements('id');
             $table->string('slug')->nullable()->collation('und_ns');
-            $table->string('user_type')->nullable();
-            $table->unsignedSmallInteger('user_id')->nullable();
+            $table->string('publisher_type')->nullable();
+            $table->unsignedSmallInteger('publisher_id')->nullable();
             $table->string('parent_type')->nullable();
             $table->unsignedInteger('parent_id')->nullable();
             $table->unsignedInteger('customer_id')->nullable();
@@ -33,7 +33,7 @@ return new class () extends Migration {
             $table->timestampsTz();
             $table->index(['parent_type', 'parent_id']);
             $table->index(['parent_type', 'parent_id','scope']);
-            $table->index(['user_id', 'user_type']);
+            $table->index(['publisher_id', 'publisher_type']);
 
         });
 

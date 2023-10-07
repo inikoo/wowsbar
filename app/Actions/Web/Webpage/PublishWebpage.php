@@ -26,6 +26,11 @@ class PublishWebpage
 
     public function handle(Webpage $webpage, array $modelData): Webpage
     {
+        $firstCommit = false;
+        if ($webpage->state == WebpageStateEnum::IN_PROCESS or $webpage->state == WebpageStateEnum::READY) {
+            $firstCommit = true;
+        }
+
         foreach ($webpage->snapshots()->where('state', SnapshotStateEnum::LIVE)->get() as $liveSnapshot) {
             UpdateSnapshot::run($liveSnapshot, [
                 'state'           => SnapshotStateEnum::HISTORIC,
@@ -40,9 +45,13 @@ class PublishWebpage
         $snapshot = StoreWebpageSnapshot::run(
             $webpage,
             [
-                'state'        => SnapshotStateEnum::LIVE,
-                'published_at' => now(),
-                'layout'       => $layout
+                'state'             => SnapshotStateEnum::LIVE,
+                'published_at'      => now(),
+                'layout'            => $layout,
+                'first_commit'      => $firstCommit,
+                'comment'           => Arr::get($modelData, 'comment'),
+                'publisher_id'      => Arr::get($modelData, 'publisher_id'),
+                'publisher_type'    => Arr::get($modelData, 'publisher_type'),
             ]
         );
 
@@ -79,8 +88,10 @@ class PublishWebpage
     public function rules(): array
     {
         return [
-            'layout'  => ['required', 'array:delay,common,components'],
-            'comment' => ['sometimes', 'required', 'string', 'max:1024']
+            'layout'         => ['required', 'array:delay,common,components'],
+            'comment'        => ['sometimes', 'required', 'string', 'max:1024'],
+            'publisher_id'   => ['sometimes'],
+            'publisher_type' => ['sometimes', 'string'],
         ];
     }
 
@@ -88,7 +99,9 @@ class PublishWebpage
     {
         $request->merge(
             [
-                'layout' => $request->only(['delay', 'common', 'components']),
+                'layout'         => $request->only(['delay', 'common', 'components']),
+                'publisher_id'   => $request->user()->id,
+                'publisher_type' => 'OrganisationUser'
             ]
         );
     }

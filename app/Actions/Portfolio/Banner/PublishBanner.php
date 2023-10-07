@@ -49,13 +49,13 @@ class PublishBanner
         $snapshot = StoreBannerSnapshot::run(
             $banner,
             [
-                'state'        => SnapshotStateEnum::LIVE,
-                'published_at' => now(),
-                'layout'       => $layout,
-                'first_commit' => $firstCommit,
-                'comment'      => Arr::get($modelData, 'comment'),
-                'user_id'      => Arr::get($modelData, 'user_id'),
-                'user_type'    => Arr::get($modelData, 'user_type'),
+                'state'             => SnapshotStateEnum::LIVE,
+                'published_at'      => now(),
+                'layout'            => $layout,
+                'first_commit'      => $firstCommit,
+                'comment'           => Arr::get($modelData, 'comment'),
+                'publisher_id'      => Arr::get($modelData, 'publisher_id'),
+                'publisher_type'    => Arr::get($modelData, 'publisher_type'),
 
 
             ],
@@ -101,10 +101,10 @@ class PublishBanner
     public function rules(): array
     {
         return [
-            'layout'    => ['required', 'array:delay,common,components'],
-            'comment'   => ['sometimes', 'required', 'string', 'max:1024'],
-            'user_id'   => ['sometimes'],
-            'user_type' => ['sometimes', 'string'],
+            'layout'         => ['required', 'array:delay,common,components'],
+            'comment'        => ['sometimes', 'required', 'string', 'max:1024'],
+            'publisher_id'   => ['sometimes'],
+            'publisher_type' => ['sometimes', 'string'],
         ];
     }
 
@@ -112,9 +112,9 @@ class PublishBanner
     {
         $request->merge(
             [
-                'layout'    => $request->only(['delay', 'common', 'components']),
-                'user_id'   => $request->get('customerUser')->id,
-                'user_type' => 'CustomerUser'
+                'layout'         => $request->only(['delay', 'common', 'components']),
+                'publisher_id'   => $request->get('customerUser')->id,
+                'publisher_type' => 'CustomerUser'
             ]
         );
     }
