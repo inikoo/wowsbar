@@ -5,21 +5,21 @@
   -->
 
 <script setup lang="ts">
-import { Head } from '@inertiajs/vue3';
+import {Head} from '@inertiajs/vue3';
 import PageHeading from '@/Components/Headings/PageHeading.vue';
-import { capitalize } from "@/Composables/capitalize"
-import Stats from "@/Components/DataDisplay/Stats.vue";
+import {capitalize} from "@/Composables/capitalize"
 import Tabs from "@/Components/Navigation/Tabs.vue";
 import {computed, ref} from "vue";
 import {useTabChange} from "@/Composables/tab-change";
-import CustomerShowcase from "@/Components/Showcases/Organisation/CustomerShowcase.vue";
-import ModelDetails from "@/Pages/ModelDetails.vue";
+import {faTachometer, faMailBulk} from "@/../private/pro-light-svg-icons"
+import {library} from "@fortawesome/fontawesome-svg-core";
+
+library.add(faTachometer, faMailBulk);
 
 
 const props = defineProps<{
     title: string,
     pageHead: object,
-    stats: object,
     tabs: {
         current: string;
         navigation: object;
@@ -40,7 +40,7 @@ const component = computed(() => {
 </script>
 
 <template layout="OrgApp">
-    <Head :title="capitalize(title)" />
+    <Head :title="capitalize(title)"/>
     <PageHeading :data="pageHead"></PageHeading>
     <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate"/>
     <component :is="component" :data="props[currentTab]"></component>

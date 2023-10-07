@@ -86,7 +86,13 @@ Route::prefix('shop/{shop}')->as('shop.')->group(function () {
         Route::get('/{prospect}/delete', [RemoveProspect::class, 'inShop'])->name('remove');
     });
 
-    Route::get('mailroom', ShowMailroomDashboard::class)->name('mailroom.dashboard');
+
+    Route::prefix('mailroom')->as('mailroom.')->group(function () {
+        Route::get('', ['icon'=>'fa-envelope','label'=>'mailroom'])->uses([ShowMailroomDashboard::class,'inShop'])->name('dashboard');
+
+
+    });
+
 
     Route::prefix('appointments')->as('appointments.')->group(function () {
         Route::get('/', ['icon'=>'fa-handshake','label'=>'appointment'])->uses([IndexAppointments::class,'inShop'])->name('index');

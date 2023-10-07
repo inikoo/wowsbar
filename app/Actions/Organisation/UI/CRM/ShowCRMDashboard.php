@@ -113,6 +113,7 @@ class ShowCRMDashboard
                                 'parameters' => $routeParameters
                             ],
                             'label' => __('CRM'),
+                            'icon'  => 'fal fa-chart-network'
                         ]
                     ],
                     default => [

@@ -25,27 +25,27 @@ enum MailroomTabsEnum: string
     {
         return match ($this) {
             MailroomTabsEnum::SHOWCASE => [
-                'title' => __('showcase'),
-                'icon'  => 'fas fa-info-circle',
+                'title' => __('dashboard'),
+                'icon'  => 'fal fa-tachometer',
             ],
 
             MailroomTabsEnum::NEWSLETTER => [
-                'title' => __('newsletter'),
+                'title' => __('newsletters'),
                 'icon'  => 'fal fa-newspaper'
             ],
 
             MailroomTabsEnum::MAILSHOT => [
-                'title' => __('mailshot'),
-                'icon'  => 'fal fa-paper-plane'
+                'title' => __('mailshots'),
+                'icon'  => 'fal fa-mail-bulk'
             ],
 
             MailroomTabsEnum::PROSPECT_CAMPAIGN => [
-                'title' => __('prospect campaign'),
-                'icon'  => 'fal fa-ad'
+                'title' => __('prospect campaigns'),
+                'icon'  => 'fal fa-transporter'
             ],
 
             MailroomTabsEnum::EMAIL_TEMPLATE => [
-                'title' => __('mail template'),
+                'title' => __('mail templates'),
                 'icon'  => 'fal fa-envelope-open-text'
             ],
         };

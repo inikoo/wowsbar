@@ -8,7 +8,6 @@
 namespace App\Actions\Organisation\UI\CRM;
 
 use App\Actions\InertiaAction;
-use App\Actions\UI\Organisation\Dashboard\ShowDashboard;
 use App\Actions\UI\WithInertia;
 use App\Enums\UI\Organisation\MailroomTabsEnum;
 use App\Models\Market\Shop;
@@ -29,6 +28,10 @@ class ShowMailroomDashboard extends InertiaAction
         return $request->user()->hasPermissionTo("crm.view");
     }
 
+    public function handle(Organisation|Shop $parent): Organisation|Shop
+    {
+        return $parent;
+    }
 
     public function asController(ActionRequest $request): Organisation
     {
@@ -36,6 +39,14 @@ class ShowMailroomDashboard extends InertiaAction
         $request->validate();
 
         return organisation();
+    }
+
+    public function inShop(Shop $shop, ActionRequest $request): Shop
+    {
+        $this->initialisation($request)->withTab(MailroomTabsEnum::values());
+        $request->validate();
+
+        return $shop;
     }
 
     public function htmlResponse(Organisation|Shop $parent, ActionRequest $request): Response
@@ -55,7 +66,7 @@ class ShowMailroomDashboard extends InertiaAction
                     'title' => __('mailroom'),
                     'icon'  => [
                         'title' => __('mailroom'),
-                        'icon'  => 'fal fa-envelope'
+                        'icon'  => 'fal fa-inbox-out'
                     ],
                 ],
                 'tabs' => [
@@ -68,33 +79,42 @@ class ShowMailroomDashboard extends InertiaAction
 
     public function getBreadcrumbs(string $routeName, array $routeParameters=[]): array
     {
-        return array_merge(
-            ShowDashboard::make()->getBreadcrumbs(),
-            [
-                match ($routeName) {
-                    'org.crm.dashboard' => [
-                        'type'   => 'simple',
-                        'simple' => [
-                            'route' => [
-                                'name'       => 'org.crm.shop.dashboard',
-                                'parameters' => $routeParameters
-                            ],
-                            'label' => __('CRM'),
-                        ]
+        $headCrumb = function (array $routeParameters = []) {
+            return [
+                [
+                    'type'   => 'simple',
+                    'simple' => [
+                        'route' => $routeParameters,
+                        'label' => __('Mailroom'),
+                        'icon'  => 'fal fa-inbox-out'
                     ],
-                    default => [
-                        'type'   => 'simple',
-                        'simple' => [
-                            'route' => [
-                                'name'       => 'org.crm.shop.mailroom.dashboard',
-                                'parameters' => $routeParameters
-                            ],
-                            'label' => __('CRM'),
-                        ]
+                ],
+            ];
+        };
+
+        return match ($routeName) {
+            'org.crm.mailroom.dashboard' =>
+            array_merge(
+                (new ShowCRMDashboard())->getBreadcrumbs('org.crm.dashboard', $routeParameters),
+                $headCrumb(
+                    [
+                        'name' => 'org.crm.mailroom.dashboard',
+                        null
                     ]
-                }
-            ]
-        );
+                ),
+            ),
+            'org.crm.shop.mailroom.dashboard' =>
+            array_merge(
+                (new ShowCRMDashboard())->getBreadcrumbs('org.crm.shop.dashboard', $routeParameters),
+                $headCrumb(
+                    [
+                        'name'       => 'org.crm.shop.mailroom.dashboard',
+                        'parameters' => $routeParameters
+                    ]
+                )
+            ),
+            default => []
+        };
     }
 
 }

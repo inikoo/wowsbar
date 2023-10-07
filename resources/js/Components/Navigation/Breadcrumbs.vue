@@ -6,17 +6,19 @@
 <script setup lang="ts">
 import {trans} from 'laravel-vue-i18n'
 
-import { computed, ref } from "vue"
-import { Link, router } from "@inertiajs/vue3"
-import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue"
-import { library } from "@fortawesome/fontawesome-svg-core"
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
-import { faChevronRight } from "../../../private/pro-regular-svg-icons"
-import { faSparkles, faArrowFromLeft, faArrowLeft, faArrowRight } from "../../../private/pro-solid-svg-icons"
-import { capitalize } from "@/Composables/capitalize"
-import { useLayoutStore } from "@/Stores/layout"
+import {computed, ref} from "vue"
+import {Link, router} from "@inertiajs/vue3"
+import {Menu, MenuButton, MenuItems, MenuItem} from "@headlessui/vue"
+import {library} from "@fortawesome/fontawesome-svg-core"
+import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome"
+import {faChevronRight} from "@/../private/pro-regular-svg-icons"
+import {faSparkles, faArrowFromLeft, faArrowLeft, faArrowRight} from "@/../private/pro-solid-svg-icons"
+import {faChartNetwork, faInboxOut} from "@/../private/pro-light-svg-icons"
 
-library.add(faSparkles, faArrowFromLeft, faArrowLeft, faArrowRight,faChevronRight);
+import {capitalize} from "@/Composables/capitalize"
+import {useLayoutStore} from "@/Stores/layout"
+
+library.add(faSparkles, faArrowFromLeft, faArrowLeft, faArrowRight, faChevronRight, faInboxOut, faChartNetwork);
 
 const props = defineProps<{
     breadcrumbs: Array<{
@@ -96,7 +98,7 @@ const layoutState = useLayoutStore()
 
 <template>
     <div v-if="compDisplayBreadcrumbs" class="transition-all duration-200 ease-in-out"
-        :class="[layoutState.leftSidebar.show ? 'pr-0 md:pr-56' : 'pr-0 md:pr-10']"
+         :class="[layoutState.leftSidebar.show ? 'pr-0 md:pr-56' : 'pr-0 md:pr-10']"
     >
         <nav
             class="py-4 md:py-0 flex border-b h-6 text-sm bg-gray-50 text-gray-700 border-gray-200 dark:bg-gray-700 dark:text-gray-400 dark:border-gray-500"
@@ -114,7 +116,7 @@ const layoutState = useLayoutStore()
                                 v-if="breadcrumbIdx !== 0"
                                 class="flex-shrink-0 h-3 w-3 mx-3 opacity-50"
                                 icon="fa-regular fa-chevron-right"
-                                aria-hidden="true" />
+                                aria-hidden="true"/>
                             <span>...</span>
                         </div>
 
@@ -124,7 +126,7 @@ const layoutState = useLayoutStore()
                                 v-if="breadcrumbIdx !== 0"
                                 class="flex-shrink-0 h-3 w-3 mx-3 opacity-50"
                                 icon="fa-regular fa-chevron-right"
-                                aria-hidden="true" />
+                                aria-hidden="true"/>
                             <component
                                 :is="breadcrumb.simple.route ? Link : 'span'"
                                 :class="'hover:text-gray-700 dark:hover:text-gray-400' || ''"
@@ -138,10 +140,12 @@ const layoutState = useLayoutStore()
 								">
                                 <FontAwesomeIcon
                                     v-if="breadcrumb.simple.icon"
-                                    :class="breadcrumb.simple.label ? 'mr-1' : ''"
+                                    :class="breadcrumb.simple.label ?
+                                     breadcrumb.simple.icon==='fal fa-bars' ? 'mr-1' : 'mr-2'
+                                     :  ''"
                                     class="flex-shrink-0 h-3.5 w-3.5"
                                     :icon="breadcrumb.simple.icon"
-                                    aria-hidden="true" />
+                                    aria-hidden="true"/>
                                 <span class="capitalize">{{ breadcrumb.simple.label }}</span>
                             </component>
                         </template>
@@ -149,7 +153,7 @@ const layoutState = useLayoutStore()
                             <FontAwesomeIcon
                                 class="flex-shrink-0 h-3.5 w-3.5 mr-1 text-yellow-500 ml-2"
                                 icon="fas fa-sparkles"
-                                aria-hidden="true" />
+                                aria-hidden="true"/>
                             <span class="capitalize text-yellow-600 opacity-75">
 								{{ breadcrumb.creatingModel.label }}
                             </span>
@@ -160,7 +164,7 @@ const layoutState = useLayoutStore()
                                     v-if="breadcrumbIdx !== 0"
                                     class="flex-shrink-0 h-3 w-3 mx-3 opacity-50 place-self-center"
                                     icon="fa-regular fa-chevron-right"
-                                    aria-hidden="true" />
+                                    aria-hidden="true"/>
                                 <Link
                                     class="hover:text-gray-700 dark:hover:text-gray-400 grid grid-flow-col items-center"
                                     :href="
@@ -172,7 +176,7 @@ const layoutState = useLayoutStore()
                                     <FontAwesomeIcon
                                         :icon="['fal', 'bars']"
                                         class="flex-shrink-0 h-3.5 w-3.5 mr-1"
-                                        aria-hidden="true" />
+                                        aria-hidden="true"/>
                                     <span class="capitalize">
                                         {{ breadcrumb.modelWithIndex.index.label }}
                                     </span>
@@ -239,18 +243,18 @@ const layoutState = useLayoutStore()
                                         v-if="breadcrumb.simple.icon && breadcrumbIdx == 0"
                                         class="flex-shrink-0 h-3.5 w-3.5"
                                         :icon="breadcrumb.simple.icon"
-                                        aria-hidden="true" />
+                                        aria-hidden="true"/>
 
                                     <!-- Icon Arrow -->
                                     <FontAwesomeIcon
                                         v-if="breadcrumbIdx != 0"
                                         class="flex-shrink-0 h-3.5 w-3.5 text-gray-300"
                                         icon="fa fa-arrow-from-left"
-                                        aria-hidden="true" />
+                                        aria-hidden="true"/>
                                     <span
                                         v-if="breadcrumbIdx == 0 && !breadcrumb.simple.label"
                                         class="grid grid-flow-cols justify-center font-bold capitalize ml-2"
-                                    >{{trans('Home')}}
+                                    >{{ trans('Home') }}
 									</span>
                                     <span
                                         class="capitalize grid grid-flow-col items-center ml-4 mr-3">
@@ -262,7 +266,7 @@ const layoutState = useLayoutStore()
                                         v-if="breadcrumb.simple.icon && breadcrumbIdx != 0"
                                         class="flex-shrink-0 h-3.5 w-3.5"
                                         :icon="breadcrumb.simple.icon"
-                                        aria-hidden="true" />
+                                        aria-hidden="true"/>
                                 </component>
                             </template>
                             <template v-else-if="breadcrumb.type === 'creatingModel'">
@@ -284,7 +288,7 @@ const layoutState = useLayoutStore()
                                         <FontAwesomeIcon
                                             class="flex-shrink-0 h-3.5 w-3.5 text-gray-300"
                                             icon="fa fa-arrow-from-left"
-                                            aria-hidden="true" />
+                                            aria-hidden="true"/>
                                         <span class="capitalize md:text-xs ml-4 mr-3">
 											{{ breadcrumb.modelWithIndex.index.label }}
 										</span>
@@ -293,7 +297,7 @@ const layoutState = useLayoutStore()
                                         <FontAwesomeIcon
                                             :icon="['fal', 'bars']"
                                             class="flex-shrink-0 h-3.5 w-3.5"
-                                            aria-hidden="true" />
+                                            aria-hidden="true"/>
                                     </Link>
 
                                     <!-- Subpage -->
@@ -311,7 +315,7 @@ const layoutState = useLayoutStore()
                                         <FontAwesomeIcon
                                             class="flex-shrink-0 h-3.5 w-3.5 mr-1 text-gray-300"
                                             icon="fa fa-arrow-from-left"
-                                            aria-hidden="true" />
+                                            aria-hidden="true"/>
                                         <span class="capitalize ml-4 mr-3">
 											{{ breadcrumb.modelWithIndex.model.label }}
 										</span>
@@ -325,12 +329,13 @@ const layoutState = useLayoutStore()
             <div v-if="props.navigation.previous || props.navigation.next" class="grid grid-flow-col justify-end items-center pr-2 space-x-2 text-sm text-gray-700 font-semibold">
                 <!-- Button: Previous -->
                 <div class="flex justify-center items-center w-8">
-                    <Link v-if="props.navigation.previous" :href="route(props.navigation.previous?.route.name, props.navigation.previous?.route.parameters)  + urlParameter" class="rounded w-full h-full flex items-center justify-center opacity-60 hover:opacity-100 hover:cursor-pointer hover:text-gray-800"
+                    <Link v-if="props.navigation.previous" :href="route(props.navigation.previous?.route.name, props.navigation.previous?.route.parameters)  + urlParameter"
+                          class="rounded w-full h-full flex items-center justify-center opacity-60 hover:opacity-100 hover:cursor-pointer hover:text-gray-800"
                           :title="capitalize(props.navigation.previous?.label)"
                     >
-                        <FontAwesomeIcon icon="fas fa-arrow-left" class="" aria-hidden="true" />
+                        <FontAwesomeIcon icon="fas fa-arrow-left" class="" aria-hidden="true"/>
                     </Link>
-                    <FontAwesomeIcon v-else icon="fas fa-arrow-left" class="opacity-20 cursor-pointer" aria-hidden="true" />
+                    <FontAwesomeIcon v-else icon="fas fa-arrow-left" class="opacity-20 cursor-pointer" aria-hidden="true"/>
                 </div>
 
                 <!-- Button: Next -->
@@ -339,9 +344,9 @@ const layoutState = useLayoutStore()
                           :title="capitalize(props.navigation.next?.label)"
                           :href="route(props.navigation.next?.route.name, props.navigation.next?.route.parameters) + urlParameter"
                     >
-                        <FontAwesomeIcon icon="fas fa-arrow-right" class="" aria-hidden="true" />
+                        <FontAwesomeIcon icon="fas fa-arrow-right" class="" aria-hidden="true"/>
                     </Link>
-                    <FontAwesomeIcon v-else icon="fas fa-arrow-right" class="opacity-20 cursor-pointer" aria-hidden="true" />
+                    <FontAwesomeIcon v-else icon="fas fa-arrow-right" class="opacity-20 cursor-pointer" aria-hidden="true"/>
                 </div>
             </div>
         </nav>

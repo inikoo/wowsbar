@@ -196,7 +196,7 @@ class GetLayout
                                 [
 
                                     'label' => __('mailroom'),
-                                    'icon'  => ['fal', 'fa-envelope'],
+                                    'icon'  => ['fal', 'fa-inbox-out'],
                                     'route' => [
                                         'name'       => 'org.crm.shop.mailroom.dashboard',
                                         'parameters' => $shop->slug
