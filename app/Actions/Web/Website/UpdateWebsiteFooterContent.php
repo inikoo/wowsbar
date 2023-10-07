@@ -17,7 +17,7 @@ class UpdateWebsiteFooterContent
 
     private bool $asAction = false;
 
-    public function handle(Website $website, array $content): void
+    public function handle(Website $website, array $content): Website
     {
 
         $snapshot = $website->unpublishedFooterSnapshot;
@@ -29,7 +29,18 @@ class UpdateWebsiteFooterContent
                 ]
             ]
         );
+        $isDirty = true;
+        if ($website->published_footer_checksum == md5(json_encode($snapshot->layout))) {
+            $isDirty = false;
+        }
 
+        $website->update(
+            [
+                'is_dirty' => $isDirty
+            ]
+        );
+
+        return $website;
 
     }
 
@@ -50,11 +61,14 @@ class UpdateWebsiteFooterContent
         ];
     }
 
-    public function asController(Website $website, ActionRequest $request): string
+    public function asController(Website $website, ActionRequest $request): array
     {
         $request->validate();
-        $this->handle($website, $request->validated());
-        return "👍";
+        $website = $this->handle($website, $request->validated());
+
+        return [
+            'isDirty' => $website->footer_is_dirty
+        ];
     }
 
 
