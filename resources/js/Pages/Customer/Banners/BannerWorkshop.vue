@@ -285,8 +285,8 @@ const compIsDataFirstTimeCreated = computed(() => {
         <template #other="{ dataPageHead: head }">
             <Publish 
                 v-model="comment"
-                :isHashSame="compIsHashSame"
                 :isDataFirstTimeCreated="compIsDataFirstTimeCreated"
+                :isHashSame="compIsHashSame"
                 :isLoading="isLoading"
                 :saveFunction="sendDataToServer"
                 :firstPublish="banner.state == 'unpublished'"
