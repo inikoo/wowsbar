@@ -35,8 +35,8 @@ const sendDataToServer = async () => {
     try {
         const response = await axios.post(
             route(
-                publishRoute.value.name,
-                publishRoute.value.parameters
+                props.publishRoute.name,
+                props.publishRoute.parameters
             ),
             { comment : comment.value },
         );
