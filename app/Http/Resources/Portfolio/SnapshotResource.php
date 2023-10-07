@@ -27,27 +27,24 @@ class SnapshotResource extends JsonResource
             $comment = __('First commit');
         }
 
-        $publisher        = '';
+        $publisher       = '';
         $publisherAvatar = null;
         if ($snapshot->publisher_id) {
-
-            switch ($snapshot->publisher_type){
+            switch ($snapshot->publisher_type) {
                 case 'CustomerUser':
                     /** @var CustomerUser $customerUser */
                     $customerUser = $snapshot->publisher;
 
-                    $publisher        = $customerUser->user->contact_name;
+                    $publisher       = $customerUser->user->contact_name;
                     $publisherAvatar = $customerUser->user->avatarImageSources(48, 48);
                     break;
                 case 'OrganisationUser':
                     /** @var OrganisationUser $organisationUser */
                     $organisationUser = $snapshot->publisher;
 
-                    $publisher        = $organisationUser->contact_name;
+                    $publisher       = $organisationUser->contact_name;
                     $publisherAvatar = $organisationUser->avatarImageSources(48, 48);
             }
-
-
         }
 
 
@@ -55,6 +52,9 @@ class SnapshotResource extends JsonResource
             'slug'             => $snapshot->slug,
             'published_at'     => $snapshot->published_at,
             'published_until'  => $snapshot->published_until,
+            'first_commit'     => $snapshot->first_commit,
+            'recyclable'       => $snapshot->recyclable,
+            'recyclable_tag'   => $snapshot->recyclable_tag,
             'layout'           => $snapshot->layout,
             'publisher'        => $publisher,
             'publisher_avatar' => $publisherAvatar,

@@ -13,10 +13,13 @@ import FooterGrape from '@/Components/CMS/Workshops/FooterWorkshop/FooterGrape.v
 import LayoutWorkshop from "@/Components/CMS/Workshops/LayoutWorkshop.vue";
 import Button from '@/Components/Elements/Buttons/Button.vue'
 import Modal from '@/Components/Utils/Modal.vue'
+import Publish from '@/Components/Utils/Publish.vue'
 import { notify } from "@kyvg/vue3-notification"
 import { useForm } from '@inertiajs/vue3'
 import {trans} from 'laravel-vue-i18n'
 import {  setDataFirebase } from '@/Composables/firebase'
+import axios from 'axios'
+import { useBannerHash } from "@/Composables/useBannerHash"
 
 library.add(
     faArrowAltToTop,
@@ -66,12 +69,12 @@ const component = computed(() => {
 
 
 const RouteActive = ref(props.publishRoutes[currentTab.value])
-const isModalOpen = ref(false)
 const comment = ref('')
+const isLoading = ref(false)
 
 
 const sendDataToServer = async () => {
-    console.log(RouteActive.value)
+    isLoading.value = true
     try {
         const response = await axios.post(
             route(
@@ -83,20 +86,18 @@ const sendDataToServer = async () => {
         if (response) {
             console.log('saving......')
             comment.value = ''
-            isModalOpen.value = false
         }
     } catch (error) {
         comment.value = ''
         console.log(error)
     }
+    isLoading.value = false
 }
 
-
-const chekIsLive  = ()=>{
-  if(props.websiteState != 'live') sendDataToServer()
-  else isModalOpen.value = true
-}
-
+const compIsDataFirstTimeCreated = computed(() => {
+    // Check no changes made after created the data (compared to hash from initial data)
+    return false
+})
 </script>
 
 
@@ -104,14 +105,14 @@ const chekIsLive  = ()=>{
     <Head :title="capitalize(title)" />
     <PageHeading :data="pageHead">
         <template #other="{ dataPageHead: head }">
-            <div class="flex items-center gap-2">
-                <span v-if="websiteState !== 'in-process'">
-                    <Button @click="chekIsLive" :label="'Publish'" :style="'save'" icon="far fa-rocket-launch"></Button>
-                </span>
-                <span v-else>
-                    <Button :label="'Set to Ready'"></Button>
-                </span>
-            </div>
+            <Publish
+                v-model="comment"
+                :isDataFirstTimeCreated="compIsDataFirstTimeCreated"
+                :isHashSame="false"
+                :isLoading="isLoading"
+                :saveFunction="sendDataToServer"
+                :firstPublish="websiteState != 'live'"
+            />
         </template>
     </PageHeading>
 
@@ -119,20 +120,5 @@ const chekIsLive  = ()=>{
 
     <component :is="component" :data="structure" :imagesUploadRoute="imagesUploadRoute" :updateRoutes="updateRoutes"></component>
 
-    <Modal :isOpen="isModalOpen" @onClose="isModalOpen = false">
-            <div>
-                <div class="inline-flex items-start leading-none">
-                    <FontAwesomeIcon :icon="'fas fa-asterisk'" class="font-light text-[12px] text-red-400 mr-1" />
-                    <span>{{ trans('Comment') }}</span>
-                </div>
-                <div class="py-2.5">
-                    <textarea rows="3" v-model="comment"
-                        class="block w-full rounded-md shadow-sm dark:bg-gray-600 dark:text-gray-400 border-gray-300 dark:border-gray-500 focus:border-gray-500 focus:ring-gray-500 sm:text-sm" />
-                </div>
-                <div class="flex justify-end">
-                    <Button size="xs" @click="sendDataToServer" icon="far fa-rocket-launch" label="Publish" />
-                </div>
-            </div>
-    </Modal>
 </template>
 

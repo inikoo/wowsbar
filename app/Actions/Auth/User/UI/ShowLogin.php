@@ -21,7 +21,7 @@ class ShowLogin
         return Inertia::render(
             'Auth/Login',
             [
-                'status' => session('status'),
+                'status'    => session('status'),
             ]
         );
     }

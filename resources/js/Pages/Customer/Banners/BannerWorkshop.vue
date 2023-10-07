@@ -5,14 +5,11 @@
   -->
 
 <script setup lang="ts">
-import { Head } from "@inertiajs/vue3"
-import { router } from '@inertiajs/vue3'
-import { useForm } from '@inertiajs/vue3'
+import { Head, router, useForm, usePage } from "@inertiajs/vue3"
 import { notify } from "@kyvg/vue3-notification"
-import { ref, reactive, onBeforeMount, watch, onBeforeUnmount, computed } from "vue"
+import { ref, reactive, onBeforeMount, watch, onBeforeUnmount, computed, nextTick } from "vue"
 import PageHeading from "@/Components/Headings/PageHeading.vue"
 import { capitalize } from "@/Composables/capitalize"
-import { faUser, faUserFriends } from "@/../private/pro-light-svg-icons"
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { trans } from "laravel-vue-i18n"
 import Button from "@/Components/Elements/Buttons/Button.vue"
@@ -21,12 +18,12 @@ import { useLayoutStore } from "@/Stores/layout"
 import { cloneDeep, set as setLodash } from "lodash"
 import { set, onValue, get } from "firebase/database"
 import { getDbRef } from '@/Composables/firebase'
-// import Modal from '@/Components/Utils/Modal.vue'
+
 import { useBannerHash } from "@/Composables/useBannerHash"
-import { usePage } from "@inertiajs/vue3"
-import Popover from "@/Components/Utils/Popover.vue"
+import Publish from "@/Components/Utils/Publish.vue"
 
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
+import { faUser, faUserFriends } from "@/../private/pro-light-svg-icons"
 import { faRocketLaunch } from "@/../private/pro-regular-svg-icons"
 import { faAsterisk } from "@/../private/pro-solid-svg-icons"
 import { faSpinnerThird } from '@/../private/pro-duotone-svg-icons'
@@ -109,6 +106,7 @@ const isLoading = ref(false)
 const comment = ref('')
 const loadingState = ref(false)
 const isSetData = ref(false)
+
 const routeExit =  props.pageHead.actions.find((item)=> item.style == "exit")
 const dbPath = 'customers' + '/' + useLayoutStore().user.customer.ulid + '/banner_workshop/' + props.banner.slug
 const data = reactive(cloneDeep(props.bannerLayout))
@@ -268,6 +266,16 @@ const stopInterval=()=>{
       clearInterval(intervalAutoSave.value);
     }
 
+
+const compIsHashSame = computed(() => {
+    return compCurrentHash.value == data.published_hash
+})
+
+const compIsDataFirstTimeCreated = computed(() => {
+    // Check no changes made after created the data (compared to hash from initial data)
+    return compCurrentHash.value == "fd186208ae9dab06d40e49141f34bef9"
+})
+
 </script>
 
 
@@ -275,57 +283,14 @@ const stopInterval=()=>{
     <Head :title="capitalize(title)" />
     <PageHeading :data="pageHead">
         <template #other="{ dataPageHead: head }">
-            <div class="flex items-center gap-2 relative">
-
-                <!-- 'fd186208ae9dab06d40e49141f34bef9' is Hash from empty data -->
-                <Button v-if="banner.state == 'unpublished'"
-                    label="Publish"
-                    :style="compCurrentHash == 'fd186208ae9dab06d40e49141f34bef9' ? 'disabled' : compCurrentHash == data.published_hash ? 'disabled' : 'primary'"
-                    :key="compCurrentHash"
-                    icon="far fa-rocket-launch"
-                    @click="sendDataToServer()"
-                />
-
-                <!-- If banner already Live, then appear Popover 'comment' before publish -->
-                <Popover v-else>
-                    <template #button="{ isOpen }">
-                        <Button v-if="!isOpen" label="Publish"
-                            :style="compCurrentHash == 'fd186208ae9dab06d40e49141f34bef9'
-                                ? 'disabled'
-                                : compCurrentHash == data.published_hash
-                                    ? 'disabled'
-                                    : isOpen
-                                        ? 'cancel'
-                                        : 'primary'"
-                            :key="compCurrentHash"
-                            icon="far fa-rocket-launch"
-                        />
-                        <Button v-else :style="`cancel`" icon="fal fa-times" label="Cancel" />
-                    </template>
-
-                    <!-- Popover: if already live, add comment to publish it again  -->
-                    <template v-if="banner.state == 'live'" #content>
-                        <div>
-                            <div class="inline-flex items-start leading-none">
-                                <FontAwesomeIcon :icon="'fas fa-asterisk'" class="font-light text-[12px] text-red-400 mr-1" />
-                                <span>{{ trans('Comment') }}</span>
-                            </div>
-                            <div class="py-2.5">
-                                <textarea rows="3" cols="20" v-model="comment"
-                                    class="block rounded-md shadow-sm dark:bg-gray-600 dark:text-gray-400 border-gray-300 dark:border-gray-500 focus:border-gray-500 focus:ring-gray-500 sm:text-sm" />
-                            </div>
-                            <div class="flex justify-end">
-                                <Button size="xs" @click="sendDataToServer" icon="far fa-rocket-launch" label="Publish" :key="comment.length" :style="comment.length ? 'primary' : 'disabled'">
-                                    <template #icon>
-                                        <FontAwesomeIcon v-if="isLoading" icon='fad fa-spinner-third' class='animate-spin' aria-hidden='true' />
-                                        <FontAwesomeIcon v-else icon='far fa-rocket-launch' class='' aria-hidden='true' />
-                                    </template>
-                                </Button>
-                            </div>
-                        </div>
-                    </template>
-                </Popover>
-            </div>
+            <Publish 
+                v-model="comment"
+                :isDataFirstTimeCreated="compIsDataFirstTimeCreated"
+                :isHashSame="compIsHashSame"
+                :isLoading="isLoading"
+                :saveFunction="sendDataToServer"
+                :firstPublish="banner.state == 'unpublished'"
+            />
         </template>
     </PageHeading>
 
