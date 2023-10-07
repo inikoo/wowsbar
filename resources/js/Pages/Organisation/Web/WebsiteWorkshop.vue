@@ -69,13 +69,6 @@ const RouteActive = ref(props.publishRoutes[currentTab.value])
 const isModalOpen = ref(false)
 const comment = ref('')
 
-// const setForm = () => {
-//     let form = null
-//     if(currentTab.value == 'workshop_header') form = useForm(structure.value['header'])
-//     if(currentTab.value == 'workshop_footer') form = useForm(structure.value['footer'])
-//     if(currentTab.value == 'workshop_layout') form = useForm(structure.value['layout'])
-//    return form
-// }
 
 const sendDataToServer = async () => {
     console.log(RouteActive.value)
@@ -90,6 +83,7 @@ const sendDataToServer = async () => {
         if (response) {
             console.log('saving......')
             comment.value = ''
+            isModalOpen.value = false
         }
     } catch (error) {
         comment.value = ''

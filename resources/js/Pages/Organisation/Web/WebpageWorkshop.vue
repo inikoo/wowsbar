@@ -8,6 +8,8 @@ import GrapesForm from "grapesjs-plugin-forms";
 import TailwindComponents from "grapesjs-tailwind";
 import { HeaderPlugins, FooterPlugins } from "@/Components/CMS/Workshops/GrapeEditor/CustomBlocks/CustomBlock";
 import Button from '@/Components/Elements/Buttons/Button.vue'
+import { trans } from 'laravel-vue-i18n'
+import Modal from '@/Components/Utils/Modal.vue'
 
 
 const props = defineProps<{
@@ -30,12 +32,11 @@ const isModalOpen = ref(false)
 const comment = ref('')
 
 const sendDataToServer = async () => {
-    console.log(RouteActive.value)
     try {
         const response = await axios.post(
             route(
-                RouteActive.value.name,
-                RouteActive.value.parameters
+                publishRoute.value.name,
+                publishRoute.value.parameters
             ),
             { comment : comment.value },
         );
