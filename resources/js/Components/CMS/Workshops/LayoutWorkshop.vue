@@ -90,7 +90,7 @@ const addfavicon = async (element) => {
 
 <template>
     <!-- Button: Title -->
-    <div class="flex justify-center items-center w-full mt-3">
+    <!-- <div class="flex justify-center items-center w-full mt-3">
         <div class="border-2 border-gray-300 rounded-md overflow-hidden">
             <button v-for="option in themeOptions" :key="option.value" @click="setData.layout = option.value"
                 :class="[setData.layout === option.value ? 'bg-gray-600 text-white hover:bg-gray-700' : 'hover:bg-gray-200 text-gray-700']"
@@ -113,10 +113,10 @@ const addfavicon = async (element) => {
                     Website Name
                 </div>
             </div>
-        </div>
+        </div> -->
 
         <!-- Workshop: Website Page -->
-        <div class="w-full h-72 flex relative justify-center items-center border border-gray-400 rounded-b-md" :style="{
+        <!-- <div class="w-full h-72 flex relative justify-center items-center border border-gray-400 rounded-b-md" :style="{
             'background-image': `url(${setData.imageLayout?.original})`,
             'background-color': `${setData.colorLayout}`,
             'background-repeat': 'no-repeat',
@@ -125,9 +125,9 @@ const addfavicon = async (element) => {
             <div class="h-full rounded-b-md relative bg-indigo-400 divide-y-2 divide-gray-200" :class="{
                 'w-full': setData.layout === 'full',
                 'w-[75%] border-x-2 border-gray-300': setData.layout === 'center',
-            }">
+            }"> -->
                 <!-- Workshop: Header -->
-                <div class="h-1/6 flex items-center relative" :style="`background-color: ${setData?.header?.color};`">
+                <!-- <div class="h-1/6 flex items-center relative" :style="`background-color: ${setData?.header?.color};`">
                     <div class="mx-auto text-xl font-medium text-gray-600">Header</div>
                     <div class="absolute left-0 -translate-x-1/2 top-1/2 -translate-y-1/2">
                         <ColorPicker :color="setData.header.color" :colorSuggestions="false"
@@ -146,10 +146,10 @@ const addfavicon = async (element) => {
                         <div class="font-xs border rounded-lg py-2 px-2 text-gray-600 hidden md:block"
                             :class="`bg-${setData?.header?.colorScheme}-500`">sign in</div>
                     </div>
-                </div>
+                </div> -->
 
                 <!-- Workshop: Webpage -->
-                <div class="h-4/6 flex items-center relative" :style="`background-color: ${setData?.content?.color};`">
+                <!-- <div class="h-4/6 flex items-center relative" :style="`background-color: ${setData?.content?.color};`">
                     <div class="mx-auto text-xl font-medium text-gray-600">Content</div>
                     <div class="absolute left-0 -translate-x-1/2 top-1/2 -translate-y-1/2">
                         <ColorPicker :color="setData?.content?.color"
@@ -166,10 +166,10 @@ const addfavicon = async (element) => {
                         <FontAwesomeIcon :icon="['far', 'oven']" class="h-8"
                             :class="`text-${setData?.content?.colorScheme}-500  hidden md:block`" />
                     </div>
-                </div>
+                </div> -->
 
                 <!-- Workshop: Footer -->
-                <div class="h-1/6 flex items-center relative" :style="`background-color: ${setData?.footer?.color};`">
+                <!-- <div class="h-1/6 flex items-center relative" :style="`background-color: ${setData?.footer?.color};`">
                     <div class="mx-auto text-xl font-medium text-gray-600">Footer</div>
                     <div class="absolute left-0 -translate-x-1/2 top-1/2 -translate-y-1/2">
                         <ColorPicker :color="setData?.footer?.color" :colorSuggestions="false"
@@ -203,5 +203,5 @@ const addfavicon = async (element) => {
                 </label>
             </div>
         </div>
-    </div>
+    </div> -->
 </template>
