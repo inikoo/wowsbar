@@ -48,7 +48,7 @@ return [
     |
     */
 
-    'debug' => (bool) env('APP_DEBUG', false),
+    'debug' => (bool)env('APP_DEBUG', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -122,7 +122,7 @@ return [
     | Encryption Key
     |--------------------------------------------------------------------------
     |
-    | This key is used by the Illuminate encrypter service and should be set
+    | This key is used by the Illuminate encrypted service and should be set
     | to a random, 32 character string, otherwise these encrypted strings
     | will not be safe. Please do this before deploying an application!
     |
@@ -138,7 +138,7 @@ return [
     |--------------------------------------------------------------------------
     |
     | These configuration options determine the driver used to determine and
-    | manage Laravel's "maintenance mode" status. The "cache" driver will
+    | manage Laravel "maintenance mode" status. The "cache" driver will
     | allow maintenance mode to be controlled across multiple machines.
     |
     | Supported drivers: "file", "cache"
@@ -152,7 +152,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Autoloaded Service Providers
+    | Autoloader Service Providers
     |--------------------------------------------------------------------------
     |
     | The service providers listed here will be automatically loaded on the
@@ -187,7 +187,7 @@ return [
     |
     | This array of class aliases will be registered when this application
     | is started. However, feel free to register as many as you wish as
-    | the aliases are "lazy" loaded so they don't hinder performance.
+    | the aliases are "lazy" loaded, so they don't hinder performance.
     |
     */
 
@@ -195,6 +195,9 @@ return [
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
 
-    'domain'                              => env('APP_DOMAIN'),
-    'universal_search_index'              => env('APP_NAME', 'wowsbar').(env('APP_ENV') == 'testing' ? '_testing' : env('APP_ENV')).'_search',
+    'domain'                 => env('APP_DOMAIN'),
+    'universal_search_index' => env('APP_NAME', 'wowsbar').(env('APP_ENV') == 'testing' ? '_testing' : env('APP_ENV')).'_search',
+    'delivery_domain'        => env('DELIVERY_DOMAIN', 'delivery.wowsbar.test'),
+    'delivery_url'        => env('DELIVERY_URL', 'http://delivery.wowsbar.test'),
+
 ];

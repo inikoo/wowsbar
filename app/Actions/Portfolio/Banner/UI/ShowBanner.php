@@ -15,6 +15,7 @@ use App\Actions\UI\Customer\CaaS\ShowCaaSDashboard;
 use App\Enums\Portfolio\Banner\BannerStateEnum;
 use App\Enums\UI\Customer\BannerTabsEnum;
 use App\Http\Resources\History\HistoryResource;
+use App\Http\Resources\Portfolio\BannerResource;
 use App\Http\Resources\Portfolio\SnapshotResource;
 use App\Models\CRM\Customer;
 use App\Models\Market\Shop;
@@ -164,23 +165,9 @@ class ShowBanner extends InertiaAction
                 ],
                 BannerTabsEnum::SHOWCASE->value => $this->tab == BannerTabsEnum::SHOWCASE->value
                     ?
-                    fn () => [
-                        'banner'         => $banner->compiled_layout,
-                        'url'            => 'xxx',
-                        'workshopRoute'  => [
-                            'name'       => 'customer.caas.banners.workshop',
-                            'parameters' => array_values($request->route()->originalParameters())
-                        ]
-                    ]
+                    fn () => BannerResource::make($banner)->getArray()
                     : Inertia::lazy(
-                        fn () => [
-                            'banner'         => $banner->compiled_layout,
-                            'url'            => 'xxx',
-                            'workshopRoute'  => [
-                                'name'       => 'customer.caas.banners.workshop',
-                                'parameters' => array_values($request->route()->originalParameters())
-                            ]
-                        ]
+                        fn () => BannerResource::make($banner)->getArray()
                     ),
 
                 BannerTabsEnum::SNAPSHOTS->value => $this->tab == BannerTabsEnum::SNAPSHOTS->value ?
