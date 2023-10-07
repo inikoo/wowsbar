@@ -36,8 +36,17 @@ class GetLayout
             /** @var Website $website */
             $website = $organisation->websites()->first();
         }
-
-
+        $navigation['dashboard'] = [
+            'scope'   => 'dashboard',
+            'icon'    => ['fal', 'fa-tachometer-alt-fast'],
+            'label'   => __('Dashboard'),
+            'route'   => [
+                'name' => 'org.dashboard.show'
+            ],
+            'topMenu' => [
+                'subSections' => [],
+            ]
+        ];
         if ($user->hasPermissionTo('shops.view')) {
             $navigation['shops'] = [
                 'label' => $shopsCount == 1 ? __('shop') : __('shops'),

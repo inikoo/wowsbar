@@ -18,7 +18,6 @@ class GetLayout
     {
         $navigation = [];
 
-
         $navigation['dashboard'] = [
             'scope'   => 'dashboard',
             'icon'    => ['fal', 'fa-home'],
@@ -27,8 +26,6 @@ class GetLayout
             'topMenu' => [
                 'subSections' => [],
             ]
-
-
         ];
 
         if ($customerUser->hasPermissionTo('portfolio.view')) {

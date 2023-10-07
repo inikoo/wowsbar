@@ -13,15 +13,16 @@ import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import {library} from "@fortawesome/fontawesome-svg-core"
 import {
     faTerminal, faUserAlien, faCog, faGlobe, faWindowMaximize, faBriefcase, faPhotoVideo, faBrowser,
-    faFolderTree, faCube, faTransporter, faEnvelope, faCoins, faFileInvoice,faMoneyCheckAlt,faChartNetwork
+    faFolderTree, faCube, faTransporter, faEnvelope, faCoins, faFileInvoice, faMoneyCheckAlt, faChartNetwork,
+    faInboxOut
 
 } from "@/../private/pro-light-svg-icons"
 import {useLayoutStore} from "@/Stores/layout"
 
 library.add(
     faTerminal, faUserAlien, faCog, faGlobe, faWindowMaximize, faBriefcase, faPhotoVideo,
-    faBrowser, faFolderTree, faCube, faTransporter, faEnvelope, faCoins, faFileInvoice,faMoneyCheckAlt,
-    faChartNetwork
+    faBrowser, faFolderTree, faCube, faTransporter, faEnvelope, faCoins, faFileInvoice, faMoneyCheckAlt,
+    faChartNetwork, faInboxOut
 )
 
 const layout = useLayoutStore()
