@@ -19,46 +19,20 @@ import { cloneDeep } from 'lodash'
 library.add(faRectangleWide, faGlobe)
 
 const props = defineProps<{
-    data: {
-        banner: {
-            parameters: {}
-            data: {
-                delay: number,
-                slides: [
-                    {
-                        imageSrc: string,
-                        imageAlt: string,
-                        link?: {
-                            label: string,
-                            target: string
-                        }
-                    }
-                ]
-            }
-        },
-        url: String
-        workshopRoute: any
-    }
+    data: any
     tab?: string
-    banner: {
-        'slug': string,
-        'ulid': string,
-        'id': number,
-        'code': string,
-        'name': string,
-        'state' : String
-    }
 }>()
 
 onMounted(() => {
-    props.data.banner.components = cloneDeep(props.data.banner.components).filter(item => item.visibility === true)
+    props.data.compiled_layout.components = cloneDeep(props.data.compiled_layout.components).filter(item => item.visibility === true)
 })
 
 </script>
 
 
 <template>
-    <Slider v-if="data.banner?.components?.length" :data="data.banner" />
+    <!-- <pre>{{ data.compiled_layout }}</pre> -->
+    <Slider v-if="data.compiled_layout?.components?.length" :data="data.compiled_layout" />
     <EmptyState v-else :data="{
         title: trans('You don\'t have slides to show'),
         description: trans('Create new slides in the workshop to get started'),
@@ -69,7 +43,7 @@ onMounted(() => {
             icon: 'fal fa-drafting-compass'
         }
     }" />
-    <div v-if="banner.state !== 'unpublished'" :class="['p-2.5', !data.banner?.components?.length ?  'flex justify-center' : '' ]">
+    <div v-if="data.state !== 'unpublished'" :class="['p-2.5', !data.compiled_layout?.components?.length ?  'flex justify-center' : '' ]">
         <Input :fieldData="{ copyButton: true, readonly: true }" fieldName='url' :form="{ url: data.url }" />
     </div>
 </template>
