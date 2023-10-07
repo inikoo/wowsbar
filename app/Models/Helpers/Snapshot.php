@@ -27,8 +27,8 @@ use Spatie\Sluggable\SlugOptions;
  *
  * @property int $id
  * @property string|null $slug
- * @property string|null $user_type
- * @property int|null $user_id
+ * @property string|null $publisher_type
+ * @property int|null $publisher_id
  * @property string|null $parent_type
  * @property int|null $parent_id
  * @property int|null $customer_id
@@ -40,13 +40,15 @@ use Spatie\Sluggable\SlugOptions;
  * @property array $layout
  * @property string|null $comment
  * @property bool $first_commit
+ * @property bool|null $recyclable
+ * @property string|null $recyclable_tag
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\CRM\Customer|null $customer
  * @property-read Model|\Eloquent $parent
+ * @property-read Model|\Eloquent $publisher
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Slide> $slides
  * @property-read int|null $slides_count
- * @property-read Model|\Eloquent $user
  * @method static Builder|Snapshot newModelQuery()
  * @method static Builder|Snapshot newQuery()
  * @method static Builder|Snapshot query()
@@ -61,12 +63,14 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Snapshot whereParentType($value)
  * @method static Builder|Snapshot wherePublishedAt($value)
  * @method static Builder|Snapshot wherePublishedUntil($value)
+ * @method static Builder|Snapshot wherePublisherId($value)
+ * @method static Builder|Snapshot wherePublisherType($value)
+ * @method static Builder|Snapshot whereRecyclable($value)
+ * @method static Builder|Snapshot whereRecyclableTag($value)
  * @method static Builder|Snapshot whereScope($value)
  * @method static Builder|Snapshot whereSlug($value)
  * @method static Builder|Snapshot whereState($value)
  * @method static Builder|Snapshot whereUpdatedAt($value)
- * @method static Builder|Snapshot whereUserId($value)
- * @method static Builder|Snapshot whereUserType($value)
  * @mixin \Eloquent
  */
 class Snapshot extends Model
@@ -117,7 +121,7 @@ class Snapshot extends Model
         return $this->morphTo();
     }
 
-    public function user(): MorphTo
+    public function publisher(): MorphTo
     {
         return $this->morphTo();
     }

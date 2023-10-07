@@ -12,7 +12,6 @@ use App\Actions\Helpers\Snapshot\UpdateSnapshot;
 use App\Actions\Traits\WithActionUpdate;
 use App\Enums\Organisation\Web\Webpage\WebpageStateEnum;
 use App\Enums\Portfolio\Snapshot\SnapshotStateEnum;
-use App\Http\Resources\Web\WebpageResource;
 use App\Models\Helpers\Snapshot;
 use App\Models\Web\Webpage;
 use Illuminate\Support\Arr;
@@ -26,6 +25,11 @@ class PublishWebpage
 
     public function handle(Webpage $webpage, array $modelData): Webpage
     {
+        $firstCommit = false;
+        if ($webpage->state == WebpageStateEnum::IN_PROCESS or $webpage->state == WebpageStateEnum::READY) {
+            $firstCommit = true;
+        }
+
         foreach ($webpage->snapshots()->where('state', SnapshotStateEnum::LIVE)->get() as $liveSnapshot) {
             UpdateSnapshot::run($liveSnapshot, [
                 'state'           => SnapshotStateEnum::HISTORIC,
@@ -33,16 +37,20 @@ class PublishWebpage
             ]);
         }
 
-        $layout                       = Arr::get($modelData, 'layout');
+        $layout = $webpage->unpublishedSnapshot->layout;
 
 
         /** @var Snapshot $snapshot */
         $snapshot = StoreWebpageSnapshot::run(
             $webpage,
             [
-                'state'        => SnapshotStateEnum::LIVE,
-                'published_at' => now(),
-                'layout'       => $layout
+                'state'          => SnapshotStateEnum::LIVE,
+                'published_at'   => now(),
+                'layout'         => $layout,
+                'first_commit'   => $firstCommit,
+                'comment'        => Arr::get($modelData, 'comment'),
+                'publisher_id'   => Arr::get($modelData, 'publisher_id'),
+                'publisher_type' => Arr::get($modelData, 'publisher_type'),
             ]
         );
 
@@ -50,11 +58,11 @@ class PublishWebpage
         $compiledLayout = $snapshot->compiledLayout();
 
 
-
         $updateData = [
-            'live_snapshot_id' => $snapshot->id,
-            'compiled_layout'  => $compiledLayout,
-            'state'            => WebpageStateEnum::LIVE,
+            'live_snapshot_id'   => $snapshot->id,
+            'compiled_layout'    => $compiledLayout,
+            'published_checksum' => md5(json_encode($snapshot->layout)),
+            'state'              => WebpageStateEnum::LIVE,
         ];
 
         if ($webpage->state == WebpageStateEnum::IN_PROCESS or $webpage->state == WebpageStateEnum::READY) {
@@ -62,7 +70,6 @@ class PublishWebpage
         }
 
         $webpage->update($updateData);
-
 
         return $webpage;
     }
@@ -79,8 +86,9 @@ class PublishWebpage
     public function rules(): array
     {
         return [
-            'layout'  => ['required', 'array:delay,common,components'],
-            'comment' => ['sometimes', 'required', 'string', 'max:1024']
+            'comment'        => ['sometimes', 'required', 'string', 'max:1024'],
+            'publisher_id'   => ['sometimes'],
+            'publisher_type' => ['sometimes', 'string'],
         ];
     }
 
@@ -88,16 +96,18 @@ class PublishWebpage
     {
         $request->merge(
             [
-                'layout' => $request->only(['delay', 'common', 'components']),
+                'publisher_id'   => $request->user()->id,
+                'publisher_type' => 'OrganisationUser'
             ]
         );
     }
 
-    public function asController(Webpage $webpage, ActionRequest $request): Webpage
+    public function asController(Webpage $webpage, ActionRequest $request): string
     {
         $request->validate();
+        $this->handle($webpage, $request->validated());
 
-        return $this->handle($webpage, $request->validated());
+        return "🚀";
     }
 
     public function action(Webpage $webpage, $modelData): Webpage
@@ -109,9 +119,5 @@ class PublishWebpage
         return $this->handle($webpage, $validatedData);
     }
 
-    public function jsonResponse(Webpage $webpage): WebpageResource
-    {
-        return new WebpageResource($webpage);
-    }
 
 }

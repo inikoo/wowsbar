@@ -78,6 +78,7 @@ class IndexSnapshots extends InertiaAction
                 ->column(key: 'published_at', label: __('date published'), sortable: true)
                 ->column(key: 'published_until', label: __('published until'))
                 ->column(key: 'comment', label: __('comment'))
+                ->column(key: 'recyclable', label: ['fal', 'fa-recycle'])
                 ->defaultSort('published_at');
         };
     }

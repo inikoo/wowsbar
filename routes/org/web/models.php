@@ -123,7 +123,6 @@ Route::prefix('webpage')->as('webpage.')->group(function () {
     Route::post('{webpage:id}', StoreWebpage::class)->name('store');
     Route::post('{webpage:id}/content', UpdateWebpageContent::class)->name('content.update');
     Route::post('{webpage:id}/publish', PublishWebpage::class)->name('content.publish');
-
     Route::get('{webpage:id}/content', ShowWebpageContent::class)->name('content.show');
 
     //Route::patch('{webpage:id}', UpdateWebsite::class)->name('update');

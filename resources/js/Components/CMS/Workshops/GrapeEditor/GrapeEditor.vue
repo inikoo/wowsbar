@@ -73,7 +73,8 @@ onMounted(() => {
         noticeOnUnload: false,
         plugins: [Webpage, Basic, usePlugin(grapesjsIcons, options),...props.plugins],
         canvas: {
-            styles: ['https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css']
+            // styles: ['https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css']
+            scripts:['https://cdn.tailwindcss.com']
         },
         storageManager: {
             type: 'remote',

@@ -9,13 +9,14 @@ import Table from '@/Components/Table/Table.vue'
 import Image from '@/Components/Image.vue'
 import Icon from "@/Components/Icon.vue"
 import { library } from "@fortawesome/fontawesome-svg-core"
-import { faBroadcastTower, faSeedling, faGhost } from "@/../private/pro-light-svg-icons"
-import { useFormatTime } from "@/Composables/useFormatTime"
-import { useLocaleStore } from '@/Stores/locale'
+import {faBroadcastTower, faSeedling, faGhost, faRecycle, faPoo} from "@/../private/pro-light-svg-icons"
+import {useFormatTime} from "@/Composables/useFormatTime"
+import {useLocaleStore} from '@/Stores/locale'
+
 const locale = useLocaleStore()
 
 
-library.add(faSeedling, faGhost, faBroadcastTower);
+library.add(faSeedling, faGhost, faBroadcastTower, faRecycle, faPoo);
 const props = defineProps<{
     data: object,
     tab?: string
