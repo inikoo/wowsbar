@@ -86,7 +86,6 @@ class ShowBanner extends InertiaAction
                     'next'     => $this->getNext($banner, $request),
                 ],
                 'title'                                   => $banner->name,
-                'banner'                                  => $banner->only(['slug', 'ulid', 'id', 'name', 'state']),
                 'pageHead'                                => [
                     'title'     => $banner->name,
                     'icon'      => [

@@ -16,11 +16,11 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
  * @property mixed $published_hash
+ * @property mixed $live_snapshot_id
  */
 class BannerResource extends JsonResource
 {
     use HasSelfCall;
-
 
     public function toArray($request): array
     {
@@ -32,6 +32,12 @@ class BannerResource extends JsonResource
         if ($banner->image) {
             $image          = (new Image())->make($banner->image->getImgProxyFilename());
             $imageThumbnail = (new Image())->make($banner->image->getImgProxyFilename())->resize(0, 48);
+        }
+
+        $publishedSnapshot=[];
+        if($banner->state==BannerStateEnum::LIVE and $this->live_snapshot_id){
+            $snapshot=$banner->liveSnapshot;
+            $publishedSnapshot=SnapshotResource::make($snapshot)->getArray();
         }
 
         return [
@@ -79,7 +85,8 @@ class BannerResource extends JsonResource
                 'parameters' => [$banner->slug]
             ],
             'compiled_layout'=>$banner->compiled_layout,
-            'delivery_url'=>config('app.delivery_url').$banner->ulid
+            'delivery_url'=>config('app.delivery_url').$banner->ulid,
+            'published_snapshot'=>$publishedSnapshot
         ];
     }
 }

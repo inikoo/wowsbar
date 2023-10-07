@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Portfolio;
 
 use App\Enums\Portfolio\Snapshot\SnapshotStateEnum;
+use App\Http\Resources\HasSelfCall;
 use App\Models\Auth\CustomerUser;
 use App\Models\Auth\OrganisationUser;
 use Illuminate\Http\Request;
@@ -10,12 +11,9 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class SnapshotResource extends JsonResource
 {
-    /**
-     * Transform the resource into an array.
-     *
-     * @return array<string, mixed>
-     */
-    public function toArray(Request $request): array
+    use HasSelfCall;
+
+    public function toArray($request): array
     {
         /** @var \App\Models\Helpers\Snapshot $snapshot */
         $snapshot = $this;
@@ -46,6 +44,7 @@ class SnapshotResource extends JsonResource
                     $publisherAvatar = $organisationUser->avatarImageSources(48, 48);
             }
         }
+
 
 
         return [

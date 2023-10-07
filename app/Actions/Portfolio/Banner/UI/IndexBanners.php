@@ -81,6 +81,7 @@ class IndexBanners extends InertiaAction
 
         return $queryBuilder
             ->defaultSort('banners.slug')
+            ->select('banners.slug','banners.state','banners.name','banners.image_id','live_at','retired_at','created_at','updated_at')
             ->allowedSorts(['slug', 'name', 'created_at', 'updated_at'])
             ->allowedFilters([$globalSearch])
             ->withPaginator($prefix)
