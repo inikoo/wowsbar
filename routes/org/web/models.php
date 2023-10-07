@@ -108,12 +108,10 @@ Route::prefix('website')->as('website.')->group(function () {
 
     Route::post('{website:id}/header/content', UpdateWebsiteHeaderContent::class)->name('header.content.update');
     Route::post('{website:id}/header/publish', [PublishWebsiteMarginal::class,'header'])->name('header.content.publish');
-
     Route::get('{website:id}/header/content', ShowWebsiteHeaderContent::class)->name('header.content.show');
 
     Route::post('{website:id}/footer/content', UpdateWebsiteFooterContent::class)->name('footer.content.update');
     Route::post('{website:id}/footer/publish', [PublishWebsiteMarginal::class,'footer'])->name('footer.content.publish');
-
     Route::get('{website:id}/footer/content', ShowWebsiteFooterContent::class)->name('footer.content.show');
 
 

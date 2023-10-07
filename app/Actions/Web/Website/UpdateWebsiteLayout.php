@@ -7,8 +7,12 @@
 
 namespace App\Actions\Web\Website;
 
+use App\Actions\Helpers\Images\GetPictureSources;
 use App\Actions\Traits\WithActionUpdate;
+use App\Helpers\ImgProxy\Image;
+use App\Models\Media\Media;
 use App\Models\Web\Website;
+use Illuminate\Support\Arr;
 use Lorisleiva\Actions\ActionRequest;
 
 class UpdateWebsiteLayout
@@ -24,11 +28,18 @@ class UpdateWebsiteLayout
                 'layout' => $modelData
             ]
         );
-        $website->update(
-            [
-                'compiled_structure' => $website->getCompiledStructure()
-            ]
-        );
+
+        /*
+         *
+         *  $layoutData = (array) $request;
+        $media      = Media::find(Arr::get($layoutData, 'favicon'));
+        if($media) {
+            $favicon    = (new Image())->make($media->getImgProxyFilename())->resize(0, 180);
+            return array_merge($layoutData, ['faviconSrc' => GetPictureSources::run($favicon)]);
+        }
+        return  $layoutData;
+         */
+
 
         return $website;
     }

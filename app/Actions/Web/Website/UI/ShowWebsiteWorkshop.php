@@ -75,7 +75,6 @@ class ShowWebsiteWorkshop extends InertiaAction
                     'current'    => $this->tab,
                     'navigation' => WebsiteWorkshopTabsEnum::navigation(),
                 ],
-                'structure'         => $website->compiled_structure,
                 'imagesUploadRoute' => [
                     'name'       => 'org.models.website.images.store',
                     'parameters' => $website->id

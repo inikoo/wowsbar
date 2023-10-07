@@ -27,15 +27,7 @@ return new class () extends Migration {
             $table->string('domain')->unique()->collation('und_ns');
             $table->jsonb('settings');
             $table->jsonb('data');
-            $table->jsonb('header');
-            $table->jsonb('menu');
-            $table->jsonb('footer');
             $table->jsonb('layout');
-
-            $table->jsonb('header_content');
-            $table->jsonb('footer_content');
-            $table->jsonb('compiled_structure');
-
             $table->jsonb('compiled_layout');
 
             $table->unsignedSmallInteger('unpublished_header_snapshot_id')->nullable()->index();

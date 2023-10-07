@@ -11,9 +11,6 @@
 namespace App\Models\Web;
 
 use App\Enums\Organisation\Web\Website\WebsiteStateEnum;
-use App\Http\Resources\Web\WebsiteFooterResource;
-use App\Http\Resources\Web\WebsiteHeaderResource;
-use App\Http\Resources\Web\WebsiteLayoutResource;
 use App\Models\Helpers\Snapshot;
 use App\Models\Market\Shop;
 use App\Models\Media\Media;
@@ -48,13 +45,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property string $domain
  * @property array $settings
  * @property array $data
- * @property array $header
- * @property array $menu
- * @property array $footer
  * @property array $layout
- * @property array $header_content
- * @property array $footer_content
- * @property array $compiled_structure
  * @property array $compiled_layout
  * @property int|null $unpublished_header_snapshot_id
  * @property int|null $live_header_snapshot_id
@@ -93,23 +84,17 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Website whereClosedAt($value)
  * @method static Builder|Website whereCode($value)
  * @method static Builder|Website whereCompiledLayout($value)
- * @method static Builder|Website whereCompiledStructure($value)
  * @method static Builder|Website whereCreatedAt($value)
  * @method static Builder|Website whereCurrentLayoutId($value)
  * @method static Builder|Website whereData($value)
  * @method static Builder|Website whereDeletedAt($value)
  * @method static Builder|Website whereDomain($value)
- * @method static Builder|Website whereFooter($value)
- * @method static Builder|Website whereFooterContent($value)
- * @method static Builder|Website whereHeader($value)
- * @method static Builder|Website whereHeaderContent($value)
  * @method static Builder|Website whereHomeId($value)
  * @method static Builder|Website whereId($value)
  * @method static Builder|Website whereLaunchedAt($value)
  * @method static Builder|Website whereLayout($value)
  * @method static Builder|Website whereLiveFooterSnapshotId($value)
  * @method static Builder|Website whereLiveHeaderSnapshotId($value)
- * @method static Builder|Website whereMenu($value)
  * @method static Builder|Website whereName($value)
  * @method static Builder|Website whereOrganisationId($value)
  * @method static Builder|Website whereSettings($value)
@@ -137,13 +122,7 @@ class Website extends Model implements Auditable, HasMedia
     protected $casts = [
         'data'               => 'array',
         'settings'           => 'array',
-        'header'             => 'array',
-        'footer'             => 'array',
-        'header_content'     => 'array',
-        'footer_content'     => 'array',
-        'menu'               => 'array',
         'layout'             => 'array',
-        'compiled_structure' => 'array',
         'compiled_layout'    => 'array',
 
         'state' => WebsiteStateEnum::class,
@@ -152,13 +131,7 @@ class Website extends Model implements Auditable, HasMedia
     protected $attributes = [
         'data'               => '{}',
         'settings'           => '{}',
-        'header'             => '{}',
-        'footer'             => '{}',
-        'header_content'     => '{}',
-        'footer_content'     => '{}',
-        'menu'               => '{}',
         'layout'             => '{}',
-        'compiled_structure' => '{}',
         'compiled_layout'    => '{}'
     ];
 
@@ -212,14 +185,6 @@ class Website extends Model implements Auditable, HasMedia
         );
     }
 
-    public function getCompiledStructure(): array
-    {
-        data_set($compiledLayout, 'header', WebsiteHeaderResource::make($this->header)->getArray());
-        data_set($compiledLayout, 'footer', WebsiteFooterResource::make($this->footer)->getArray());
-        data_set($compiledLayout, 'layout', WebsiteLayoutResource::make($this->layout)->getArray());
-
-        return $compiledLayout;
-    }
 
 
     public function images(): MorphToMany
