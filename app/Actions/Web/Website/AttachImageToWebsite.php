@@ -28,7 +28,6 @@ class AttachImageToWebsite
         $media = $website->media()->where('collection_name', $collection)->where('checksum', $checksum)->first();
 
         if ($media) {
-
             return $media;
         }
 
@@ -37,7 +36,7 @@ class AttachImageToWebsite
         $filename = dechex(crc32($checksum)).'.';
         $filename .= empty($extension) ? pathinfo($imagePath, PATHINFO_EXTENSION) : $extension;
 
-        $media = $website->addMedia($imagePath)
+        $media= $website->addMedia($imagePath)
             ->preservingOriginal()
             ->withProperties(
                 [
@@ -47,7 +46,7 @@ class AttachImageToWebsite
             ->usingName($originalFilename)
             ->usingFileName($filename)
             ->toMediaCollection($collection);
-
+        $media->refresh();
         return $media;
     }
 }

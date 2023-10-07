@@ -49,8 +49,12 @@ use Spatie\Sluggable\SlugOptions;
  * @property array $compiled_layout
  * @property int|null $unpublished_header_snapshot_id
  * @property int|null $live_header_snapshot_id
+ * @property string|null $published_header_checksum
+ * @property bool $header_is_dirty
  * @property int|null $unpublished_footer_snapshot_id
  * @property int|null $live_footer_snapshot_id
+ * @property string|null $published_footer_checksum
+ * @property bool $footer_is_dirty
  * @property int|null $current_layout_id
  * @property int $organisation_id
  * @property \Illuminate\Support\Carbon|null $created_at
@@ -89,6 +93,8 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Website whereData($value)
  * @method static Builder|Website whereDeletedAt($value)
  * @method static Builder|Website whereDomain($value)
+ * @method static Builder|Website whereFooterIsDirty($value)
+ * @method static Builder|Website whereHeaderIsDirty($value)
  * @method static Builder|Website whereHomeId($value)
  * @method static Builder|Website whereId($value)
  * @method static Builder|Website whereLaunchedAt($value)
@@ -97,6 +103,8 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Website whereLiveHeaderSnapshotId($value)
  * @method static Builder|Website whereName($value)
  * @method static Builder|Website whereOrganisationId($value)
+ * @method static Builder|Website wherePublishedFooterChecksum($value)
+ * @method static Builder|Website wherePublishedHeaderChecksum($value)
  * @method static Builder|Website whereSettings($value)
  * @method static Builder|Website whereShopId($value)
  * @method static Builder|Website whereSlug($value)

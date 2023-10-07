@@ -8,9 +8,9 @@
 namespace App\Actions\Web\Website;
 
 use App\Http\Resources\Gallery\ImageResource;
-use App\Models\Media\Media;
 use App\Models\Web\Website;
-use Illuminate\Http\UploadedFile;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Collection;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
@@ -21,27 +21,24 @@ class UploadImagesToWebsite
     use WithAttributes;
 
 
-    public function handle(Website $website, string $scope, UploadedFile $imageFile): Media
+    public function handle(Website $website, string $scope, array $imageFiles): Collection
     {
-        $media = AttachImageToWebsite::run(
-            website: $website,
-            collection: 'structure',
-            imagePath: $imageFile->getPathName(),
-            originalFilename: $imageFile->getClientOriginalName(),
-            extension: $imageFile->guessClientExtension()
-        );
+
+        $medias=[];
+
+        foreach ($imageFiles as $imageFile) {
+            $medias[] = AttachImageToWebsite::run(
+                website: $website,
+                collection: $scope,
+                imagePath: $imageFile->getPathName(),
+                originalFilename: $imageFile->getClientOriginalName(),
+                extension: $imageFile->guessClientExtension()
+            );
+        }
 
 
-        $existing_ids = $website->images()->where('scope', $scope)->whereIn('media_id', [$media->id])->pluck('media_id');
-        $website->images()->attach(
-            collect([$media->id])->diff($existing_ids),
-            [
-                'scope' => $scope
-            ]
-        );
+        return collect($medias);
 
-
-        return $media;
     }
 
     public function authorize(ActionRequest $request): bool
@@ -58,27 +55,27 @@ class UploadImagesToWebsite
     }
 
 
-    public function header(Website $website, ActionRequest $request): Media
+    public function header(Website $website, ActionRequest $request): Collection
     {
         $request->validate();
         return $this->handle($website, 'header', $request->validated('images'));
     }
 
-    public function footer(Website $website, ActionRequest $request): Media
+    public function footer(Website $website, ActionRequest $request): Collection
     {
         $request->validate();
         return $this->handle($website, 'footer', $request->validated('images'));
     }
 
-    public function favicon(Website $website, ActionRequest $request): Media
+    public function favicon(Website $website, ActionRequest $request): Collection
     {
         $request->validate();
         return $this->handle($website, 'favicon', $request->validated('images'));
     }
 
-    public function jsonResponse(Media $media): array
+    public function jsonResponse($medias): AnonymousResourceCollection
     {
-        return ImageResource::make($media)->getArray();
+        return ImageResource::collection($medias);
     }
 
 }
