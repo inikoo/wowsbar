@@ -23,6 +23,7 @@ class ImageResource extends JsonResource
         $media = $this;
 
 
+
         $image          = (new Image())->make($media->getImgProxyFilename(), $media->is_animated);
         $imageThumbnail = (new Image())->make($media->getImgProxyFilename(), $media->is_animated)->resize(0, 48);
 
@@ -30,6 +31,7 @@ class ImageResource extends JsonResource
         return [
             'id'         => $media->id,
             'slug'       => $media->slug,
+            'uuid'       => $media->uuid,
             'name'       => $media->name,
             'mime_type'  => $media->mime_type,
             'size'       => NaturalLanguage::make()->fileSize($media->size),
