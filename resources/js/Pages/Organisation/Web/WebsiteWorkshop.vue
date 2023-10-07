@@ -46,8 +46,6 @@ console.log(props.websiteState)
 
 let currentTab = ref(props.tabs.current)
 
-const structure = ref(props.structure)
-
 const handleTabUpdate = (tabSlug) => {
     useTabChange(tabSlug, currentTab)
     RouteActive.value = props.publishRoutes[tabSlug]
@@ -98,6 +96,7 @@ const compIsDataFirstTimeCreated = computed(() => {
 
 <template layout="OrgApp">
     <Head :title="capitalize(title)" />
+    <!-- <pre>{{ props }}</pre> -->
     <PageHeading :data="pageHead">
         <template #other="{ dataPageHead: head }">
             <Publish
@@ -112,6 +111,7 @@ const compIsDataFirstTimeCreated = computed(() => {
     </PageHeading>
 
     <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate"/>
+
     <component :is="component" :data="props[currentTab]" :imagesUploadRoute="imagesUploadRoute" :updateRoutes="updateRoutes"></component>
 
 </template>

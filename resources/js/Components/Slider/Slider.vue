@@ -97,7 +97,7 @@ watch(() => props.jumpToIndex, (newVal) => {
 </script>
 
 <template>
-    <div class="relative border border-gray-300 shadow-md" 
+    <div class="relative" 
         :class="[$props.view
             ? { 'aspect-[2/1] w-1/2' : $props.view == 'mobile',
                 'aspect-[3/1] w-3/4' : $props.view == 'tablet',

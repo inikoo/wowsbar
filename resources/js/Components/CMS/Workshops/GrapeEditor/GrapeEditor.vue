@@ -241,4 +241,3 @@ onMounted(() => {
     @apply text-gray-600;
 }
 </style>
-@/Components/CMS/Workshops/GrapeEditor/CustomBlocks/CustomBlock
