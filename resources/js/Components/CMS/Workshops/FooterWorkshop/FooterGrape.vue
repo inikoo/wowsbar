@@ -30,6 +30,6 @@ library.add(
 </script>
 
 <template layout="OrgApp">
-    <GrapeEditor :data="data" @changeData="(value) => data = value" :plugins="[FooterPlugins]" :updateRoute="updateRoutes.workshop_footer" :loadRoute="updateRoutes.workshop_footer" />
+    <GrapeEditor :data="data" @changeData="(value) => data = value" :plugins="[FooterPlugins]" :updateRoute="updateRoutes.workshop_footer" :loadRoute="updateRoutes.workshop_footer" :imagesUploadRoute="imagesUploadRoute.workshop_footer" />
 </template>
 

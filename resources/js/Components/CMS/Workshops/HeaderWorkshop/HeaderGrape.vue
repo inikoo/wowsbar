@@ -13,6 +13,7 @@ const props = defineProps<{
     updateRoutes: Object
 }>();
 
+
 library.add(
     faArrowAltToTop,
     faArrowAltToBottom,
@@ -29,6 +30,6 @@ library.add(
 </script>
 
 <template layout="OrgApp">
-    <GrapeEditor :plugins="[HeaderPlugins]" :updateRoute="updateRoutes.workshop_header" :loadRoute="updateRoutes.workshop_header" :imagesUploadRoute="imagesUploadRoute" />
+    <GrapeEditor :plugins="[HeaderPlugins]" :updateRoute="updateRoutes.workshop_header" :loadRoute="updateRoutes.workshop_header" :imagesUploadRoute="imagesUploadRoute.workshop_header" />
 </template>
 
