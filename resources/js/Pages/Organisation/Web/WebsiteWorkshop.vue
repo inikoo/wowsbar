@@ -10,6 +10,7 @@ import Tabs from "@/Components/Navigation/Tabs.vue"
 import { capitalize } from "@/Composables/capitalize"
 import HeaderGrape from '@/Components/CMS/Workshops/HeaderWorkshop/HeaderGrape.vue'
 import FooterGrape from '@/Components/CMS/Workshops/FooterWorkshop/FooterGrape.vue'
+import LayoutTemplateWorkshop from '@/Components/CMS/Workshops/LayoutWorkshop/LayoutTemplateWorkshop.vue'
 import Publish from '@/Components/Utils/Publish.vue'
 import axios from 'axios'
 import Edit from '@/Components/Edit.vue';
@@ -31,13 +32,14 @@ const props = defineProps<{
     pageHead: any,
     tabs: {
         current: string
-        navigation: object
+        navigation: object,
     }
     structure: Object
     imagesUploadRoute: Object
     updateRoutes: Object
     publishRoutes:Object
     websiteState:String
+    workshop_layout?: any
 }>()
 
 console.log(props.websiteState)
@@ -55,7 +57,7 @@ const component = computed(() => {
     const components = {
         'workshop_header': HeaderGrape,
         'workshop_footer': FooterGrape,
-        'workshop_layout': Edit,
+        'workshop_layout': LayoutTemplateWorkshop,
     }
     return components[currentTab.value]
 })
@@ -110,8 +112,7 @@ const compIsDataFirstTimeCreated = computed(() => {
     </PageHeading>
 
     <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate"/>
-
-    <component :is="component" :data="structure" :imagesUploadRoute="imagesUploadRoute" :updateRoutes="updateRoutes"></component>
+    <component :is="component" :data="props[currentTab]" :imagesUploadRoute="imagesUploadRoute" :updateRoutes="updateRoutes"></component>
 
 </template>
 
