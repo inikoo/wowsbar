@@ -43,7 +43,7 @@ class PublishBanner
         }
 
         $layout                       = Arr::pull($modelData, 'layout');
-        list($layout, $slides, $hash) = ParseBannerLayout::run($layout);
+        list($layout, $slides) = ParseBannerLayout::run($layout);
 
         /** @var Snapshot $snapshot */
         $snapshot = StoreBannerSnapshot::run(
@@ -67,7 +67,7 @@ class PublishBanner
             'live_snapshot_id' => $snapshot->id,
             'compiled_layout'  => $compiledLayout,
             'state'            => BannerStateEnum::LIVE,
-            'checksum'         => $hash
+           // 'checksum'         => $hash
         ];
 
         if ($banner->state == BannerStateEnum::UNPUBLISHED) {
