@@ -11,9 +11,9 @@ const props = defineProps({
 </script>
 
 <template>
-    <Popover :popover-placement="'bottom-start'">
+    <Popover :popover-placement="'bottom-start'" v-slot="{ open }">
         <PopoverButton>
-            <slot name="button"></slot>
+            <slot name="button" :isOpen="open"></slot>
         </PopoverButton>
 
         <slot name="popup">
