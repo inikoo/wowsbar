@@ -18,9 +18,9 @@ import { useLayoutStore } from "@/Stores/layout"
 import { cloneDeep, set as setLodash } from "lodash"
 import { set, onValue, get } from "firebase/database"
 import { getDbRef } from '@/Composables/firebase'
-// import Modal from '@/Components/Utils/Modal.vue'
+
 import { useBannerHash } from "@/Composables/useBannerHash"
-import Popover from "@/Components/Utils/Popover.vue"
+import Publish from "@/Components/Utils/Publish.vue"
 
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { faUser, faUserFriends } from "@/../private/pro-light-svg-icons"
@@ -103,10 +103,9 @@ const props = defineProps<{
 
 const user = ref(usePage().props.auth.user)
 const isLoading = ref(false)
-const comment = ref('')
+const comment = ref('abcc')
 const loadingState = ref(false)
 const isSetData = ref(false)
-const _comment = ref()
 
 const routeExit =  props.pageHead.actions.find((item)=> item.style == "exit")
 const dbPath = 'customers' + '/' + useLayoutStore().user.customer.ulid + '/banner_workshop/' + props.banner.slug
@@ -267,6 +266,11 @@ const stopInterval=()=>{
       clearInterval(intervalAutoSave.value);
     }
 
+
+const compIsHashSame = computed(() => {
+    return compCurrentHash.value == data.published_hash
+})
+
 </script>
 
 
@@ -274,58 +278,15 @@ const stopInterval=()=>{
     <Head :title="capitalize(title)" />
     <PageHeading :data="pageHead">
         <template #other="{ dataPageHead: head }">
-            <div class="flex items-center gap-2 relative" tabindex="-1">
-
-                <!-- 'fd186208ae9dab06d40e49141f34bef9' is Hash from empty data -->
-                <Button v-if="banner.state == 'unpublished'"
-                    label="Publish"
-                    :style="compCurrentHash == 'fd186208ae9dab06d40e49141f34bef9' ? 'disabled' : compCurrentHash == data.published_hash ? 'disabled' : 'primary'"
-                    :key="compCurrentHash"
-                    icon="far fa-rocket-launch"
-                    @click="sendDataToServer()"
-                />
-
-                <!-- If banner already Live, then appear Popover 'comment' before publish -->
-                <Popover v-else>
-                    <template #button="{ isOpen }">
-                        <Button v-if="!isOpen" label="Publish"
-                            :style="compCurrentHash == 'fd186208ae9dab06d40e49141f34bef9'
-                                ? 'disabled'
-                                : compCurrentHash == data.published_hash
-                                    ? 'disabled'
-                                    : isOpen
-                                        ? 'cancel'
-                                        : 'primary'"
-                            :key="compCurrentHash"
-                            icon="far fa-rocket-launch"
-                        />
-                        <Button v-else :style="`cancel`" icon="fal fa-times" label="Cancel" />
-                    </template>
-
-                    <!-- Popover: if already live, add comment to publish it again  -->
-                    <template v-if="banner.state == 'live'" #content>
-                        <div>
-                            <div class="inline-flex items-start leading-none">
-                                <FontAwesomeIcon :icon="'fas fa-asterisk'" class="font-light text-[12px] text-red-400 mr-1" />
-                                <span>{{ trans('Comment') }}</span>
-                            </div>
-                            <div class="py-2.5">
-                                <textarea
-                                    rows="3" v-model="comment"
-                                    class="block w-64 lg:w-96 rounded-md shadow-sm dark:bg-gray-600 dark:text-gray-400 border-gray-300 dark:border-gray-500 focus:border-gray-500 focus:ring-gray-500 sm:text-sm" />
-                            </div>
-                            <div class="flex justify-end">
-                                <Button size="xs" @click="sendDataToServer" icon="far fa-rocket-launch" label="Publish" :key="comment.length" :style="comment.length ? 'primary' : 'disabled'">
-                                    <template #icon>
-                                        <FontAwesomeIcon v-if="isLoading" icon='fad fa-spinner-third' class='animate-spin' aria-hidden='true' />
-                                        <FontAwesomeIcon v-else icon='far fa-rocket-launch' class='' aria-hidden='true' />
-                                    </template>
-                                </Button>
-                            </div>
-                        </div>
-                    </template>
-                </Popover>
-            </div>
+            <Publish 
+                v-model="comment"
+                :isHashSame="compIsHashSame"
+                :currentHashData="compCurrentHash"
+                emptyDataHash="fd186208ae9dab06d40e49141f34bef9"
+                :isLoading="isLoading"
+                :saveFunction="sendDataToServer"
+                :firstPublish="banner.state == 'unpublished'"
+            />
         </template>
     </PageHeading>
 
