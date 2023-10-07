@@ -90,6 +90,11 @@ class ShowWebsiteWorkshop extends InertiaAction
 
                 ],
                 'websiteState'  => $website->state,
+                'isDirty'      => [
+                    'workshop_header'=> $website->header_is_dirty,
+                    'workshop_footer'=> $website->footer_is_dirty,
+                ],
+
                 'publishRoutes' => [
                     'workshop_header'=> [
                         'name'       => 'org.models.website.header.content.publish',

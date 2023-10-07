@@ -17,20 +17,30 @@ class UpdateWebsiteHeaderContent
 
     private bool $asAction = false;
 
-    public function handle(Website $website, array $content): void
+    public function handle(Website $website, array $content): Website
     {
-
         $snapshot = $website->unpublishedHeaderSnapshot;
         $snapshot->update(
             [
                 'layout' => [
-                    'src' => $content['data'],
-                    'html'=> $content['pagesHtml'],
+                    'src'  => $content['data'],
+                    'html' => $content['pagesHtml'],
                 ]
             ]
         );
 
+        $isDirty = true;
+        if ($website->published_header_checksum == md5(json_encode($snapshot->layout))) {
+            $isDirty = false;
+        }
 
+        $website->update(
+            [
+                'header_is_dirty' => $isDirty
+            ]
+        );
+
+        return $website;
     }
 
     public function authorize(ActionRequest $request): bool
@@ -50,11 +60,14 @@ class UpdateWebsiteHeaderContent
         ];
     }
 
-    public function asController(Website $website, ActionRequest $request): string
+    public function asController(Website $website, ActionRequest $request): array
     {
         $request->validate();
-        $this->handle($website, $request->validated());
-        return "👍";
+        $website = $this->handle($website, $request->validated());
+
+        return [
+            'isDirty' => $website->header_is_dirty
+        ];
     }
 
 

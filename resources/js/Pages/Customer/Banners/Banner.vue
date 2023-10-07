@@ -24,14 +24,6 @@ library.add(faRectangleWide, faGlobe, faPencil,faSeedling, faPaste,faLayerGroup)
 const props = defineProps<{
     title: string,
     pageHead: object,
-    banner: {
-        'slug': string,
-        'ulid': string,
-        'id': number,
-        'code': string,
-        'name': string,
-        'state' : String
-    }
     tabs: {
         current: string;
         navigation: object;
@@ -62,8 +54,9 @@ const component = computed(() => {
 
 <template layout="CustomerApp">
     <Head :title="capitalize(title)"/>
+    <!-- <pre>{{ showcase }}</pre> -->
     <PageHeading :data="pageHead"></PageHeading>
     <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate"/>
-    <component :is="component" :tab="currentTab" :data="props[currentTab]"  :banner="banner"></component>
+    <component :is="component" :tab="currentTab" :data="props[currentTab]"></component>
 </template>
 

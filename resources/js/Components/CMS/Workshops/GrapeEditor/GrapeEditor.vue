@@ -7,9 +7,10 @@ import { router } from '@inertiajs/vue3'
 import Basic from "grapesjs-blocks-basic";
 import grapesjsIcons from "grapesjs-icons";
 import { CustomBlock } from "@/Components/CMS/Workshops/GrapeEditor/CustomBlocks/CustomBlock";
+import axios from "axios"
 
 
-const emits = defineEmits();
+const emits = defineEmits(['onSaveToServer']);
 const props = defineProps<{
     plugins: Array;
     customBlocks?: Array;
@@ -17,8 +18,6 @@ const props = defineProps<{
     loadRoute?: Object;
     imagesUploadRoute?:Object
 }>();
-
-console.log(props.imagesUploadRoute)
 
 const editorInstance = ref(null);
 const options = { collections: ["ri", "mdi", "uim", "streamline-emojis"]};
@@ -58,10 +57,12 @@ const Store = async (data, editor) => {
                 props.updateRoute.parameters
             ),
             { data, pagesHtml },
-        );
-        if (response) {
-            console.log('saving......')
-        }
+        )
+        emits('onSaveToServer', response?.data?.isDirty)
+        // console.log("==================")
+        // console.log(response.data.isDirty)
+        console.log('saving......')
+        
     } catch (error) {
         console.log(error)
     }
