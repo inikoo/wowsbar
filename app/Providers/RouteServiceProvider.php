@@ -23,9 +23,7 @@ class RouteServiceProvider extends ServiceProvider
 
 
         $this->routes(function () {
-
-
-            Route::domain('delivery.'.config('app.domain'))
+            Route::domain(config('app.delivery_domain'))
                 ->name('delivery.')
                 ->group(base_path('routes/delivery/app.php'));
 
@@ -33,9 +31,6 @@ class RouteServiceProvider extends ServiceProvider
                 ->domain(config('app.domain'))
                 ->name('org.')
                 ->group(base_path('routes/org/web/app.php'));
-
-
-
 
             Route::middleware('public')
                 ->name('public.')
@@ -45,32 +40,6 @@ class RouteServiceProvider extends ServiceProvider
                 ->prefix('auth')
                 ->name('customer.')
                 ->group(base_path('routes/customer/app.php'));
-
-
-            /*
-
-                        Route::middleware('web')
-                            ->prefix('api')
-                            ->name('customer.')
-                            ->group(base_path('routes/customer/web/app.php'));
-
-
-                        Route::middleware('public-web')
-                            ->domain(config('app.domain'))
-                            ->name('public.')
-                            ->group(base_path('routes/public/web/app.php'));
-
-
-                        /*
-
-                        Route::middleware('customer-api')
-                            ->prefix('api')
-                            ->group(base_path('routes/customer/api/api.php'));
-            */
-
-
-
-
         });
     }
 
