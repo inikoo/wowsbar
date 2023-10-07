@@ -6,8 +6,9 @@
 
 <script setup lang="ts">
 import Table from '@/Components/Table/Table.vue'
+import Image from '@/Components/Image.vue'
 import Icon from "@/Components/Icon.vue"
-import {library} from "@fortawesome/fontawesome-svg-core"
+import { library } from "@fortawesome/fontawesome-svg-core"
 import { faBroadcastTower, faSeedling, faGhost } from "@/../private/pro-light-svg-icons"
 import { useFormatTime } from "@/Composables/useFormatTime"
 import { useLocaleStore } from '@/Stores/locale'
@@ -24,16 +25,31 @@ const props = defineProps<{
 
 <template>
     <Table :resource="data" class="mt-5" :name="tab">
-        <template #cell(published_at)="{ item: user }">
-            {{ useFormatTime(user.published_at, locale.language.code, true) }}
-        </template>
-
-        <template #cell(published_until)="{ item: user }">
-            {{ useFormatTime(user.published_until, locale.language.code, true) }}
-        </template>
-
+        <!-- Icon -->
         <template #cell(state)="{ item: user }">
-            <Icon :data="user.state"/>
+            <Icon :data="user.state" />
+        </template>
+
+        <!-- Publisher -->
+        <template #cell(publisher)="{ item: user }">
+            <div class="grid grid-cols-[min(25px)_minmax(90px,100%)] items-center">
+                <div class="" :title="user.publisher">
+                    <div class="h-5 aspect-square rounded-full overflow-hidden ring-1 ring-gray-200">
+                        <Image :src="user.publisher_avatar" />
+                    </div>
+                </div>
+                <div class="">{{ user.publisher }}</div>
+            </div>
+        </template>
+        
+        <!-- Date Published -->
+        <template #cell(published_at)="{ item: user }">
+            <div class="text-gray-500">{{ useFormatTime(user.published_at, locale.language.code, true) }}</div>
+        </template>
+
+        <!-- Published Until -->
+        <template #cell(published_until)="{ item: user }">
+            <div class="text-gray-500">{{ useFormatTime(user.published_until, locale.language.code, true) }}</div>
         </template>
     </Table>
 </template>
