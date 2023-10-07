@@ -117,7 +117,7 @@ class Snapshot extends Model
         return $this->morphTo();
     }
 
-    public function user(): MorphTo
+    public function publisher(): MorphTo
     {
         return $this->morphTo();
     }

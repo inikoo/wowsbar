@@ -28,9 +28,9 @@ class SnapshotResource extends JsonResource
 
         $publisher        = '';
         $publisher_avatar = null;
-        if ($snapshot->user_id) {
+        if ($snapshot->publisher_id) {
             /** @var CustomerUser $customerUser */
-            $customerUser = $snapshot->user;
+            $customerUser = $snapshot->publisher;
 
             $publisher        = $customerUser->user->contact_name;
             $publisher_avatar = $customerUser->user->avatarImageSources(48, 48);

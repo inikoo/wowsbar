@@ -27,13 +27,16 @@ class PublishWebsiteMarginal
     {
         $layout = [];
         if ($marginal == 'header') {
-            $layout=$website->unpublishedHeaderSnapshot->layout;
+            $layout = $website->unpublishedHeaderSnapshot->layout;
         } elseif ($marginal == 'footer') {
             $layout = $website->unpublishedFooterSnapshot->layout;
         }
 
+        $firstCommit = true;
+
 
         foreach ($website->snapshots()->where('scope', $marginal)->where('state', SnapshotStateEnum::LIVE)->get() as $liveSnapshot) {
+            $firstCommit = false;
             UpdateSnapshot::run($liveSnapshot, [
                 'state'           => SnapshotStateEnum::HISTORIC,
                 'published_until' => now()
@@ -45,16 +48,19 @@ class PublishWebsiteMarginal
         $snapshot = StoreWebsiteSnapshot::run(
             $website,
             [
-                'state'        => SnapshotStateEnum::LIVE,
-                'published_at' => now(),
-                'layout'       => $layout,
-                'scope'        => $marginal,
-                'comment'      => Arr::get($modelData, 'comment')
+                'state'          => SnapshotStateEnum::LIVE,
+                'published_at'   => now(),
+                'layout'         => $layout,
+                'scope'          => $marginal,
+                'first_commit'   => $firstCommit,
+                'comment'        => Arr::get($modelData, 'comment'),
+                'publisher_id'   => Arr::get($modelData, 'publisher_id'),
+                'publisher_type' => Arr::get($modelData, 'publisher_type'),
             ],
         );
 
 
-        $updateData     = [
+        $updateData = [
             "live_{$marginal}_snapshot_id" => $snapshot->id,
             "compiled_layout->$marginal"   => $snapshot->compiledLayout()
         ];
@@ -71,10 +77,22 @@ class PublishWebsiteMarginal
         return $request->user()->hasPermissionTo("websites.edit");
     }
 
+    public function prepareForValidation(ActionRequest $request): void
+    {
+        $request->merge(
+            [
+                'publisher_id'   => $request->user()->id,
+                'publisher_type' => 'OrganisationUser'
+            ]
+        );
+    }
+
     public function rules(): array
     {
         return [
-            'comment' => ['sometimes', 'required', 'string', 'max:1024']
+            'comment'        => ['sometimes', 'required', 'string', 'max:1024'],
+            'publisher_id'   => ['sometimes'],
+            'publisher_type' => ['sometimes', 'string'],
         ];
     }
 
