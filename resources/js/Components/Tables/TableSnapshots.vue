@@ -8,13 +8,14 @@
 import Table from '@/Components/Table/Table.vue'
 import Icon from "@/Components/Icon.vue"
 import {library} from "@fortawesome/fontawesome-svg-core"
-import { faBroadcastTower, faSeedling, faGhost } from "@/../private/pro-light-svg-icons"
-import { useFormatTime } from "@/Composables/useFormatTime"
-import { useLocaleStore } from '@/Stores/locale'
+import {faBroadcastTower, faSeedling, faGhost, faRecycle, faPoo} from "@/../private/pro-light-svg-icons"
+import {useFormatTime} from "@/Composables/useFormatTime"
+import {useLocaleStore} from '@/Stores/locale'
+
 const locale = useLocaleStore()
 
 
-library.add(faSeedling, faGhost, faBroadcastTower);
+library.add(faSeedling, faGhost, faBroadcastTower, faRecycle, faPoo);
 const props = defineProps<{
     data: object,
     tab?: string
@@ -25,11 +26,11 @@ const props = defineProps<{
 <template>
     <Table :resource="data" class="mt-5" :name="tab">
         <template #cell(published_at)="{ item: user }">
-            {{ useFormatTime(user.published_at, locale.language.code, true) }}
+            {{ useFormatTime(user['published_at'], locale.language.code, true) }}
         </template>
 
         <template #cell(published_until)="{ item: user }">
-            {{ useFormatTime(user.published_until, locale.language.code, true) }}
+            {{ useFormatTime(user['published_until'], locale.language.code, true) }}
         </template>
 
         <template #cell(state)="{ item: user }">

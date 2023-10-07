@@ -40,6 +40,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property array $layout
  * @property string|null $comment
  * @property bool $first_commit
+ * @property bool|null $recyclable
+ * @property string|null $recyclable_tag
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\CRM\Customer|null $customer
@@ -63,6 +65,8 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Snapshot wherePublishedUntil($value)
  * @method static Builder|Snapshot wherePublisherId($value)
  * @method static Builder|Snapshot wherePublisherType($value)
+ * @method static Builder|Snapshot whereRecyclable($value)
+ * @method static Builder|Snapshot whereRecyclableTag($value)
  * @method static Builder|Snapshot whereScope($value)
  * @method static Builder|Snapshot whereSlug($value)
  * @method static Builder|Snapshot whereState($value)
