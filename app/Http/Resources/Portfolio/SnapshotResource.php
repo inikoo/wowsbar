@@ -6,7 +6,6 @@ use App\Enums\Portfolio\Snapshot\SnapshotStateEnum;
 use App\Http\Resources\HasSelfCall;
 use App\Models\Auth\CustomerUser;
 use App\Models\Auth\OrganisationUser;
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class SnapshotResource extends JsonResource

@@ -195,10 +195,10 @@ class GetLayout
                                 ],
                                 [
 
-                                    'label' => __('appointment'),
+                                    'label' => __('appointments'),
                                     'icon'  => ['fal', 'fa-handshake'],
                                     'route' => [
-                                        'name'       => 'org.crm.shop.mailroom.dashboard',
+                                        'name'       => 'org.crm.shop.appointments.index',
                                         'parameters' => $shop->slug
                                     ]
                                 ]

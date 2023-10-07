@@ -6,6 +6,8 @@
  */
 
 
+use App\Actions\CRM\Appointment\UI\CreateAppointment;
+use App\Actions\CRM\Appointment\UI\IndexAppointments;
 use App\Actions\CRM\Customer\UI\CreateCustomer;
 use App\Actions\CRM\Customer\UI\EditCustomer;
 use App\Actions\CRM\Customer\UI\IndexCustomers;
@@ -87,6 +89,8 @@ Route::prefix('shop/{shop}')->as('shop.')->group(function () {
     Route::get('mailroom', ShowMailroomDashboard::class)->name('mailroom.dashboard');
 
     Route::prefix('appointments')->as('appointments.')->group(function () {
-        Route::get('/', ShowMailroomDashboard::class)->name('mailroom.dashboard');
+        Route::get('/', ['icon'=>'fa-handshake','label'=>'appointment'])->uses([IndexAppointments::class,'inShop'])->name('index');
+        Route::get('/create', ['icon'=>'fa-handshake','label'=>'appointment'])->uses([CreateAppointment::class,'inShop'])->name('create');
+
     });
 });

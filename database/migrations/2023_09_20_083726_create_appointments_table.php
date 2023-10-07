@@ -1,4 +1,9 @@
 <?php
+/*
+ * Author: Raul Perusquia <raul@inikoo.com>
+ * Created: Sat, 07 Oct 2023 12:33:09 Malaysia Time, Office, Bali, Indonesia
+ * Copyright (c) 2023, Raul A Perusquia Flores
+ */
 
 use App\Enums\CRM\Appointment\AppointmentStateEnum;
 use Illuminate\Database\Migrations\Migration;
@@ -6,13 +11,14 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class () extends Migration {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('appointments', function (Blueprint $table) {
-            $table->smallIncrements('id');
+            $table->increments('id');
+            $table->string('slug')->nullable();
+            $table->unsignedInteger('shop_id');
+            $table->foreign('shop_id')->references('id')->on('shops')->onUpdate('cascade')->onDelete('cascade');
+
             $table->unsignedInteger('customer_id');
             $table->foreign('customer_id')->references('id')->on('customers')->onUpdate('cascade')->onDelete('cascade');
 
@@ -32,9 +38,7 @@ return new class () extends Migration {
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
+
     public function down(): void
     {
         Schema::dropIfExists('appointments');

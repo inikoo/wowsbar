@@ -35,8 +35,8 @@ class BannerResource extends JsonResource
         }
 
         $publishedSnapshot=[];
-        if($banner->state==BannerStateEnum::LIVE and $this->live_snapshot_id){
-            $snapshot=$banner->liveSnapshot;
+        if($banner->state==BannerStateEnum::LIVE and $this->live_snapshot_id) {
+            $snapshot         =$banner->liveSnapshot;
             $publishedSnapshot=SnapshotResource::make($snapshot)->getArray();
         }
 
@@ -80,13 +80,13 @@ class BannerResource extends JsonResource
             'websites'        => implode(', ', $banner->portfolioWebsite->pluck('name')->toArray()),
             'updated_at'      => $banner->updated_at,
             'created_at'      => $banner->created_at,
-            'workshopRoute'=>[
+            'workshopRoute'   => [
                 'name'       => 'customer.caas.banners.workshop',
                 'parameters' => [$banner->slug]
             ],
-            'compiled_layout'=>$banner->compiled_layout,
-            'delivery_url'=>config('app.delivery_url').$banner->ulid,
-            'published_snapshot'=>$publishedSnapshot
+            'compiled_layout'   => $banner->compiled_layout,
+            'delivery_url'      => config('app.delivery_url').$banner->ulid,
+            'published_snapshot'=> $publishedSnapshot
         ];
     }
 }

@@ -90,7 +90,7 @@ class ShowWebsiteWorkshop extends InertiaAction
 
                 ],
                 'websiteState'  => $website->state,
-                'isDirty'      => [
+                'isDirty'       => [
                     'workshop_header'=> $website->header_is_dirty,
                     'workshop_footer'=> $website->footer_is_dirty,
                 ],
