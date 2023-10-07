@@ -54,6 +54,7 @@ class HydrateCustomer
 
             Config::set('global.customer_id', $customer->id);
             $this->handle($customer);
+            $command->line("Customer {$customer->name} hydrated 💦");
 
         }
 

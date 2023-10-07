@@ -179,11 +179,11 @@ class ShowWebpage extends InertiaAction
         )->table(
             IndexWebpages::make()->tableStructure(parent: $webpage, prefix: 'webpages')
         )->table(
-        IndexSnapshots::make()->tableStructure(
-            parent: $webpage,
-            prefix:'snapshots'
-        )
-    );
+            IndexSnapshots::make()->tableStructure(
+                parent: $webpage,
+                prefix:'snapshots'
+            )
+        );
     }
 
     public function getBreadcrumbs(array $routeParameters, string $suffix = ''): array

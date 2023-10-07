@@ -8,10 +8,8 @@
 namespace App\Actions\CRM\Appointment\UI;
 
 use App\Actions\InertiaAction;
-use App\Enums\Portfolio\Snapshot\SnapshotStateEnum;
 use App\InertiaTable\InertiaTable;
 use App\Models\CRM\Appointment;
-use App\Models\Helpers\Snapshot;
 use App\Models\Portfolio\Banner;
 use App\Models\Web\Webpage;
 use Closure;

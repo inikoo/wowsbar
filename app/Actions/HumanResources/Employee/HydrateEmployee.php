@@ -9,13 +9,13 @@ namespace App\Actions\HumanResources\Employee;
 
 use App\Actions\HumanResources\Employee\Hydrators\EmployeeHydrateJobPositionsShare;
 use App\Actions\HumanResources\Employee\Hydrators\EmployeeHydrateWeekWorkingHours;
-use App\Actions\HydrateModel;
 use App\Models\HumanResources\Employee;
-use Illuminate\Support\Collection;
+use Illuminate\Console\Command;
+use Lorisleiva\Actions\Concerns\AsAction;
 
-class HydrateEmployee extends HydrateModel
+class HydrateEmployee
 {
-    public string $commandSignature = 'hydrate:employee {tenants?*} {--i|id=}';
+    use asAction;
 
 
     public function handle(Employee $employee): void
@@ -25,13 +25,33 @@ class HydrateEmployee extends HydrateModel
     }
 
 
-    protected function getModel(int $id): Employee
+    public string $commandSignature = 'hydrate:employees {employees?*}';
+
+    public function asCommand(Command $command): int
     {
-        return Employee::findOrFail($id);
+
+        if(!$command->argument('employees')) {
+            $employees=Employee::all();
+        } else {
+            $employees =  Employee::query()
+                ->when($command->argument('employees'), function ($query) use ($command) {
+                    $query->whereIn('slug', $command->argument('employees'));
+                })
+                ->cursor();
+        }
+
+
+        $exitCode = 0;
+
+        foreach ($employees as $employee) {
+
+            $this->handle($employee);
+            $command->line("Employee {$employee->contact_name} hydrated 💦");
+
+        }
+
+        return $exitCode;
     }
 
-    protected function getAllModels(): Collection
-    {
-        return Employee::get();
-    }
+
 }

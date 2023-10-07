@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\MediaLibrary\HasMedia;
@@ -147,6 +148,12 @@ class Employee extends Model implements HasMedia, Auditable
             ->slugsShouldBeNoLongerThan(16);
     }
 
+
+    public function jobPositions(): MorphToMany
+    {
+        return $this->morphToMany(JobPosition::class, 'job_positionable');
+    }
+    /*
     public function jobPositions(): BelongsToMany
     {
         return $this->belongsToMany(JobPosition::class)
@@ -154,7 +161,7 @@ class Employee extends Model implements HasMedia, Auditable
             ->withTimestamps()
             ->withPivot('share');
     }
-
+*/
     public function organisationUser(): MorphOne
     {
         return $this->morphOne(OrganisationUser::class, 'parent');

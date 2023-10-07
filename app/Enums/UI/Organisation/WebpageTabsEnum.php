@@ -20,7 +20,7 @@ enum WebpageTabsEnum: string
 
     case ANALYTICS = 'analytics';
 
-    case WEBPAGES = 'webpages';
+    case WEBPAGES  = 'webpages';
     case SNAPSHOTS = 'snapshots';
 
 
