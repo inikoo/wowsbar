@@ -28,7 +28,7 @@ class Login
     use AsController;
 
     private string $credentialHandler = 'email';
-    private string $home              = 'auth/dashboard';
+    private string $home              = 'app/dashboard';
     private string $gate              = 'customer';
 
 

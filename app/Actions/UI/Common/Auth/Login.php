@@ -41,7 +41,7 @@ class Login
                 default          => 'customer'
             };
             if($routeName=='customer.login.store') {
-                $this->home='auth/dashboard';
+                $this->home='app/dashboard';
             }
 
         }

@@ -15,7 +15,7 @@ Route::middleware([
 
     Route::middleware(["auth:customer"])->group(function () {
         Route::get('/', function () {
-            return redirect('/auth/dashboard');
+            return redirect('/app/dashboard');
         });
         Route::prefix("dashboard")
             ->name("dashboard.")

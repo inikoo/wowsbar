@@ -21,7 +21,7 @@ export const headerBlock1 = () => {
   <span data-gjs-editable="false" data-gjs-removable="false">Appointment</span>
 </a>
 
-<a href="/auth/login" class="ml-3 inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 focus-visible:ring focus-visible:ring-indigo-500 focus:outline-none transition duration-300 ease-in-out">
+<a href="/app/login" class="ml-3 inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 focus-visible:ring focus-visible:ring-indigo-500 focus:outline-none transition duration-300 ease-in-out">
   <span data-gjs-editable="false" data-gjs-removable="false">Log in</span>
 </a>
   </div>
@@ -41,14 +41,14 @@ export  const headerBlock2 = () => {
     content : `'<header class="text-gray-600 body-font">
     <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
     <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
-    <img src="https://dummyimage.com/45x30" class="w-10 h-10 text-white p-2 bg-indigo-500 rounded-md" alt="Description of the image"><span class="ml-3 text-xl">Tailblocks</span></a><nav class="md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l 
-    md:border-gray-400 flex flex-wrap items-center text-base justify-center"><a class="mr-5 hover:text-gray-900">First Link</a><a class="mr-5 hover:text-gray-900">Second Link</a><a 
+    <img src="https://dummyimage.com/45x30" class="w-10 h-10 text-white p-2 bg-indigo-500 rounded-md" alt="Description of the image"><span class="ml-3 text-xl">Tailblocks</span></a><nav class="md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l
+    md:border-gray-400 flex flex-wrap items-center text-base justify-center"><a class="mr-5 hover:text-gray-900">First Link</a><a class="mr-5 hover:text-gray-900">Second Link</a><a
     class="mr-5 hover:text-gray-900">Third Link</a><a class="mr-5 hover:text-gray-900">Fourth Link</a></nav>
     <a href="/appointment" class="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 transition duration-300 ease-in-out">
   <span data-gjs-editable="false" data-gjs-removable="false">Appointment</span>
 </a>
 
-<a href="/auth/login" class="ml-3 inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 focus-visible:ring focus-visible:ring-indigo-500 focus:outline-none transition duration-300 ease-in-out">
+<a href="/app/login" class="ml-3 inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 focus-visible:ring focus-visible:ring-indigo-500 focus:outline-none transition duration-300 ease-in-out">
   <span data-gjs-editable="false" data-gjs-removable="false">Log in</span>
 </a>
     </div>
@@ -78,7 +78,7 @@ export const headerBlock3 = () => {
   <span data-gjs-editable="false" data-gjs-removable="false">Appointment</span>
 </a>
 
-<a href="/auth/login" class="ml-3 inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 focus-visible:ring focus-visible:ring-indigo-500 focus:outline-none transition duration-300 ease-in-out">
+<a href="/app/login" class="ml-3 inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 focus-visible:ring focus-visible:ring-indigo-500 focus:outline-none transition duration-300 ease-in-out">
   <span data-gjs-editable="false" data-gjs-removable="false">Log in</span>
 </a>
       </div>
@@ -113,7 +113,7 @@ export const headerBlock4 = () => {
   <span data-gjs-editable="false" data-gjs-removable="false">Appointment</span>
 </a>
 
-<a href="/auth/login" class="ml-3 inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 focus-visible:ring focus-visible:ring-indigo-500 focus:outline-none transition duration-300 ease-in-out">
+<a href="/app/login" class="ml-3 inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 focus-visible:ring focus-visible:ring-indigo-500 focus:outline-none transition duration-300 ease-in-out">
   <span data-gjs-editable="false" data-gjs-removable="false">Log in</span>
 </a>
     </div>
