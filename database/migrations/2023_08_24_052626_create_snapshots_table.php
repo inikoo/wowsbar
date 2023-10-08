@@ -15,13 +15,13 @@ return new class () extends Migration {
     {
         Schema::create('snapshots', function (Blueprint $table) {
             $table->mediumIncrements('id');
-            $table->string('slug')->nullable()->collation('und_ns');
+            $table->string('slug')->unique()->collation('und_ns')->nullable();
+            $table->string('scope')->index()->nullable();
             $table->string('publisher_type')->nullable();
             $table->unsignedSmallInteger('publisher_id')->nullable();
             $table->string('parent_type')->nullable();
             $table->unsignedInteger('parent_id')->nullable();
             $table->unsignedInteger('customer_id')->nullable();
-            $table->string('scope')->index()->nullable();
             $table->foreign('customer_id')->references('id')->on('customers')->onUpdate('cascade')->onDelete('cascade');
             $table->string('state')->default(SnapshotStateEnum::UNPUBLISHED->value);
             $table->dateTimeTz('published_at')->nullable();

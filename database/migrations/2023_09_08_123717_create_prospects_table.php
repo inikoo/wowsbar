@@ -17,7 +17,7 @@ return new class () extends Migration {
     {
         Schema::create('prospects', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('slug')->unique()->collation('udn_ns')->nullable();
+            $table->string('slug')->unique()->collation('und_ns')->nullable();
             $table->string('scope_type')->index();
             $table->unsignedInteger('scope_id')->index();
             $table->unsignedInteger('shop_id')->index()->nullable();

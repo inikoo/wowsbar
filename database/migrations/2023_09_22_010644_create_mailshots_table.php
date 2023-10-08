@@ -15,7 +15,7 @@ return new class () extends Migration {
     {
         Schema::create('mailshots', function (Blueprint $table) {
             $table->smallIncrements('id');
-            $table->string('slug')->unique()->collation('und_nd');
+            $table->string('slug')->unique()->collation('und_ns');
             $table->string('subject')->index();
             $table->unsignedSmallInteger('email_template_id')->index();
             $table->foreign('email_template_id')->references('id')->on('email_templates')->onUpdate('cascade')->onDelete('cascade');
