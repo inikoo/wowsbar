@@ -23,7 +23,6 @@ task('install:reset-db', function () {
     run('dropdb --force --if-exists {{db_backup}}');
     run('createdb --template=template0 --lc-collate={{db_collate}} --lc-ctype={{db_collate}} {{db_backup}}');
     run('redis-cli KEYS "wowsbar_*" | xargs redis-cli DEL');
-
 });
 
 desc('🌱 Copy artifacts no present in repo');
@@ -32,7 +31,6 @@ task('install:copy-artifacts', function () {
     $sharedPath    = "{{deploy_path}}/shared";
     run("cp artifacts/env.{{environment}} $sharedPath/.env");
     run("cp -r$copyVerbosity artifacts/private $sharedPath");
-
 });
 
 desc('🪴 install set up');
@@ -41,21 +39,16 @@ task('install:setup', function () {
     run("sudo mkdir -p {{root_path}}");
     run("sudo chown {{remote_user}}:{{http_group}} {{root_path}} ");
     run("{{bin/symlink}} {{deploy_path}} {{environment}}");
-
 });
 
 desc('🎨 install artifacts');
 task('install:artifacts', function () {
     run("cp artifacts/install/* {{deploy_path}}/current ");
-
-
 });
 
 add('crontab:jobs', [
     '* * * * * cd {{current_path}} && {{bin/php}} artisan schedule:run >> /dev/null 2>&1',
 ]);
-
-
 
 desc('Clean up supervisor');
 task('install:clean-supervisor', [
@@ -79,6 +72,10 @@ task('install:copy-env', function () {
     run("cp artifacts/env.{{environment}} $sharedPath/.env");
 });
 
+desc('✨ run install artifacts');
+task('install:run', function () {
+    run("cd {{release_path}} && ./install.sh");
+});
 
 desc('🌱 Symlink private folder to resources dir');
 task('install:shared-private', function () {
@@ -92,12 +89,11 @@ task('install:migrate', function () {
     artisan('migrate --force --database=backup --path=database/migrations/backup', ['skipIfNoEnv', 'showOutput'])();
     artisan('migrate --force', ['skipIfNoEnv', 'showOutput'])();
 });
+
 desc('🏗️ Build vue app');
 task('install:build', function () {
     run("cd {{release_path}} && {{bin/npm}} run build");
 });
-
-
 
 desc('Install wowsbar');
 task('install', [
@@ -135,5 +131,6 @@ task('install', [
     'nginx:enable-site',
     'nginx:restart',
     'crontab:sync',
-    'install:artifacts'
+    'install:artifacts',
+    'install:run'
 ]);

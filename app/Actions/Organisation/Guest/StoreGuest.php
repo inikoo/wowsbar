@@ -102,13 +102,12 @@ class StoreGuest
         return $this->handle($validatedData);
     }
 
-    public string $commandSignature = 'org:create-guest {name} {username}  {type : Guest type contractor|external_employee|external_administrator} {--P|password=} {--e|email=} {--t|phone=}  {--identity_document_number=} {--identity_document_type=}';
+    public string $commandSignature = 'org:create-guest {name} {username}  {type : Guest type contractor|external_employee|external_administrator} {--P|password=} {--e|email=} {--t|phone=} {--identity_document_number=} {--identity_document_type=}';
 
 
     public function asCommand(Command $command): int
     {
         $this->trusted = true;
-
 
         $this->fill([
             'type'         => $command->argument('type'),
