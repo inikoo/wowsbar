@@ -33,7 +33,7 @@ Route::get('/', function () {return redirect('/crm/dashboard');});
 Route::get('/dashboard', [ShowCRMDashboard::class, 'inOrganisation'])->name('dashboard');
 
 Route::get('customers', IndexCustomers::class)->name('customers.index');
-Route::get('customers/create', CreateCustomer::class)->name('customers.index');
+Route::get('customers/create', CreateCustomer::class)->name('customers.create');
 
 Route::prefix('customers/{customer}')->as('customers.')->group(function () {
     Route::get('', ShowCustomer::class)->name('show');
