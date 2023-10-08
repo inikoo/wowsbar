@@ -90,7 +90,7 @@ class Handler extends ExceptionHandler
             $host = Request::getHost();
             if ($host == config('app.delivery_domain')) {
                 Inertia::setRootView('app-delivery');
-            }elseif ($host == config('app.domain')) {
+            } elseif ($host == config('app.domain')) {
                 Inertia::setRootView('app-organisation');
             } else {
                 $path = Request::path();

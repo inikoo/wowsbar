@@ -32,7 +32,9 @@ class StoreBannerSnapshot
 
         $snapshot=Snapshot::create($modelData);
         $banner->snapshots()->save($snapshot);
-        $banner->generateSlug();
+        $snapshot->generateSlug();
+        $snapshot->saveQuietly();
+
         if ($slides) {
             foreach ($slides as $slide) {
                 StoreSlide::run(

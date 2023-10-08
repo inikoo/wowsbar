@@ -11,6 +11,7 @@
 namespace App\Models\Web;
 
 use App\Enums\Organisation\Web\Website\WebsiteStateEnum;
+use App\Models\Helpers\Deployment;
 use App\Models\Helpers\Snapshot;
 use App\Models\Market\Shop;
 use App\Models\Media\Media;
@@ -65,6 +66,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property int|null $home_id
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \OwenIt\Auditing\Models\Audit> $audits
  * @property-read int|null $audits_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Deployment> $deployments
+ * @property-read int|null $deployments_count
  * @property-read array $es_audits
  * @property-read \App\Models\Web\Webpage|null $home
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, Media> $images
@@ -218,6 +221,11 @@ class Website extends Model implements Auditable, HasMedia
     public function liveSnapshot(): BelongsTo
     {
         return $this->belongsTo(Snapshot::class, 'live_snapshot_id');
+    }
+
+    public function deployments(): MorphMany
+    {
+        return $this->morphMany(Deployment::class, 'model');
     }
 
 }

@@ -10,6 +10,7 @@ namespace App\Models\Web;
 use App\Enums\Organisation\Web\Webpage\WebpagePurposeEnum;
 use App\Enums\Organisation\Web\Webpage\WebpageStateEnum;
 use App\Enums\Organisation\Web\Webpage\WebpageTypeEnum;
+use App\Models\Helpers\Deployment;
 use App\Models\Helpers\Snapshot;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -46,6 +47,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string|null $deleted_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Deployment> $deployments
+ * @property-read int|null $deployments_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Snapshot> $snapshots
  * @property-read int|null $snapshots_count
  * @property-read \App\Models\Web\WebpageStats|null $stats
@@ -134,6 +137,9 @@ class Webpage extends Model
         return $this->belongsTo(Snapshot::class, 'unpublished_snapshot_id');
     }
 
-
+    public function deployments(): MorphMany
+    {
+        return $this->morphMany(Deployment::class, 'model');
+    }
 
 }

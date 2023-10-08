@@ -31,6 +31,7 @@ class StoreWebsiteSnapshot
         $snapshot = Snapshot::create($modelData);
         $website->snapshots()->save($snapshot);
         $snapshot->generateSlug();
+        $snapshot->saveQuietly();
 
         return $snapshot;
     }

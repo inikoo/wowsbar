@@ -63,6 +63,8 @@ class StoreCustomer
                 );
             }
             $customer->generateSlug();
+            $customer->saveQuietly();
+
             $customer->stats()->create();
             $customer->portfolioStats()->create();
 

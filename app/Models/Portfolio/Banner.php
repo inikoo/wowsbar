@@ -10,6 +10,7 @@ namespace App\Models\Portfolio;
 use App\Actions\Utils\Abbreviate;
 use App\Concerns\BelongsToCustomer;
 use App\Enums\Portfolio\Banner\BannerStateEnum;
+use App\Models\Helpers\Deployment;
 use App\Models\Helpers\Snapshot;
 use App\Models\Media\Media;
 use App\Models\Traits\HasHistory;
@@ -52,6 +53,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \OwenIt\Auditing\Models\Audit> $audits
  * @property-read int|null $audits_count
  * @property-read \App\Models\CRM\Customer $customer
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Deployment> $deployments
+ * @property-read int|null $deployments_count
  * @property-read array $es_audits
  * @property-read Media|null $image
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, Media> $images
@@ -168,6 +171,11 @@ class Banner extends Model implements HasMedia, Auditable
     public function images(): MorphToMany
     {
         return $this->morphToMany(Media::class, 'model', 'model_has_media');
+    }
+
+    public function deployments(): MorphMany
+    {
+        return $this->morphMany(Deployment::class, 'model');
     }
 
 }
