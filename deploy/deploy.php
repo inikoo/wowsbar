@@ -7,6 +7,18 @@
 
 namespace Deployer;
 
+
+desc('🚡 Migrating database');
+task('deploy:migrate', function () {
+    artisan('migrate --force --database=backup --path=database/migrations/backup', ['skipIfNoEnv', 'showOutput'])();
+    artisan('migrate --force', ['skipIfNoEnv', 'showOutput'])();
+});
+desc('🏗️ Build vue app');
+task('deploy:build', function () {
+    run("cd {{release_path}} && {{bin/npm}} run build");
+});
+
+
 desc('Deploys your project');
 task('deploy', [
     'deploy:prepare',

@@ -55,22 +55,6 @@ add('crontab:jobs', [
     '* * * * * cd {{current_path}} && {{bin/php}} artisan schedule:run >> /dev/null 2>&1',
 ]);
 
-desc('Prepares a new release (wowsbar version)');
-task('install:prepare', [
-    'deploy:info',
-    'install:setup',
-    'deploy:setup',
-    'deploy:lock',
-    'install:copy-artifacts',
-    'deploy:copy-env',
-    'deploy:release',
-    'deploy:update_code',
-    'deploy:shared-private',
-    'deploy:shared',
-    'deploy:writable',
-    'deploy:migrate',
-    'install:seeding',
-]);
 
 
 desc('Clean up supervisor');
@@ -79,20 +63,71 @@ task('install:clean-supervisor', [
     'supervisor:reread-update',
 ]);
 
+desc('🚡 Refresh elasticsearch');
+task('install:elasticsearch', function () {
+    artisan('es:refresh', ['skipIfNoEnv', 'showOutput'])();
+});
+
+desc('🌱 Seeding database');
+task('install:seeding', function () {
+    artisan('db:seed --force', ['skipIfNoEnv', 'showOutput'])();
+});
+
+desc('⚙️ Copy env master file');
+task('install:copy-env', function () {
+    $sharedPath = "{{deploy_path}}/shared";
+    run("cp artifacts/env.{{environment}} $sharedPath/.env");
+});
+
+
+desc('🌱 Symlink private folder to resources dir');
+task('install:shared-private', function () {
+    $sharedPath = "{{deploy_path}}/shared";
+    $dir        ='private';
+    run("{{bin/symlink}} $sharedPath/$dir {{release_path}}/resources/$dir");
+});
+
+desc('🚡 Migrating database');
+task('install:migrate', function () {
+    artisan('migrate --force --database=backup --path=database/migrations/backup', ['skipIfNoEnv', 'showOutput'])();
+    artisan('migrate --force', ['skipIfNoEnv', 'showOutput'])();
+});
+desc('🏗️ Build vue app');
+task('install:build', function () {
+    run("cd {{release_path}} && {{bin/npm}} run build");
+});
+
+
+
 desc('Install wowsbar');
 task('install', [
     'install:delete_deploy_path',
     'install:reset-db',
-    'install:prepare',
+    'deploy:info',
+    'install:setup',
+    'deploy:setup',
+    'deploy:lock',
+    'install:copy-artifacts',
+    'install:copy-env',
+    'deploy:release',
+    'deploy:update_code',
+    'install:shared-private',
+    'deploy:shared',
+    'deploy:writable',
+    'install:migrate',
+    'install:seeding',
     'artisan:key:generate',
-    'deploy:elasticsearch',
+    'artisan:route:clear',
+    'artisan:cache:clear',
+    'artisan:config:clear',
+    'install:elasticsearch',
     'artisan:storage:link',
     'artisan:config:cache',
     'artisan:route:cache',
     'artisan:view:cache',
     'artisan:event:cache',
     'artisan:horizon:clear',
-    'deploy:build',
+    'install:build',
     'deploy:publish',
     'supervisor:upload',
     'supervisor:reread-update',

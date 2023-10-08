@@ -101,7 +101,7 @@ class EditCustomerWebsite extends InertiaAction
                                         'type'      => 'inputWithAddOn',
                                         'label'     => __('domain'),
                                         'leftAddOn' => [
-                                            'label'=> 'http://www.'
+                                            'label'=> 'https://www.'
                                         ],
                                         'value'    => $portfolioWebsite->domain,
                                         'required' => true,
