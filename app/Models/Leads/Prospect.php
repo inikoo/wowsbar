@@ -28,7 +28,7 @@ use Spatie\Sluggable\SlugOptions;
  * App\Models\Leads\Prospect
  *
  * @property int $id
- * @property string $slug
+ * @property string|null $slug
  * @property string $scope_type
  * @property int $scope_id
  * @property int|null $shop_id

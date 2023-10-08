@@ -7,6 +7,7 @@
 
 namespace App\Actions\Web\Website;
 
+use App\Actions\Helpers\Deployment\StoreDeployment;
 use App\Actions\Helpers\Snapshot\StoreWebsiteSnapshot;
 use App\Actions\Helpers\Snapshot\UpdateSnapshot;
 
@@ -59,11 +60,18 @@ class PublishWebsiteMarginal
             ],
         );
 
+        StoreDeployment::run(
+            $website,
+            [
+                'scope'        => $marginal,
+                'snapshot_id'  => $snapshot->id,
+            ]
+        );
 
         $updateData = [
-            "live_{$marginal}_snapshot_id"  => $snapshot->id,
-            "compiled_layout->$marginal"    => $snapshot->compiledLayout(),
-            "published_{$marginal}_checksum"=> md5(json_encode($snapshot->layout)),
+            "live_{$marginal}_snapshot_id"   => $snapshot->id,
+            "compiled_layout->$marginal"     => $snapshot->compiledLayout(),
+            "published_{$marginal}_checksum" => md5(json_encode($snapshot->layout)),
         ];
 
         $website->update($updateData);

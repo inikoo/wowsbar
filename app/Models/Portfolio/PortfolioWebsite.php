@@ -26,9 +26,9 @@ use Spatie\Sluggable\HasSlug;
  * App\Models\Portfolio\PortfolioWebsite
  *
  * @property int $id
+ * @property string $slug
  * @property int $shop_id
  * @property int $customer_id
- * @property string $slug
  * @property string $url
  * @property string $name
  * @property array $data

@@ -7,6 +7,7 @@
 
 namespace App\Actions\Web\Webpage;
 
+use App\Actions\Helpers\Deployment\StoreDeployment;
 use App\Actions\Helpers\Snapshot\StoreWebpageSnapshot;
 use App\Actions\Helpers\Snapshot\UpdateSnapshot;
 use App\Actions\Traits\WithActionUpdate;
@@ -54,6 +55,12 @@ class PublishWebpage
             ]
         );
 
+        StoreDeployment::run(
+            $webpage,
+            [
+                'snapshot_id'  => $snapshot->id,
+            ]
+        );
 
         $compiledLayout = $snapshot->compiledLayout();
 

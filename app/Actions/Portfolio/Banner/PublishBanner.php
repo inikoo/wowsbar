@@ -8,6 +8,7 @@
 namespace App\Actions\Portfolio\Banner;
 
 use App\Actions\CRM\Customer\Hydrators\CustomerHydrateBanners;
+use App\Actions\Helpers\Deployment\StoreDeployment;
 use App\Actions\Helpers\Snapshot\StoreBannerSnapshot;
 use App\Actions\Helpers\Snapshot\UpdateSnapshot;
 use App\Actions\Portfolio\Banner\Elasticsearch\StoreBannerElasticsearch;
@@ -49,19 +50,25 @@ class PublishBanner
         $snapshot = StoreBannerSnapshot::run(
             $banner,
             [
-                'state'             => SnapshotStateEnum::LIVE,
-                'published_at'      => now(),
-                'layout'            => $layout,
-                'first_commit'      => $firstCommit,
-                'comment'           => Arr::get($modelData, 'comment'),
-                'publisher_id'      => Arr::get($modelData, 'publisher_id'),
-                'publisher_type'    => Arr::get($modelData, 'publisher_type'),
+                'state'          => SnapshotStateEnum::LIVE,
+                'published_at'   => now(),
+                'layout'         => $layout,
+                'first_commit'   => $firstCommit,
+                'publisher_id'   => Arr::get($modelData, 'publisher_id'),
+                'publisher_type' => Arr::get($modelData, 'publisher_type'),
+                'comment'        => Arr::get($modelData, 'comment'),
 
 
             ],
             $slides
         );
 
+        StoreDeployment::run(
+            $banner,
+            [
+                'snapshot_id'  => $snapshot->id,
+            ]
+        );
 
         $compiledLayout = $snapshot->compiledLayout();
 

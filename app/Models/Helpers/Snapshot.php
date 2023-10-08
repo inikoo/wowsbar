@@ -27,12 +27,12 @@ use Spatie\Sluggable\SlugOptions;
  *
  * @property int $id
  * @property string|null $slug
+ * @property string|null $scope
  * @property string|null $publisher_type
  * @property int|null $publisher_id
  * @property string|null $parent_type
  * @property int|null $parent_id
  * @property int|null $customer_id
- * @property string|null $scope
  * @property SnapshotStateEnum $state
  * @property string|null $published_at
  * @property string|null $published_until
@@ -82,8 +82,8 @@ class Snapshot extends Model
     protected array $dates = ['published_at', 'published_until'];
 
     protected $casts = [
-        'layout'           => 'array',
-        'state'            => SnapshotStateEnum::class
+        'layout' => 'array',
+        'state'  => SnapshotStateEnum::class
     ];
 
     protected $attributes = [
@@ -96,14 +96,13 @@ class Snapshot extends Model
     {
         return SlugOptions::create()
             ->generateSlugsFrom(function () {
-
                 /** @var Webpage|Website|Banner $parent */
-                $parent=$this->parent;
-                $slug  =$parent->slug;
-                if($this->scope) {
-                    $slug.=" $this->scope";
+                $parent = $this->parent;
+                $slug   = $parent->slug;
+                if ($this->scope) {
+                    $slug .= " $this->scope";
                 }
-                return $slug.'-'.now()->isoFormat('YYMMDD');
+                return $slug;
             })
             ->saveSlugsTo('slug')
             ->doNotGenerateSlugsOnCreate()
@@ -133,12 +132,12 @@ class Snapshot extends Model
 
     public function compiledLayout(): array|string
     {
-
         switch (class_basename($this->parent)) {
             case 'Banner':
-                $slides         =$this->slides()->where('visibility', true)->get();
+                $slides         = $this->slides()->where('visibility', true)->get();
                 $compiledLayout = $this->layout;
                 data_set($compiledLayout, 'components', json_decode(SlideResource::collection($slides)->toJson(), true));
+
                 return $compiledLayout;
             case 'Website':
             case 'Webpage':
@@ -146,10 +145,7 @@ class Snapshot extends Model
             default:
                 return [];
         }
-
-
     }
-
 
 
 }
