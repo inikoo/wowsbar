@@ -14,6 +14,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Request;
 use Inertia\Inertia;
 use Throwable;
 
@@ -38,8 +39,6 @@ class Handler extends ExceptionHandler
                 app('sentry')->captureException($e);
             }
         });
-
-
     }
 
     public function render($request, Throwable $e): Response|JsonResponse|\Symfony\Component\HttpFoundation\Response|RedirectResponse
@@ -47,8 +46,7 @@ class Handler extends ExceptionHandler
         $response = parent::render($request, $e);
 
         if (!app()->environment(['local', 'testing']) && in_array($response->status(), [500, 503, 404, 403, 422])) {
-
-            $errorData=match ($response->status()) {
+            $errorData = match ($response->status()) {
                 403 => [
                     'status'      => $response->status(),
                     'title'       => __('Forbidden'),
@@ -71,22 +69,38 @@ class Handler extends ExceptionHandler
                 ],
                 default => $this->getExceptionInfo()
             };
-            $user=$request->user();
-            if(Auth::check()) {
-                $errorData= match(class_basename($user)) {
-                    'User'=> array_merge(
+
+            if (Auth::check()) {
+                $user = $request->user();
+
+                $errorData = match (class_basename($user)) {
+                    'User' => array_merge(
                         GetFirstLoadProps::run($user),
                         $errorData,
                         [
-                            'auth'          => [
+                            'auth' => [
                                 'user' => $request->user() ? new LoggedUserResource($user) : null,
                             ],
                         ]
                     ),
-                    default=> []
+                    default => []
                 };
-
             }
+
+            $host = Request::getHost();
+            if ($host == config('app.delivery_domain')) {
+                Inertia::setRootView('app-delivery');
+            }elseif ($host == config('app.domain')) {
+                Inertia::setRootView('app-organisation');
+            } else {
+                $path = Request::path();
+                if (preg_match('/^auth\//', $path)) {
+                    Inertia::setRootView('app-customer');
+                } else {
+                    Inertia::setRootView('app-public');
+                }
+            }
+
 
             return Inertia::render(
                 $this->getInertiaPage($e),
@@ -114,12 +128,11 @@ class Handler extends ExceptionHandler
 
     public function getInertiaPage(Throwable $e): string
     {
-        if(get_class($e)=='Exceptions\NoCustomer') {
+        if (get_class($e) == 'Exceptions\NoCustomer') {
             return 'Utils/CustomerNotFound';
         }
 
         return Auth::check() ? 'Utils/ErrorInApp' : 'Utils/Error';
-
     }
 
 }
