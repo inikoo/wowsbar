@@ -16,7 +16,7 @@ return new class () extends Migration {
             $table->increments('id');
             $table->unsignedInteger('customer_id')->nullable()->index();
             $table->foreign('customer_id')->references('id')->on('customers');
-            $table->string('slug')->unique()->index();
+            $table->string('slug')->unique()->collation('und_ns');
             $table->string('model_type')->nullable();
             $table->unsignedInteger('model_id')->nullable();
             $table->uuid()->nullable()->unique();

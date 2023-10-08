@@ -14,11 +14,11 @@ return new class () extends Migration {
     {
         Schema::create('portfolio_websites', function (Blueprint $table) {
             $table->smallIncrements('id');
+            $table->string('slug')->unique()->collation('und_ns');
             $table->unsignedInteger('shop_id');
             $table->foreign('shop_id')->references('id')->on('shops')->onUpdate('cascade')->onDelete('cascade');
             $table->unsignedInteger('customer_id');
             $table->foreign('customer_id')->references('id')->on('customers')->onUpdate('cascade')->onDelete('cascade');
-            $table->string('slug')->collation('und_ns')->unique()->index();
             $table->string('url')->collation('und_ns');
             $table->string('name')->collation('und_ns');
             $table->jsonb('data');

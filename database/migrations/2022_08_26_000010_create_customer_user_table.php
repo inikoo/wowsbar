@@ -14,10 +14,9 @@ return new class () extends Migration {
     {
         Schema::create('customer_user', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('slug')->unique()->nullable()->index();
+            $table->string('slug')->unique()->collation('udn_ns')->nullable();
             $table->boolean('is_root')->default(false)->index();
             $table->boolean('status')->default(true);
-
             $table->unsignedInteger('customer_id')->index();
             $table->foreign('customer_id')->references('id')->on('customers');
             $table->unsignedInteger('user_id')->index();

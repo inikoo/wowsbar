@@ -15,7 +15,7 @@ return new class () extends Migration {
     {
         Schema::create('appointments', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('slug')->nullable();
+            $table->string('slug')->unique()->collation('udn_ns')->nullable();
             $table->unsignedInteger('shop_id');
             $table->foreign('shop_id')->references('id')->on('shops')->onUpdate('cascade')->onDelete('cascade');
 

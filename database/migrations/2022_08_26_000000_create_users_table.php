@@ -17,7 +17,7 @@ return new class () extends Migration {
     {
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('slug')->index()->unique();
+            $table->string('slug')->unique()->collation('und_ns');
             $table->string('email')->index()->collation('und_ns');
             $table->timestamp('email_verified_at')->nullable();
             $table->unsignedInteger('website_id')->index();
