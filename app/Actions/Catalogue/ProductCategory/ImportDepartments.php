@@ -35,7 +35,7 @@ class ImportDepartments
         $this->handle($file);
     }
 
-    public string $commandSignature = 'department:import {--G|google=} {filename?}';
+    public string $commandSignature = 'department:import {--g|g_drive} {filename}';
 
 
 }
