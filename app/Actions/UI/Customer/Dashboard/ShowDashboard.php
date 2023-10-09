@@ -19,12 +19,21 @@ class ShowDashboard
 
     public function asController(ActionRequest $request): Response
     {
+
+        $customer=customer();
+
+        $latestBanners=GetLastEditedBanner::run($customer);
+
+
+
         return Inertia::render(
             'Dashboard',
             [
                 'title'       => __('dashboard'),
                 'breadcrumbs' => $this->getBreadcrumbs(__('dashboard')),
-                'banners'     => GetLastEditedBanner::run(customer()),
+                'banners'     => $latestBanners,
+                'banners_count'=>$latestBanners->count(),
+                'portfolio_websites_count'=>$customer->portfolioStats->number_portfolio_websites,
                 'name'        => $request->user()->contact_name??$request->user()->slug
             ]
         );
