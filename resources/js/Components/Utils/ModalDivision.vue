@@ -60,7 +60,7 @@ const submitState = async (selectedColumnName: string, stateName: string) => {
 
 <template>
     <!-- Popup: for confirmation -->
-    <Modal :isOpen="isModalOpen" @onClose="emits('onClose')">
+    <Modal :isOpen="isModalOpen" @onClose="emits('onClose')" width="w-fit">
         <Button class="sr-only" /> <!-- Helper: to focused on popup Modal -->
         <div class="space-y-4">
             <p class="text-gray-600 text-center">Do you want to change the <span class="font-bold">{{ selectedColumn.label }}</span> status of <span class="font-bold">{{ selectedWebsite.name }}</span>?</p>

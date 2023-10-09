@@ -104,7 +104,7 @@ const logoutAuth = () => {
             </div>
 
             <!-- Avatar Group -->
-            <div class="flex items-center space-x-3 justify-end lg:justify-between w-full pl-3 pr-4 border-b border-gray-200">
+            <div class="bg-gray-50 flex items-center space-x-3 justify-end lg:justify-between w-full pl-3 pr-4 border-b border-gray-200">
                 <!-- TopBar: items -->
                 <TopBarNavs />
                 <div class="flex gap-x-3">

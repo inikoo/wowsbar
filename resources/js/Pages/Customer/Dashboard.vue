@@ -16,6 +16,11 @@ import secondStep from '@/Components/Dashboard/secondStep.vue'
 import thirdStep from '@/Components/Dashboard/thirdStep.vue'
 import Button from '@/Components/Elements/Buttons/Button.vue'
 
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { faArrowRight } from '@/../private/pro-regular-svg-icons'
+import { library } from '@fortawesome/fontawesome-svg-core'
+library.add(faArrowRight)
+
 const currentHour = new Date().getHours();
 
 const greetingMessage =
@@ -118,7 +123,10 @@ const compComponentSteps = computed(() => {
                     <component :is="compComponentSteps" />
                 </KeepAlive>
                 <div class="flex justify-end">
-                    <Button label="Next" />
+                    <Button label="Next">
+                        <span>Next</span>
+                        <FontAwesomeIcon icon='far fa-arrow-right' class='' aria-hidden='true' />
+                    </Button>
                 </div>
             </div>
         </div>
