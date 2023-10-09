@@ -30,7 +30,7 @@ class StoreBannerSnapshot
             )
         );
 
-        data_set($modelData,'customer_id',$banner->customer_id);
+        data_set($modelData, 'customer_id', $banner->customer_id);
 
         $snapshot=Snapshot::create($modelData);
         $banner->snapshots()->save($snapshot);

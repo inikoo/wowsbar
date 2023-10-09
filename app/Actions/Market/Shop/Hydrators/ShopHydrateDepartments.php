@@ -21,7 +21,8 @@ class ShopHydrateDepartments implements ShouldBeUnique
 
     public function handle(Shop $shop): void
     {
-
+        //todo implement this
+        /*
         $stats            = [
             'number_departments' => $shop->departments()->count(),
         ];
@@ -35,6 +36,7 @@ class ShopHydrateDepartments implements ShouldBeUnique
             $stats['number_departments_state_'.$departmentState->snake()] = Arr::get($stateCounts, $departmentState->value, 0);
         }
         $shop->stats->update($stats);
+        */
     }
 
     public function getJobUniqueId(Shop $parameters): string

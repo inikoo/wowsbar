@@ -28,7 +28,8 @@ class CustomerHydrateBanners implements ShouldBeUnique
         foreach (BannerStateEnum::cases() as $state) {
             $stats['number_banners_state_'.$state->snake()] = $customer->banners()->where('state', $state->value)->count();
         }
-        $customer->portfolioStats->update($stats);
+
+        $customer->portfolioStats()->update($stats);
     }
 
 }

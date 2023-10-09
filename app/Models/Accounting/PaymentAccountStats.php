@@ -21,9 +21,9 @@ use Illuminate\Support\Carbon;
  * @property int $number_payment_records
  * @property int $number_payments
  * @property int $number_refunds
- * @property string $tc_amount customer currency, amount_successfully_paid-amount_returned
- * @property string $tc_amount_successfully_paid
- * @property string $tc_amount_refunded
+ * @property string $org_amount customer currency, amount_successfully_paid-amount_returned
+ * @property string $org_amount_successfully_paid
+ * @property string $org_amount_refunded
  * @property string $gc_amount Group currency, amount_successfully_paid-amount_returned
  * @property string $gc_amount_successfully_paid
  * @property string $gc_amount_refunded

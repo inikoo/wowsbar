@@ -7,7 +7,6 @@
 
 namespace App\Models\Helpers;
 
-use App\Concerns\BelongsToCustomer;
 use App\Enums\Portfolio\Snapshot\SnapshotStateEnum;
 use App\Http\Resources\Portfolio\SlideResource;
 use App\Models\Portfolio\Banner;

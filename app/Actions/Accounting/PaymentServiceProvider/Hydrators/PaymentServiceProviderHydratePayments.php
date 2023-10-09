@@ -26,19 +26,19 @@ class PaymentServiceProviderHydratePayments implements ShouldBeUnique
         $amountTenantCurrencySuccessfullyPaid = $paymentServiceProvider->payments()
             ->where('type', 'payment')
             ->where('status', 'success')
-            ->sum('tc_amount');
+            ->sum('org_amount');
         $amountTenantCurrencyRefunded         = $paymentServiceProvider->payments()
             ->where('type', 'refund')
             ->where('status', 'success')
-            ->sum('tc_amount');
+            ->sum('org_amount');
 
         $stats = [
             'number_payment_records'      => $paymentRecords,
             'number_payments'             => $paymentRecords - $refunds,
             'number_refunds'              => $refunds,
-            'tc_amount'                   => $amountTenantCurrencySuccessfullyPaid + $amountTenantCurrencyRefunded,
-            'tc_amount_successfully_paid' => $amountTenantCurrencySuccessfullyPaid,
-            'tc_amount_refunded'          => $amountTenantCurrencyRefunded
+            'org_amount'                   => $amountTenantCurrencySuccessfullyPaid + $amountTenantCurrencyRefunded,
+            'org_amount_successfully_paid' => $amountTenantCurrencySuccessfullyPaid,
+            'org_amount_refunded'          => $amountTenantCurrencyRefunded
         ];
 
 

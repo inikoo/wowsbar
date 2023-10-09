@@ -28,11 +28,13 @@ class ShopHydrateCustomerInvoices implements ShouldBeUnique
             ->groupBy('trade_state')
             ->pluck('total', 'trade_state')->all();
 
-
+        //todo implement this if needed
+        /*
         foreach (CustomerTradeStateEnum::cases() as $tradeState) {
             $stats['number_customers_trade_state_'.$tradeState->snake()] =
                 Arr::get($numberInvoicesStateCounts, $tradeState->value, 0);
         }
+        */
         $shop->stats->update($stats);
     }
 

@@ -9,7 +9,6 @@ namespace App\Actions\CRM\Appointment;
 
 use App\Enums\CRM\Appointment\AppointmentEventEnum;
 use App\Enums\CRM\Appointment\AppointmentTypeEnum;
-use App\Models\CRM\Appointment;
 use App\Models\CRM\Customer;
 use App\Models\Market\Shop;
 use Exception;
