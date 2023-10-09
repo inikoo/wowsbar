@@ -1,3 +1,9 @@
+<!--
+  - Author: Raul Perusquia <raul@inikoo.com>
+  - Created: Mon, 09 Oct 2023 09:38:44 Malaysia Time, Office, Bali, Indonesia
+  - Copyright (c) 2023, Raul A Perusquia Flores
+  -->
+
 <script setup lang="ts">
 import InputError from '@/Components/InputError.vue'
 import InputLabel from '@/Components/InputLabel.vue'
@@ -20,7 +26,7 @@ const form = useForm({
 })
 
 const submit = () => {
-    form.post(route('public.register'), {
+    form.post(route('customer.register'), {
         onFinish: () => form.reset('password', 'password_confirmation'),
     })
 }
@@ -28,7 +34,7 @@ const submit = () => {
 
 <template layout="Public">
     <Head title="Register" />
-
+    <div class="mt-16 sm:mx-auto sm:w-full sm:max-w-md">
     <form @submit.prevent="submit" class="space-y-6">
         <!-- Field: Name -->
         <div>
@@ -76,9 +82,10 @@ const submit = () => {
         <div class="">
             <div class="text-sm font-light text-gray-500 dark:text-gray-400">
                 {{ trans('Already registered?') }}
-                <Link :href="route('public.login')" id="login-link"
+                <Link :href="route('customer.login')" id="login-link"
                     class="font-bold text-primary-700 hover:underline dark:text-primary-500">{{ trans('Login') }}</Link>
             </div>
         </div>
     </form>
+    </div>
 </template>

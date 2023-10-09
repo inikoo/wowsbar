@@ -90,7 +90,7 @@ class StoreCustomer
         return [
             'contact_name'             => ['nullable', 'string', 'max:255'],
             'company_name'             => ['nullable', 'string', 'max:255'],
-            'email'                    => ['nullable', 'email', 'unique:customers'],
+            'email'                    => ['nullable', 'email', 'iunique:customers'],
             'phone'                    => ['nullable', 'phone:AUTO'],
             'identity_document_number' => ['nullable', 'string'],
             'contact_website'          => ['nullable', 'active_url'],

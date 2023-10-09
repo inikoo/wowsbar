@@ -68,21 +68,21 @@ const handleToggleLeftbar = () => {
 </script>
 
 <template>
-    <div class="mt-11 fixed md:flex md:flex-col md:inset-y-0 lg:mt-10 bg-gray-50 dark:bg-gray-800 dark:text-gray-100 h-full text-gray-400"
+    <div class="mt-11 fixed md:flex md:flex-col md:inset-y-0 lg:mt-10 bg-slate-600 dark:bg-gray-800 dark:text-gray-100 h-full text-white"
          :class="[layout.leftSidebar.show ? 'w-8/12 md:w-56' : 'w-8/12 md:w-10']"
          @mouseenter="isHover = true" @mouseleave="isHover = false"
     >
         <!-- Toggle: collapse-expand LeftSideBar -->
         <div @click="handleToggleLeftbar"
-             class="hidden absolute z-10 right-0 top-2/4 -translate-y-full translate-x-1/2 w-7 aspect-square bg-gray-200 hover:bg-gray-300 border border-gray-300 rounded-full md:flex md:justify-center md:items-center cursor-pointer"
+             class="hidden absolute z-10 right-0 top-2/4 -translate-y-full translate-x-1/2 w-7 aspect-square bg-yellow-400 hover:bg-yellow-500 border-2 border-gray-600 text-slate-600 rounded-full md:flex md:justify-center md:items-center cursor-pointer"
              :title="[layout.leftSidebar.show ? 'Collapse the bar' : 'Expand the bar']"
         >
-            <div class="flex items-center justify-center transition-all duration-200 ease-in-out" :class="{'rotate-180': !layout.leftSidebar.show}">
+            <div class="flex items-center justify-center" :class="{'rotate-180': !layout.leftSidebar.show}">
                 <FontAwesomeIcon icon='far fa-chevron-left' class='-translate-x-[1px] h-[14px]' aria-hidden='true'/>
             </div>
         </div>
 
-        <div class="isolate relative flex flex-grow flex-col h-full overflow-y-auto custom-hide-scrollbar border-r border-gray-200 dark:border-gray-500 pb-4">
+        <div class="isolate relative flex flex-grow flex-col h-full overflow-y-auto custom-hide-scrollbar dark:border-gray-500 pb-4">
             <div class="flex flex-grow flex-col pb-16">
                 <nav class="flex-1 space-y-1" aria-label="Sidebar">
                     <!-- LeftSide Links -->
@@ -100,10 +100,10 @@ const handleToggleLeftbar = () => {
                         <div class="flex items-center">
                             <FontAwesomeIcon
                                 aria-hidden="true"
-                                class="text-gray-400 dark:text-gray-200 ml-2 mr-3 flex-shrink-0 h-4 w-4"
+                                class="dark:text-gray-200 ml-2 mr-3 flex-shrink-0 h-4 w-4"
                                 :icon="item.icon"/>
                         </div>
-                        <span class="capitalize text-gray-600 leading-none whitespace-nowrap" :class="[layout.leftSidebar.show ? 'block md:block' : 'block md:hidden']">{{ trans(item.label) }}</span>
+                        <span class="capitalize leading-none whitespace-nowrap" :class="[layout.leftSidebar.show ? 'block md:block' : 'block md:hidden']">{{ trans(item.label) }}</span>
                     </Link>
                 </nav>
             </div>

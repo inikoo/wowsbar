@@ -8,7 +8,7 @@
 use App\Actions\Auth\User\Login;
 use App\Actions\Auth\User\Logout;
 use App\Actions\Auth\User\UI\ShowLogin;
-use App\Actions\UI\Public\Auth\Register;
+use App\Actions\CRM\Customer\Register;
 use App\Actions\UI\Public\Auth\ShowRegister;
 use Illuminate\Support\Facades\Route;
 

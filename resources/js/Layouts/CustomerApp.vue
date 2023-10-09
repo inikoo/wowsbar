@@ -41,7 +41,7 @@ library.add(
     faBell
 )
 
-const sidebarOpen = ref(false)
+const isHamburgerOpen = ref(false)
 const layout = initialiseCustomerApp()
 
 
@@ -57,11 +57,15 @@ const layoutState = useLayoutStore()
 <template>
     <div class="fixed top-0 left-0 w-screen h-screen dark:bg-gray-700 bg-gray-50" />
     <div class="relative min-h-full transition-all duration-200 ease-in-out"
-        :class="[Object.values(layout.rightSidebar).some(value => value.show) ? 'mr-44' : 'mr-0']">
-        <TopBar @sidebarOpen="(value: boolean) => sidebarOpen = value" :sidebarOpen="sidebarOpen"
+        :class="[Object.values(layoutState.rightSidebar).some(value => value.show) ? 'mr-44' : 'mr-0']">
+
+        <!-- Section: Topbar -->
+        <TopBar v-model="layoutState.leftSidebar.show"
             :logoRoute="`customer.dashboard.show`" urlPrefix="customer.">
-            <span class="hidden leading-none md:inline font-bold xl:truncate text-gray-800 dark:text-gray-300">
-                {{ layout.app.name }}
+            <span class="leading-none font-light xl:truncate text-white dark:text-gray-300"
+                :class="[layoutState.leftSidebar.show ? '' : '']"
+            >
+                {{ layoutState.app.name }}
             </span>
         </TopBar>
 
@@ -73,12 +77,12 @@ const layoutState = useLayoutStore()
         <!-- Sidebar: Left -->
         <div>
             <Transition>
+                <!-- Mobile Helper: background to close hamburger -->
                 <div class="bg-gray-200/80 fixed top-0 w-screen h-screen z-20 md:hidden transition-all duration-500 ease-in-out"
-                    v-if="sidebarOpen" @click="sidebarOpen = !sidebarOpen" />
+                    v-if="layoutState.leftSidebar.show" @click="layoutState.leftSidebar.show = !layoutState.leftSidebar.show" />
             </Transition>
-            <!-- Mobile Helper: background to close hamburger -->
             <AppLeftSideBar class="-left-2/3 transition-all duration-300 ease-in-out z-20 block md:left-0"
-                :class="{ 'left-0': sidebarOpen }" @click="sidebarOpen = !sidebarOpen" />
+                :class="{ 'left-0': layoutState.leftSidebar.show }" />
         </div>
 
         <!-- Main Content -->
@@ -90,7 +94,7 @@ const layoutState = useLayoutStore()
 
         <!-- Sidebar: Right -->
         <AppRightSideBar class="fixed top-[76px] md:top-[68px] lg:top-16 w-44 transition-all duration-200 ease-in-out"
-            :class="[Object.values(layout.rightSidebar).some(value => value.show === true) ? 'right-0' : '-right-44']" />
+            :class="[Object.values(layoutState.rightSidebar).some(value => value.show === true) ? 'right-0' : '-right-44']" />
 
     </div>
 
