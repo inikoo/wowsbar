@@ -153,15 +153,7 @@ class Employee extends Model implements HasMedia, Auditable
     {
         return $this->morphToMany(JobPosition::class, 'job_positionable');
     }
-    /*
-    public function jobPositions(): BelongsToMany
-    {
-        return $this->belongsToMany(JobPosition::class)
-            ->using(EmployeeJobPosition::class)
-            ->withTimestamps()
-            ->withPivot('share');
-    }
-*/
+
     public function organisationUser(): MorphOne
     {
         return $this->morphOne(OrganisationUser::class, 'parent');
@@ -176,5 +168,6 @@ class Employee extends Model implements HasMedia, Auditable
     {
         return $this->belongsTo(Workplace::class);
     }
+
 
 }

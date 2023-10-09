@@ -75,7 +75,6 @@ class StoreEmployee
 
         EmployeeHydrateWeekWorkingHours::dispatch($employee);
         OrganisationHydrateEmployees::dispatch();
-        //if($employee->workplace_id){}
 
         EmployeeHydrateUniversalSearch::dispatch($employee);
 

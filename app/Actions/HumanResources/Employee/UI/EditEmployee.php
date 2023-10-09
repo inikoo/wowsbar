@@ -48,17 +48,17 @@ class EditEmployee extends InertiaAction
                 'title'       => __('employee'),
                 'breadcrumbs' => $this->getBreadcrumbs($employee),
                 'pageHead'    => [
-                    'title'    => $employee->contact_name,
-                    'icon'     => [
+                    'title'     => $employee->contact_name,
+                    'icon'      => [
                         'title' => __('employee'),
                         'icon'  => 'fal fa-user-hard-hat'
                     ],
-                    'iconRight'    =>
+                    'iconRight' =>
                         [
                             'icon'  => ['fal', 'fa-edit'],
                             'title' => __("Editing employee")
                         ],
-                    'actions'  => [
+                    'actions'   => [
                         [
                             'type'  => 'button',
                             'style' => 'exit',
@@ -70,13 +70,13 @@ class EditEmployee extends InertiaAction
                         ]
                     ]
                 ],
-                'formData' => [
+                'formData'    => [
                     'blueprint' => [
                         [
                             'title'  => __('personal information'),
                             'fields' => [
 
-                                'contact_name' => [
+                                'contact_name'  => [
                                     'type'        => 'input',
                                     'label'       => __('name'),
                                     'placeholder' => __('Name'),
@@ -92,6 +92,7 @@ class EditEmployee extends InertiaAction
                                 'email'         => [
                                     'type'  => 'input',
                                     'label' => __('personal email'),
+                                    'value' => $employee->email
                                 ],
 
 
@@ -104,21 +105,24 @@ class EditEmployee extends InertiaAction
                                     'type'     => 'input',
                                     'label'    => __('worker number'),
                                     'required' => true,
+                                    'value'    => $employee->worker_number
                                 ],
                                 'alias'               => [
                                     'type'     => 'input',
                                     'label'    => __('alias'),
                                     'required' => true,
+                                    'value'    => $employee->alias
                                 ],
                                 'work_email'          => [
                                     'type'  => 'input',
                                     'label' => __('work email'),
+                                    'value' => $employee->work_email
                                 ],
                                 'state'               => [
                                     'type'    => 'radio',
                                     'mode'    => 'card',
                                     'label'   => '',
-                                    'value'   => EmployeeStateEnum::HIRED->value,
+                                    'value'   => $employee->state,
                                     'options' => [
                                         [
                                             'title'       => __('Hired'),
@@ -135,7 +139,7 @@ class EditEmployee extends InertiaAction
                                 'employment_start_at' => [
                                     'type'     => 'date',
                                     'label'    => __('employment start at'),
-                                    'value'    => '',
+                                    'value'    => $employee->employment_start_at,
                                     'required' => true
                                 ],
 
@@ -151,15 +155,18 @@ class EditEmployee extends InertiaAction
                                     'options'     => Options::forModels(JobPosition::class, label: 'name', value: 'name'),
                                     'placeholder' => __('Select a job position'),
                                     'mode'        => 'single',
-                                    'searchable'  => true
+                                    'searchable'  => true,
+                                    'value'       => $employee->jobPositions,
                                 ],
                                 'job_title' => [
                                     'type'        => 'input',
                                     'label'       => __('job title'),
                                     'placeholder' => __('Job title'),
-                                    'searchable'  => true
+                                    'searchable'  => true,
+                                    'value'       => $employee->job_title,
+                                    'required'  => true
                                 ],
-                                'required'  => true
+
 
 
                             ]
@@ -171,6 +178,7 @@ class EditEmployee extends InertiaAction
                                 'username' => [
                                     'type'  => 'input',
                                     'label' => __('username'),
+                                    'value' => $employee->organisationUser ? $employee->organisationUser->username : ''
 
                                 ],
                                 'password' => [
@@ -186,7 +194,7 @@ class EditEmployee extends InertiaAction
                     'args'      => [
                         'updateRoute' => [
                             'name'       => 'org.models.employee.update',
-                            'parameters' => $employee->slug
+                            'parameters' => $employee->id
 
                         ],
                     ]
@@ -199,6 +207,6 @@ class EditEmployee extends InertiaAction
 
     public function getBreadcrumbs(Employee $employee): array
     {
-        return ShowEmployee::make()->getBreadcrumbs(employee:$employee, suffix: '('.__('editing').')');
+        return ShowEmployee::make()->getBreadcrumbs(employee: $employee, suffix: '('.__('editing').')');
     }
 }
