@@ -26,13 +26,13 @@ import { useAppearanceStore } from "@/Stores/appearance"
 import Image from "@/Components/Image.vue"
 
 const props = defineProps<{
-    sidebarOpen: boolean
+    modelValue: boolean
     logoRoute: string
     urlPrefix: string
 }>()
 
 defineEmits<{
-    (e: 'sidebarOpen'): void
+    (e: 'update:modelValue', sideBar: boolean): void
 }>()
 
 const layout = useLayoutStore()
@@ -76,95 +76,95 @@ const logoutAuth = () => {
 </script>
 
 <template>
-    <Disclosure as="nav" class=" fixed top-0 z-[21] w-full bg-gray-50 text-gray-700 dark:bg-gray-800 dark:text-gray-200" v-slot="{ open }">
-        <div class="px-0">
-            <div class="flex h-11 lg:h-10 flex-shrink-0 border-b border-gray-200 dark:border-gray-500 ">
-                <div class="flex flex-1">
-                    <div class="flex flex-1 lg:justify-between">
-                        <!-- Hamburger -->
-                        <button class="block md:hidden w-10 h-10 relative focus:outline-none" @click="sidebarOpen = !sidebarOpen, $emit('sidebarOpen', sidebarOpen)">
-                            <span class="sr-only">Open sidebar</span>
-                            <div class="block w-5 absolute left-1/2 top-1/2   transform  -translate-x-1/2 -translate-y-1/2">
-                                <span aria-hidden="true" class="block absolute rounded-full h-0.5 w-5 bg-gray-900 transform transition duration-200 ease-in-out"
-                                    :class="{'rotate-45': sidebarOpen,' -translate-y-1.5': !sidebarOpen }"></span>
-                                <span aria-hidden="true" class="block absolute rounded-full h-0.5 w-5 bg-gray-900 transform transition duration-100 ease-in-out" :class="{'opacity-0': sidebarOpen } "></span>
-                                <span aria-hidden="true" class="block absolute rounded-full h-0.5 w-5 bg-gray-900 transform transition duration-200 ease-in-out"
-                                    :class="{'-rotate-45': sidebarOpen, ' translate-y-1.5': !sidebarOpen}"></span>
-                            </div>
-                        </button>
-
-                        <!-- Menu -->
-                        <div class="flex flex-1 items-center justify-between lg:justify-start">
-                            <Link :href="route(logoRoute)"
-                                class="md:pl-3 flex items-center h-full xl:overflow-hidden space-x-2 mr-6 xl:w-56 xl:pr-2 xl:border-r-2 xl:mr-0 xl:border-gray-200 dark:xl:border-gray-500"
-                            >
-                                <slot />
-                            </Link>
-                            <TopBarNavs />
-                        </div>
+    <Disclosure as="nav" class="fixed top-0 z-[21] w-full text-white dark:bg-gray-800 dark:text-gray-200" v-slot="{ open }">
+        <div class="flex h-11 lg:h-10 flex-shrink-0">
+            <div class="bg-gray-600 flex transition-all duration-300 ease-in-out">
+                <!-- Hamburger -->
+                <button class="block md:hidden w-10 h-10 relative focus:outline-none" @click="$emit('update:modelValue', !modelValue)">
+                    <span class="sr-only">Open sidebar</span>
+                    <div class="block w-5 absolute left-1/2 top-1/2   transform  -translate-x-1/2 -translate-y-1/2">
+                        <span aria-hidden="true" class="block absolute rounded-full h-0.5 w-5 bg-gray-100 transform transition duration-200 ease-in-out"
+                            :class="{'rotate-45': modelValue,' -translate-y-1.5': !modelValue }"></span>
+                        <span aria-hidden="true" class="block absolute rounded-full h-0.5 w-5 bg-gray-100 transform transition duration-100 ease-in-out" :class="{'opacity-0': modelValue } "></span>
+                        <span aria-hidden="true" class="block absolute rounded-full h-0.5 w-5 bg-gray-100 transform transition duration-200 ease-in-out"
+                            :class="{'-rotate-45': modelValue, ' translate-y-1.5': !modelValue}"></span>
                     </div>
+                </button>
 
-                    <!-- Avatar Group -->
-                    <div class="flex items-center mr-6 space-x-3">
-                        <div class="flex">
-                            <!-- <div class="cursor-pointer text-white bg-indigo-500 px-2 py-0.5 rounded-md select-none" @click="changeColorMode(true)">Dark mode: True</div>
-                            <div class="cursor-pointer text-white bg-indigo-500 px-2 py-0.5 rounded-md select-none" @click="changeColorMode(false)">Dark mode: False</div>
-                            <div class="cursor-pointer text-white bg-indigo-500 px-2 py-0.5 rounded-md select-none" @click="changeColorMode('system')">Dark mode: OS System</div> -->
-
-                            <!-- Button: Search -->
-                            <button @click="showSearchDialog = !showSearchDialog" id="search"
-                                    class="h-8 w-8 grid items-center justify-center rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500">
-                                <span class="sr-only">{{ trans("Search") }}</span>
-                                <font-awesome-icon aria-hidden="true" icon="fa-regular fa-search" size="lg" />
-                                <SearchBar v-if="showSearchDialog" v-on:close="showSearchDialog = false" />
-                            </button>
-
-                            <!-- Button: Notifications -->
-                            <button type="button"
-                                    class="h-8 w-8 grid items-center justify-center rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500">
-                                <span class="sr-only">{{ trans("View notifications") }}</span>
-                                <font-awesome-icon aria-hidden="true" icon="fa-regular fa-bell" size="lg" />
-                            </button>
-                        </div>
-
-                        <!-- Avatar Button -->
-                        <Menu as="div" class="relative">
-                            <MenuButton id="avatar-thumbnail"
-                                class="flex max-w-xs overflow-hidden items-center rounded-full bg-gray-100 text-sm focus:outline-none focus:ring-2 focus:ring-gray-500">
-                                <span class="sr-only">{{ trans("Open user menu") }}</span>
-                                <Image  class="h-8 w-8 rounded-full"
-                                    :src="layout.avatar_thumbnail"
-                                    alt="" />
-
-                            </MenuButton>
-
-                            <transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100"
-                                        leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
-                                <MenuItems class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-200 focus:outline-none">
-                                    <div class="py-1">
-                                        <MenuItem v-slot="{ active }">
-                                            <div as="ul" type="button" @click="router.visit(route(urlPrefix+'profile.show'))"
-                                                :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm cursor-pointer']">
-                                                {{ trans("View profile") }}
-                                            </div>
-                                        </MenuItem>
-
-                                    </div>
-
-                                    <div class="py-1">
-                                        <MenuItem v-slot="{ active }">
-                                            <div @click="logoutAuth()"
-                                                :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm cursor-pointer']"
-                                            >
-                                                {{ trans('Logout') }}
-                                            </div>
-                                        </MenuItem>
-                                    </div>
-                                </MenuItems>
-                            </transition>
-                        </Menu>
-                    </div>
+                <!-- App Title -->
+                <div class="flex flex-1 items-center justify-center md:justify-start transition-all duration-300 ease-in-out border-b border-gray-400"
+                    :class="[layout.leftSidebar.show ? 'md:w-56 md:px-4' : 'md:w-10']"
+                >
+                    <Link v-if="layout.leftSidebar.show" :href="route(logoRoute)"
+                        class="hidden md:flex items-center h-full overflow-hidden space-x-2"
+                    >
+                        <slot />
+                    </Link>
                 </div>
+            </div>
+
+            <!-- Avatar Group -->
+            <div class="flex items-center space-x-3 justify-end lg:justify-between w-full pl-3 pr-4 border-b border-gray-200">
+                <!-- TopBar: items -->
+                <TopBarNavs />
+                <div class="flex gap-x-3">
+                    <!-- <div class="cursor-pointer text-white bg-indigo-500 px-2 py-0.5 rounded-md select-none" @click="changeColorMode(true)">Dark mode: True</div>
+                    <div class="cursor-pointer text-white bg-indigo-500 px-2 py-0.5 rounded-md select-none" @click="changeColorMode(false)">Dark mode: False</div>
+                    <div class="cursor-pointer text-white bg-indigo-500 px-2 py-0.5 rounded-md select-none" @click="changeColorMode('system')">Dark mode: OS System</div> -->
+
+                    <!-- Button: Search -->
+                    <button @click="showSearchDialog = !showSearchDialog" id="search"
+                            class="h-8 w-8 grid items-center justify-center rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500">
+                        <span class="sr-only">{{ trans("Search") }}</span>
+                        <FontAwesomeIcon aria-hidden="true" icon="far fa-search" size="lg" />
+                        <SearchBar v-if="showSearchDialog" v-on:close="showSearchDialog = false" />
+                    </button>
+
+                    <!-- Button: Notifications -->
+                    <!-- <button type="button"
+                            class="h-8 w-8 grid items-center justify-center rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500">
+                        <span class="sr-only">{{ trans("View notifications") }}</span>
+                        <FontAwesomeIcon aria-hidden="true" icon="far fa-bell" size="lg" />
+                    </button> -->
+
+                    <!-- Avatar Button -->
+                    <Menu as="div" class="relative">
+                        <MenuButton id="avatar-thumbnail"
+                            class="flex max-w-xs overflow-hidden items-center rounded-full bg-gray-100 text-sm focus:outline-none focus:ring-2 focus:ring-gray-500">
+                            <span class="sr-only">{{ trans("Open user menu") }}</span>
+                            <Image class="h-8 w-8 rounded-full"
+                                :src="layout.avatar_thumbnail"
+                                alt="" />
+
+                        </MenuButton>
+
+                        <transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100"
+                                    leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
+                            <MenuItems class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-200 focus:outline-none">
+                                <div class="py-1">
+                                    <MenuItem v-slot="{ active }">
+                                        <div as="ul" type="button" @click="router.visit(route(urlPrefix+'profile.show'))"
+                                            :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm cursor-pointer']">
+                                            {{ trans("View profile") }}
+                                        </div>
+                                    </MenuItem>
+
+                                </div>
+
+                                <div class="py-1">
+                                    <MenuItem v-slot="{ active }">
+                                        <div @click="logoutAuth()"
+                                            :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm cursor-pointer']"
+                                        >
+                                            {{ trans('Logout') }}
+                                        </div>
+                                    </MenuItem>
+                                </div>
+                            </MenuItems>
+                        </transition>
+                    </Menu>
+                </div>
+
             </div>
         </div>
     </Disclosure>

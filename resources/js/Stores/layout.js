@@ -9,19 +9,28 @@ import {defineStore} from 'pinia';
 export const useLayoutStore = defineStore('layout', {
     state: () => (
         {
-            booted                : false,
-            navigation            : [],
             app                   : {
                 slug         : '',
                 name         : '',
                 showLiveUsers: false,
             },
+            avatar_thumbnail      : {
+                original: '',
+                original_2x: '',
+                avif: '',
+                avif_2x: '',
+                webp: '',
+                webp_2x: '',
+            },
+            booted                : false,
             currentRoute          : '',
             currentRouteParameters: {},
             currentModule         : '',
             leftSidebar           : {
                 show: true,
             },
+            navigation            : [],
+            organisation          : {},
             rightSidebar          : {
                 activeUsers: {
                     users: [],
@@ -32,8 +41,6 @@ export const useLayoutStore = defineStore('layout', {
                     show: false,
                 },
             },
-            avatar_thumbnail      : null,
-            organisation          : {},
             user                  : {
                 username: '',
                 name    : '',
