@@ -9,7 +9,6 @@ namespace App\Actions\Auth\User;
 
 use App\Actions\Auth\User\Hydrators\UserHydrateFailLogin;
 use App\Actions\Auth\User\Hydrators\UserHydrateLogin;
-use App\Actions\Organisation\OrganisationUser\Hydrators\OrganisationUserHydrateFailLogin;
 use App\Models\Auth\CustomerUser;
 use App\Models\Auth\User;
 use Illuminate\Auth\Events\Lockout;
@@ -21,15 +20,14 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Lorisleiva\Actions\ActionRequest;
-use Lorisleiva\Actions\Concerns\AsController;
+use Lorisleiva\Actions\Concerns\AsAction;
 
 class Login
 {
-    use AsController;
+    use AsAction;
 
     private string $credentialHandler = 'email';
     private string $home              = 'app/dashboard';
-    private string $gate              = 'customer';
 
 
     /**
@@ -39,12 +37,13 @@ class Login
     {
         $this->ensureIsNotRateLimited($request);
 
-        if (!Auth::guard($this->gate)->attempt(
+        if (!Auth::guard('customer')->attempt(
             array_merge($request->validated(), ['status' => true]),
             $request->boolean('remember')
         )) {
             RateLimiter::hit($this->throttleKey($request));
-            $this->userFailLogin();
+            UserHydrateFailLogin::dispatch(Auth::guard('customer')->user(), request()->ip(), now());
+
             throw ValidationException::withMessages([
                 'email' => trans('auth.failed'),
             ]);
@@ -53,21 +52,30 @@ class Login
         RateLimiter::clear($this->throttleKey($request));
 
         /** @var User $user */
-        $user = Auth::guard($this->gate)->user();
+        $user = Auth::guard('customer')->user();
 
+
+
+        $this->logCustomerUser($user);
+
+        return back();
+    }
+
+
+
+    public function logCustomerUser(User $user): void
+    {
         /** @var CustomerUser $customerUser */
         $customerUser = $user->customerUsers()->where('status', true)->first();
         if (!$customerUser) {
-            RateLimiter::hit($this->throttleKey($request));
-            $this->userFailLogin();
 
-            Auth::guard($this->gate)->logout();
-            $request->session()->invalidate();
-            $request->session()->regenerateToken();
 
-            throw ValidationException::withMessages([
-                'email' => trans('auth.failed'),
-            ]);
+
+            Auth::guard('customer')->logout();
+            session()->invalidate();
+            session()->regenerateToken();
+
+            abort(419,'CustomerUser not associated with user, cant log in');
         }
 
 
@@ -81,9 +89,9 @@ class Login
             'customer_name'    => $customerUser->customer->name,
             'customer_ulid'    => $customerUser->customer->ulid
         ]);
-        UserHydrateLogin::dispatch(Auth::guard($this->gate)->user(), request()->ip(), now());
+        UserHydrateLogin::dispatch(Auth::guard('customer')->user(), request()->ip(), now());
 
-        $request->session()->regenerate();
+        session()->regenerate();
         Session::put('reloadLayout', '1');
 
 
@@ -92,21 +100,8 @@ class Login
             app()->setLocale($language);
         }
 
-        return back();
     }
 
-
-    public function userFailLogin(): void
-    {
-        switch ($this->gate) {
-            case 'web':
-            case 'public':
-                UserHydrateFailLogin::dispatch(Auth::guard($this->gate)->user(), request()->ip(), now());
-                break;
-            case 'org':
-                OrganisationUserHydrateFailLogin::dispatch(Auth::guard($this->gate)->user(), request()->ip(), now());
-        }
-    }
 
     public function rules(): array
     {

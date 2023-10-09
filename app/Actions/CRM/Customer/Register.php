@@ -1,23 +1,21 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Sun, 13 Aug 2023 15:58:05 Malaysia Time, Sanur, Bali
+ * Created: Mon, 09 Oct 2023 10:14:58 Malaysia Time, Office, Bali, Indonesia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\UI\Public\Auth;
+namespace App\Actions\CRM\Customer;
 
+use App\Actions\Auth\User\Login;
 use App\Actions\Auth\User\StoreUser;
-use App\Actions\CRM\Customer\StoreCustomer;
-use App\Models\Auth\User;
 use App\Models\Market\Shop;
-use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
-use Illuminate\Validation\Rules;
+use Illuminate\Validation\Rules\Password;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\AsController;
@@ -45,13 +43,28 @@ class Register
         Config::set('customer_id', $customer->id);
 
 
-        $user = StoreUser::run($customer, $modelData);
+        $customerUser = StoreUser::run(
+            $shop->website,
+            $customer,
+            array_merge(
+                $modelData,
+                [
+                    'is_root' => true,
+                    'roles'=>[
+                        'super-admin'
+                    ]
+                ]
+            )
+
+        );
 
 
-        event(new Registered($user));
-        Auth::guard('public')->login($user);
+        event(new Registered($customerUser));
+        Auth::guard('customer')->login($customerUser->user);
+        Login::make()->logCustomerUser($customerUser->user);
 
-        return redirect(RouteServiceProvider::HOME);
+
+        return redirect('app/dashboard');
     }
 
 
@@ -59,9 +72,12 @@ class Register
     {
         return [
             'contact_name' => 'required|string|max:255',
-            'username'     => 'required|string|max:255|unique:'.User::class,
-            'email'        => 'required|string|email|max:255|unique:'.User::class,
-            'password'     => ['required', 'confirmed', Rules\Password::defaults(), 'min:8'],
+            'email'        => ['required', 'email', 'iunique:customers'],
+            'password'     => [
+                'required',
+                'confirmed',
+                app()->isLocal() || app()->environment('testing') ? null : Password::min(8)->uncompromised()
+            ],
         ];
     }
 
