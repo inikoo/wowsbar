@@ -34,8 +34,8 @@ function appointmentRoute(appointment) {
         case 'org.crm.shop.appointments.index':
         case 'org.crm.shop.customers.show':
             return route(
-                'org.crm.shop.appointments.index',
-                [route().params['shop'], appointment.customer_slug]);
+                'org.crm.shop.appointments.show',
+                [route().params['shop'], appointment.slug]);
         default:
             return route(
                 'org.crm.appointments.show',
