@@ -12,11 +12,9 @@ import IconGroupInterested from '@/Components/Table/IconGroupInterested.vue'
 import ModalDivision from '@/Components/Utils/ModalDivision.vue'
 import { Website } from "@/types/website"
 // import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faCheckCircle, faTimesCircle } from '@/../private/pro-light-svg-icons'
-import { faCircle } from '@/../private/pro-regular-svg-icons'
 import { faCheckCircle as fasCheckCircle } from '@/../private/pro-solid-svg-icons'
 import { library } from '@fortawesome/fontawesome-svg-core'
-library.add(faCheckCircle, faTimesCircle, fasCheckCircle, faCircle)
+library.add(fasCheckCircle)
 
 const props = defineProps<{
     data: {
@@ -50,7 +48,9 @@ const selectedColumn = ref({
     label: '',
     name: ''
 })
-const selectedWebsite = ref()
+const selectedWebsite = ref({
+    slug: ''
+})
 
 </script>
 
@@ -98,10 +98,14 @@ const selectedWebsite = ref()
         </template>
     </Table>
 
-
     <ModalDivision
         :isModalOpen="isModalOpen"
-        @close="() => isModalOpen = false"
+        @onClose="() => isModalOpen = false"
         :selectedWebsite="selectedWebsite"
-        :selectedColumn="selectedColumn" />
+        :selectedColumn="selectedColumn"
+        :routeToSave="{
+            name: 'customer.models.portfolio-website.interest.store',
+            parameter: selectedWebsite.slug
+        }"
+    />
 </template>
