@@ -122,7 +122,7 @@ const getDate = () => {
                             {{ Book.meet.customerService }}
                         </div>
                         <div class="text-4xl font-medium">
-                            {{ data.title }}
+                            {{ Book.title }}
                         </div>
                         <div>
                             <div class="flex justify-start my-2 gap-3">
@@ -132,7 +132,7 @@ const getDate = () => {
                                         class="w-4 h-4"
                                     />
                                 </div>
-                                <div>{{ data.meet.duration }}</div>
+                                <div>{{ Book.meet.duration }}</div>
                             </div>
                             <div class="flex justify-start my-2 gap-3">
                                 <div>
@@ -140,7 +140,7 @@ const getDate = () => {
                                         :icon="['far', 'video']"
                                     />
                                 </div>
-                                <div>{{ data.meetInformation }}</div>
+                                <div>{{ Book.meetInformation }}</div>
                             </div>
                         </div>
 
@@ -151,8 +151,36 @@ const getDate = () => {
 
                             <div
                                 class="mt-1 mb-2 text-gray-500 text-xs"
-                                v-html="data.description"
+                                v-html="Book.description"
                             />
+                        </div>
+                    </div>
+                    <div class="mt-8 lg:col-span-7">
+                        <span class="text-lg font-medium text-gray-900"
+                            >Select a Date & Time</span
+                        >
+                        <div class="p-2.5">
+                            <VCalendar
+                                expanded
+                                :attributes="attrs"
+                                @dayclick="handleDateClick"
+                            />
+                        </div>
+                        <div v-if="!isNull(selectedDate)">
+                            <div class="px-2.5">{{ getDate() }}</div>
+                            <div class="px-2.5 my-4">
+                                <div class="flex flex-wrap justify-start gap-3">
+                                    <!-- Create buttons for hours using a v-for loop -->
+                                    <button
+                                        v-for="hour in hours"
+                                        :key="hour"
+                                        @click="selectHour(hour)"
+                                        class="rounded-md border border-transparent bg-indigo-600 px-2 py-1 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                                    >
+                                        {{ hour }}
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
