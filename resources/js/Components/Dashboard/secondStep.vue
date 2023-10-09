@@ -49,65 +49,61 @@ const dummyData = reactive({
 </script>
 
 <template>
-    <div class="px-4 sm:px-6 lg:px-8">
-        <div class="mt-8 flow-root">
-            <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-                    <table class="min-w-full divide-y divide-gray-300 shadow rounded-md overflow-hidden">
-                        <thead>
-                            <tr class="divide-x divide-gray-200 text-sm font-semibold">
-                                <th scope="col" class="py-3.5 pl-4 pr-4 text-left sm:pl-0">Name</th>
-                                <th scope="col" class="px-4 py-3.5 text-left">Url</th>
-                                <th scope="col" class="px-4 py-3.5 text-left">Leads</th>
-                                <th scope="col" class="py-3.5 pl-4 pr-4 text-left sm:pr-0">SEO</th>
-                                <th scope="col" class="py-3.5 pl-4 pr-4 text-left sm:pr-0">Google Ads</th>
-                                <th scope="col" class="py-3.5 pl-4 pr-4 text-left sm:pr-0">Social</th>
-                                <th scope="col" class="py-3.5 pl-4 pr-4 text-left sm:pr-0">Banners</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-gray-200 bg-white">
-                            <tr class="divide-x divide-gray-200">
-                                <td class="whitespace-nowrap py-4 pl-4 pr-4">
-                                    Lindsay Walton
-                                </td>
-                                <td class="whitespace-nowrap py-4 pl-4 pr-4">
-                                    {{ 'www.hello.com'}}
-                                </td>
-                                <td class="whitespace-nowrap p-4 text-sm text-gray-500">
-                                    <div class="cursor-pointer"
-                                        @click="() => { isModalOpen = true, selectedWebsite = dummyData, selectedColumn = dummyData.prospects }">
-                                        <IconGroupInterested :columnValue="dummyData.prospects?.value" />
-                                    </div>
-                                </td>
-                                <td class="whitespace-nowrap p-4 text-sm text-gray-500">
-                                    <div class="cursor-pointer"
-                                        @click="() => { isModalOpen = true, selectedWebsite = dummyData, selectedColumn = dummyData.seo }">
-                                        <IconGroupInterested :columnValue="dummyData.seo?.value" />
-                                    </div>
-                                </td>
-                                <td class="whitespace-nowrap p-4 text-sm text-gray-500">
-                                    <div class="cursor-pointer"
-                                        @click="() => { isModalOpen = true, selectedWebsite = dummyData, selectedColumn = dummyData['google-ads'] }">
-                                        <IconGroupInterested :columnValue="dummyData['google-ads']?.value" />
-                                    </div>
-                                </td>
-                                <td class="whitespace-nowrap p-4 text-sm text-gray-500">
-                                    <div class="cursor-pointer"
-                                        @click="() => { isModalOpen = true, selectedWebsite = dummyData, selectedColumn = dummyData.social }">
-                                        <IconGroupInterested :columnValue="dummyData.social?.value" />
-                                    </div>
-                                </td>
-                                <td class="whitespace-nowrap p-4 text-sm text-gray-500">
-                                    <div class="cursor-pointer"
-                                        @click="() => { isModalOpen = true, selectedWebsite = dummyData, selectedColumn = dummyData.banners }">
-                                        <IconGroupInterested :columnValue="dummyData.banners?.value" />
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+    <div class="flow-root overflow-x-auto">
+        <div class="inline-block min-w-full align-middle sm:px-6 lg:px-8">
+            <table class="min-w-full divide-y divide-gray-300 shadow rounded-md overflow-hidden">
+                <thead>
+                    <tr class="divide-x divide-gray-200 text-sm font-semibold">
+                        <th scope="col" class="py-3.5 pl-4 pr-4 text-left sm:pl-0">Name</th>
+                        <th scope="col" class="px-4 py-3.5 text-left">Url</th>
+                        <th scope="col" class="px-4 py-3.5 text-left">Leads</th>
+                        <th scope="col" class="py-3.5 pl-4 pr-4 text-left sm:pr-0">SEO</th>
+                        <th scope="col" class="py-3.5 pl-4 pr-4 text-left sm:pr-0">Google Ads</th>
+                        <th scope="col" class="py-3.5 pl-4 pr-4 text-left sm:pr-0">Social</th>
+                        <th scope="col" class="py-3.5 pl-4 pr-4 text-left sm:pr-0">Banners</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200 bg-white">
+                    <tr class="divide-x divide-gray-200">
+                        <td class="whitespace-nowrap py-4 pl-4 pr-4">
+                            Lindsay Walton
+                        </td>
+                        <td class="whitespace-nowrap py-4 pl-4 pr-4">
+                            {{ 'www.hello.com'}}
+                        </td>
+                        <td class="whitespace-nowrap p-4 text-sm text-gray-500">
+                            <div class="cursor-pointer"
+                                @click="() => { isModalOpen = true, selectedWebsite = dummyData, selectedColumn = dummyData.prospects }">
+                                <IconGroupInterested :columnValue="dummyData.prospects?.value" />
+                            </div>
+                        </td>
+                        <td class="whitespace-nowrap p-4 text-sm text-gray-500">
+                            <div class="cursor-pointer"
+                                @click="() => { isModalOpen = true, selectedWebsite = dummyData, selectedColumn = dummyData.seo }">
+                                <IconGroupInterested :columnValue="dummyData.seo?.value" />
+                            </div>
+                        </td>
+                        <td class="whitespace-nowrap p-4 text-sm text-gray-500">
+                            <div class="cursor-pointer"
+                                @click="() => { isModalOpen = true, selectedWebsite = dummyData, selectedColumn = dummyData['google-ads'] }">
+                                <IconGroupInterested :columnValue="dummyData['google-ads']?.value" />
+                            </div>
+                        </td>
+                        <td class="whitespace-nowrap p-4 text-sm text-gray-500">
+                            <div class="cursor-pointer"
+                                @click="() => { isModalOpen = true, selectedWebsite = dummyData, selectedColumn = dummyData.social }">
+                                <IconGroupInterested :columnValue="dummyData.social?.value" />
+                            </div>
+                        </td>
+                        <td class="whitespace-nowrap p-4 text-sm text-gray-500">
+                            <div class="cursor-pointer"
+                                @click="() => { isModalOpen = true, selectedWebsite = dummyData, selectedColumn = dummyData.banners }">
+                                <IconGroupInterested :columnValue="dummyData.banners?.value" />
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 
