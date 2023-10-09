@@ -103,7 +103,7 @@ class ShowProduct extends InertiaAction
                                 'name'       => preg_replace('/show$/', 'edit', $this->routeName),
                                 'parameters' => $request->route()->originalParameters()
                             ]
-                        ] : false,
+                        ] : [],
                         $this->canDelete ? [
                             'type'  => 'button',
                             'style' => 'delete',
@@ -111,7 +111,7 @@ class ShowProduct extends InertiaAction
                                 'name'       => 'shops.show.products.remove',
                                 'parameters' => $request->route()->originalParameters()
                             ]
-                        ] : false
+                        ] : []
                     ]
                 ],
                 'tabs'        => [

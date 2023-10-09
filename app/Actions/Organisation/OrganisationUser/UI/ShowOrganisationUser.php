@@ -68,7 +68,7 @@ class ShowOrganisationUser extends InertiaAction
                                 'name'       => preg_replace('/show$/', 'edit', $request->route()->getName()),
                                 'parameters' => array_values($request->route()->originalParameters())
                             ]
-                        ] : false,
+                        ] : [],
                     ]
                 ],
                 'tabs' => [

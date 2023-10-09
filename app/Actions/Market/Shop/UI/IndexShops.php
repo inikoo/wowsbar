@@ -139,7 +139,7 @@ class IndexShops extends InertiaAction
                                 'name'       => 'org.shops.create',
                                 'parameters' => $request->route()->originalParameters()
                             ]
-                        ] : false,
+                        ] : [],
                     ]
                 ],
 

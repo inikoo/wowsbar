@@ -162,7 +162,7 @@ class IndexCustomerUsers extends InertiaAction
                                 'name'       => preg_replace('/index$/', 'create', $request->route()->getName()),
                                 'parameters' => array_values($request->route()->originalParameters())
                             ]
-                        ] : null
+                        ] : []
                     ]
                 ],
 

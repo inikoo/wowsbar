@@ -22,12 +22,12 @@ class EmployeeHydrateUniversalSearch
             [
                 'in_organisation' => true,
                 'section'         => 'hr',
-                'title'           => join(' ',[
+                'title'           => join(' ', [
                     $employee->alias,
                     $employee->worker_number,
                     $employee->contact_name,
                 ]),
-                'description'     =>join(' ',[
+                'description'     => join(' ', [
                     $employee->work_email,
                     $employee->job_title,
                     $employee->email

@@ -65,7 +65,7 @@ class EditEmployee extends InertiaAction
                             'label' => __('Exit edit'),
                             'route' => [
                                 'name'       => preg_replace('/edit$/', 'show', $request->route()->getName()),
-                                'parameters' => array_values($request->route()->parameters)
+                                'parameters' => $request->route()->originalParameters()
                             ]
                         ]
                     ]
@@ -164,7 +164,7 @@ class EditEmployee extends InertiaAction
                                     'placeholder' => __('Job title'),
                                     'searchable'  => true,
                                     'value'       => $employee->job_title,
-                                    'required'  => true
+                                    'required'    => true
                                 ],
 
 
