@@ -18,6 +18,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Validation\Rule;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
+use Lorisleiva\Actions\Concerns\AsCommand;
 use Lorisleiva\Actions\Concerns\WithAttributes;
 use Throwable;
 
@@ -25,6 +26,7 @@ class StoreAppointment
 {
     use AsAction;
     use WithAttributes;
+    use AsCommand;
 
     private bool $asAction = false;
 
@@ -36,6 +38,8 @@ class StoreAppointment
 
         if(class_basename($parent) == 'Shop') {
             data_set($modelData, 'customer_id', $modelData['customer_id']);
+        } else if(class_basename($parent) == 'Customer') {
+            data_set($modelData, 'shop_id', $parent->shop_id);
         }
 
         return $parent->appointment()->create($modelData);
@@ -61,7 +65,7 @@ class StoreAppointment
         return [
             'customer_id'              => ['sometimes'],
             'name'                     => ['required', 'string'],
-            'schedule_at'              => ['required', 'string'],
+            'schedule_at'              => ['required'],
             'description'              => ['nullable', 'string', 'max:255'],
             'type'                     => ['required', Rule::in(AppointmentTypeEnum::values())],
             'event'                    => ['required', Rule::in(AppointmentEventEnum::values())],
@@ -88,7 +92,7 @@ class StoreAppointment
         return $this->handle($shop, $request->validated());
     }
 
-    public string $commandSignature = 'appointment:book {customer} {schedule} {--t|type=} {--e|event=} {--a|event_address=}';
+    public string $commandSignature = 'appointment:book {shop}';
 
     /**
      * @throws \Throwable
@@ -96,7 +100,7 @@ class StoreAppointment
     public function asCommand(Command $command): int
     {
         try {
-            $customer = Customer::where('slug', $command->argument('customer'))->firstOrFail();
+            $shop = Shop::where('slug', $command->argument('shop'))->firstOrFail();
         } catch (Exception $e) {
             $command->error($e->getMessage());
 
@@ -104,10 +108,11 @@ class StoreAppointment
         }
 
         $this->setRawAttributes([
-            'schedule_at'          => $command->argument('schedule'),
-            'type'                 => $command->option('type'),
-            'event'                => $command->option('event'),
-            'event_address'        => $command->option('event_address')
+            'name'                 => 'aiku',
+            'schedule_at'          => now()->addHours(rand(1, 9)),
+            'type'                 => AppointmentTypeEnum::LEAD->value,
+            'event'                => AppointmentEventEnum::IN_PERSON->value,
+            'event_address'        => 'AW Office'
         ]);
 
         try {
@@ -118,7 +123,7 @@ class StoreAppointment
             return 1;
         }
 
-        $this->handle($customer, $validatedData);
+        $this->handle($shop->customers()->first(), $validatedData);
 
         $command->info("Appointment created successfully 🎉");
 
