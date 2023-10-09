@@ -1,25 +1,13 @@
 <script setup lang="ts">
-import axios from 'axios'
+import ServicePicker from '@/Components/Picker/ServicePicker.vue'
 
 const props = defineProps<{
     data: any
 }>()
 
-props.data.basket.data.map((item: any) => {if(item.interest == null) { item.interest = 'not_sure'}})
 
-// When the radio is updated
-const handleRadioChanged = async (itemValue: string, itemSlug: string) => {
-    try {
-        await axios.patch(
-            route('org.models.product-category.update', itemSlug),
-            {
-                interest: itemValue
-            }
-        )
-    } catch (error: any) {
-        console.error(error.message)
-    }
-}
+
+
 </script>
 
 <template>
@@ -27,7 +15,11 @@ const handleRadioChanged = async (itemValue: string, itemSlug: string) => {
     <div class="max-w-xl px-4 sm:px-6 lg:px-8 pt-4">
         <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-                <table class="min-w-full divide-y divide-gray-300">
+                <ServicePicker
+                    :data="data.basket.data"
+                    routeToUpdate="org.models.product-category.update"
+                />
+                <!-- <table class="min-w-full divide-y divide-gray-300">
                     <thead>
                         <tr class="text-gray-600 bg-gray-200">
                             <th scope="col" class="py-3.5 pl-4 pr-3 text-left font-semibold tracking-wide">
@@ -65,7 +57,7 @@ const handleRadioChanged = async (itemValue: string, itemSlug: string) => {
                             </td>
                         </tr>
                     </tbody>
-                </table>
+                </table> -->
             </div>
         </div>
     </div>
