@@ -26,7 +26,6 @@ onMounted(() => {
 });
 
 
-console.log(dynamicClasses)
 </script>
 
 <template layout="Public">
