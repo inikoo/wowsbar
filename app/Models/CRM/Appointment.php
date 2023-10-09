@@ -35,6 +35,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read OrganisationUser|null $organisationUser
+ * @property-read \App\Models\CRM\Customer $customer
  * @method static \Illuminate\Database\Eloquent\Builder|Appointment newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Appointment newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Appointment query()
@@ -78,6 +79,11 @@ class Appointment extends Model
     public function organisationUser(): BelongsTo
     {
         return $this->belongsTo(OrganisationUser::class);
+    }
+
+    public function customer(): BelongsTo
+    {
+        return $this->belongsTo(Customer::class);
     }
 
 }

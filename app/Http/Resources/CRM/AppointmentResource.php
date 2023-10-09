@@ -32,6 +32,8 @@ class AppointmentResource extends JsonResource
         return [
             'slug'             => $appointment->slug,
             'name'             => $appointment->name,
+            'customer_name'    => $appointment->customer->name,
+            'customer_slug'    => $appointment->customer->slug,
             'event'            => $appointment->event,
             'event_address'    => $appointment->event_address,
             'type'             => $appointment->type,
