@@ -7,6 +7,7 @@
 
 namespace App\Actions\Accounting\PaymentAccount\UI;
 
+use App\Actions\Accounting\PaymentServiceProvider\UI\ShowPaymentServiceProvider;
 use App\Actions\InertiaAction;
 use App\Actions\UI\Organisation\Accounting\AccountingDashboard;
 use App\Http\Resources\Accounting\PaymentAccountResource;
@@ -108,7 +109,6 @@ class IndexPaymentAccounts extends InertiaAction
     public function authorize(ActionRequest $request): bool
     {
         $this->canEdit = $request->user()->hasPermissionTo('accounting.edit');
-        return true;
 
         return
             (
@@ -207,7 +207,7 @@ class IndexPaymentAccounts extends InertiaAction
             ),
             'org.accounting.payment-service-providers.show.payment-accounts.index' =>
             array_merge(
-                \App\Actions\Accounting\PaymentServiceProvider\UI\ShowPaymentServiceProvider::make()->getBreadcrumbs(
+                ShowPaymentServiceProvider::make()->getBreadcrumbs(
                     $routeParameters
                 ),
                 $headCrumb($routeParameters)

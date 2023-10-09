@@ -9,8 +9,8 @@ namespace App\Actions\HumanResources\JobPosition\UI;
 
 use App\Actions\Helpers\History\IndexHistories;
 use App\Actions\InertiaAction;
-use App\Actions\UI\HumanResources\HumanResourcesDashboard;
-use App\Enums\UI\JobPositionTabsEnum;
+use App\Actions\UI\Organisation\HumanResources\ShowHumanResourcesDashboard;
+use App\Enums\UI\Organisation\JobPositionTabsEnum;
 use App\Http\Resources\History\HistoryResource;
 use App\Http\Resources\HumanResources\EmployeeResource;
 use App\Http\Resources\HumanResources\JobPositionResource;
@@ -127,7 +127,7 @@ class ShowJobPosition extends InertiaAction
     public function getBreadcrumbs(JobPosition $jobPosition, $suffix = null): array
     {
         return array_merge(
-            (new HumanResourcesDashboard())->getBreadcrumbs(),
+            (new ShowHumanResourcesDashboard())->getBreadcrumbs(),
             [
                 [
                     'type'           => 'modelWithIndex',

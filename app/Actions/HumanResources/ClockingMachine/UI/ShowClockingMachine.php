@@ -10,8 +10,8 @@ namespace App\Actions\HumanResources\ClockingMachine\UI;
 use App\Actions\Helpers\History\IndexHistories;
 use App\Actions\HumanResources\Clocking\UI\IndexClockings;
 use App\Actions\InertiaAction;
-use App\Actions\UI\HumanResources\HumanResourcesDashboard;
-use App\Enums\UI\ClockingMachineTabsEnum;
+use App\Actions\UI\Organisation\HumanResources\ShowHumanResourcesDashboard;
+use App\Enums\UI\Organisation\ClockingMachineTabsEnum;
 use App\Http\Resources\History\HistoryResource;
 use App\Http\Resources\HumanResources\ClockingMachineResource;
 use App\Http\Resources\HumanResources\ClockingResource;
@@ -162,7 +162,7 @@ class ShowClockingMachine extends InertiaAction
         return match ($routeName) {
             'hr.clocking-machines.show' =>
             array_merge(
-                (new HumanResourcesDashboard())->getBreadcrumbs(),
+                (new ShowHumanResourcesDashboard())->getBreadcrumbs(),
                 $headCrumb(
                     $routeParameters['clockingMachine'],
                     [
