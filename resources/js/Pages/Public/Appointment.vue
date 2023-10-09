@@ -12,6 +12,15 @@ import { useFormatTime } from "@/Composables/useFormatTime";
 
 library.add(faRocketLaunch, faClock, faVideo);
 
+const props = defineProps<{
+    title     : String
+                breadcrumbs : String
+                calendars : Array
+                content : Array
+}>()
+
+console.log('props',props)
+
 const Book = {
     description: "The Basic tee is an honest new take on a classic. The tee uses super soft, pre-shrunk cotton for true comfort and a dependable fit",
     meet: {

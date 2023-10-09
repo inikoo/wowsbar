@@ -20,16 +20,17 @@ onMounted(() => {
   }
 
   // Append the dynamic styles to the <style> block using a new style element
-  const styleElement = document.createElement('style');
+  const styleElement = document.createElement('style');  
   styleElement.textContent = dynamicClasses;
   document.head.appendChild(styleElement);
 });
 
 
-
+console.log(dynamicClasses)
 </script>
 
 <template layout="Public">
+  {{ dynamicClasses }}
   <div v-if="content[0]">
     <div v-html="content[0].html" :class="dynamicClasses"></div>
   </div>

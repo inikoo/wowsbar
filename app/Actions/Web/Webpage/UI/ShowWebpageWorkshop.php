@@ -87,6 +87,7 @@ class ShowWebpageWorkshop extends InertiaAction
                 'websiteState' => $webpage->website->state,
                 'webpageState' => $webpage->state,
                 'isDirty'      => $webpage->is_dirty,
+                'pageCode'     => $webpage->code,
 
                 'imagesUploadRoute' => [
                     'name'       => 'org.models.webpage.images.store',

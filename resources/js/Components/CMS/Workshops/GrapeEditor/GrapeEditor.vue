@@ -53,8 +53,6 @@ const Store = async (data, editor) => {
             { data, pagesHtml },
         )
         emits('onSaveToServer', response?.data?.isDirty)
-        // console.log("==================")
-        // console.log(response.data.isDirty)
         console.log('saving......')
         
     } catch (error) {
@@ -143,7 +141,9 @@ onMounted(() => {
 </script>
 
 <template>
-    <div id="gjs"></div>
+    <div id="gjs">
+    <slot name="defaultComponents"></slot>
+    </div>
 </template>
 
 <style lang="scss">
