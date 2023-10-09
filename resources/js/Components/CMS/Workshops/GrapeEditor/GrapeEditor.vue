@@ -124,7 +124,8 @@ onMounted(() => {
                         {
                         src: image.thumbnail.original,
                         type: 'image',
-                        id: image.id
+                        id: image.id,
+                        name : image.slug
                 }
                 editorInstance.value.AssetManager.add(imageToStore);
             }
