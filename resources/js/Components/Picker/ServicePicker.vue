@@ -12,7 +12,7 @@ const props = defineProps<{
         description?: string
         created_at: string
         updated_at: string
-    }
+    }[]
     routeToUpdate: string
 }>()
 
@@ -53,7 +53,7 @@ const handleRadioChanged = async (itemValue: string, itemSlug: string) => {
             </tr>
         </thead>
         <tbody class="divide-y divide-gray-200">
-            <tr v-for="item in props.data" :key="item.email" class="hover:bg-gray-100">
+            <tr v-for="item in props.data" :key="item.id" class="hover:bg-gray-100">
                 <td class="">
                     <div
                         class="whitespace-nowrap block py-2 pl-4 pr-3 text-sm font-medium text-gray-500 hover:text-gray-600">

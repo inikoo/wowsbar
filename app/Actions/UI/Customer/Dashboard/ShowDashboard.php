@@ -31,8 +31,8 @@ class ShowDashboard
             [
                 'title'       => __('dashboard'),
                 'breadcrumbs' => $this->getBreadcrumbs(__('dashboard')),
-                'banners'     => $latestBanners,
-                'banners_count'=>$latestBanners->count(),
+                'latest_banners'     => $latestBanners,
+                'latest_banners_count'=>$latestBanners->count(),
                 'portfolio_websites_count'=>$customer->portfolioStats->number_portfolio_websites,
                 'name'        => $request->user()->contact_name??$request->user()->slug
             ]
