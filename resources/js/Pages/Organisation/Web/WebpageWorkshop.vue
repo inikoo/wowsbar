@@ -32,15 +32,15 @@ const props = defineProps<{
         current: string
         navigation: object
     }
-    updateRoute : object,
-    loadRoute : object
-    webpageState : String,
-    websiteState : String
-    publishRoute : Object
-    setAsReadyRoute : Object
+    updateRoute: object,
+    loadRoute: object
+    webpageState: String,
+    websiteState: String
+    publishRoute: Object
+    setAsReadyRoute: Object
     isDirty: boolean
     imagesUploadRoute: Object
-    pageCode:String
+    pageCode: String
 }>()
 
 const isLoading = ref(false)
@@ -56,7 +56,7 @@ const sendDataToServer = async () => {
                 props.publishRoute.name,
                 props.publishRoute.parameters
             ),
-            { comment : comment.value },
+            { comment: comment.value },
         )
         console.log('publish......')
         comment.value = ''
@@ -85,96 +85,58 @@ const Book = {
 </script>
 
 <template layout="OrgApp">
-    <Head :title="capitalize(title)"/>
+    <Head :title="capitalize(title)" />
 
     <PageHeading :data="pageHead">
         <template #other="{ dataPageHead: head }">
-            <Publish
-                v-model="comment"
-                :isDataFirstTimeCreated="compIsDataFirstTimeCreated"
-                :isHashSame="!isDataDirty"
-                :isLoading="isLoading"
-                :saveFunction="sendDataToServer"
-                :firstPublish="websiteState != 'live'"
-            />
+            <Publish v-model="comment" :isDataFirstTimeCreated="compIsDataFirstTimeCreated" :isHashSame="!isDataDirty"
+                :isLoading="isLoading" :saveFunction="sendDataToServer" :firstPublish="websiteState != 'live'" />
         </template>
     </PageHeading>
 
-    <GrapeEditor
-        @onSaveToServer="(isDirtyFromServer) => isDataDirty = isDirtyFromServer"
-        :plugins="[HeaderPlugins,FooterPlugins]"
-        :updateRoute="updateRoute"
-        :loadRoute="loadRoute"
-        :imagesUploadRoute="imagesUploadRoute"
-    >
-    <template #defaultComponents v-if="pageCode == 'appointment'">
-        <div class="bg-white">
-        <div class="pb-16 pt-6 sm:pb-24">
-            <div
-                class="mx-auto mt-8 max-w-2xl px-4 sm:px-6 lg:max-w-7xl lg:px-8 border rounded-md"
-            >
-                <div
-                    class="lg:grid lg:auto-rows-min lg:grid-cols-12 lg:gap-x-8"
-                >
-                    <!-- Image gallery -->
-                    <div
-                        class="mt-8 lg:col-span-5 lg:col-start-1 lg:row-span-3 lg:row-start-1 lg:mt-0"
-                    >
-                        <div class="flex justify-center align-middle p-20">
-                            <FontAwesomeIcon
-                                :icon="['far', 'rocket-launch']"
-                                class="w-32 h-32"
-                            />
-                        </div>
-                        <hr />
-                        <div class="text-lg text-slate-400">
-                            {{ Book.meet.customerService }}
-                        </div>
-                        <div class="text-4xl font-medium">
-                            {{ Book.title }}
-                        </div>
-                        <div>
-                            <div class="flex justify-start my-2 gap-3">
-                                <div>
-                                    <font-awesome-icon
-                                        :icon="['far', 'clock']"
-                                        class="w-4 h-4"
-                                    />
-                                </div>
-                                <div>{{ Book.meet.duration }}</div>
+    <GrapeEditor @onSaveToServer="(isDirtyFromServer) => isDataDirty = isDirtyFromServer" :useBasic="false"
+        :plugins="pageCode == 'appointment' ? [] : [HeaderPlugins, FooterPlugins]" :updateRoute="updateRoute" :loadRoute="loadRoute"
+        :imagesUploadRoute="imagesUploadRoute">
+        <template #defaultComponents v-if="pageCode == 'appointment'" data-gjs-editable="false" data-gjs-removable="false">
+            <div class="bg-white mt-auto">
+                    <div class="mx-auto max-w-2xl px-4 sm:px-6  lg:px-8 border" data-gjs-editable="false" data-gjs-removable="false">
+                        <div class="mt-8 lg:col-span-5 lg:col-start-1 lg:row-span-3 lg:row-start-1 lg:mt-0">
+                            <div class="flex justify-center align-middle p-20" data-gjs-removable="false" >
+                                <img src="https://dummyimage.com/" data-gjs-removable="false" class="w-32 h-32  p-2" alt="Description of the image">
                             </div>
-                            <div class="flex justify-start my-2 gap-3">
-                                <div>
-                                    <font-awesome-icon
-                                        :icon="['far', 'video']"
-                                    />
+                            <hr />
+                            <div class="text-lg text-slate-400">
+                                {{ Book.meet.customerService }}
+                            </div>
+                            <div class="text-4xl font-medium">
+                                {{ Book.title }}
+                            </div>
+                            <div>
+                                <div class="flex justify-start my-2 gap-3">
+                                    <div>
+                                        <font-awesome-icon :icon="['far', 'clock']" class="w-4 h-4" />
+                                    </div>
+                                    <div>{{ Book.meet.duration }}</div>
                                 </div>
-                                <div>{{ Book.meetInformation }}</div>
+                                <div class="flex justify-start my-2 gap-3">
+                                    <div>
+                                        <font-awesome-icon :icon="['far', 'video']" />
+                                    </div>
+                                    <div>{{ Book.meetInformation }}</div>
+                                </div>
+                            </div>
+
+                            <div class="my-3">
+                                <h2 class="text-sm font-medium text-gray-900">
+                                    Description
+                                </h2>
+
+                                <div class="mt-1 mb-2 text-gray-500 text-xs" v-html="Book.description" />
                             </div>
                         </div>
-
-                        <div class="my-3">
-                            <h2 class="text-sm font-medium text-gray-900">
-                                Description
-                            </h2>
-
-                            <div
-                                class="mt-1 mb-2 text-gray-500 text-xs"
-                                v-html="Book.description"
-                            />
-                        </div>
                     </div>
-                    <div class="mt-8 lg:col-span-7">
-                        <span class="text-lg font-medium text-gray-900"
-                            >Select a Date & Time</span
-                        >
-                    </div>
-
-                </div>
             </div>
-        </div>
-    </div>
-    </template>
+        </template>
     </GrapeEditor>
 </template>
 
