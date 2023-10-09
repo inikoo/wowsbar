@@ -111,14 +111,14 @@ class GetLayout
                 'scope'   => 'google-ads',
                 'icon'    => ['fal', 'fa-bullseye'],
                 'label'   => __('Google Ads'),
-                'route'   => 'customer.google-ads.dashboard',
+                'route'   => 'customer.ppc.dashboard',
                 'topMenu' => [
                     'subSections' => [
                         [
                             'icon'  => ['fal', 'fa-globe'],
                             'label' => __('websites'),
                             'route' => [
-                                'name' => 'customer.google-ads.websites.index',
+                                'name' => 'customer.ppc.websites.index',
                             ]
                         ],
                     ],

@@ -77,9 +77,9 @@ const selectedWebsite = ref()
         </template>
 
         <!-- Google Ads -->
-        <template #cell(google-ads)="{ item: website }">
-            <div class="cursor-pointer" @click="() => {isModalOpen = true, selectedWebsite = website, selectedColumn = website['google-ads']}">
-                <IconGroupInterested :columnValue="website['google-ads'].value" />
+        <template #cell(ppc)="{ item: website }">
+            <div class="cursor-pointer" @click="() => {isModalOpen = true, selectedWebsite = website, selectedColumn = website.ppc}">
+                <IconGroupInterested :columnValue="website.ppc?.value" />
             </div>
         </template>
 

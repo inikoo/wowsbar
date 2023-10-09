@@ -76,7 +76,6 @@ use Spatie\Sluggable\SlugOptions;
 class Snapshot extends Model
 {
     use HasSlug;
-    use BelongsToCustomer;
 
     protected $dateFormat  = 'Y-m-d H:i:s P';
     protected array $dates = ['published_at', 'published_until'];

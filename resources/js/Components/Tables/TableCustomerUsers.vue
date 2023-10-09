@@ -46,7 +46,7 @@ const setThemeRoles = (roles: string) => {
             return 3;
         case 'seo':
             return 4;
-        case 'google-ads':
+        case 'ppc':
             return 5;
         case 'prospects':
             return 6;
@@ -60,7 +60,7 @@ const setThemeRoles = (roles: string) => {
     }
 }
 
-// To split 
+// To split
 const splitRoles = (word: string) => {
     return word.split(', ')
 }
