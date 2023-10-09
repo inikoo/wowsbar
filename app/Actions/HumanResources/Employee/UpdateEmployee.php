@@ -7,9 +7,14 @@
 
 namespace App\Actions\HumanResources\Employee;
 
+use App\Actions\HumanResources\Employee\Hydrators\EmployeeHydrateUniversalSearch;
+use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateEmployees;
 use App\Actions\Traits\WithActionUpdate;
+use App\Enums\HumanResources\Employee\EmployeeStateEnum;
 use App\Http\Resources\HumanResources\EmployeeResource;
 use App\Models\HumanResources\Employee;
+use Illuminate\Validation\Rules\Enum;
+use Illuminate\Validation\Rules\Password;
 use Lorisleiva\Actions\ActionRequest;
 
 class UpdateEmployee
@@ -18,9 +23,16 @@ class UpdateEmployee
 
     public function handle(Employee $employee, array $modelData): Employee
     {
-        $employee =  $this->update($employee, $modelData, ['data', 'salary',]);
+        $employee = $this->update($employee, $modelData, ['data', 'salary',]);
 
-        //        EmployeeHydrateUniversalSearch::dispatch($employee);
+        if ($employee->wasChanged(['worker_number', 'worker_number', 'contact_name', 'work_email', 'job_title', 'email'])) {
+            EmployeeHydrateUniversalSearch::dispatch($employee);
+        }
+        if ($employee->wasChanged(['state'])) {
+            OrganisationHydrateEmployees::dispatch();
+        }
+
+
         return $employee;
     }
 
@@ -33,13 +45,20 @@ class UpdateEmployee
     public function rules(): array
     {
         return [
-            'worker_number'       => ['sometimes','required', 'max:64', 'iunique:employees', 'alpha_dash:ascii'],
+            'worker_number'       => ['sometimes', 'required', 'max:64', 'iunique:employees', 'alpha_dash:ascii'],
             'employment_start_at' => ['sometimes', 'nullable', 'date'],
+            'work_email'          => ['sometimes', 'nullable', 'email', 'iunique:employees'],
+            'alias'               => ['sometimes', 'required', 'iunique:employees', 'string', 'max:12'],
+            'contact_name'        => ['sometimes', 'required', 'max:256'],
+            'date_of_birth'       => ['sometimes', 'nullable', 'date', 'before_or_equal:today'],
+            'job_title'           => ['sometimes', 'required', 'max:256'],
+            'state'               => ['sometimes', 'required', new Enum(EmployeeStateEnum::class)],
+            'positions.*'         => ['sometimes', 'exists:job_positions,slug'],
+            'email'               => ['sometimes', 'nullable', 'email'],
+            'positions'           => ['sometimes', 'required', 'array'],
+            'username'            => ['sometimes', 'required', 'iunique:organisation_users'],
+            'password'            => ['sometimes', 'required', 'max:255', app()->isLocal() || app()->environment('testing') ? null : Password::min(8)->uncompromised()],
 
-            'contact_name'  => ['sometimes','required'],
-            'date_of_birth' => ['sometimes','date'],
-            'job_title'     => ['sometimes','required'],
-            'state'         => ['sometimes','required'],
         ];
     }
 

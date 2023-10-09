@@ -23,22 +23,16 @@ const editorInstance = ref(null);
 const options = { collections: ["ri", "mdi", "uim", "streamline-emojis"]};
 
 const deleteImageStore = (data) => {
-    console.log(data)
-    const am = editorInstance.value.AssetManager;
     const allImages = data.assets;
     const usageImages = editorInstance.value.DomComponents.getWrapper().find('img');
-    const deleteImages = []
-    console.log(allImages,usageImages)
-    allImages.forEach((image) => {
-        console.log(image.id)
+    allImages.forEach((image,index) => {
         usageImages.find((item) => console.log(item.attributes.src,image.src) )
         const hasImages = usageImages.find((item) => item.attributes.src == image.src)
-        if (hasImages) {
-            console.log(image)
-            deleteImages.push(image)
+        if (!hasImages) {
+            allImages.splice(index,1)
+            editorInstance.value.AssetManager.remove(image)
         }
     });
-    data.asset = deleteImages
 };
  
 const Store = async (data, editor) => {
@@ -124,7 +118,8 @@ onMounted(() => {
                         {
                         src: image.thumbnail.original,
                         type: 'image',
-                        id: image.id
+                        id: image.id,
+                        name : image.slug
                 }
                 editorInstance.value.AssetManager.add(imageToStore);
             }

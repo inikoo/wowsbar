@@ -27,7 +27,7 @@ class Logout
                 break;
             default:
                 $gate        = 'customer';
-                $redirectUrl = '/auth/login';
+                $redirectUrl = '/app/login';
         }
 
         Auth::guard($gate)->logout();

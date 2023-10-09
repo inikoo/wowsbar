@@ -17,7 +17,6 @@ use App\Models\Traits\HasUniversalSearch;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -153,15 +152,7 @@ class Employee extends Model implements HasMedia, Auditable
     {
         return $this->morphToMany(JobPosition::class, 'job_positionable');
     }
-    /*
-    public function jobPositions(): BelongsToMany
-    {
-        return $this->belongsToMany(JobPosition::class)
-            ->using(EmployeeJobPosition::class)
-            ->withTimestamps()
-            ->withPivot('share');
-    }
-*/
+
     public function organisationUser(): MorphOne
     {
         return $this->morphOne(OrganisationUser::class, 'parent');
@@ -176,5 +167,6 @@ class Employee extends Model implements HasMedia, Auditable
     {
         return $this->belongsTo(Workplace::class);
     }
+
 
 }

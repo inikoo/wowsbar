@@ -22,8 +22,17 @@ class EmployeeHydrateUniversalSearch
             [
                 'in_organisation' => true,
                 'section'         => 'hr',
-                'title'           => trim($employee->slug.' '.$employee->worker_number.' '.$employee->contact_name),
-                'description'     => $employee->work_email.' '.$employee->job_title
+                'title'           => join(' ', [
+                    $employee->alias,
+                    $employee->worker_number,
+                    $employee->contact_name,
+                ]),
+                'description'     => join(' ', [
+                    $employee->work_email,
+                    $employee->job_title,
+                    $employee->email
+                ])
+
             ]
         );
     }

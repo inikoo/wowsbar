@@ -1,20 +1,17 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Sat, 12 Aug 2023 20:03:28 Malaysia Time, Sanur, Bali
+ * Created: Mon, 09 Oct 2023 08:24:40 Malaysia Time, Office, Bali, Indonesia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\UI\Common\Auth;
+namespace App\Actions\Organisation\OrganisationUser;
 
-use App\Actions\Auth\User\Hydrators\UserHydrateFailLogin;
-use App\Actions\Auth\User\Hydrators\UserHydrateLogin;
 use App\Actions\Organisation\OrganisationUser\Hydrators\OrganisationUserHydrateFailLogin;
 use App\Actions\Organisation\OrganisationUser\Hydrators\OrganisationUserHydrateLogin;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
@@ -28,24 +25,8 @@ class Login
 
     private string $credentialHandler         = 'username';
     private string $home                      = '/dashboard';
-    private string $gate                      = '';
+    private string $gate                      = 'org';
 
-
-    public function __construct(ActionRequest $request)
-    {
-        if ($request->route()) {
-
-            $routeName =$request->route()->getName();
-            $this->gate=match ($request->route()->getName()) {
-                'org.login.store'=> 'org',
-                default          => 'customer'
-            };
-            if($routeName=='customer.login.store') {
-                $this->home='auth/dashboard';
-            }
-
-        }
-    }
 
 
     /**
@@ -61,7 +42,8 @@ class Login
         )) {
             RateLimiter::hit($this->throttleKey($request));
 
-            $this->userFailLogin();
+            OrganisationUserHydrateFailLogin::dispatch(Auth::guard($this->gate)->user(), request()->ip(), now());
+
 
             throw ValidationException::withMessages([
                 $this->credentialHandler => trans('auth.failed'),
@@ -70,25 +52,17 @@ class Login
 
         RateLimiter::clear($this->throttleKey($request));
 
+        OrganisationUserHydrateLogin::dispatch(Auth::guard($this->gate)->user(), request()->ip(), now());
 
-        switch ($this->gate) {
-            case 'web':
-            case 'public':
-                Config::set('global.customer_id', Auth::guard($this->gate)->user()->customer_id);
-                UserHydrateLogin::dispatch(Auth::guard($this->gate)->user(), request()->ip(), now());
-                break;
-            case 'org':
-                OrganisationUserHydrateLogin::dispatch(Auth::guard($this->gate)->user(), request()->ip(), now());
-        }
 
 
         $request->session()->regenerate();
         Session::put('reloadLayout', '1');
 
-        /** @var \App\Models\Auth\User $user */
-        $user = auth($this->gate)->user();
+        /** @var \App\Models\Auth\OrganisationUser $organisationUser */
+        $organisationUser = auth($this->gate)->user();
 
-        $language = $user->language;
+        $language = $organisationUser->language;
         if ($language) {
             app()->setLocale($language);
         }
@@ -97,17 +71,6 @@ class Login
     }
 
 
-    public function userFailLogin(): void
-    {
-        switch ($this->gate) {
-            case 'web':
-            case 'public':
-                UserHydrateFailLogin::dispatch(Auth::guard($this->gate)->user(), request()->ip(), now());
-                break;
-            case 'org':
-                OrganisationUserHydrateFailLogin::dispatch(Auth::guard($this->gate)->user(), request()->ip(), now());
-        }
-    }
 
     public function rules(): array
     {

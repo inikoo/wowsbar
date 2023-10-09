@@ -70,7 +70,7 @@ class ShowPaymentServiceProvider extends InertiaAction
                                  'name'       => preg_replace('/show$/', 'edit', $request->route()->getName()),
                                  'parameters' => array_values($this->originalParameters)
                              ]
-                         ] : false,
+                         ] : []],
                          $this->canDelete ? [
                              'type'  => 'button',
                              'style' => 'delete',
@@ -78,7 +78,7 @@ class ShowPaymentServiceProvider extends InertiaAction
                                  'name'       => 'org.accounting.payment-service-providers.remove',
                                  'parameters' => array_values($this->originalParameters)
                              ]
-                         ] : false
+                         ] : []]
                      ], */
                     'meta' => [
                         [

@@ -186,7 +186,7 @@ class IndexCustomers extends InertiaAction
                                     'name'       => 'org.crm.shop.customers.create',
                                     'parameters' => array_values($this->originalParameters)
                                 ]
-                            ] : null
+                            ] : []
                         ]
                 ],
                 'data'        => CustomerResource::collection($customers),

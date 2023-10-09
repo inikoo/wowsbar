@@ -69,7 +69,7 @@ class ShowWebpageWorkshopPreview extends InertiaAction
                                 'name'       => preg_replace('/preview/', 'workshop', $request->route()->getName()),
                                 'parameters' => array_values($request->route()->originalParameters())
                             ]
-                        ] : false,
+                        ] : [],
                     ],
                 ],
             ]

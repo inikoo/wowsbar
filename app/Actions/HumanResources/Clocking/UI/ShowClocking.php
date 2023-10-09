@@ -9,9 +9,10 @@ namespace App\Actions\HumanResources\Clocking\UI;
 
 use App\Actions\Helpers\History\IndexHistories;
 use App\Actions\HumanResources\ClockingMachine\UI\ShowClockingMachine;
+use App\Actions\HumanResources\Workplace\UI\ShowWorkplace;
 use App\Actions\InertiaAction;
-use App\Actions\UI\HumanResources\HumanResourcesDashboard;
-use App\Enums\UI\ClockingTabsEnum;
+use App\Actions\UI\Organisation\HumanResources\ShowHumanResourcesDashboard;
+use App\Enums\UI\Organisation\ClockingTabsEnum;
 use App\Http\Resources\History\HistoryResource;
 use App\Models\HumanResources\Clocking;
 use App\Models\HumanResources\ClockingMachine;
@@ -95,7 +96,7 @@ class ShowClocking extends InertiaAction
                                 'name'       => preg_replace('/show$/', 'edit', $request->route()->getName()),
                                 'parameters' => array_values($this->originalParameters)
                             ]
-                        ] : false,
+                        ] : [],
                         $this->canDelete ?
                             match ($request->route()->getName()) {
                                 'hr.clockings.show' => [
@@ -123,7 +124,7 @@ class ShowClocking extends InertiaAction
                                         'parameters' => $request->route()->originalParameters()
                                     ]
                                 ]
-                            } : false
+                            } : []
                     ]
                 ],
                 'tabs' => [
@@ -174,7 +175,7 @@ class ShowClocking extends InertiaAction
         return match ($routeName) {
             'hr.clockings.show' =>
             array_merge(
-                HumanResourcesDashboard::make()->getBreadcrumbs(),
+                ShowHumanResourcesDashboard::make()->getBreadcrumbs(),
                 $headCrumb(
                     $routeParameters['clocking'],
                     [
@@ -191,7 +192,7 @@ class ShowClocking extends InertiaAction
                 ),
             ),
             'org.hr.workplaces.show.clockings.show' => array_merge(
-                (new \App\Actions\HumanResources\Workplace\UI\ShowWorkplace())->getBreadcrumbs($routeParameters['workplace']),
+                (new ShowWorkplace())->getBreadcrumbs($routeParameters['workplace']),
                 $headCrumb(
                     $routeParameters['clocking'],
                     [

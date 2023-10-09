@@ -74,7 +74,7 @@ class ShowWebpage extends InertiaAction
                                 'website' => $webpage->website->slug,
                             ]
                         ]
-                    ] : false
+                    ] : []
                 ]
             );
         } elseif ($webpage->type == WebpageTypeEnum::STOREFRONT) {
@@ -93,7 +93,7 @@ class ShowWebpage extends InertiaAction
 
                             ]
                         ]
-                    ] : false
+                    ] : []
                 ]
             );
         } elseif (in_array(
@@ -117,7 +117,7 @@ class ShowWebpage extends InertiaAction
                                 'webpage' => $webpage->slug
                             ]
                         ]
-                    ] : false
+                    ] : []
                 ]
             );
         }
