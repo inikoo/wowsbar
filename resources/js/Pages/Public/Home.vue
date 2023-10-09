@@ -30,6 +30,12 @@ onMounted(() => {
 </script>
 
 <template layout="Public">
-  <div v-html="content[0].html" :class="dynamicClasses"></div>
+  <div v-if="content[0]">
+    <div v-html="content[0].html" :class="dynamicClasses"></div>
+  </div>
+  <div v-else>
+    you don't have any content to display
+  </div>
+
 </template>
 

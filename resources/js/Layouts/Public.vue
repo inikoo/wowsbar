@@ -13,7 +13,7 @@ import { loadCss } from '@/Composables/loadCss';
 const header = usePage().props.structure.header;
 const footer = usePage().props.structure.footer;
 
-console.log(header,footer)
+console.log('inini', usePage().props)
 let dynamicClasses = {
     header: '',
     footer: ''
