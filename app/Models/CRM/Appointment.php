@@ -14,12 +14,15 @@ use App\Models\Auth\OrganisationUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 /**
  * App\Models\CRM\Appointment
  *
  * @property int $id
  * @property string|null $slug
+ * @property string $name
  * @property int $shop_id
  * @property int $customer_id
  * @property int|null $organisation_user_id
@@ -53,6 +56,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Appointment extends Model
 {
     use HasFactory;
+    use HasSlug;
 
     protected $casts = [
         'state'            => AppointmentStateEnum::class,
@@ -60,6 +64,14 @@ class Appointment extends Model
         'event'            => AppointmentEventEnum::class
 
     ];
+
+    public function getSlugOptions(): SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom('name')
+            ->saveSlugsTo('slug')
+            ->doNotGenerateSlugsOnUpdate();
+    }
 
     protected $guarded = [];
 

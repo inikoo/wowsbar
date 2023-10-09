@@ -59,7 +59,12 @@ class CreateAppointment extends InertiaAction
                             [
                                 'title'  => __('customer'),
                                 'fields' => [
-                                    'customer' => [
+                                    'name' => [
+                                        'type'    => 'input',
+                                        'label'   => __('name'),
+                                        'required' => true,
+                                    ],
+                                    'customer_id' => [
                                         'type'    => 'select',
                                         'mode'    => 'single',
                                         'label'   => __('customer'),

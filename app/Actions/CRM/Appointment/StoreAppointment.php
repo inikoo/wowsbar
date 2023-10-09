@@ -9,10 +9,13 @@ namespace App\Actions\CRM\Appointment;
 
 use App\Enums\CRM\Appointment\AppointmentEventEnum;
 use App\Enums\CRM\Appointment\AppointmentTypeEnum;
+use App\Models\CRM\Appointment;
 use App\Models\CRM\Customer;
+use App\Models\Market\Shop;
 use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Validation\Rule;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -26,13 +29,17 @@ class StoreAppointment
 
     private bool $asAction = false;
 
+    public Customer|Shop $parent;
 
-    /**
-     * @throws Throwable
-     */
-    public function handle(Customer $customer, array $modelData): Model
+    public function handle(Customer|Shop $parent, array $modelData): Model
     {
-        return $customer->appointment()->create($modelData);
+        $this->parent = $parent;
+
+        if(class_basename($parent) == 'Shop') {
+            data_set($modelData, 'customer_id', $modelData['customer_id']);
+        }
+
+        return $parent->appointment()->create($modelData);
     }
 
     public function authorize(ActionRequest $request): bool
@@ -40,9 +47,21 @@ class StoreAppointment
         return true;
     }
 
+    public function htmlResponse(): RedirectResponse
+    {
+        return match (class_basename($this->parent)) {
+            'Shop' => redirect()->route('org.crm.shop.appointments.index', [
+                'shop' => $this->parent
+            ]),
+            default => back(),
+        };
+    }
+
     public function rules(): array
     {
         return [
+            'customer_id'              => ['sometimes'],
+            'name'                     => ['required', 'string'],
             'schedule_at'              => ['required', 'string'],
             'description'              => ['nullable', 'string', 'max:255'],
             'type'                     => ['required', Rule::in(AppointmentTypeEnum::values())],
@@ -60,6 +79,14 @@ class StoreAppointment
         $request->validate();
 
         return $this->handle($customer, $request->validated());
+    }
+
+    public function inShop(Shop $shop, ActionRequest $request): Model
+    {
+        $this->fillFromRequest($request);
+        $request->validate();
+
+        return $this->handle($shop, $request->validated());
     }
 
     public string $commandSignature = 'appointment:book {customer} {schedule} {--t|type=} {--e|event=} {--a|event_address=}';

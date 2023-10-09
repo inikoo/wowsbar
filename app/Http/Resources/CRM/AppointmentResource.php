@@ -19,7 +19,6 @@ class AppointmentResource extends JsonResource
         /** @var Appointment $appointment */
         $appointment = $this;
 
-
         $organisationUserName        = '';
         $organisationUserAvatar      = null;
         if ($appointment->organisation_user_id) {
@@ -32,9 +31,11 @@ class AppointmentResource extends JsonResource
 
         return [
             'slug'             => $appointment->slug,
-            'published_at'     => $appointment->published_at,
-            'published_until'  => $appointment->published_until,
-            'layout'           => $appointment->layout,
+            'name'             => $appointment->name,
+            'event'            => $appointment->event,
+            'event_address'    => $appointment->event_address,
+            'type'             => $appointment->type,
+            'schedule_at'      => $appointment->schedule_at,
             'publisher'        => $organisationUserName,
             'publisher_avatar' => $organisationUserAvatar,
             'state'            => match ($appointment->state) {
@@ -49,11 +50,11 @@ class AppointmentResource extends JsonResource
                     'class'   => 'text-indigo-500'
                 ],
                 AppointmentStateEnum::ONGOING => [
-                    'tooltip' => __('retired'),
+                    'tooltip' => __('ongoing'),
                     'icon'    => 'fal fa-ghost'
                 ],
                 AppointmentStateEnum::FINISH => [
-                    'tooltip' => __('retired'),
+                    'tooltip' => __('finish'),
                     'icon'    => 'fal fa-ghost'
                 ],
                 AppointmentStateEnum::CANCEL => [

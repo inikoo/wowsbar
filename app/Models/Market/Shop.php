@@ -19,6 +19,7 @@ use App\Models\Assets\Country;
 use App\Models\Assets\Currency;
 use App\Models\Assets\Timezone;
 use App\Models\Catalogue\ProductCategory;
+use App\Models\CRM\Appointment;
 use App\Models\CRM\Customer;
 use App\Models\Helpers\SerialReference;
 use App\Models\Leads\Prospect;
@@ -70,6 +71,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read \App\Models\Market\ShopCatalogueStats|null $catalogueStats
  * @property-read Country $country
  * @property-read \App\Models\Market\ShopCRMStats|null $crmStats
+ * @property-read Appointment|null $appointment
  * @property-read Currency $currency
  * @property-read \Illuminate\Database\Eloquent\Collection<int, CustomerWebsite> $customerWebsites
  * @property-read int|null $customer_websites_count
@@ -282,5 +284,8 @@ class Shop extends Model
         return $this->morphMany(ProductCategory::class, 'parent');
     }
 
-
+    public function appointment(): HasMany
+    {
+        return $this->hasMany(Appointment::class);
+    }
 }

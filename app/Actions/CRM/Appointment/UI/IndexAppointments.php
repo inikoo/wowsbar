@@ -72,7 +72,7 @@ class IndexAppointments extends InertiaAction
             );
         }
 
-        $queryBuilder->leftJoin('customers', 'appointments.customer_id', 'customers.id');
+        // $queryBuilder->leftJoin('customers', 'appointments.customer_id', 'customers.id');
 
         return $queryBuilder
             ->defaultSort('-schedule_at')
@@ -110,7 +110,7 @@ class IndexAppointments extends InertiaAction
             }
 
 
-            $table->column(key: 'appointment_name', label: 'appointment name')
+            $table->column(key: 'name', label: 'appointment name')
                 ->column(key: 'schedule_at', label: __('schedule at'), sortable: true)
                 ->column(key: 'state', label: __('state'))
                 ->column(key: 'type', label: __('type'))
