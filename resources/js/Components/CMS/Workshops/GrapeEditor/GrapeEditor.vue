@@ -27,18 +27,15 @@ const deleteImageStore = (data) => {
     const am = editorInstance.value.AssetManager;
     const allImages = data.assets;
     const usageImages = editorInstance.value.DomComponents.getWrapper().find('img');
-    const deleteImages = []
-    console.log(allImages,usageImages)
+    const usedImages = []
     allImages.forEach((image) => {
-        console.log(image.id)
         usageImages.find((item) => console.log(item.attributes.src,image.src) )
         const hasImages = usageImages.find((item) => item.attributes.src == image.src)
         if (hasImages) {
-            console.log(image)
-            deleteImages.push(image)
+            usedImages.push(image)
         }
     });
-    data.asset = deleteImages
+    data.assets = usedImages
 };
  
 const Store = async (data, editor) => {
