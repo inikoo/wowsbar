@@ -5,9 +5,9 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
+use App\Providers\ElasticSearchServiceProvider;
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\ServiceProvider;
-use Matchish\ScoutElasticSearch\ElasticSearchServiceProvider;
 
 return [
 
