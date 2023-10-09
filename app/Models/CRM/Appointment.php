@@ -62,8 +62,8 @@ class Appointment extends Model
     protected $casts = [
         'state'            => AppointmentStateEnum::class,
         'type'             => AppointmentTypeEnum::class,
-        'event'            => AppointmentEventEnum::class
-
+        'event'            => AppointmentEventEnum::class,
+        'schedule_at' => 'datetime'
     ];
 
     public function getSlugOptions(): SlugOptions
