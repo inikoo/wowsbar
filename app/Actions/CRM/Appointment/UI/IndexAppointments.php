@@ -111,6 +111,7 @@ class IndexAppointments extends InertiaAction
 
 
             $table->column(key: 'name', label: 'appointment name')
+                ->column(key: 'customer_name', label: __('customer name'))
                 ->column(key: 'schedule_at', label: __('schedule at'), sortable: true)
                 ->column(key: 'state', label: __('state'))
                 ->column(key: 'type', label: __('type'))

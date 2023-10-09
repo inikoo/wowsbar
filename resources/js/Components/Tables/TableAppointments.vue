@@ -18,11 +18,24 @@ function customerRoute(customer) {
         case 'org.crm.shop.customers.index':
             return route(
                 'org.crm.shop.customers.show',
-                [route().params['shop'],customer.slug]);
+                [route().params['shop'],customer.customer_slug]);
         default:
             return route(
                 'org.crm.customers.show',
-                [customer.slug]);
+                [customer.customer_slug]);
+    }
+}
+
+function appointmentRoute(appointment) {
+    switch (route().current()) {
+        case 'org.crm.shop.appointments.index':
+            return route(
+                'org.crm.shop.appointments.index',
+                [route().params['shop'], appointment.slug]);
+        default:
+            return route(
+                'org.crm.customers.show',
+                [appointment.customer_slug]);
     }
 }
 
@@ -30,9 +43,14 @@ function customerRoute(customer) {
 
 <template>
     <Table :resource="data" :name="tab" class="mt-5">
-        <template #cell(customer)="{ item: appointment }">
+        <template #cell(name)="{ item: appointment }">
+            <Link :href="appointmentRoute(appointment)">
+                {{ appointment['name'] }}
+            </Link>
+        </template>
+        <template #cell(customer_name)="{ item: appointment }">
             <Link :href="customerRoute(appointment)">
-                {{ appointment['customer'] }}
+                {{ appointment['customer_name'] }}
             </Link>
         </template>
     </Table>
