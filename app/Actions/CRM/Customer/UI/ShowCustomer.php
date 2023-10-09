@@ -7,10 +7,12 @@
 
 namespace App\Actions\CRM\Customer\UI;
 
+use App\Actions\CRM\Appointment\UI\IndexAppointments;
 use App\Actions\Portfolios\CustomerWebsite\UI\IndexCustomerWebsites;
 use App\Actions\InertiaAction;
 use App\Actions\Organisation\UI\CRM\ShowCRMDashboard;
 use App\Enums\UI\Customer\CustomerTabsEnum;
+use App\Http\Resources\CRM\AppointmentResource;
 use App\Http\Resources\CRM\CustomerResource;
 use App\Models\CRM\Customer;
 use App\Models\Market\Shop;
@@ -137,12 +139,17 @@ class ShowCustomer extends InertiaAction
                     fn () => GetCustomerShowcase::run($customer)
                     : Inertia::lazy(fn () => GetCustomerShowcase::run($customer)),
 
+                CustomerTabsEnum::APPOINTMENTS->value => $this->tab == CustomerTabsEnum::APPOINTMENTS->value ?
+                    fn () => AppointmentResource::collection(IndexAppointments::run($customer))
+                    : Inertia::lazy(fn () => AppointmentResource::collection(IndexAppointments::run($customer))),
+
                 CustomerTabsEnum::PORTFOLIO->value => $this->tab == CustomerTabsEnum::PORTFOLIO->value ?
                     fn () => IndexCustomerWebsites::run($customer)
                     : Inertia::lazy(fn () => IndexCustomerWebsites::run($customer)),
 
             ]
-        )->table(IndexCustomerWebsites::make()->tableStructure(
+        )->table(IndexAppointments::make()->tableStructure(parent: $customer, prefix: CustomerTabsEnum::APPOINTMENTS->value))
+            ->table(IndexCustomerWebsites::make()->tableStructure(
             parent: $customer,
             modelOperations: [
                 'createLink' => [

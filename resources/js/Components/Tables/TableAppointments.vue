@@ -16,9 +16,11 @@ const props = defineProps<{
 function customerRoute(customer) {
     switch (route().current()) {
         case 'org.crm.shop.customers.index':
+        case 'org.crm.shop.appointments.index':
+        case 'org.crm.shop.customers.show':
             return route(
                 'org.crm.shop.customers.show',
-                [route().params['shop'],customer.customer_slug]);
+                [route().params['shop'], customer.customer_slug]);
         default:
             return route(
                 'org.crm.customers.show',
@@ -28,13 +30,15 @@ function customerRoute(customer) {
 
 function appointmentRoute(appointment) {
     switch (route().current()) {
+        case 'org.crm.shop.customers.index':
         case 'org.crm.shop.appointments.index':
+        case 'org.crm.shop.customers.show':
             return route(
                 'org.crm.shop.appointments.index',
-                [route().params['shop'], appointment.slug]);
+                [route().params['shop'], appointment.customer_slug]);
         default:
             return route(
-                'org.crm.customers.show',
+                'org.crm.appointments.show',
                 [appointment.customer_slug]);
     }
 }
@@ -42,7 +46,7 @@ function appointmentRoute(appointment) {
 </script>
 
 <template>
-    <Table :resource="data" :name="tab" class="mt-5">
+    <Table :resource="data" :name="'appointments'" class="mt-5">
         <template #cell(name)="{ item: appointment }">
             <Link :href="appointmentRoute(appointment)">
                 {{ appointment['name'] }}
