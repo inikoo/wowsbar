@@ -3,6 +3,7 @@
 import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
 import { faExclamationCircle ,faCheckCircle} from "@/../private/pro-solid-svg-icons";
 import {library} from '@fortawesome/fontawesome-svg-core';
+import PureTextarea from '@/Components/Pure/PureTextarea.vue';
 library.add(faExclamationCircle,faCheckCircle);
 
 const props = defineProps(['form', 'fieldName','options', 'fieldData']);
@@ -24,25 +25,15 @@ if(props.options!==undefined && props.options.type ){
     <div class="relative">
         <div>
             <label :for="fieldName" class="block text-sm font-medium text-gray-700"></label>
-            <div class="rounded-md shadow-sm">
-                <textarea
-                    v-model.trim="form[fieldName]"
-                    :id="fieldName"
-                    :name="fieldName"
-                    :placeholder="fieldData?.placeholder"
-                    rows="3"
-                    class="block w-full rounded-md shadow-sm dark:bg-gray-600 dark:text-gray-400 border-gray-300 dark:border-gray-500 focus:border-gray-500 focus:ring-gray-500 sm:text-sm" />
-            </div>
-            <div v-if="fieldData.counter" class="grid grid-flow-col text-xs italic text-gray-500 mt-2 space-x-12 justify-start">
-                <p class="">
-                    <!-- {{ pageBody.layout.profile.fields.about.notes }} -->
-                    Letters: {{ form[fieldName].length }}
-                </p>
-                <p class="">
-                    <!-- {{ pageBody.layout.profile.fields.about.notes }} -->
-                    Words: {{ form[fieldName].trim().split(/\s+/).filter(Boolean).length }}
-                </p>
-            </div>
+            <PureTextarea
+                v-model="form[fieldName]"
+                :placeholder="fieldData.placeholder"
+                :readonly="fieldData.readonly"
+                :inputName="fieldName"
+                :counter="fieldData.counter"
+            >
+            
+            </PureTextarea>
         </div>
 
         <!-- Icon: Error, Success, Loading -->
