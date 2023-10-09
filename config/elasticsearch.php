@@ -7,7 +7,7 @@
 
 
 return [
-    'host'        => explode(',', env('ELASTICSEARCH_HOSTS', 'localhost:9200')),
+    'host'         => env('ELASTICSEARCH_HOST'),
     'api_key'      => env('ELASTICSEARCH_API_KEY'),
     'ca_bundle'    => env('ELASTICSEARCH_CA_BUNDLE'),
     'index_prefix' => env('ELASTICSEARCH_INDEX_PREFIX', 'wowsbar_'),
@@ -16,25 +16,25 @@ return [
         'mappings' => [
             'universal_search' => [
                 'properties' => [
-                    'in_organisation'     => [
+                    'in_organisation' => [
                         'type' => 'boolean',
                     ],
-                    'shop_id'     => [
+                    'shop_id'         => [
                         'type' => 'keyword',
                     ],
-                    'website_id'  => [
+                    'website_id'      => [
                         'type' => 'keyword',
                     ],
-                    'customer_id' => [
+                    'customer_id'     => [
                         'type' => 'keyword',
                     ],
-                    'section'     => [
+                    'section'         => [
                         'type' => 'keyword',
                     ],
-                    'title'       => [
+                    'title'           => [
                         'type' => 'text',
                     ],
-                    'description' => [
+                    'description'     => [
                         'type' => 'text',
                     ],
                 ],
