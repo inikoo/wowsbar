@@ -96,6 +96,13 @@ class CreateAppointment extends InertiaAction
                                         'value'    => '',
                                         'required' => true,
                                     ],
+                                    'time' => [
+                                        'type'    => 'select',
+                                        'mode'    => 'single',
+                                        'label'   => __('time'),
+                                        'required' => true,
+                                        'options' => []
+                                    ],
                                     'description' => [
                                         'type'     => 'textarea',
                                         'label'    => __('description'),
