@@ -1,5 +1,5 @@
 import { headerBlock1, headerBlock2, headerBlock3, headerBlock4 } from './Header/Header'
-import { footerBlock1, footerBlock2, footerBlock3, footerBlock4, footerBlock5 } from './Footer/Footer'
+import { footerBlock1, footerBlock2, footerBlock3, footerBlock4 } from './Footer/Footer'
 
 export const CustomBlock = (editor : Any) => {
     IconBlock(editor)
@@ -47,7 +47,7 @@ export const HeaderPlugins = (editor: any) => {
 }
 
 export const FooterPlugins = (editor: any) => {
-  const footer = [footerBlock1(),footerBlock2(),footerBlock3(),footerBlock4(),footerBlock5()]
+  const footer = [footerBlock1(),footerBlock2(),footerBlock3(),footerBlock4()]
   footer.map((item,index)=>{
     editor.Blocks.add(item.id,item);
 })

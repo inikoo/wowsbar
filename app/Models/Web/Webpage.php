@@ -12,11 +12,16 @@ use App\Enums\Organisation\Web\Webpage\WebpageStateEnum;
 use App\Enums\Organisation\Web\Webpage\WebpageTypeEnum;
 use App\Models\Helpers\Deployment;
 use App\Models\Helpers\Snapshot;
+use App\Models\Traits\HasHistory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
@@ -83,9 +88,12 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Webpage whereWebsiteId($value)
  * @mixin \Eloquent
  */
-class Webpage extends Model
+class Webpage extends Model implements Auditable, HasMedia
 {
     use HasSlug;
+    use HasHistory;
+    use SoftDeletes;
+    use InteractsWithMedia;
 
     protected $casts = [
         'data'             => 'array',

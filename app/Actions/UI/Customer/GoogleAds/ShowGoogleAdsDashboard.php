@@ -96,7 +96,7 @@ class ShowGoogleAdsDashboard extends InertiaAction
                         'type'   => 'simple',
                         'simple' => [
                             'route' => [
-                                'name' => 'customer.google-ads.dashboard'
+                                'name' => 'customer.ppc.dashboard'
                             ],
                             'label' => __('Google Ads'),
                         ]

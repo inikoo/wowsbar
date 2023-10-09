@@ -13,7 +13,6 @@ import { loadCss } from '@/Composables/loadCss';
 const header = usePage().props.structure.header;
 const footer = usePage().props.structure.footer;
 
-console.log('inini', usePage().props)
 let dynamicClasses = {
     header: '',
     footer: ''
@@ -30,8 +29,9 @@ onMounted(() => {
             let classString = '';
             for (const c in css[selector][property]) {
                 classString += `${c}: ${css[selector][property][c]};`;
+                dynamicClasses[selector] += `${property} { ${classString} } `;
             }
-            dynamicClasses[selector] += `${selector} { ${classString} } `;
+            
         }
     }
 
@@ -39,6 +39,7 @@ onMounted(() => {
     styleElement.textContent = dynamicClasses.header + dynamicClasses.footer;
     document.head.appendChild(styleElement);
 });
+
 
 </script>
 

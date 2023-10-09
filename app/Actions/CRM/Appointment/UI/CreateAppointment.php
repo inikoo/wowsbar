@@ -7,12 +7,17 @@
 
 namespace App\Actions\CRM\Appointment\UI;
 
+use App\Actions\CRM\Customer\UI\GetCustomerOptions;
 use App\Actions\InertiaAction;
+use App\Enums\CRM\Appointment\AppointmentEventEnum;
+use App\Enums\CRM\Appointment\AppointmentTypeEnum;
+use App\Models\CRM\Customer;
 use App\Models\Market\Shop;
 use App\Models\Organisation\Organisation;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
+use Spatie\LaravelOptions\Options;
 
 class CreateAppointment extends InertiaAction
 {
@@ -53,8 +58,56 @@ class CreateAppointment extends InertiaAction
                             [
                                 'title'  => __('customer'),
                                 'fields' => [
-
-
+                                    'name' => [
+                                        'type'     => 'input',
+                                        'label'    => __('appointment name'),
+                                        'required' => true,
+                                    ],
+                                    'customer_id' => [
+                                        'type'     => 'select',
+                                        'mode'     => 'single',
+                                        'label'    => __('customer'),
+                                        'required' => true,
+                                        'options'  => GetCustomerOptions::run(Customer::all())
+                                    ],
+                                    'type' => [
+                                        'type'     => 'select',
+                                        'mode'     => 'single',
+                                        'label'    => __('type'),
+                                        'required' => true,
+                                        'options'  => Options::forEnum(AppointmentTypeEnum::class)
+                                    ],
+                                    'event' => [
+                                        'type'     => 'select',
+                                        'mode'     => 'single',
+                                        'label'    => __('event'),
+                                        'required' => true,
+                                        'options'  => Options::forEnum(AppointmentEventEnum::class)
+                                    ],
+                                    'event_address' => [
+                                        'type'     => 'input',
+                                        'label'    => __('event address'),
+                                        'value'    => '',
+                                        'required' => true,
+                                    ],
+                                    'schedule_at' => [
+                                        'type'     => 'date',
+                                        'label'    => __('schedule'),
+                                        'value'    => '',
+                                        'required' => true,
+                                    ],
+                                    'time' => [
+                                        'type'    => 'select',
+                                        'mode'    => 'single',
+                                        'label'   => __('time'),
+                                        'required' => true,
+                                        'options' => []
+                                    ],
+                                    'description' => [
+                                        'type'     => 'textarea',
+                                        'label'    => __('description'),
+                                        'value'    => ''
+                                    ]
                                 ]
                             ],
 

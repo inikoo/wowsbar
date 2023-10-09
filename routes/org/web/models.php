@@ -44,6 +44,7 @@ use App\Actions\Web\Webpage\ShowWebpageContent;
 use App\Actions\Web\Webpage\StoreArticle;
 use App\Actions\Web\Webpage\StoreWebpage;
 use App\Actions\Web\Webpage\UpdateWebpageContent;
+use App\Actions\Web\Webpage\UploadImagesToWebpage;
 use App\Actions\Web\Website\PublishWebsiteMarginal;
 use App\Actions\Web\Website\ShowWebsiteFooterContent;
 use App\Actions\Web\Website\ShowWebsiteHeaderContent;
@@ -93,6 +94,8 @@ Route::prefix('shop')->as('shop.')->group(function () {
         Route::post('prospect', [StoreProspect::class, 'inShop'])->name('prospect.store');
         Route::patch('prospect/{prospect:id}', [UpdateProspect::class, 'inShop'])->name('prospect.update');
         Route::post('product', [StoreProduct::class, 'inShop'])->name('product.store');
+
+        Route::post('/', [StoreAppointment::class, 'inShop'])->name('appointment.store');
     });
 });
 
@@ -124,7 +127,7 @@ Route::prefix('webpage')->as('webpage.')->group(function () {
 
     //Route::patch('{webpage:id}', UpdateWebsite::class)->name('update');
     //Route::patch('{webpage:id}/state', UpdateWebsiteState::class)->name('state.update');
-    //Route::post('{webpage:id}/images', UploadImagesToWebsite::class)->name('images.store');
+    Route::post('{webpage:id}/images', UploadImagesToWebpage::class)->name('images.store');
 });
 
 Route::prefix('appointment')->as('appointment.')->group(function () {

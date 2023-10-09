@@ -16,12 +16,10 @@ trait BelongsToCustomer
 {
     public static function bootBelongsToCustomer(): void
     {
-        //        static::addGlobalScope(new CustomerScope());
-
+        static::addGlobalScope(new CustomerScope());
         static::creating(function (Model $model) {
             $model->customer_id ??= config('global.customer_id');
         });
-
     }
 
     public function customer(): BelongsTo

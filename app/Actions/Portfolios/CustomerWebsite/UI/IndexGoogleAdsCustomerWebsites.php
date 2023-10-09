@@ -31,9 +31,9 @@ class IndexGoogleAdsCustomerWebsites extends InertiaAction
 {
     public function authorize(ActionRequest $request): bool
     {
-        $this->canEdit = $request->user()->hasPermissionTo('catalogue.google-ads.edit');
+        $this->canEdit = $request->user()->hasPermissionTo('catalogue.ppc.edit');
 
-        return $request->user()->hasPermissionTo('catalogue.google-ads.view');
+        return $request->user()->hasPermissionTo('catalogue.ppc.view');
     }
 
     public function asController(ActionRequest $request): LengthAwarePaginator
@@ -46,11 +46,11 @@ class IndexGoogleAdsCustomerWebsites extends InertiaAction
     /** @noinspection PhpUndefinedMethodInspection */
     public function handle($prefix = null): LengthAwarePaginator
     {
-        $divisionId = Cache::get('google-ads');
+        $divisionId = Cache::get('ppc');
 
         if(! $divisionId) {
-            $divisionId = Division::firstWhere('slug', 'google-ads')->id;
-            Cache::put('google-ads', $divisionId);
+            $divisionId = Division::firstWhere('slug', 'ppc')->id;
+            Cache::put('ppc', $divisionId);
         }
 
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
@@ -172,12 +172,12 @@ class IndexGoogleAdsCustomerWebsites extends InertiaAction
         };
 
         return match ($routeName) {
-            'org.google-ads.websites.index' =>
+            'org.ppc.websites.index' =>
             array_merge(
                 ShowGoogleAdsDashboard::make()->getBreadcrumbs(),
                 $headCrumb(
                     [
-                        'name' => 'org.google-ads.websites.index',
+                        'name' => 'org.ppc.websites.index',
                         null
                     ]
                 ),

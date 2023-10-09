@@ -107,7 +107,7 @@ return [
             'department' => 'content',
             'name'       => 'PPC supervisor',
             'roles'      => [
-                'google-ads-supervisor'
+                'ppc-supervisor'
             ]
         ],
         'ppc-w'       => [
@@ -116,7 +116,7 @@ return [
             'department' => 'content',
             'name'       => 'PPC',
             'roles'      => [
-                'google-ads'
+                'ppc'
             ]
         ],
         'social-m'    => [

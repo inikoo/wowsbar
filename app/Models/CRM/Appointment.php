@@ -11,15 +11,19 @@ use App\Enums\CRM\Appointment\AppointmentEventEnum;
 use App\Enums\CRM\Appointment\AppointmentStateEnum;
 use App\Enums\CRM\Appointment\AppointmentTypeEnum;
 use App\Models\Auth\OrganisationUser;
+use App\Models\Market\Shop;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 /**
  * App\Models\CRM\Appointment
  *
  * @property int $id
  * @property string|null $slug
+ * @property string $name
  * @property int $shop_id
  * @property int $customer_id
  * @property int|null $organisation_user_id
@@ -32,6 +36,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read OrganisationUser|null $organisationUser
+ * @property-read Shop $shop
+ * @property-read \App\Models\CRM\Customer $customer
  * @method static \Illuminate\Database\Eloquent\Builder|Appointment newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Appointment newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Appointment query()
@@ -53,19 +59,43 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Appointment extends Model
 {
     use HasFactory;
+    use HasSlug;
 
     protected $casts = [
         'state'            => AppointmentStateEnum::class,
         'type'             => AppointmentTypeEnum::class,
-        'event'            => AppointmentEventEnum::class
-
+        'event'            => AppointmentEventEnum::class,
+        'schedule_at' => 'datetime'
     ];
 
+    public function getSlugOptions(): SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom('name')
+            ->saveSlugsTo('slug')
+            ->doNotGenerateSlugsOnUpdate();
+    }
+
     protected $guarded = [];
+
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
 
     public function organisationUser(): BelongsTo
     {
         return $this->belongsTo(OrganisationUser::class);
+    }
+
+    public function customer(): BelongsTo
+    {
+        return $this->belongsTo(Customer::class);
+    }
+
+    public function shop(): BelongsTo
+    {
+        return $this->belongsTo(Shop::class);
     }
 
 }

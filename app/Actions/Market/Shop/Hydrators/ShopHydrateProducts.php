@@ -20,6 +20,8 @@ class ShopHydrateProducts implements ShouldBeUnique
 
     public function handle(Shop $shop): void
     {
+        // todo: implement this
+        /*
         $stateCounts   = ShopProduct::where('shop_id', $shop->id)
             ->selectRaw('state, count(*) as total')
             ->groupBy('state')
@@ -31,6 +33,7 @@ class ShopHydrateProducts implements ShouldBeUnique
             $stats['number_products_state_'.$productState->snake()] = Arr::get($stateCounts, $productState->value, 0);
         }
         $shop->stats->update($stats);
+        */
     }
 
     public function getJobUniqueId(Shop $parameters): string

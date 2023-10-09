@@ -75,7 +75,7 @@ class Login
             session()->invalidate();
             session()->regenerateToken();
 
-            abort(419,'CustomerUser not associated with user, cant log in');
+            abort(419, 'CustomerUser not associated with user, cant log in');
         }
 
 

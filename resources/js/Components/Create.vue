@@ -42,6 +42,7 @@ import Password from "@/Components/Forms/Fields/Password.vue"
 import CustomerRoles from '@/Components/Forms/Fields/CustomerRoles.vue'
 
 import { ref, onMounted } from 'vue'
+import Textarea from "@/Components/Forms/Fields/Textarea.vue";
 
 const getComponent = (componentName: string) => {
     const components: any = {
@@ -56,6 +57,7 @@ const getComponent = (componentName: string) => {
         'currency': Currency,
         'password': Password,
         'customerRoles': CustomerRoles,
+        'textarea': Textarea
     };
     return components[componentName] ?? null;
 
@@ -135,7 +137,7 @@ onMounted(() => {
                 <div v-for="(sectionData, sectionIdx ) in formData['blueprint']" :key="sectionIdx" class="relative py-4">
                     <!-- Helper: Section click -->
                     <div class="sr-only absolute -top-16" :id="`field${sectionIdx}`" />
-                    
+
                     <!-- Title -->
                     <div class="flex items-center gap-x-2" ref="buttonRefs">
                         <FontAwesomeIcon v-if="sectionData.icon" :icon='sectionData.icon' class='' aria-hidden='true' />

@@ -14,4 +14,12 @@ enum AppointmentTypeEnum: string
     use EnumHelperTrait;
 
     case LEAD = 'lead';
+
+    public static function labels(): array
+    {
+        return [
+            'lead' => 'Leads'
+        ];
+    }
+
 }

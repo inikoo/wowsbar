@@ -87,20 +87,25 @@ class ShowWebpageWorkshop extends InertiaAction
                 'websiteState' => $webpage->website->state,
                 'webpageState' => $webpage->state,
                 'isDirty'      => $webpage->is_dirty,
+                'pageCode'     => $webpage->code,
 
-                'publishRoute'    => [
+                'imagesUploadRoute' => [
+                    'name'       => 'org.models.webpage.images.store',
+                    'parameters' => $webpage->id
+                ],
+                'publishRoute'      => [
                     'name'       => 'org.models.webpage.content.publish',
                     'parameters' => $webpage->id
                 ],
-                'setAsReadyRoute' => [
+                'setAsReadyRoute'   => [
                     'name'       => 'org.models.webpage.content.publish',
                     'parameters' => $webpage->id
                 ],
-                'updateRoute'     => [
+                'updateRoute'       => [
                     'name'       => 'org.models.webpage.content.update',
                     'parameters' => $webpage->id
                 ],
-                'loadRoute'       => [
+                'loadRoute'         => [
                     'name'       => 'org.models.webpage.content.show',
                     'parameters' => $webpage->id
                 ],

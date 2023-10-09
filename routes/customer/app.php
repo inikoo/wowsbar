@@ -36,9 +36,9 @@ Route::middleware([
         Route::prefix("seo")
             ->name("seo.")
             ->group(__DIR__."/seo.php");
-        Route::prefix("google-ads")
-            ->name("google-ads.")
-            ->group(__DIR__."/google-ads.php");
+        Route::prefix("ppc")
+            ->name("ppc.")
+            ->group(__DIR__."/ppc.php");
         Route::prefix("social")
             ->name("social.")
             ->group(__DIR__."/social.php");

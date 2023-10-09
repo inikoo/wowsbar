@@ -15,12 +15,12 @@
     "portfolio.banners.edit",
 
     "portfolio.seo",
-    "portfolio.google-ads",
+    "portfolio.ppc",
     "portfolio.social",
     "portfolio.prospects",
 
     "portfolio.seo.view",
-    "portfolio.google-ads.view",
+    "portfolio.ppc.view",
     "portfolio.social.view",
     "portfolio.prospects.view"
 ]

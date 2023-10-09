@@ -27,11 +27,11 @@ class ShopHydratePayments implements ShouldBeUnique
         $amountTenantCurrencySuccessfullyPaid = $shop->payments()
             ->where('type', 'payment')
             ->where('status', 'success')
-            ->sum('tc_amount');
+            ->sum('org_amount');
         $amountTenantCurrencyRefunded         = $shop->payments()
             ->where('type', 'refund')
             ->where('status', 'success')
-            ->sum('tc_amount');
+            ->sum('org_amount');
 
         $amountSuccessfullyPaid = $shop->payments()
             ->where('type', 'payment')
@@ -44,15 +44,15 @@ class ShopHydratePayments implements ShouldBeUnique
 
 
         $stats = [
-            'number_payment_records'      => $paymentRecords,
-            'number_payments'             => $paymentRecords - $refunds,
-            'number_refunds'              => $refunds,
-            'amount'                      => $amountSuccessfullyPaid + $amountTenantCurrencyRefunded,
-            'amount_successfully_paid'    => $amountSuccessfullyPaid,
-            'amount_refunded'             => $amountRefunded,
-            'tc_amount'                   => $amountTenantCurrencySuccessfullyPaid + $amountTenantCurrencyRefunded,
-            'tc_amount_successfully_paid' => $amountTenantCurrencySuccessfullyPaid,
-            'tc_amount_refunded'          => $amountTenantCurrencyRefunded
+            'number_payment_records'       => $paymentRecords,
+            'number_payments'              => $paymentRecords - $refunds,
+            'number_refunds'               => $refunds,
+            'amount'                       => $amountSuccessfullyPaid + $amountTenantCurrencyRefunded,
+            'amount_successfully_paid'     => $amountSuccessfullyPaid,
+            'amount_refunded'              => $amountRefunded,
+            'org_amount'                   => $amountTenantCurrencySuccessfullyPaid + $amountTenantCurrencyRefunded,
+            'org_amount_successfully_paid' => $amountTenantCurrencySuccessfullyPaid,
+            'org_amount_refunded'          => $amountTenantCurrencyRefunded
 
 
         ];

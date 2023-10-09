@@ -65,9 +65,7 @@ class StoreUser
 
 
         SetUserAvatar::run($user);
-
         UserHydrateUniversalSearch::dispatch($user);
-
         CustomerHydrateCustomerUsers::dispatch($customer);
 
         return $customerUser;

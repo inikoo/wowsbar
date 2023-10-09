@@ -11,13 +11,16 @@ import axios from "axios"
 
 
 const emits = defineEmits(['onSaveToServer']);
-const props = defineProps<{
+const props = withDefaults(defineProps<{
     plugins: Array;
     customBlocks?: Array;
     updateRoute?: Object;
     loadRoute?: Object;
     imagesUploadRoute?:Object
-}>();
+    useBasic?:Boolean
+}>(),{
+    useBasic: true,
+});
 
 const editorInstance = ref(null);
 const options = { collections: ["ri", "mdi", "uim", "streamline-emojis"]};
@@ -53,8 +56,6 @@ const Store = async (data, editor) => {
             { data, pagesHtml },
         )
         emits('onSaveToServer', response?.data?.isDirty)
-        // console.log("==================")
-        // console.log(response.data.isDirty)
         console.log('saving......')
         
     } catch (error) {
@@ -78,8 +79,9 @@ const Load = async (data) => {
     }
 }
 
+console.log('inii',props.useBasic)
 
-
+const plugin = props.useBasic ?  [Webpage, Basic, usePlugin(grapesjsIcons, options),...props.plugins] :  [Webpage, usePlugin(grapesjsIcons, options),...props.plugins]
 
 
 onMounted(() => {
@@ -89,7 +91,7 @@ onMounted(() => {
         showOffsets: true,
         fromElement: true,
         noticeOnUnload: false,
-        plugins: [Webpage, Basic, usePlugin(grapesjsIcons, options),...props.plugins],
+        plugins: plugin,
         canvas: {
             // styles: ['https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css']
             scripts:['https://cdn.tailwindcss.com']
@@ -143,7 +145,9 @@ onMounted(() => {
 </script>
 
 <template>
-    <div id="gjs"></div>
+    <div id="gjs">
+    <slot name="defaultComponents"></slot>
+    </div>
 </template>
 
 <style lang="scss">
