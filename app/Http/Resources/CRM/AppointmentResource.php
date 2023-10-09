@@ -28,7 +28,6 @@ class AppointmentResource extends JsonResource
             $organisationUserAvatar      = $appointment->organisationUser->avatarImageSources(48, 48);
         }
 
-
         return [
             'slug'             => $appointment->slug,
             'name'             => $appointment->name,

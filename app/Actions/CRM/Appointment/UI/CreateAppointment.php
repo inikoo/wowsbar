@@ -60,7 +60,7 @@ class CreateAppointment extends InertiaAction
                                 'fields' => [
                                     'name' => [
                                         'type'     => 'input',
-                                        'label'    => __('name'),
+                                        'label'    => __('appointment name'),
                                         'required' => true,
                                     ],
                                     'customer_id' => [

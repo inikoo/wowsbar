@@ -31,6 +31,7 @@ import {
 } from "@headlessui/vue"
 import TablePortfolioWebsites from "@/Components/Tables/TablePortfolioWebsites.vue"
 import { routeType } from '@/types/route'
+import TableAppointments from "@/Components/Tables/TableAppointments.vue";
 
 library.add(
     faStickyNote,
@@ -56,6 +57,7 @@ const props = defineProps<{
     }
     showcase?:object
     portfolio?: object
+    appointments?: object
     uploadRoutes: {
         upload: routeType
         history?: routeType
@@ -71,7 +73,8 @@ const components = {
     showcase: CustomerShowcase,
     details: ModelDetails,
     history: ModelChangelog,
-    portfolio: TablePortfolioWebsites
+    portfolio: TablePortfolioWebsites,
+    appointments: TableAppointments
 }
 
 // Selected component

@@ -86,10 +86,9 @@ trait WithImportModel
     {
         try {
             $client = new Client();
-            $client->useApplicationDefaultCredentials();
-            //
-            //            $client->setClientId('');
-            //            $client->setClientSecret('');
+            $client->setClientId('916522519464-211r9tuaif665s461454vj20nsaejh1e.apps.googleusercontent.com');
+            $client->setClientSecret('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');
+            $client->refreshToken('1//04aS5P0v3_i3XCgYIARAAGAQSNwF-L9IrUKqKJqebguM9MqDxc9umgfgzzX1ObJpBpdldP_LeMYjds-XDUwdBUu7gBfFi37mXh0w');
 
             $client->addScope([
                 Drive::DRIVE,

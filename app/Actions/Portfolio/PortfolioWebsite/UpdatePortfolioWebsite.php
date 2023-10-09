@@ -42,7 +42,7 @@ class UpdatePortfolioWebsite
             'url'  => [
                 'sometimes',
                 'required',
-                'url',
+                'active_url',
                 'max:500',
                 new IUnique(
                     table: 'portfolio_websites',
@@ -55,6 +55,13 @@ class UpdatePortfolioWebsite
             ],
             'name' => ['sometimes', 'required', 'string', 'max:128']
         ];
+    }
+
+    public function prepareForValidation(\Lorisleiva\Actions\ActionRequest $request): void
+    {
+        $request->replace([
+            'url' => 'https://' . $request->input('url')
+        ]);
     }
 
     public function asController(PortfolioWebsite $portfolioWebsite, ActionRequest $request): PortfolioWebsite

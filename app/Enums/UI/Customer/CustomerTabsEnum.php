@@ -26,6 +26,7 @@ enum CustomerTabsEnum: string
     case USERS              = 'users';
 
     case DISPATCHED_EMAILS = 'dispatched_emails';
+    case APPOINTMENTS = 'appointments';
 
     public function blueprint(): array
     {
@@ -62,6 +63,12 @@ enum CustomerTabsEnum: string
                 'align' => 'right',
                 'title' => __('dispatched emails'),
                 'icon'  => 'fal fa-paper-plane',
+                'type'  => 'icon',
+            ],
+            CustomerTabsEnum::APPOINTMENTS => [
+                'align' => 'right',
+                'title' => __('appointments'),
+                'icon'  => 'fal fa-handshake',
                 'type'  => 'icon',
             ],
             CustomerTabsEnum::SHOWCASE => [

@@ -72,7 +72,7 @@ class IndexAppointments extends InertiaAction
             );
         }
 
-        // $queryBuilder->leftJoin('customers', 'appointments.customer_id', 'customers.id');
+//         $queryBuilder->leftJoin('customers', 'appointments.customer_id', 'customers.id');
 
         return $queryBuilder
             ->defaultSort('-schedule_at')
@@ -80,6 +80,8 @@ class IndexAppointments extends InertiaAction
             ->when(true, function ($query) use ($parent) {
                 if (class_basename($parent) == 'Shop') {
                     $query->where('appointments.shop_id', $parent->id);
+                } elseif (class_basename($parent) == 'Customer') {
+                    $query->where('appointments.customer_id', $parent->id);
                 }
             })
             ->allowedFilters([$globalSearch])
@@ -171,7 +173,7 @@ class IndexAppointments extends InertiaAction
                 'data'        => AppointmentResource::collection($appointments),
 
             ]
-        )->table($this->tableStructure($this->parent));
+        )->table($this->tableStructure(parent: $this->parent, prefix: 'appointments'));
     }
 
     public function getBreadcrumbs(string $routeName, array $routeParameters): array
