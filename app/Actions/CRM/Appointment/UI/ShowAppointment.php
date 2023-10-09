@@ -50,7 +50,7 @@ class ShowAppointment extends InertiaAction
         return Inertia::render(
             'CRM/Appointment',
             [
-                'title'       => __('customer'),
+                'title'       => __('appointment'),
                 'breadcrumbs' => [],
 //                    $this->getBreadcrumbs(
 //                    $request->route()->getName(),

@@ -21,8 +21,8 @@ enum AppointmentTabsEnum: string
     {
         return match ($this) {
             AppointmentTabsEnum::SHOWCASE => [
-                'title' => __('customer'),
-                'icon'  => 'fas fa-info-circle',
+                'title' => __('appointment'),
+                'icon'  => 'fas fa-info-circle'
             ],
         };
     }
