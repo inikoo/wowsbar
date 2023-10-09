@@ -21,7 +21,7 @@ class Logout
     public function handle(Request $request): RedirectResponse
     {
         $gate        = 'customer';
-        $redirectUrl = '/auth/login';
+        $redirectUrl = '/app/login';
 
         Auth::guard($gate)->logout();
         $request->session()->invalidate();

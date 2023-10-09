@@ -19,7 +19,7 @@ export const headerBlock1 = () => {
   <span data-gjs-editable="false" data-gjs-removable="false">Appointment</span>
 </a>
 
-<a href="/auth/login" class="ml-3 inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 focus-visible:ring focus-visible:ring-indigo-500 focus:outline-none transition duration-300 ease-in-out">
+<a href="/app/login" class="ml-3 inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 focus-visible:ring focus-visible:ring-indigo-500 focus:outline-none transition duration-300 ease-in-out">
   <span data-gjs-editable="false" data-gjs-removable="false">Log in</span>
 </a>
       </div>
@@ -97,7 +97,7 @@ export const headerBlock3 = () => {
   <span data-gjs-editable="false" data-gjs-removable="false">Appointment</span>
 </a>
 
-<a href="/auth/login" class="ml-3 inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 focus-visible:ring focus-visible:ring-indigo-500 focus:outline-none transition duration-300 ease-in-out">
+<a href="/app/login" class="ml-3 inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 focus-visible:ring focus-visible:ring-indigo-500 focus:outline-none transition duration-300 ease-in-out">
   <span data-gjs-editable="false" data-gjs-removable="false">Log in</span>
 </a>
       </div>
@@ -130,7 +130,7 @@ export const headerBlock4 = () => {
   <span data-gjs-editable="false" data-gjs-removable="false">Appointment</span>
 </a>
 
-<a href="/auth/login" class="ml-3 inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 focus-visible:ring focus-visible:ring-indigo-500 focus:outline-none transition duration-300 ease-in-out">
+<a href="/app/login" class="ml-3 inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 focus-visible:ring focus-visible:ring-indigo-500 focus:outline-none transition duration-300 ease-in-out">
   <span data-gjs-editable="false" data-gjs-removable="false">Log in</span>
 </a>
       </div>
