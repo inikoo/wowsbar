@@ -48,7 +48,7 @@ class ShowSocialDashboard
                         'name' => __('websites'),
                         'stat' => $org->crmStats->number_customer_websites_social,
                         'href' => [
-                            'name' => 'org.google-ads.websites.index'
+                            'name' => 'org.ppc.websites.index'
                         ]
                     ],
 

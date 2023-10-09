@@ -98,7 +98,7 @@ class StoreBanner
         }
 
 
-        CustomerHydrateBanners::dispatch($customer);
+        CustomerHydrateBanners::run($customer);
 
         if(class_basename($parent) == 'PortfolioWebsite') {
             PortfolioWebsiteHydrateBanners::dispatch($parent);

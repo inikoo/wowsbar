@@ -16,6 +16,9 @@ class GetLayout
 
     public function handle(CustomerUser $customerUser): array
     {
+
+        $number_portfolio_websites=$customerUser->customer->portfolioStats->number_portfolio_websites;
+
         $navigation = [];
 
         $navigation['dashboard'] = [
@@ -66,7 +69,7 @@ class GetLayout
             ];
         }
 
-        if ($customerUser->hasPermissionTo('portfolio.prospects.view')) {
+        if ($customerUser->hasPermissionTo('portfolio.prospects.view') && $number_portfolio_websites>0) {
             $navigation['prospects'] = [
                 'scope'   => 'prospects',
                 'icon'    => ['fal', 'fa-transporter'],
@@ -86,7 +89,7 @@ class GetLayout
             ];
         }
 
-        if ($customerUser->hasPermissionTo('portfolio.seo.view')) {
+        if ($customerUser->hasPermissionTo('portfolio.seo.view') && $number_portfolio_websites>0) {
             $navigation['seo'] = [
                 'scope'   => 'seo',
                 'icon'    => ['fab', 'fa-google'],
@@ -106,19 +109,19 @@ class GetLayout
             ];
         }
 
-        if ($customerUser->hasPermissionTo('portfolio.google-ads.view')) {
-            $navigation['google-ads'] = [
-                'scope'   => 'google-ads',
+        if ($customerUser->hasPermissionTo('portfolio.ppc.view') && $number_portfolio_websites>0) {
+            $navigation['ppc'] = [
+                'scope'   => 'ppc',
                 'icon'    => ['fal', 'fa-bullseye'],
                 'label'   => __('Google Ads'),
-                'route'   => 'customer.google-ads.dashboard',
+                'route'   => 'customer.ppc.dashboard',
                 'topMenu' => [
                     'subSections' => [
                         [
                             'icon'  => ['fal', 'fa-globe'],
                             'label' => __('websites'),
                             'route' => [
-                                'name' => 'customer.google-ads.websites.index',
+                                'name' => 'customer.ppc.websites.index',
                             ]
                         ],
                     ],
@@ -126,7 +129,7 @@ class GetLayout
             ];
         }
 
-        if ($customerUser->hasPermissionTo('portfolio.social.view')) {
+        if ($customerUser->hasPermissionTo('portfolio.social.view') && $number_portfolio_websites>0) {
             $navigation['social'] = [
                 'scope'   => 'social',
                 'icon'    => ['fal', 'fa-thumbs-up'],
@@ -147,7 +150,7 @@ class GetLayout
         }
 
 
-        if ($customerUser->hasPermissionTo('portfolio.banners.view')) {
+        if ($customerUser->hasPermissionTo('portfolio.banners.view') && $number_portfolio_websites>0) {
             $navigation['caas'] = [
                 'scope'   => 'caas',
                 'icon'    => ['fal', 'fa-rectangle-wide'],

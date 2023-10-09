@@ -55,7 +55,7 @@ const optionsRoles3 = reactive([
         disabled: false
     },
     {
-        label: 'Google-Ads',
+        label: 'ppc',
         name: 'googleads',
         value: props.form[props.fieldName].includes("googleads"),
         disabled: false
@@ -107,7 +107,7 @@ watchEffect(() => {
                         />
                     </td>
                 </tr>
-            
+
                 <tr class="border-b border-gray-300">
                     <td class="">
                         <label :for="optionsRoles2.name"

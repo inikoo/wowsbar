@@ -20,8 +20,6 @@ class HydrateCustomer
 {
     use asAction;
 
-
-
     public function handle(Customer $customer): void
     {
         //CustomerHydrateInvoices::run($customer);
@@ -29,8 +27,6 @@ class HydrateCustomer
         CustomerHydrateBanners::run($customer);
         CustomerHydratePortfolioWebsites::run($customer);
     }
-
-
 
     public string $commandSignature = 'hydrate:customers {customers?*}';
 

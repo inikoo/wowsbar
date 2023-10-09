@@ -70,7 +70,6 @@ class ShowCaaSDashboard extends InertiaAction
     {
         $customer=customer();
 
-
         return [
             'flatTreeMaps' => [
                 [

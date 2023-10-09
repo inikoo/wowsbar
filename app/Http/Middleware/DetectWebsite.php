@@ -18,6 +18,8 @@ class DetectWebsite
     {
         $domain = $request->getHost();
 
+
+        //todo cache this somehow
         $website = Website::where('domain', $domain)->firstOrFail();
 
         $request->merge([

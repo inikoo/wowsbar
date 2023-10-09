@@ -50,12 +50,11 @@ class Register
                 $modelData,
                 [
                     'is_root' => true,
-                    'roles'=>[
+                    'roles'   => [
                         'super-admin'
                     ]
                 ]
             )
-
         );
 
 

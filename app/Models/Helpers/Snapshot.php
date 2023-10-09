@@ -7,7 +7,6 @@
 
 namespace App\Models\Helpers;
 
-use App\Concerns\BelongsToCustomer;
 use App\Enums\Portfolio\Snapshot\SnapshotStateEnum;
 use App\Http\Resources\Portfolio\SlideResource;
 use App\Models\Portfolio\Banner;
@@ -76,7 +75,6 @@ use Spatie\Sluggable\SlugOptions;
 class Snapshot extends Model
 {
     use HasSlug;
-    use BelongsToCustomer;
 
     protected $dateFormat  = 'Y-m-d H:i:s P';
     protected array $dates = ['published_at', 'published_until'];

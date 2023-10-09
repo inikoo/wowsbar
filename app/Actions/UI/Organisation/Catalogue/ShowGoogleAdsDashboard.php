@@ -21,7 +21,7 @@ class ShowGoogleAdsDashboard
 
     public function authorize(ActionRequest $request): bool
     {
-        return $request->user()->hasPermissionTo("catalogue.google-ads.view");
+        return $request->user()->hasPermissionTo("catalogue.ppc.view");
     }
 
 
@@ -48,7 +48,7 @@ class ShowGoogleAdsDashboard
                         'name' => __('websites'),
                         'stat' => $org->crmStats->number_customer_websites_google_ads,
                         'href' => [
-                            'name' => 'org.google-ads.websites.index'
+                            'name' => 'org.ppc.websites.index'
                         ]
                     ],
 
@@ -68,7 +68,7 @@ class ShowGoogleAdsDashboard
                         'type'   => 'simple',
                         'simple' => [
                             'route' => [
-                                'name' => 'org.google-ads.dashboard'
+                                'name' => 'org.ppc.dashboard'
                             ],
                             'label' => __('ads'),
                         ]

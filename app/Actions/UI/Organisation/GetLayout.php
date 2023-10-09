@@ -324,12 +324,12 @@ class GetLayout
             ];
         }
 
-        if ($user->hasPermissionTo('catalogue.google-ads.view')) {
-            $navigation['google-ads'] = [
+        if ($user->hasPermissionTo('catalogue.ppc.view')) {
+            $navigation['ppc'] = [
                 'label'   => __('Ads'),
                 'icon'    => ['fal', 'fa-ad'],
                 'route'   => [
-                    'name' => 'org.google-ads.dashboard'
+                    'name' => 'org.ppc.dashboard'
                 ],
                 'topMenu' => [
                     'subSections' => [
@@ -337,7 +337,7 @@ class GetLayout
                             'icon'  => ['fal', 'fa-globe'],
                             'label' => __('websites'),
                             'route' => [
-                                'name' => 'org.google-ads.websites.index',
+                                'name' => 'org.ppc.websites.index',
                             ]
                         ],
                     ]

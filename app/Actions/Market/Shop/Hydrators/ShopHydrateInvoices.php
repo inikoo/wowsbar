@@ -23,6 +23,9 @@ class ShopHydrateInvoices implements ShouldBeUnique
 
     public function handle(Shop $shop): void
     {
+
+    // todo implement this
+     /*
         $stats = [
             'number_invoices' => $shop->invoices->count(),
 
@@ -38,9 +41,9 @@ class ShopHydrateInvoices implements ShouldBeUnique
             $stats['number_invoices_type_'.$invoiceType->snake()] = Arr::get($invoiceTypeCounts, $invoiceType->value, 0);
         }
 
-        //        $this->storeElastic('invoice');
 
         $shop->stats->update($stats);
+      */
     }
 
     public function getJobUniqueId(Shop $shop): string

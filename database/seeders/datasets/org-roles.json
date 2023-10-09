@@ -81,11 +81,11 @@
         ]
     },
     {
-        "name": "google-ads-supervisor",
+        "name": "ppc-supervisor",
         "permissions": [
             "crm",
-            "catalogue.google-ads",
-            "supervisor.catalogue.google-ads"
+            "catalogue.ppc",
+            "supervisor.catalogue.ppc"
         ]
     },
     {
@@ -113,10 +113,10 @@
         ]
     },
     {
-        "name": "google-ads",
+        "name": "ppc",
         "permissions": [
             "crm",
-            "catalogue.google-ads"
+            "catalogue.ppc"
         ]
     },
 

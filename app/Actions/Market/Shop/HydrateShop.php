@@ -7,7 +7,6 @@
 
 namespace App\Actions\Market\Shop;
 
-use App\Actions\HydrateModel;
 use App\Actions\Market\Shop\Hydrators\ShopHydrateCustomerInvoices;
 use App\Actions\Market\Shop\Hydrators\ShopHydrateCustomers;
 use App\Actions\Market\Shop\Hydrators\ShopHydrateDepartments;
@@ -18,12 +17,12 @@ use App\Actions\Market\Shop\Hydrators\ShopHydratePayments;
 use App\Actions\Market\Shop\Hydrators\ShopHydrateProducts;
 use App\Actions\Market\Shop\Hydrators\ShopHydrateSales;
 use App\Models\Market\Shop;
-use Illuminate\Support\Collection;
+use Illuminate\Console\Command;
+use Lorisleiva\Actions\Concerns\AsAction;
 
-class HydrateShop extends HydrateModel
+class HydrateShop
 {
-    public string $commandSignature = 'hydrate:shop {tenants?*} {--i|id=} ';
-
+    use asAction;
 
     public function handle(Shop $shop): void
     {
@@ -37,15 +36,32 @@ class HydrateShop extends HydrateModel
         ShopHydrateSales::run($shop);
         ShopHydrateProducts::run($shop);
     }
+    public string $commandSignature = 'hydrate:shops {shops?*} ';
 
-
-    protected function getModel(int $id): Shop
+    public function asCommand(Command $command): int
     {
-        return Shop::find($id);
+
+        if(!$command->argument('shops')) {
+            $shops=Shop::all();
+        } else {
+            $shops =  Shop::query()
+                ->when($command->argument('shops'), function ($query) use ($command) {
+                    $query->whereIn('slug', $command->argument('shops'));
+                })
+                ->cursor();
+        }
+
+
+        $exitCode = 0;
+
+        foreach ($shops as $shop) {
+
+            $this->handle($shop);
+            $command->line("Shop {$shop->name} hydrated 💦");
+
+        }
+
+        return $exitCode;
     }
 
-    protected function getAllModels(): Collection
-    {
-        return Shop::withTrashed()->get();
-    }
 }

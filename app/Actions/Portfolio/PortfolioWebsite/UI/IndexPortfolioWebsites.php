@@ -91,7 +91,7 @@ class IndexPortfolioWebsites extends InertiaAction
                 ->column(key: 'url', label: __('url'), sortable: true)
                 ->column(key: 'leads', label: __('Leads'), sortable: false)
                 ->column(key: 'seo', label: __('SEO'), sortable: false)
-                ->column(key: 'google-ads', label: __('Google Ads'), sortable: false)
+                ->column(key: 'ppc', label: __('Google Ads'), sortable: false)
                 ->column(key: 'social', label: __('Social'), sortable: false)
 
                 ->column(key: 'banners', label: __('banners'), sortable: false)

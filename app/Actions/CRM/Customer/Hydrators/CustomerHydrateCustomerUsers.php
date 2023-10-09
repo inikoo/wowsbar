@@ -11,7 +11,7 @@ use App\Models\CRM\Customer;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Lorisleiva\Actions\Concerns\AsAction;
 
-class CustomerHydrateCustomerUsers implements ShouldBeUnique
+class CustomerHydrateCustomerUsers
 {
     use AsAction;
 
@@ -26,6 +26,6 @@ class CustomerHydrateCustomerUsers implements ShouldBeUnique
             'number_users_status_inactive' => $numberUsers - $numberActiveUsers
         ];
 
-        $customer->stats->update($stats);
+        $customer->stats()->update($stats);
     }
 }

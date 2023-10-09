@@ -7,22 +7,18 @@
 
 namespace App\Concerns\Scopes;
 
-use App\Exceptions\NoCustomer;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Scope;
 
 class CustomerScope implements Scope
 {
-    /**
-     * @throws \App\Exceptions\NoCustomer
-     */
     public function apply(Builder $builder, Model $model): void
     {
-        if (! config('global.customer_id')) {
-            throw new NoCustomer();
+        if (config('global.customer_id')) {
+            $builder->where($model->getTable().'.customer_id', config('global.customer_id'));
         }
 
-        $builder->where($model->getTable().'.customer_id', config('global.customer_id'));
+
     }
 }

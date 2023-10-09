@@ -46,11 +46,11 @@ class IndexGoogleAdsPortfolioWebsites extends InertiaAction
     /** @noinspection PhpUndefinedMethodInspection */
     public function handle($prefix = null): LengthAwarePaginator
     {
-        $divisionId = Cache::get('google-ads');
+        $divisionId = Cache::get('ppc');
 
         if(! $divisionId) {
-            $divisionId = Division::firstWhere('slug', 'google-ads')->id;
-            Cache::put('google-ads', $divisionId);
+            $divisionId = Division::firstWhere('slug', 'ppc')->id;
+            Cache::put('ppc', $divisionId);
         }
 
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
@@ -172,12 +172,12 @@ class IndexGoogleAdsPortfolioWebsites extends InertiaAction
         };
 
         return match ($routeName) {
-            'customer.google-ads.websites.index' =>
+            'customer.ppc.websites.index' =>
             array_merge(
                 ShowGoogleAdsDashboard::make()->getBreadcrumbs(),
                 $headCrumb(
                     [
-                        'name' => 'customer.google-ads.websites.index',
+                        'name' => 'customer.ppc.websites.index',
                         null
                     ]
                 ),
