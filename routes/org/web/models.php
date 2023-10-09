@@ -44,6 +44,7 @@ use App\Actions\Web\Webpage\ShowWebpageContent;
 use App\Actions\Web\Webpage\StoreArticle;
 use App\Actions\Web\Webpage\StoreWebpage;
 use App\Actions\Web\Webpage\UpdateWebpageContent;
+use App\Actions\Web\Webpage\UploadImagesToWebpage;
 use App\Actions\Web\Website\PublishWebsiteMarginal;
 use App\Actions\Web\Website\ShowWebsiteFooterContent;
 use App\Actions\Web\Website\ShowWebsiteHeaderContent;
@@ -126,7 +127,7 @@ Route::prefix('webpage')->as('webpage.')->group(function () {
 
     //Route::patch('{webpage:id}', UpdateWebsite::class)->name('update');
     //Route::patch('{webpage:id}/state', UpdateWebsiteState::class)->name('state.update');
-    //Route::post('{webpage:id}/images', UploadImagesToWebsite::class)->name('images.store');
+    Route::post('{webpage:id}/images', UploadImagesToWebpage::class)->name('images.store');
 });
 
 Route::prefix('appointment')->as('appointment.')->group(function () {

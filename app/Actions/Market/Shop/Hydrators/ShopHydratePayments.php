@@ -44,12 +44,12 @@ class ShopHydratePayments implements ShouldBeUnique
 
 
         $stats = [
-            'number_payment_records'      => $paymentRecords,
-            'number_payments'             => $paymentRecords - $refunds,
-            'number_refunds'              => $refunds,
-            'amount'                      => $amountSuccessfullyPaid + $amountTenantCurrencyRefunded,
-            'amount_successfully_paid'    => $amountSuccessfullyPaid,
-            'amount_refunded'             => $amountRefunded,
+            'number_payment_records'       => $paymentRecords,
+            'number_payments'              => $paymentRecords - $refunds,
+            'number_refunds'               => $refunds,
+            'amount'                       => $amountSuccessfullyPaid + $amountTenantCurrencyRefunded,
+            'amount_successfully_paid'     => $amountSuccessfullyPaid,
+            'amount_refunded'              => $amountRefunded,
             'org_amount'                   => $amountTenantCurrencySuccessfullyPaid + $amountTenantCurrencyRefunded,
             'org_amount_successfully_paid' => $amountTenantCurrencySuccessfullyPaid,
             'org_amount_refunded'          => $amountTenantCurrencyRefunded

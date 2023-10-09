@@ -17,6 +17,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
@@ -86,6 +88,8 @@ use Spatie\Sluggable\SlugOptions;
 class Webpage extends Model
 {
     use HasSlug;
+    use SoftDeletes;
+    use InteractsWithMedia;
 
     protected $casts = [
         'data'             => 'array',

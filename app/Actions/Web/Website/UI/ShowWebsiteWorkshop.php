@@ -37,9 +37,9 @@ class ShowWebsiteWorkshop extends InertiaAction
         return Inertia::render(
             'Web/WebsiteWorkshop',
             [
-                'title'       => __("Website's workshop"),
-                'breadcrumbs' => $this->getBreadcrumbs($request->route()->originalParameters()),
-                'pageHead'    => [
+                'title'             => __("Website's workshop"),
+                'breadcrumbs'       => $this->getBreadcrumbs($request->route()->originalParameters()),
+                'pageHead'          => [
 
                     'title' => __('Workshop'),
 
@@ -71,54 +71,51 @@ class ShowWebsiteWorkshop extends InertiaAction
                         ]
                     ],
                 ],
-                'tabs'        => [
+                'tabs'              => [
                     'current'    => $this->tab,
                     'navigation' => WebsiteWorkshopTabsEnum::navigation(),
                 ],
                 'imagesUploadRoute' => [
 
-                    'workshop_header'=> [
+                    'workshop_header' => [
                         'name'       => 'org.models.website.header.images.store',
                         'parameters' => $website->id
                     ],
-                    'workshop_footer'=> [
+                    'workshop_footer' => [
                         'name'       => 'org.models.website.footer.images.store',
                         'parameters' => $website->id
                     ],
-
-
-
                 ],
-                'websiteState'  => $website->state,
-                'isDirty'       => [
-                    'workshop_header'=> $website->header_is_dirty,
-                    'workshop_footer'=> $website->footer_is_dirty,
+                'websiteState'      => $website->state,
+                'isDirty'           => [
+                    'workshop_header' => $website->header_is_dirty,
+                    'workshop_footer' => $website->footer_is_dirty,
                 ],
 
                 'publishRoutes' => [
-                    'workshop_header'=> [
+                    'workshop_header' => [
                         'name'       => 'org.models.website.header.content.publish',
                         'parameters' => $website->id
                     ],
-                    'workshop_footer'=> [
+                    'workshop_footer' => [
                         'name'       => 'org.models.website.footer.content.publish',
                         'parameters' => $website->id
                     ],
-                    'workshop_layout'=> [
+                    'workshop_layout' => [
                         'name'       => 'org.models.website.layout.update',
                         'parameters' => $website->id
                     ],
                 ],
-                'updateRoutes' => [
-                    'workshop_header'=> [
+                'updateRoutes'  => [
+                    'workshop_header' => [
                         'name'       => 'org.models.website.header.content.update',
                         'parameters' => $website->id
                     ],
-                    'workshop_footer'=> [
+                    'workshop_footer' => [
                         'name'       => 'org.models.website.footer.content.update',
                         'parameters' => $website->id
                     ],
-                    'workshop_layout'=> [
+                    'workshop_layout' => [
                         'name'       => 'org.models.website.layout.update',
                         'parameters' => $website->id
                     ],

@@ -33,9 +33,9 @@ class PaymentServiceProviderHydratePayments implements ShouldBeUnique
             ->sum('org_amount');
 
         $stats = [
-            'number_payment_records'      => $paymentRecords,
-            'number_payments'             => $paymentRecords - $refunds,
-            'number_refunds'              => $refunds,
+            'number_payment_records'       => $paymentRecords,
+            'number_payments'              => $paymentRecords - $refunds,
+            'number_refunds'               => $refunds,
             'org_amount'                   => $amountTenantCurrencySuccessfullyPaid + $amountTenantCurrencyRefunded,
             'org_amount_successfully_paid' => $amountTenantCurrencySuccessfullyPaid,
             'org_amount_refunded'          => $amountTenantCurrencyRefunded

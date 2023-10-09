@@ -24,26 +24,26 @@ class ShopHydrateInvoices implements ShouldBeUnique
     public function handle(Shop $shop): void
     {
 
-    // todo implement this
-     /*
-        $stats = [
-            'number_invoices' => $shop->invoices->count(),
+        // todo implement this
+        /*
+           $stats = [
+               'number_invoices' => $shop->invoices->count(),
 
-        ];
+           ];
 
-        $invoiceTypeCounts = Invoice::where('shop_id', $shop->id)
-            ->selectRaw('type, count(*) as total')
-            ->groupBy('type')
-            ->pluck('total', 'type')->all();
-
-
-        foreach (InvoiceTypeEnum::cases() as $invoiceType) {
-            $stats['number_invoices_type_'.$invoiceType->snake()] = Arr::get($invoiceTypeCounts, $invoiceType->value, 0);
-        }
+           $invoiceTypeCounts = Invoice::where('shop_id', $shop->id)
+               ->selectRaw('type, count(*) as total')
+               ->groupBy('type')
+               ->pluck('total', 'type')->all();
 
 
-        $shop->stats->update($stats);
-      */
+           foreach (InvoiceTypeEnum::cases() as $invoiceType) {
+               $stats['number_invoices_type_'.$invoiceType->snake()] = Arr::get($invoiceTypeCounts, $invoiceType->value, 0);
+           }
+
+
+           $shop->stats->update($stats);
+         */
     }
 
     public function getJobUniqueId(Shop $shop): string

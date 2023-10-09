@@ -135,8 +135,7 @@ class Website extends Model implements Auditable, HasMedia
         'settings'           => 'array',
         'layout'             => 'array',
         'compiled_layout'    => 'array',
-
-        'state' => WebsiteStateEnum::class,
+        'state'              => WebsiteStateEnum::class,
     ];
 
     protected $attributes = [
@@ -195,8 +194,6 @@ class Website extends Model implements Auditable, HasMedia
             }
         );
     }
-
-
 
     public function images(): MorphToMany
     {
