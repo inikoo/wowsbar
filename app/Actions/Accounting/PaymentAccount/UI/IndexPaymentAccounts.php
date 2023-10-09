@@ -146,7 +146,7 @@ class IndexPaymentAccounts extends InertiaAction
                 'pageHead'    => [
                     'title'     => __('Payment Accounts'),
                     'actions'   => [
-                        !$this->canEdit ? [
+                        $this->canEdit ? [
                             'type'  => 'button',
                             'style' => 'create',
                             'label' => __('payment account'),
@@ -154,7 +154,7 @@ class IndexPaymentAccounts extends InertiaAction
                                 'name'       => 'org.accounting.payment-accounts.create',
                                 'parameters' => array_values($this->originalParameters)
                             ]
-                        ] : false
+                        ] : []
                     ],
                     'container' => match ($routeName) {
                         'org.accounting.shops.show.payment-accounts.index' => [

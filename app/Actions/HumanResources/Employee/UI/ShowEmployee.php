@@ -89,14 +89,14 @@ class ShowEmployee extends InertiaAction
                     'title'   => $employee->contact_name,
                     'meta'    => $meta,
                     'actions' => [
-                        $this->canEdit ? [
+                        !$this->canEdit ? [
                             'type'  => 'button',
                             'style' => 'edit',
                             'route' => [
                                 'name'       => preg_replace('/show$/', 'edit', $request->route()->getName()),
                                 'parameters' => $request->route()->originalParameters()
                             ]
-                        ] : false,
+                        ] : [],
                         $this->canDelete ? [
                             'type'  => 'button',
                             'style' => 'delete',
@@ -105,7 +105,7 @@ class ShowEmployee extends InertiaAction
                                 'parameters' => $request->route()->originalParameters()
                             ]
 
-                        ] : false
+                        ] : []
                     ]
                 ],
                 'tabs'        => [

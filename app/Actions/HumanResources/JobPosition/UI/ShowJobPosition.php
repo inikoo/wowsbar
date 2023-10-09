@@ -62,7 +62,7 @@ class ShowJobPosition extends InertiaAction
                                 'name'       => preg_replace('/show$/', 'edit', $request->route()->getName()),
                                 'parameters' => $request->route()->originalParameters()
                             ]
-                        ] : false,
+                        ] : [],
                         $this->canDelete ? [
                             'type'  => 'button',
                             'style' => 'delete',
@@ -71,7 +71,7 @@ class ShowJobPosition extends InertiaAction
                                 'parameters' => $request->route()->originalParameters()
                             ]
 
-                        ] : false
+                        ] : []
                     ]
                 ],
                 'tabs'        => [

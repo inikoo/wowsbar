@@ -157,7 +157,7 @@ class IndexProspects extends InertiaAction
                                             ]
                                         ]
                                     ],
-                                    default => null
+                                    default => []
                                 }
 
 

@@ -95,7 +95,7 @@ class ShowClocking extends InertiaAction
                                 'name'       => preg_replace('/show$/', 'edit', $request->route()->getName()),
                                 'parameters' => array_values($this->originalParameters)
                             ]
-                        ] : false,
+                        ] : [],
                         $this->canDelete ?
                             match ($request->route()->getName()) {
                                 'hr.clockings.show' => [
@@ -123,7 +123,7 @@ class ShowClocking extends InertiaAction
                                         'parameters' => $request->route()->originalParameters()
                                     ]
                                 ]
-                            } : false
+                            } : []
                     ]
                 ],
                 'tabs' => [
