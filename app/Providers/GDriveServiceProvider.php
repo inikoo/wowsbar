@@ -7,6 +7,7 @@
 
 namespace App\Providers;
 
+use App\Adapter\GoogleDriveCustomAdapter;
 use Exception;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\ServiceProvider;
@@ -40,7 +41,7 @@ class GDriveServiceProvider extends ServiceProvider
                 $client->refreshToken($config['refreshToken']);
 
                 $service = new \Google\Service\Drive($client);
-                $adapter = new \Masbug\Flysystem\GoogleDriveAdapter($service, $config['folder'] ?? '/', $options);
+                $adapter = new GoogleDriveCustomAdapter($service, $config['folder'] ?? '/', $options);
                 $driver  = new \League\Flysystem\Filesystem($adapter);
 
                 return new \Illuminate\Filesystem\FilesystemAdapter($driver, $adapter);
