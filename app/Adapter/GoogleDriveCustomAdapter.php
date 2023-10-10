@@ -12,8 +12,8 @@ class GoogleDriveCustomAdapter extends GoogleDriveAdapter
     public function read(string $location): string
     {
         $this->refreshToken();
-        $path = $this->prefixer->prefixPath($location);
-        if ($this->useDisplayPaths) {
+        $path = (new PathPrefixer(''))->prefixPath($location);
+        if (static::$defaultOptions['useDisplayPaths']) {
             $fileId = $this->toVirtualPath($path, false, true);
         } else {
             [, $fileId] = $this->splitPath($path);

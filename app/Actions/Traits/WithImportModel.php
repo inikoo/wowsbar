@@ -44,9 +44,8 @@ trait WithImportModel
 
     public function asCommand(Command $command): int
     {
-
         $filename = $command->argument('filename');
-
+        $newFileName = now()->timestamp . ".xlsx";
 
         if($command->option('g_drive')){
             $googleDisk = Storage::disk('google');
@@ -56,11 +55,10 @@ trait WithImportModel
                 return 1;
             }
 
-            $content=$googleDisk->get($filename);
-            dd($content);
+            $content = $googleDisk->get($filename);
 
+            Storage::disk('local')->put("tmp/$newFileName", $content);
         }
-
 
 
 
@@ -69,7 +67,7 @@ trait WithImportModel
         //    $filePath = "storage/app/tmp/" . $filename;
       //  }
 
-        $file = ConvertUploadedFile::run($filename);
+        $file = ConvertUploadedFile::run("storage/app/tmp/" . $newFileName);
 
         $upload = $this->rumImport($file, $command);
 
@@ -104,7 +102,7 @@ trait WithImportModel
     {
 
         $googleDisk = Storage::disk('google');
-        dd('caca');
+        dd($googleDisk);
 
         /*
         try {
