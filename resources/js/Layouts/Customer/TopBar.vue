@@ -92,7 +92,7 @@ const logoutAuth = () => {
                 </button>
 
                 <!-- App Title -->
-                <div class="flex flex-1 items-center justify-center md:justify-start transition-all duration-300 ease-in-out border-b border-gray-400"
+                <div class="flex flex-1 items-center justify-center md:justify-start transition-all duration-300 ease-in-out border-b border-gray-500"
                     :class="[layout.leftSidebar.show ? 'md:w-56 md:px-4' : 'md:w-10']"
                 >
                     <Link v-if="layout.leftSidebar.show" :href="route(logoRoute)"
@@ -104,7 +104,7 @@ const logoutAuth = () => {
             </div>
 
             <!-- Avatar Group -->
-            <div class="flex items-center space-x-3 justify-end lg:justify-between w-full pl-3 pr-4 border-b border-gray-200">
+            <div class="bg-gray-50 flex items-center space-x-3 justify-end lg:justify-between w-full pl-3 pr-4 border-b border-gray-200">
                 <!-- TopBar: items -->
                 <TopBarNavs />
                 <div class="flex gap-x-3">

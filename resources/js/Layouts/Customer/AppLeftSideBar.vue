@@ -69,13 +69,13 @@ const handleToggleLeftbar = () => {
 
 <template>
     <div class="mt-11 fixed md:flex md:flex-col md:inset-y-0 lg:mt-10 bg-slate-600 dark:bg-gray-800 dark:text-gray-100 h-full text-white"
-         :class="[layout.leftSidebar.show ? 'w-8/12 md:w-56' : 'w-8/12 md:w-10']"
-         @mouseenter="isHover = true" @mouseleave="isHover = false"
+        :class="[layout.leftSidebar.show ? 'w-8/12 md:w-56' : 'w-8/12 md:w-10']"
+        @mouseenter="isHover = true" @mouseleave="isHover = false"
     >
         <!-- Toggle: collapse-expand LeftSideBar -->
         <div @click="handleToggleLeftbar"
-             class="hidden absolute z-10 right-0 top-2/4 -translate-y-full translate-x-1/2 w-7 aspect-square bg-yellow-400 hover:bg-yellow-500 border-2 border-gray-600 text-slate-600 rounded-full md:flex md:justify-center md:items-center cursor-pointer"
-             :title="[layout.leftSidebar.show ? 'Collapse the bar' : 'Expand the bar']"
+            class="hidden absolute z-10 right-0 top-2/4 -translate-y-full translate-x-1/2 w-7 aspect-square bg-slate-500 hover:bg-slate-400 border-2 border-gray-600 text-white rounded-full md:flex md:justify-center md:items-center cursor-pointer"
+            :title="[layout.leftSidebar.show ? 'Collapse the bar' : 'Expand the bar']"
         >
             <div class="flex items-center justify-center" :class="{'rotate-180': !layout.leftSidebar.show}">
                 <FontAwesomeIcon icon='far fa-chevron-left' class='-translate-x-[1px] h-[14px]' aria-hidden='true'/>
@@ -87,15 +87,15 @@ const handleToggleLeftbar = () => {
                 <nav class="flex-1 space-y-1" aria-label="Sidebar">
                     <!-- LeftSide Links -->
                     <Link v-for="(item, itemKey) in layout.navigation"
-                          :key="itemKey" :href="route(item.route)"
-                          :class="[
+                        :key="itemKey" :href="route(item.route)"
+                        :class="[
 							itemKey === layout.currentModule
 								? 'tabNavigationActive dark:border-gray-100 dark:bg-gray-600 px-0.5'
 								: 'tabNavigation dark:hover:bg-dark-700 px-1',
 							layout.leftSidebar.show ? 'px-3' : '',
 							'group flex items-center text-sm font-medium py-2',
 						]"
-                          :aria-current="itemKey === layout.currentModule ? 'page' : undefined"
+                        :aria-current="itemKey === layout.currentModule ? 'page' : undefined"
                     >
                         <div class="flex items-center">
                             <FontAwesomeIcon

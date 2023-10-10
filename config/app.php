@@ -5,9 +5,10 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
+use App\Providers\ElasticSearchServiceProvider;
+use App\Providers\GDriveServiceProvider;
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\ServiceProvider;
-use Matchish\ScoutElasticSearch\ElasticSearchServiceProvider;
 
 return [
 
@@ -176,7 +177,8 @@ return [
         App\Providers\HorizonServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\MacroServiceProvider::class,
-        ElasticSearchServiceProvider::class
+        ElasticSearchServiceProvider::class,
+        GDriveServiceProvider::class
 
     ])->toArray(),
 

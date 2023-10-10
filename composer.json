@@ -23,6 +23,7 @@
         "league/flysystem-aws-s3-v3": "^3.0",
         "lorisleiva/laravel-actions": "^2.6",
         "maatwebsite/excel": "^3.1",
+        "masbug/flysystem-google-drive-ext": "^2.2",
         "matchish/laravel-scout-elasticsearch": "^7.2",
         "owen-it/laravel-auditing": "^13.5",
         "propaganistas/laravel-phone": "^5.0",

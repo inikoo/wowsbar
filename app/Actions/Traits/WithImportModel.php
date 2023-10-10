@@ -11,14 +11,12 @@ use App\Actions\Helpers\Uploads\ConvertUploadedFile;
 use App\Enums\Helpers\Import\UploadRecordStatusEnum;
 use App\Models\Helpers\Upload;
 use Exception;
-use Google\Service\Sheets;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
 use Maatwebsite\Excel\Facades\Excel;
-use Google\Client;
-use Google\Service\Drive;
+
 
 trait WithImportModel
 {
@@ -44,20 +42,38 @@ trait WithImportModel
 
     }
 
-    public function asCommand(Command $command): void
+    public function asCommand(Command $command): int
     {
-        $filename = null;
-        $filePath = $command->argument('filename');
-        if (!$filePath) {
-            $filename = $this->downloadFromGoogle($command->option('google'));
-            $filePath = "storage/app/tmp/" . $filename;
+
+        $filename = $command->argument('filename');
+
+
+        if($command->option('g_drive')){
+            $googleDisk = Storage::disk('google');
+
+            if(!$googleDisk->exists($filename)){
+                $command->error("$filename do not found in GDrive");
+                return 1;
+            }
+
+            $content=$googleDisk->get($filename);
+            dd($content);
+
         }
 
-        $file = ConvertUploadedFile::run($filePath);
+
+
+
+      //  if (!$filePath) {
+        //    $filename = $this->downloadFromGoogle($command->option('google'));
+        //    $filePath = "storage/app/tmp/" . $filename;
+      //  }
+
+        $file = ConvertUploadedFile::run($filename);
 
         $upload = $this->rumImport($file, $command);
 
-        Storage::disk('local')->delete("tmp/" . $filename);
+       // Storage::disk('local')->delete("tmp/" . $filename);
 
         $command->table(
             ['', 'Success', 'Fail'],
@@ -80,15 +96,22 @@ trait WithImportModel
                 $failData
             );
         }
+
+        return 0;
     }
 
     public function downloadFromGoogle(string $url): Exception|string
     {
+
+        $googleDisk = Storage::disk('google');
+        dd('caca');
+
+        /*
         try {
             $client = new Client();
-            $client->setClientId('916522519464-211r9tuaif665s461454vj20nsaejh1e.apps.googleusercontent.com');
-            $client->setClientSecret('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');
-            $client->refreshToken('1//04aS5P0v3_i3XCgYIARAAGAQSNwF-L9IrUKqKJqebguM9MqDxc9umgfgzzX1ObJpBpdldP_LeMYjds-XDUwdBUu7gBfFi37mXh0w');
+            $client->setClientId('');
+            $client->setClientSecret('');
+            $client->refreshToken('');
 
             $client->addScope([
                 Drive::DRIVE,
@@ -115,6 +138,7 @@ trait WithImportModel
         }
 
         return "$filename.xlsx";
+        */
     }
 
     public function downloadType($driveService, $fileId, $filename): void

@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-// import {  } from '@/../private/pro-solid-svg-icons'
-// import { library } from '@fortawesome/fontawesome-svg-core'
-// library.add()
+import { faCheckCircle, faTimesCircle } from '@/../private/pro-light-svg-icons'
+import { faCircle } from '@/../private/pro-regular-svg-icons'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faCheckCircle as fasCheckCircle } from '@/../private/pro-solid-svg-icons'
+library.add(faCheckCircle, faTimesCircle, faCircle, fasCheckCircle)
 
 const props = defineProps<{
     columnValue?: string

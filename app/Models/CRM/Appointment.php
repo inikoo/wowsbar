@@ -11,6 +11,7 @@ use App\Enums\CRM\Appointment\AppointmentEventEnum;
 use App\Enums\CRM\Appointment\AppointmentStateEnum;
 use App\Enums\CRM\Appointment\AppointmentTypeEnum;
 use App\Models\Auth\OrganisationUser;
+use App\Models\Market\Shop;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -35,6 +36,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read OrganisationUser|null $organisationUser
+ * @property-read Shop $shop
  * @property-read \App\Models\CRM\Customer $customer
  * @method static \Illuminate\Database\Eloquent\Builder|Appointment newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Appointment newQuery()
@@ -76,6 +78,11 @@ class Appointment extends Model
 
     protected $guarded = [];
 
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
+
     public function organisationUser(): BelongsTo
     {
         return $this->belongsTo(OrganisationUser::class);
@@ -84,6 +91,11 @@ class Appointment extends Model
     public function customer(): BelongsTo
     {
         return $this->belongsTo(Customer::class);
+    }
+
+    public function shop(): BelongsTo
+    {
+        return $this->belongsTo(Shop::class);
     }
 
 }
