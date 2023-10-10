@@ -12,6 +12,7 @@ use App\Actions\Helpers\Snapshot\StoreBannerSnapshot;
 use App\Actions\Portfolio\Banner\Hydrators\BannerHydrateUniversalSearch;
 use App\Actions\Portfolio\Banner\UI\ParseBannerLayout;
 use App\Actions\Portfolio\PortfolioWebsite\Hydrators\PortfolioWebsiteHydrateBanners;
+use App\Enums\Portfolio\Banner\BannerTypeEnum;
 use App\Models\CRM\Customer;
 use App\Models\Portfolio\Banner;
 use App\Models\Portfolio\PortfolioWebsite;
@@ -21,6 +22,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rules\Enum;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
@@ -124,7 +126,8 @@ class StoreBanner
         return [
             'portfolio_website_id' => ['sometimes', 'nullable', 'exists:portfolio_websites,id'],
             'name'                 => ['required','string','max:255'],
-            'published_hash'       => ['nullable','string','max:255']
+            'published_hash'       => ['nullable','string','max:255'],
+            'type'                 => ['required',new Enum(BannerTypeEnum::class)],
         ];
     }
 

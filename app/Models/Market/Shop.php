@@ -68,10 +68,11 @@ use Spatie\Sluggable\SlugOptions;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read \App\Models\Market\ShopAccountingStats|null $accountingStats
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Appointment> $appointment
+ * @property-read int|null $appointment_count
  * @property-read \App\Models\Market\ShopCatalogueStats|null $catalogueStats
  * @property-read Country $country
  * @property-read \App\Models\Market\ShopCRMStats|null $crmStats
- * @property-read Appointment|null $appointment
  * @property-read Currency $currency
  * @property-read \Illuminate\Database\Eloquent\Collection<int, CustomerWebsite> $customerWebsites
  * @property-read int|null $customer_websites_count

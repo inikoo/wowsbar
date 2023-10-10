@@ -33,7 +33,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $number_orders_state_settled
  * @property int $number_customer_websites
  * @property int $number_customer_websites_seo
- * @property int $number_customer_websites_google_ads
+ * @property int $number_customer_websites_ppc
  * @property int $number_customer_websites_social
  * @property int $number_customer_websites_prospects
  * @property int $number_customer_websites_banners
@@ -47,7 +47,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static Builder|ShopCRMStats whereId($value)
  * @method static Builder|ShopCRMStats whereNumberCustomerWebsites($value)
  * @method static Builder|ShopCRMStats whereNumberCustomerWebsitesBanners($value)
- * @method static Builder|ShopCRMStats whereNumberCustomerWebsitesGoogleAds($value)
+ * @method static Builder|ShopCRMStats whereNumberCustomerWebsitesPpc($value)
  * @method static Builder|ShopCRMStats whereNumberCustomerWebsitesProspects($value)
  * @method static Builder|ShopCRMStats whereNumberCustomerWebsitesSeo($value)
  * @method static Builder|ShopCRMStats whereNumberCustomerWebsitesSocial($value)

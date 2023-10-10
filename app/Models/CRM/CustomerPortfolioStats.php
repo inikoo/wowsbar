@@ -18,9 +18,15 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $number_banners_no_website
  * @property int $number_banners
  * @property int $number_historic_snapshots
+ * @property int $number_banners_type_landscape
+ * @property int $number_banners_type_portrait
  * @property int $number_banners_state_unpublished
  * @property int $number_banners_state_live
  * @property int $number_banners_state_retired
+ * @property int $number_banner_snapshots
+ * @property int $number_banners_snapshots_state_unpublished
+ * @property int $number_banners_snapshots_state_live
+ * @property int $number_banners_snapshots_state_historic
  * @property int $number_prospects
  * @property int $number_prospects_state_no_contacted
  * @property int $number_prospects_state_contacted
@@ -31,10 +37,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $number_prospects_gender_male
  * @property int $number_prospects_gender_female
  * @property int $number_prospects_gender_other
- * @property int $number_snapshots
- * @property int $number_snapshots_state_unpublished
- * @property int $number_snapshots_state_live
- * @property int $number_snapshots_state_historic
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerPortfolioStats newModelQuery()
@@ -43,11 +45,17 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerPortfolioStats whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerPortfolioStats whereCustomerId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerPortfolioStats whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerPortfolioStats whereNumberBannerSnapshots($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerPortfolioStats whereNumberBanners($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerPortfolioStats whereNumberBannersNoWebsite($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerPortfolioStats whereNumberBannersSnapshotsStateHistoric($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerPortfolioStats whereNumberBannersSnapshotsStateLive($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerPortfolioStats whereNumberBannersSnapshotsStateUnpublished($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerPortfolioStats whereNumberBannersStateLive($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerPortfolioStats whereNumberBannersStateRetired($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerPortfolioStats whereNumberBannersStateUnpublished($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerPortfolioStats whereNumberBannersTypeLandscape($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerPortfolioStats whereNumberBannersTypePortrait($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerPortfolioStats whereNumberHistoricSnapshots($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerPortfolioStats whereNumberPortfolioWebsites($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerPortfolioStats whereNumberProspects($value)
@@ -60,10 +68,6 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerPortfolioStats whereNumberProspectsStateNoContacted($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerPortfolioStats whereNumberProspectsStateNotInterested($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerPortfolioStats whereNumberProspectsStateRegistered($value)
- * @method static \Illuminate\Database\Eloquent\Builder|CustomerPortfolioStats whereNumberSnapshots($value)
- * @method static \Illuminate\Database\Eloquent\Builder|CustomerPortfolioStats whereNumberSnapshotsStateHistoric($value)
- * @method static \Illuminate\Database\Eloquent\Builder|CustomerPortfolioStats whereNumberSnapshotsStateLive($value)
- * @method static \Illuminate\Database\Eloquent\Builder|CustomerPortfolioStats whereNumberSnapshotsStateUnpublished($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerPortfolioStats whereUpdatedAt($value)
  * @mixin \Eloquent
  */

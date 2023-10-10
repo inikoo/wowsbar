@@ -35,6 +35,7 @@ use Spatie\Sluggable\SlugOptions;
  *
  * @property int $id
  * @property string $ulid
+ * @property string $type
  * @property int $customer_id
  * @property int|null $portfolio_website_id
  * @property string $slug
@@ -88,6 +89,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Banner whereRetiredAt($value)
  * @method static Builder|Banner whereSlug($value)
  * @method static Builder|Banner whereState($value)
+ * @method static Builder|Banner whereType($value)
  * @method static Builder|Banner whereUlid($value)
  * @method static Builder|Banner whereUnpublishedSnapshotId($value)
  * @method static Builder|Banner whereUpdatedAt($value)

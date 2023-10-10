@@ -51,9 +51,14 @@ use Spatie\Sluggable\SlugOptions;
  * @property array $settings
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property string|null $deleted_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \OwenIt\Auditing\Models\Audit> $audits
+ * @property-read int|null $audits_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Deployment> $deployments
  * @property-read int|null $deployments_count
+ * @property-read array $es_audits
+ * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \App\Models\Media\Media> $media
+ * @property-read int|null $media_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Snapshot> $snapshots
  * @property-read int|null $snapshots_count
  * @property-read \App\Models\Web\WebpageStats|null $stats
@@ -61,6 +66,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read \App\Models\Web\Website $website
  * @method static Builder|Webpage newModelQuery()
  * @method static Builder|Webpage newQuery()
+ * @method static Builder|Webpage onlyTrashed()
  * @method static Builder|Webpage query()
  * @method static Builder|Webpage whereClosedAt($value)
  * @method static Builder|Webpage whereCode($value)
@@ -86,6 +92,8 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Webpage whereUpdatedAt($value)
  * @method static Builder|Webpage whereUrl($value)
  * @method static Builder|Webpage whereWebsiteId($value)
+ * @method static Builder|Webpage withTrashed()
+ * @method static Builder|Webpage withoutTrashed()
  * @mixin \Eloquent
  */
 class Webpage extends Model implements Auditable, HasMedia
