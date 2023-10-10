@@ -2,6 +2,8 @@ import { headerBlock1, headerBlock2, headerBlock3, headerBlock4 } from './Header
 import { footerBlock1, footerBlock2, footerBlock3, footerBlock4 } from './Footer/Footer'
 import { heroBlock1 , heroBlock2, heroBlock3, heroBlock4} from './Hero/Hero'
 import { Appointment } from './Appointment/Appointment'
+import { BlogBlock1, BlogBlock2, BlogBlock3, BlogBlock4 } from './Blog/Blog'
+import { StatisticsBlock1, StatisticsBlock2, StatisticsBlock3, StatisticsBlock4 } from './Statistics/Statistics'
 
 export const CustomBlock = (editor : Any) => {
     IconBlock(editor)
@@ -68,6 +70,23 @@ export const HeroPlugins = (editor: any) => {
         editor.Blocks.add(item.id,item);
     })
 }
+
+
+export const BlogPlugins = (editor: any) => {
+    const Blog = [BlogBlock1(), BlogBlock2(), BlogBlock3(),BlogBlock4()]
+    Blog.map((item,index)=>{
+        editor.Blocks.add(item.id,item);
+    })
+}
+
+export const StatisticsPlugins = (editor: any) => {
+    const statistics = [StatisticsBlock1(), StatisticsBlock2(), StatisticsBlock3(), StatisticsBlock4()]
+    statistics.map((item,index)=>{
+        editor.Blocks.add(item.id,item);
+    })
+}
+
+
 
 
 
