@@ -10,7 +10,7 @@ namespace App\Actions\Portfolio\Gallery\UI\StockImages;
 use App\Actions\InertiaAction;
 use App\Http\Resources\Gallery\ImageResource;
 use App\InertiaTable\InertiaTable;
-use App\Models\Media\LandlordMedia;
+use App\Models\Media\Media;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -47,7 +47,7 @@ class IndexStockImages extends InertiaAction
             InertiaTable::updateQueryBuilderParameters($prefix);
         }
 
-        $queryBuilder = QueryBuilder::for(LandlordMedia::class);
+        $queryBuilder = QueryBuilder::for(Media::class);
 
 
         return $queryBuilder

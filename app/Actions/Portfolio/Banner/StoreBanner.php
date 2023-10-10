@@ -41,7 +41,7 @@ class StoreBanner
     public function handle(Customer|PortfolioWebsite $parent, array $modelData): Banner
     {
         $this->parent = $parent;
-        $customer     =customer();
+        $customer     = customer();
 
         $layout = [
             "delay"      => 5000,
@@ -69,23 +69,22 @@ class StoreBanner
         }
 
         /** @var Banner $banner */
-        $banner  = Banner::create($modelData);
-        $snapshot=StoreBannerSnapshot::run(
+        $banner   = Banner::create($modelData);
+        $snapshot = StoreBannerSnapshot::run(
             $banner,
             [
-                'layout'=> $layout
+                'layout' => $layout
             ],
             $slides
         );
 
         $banner->update(
             [
-                'unpublished_snapshot_id'=> $snapshot->id,
-                'compiled_layout'        => $snapshot->compiledLayout()
+                'unpublished_snapshot_id' => $snapshot->id,
+                'compiled_layout'         => $snapshot->compiledLayout()
             ]
         );
         $banner->stats()->create();
-
 
 
         if (class_basename($parent) == 'PortfolioWebsite') {
@@ -96,17 +95,17 @@ class StoreBanner
                     'ulid'        => Str::ulid()
                 ]
             );
-
         }
 
 
         CustomerHydrateBanners::run($customer);
 
-        if(class_basename($parent) == 'PortfolioWebsite') {
+        if (class_basename($parent) == 'PortfolioWebsite') {
             PortfolioWebsiteHydrateBanners::dispatch($parent);
         }
 
         BannerHydrateUniversalSearch::dispatch($banner);
+
         //  StoreBannerElasticsearch::run($banner);
 
         return $banner;
@@ -125,25 +124,24 @@ class StoreBanner
     {
         return [
             'portfolio_website_id' => ['sometimes', 'nullable', 'exists:portfolio_websites,id'],
-            'name'                 => ['required','string','max:255'],
-            'published_hash'       => ['nullable','string','max:255'],
-            'type'                 => ['required',new Enum(BannerTypeEnum::class)],
+            'name'                 => ['required', 'string', 'max:255'],
+            'published_hash'       => ['nullable', 'string', 'max:255'],
+            'type'                 => ['required', new Enum(BannerTypeEnum::class)],
         ];
     }
 
 
     public function inCustomer(ActionRequest $request): Banner
     {
-
-        $this->scope='customer';
+        $this->scope = 'customer';
 
         $parent = customer();
         $request->validate();
 
-        $validatedData=$request->validated();
+        $validatedData = $request->validated();
 
-        if($portfolioWebsiteId=Arr::get($validatedData, 'portfolio_website_id')) {
-            $parent=PortfolioWebsite::find($portfolioWebsiteId);
+        if ($portfolioWebsiteId = Arr::get($validatedData, 'portfolio_website_id')) {
+            $parent = PortfolioWebsite::find($portfolioWebsiteId);
         }
 
         return $this->handle($parent, $request->validated());
@@ -151,16 +149,15 @@ class StoreBanner
 
     public function fromGallery(ActionRequest $request): Banner
     {
-
-        $this->scope='gallery';
+        $this->scope = 'gallery';
 
         $parent = customer();
         $request->validate();
 
-        $validatedData=$request->validated();
+        $validatedData = $request->validated();
 
-        if($portfolioWebsiteId=Arr::get($validatedData, 'portfolio_website_id')) {
-            $parent=PortfolioWebsite::find($portfolioWebsiteId);
+        if ($portfolioWebsiteId = Arr::get($validatedData, 'portfolio_website_id')) {
+            $parent = PortfolioWebsite::find($portfolioWebsiteId);
         }
 
         return $this->handle($parent, $request->validated());
@@ -168,8 +165,9 @@ class StoreBanner
 
     public function inPortfolioWebsite(PortfolioWebsite $portfolioWebsite, ActionRequest $request): Banner
     {
-        $this->scope='portfolioWebsite';
+        $this->scope = 'portfolioWebsite';
         $request->validate();
+
         return $this->handle($portfolioWebsite, $request->validated());
     }
 
@@ -184,7 +182,7 @@ class StoreBanner
 
     public function getCommandSignature(): string
     {
-        return 'customer:new-banner {customer} {name} {portfolio-website?}';
+        return 'customer:new-banner {customer} {name} {portfolio-website?} {--T|type=landscape}';
     }
 
     public function asCommand(Command $command): int
@@ -193,11 +191,12 @@ class StoreBanner
             $customer = Customer::where('slug', $command->argument('customer'))->firstOrFail();
         } catch (Exception) {
             $command->error('Customer not found');
+
             return 1;
         }
         Config::set('global.customer_id', $customer->id);
 
-        if($website = $command->argument('portfolio-website')) {
+        if ($website = $command->argument('portfolio-website')) {
             $portfolioWebsite = PortfolioWebsite::where('slug', $website)->firstOrFail();
         }
 
@@ -206,7 +205,8 @@ class StoreBanner
         $this->setRawAttributes(
             [
                 'name'                 => $command->argument('name'),
-                'portfolio_website_id' => $portfolioWebsite->id ?? null
+                'portfolio_website_id' => $portfolioWebsite->id ?? null,
+                'type'                 => $command->option('type')
             ]
         );
         $validatedData = $this->validateAttributes();
@@ -214,13 +214,12 @@ class StoreBanner
         $banner = $this->handle($portfolioWebsite ?? $customer, $validatedData);
 
         $command->info("Done! Banner $banner->slug created 🎉");
+
         return 0;
     }
 
     public function htmlResponse(Banner $banner): RedirectResponse
     {
-
-
         if (class_basename($this->parent) == 'PortfolioWebsite') {
             return redirect()->route(
                 'customer.portfolio.websites.show.banners.workshop',

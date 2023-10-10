@@ -11,7 +11,7 @@ use App\Actions\InertiaAction;
 use App\Actions\UI\Customer\Portfolio\ShowPortfolio;
 use App\Http\Resources\Gallery\ImageResource;
 use App\InertiaTable\InertiaTable;
-use App\Models\Media\LandlordMedia;
+use App\Models\Media\Media;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -54,7 +54,7 @@ class IndexUploadedImages extends InertiaAction
             InertiaTable::updateQueryBuilderParameters($prefix);
         }
 
-        $queryBuilder = QueryBuilder::for(LandlordMedia::class);
+        $queryBuilder = QueryBuilder::for(Media::class);
 
 
         return $queryBuilder

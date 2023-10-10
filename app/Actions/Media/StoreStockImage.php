@@ -7,7 +7,7 @@
 
 namespace App\Actions\Media;
 
-use App\Models\Media\LandlordMedia;
+use App\Models\Media\Media;
 use App\Models\Organisation\Organisation;
 use Lorisleiva\Actions\Concerns\AsAction;
 
@@ -22,6 +22,7 @@ class StoreStockImage
      */
     public function handle(
         string $collection,
+        string $scope,
         string $imagePath,
         string $originalFilename,
         string $extension=null
@@ -30,7 +31,7 @@ class StoreStockImage
         $organisation =Organisation::find(1);
         $checksum     = md5_file($imagePath);
 
-        $organisationMedia = LandlordMedia::where('checksum', $checksum)->first();
+        $organisationMedia = Media::where('checksum', $checksum)->first();
         if (!$organisationMedia) {
             $filename=dechex(crc32($checksum)).'.';
 
@@ -52,6 +53,7 @@ class StoreStockImage
                 ->preservingOriginal()
                 ->withProperties(
                     [
+                        'scope'=>$scope,
                         'checksum'   => $checksum,
                         'is_animated'=> $animated
                     ]
