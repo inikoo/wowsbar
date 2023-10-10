@@ -10,7 +10,9 @@ import { capitalize } from "@/Composables/capitalize"
 import { trans } from 'laravel-vue-i18n'
 import { useLayoutStore } from '@/Stores/layout'
 import LastEditedBanners from '@/Components/LastEditedBanners.vue'
-import Steps from '@/Components/DataDisplay/Steps.vue'
+import StepsClean from '@/Components/DataDisplay/Steps/StepsClean.vue'
+import StepsSimple from '@/Components/DataDisplay/Steps/StepsSimple.vue'
+import StepsCompact from '@/Components/DataDisplay/Steps/StepsCompact.vue'
 import { computed, ref, reactive } from 'vue'
 import firstStep from '@/Components/Dashboard/firstStep.vue'
 import secondStep from '@/Components/Dashboard/secondStep.vue'
@@ -24,6 +26,7 @@ library.add(faArrowRight)
 
 const currentHour = new Date().getHours();
 
+// Greeting Message (Good Morning, Good Afternoon, etc)
 const greetingMessage =
     currentHour >= 4 && currentHour < 12 ? // after 4:00AM and before 12:00PM
         trans('Good morning') :
@@ -113,18 +116,27 @@ const stepsList = [
     },
 ]
 
-// Define the component of each Steps
-const componentStepsList: any = {
-    firstStep: firstStep,
-    secondStep: secondStep,
-    thirdStep: thirdStep,
-}
-
-// Computed dynamic component of Steps
+// Dynamic component: Steps
 const compComponentSteps = computed(() => {
+    const componentStepsList: any = {
+        firstStep: firstStep,
+        secondStep: secondStep,
+        thirdStep: thirdStep,
+    }
+
     return componentStepsList[currentStep.value.component]
 })
 
+// Dynamic component: Content of Steps
+const compContentStep = computed(() => {
+    const compContentStep: any = {
+        clean: StepsClean,
+        simple: StepsSimple,
+        compact: StepsCompact,
+    }
+
+    return compContentStep['simple']
+})
 
 // const backAction = ref(false) // True/false to define the Transition name
 </script>
@@ -144,10 +156,9 @@ const compComponentSteps = computed(() => {
         </div> -->
 
         <div class="mt-6 pt-10 border-t border-gray-300">
-
-            <!-- Step: Head (progress) -->
+            <!-- Steps: Head (progress) -->
             <div class="mb-10">
-                <Steps :stepsList="stepsList" :currentStep="currentStep"/>
+                <component :is="compContentStep" :stepsList="stepsList" :currentStep="currentStep"/>
             </div>
 
             <!-- Button: Next -->
