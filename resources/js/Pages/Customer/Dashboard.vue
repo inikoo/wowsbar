@@ -97,17 +97,17 @@ const currentStep = ref({
 const stepsList = [
     {
         id: 1,
-        label: 'Step  1',
+        label: 'Enter your website name',
         component: 'firstStep'
     },
     {
         id: 2,
-        label: 'Step 2',
+        label: 'Select your interest',
         component: 'secondStep'
     },
     {
         id: 3,
-        label: 'Step 3',
+        label: 'Make appointment',
         component: 'thirdStep'
     },
 ]
@@ -125,7 +125,7 @@ const compComponentSteps = computed(() => {
 })
 
 
-const backAction = ref(false) // True/false to define the Transition name
+// const backAction = ref(false) // True/false to define the Transition name
 </script>
 
 <template layout="CustomerApp">
@@ -136,54 +136,49 @@ const backAction = ref(false) // True/false to define the Transition name
             {{ trans(greetingMessage) }}, <span class="font-bold capitalize">{{ name }}</span>!
         </div>
         
-        <div class="">
+        <!-- <div class="">
             <hr class="mt-3 mb-8">
             <LastEditedBanners v-if="latest_banners_count > 0" :banners="latest_banners" />
-        </div>
+        </div> -->
 
         <div class="mt-6">
             <hr class="mb-10">
 
-            <!-- Section: Steps button -->
-            <div class="max-w-5xl mx-auto mb-10">
-                <nav aria-label="Progress">
-                    <ol role="list"
-                        class="divide-y md:divide-y-0 md:divide-x divide-gray-200 overflow-hidden rounded-md border border-gray-300 md:flex">
-                        <!-- The step -->
-                        <li v-for="(step, index) in stepsList" class="relative md:flex md:flex-1" :class="[
-                            index + 1 < currentStep.id  // Previous step
-                                ? 'bg-slate-600'
-                                : currentStep.id == index + 1  // Current step
-                                    ? 'bg-gray-200'
-                                    : ''
-                        ]">
-                            <div class="group flex w-full items-center">
-                                <span class="flex items-center px-6 py-4 text-sm font-medium">
-                                    <!-- Circle: Number -->
-                                    <div class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full"
-                                        :class="[
-                                            index + 1 < currentStep.id
-                                                ? 'bg-white text-slate-600'  // Previous step
-                                                : currentStep.id == index + 1
-                                                    ? 'bg-gray-100 ring-1 ring-gray-300'  // Current step
-                                                    : 'ring-1 ring-gray-400'
-                                        ]">
-                                        <span class="">{{ index + 1 }}</span>
-                                    </div>
-                                    <span class="ml-4 text-sm font-medium" 
-                                        :class="[
-                                            index + 1 < currentStep.id  // Previous step
-                                                ? 'text-white'
-                                                : 'text-slate-600'
-                                        ]"
-                                    >
-                                        {{ step.label }}
-                                    </span>
-                                </span>
-                            </div>
-                        </li>
-                    </ol>
-                </nav>
+            <!-- Step: Head (progress) -->
+            <nav aria-label="Progress" class="mb-10">
+                <ol role="list" class="space-y-4 md:flex md:space-x-8 md:space-y-0">
+                    <li v-for="(step, index) in stepsList" :key="step.id" class="md:flex-1">
+                        <div class="group rounded-md overflow-hidden ring-1 ring-gray-300 shadow flex flex-col border-l-4 py-3 px-4 md:border-l-0 md:border-t-4"
+                            :class="[
+                                index + 1 < currentStep.id  // Previous step
+                                    ? 'border-slate-500'
+                                    : currentStep.id == index + 1  // Current step
+                                        ? 'bg-gray-200 border-slate-500'
+                                        : 'text-gray-400 border-slate-300'
+                            ]"
+                        >
+                            <span class="text-xl font-medium">{{ step.id }}</span>
+                            <span class="text-sm font-medium">{{ step.label }}</span>
+                        </div>
+                    </li>
+                </ol>
+            </nav>
+
+            <div class="grid grid-cols-2 justify-between mb-10">
+                <div>
+                    <!-- <Button v-if="currentStep.id != 1" label="Previous" :style="`tertiary`"
+                        @click="currentStep = stepsList[currentStep.id - 2], backAction = true">
+                        <FontAwesomeIcon icon='far fa-arrow-left' class='' aria-hidden='true' />
+                        <span>Previous</span>
+                    </Button> -->
+                </div>
+                <div class="text-right">
+                    <Button v-if="currentStep.id != stepsList.length" label="Next" :style="`secondary`"
+                        @click="currentStep = stepsList[currentStep.id]">
+                        <span>Next</span>
+                        <FontAwesomeIcon icon='far fa-arrow-right' class='' aria-hidden='true' />
+                    </Button>
+                </div>
             </div>
 
             <!-- Section: Dynamic Component -->
@@ -196,22 +191,6 @@ const backAction = ref(false) // True/false to define the Transition name
 
                 <hr class="mt-10 mb-5">
 
-                <div class="grid grid-cols-2 justify-between">
-                    <div>
-                        <Button v-if="currentStep.id != 1" label="Previous" :style="`tertiary`"
-                            @click="currentStep = stepsList[currentStep.id - 2], backAction = true">
-                            <FontAwesomeIcon icon='far fa-arrow-left' class='' aria-hidden='true' />
-                            <span>Previous</span>
-                        </Button>
-                    </div>
-                    <div class="text-right">
-                        <Button v-if="currentStep.id != stepsList.length" label="Next" :style="`secondary`"
-                            @click="currentStep = stepsList[currentStep.id], backAction = false">
-                            <span>Next</span>
-                            <FontAwesomeIcon icon='far fa-arrow-right' class='' aria-hidden='true' />
-                        </Button>
-                    </div>
-                </div>
             </div>
         </div>
     </div>

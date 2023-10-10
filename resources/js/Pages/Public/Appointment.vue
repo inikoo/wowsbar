@@ -141,32 +141,33 @@ onMounted(() => {
 
     </div> -->
 
-    <div class="bg-white w-fit flex justify-center">
-        <div class="w-full w-96">
-            <div class="overflow-hidden bg-white shadow sm:rounded-lg">
-                <div class="px-4 py-5 sm:p-6">
-                    XX
-                    <!-- Content goes here -->
+    <div class="flex justify-center">
+        <div class="bg-white w-fit grid grid-cols-2 justify-center border-2 border-gray-300 rounded-md divide-x divide-gray-100">
+            <div class="">
+                <div class="overflow-hidden bg-white sm:rounded-lg">
+                    <div class="px-4 py-5 sm:p-6">
+                        
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="w-96">
-            <div class="divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow">
-                <div class="px-4 py-5 sm:px-6">
-                   Select data & time
-                </div>
-                <div class="px-4 py-5 sm:p-6">
-                    <VCalendar expanded :attributes="attrs" @dayclick="handleDateClick" />
-                </div>
-                <div class="px-4 py-4 sm:px-6">
-                    <div v-if="!isNull(selectedDate)">
-                        <div class="px-2.5">{{ getDate() }}</div>
-                        <div class="px-2.5 my-4">
-                            <div class="flex flex-wrap justify-start gap-3">
-                                <button v-for="hour in hours" :key="hour" @click="selectHour(hour)"
-                                        class="rounded-md border border-transparent bg-indigo-600 px-2 py-1 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                                    {{ hour }}
-                                </button>
+            <div class="w-96">
+                <div class="divide-y divide-gray-200 overflow-hidden rounded-lg bg-white">
+                    <div class="px-4 py-5 sm:px-6">
+                       Select data & time
+                    </div>
+                    <div class="px-4 py-5 sm:p-6">
+                        <VCalendar expanded :attributes="attrs" @dayclick="handleDateClick" />
+                    </div>
+                    <div class="px-4 py-4 sm:px-6">
+                        <div v-if="!isNull(selectedDate)">
+                            <div class="px-2.5">{{ getDate() }}</div>
+                            <div class="px-2.5 my-4">
+                                <div class="flex flex-wrap justify-start gap-3">
+                                    <button v-for="hour in hours" :key="hour" @click="selectHour(hour)"
+                                            class="rounded-md border border-transparent bg-indigo-600 px-2 py-1 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                                        {{ hour }}
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
