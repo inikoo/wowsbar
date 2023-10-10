@@ -55,7 +55,7 @@ const dummyData = reactive({
 <template>
     <div class="flow-root overflow-x-auto">
         <div class="inline-block min-w-full align-middle sm:px-6 lg:px-8">
-            <table class="min-w-full divide-y divide-gray-300 shadow rounded-md overflow-hidden">
+            <table class="min-w-full divide-y divide-gray-300 shadow rounded-md overflow-hidden text-gray-500">
                 <thead>
                     <tr class="divide-x divide-gray-200 text-sm font-semibold">
                         <th scope="col" class="py-3.5 pl-4 pr-4 text-left">Name</th>

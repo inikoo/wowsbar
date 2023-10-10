@@ -124,6 +124,8 @@ const compComponentSteps = computed(() => {
     return componentStepsList[currentStep.value.component]
 })
 
+
+const backAction = ref(false) // True/false to define the Transition name
 </script>
 
 <template layout="CustomerApp">
@@ -133,51 +135,52 @@ const compComponentSteps = computed(() => {
         <div class="pt-2 mt-4 lg:mt-0 lg:pt-0 text-2xl font-light">
             {{ trans(greetingMessage) }}, <span class="font-bold capitalize">{{ name }}</span>!
         </div>
-        <div>
-            <hr class="mt-3 mb-6">
+        
+        <div class="">
+            <hr class="mt-3 mb-8">
             <LastEditedBanners v-if="latest_banners_count > 0" :banners="latest_banners" />
         </div>
 
-        <div class="mt-8">
+        <div class="mt-6">
             <hr class="mb-10">
 
             <!-- Section: Steps button -->
             <div class="max-w-5xl mx-auto mb-10">
                 <nav aria-label="Progress">
                     <ol role="list"
-                        class="divide-x divide-gray-400 rounded-md border border-gray-300 md:flex md:divide-y-0">
+                        class="divide-y md:divide-y-0 md:divide-x divide-gray-200 overflow-hidden rounded-md border border-gray-300 md:flex">
+                        <!-- The step -->
                         <li v-for="(step, index) in stepsList" class="relative md:flex md:flex-1" :class="[
                             index + 1 < currentStep.id  // Previous step
-                                ? 'bg-sky-200'
+                                ? 'bg-slate-600'
                                 : currentStep.id == index + 1  // Current step
                                     ? 'bg-gray-200'
                                     : ''
                         ]">
-                            <!-- Completed Step -->
                             <div class="group flex w-full items-center">
                                 <span class="flex items-center px-6 py-4 text-sm font-medium">
+                                    <!-- Circle: Number -->
                                     <div class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full"
                                         :class="[
-                                            index + 1 < currentStep.id  // Previous step
-                                                ? 'bg-sky-500 ring-1 ring-sky-300 text-white'
-                                                : currentStep.id == index + 1  // Current step
-                                                    ? 'bg-gray-100 ring-1 ring-gray-300'
+                                            index + 1 < currentStep.id
+                                                ? 'bg-white text-slate-600'  // Previous step
+                                                : currentStep.id == index + 1
+                                                    ? 'bg-gray-100 ring-1 ring-gray-300'  // Current step
                                                     : 'ring-1 ring-gray-400'
                                         ]">
                                         <span class="">{{ index + 1 }}</span>
                                     </div>
-                                    <span class="ml-4 text-sm font-medium text-gray-700">{{ step.label }}</span>
+                                    <span class="ml-4 text-sm font-medium" 
+                                        :class="[
+                                            index + 1 < currentStep.id  // Previous step
+                                                ? 'text-white'
+                                                : 'text-slate-600'
+                                        ]"
+                                    >
+                                        {{ step.label }}
+                                    </span>
                                 </span>
                             </div>
-
-                            <!-- Arrow separator for lg screens and up -->
-                            <!-- <div v-if="index < stepsList.length - 1" class="absolute right-0 top-0 hidden h-full w-5 md:block" aria-hidden="true">
-                                <svg class="h-full w-full text-gray-300" viewBox="0 0 22 80" fill="none"
-                                    preserveAspectRatio="none">
-                                    <path d="M0 -2L20 40L0 82" vector-effect="non-scaling-stroke" stroke="currentcolor"
-                                        stroke-linejoin="round" />
-                                </svg>
-                            </div> -->
                         </li>
                     </ol>
                 </nav>
@@ -185,7 +188,7 @@ const compComponentSteps = computed(() => {
 
             <!-- Section: Dynamic Component -->
             <div class="flex flex-col">
-                <Transition name="slide-fade" mode="out-in">
+                <Transition :name="backAction ? 'slide-to-right' : 'slide-to-left'" mode="out-in">
                     <KeepAlive>
                         <component :is="compComponentSteps" :data="data[currentStep.component]" />
                     </KeepAlive>
@@ -196,14 +199,14 @@ const compComponentSteps = computed(() => {
                 <div class="grid grid-cols-2 justify-between">
                     <div>
                         <Button v-if="currentStep.id != 1" label="Previous" :style="`tertiary`"
-                            @click="currentStep = stepsList[currentStep.id - 2]">
+                            @click="currentStep = stepsList[currentStep.id - 2], backAction = true">
                             <FontAwesomeIcon icon='far fa-arrow-left' class='' aria-hidden='true' />
                             <span>Previous</span>
                         </Button>
                     </div>
                     <div class="text-right">
                         <Button v-if="currentStep.id != stepsList.length" label="Next" :style="`secondary`"
-                            @click="currentStep = stepsList[currentStep.id]">
+                            @click="currentStep = stepsList[currentStep.id], backAction = false">
                             <span>Next</span>
                             <FontAwesomeIcon icon='far fa-arrow-right' class='' aria-hidden='true' />
                         </Button>
@@ -215,21 +218,5 @@ const compComponentSteps = computed(() => {
 </template>
 
 <style>
-.slide-fade-enter-active {
-    transition: all 0.15s ease-out;
-}
 
-.slide-fade-leave-active {
-    transition: all 0.15s cubic-bezier(1, 0.5, 0.8, 1);
-}
-
-.slide-fade-enter-from {
-    transform: translateX(-20px);
-    opacity: 0;
-}
-
-.slide-fade-leave-to {
-    transform: translateX(20px);
-    opacity: 0;
-}
 </style>

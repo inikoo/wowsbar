@@ -42,3 +42,35 @@
 .tabNavigation {
     @apply hover:bg-gray-200/30 dark:hover:bg-gray-600 text-white dark:text-gray-400 transition-all duration-100 ease-in-out
 }
+
+/* Transition name="slide-to-right" */
+.slide-to-right-enter-active {
+    transition: all 0.1s ease-out;
+}
+.slide-to-right-leave-active {
+    transition: all 0.1s cubic-bezier(1, 0.5, 0.8, 1);
+}
+.slide-to-right-enter-from {
+    transform: translateX(-20px);
+    opacity: 0;
+}
+.slide-to-right-leave-to {
+    transform: translateX(20px);
+    opacity: 0;
+}
+
+/* Transition name="slide-to-left" */
+.slide-to-left-enter-active {
+    transition: all 0.1s ease-out;
+}
+.slide-to-left-leave-active {
+    transition: all 0.1s cubic-bezier(1, 0.5, 0.8, 1);
+}
+.slide-to-left-enter-from {
+    transform: translateX(20px);
+    opacity: 0;
+}
+.slide-to-left-leave-to {
+    transform: translateX(-20px);
+    opacity: 0;
+}

@@ -12,7 +12,7 @@ const props = defineProps<{
 
 <template>
     <div class="mx-auto">
-        <label for="inputWebsite" class="text-xl">Enter your website</label>
+        <label for="inputWebsite" class="text-xl text-gray-600 font-medium">Enter your website</label>
         <div class="relative flex rounded-md px-4 shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-gray-500">
             <div class="text-3xl flex items-center gap-x-1.5">
                 <div class="flex select-none items-center text-gray-400">
