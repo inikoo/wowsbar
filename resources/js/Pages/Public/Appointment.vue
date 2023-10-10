@@ -142,12 +142,10 @@ onMounted(() => {
     </div> -->
 
     <div class="flex justify-center">
-        <div class="bg-white w-fit grid grid-cols-2 justify-center border-2 border-gray-300 rounded-md divide-x divide-gray-100">
-            <div class="">
-                <div class="overflow-hidden bg-white sm:rounded-lg">
-                    <div class="px-4 py-5 sm:p-6">
-                        
-                    </div>
+        <div class="bg-white w-fit grid grid-cols-2 max-w-3xl justify-center border-2 border-gray-300 overflow-hidden rounded-md divide-x divide-gray-100">
+            <div class="overflow-hidden bg-white sm:rounded-lg">
+                <div class="px-4 py-5 sm:p-6">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto quo expedita accusantium rerum placeat enim atque voluptates consequatur dolorum quibusdam distinctio, molestiae labore fugiat. Iusto similique veritatis a exercitationem provident atque omnis adipisci aperiam libero? Repellat quod nulla expedita earum? Neque unde rem odio libero delectus dolor voluptates, dolorum fugiat nobis est numquam molestias suscipit repellat ipsum earum non reprehenderit. Dolorum eos dolores dolore officiis magnam numquam molestiae id, quod porro eligendi reprehenderit aliquid tempore eum sapiente, iusto laboriosam. Nisi earum at, alias incidunt nihil, officiis adipisci iusto consequuntur provident culpa doloribus voluptas facere ea! Necessitatibus deleniti ipsum quisquam accusamus.
                 </div>
             </div>
             <div class="w-96">
