@@ -92,15 +92,19 @@ class StoreAppointment
         return $this->handle($shop, $request->validated());
     }
 
-    public string $commandSignature = 'appointment:book {shop}';
+    public string $commandSignature = 'appointment:book {shop} {hour} {minute}';
 
     /**
      * @throws \Throwable
      */
     public function asCommand(Command $command): int
     {
+        $shop = $command->argument('shop');
+        $hour = $command->argument('hour');
+        $minute = $command->argument('minute');
+
         try {
-            $shop = Shop::where('slug', $command->argument('shop'))->firstOrFail();
+            $shop = Shop::where('slug', $shop)->firstOrFail();
         } catch (Exception $e) {
             $command->error($e->getMessage());
 
@@ -108,11 +112,11 @@ class StoreAppointment
         }
 
         $this->setRawAttributes([
-            'name'                 => 'aiku',
-            'schedule_at'          => now()->addHours(rand(1, 9)),
+            'name'                 => fake()->name,
+            'schedule_at'          => now()->setHours($hour)->setMinutes($minute),
             'type'                 => AppointmentTypeEnum::LEAD->value,
             'event'                => AppointmentEventEnum::IN_PERSON->value,
-            'event_address'        => 'AW Office'
+            'event_address'        => fake()->address
         ]);
 
         try {

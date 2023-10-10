@@ -71,8 +71,8 @@ class ShowAppointment extends InertiaAction
                             'type'  => 'button',
                             'style' => 'edit',
                             'route' => [
-                                'name'       => preg_replace('/show$/', 'index', $request->route()->getName()),
-                                'parameters' => $request->route()->originalParameters()
+                                'name'       => preg_replace('/show$/', 'edit', $request->route()->getName()),
+                                'parameters' => $this->originalParameters
                             ]
                         ] : []
                     ]
