@@ -63,13 +63,13 @@ const handleToggleLeftbar = () => {
 
 <template>
     <div class="mt-11 fixed md:flex md:flex-col md:inset-y-0 lg:mt-10 bg-gray-50 dark:bg-gray-800 dark:text-gray-100 h-full text-gray-400"
-         :class="[layout.leftSidebar.show ? 'w-8/12 md:w-56' : 'w-8/12 md:w-10']"
-         @mouseenter="isHover = true" @mouseleave="isHover = false"
+        :class="[layout.leftSidebar.show ? 'w-8/12 md:w-56' : 'w-8/12 md:w-10']"
+        @mouseenter="isHover = true" @mouseleave="isHover = false"
     >
         <!-- Toggle: collapse-expand LeftSideBar -->
         <div @click="handleToggleLeftbar"
-             class="hidden absolute z-10 right-0 top-2/4 -translate-y-full translate-x-1/2 w-7 aspect-square bg-gray-200 hover:bg-gray-300 border border-gray-300 rounded-full md:flex md:justify-center md:items-center cursor-pointer"
-             :title="[layout.leftSidebar.show ? 'Collapse the bar' : 'Expand the bar']"
+            class="hidden absolute z-10 right-0 top-2/4 -translate-y-full translate-x-1/2 w-7 aspect-square bg-gray-200 hover:bg-gray-300 border border-gray-300 rounded-full md:flex md:justify-center md:items-center cursor-pointer"
+            :title="layout.leftSidebar.show ? 'Collapse the bar' : 'Expand the bar'"
         >
             <div class="flex items-center justify-center transition-all duration-200 ease-in-out" :class="{'rotate-180': !layout.leftSidebar.show}">
                 <FontAwesomeIcon icon='far fa-chevron-left' class='-translate-x-[1px] h-[14px]' aria-hidden='true'/>
@@ -81,28 +81,27 @@ const handleToggleLeftbar = () => {
                 <nav class="flex-1 space-y-1" aria-label="Sidebar">
                     <!-- LeftSide Links -->
                     <Link v-for="(item, itemKey) in layout.navigation"
-                          :key="itemKey"
-                          :href="route(item.route.name,item.route.parameters)"
-                          :class="[
+                        :key="itemKey"
+                        :href="route(item.route.name,item.route.parameters)"
+                        :class="[
 							itemKey === layout.currentModule
-								? 'tabNavigationActive dark:border-gray-100 dark:bg-gray-600 px-0.5'
-								: 'tabNavigation dark:hover:bg-dark-700 px-1',
+								? 'navigationActiveOrganisation dark:border-gray-100 dark:bg-gray-600 px-0.5'
+								: 'navigationOrganisation dark:hover:bg-dark-700 px-1',
 							layout.leftSidebar.show ? 'px-3' : '',
 							'group flex items-center text-sm font-medium py-2',
 						]"
-                          :aria-current="itemKey === layout.currentModule ? 'page' : undefined"
+                        :aria-current="itemKey === layout.currentModule ? 'page' : undefined"
                     >
                         <div class="flex items-center">
                             <!--
                             <img v-if="item.name == 'dashboard'" src="@/../images/logo-charcoal-transparent.png" alt="" class="h-4 aspect-square"
-                                 :class="[ itemKey === layout.currentModule
+                                :class="[ itemKey === layout.currentModule
 											? 'text-orange-500'
 											: 'text-gray-400 group-hover:text-gray-600',
 										'ml-2 mr-3 flex-shrink-0 h-4 w-4'
 							]">
 							-->
                             <FontAwesomeIcon
-
                                 aria-hidden="true"
                                 class="text-gray-400 dark:text-gray-200 ml-2 mr-3 flex-shrink-0 h-4 w-4"
                                 :icon="item.icon"/>

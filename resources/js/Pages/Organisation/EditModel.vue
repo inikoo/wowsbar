@@ -60,7 +60,7 @@ const props = defineProps<{
 <template layout="OrgApp">
     <Head :title="capitalize(title)" />
     <PageHeading :data="pageHead"></PageHeading>
-    <Edit :form-data="formData" />
+    <Edit :form-data="formData" appName="organisation" />
 </template>
 
 

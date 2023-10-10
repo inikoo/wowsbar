@@ -35,12 +35,20 @@
     @apply relative before:absolute before:inset-0 before:-translate-x-full before:animate-skeleton before:bg-gradient-to-r before:from-transparent before:via-gray-200/60 before:to-transparent isolate overflow-hidden shadow-xl shadow-black/5 before:border-y before:border-white/30 bg-gray-300
 }
 
-.tabNavigationActive {
+.navigationActiveCustomer {
     @apply bg-slate-700 sm:border-l-4 sm:border-amber-300 text-amber-300 dark:text-gray-300 transition-all duration-100 ease-in-out
 }
 
-.tabNavigation {
+.navigationCustomer {
     @apply hover:bg-gray-200/30 dark:hover:bg-gray-600 text-white dark:text-gray-400 transition-all duration-100 ease-in-out
+}
+
+.navigationActiveOrganisation {
+    @apply bg-gray-300 sm:border-l-4 sm:border-gray-600 text-gray-600 dark:text-gray-300 transition-all duration-100 ease-in-out
+}
+
+.navigationOrganisation {
+    @apply hover:bg-gray-300/30 dark:hover:bg-gray-600 text-gray-600 dark:text-gray-400 transition-all duration-100 ease-in-out
 }
 
 /* Transition name="slide-to-right" */

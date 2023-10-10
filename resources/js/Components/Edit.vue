@@ -49,13 +49,14 @@ const props = defineProps<{
         }
         title?: string
     }
+    appName: string
 }>()
 
 
 const current = ref(0)
 const buttonRefs = ref([])  // For click linked to Navigation
 const isMobile = ref(false)
-const tabActive = ref({})
+const tabActive: any = ref({})
 
 const updateViewportWidth = () => {
     isMobile.value = window.innerWidth <= 768
@@ -103,9 +104,13 @@ onBeforeUnmount(() => {
             <aside class="py-0 lg:col-span-3 lg:h-full">
                 <div class="sticky top-16">
                     <div v-for="(item, key) in formData['blueprint']" @click="jumpToElement(`field${key}`)" :class="[
-                        tabActive[key]
-                            ? 'tabNavigationActive'
-                            : 'tabNavigation text-gray-600 hover:bg-gray-100 hover:text-gray-700',
+                        appName == 'customer'
+                        ? tabActive[key]
+                            ? 'navigationActiveCustomer'
+                            : 'navigationCustomer text-gray-600 hover:bg-gray-100 hover:text-gray-700'
+                        : tabActive[key]
+                            ? 'navigationActiveOrganisation'
+                            : 'navigationOrganisation text-gray-600 hover:bg-gray-100 hover:text-gray-700',
                         'cursor-pointer group border-l-4 px-3 py-2 flex items-center text-sm font-medium',
                         ]">
                         <FontAwesomeIcon v-if="item.icon" aria-hidden="true" class="flex-shrink-0 -ml-1 mr-3 h-6 w-6"
