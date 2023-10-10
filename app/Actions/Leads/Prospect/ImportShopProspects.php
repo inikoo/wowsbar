@@ -37,7 +37,7 @@ class ImportShopProspects
         $this->handle($shop, $file);
     }
 
-    public string $commandSignature = 'shop:import-prospects {shop} {--G|google=} {filename}';
+    public string $commandSignature = 'shop:import-prospects {shop} {--g|g_drive} {filename}';
 
     public function rumImport($file, $command): Upload
     {

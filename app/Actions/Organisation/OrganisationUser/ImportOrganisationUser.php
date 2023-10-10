@@ -27,7 +27,7 @@ class ImportOrganisationUser
      * @var true
      */
     private bool $asAction          = false;
-    public string $commandSignature = 'organisation-user:import {filename}';
+    public string $commandSignature = 'organisation-user:import {--g|g_drive} {filename}';
 
     public function handle($file): void
     {

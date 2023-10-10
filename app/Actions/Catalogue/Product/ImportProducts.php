@@ -35,7 +35,7 @@ class ImportProducts
         $this->handle($file);
     }
 
-    public string $commandSignature = 'product:import {filename}';
+    public string $commandSignature = 'product:import {--g|g_drive} {filename}';
 
 
 }

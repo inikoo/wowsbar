@@ -8,6 +8,8 @@
 namespace App\Stubs\Migrations;
 
 use App\Enums\Portfolio\Banner\BannerStateEnum;
+use App\Enums\Portfolio\Banner\BannerTypeEnum;
+use App\Enums\Portfolio\Snapshot\SnapshotStateEnum;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Str;
 
@@ -18,9 +20,20 @@ trait HasBannerStats
         $table->unsignedSmallInteger('number_banners')->default(0);
         $table->unsignedSmallInteger('number_historic_snapshots')->default(0);
 
-        foreach (BannerStateEnum::cases() as $state) {
-            $table->unsignedSmallInteger('number_banners_state_' . Str::replace('-', '_', $state->snake()))->default(0);
+        foreach (BannerTypeEnum::cases() as $case) {
+            $table->unsignedSmallInteger('number_banners_type_' . Str::replace('-', '_', $case->snake()))->default(0);
         }
+
+        foreach (BannerStateEnum::cases() as $case) {
+            $table->unsignedSmallInteger('number_banners_state_' . Str::replace('-', '_', $case->snake()))->default(0);
+        }
+
+        $table->unsignedSmallInteger('number_banner_snapshots')->default(0);
+        foreach (SnapshotStateEnum::cases() as $state) {
+            $table->unsignedSmallInteger('number_banners_snapshots_state_'.Str::replace('-', '_', $state->snake()))->default(0);
+        }
+
+
 
         return $table;
     }

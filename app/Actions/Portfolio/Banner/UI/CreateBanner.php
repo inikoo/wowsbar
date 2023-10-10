@@ -9,12 +9,15 @@ namespace App\Actions\Portfolio\Banner\UI;
 
 use App\Actions\InertiaAction;
 use App\Actions\Portfolio\PortfolioWebsite\UI\GetPortfolioWebsitesOptions;
+use App\Enums\CRM\Appointment\AppointmentTypeEnum;
+use App\Enums\Portfolio\Banner\BannerTypeEnum;
 use App\Models\CRM\Customer;
 use App\Models\Portfolio\PortfolioWebsite;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
+use Spatie\LaravelOptions\Options;
 
 class CreateBanner extends InertiaAction
 {
@@ -61,17 +64,17 @@ class CreateBanner extends InertiaAction
         }
 
         $fields[] = [
-            'title'  => __('name'),
+            'title'  => '',
             'fields' => [
-                /*
-                                'code' => [
-                                    'type'          => 'input',
-                                    'label'         => __('code'),
-                                    'placeholder'   => __('Input unique code'),
-                                    'required'      => true,
-                                    'value'         => Str::random(3)
-                                ],
-                */
+
+                'type' => [
+                    'type'        => 'radio',
+                    'label'       => __('orientation'),
+                    'required'    => true,
+                    'value'       => BannerTypeEnum::LANDSCAPE,
+                    'options'  => Options::forEnum(BannerTypeEnum::class)
+
+                ],
                 'name' => [
                     'type'        => 'input',
                     'label'       => __('name'),
