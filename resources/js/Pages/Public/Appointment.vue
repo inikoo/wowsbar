@@ -154,7 +154,7 @@ onMounted(() => {
                         <div class="text-lg text-slate-400">
                             Hi you can create appointment
                         </div>
-                        <div class="text-4xl font-medium">
+                        <div class="text-xl font-medium">
                             Request a one-to-one appointemt with us
                         </div>
                         <div>
