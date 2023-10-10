@@ -71,7 +71,7 @@ trait WithImportModel
 
         $upload = $this->rumImport($file, $command);
 
-       // Storage::disk('local')->delete("tmp/" . $filename);
+        Storage::disk('local')->delete("tmp/" . $newFileName);
 
         $command->table(
             ['', 'Success', 'Fail'],
