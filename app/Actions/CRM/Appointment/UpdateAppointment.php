@@ -41,22 +41,6 @@ class UpdateAppointment
         return true;
     }
 
-    public function htmlResponse(Appointment $appointment): RedirectResponse
-    {
-        $parent = Customer::class;
-
-        if($appointment->shop_id) {
-            $parent = Shop::class;
-        }
-
-        return match (class_basename($parent)) {
-            'Shop' => redirect()->route('org.crm.shop.appointments.index', [
-                'shop' => $parent
-            ]),
-            default => back(),
-        };
-    }
-
     public function rules(): array
     {
         return [

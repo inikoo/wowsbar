@@ -10,6 +10,9 @@ import { capitalize } from "@/Composables/capitalize"
 import { trans } from 'laravel-vue-i18n'
 import { useLayoutStore } from '@/Stores/layout'
 import LastEditedBanners from '@/Components/LastEditedBanners.vue'
+import StepsClean from '@/Components/DataDisplay/Steps/StepsClean.vue'
+import StepsSimple from '@/Components/DataDisplay/Steps/StepsSimple.vue'
+import StepsCompact from '@/Components/DataDisplay/Steps/StepsCompact.vue'
 import { computed, ref, reactive } from 'vue'
 import firstStep from '@/Components/Dashboard/firstStep.vue'
 import secondStep from '@/Components/Dashboard/secondStep.vue'
@@ -23,6 +26,7 @@ library.add(faArrowRight)
 
 const currentHour = new Date().getHours();
 
+// Greeting Message (Good Morning, Good Afternoon, etc)
 const greetingMessage =
     currentHour >= 4 && currentHour < 12 ? // after 4:00AM and before 12:00PM
         trans('Good morning') :
@@ -112,18 +116,27 @@ const stepsList = [
     },
 ]
 
-// Define the component of each Steps
-const componentStepsList: any = {
-    firstStep: firstStep,
-    secondStep: secondStep,
-    thirdStep: thirdStep,
-}
-
-// Computed dynamic component of Steps
+// Dynamic component: Steps
 const compComponentSteps = computed(() => {
+    const componentStepsList: any = {
+        firstStep: firstStep,
+        secondStep: secondStep,
+        thirdStep: thirdStep,
+    }
+
     return componentStepsList[currentStep.value.component]
 })
 
+// Dynamic component: Content of Steps
+const compContentStep = computed(() => {
+    const compContentStep: any = {
+        clean: StepsClean,
+        simple: StepsSimple,
+        compact: StepsCompact,
+    }
+
+    return compContentStep['simple']
+})
 
 // const backAction = ref(false) // True/false to define the Transition name
 </script>
@@ -136,42 +149,21 @@ const compComponentSteps = computed(() => {
             {{ trans(greetingMessage) }}, <span class="font-bold capitalize">{{ name }}</span>!
         </div>
         
+        <!-- Last Edited Banners -->
         <!-- <div class="">
             <hr class="mt-3 mb-8">
             <LastEditedBanners v-if="latest_banners_count > 0" :banners="latest_banners" />
         </div> -->
 
-        <div class="mt-6">
-            <hr class="mb-10">
+        <div class="mt-6 pt-10 border-t border-gray-300">
+            <!-- Steps: Head (progress) -->
+            <div class="mb-10">
+                <component :is="compContentStep" :stepsList="stepsList" :currentStep="currentStep"/>
+            </div>
 
-            <!-- Step: Head (progress) -->
-            <nav aria-label="Progress" class="mb-10">
-                <ol role="list" class="space-y-4 md:flex md:space-x-8 md:space-y-0">
-                    <li v-for="(step, index) in stepsList" :key="step.id" class="md:flex-1">
-                        <div class="group rounded-md overflow-hidden ring-1 ring-gray-300 shadow flex flex-col border-l-4 py-3 px-4 md:border-l-0 md:border-t-4"
-                            :class="[
-                                index + 1 < currentStep.id  // Previous step
-                                    ? 'border-slate-500'
-                                    : currentStep.id == index + 1  // Current step
-                                        ? 'bg-gray-200 border-slate-500'
-                                        : 'text-gray-400 border-slate-300'
-                            ]"
-                        >
-                            <span class="text-xl font-medium">{{ step.id }}</span>
-                            <span class="text-sm font-medium">{{ step.label }}</span>
-                        </div>
-                    </li>
-                </ol>
-            </nav>
-
+            <!-- Button: Next -->
             <div class="grid grid-cols-2 justify-between mb-10">
-                <div>
-                    <!-- <Button v-if="currentStep.id != 1" label="Previous" :style="`tertiary`"
-                        @click="currentStep = stepsList[currentStep.id - 2], backAction = true">
-                        <FontAwesomeIcon icon='far fa-arrow-left' class='' aria-hidden='true' />
-                        <span>Previous</span>
-                    </Button> -->
-                </div>
+                <div />
                 <div class="text-right">
                     <Button v-if="currentStep.id != stepsList.length" label="Next" :style="`secondary`"
                         @click="currentStep = stepsList[currentStep.id]">
@@ -182,16 +174,14 @@ const compComponentSteps = computed(() => {
             </div>
 
             <!-- Section: Dynamic Component -->
-            <div class="flex flex-col">
-                <Transition :name="backAction ? 'slide-to-right' : 'slide-to-left'" mode="out-in">
+            <div class="flex flex-col pb-10 mb-5 border-b border-gray-300">
+                <Transition name="slide-to-left" mode="out-in">
                     <KeepAlive>
                         <component :is="compComponentSteps" :data="data[currentStep.component]" />
                     </KeepAlive>
                 </Transition>
-
-                <hr class="mt-10 mb-5">
-
             </div>
+
         </div>
     </div>
 </template>
