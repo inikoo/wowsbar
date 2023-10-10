@@ -41,8 +41,8 @@ class EditAppointment extends InertiaAction
                     'actions' => [
                         [
                             'type' => 'button',
-                            'style' => 'cancel',
-                            'label' => __('cancel'),
+                            'style' => 'back',
+                            'label' => __('back'),
                             'route' => [
                                 'name' => match ($request->route()->getName()) {
                                     'shops.show.appointments.edit' => 'org.shops.appointments.index',
