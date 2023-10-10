@@ -7,6 +7,7 @@
 <script setup lang="ts">
 import {Link} from '@inertiajs/vue3';
 import Table from '@/Components/Table/Table.vue';
+import Icon from "@/Components/Icon.vue";
 
 const props = defineProps<{
     data: object,
@@ -56,6 +57,9 @@ function appointmentRoute(appointment) {
             <Link :href="customerRoute(appointment)">
                 {{ appointment['customer_name'] }}
             </Link>
+        </template>
+        <template #cell(state)="{ item: appointment }">
+            <Icon :data="appointment['state']" />
         </template>
     </Table>
 </template>
