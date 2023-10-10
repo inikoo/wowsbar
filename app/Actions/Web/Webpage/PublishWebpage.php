@@ -17,6 +17,7 @@ use App\Models\Helpers\Snapshot;
 use App\Models\Web\Webpage;
 use Illuminate\Support\Arr;
 use Lorisleiva\Actions\ActionRequest;
+use function MongoDB\BSON\toJSON;
 
 class PublishWebpage
 {
@@ -33,24 +34,28 @@ class PublishWebpage
 
         foreach ($webpage->snapshots()->where('state', SnapshotStateEnum::LIVE)->get() as $liveSnapshot) {
             UpdateSnapshot::run($liveSnapshot, [
-                'state'           => SnapshotStateEnum::HISTORIC,
+                'state' => SnapshotStateEnum::HISTORIC,
                 'published_until' => now()
             ]);
         }
 
         $layout = $webpage->unpublishedSnapshot->layout;
+        $layout = $layout['html'][0]['html'];
 
+        $doc = new \DOMDocument('1.0', 'utf-8');
+        @$doc->loadHTML($html);
 
+        $layout['html'] = $this->getElementsByClass($doc, 'section', 'wowsbar-html');
         /** @var Snapshot $snapshot */
         $snapshot = StoreWebpageSnapshot::run(
             $webpage,
             [
-                'state'          => SnapshotStateEnum::LIVE,
-                'published_at'   => now(),
-                'layout'         => $layout,
-                'first_commit'   => $firstCommit,
-                'comment'        => Arr::get($modelData, 'comment'),
-                'publisher_id'   => Arr::get($modelData, 'publisher_id'),
+                'state' => SnapshotStateEnum::LIVE,
+                'published_at' => now(),
+                'layout' => $layout,
+                'first_commit' => $firstCommit,
+                'comment' => Arr::get($modelData, 'comment'),
+                'publisher_id' => Arr::get($modelData, 'publisher_id'),
                 'publisher_type' => Arr::get($modelData, 'publisher_type'),
             ]
         );
@@ -58,7 +63,7 @@ class PublishWebpage
         StoreDeployment::run(
             $webpage,
             [
-                'snapshot_id'  => $snapshot->id,
+                'snapshot_id' => $snapshot->id,
             ]
         );
 
@@ -66,10 +71,10 @@ class PublishWebpage
 
 
         $updateData = [
-            'live_snapshot_id'   => $snapshot->id,
-            'compiled_layout'    => $compiledLayout,
+            'live_snapshot_id' => $snapshot->id,
+            'compiled_layout' => $compiledLayout,
             'published_checksum' => md5(json_encode($snapshot->layout)),
-            'state'              => WebpageStateEnum::LIVE,
+            'state' => WebpageStateEnum::LIVE,
         ];
 
         if ($webpage->state == WebpageStateEnum::IN_PROCESS or $webpage->state == WebpageStateEnum::READY) {
@@ -93,8 +98,8 @@ class PublishWebpage
     public function rules(): array
     {
         return [
-            'comment'        => ['sometimes', 'required', 'string', 'max:1024'],
-            'publisher_id'   => ['sometimes'],
+            'comment' => ['sometimes', 'required', 'string', 'max:1024'],
+            'publisher_id' => ['sometimes'],
             'publisher_type' => ['sometimes', 'string'],
         ];
     }
@@ -103,7 +108,7 @@ class PublishWebpage
     {
         $request->merge(
             [
-                'publisher_id'   => $request->user()->id,
+                'publisher_id' => $request->user()->id,
                 'publisher_type' => 'OrganisationUser'
             ]
         );
@@ -126,5 +131,30 @@ class PublishWebpage
         return $this->handle($webpage, $validatedData);
     }
 
+    public function getElementsByClass(&$parentNode, $tagName, $className): array
+    {
+        $childNodes = [];
 
+        $childNodeList = $parentNode->getElementsByTagName($tagName);
+        for ($i = 0; $i < $childNodeList->length; $i++) {
+            $temp = $childNodeList->item($i);
+            if (stripos($temp->getAttribute('class'), $className) !== false) {
+                $nodes = $temp;
+                $children = $nodes->childNodes;
+                foreach ($children as $child) {
+                    $childNodes[] = [
+                        'section' => $className,
+                        'content' => $this->convertToHTML($child)
+                    ];
+                }
+            }
+        }
+
+        return $childNodes;
+    }
+
+    public function convertToHTML($child): string
+    {
+        return $child->ownerDocument->saveXML( $child );
+    }
 }
