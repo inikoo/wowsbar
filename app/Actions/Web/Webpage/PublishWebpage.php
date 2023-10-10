@@ -40,7 +40,7 @@ class PublishWebpage
         }
 
         $layout = $webpage->unpublishedSnapshot->layout;
-        $layout = $layout['html'][0]['html'];
+        $html = $layout['html'][0]['html'];
 
         $doc = new \DOMDocument('1.0', 'utf-8');
         @$doc->loadHTML($html);
