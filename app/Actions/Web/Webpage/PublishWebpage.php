@@ -46,6 +46,7 @@ class PublishWebpage
         @$doc->loadHTML($html);
 
         $layout['html'] = $this->getElementsByClass($doc, 'section', 'wowsbar-html');
+
         /** @var Snapshot $snapshot */
         $snapshot = StoreWebpageSnapshot::run(
             $webpage,
@@ -137,6 +138,7 @@ class PublishWebpage
 
         $childNodeList = $parentNode->getElementsByTagName($tagName);
         for ($i = 0; $i < $childNodeList->length; $i++) {
+            $childNodes = [];
             $temp = $childNodeList->item($i);
             if (stripos($temp->getAttribute('class'), $className) !== false) {
                 $nodes = $temp;
