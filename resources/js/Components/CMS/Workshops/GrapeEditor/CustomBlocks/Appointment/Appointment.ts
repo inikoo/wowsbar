@@ -42,7 +42,7 @@ export const Appointment = () => {
                     </div>
                 </div>
                 <div class="w-96">
-                    <div class="divide-y divide-gray-200 overflow-hidden rounded-lg bg-red-500 space-y-4">
+                    <div class="divide-y divide-gray-200 overflow-hidden rounded-lg bg-white space-y-4">
                         <div class="px-4 py-5 sm:px-6">
                             <section class="appointment-title">
                                 Select data & time
