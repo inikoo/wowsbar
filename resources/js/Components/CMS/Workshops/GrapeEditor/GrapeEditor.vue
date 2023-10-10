@@ -43,7 +43,8 @@ const Store = async (data, editor) => {
         const component = page.getMainComponent();
         return {
             html: editor.getHtml({ component }),
-            css: editor.getCss({ component })
+            css: editor.getCss({ component }),
+            js:editor.getJs({ component })
         }
     });
     deleteImageStore(data)
@@ -103,7 +104,6 @@ onMounted(() => {
             storeAfterUpload  : false,
             uploadFile: async function (e) {
                 var files = e.dataTransfer ? e.dataTransfer.files : e.target.files;
-                console.log('test',files)
              try {
              const response = await axios.post(
                 route(
