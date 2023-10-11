@@ -19,11 +19,12 @@ class ExtractWebpage
 
     public function handle($html): array
     {
-        $blocks = [];
         $this->html = $html[0];
 
         $doc = new \DOMDocument('1.0', 'utf-8');
         @$doc->loadHTML($this->html['html']);
+
+        $blocks = $this->getBlocks($doc);
 
         return [
             'css' => $html[0]['css'],
@@ -32,40 +33,24 @@ class ExtractWebpage
         ];
     }
 
-    public function getNumberBlocks(&$parentNode, $tagName, $className)
+
+    public function getBlocks(&$parentNode)
     {
-        $childNodeList = $parentNode->getElementsByTagName($tagName);
-        $numberBlocks = 0;
-
-        for ($i = 0; $i < $childNodeList->length; $i++) {
-            $temp = $childNodeList->item($i);
-            $classes = explode(' ', $temp->getAttribute('class'));
-
-            if(in_array($className, $classes)) {
-                $numberBlocks++;
-            }
-        }
-
-        return $numberBlocks;
-    }
-
-
-    public function getBlocks(&$parentNode, $tagName, $className)
-    {
-        $childNodeList = $parentNode->getElementsByTagName($tagName);
+        $childNodeList = $parentNode->getElementsByTagName('section');
         $blocks = [];
 
         for ($i = 0; $i < $childNodeList->length; $i++) {
             $childNode = $childNodeList->item($i);
             $classes = explode(' ', $childNode->getAttribute('class'));
 
-            if(in_array($className, $classes)) {
+            if (in_array('wowsbar-block', $classes)) {
                 $blocks[] = [
                     'id' => $childNode->getAttribute('data-id'),
                     'group' => $childNode->getAttribute('data-group'),
                     'type' => $childNode->getAttribute('data-type'),
                     'content' => match ($childNode->getAttribute('data-type')) {
-                    'html' => $this->extractHtml($childNode),
+                        'html' => $this->extractHtml($childNode),
+                        'appointment' => $this->extractAppointment($childNode),
                         default => null
                     }
                 ];
@@ -86,6 +71,27 @@ class ExtractWebpage
         }
 
         return $blocks;
+    }
+
+    public function extractAppointment($node): array
+    {
+        $childNodeList = $node->getElementsByTagName('section');
+        $subBlocks = [];
+
+        for ($i = 0; $i < $childNodeList->length; $i++) {
+            $childNode = $childNodeList->item($i);
+            $classes = explode(' ', $childNode->getAttribute('class'));
+
+            if (in_array('wowsbar-appointment-block', $classes)) {
+                $subBlocks[] = [
+                    'id' => $childNode->getAttribute('data-id'),
+                    'content' => $this->extractHtml($childNode)
+                ];
+            }
+        }
+
+        return $subBlocks;
+
     }
 
     public function getElementsByClass(&$parentNode, $tagName, $className): array

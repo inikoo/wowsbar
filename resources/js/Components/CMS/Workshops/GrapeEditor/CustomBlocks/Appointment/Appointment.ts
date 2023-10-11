@@ -10,7 +10,7 @@ export const Appointment = () => {
             <div class="bg-white w-fit grid grid-cols-2 max-w-3xl justify-center border-2 border-gray-300 overflow-hidden rounded-md divide-x divide-gray-100">
                 <div class="overflow-hidden bg-white sm:rounded-lg">
                     <div class="px-4 py-5 sm:p-6">
-                        <section class="wowsbar-sub-block wowsbar-sub-block-id-content">
+                        <section data-id="left-content" class="wowsbar-appointment-block">
                             <div class="flex justify-center align-middle ">
                                 <img src="https://dummyimage.com/50x50" data-gjs-removable="false" class="h-14 aspect-square"
                                     alt="Description of the image">
@@ -44,7 +44,7 @@ export const Appointment = () => {
                 <div class="w-96">
                     <div class="divide-y divide-gray-200 overflow-hidden rounded-lg bg-white space-y-4">
                         <div class="px-4 py-5 sm:px-6">
-                            <section class="wowsbar-sub-block wowsbar-sub-block-id-title">
+                            <section data-id="title" class="wowsbar-appointment-block">
                                 Select data & time
                             </section>
                         </div>
