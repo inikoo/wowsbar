@@ -91,7 +91,6 @@ class ExtractWebpage
         }
 
         return $subBlocks;
-
     }
 
     public function getElementsByClass(&$parentNode, $tagName, $className): array
