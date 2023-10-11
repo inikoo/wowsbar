@@ -15,6 +15,7 @@ use App\Enums\Organisation\Web\Webpage\WebpageStateEnum;
 use App\Enums\Portfolio\Snapshot\SnapshotStateEnum;
 use App\Models\Helpers\Snapshot;
 use App\Models\Web\Webpage;
+use DOMDocument;
 use Illuminate\Support\Arr;
 use Lorisleiva\Actions\ActionRequest;
 use function MongoDB\BSON\toJSON;
@@ -40,12 +41,15 @@ class PublishWebpage
         }
 
         $layout = $webpage->unpublishedSnapshot->layout;
-        $html = $layout['html'][0]['html'];
 
-        $doc = new \DOMDocument('1.0', 'utf-8');
-        @$doc->loadHTML($html);
+        if($layout!='') {
+            $html = $layout['html'][0]['html'];
 
-        $layout['html'] = $this->getElementsByClass($doc, 'section', 'wowsbar-html');
+            $doc = new DOMDocument('1.0', 'utf-8');
+            @$doc->loadHTML($html);
+
+            $layout['html'] = $this->getElementsByClass($doc, 'section', 'wowsbar-html');
+        }
 
         /** @var Snapshot $snapshot */
         $snapshot = StoreWebpageSnapshot::run(
