@@ -7,6 +7,7 @@
 
 namespace Database\Factories\Portfolio;
 
+use App\Enums\Portfolio\Banner\BannerTypeEnum;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class BannerFactory extends Factory
@@ -15,6 +16,7 @@ class BannerFactory extends Factory
     {
         return [
             'name'   => fake()->company(),
+            'type'=>BannerTypeEnum::LANDSCAPE->value
         ];
     }
 }

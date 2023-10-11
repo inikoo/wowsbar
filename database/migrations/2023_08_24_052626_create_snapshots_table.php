@@ -32,12 +32,10 @@ return new class () extends Migration {
             $table->boolean('first_commit')->default(false);
             $table->boolean('recyclable')->nullable();
             $table->string('recyclable_tag')->nullable();
-
             $table->timestampsTz();
             $table->index(['parent_type', 'parent_id']);
-            $table->index(['parent_type', 'parent_id','scope']);
+            $table->index(['parent_type', 'parent_id', 'scope']);
             $table->index(['publisher_id', 'publisher_type']);
-
         });
 
         Schema::table('websites', function (Blueprint $table) {
@@ -65,7 +63,7 @@ return new class () extends Migration {
             $table->dropForeign(['live_snapshot_id', 'unpublished_snapshot_id']);
         });
         Schema::table('websites', function (Blueprint $table) {
-            $table->dropForeign(['live_header_snapshot_id', 'unpublished_header_snapshot_id','live_footer_snapshot_id', 'unpublished_footer_snapshot_id']);
+            $table->dropForeign(['live_header_snapshot_id', 'unpublished_header_snapshot_id', 'live_footer_snapshot_id', 'unpublished_footer_snapshot_id']);
         });
         Schema::dropIfExists('snapshots');
     }
