@@ -16,9 +16,8 @@ class CustomerUserRequestLogsResource extends JsonResource
 {
     public function toArray($request): array|Arrayable|JsonSerializable
     {
-
         return [
-            'slug'            => $this['slug'],
+           // 'slug'            => $this['customer_user_slug'],
             'ip_address'      => $this['ip_address'],
             'route_name'      => $this['route_name'],
             'route_parameter' => $this['arguments'],

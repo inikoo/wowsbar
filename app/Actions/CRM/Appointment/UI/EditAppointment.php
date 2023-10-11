@@ -14,7 +14,6 @@ use App\Enums\CRM\Appointment\AppointmentTypeEnum;
 use App\Models\CRM\Appointment;
 use App\Models\CRM\Customer;
 use App\Models\Market\Shop;
-use App\Models\Organisation\Organisation;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -31,22 +30,22 @@ class EditAppointment extends InertiaAction
                     $request->route()->getName(),
                     $request->route()->parameters
                 ),
-                'title' => __('edit appointment'),
+                'title'    => __('edit appointment'),
                 'pageHead' => [
                     'title' => __('edit appointment'),
-                    'icon' => [
-                        'icon' => ['fal', 'fa-handshake'],
+                    'icon'  => [
+                        'icon'  => ['fal', 'fa-handshake'],
                         'title' => __('appointment')
                     ],
                     'actions' => [
                         [
-                            'type' => 'button',
+                            'type'  => 'button',
                             'style' => 'back',
                             'label' => __('back'),
                             'route' => [
                                 'name' => match ($request->route()->getName()) {
                                     'shops.show.appointments.edit' => 'org.shops.appointments.index',
-                                    default => preg_replace('/edit$/', 'index', $request->route()->getName())
+                                    default                        => preg_replace('/edit$/', 'index', $request->route()->getName())
                                 },
                                 'parameters' => array_values($request->route()->originalParameters())
                             ],
@@ -57,52 +56,52 @@ class EditAppointment extends InertiaAction
                     'blueprint' =>
                         [
                             [
-                                'title' => __('customer'),
+                                'title'  => __('customer'),
                                 'fields' => [
                                     'name' => [
-                                        'type' => 'input',
-                                        'label' => __('appointment name'),
+                                        'type'     => 'input',
+                                        'label'    => __('appointment name'),
                                         'required' => true,
-                                        'value' => $appointment->name
+                                        'value'    => $appointment->name
                                     ],
                                     'customer_id' => [
-                                        'type' => 'select',
-                                        'mode' => 'single',
-                                        'label' => __('customer'),
+                                        'type'     => 'select',
+                                        'mode'     => 'single',
+                                        'label'    => __('customer'),
                                         'required' => true,
-                                        'value' => $appointment->customer_id,
-                                        'options' => GetCustomerOptions::run(Customer::all())
+                                        'value'    => $appointment->customer_id,
+                                        'options'  => GetCustomerOptions::run(Customer::all())
                                     ],
                                     'type' => [
-                                        'type' => 'select',
-                                        'mode' => 'single',
-                                        'label' => __('type'),
+                                        'type'     => 'select',
+                                        'mode'     => 'single',
+                                        'label'    => __('type'),
                                         'required' => true,
-                                        'value' => $appointment->type,
-                                        'options' => Options::forEnum(AppointmentTypeEnum::class)
+                                        'value'    => $appointment->type,
+                                        'options'  => Options::forEnum(AppointmentTypeEnum::class)
                                     ],
                                     'event' => [
-                                        'type' => 'select',
-                                        'mode' => 'single',
-                                        'label' => __('event'),
+                                        'type'     => 'select',
+                                        'mode'     => 'single',
+                                        'label'    => __('event'),
                                         'required' => true,
-                                        'value' => $appointment->event,
-                                        'options' => Options::forEnum(AppointmentEventEnum::class)
+                                        'value'    => $appointment->event,
+                                        'options'  => Options::forEnum(AppointmentEventEnum::class)
                                     ],
                                     'event_address' => [
-                                        'type' => 'input',
-                                        'label' => __('event address'),
-                                        'value' => $appointment->event_address,
+                                        'type'     => 'input',
+                                        'label'    => __('event address'),
+                                        'value'    => $appointment->event_address,
                                         'required' => true,
                                     ],
                                     'schedule_at' => [
-                                        'type' => 'date',
-                                        'label' => __('schedule'),
-                                        'value' => $appointment->schedule_at,
+                                        'type'     => 'date',
+                                        'label'    => __('schedule'),
+                                        'value'    => $appointment->schedule_at,
                                         'required' => true,
                                     ],
                                     'description' => [
-                                        'type' => 'textarea',
+                                        'type'  => 'textarea',
                                         'label' => __('description'),
                                         'value' => $appointment->description
                                     ]
@@ -111,7 +110,7 @@ class EditAppointment extends InertiaAction
                         ],
                     'args' => [
                         'updateRoute' => [
-                            'name' => 'org.models.appointment.update',
+                            'name'       => 'org.models.appointment.update',
                             'parameters' => [$appointment->slug]
                         ],
                     ]
@@ -141,7 +140,7 @@ class EditAppointment extends InertiaAction
             ),
             [
                 [
-                    'type' => 'editingModel',
+                    'type'         => 'editingModel',
                     'editingModel' => [
                         'label' => __('editing appointment'),
                     ]

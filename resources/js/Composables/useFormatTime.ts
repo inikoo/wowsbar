@@ -18,6 +18,6 @@ export const useFormatTime = (dateIso: string, localeCode?: string, time?: boole
 // Relative time range
 export const useRangeFromNow = (dateIso: string, localeCode?: any) => {
     let tempLocaleCode = localeCode === 'zh-Hans' ? 'zhCN' : 'localeCode'
-    const datedate = new Date(dateIso)
-    return formatDistanceToNow(datedate, { locale: localesCode[tempLocaleCode] })
+    const date = new Date(dateIso)
+    return formatDistanceToNow(date, { locale: localesCode[tempLocaleCode] })
 }

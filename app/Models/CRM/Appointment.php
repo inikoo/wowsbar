@@ -66,7 +66,7 @@ class Appointment extends Model
         'state'            => AppointmentStateEnum::class,
         'type'             => AppointmentTypeEnum::class,
         'event'            => AppointmentEventEnum::class,
-        'schedule_at' => 'datetime'
+        'schedule_at'      => 'datetime'
     ];
 
     public function getSlugOptions(): SlugOptions

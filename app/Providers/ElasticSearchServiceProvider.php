@@ -18,7 +18,6 @@ use Matchish\ScoutElasticSearch\ElasticSearch\HitsIteratorAggregate;
 
 final class ElasticSearchServiceProvider extends ServiceProvider
 {
-
     public function register(): void
     {
 
@@ -47,4 +46,3 @@ final class ElasticSearchServiceProvider extends ServiceProvider
         return [Client::class];
     }
 }
-

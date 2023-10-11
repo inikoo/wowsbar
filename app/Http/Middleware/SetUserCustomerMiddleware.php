@@ -24,7 +24,7 @@ class SetUserCustomerMiddleware
 
             $request->merge(
                 [
-                    'customer' => Customer::find(session('customer_id')),
+                    'customer'     => Customer::find(session('customer_id')),
                     'customerUser' => CustomerUser::find(session('customer_user_id'))
 
                 ]

@@ -18,7 +18,7 @@ class StockImageSeeder extends Seeder
         foreach (glob(resource_path('art/stock_images/*/*/*')) as $filename) {
             $_filename = Str::after($filename, resource_path('art/stock_images'));
             if (preg_match('/\/(.*)\/(.*)/', $_filename, $fileData)) {
-                $scope     = Str::before($fileData[1],'/');
+                $scope     = Str::before($fileData[1], '/');
                 $imageName = $fileData[2];
                 StoreStockImage::run(
                     collection: 'stock_images',

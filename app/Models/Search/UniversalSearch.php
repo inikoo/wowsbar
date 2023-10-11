@@ -52,11 +52,11 @@ class UniversalSearch extends Model
 
     protected $guarded = [];
 
-    protected $table='universal_searches';
+    protected $table = 'universal_searches';
 
     public function searchableAs(): string
     {
-        return config('elasticsearch.index_prefix') . config('app.env').'_search';
+        return config('elasticsearch.index_prefix').'search';
     }
 
     public function toSearchableArray(): array

@@ -10,7 +10,7 @@ import {Head} from '@inertiajs/vue3'
 import PageHeading from '@/Components/Headings/PageHeading.vue'
 import {computed, ref} from "vue"
 import {useTabChange} from "@/Composables/tab-change"
-import TableUserRequestLogs from "@/Components/Tables/TableUserRequestLogs.vue"
+import TableCustomerUserRequestLogs from "@/Components/Tables/TableCustomerUserRequestLogs.vue"
 import TableHistories from "@/Components/Tables/TableHistories.vue"
 import Tabs from "@/Components/Navigation/Tabs.vue"
 
@@ -38,7 +38,7 @@ const handleTabUpdate = (tabSlug) => useTabChange(tabSlug, currentTab);
 const component = computed(() => {
 
     const components = {
-        request_logs: TableUserRequestLogs,
+        request_logs: TableCustomerUserRequestLogs,
         history: TableHistories,
         showcase: UsersShowcase
     }

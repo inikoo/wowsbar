@@ -38,14 +38,14 @@ class ShowDashboard
         $welcomeStep = Arr::get($customer->data, 'welcome_step');
         if (in_array($welcomeStep, [1, 2, 3])) {
             $data['welcome'] = [
-                'currentStep' => $welcomeStep,
+                'currentStep'   => $welcomeStep,
                 'steps_data'    => [
                     'step_1'    => [
-                        'id'    => 1,
-                        'label'=> 'Enter your website name',
-                        'description'   => 'Lorem ipsum dolor sit amet.',
-                        'component'     => 1,
-                        'websiteValue'  => '',
+                        'id'                         => 1,
+                        'label'                      => 'Enter your website name',
+                        'description'                => 'Lorem ipsum dolor sit amet.',
+                        'component'                  => 1,
+                        'websiteValue'               => '',
                         'storePortfolioWebsiteRoute' => [
                             'name'      => 'customer.models.portfolio-website.store.from-welcome'
                         ],
@@ -61,7 +61,7 @@ class ShowDashboard
                         "name"              => "My website 😸",
                         "url"               => "hello.com",
                         "number_banners"    => 0,
-                        "seo"           => [
+                        "seo"               => [
                             "name"          => "seo",
                             "label"         => "SEO",
                             "value"         => 'not_sure'

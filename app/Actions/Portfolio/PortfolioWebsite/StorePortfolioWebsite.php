@@ -109,17 +109,17 @@ class StorePortfolioWebsite
 
     public function asController(ActionRequest $request): PortfolioWebsite
     {
-        $customer=$request->get('customer');
-        $welcomeStep=Arr::get($customer,'data.welcome_step');
+        $customer   =$request->get('customer');
+        $welcomeStep=Arr::get($customer, 'data.welcome_step');
 
         $request->validate();
 
         $portfolioWebpage= $this->handle($customer, $request->validated());
 
-        if($welcomeStep==1){
+        if($welcomeStep==1) {
             $customer->update(
                 [
-                    'data->welcome_step'=>2
+                    'data->welcome_step'=> 2
                 ]
             );
         }

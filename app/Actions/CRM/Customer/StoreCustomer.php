@@ -49,8 +49,8 @@ class StoreCustomer
             data_set($modelData, 'ulid', Str::ulid());
             data_set($modelData, 'timezone_id', $organisation->timezone_id, overwrite: false);
             data_set($modelData, 'language_id', $organisation->language_id, overwrite: false);
-            data_set($modelData,'data',[
-                'welcome_step'=>1
+            data_set($modelData, 'data', [
+                'welcome_step'=> 1
             ]);
 
 

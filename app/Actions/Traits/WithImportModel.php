@@ -17,7 +17,6 @@ use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
 use Maatwebsite\Excel\Facades\Excel;
 
-
 trait WithImportModel
 {
     use AsAction;
@@ -44,13 +43,13 @@ trait WithImportModel
 
     public function asCommand(Command $command): int
     {
-        $filename = $command->argument('filename');
+        $filename    = $command->argument('filename');
         $newFileName = now()->timestamp . ".xlsx";
 
-        if($command->option('g_drive')){
+        if($command->option('g_drive')) {
             $googleDisk = Storage::disk('google');
 
-            if(!$googleDisk->exists($filename)){
+            if(!$googleDisk->exists($filename)) {
                 $command->error("$filename do not found in GDrive");
                 return 1;
             }
@@ -62,10 +61,10 @@ trait WithImportModel
 
 
 
-      //  if (!$filePath) {
+        //  if (!$filePath) {
         //    $filename = $this->downloadFromGoogle($command->option('google'));
         //    $filePath = "storage/app/tmp/" . $filename;
-      //  }
+        //  }
 
         $file = ConvertUploadedFile::run("storage/app/tmp/" . $newFileName);
 

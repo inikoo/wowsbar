@@ -15,9 +15,10 @@ use App\Http\Middleware\HandleDeliveryInertiaRequests;
 use App\Http\Middleware\HandleCustomerInertiaRequests;
 use App\Http\Middleware\HandleOrgInertiaRequests;
 use App\Http\Middleware\HandlePublicInertiaRequests;
+use App\Http\Middleware\LogCustomerUserRequestMiddleware;
 use App\Http\Middleware\LogLiveOrganisationUsersMiddleware;
 use App\Http\Middleware\LogLiveUsersMiddleware;
-use App\Http\Middleware\LogUserRequestMiddleware;
+use App\Http\Middleware\LogOrganisationUserRequestMiddleware;
 use App\Http\Middleware\OrgAuthenticate;
 use App\Http\Middleware\PreventRequestsDuringMaintenance;
 use App\Http\Middleware\PublicAuthenticate;
@@ -81,7 +82,7 @@ class Kernel extends HttpKernel
             HandleOrgInertiaRequests::class,
             AddLinkHeadersForPreloadedAssets::class,
             LogLiveOrganisationUsersMiddleware::class,
-            LogUserRequestMiddleware::class
+            LogOrganisationUserRequestMiddleware::class
         ],
         'public' => [
             DetectWebsite::class,
@@ -109,7 +110,7 @@ class Kernel extends HttpKernel
             HandleCustomerInertiaRequests::class,
             AddLinkHeadersForPreloadedAssets::class,
             LogLiveUsersMiddleware::class,
-            LogUserRequestMiddleware::class
+            LogCustomerUserRequestMiddleware::class
         ],
 
 

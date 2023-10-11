@@ -16,10 +16,8 @@ use App\Enums\Organisation\Web\Webpage\WebpageStateEnum;
 use App\Enums\Portfolio\Snapshot\SnapshotStateEnum;
 use App\Models\Helpers\Snapshot;
 use App\Models\Web\Webpage;
-use DOMDocument;
 use Illuminate\Support\Arr;
 use Lorisleiva\Actions\ActionRequest;
-use function MongoDB\BSON\toJSON;
 
 class PublishWebpage
 {
@@ -36,7 +34,7 @@ class PublishWebpage
 
         foreach ($webpage->snapshots()->where('state', SnapshotStateEnum::LIVE)->get() as $liveSnapshot) {
             UpdateSnapshot::run($liveSnapshot, [
-                'state' => SnapshotStateEnum::HISTORIC,
+                'state'           => SnapshotStateEnum::HISTORIC,
                 'published_until' => now()
             ]);
         }
@@ -44,20 +42,20 @@ class PublishWebpage
         $layout = $webpage->unpublishedSnapshot->layout;
 
 
-        if($layout!='' and  Arr::get($layout,'html')  ) {
-            $layout['html'] = ExtractWebpage::run(Arr::get($layout,'html'));
+        if($layout!='' and  Arr::get($layout, 'html')) {
+            $layout['html'] = ExtractWebpage::run(Arr::get($layout, 'html'));
         }
 
         /** @var Snapshot $snapshot */
         $snapshot = StoreWebpageSnapshot::run(
             $webpage,
             [
-                'state' => SnapshotStateEnum::LIVE,
-                'published_at' => now(),
-                'layout' => $layout,
-                'first_commit' => $firstCommit,
-                'comment' => Arr::get($modelData, 'comment'),
-                'publisher_id' => Arr::get($modelData, 'publisher_id'),
+                'state'          => SnapshotStateEnum::LIVE,
+                'published_at'   => now(),
+                'layout'         => $layout,
+                'first_commit'   => $firstCommit,
+                'comment'        => Arr::get($modelData, 'comment'),
+                'publisher_id'   => Arr::get($modelData, 'publisher_id'),
                 'publisher_type' => Arr::get($modelData, 'publisher_type'),
             ]
         );
@@ -65,8 +63,8 @@ class PublishWebpage
         StoreDeployment::run(
             $webpage,
             [
-                'snapshot_id' => $snapshot->id,
-                'publisher_id' => Arr::get($modelData, 'publisher_id'),
+                'snapshot_id'    => $snapshot->id,
+                'publisher_id'   => Arr::get($modelData, 'publisher_id'),
                 'publisher_type' => Arr::get($modelData, 'publisher_type'),
             ]
         );
@@ -75,10 +73,10 @@ class PublishWebpage
 
 
         $updateData = [
-            'live_snapshot_id' => $snapshot->id,
-            'compiled_layout' => $compiledLayout,
+            'live_snapshot_id'   => $snapshot->id,
+            'compiled_layout'    => $compiledLayout,
             'published_checksum' => md5(json_encode($snapshot->layout)),
-            'state' => WebpageStateEnum::LIVE,
+            'state'              => WebpageStateEnum::LIVE,
         ];
 
         if ($webpage->state == WebpageStateEnum::IN_PROCESS or $webpage->state == WebpageStateEnum::READY) {
@@ -102,8 +100,8 @@ class PublishWebpage
     public function rules(): array
     {
         return [
-            'comment' => ['sometimes', 'required', 'string', 'max:1024'],
-            'publisher_id' => ['sometimes'],
+            'comment'        => ['sometimes', 'required', 'string', 'max:1024'],
+            'publisher_id'   => ['sometimes'],
             'publisher_type' => ['sometimes', 'string'],
         ];
     }
@@ -112,7 +110,7 @@ class PublishWebpage
     {
         $request->merge(
             [
-                'publisher_id' => $request->user()->id,
+                'publisher_id'   => $request->user()->id,
                 'publisher_type' => 'OrganisationUser'
             ]
         );

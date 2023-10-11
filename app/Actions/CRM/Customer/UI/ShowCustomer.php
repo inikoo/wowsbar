@@ -150,8 +150,8 @@ class ShowCustomer extends InertiaAction
             ]
         )->table(IndexAppointments::make()->tableStructure(parent: $customer, prefix: CustomerTabsEnum::APPOINTMENTS->value))
             ->table(IndexCustomerWebsites::make()->tableStructure(
-            parent: $customer,
-            modelOperations: [
+                parent: $customer,
+                modelOperations: [
                 'createLink' => [
                     /*
                     [
@@ -175,14 +175,14 @@ class ShowCustomer extends InertiaAction
                     ],
                 ]
             ],
-            // exportLinks: [
-            //     'export' => [
-            //         'route' => [
-            //             'name' => 'export.websites.index'
-            //         ]
-            //     ]
-            // ]
-        ));
+                // exportLinks: [
+                //     'export' => [
+                //         'route' => [
+                //             'name' => 'export.websites.index'
+                //         ]
+                //     ]
+                // ]
+            ));
     }
 
     public function jsonResponse(Customer $customer): CustomerResource

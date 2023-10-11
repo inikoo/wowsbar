@@ -7,13 +7,11 @@
 
 namespace App\Models\Traits;
 
-use App\Drivers\Audits\ElasticsearchAuditDriver;
 use OwenIt\Auditing\Auditable;
 
 trait HasHistory
 {
     use Auditable;
-    use ElasticSearchAuditable;
 
     protected array $auditEvents = [
         'created',
@@ -22,5 +20,4 @@ trait HasHistory
         'restored',
     ];
 
-    //    protected string $auditDriver = ElasticsearchAuditDriver::class;
 }

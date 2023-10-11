@@ -36,12 +36,12 @@ class ShowPublicAppointment
         return Inertia::render(
             'Webpage',
             [
-               
+
                 'content' => $webpage->compiled_layout,
-             
+
             ]
         );
     }
 
-   
+
 }
