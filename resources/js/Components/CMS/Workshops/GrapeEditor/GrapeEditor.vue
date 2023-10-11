@@ -80,8 +80,6 @@ const Load = async (data) => {
     }
 }
 
-console.log('inii',props.useBasic)
-
 const plugin = props.useBasic ?  [Webpage, Basic, usePlugin(grapesjsIcons, options),...props.plugins] :  [Webpage, usePlugin(grapesjsIcons, options),...props.plugins]
 
 
@@ -94,7 +92,7 @@ onMounted(() => {
         noticeOnUnload: false,
         plugins: plugin,
         canvas: {
-            // styles: ['https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css']
+            styles: ['https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css'],
             scripts:['https://cdn.tailwindcss.com']
         },
         storageManager: {
@@ -118,7 +116,7 @@ onMounted(() => {
                 for(const image of response.data.data){
                     let imageToStore = 
                         {
-                        src: image.thumbnail.original,
+                        src: image.source.original,
                         type: 'image',
                         id: image.id,
                         name : image.slug
@@ -134,11 +132,8 @@ onMounted(() => {
 
     });
     editorInstance.value.Storage.add('remote', {
-        async load() {
-          
-            return Load()
-        },
-        async store(data) { return Store(data, editorInstance.value) },
+        async load() { return Load() },
+        async store(data) { return Store(data, editorInstance.value) }
     });
     CustomBlock(editorInstance.value)
 });
@@ -155,6 +150,19 @@ onMounted(() => {
 </template>
 
 <style lang="scss">
+
+.gjs-cv-canvas {
+    box-sizing: border-box;
+    width: 80%;
+    height: calc(100% - 40px);
+    bottom: 0;
+    margin: auto;
+    overflow: hidden;
+    z-index: 1;
+    position: absolute;
+    left: 35px;
+    top: 70px;
+}
 
 .editor{
     width: 100%;

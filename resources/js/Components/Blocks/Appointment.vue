@@ -108,7 +108,7 @@ const getDate = () => {
 <template >
     <div class="flex justify-center">
         <div
-            class="bg-white w-fit grid grid-cols-2 max-w-3xl justify-center border-2 border-gray-300 overflow-hidden rounded-md divide-x divide-gray-100">
+            class="mt-12 bg-white w-fit grid grid-cols-2 max-w-3xl justify-center border-2 border-gray-300 overflow-hidden rounded-md divide-x divide-gray-100">
             <div class="overflow-hidden bg-white sm:rounded-lg">
                 <div class="px-4 py-5 sm:p-6">
                     <div v-html="data.info"></div>
