@@ -1,16 +1,16 @@
 export const Appointment = () => {
     return {
-      id: 'appointment-block-3',
+      id: 'appointment-block',
       class: '',
       category: 'Appointment',
       label : 'appointment',
       content :`
-      <section class="wowsbar" data="wowsbar-section">
+      <section class="wowsbar-block wowsbar-block-type-appointment wowsbar-with-sub-blocks">
         <div class="flex justify-center">
             <div class="bg-white w-fit grid grid-cols-2 max-w-3xl justify-center border-2 border-gray-300 overflow-hidden rounded-md divide-x divide-gray-100">
                 <div class="overflow-hidden bg-white sm:rounded-lg">
                     <div class="px-4 py-5 sm:p-6">
-                        <section class="appointment-content">
+                        <section class="wowsbar-sub-block wowsbar-sub-block-id-content">
                             <div class="flex justify-center align-middle ">
                                 <img src="https://dummyimage.com/50x50" data-gjs-removable="false" class="h-14 aspect-square"
                                     alt="Description of the image">
@@ -44,7 +44,7 @@ export const Appointment = () => {
                 <div class="w-96">
                     <div class="divide-y divide-gray-200 overflow-hidden rounded-lg bg-white space-y-4">
                         <div class="px-4 py-5 sm:px-6">
-                            <section class="appointment-title">
+                            <section class="wowsbar-sub-block wowsbar-sub-block-id-title">
                                 Select data & time
                             </section>
                         </div>
