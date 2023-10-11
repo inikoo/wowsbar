@@ -64,12 +64,12 @@ class ExtractWebpage
 
     public function extractHtml($node): string
     {
-        $blocks = '';
-        $children = $node->childNodes;
-
-        foreach ($children as $child) {
-            $blocks .= $this->convertToHTML($child);
-        }
+        $blocks = $this->convertToHTML($node);
+//        $children = $node->childNodes;
+//
+//        foreach ($children as $child) {
+//            $blocks .= $this->convertToHTML($child);
+//        }
 
 //        dd($blocks);
 
