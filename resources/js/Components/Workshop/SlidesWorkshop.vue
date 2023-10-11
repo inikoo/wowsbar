@@ -514,8 +514,8 @@ const uploadImageRespone = (res) => {
             <div :class="[
                 'p-2 mb-4 md:pl-3 cursor-pointer space-x-3 md:space-x-2 ring-1 ring-gray-300 flex flex-row items-center md:block',
                 commonEditActive
-                    ? 'tabNavigationActive bg-gray-200/60 font-medium'
-                    : 'tabNavigation hover:bg-gray-100 border-gray-300',
+                    ? 'navigationActiveCustomer bg-gray-200/60 font-medium'
+                    : 'navigationCustomer hover:bg-gray-100 border-gray-300',
                 ]" @click="setCommonEdit"
             >
                 <FontAwesomeIcon v-if="props.data.common.user == props.user || !props.data.common.user"
@@ -540,8 +540,8 @@ const uploadImageRespone = (res) => {
                         v-if="slide.ulid" :class="[
                             'grid grid-flow-col relative sm:py-1 mb-2 items-center justify-between ring-1 ring-gray-300',
                             slide.ulid == get(currentComponentBeenEdited, 'ulid')
-                                ? 'tabNavigationActive font-medium'
-                                : 'tabNavigation',
+                                ? 'navigationActiveCustomer font-medium'
+                                : 'navigationCustomer',
                             slide.user != props.user && slide.user
                                 ? 'border-l-gray-500 border-l-4 bg-gray-200/60 text-gray-600 font-medium cursor-not-allowed'
                                 : 'cursor-pointer',

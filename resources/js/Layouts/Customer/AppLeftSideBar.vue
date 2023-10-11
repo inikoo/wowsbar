@@ -90,8 +90,8 @@ const handleToggleLeftbar = () => {
                         :key="itemKey" :href="route(item.route)"
                         :class="[
 							itemKey === layout.currentModule
-								? 'tabNavigationActive dark:border-gray-100 dark:bg-gray-600 px-0.5'
-								: 'tabNavigation dark:hover:bg-dark-700 px-1',
+								? 'navigationActiveCustomer dark:border-gray-100 dark:bg-gray-600 px-0.5'
+								: 'navigationCustomer dark:hover:bg-dark-700 px-1',
 							layout.leftSidebar.show ? 'px-3' : '',
 							'group flex items-center text-sm font-medium py-2',
 						]"

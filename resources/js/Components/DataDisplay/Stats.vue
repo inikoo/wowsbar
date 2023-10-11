@@ -20,8 +20,8 @@ defineProps(['stats']);
                 <dt class="truncate text-sm font-medium text-gray-500 dark:text-gray-400 capitalize">{{ trans(item.name) }}</dt>
                 <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-800 dark:text-gray-300">
                     <Link class="special-underline" v-if="item.href"
-                          :href="route(item.href['name'],item.href['parameters'])">
-                        {{ item.stat }}
+                        :href="route(item.href['name'],item.href['parameters'])">
+                        {{ item.stat ?? 0 }}
                     </Link>
                     <span v-else>{{ trans(item.stat) }}</span>
                 </dd>

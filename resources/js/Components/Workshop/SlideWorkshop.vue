@@ -66,8 +66,8 @@ const current = ref(0);
                         :class="[
                             'group cursor-pointer px-6 sm:px-3 py-2 flex items-center justify-center sm:justify-start text-sm font-medium',
                             key == current
-                                ? 'tabNavigationActive'
-                                : 'tabNavigation',
+                                ? 'navigationActiveCustomer'
+                                : 'navigationCustomer',
                         ]"
                         :aria-current="key === current ? 'page' : undefined"
                     >
