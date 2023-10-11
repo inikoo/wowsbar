@@ -4,7 +4,8 @@ export const BlogBlock1 = () => {
      class: '',
      category: 'Blog',
      label :  'Blog One',
-     content : `<section class="text-gray-600 body-font">
+     content : `
+     <section class="wowsbar-block-type-blog wowsbar-block">
      <div class="container px-5 py-24 mx-auto">
          <div class="flex m-4">
              <!-- First Content Block -->
@@ -64,7 +65,8 @@ export const BlogBlock2 = () => {
      class: '',
      category: 'Blog',
      label :  'Blog Two',
-     content : `<section class="text-gray-600 body-font">
+     content : `
+     <section class="wowsbar-block-type-blog wowsbar-block">
      <div class="text-gray-600 body-font">
      <div class="container px-5 py-24 mx-auto">
          <div class="flex  m-4">
@@ -85,7 +87,6 @@ export const BlogBlock2 = () => {
                  </div>
              </div>
              
-             <!-- Second Blog Post Entry (similar structure) -->
              <div class="p-4 md:w-1/3">
              <div class="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
                  <img class="lg:h-48 md:h-36 w-full object-cover object-center" src="https://dummyimage.com/720x400" alt="blog">
@@ -101,9 +102,7 @@ export const BlogBlock2 = () => {
                  </div>
              </div>
          </div>
-             
-             <!-- Third Blog Post Entry (similar structure) -->
-             <div class="p-4 md:w-1/3">
+          <div class="p-4 md:w-1/3">
              <div class="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
                  <img class="lg:h-48 md:h-36 w-full object-cover object-center" src="https://dummyimage.com/720x400" alt="blog">
                  <div class="p-6">
@@ -117,8 +116,7 @@ export const BlogBlock2 = () => {
                      </div>
                  </div>
              </div>
-         </div>
-             
+         </div>   
          </div>
      </div>
  </div>
@@ -133,7 +131,8 @@ export const BlogBlock3 = () => {
      class: '',
      category: 'Blog',
      label :  'Blog three',
-     content : `<section class="text-gray-600 body-font">
+     content : `
+     <section class="wowsbar-block-type-hero wowsbar-block">
      <div class="bg-white py-24 sm:py-32">
      <div class="mx-auto max-w-7xl px-6 lg:px-8">
        <div class="mx-auto max-w-2xl text-center">
@@ -247,7 +246,6 @@ export const BlogBlock3 = () => {
        </div>
      </div>
    </div>
-   
  </section>
    `,
     }
@@ -260,7 +258,7 @@ export const BlogBlock4 = () => {
      category: 'Blog',
      label :  'Blog four',
      content : `
-    <section class="text-gray-600 body-font">
+     <section class="wowsbar-block-type-hero wowsbar-block">
             <div class="bg-white py-24 sm:py-32">
             <div class="mx-auto max-w-7xl px-6 lg:px-8">
             <div class="mx-auto max-w-2xl lg:max-w-4xl">

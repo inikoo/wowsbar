@@ -20,7 +20,7 @@ const props = defineProps<{
     content: Array
 }>()
 
-
+console.log('porpsd',props)
 
 const Book = {
     description: "The Basic tee is an honest new take on a classic. The tee uses super soft, pre-shrunk cotton for true comfort and a dependable fit",
