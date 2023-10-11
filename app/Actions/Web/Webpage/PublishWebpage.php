@@ -42,7 +42,7 @@ class PublishWebpage
 
         $layout = $webpage->unpublishedSnapshot->layout;
 
-        if($layout!='') {
+        if($layout!='' or Arr::get($layout,'html')!='') {
             $html = $layout['html'][0]['html'];
 
             $doc = new DOMDocument('1.0', 'utf-8');
