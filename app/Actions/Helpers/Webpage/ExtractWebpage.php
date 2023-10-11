@@ -61,13 +61,13 @@ class ExtractWebpage
         return $blocks;
     }
 
-    public function extractHtml($node): array
+    public function extractHtml($node): string
     {
-        $blocks = [];
+        $blocks = '';
         $children = $node->childNodes;
 
         foreach ($children as $child) {
-            $blocks[] = $this->convertToHTML($child);
+            $blocks .= $this->convertToHTML($child);
         }
 
         return $blocks;
