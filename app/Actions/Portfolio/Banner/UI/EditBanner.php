@@ -49,7 +49,7 @@ class EditBanner extends InertiaAction
                 'title'       => __("Website's settings"),
                 'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->getName(),
-                    $request->route()->parameters()
+                    $request->route()->originalParameters()
                 ),
                 'navigation'  => [
                     'previous' => $this->getPrevious($banner, $request),

@@ -8,6 +8,7 @@
 namespace App\Http\Middleware;
 
 use App\Models\Auth\CustomerUser;
+use App\Models\CRM\Customer;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
@@ -23,7 +24,9 @@ class SetUserCustomerMiddleware
 
             $request->merge(
                 [
+                    'customer' => Customer::find(session('customer_id')),
                     'customerUser' => CustomerUser::find(session('customer_user_id'))
+
                 ]
             );
         }
