@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "ext-dom": "*",
         "ext-fileinfo": "*",
         "ext-pdo": "*",
         "aws/aws-sdk-php": "^3.278",
@@ -33,6 +34,7 @@
         "pusher/pusher-php-server": "^7.2",
         "sentry/sentry-laravel": "^3.7",
         "spatie/crawler": "^8.0",
+        "spatie/laravel-analytics": "^5.0",
         "spatie/laravel-medialibrary": "^10.0.0",
         "spatie/laravel-options": "^1.1",
         "spatie/laravel-permission": "^5.10",
@@ -42,8 +44,7 @@
         "tightenco/ziggy": "^1.0",
         "vemcogroup/laravel-translation": "^3.0",
         "vlucas/phpdotenv": "^5.5",
-        "xendit/xendit-php": "^2.19",
-        "ext-dom": "*"
+        "xendit/xendit-php": "^2.19"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.13",
