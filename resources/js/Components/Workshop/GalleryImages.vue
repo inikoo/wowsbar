@@ -87,15 +87,18 @@ const collectImage = (image) => {
     <div class="flex gap-x-2">
         <!-- Sidebar -->
         <section class="bg-gray-50 w-64">
-            <div class="py-2 px-2 cursor-pointer hover:bg-gray-200 text-sm flex gap-x-1 items-center text-gray-600 hover:text-gray-700"
-                :class="[activeSidebar == 'uploaded_images' ? 'navigationActiveCustomer' : 'navigationCustomer']"
+            <!-- Uploaded Images -->
+            <div class="py-2 px-2 cursor-pointer text-sm flex gap-x-1 items-center"
+                :class="[activeSidebar == 'uploaded_images' ? 'navigationSecondActiveCustomer' : 'navigationSecondCustomer']"
                 @click="activeSidebar = 'uploaded_images'" id="uploaded_images"
             >
                 <FontAwesomeIcon icon='fal fa-cloud-upload' class='w-4 h-4 text-gray-400' aria-hidden='true' />
                 <span>Uploaded Images</span>
             </div>
-            <div class="py-2 px-2 cursor-pointer hover:bg-gray-200 text-sm flex gap-x-1 items-center text-gray-600 hover:text-gray-700"
-                :class="[activeSidebar == 'stock_images' ? 'navigationActiveCustomer' : 'navigationCustomer']"
+
+            <!-- Stock Images -->
+            <div class="py-2 px-2 cursor-pointer text-sm flex gap-x-1 items-center"
+                :class="[activeSidebar == 'stock_images' ? 'navigationSecondActiveCustomer' : 'navigationSecondCustomer']"
                 @click="activeSidebar = 'stock_images'" id="stock_images"
             >
                 <FontAwesomeIcon icon='fal fa-image-polaroid' class='w-4 h-4 text-gray-400' aria-hidden='true' />

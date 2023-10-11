@@ -17,7 +17,7 @@ const props = defineProps<{
 <template>
     <nav class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8" aria-label="Progress">
         <ol role="list" class="overflow-hidden rounded-md lg:flex lg:border lg:border-gray-200">
-            <li v-for="(step, stepIdx) in stepsList" :key="step.id" class="relative overflow-hidden lg:flex-1">
+            <li v-for="(step, stepName, stepIdx) in stepsList" :key="step.id" class="relative overflow-hidden lg:flex-1">
                 <div class="overflow-hidden border border-gray-200 lg:border-0"
                     :class="[stepIdx === 0  // For first Step
                         ? 'rounded-t-md border-b-0'

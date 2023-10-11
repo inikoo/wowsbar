@@ -175,13 +175,13 @@ class ShowCustomer extends InertiaAction
                     ],
                 ]
             ],
-            exportLinks: [
-                'export' => [
-                    'route' => [
-                        'name' => 'export.websites.index'
-                    ]
-                ]
-            ]
+            // exportLinks: [
+            //     'export' => [
+            //         'route' => [
+            //             'name' => 'export.websites.index'
+            //         ]
+            //     ]
+            // ]
         ));
     }
 

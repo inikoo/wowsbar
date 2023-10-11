@@ -145,13 +145,13 @@ class IndexPortfolioSocialAccount extends InertiaAction
         )->table(
             $this->tableStructure(
                 prefix: 'accounts',
-                exportLinks: [
-                    'export' => [
-                        'route' => [
-                            'name' => 'export.websites.index'
-                        ]
-                    ]
-                ]
+                // exportLinks: [
+                //     'export' => [
+                //         'route' => [
+                //             'name' => 'export.websites.index'
+                //         ]
+                //     ]
+                // ]
             )
         )->table(IndexHistories::make()->tableStructure());
     }
