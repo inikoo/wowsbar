@@ -15,7 +15,6 @@ use App\Models\Portfolio\Banner;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
- * @property mixed $published_hash
  * @property mixed $live_snapshot_id
  */
 class BannerResource extends JsonResource
@@ -47,7 +46,6 @@ class BannerResource extends JsonResource
             'slug'               => $banner->slug,
             'name'               => $banner->name,
             'state'              => $banner->state,
-            'published_hash'     => $this->published_hash,
             'state_label'        => $banner->state->labels()[$banner->state->value],
             'state_icon'         => match ($banner->state) {
                 BannerStateEnum::LIVE => [

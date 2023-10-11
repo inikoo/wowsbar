@@ -1,86 +1,85 @@
+<script setup lang="ts">
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { faCheck } from '@/../private/pro-light-svg-icons'
+import { library } from '@fortawesome/fontawesome-svg-core'
+library.add(faCheck)
+
+const props = defineProps<{
+    stepsList: {
+        id: number
+        label: string
+        description: string
+    }[]
+    currentStep: number
+}>()
+</script>
+
 <template>
-    <div class="lg:border-b lg:border-t lg:border-gray-200">
-        <nav class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8" aria-label="Progress">
-            <ol role="list"
-                class="overflow-hidden rounded-md lg:flex lg:rounded-none lg:border-l lg:border-r lg:border-gray-200">
-                <li v-for="(step, stepIdx) in steps" :key="step.id" class="relative overflow-hidden lg:flex-1">
-                    <div
-                        :class="[stepIdx === 0 ? 'rounded-t-md border-b-0' : '', stepIdx === steps.length - 1 ? 'rounded-b-md border-t-0' : '', 'overflow-hidden border border-gray-200 lg:border-0']">
-                        <a v-if="step.status === 'complete'" :href="step.href" class="group">
-                            <span
-                                class="absolute left-0 top-0 h-full w-1 bg-transparent group-hover:bg-gray-200 lg:bottom-0 lg:top-auto lg:h-1 lg:w-full"
-                                aria-hidden="true" />
-                            <span
-                                :class="[stepIdx !== 0 ? 'lg:pl-9' : '', 'flex items-start px-6 py-5 text-sm font-medium']">
-                                <span class="flex-shrink-0">
-                                    <span class="flex h-10 w-10 items-center justify-center rounded-full bg-indigo-600">
-                                        <CheckIcon class="h-6 w-6 text-white" aria-hidden="true" />
-                                    </span>
-                                </span>
-                                <span class="ml-4 mt-0.5 flex min-w-0 flex-col">
-                                    <span class="text-sm font-medium">{{ step.name }}</span>
-                                    <span class="text-sm font-medium text-gray-500">{{ step.description }}</span>
-                                </span>
-                            </span>
-                        </a>
-                        <a v-else-if="step.status === 'current'" :href="step.href" aria-current="step">
-                            <span
-                                class="absolute left-0 top-0 h-full w-1 bg-indigo-600 lg:bottom-0 lg:top-auto lg:h-1 lg:w-full"
-                                aria-hidden="true" />
-                            <span
-                                :class="[stepIdx !== 0 ? 'lg:pl-9' : '', 'flex items-start px-6 py-5 text-sm font-medium']">
-                                <span class="flex-shrink-0">
-                                    <span
-                                        class="flex h-10 w-10 items-center justify-center rounded-full border-2 border-indigo-600">
-                                        <span class="text-indigo-600">{{ step.id }}</span>
-                                    </span>
-                                </span>
-                                <span class="ml-4 mt-0.5 flex min-w-0 flex-col">
-                                    <span class="text-sm font-medium text-indigo-600">{{ step.name }}</span>
-                                    <span class="text-sm font-medium text-gray-500">{{ step.description }}</span>
+    <nav class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8" aria-label="Progress">
+        <ol role="list" class="overflow-hidden rounded-md lg:flex lg:border lg:border-gray-200">
+            <li v-for="(step, stepIdx) in stepsList" :key="step.id" class="relative overflow-hidden lg:flex-1">
+                <div class="overflow-hidden border border-gray-200 lg:border-0"
+                    :class="[stepIdx === 0  // For first Step
+                        ? 'rounded-t-md border-b-0'
+                        : stepIdx === stepsList.length - 1  // For last Step
+                            ? 'rounded-b-md border-t-0'
+                            : ''
+                ]">
+                    <div class="group">
+                        <!-- The bottom border -->
+                        <span aria-hidden="true"
+                            class="absolute left-0 top-0 h-full w-1 lg:bottom-0 lg:top-auto lg:h-1 lg:w-full"
+                            :class="[
+                                stepIdx + 1 < currentStep  // Previous step
+                                    ? 'bg-gray-300'
+                                    : currentStep == stepIdx + 1  // Current step
+                                        ? ' bg-gray-500'
+                                        : 'bg-transparent'
+                            ]"
+                        />
+                        <span :class="[stepIdx !== 0 ? 'lg:pl-9' : '', 'flex items-start px-6 py-5 text-sm font-medium']">
+                            <!-- The circle: Number -->
+                            <span class="flex-shrink-0">
+                                <span class="flex h-10 w-10 items-center justify-center rounded-full"
+                                    :class="[
+                                        stepIdx + 1 < currentStep  // Previous step
+                                            ? 'bg-gray-600 text-white'
+                                            : currentStep == stepIdx + 1  // Current step
+                                                ? ' border border-gray-600 text-gray-600'
+                                                : 'text-gray-400 border border-slate-300 '
+                                    ]"
+                                >
+                                    <FontAwesomeIcon v-if="stepIdx + 1 < currentStep" icon='fal fa-check' class='h-6 w-6' aria-hidden='true' />
+                                    <span v-else class="">{{ step.id }}</span>
                                 </span>
                             </span>
-                        </a>
-                        <a v-else :href="step.href" class="group">
-                            <span
-                                class="absolute left-0 top-0 h-full w-1 bg-transparent group-hover:bg-gray-200 lg:bottom-0 lg:top-auto lg:h-1 lg:w-full"
-                                aria-hidden="true" />
-                            <span
-                                :class="[stepIdx !== 0 ? 'lg:pl-9' : '', 'flex items-start px-6 py-5 text-sm font-medium']">
-                                <span class="flex-shrink-0">
-                                    <span
-                                        class="flex h-10 w-10 items-center justify-center rounded-full border-2 border-gray-300">
-                                        <span class="text-gray-500">{{ step.id }}</span>
-                                    </span>
-                                </span>
-                                <span class="ml-4 mt-0.5 flex min-w-0 flex-col">
-                                    <span class="text-sm font-medium text-gray-500">{{ step.name }}</span>
-                                    <span class="text-sm font-medium text-gray-500">{{ step.description }}</span>
-                                </span>
+                            
+                            <!-- The title and description -->
+                            <span class="text-sm ml-4 mt-0.5 flex min-w-0 flex-col"
+                                :class="[
+                                    stepIdx + 1 <= currentStep  // Previous & current step
+                                        ? 'text-gray-600'
+                                        : 'text-gray-400'
+                                ]"
+                            >
+                                <span class="font-semibold">{{ step.label }}</span>
+                                <span class="font-light">{{ step.description }}</span>
                             </span>
-                        </a>
-                        <template v-if="stepIdx !== 0">
-                            <!-- Separator -->
-                            <div class="absolute inset-0 left-0 top-0 hidden w-3 lg:block" aria-hidden="true">
-                                <svg class="h-full w-full text-gray-300" viewBox="0 0 12 82" fill="none"
-                                    preserveAspectRatio="none">
-                                    <path d="M0.5 0V31L10.5 41L0.5 51V82" stroke="currentcolor"
-                                        vector-effect="non-scaling-stroke" />
-                                </svg>
-                            </div>
-                        </template>
+                        </span>
                     </div>
-                </li>
+
+                    <template v-if="stepIdx !== 0">
+                        <!-- Separator -->
+                        <div class="absolute inset-0 left-0 top-0 hidden w-3 lg:block" aria-hidden="true">
+                            <svg class="h-full w-full text-gray-300" viewBox="0 0 12 82" fill="none"
+                                preserveAspectRatio="none">
+                                <path d="M0.5 0V31L10.5 41L0.5 51V82" stroke="currentcolor"
+                                    vector-effect="non-scaling-stroke" />
+                            </svg>
+                        </div>
+                    </template>
+                </div>
+            </li>
         </ol>
     </nav>
-</div></template>
-  
-<script setup>
-import { CheckIcon } from '@heroicons/vue/24/solid'
-
-const steps = [
-    { id: '01', name: 'Job Details', description: 'Vitae sed mi luctus laoreet.', href: '#', status: 'complete' },
-    { id: '02', name: 'Application form', description: 'Cursus semper viverra.', href: '#', status: 'current' },
-    { id: '03', name: 'Preview', description: 'Penatibus eu quis ante.', href: '#', status: 'upcoming' },
-]
-</script>
+</template>

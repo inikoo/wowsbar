@@ -1,64 +1,49 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3'
-import { ref, reactive } from 'vue'
+import { ref, Ref } from 'vue'
 import ModalDivision from '@/Components/Utils/ModalDivision.vue'
 import IconGroupInterested from '@/Components/Table/IconGroupInterested.vue'
 
+interface columnInterest {
+    name: string,
+    label: string,
+    value: string
+}
+
 const props = defineProps<{
-    data: any
+    data: {
+        slug: string
+        customer_name: string
+        code?: string
+        name: string
+        url: string
+        number_banners: number
+        seo: columnInterest
+        "google-ads": columnInterest
+        social: columnInterest
+        prospects: columnInterest
+        banners: columnInterest
+    }
 }>()
 
 const isModalOpen = ref(false)
-const selectedColumn = ref({
+const selectedColumn: Ref<columnInterest> = ref({
+    name: '',
     label: '',
-    name: ''
+    value: ''
 })
 const selectedWebsite = ref({
     slug: ''
 })
 
-const dummyData = reactive({
-    "slug": "mw",
-    "customer_name": "Aiku",
-    "code": null,
-    "name": "My website 😸",
-    "url": "hello.com",
-    "number_banners": 0,
-    "seo": {
-        "name": "seo",
-        "label": "SEO",
-        "value": 'not_sure'
-    },
-    "google-ads": {
-        "name": "google-ads",
-        "label": "PPC",
-        "value": "not_interested"
-    },
-    "social": {
-        "name": "social",
-        "label": "Social",
-        "value": 'not_sure'
-    },
-    "prospects": {
-        "name": "prospects",
-        "label": "Prospects",
-        "value": 'not_sure'
-    },
-    "banners": {
-        "name": "banners",
-        "label": "Banners",
-        "value": 'not_sure'
-    }
-})
 </script>
 
 <template>
-    <div class="flow-root overflow-x-auto">
-        <div class="inline-block min-w-full align-middle sm:px-6 lg:px-8">
-            <table class="min-w-full divide-y divide-gray-300 shadow rounded-md overflow-hidden text-gray-500">
+    <div class="flow-root overflow-x-auto shadow-sm rounded-md overflow-hidden ring-1 ring-gray-200 ">
+        <div class="inline-block min-w-full align-middle">
+            <table class="min-w-full divide-y divide-gray-300 text-gray-500">
                 <thead>
                     <tr class="divide-x divide-gray-200 text-sm font-semibold">
-                        <th scope="col" class="py-3.5 pl-4 pr-4 text-left">Name</th>
                         <th scope="col" class="px-4 py-3.5 text-left">Url</th>
                         <th scope="col" class="px-4 py-3.5 text-left">Leads</th>
                         <th scope="col" class="py-3.5 pl-4 pr-4 text-left">SEO</th>
@@ -69,10 +54,7 @@ const dummyData = reactive({
                 </thead>
                 <tbody class="divide-y divide-gray-200 bg-white">
                     <tr class="divide-x divide-gray-200">
-                        <td class="whitespace-nowrap py-4 pl-4 pr-4">
-                            Lindsay Walton
-                        </td>
-                        <td class="whitespace-nowrap py-4 pl-4 pr-4">
+                        <td class="whitespace-nowrap p-4">
                             {{ 'www.hello.com'}}
                         </td>
                         <td class="whitespace-nowrap p-4 text-sm text-gray-500">

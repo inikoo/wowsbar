@@ -8,12 +8,10 @@ const props = defineProps<{
     stepsList: {
         id: number
         label: string
-        component: string
     }[]
     currentStep: {
         id: number
         label: string
-        component: string
     }
 }>()
 </script>

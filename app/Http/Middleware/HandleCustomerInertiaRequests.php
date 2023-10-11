@@ -24,9 +24,10 @@ class HandleCustomerInertiaRequests extends Middleware
 
 
         $firstLoadOnlyProps = [];
-        if ((!$request->inertia()
-            or
-            Session::get('reloadLayout'))) {
+        if (
+            (!$request->inertia() or Session::get('reloadLayout'))
+
+        ) {
             $firstLoadOnlyProps = GetFirstLoadProps::run($request->get('customerUser'));
 
             $firstLoadOnlyProps['ziggy'] = function () use ($request) {

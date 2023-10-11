@@ -25,26 +25,41 @@ class ShowDashboard
         $latestBanners = GetLastEditedBanner::run($customer);
 
 
-        $welcome_step = Arr::get($customer->data, 'welcome_step');
+        $data = [
+            'title'                    => __('dashboard'),
+            'breadcrumbs'              => $this->getBreadcrumbs(__('dashboard')),
+            'latest_banners'           => $latestBanners,
+            'latest_banners_count'     => $latestBanners->count(),
+            'portfolio_websites_count' => $customer->portfolioStats->number_portfolio_websites,
+            'name'                     => $request->user()->contact_name ?? $request->user()->slug,
 
+        ];
 
-        return Inertia::render(
-            'Dashboard',
-            [
-                'title'                    => __('dashboard'),
-                'breadcrumbs'              => $this->getBreadcrumbs(__('dashboard')),
-                'latest_banners'           => $latestBanners,
-                'latest_banners_count'     => $latestBanners->count(),
-                'portfolio_websites_count' => $customer->portfolioStats->number_portfolio_websites,
-                'name'                     => $request->user()->contact_name ?? $request->user()->slug,
-                'welcome'=>[
-                    'step'=>$welcome_step,
-                    'storePortfolioWebsiteRoute'=>[
-                        'name'=>'customer.models.portfolio-website.store.from-welcome'
+        $welcomeStep = Arr::get($customer->data, 'welcome_step');
+
+        if (in_array($welcomeStep, [1, 2, 3])) {
+            $data['welcome'] = [
+                'currentStep' => $welcomeStep,
+                'steps'       => [
+                    [
+                        'storePortfolioWebsiteRoute' => [
+                            'name' => 'customer.models.portfolio-website.store.from-welcome'
+                        ]
+                    ],
+                    [
+
+                    ],
+                    [
+
                     ]
-                ]
-            ]
-        );
+                ],
+
+
+            ];
+        }
+
+
+        return Inertia::render('Dashboard', $data);
     }
 
     public function getBreadcrumbs($label = null): array
