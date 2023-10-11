@@ -10,10 +10,7 @@ const props = defineProps<{
         label: string
         description: string
     }[]
-    currentStep: {
-        id: number
-        label: string
-    }
+    currentStep: number
 }>()
 </script>
 
@@ -33,9 +30,9 @@ const props = defineProps<{
                         <span aria-hidden="true"
                             class="absolute left-0 top-0 h-full w-1 lg:bottom-0 lg:top-auto lg:h-1 lg:w-full"
                             :class="[
-                                stepIdx + 1 < currentStep.id  // Previous step
+                                stepIdx + 1 < currentStep  // Previous step
                                     ? 'bg-gray-300'
-                                    : currentStep.id == stepIdx + 1  // Current step
+                                    : currentStep == stepIdx + 1  // Current step
                                         ? ' bg-gray-500'
                                         : 'bg-transparent'
                             ]"
@@ -45,14 +42,14 @@ const props = defineProps<{
                             <span class="flex-shrink-0">
                                 <span class="flex h-10 w-10 items-center justify-center rounded-full"
                                     :class="[
-                                        stepIdx + 1 < currentStep.id  // Previous step
+                                        stepIdx + 1 < currentStep  // Previous step
                                             ? 'bg-gray-600 text-white'
-                                            : currentStep.id == stepIdx + 1  // Current step
+                                            : currentStep == stepIdx + 1  // Current step
                                                 ? ' border border-gray-600 text-gray-600'
                                                 : 'text-gray-400 border border-slate-300 '
                                     ]"
                                 >
-                                    <FontAwesomeIcon v-if="stepIdx + 1 < currentStep.id" icon='fal fa-check' class='h-6 w-6' aria-hidden='true' />
+                                    <FontAwesomeIcon v-if="stepIdx + 1 < currentStep" icon='fal fa-check' class='h-6 w-6' aria-hidden='true' />
                                     <span v-else class="">{{ step.id }}</span>
                                 </span>
                             </span>
@@ -60,7 +57,7 @@ const props = defineProps<{
                             <!-- The title and description -->
                             <span class="text-sm ml-4 mt-0.5 flex min-w-0 flex-col"
                                 :class="[
-                                    stepIdx + 1 <= currentStep.id  // Previous & current step
+                                    stepIdx + 1 <= currentStep  // Previous & current step
                                         ? 'text-gray-600'
                                         : 'text-gray-400'
                                 ]"
