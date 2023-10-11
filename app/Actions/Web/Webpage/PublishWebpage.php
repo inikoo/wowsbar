@@ -10,6 +10,7 @@ namespace App\Actions\Web\Webpage;
 use App\Actions\Helpers\Deployment\StoreDeployment;
 use App\Actions\Helpers\Snapshot\StoreWebpageSnapshot;
 use App\Actions\Helpers\Snapshot\UpdateSnapshot;
+use App\Actions\Helpers\Webpage\ExtractWebpage;
 use App\Actions\Traits\WithActionUpdate;
 use App\Enums\Organisation\Web\Webpage\WebpageStateEnum;
 use App\Enums\Portfolio\Snapshot\SnapshotStateEnum;
@@ -48,7 +49,7 @@ class PublishWebpage
             $doc = new DOMDocument('1.0', 'utf-8');
             @$doc->loadHTML($html);
 
-            $layout['html'] = $this->getElementsByClass($doc, 'section', 'wowsbar-html');
+            $layout['html'] = ExtractWebpage::run($doc, 'section', 'wowsbar-block');
         }
 
         /** @var Snapshot $snapshot */
@@ -134,33 +135,5 @@ class PublishWebpage
         $validatedData = $this->validateAttributes();
 
         return $this->handle($webpage, $validatedData);
-    }
-
-    public function getElementsByClass(&$parentNode, $tagName, $className): array
-    {
-        $childNodes = [];
-
-        $childNodeList = $parentNode->getElementsByTagName($tagName);
-        for ($i = 0; $i < $childNodeList->length; $i++) {
-            $childNodes = [];
-            $temp = $childNodeList->item($i);
-            if (stripos($temp->getAttribute('class'), $className) !== false) {
-                $nodes = $temp;
-                $children = $nodes->childNodes;
-                foreach ($children as $child) {
-                    $childNodes[] = [
-                        'section' => $className,
-                        'content' => $this->convertToHTML($child)
-                    ];
-                }
-            }
-        }
-
-        return $childNodes;
-    }
-
-    public function convertToHTML($child): string
-    {
-        return $child->ownerDocument->saveXML( $child );
     }
 }
