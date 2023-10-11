@@ -20,9 +20,8 @@ class ShowHome
     public function handle(ActionRequest $request): Response
     {
         $webpage = Webpage::where('slug', 'home')->first();
-
         return Inertia::render(
-            'Home',
+            'Webpage',
             [
                 'content' => $webpage->compiled_layout
             ]

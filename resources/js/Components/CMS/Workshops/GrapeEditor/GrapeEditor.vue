@@ -144,13 +144,22 @@ onMounted(() => {
 });
 </script>
 
+
 <template>
+<div class="editor">
     <div id="gjs">
-    <slot name="defaultComponents"></slot>
+        <slot name="defaultComponents"></slot>
     </div>
+</div>
+  
 </template>
 
 <style lang="scss">
+
+.editor{
+    width: 100%;
+    height: calc(100% - 5rem);
+}
 .panel {
     width: 90%;
     max-width: 700px;

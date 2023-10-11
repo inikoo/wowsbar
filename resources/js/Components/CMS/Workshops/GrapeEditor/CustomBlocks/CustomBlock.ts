@@ -1,6 +1,6 @@
 import { headerBlock1, headerBlock2, headerBlock3, headerBlock4 } from './Header/Header'
 import { footerBlock1, footerBlock2, footerBlock3, footerBlock4 } from './Footer/Footer'
-import { heroBlock1 , heroBlock2, heroBlock3, heroBlock4} from './Hero/Hero'
+import { heroBlock1 , heroBlock2, heroBlock3, heroBlock4, heroBlock5} from './Hero/Hero'
 import { Appointment } from './Appointment/Appointment'
 import { BlogBlock1, BlogBlock2, BlogBlock3, BlogBlock4 } from './Blog/Blog'
 import { StatisticsBlock1, StatisticsBlock2, StatisticsBlock3, StatisticsBlock4 } from './Statistics/Statistics'
@@ -37,7 +37,7 @@ export const FooterPlugins = (editor: any) => {
 }
 
 export const HeroPlugins = (editor: any) => {
-    const hero = [heroBlock1(),heroBlock2(),heroBlock3(),heroBlock4()]
+    const hero = [heroBlock1(),heroBlock2(),heroBlock3(),heroBlock4(),heroBlock5()]
     hero.map((item,index)=>{
       editor.Blocks.add(item.id,item);
   })

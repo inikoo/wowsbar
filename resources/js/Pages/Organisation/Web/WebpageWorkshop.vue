@@ -93,7 +93,7 @@ const Book = {
     </PageHeading>
 
     <GrapeEditor @onSaveToServer="(isDirtyFromServer) => isDataDirty = isDirtyFromServer" :useBasic="true"
-        :plugins="pageCode == 'appointment' ? [AppointmentPlugins] : [HeroPlugins, BlogPlugins, StatisticsPlugins, PricingPlugins]" :updateRoute="updateRoute" :loadRoute="loadRoute"
+        :plugins="pageCode == 'appointment' ? [AppointmentPlugins,HeroPlugins] : [HeroPlugins, BlogPlugins, StatisticsPlugins, PricingPlugins]" :updateRoute="updateRoute" :loadRoute="loadRoute"
         :imagesUploadRoute="imagesUploadRoute">
        
     </GrapeEditor>
