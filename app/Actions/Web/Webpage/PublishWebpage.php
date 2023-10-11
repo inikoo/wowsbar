@@ -43,7 +43,8 @@ class PublishWebpage
 
         $layout = $webpage->unpublishedSnapshot->layout;
 
-        if($layout!='') {
+
+        if($layout!='' and  Arr::get($layout,'html')  ) {
             $html = $layout['html'][0]['html'];
 
             $doc = new DOMDocument('1.0', 'utf-8');
@@ -70,6 +71,8 @@ class PublishWebpage
             $webpage,
             [
                 'snapshot_id' => $snapshot->id,
+                'publisher_id' => Arr::get($modelData, 'publisher_id'),
+                'publisher_type' => Arr::get($modelData, 'publisher_type'),
             ]
         );
 

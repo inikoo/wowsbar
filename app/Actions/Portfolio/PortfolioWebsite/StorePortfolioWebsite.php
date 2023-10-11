@@ -12,6 +12,7 @@ use App\Actions\Market\Shop\Hydrators\ShopHydrateCustomerWebsites;
 use App\Actions\Portfolios\CustomerWebsite\Hydrators\CustomerWebsiteHydrateUniversalSearch;
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateCustomerWebsites;
 use App\Actions\Portfolio\PortfolioWebsite\Hydrators\PortfolioWebsiteHydrateUniversalSearch;
+use App\Http\Resources\Portfolio\PortfolioWebsiteResource;
 use App\Models\Portfolios\CustomerWebsite;
 use App\Models\Portfolio\PortfolioWebsite;
 use App\Rules\IUnique;
@@ -76,6 +77,21 @@ class StorePortfolioWebsite
 
     public function prepareForValidation(ActionRequest $request): void
     {
+
+        if(!$request->exists('name')){
+            $parse = parse_url($request->url());
+            $name= preg_replace("/^([a-zA-Z0-9].*\.)?([a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]\.[a-zA-Z.]{2,})$/", '$2', $parse['host']);
+            if($name==''){
+                $name='website';
+            }
+
+            $request->merge(
+                [
+                    'name' => $name
+                ]
+            );
+        }
+
         if ($request->get('url')) {
             $request->merge(
                 [
@@ -88,8 +104,18 @@ class StorePortfolioWebsite
     public function asController(ActionRequest $request): PortfolioWebsite
     {
         $request->validate();
-
         return $this->handle($request->validated());
+    }
+
+    public function fromDashboard(ActionRequest $request): PortfolioWebsite
+    {
+        $request->validate();
+        return $this->handle($request->validated());
+    }
+
+    public function jsonResponse(PortfolioWebsite $portfolioWebsite): PortfolioWebsiteResource
+    {
+        return new PortfolioWebsiteResource($portfolioWebsite);
     }
 
     public function htmlResponse(PortfolioWebsite $portfolioWebsite): RedirectResponse

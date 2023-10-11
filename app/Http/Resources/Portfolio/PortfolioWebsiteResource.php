@@ -31,6 +31,7 @@ class PortfolioWebsiteResource extends JsonResource
 
 
         return array_merge([
+            'id'             => $websitePortfolio->id,
             'slug'           => $websitePortfolio->slug,
             'customer_name'  => $websitePortfolio->customer->name,
             'name'           => $websitePortfolio->name,
