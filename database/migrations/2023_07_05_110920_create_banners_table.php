@@ -6,6 +6,7 @@
  */
 
 use App\Enums\Portfolio\Banner\BannerStateEnum;
+use App\Enums\Portfolio\Banner\BannerTypeEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,6 +17,7 @@ return new class () extends Migration {
         Schema::create('banners', function (Blueprint $table) {
             $table->mediumIncrements('id');
             $table->ulid()->index();
+            $table->string('type')->default(BannerTypeEnum::LANDSCAPE->value);
             $table->unsignedInteger('customer_id');
             $table->foreign('customer_id')->references('id')->on('customers')->onUpdate('cascade')->onDelete('cascade');
             $table->unsignedSmallInteger('portfolio_website_id')->nullable()->index();

@@ -87,10 +87,10 @@ use Illuminate\Support\Carbon;
  * @method static Builder|ShopAccountingStats whereNumberRefundsStateDeclined($value)
  * @method static Builder|ShopAccountingStats whereNumberRefundsStateError($value)
  * @method static Builder|ShopAccountingStats whereNumberRefundsStateInProcess($value)
+ * @method static Builder|ShopAccountingStats whereOrgAmount($value)
+ * @method static Builder|ShopAccountingStats whereOrgAmountRefunded($value)
+ * @method static Builder|ShopAccountingStats whereOrgAmountSuccessfullyPaid($value)
  * @method static Builder|ShopAccountingStats whereShopId($value)
- * @method static Builder|ShopAccountingStats whereTcAmount($value)
- * @method static Builder|ShopAccountingStats whereTcAmountRefunded($value)
- * @method static Builder|ShopAccountingStats whereTcAmountSuccessfullyPaid($value)
  * @method static Builder|ShopAccountingStats whereUpdatedAt($value)
  * @mixin Eloquent
  */

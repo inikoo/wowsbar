@@ -18,9 +18,15 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $portfolio_website_id
  * @property int $number_banners
  * @property int $number_historic_snapshots
+ * @property int $number_banners_type_landscape
+ * @property int $number_banners_type_portrait
  * @property int $number_banners_state_unpublished
  * @property int $number_banners_state_live
  * @property int $number_banners_state_retired
+ * @property int $number_banner_snapshots
+ * @property int $number_banners_snapshots_state_unpublished
+ * @property int $number_banners_snapshots_state_live
+ * @property int $number_banners_snapshots_state_historic
  * @property int $number_prospects
  * @property int $number_prospects_state_no_contacted
  * @property int $number_prospects_state_contacted
@@ -39,10 +45,16 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static Builder|PortfolioWebsiteStats query()
  * @method static Builder|PortfolioWebsiteStats whereCreatedAt($value)
  * @method static Builder|PortfolioWebsiteStats whereId($value)
+ * @method static Builder|PortfolioWebsiteStats whereNumberBannerSnapshots($value)
  * @method static Builder|PortfolioWebsiteStats whereNumberBanners($value)
+ * @method static Builder|PortfolioWebsiteStats whereNumberBannersSnapshotsStateHistoric($value)
+ * @method static Builder|PortfolioWebsiteStats whereNumberBannersSnapshotsStateLive($value)
+ * @method static Builder|PortfolioWebsiteStats whereNumberBannersSnapshotsStateUnpublished($value)
  * @method static Builder|PortfolioWebsiteStats whereNumberBannersStateLive($value)
  * @method static Builder|PortfolioWebsiteStats whereNumberBannersStateRetired($value)
  * @method static Builder|PortfolioWebsiteStats whereNumberBannersStateUnpublished($value)
+ * @method static Builder|PortfolioWebsiteStats whereNumberBannersTypeLandscape($value)
+ * @method static Builder|PortfolioWebsiteStats whereNumberBannersTypePortrait($value)
  * @method static Builder|PortfolioWebsiteStats whereNumberHistoricSnapshots($value)
  * @method static Builder|PortfolioWebsiteStats whereNumberProspects($value)
  * @method static Builder|PortfolioWebsiteStats whereNumberProspectsGenderFemale($value)

@@ -12,6 +12,7 @@ use App\Enums\Organisation\Web\Webpage\WebpagePurposeEnum;
 use App\Enums\Organisation\Web\Webpage\WebpageStateEnum;
 use App\Enums\Organisation\Web\Webpage\WebpageTypeEnum;
 use App\Enums\Organisation\Web\Website\WebsiteStateEnum;
+use App\Enums\Portfolio\Banner\BannerTypeEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -68,6 +69,11 @@ return new class () extends Migration {
 
             foreach (WebpageStateEnum::cases() as $case) {
                 $table->unsignedSmallInteger('number_webpages_state_'.$case->snake())->default(0);
+            }
+
+            $table->unsignedSmallInteger('number_uploaded_images')->default(0);
+            foreach (BannerTypeEnum::cases() as $case) {
+                $table->unsignedSmallInteger('number_uploaded_images_scope_' . Str::replace('-', '_', $case->snake()))->default(0);
             }
 
 

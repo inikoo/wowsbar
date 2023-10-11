@@ -27,7 +27,7 @@ class ImportGuest
      * @var true
      */
     private bool $asAction          = false;
-    public string $commandSignature = 'guest:import {filename}';
+    public string $commandSignature = 'guest:import {--g|g_drive} {filename}';
 
     public function handle($file): void
     {

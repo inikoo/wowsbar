@@ -8,6 +8,7 @@
 namespace App\Actions\UI\Customer\Dashboard;
 
 use App\Actions\Portfolio\Banner\UI\GetLastEditedBanner;
+use Illuminate\Support\Arr;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -19,22 +20,29 @@ class ShowDashboard
 
     public function asController(ActionRequest $request): Response
     {
+        $customer = customer();
 
-        $customer=customer();
+        $latestBanners = GetLastEditedBanner::run($customer);
 
-        $latestBanners=GetLastEditedBanner::run($customer);
 
+        $welcome_step = Arr::get($customer->data, 'welcome_step');
 
 
         return Inertia::render(
             'Dashboard',
             [
-                'title'                     => __('dashboard'),
-                'breadcrumbs'               => $this->getBreadcrumbs(__('dashboard')),
-                'latest_banners'            => $latestBanners,
-                'latest_banners_count'      =>$latestBanners->count(),
-                'portfolio_websites_count'  =>$customer->portfolioStats->number_portfolio_websites,
-                'name'                      => $request->user()->contact_name??$request->user()->slug
+                'title'                    => __('dashboard'),
+                'breadcrumbs'              => $this->getBreadcrumbs(__('dashboard')),
+                'latest_banners'           => $latestBanners,
+                'latest_banners_count'     => $latestBanners->count(),
+                'portfolio_websites_count' => $customer->portfolioStats->number_portfolio_websites,
+                'name'                     => $request->user()->contact_name ?? $request->user()->slug,
+                'welcome'=>[
+                    'step'=>$welcome_step,
+                    'storePortfolioWebsiteRoute'=>[
+                        'name'=>'customer.models.portfolio-website.store.from-welcome'
+                    ]
+                ]
             ]
         );
     }

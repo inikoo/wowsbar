@@ -77,10 +77,10 @@ use Illuminate\Support\Carbon;
  * @method static Builder|PaymentAccountStats whereNumberRefundsStateDeclined($value)
  * @method static Builder|PaymentAccountStats whereNumberRefundsStateError($value)
  * @method static Builder|PaymentAccountStats whereNumberRefundsStateInProcess($value)
+ * @method static Builder|PaymentAccountStats whereOrgAmount($value)
+ * @method static Builder|PaymentAccountStats whereOrgAmountRefunded($value)
+ * @method static Builder|PaymentAccountStats whereOrgAmountSuccessfullyPaid($value)
  * @method static Builder|PaymentAccountStats wherePaymentAccountId($value)
- * @method static Builder|PaymentAccountStats whereTcAmount($value)
- * @method static Builder|PaymentAccountStats whereTcAmountRefunded($value)
- * @method static Builder|PaymentAccountStats whereTcAmountSuccessfullyPaid($value)
  * @method static Builder|PaymentAccountStats whereUpdatedAt($value)
  * @mixin Eloquent
  */

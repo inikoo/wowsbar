@@ -21,6 +21,7 @@ return new class () extends Migration {
             $table->unsignedInteger('model_id')->nullable();
             $table->uuid()->nullable()->unique();
             $table->string('collection_name')->index();
+            $table->string('scope')->nullable()->index();
             $table->string('name');
             $table->string('file_name');
             $table->string('mime_type')->nullable();
@@ -36,6 +37,7 @@ return new class () extends Migration {
             $table->unsignedInteger('order_column')->nullable()->index();
             $table->nullableTimestamps();
             $table->index(['model_type','model_id']);
+            $table->index(['collection_name','scope']);
         });
     }
 };

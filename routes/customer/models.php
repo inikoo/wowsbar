@@ -30,15 +30,17 @@ use App\Actions\UI\Customer\Profile\UpdateProfile;
 Route::post('/portfolio-social-account', StorePortfolioSocialAccount::class)->name('portfolio-social-account.store');
 Route::patch('/portfolio-social-account/{portfolioSocialAccount}', UpdatePortfolioSocialAccount::class)->name('portfolio-social-account.update');
 
-Route::post('/portfolio-website', StorePortfolioWebsite::class)->name('portfolio-website.store');
-Route::patch('/portfolio-website/{portfolioWebsite:id}', UpdatePortfolioWebsite::class)->name('portfolio-website.update');
-Route::delete('/portfolio-website/{portfolioWebsite:id}', DeletePortfolioWebsite::class)->name('portfolio-website.delete');
+Route::prefix('portfolio-website')->name('portfolio-website.')->group(function () {
+    Route::post('', StorePortfolioWebsite::class)->name('store');
+    Route::post('/from-welcome', [StorePortfolioWebsite::class, 'fromWelcome'])->name('store.from-welcome');
 
-Route::post('/portfolio-website/{portfolioWebsite:id}/banner', [StoreBanner::class, 'inPortfolioWebsite'])->name('portfolio-website.banner.store');
-Route::post('/portfolio-website/{portfolioWebsite}/interest', SyncDivisionPortfolioWebsite::class)->name('portfolio-website.interest.store');
-
-
-
+    Route::prefix('{portfolioWebsite:id}')->group(function () {
+        Route::patch('', UpdatePortfolioWebsite::class)->name('update');
+        Route::delete('', DeletePortfolioWebsite::class)->name('delete');
+        Route::post('banner', [StoreBanner::class, 'inPortfolioWebsite'])->name('banner.store');
+        Route::post('interest', SyncDivisionPortfolioWebsite::class)->name('interest.store');
+    });
+});
 
 Route::prefix('/banner')->name('banner.')->group(function () {
     Route::post('', [StoreBanner::class, 'inCustomer'])->name('store');

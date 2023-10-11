@@ -35,7 +35,7 @@ class ImportEmployees
         $this->handle($file);
     }
 
-    public string $commandSignature = 'employee:upload {--G|google=} {filename?}';
+    public string $commandSignature = 'employee:import  {--g|g_drive} {filename}';
 
 
 }

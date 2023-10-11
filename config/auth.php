@@ -116,18 +116,6 @@ return [
             'expire'   => 60,
             'throttle' => 60,
         ],
-        'root' => [
-            'provider' => 'public_users',
-            'table'    => 'password_reset_tokens',
-            'expire'   => 60,
-            'throttle' => 60,
-        ],
-        'landlord' => [
-            'provider' => 'org_users',
-            'table'    => 'password_reset_tokens',
-            'expire'   => 60,
-            'throttle' => 60,
-        ],
     ],
 
     /*

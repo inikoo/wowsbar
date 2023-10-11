@@ -27,7 +27,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property int $shop_id
  * @property int $customer_id
  * @property int|null $organisation_user_id
- * @property string $schedule_at
+ * @property \Illuminate\Support\Carbon $schedule_at
  * @property string|null $description
  * @property AppointmentStateEnum $state
  * @property AppointmentTypeEnum $type
@@ -35,9 +35,9 @@ use Spatie\Sluggable\SlugOptions;
  * @property string $event_address
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\CRM\Customer $customer
  * @property-read OrganisationUser|null $organisationUser
  * @property-read Shop $shop
- * @property-read \App\Models\CRM\Customer $customer
  * @method static \Illuminate\Database\Eloquent\Builder|Appointment newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Appointment newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Appointment query()
@@ -47,6 +47,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|Appointment whereEvent($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Appointment whereEventAddress($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Appointment whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Appointment whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Appointment whereOrganisationUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Appointment whereScheduleAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Appointment whereShopId($value)

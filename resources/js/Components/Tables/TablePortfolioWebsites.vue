@@ -105,7 +105,7 @@ const selectedWebsite = ref({
         :selectedColumn="selectedColumn"
         :routeToSave="{
             name: 'customer.models.portfolio-website.interest.store',
-            parameter: selectedWebsite.slug
+            parameter: selectedWebsite.id
         }"
     />
 </template>

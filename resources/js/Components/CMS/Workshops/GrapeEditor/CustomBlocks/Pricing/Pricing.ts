@@ -1,9 +1,9 @@
 export const PricingBlock1 = () => {
     return {
-        id: "Statistic-block-4",
+        id: "Pricing-block-4",
         class: "",
-        category: "Statistics",
-        label: "Blog Four",
+        category: "Pricing",
+        label: "Pricing Four",
         content: `
         <section class="text-gray-600 body-font">
         <div class="bg-white py-24 sm:py-32">

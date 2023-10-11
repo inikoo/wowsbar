@@ -32,6 +32,7 @@ use Spatie\Sluggable\SlugOptions;
  * App\Models\Payments\Payment
  *
  * @property int $id
+ * @property int $shop_id
  * @property int $payment_account_id
  * @property int $customer_id
  * @property PaymentTypeEnum $type
@@ -42,6 +43,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property PaymentStateEnum $state
  * @property PaymentSubsequentStatusEnum|null $subsequent_status
  * @property string $amount
+ * @property string $org_amount
  * @property array $data
  * @property string $date Most relevant date at current state
  * @property string|null $completed_at
@@ -53,7 +55,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read Currency $currency
  * @property-read Customer $customer
  * @property-read \App\Models\Accounting\PaymentAccount $paymentAccount
- * @property-read Shop|null $shop
+ * @property-read Shop $shop
  * @property-read UniversalSearch|null $universalSearch
  * @method static Builder|Payment newModelQuery()
  * @method static Builder|Payment newQuery()
@@ -68,8 +70,10 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Payment whereDate($value)
  * @method static Builder|Payment whereDeletedAt($value)
  * @method static Builder|Payment whereId($value)
+ * @method static Builder|Payment whereOrgAmount($value)
  * @method static Builder|Payment wherePaymentAccountId($value)
  * @method static Builder|Payment whereReference($value)
+ * @method static Builder|Payment whereShopId($value)
  * @method static Builder|Payment whereSlug($value)
  * @method static Builder|Payment whereState($value)
  * @method static Builder|Payment whereStatus($value)

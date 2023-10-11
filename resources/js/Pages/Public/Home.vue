@@ -6,13 +6,11 @@ const props = defineProps<{
   content: object[];
 }>()
 
+console.log('porp',props.content)
+
 let dynamicClasses = '';
 
 onMounted(() => {
-  import('tailwindcss/base.css');
-  import('tailwindcss/components.css');
-  import('tailwindcss/utilities.css');
-
   const css = props.content[0] ? loadCss(props.content[0].css) : {};
 
   for (const selector in css) {
