@@ -2,7 +2,7 @@
 import { loadCss } from '@/Composables/loadCss';
 import { ref, onMounted } from "vue";
 import Html from '@/Components/Blocks/Html.vue'
-
+import Appointment from '@/Components/Blocks/Appointment.vue'
 const props = defineProps<{
     content: {
         css: String,
@@ -14,6 +14,7 @@ const props = defineProps<{
 const getComponent = (componentName: string) => {
     const components: any = {
         'html': Html,
+        'appointment' : Appointment
     };
     return components[componentName] ?? null;
 
