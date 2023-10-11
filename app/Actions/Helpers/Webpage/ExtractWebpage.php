@@ -17,14 +17,21 @@ class ExtractWebpage
 
     public array $html;
 
-    public function handle($html, $tagName, $className): array
+    public function handle($html): array
     {
+        $blocks = [];
         $this->html = $html[0];
 
         $doc = new \DOMDocument('1.0', 'utf-8');
         @$doc->loadHTML($this->html['html']);
 
-        return $this->getElementsByClass($doc, $tagName, $className);
+        // return $this->getElementsByClass($doc, 'section', 'wowsbar-block');
+
+        return [
+            'css' => $html[0]['css'],
+            'js' => $html[0]['js'],
+            'blocks' => $blocks
+        ];
     }
 
     public function getElementsByClass(&$parentNode, $tagName, $className): array
@@ -34,7 +41,7 @@ class ExtractWebpage
 
         $childNodeList = $parentNode->getElementsByTagName($tagName);
         for ($i = 0; $i < $childNodeList->length; $i++) {
-
+            $childNodes = [];
             $temp = $childNodeList->item($i);
             $class = $temp->getAttribute('class');
 
