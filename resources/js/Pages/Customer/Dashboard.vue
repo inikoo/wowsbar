@@ -46,7 +46,7 @@ const props = defineProps<{
     name: string
 }>()
 
-// Data for all steps
+// Data content for all steps
 const data: any = reactive({
     firstStep: {
         websiteValue: ''
@@ -94,6 +94,7 @@ const data: any = reactive({
 const currentStep = ref({
     id: 1,
     label: 'Step  1',
+    description: 'Lorem ipsum dolor sit amet.',
     component: 'firstStep'
 })
 
@@ -102,16 +103,19 @@ const stepsList = [
     {
         id: 1,
         label: 'Enter your website name',
+        description: 'Lorem ipsum dolor sit amet.',
         component: 'firstStep'
     },
     {
         id: 2,
         label: 'Select your interest',
+        description: 'Lorem ipsum dolor sit amet.',
         component: 'secondStep'
     },
     {
         id: 3,
         label: 'Make appointment',
+        description: 'Lorem ipsum dolor sit amet.',
         component: 'thirdStep'
     },
 ]
@@ -135,7 +139,7 @@ const compContentStep = computed(() => {
         compact: StepsCompact,
     }
 
-    return compContentStep['simple']
+    return compContentStep['compact']
 })
 
 // const backAction = ref(false) // True/false to define the Transition name
