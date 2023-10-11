@@ -25,8 +25,6 @@ class ExtractWebpage
         $doc = new \DOMDocument('1.0', 'utf-8');
         @$doc->loadHTML($this->html['html']);
 
-        dd($this->getBlocks($doc, 'section', 'wowsbar-block'));
-
         return [
             'css' => $html[0]['css'],
             'js' => $html[0]['js'],
