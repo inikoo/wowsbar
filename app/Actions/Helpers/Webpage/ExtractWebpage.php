@@ -86,10 +86,7 @@ class ExtractWebpage
             $classes = explode(' ', $childNode->getAttribute('class'));
 
             if (in_array('wowsbar-appointment-block', $classes)) {
-                $subBlocks[] = [
-                    'id' => $childNode->getAttribute('data-id'),
-                    'content' => $this->extractHtml($childNode)
-                ];
+                $subBlocks[$childNode->getAttribute('data-id')] = $this->extractHtml($childNode);
             }
         }
 
