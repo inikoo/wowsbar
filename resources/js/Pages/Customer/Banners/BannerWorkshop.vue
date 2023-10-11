@@ -137,9 +137,9 @@ const sendDataToServer = async () => {
             isLoading.value = false
             router.visit(route(routeExit['route']['name'], routeExit['route']['parameters']))
             notify({
-                title: "success Update",
+                title: "Success!",
                 type: "success",
-                text: "Banner already update and publish",
+                text: "Banner been updated and published.",
             });
         },
         onError: (errors: any) => {
