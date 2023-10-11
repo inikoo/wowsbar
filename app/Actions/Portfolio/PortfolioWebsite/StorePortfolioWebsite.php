@@ -13,11 +13,14 @@ use App\Actions\Portfolios\CustomerWebsite\Hydrators\CustomerWebsiteHydrateUnive
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateCustomerWebsites;
 use App\Actions\Portfolio\PortfolioWebsite\Hydrators\PortfolioWebsiteHydrateUniversalSearch;
 use App\Http\Resources\Portfolio\PortfolioWebsiteResource;
+use App\Models\CRM\Customer;
 use App\Models\Portfolios\CustomerWebsite;
 use App\Models\Portfolio\PortfolioWebsite;
 use App\Rules\IUnique;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
@@ -34,13 +37,14 @@ class StorePortfolioWebsite
     private bool $asAction = false;
 
 
-    public function handle(array $modelData): PortfolioWebsite
+    public function handle(Customer $customer, array $modelData): PortfolioWebsite
     {
-        data_set($modelData, 'shop_id', customer()->shop_id);
+        data_set($modelData, 'shop_id', $customer->shop_id);
         $portfolioWebsite = PortfolioWebsite::create($modelData);
         $portfolioWebsite->stats()->create();
 
-        CustomerHydratePortfolioWebsites::dispatch($portfolioWebsite->customer);
+        // Must be run to the website layout to work
+        CustomerHydratePortfolioWebsites::run($portfolioWebsite->customer);
 
         PortfolioWebsiteHydrateUniversalSearch::dispatch($portfolioWebsite);
         CustomerWebsiteHydrateUniversalSearch::dispatch(CustomerWebsite::find($portfolioWebsite->id));
@@ -63,26 +67,28 @@ class StorePortfolioWebsite
     public function rules(): array
     {
         return [
-            'url'  => ['required', 'url', 'max:500',
-                       new IUnique(
-                           table: 'portfolio_websites',
-                           extraConditions: [
-                               ['column' => 'customer_id', 'value' => customer()->id],
-                           ]
-                       ),
-                ],
+            'url'  => [
+                'required',
+                'url',
+                'max:500',
+                new IUnique(
+                    table: 'portfolio_websites',
+                    extraConditions: [
+                        ['column' => 'customer_id', 'value' => customer()->id],
+                    ]
+                ),
+            ],
             'name' => ['required', 'string', 'max:128']
         ];
     }
 
     public function prepareForValidation(ActionRequest $request): void
     {
-
-        if(!$request->exists('name')){
+        if (!$request->exists('name')) {
             $parse = parse_url($request->url());
-            $name= preg_replace("/^([a-zA-Z0-9].*\.)?([a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]\.[a-zA-Z.]{2,})$/", '$2', $parse['host']);
-            if($name==''){
-                $name='website';
+            $name  = preg_replace("/^([a-zA-Z0-9].*\.)?([a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]\.[a-zA-Z.]{2,})$/", '$2', $parse['host']);
+            if ($name == '') {
+                $name = 'website';
             }
 
             $request->merge(
@@ -103,14 +109,29 @@ class StorePortfolioWebsite
 
     public function asController(ActionRequest $request): PortfolioWebsite
     {
+        $customer=$request->get('customer');
+        $welcomeStep=Arr::get($customer,'data.welcome_step');
+
         $request->validate();
-        return $this->handle($request->validated());
+
+        $portfolioWebpage= $this->handle($customer, $request->validated());
+
+        if($welcomeStep==1){
+            $customer->update(
+                [
+                    'data->welcome_step'=>2
+                ]
+            );
+        }
+
+        return $portfolioWebpage;
     }
 
-    public function fromDashboard(ActionRequest $request): PortfolioWebsite
+    public function fromWelcome(ActionRequest $request): PortfolioWebsite
     {
         $request->validate();
-        return $this->handle($request->validated());
+
+        return $this->handle($request->get('customer'), $request->validated());
     }
 
     public function jsonResponse(PortfolioWebsite $portfolioWebsite): PortfolioWebsiteResource
@@ -120,18 +141,21 @@ class StorePortfolioWebsite
 
     public function htmlResponse(PortfolioWebsite $portfolioWebsite): RedirectResponse
     {
+        Session::put('reloadLayout', '1');
+
+
         return Redirect::route('customer.portfolio.websites.show', [
             $portfolioWebsite->slug
         ]);
     }
 
-    public function action(array $objectData): PortfolioWebsite
+    public function action(Customer $customer, array $objectData): PortfolioWebsite
     {
         $this->asAction = true;
         $this->setRawAttributes($objectData);
         $validatedData = $this->validateAttributes();
 
-        return $this->handle($validatedData);
+        return $this->handle($customer, $validatedData);
     }
 
 
