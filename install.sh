@@ -42,6 +42,7 @@ echo "🌱 create shop/website"
 php artisan shop:create awa 'aw-advantage' 'digital-marketing'
 php artisan shop:new-website awa 'awa.test'
 php artisan website:launch awa
+pg_dump -Fc -f "devops/devel/snapshots/website.dump" ${DB}
 echo "🌱 create catalogue"
 php artisan department:import -g wowsbar/data-sets/departments
 php artisan product:import -g wowsbar/data-sets/products
