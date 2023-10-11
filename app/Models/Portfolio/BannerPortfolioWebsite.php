@@ -18,7 +18,6 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
  * @property int|null $portfolio_website_id
  * @property int $customer_id
  * @property int $banner_id
- * @property string|null $published_hash
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @method static Builder|BannerPortfolioWebsite newModelQuery()
