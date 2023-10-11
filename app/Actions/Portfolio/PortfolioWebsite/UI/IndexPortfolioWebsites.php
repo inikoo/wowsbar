@@ -150,13 +150,13 @@ class IndexPortfolioWebsites extends InertiaAction
         )->table(
             $this->tableStructure(
                 prefix: 'websites',
-                exportLinks: [
-                    'export' => [
-                        'route' => [
-                            'name' => 'export.websites.index'
-                        ]
-                    ]
-                ]
+                // exportLinks: [
+                //     'export' => [
+                //         'route' => [
+                //             'name' => 'export.websites.index'
+                //         ]
+                //     ]
+                // ]
             )
         )->table(IndexHistories::make()->tableStructure());
     }

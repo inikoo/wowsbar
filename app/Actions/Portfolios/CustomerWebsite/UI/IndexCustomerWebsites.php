@@ -222,13 +222,13 @@ class IndexCustomerWebsites extends InertiaAction
             $this->tableStructure(
                 parent: $this->parent,
                 prefix: 'websites',
-                exportLinks: [
-                    'export' => [
-                        'route' => [
-                            'name' => 'export.websites.index'
-                        ]
-                    ]
-                ]
+                // exportLinks: [
+                //     'export' => [
+                //         'route' => [
+                //             'name' => 'export.websites.index'
+                //         ]
+                //     ]
+                // ]
             )
         )->table(IndexHistories::make()->tableStructure());
     }
