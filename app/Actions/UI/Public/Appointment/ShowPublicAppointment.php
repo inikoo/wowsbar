@@ -33,34 +33,15 @@ class ShowPublicAppointment
     public function htmlResponse(array $calendars): Response
     {
         $webpage = Webpage::where('slug', 'appointment')->first();
-
         return Inertia::render(
-            'Appointment',
+            'Webpage',
             [
-                'title'       => __('appointment'),
-                'breadcrumbs' => $this->getBreadcrumbs(__('appointment')),
+               
                 'content' => $webpage->compiled_layout,
-                'calendars' => $calendars
+             
             ]
         );
     }
 
-    public function getBreadcrumbs($label = null): array
-    {
-        return [
-            [
-
-                'type'   => 'simple',
-                'simple' => [
-                    'icon'  => 'fal fa-tachometer-alt-fast',
-                    'label' => $label,
-                    'route' => [
-                        'name' => 'customer.dashboard.show'
-                    ]
-                ]
-
-            ],
-
-        ];
-    }
+   
 }

@@ -165,7 +165,7 @@ export const heroBlock5 = () => {
     label:`Hero Theme five`,
     id: "hero-block-5",
     content : `
-    <section class="wowsbar-block-type-hero wowsbar-block" data-gjs-removable="false"  data-gjs-editable="false">
+    <section data-id="hero-block-5" data-type="html" data-group="hero" class="wowsbar-block" data-gjs-removable="false"  data-gjs-editable="false">
     <div class="bg-gray-50">
   <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
     <div class="sm:flex sm:items-baseline sm:justify-between">
