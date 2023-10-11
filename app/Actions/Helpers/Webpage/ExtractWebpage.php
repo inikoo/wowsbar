@@ -25,13 +25,69 @@ class ExtractWebpage
         $doc = new \DOMDocument('1.0', 'utf-8');
         @$doc->loadHTML($this->html['html']);
 
-        // return $this->getElementsByClass($doc, 'section', 'wowsbar-block');
+        dd($this->getBlocks($doc, 'section', 'wowsbar-block'));
 
         return [
             'css' => $html[0]['css'],
             'js' => $html[0]['js'],
             'blocks' => $blocks
         ];
+    }
+
+    public function getNumberBlocks(&$parentNode, $tagName, $className)
+    {
+        $childNodeList = $parentNode->getElementsByTagName($tagName);
+        $numberBlocks = 0;
+
+        for ($i = 0; $i < $childNodeList->length; $i++) {
+            $temp = $childNodeList->item($i);
+            $classes = explode(' ', $temp->getAttribute('class'));
+
+            if(in_array($className, $classes)) {
+                $numberBlocks++;
+            }
+        }
+
+        return $numberBlocks;
+    }
+
+
+    public function getBlocks(&$parentNode, $tagName, $className)
+    {
+        $childNodeList = $parentNode->getElementsByTagName($tagName);
+        $blocks = [];
+
+        for ($i = 0; $i < $childNodeList->length; $i++) {
+            $childNode = $childNodeList->item($i);
+            $classes = explode(' ', $childNode->getAttribute('class'));
+
+            if(in_array($className, $classes)) {
+                $blocks[] = [
+                    'id' => $childNode->getAttribute('data-id'),
+                    'group' => $childNode->getAttribute('data-group'),
+                    'type' => $childNode->getAttribute('data-type'),
+                    'content' => match ($childNode->getAttribute('data-type')) {
+                    'html' => $this->extractHtml($childNode),
+                        default => null
+                    }
+                ];
+            }
+        }
+
+
+        return $blocks;
+    }
+
+    public function extractHtml($node): array
+    {
+        $blocks = [];
+        $children = $node->childNodes;
+
+        foreach ($children as $child) {
+            $blocks[] = $this->convertToHTML($child);
+        }
+
+        return $blocks;
     }
 
     public function getElementsByClass(&$parentNode, $tagName, $className): array
@@ -41,7 +97,6 @@ class ExtractWebpage
 
         $childNodeList = $parentNode->getElementsByTagName($tagName);
         for ($i = 0; $i < $childNodeList->length; $i++) {
-            $childNodes = [];
             $temp = $childNodeList->item($i);
             $class = $temp->getAttribute('class');
 
@@ -73,8 +128,6 @@ class ExtractWebpage
                         'section' => $class,
                         'content' => [
                             'html' => $this->convertToHTML($child),
-                            'css' => $this->html['css'],
-                            'js' => $this->html['js']
                         ],
                         'children' => $childrenNodes
                     ];
