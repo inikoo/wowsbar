@@ -18,12 +18,14 @@ return new class () extends Migration {
             $table->string('model_type');
             $table->unsignedInteger('model_id');
             $table->string('scope')->nullable()->index();
+            $table->string('publisher_type')->nullable();
+            $table->unsignedSmallInteger('publisher_id')->nullable();
             $table->unsignedInteger('snapshot_id')->nullable();
             $table->foreign('snapshot_id')->references('id')->on('snapshots')->onUpdate('cascade')->onDelete('cascade');
             $table->timestampsTz();
-            $table->index(['model_type','model_id']);
-            $table->index(['model_type','model_id','scope']);
-
+            $table->index(['model_type', 'model_id']);
+            $table->index(['model_type', 'model_id', 'scope']);
+            $table->index(['publisher_id', 'publisher_type']);
         });
     }
 
