@@ -15,9 +15,16 @@ class ExtractWebpage
 {
     use AsAction;
 
-    public function handle($parentNode, $tagName, $className): array
+    public array $html;
+
+    public function handle($html, $tagName, $className): array
     {
-        return $this->getElementsByClass($parentNode, $tagName, $className);
+        $this->html = $html[0];
+
+        $doc = new \DOMDocument('1.0', 'utf-8');
+        @$doc->loadHTML($this->html['html']);
+
+        return $this->getElementsByClass($doc, $tagName, $className);
     }
 
     public function getElementsByClass(&$parentNode, $tagName, $className): array
@@ -50,7 +57,6 @@ class ExtractWebpage
                                         'section' => $classesSub,
                                         'content' => $this->convertToHTML($childSub),
                                     ];
-                                    $childNodeList = $parentNode->getElementsByTagName($tagName);
                                 }
                             }
                         }
@@ -58,7 +64,11 @@ class ExtractWebpage
 
                     $childNodes[] = [
                         'section' => $class,
-                        'content' => $this->convertToHTML($child),
+                        'content' => [
+                            'html' => $this->convertToHTML($child),
+                            'css' => $this->html['css'],
+                            'js' => $this->html['js']
+                        ],
                         'children' => $childrenNodes
                     ];
                 }
