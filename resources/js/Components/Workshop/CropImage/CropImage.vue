@@ -21,11 +21,11 @@ import CropComponents from "@/Components/Workshop/CropImage/CropComponents.vue"
 
 
 const props = withDefaults(defineProps<{
-    data: FileList;
+    data: File[];
     imagesUploadRoute: {
-        name:string,
-        parameters: Array<string>
-    };
+        name: string
+        parameters: string[]
+    }
     response : Function
     ratio?:  {
         w: number

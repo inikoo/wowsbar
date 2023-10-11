@@ -21,7 +21,7 @@ class GetPortfolioWebsitesOptions
         foreach (PortfolioWebsite::all() as $portfolioWebsite) {
             $selectOptions[$portfolioWebsite->id] =
                 [
-                    'label' => $portfolioWebsite->name.' ('.$portfolioWebsite->code.')',
+                    'label' => $portfolioWebsite->name.' ('.$portfolioWebsite->url.')',
                 ];
         }
 

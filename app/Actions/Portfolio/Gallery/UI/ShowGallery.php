@@ -54,7 +54,7 @@ class ShowGallery extends InertiaAction
                         'title' => __('image'),
                         'icon'  => 'fal fa-photo-video'
                     ],
-                    'actions'   => [
+                    'actxions'   => [
                         [
                             'type'  => 'button',
                             'style' => 'create',

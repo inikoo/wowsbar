@@ -80,7 +80,7 @@ const props = defineProps<{
     };
     imagesUploadRoute: {
         name: string;
-        arguments: string;
+        arguments: string[]
     };
     user: string
     screenView : String
@@ -540,8 +540,8 @@ const uploadImageRespone = (res) => {
                         v-if="slide.ulid" :class="[
                             'grid grid-flow-col relative sm:py-1 mb-2 items-center justify-between ring-1 ring-gray-300',
                             slide.ulid == get(currentComponentBeenEdited, 'ulid')
-                                ? 'navigationActiveCustomer font-medium'
-                                : 'navigationCustomer',
+                                ? 'navigationSecondActiveCustomer font-medium'
+                                : 'navigationSecondCustomer',
                             slide.user != props.user && slide.user
                                 ? 'border-l-gray-500 border-l-4 bg-gray-200/60 text-gray-600 font-medium cursor-not-allowed'
                                 : 'cursor-pointer',
