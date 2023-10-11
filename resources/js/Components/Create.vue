@@ -115,24 +115,26 @@ onMounted(() => {
             <!-- Left Tab: Navigation -->
             <aside class="py-0 lg:col-span-3 lg:h-full">
                 <div class="sticky top-16">
-                    <div v-for="(item, key) in formData['blueprint']" @click="jumpToElement(`field${key}`)" :class="[
-                        appName == 'customer'
-                        ? tabActive[key]
-                                ? 'navigationActiveCustomer'
-                                : 'navigationCustomer text-gray-600 hover:bg-gray-100 hover:text-gray-700'
-                        : tabActive[key]
-                                ? 'navigationActiveOrganisation'
-                                : 'navigationOrganisation text-gray-600 hover:bg-gray-100 hover:text-gray-700',
-                        'cursor-pointer group border-l-4 px-3 py-2 flex items-center text-sm font-medium',
-                    ]">
-                        <FontAwesomeIcon v-if="item.icon" aria-hidden="true" class="flex-shrink-0 -ml-1 mr-3 h-6 w-6"
-                            :class="[tabActive[key]
-                                ? 'text-gray-400 group-hover:text-gray-500'
-                                : 'text-gray-400',
-                            ]"
-                            :icon="item.icon" />
-                        <span class="capitalize truncate">{{ item.title }}</span>
-                    </div>
+                    <template v-for="(item, key) in formData['blueprint']">
+                        <div v-if="item.title || item.icon" @click="jumpToElement(`field${key}`)" :class="[
+                            appName == 'customer'
+                            ? tabActive[key]
+                                    ? 'navigationSecondActiveCustomer'
+                                    : 'navigationSecondCustomer'
+                            : tabActive[key]
+                                    ? 'navigationActiveOrganisation'
+                                    : 'navigationOrganisation',
+                            'cursor-pointer group border-l-4 px-3 py-2 flex items-center text-sm font-medium',
+                        ]">
+                            <FontAwesomeIcon v-if="item.icon" aria-hidden="true" class="flex-shrink-0 -ml-1 mr-3 h-6 w-6"
+                                :class="[tabActive[key]
+                                    ? 'text-gray-400 group-hover:text-gray-500'
+                                    : 'text-gray-400',
+                                ]"
+                                :icon="item.icon" />
+                            <span class="capitalize truncate">{{ item.title }}</span>
+                        </div>
+                    </template>
                 </div>
             </aside>
 

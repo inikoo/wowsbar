@@ -82,8 +82,7 @@ const tabIconClass = (current: string | boolean, type: string, align: string, ex
                                     </slot>
                                 </span>
                             </button>
-                            <div class="absolute h-0.5 rounded-full bottom-0 left-[50%] translate-x-[-50%] mx-auto transition-all duration-200 ease-in-out"
-                                :class="[tabSlug === currentTab ? 'bg-orange-500 dark:bg-gray-300 w-full' : 'bg-gray-400 w-0 group-hover:w-3/6']"
+                            <div class="" :class="[tabSlug === currentTab ? 'bottomNavigationActiveCustomer' : 'bottomNavigationCustomer']"
                             />
                         </div>
                     </template>
