@@ -3,7 +3,6 @@ import { Link } from '@inertiajs/vue3'
 import { ref, Ref } from 'vue'
 import ModalDivision from '@/Components/Utils/ModalDivision.vue'
 import IconGroupInterested from '@/Components/Table/IconGroupInterested.vue'
-
 interface columnInterest {
     name: string,
     label: string,

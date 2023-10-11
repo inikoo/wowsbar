@@ -32,7 +32,7 @@ const props = defineProps<{
     latest_banners_count: number
     portfolio_websites_count: number
     name: string
-    welcome: any
+    welcome?: any
 }>()
 
 
@@ -42,7 +42,6 @@ const props = defineProps<{
 
 <template layout="CustomerApp">
     <Head :title="capitalize(title)" />
-    <!-- <pre>{{ props }}</pre> -->
     <div class="max-w-7xl px-4 sm:px-6 lg:px-8 lg:py-6">
         <!-- Greeting Message -->
         <div class="pt-2 mt-4 lg:mt-0 lg:pt-0 text-2xl font-light">
@@ -55,8 +54,6 @@ const props = defineProps<{
             <LastEditedBanners v-if="latest_banners_count > 0" :banners="latest_banners" />
         </div> -->
 
-        <div class="mt-6 pt-10 border-t border-gray-300">
-            <WelcomeSteps :step="welcome.step" />
-        </div>
+        <WelcomeSteps v-if="welcome" :data="welcome" />
     </div>
 </template>

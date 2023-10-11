@@ -36,21 +36,64 @@ class ShowDashboard
         ];
 
         $welcomeStep = Arr::get($customer->data, 'welcome_step');
-
         if (in_array($welcomeStep, [1, 2, 3])) {
             $data['welcome'] = [
                 'currentStep' => $welcomeStep,
-                'steps'       => [
-                    [
+                'steps_data'    => [
+                    'step_1'    => [
+                        'id'    => 1,
+                        'label'=> 'Enter your website name',
+                        'description'   => 'Lorem ipsum dolor sit amet.',
+                        'component'     => 1,
+                        'websiteValue'  => '',
                         'storePortfolioWebsiteRoute' => [
-                            'name' => 'customer.models.portfolio-website.store.from-welcome'
+                            'name'      => 'customer.models.portfolio-website.store.from-welcome'
+                        ],
+                    ],
+                    'step_2'    => [
+                        'id'                => 2,
+                        'label'             => 'Select your interest',
+                        'description'       => 'Lorem ipsum dolor sit amet.',
+                        'component'         => 2,
+                        "slug"              => "mw",
+                        "customer_name"     => "Aiku",
+                        "code"              => null,
+                        "name"              => "My website 😸",
+                        "url"               => "hello.com",
+                        "number_banners"    => 0,
+                        "seo"           => [
+                            "name"          => "seo",
+                            "label"         => "SEO",
+                            "value"         => 'not_sure'
+                        ],
+                        "google-ads"    => [
+                            "name"          => "google-ads",
+                            "label"         => "PPC",
+                            "value"         => "not_interested"
+                        ],
+                        "social"        => [
+                            "name"          => "social",
+                            "label"         => "Social",
+                            "value"         => 'not_sure'
+                        ],
+                        "prospects"     => [
+                            "name"          => "prospects",
+                            "label"         => "Prospects",
+                            "value"         => 'not_sure'
+                        ],
+                        "banners"      => [
+                            "name"          => "banners",
+                            "label"         => "Banners",
+                            "value"         => 'not_sure'
                         ]
                     ],
-                    [
-
-                    ],
-                    [
-
+                    'step_3'    => [
+                        'id'            => 3,
+                        'label'         => 'Make appointment',
+                        'description'   => 'Lorem ipsum dolor sit amet.',
+                        'component'     => 3,
+                        'textareaValue' => '',
+                        'inputValue'    => ''
                     ]
                 ],
 
