@@ -7,8 +7,6 @@ import firstStep from '@/Components/Dashboard/firstStep.vue'
 import secondStep from '@/Components/Dashboard/secondStep.vue'
 import thirdStep from '@/Components/Dashboard/thirdStep.vue'
 import Button from '@/Components/Elements/Buttons/Button.vue'
-import { nextTick } from 'vue'
-
 
 
 const props = defineProps<{
@@ -67,6 +65,7 @@ const compContentStep = computed(() => {
                         </Button>
                     </div>
                 </div> -->
+
         <!-- Section: Dynamic Content (firstStep.vue, secondStep.vue, thirdStep.vue) -->
         <div class="flex gap-x-4 pb-10 mb-5 border-b border-gray-300 w-full">
             <Transition name="slide-to-left" mode="out-in">
@@ -75,7 +74,7 @@ const compContentStep = computed(() => {
                         :key="currentStep"
                         :data="compCurrentStepData"
                         :currentStep="currentStep"
-                        @updateCurrentStep="() => currentStep = 2"
+                        @updateCurrentStep="() => currentStep++"
                     />
                 </KeepAlive>
             </Transition>
