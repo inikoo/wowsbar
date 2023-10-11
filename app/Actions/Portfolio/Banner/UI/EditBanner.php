@@ -105,8 +105,8 @@ class EditBanner extends InertiaAction
                     ],
                     'args'      => [
                         'updateRoute' => [
-                            'name'       => 'models.banner.update',
-                            'parameters' => $banner->slug
+                            'name'       => 'customer.models.banner.update',
+                            'parameters' => $banner->id
                         ],
                     ]
                 ],

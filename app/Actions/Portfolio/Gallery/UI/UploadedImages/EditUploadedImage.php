@@ -87,8 +87,8 @@ class EditUploadedImage extends InertiaAction
                     ],
                     'args'      => [
                         'updateRoute' => [
-                            'name'       => 'models.images.update',
-                            'parameters' => $media->slug
+                            'name'       => 'customer.models.images.update',
+                            'parameters' => $media->id
                         ],
                     ]
                 ]
