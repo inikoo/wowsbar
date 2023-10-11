@@ -23,6 +23,7 @@ class ExtractWebpage
     public function getElementsByClass(&$parentNode, $tagName, $className): array
     {
         $childNodes = [];
+        $childrenNodes = [];
 
         $childNodeList = $parentNode->getElementsByTagName($tagName);
         for ($i = 0; $i < $childNodeList->length; $i++) {
@@ -34,11 +35,6 @@ class ExtractWebpage
                 $nodes = $temp;
                 $children = $nodes->childNodes;
                 foreach ($children as $child) {
-                    $childNodes[] = [
-                        'section' => $class,
-                        'content' => $this->convertToHTML($child)
-                    ];
-
                     if (Str::contains($class, 'wowsbar-with-sub-blocks')) {
                         $childSubNodeList = $child->getElementsByTagName($tagName);
                         for ($i = 0; $i < $childSubNodeList->length; $i++) {
@@ -50,16 +46,21 @@ class ExtractWebpage
                                 $nodes = $temp;
                                 $childrenSub = $nodes->childNodes;
                                 foreach ($childrenSub as $childSub) {
-                                    $childNodes[] = [
+                                    $childrenNodes[] = [
                                         'section' => $classesSub,
-                                        'content' => $this->convertToHTML($childSub)
+                                        'content' => $this->convertToHTML($childSub),
                                     ];
                                     $childNodeList = $parentNode->getElementsByTagName($tagName);
                                 }
                             }
                         }
-
                     }
+
+                    $childNodes[] = [
+                        'section' => $class,
+                        'content' => $this->convertToHTML($child),
+                        'children' => $childrenNodes
+                    ];
                 }
             }
         }
