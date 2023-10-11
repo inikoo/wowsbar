@@ -45,9 +45,7 @@ class PublishWebpage
 
 
         if($layout!='' and  Arr::get($layout,'html')  ) {
-            $html = Arr::get($layout,'html');
-
-            $layout['html'] = ExtractWebpage::run($html, 'section', 'wowsbar-block');
+            $layout['html'] = ExtractWebpage::run(Arr::get($layout,'html'));
         }
 
         /** @var Snapshot $snapshot */

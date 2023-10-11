@@ -5,7 +5,7 @@ export const Appointment = () => {
       category: 'Appointment',
       label : 'appointment',
       content :`
-      <section class="wowsbar-block wowsbar-block-type-appointment wowsbar-with-sub-blocks">
+      <section data-id="appointment-block-1" data-type="appointment" data-group="contact" class="wowsbar-block">
         <div class="flex justify-center">
             <div class="bg-white w-fit grid grid-cols-2 max-w-3xl justify-center border-2 border-gray-300 overflow-hidden rounded-md divide-x divide-gray-100">
                 <div class="overflow-hidden bg-white sm:rounded-lg">
