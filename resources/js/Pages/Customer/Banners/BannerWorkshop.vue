@@ -84,7 +84,6 @@ const props = defineProps<{
             image_id: number
             image_source: string
         }[]
-        published_hash: string
     }
     imagesUploadRoute: {
         name: string
@@ -122,7 +121,6 @@ const sendDataToServer = async () => {
     const formValues = {
         ...deleteUser(),
         ...(props.banner.state !== 'unpublished' && { comment: comment.value }),
-        published_hash: compCurrentHash.value  // include Hash to save to server
     }
     const form = useForm(formValues)
 
