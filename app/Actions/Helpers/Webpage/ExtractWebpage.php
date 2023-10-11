@@ -21,8 +21,9 @@ class ExtractWebpage
     {
         $this->html = $html[0];
 
-        $doc = new \DOMDocument('1.0', 'utf-8');
-        @$doc->loadHTML($this->html['html']);
+        $doc = new \DOMDocument();
+        $doc->encoding = 'utf-8';
+        @$doc->loadHTML(mb_convert_encoding($this->html['html'], 'HTML-ENTITIES', 'UTF-8'));
 
         $blocks = $this->getBlocks($doc);
 
@@ -69,6 +70,8 @@ class ExtractWebpage
         foreach ($children as $child) {
             $blocks .= $this->convertToHTML($child);
         }
+
+//        dd($blocks);
 
         return $blocks;
     }
@@ -143,6 +146,6 @@ class ExtractWebpage
 
     public function convertToHTML($child): string
     {
-        return $child->ownerDocument->saveXML($child);
+        return $child->ownerDocument->saveHTML($child);
     }
 }
