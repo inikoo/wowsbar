@@ -10,23 +10,25 @@ namespace App\Http\Resources\Catalogue;
 use App\Models\Catalogue\ProductCategory;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ *
+ * @property int $id
+ * @property string $slug
+ * @property string $name
+ * @property string $interest
+ */
+
 class BasketResource extends JsonResource
 {
     public function toArray($request): array
     {
-        /** @var ProductCategory $department */
-        $department=$this;
+        $divisions = $this;
 
         return [
-            'id'          => $department->id,
-            'slug'        => $department->slug,
-            'code'        => $department->code,
-            'name'        => $department->name,
-            'state'       => $department->state,
-            'interest'    => $department->interest,
-            'description' => $department->description,
-            'created_at'  => $department->created_at,
-            'updated_at'  => $department->updated_at,
+            'id'          => $divisions->id,
+            'slug'        => $divisions->slug,
+            'name'        => $divisions->name,
+            'interest'    => $divisions->interest
         ];
     }
 }

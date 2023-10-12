@@ -63,7 +63,7 @@ const selectedWebsite = ref({
         </template>
 
         <!-- Leads -->
-        <template #cell(leads)="{ item: website }">
+        <template #cell(leads)="{ item: website }">d
             <div class="cursor-pointer" @click="() => {isModalOpen = true, selectedWebsite = website, selectedColumn = website.prospects}">
                 <IconGroupInterested :columnValue="website.prospects?.value" />
             </div>
