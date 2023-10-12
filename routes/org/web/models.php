@@ -34,11 +34,13 @@ use App\Actions\Organisation\Guest\ImportGuest;
 use App\Actions\Organisation\Guest\StoreGuest;
 use App\Actions\Organisation\Guest\UpdateGuest;
 use App\Actions\Organisation\Organisation\UpdateOrganisation;
+use App\Actions\Portfolio\PortfolioDivision\SyncDivisionPortfolioWebsite;
 use App\Actions\Portfolio\PortfolioWebsite\ImportPortfolioWebsite;
 use App\Actions\Portfolios\CustomerWebsite\StoreCustomerWebsite;
 use App\Actions\Catalogue\Product\StoreProduct;
 use App\Actions\Catalogue\Product\UpdateProduct;
 use App\Actions\Catalogue\Product\ImportProducts;
+use App\Actions\Portfolios\CustomerWebsite\UpdateCustomerWebsite;
 use App\Actions\UI\Organisation\Profile\UpdateProfile;
 use App\Actions\Web\Webpage\PublishWebpage;
 use App\Actions\Web\Webpage\ShowWebpageContent;
@@ -146,3 +148,7 @@ Route::prefix('customer/{customer:id}')->as('customer.')->group(function () {
     Route::post('websites/upload', ImportPortfolioWebsite::class)->name('website.upload');
     Route::post('websites', StoreCustomerWebsite::class)->name('customer-website.store');
 });
+
+Route::patch('websites/{customerWebsite}', UpdateCustomerWebsite::class)->name('customer-website.update');
+
+Route::patch('{portfolioWebsite}/interest', SyncDivisionPortfolioWebsite::class)->name('interest.store');
