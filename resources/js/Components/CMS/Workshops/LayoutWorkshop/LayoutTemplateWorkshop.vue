@@ -1,23 +1,19 @@
 <script setup lang="ts">
-import Edit from '@/Components/Edit.vue';
+import Edit from "@/Components/Edit.vue";
 
 const props = defineProps<{
-    data: any
-    imagesUploadRoute: any
-    updateRoutes: any
-}>()
+    data: any;
+    imagesUploadRoute: any;
+    updateRoutes: any;
+}>();
 </script>
 
 <template>
     <div>
         <Edit :formData="data.formData" />
 
-
-    
-    
+       
     </div>
-
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>
