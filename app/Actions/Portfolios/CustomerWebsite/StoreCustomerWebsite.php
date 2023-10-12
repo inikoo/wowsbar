@@ -33,6 +33,10 @@ class StoreCustomerWebsite
 
 
     private bool $asAction = false;
+    /**
+     * @var \App\Models\CRM\Customer
+     */
+    private Customer $customer;
 
 
     public function handle(Customer $customer, array $modelData): CustomerWebsite
@@ -63,6 +67,18 @@ class StoreCustomerWebsite
         return $request->user()->hasPermissionTo("crm.edit");
     }
 
+    public function prepareForValidation(ActionRequest $request): void
+    {
+        if ($request->get('url')) {
+            $request->merge(
+                [
+                    'url' => 'https://'.$request->get('url'),
+                ]
+            );
+        }
+    }
+
+
     public function rules(): array
     {
         return [
@@ -70,7 +86,7 @@ class StoreCustomerWebsite
                        new IUnique(
                            table: 'portfolio_websites',
                            extraConditions: [
-                               ['column' => 'customer_id', 'value' => customer()->id],
+                               ['column' => 'customer_id', 'value' => $this->customer->id],
                            ]
                        ),
             ],
@@ -80,6 +96,7 @@ class StoreCustomerWebsite
 
     public function asController(Customer $customer, ActionRequest $request): CustomerWebsite
     {
+        $this->customer = $customer;
         $request->validate();
 
         return $this->handle($customer, $request->validated());
