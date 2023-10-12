@@ -8,7 +8,6 @@
 namespace App\Actions\Auth\CustomerUser\UI;
 
 use App\Actions\Helpers\History\IndexHistories;
-use App\Actions\Helpers\History\ShowHistories;
 use App\Actions\InertiaAction;
 use App\Actions\Traits\WithElasticsearch;
 use App\Actions\UI\Customer\SysAdmin\ShowSysAdminDashboard;
@@ -84,17 +83,17 @@ class ShowCustomerUser extends InertiaAction
                 ],
 
                 CustomerUserTabsEnum::SHOWCASE->value => $this->tab == CustomerUserTabsEnum::SHOWCASE->value ?
-                    fn() => new CustomerUserResource($customerUser)
-                    : Inertia::lazy(fn() => new CustomerUserResource($customerUser)),
+                    fn () => new CustomerUserResource($customerUser)
+                    : Inertia::lazy(fn () => new CustomerUserResource($customerUser)),
 
 
                 CustomerUserTabsEnum::REQUEST_LOGS->value => $this->tab == CustomerUserTabsEnum::REQUEST_LOGS->value ?
-                    fn() => CustomerUserRequestLogsResource::collection(IndexCustomerUserRequestLogs::run($customerUser))
-                    : Inertia::lazy(fn() => CustomerUserRequestLogsResource::collection(IndexCustomerUserRequestLogs::run($customerUser))),
+                    fn () => CustomerUserRequestLogsResource::collection(IndexCustomerUserRequestLogs::run($customerUser))
+                    : Inertia::lazy(fn () => CustomerUserRequestLogsResource::collection(IndexCustomerUserRequestLogs::run($customerUser))),
 
                 CustomerUserTabsEnum::HISTORY->value => $this->tab == CustomerUserTabsEnum::HISTORY->value ?
-                    fn() => HistoryResource::collection(ShowHistories::run($customerUser))
-                    : Inertia::lazy(fn() => HistoryResource::collection(ShowHistories::run($customerUser)))
+                    fn () => HistoryResource::collection(IndexHistories::run($customerUser))
+                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistories::run($customerUser)))
 
             ]
         )

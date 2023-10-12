@@ -14,7 +14,7 @@ enum BannerTypeEnum: string
     use EnumHelperTrait;
 
     case LANDSCAPE       = 'landscape';
-    case SQUARE        = 'square';
+    case SQUARE          = 'square';
     // case PORTRAIT        = 'portrait';
 
 
@@ -22,7 +22,7 @@ enum BannerTypeEnum: string
     {
         return [
             'landscape'       => __('landscape'),
-            'square'        => __('square'),
+            'square'          => __('square'),
             // 'portrait'        => __('portrait'),
 
         ];
@@ -34,7 +34,7 @@ enum BannerTypeEnum: string
 
         return [
             'landscape'       => $stats->number_banners_type_landscape,
-            'square'        => $stats->number_banners_type_square,
+            'square'          => $stats->number_banners_type_square,
             // 'portrait'        => $stats->number_banners_type_portrait,
         ];
     }

@@ -105,17 +105,18 @@ class ShowUser extends InertiaAction
                 UserTabsEnum::SHOWCASE->value => $this->tab == UserTabsEnum::SHOWCASE->value ?
                     fn () => new UserResource($user)
                     : Inertia::lazy(fn () => new UserResource($user)),
-
+/*
                 UserTabsEnum::REQUEST_LOGS->value => $this->tab == UserTabsEnum::REQUEST_LOGS->value ?
                     fn () => UserRequestLogsResource::collection(ShowUserRequestLogs::run($user->username))
                     : Inertia::lazy(fn () => UserRequestLogsResource::collection(ShowUserRequestLogs::run($user->username))),
-
+*/
                 UserTabsEnum::HISTORY->value => $this->tab == UserTabsEnum::HISTORY->value ?
                     fn () => HistoryResource::collection(ShowHistories::run($user))
                     : Inertia::lazy(fn () => HistoryResource::collection(ShowHistories::run($user)))
 
             ]
-        )->table(ShowUserRequestLogs::make()->tableStructure())
+        )
+            //->table(ShowUserRequestLogs::make()->tableStructure())
             ->table(IndexHistories::make()->tableStructure());
     }
 

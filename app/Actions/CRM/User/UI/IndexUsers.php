@@ -12,7 +12,7 @@ use App\Actions\CRM\Customer\UI\ShowCustomer;
 use App\Actions\Helpers\History\IndexHistories;
 use App\Actions\InertiaAction;
 use App\Enums\UI\UsersTabsEnum;
-use App\Http\Resources\Auth\UserRequestLogsResource;
+use App\Http\Resources\Auth\OrganisationUserRequestLogsResource;
 use App\Http\Resources\Auth\UserResource;
 use App\Http\Resources\History\HistoryResource;
 use App\InertiaTable\InertiaTable;
@@ -195,9 +195,11 @@ class IndexUsers extends InertiaAction
                     fn () => UserResource::collection($users)
                     : Inertia::lazy(fn () => UserResource::collection($users)),
 
+                /*
                 UsersTabsEnum::USERS_REQUESTS->value => $this->tab == UsersTabsEnum::USERS_REQUESTS->value ?
-                    fn () => UserRequestLogsResource::collection(IndexUserRequestLogs::run($request->get('sort')))
-                    : Inertia::lazy(fn () => UserRequestLogsResource::collection(IndexUserRequestLogs::run())),
+                    fn () => OrganisationUserRequestLogsResource::collection(IndexUserRequestLogs::run($request->get('sort')))
+                    : Inertia::lazy(fn () => OrganisationUserRequestLogsResource::collection(IndexUserRequestLogs::run())),
+                */
 
                 UsersTabsEnum::USERS_HISTORIES->value => $this->tab == UsersTabsEnum::USERS_HISTORIES->value ?
                     fn () => HistoryResource::collection(IndexHistories::run(User::class))
@@ -216,7 +218,9 @@ class IndexUsers extends InertiaAction
                     ]
                 ]
             )
-        )->table(IndexUserRequestLogs::make()->tableStructure())
+        )
+            /*
+            ->table(IndexUserRequestLogs::make()->tableStructure())
             ->table(
                 IndexHistories::make()->tableStructure(
                     exportLinks: [
@@ -228,6 +232,7 @@ class IndexUsers extends InertiaAction
                     ]
                 )
             );
+            */;
     }
 
     public function asController(ActionRequest $request): LengthAwarePaginator

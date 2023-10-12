@@ -22,7 +22,7 @@ class DeliverBanner
         $client = BuildElasticsearchClient::run();
 
         $params = [
-            'index' => config('elasticsearch.index_prefix').'_'.config('app.env').'_content_blocks',
+            'index' => config('elasticsearch.index_prefix').'content_blocks',
             'id'    => 'banner_'.$ulid
         ];
 

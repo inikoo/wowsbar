@@ -32,6 +32,7 @@ class LogCustomerUserRequest
             'username'           => $customerUser->user->email,
             'customer_user_slug' => $customerUser->slug,
             'customer_user_id'   => $customerUser->id,
+            'customer_id'        => $customerUser->customer->id,
             'route'              => $routeData,
             'module'             => explode('.', $routeData['name'])[0],
             'ip_address'         => $ip,

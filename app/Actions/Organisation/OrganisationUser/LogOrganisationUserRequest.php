@@ -1,7 +1,7 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Wed, 11 Oct 2023 16:10:00 Malaysia Time, Office, Bali, Indonesia
+ * Created: Thu, 12 Oct 2023 08:57:05 Malaysia Time, Office, Bali, Indonesia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
@@ -19,22 +19,22 @@ class LogOrganisationUserRequest
     use AsAction;
     use WithLogRequest;
 
-    public function handle(Carbon $datetime, array $routeData, string $ip, string $userAgent, string $type, OrganisationUser $user): void
+    public function handle(Carbon $datetime, array $routeData, string $ip, string $organisationUserAgent, string $type, OrganisationUser $organisationUser): void
     {
         $index = config('elasticsearch.index_prefix').'organisation_users_requests';
 
-        $parsedUserAgent = (new Browser())->parse($userAgent);
+        $parsedUserAgent = (new Browser())->parse($organisationUserAgent);
 
         $body = [
             'type'                 => $type,
             'datetime'             => $datetime,
-            'username'             => $user->username,
-            'organisation_user_id' => $user->id,
+            'username'             => $organisationUser->username,
+            'organisation_user_id' => $organisationUser->id,
             'route'                => $routeData,
             'module'               => explode('.', $routeData['name'])[0],
             'ip_address'           => $ip,
             'location'             => json_encode($this->getLocation($ip)), // reference: https://github.com/stevebauman/location
-            'user_agent'           => $userAgent,
+            'user_agent'           => $organisationUserAgent,
             'device_type'          => json_encode([
                 'title' => $parsedUserAgent->deviceType(),
                 'icon'  => $this->getDeviceIcon($parsedUserAgent->deviceType())
@@ -51,7 +51,7 @@ class LogOrganisationUserRequest
 
 
         IndexElasticsearchDocument::dispatch(index: $index, body: $body);
-        $user->stats->update(['last_active_at' => $datetime]);
+        $organisationUser->stats->update(['last_active_at' => $datetime]);
     }
 
 
