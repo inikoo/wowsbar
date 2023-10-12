@@ -12,6 +12,7 @@ const props = defineProps<{
     };
 }>();
 
+
 const getComponent = (componentName: string) => {
     const components: any = {
         html: Html,
@@ -20,7 +21,7 @@ const getComponent = (componentName: string) => {
     return components[componentName] ?? null;
 };
 
-const css = loadCss(props.content.css);
+const css = props.content.css ? loadCss(props.content.css) : null
 let dynamicClasses = "";
 onMounted(() => {
     // Append css style
@@ -43,6 +44,7 @@ onMounted(() => {
     }
     document.body.style.display = "block";
 });
+
 </script>
 
 <template layout='Public'>
