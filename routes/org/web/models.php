@@ -151,4 +151,4 @@ Route::prefix('customer/{customer:id}')->as('customer.')->group(function () {
 
 Route::patch('websites/{customerWebsite}', UpdateCustomerWebsite::class)->name('customer-website.update');
 
-Route::post('{portfolioWebsite}/interest', SyncDivisionPortfolioWebsite::class)->name('interest.store');
+Route::patch('{portfolioWebsite}/interest', SyncDivisionPortfolioWebsite::class)->name('interest.store');

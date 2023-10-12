@@ -40,7 +40,7 @@ onMounted(() => {
 
     // Append tailwind
     for (const element of document.querySelectorAll("*[class]")) {
-        const styles = processClasses(element.classList);
+        processClasses(element.classList);
     }
     document.body.style.display = "block";
 });

@@ -61,7 +61,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <div v-html="header[0]?.html" :class="dynamicClasses.header"></div>
+    <div v-html="header[0]?.html" ></div>
     <slot />
-    <div v-html="footer[0]?.html" :class="dynamicClasses.footer"></div>
+    <div v-html="footer[0]?.html"></div>
 </template>

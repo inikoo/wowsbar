@@ -5,7 +5,7 @@ import { faEye, faEyeSlash } from '@/../private/pro-solid-svg-icons'
 import { faRectangleWide } from "@/../private/pro-duotone-svg-icons"
 import { library } from '@fortawesome/fontawesome-svg-core'
 import GrapeEditor from '@/Components/CMS/Workshops/GrapeEditor/GrapeEditor.vue'
-import { HeaderPlugins } from "@/Components/CMS/Workshops/GrapeEditor/CustomBlocks/CustomBlock";
+import { HeaderPlugins, BlogPlugins } from "@/Components/CMS/Workshops/GrapeEditor/CustomBlocks/CustomBlock";
 
 
 const props = defineProps<{
@@ -30,6 +30,6 @@ library.add(
 </script>
 
 <template layout="OrgApp">
-    <GrapeEditor :plugins="[HeaderPlugins]" :updateRoute="updateRoutes.workshop_header" :loadRoute="updateRoutes.workshop_header" :imagesUploadRoute="imagesUploadRoute.workshop_header" />
+    <GrapeEditor :plugins="[HeaderPlugins,BlogPlugins]" :updateRoute="updateRoutes.workshop_header" :loadRoute="updateRoutes.workshop_header" :imagesUploadRoute="imagesUploadRoute.workshop_header" />
 </template>
 

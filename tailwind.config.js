@@ -36,5 +36,18 @@ export default {
         },
     },
 
+    safelist: [
+        'space-y-8',
+        'mx-auto',
+        'text-center',
+        'md:text-left',
+        'xl:col-span-2',
+        'xl:mt-0',
+        "md:flex-row ",
+        "md:flex-nowrap",
+        "flex-wrap", 
+        "lg:flex-nowrap"
+      ],
+
     plugins: [forms],
 };

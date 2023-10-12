@@ -10,14 +10,16 @@ const props = defineProps<{
 
 </script>
 
-<template>
-    <!-- <pre>{{ data }}</pre> -->
+<template>{{ data }}
     <div class="max-w-xl px-4 sm:px-6 lg:px-8 pt-4">
         <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
                 <ServicePicker
                     :data="data.basket.data"
-                    routeToUpdate="org.models.product-category.update"
+                    :routeToUpdate="{
+                        name: 'org.models.interest.store',
+                        parameters: route().params.customerWebsite
+                    }"
                 />
                 <!-- <table class="min-w-full divide-y divide-gray-300">
                     <thead>
