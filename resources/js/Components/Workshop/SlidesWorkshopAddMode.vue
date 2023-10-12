@@ -1,16 +1,11 @@
 <script setup lang="ts">
 import { ref } from "vue"
-import { library } from "@fortawesome/fontawesome-svg-core"
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
-import { faImage, faPhotoVideo } from "@/../private/pro-light-svg-icons"
 import { ulid } from "ulid"
-import { trans } from "laravel-vue-i18n"
 import Modal from '@/Components/Utils/Modal.vue'
 import CropImage from "./CropImage/CropImage.vue"
-import Button from "../Elements/Buttons/Button.vue"
 import GalleryImages from "@/Components/Workshop/GalleryImages.vue"
+import SlideAddMode from '@/Components/Banner/SlideAddMode.vue'
 
-library.add(faImage, faPhotoVideo)
 const props = defineProps<{
     data: {
         common: {
@@ -41,27 +36,28 @@ const props = defineProps<{
         }>
         delay: number
     }
-    imagesUploadRoute: Object
+    imagesUploadRoute: {
+        name: string
+        parameters: string[]
+    }
+    bannerType: string
 }>()
 
-const isOpen = ref(false)
-const addFiles = ref([])
+const isOpenModalCrop = ref(false)
+const addedFiles = ref([])
 const isOpenGalleryImages = ref(false)
+
 const closeModal = () => {
-    addFiles.value.files = null
-    isOpen.value = false
-    fileInput.value.value = ""
+    addedFiles.value.files = null
+    isOpenModalCrop.value = false
+    // fileInput.value.value = ""
 }
 
 const isDragging = ref(false)
-const fileInput = ref(null)
 
-const onChange = () => {
-    addFiles.value = fileInput.value?.files
-    isOpen.value = true
-}
 
 const dragover = (e) => {
+    console.log(e)
     e.preventDefault()
     isDragging.value = true
 }
@@ -72,8 +68,8 @@ const dragleave = () => {
 
 const drop = (e) => {
     e.preventDefault()
-    addFiles.value = e.dataTransfer.files
-    isOpen.value = true
+    addedFiles.value = e.dataTransfer.files
+    isOpenModalCrop.value = true
     isDragging.value = false
 }
 
@@ -94,43 +90,33 @@ const uploadImageRespone = (res) => {
     }
     const newFiles = [...setData]
     props.data.components = [...props.data.components, ...newFiles]
-    isOpen.value = false
+    isOpenModalCrop.value = false
 }
 </script>
 
 <template layout="CustomerApp">
-    <Modal :isOpen="isOpen" @onClose="closeModal">
+    <Modal :isOpen="isOpenModalCrop" @onClose="closeModal">
         <div>
-            <CropImage :data="addFiles" :imagesUploadRoute="props.imagesUploadRoute" :response="uploadImageRespone" />
+            <CropImage :data="addedFiles" :imagesUploadRoute="props.imagesUploadRoute" :response="uploadImageRespone" />
         </div>
     </Modal>
+    
     <Modal :isOpen="isOpenGalleryImages" @onClose="()=>isOpenGalleryImages = false">
-            <div>
-                <GalleryImages :addImage="uploadImageRespone" :closeModal="()=>isOpenGalleryImages = false"/>
-            </div>
-        </Modal>
-    <div class="col-span-full p-3" @dragover="dragover" @dragleave="dragleave" @drop="drop">
-        <div class="relative mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10 bg-gray-400/10 hover:bg-gray-400/20">
-            <label for="fileInput"
-                class="absolute cursor-pointer rounded-md inset-0 focus-within:outline-none focus-within:ring-2 focus-within:ring-gray-400 focus-within:ring-offset-0">
-                <!-- <span>{{ trans("Click") }}</span> -->
-                <input type="file" multiple name="file" id="fileInput" class="sr-only" @change="onChange" ref="fileInput" />
-            </label>
-            <div class="text-center text-gray-500">
-                <FontAwesomeIcon :icon="['fal', 'image']" class="mx-auto h-12 w-12 text-gray-300" aria-hidden="true" />
-                <div class="mt-2 flex  justify-center text-lg font-medium leading-6 ">
-                    <p class="pl-1">{{ trans("Upload Image") }}</p>
-                </div>
-                <div class="flex text-sm leading-6 ">
-                    <p class="pl-1">{{ trans("Click or drag & drop") }}</p>
-                </div>
-                <p class="text-[0.7rem]">
-                    {{ trans("PNG, JPG, GIF up to 10MB") }}
-                </p>
-                <Button id="gallery" :style="`primary`" :icon="'fal fa-photo-video'" label="Gallery" size="xs" class="relative m-2.5"
-                    @click="()=>isOpenGalleryImages=true" />
-            </div>
+        <div>
+            <GalleryImages :addImage="uploadImageRespone" :closeModal="()=>isOpenGalleryImages = false"/>
         </div>
-        <div class="text-xs text-gray-400 py-1">{{ trans("The recommended image size is 1800 x 450") }}</div>
+    </Modal>
+    
+    <div class="col-span-full p-3" >
+        <SlideAddMode
+            :bannerType="bannerType"
+            :resetInput="true"
+            @addedFiles="(files: any ) => addedFiles = files"
+            @dragover="dragover"
+            @dragleave="dragleave"
+            @drop="drop"
+            @onClickButtonGallery="isOpenGalleryImages = true"
+            @onChangeInput="isOpenModalCrop = true"
+        />
     </div>
 </template>

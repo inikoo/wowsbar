@@ -7,15 +7,10 @@
 
 namespace App\Actions\CRM\Appointment\UI;
 
-use App\Actions\CRM\Appointment\UI\IndexAppointments;
-use App\Actions\CRM\Customer\UI\GetCustomerShowcase;
-use App\Actions\Portfolios\CustomerWebsite\UI\IndexCustomerWebsites;
 use App\Actions\InertiaAction;
 use App\Actions\Organisation\UI\CRM\ShowCRMDashboard;
 use App\Enums\UI\Customer\AppointmentTabsEnum;
-use App\Enums\UI\Customer\CustomerTabsEnum;
 use App\Http\Resources\CRM\AppointmentResource;
-use App\Http\Resources\CRM\CustomerResource;
 use App\Models\CRM\Appointment;
 use App\Models\CRM\Customer;
 use App\Models\Market\Shop;

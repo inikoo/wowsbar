@@ -202,4 +202,14 @@ return [
     'delivery_domain'        => env('DELIVERY_DOMAIN', 'delivery.wowsbar.test'),
     'delivery_url'           => env('DELIVERY_URL', 'http://delivery.wowsbar.test'),
 
+    'request_log'=> [
+        'organisation'=> env('ORGANISATION_USER_REQUEST_LOG', true),
+        'customers'   => env('CUSTOMER_USER_REQUEST_LOG', true),
+    ],
+    'live_list'=> [
+        'organisation'=> env('ORGANISATION_USER_LIVE_LIST', true),
+        'customers'   => env('CUSTOMER_USER_LIVE_LIST', true),
+    ]
+
+
 ];

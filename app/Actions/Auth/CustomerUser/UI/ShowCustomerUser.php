@@ -13,6 +13,7 @@ use App\Actions\InertiaAction;
 use App\Actions\Traits\WithElasticsearch;
 use App\Actions\UI\Customer\SysAdmin\ShowSysAdminDashboard;
 use App\Enums\Auth\CustomerUser\CustomerUserTabsEnum;
+use App\Http\Resources\Auth\CustomerUserRequestLogsResource;
 use App\Http\Resources\Auth\CustomerUserResource;
 use App\Http\Resources\History\HistoryResource;
 use App\Models\Auth\CustomerUser;
@@ -27,6 +28,7 @@ class ShowCustomerUser extends InertiaAction
     public function asController(CustomerUser $customerUser, ActionRequest $request): CustomerUser
     {
         $this->initialisation($request)->withTab(CustomerUserTabsEnum::values());
+
         return $customerUser;
     }
 
@@ -38,6 +40,7 @@ class ShowCustomerUser extends InertiaAction
     public function authorize(ActionRequest $request): bool
     {
         $this->canEdit = $request->get('customerUser')->hasPermissionTo('sysadmin.edit');
+
         return $request->get('customerUser')->hasPermissionTo("sysadmin.view");
     }
 
@@ -48,23 +51,23 @@ class ShowCustomerUser extends InertiaAction
         return Inertia::render(
             'SysAdmin/CustomerUser',
             [
-                'title'       => __('customerUser'),
+                'title'       => __('user'),
                 'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->getName(),
                     $request->route()->originalParameters()
                 ),
-                'navigation' => [
+                'navigation'  => [
                     'previous' => $this->getPrevious($customerUser, $request),
                     'next'     => $this->getNext($customerUser, $request),
                 ],
-                'pageHead' => [
-                    'icon'=> [
-                        'icon'   => 'fal fa-terminal',
-                        'tooltip'=> __('User')
+                'pageHead'    => [
+                    'icon'         => [
+                        'icon'    => 'fal fa-terminal',
+                        'tooltip' => __('User')
                     ],
-                    'title'       => $customerUser->user->email,
-                    'noCapitalise'=> true,
-                    'actions'     => [
+                    'title'        => $customerUser->user->email,
+                    'noCapitalise' => true,
+                    'actions'      => [
                         $this->canEdit ? [
                             'type'  => 'button',
                             'style' => 'edit',
@@ -75,33 +78,36 @@ class ShowCustomerUser extends InertiaAction
                         ] : [],
                     ]
                 ],
-                'tabs' => [
+                'tabs'        => [
                     'current'    => $this->tab,
                     'navigation' => CustomerUserTabsEnum::navigation()
                 ],
 
                 CustomerUserTabsEnum::SHOWCASE->value => $this->tab == CustomerUserTabsEnum::SHOWCASE->value ?
-                    fn () => new CustomerUserResource($customerUser)
-                    : Inertia::lazy(fn () => new CustomerUserResource($customerUser)),
+                    fn() => new CustomerUserResource($customerUser)
+                    : Inertia::lazy(fn() => new CustomerUserResource($customerUser)),
 
-                /*
+
                 CustomerUserTabsEnum::REQUEST_LOGS->value => $this->tab == CustomerUserTabsEnum::REQUEST_LOGS->value ?
-                    fn () => CustomerUserRequestLogsResource::collection(ShowCustomerUserRequestLogs::run($customerUser->customerUsername))
-                    : Inertia::lazy(fn () => CustomerUserRequestLogsResource::collection(ShowCustomerUserRequestLogs::run($customerUser->customerUsername))),
-*/
+                    fn() => CustomerUserRequestLogsResource::collection(IndexCustomerUserRequestLogs::run($customerUser))
+                    : Inertia::lazy(fn() => CustomerUserRequestLogsResource::collection(IndexCustomerUserRequestLogs::run($customerUser))),
+
                 CustomerUserTabsEnum::HISTORY->value => $this->tab == CustomerUserTabsEnum::HISTORY->value ?
-                    fn () => HistoryResource::collection(ShowHistories::run($customerUser))
-                    : Inertia::lazy(fn () => HistoryResource::collection(ShowHistories::run($customerUser)))
+                    fn() => HistoryResource::collection(ShowHistories::run($customerUser))
+                    : Inertia::lazy(fn() => HistoryResource::collection(ShowHistories::run($customerUser)))
 
             ]
         )
-            //->table(ShowCustomerUserRequestLogs::make()->tableStructure())
+            ->table(
+                IndexCustomerUserRequestLogs::make()->tableStructure(
+                    parent: $customerUser
+                )
+            )
             ->table(IndexHistories::make()->tableStructure());
     }
 
     public function getBreadcrumbs(string $routeName, array $routeParameters, string $suffix = ''): array
     {
-
         $headCrumb = function (CustomerUser $customerUser, array $routeParameters, string $suffix) {
             return [
                 [
@@ -118,7 +124,7 @@ class ShowCustomerUser extends InertiaAction
                         ],
 
                     ],
-                    'suffix' => $suffix
+                    'suffix'         => $suffix
 
                 ],
             ];
@@ -149,19 +155,19 @@ class ShowCustomerUser extends InertiaAction
 
             default => []
         };
-
     }
 
     public function getPrevious(CustomerUser $customerUser, ActionRequest $request): ?array
     {
         $previous = CustomerUser::where('slug', '<', $customerUser->slug)->where('customer_id', customer()->id)->orderBy('slug', 'desc')->first();
-        return $this->getNavigation($previous, $request->route()->getName());
 
+        return $this->getNavigation($previous, $request->route()->getName());
     }
 
     public function getNext(CustomerUser $customerUser, ActionRequest $request): ?array
     {
         $next = CustomerUser::where('slug', '>', $customerUser->slug)->where('customer_id', customer()->id)->orderBy('slug')->first();
+
         return $this->getNavigation($next, $request->route()->getName());
     }
 
@@ -170,6 +176,7 @@ class ShowCustomerUser extends InertiaAction
         if (!$customerUser) {
             return null;
         }
+
         return match ($routeName) {
             'customer.sysadmin.users.show' => [
                 'label' => $customerUser->slug,

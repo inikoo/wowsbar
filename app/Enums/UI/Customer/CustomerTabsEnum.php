@@ -26,7 +26,7 @@ enum CustomerTabsEnum: string
     case USERS              = 'users';
 
     case DISPATCHED_EMAILS = 'dispatched_emails';
-    case APPOINTMENTS = 'appointments';
+    case APPOINTMENTS      = 'appointments';
 
     public function blueprint(): array
     {

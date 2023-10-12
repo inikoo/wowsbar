@@ -53,6 +53,7 @@ const props = defineProps<{
         code: string,
         name: string
         state: string
+        type: string
     }
     bannerLayout: {
         delay: number
@@ -279,6 +280,7 @@ const compIsDataFirstTimeCreated = computed(() => {
 
 <template layout="CustomerApp">
     <Head :title="capitalize(title)" />
+    <!-- <pre>{{ props.banner.type }}</pre> -->
     <PageHeading :data="pageHead">
         <template #other="{ dataPageHead: head }">
             <Publish 
@@ -302,6 +304,7 @@ const compIsDataFirstTimeCreated = computed(() => {
                 :data="data"
                 :imagesUploadRoute="imagesUploadRoute"
                 :user="user.username"
+                :banner="banner"
             />
         </div>
     </section>

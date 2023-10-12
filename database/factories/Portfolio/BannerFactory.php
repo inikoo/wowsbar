@@ -16,7 +16,7 @@ class BannerFactory extends Factory
     {
         return [
             'name'   => fake()->company(),
-            'type'=>BannerTypeEnum::LANDSCAPE->value
+            'type'   => BannerTypeEnum::LANDSCAPE->value
         ];
     }
 }

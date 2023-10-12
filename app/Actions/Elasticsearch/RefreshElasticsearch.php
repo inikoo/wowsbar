@@ -28,16 +28,15 @@ class RefreshElasticsearch
      */
     public function handle(): void
     {
-        $indices = ['_search', '_content_blocks'];
+        $indices = ['search', 'content_blocks', 'customer_users_requests', 'organisation_users_requests'];
 
         $client = BuildElasticsearchClient::run();
         if ($client instanceof Exception) {
             throw $client;
         } else {
-
             foreach ($indices as $index) {
                 $params = [
-                    'index' => config('elasticsearch.index_prefix') . config('app.env'). $index
+                    'index' => config('elasticsearch.index_prefix').$index
                 ];
 
                 $response = $client->indices()->exists($params);
@@ -49,7 +48,6 @@ class RefreshElasticsearch
                 $client->indices()->create($params);
             }
         }
-
     }
 
     public function asCommand(Command $command): int

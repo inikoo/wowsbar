@@ -42,17 +42,17 @@ class ExtractWebpage
 
         for ($i = 0; $i < $childNodeList->length; $i++) {
             $childNode = $childNodeList->item($i);
-            $classes = explode(' ', $childNode->getAttribute('class'));
+            $classes   = explode(' ', $childNode->getAttribute('class'));
 
             if (in_array('wowsbar-block', $classes)) {
                 $blocks[] = [
-                    'id' => $childNode->getAttribute('data-id'),
-                    'group' => $childNode->getAttribute('data-group'),
-                    'type' => $childNode->getAttribute('data-type'),
+                    'id'      => $childNode->getAttribute('data-id'),
+                    'group'   => $childNode->getAttribute('data-group'),
+                    'type'    => $childNode->getAttribute('data-type'),
                     'content' => match ($childNode->getAttribute('data-type')) {
-                        'html' => $this->extractHtml($childNode),
+                        'html'        => $this->extractHtml($childNode),
                         'appointment' => $this->extractAppointment($childNode),
-                        default => null
+                        default       => null
                     }
                 ];
             }
@@ -95,27 +95,27 @@ class ExtractWebpage
 
     public function getElementsByClass(&$parentNode, $tagName, $className): array
     {
-        $childNodes = [];
+        $childNodes    = [];
         $childrenNodes = [];
 
         $childNodeList = $parentNode->getElementsByTagName($tagName);
         for ($i = 0; $i < $childNodeList->length; $i++) {
-            $temp = $childNodeList->item($i);
+            $temp  = $childNodeList->item($i);
             $class = $temp->getAttribute('class');
 
             if (stripos($class, $className) !== false) {
-                $nodes = $temp;
+                $nodes    = $temp;
                 $children = $nodes->childNodes;
                 foreach ($children as $child) {
                     if (Str::contains($class, 'wowsbar-with-sub-blocks')) {
                         $childSubNodeList = $child->getElementsByTagName($tagName);
                         for ($i = 0; $i < $childSubNodeList->length; $i++) {
 
-                            $temp = $childSubNodeList->item($i);
+                            $temp       = $childSubNodeList->item($i);
                             $classesSub = $temp->getAttribute('class');
 
                             if (Str::contains($classesSub, ['wowsbar-sub-block-id-content', 'wowsbar-sub-block-id-title'])) {
-                                $nodes = $temp;
+                                $nodes       = $temp;
                                 $childrenSub = $nodes->childNodes;
                                 foreach ($childrenSub as $childSub) {
                                     $childrenNodes[] = [

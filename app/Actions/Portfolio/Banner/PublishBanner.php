@@ -66,7 +66,7 @@ class PublishBanner
         StoreDeployment::run(
             $banner,
             [
-                'snapshot_id'  => $snapshot->id,
+                'snapshot_id'    => $snapshot->id,
                 'publisher_id'   => Arr::get($modelData, 'publisher_id'),
                 'publisher_type' => Arr::get($modelData, 'publisher_type'),
             ]

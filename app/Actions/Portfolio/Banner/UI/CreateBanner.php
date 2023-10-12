@@ -9,7 +9,6 @@ namespace App\Actions\Portfolio\Banner\UI;
 
 use App\Actions\InertiaAction;
 use App\Actions\Portfolio\PortfolioWebsite\UI\GetPortfolioWebsitesOptions;
-use App\Enums\CRM\Appointment\AppointmentTypeEnum;
 use App\Enums\Portfolio\Banner\BannerTypeEnum;
 use App\Models\CRM\Customer;
 use App\Models\Portfolio\PortfolioWebsite;
@@ -72,7 +71,7 @@ class CreateBanner extends InertiaAction
                     'label'       => __('orientation'),
                     'required'    => true,
                     'value'       => BannerTypeEnum::LANDSCAPE,
-                    'options'  => Options::forEnum(BannerTypeEnum::class)
+                    'options'     => Options::forEnum(BannerTypeEnum::class)
 
                 ],
                 'name' => [

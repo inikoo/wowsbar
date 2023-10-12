@@ -53,7 +53,7 @@ class StoreStockImage
                 ->preservingOriginal()
                 ->withProperties(
                     [
-                        'scope'=>$scope,
+                        'scope'      => $scope,
                         'checksum'   => $checksum,
                         'is_animated'=> $animated
                     ]

@@ -19,18 +19,16 @@ class DeliverBanner
 
     public function handle(string $ulid): array
     {
-
         $client = BuildElasticsearchClient::run();
 
         $params = [
-            'index' => config('elasticsearch.index_prefix') . config('app.env').'_content_blocks',
+            'index' => config('elasticsearch.index_prefix').'_'.config('app.env').'_content_blocks',
             'id'    => 'banner_'.$ulid
         ];
 
         $response = $client->get($params)->asString();
 
         return Arr::get(json_decode($response, true), '_source');
-
     }
 
 

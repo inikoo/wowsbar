@@ -169,12 +169,12 @@ watch(isModalOpen, async () => {
     <PageHeading :data="pageHead">
         <template #button>
             <!-- Button: Initial state -->
-            <Button v-if="!isSelectImage" @click="isSelectImage = true" size="xs" :style="`tertiary`" id="select-images">
+            <!-- <Button v-if="!isSelectImage" @click="isSelectImage = true" size="xs" :style="`tertiary`" id="select-images">
                 {{ trans('Choose images for a new banner') }}
-            </Button>
+            </Button> -->
 
             <!-- Button: Create Banner -->
-            <div v-if="isSelectImage" class="flex gap-x-2">
+            <!-- <div v-if="isSelectImage" class="flex gap-x-2">
                 <Button :style="'delete'" @click="isSelectImage = false"  size="xs" id="cancel-select">
                     <FontAwesomeIcon icon='fal fa-times' class='' aria-hidden='true' />
                     {{ trans('Cancel') }}
@@ -185,7 +185,7 @@ watch(isModalOpen, async () => {
                     {{ trans('Next') }} ({{ compCombinedImages.length }})
                     <FontAwesomeIcon v-if="compCombinedImages.length" icon='far fa-arrow-right' class='' aria-hidden='true' />
                 </Button>
-            </div>
+            </div> -->
         </template>
     </PageHeading>
 

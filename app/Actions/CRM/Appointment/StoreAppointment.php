@@ -38,7 +38,7 @@ class StoreAppointment
 
         if(class_basename($parent) == 'Shop') {
             data_set($modelData, 'customer_id', $modelData['customer_id']);
-        } else if(class_basename($parent) == 'Customer') {
+        } elseif(class_basename($parent) == 'Customer') {
             data_set($modelData, 'shop_id', $parent->shop_id);
         }
 
@@ -99,8 +99,8 @@ class StoreAppointment
      */
     public function asCommand(Command $command): int
     {
-        $shop = $command->argument('shop');
-        $hour = $command->argument('hour');
+        $shop   = $command->argument('shop');
+        $hour   = $command->argument('hour');
         $minute = $command->argument('minute');
 
         try {

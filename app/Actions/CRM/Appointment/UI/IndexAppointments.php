@@ -72,7 +72,7 @@ class IndexAppointments extends InertiaAction
             );
         }
 
-//         $queryBuilder->leftJoin('customers', 'appointments.customer_id', 'customers.id');
+        //         $queryBuilder->leftJoin('customers', 'appointments.customer_id', 'customers.id');
 
         return $queryBuilder
             ->defaultSort('-schedule_at')

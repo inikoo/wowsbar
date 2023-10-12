@@ -18,6 +18,7 @@ const props = defineProps<{
     data: any
     imagesUploadRoute: any
     user: any
+    banner: any
 }>()
 
 const jumpToIndex = ref(0)
@@ -40,7 +41,7 @@ const screenView = ref("")
 
     <!-- Component: Add slide if there is not exist -->
     <div v-if="data.components.filter((item: any) => item.ulid != null).length == 0">
-        <SlidesWorkshopAddMode :data="data" :imagesUploadRoute="imagesUploadRoute" />
+        <SlidesWorkshopAddMode :bannerType="banner.type" :data="data" :imagesUploadRoute="imagesUploadRoute" />
     </div>
 
 </template>

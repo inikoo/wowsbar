@@ -14,7 +14,6 @@ use Illuminate\Support\ServiceProvider;
 
 class GDriveServiceProvider extends ServiceProvider
 {
-
     public function register(): void
     {
     }

@@ -5,12 +5,13 @@
   -->
 
 <script setup lang="ts">
-import { capitalize } from "@/Composables/capitalize"
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faFirefoxBrowser, faWindows} from "@fortawesome/free-brands-svg-icons"
-import { faDesktop, faMobile, faDesktopAlt } from '@/../private/pro-regular-svg-icons'
-import { library } from '@fortawesome/fontawesome-svg-core'
-library.add(faDesktop, faMobile, faDesktopAlt, faFirefoxBrowser, faWindows)
+import {capitalize} from "@/Composables/capitalize"
+import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
+import {faFirefoxBrowser, faWindows, faChrome} from "@fortawesome/free-brands-svg-icons"
+import {faDesktop, faMobile, faDesktopAlt} from '@/../private/pro-regular-svg-icons'
+import {library} from '@fortawesome/fontawesome-svg-core'
+
+library.add(faDesktop, faMobile, faDesktopAlt, faFirefoxBrowser, faWindows, faChrome)
 
 const props = defineProps<{
     data: [
@@ -30,8 +31,8 @@ const parseJson = (data: any) => {
 
 <template>
     <div class="flex text-gray-600">
-        <FontAwesomeIcon :icon='(parseJson(data[0])).icon' class='w-6' aria-hidden='true' :title='capitalize((parseJson(data[0])).title)' />
-        <FontAwesomeIcon :icon='(parseJson(data[1])).icon' class='w-6' aria-hidden='true' :title='capitalize((parseJson(data[1])).title)' />
-        <FontAwesomeIcon :icon='(parseJson(data[2])).icon' class='w-6' aria-hidden='true' :title='capitalize((parseJson(data[2])).title)' />
+        <FontAwesomeIcon :icon='(parseJson(data[0])).icon' class='w-6' aria-hidden='true' :title='capitalize((parseJson(data[0])).title)'/>
+        <FontAwesomeIcon :icon='(parseJson(data[1])).icon' class='w-6' aria-hidden='true' :title='capitalize((parseJson(data[1])).title)'/>
+        <FontAwesomeIcon :icon='(parseJson(data[2])).icon' class='w-6' aria-hidden='true' :title='capitalize((parseJson(data[2])).title)'/>
     </div>
 </template>

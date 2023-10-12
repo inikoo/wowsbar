@@ -7,9 +7,7 @@
 
 namespace App\Stubs\Migrations;
 
-use App\Enums\Portfolio\Snapshot\SnapshotStateEnum;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Str;
 
 trait HasPortfolioWebsitesStats
 {
