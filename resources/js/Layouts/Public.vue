@@ -5,58 +5,63 @@
   -->
 
 <script setup>
-
-import { usePage } from "@inertiajs/vue3"
-import { onMounted } from 'vue';
-import { loadCss } from '@/Composables/loadCss';
+import { usePage } from "@inertiajs/vue3";
+import { onMounted, ref } from "vue";
+import { loadCss } from "@/Composables/loadCss";
 import processClasses from "https://cdn.statically.io/gh/mudgen/runcss/master/src/runcss.min.js";
+
 const header = usePage().props.structure.header;
 const footer = usePage().props.structure.footer;
+const user = usePage().props.auth.user;
 
 let dynamicClasses = {
-    header: '',
-    footer: ''
+    header: "",
+    footer: "",
 };
 
-console.log(header,footer)
 
 onMounted(() => {
     const css = {
         header: header[0] ? loadCss(header[0].css) : [],
-        footer: footer[0] ? loadCss(footer[0].css) : []
+        footer: footer[0] ? loadCss(footer[0].css) : [],
     };
 
     for (const selector in css) {
         for (const property in css[selector]) {
-            let classString = '';
+            let classString = "";
             for (const c in css[selector][property]) {
                 classString += `${c}: ${css[selector][property][c]};`;
                 dynamicClasses[selector] += `${property} { ${classString} } `;
             }
-            
         }
     }
 
-    const styleElement = document.createElement('style');
+    const styleElement = document.createElement("style");
     styleElement.textContent = dynamicClasses.header + dynamicClasses.footer;
     document.head.appendChild(styleElement);
 
-      for (const element of document.querySelectorAll("*[class]")) {
-        console.log(element.classList, processClasses)
+    for (const element of document.querySelectorAll("*[class]")) {
         const styles = processClasses(element.classList);
     }
     document.body.style.display = "block";
 
+
+
+    // set Login Button logic
+    const loginButton = document.querySelectorAll(
+        '*[data-wowsbar-element="login"]'
+    );
+    console.log(user)
+    if (user) {
+        loginButton.forEach((button) => {
+            button.innerHTML = 'Dashboard'
+        });
+    }
 });
-
-
 </script>
 
 <template>
-    <div class="relative">
-        <div v-html="header[0]?.html" :class="dynamicClasses.header"></div>
-        <slot />
-        <div v-html="footer[0]?.html" :class="dynamicClasses.footer"></div>
-    </div>
+    <div v-html="header[0]?.html" :class="dynamicClasses.header"></div>
+    <slot />
+    <div v-html="footer[0]?.html" :class="dynamicClasses.footer"></div>
 </template>
-
