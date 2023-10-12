@@ -97,7 +97,7 @@ const uploadImageRespone = (res) => {
 <template layout="CustomerApp">
     <Modal :isOpen="isOpenModalCrop" @onClose="closeModal">
         <div>
-            <CropImage :data="addedFiles" :imagesUploadRoute="props.imagesUploadRoute" :response="uploadImageRespone" />
+            <CropImage :ratio="bannerType == 'square' ? {w: 1, h: 1} : {w: 4, h: 1}" :data="addedFiles" :imagesUploadRoute="props.imagesUploadRoute" :response="uploadImageRespone" />
         </div>
     </Modal>
     
