@@ -9,7 +9,7 @@
 import { usePage } from "@inertiajs/vue3"
 import { onMounted } from 'vue';
 import { loadCss } from '@/Composables/loadCss';
-
+import processClasses from "https://cdn.statically.io/gh/mudgen/runcss/master/src/runcss.min.js";
 const header = usePage().props.structure.header;
 const footer = usePage().props.structure.footer;
 
@@ -17,6 +17,8 @@ let dynamicClasses = {
     header: '',
     footer: ''
 };
+
+console.log(header,footer)
 
 onMounted(() => {
     const css = {
@@ -38,6 +40,13 @@ onMounted(() => {
     const styleElement = document.createElement('style');
     styleElement.textContent = dynamicClasses.header + dynamicClasses.footer;
     document.head.appendChild(styleElement);
+
+      for (const element of document.querySelectorAll("*[class]")) {
+        console.log(element.classList, processClasses)
+        const styles = processClasses(element.classList);
+    }
+    document.body.style.display = "block";
+
 });
 
 

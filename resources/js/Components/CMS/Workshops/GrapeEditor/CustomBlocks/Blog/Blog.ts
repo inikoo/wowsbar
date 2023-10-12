@@ -1,11 +1,11 @@
 export const BlogBlock1 = () => {
     return {
-     id: 'Blog-block-1',
-     class: '',
-     category: 'Blog',
-     label :  'Blog One',
-     content : `
-     <section data-id="hero-block-1" data-type="html" data-group="hero" class="wowsbar-block container px-5 py-24 mx-auto"  data-gjs-editable="false" data-gjs-droppable="false">
+        id: "Blog-block-1",
+        class: "",
+        category: "Blog",
+        label: "Blog One",
+        content: `
+     <section data-id="hero-blog-1" data-type="html" data-group="blog" class="wowsbar-block  px-5 py-24 mx-auto"  data-gjs-editable="false" data-gjs-droppable="false">
          <div class="flex m-4 flex-wrap lg:flex-nowrap">
              <div class="p-4 lg:w-1/3 w-full">
                  <div class="h-full bg-gray-100 bg-opacity-75 px-8 pt-16 pb-24 rounded-lg overflow-hidden text-center relative">
@@ -50,19 +50,17 @@ export const BlogBlock1 = () => {
          </div>
  </section>
    `,
-    }
-}
+    };
+};
 
 export const BlogBlock2 = () => {
     return {
-     id: 'Blog-block-2',
-     class: '',
-     category: 'Blog',
-     label :  'Blog Two',
-     content : `
-     <section class="wowsbar-block-type-blog wowsbar-block">
-     <div class="text-gray-600 body-font">
-     <div class="container px-5 py-24 mx-auto">
+        id: "Blog-block-2",
+        class: "",
+        category: "Blog",
+        label: "Blog Two",
+        content: `
+     <section data-id="hero-blog-2" data-type="html" data-group="blog" class="wowsbar-block  px-5 py-24 mx-auto"  data-gjs-editable="false" data-gjs-droppable="false">
          <div class="flex  m-4">
              <!-- First Blog Post Entry -->
              <div class="p-4 md:w-1/3">
@@ -112,22 +110,19 @@ export const BlogBlock2 = () => {
              </div>
          </div>   
          </div>
-     </div>
- </div>
  </section>
    `,
-    }
-}
+    };
+};
 
 export const BlogBlock3 = () => {
     return {
-     id: 'Blog-block-3',
-     class: '',
-     category: 'Blog',
-     label :  'Blog three',
-     content : `
-     <section class="wowsbar-block-type-hero wowsbar-block">
-     <div class="bg-white py-24 sm:py-32">
+        id: "Blog-block-3",
+        class: "",
+        category: "Blog",
+        label: "Blog three",
+        content: `
+     <section data-id="hero-blog-3" data-type="html" data-group="blog" class="wowsbar-block"  data-gjs-editable="false" data-gjs-droppable="false">
      <div class="mx-auto max-w-7xl px-6 lg:px-8">
        <div class="mx-auto max-w-2xl text-center">
          <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">From the blog</h2>
@@ -236,25 +231,21 @@ export const BlogBlock3 = () => {
        </div>
      </article>
    
-         <!-- More posts... -->
        </div>
      </div>
-   </div>
  </section>
    `,
-    }
-}
+    };
+};
 
 export const BlogBlock4 = () => {
     return {
-     id: 'Blog-block-4',
-     class: '',
-     category: 'Blog',
-     label :  'Blog four',
-     content : `
-     <section class="wowsbar-block-type-hero wowsbar-block">
-            <div class="bg-white py-24 sm:py-32">
-            <div class="mx-auto max-w-7xl px-6 lg:px-8">
+        id: "Blog-block-4",
+        class: "",
+        category: "Blog",
+        label: "Blog four",
+        content: `
+     <section data-id="hero-blog-4" data-type="html" data-group="blog" class="wowsbar-block py-24 sm:py-32 mx-auto px-6 lg:px-8"  data-gjs-editable="false" data-gjs-droppable="false">
             <div class="mx-auto max-w-2xl lg:max-w-4xl">
                 <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">From the blog</h2>
                 <p class="mt-2 text-lg leading-8 text-gray-600">Learn how to grow your business with our expert advice.</p>
@@ -366,9 +357,7 @@ export const BlogBlock4 = () => {
             </article>
                 </div>
             </div>
-            </div>
-        </div>
     </section>
    `,
-    }
-}
+    };
+};
