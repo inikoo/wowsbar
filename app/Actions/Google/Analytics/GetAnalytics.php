@@ -7,7 +7,10 @@
 
 namespace App\Actions\Google\Analytics;
 
+use Illuminate\Console\Command;
+use Illuminate\Support\Collection;
 use Lorisleiva\Actions\Concerns\AsAction;
+use Lorisleiva\Actions\Concerns\AsCommand;
 use Lorisleiva\Actions\Concerns\AsObject;
 use Spatie\Analytics\Facades\Analytics;
 use Spatie\Analytics\Period;
@@ -16,11 +19,23 @@ class GetAnalytics
 {
     use AsObject;
     use AsAction;
+    use AsCommand;
 
-    public function handle(): void
+    public string $commandSignature = 'analytics:fetch {property} {days}';
+
+    public function handle($propertyId, $periodDay): Collection
     {
-        $analyticsData = Analytics::fetchVisitorsAndPageViews(Period::days(7));
+        Analytics::setPropertyId($propertyId);
 
-        dd($analyticsData);
+        return Analytics::fetchVisitorsAndPageViews(Period::days($periodDay));
+    }
+
+    public function asCommand(Command $command): int
+    {
+        $result =  $this->handle($command->argument('property'), $command->argument('days'));
+
+        print_r($result);
+
+        return 0;
     }
 }
