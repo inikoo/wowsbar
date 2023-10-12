@@ -31,12 +31,12 @@ test('create portfolio websites', function () {
     $customer  = customer();
     $modelData = PortfolioWebsite::factory()->definition();
 
-    $website   = StorePortfolioWebsite::make()->action($modelData);
+    $website   = StorePortfolioWebsite::make()->action($customer,$modelData);
     $customer->refresh();
     expect($website)->toBeInstanceOf(PortfolioWebsite::class)
         ->and($customer->portfolioStats->number_portfolio_websites)->toBe(1);
     $modelData = PortfolioWebsite::factory()->definition();
-    $website2  = StorePortfolioWebsite::make()->action($modelData);
+    $website2  = StorePortfolioWebsite::make()->action($customer,$modelData);
     $customer->refresh();
     expect($website2)->toBeInstanceOf(PortfolioWebsite::class)
         ->and($customer->portfolioStats->number_portfolio_websites)->toBe(2);

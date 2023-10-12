@@ -5,40 +5,40 @@
  * Copyright (c) 2023, Inikoo LTD
  */
 
-namespace App\Enums\Auth\CustomerUser;
+namespace App\Enums\UI\Organisation;
 
 use App\Enums\EnumHelperTrait;
 use App\Enums\HasTabs;
 
-enum CustomerUserTabsEnum: string
+enum OrganisationUsersTabsEnum: string
 {
     use EnumHelperTrait;
     use HasTabs;
 
-    case SHOWCASE     = 'showcase';
-    case HISTORY      = 'history';
-    case REQUEST_LOGS = 'request_logs';
+    case USERS                       = 'users';
+    case USERS_HISTORIES             = 'history';
 
+    case USERS_REQUESTS              = 'users_requests';
 
     public function blueprint(): array
     {
         return match ($this) {
-            CustomerUserTabsEnum::SHOWCASE => [
-                'title' => __('user'),
-                'icon'  => 'fas fa-info-circle',
+            OrganisationUsersTabsEnum::USERS => [
+                'title' => __('users'),
+                'icon'  => 'fal fa-terminal',
             ],
-            CustomerUserTabsEnum::REQUEST_LOGS => [
+            OrganisationUsersTabsEnum::USERS_REQUESTS => [
                 'title' => __('visit logs'),
                 'icon'  => 'fal fa-road',
                 'type'  => 'icon',
-                'align' => 'right',
+                'align' => 'right'
             ],
-            CustomerUserTabsEnum::HISTORY => [
+            OrganisationUsersTabsEnum::USERS_HISTORIES => [
                 'title' => __('history'),
                 'icon'  => 'fal fa-clock',
                 'type'  => 'icon',
-                'align' => 'right',
-            ],
+                'align' => 'right'
+            ]
         };
     }
 }

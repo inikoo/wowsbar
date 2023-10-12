@@ -5,13 +5,8 @@ const props = defineProps<{
     data: {
         id: number
         slug: string
-        code: string
         name: string
-        state?: any
         interest: string
-        description?: string
-        created_at: string
-        updated_at: string
     }[]
     routeToUpdate: string
 }>()

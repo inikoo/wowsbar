@@ -12,7 +12,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Str;
 use JsonSerializable;
 
-class UserRequestLogsResource extends JsonResource
+class OrganisationUserRequestLogsResource extends JsonResource
 {
     public function toArray($request): array|Arrayable|JsonSerializable
     {

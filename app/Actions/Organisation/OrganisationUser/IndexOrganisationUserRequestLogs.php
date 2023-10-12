@@ -1,17 +1,17 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Wed, 11 Oct 2023 17:06:28 Malaysia Time, Office, Bali, Indonesia
+ * Created: Thu, 12 Oct 2023 08:56:03 Malaysia Time, Office, Bali, Indonesia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Auth\CustomerUser\UI;
+namespace App\Actions\Organisation\OrganisationUser;
 
 use App\Actions\Auth\UserRequest\Traits\WithFormattedRequestLogs;
 use App\Actions\Elasticsearch\BuildElasticsearchClient;
 use App\InertiaTable\InertiaTable;
-use App\Models\Auth\CustomerUser;
-use App\Models\CRM\Customer;
+use App\Models\Auth\OrganisationUser;
+use App\Models\Organisation\Organisation;
 use Closure;
 use Elastic\Elasticsearch\Client;
 use Elastic\Elasticsearch\Exception\ClientResponseException;
@@ -22,26 +22,23 @@ use Lorisleiva\Actions\Concerns\AsObject;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 
-class IndexCustomerUserRequestLogs
+class IndexOrganisationUserRequestLogs
 {
     use AsObject;
 
-    public function handle(Customer|CustomerUser $parent): LengthAwarePaginator|bool|array
+    public function handle(Organisation|OrganisationUser $parent): LengthAwarePaginator|bool|array
     {
         $client = BuildElasticsearchClient::run();
 
 
         $query = [['match' => ['type' => 'VISIT']]];
-        if (class_basename($parent) == 'CustomerUser') {
-            $query[] = ['match' => ['customer_user_id' => $parent->id]];
-        } elseif (class_basename($parent) == 'Customer') {
-            $query[] = ['match' => ['customer_id' => $parent->id]];
+        if (class_basename($parent) == 'OrganisationUser') {
+            $query[] = ['match' => ['organisation_user_id' => $parent->id]];
         }
-
         if ($client instanceof Client) {
             try {
                 $params = [
-                    'index' => config('elasticsearch.index_prefix').'customer_users_requests',
+                    'index' => config('elasticsearch.index_prefix').'organisation_users_requests',
                     'size'  => request()->get('perPage') ?? config('ui.table.records_per_page'),
                     'body'  => [
                         'query' => [
@@ -57,19 +54,18 @@ class IndexCustomerUserRequestLogs
 
                 foreach (json_decode($client->search($params), true)['hits']['hits'] as $result) {
                     $results[] = [
-                        'username'           => $result['_source']['username'],
-                        'customer_user_slug' => $result['_source']['customer_user_slug'],
-                        'customer_user_id'   => $result['_source']['customer_user_id'],
-                        'ip_address'         => $result['_source']['ip_address'],
-                        'location'           => json_decode($result['_source']['location'], true),
-                        'device_type'        => $result['_source']['device_type'],
-                        'module'             => $result['_source']['module'],
-                        'platform'           => $result['_source']['platform'],
-                        'browser'            => $result['_source']['browser'],
-                        'route_name'         => $result['_source']['route']['name'],
-                        'arguments'          => array_values($result['_source']['route']['arguments']),
-                        'url'                => $result['_source']['route']['url'],
-                        'datetime'           => $result['_source']['datetime']
+                        'username'               => $result['_source']['username'],
+                        'organisation_user_id'   => $result['_source']['organisation_user_id'],
+                        'ip_address'             => $result['_source']['ip_address'],
+                        'location'               => json_decode($result['_source']['location'], true),
+                        'device_type'            => $result['_source']['device_type'],
+                        'module'                 => $result['_source']['module'],
+                        'platform'               => $result['_source']['platform'],
+                        'browser'                => $result['_source']['browser'],
+                        'route_name'             => $result['_source']['route']['name'],
+                        'arguments'              => array_values($result['_source']['route']['arguments']),
+                        'url'                    => $result['_source']['route']['url'],
+                        'datetime'               => $result['_source']['datetime']
                     ];
                 }
 
@@ -96,13 +92,13 @@ class IndexCustomerUserRequestLogs
         return [];
     }
 
-    public function tableStructure(CustomerUser|Customer $parent, ?array $exportLinks = null): Closure
+    public function tableStructure(Organisation|OrganisationUser $parent, ?array $exportLinks = null): Closure
     {
         return function (InertiaTable $table) use ($exportLinks, $parent) {
             $table
                 ->withGlobalSearch()
                 ->withExportLinks($exportLinks);
-            if (class_basename($parent) == 'Customer') {
+            if (class_basename($parent) == 'Organisation') {
                 $table->column(key: 'username', label: __('Username'), canBeHidden: false, sortable: true, searchable: true);
             }
 

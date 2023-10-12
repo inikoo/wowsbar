@@ -8,8 +8,10 @@
 namespace App\Actions\Organisation\OrganisationUser\UI;
 
 use App\Actions\InertiaAction;
+use App\Actions\Organisation\OrganisationUser\IndexOrganisationUserRequestLogs;
 use App\Actions\UI\Organisation\SysAdmin\ShowSysAdminDashboard;
-use App\Enums\UI\UsersTabsEnum;
+use App\Enums\UI\Organisation\OrganisationUsersTabsEnum;
+use App\Http\Resources\Auth\OrganisationUserRequestLogsResource;
 use App\Http\Resources\Auth\OrganisationUserResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\Auth\OrganisationUser;
@@ -134,6 +136,8 @@ class IndexOrganisationUsers extends InertiaAction
 
     public function htmlResponse(LengthAwarePaginator $organisationUsers, ActionRequest $request): Response
     {
+        $organisation=organisation();
+
         return Inertia::render(
             'SysAdmin/OrganisationUsers',
             [
@@ -162,31 +166,28 @@ class IndexOrganisationUsers extends InertiaAction
 
                 'tabs' => [
                     'current'    => $this->tab,
-                    'navigation' => UsersTabsEnum::navigation(),
+                    'navigation' => OrganisationUsersTabsEnum::navigation(),
                 ],
 
-                UsersTabsEnum::USERS->value => $this->tab == UsersTabsEnum::USERS->value ?
+                OrganisationUsersTabsEnum::USERS->value => $this->tab == OrganisationUsersTabsEnum::USERS->value ?
                     fn () => OrganisationUserResource::collection($organisationUsers)
                     : Inertia::lazy(fn () => OrganisationUserResource::collection($organisationUsers)),
 
-                /*
-                UsersTabsEnum::USERS_REQUESTS->value => $this->tab == UsersTabsEnum::USERS_REQUESTS->value ?
-                    fn () => UserRequestLogsResource::collection(IndexUserRequestLogs::run())
-                    : Inertia::lazy(fn () => UserRequestLogsResource::collection(IndexUserRequestLogs::run()))
-                */
+
+                OrganisationUsersTabsEnum::USERS_REQUESTS->value => $this->tab == OrganisationUsersTabsEnum::USERS_REQUESTS->value ?
+                    fn () => OrganisationUserRequestLogsResource::collection(IndexOrganisationUserRequestLogs::run($organisation))
+                    : Inertia::lazy(fn () => OrganisationUserRequestLogsResource::collection(IndexOrganisationUserRequestLogs::run($organisation)))
+
 
             ]
         )->table(
-            $this->tableStructure(
-                prefix: 'users'
-            )
-        )//  ->table(IndexUserRequestLogs::make()->tableStructure())
-        ;
+            $this->tableStructure(prefix: 'users')
+        )->table(IndexOrganisationUserRequestLogs::make()->tableStructure($organisation));
     }
 
     public function asController(ActionRequest $request): LengthAwarePaginator
     {
-        $this->initialisation($request)->withTab(UsersTabsEnum::values());
+        $this->initialisation($request)->withTab(OrganisationUsersTabsEnum::values());
 
         return $this->handle(prefix: 'users');
     }

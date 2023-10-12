@@ -6,12 +6,12 @@ export const heroBlock1 = () => {
         label: `Hero Theme One`,
         id: "hero-block-1",
         content: `
-    <section data-id="hero-block-1" data-type="html" data-group="hero" class="wowsbar-block relative isolate overflow-hidden bg-gray-900" gjs-row"  data-gjs-editable="false" data-gjs-droppable="false">
+    <section data-id="hero-block-1" data-type="html" data-group="hero" class="wowsbar-block relative isolate overflow-hidden bg-gray-900" data-gjs-editable="false" data-gjs-droppable="false">
         <div class="mx-auto max-w-7xl px-6 pb-24 pt-10 sm:pb-32 lg:flex lg:px-8 lg:py-40">
           <div class="mx-auto max-w-2xl flex-shrink-0 lg:mx-0 lg:max-w-xl lg:pt-8">
             <img src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500" alt="Your Company" class="h-11"/>
             <div class="mt-24 sm:mt-32 lg:mt-16">
-              <a href="#" class="inline-flex space-x-6"><span class="rounded-full bg-indigo-500-10 px-3 py-1 text-sm font-semibold leading-6 text-indigo-400 ring-1 ring-inset ring-indigo-500-20">What's new</span><span class="inline-flex items-center space-x-2 text-sm font-medium leading-6 text-gray-300"><span>Just shipped v1.0</span><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" class="h-5 w-5 text-gray-500">
+              <a href="#" class="inline-flex space-x-6"><span class="rounded-full bg-indigo-500-10 px-3 py-1 text-sm font-semibold leading-6 text-indigo-500 ring-1 ring-inset ring-indigo-500-20">What's new</span><span class="inline-flex items-center space-x-2 text-sm font-medium leading-6 text-gray-300"><span>Just shipped v1.0</span><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" class="h-5 w-5 text-gray-500">
                 <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd">
                 </path>
                 </svg></span></a>
@@ -44,7 +44,7 @@ export const heroBlock2 = () => {
         label: `Hero Theme Two`,
         id: "hero-block-2",
         content: `
-  <section data-id="hero-block-2" data-type="html" data-group="hero" class="wowsbar-block gjs-row" data-gjs-editable="false">
+  <section data-id="hero-block-2" data-type="html" data-group="hero" class="wowsbar-block p-12" data-gjs-editable="false">
   <div class=" mx-auto max-w-7xl px-6 lg:px-8">
             <div class="mx-auto max-w-2xl text-center">
               <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">Data to enrich your online business</h1>
@@ -77,7 +77,7 @@ export const heroBlock3 = () => {
         label: `Hero Theme three`,
         id: "hero-block-3",
         content: `
-    <section data-id="hero-block-3" data-type="html" data-group="hero" class="wowsbar-block gjs-row relative isolate overflow-hidden bg-gradient-to-b from-indigo-100/20 pt-14"  data-gjs-editable="false">
+    <section data-id="hero-block-3" data-type="html" data-group="hero" class="wowsbar-block relative isolate overflow-hidden bg-gradient-to-b from-indigo-100/20 pt-14"  data-gjs-editable="false">
     <div class="absolute inset-y-0 right-1/2 -z-10 -mr-96 w-[200%] origin-top-right skew-x-[-30deg] bg-white shadow-xl shadow-indigo-600/10 ring-1 ring-indigo-50 sm:-mr-80 lg:-mr-96" aria-hidden="true"></div>
     <div class="mx-auto max-w-7xl px-6 py-32 sm:py-40 lg:px-8">
       <div class="mx-auto max-w-2xl lg:mx-0 lg:grid lg:max-w-none lg:grid-cols-2 lg:gap-x-16 lg:gap-y-6 xl:grid-cols-1 xl:grid-rows-1 xl:gap-x-8">
@@ -106,7 +106,7 @@ export const heroBlock4 = () => {
         label: `Hero Theme four`,
         id: "hero-block-4",
         content: `
-    <section data-id="hero-block-4" data-type="html" data-group="hero" class="wowsbar-block gjs-row" data-gjs-editable="false">
+    <section data-id="hero-block-4" data-type="html" data-group="hero" class="wowsbar-block " data-gjs-editable="false">
         <div class="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
             <div class="lg:max-w-lg lg:w-full md:w-1/2 w-5/6 mb-10 md:mb-0">
                 <img class="object-cover object-center rounded" alt="hero" src="https://dummyimage.com/720x600">
@@ -132,7 +132,7 @@ export const heroBlock5 = () => {
         label: `Hero Theme five`,
         id: "hero-block-5",
         content: `
-    <section data-id="hero-block-5" data-type="html" data-group="hero" class="wowsbar-block gjs-row bg-white px-6 py-24 sm:py-32 lg:px-8"   data-gjs-editable="false">
+    <section data-id="hero-block-5" data-type="html" data-group="hero" class="wowsbar-block  bg-white px-6 py-24 sm:py-32 lg:px-8"   data-gjs-editable="false">
     <div class="mx-auto max-w-2xl text-center">
       <h2 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">Support center</h2>
       <p class="mt-6 text-lg leading-8 text-gray-600">Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo. Elit sunt amet fugiat veniam occaecat fugiat aliqua.</p>

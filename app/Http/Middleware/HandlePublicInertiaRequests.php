@@ -7,6 +7,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Http\Resources\UI\LoggedUserResource;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Tightenco\Ziggy\Ziggy;
@@ -24,12 +25,15 @@ class HandlePublicInertiaRequests extends Middleware
             ]);
         };
 
-
-
         $firstLoadOnlyProps['structure']=$request->get('website')->compiled_layout;
 
         return array_merge(
             $firstLoadOnlyProps,
+            [
+                'auth'  => [
+                    'user' => $request->user() ? LoggedUserResource::make($request->user())->getArray() : null,
+                ],
+            ],
             parent::share($request),
         );
 

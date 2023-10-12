@@ -21,15 +21,15 @@ class ExtractWebpage
     {
         $this->html = $html[0];
 
-        $doc = new \DOMDocument();
+        $doc           = new \DOMDocument();
         $doc->encoding = 'utf-8';
         @$doc->loadHTML(mb_convert_encoding($this->html['html'], 'HTML-ENTITIES', 'UTF-8'));
 
         $blocks = $this->getBlocks($doc);
 
         return [
-            'css' => $html[0]['css'],
-            'js' => $html[0]['js'],
+            'css'    => $html[0]['css'],
+            'js'     => $html[0]['js'],
             'blocks' => $blocks
         ];
     }
@@ -38,7 +38,7 @@ class ExtractWebpage
     public function getBlocks(&$parentNode)
     {
         $childNodeList = $parentNode->getElementsByTagName('section');
-        $blocks = [];
+        $blocks        = [];
 
         for ($i = 0; $i < $childNodeList->length; $i++) {
             $childNode = $childNodeList->item($i);
@@ -65,13 +65,13 @@ class ExtractWebpage
     public function extractHtml($node): string
     {
         $blocks = $this->convertToHTML($node);
-//        $children = $node->childNodes;
-//
-//        foreach ($children as $child) {
-//            $blocks .= $this->convertToHTML($child);
-//        }
+        //        $children = $node->childNodes;
+        //
+        //        foreach ($children as $child) {
+        //            $blocks .= $this->convertToHTML($child);
+        //        }
 
-//        dd($blocks);
+        //        dd($blocks);
 
         return $blocks;
     }
@@ -79,11 +79,11 @@ class ExtractWebpage
     public function extractAppointment($node): array
     {
         $childNodeList = $node->getElementsByTagName('section');
-        $subBlocks = [];
+        $subBlocks     = [];
 
         for ($i = 0; $i < $childNodeList->length; $i++) {
             $childNode = $childNodeList->item($i);
-            $classes = explode(' ', $childNode->getAttribute('class'));
+            $classes   = explode(' ', $childNode->getAttribute('class'));
 
             if (in_array('wowsbar-appointment-block', $classes)) {
                 $subBlocks[$childNode->getAttribute('data-id')] = $this->extractHtml($childNode);

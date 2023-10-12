@@ -1,32 +1,32 @@
 <script setup lang="ts">
-import { loadCss } from '@/Composables/loadCss';
+import { loadCss } from "@/Composables/loadCss";
 import { ref, onMounted } from "vue";
-import Html from '@/Components/Blocks/Html.vue'
-import Appointment from '@/Components/Blocks/Appointment.vue'
+import Html from "@/Components/Blocks/Html.vue";
+import Appointment from "@/Components/Blocks/Appointment.vue";
+import processClasses from "https://cdn.statically.io/gh/mudgen/runcss/master/src/runcss.min.js";
 const props = defineProps<{
     content: {
-        css: String,
-        js: String,
-        blocks: Array
-    }
-}>()
+        css: String;
+        js: String;
+        blocks: Array;
+    };
+}>();
+
 
 const getComponent = (componentName: string) => {
     const components: any = {
-        'html': Html,
-        'appointment' : Appointment
+        html: Html,
+        appointment: Appointment,
     };
     return components[componentName] ?? null;
-
 };
 
-console.log('props', props.content)
-const css = loadCss(props.content.css)
-let dynamicClasses = '';
+const css = props.content.css ? loadCss(props.content.css) : null
+let dynamicClasses = "";
 onMounted(() => {
-    // Generate dynamic CSS classes based on the parsed styles
+    // Append css style
     for (const selector in css) {
-        let classString = '';
+        let classString = "";
         for (const property in css[selector]) {
             classString += `${property}: ${css[selector][property]};`;
         }
@@ -34,17 +34,25 @@ onMounted(() => {
     }
 
     // Append the dynamic styles to the <style> block using a new style element
-    const styleElement = document.createElement('style');
+    const styleElement = document.createElement("style");
     styleElement.textContent = dynamicClasses;
     document.head.appendChild(styleElement);
+
+    // Append tailwind
+    for (const element of document.querySelectorAll("*[class]")) {
+        const styles = processClasses(element.classList);
+    }
+    document.body.style.display = "block";
 });
 
 </script>
 
-<template>
-       <div v-for="(blockData,index) in content.blocks" :key="index" >
-        <component :is="getComponent(blockData['type'])" :data="blockData.content" >
-    </component>
-       </div>
-   
+<template layout='Public'>
+    <div v-for="(blockData, index) in content.blocks" :key="index">
+        <component
+            :is="getComponent(blockData['type'])"
+            :data="blockData.content"
+        >
+        </component>
+    </div>
 </template>

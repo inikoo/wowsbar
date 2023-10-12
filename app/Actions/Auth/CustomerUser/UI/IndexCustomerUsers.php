@@ -7,13 +7,12 @@
 
 namespace App\Actions\Auth\CustomerUser\UI;
 
-use App\Actions\Auth\UserRequest\IndexUserRequestLogs;
 use App\Actions\Helpers\History\IndexHistories;
 use App\Actions\InertiaAction;
 use App\Actions\UI\Customer\SysAdmin\ShowSysAdminDashboard;
-use App\Enums\UI\UsersTabsEnum;
+use App\Enums\UI\Customer\CustomerUsersTabsEnum;
+use App\Http\Resources\Auth\CustomerUserRequestLogsResource;
 use App\Http\Resources\Auth\CustomerUserResource;
-use App\Http\Resources\Auth\UserRequestLogsResource;
 use App\Http\Resources\History\HistoryResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\Auth\CustomerUser;
@@ -140,6 +139,8 @@ class IndexCustomerUsers extends InertiaAction
 
     public function htmlResponse(LengthAwarePaginator $users, ActionRequest $request): Response
     {
+        $customer=$request->get('customer');
+
         return Inertia::render(
             'SysAdmin/CustomerUsers',
             [
@@ -169,18 +170,18 @@ class IndexCustomerUsers extends InertiaAction
 
                 'tabs' => [
                     'current'    => $this->tab,
-                    'navigation' => UsersTabsEnum::navigation(),
+                    'navigation' => CustomerUsersTabsEnum::navigation(),
                 ],
 
-                UsersTabsEnum::USERS->value => $this->tab == UsersTabsEnum::USERS->value ?
+                CustomerUsersTabsEnum::USERS->value => $this->tab == CustomerUsersTabsEnum::USERS->value ?
                     fn () => CustomerUserResource::collection($users)
                     : Inertia::lazy(fn () => CustomerUserResource::collection($users)),
 
-                UsersTabsEnum::USERS_REQUESTS->value => $this->tab == UsersTabsEnum::USERS_REQUESTS->value ?
-                    fn () => UserRequestLogsResource::collection(IndexUserRequestLogs::run($request->get('sort')))
-                    : Inertia::lazy(fn () => UserRequestLogsResource::collection(IndexUserRequestLogs::run())),
+                CustomerUsersTabsEnum::USERS_REQUESTS->value => $this->tab == CustomerUsersTabsEnum::USERS_REQUESTS->value ?
+                    fn () => CustomerUserRequestLogsResource::collection(IndexCustomerUserRequestLogs::run($customer))
+                    : Inertia::lazy(fn () => CustomerUserRequestLogsResource::collection(IndexCustomerUserRequestLogs::run($customer))),
 
-                UsersTabsEnum::USERS_HISTORIES->value => $this->tab == UsersTabsEnum::USERS_HISTORIES->value ?
+                CustomerUsersTabsEnum::USERS_HISTORIES->value => $this->tab == CustomerUsersTabsEnum::USERS_HISTORIES->value ?
                     fn () => HistoryResource::collection(IndexHistories::run(User::class))
                     : Inertia::lazy(fn () => HistoryResource::collection(IndexHistories::run(User::class)))
 
@@ -196,7 +197,7 @@ class IndexCustomerUsers extends InertiaAction
                     ]
                 ]
             )
-        )->table(IndexUserRequestLogs::make()->tableStructure())
+        )->table(IndexCustomerUserRequestLogs::make()->tableStructure(parent:$customer))
             ->table(
                 IndexHistories::make()->tableStructure(
                     exportLinks: [
@@ -212,7 +213,7 @@ class IndexCustomerUsers extends InertiaAction
 
     public function asController(ActionRequest $request): LengthAwarePaginator
     {
-        $this->initialisation($request)->withTab(UsersTabsEnum::values());
+        $this->initialisation($request)->withTab(CustomerUsersTabsEnum::values());
 
         return $this->handle(prefix: 'users');
     }

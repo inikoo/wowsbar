@@ -100,7 +100,18 @@ class ShowCustomerWebsite extends InertiaAction
                         'title' => __('website'),
                         'icon'  => 'fal fa-briefcase'
                     ],
-                    'container'=> $container
+                    'container' => $container,
+                    'actions' => [
+                        $this->canEdit ? [
+                            'type'  => 'button',
+                            'style' => 'edit',
+                            'label' => __('edit'),
+                            'route' => [
+                                'name'       => preg_replace('/show$/', 'edit', $request->route()->getName()),
+                                'parameters' => array_values($request->route()->originalParameters())
+                            ]
+                        ] : [],
+                    ]
                 ],
                 'tabs'        => [
                     'current'    => $this->tab,

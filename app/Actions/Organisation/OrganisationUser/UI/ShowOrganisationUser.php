@@ -10,9 +10,11 @@ namespace App\Actions\Organisation\OrganisationUser\UI;
 use App\Actions\Helpers\History\IndexHistories;
 use App\Actions\Helpers\History\ShowHistories;
 use App\Actions\InertiaAction;
+use App\Actions\Organisation\OrganisationUser\IndexOrganisationUserRequestLogs;
 use App\Actions\Traits\WithElasticsearch;
 use App\Actions\UI\Customer\SysAdmin\ShowSysAdminDashboard;
 use App\Enums\UI\Organisation\OrganisationUserTabsEnum;
+use App\Http\Resources\Auth\OrganisationUserRequestLogsResource;
 use App\Http\Resources\Auth\OrganisationUserResource;
 use App\Http\Resources\History\HistoryResource;
 
@@ -80,18 +82,18 @@ class ShowOrganisationUser extends InertiaAction
                     fn () => new OrganisationUserResource($organisationUser)
                     : Inertia::lazy(fn () => new OrganisationUserResource($organisationUser)),
 
-                /*
+
                 OrganisationUserTabsEnum::REQUEST_LOGS->value => $this->tab == OrganisationUserTabsEnum::REQUEST_LOGS->value ?
-                    fn () => OrganisationUserRequestLogsResource::collection(ShowOrganisationUserRequestLogs::run($organisationUser->organisationUsername))
-                    : Inertia::lazy(fn () => OrganisationUserRequestLogsResource::collection(ShowOrganisationUserRequestLogs::run($organisationUser->organisationUsername))),
-*/
+                    fn () => OrganisationUserRequestLogsResource::collection(IndexOrganisationUserRequestLogs::run($organisationUser))
+                    : Inertia::lazy(fn () => OrganisationUserRequestLogsResource::collection(IndexOrganisationUserRequestLogs::run($organisationUser))),
+
                 OrganisationUserTabsEnum::HISTORY->value => $this->tab == OrganisationUserTabsEnum::HISTORY->value ?
                     fn () => HistoryResource::collection(ShowHistories::run($organisationUser))
                     : Inertia::lazy(fn () => HistoryResource::collection(ShowHistories::run($organisationUser)))
 
             ]
         )
-            //->table(ShowOrganisationUserRequestLogs::make()->tableStructure())
+            ->table(IndexOrganisationUserRequestLogs::make()->tableStructure($organisationUser))
             ->table(IndexHistories::make()->tableStructure());
     }
 

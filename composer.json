@@ -12,6 +12,7 @@
         "ext-dom": "*",
         "ext-fileinfo": "*",
         "ext-pdo": "*",
+        "ext-bcmath": "*",
         "aws/aws-sdk-php": "^3.278",
         "commerceguys/addressing": "^2.0",
         "commerceguys/intl": "^2.0",
