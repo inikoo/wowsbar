@@ -8,7 +8,10 @@ const props = defineProps<{
         name: string
         interest: string
     }[]
-    routeToUpdate: string
+    routeToUpdate: {
+        name: string,
+        parameters: string|string[]
+    }
 }>()
 
 // Change interest: if null to not_sure
@@ -18,8 +21,9 @@ props.data.map((item: any) => { if(item.interest == null) { item.interest = 'not
 const handleRadioChanged = async (itemValue: string, itemSlug: string) => {
     try {
         await axios.patch(
-            route(props.routeToUpdate, itemSlug),
+            route(props.routeToUpdate.name, props.routeToUpdate.parameters),
             {
+                division: itemSlug,
                 interest: itemValue
             }
         )
