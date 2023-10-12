@@ -113,13 +113,19 @@ class EditCustomerWebsite extends InertiaAction
                             ]
                         ],
                         [
-                            'title' => __('Analytics'),
+                            'title' => __('Google Services'),
                             'icon' => 'fab fa-google',
                             'fields' => [
                                 'property_id' => [
                                     'type' => 'input',
-                                    'label' => __('property id'),
+                                    'label' => __('analytics property id'),
                                     'value' => Arr::get($customerWebsite->data, 'property_id'),
+                                    'required' => true,
+                                ],
+                                'google_ads_id' => [
+                                    'type' => 'input',
+                                    'label' => __('google ads id'),
+                                    'value' => Arr::get($customerWebsite->data, 'google_ads_id'),
                                     'required' => true,
                                 ],
                             ]
