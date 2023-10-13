@@ -232,7 +232,13 @@ const autoSave = () => {
     const form = useForm(deleteUser());
     form.patch(
         route(props.autoSaveRoute.name, props.autoSaveRoute.parameters), {
-        onSuccess: async (res) => {},
+        onSuccess: async (res) => {
+            notify({
+                type: "success",
+                title: "Success!",
+                text: "Banner has been auto saved.",
+            })
+        },
         onError: (errors: any) => {
             console.log(errors)
         },
@@ -264,12 +270,13 @@ const stopInterval=()=>{
     }
 
 
-const compIsHashSame = computed(() => {
+const compIsHashSameWithPrevious = computed(() => {
+    // Check is current Hash is same with previous Hash (that have been published)
     return compCurrentHash.value == data.published_hash
 })
 
 const compIsDataFirstTimeCreated = computed(() => {
-    // Check no changes made after created the data (compared to hash from initial data)
+    // Check is current Hash is same as initial Hash
     return compCurrentHash.value == "fd186208ae9dab06d40e49141f34bef9"
 })
 
@@ -284,14 +291,14 @@ const compIsDataFirstTimeCreated = computed(() => {
             <Publish 
                 v-model="comment"
                 :isDataFirstTimeCreated="compIsDataFirstTimeCreated"
-                :isHashSame="compIsHashSame"
+                :isHashSame="compIsHashSameWithPrevious"
                 :isLoading="isLoading"
                 :saveFunction="sendDataToServer"
                 :firstPublish="banner.state == 'unpublished'"
             />
         </template>
     </PageHeading>
-
+    
     <section>
         <div v-if="loadingState" class="w-full min-h-screen flex justify-center items-center">
             <FontAwesomeIcon icon='fad fa-spinner-third' class='animate-spin h-12 text-gray-600' aria-hidden='true' />

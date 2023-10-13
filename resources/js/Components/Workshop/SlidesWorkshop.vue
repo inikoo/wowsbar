@@ -96,14 +96,12 @@ const fileInput = ref(null);
 const currentComponentBeenEdited = ref();
 const commonEditActive = ref(true);
 const isOpenGalleryImages = ref(false);
+const _SlideWorkshop = ref(null);
 const uploadedFilesList = ref([]);
-const closeModalisOpenGalleryImages = () => {
-    isOpenGalleryImages.value = false;
-};
 
 const isOpenCropModal = ref(false);
 
-const closeModalisOpenCropModal = () => {
+const closeCropModal = () => {
     uploadedFilesList.value = [];
     isOpenCropModal.value = false;
     fileInput.value.value = "";
@@ -235,12 +233,14 @@ const ComponentsBlueprint = ref([
                 type: "text",
                 label: trans("Title"),
                 value: ["layout", "centralStage", "title"],
+                placeholder: "Holiday Sales!"
             },
             {
                 name: ["layout", "centralStage", "subtitle"],
                 type: "text",
                 label: trans("subtitle"),
                 value: ["layout", "centralStage", "subtitle"],
+                placeholder: "Holiday sales up to 80% all items."
             },
             {
                 name: ["layout", "centralStage", "style", "fontFamily"],
@@ -407,6 +407,23 @@ const CommonBlueprint = ref([
                 type: "textAlign",
                 label: trans("Text Align"),
                 value: ["common", "centralStage", "textAlign"],
+                options: [
+                    {
+                        label: "Align left",
+                        value: "left",
+                        icon: 'fal fa-align-left'
+                    },
+                    {
+                        label: "Align center",
+                        value: "center",
+                        icon: 'fal fa-align-center'
+                    },
+                    {
+                        label: "Align right",
+                        value: "right",
+                        icon: 'fal fa-align-right'
+                    },
+                ],
             },
             {
                 name: ["common", "centralStage", "style", "fontSize"],
@@ -459,7 +476,6 @@ const CommonBlueprint = ref([
     },
 ]);
 
-const _SlideWorkshop = ref(null);
 
 const setCommonEdit = () => {
     if (props.data.common.user && props.data.common.user !== props.user) {
@@ -612,27 +628,27 @@ const uploadImageRespone = (res) => {
             </div>
         </div>
 
-        <!-- The Editor: Common -->
-        <div class="border border-gray-300 w-3/4" v-if="commonEditActive">
-            <SliderCommonWorkshop :currentComponentBeenEdited="props.data" :blueprint="CommonBlueprint"
-                ref="_SlideWorkshop" />
+        <!-- The Editor: Common Properties -->
+        <div class="border border-gray-300 w-3/4 rounded-md" v-if="commonEditActive">
+            <SliderCommonWorkshop ref="_SlideWorkshop" :currentComponentBeenEdited="props.data" :blueprint="CommonBlueprint"
+                />
         </div>
 
         <!-- The Editor: Slide -->
-        <div class="border border-gray-300 w-3/4" v-if="currentComponentBeenEdited != null">
-            <SlideWorkshop :bannerType="bannerType" :common="data.common" :currentComponentBeenEdited="currentComponentBeenEdited"
-                :blueprint="ComponentsBlueprint" ref="_SlideWorkshop" :remove="removeComponent" />
+        <div class="border border-gray-300 w-3/4 rounded-md" v-if="currentComponentBeenEdited != null">
+            <SlideWorkshop ref="_SlideWorkshop" :bannerType="bannerType" :common="data.common" :currentComponentBeenEdited="currentComponentBeenEdited"
+                :blueprint="ComponentsBlueprint" :remove="removeComponent" />
         </div>
 
         <!-- Modal: Gallery -->
-        <Modal :isOpen="isOpenGalleryImages" @onClose="closeModalisOpenGalleryImages">
+        <Modal :isOpen="isOpenGalleryImages" @onClose="isOpenGalleryImages = false">
             <div>
                 <GalleryImages :addImage="uploadImageRespone" :closeModal="()=>isOpenGalleryImages = false"/>
             </div>
         </Modal>
 
         <!-- Modal: Crop (add slide) -->
-        <Modal :isOpen="isOpenCropModal" @onClose="closeModalisOpenCropModal">
+        <Modal :isOpen="isOpenCropModal" @onClose="closeCropModal">
             <div>
                 <CropImage
                     :ratio="bannerType == 'square' ? {w: 1, h: 1} : {w: 4, h: 1}"

@@ -140,13 +140,14 @@ const compHandleBannerLessSlide = computed(() => {
 </script>
 
 <template>
+    <!-- <pre>{{ data.components[0] }}</pre> -->
     <!-- <div>{{ screenBreakpoint }} <br>compHandleBannerLessSlide: {{ compHandleBannerLessSlide.length }} <br> slide per view:{{  compSlidesPerView }}
     <br> actualSlides: {{ actualSlides.length }}
     </div> -->
     
     <!-- Square -->
     <div v-if="bannerType == 'square'"
-        class="relative h-auto max-h-48 lg:max-h-64 xl:max-h-96 w-fit shadow overflow-hidden"
+        class="relative h-48 lg:h-64 xl:h-96 w-fit shadow overflow-hidden"
         :class="[compSlidesPerView == 1 ? 'aspect-square' : `aspect-[${compSlidesPerView}/1]`]"
     >
         <Swiper ref="swiperRef"
