@@ -7,9 +7,9 @@
 
 namespace App\Actions\Portfolio\PortfolioWebsite\UI;
 
-use App\Actions\Helpers\History\IndexHistories;
+use App\Actions\Helpers\History\IndexHistory;
 use App\Actions\InertiaAction;
-use App\Actions\UI\Customer\Prospects\ShowProspectsDashboard;
+use App\Actions\UI\Customer\PPC\ShowPPCDashboard;
 use App\Enums\UI\Customer\PortfolioWebsitesTabsEnum;
 use App\Enums\UI\Organisation\CustomerWebsitesTabsEnum;
 use App\Http\Resources\History\HistoryResource;
@@ -27,7 +27,7 @@ use Lorisleiva\Actions\ActionRequest;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
-class IndexLeadsPortfolioWebsites extends InertiaAction
+class IndexPPCPortfolioWebsites extends InertiaAction
 {
     public function authorize(ActionRequest $request): bool
     {
@@ -46,11 +46,11 @@ class IndexLeadsPortfolioWebsites extends InertiaAction
     /** @noinspection PhpUndefinedMethodInspection */
     public function handle($prefix = null): LengthAwarePaginator
     {
-        $divisionId = Cache::get('prospects');
+        $divisionId = Cache::get('ppc');
 
         if(! $divisionId) {
-            $divisionId = Division::firstWhere('slug', 'prospects')->id;
-            Cache::put('prospects', $divisionId);
+            $divisionId = Division::firstWhere('slug', 'ppc')->id;
+            Cache::put('ppc', $divisionId);
         }
 
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
@@ -112,7 +112,7 @@ class IndexLeadsPortfolioWebsites extends InertiaAction
     public function htmlResponse(LengthAwarePaginator $websites, ActionRequest $request): Response
     {
         return Inertia::render(
-            'SEO/SeoPortfolioWebsites',
+            'GoogleAds/GoogleAdsPortfolioWebsites',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->getName(),
@@ -138,8 +138,8 @@ class IndexLeadsPortfolioWebsites extends InertiaAction
                     : Inertia::lazy(fn () => PortfolioWebsiteResource::collection($websites)),
 
                 PortfolioWebsitesTabsEnum::CHANGELOG->value => $this->tab == PortfolioWebsitesTabsEnum::CHANGELOG->value ?
-                    fn () => HistoryResource::collection(IndexHistories::run(PortfolioWebsite::class))
-                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistories::run(PortfolioWebsite::class)))
+                    fn () => HistoryResource::collection(IndexHistory::run(PortfolioWebsite::class))
+                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistory::run(PortfolioWebsite::class)))
             ]
         )->table(
             $this->tableStructure(
@@ -152,7 +152,7 @@ class IndexLeadsPortfolioWebsites extends InertiaAction
                 //     ]
                 // ]
             )
-        )->table(IndexHistories::make()->tableStructure());
+        )->table(IndexHistory::make()->tableStructure());
     }
 
     /** @noinspection PhpUnusedParameterInspection */
@@ -172,12 +172,12 @@ class IndexLeadsPortfolioWebsites extends InertiaAction
         };
 
         return match ($routeName) {
-            'customer.prospects.websites.index' =>
+            'customer.ppc.websites.index' =>
             array_merge(
-                ShowProspectsDashboard::make()->getBreadcrumbs(),
+                ShowPPCDashboard::make()->getBreadcrumbs(),
                 $headCrumb(
                     [
-                        'name' => 'customer.prospects.websites.index',
+                        'name' => 'customer.ppc.websites.index',
                         null
                     ]
                 ),

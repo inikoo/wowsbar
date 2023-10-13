@@ -46,11 +46,10 @@ use Spatie\Sluggable\SlugOptions;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property Carbon|null $deleted_at
- * @property-read Collection<int, \OwenIt\Auditing\Models\Audit> $audits
+ * @property-read Collection<int, \App\Models\Helpers\Audit> $audits
  * @property-read int|null $audits_count
  * @property-read Collection<int, ProductCategory> $departments
  * @property-read int|null $departments_count
- * @property-read array $es_audits
  * @property-read Model|\Eloquent $parent
  * @property-read Collection<int, \App\Models\Catalogue\Product> $products
  * @property-read int|null $products_count
@@ -99,6 +98,13 @@ class ProductCategory extends Model implements Auditable
     protected $attributes = [
         'data' => '{}',
     ];
+
+    public function generateTags(): array
+    {
+        return [
+            'catalogue'
+        ];
+    }
 
     public function getRouteKeyName(): string
     {

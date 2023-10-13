@@ -11,11 +11,11 @@ import Tabs from "@/Components/Navigation/Tabs.vue"
 import { computed, ref } from "vue"
 import { useTabChange } from "@/Composables/tab-change"
 import { faRoad, faTerminal, faUserCircle } from "../../../../private/pro-light-svg-icons"
-import TableUserRequestLogs from "@/Components/Tables/TableUserRequestLogs.vue"
+import TableCustomerUserRequestLogs from "@/Components/Tables/TableCustomerUserRequestLogs.vue"
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { capitalize } from "@/Composables/capitalize"
 import PageHeading from "@/Components/Headings/PageHeading.vue";
-import TableHistories from "@/Components/Tables/TableHistories.vue";
+import TableCustomerHistories from "@/Components/Tables/TableCustomerHistories.vue";
 
 library.add(faRoad, faTerminal, faUserCircle)
 const props = defineProps <{
@@ -37,8 +37,8 @@ const handleTabUpdate = (tabSlug) => useTabChange(tabSlug, currentTab);
 const component = computed(() => {
     const components = {
         users: TableCustomerUsers,
-        users_requests: TableUserRequestLogs,
-        history: TableHistories
+        users_requests: TableCustomerUserRequestLogs,
+        history: TableCustomerHistories
     };
     return components[currentTab.value];
 

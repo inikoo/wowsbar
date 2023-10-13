@@ -16,7 +16,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import Tabs from "@/Components/Navigation/Tabs.vue";
 import {useTabChange} from "@/Composables/tab-change";
 import ModelDetails from "@/Pages/ModelDetails.vue";
-import TableHistories from "@/Components/Tables/TableHistories.vue";
+import TableCustomerHistories from "@/Components/Tables/TableCustomerHistories.vue";
 import TableUploadedWebsites from "@/Components/Tables/TableUploadedWebsites.vue";
 
 library.add(faUpload, falFile, faTimes, faFileDownload, fasFile)
@@ -39,7 +39,7 @@ const handleTabUpdate = (tabSlug) => useTabChange(tabSlug, currentTab);
 const component = computed(() => {
     const components = {
         details: ModelDetails,
-        changelog: TableHistories,
+        changelog: TableCustomerHistories,
         websites: TablePortfolioWebsites,
         uploaded_websites: TableUploadedWebsites
     };

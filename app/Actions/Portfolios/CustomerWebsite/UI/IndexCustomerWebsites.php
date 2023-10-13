@@ -8,7 +8,7 @@
 namespace App\Actions\Portfolios\CustomerWebsite\UI;
 
 use App\Actions\CRM\Customer\UI\ShowCustomer;
-use App\Actions\Helpers\History\IndexHistories;
+use App\Actions\Helpers\History\IndexHistory;
 use App\Actions\InertiaAction;
 use App\Actions\UI\Organisation\Portfolios\ShowPortfoliosDashboard;
 use App\Actions\UI\Organisation\Dashboard\ShowDashboard;
@@ -215,8 +215,8 @@ class IndexCustomerWebsites extends InertiaAction
                     : Inertia::lazy(fn () => CustomerWebsiteResource::collection($websites)),
 
                 CustomerWebsitesTabsEnum::CHANGELOG->value => $this->tab == CustomerWebsitesTabsEnum::CHANGELOG->value ?
-                    fn () => HistoryResource::collection(IndexHistories::run(CustomerWebsite::class))
-                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistories::run(CustomerWebsite::class)))
+                    fn () => HistoryResource::collection(IndexHistory::run(CustomerWebsite::class))
+                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistory::run(CustomerWebsite::class)))
             ]
         )->table(
             $this->tableStructure(
@@ -230,7 +230,7 @@ class IndexCustomerWebsites extends InertiaAction
                 //     ]
                 // ]
             )
-        )->table(IndexHistories::make()->tableStructure());
+        )->table(IndexHistory::make()->tableStructure());
     }
 
     public function getBreadcrumbs(string $routeName, array $routeParameters): array

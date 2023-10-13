@@ -54,36 +54,36 @@ class EditCustomerWebsite extends InertiaAction
         return Inertia::render(
             'EditModel',
             [
-                'title' => __("CustomerWebsite's settings"),
+                'title'       => __("CustomerWebsite's settings"),
                 'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->getName(),
                     $this->originalParameters
                 ),
                 'navigation' => [
                     'previous' => $this->getPrevious($customerWebsite, $request),
-                    'next' => $this->getNext($customerWebsite, $request),
+                    'next'     => $this->getNext($customerWebsite, $request),
                 ],
                 'pageHead' => [
-                    'title' => __('Edit website'),
+                    'title'     => __('Edit website'),
                     'container' => [
-                        'icon' => ['fal', 'fa-globe'],
+                        'icon'    => ['fal', 'fa-globe'],
                         'tooltip' => __('CustomerWebsite'),
-                        'label' => Str::possessive($customerWebsite->name)
+                        'label'   => Str::possessive($customerWebsite->name)
                     ],
 
                     'iconRight' =>
                         [
-                            'icon' => ['fal', 'fa-edit'],
+                            'icon'  => ['fal', 'fa-edit'],
                             'title' => __("Editing website")
                         ],
 
                     'actions' => [
                         [
-                            'type' => 'button',
+                            'type'  => 'button',
                             'style' => 'exit',
                             'label' => __('Exit edit'),
                             'route' => [
-                                'name' => preg_replace('/edit$/', 'show', $request->route()->getName()),
+                                'name'       => preg_replace('/edit$/', 'show', $request->route()->getName()),
                                 'parameters' => array_values($request->route()->originalParameters())
                             ]
                         ]
@@ -92,40 +92,40 @@ class EditCustomerWebsite extends InertiaAction
                 'formData' => [
                     'blueprint' => [
                         [
-                            'title' => __('ID/domain'),
-                            'icon' => 'fa-light fa-id-card',
+                            'title'  => __('ID/domain'),
+                            'icon'   => 'fa-light fa-id-card',
                             'fields' => [
                                 'name' => [
-                                    'type' => 'input',
-                                    'label' => __('name'),
-                                    'value' => $customerWebsite->name,
+                                    'type'     => 'input',
+                                    'label'    => __('name'),
+                                    'value'    => $customerWebsite->name,
                                     'required' => true,
                                 ],
                                 'url' => [
-                                    'type' => 'inputWithAddOn',
-                                    'label' => __('domain'),
+                                    'type'      => 'inputWithAddOn',
+                                    'label'     => __('domain'),
                                     'leftAddOn' => [
                                         'label' => 'https://'
                                     ],
-                                    'value' => $customerWebsite->url,
+                                    'value'    => $customerWebsite->url,
                                     'required' => true,
                                 ],
                             ]
                         ],
                         [
-                            'title' => __('Google Services'),
-                            'icon' => 'fab fa-google',
+                            'title'  => __('Google Services'),
+                            'icon'   => 'fab fa-google',
                             'fields' => [
                                 'property_id' => [
-                                    'type' => 'input',
-                                    'label' => __('analytics property id'),
-                                    'value' => Arr::get($customerWebsite->data, 'property_id'),
+                                    'type'     => 'input',
+                                    'label'    => __('analytics property id'),
+                                    'value'    => Arr::get($customerWebsite->data, 'property_id'),
                                     'required' => true,
                                 ],
                                 'google_ads_id' => [
-                                    'type' => 'input',
-                                    'label' => __('google ads id'),
-                                    'value' => Arr::get($customerWebsite->data, 'google_ads_id'),
+                                    'type'     => 'input',
+                                    'label'    => __('google ads id'),
+                                    'value'    => Arr::get($customerWebsite->data, 'google_ads_id'),
                                     'required' => true,
                                 ],
                             ]
@@ -134,7 +134,7 @@ class EditCustomerWebsite extends InertiaAction
                     ],
                     'args' => [
                         'updateRoute' => [
-                            'name' => 'org.models.customer-website.update',
+                            'name'       => 'org.models.customer-website.update',
                             'parameters' => [
                                 'customerWebsite' => $request->route()->originalParameter('customerWebsite')
                             ]
@@ -182,7 +182,7 @@ class EditCustomerWebsite extends InertiaAction
             'org.crm.shop.customers.show.customer-websites.edit' => [
                 'label' => $customerWebsite->name,
                 'route' => [
-                    'name' => $routeName,
+                    'name'       => $routeName,
                     'parameters' => $this->originalParameters
                 ]
             ]

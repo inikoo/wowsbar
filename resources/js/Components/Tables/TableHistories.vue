@@ -11,31 +11,37 @@ import { useFormatTime } from '@/Composables/useFormatTime'
 import { useLocaleStore } from '@/Stores/locale'
 const locale = useLocaleStore()
 
-// import {ref,computed} from 'vue'
-
-// import TableElements from '@/Components/Table/TableElements.vue'
-
 const props = defineProps<{
-    data: object
+    data: object,
+    tab?: string
 }>()
 
-// console.log('dddd', props.data)
 </script>
 
 <template>
-    <Table :resource="data" class="mt-5" name="hst">
-        <template #cell(old_values)="{ item: user }">
-            <JsonViewer :value="user['old_values']" copyable sort>
+    <Table :resource="data" :name="tab"  class="mt-5"  >
+
+        <template #cell(created_at)="{ item: history }">
+            {{ useFormatTime(history['created_at'], locale.language.code, true) }}
+        </template>
+
+        <template #cell(old_values)="{ item: history }">
+            <JsonViewer :value="history['old_values']" copyable sort>
             </JsonViewer>
         </template>
 
-        <template #cell(new_values)="{ item: user }">
-            <JsonViewer :value="user['new_values']" copyable sort>
+        <template #cell(new_values)="{ item: history }">
+            <JsonViewer :value="history['new_values']" copyable sort>
             </JsonViewer>
         </template>
 
-        <template #cell(datetime)="{ item: user }">
-            {{ useFormatTime(user.datetime, locale.language.code, true) }}
+        <template #cell(datetime)="{ item: history }">
+            {{ useFormatTime(history.datetime, locale.language.code, true) }}
         </template>
+
+        <template #cell(action)="{ item: history }">
+            {{history['natural_language']}}
+        </template>
+
     </Table>
 </template>

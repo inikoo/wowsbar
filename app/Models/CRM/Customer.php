@@ -22,6 +22,7 @@ use App\Models\Portfolio\PortfolioWebsite;
 use App\Models\Portfolios\CustomerSocialAccount;
 use App\Models\Portfolios\CustomerWebsite;
 use App\Models\Search\UniversalSearch;
+use App\Models\Traits\HasHistory;
 use App\Models\Traits\HasPhoto;
 use App\Models\Traits\HasUniversalSearch;
 use App\Models\Web\Website;
@@ -37,6 +38,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
+use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
@@ -71,6 +73,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property Carbon|null $deleted_at
  * @property-read Collection<int, \App\Models\CRM\Appointment> $appointment
  * @property-read int|null $appointment_count
+ * @property-read Collection<int, \App\Models\Helpers\Audit> $audits
+ * @property-read int|null $audits_count
  * @property-read Collection<int, Banner> $banners
  * @property-read int|null $banners_count
  * @property-read Currency $currency
@@ -129,13 +133,14 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Customer withoutTrashed()
  * @mixin Eloquent
  */
-class Customer extends Model implements HasMedia
+class Customer extends Model implements HasMedia, Auditable
 {
     use SoftDeletes;
     use HasSlug;
     use HasUniversalSearch;
     use HasPhoto;
     use HasFactory;
+    use HasHistory;
 
     protected $casts = [
         'data'        => 'array',
@@ -152,6 +157,20 @@ class Customer extends Model implements HasMedia
     ];
 
     protected $guarded = [];
+
+    public function generateTags(): array
+    {
+        return [
+            'crm'
+        ];
+    }
+
+    protected array $auditExclude = [
+        'id','slug',
+        'reference',
+        'website_id',
+        'location'
+    ];
 
     public function getSlugOptions(): SlugOptions
     {

@@ -7,7 +7,8 @@
 
 namespace App\Actions\Auth\CustomerUser\UI;
 
-use App\Actions\Helpers\History\IndexHistories;
+use App\Actions\Helpers\History\IndexCustomerHistory;
+use App\Actions\Helpers\History\IndexHistory;
 use App\Actions\InertiaAction;
 use App\Actions\UI\Customer\SysAdmin\ShowSysAdminDashboard;
 use App\Enums\UI\Customer\CustomerUsersTabsEnum;
@@ -16,7 +17,6 @@ use App\Http\Resources\Auth\CustomerUserResource;
 use App\Http\Resources\History\HistoryResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\Auth\CustomerUser;
-use App\Models\Auth\User;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -182,8 +182,8 @@ class IndexCustomerUsers extends InertiaAction
                     : Inertia::lazy(fn () => CustomerUserRequestLogsResource::collection(IndexCustomerUserRequestLogs::run($customer))),
 
                 CustomerUsersTabsEnum::USERS_HISTORIES->value => $this->tab == CustomerUsersTabsEnum::USERS_HISTORIES->value ?
-                    fn () => HistoryResource::collection(IndexHistories::run(User::class))
-                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistories::run(User::class)))
+                    fn () => HistoryResource::collection(IndexCustomerHistory::run($customer, CustomerUser::class, 'history'))
+                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistory::run($customer, CustomerUser::class, 'history')))
 
             ]
         )->table(
@@ -198,17 +198,7 @@ class IndexCustomerUsers extends InertiaAction
                 ]
             )
         )->table(IndexCustomerUserRequestLogs::make()->tableStructure(parent:$customer))
-            ->table(
-                IndexHistories::make()->tableStructure(
-                    exportLinks: [
-                        'export' => [
-                            'route' => [
-                                'name' => 'export.histories.index'
-                            ]
-                        ]
-                    ]
-                )
-            );
+        ->table(IndexCustomerHistory::make()->tableStructure('history'));
     }
 
     public function asController(ActionRequest $request): LengthAwarePaginator

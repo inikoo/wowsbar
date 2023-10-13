@@ -19,7 +19,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $number_banners
  * @property int $number_historic_snapshots
  * @property int $number_banners_type_landscape
- * @property int $number_banners_type_portrait
+ * @property int $number_banners_type_square
  * @property int $number_banners_state_unpublished
  * @property int $number_banners_state_live
  * @property int $number_banners_state_retired
@@ -54,7 +54,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationPortfoliosStats whereNumberBannersStateRetired($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationPortfoliosStats whereNumberBannersStateUnpublished($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationPortfoliosStats whereNumberBannersTypeLandscape($value)
- * @method static \Illuminate\Database\Eloquent\Builder|OrganisationPortfoliosStats whereNumberBannersTypePortrait($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrganisationPortfoliosStats whereNumberBannersTypeSquare($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationPortfoliosStats whereNumberHistoricSnapshots($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationPortfoliosStats whereNumberPortfolioWebsites($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationPortfoliosStats whereNumberProspects($value)

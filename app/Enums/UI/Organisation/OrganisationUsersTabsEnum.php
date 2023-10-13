@@ -15,8 +15,8 @@ enum OrganisationUsersTabsEnum: string
     use EnumHelperTrait;
     use HasTabs;
 
-    case USERS                       = 'users';
-    case USERS_HISTORIES             = 'history';
+    case USERS                        = 'users';
+    case SYSADMIN_HISTORY             = 'sysadmin_history';
 
     case USERS_REQUESTS              = 'users_requests';
 
@@ -33,7 +33,7 @@ enum OrganisationUsersTabsEnum: string
                 'type'  => 'icon',
                 'align' => 'right'
             ],
-            OrganisationUsersTabsEnum::USERS_HISTORIES => [
+            OrganisationUsersTabsEnum::SYSADMIN_HISTORY => [
                 'title' => __('history'),
                 'icon'  => 'fal fa-clock',
                 'type'  => 'icon',

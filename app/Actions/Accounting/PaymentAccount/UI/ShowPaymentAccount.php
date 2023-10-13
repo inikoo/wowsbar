@@ -8,7 +8,7 @@
 namespace App\Actions\Accounting\PaymentAccount\UI;
 
 use App\Actions\Accounting\Payment\UI\IndexPayments;
-use App\Actions\Helpers\History\IndexHistories;
+use App\Actions\Helpers\History\IndexHistory;
 use App\Actions\InertiaAction;
 use App\Actions\UI\Organisation\Accounting\AccountingDashboard;
 use App\Enums\UI\Organisation\PaymentAccountTabsEnum;
@@ -134,8 +134,8 @@ class ShowPaymentAccount extends InertiaAction
                         )
                     )),
                 PaymentAccountTabsEnum::HISTORY->value => $this->tab == PaymentAccountTabsEnum::HISTORY->value ?
-                    fn () => HistoryResource::collection(IndexHistories::run($paymentAccount))
-                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistories::run($paymentAccount)))
+                    fn () => HistoryResource::collection(IndexHistory::run($paymentAccount))
+                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistory::run($paymentAccount)))
 
             ]
         )->table(
@@ -153,7 +153,7 @@ class ShowPaymentAccount extends InertiaAction
             ],
                 prefix: 'payments'
             )
-        )->table(IndexHistories::make()->tableStructure());
+        )->table(IndexHistory::make()->tableStructure());
     }
 
 

@@ -7,8 +7,7 @@
 
 namespace App\Actions\Organisation\OrganisationUser\UI;
 
-use App\Actions\Helpers\History\IndexHistories;
-use App\Actions\Helpers\History\ShowHistories;
+use App\Actions\Helpers\History\IndexHistory;
 use App\Actions\InertiaAction;
 use App\Actions\Organisation\OrganisationUser\IndexOrganisationUserRequestLogs;
 use App\Actions\Traits\WithElasticsearch;
@@ -88,13 +87,13 @@ class ShowOrganisationUser extends InertiaAction
                     : Inertia::lazy(fn () => OrganisationUserRequestLogsResource::collection(IndexOrganisationUserRequestLogs::run($organisationUser))),
 
                 OrganisationUserTabsEnum::HISTORY->value => $this->tab == OrganisationUserTabsEnum::HISTORY->value ?
-                    fn () => HistoryResource::collection(ShowHistories::run($organisationUser))
-                    : Inertia::lazy(fn () => HistoryResource::collection(ShowHistories::run($organisationUser)))
+                    fn () => HistoryResource::collection(IndexHistory::run($organisationUser, 'history'))
+                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistory::run($organisationUser, 'history')))
 
             ]
         )
             ->table(IndexOrganisationUserRequestLogs::make()->tableStructure($organisationUser))
-            ->table(IndexHistories::make()->tableStructure());
+            ->table(IndexHistory::make()->tableStructure($organisationUser, 'history'));
     }
 
     public function getBreadcrumbs(string $routeName, array $routeParameters, string $suffix = ''): array
@@ -112,7 +111,7 @@ class ShowOrganisationUser extends InertiaAction
                         ],
                         'model' => [
                             'route' => $routeParameters['model'],
-                            'label' => $organisationUser->username,
+                            'label' => $organisationUser->slug,
                         ],
 
                     ],
@@ -129,7 +128,7 @@ class ShowOrganisationUser extends InertiaAction
             array_merge(
                 ShowSysAdminDashboard::make()->getBreadcrumbs(),
                 $headCrumb(
-                    OrganisationUser::firstWhere('username', $routeParameters['organisationUser']),
+                    OrganisationUser::firstWhere('slug', $routeParameters['organisationUser']),
                     [
                         'index' => [
                             'name'       => 'org.sysadmin.users.index',
@@ -174,7 +173,7 @@ class ShowOrganisationUser extends InertiaAction
                 'route' => [
                     'name'       => $routeName,
                     'parameters' => [
-                        'organisationUser' => $organisationUser->username
+                        'organisationUser' => $organisationUser->slug
                     ]
 
                 ]

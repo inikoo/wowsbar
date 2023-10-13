@@ -57,9 +57,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \OwenIt\Auditing\Models\Audit> $audits
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Helpers\Audit> $audits
  * @property-read int|null $audits_count
- * @property-read array $es_audits
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\HumanResources\JobPosition> $jobPositions
  * @property-read int|null $job_positions_count
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \App\Models\Media\Media> $media
@@ -136,6 +135,13 @@ class Employee extends Model implements HasMedia, Auditable
 
 
     protected $guarded = [];
+
+    public function generateTags(): array
+    {
+        return [
+            'sysadmin'
+        ];
+    }
 
 
     public function getSlugOptions(): SlugOptions

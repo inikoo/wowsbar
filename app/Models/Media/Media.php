@@ -22,6 +22,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media as BaseMedia;
  * @property int|null $model_id
  * @property string|null $uuid
  * @property string $collection_name
+ * @property string|null $scope
  * @property string $name
  * @property string $file_name
  * @property string|null $mime_type
@@ -62,6 +63,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media as BaseMedia;
  * @method static Builder|Media whereName($value)
  * @method static Builder|Media whereOrderColumn($value)
  * @method static Builder|Media whereResponsiveImages($value)
+ * @method static Builder|Media whereScope($value)
  * @method static Builder|Media whereSize($value)
  * @method static Builder|Media whereSlug($value)
  * @method static Builder|Media whereUpdatedAt($value)

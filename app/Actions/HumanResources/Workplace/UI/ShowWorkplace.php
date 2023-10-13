@@ -7,7 +7,7 @@
 
 namespace App\Actions\HumanResources\Workplace\UI;
 
-use App\Actions\Helpers\History\IndexHistories;
+use App\Actions\Helpers\History\IndexHistory;
 use App\Actions\HumanResources\Clocking\UI\IndexClockings;
 use App\Actions\HumanResources\ClockingMachine\UI\IndexClockingMachines;
 use App\Actions\InertiaAction;
@@ -154,8 +154,8 @@ class ShowWorkplace extends InertiaAction
                     )),
 
                 WorkplaceTabsEnum::HISTORY->value => $this->tab == WorkplaceTabsEnum::HISTORY->value ?
-                    fn () => HistoryResource::collection(IndexHistories::run($workplace))
-                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistories::run($workplace)))
+                    fn () => HistoryResource::collection(IndexHistory::run($workplace))
+                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistory::run($workplace)))
             ]
         )->table(
             IndexClockings::make()->tableStructure(
@@ -183,7 +183,7 @@ class ShowWorkplace extends InertiaAction
                     ],
                 prefix: 'clocking_machines' */
             )
-        )->table(IndexHistories::make()->tableStructure());
+        )->table(IndexHistory::make()->tableStructure());
     }
 
 

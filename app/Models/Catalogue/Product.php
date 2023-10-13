@@ -12,6 +12,7 @@ use App\Enums\Catalogue\Product\ProductTypeEnum;
 use App\Models\BI\SalesStats;
 use App\Models\Market\Shop;
 use App\Models\Search\UniversalSearch;
+use App\Models\Traits\HasHistory;
 use App\Models\Traits\HasImages;
 use App\Models\Traits\HasUniversalSearch;
 use Eloquent;
@@ -24,6 +25,7 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
+use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection;
 use Spatie\Sluggable\HasSlug;
@@ -49,6 +51,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property Carbon|null $deleted_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Helpers\Audit> $audits
+ * @property-read int|null $audits_count
  * @property-read MediaCollection<int, \App\Models\Media\Media> $media
  * @property-read int|null $media_count
  * @property-read Model|\Eloquent $parent
@@ -81,13 +85,15 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Product withoutTrashed()
  * @mixin Eloquent
  */
-class Product extends Model implements HasMedia
+class Product extends Model implements HasMedia, Auditable
 {
     use SoftDeletes;
     use HasSlug;
     use HasUniversalSearch;
     use HasImages;
     use HasFactory;
+    use HasHistory;
+
 
     protected $casts = [
         'data'                   => 'array',
@@ -105,6 +111,13 @@ class Product extends Model implements HasMedia
     public function getRouteKeyName(): string
     {
         return 'slug';
+    }
+
+    public function generateTags(): array
+    {
+        return [
+            'catalogue'
+        ];
     }
 
     protected $guarded = [];

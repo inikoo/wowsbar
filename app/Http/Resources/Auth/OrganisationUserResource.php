@@ -21,9 +21,9 @@ class OrganisationUserResource extends JsonResource
         $organisationUser = $this;
 
 
-
         return [
             'id'           => $organisationUser->id,
+            'slug'         => $organisationUser->slug,
             'username'     => $organisationUser->username,
             'email'        => $organisationUser->email,
             'avatar'       => $organisationUser->avatarImageSources(48, 48),

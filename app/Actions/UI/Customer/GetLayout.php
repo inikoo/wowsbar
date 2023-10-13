@@ -112,7 +112,7 @@ class GetLayout
         if ($customerUser->hasPermissionTo('portfolio.ppc.view') && $number_portfolio_websites>0) {
             $navigation['ppc'] = [
                 'scope'   => 'ppc',
-                'icon'    => ['fal', 'fa-bullseye'],
+                'icon'    => ['fal', 'fa-ad'],
                 'label'   => __('Google Ads'),
                 'route'   => 'customer.ppc.dashboard',
                 'topMenu' => [

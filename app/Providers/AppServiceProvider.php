@@ -59,7 +59,9 @@ class AppServiceProvider extends ServiceProvider
                 'ProductCategory'  => 'App\Models\Catalogue\ProductCategory',
                 'CustomerUser'     => 'App\Models\Auth\CustomerUser',
                 'Employee'         => 'App\Models\HumanResources\Employee',
-                'CustomerWebsite'  => 'App\Models\Portfolios\CustomerWebsite'
+                'CustomerWebsite'  => 'App\Models\Portfolios\CustomerWebsite',
+                'PaymentAccount'   => 'App\Models\Accounting\PaymentAccount',
+                'JobPosition'      => 'App\Models\HumanResources\JobPosition',
 
             ]
         );

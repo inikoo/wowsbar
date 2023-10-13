@@ -7,7 +7,7 @@
 
 namespace App\Actions\Organisation\Guest\UI;
 
-use App\Actions\Elasticsearch\History\IndexHistories;
+use App\Actions\Helpers\History\IndexHistory;
 use App\Actions\InertiaAction;
 use App\Actions\UI\Organisation\SysAdmin\ShowSysAdminDashboard;
 use App\Enums\UI\Organisation\GuestTabsEnum;
@@ -36,6 +36,7 @@ class ShowGuest extends InertiaAction
     {
         $this->canEdit   = $request->user()->hasPermissionTo('sysadmin.users.edit');
         $this->canDelete = $request->user()->hasPermissionTo('sysadmin.users.edit');
+
         return $request->user()->hasPermissionTo("sysadmin.view");
     }
 
@@ -44,18 +45,18 @@ class ShowGuest extends InertiaAction
         return Inertia::render(
             'SysAdmin/Guest',
             [
-                'title'       => __('guest'),
-                'breadcrumbs' => $this->getBreadcrumbs(
+                'title'                        => __('guest'),
+                'breadcrumbs'                  => $this->getBreadcrumbs(
                     $request->route()->getName(),
                     $request->route()->parameters
                 ),
-                'navigation'                            => [
+                'navigation'                   => [
                     'previous' => $this->getPrevious($guest, $request),
                     'next'     => $this->getNext($guest, $request),
                 ],
-                'pageHead'    => [
-                    'title'     => $guest->contact_name,
-                    'actions'   => [
+                'pageHead'                     => [
+                    'title'   => $guest->contact_name,
+                    'actions' => [
                         $this->canEdit ? [
                             'type'  => 'button',
                             'style' => 'edit',
@@ -74,18 +75,33 @@ class ShowGuest extends InertiaAction
                         ] : false
                     ]
                 ],
-                'tabs'        => [
+                'tabs'                         => [
                     'current'    => $this->tab,
                     'navigation' => GuestTabsEnum::navigation()
                 ],
                 GuestTabsEnum::SHOWCASE->value => $this->tab == GuestTabsEnum::SHOWCASE->value ?
-                    fn () => GetGuestShowcase::run($guest)
-                    : Inertia::lazy(fn () => GetGuestShowcase::run($guest)),
-                GuestTabsEnum::HISTORY->value => $this->tab == GuestTabsEnum::HISTORY->value ?
-                    fn () => HistoryResource::collection(IndexHistories::run($guest))
-                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistories::run($guest)))
+                    fn() => GetGuestShowcase::run($guest)
+                    : Inertia::lazy(fn() => GetGuestShowcase::run($guest)),
+                GuestTabsEnum::HISTORY->value  => $this->tab == GuestTabsEnum::HISTORY->value
+                    ?
+                    fn() => HistoryResource::collection(
+                        IndexHistory::run(
+                            model: $guest,
+                            prefix: GuestTabsEnum::HISTORY->value
+                        )
+                    )
+                    : Inertia::lazy(fn() => HistoryResource::collection(
+                        IndexHistory::run(
+                            model: $guest,
+                            prefix: GuestTabsEnum::HISTORY->value
+                        )
+                    ))
             ]
-        )->table(IndexHistories::make()->tableStructure());
+        )->table(
+            IndexHistory::make()->tableStructure(
+                prefix: GuestTabsEnum::HISTORY->value
+            )
+        );
     }
 
     public function getBreadcrumbs(string $routeName, array $routeParameters, string $suffix = ''): array
@@ -102,7 +118,7 @@ class ShowGuest extends InertiaAction
                         ],
                         'model' => [
                             'route' => $routeParameters['model'],
-                            'label' => $guest->slug,
+                            'label' => $guest->contact_name ?? $guest->slug,
                         ],
 
                     ],
@@ -141,28 +157,30 @@ class ShowGuest extends InertiaAction
     public function getPrevious(Guest $guest, ActionRequest $request): ?array
     {
         $previous = Guest::where('slug', '<', $guest->slug)->orderBy('slug', 'desc')->first();
-        return $this->getNavigation($previous, $request->route()->getName());
 
+        return $this->getNavigation($previous, $request->route()->getName());
     }
 
     public function getNext(Guest $guest, ActionRequest $request): ?array
     {
         $next = Guest::where('slug', '>', $guest->slug)->orderBy('slug')->first();
+
         return $this->getNavigation($next, $request->route()->getName());
     }
 
     private function getNavigation(?Guest $guest, string $routeName): ?array
     {
-        if(!$guest) {
+        if (!$guest) {
             return null;
         }
+
         return match ($routeName) {
-            'org.sysadmin.guests.show'=> [
-                'label'=> $guest->contact_name,
-                'route'=> [
-                    'name'      => $routeName,
-                    'parameters'=> [
-                        'guest'=> $guest->slug
+            'org.sysadmin.guests.show' => [
+                'label' => $guest->contact_name,
+                'route' => [
+                    'name'       => $routeName,
+                    'parameters' => [
+                        'guest' => $guest->contact_name ?? $guest->slug,
                     ]
 
                 ]

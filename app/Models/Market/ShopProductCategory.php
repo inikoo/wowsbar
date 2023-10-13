@@ -41,11 +41,10 @@ use Spatie\Sluggable\SlugOptions;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property ProductCategoryStateEnum $state
- * @property-read Collection<int, \OwenIt\Auditing\Models\Audit> $audits
+ * @property-read Collection<int, \App\Models\Helpers\Audit> $audits
  * @property-read int|null $audits_count
  * @property-read Collection<int, ShopProductCategory> $departments
  * @property-read int|null $departments_count
- * @property-read array $es_audits
  * @property-read Model|\Eloquent $parent
  * @property-read ProductCategory|null $productCategory
  * @property-read Collection<int, \App\Models\Market\ShopProduct> $products
