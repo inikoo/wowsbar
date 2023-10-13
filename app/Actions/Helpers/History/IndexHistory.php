@@ -27,7 +27,7 @@ class IndexHistory
 
     public function handle($model, $prefix = null): LengthAwarePaginator|array|bool
     {
-        $this->model = isset($model->id) ? class_basename($model) : $model;
+        $this->model = class_basename($model);
 
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
             $query->where(function ($query) use ($value) {
@@ -57,7 +57,7 @@ class IndexHistory
             ->withQueryString();
     }
 
-    public function tableStructure($parent, $prefix=null, ?array $exportLinks = null): Closure
+    public function tableStructure($prefix=null, ?array $exportLinks = null): Closure
     {
         return function (InertiaTable $table) use ($exportLinks, $prefix) {
 
