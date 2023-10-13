@@ -24,10 +24,14 @@ class CustomerHydratePortfolioWebsites
         ];
 
         foreach (json_decode(file_get_contents(base_path('database/seeders/datasets/divisions.json')), true) as $division) {
-            $stats['number_portfolio_websites_division_' . $division['slug']] = $customer->portfolioWebsites()->count();
+            $stats['number_portfolio_websites_division_' . $division['slug']] = $customer->portfolioWebsites()->each(function ($portfolioWebsite) {
+                return $portfolioWebsite->divisions()->count();
+            });
 
             foreach (InterestEnum::cases() as $case) {
-                $stats['number_portfolio_websites_' . $division['slug'] . '_' . Str::replace('-', '_', $case->snake())] = $customer->portfolioWebsites()->count();
+                $stats['number_portfolio_websites_' . $division['slug'] . '_' . Str::replace('-', '_', $case->snake())] = $customer->portfolioWebsites()->each(function ($portfolioWebsite) use ($case) {
+                    return $portfolioWebsite->divisions()->wherePivot('interest', $case)->count();
+                });
             }
         }
 
