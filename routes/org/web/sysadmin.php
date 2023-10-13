@@ -30,6 +30,7 @@ Route::prefix('users')->name('users.')->group(function () {
     Route::get('/export', ExportUsers::class)->name('export');
     Route::get('/{organisationUser}', ShowOrganisationUser::class)->name('show');
     Route::get('/{organisationUser}/edit', EditOrganisationUser::class)->name('edit');
+
 });
 
 Route::prefix('guests')->name('guests.')->group(function () {

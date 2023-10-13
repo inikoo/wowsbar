@@ -23,6 +23,7 @@ use App\Http\Middleware\OrgAuthenticate;
 use App\Http\Middleware\PreventRequestsDuringMaintenance;
 use App\Http\Middleware\PublicAuthenticate;
 use App\Http\Middleware\RedirectIfAuthenticated;
+use App\Http\Middleware\ResetPasswordIfNeeded;
 use App\Http\Middleware\SetUserCustomerMiddleware;
 use App\Http\Middleware\TrimStrings;
 use App\Http\Middleware\TrustProxies;
@@ -145,5 +146,6 @@ class Kernel extends HttpKernel
         'signed'           => ValidateSignature::class,
         'throttle'         => ThrottleRequests::class,
         'verified'         => EnsureEmailIsVerified::class,
+        'reset-pass'       => ResetPasswordIfNeeded::class
     ];
 }
