@@ -8,7 +8,6 @@
 namespace App\Actions\Portfolio\Banner\UI;
 
 use App\Actions\Helpers\History\IndexCustomerHistory;
-use App\Actions\Helpers\History\IndexHistory;
 use App\Actions\Helpers\Snapshot\UI\IndexSnapshots;
 use App\Actions\InertiaAction;
 use App\Actions\Portfolio\PortfolioWebsite\UI\ShowPortfolioWebsite;
@@ -207,8 +206,7 @@ class ShowBanner extends InertiaAction
 
             ]
         )->table(
-            IndexHistory::make()->tableStructure(
-                parent: $banner,
+            IndexCustomerHistory::make()->tableStructure(
                 prefix:  BannerTabsEnum::CHANGELOG->value
             )
         )->table(

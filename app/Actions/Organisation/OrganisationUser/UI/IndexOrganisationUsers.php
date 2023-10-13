@@ -181,13 +181,13 @@ class IndexOrganisationUsers extends InertiaAction
                     : Inertia::lazy(fn () => OrganisationUserRequestLogsResource::collection(IndexOrganisationUserRequestLogs::run($organisation))),
 
                 OrganisationUsersTabsEnum::SYSADMIN_HISTORY->value => $this->tab == OrganisationUsersTabsEnum::SYSADMIN_HISTORY->value ?
-                    fn () => HistoryResource::collection(IndexHistory::run(model: $organisation, prefix: 'history'))
-                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistory::run(parent: $organisation, prefix: 'history')))
+                    fn () => HistoryResource::collection(IndexHistory::run(model: OrganisationUser::class, prefix: OrganisationUsersTabsEnum::SYSADMIN_HISTORY->value))
+                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistory::run(model: OrganisationUser::class, prefix: OrganisationUsersTabsEnum::SYSADMIN_HISTORY->value)))
 
 
             ]
         )->table($this->tableStructure(prefix: 'users'))
-            ->table(IndexHistory::make()->tableStructure(parent: $organisation, prefix: 'visit_log'))
+            ->table(IndexHistory::make()->tableStructure( prefix: OrganisationUsersTabsEnum::SYSADMIN_HISTORY->value))
         ->table(IndexOrganisationUserRequestLogs::make()->tableStructure(parent: $organisation, prefix: 'visit_log'));
     }
 
