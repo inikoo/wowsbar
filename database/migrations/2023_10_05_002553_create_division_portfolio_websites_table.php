@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\Helpers\Interest\InterestEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -19,7 +20,7 @@ return new class () extends Migration {
             $table->unsignedSmallInteger('portfolio_website_id')->index();
             $table->foreign('portfolio_website_id')->references('id')->on('portfolio_websites');
 
-            $table->string('interest')->nullable();
+            $table->string('interest')->default(InterestEnum::NOT_SURE->value);
 
             $table->timestampsTz();
         });
