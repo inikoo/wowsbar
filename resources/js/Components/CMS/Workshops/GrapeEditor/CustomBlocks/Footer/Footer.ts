@@ -279,32 +279,113 @@ export const footerBlock4 = () => {
     category: 'Footer',
     label : '<svg fill="none" viewBox="0 0 266 150" width="266"  height="50" ><path fill="#FFFFFF" d="M0 0h266v150H0z"></path><path stroke="#E2E8F0" d="M266 112.5H0" fill="none"></path><circle cx="29" cy="131" r="9" fill="#6366F1"></circle><rect x="213" y="129" width="31" height="4" rx="2" fill="#A0AEC0"></rect><rect x="53" y="129" width="45" height="4" rx="2" fill="#A0AEC0"></rect><path fill="#CBD5E0" d="M45 120h1v22h-1z"></path></svg>',
     content : `
-    <footer class="text-gray-600 body-font"  data-gjs-editable="false" data-gjs-droppable="false">
-    <div class="bg-gray-100"  data-gjs-editable="false" data-gjs-droppable="false">
-      <div class="container mx-auto py-4 px-5 flex flex-col sm:flex-row">
-        <p class="text-gray-500 text-sm text-center sm:text-left">© 2020 Wowsbar —
-          <a rel="noopener noreferrer" href="https://twitter.com/Wowsbar" target="_blank" class="text-gray-600 ml-1">@Wowsbar</a>
-        </p>
-        <span class="inline-flex ml-auto sm:mt-0 mt-2 justify-center sm:justify-start"><a class="text-gray-500"><svg fill="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5">
-          <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z">
-          </path>
-          </svg></a><a class="ml-3 text-gray-500"><svg fill="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5">
-          <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z">
-          </path>
-          </svg></a><a class="ml-3 text-gray-500"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5">
-          <rect x="2" y="2" rx="5" ry="5" width="20" height="20">
-          </rect>
-          <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37zm1.5-4.87h.01">
-          </path>
-          </svg></a><a class="ml-3 text-gray-500"><svg fill="currentColor" stroke="currentColor" viewBox="0 0 24 24" stroke-width="0" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5">
-          <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z" stroke="none">
-          </path>
-          <circle r="2" cx="4" cy="4" stroke="none">
-          </circle>
-          </svg></a></span>
+    <footer class="text-center text-white" style="background-color: #3f51b5"  data-gjs-editable="false" data-gjs-droppable="false">
+      <!-- Grid container -->
+      <div class="container"  data-gjs-editable="false" data-gjs-droppable="false">
+        <!-- Section: Links -->
+        <section class="mt-5"  data-gjs-editable="false" data-gjs-droppable="false">
+          <!-- Grid row-->
+          <div class="row text-center d-flex justify-content-center pt-5"  data-gjs-droppable="false">
+            <!-- Grid column -->
+            <div class="col-md-2">
+              <h6 class="text-uppercase font-weight-bold">
+                <a href="#!" class="text-white">About us</a>
+              </h6>
+            </div>
+            <!-- Grid column -->
+  
+            <!-- Grid column -->
+            <div class="col-md-2">
+              <h6 class="text-uppercase font-weight-bold">
+                <a href="#!" class="text-white">Products</a>
+              </h6>
+            </div>
+            <!-- Grid column -->
+  
+            <!-- Grid column -->
+            <div class="col-md-2">
+              <h6 class="text-uppercase font-weight-bold">
+                <a href="#!" class="text-white">Awards</a>
+              </h6>
+            </div>
+            <!-- Grid column -->
+  
+            <!-- Grid column -->
+            <div class="col-md-2">
+              <h6 class="text-uppercase font-weight-bold">
+                <a href="#!" class="text-white">Help</a>
+              </h6>
+            </div>
+            <!-- Grid column -->
+  
+            <!-- Grid column -->
+            <div class="col-md-2">
+              <h6 class="text-uppercase font-weight-bold">
+                <a href="#!" class="text-white">Contact</a>
+              </h6>
+            </div>
+            <!-- Grid column -->
+          </div>
+          <!-- Grid row-->
+        </section>
+        <!-- Section: Links -->
+  
+        <hr class="my-5" />
+  
+        <!-- Section: Text -->
+        <section class="mb-5">
+          <div class="row d-flex justify-content-center" data-gjs-droppable="false">
+            <div class="col-lg-8">
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt
+                distinctio earum repellat quaerat voluptatibus placeat nam,
+                commodi optio pariatur est quia magnam eum harum corrupti
+                dicta, aliquam sequi voluptate quas.
+              </p>
+            </div>
+          </div>
+        </section>
+        <!-- Section: Text -->
+  
+        <!-- Section: Social -->
+        <section class="text-center justify-center flex mb-5">
+          <a href="" class="text-white me-4">
+          <img  src="https://dummyimage.com"" alt="GitHub Icon" width="32" height="32">
+          </a>
+          <a href="" class="text-white me-4">
+          <img  src="https://dummyimage.com" alt="GitHub Icon" width="32" height="32">
+          </a>
+          <a href="" class="text-white me-4">
+          <img  src="https://dummyimage.com" alt="GitHub Icon" width="32" height="32">
+          </a>
+          <a href="" class="text-white me-4">
+          <img  src="https://dummyimage.com" alt="GitHub Icon" width="32" height="32">
+          </a>
+          <a href="" class="text-white me-4">
+          <img  src="https://dummyimage.com" alt="GitHub Icon" width="32" height="32">
+          </a>
+          <a href="" class="text-white me-4">
+          <img  src="https://dummyimage.com" alt="GitHub Icon" width="32" height="32">
+          </a>
+        </section>
+        <!-- Section: Social -->
       </div>
-    </div>
-  </footer>
+      <!-- Grid container -->
+  
+      <!-- Copyright -->
+      <div
+      data-gjs-droppable="false"
+           class="text-center p-3"
+           style="background-color: rgba(0, 0, 0, 0.2)"
+           >
+        © 2020 Copyright:
+        <a class="text-white" href="https://mdbootstrap.com/"
+           >MDBootstrap.com</a
+          >
+      </div>
+      <!-- Copyright -->
+    </footer>
+    <!-- Footer -->
   `
 
   } 
