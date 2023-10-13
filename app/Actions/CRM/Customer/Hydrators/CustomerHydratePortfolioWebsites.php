@@ -7,7 +7,9 @@
 
 namespace App\Actions\CRM\Customer\Hydrators;
 
+use App\Enums\Helpers\Interest\InterestEnum;
 use App\Models\CRM\Customer;
+use Illuminate\Support\Str;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class CustomerHydratePortfolioWebsites
@@ -20,6 +22,15 @@ class CustomerHydratePortfolioWebsites
         $stats = [
             'number_portfolio_websites'       => $customer->portfolioWebsites()->count(),
         ];
+
+        foreach (json_decode(file_get_contents(base_path('database/seeders/datasets/divisions.json')), true) as $division) {
+            $stats['number_portfolio_websites_division_' . $division['slug']] = $customer->portfolioWebsites()->count();
+
+            foreach (InterestEnum::cases() as $case) {
+                $stats['number_portfolio_websites_' . $division['slug'] . '_' . Str::replace('-', '_', $case->snake())] = $customer->portfolioWebsites()->count();
+            }
+        }
+
         $customer->portfolioStats()->update($stats);
     }
 

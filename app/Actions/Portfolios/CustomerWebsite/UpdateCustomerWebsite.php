@@ -14,6 +14,8 @@ use App\Models\CRM\Customer;
 use App\Models\Portfolios\CustomerWebsite;
 use App\Rules\IUnique;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
+use Illuminate\Validation\Validator;
 use Lorisleiva\Actions\ActionRequest;
 
 class UpdateCustomerWebsite
@@ -60,11 +62,12 @@ class UpdateCustomerWebsite
 
             ],
             'name' => ['sometimes', 'string', 'max:128'],
-            'property_id' => ['sometimes']
+            'property_id' => ['sometimes'],
+            'google_ads_id' => ['sometimes']
         ];
     }
 
-    public function prepareForValidation(\Lorisleiva\Actions\ActionRequest $request): void
+    public function prepareForValidation(ActionRequest $request): void
     {
         if ($request->input('url')) {
             $request->replace([
@@ -76,7 +79,6 @@ class UpdateCustomerWebsite
     public function asController(Customer $customer, CustomerWebsite $customerWebsite, ActionRequest $request): CustomerWebsite
     {
         $this->customer = $customer;
-        $originalUrl = $request->input('url');
         $request->validate();
 
         $modelData = [];
@@ -85,17 +87,17 @@ class UpdateCustomerWebsite
                 $modelData,
                 match ($key) {
                     'property_id' => 'data.property_id',
+                    'google_ads_id' => 'data.google_ads_id',
                     default => $key
                 },
                 $value
             );
-        }
 
-        $modelData['url'] = $originalUrl;
+            data_set($modelData, 'url', Str::replace('https://', '', $request->input('url')));
+        }
 
         return $this->handle($customerWebsite, $modelData);
     }
-
 
     public function jsonResponse(CustomerWebsite $customerWebsite): CustomerWebsiteResource
     {
