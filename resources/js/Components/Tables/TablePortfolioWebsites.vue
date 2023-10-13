@@ -65,45 +65,54 @@ const selectedWebsite = ref({
 
 <template>
     <Table :resource="data" :name="tab" class="mt-5">
-        <template #cell(slug)="{ item: website }">
+        <template #cell(name)="{ item: website }">
             <Link :href="websiteRoute(website)" :id="website['slug']" class="py-2 px-1">
-                {{ website['slug'] }}
+                {{ website['name'] }}
             </Link>
         </template>
 
         <!-- Leads -->
         <template #cell(leads)="{ item: website }">
-            <div class="cursor-pointer" @click="() => {isModalOpen = true, selectedWebsite = website, selectedColumn = website.prospects}">
+            <div v-if="website.prospects?.value!='customer'"  class="cursor-pointer" @click="() => {isModalOpen = true, selectedWebsite = website, selectedColumn = website.prospects}">
                 <IconGroupInterested :columnValue="website.prospects?.value" />
             </div>
+            <IconGroupInterested v-else :columnValue="website.prospects?.value" />
+
         </template>
 
         <!-- SEO -->
         <template #cell(seo)="{ item: website }">
-            <div class="cursor-pointer" @click="() => {isModalOpen = true, selectedWebsite = website, selectedColumn = website.seo}">
+            <div v-if="website.seo?.value!='customer'"  class="cursor-pointer" @click="() => {isModalOpen = true, selectedWebsite = website, selectedColumn = website.seo}">
                 <IconGroupInterested :columnValue="website.seo?.value" />
             </div>
+            <IconGroupInterested v-else :columnValue="website.seo?.value" />
+
         </template>
 
         <!-- Google Ads -->
         <template #cell(ppc)="{ item: website }">
-            <div class="cursor-pointer" @click="() => {isModalOpen = true, selectedWebsite = website, selectedColumn = website.ppc}">
+            <div v-if="website.ppc?.value!='customer'"  class="cursor-pointer" @click="() => {isModalOpen = true, selectedWebsite = website, selectedColumn = website.ppc}">
                 <IconGroupInterested :columnValue="website.ppc?.value" />
             </div>
+            <IconGroupInterested v-else :columnValue="website.ppc?.value" />
+
         </template>
 
         <!-- Social -->
         <template #cell(social)="{ item: website }">
-            <div class="cursor-pointer" @click="() => {isModalOpen = true, selectedWebsite = website, selectedColumn = website.social}">
+            <div v-if="website.social?.value!='customer'"  class="cursor-pointer" @click="() => {isModalOpen = true, selectedWebsite = website, selectedColumn = website.social}">
                 <IconGroupInterested :columnValue="website.social?.value" />
             </div>
+            <IconGroupInterested v-else :columnValue="website.social?.value" />
         </template>
 
         <!-- Banners -->
         <template #cell(banners)="{ item: website }">
-            <div class="cursor-pointer" @click="() => {isModalOpen = true, selectedWebsite = website, selectedColumn = website.banners}">
+            <div v-if="website.banners?.value!='customer'"  class="cursor-pointer" @click="() => {isModalOpen = true, selectedWebsite = website, selectedColumn = website.banners}">
                 <IconGroupInterested :columnValue="website.banners?.value" />
             </div>
+            <IconGroupInterested v-else :columnValue="website.banners?.value" />
+
         </template>
     </Table>
 

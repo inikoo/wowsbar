@@ -10,9 +10,6 @@ namespace App\Http\Resources\Portfolio;
 use App\Models\Portfolio\PortfolioWebsite;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-/**
- * @property numeric $number_banners
- */
 class PortfolioWebsiteResource extends JsonResource
 {
     public function toArray($request): array
@@ -29,14 +26,11 @@ class PortfolioWebsiteResource extends JsonResource
             ];
         }
 
-
         return array_merge([
-            'id'             => $websitePortfolio->id,
-            'slug'           => $websitePortfolio->slug,
-            'customer_name'  => $websitePortfolio->customer->name,
-            'name'           => $websitePortfolio->name,
-            'url'            => preg_replace('/^https?:\/\//', '', $websitePortfolio->url),
-            'number_banners' => $websitePortfolio->stats->number_banners
+            'id'   => $websitePortfolio->id,
+            'slug' => $websitePortfolio->slug,
+            'name' => $websitePortfolio->name,
+            'url'  => preg_replace('/^https?:\/\//', '', $websitePortfolio->url),
         ], $divisions);
     }
 }
