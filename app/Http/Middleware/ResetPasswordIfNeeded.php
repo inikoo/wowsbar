@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
 class ResetPasswordIfNeeded
@@ -15,7 +16,7 @@ class ResetPasswordIfNeeded
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if($request->user('org')->reset_password) {
+        if($request->user(Auth::getDefaultDriver())->reset_password) {
             return redirect()->route('org.passwords.reset.password');
         }
 
