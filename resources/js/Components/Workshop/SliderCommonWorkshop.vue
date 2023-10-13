@@ -78,7 +78,7 @@ const setCurrent = (key) => {
         </aside>
 
         <!-- Content of forms -->
-        <div class="px-4 sm:px-6 md:px-4 pt-6 xl:pt-4 col-span-9 flex flex-grow justify-center overflow-auto">
+        <div class="px-4 sm:px-6 md:px-4 pt-6 xl:pt-4 col-span-9 flex flex-grow justify-center">
             <div class="flex flex-col w-full ">
                 <dl v-for="(fieldData, index ) in blueprint[current].fields" :key="index"
                     class="pb-4 sm:pb-5 sm:gap-4 w-full">
