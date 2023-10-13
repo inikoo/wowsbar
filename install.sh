@@ -51,8 +51,7 @@ php artisan product:import -g wowsbar/data-sets/products
 pg_dump -Fc -f "devops/devel/snapshots/catalogue.dump" ${DB}
 
 echo "🌱 create customers"
-
-#php artisan customer:import database/seeders/uploads/${IMPORT_DIR}/customers.xlsx
+php artisan customer:import -g wowsbar/data-sets/customers
 php artisan shop:new-customer awa aiku@inikoo.com -C 'Aiku' -P hello -N 'Mr Aiku'
 php artisan shop:new-customer awa devs@aw-advantage.com -C 'aw-advantage' -P hello -N 'Mr Dev'
 #php artisan customer:new-user aiku -P hello -N 'Mary'

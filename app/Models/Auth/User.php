@@ -46,6 +46,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property int $language_id
  * @property int|null $avatar_id
  * @property string $ulid
+ * @property bool $reset_password
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string|null $deleted_at
@@ -80,6 +81,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|User whereLanguageId($value)
  * @method static Builder|User wherePassword($value)
  * @method static Builder|User whereRememberToken($value)
+ * @method static Builder|User whereResetPassword($value)
  * @method static Builder|User whereSettings($value)
  * @method static Builder|User whereSlug($value)
  * @method static Builder|User whereStatus($value)
