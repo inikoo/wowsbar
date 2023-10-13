@@ -30,7 +30,7 @@ use App\Actions\Leads\Prospect\StoreProspect;
 use App\Actions\Leads\Prospect\UpdateProspect;
 use App\Actions\Market\Shop\StoreShop;
 use App\Actions\Organisation\Guest\DeleteGuest;
-use App\Actions\Organisation\Guest\ImportGuest;
+use App\Actions\Organisation\Guest\ImportGuests;
 use App\Actions\Organisation\Guest\StoreGuest;
 use App\Actions\Organisation\Guest\UpdateGuest;
 use App\Actions\Organisation\Organisation\UpdateOrganisation;
@@ -74,7 +74,7 @@ Route::delete('/prospect/{prospect:id}', RemoveProspect::class)->name('prospect.
 
 Route::post('/products/imports/upload', ImportProducts::class)->name('products.upload');
 
-Route::post('/guests/imports/upload', ImportGuest::class)->name('guests.upload');
+Route::post('/guests/imports/upload', ImportGuests::class)->name('guests.upload');
 Route::patch('/guest/{guest}', UpdateGuest::class)->name('guests.update');
 Route::post('/guest', StoreGuest::class)->name('guests.store');
 Route::delete('/guest/{guest}', DeleteGuest::class)->name('guests.delete');

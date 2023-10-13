@@ -34,6 +34,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property int|null $parent_id
  * @property string $username
  * @property string|null $email
+ * @property bool $reset_password
  * @property bool $status
  * @property string|null $contact_name
  * @property mixed $password
@@ -81,6 +82,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|OrganisationUser whereParentType($value)
  * @method static Builder|OrganisationUser wherePassword($value)
  * @method static Builder|OrganisationUser whereRememberToken($value)
+ * @method static Builder|OrganisationUser whereResetPassword($value)
  * @method static Builder|OrganisationUser whereSettings($value)
  * @method static Builder|OrganisationUser whereSlug($value)
  * @method static Builder|OrganisationUser whereStatus($value)

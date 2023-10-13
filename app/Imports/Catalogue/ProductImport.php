@@ -36,11 +36,14 @@ class ProductImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wit
 
         $fields =
             array_merge(
-                Arr::except(
-                    array_keys($this->rules()),
-                    ['department']
+                array_keys(
+                    Arr::except(
+                        $this->rules(),
+                        ['department']
+                    )
                 ),
-                []
+                [
+                ]
             );
 
 

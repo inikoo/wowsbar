@@ -80,17 +80,17 @@ class ShowGuest extends InertiaAction
                     'navigation' => GuestTabsEnum::navigation()
                 ],
                 GuestTabsEnum::SHOWCASE->value => $this->tab == GuestTabsEnum::SHOWCASE->value ?
-                    fn() => GetGuestShowcase::run($guest)
-                    : Inertia::lazy(fn() => GetGuestShowcase::run($guest)),
+                    fn () => GetGuestShowcase::run($guest)
+                    : Inertia::lazy(fn () => GetGuestShowcase::run($guest)),
                 GuestTabsEnum::HISTORY->value  => $this->tab == GuestTabsEnum::HISTORY->value
                     ?
-                    fn() => HistoryResource::collection(
+                    fn () => HistoryResource::collection(
                         IndexHistory::run(
                             model: $guest,
                             prefix: GuestTabsEnum::HISTORY->value
                         )
                     )
-                    : Inertia::lazy(fn() => HistoryResource::collection(
+                    : Inertia::lazy(fn () => HistoryResource::collection(
                         IndexHistory::run(
                             model: $guest,
                             prefix: GuestTabsEnum::HISTORY->value

@@ -187,7 +187,7 @@ class IndexOrganisationUsers extends InertiaAction
 
             ]
         )->table($this->tableStructure(prefix: 'users'))
-            ->table(IndexHistory::make()->tableStructure( prefix: OrganisationUsersTabsEnum::SYSADMIN_HISTORY->value))
+            ->table(IndexHistory::make()->tableStructure(prefix: OrganisationUsersTabsEnum::SYSADMIN_HISTORY->value))
         ->table(IndexOrganisationUserRequestLogs::make()->tableStructure(parent: $organisation, prefix: 'visit_log'));
     }
 

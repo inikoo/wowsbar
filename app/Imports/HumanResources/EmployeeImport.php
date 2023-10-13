@@ -37,13 +37,14 @@ class EmployeeImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wi
 
         $fields =
             array_merge(
-                Arr::except(
-                    array_keys($this->rules()),
-                    ['name', 'starting_date', 'workplace', 'position_code', 'username', 'password']
+                array_keys(
+                    Arr::except(
+                        $this->rules(),
+                        ['name', 'starting_date', 'workplace',]
+                    )
                 ),
                 [
-                    'contact_name',
-                    'employment_start_at'
+                    'contact_name','employment_start_at'
                 ]
             );
 
@@ -53,13 +54,11 @@ class EmployeeImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wi
             data_set($modelData, 'work_email', null, overwrite: false);
             data_set($modelData, 'email', null, overwrite: false);
 
-
             StoreEmployee::make()->action(
                 $parent,
                 $modelData
             );
             $this->setRecordAsCompleted($uploadRecord);
-
         } catch (Exception $e) {
             $this->setRecordAsFailed($uploadRecord, [$e->getMessage()]);
         }
@@ -86,19 +85,20 @@ class EmployeeImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wi
     public function rules(): array
     {
         return [
-            'worker_number' => ['required', 'max:64', 'iunique:employees', 'alpha_dash:ascii'],
-            'date_of_birth' => ['sometimes', 'nullable', 'date', 'before_or_equal:today'],
-            'work_email'    => ['sometimes', 'required', 'email'],
-            'alias'         => ['required', 'iunique:employees', 'string', 'max:16'],
-            'name'          => ['required', 'string', 'max:256'],
-            'job_title'     => ['required', 'string', 'max:256'],
-            'positions'     => ['required', 'array'],
-            'positions.*'   => ['exists:job_positions,slug'],
-            'starting_date' => ['required', 'date'],
-            'workplace'     => ['required', 'nullable', 'string', 'exists:workplaces,slug'],
-            'username'      => ['sometimes', 'iunique:organisation_users', 'alpha_dash:ascii'],
-            'password'      => ['sometimes', 'string', 'min:8', 'max:64'],
-            'state'         => ['required', new Enum(EmployeeStateEnum::class)]
+            'worker_number'  => ['required', 'max:64', 'iunique:employees', 'alpha_dash:ascii'],
+            'date_of_birth'  => ['sometimes', 'nullable', 'date', 'before_or_equal:today'],
+            'work_email'     => ['sometimes', 'required', 'email'],
+            'alias'          => ['required', 'iunique:employees', 'string', 'max:16'],
+            'name'           => ['required', 'string', 'max:256'],
+            'job_title'      => ['required', 'string', 'max:256'],
+            'positions'      => ['required', 'array'],
+            'positions.*'    => ['exists:job_positions,slug'],
+            'starting_date'  => ['required', 'date'],
+            'workplace'      => ['required', 'nullable', 'string', 'exists:workplaces,slug'],
+            'username'       => ['sometimes', 'iunique:organisation_users', 'alpha_dash:ascii'],
+            'password'       => ['sometimes', 'string', 'min:8', 'max:64'],
+            'reset_password' => ['sometimes', 'boolean'],
+            'state'          => ['required', new Enum(EmployeeStateEnum::class)]
         ];
     }
 

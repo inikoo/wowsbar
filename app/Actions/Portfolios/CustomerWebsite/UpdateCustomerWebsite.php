@@ -13,9 +13,7 @@ use App\Http\Resources\Prospects\CustomerWebsiteResource;
 use App\Models\CRM\Customer;
 use App\Models\Portfolios\CustomerWebsite;
 use App\Rules\IUnique;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
-use Illuminate\Validation\Validator;
 use Lorisleiva\Actions\ActionRequest;
 
 class UpdateCustomerWebsite
@@ -61,8 +59,8 @@ class UpdateCustomerWebsite
                 ),
 
             ],
-            'name' => ['sometimes', 'string', 'max:128'],
-            'property_id' => ['sometimes'],
+            'name'          => ['sometimes', 'string', 'max:128'],
+            'property_id'   => ['sometimes'],
             'google_ads_id' => ['sometimes']
         ];
     }
@@ -86,9 +84,9 @@ class UpdateCustomerWebsite
             data_set(
                 $modelData,
                 match ($key) {
-                    'property_id' => 'data.property_id',
+                    'property_id'   => 'data.property_id',
                     'google_ads_id' => 'data.google_ads_id',
-                    default => $key
+                    default         => $key
                 },
                 $value
             );
