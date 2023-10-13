@@ -13,7 +13,7 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { library } from "@fortawesome/fontawesome-svg-core"
 import {
     faTerminal, faUserAlien, faCog, faGlobe, faWindowMaximize, faBriefcase, faPhotoVideo, faBrowser,
-    faRectangleWide,faChartNetwork
+    faRectangleWide,faChartNetwork,faThumbsUp
 
 } from "@/../private/pro-light-svg-icons"
 import { useLayoutStore } from "@/Stores/layout"
@@ -21,7 +21,7 @@ import { useLayoutStore } from "@/Stores/layout"
 
 library.add(
     faTerminal, faUserAlien, faCog, faGlobe, faWindowMaximize, faBriefcase, faPhotoVideo,
-    faBrowser,faRectangleWide,faChartNetwork
+    faBrowser,faRectangleWide,faChartNetwork,faThumbsUp
 )
 
 const layout = useLayoutStore()
@@ -42,7 +42,7 @@ const layout = useLayoutStore()
                 class="h-5 lg:h-3.5 w-auto group-hover:opacity-100 opacity-70 transition duration-100 ease-in-out"
                 aria-hidden="true"/>
             <span v-if="menu.label" class="hidden lg:inline capitalize whitespace-nowrap">{{ trans(menu.label) }}</span>
-            
+
             <!-- The line appear on hover and active state -->
             <div :class="[route(layout.currentRoute, route().v().params).includes(route(menu.route.name)) ? 'bottomNavigationActiveCustomer' : 'bottomNavigationCustomer']" />
         </Link>

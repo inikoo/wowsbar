@@ -16,8 +16,7 @@ class GetLayout
 
     public function handle(CustomerUser $customerUser): array
     {
-
-        $number_portfolio_websites=$customerUser->customer->portfolioStats->number_portfolio_websites;
+        $number_portfolio_websites = $customerUser->customer->portfolioStats->number_portfolio_websites;
 
         $navigation = [];
 
@@ -31,37 +30,51 @@ class GetLayout
             ]
         ];
 
+
+        $portfolioSubsections = [
+            [
+                'icon'  => ['fal', 'fa-briefcase'],
+                'route' => [
+                    'name' => 'customer.portfolio.dashboard',
+                ]
+            ],
+            [
+                'icon'  => ['fal', 'fa-globe'],
+                'label' => __('websites'),
+                'route' => [
+                    'name' => 'customer.portfolio.websites.index',
+                ]
+            ],
+            [
+                'icon'  => ['fal', 'fa-thumbs-up'],
+                'label' => __('social accounts'),
+                'route' => [
+                    'name' => 'customer.portfolio.social-accounts.index',
+                ]
+            ],
+        ];
+
+        if ($customerUser->hasPermissionTo('portfolio.social.view')) {
+            $navigation['social'] = [
+                'scope'   => 'social',
+                'icon'    => ['fal', 'fa-thumbs-up'],
+                'label'   => __('Social accounts'),
+                'route'   => 'customer.portfolio.social-accounts.index',
+                'topMenu' => [
+                    'subSections' => $portfolioSubsections
+                ]
+            ];
+        }
+
+
         if ($customerUser->hasPermissionTo('portfolio.view')) {
             $navigation['portfolio'] = [
                 'scope'   => 'portfolio',
-                'icon'    => ['fal', 'fa-briefcase'],
-                'label'   => __('portfolio'),
-                'route'   => 'customer.portfolio.dashboard',
+                'icon'    => ['fal', 'fa-globe'],
+                'label'   => __('websites'),
+                'route'   => 'customer.portfolio.websites.index',
                 'topMenu' => [
-                    'subSections' => [
-                        [
-                            'icon'  => ['fal', 'fa-briefcase'],
-                            'route' => [
-                                'name' => 'customer.portfolio.dashboard',
-                            ]
-                        ],
-                        [
-                            'icon'  => ['fal', 'fa-globe'],
-                            'label' => __('websites'),
-                            'route' => [
-                                'name' => 'customer.portfolio.websites.index',
-                            ]
-                        ],
-                        [
-                            'icon'  => ['fal', 'fa-user'],
-                            'label' => __('social media account'),
-                            'route' => [
-                                'name' => 'customer.portfolio.social.account.index',
-                            ]
-                        ],
-
-
-                    ],
+                    'subSections' => $portfolioSubsections
 
                 ]
 
@@ -69,7 +82,8 @@ class GetLayout
             ];
         }
 
-        if ($customerUser->hasPermissionTo('portfolio.prospects.view') && $number_portfolio_websites>0) {
+
+        if ($customerUser->hasPermissionTo('portfolio.prospects.view') && $number_portfolio_websites > 0) {
             $navigation['prospects'] = [
                 'scope'   => 'prospects',
                 'icon'    => ['fal', 'fa-transporter'],
@@ -89,7 +103,7 @@ class GetLayout
             ];
         }
 
-        if ($customerUser->hasPermissionTo('portfolio.seo.view') && $number_portfolio_websites>0) {
+        if ($customerUser->hasPermissionTo('portfolio.seo.view') && $number_portfolio_websites > 0) {
             $navigation['seo'] = [
                 'scope'   => 'seo',
                 'icon'    => ['fab', 'fa-google'],
@@ -109,7 +123,7 @@ class GetLayout
             ];
         }
 
-        if ($customerUser->hasPermissionTo('portfolio.ppc.view') && $number_portfolio_websites>0) {
+        if ($customerUser->hasPermissionTo('portfolio.ppc.view') && $number_portfolio_websites > 0) {
             $navigation['ppc'] = [
                 'scope'   => 'ppc',
                 'icon'    => ['fal', 'fa-ad'],
@@ -129,28 +143,8 @@ class GetLayout
             ];
         }
 
-        if ($customerUser->hasPermissionTo('portfolio.social.view') && $number_portfolio_websites>0) {
-            $navigation['social'] = [
-                'scope'   => 'social',
-                'icon'    => ['fal', 'fa-thumbs-up'],
-                'label'   => __('Social'),
-                'route'   => 'customer.social.dashboard',
-                'topMenu' => [
-                    'subSections' => [
-                        [
-                            'icon'  => ['fal', 'fa-globe'],
-                            'label' => __('websites'),
-                            'route' => [
-                                'name' => 'customer.social.websites.index',
-                            ]
-                        ],
-                    ],
-                ]
-            ];
-        }
 
-
-        if ($customerUser->hasPermissionTo('portfolio.banners.view') && $number_portfolio_websites>0) {
+        if ($customerUser->hasPermissionTo('portfolio.banners.view') && $number_portfolio_websites > 0) {
             $navigation['caas'] = [
                 'scope'   => 'caas',
                 'icon'    => ['fal', 'fa-rectangle-wide'],
@@ -197,7 +191,7 @@ class GetLayout
 
         if ($customerUser->hasPermissionTo('sysadmin.view')) {
             $navigation['sysadmin'] = [
-                'label'   => __('Manage account'),
+                'label'   => __('Account / Users'),
                 'icon'    => ['fal', 'fa-users-cog'],
                 'route'   => 'customer.sysadmin.dashboard',
                 'topMenu' => [

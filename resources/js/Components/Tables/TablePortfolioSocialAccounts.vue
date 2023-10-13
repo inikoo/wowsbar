@@ -18,9 +18,9 @@ const props = defineProps<{
 
 function accountRoute(account) {
     switch (route().current()) {
-        case 'customer.portfolio.social.account.index':
+        case 'customer.portfolio.social-accounts.index':
             return route(
-                'customer.portfolio.social.account.show',
+                'customer.portfolio.social-accounts.show',
                 [account.slug]);
     }
 }

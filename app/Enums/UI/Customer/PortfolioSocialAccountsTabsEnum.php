@@ -23,7 +23,7 @@ enum PortfolioSocialAccountsTabsEnum: string
         return match ($this) {
             PortfolioSocialAccountsTabsEnum::ACCOUNTS => [
                 'title' => __('accounts'),
-                'icon'  => 'fas fa-info-circle',
+                'icon'  => 'fal fa-bars',
             ],
 
             PortfolioSocialAccountsTabsEnum::CHANGELOG => [

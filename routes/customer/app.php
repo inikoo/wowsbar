@@ -39,10 +39,6 @@ Route::middleware([
         Route::prefix("ppc")
             ->name("ppc.")
             ->group(__DIR__."/ppc.php");
-        Route::prefix("social")
-            ->name("social.")
-            ->group(__DIR__."/social.php");
-
         Route::prefix("caas")
             ->name("caas.")
             ->group(__DIR__."/caas.php");

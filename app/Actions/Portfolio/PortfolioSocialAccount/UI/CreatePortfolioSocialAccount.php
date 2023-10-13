@@ -99,8 +99,8 @@ class CreatePortfolioSocialAccount extends InertiaAction
     public function getBreadcrumbs(): array
     {
         return array_merge(
-            IndexPortfolioSocialAccount::make()->getBreadcrumbs(
-                'customer.portfolio.social.account.index',
+            IndexPortfolioSocialAccounts::make()->getBreadcrumbs(
+                'customer.portfolio.social-accounts.index',
                 []
             ),
             [

@@ -40,7 +40,7 @@ class StorePortfolioSocialAccount
 
     public function htmlResponse(): RedirectResponse
     {
-        return redirect()->route('customer.portfolio.social.account.index');
+        return redirect()->route('customer.portfolio.social-accounts.index');
     }
 
     public function authorize(ActionRequest $request): bool

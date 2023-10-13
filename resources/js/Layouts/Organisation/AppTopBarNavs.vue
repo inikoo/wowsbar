@@ -14,7 +14,7 @@ import {library} from "@fortawesome/fontawesome-svg-core"
 import {
     faTerminal, faUserAlien, faCog, faGlobe, faWindowMaximize, faBriefcase, faPhotoVideo, faBrowser,
     faFolderTree, faCube, faTransporter, faEnvelope, faCoins, faFileInvoice, faMoneyCheckAlt, faChartNetwork,
-    faInboxOut
+    faInboxOut,faThumbsUp
 
 } from "@/../private/pro-light-svg-icons"
 import {useLayoutStore} from "@/Stores/layout"
@@ -22,7 +22,7 @@ import {useLayoutStore} from "@/Stores/layout"
 library.add(
     faTerminal, faUserAlien, faCog, faGlobe, faWindowMaximize, faBriefcase, faPhotoVideo,
     faBrowser, faFolderTree, faCube, faTransporter, faEnvelope, faCoins, faFileInvoice, faMoneyCheckAlt,
-    faChartNetwork, faInboxOut
+    faChartNetwork, faInboxOut,faThumbsUp
 )
 
 const layout = useLayoutStore()
