@@ -24,14 +24,18 @@ class CustomerHydratePortfolioWebsites
         ];
 
         foreach (json_decode(file_get_contents(base_path('database/seeders/datasets/divisions.json')), true) as $division) {
-            $stats['number_portfolio_websites_division_' . $division['slug']] = $customer->portfolioWebsites()->each(function ($portfolioWebsite) {
-                return $portfolioWebsite->divisions()->count();
+            $customer->portfolioWebsites()->each(function ($portfolioWebsite) use (&$counts, $division) {
+                $counts = $portfolioWebsite->divisions()->where('slug', $division['slug'])->count();
             });
 
+            $stats['number_portfolio_websites_division_' . $division['slug']] = $counts;
+
             foreach (InterestEnum::cases() as $case) {
-                $stats['number_portfolio_websites_' . $division['slug'] . '_' . Str::replace('-', '_', $case->snake())] = $customer->portfolioWebsites()->each(function ($portfolioWebsite) use ($case) {
-                    return $portfolioWebsite->divisions()->wherePivot('interest', $case)->count();
+                $customer->portfolioWebsites()->each(function ($portfolioWebsite) use (&$counts, $case, $division) {
+                    $counts = $portfolioWebsite->divisions()->where('slug', $division['slug'])->wherePivot('interest', $case)->count();
                 });
+
+                $stats['number_portfolio_websites_' . $division['slug'] . '_' . Str::replace('-', '_', $case->snake())] = $counts;
             }
         }
 
