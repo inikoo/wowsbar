@@ -67,26 +67,26 @@ if (props.dataToSubmit && props.data.actionActualMethod) {
 <template>
     <div class="mx-4 py-4 md:pb-2 md:pt-3 lg:py-2 grid grid-flow-col justify-between items-center">
         <div class="">
-            <h2 class="font-bold text-gray-700 dark:text-gray-300 text-2xl tracking-tight ">
-                <span v-if="data.container" class="text-slate-500 text-lg  mr-2">
+            <h2 class="flex items-center font-bold text-gray-700 dark:text-gray-300 text-2xl tracking-tight ">
+                <div v-if="data.container" class="text-slate-500 text-lg  mr-2">
                     <Link v-if="data.container.href"
-                          :href="route(
-                              data.container.href['name'],
-                              data.container.href['parameters']
-                              )">
+                        :href="route(
+                            data.container.href['name'],
+                            data.container.href['parameters']
+                    )">
                         <Container :data="data.container"/>
                     </Link>
-                    <Container v-else :data="data.container" />
+                    <div v-else class="flex items-center gap-x-1">
+                        <Container :data="data.container" />
+                    </div>
+                </div>
 
-
-                </span>
-
-                <span class="text-gray-400">
-                <FontAwesomeIcon v-if="data.icon" :title="capitalize(data.icon.tooltip ?? '')" aria-hidden="true"
-                    :icon="data.icon.icon" size="sm" class="pr-2"/>
-                <FontAwesomeIcon v-if="data.iconBis" :title="capitalize(data.iconBis.tooltip ?? '')" aria-hidden="true"
-                    :icon="data.iconBis.icon" size="sm" class="pr-2" :class="data.iconBis.class"/>
-                </span>
+                <div class="inline text-gray-400">
+                    <FontAwesomeIcon v-if="data.icon" :title="capitalize(data.icon.tooltip ?? '')" aria-hidden="true"
+                        :icon="data.icon.icon" size="sm" class="pr-2"/>
+                    <FontAwesomeIcon v-if="data.iconBis" :title="capitalize(data.iconBis.tooltip ?? '')" aria-hidden="true"
+                        :icon="data.iconBis.icon" size="sm" class="pr-2" :class="data.iconBis.class"/>
+                </div>
                 <span :class="!data.noCapitalise? 'capitalize':''">{{ data.title }}</span>
                 <FontAwesomeIcon v-if="data.iconRight" :title="capitalize(data.iconRight.tooltip ?? '')" aria-hidden="true"
                     :icon="data.iconRight.icon" class="pl-3 h-4 mb-0.5" :class="data.iconRight.class"/>

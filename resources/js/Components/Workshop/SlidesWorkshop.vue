@@ -27,7 +27,7 @@ import { get, isNull } from "lodash"
 import SliderCommonWorkshop from "./SliderCommonWorkshop.vue"
 import Modal from '@/Components/Utils/Modal.vue'
 import GalleryImages from "@/Components/Workshop/GalleryImages.vue"
-import CropImage from "./CropImage/CropImage.vue"
+import CropImage from "@/Components/Workshop/CropImage/CropImage.vue"
 import Image from "@/Components/Image.vue"
 
 library.add(faEye, faEyeSlash, faTrashAlt, faAlignJustify, faCog, faImage, faLock)
@@ -83,7 +83,8 @@ const props = defineProps<{
         arguments: string[]
     };
     user: string
-    screenView : String
+    screenView: String
+    bannerType: string
 }>();
 
 const emits = defineEmits<{
@@ -519,7 +520,7 @@ const uploadImageRespone = (res) => {
                 ]" @click="setCommonEdit"
             >
                 <FontAwesomeIcon v-if="props.data.common.user == props.user || !props.data.common.user"
-                    icon="fal fa-cog" class="text-xl md:text-base" aria-hidden="true" />
+                    icon="fal fa-cog" class="text-xl md:text-base text-gray-500" aria-hidden="true" />
                 <FontAwesomeIcon v-else="
                     props.data.common.user == props.user || !props.data.common.user
                     " :icon="['fal', 'lock']" class="" aria-hidden="true" />
@@ -594,18 +595,16 @@ const uploadImageRespone = (res) => {
             </draggable>
 
             <!-- Button: Add slide, Gallery -->
-            <div class="flex flex-wrap md:flex-row gap-x-2 gap-y-1 md:gap-y-0 max-w-fit">
-                <Button :style="`secondary`" icon="fas fa-plus" size="xs" class="relative">
-                    {{ trans("Add slide") }}
+            <div class="flex flex-wrap md:flex-row gap-x-2 gap-y-1 lg:gap-y-0 w-full justify-between">
+                <Button @click="isOpenGalleryImages = !isOpen" :style="`tertiary`" icon="fal fa-photo-video" label="Gallery" size="xs" class="relative w-full flex justify-center lg:w-fit lg:inline space-x-2" id="gallery" />
+                
+                <Button :style="`secondary`" size="xs" class="relative w-full flex justify-center lg:w-fit lg:inline space-x-2">
+                    <FontAwesomeIcon icon='fas fa-plus' class='' aria-hidden='true' />
+                    <span>{{ trans("Add slide") }}</span>
                     <label class="bg-transparent inset-0 absolute inline-block cursor-pointer" id="input-slide-large-mask"
                         for="fileInput" />
                     <input ref="fileInput" type="file" multiple name="file" id="fileInput" @change="addComponent"
                         accept="image/*" class="absolute cursor-pointer rounded-md border-gray-300 sr-only" />
-                </Button>
-
-                <Button :style="`tertiary`" icon="fal fa-photo-video" size="xs" class="relative" id="gallery"
-                    @click="isOpenGalleryImages = !isOpen">
-                    {{ trans("Gallery") }}
                 </Button>
             </div>
             <div class="text-xs text-gray-400 py-1">
@@ -621,7 +620,7 @@ const uploadImageRespone = (res) => {
 
         <!-- The Editor: Slide -->
         <div class="border border-gray-300 w-3/4" v-if="currentComponentBeenEdited != null">
-            <SlideWorkshop :common="data.common" :currentComponentBeenEdited="currentComponentBeenEdited"
+            <SlideWorkshop :bannerType="bannerType" :common="data.common" :currentComponentBeenEdited="currentComponentBeenEdited"
                 :blueprint="ComponentsBlueprint" ref="_SlideWorkshop" :remove="removeComponent" />
         </div>
 
@@ -629,14 +628,17 @@ const uploadImageRespone = (res) => {
         <Modal :isOpen="isOpenGalleryImages" @onClose="closeModalisOpenGalleryImages">
             <div>
                 <GalleryImages :addImage="uploadImageRespone" :closeModal="()=>isOpenGalleryImages = false"/>
-
             </div>
         </Modal>
 
         <!-- Modal: Crop (add slide) -->
         <Modal :isOpen="isOpenCropModal" @onClose="closeModalisOpenCropModal">
             <div>
-                <CropImage :data="uploadedFilesList" :imagesUploadRoute="props.imagesUploadRoute" :response="uploadImageRespone" />
+                <CropImage
+                    :ratio="bannerType == 'square' ? {w: 1, h: 1} : {w: 4, h: 1}"
+                    :data="uploadedFilesList"
+                    :imagesUploadRoute="props.imagesUploadRoute"
+                    :response="uploadImageRespone" />
             </div>
         </Modal>
     </div>

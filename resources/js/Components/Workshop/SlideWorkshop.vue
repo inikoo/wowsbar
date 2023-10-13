@@ -27,6 +27,7 @@ const props = defineProps<{
     blueprint: Array
     remove : Function
     common: any
+    bannerType: string
 }>()
 
 // console.log(props.common)
@@ -93,7 +94,9 @@ const current = ref(0);
                     <dd class="flex text-sm text-gray-700 sm:mt-0 w-full">
                         <div class="relative flex-grow">
                             <component :is="getComponent(fieldData['type'])" :data="currentComponentBeenEdited"
-                                :fieldName="fieldData.name" :fieldData="fieldData" :key="index" :counter="false" :common="common">
+                                :fieldName="fieldData.name" :fieldData="fieldData" :key="index" :counter="false" :common="common"
+                                :bannerType="bannerType"
+                            >
                             </component>
                         </div>
                     </dd>
