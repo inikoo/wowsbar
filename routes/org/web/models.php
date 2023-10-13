@@ -155,3 +155,4 @@ Route::patch('websites/{customerWebsite}', UpdateCustomerWebsite::class)->name('
 Route::patch('{portfolioWebsite}/interest', SyncDivisionPortfolioWebsite::class)->name('interest.store');
 
 Route::patch('/organisation-user/{organisationUser:id}', UpdateOrganisationUser::class)->name('organisation-user.update');
+Route::patch('/organisation-user/password/reset', [UpdateOrganisationUser::class, 'inLoggedUser'])->name('organisation-user.update.password');

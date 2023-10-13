@@ -52,6 +52,11 @@ class UpdateOrganisationUser
         }
     }
 
+    public function inLoggedUser(ActionRequest $request): OrganisationUser
+    {
+        $request->validate();
+        return $this->handle($request->user(), $request->validated());
+    }
 
     public function asController(OrganisationUser $organisationUser, ActionRequest $request): OrganisationUser
     {
