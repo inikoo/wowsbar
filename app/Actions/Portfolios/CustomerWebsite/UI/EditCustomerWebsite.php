@@ -177,7 +177,8 @@ class EditCustomerWebsite extends InertiaAction
         }
 
         return match ($routeName) {
-            'customer.portfolio.websites.edit' => [
+            'customer.portfolio.websites.edit',
+            'org.portfolios.shop.customer-websites.edit' => [
                 'label' => $customerWebsite->name,
                 'route' => [
                     'name' => $routeName,

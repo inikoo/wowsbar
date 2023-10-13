@@ -15,7 +15,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property int $id
  * @property string $slug
  * @property string $name
- * @property string $interest
+ * @property object $pivot
  */
 
 class BasketResource extends JsonResource
@@ -28,7 +28,7 @@ class BasketResource extends JsonResource
             'id'          => $divisions->id,
             'slug'        => $divisions->slug,
             'name'        => $divisions->name,
-            'interest'    => $divisions->interest
+            'interest'    => $divisions->pivot->interest
         ];
     }
 }
