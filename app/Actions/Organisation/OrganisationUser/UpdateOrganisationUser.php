@@ -45,7 +45,8 @@ class UpdateOrganisationUser
         return [
             'username'     => ['sometimes', 'required', new AlphaDashDot(), 'unique:organisation_users,username'],
             'password'     => ['sometimes', 'required', app()->isLocal() || app()->environment('testing') ? null : Password::min(8)->uncompromised()],
-            'status'       => 'sometimes|required|boolean'
+            'status'       => 'sometimes|required|boolean',
+            'reset_password' => ['sometimes']
         ];
     }
 
