@@ -8,12 +8,14 @@
 namespace App\Models\Auth;
 
 use App\Enums\Organisation\Guest\GuestTypeEnum;
+use App\Models\HumanResources\JobPosition;
 use App\Models\Traits\HasHistory;
 use App\Models\Traits\HasUniversalSearch;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\MediaLibrary\HasMedia;
@@ -26,6 +28,7 @@ use Spatie\Sluggable\SlugOptions;
  *
  * @property int $id
  * @property string $slug
+ * @property string $alias
  * @property bool $status
  * @property GuestTypeEnum $type
  * @property string|null $contact_name
@@ -40,9 +43,10 @@ use Spatie\Sluggable\SlugOptions;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \OwenIt\Auditing\Models\Audit> $audits
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Helpers\Audit> $audits
  * @property-read int|null $audits_count
- * @property-read array $es_audits
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, JobPosition> $jobPositions
+ * @property-read int|null $job_positions_count
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \App\Models\Media\Media> $media
  * @property-read int|null $media_count
  * @property-read \App\Models\Auth\OrganisationUser|null $organisationUser
@@ -51,6 +55,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Guest newQuery()
  * @method static Builder|Guest onlyTrashed()
  * @method static Builder|Guest query()
+ * @method static Builder|Guest whereAlias($value)
  * @method static Builder|Guest whereCompanyName($value)
  * @method static Builder|Guest whereContactName($value)
  * @method static Builder|Guest whereCreatedAt($value)
@@ -94,6 +99,13 @@ class Guest extends Model implements HasMedia, Auditable
 
     protected $guarded = [];
 
+    public function generateTags(): array
+    {
+        return [
+            'sysadmin'
+        ];
+    }
+
 
     public function getSlugOptions(): SlugOptions
     {
@@ -114,7 +126,7 @@ class Guest extends Model implements HasMedia, Auditable
                 if ($guest->wasChanged('status')) {
                     //HydrateOrganisation::make()->guestsStats();
                     if (!$guest->status) {
-                        $guest->user->update(
+                        $guest->organisationUser->update(
                             [
                                 'status' => $guest->status
                             ]
@@ -145,5 +157,10 @@ class Guest extends Model implements HasMedia, Auditable
     public function getRouteKeyName(): string
     {
         return 'slug';
+    }
+
+    public function jobPositions(): MorphToMany
+    {
+        return $this->morphToMany(JobPosition::class, 'job_positionable');
     }
 }

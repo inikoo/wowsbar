@@ -7,7 +7,6 @@
 
 namespace App\Actions\Organisation\OrganisationUser;
 
-use App\Actions\Auth\UserRequest\Traits\WithFormattedRequestLogs;
 use App\Actions\Elasticsearch\BuildElasticsearchClient;
 use App\InertiaTable\InertiaTable;
 use App\Models\Auth\OrganisationUser;
@@ -26,8 +25,13 @@ class IndexOrganisationUserRequestLogs
 {
     use AsObject;
 
-    public function handle(Organisation|OrganisationUser $parent): LengthAwarePaginator|bool|array
+    public function handle(Organisation|OrganisationUser $parent, $prefix = null): LengthAwarePaginator|bool|array
     {
+
+
+
+
+
         $client = BuildElasticsearchClient::run();
 
 
@@ -92,9 +96,12 @@ class IndexOrganisationUserRequestLogs
         return [];
     }
 
-    public function tableStructure(Organisation|OrganisationUser $parent, ?array $exportLinks = null): Closure
+    public function tableStructure(Organisation|OrganisationUser $parent, $prefix = null, ?array $exportLinks = null): Closure
     {
-        return function (InertiaTable $table) use ($exportLinks, $parent) {
+        return function (InertiaTable $table) use ($exportLinks, $parent, $prefix) {
+
+
+
             $table
                 ->withGlobalSearch()
                 ->withExportLinks($exportLinks);

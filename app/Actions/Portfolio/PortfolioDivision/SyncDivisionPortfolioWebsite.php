@@ -7,6 +7,7 @@
 
 namespace App\Actions\Portfolio\PortfolioDivision;
 
+use App\Actions\CRM\Customer\Hydrators\CustomerHydratePortfolioWebsites;
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateCustomerWebsites;
 use App\Enums\Helpers\Interest\InterestEnum;
 use App\Models\Organisation\Division;
@@ -33,6 +34,7 @@ class SyncDivisionPortfolioWebsite
         ]);
 
         OrganisationHydrateCustomerWebsites::dispatch();
+        CustomerHydratePortfolioWebsites::dispatch($portfolioWebsite->customer);
     }
 
     public function rules(): array

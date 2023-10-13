@@ -58,6 +58,7 @@ const optionType = [
                 type: 'input',
                 label: trans('Text'),
                 value: null,
+                placeholder: "Christmas Sales on 20-31 December!"
             },
             {
                 name: "color",
@@ -181,7 +182,8 @@ const optionType = [
                 name: 'text',
                 type: 'input',
                 label: trans('Title'),
-                value: null
+                value: null,
+                placeholder: "Buy Now!"
             },
             {
                 name: 'target',

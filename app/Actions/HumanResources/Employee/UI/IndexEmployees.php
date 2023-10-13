@@ -128,10 +128,13 @@ class IndexEmployees extends InertiaAction
                         ] : null
                     ]
                 )
+                ->column(key: 'state', label: __('state'), canBeHidden: false)
+
                 ->column(key: 'slug', label: __('code'), canBeHidden: false, sortable: true, searchable: true)
                 ->column(key: 'contact_name', label: __('name'), canBeHidden: false, sortable: true, searchable: true)
-                ->column(key: 'job_title', label: __('position'), canBeHidden: false)
-                ->column(key: 'state', label: __('state'), canBeHidden: false)
+                ->column(key: 'job_title', label: __('job title'), canBeHidden: false)
+                ->column(key: 'positions', label: __('positions'), canBeHidden: false)
+
                 ->defaultSort('slug');
         };
     }

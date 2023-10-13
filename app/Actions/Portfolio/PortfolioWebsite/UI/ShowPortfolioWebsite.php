@@ -7,13 +7,13 @@
 
 namespace App\Actions\Portfolio\PortfolioWebsite\UI;
 
-use App\Actions\Helpers\History\IndexHistories;
+use App\Actions\Helpers\History\IndexCustomerHistory;
 use App\Actions\InertiaAction;
 use App\Actions\Portfolio\Banner\UI\IndexBanners;
 use App\Actions\UI\Customer\Portfolio\ShowPortfolio;
 use App\Actions\UI\WithInertia;
 use App\Enums\UI\Customer\PortfolioWebsiteTabsEnum;
-use App\Http\Resources\History\HistoryResource;
+use App\Http\Resources\History\CustomerHistoryResource;
 use App\Http\Resources\Portfolio\BannerResource;
 use App\Http\Resources\Portfolio\PortfolioWebsiteResource;
 use App\Models\Portfolio\PortfolioWebsite;
@@ -50,6 +50,8 @@ class ShowPortfolioWebsite extends InertiaAction
 
     public function htmlResponse(PortfolioWebsite $portfolioWebsite, ActionRequest $request): Response
     {
+        $customer = $request->get('customer');
+
         return Inertia::render(
             'Portfolio/PortfolioWebsite',
             [
@@ -85,19 +87,29 @@ class ShowPortfolioWebsite extends InertiaAction
                 ],
 
                 PortfolioWebsiteTabsEnum::CHANGELOG->value => $this->tab == PortfolioWebsiteTabsEnum::CHANGELOG->value ?
-                    fn () => HistoryResource::collection(IndexHistories::run($portfolioWebsite))
-                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistories::run($portfolioWebsite))),
+                    fn () => CustomerHistoryResource::collection(IndexCustomerHistory::run(
+                        customer:$customer,
+                        model:PortfolioWebsite::class,
+                        prefix: PortfolioWebsiteTabsEnum::CHANGELOG->value
+                    ))
+                    : Inertia::lazy(fn () => CustomerHistoryResource::collection(IndexCustomerHistory::run(
+                        customer:$customer,
+                        model:PortfolioWebsite::class,
+                        prefix: PortfolioWebsiteTabsEnum::CHANGELOG->value
+                    ))),
 
                 PortfolioWebsiteTabsEnum::BANNERS->value => $this->tab == PortfolioWebsiteTabsEnum::BANNERS->value ?
-                    fn () => BannerResource::collection(IndexBanners::run($portfolioWebsite, 'banners'))
-                    : Inertia::lazy(fn () => BannerResource::collection(IndexBanners::run($portfolioWebsite, 'banners')))
+                    fn () => BannerResource::collection(IndexBanners::run($portfolioWebsite, PortfolioWebsiteTabsEnum::BANNERS->value))
+                    : Inertia::lazy(fn () => BannerResource::collection(IndexBanners::run($portfolioWebsite, PortfolioWebsiteTabsEnum::BANNERS->value)))
             ]
         )
             ->table(IndexBanners::make()->tableStructure(
                 parent:$portfolioWebsite,
-                prefix: 'banners'
+                prefix: PortfolioWebsiteTabsEnum::BANNERS->value
             ))
-            ->table(IndexHistories::make()->tableStructure());
+            ->table(IndexCustomerHistory::make()->tableStructure(
+                prefix: PortfolioWebsiteTabsEnum::CHANGELOG->value
+            ));
     }
 
     public function jsonResponse(PortfolioWebsite $portfolioWebsite): PortfolioWebsiteResource

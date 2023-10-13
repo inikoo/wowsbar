@@ -33,7 +33,7 @@ const onChange = () => {
 </script>
 
 <template>
-    <div class="w-full h-full" @dragover="emits('dragOver')" @dragleave="emits('dragLeave')" @drop="emits('drop')">
+    <div class="w-full h-full space-y-2" @dragover="emits('dragOver')" @dragleave="emits('dragLeave')" @drop="emits('drop')">
         <div class="relative mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10 bg-gray-400/10 hover:bg-gray-400/20"
             :class="bannerType == 'square' ? 'h-72 aspect-square mx-auto' : ''"
         >
@@ -59,6 +59,6 @@ const onChange = () => {
             </div>
         </div>
         <div v-if="bannerType == 'landscape'" class="text-xs text-gray-400 py-1">{{ trans("The recommended image size is 1800 x 450") }}</div>
-        <div v-else-if="bannerType == 'square'" class="text-xs text-gray-400 py-1">{{ trans("The recommended image size is 500 x 500") }}</div>
+        <div v-else-if="bannerType == 'square'" class="mx-auto w-fit text-xs text-gray-400 py-1">{{ trans("The recommended image size is 500 x 500") }}</div>
     </div>
 </template>

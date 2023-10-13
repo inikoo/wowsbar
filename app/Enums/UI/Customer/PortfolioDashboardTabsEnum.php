@@ -18,7 +18,7 @@ enum PortfolioDashboardTabsEnum: string
     case DASHBOARD              = 'dashboard';
 
 
-    case PORTFOLIO_CHANGELOG            = 'history';
+    case CHANGELOG            = 'history';
 
 
 
@@ -30,7 +30,7 @@ enum PortfolioDashboardTabsEnum: string
                 'icon'  => 'fas fa-tachometer-alt',
             ],
 
-            PortfolioDashboardTabsEnum::PORTFOLIO_CHANGELOG => [
+            PortfolioDashboardTabsEnum::CHANGELOG => [
                 'title' => __('changelog'),
                 'icon'  => 'fal fa-clock',
                 'type'  => 'icon',

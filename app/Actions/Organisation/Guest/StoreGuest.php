@@ -7,12 +7,13 @@
 
 namespace App\Actions\Organisation\Guest;
 
+use App\Actions\HumanResources\AttachJobPosition;
 use App\Actions\Organisation\Guest\Hydrators\GuestHydrateUniversalSearch;
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateGuests;
 use App\Actions\Organisation\OrganisationUser\StoreOrganisationUser;
 use App\Enums\Organisation\Guest\GuestTypeEnum;
 use App\Models\Auth\Guest;
-use App\Models\Auth\Role;
+use App\Models\HumanResources\JobPosition;
 use App\Rules\AlphaDashDot;
 use Illuminate\Console\Command;
 use Illuminate\Http\RedirectResponse;
@@ -20,6 +21,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Password;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
@@ -33,23 +35,37 @@ class StoreGuest
 
     public function handle(array $modelData): Guest
     {
+        $positions = Arr::get($modelData, 'positions');
+        Arr::forget($modelData, 'positions');
+
+
         $guest = Guest::create(
             Arr::except($modelData, [
-                'username'
+                'username',
+                'password',
+                'reset_password'
             ])
         );
         OrganisationHydrateGuests::dispatch();
         GuestHydrateUniversalSearch::dispatch($guest);
 
+
+
         StoreOrganisationUser::make()->action(
             $guest,
             [
-                'username'    => Arr::get($modelData, 'username'),
-                'password'    => (app()->isLocal() ? 'hello' : wordwrap(Str::random(), 4, '-', true)),
-                'contact_name'=> $guest->contact_name,
-                'email'       => $guest->email
+                'username'        => Arr::get($modelData, 'username'),
+                'password'        => (app()->isLocal() ? 'hello' : wordwrap(Str::random(), 4, '-', true)),
+                'contact_name'    => $guest->contact_name,
+                'email'           => $guest->email,
+                'reset_password'  => Arr::get($modelData, 'reset_password', false),
             ]
         );
+
+        foreach ($positions as $position) {
+            $jobPosition = JobPosition::firstWhere('slug', $position);
+            AttachJobPosition::run($guest, $jobPosition);
+        }
 
         return $guest;
     }
@@ -73,12 +89,17 @@ class StoreGuest
     public function rules(): array
     {
         return [
-            'type'         => ['required', Rule::in(GuestTypeEnum::values())],
-            'username'     => ['sometimes', new AlphaDashDot(), 'unique:App\Models\Auth\OrganisationUser,username', Rule::notIn(['export', 'create'])],
-            'company_name' => ['nullable', 'string', 'max:255'],
-            'contact_name' => ['required', 'string', 'max:255'],
-            'phone'        => ['nullable', 'phone:AUTO'],
-            'email'        => ['nullable', 'email']
+            'type'            => ['required', Rule::in(GuestTypeEnum::values())],
+            'alias'           => ['required', 'iunique:employees', 'string', 'max:12'],
+            'username'        => ['required', 'required', new AlphaDashDot(), 'iunique:organisation_users'],
+            'company_name'    => ['nullable', 'string', 'max:255'],
+            'contact_name'    => ['required', 'string', 'max:255'],
+            'phone'           => ['nullable', 'phone:AUTO'],
+            'email'           => ['nullable', 'email'],
+            'positions.*'     => ['exists:job_positions,slug'],
+            'password'        => ['sometimes', 'required', 'max:255', app()->isLocal() || app()->environment('testing') ? null : Password::min(8)->uncompromised()],
+            'reset_password'  => ['sometimes', 'boolean']
+
         ];
     }
 
@@ -102,28 +123,33 @@ class StoreGuest
         return $this->handle($validatedData);
     }
 
-    public string $commandSignature = 'org:create-guest {name} {username}  {type : Guest type contractor|external_employee|external_administrator} {--P|password=} {--e|email=} {--t|phone=} {--identity_document_number=} {--identity_document_type=}';
+    public string $commandSignature = 'org:create-guest {name} {alias} {type : Guest type contractor|external_employee|external_administrator} {--P|password=} {--e|email=} {--t|phone=} {--identity_document_number=} {--identity_document_type=}';
 
 
     public function asCommand(Command $command): int
     {
         $this->trusted = true;
 
-        $this->fill([
+
+        $fields = [
             'type'         => $command->argument('type'),
             'contact_name' => $command->argument('name'),
             'email'        => $command->option('email'),
             'phone'        => $command->option('phone'),
-            'username'     => $command->argument('username'),
+            'alias'        => $command->argument('alias'),
+            'username'     => $command->argument('alias'),
             'password'     => $command->option('password') ?? (app()->isLocal() ? 'hello' : wordwrap(Str::random(), 4, '-', true))
-        ]);
+        ];
+
+        if ($command->argument('type') == GuestTypeEnum::EXTERNAL_ADMINISTRATOR->value) {
+            $fields['positions'] = ['admin'];
+        }
+
+
+        $this->fill($fields);
 
         $guest = $this->handle($this->validateAttributes());
 
-        if ($command->argument('type') == GuestTypeEnum::EXTERNAL_ADMINISTRATOR->value) {
-            $superAdminRole = Role::where('guard_name', 'org')->where('name', 'super-admin')->firstOrFail();
-            $guest->organisationUser->assignRole($superAdminRole);
-        }
 
         $command->info("Guest <fg=yellow>$guest->slug</> created 👍");
 

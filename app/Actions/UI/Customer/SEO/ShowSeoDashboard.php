@@ -7,12 +7,12 @@
 
 namespace App\Actions\UI\Customer\SEO;
 
-use App\Actions\Helpers\History\IndexHistories;
+use App\Actions\Helpers\History\IndexCustomerModuleHistory;
 use App\Actions\InertiaAction;
 use App\Actions\UI\Customer\Dashboard\ShowDashboard;
-use App\Enums\UI\Customer\PortfolioDashboardTabsEnum;
+use App\Enums\UI\Customer\SEODashboardTabsEnum;
 use App\Http\Resources\History\HistoryResource;
-use App\Models\Portfolio\PortfolioWebsite;
+use App\Models\CRM\Customer;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -21,64 +21,80 @@ class ShowSeoDashboard extends InertiaAction
 {
     public function authorize(ActionRequest $request): bool
     {
-        return $request->get('customerUser')->hasPermissionTo("portfolio.view");
+        return $request->get('customerUser')->hasPermissionTo("portfolio.seo.view");
     }
 
 
     public function asController(ActionRequest $request): ActionRequest
     {
-        $this->initialisation($request)->withTab(PortfolioDashboardTabsEnum::values());
+        $this->initialisation($request)->withTab(SEODashboardTabsEnum::values());
+
         return $request;
     }
 
 
-
     public function htmlResponse(ActionRequest $request): Response
     {
-
+        $customer = $request->get('customer');
 
         return Inertia::render(
-            'GoogleAds/GoogleAdsDashboard',
+            'SEO/SEODashboard',
             [
-                'breadcrumbs'  => $this->getBreadcrumbs(),
-                'title'        => __('SEO'),
-                'pageHead'     => [
-                    'title'             => __('SEO'),
-                    'icon'              => [
+                'breadcrumbs' => $this->getBreadcrumbs(),
+                'title'       => __('SEO'),
+                'pageHead'    => [
+                    'title' => __('SEO'),
+                    'icon'  => [
                         'icon'    => ['fab', 'fa-google'],
                         'tooltip' => __('SEO')
                     ],
                 ],
 
-                'tabs'                             => [
+                'tabs'                                 => [
                     'current'    => $this->tab,
-                    'navigation' => PortfolioDashboardTabsEnum::navigation(),
+                    'navigation' => SEODashboardTabsEnum::navigation(),
                 ],
-                PortfolioDashboardTabsEnum::DASHBOARD->value => $this->tab == PortfolioDashboardTabsEnum::DASHBOARD->value ?
-                    fn () => $this->getDashboard()
-                    : Inertia::lazy(fn () =>  $this->getDashboard()),
+                SEODashboardTabsEnum::DASHBOARD->value => $this->tab == SEODashboardTabsEnum::DASHBOARD->value ?
+                    fn () => $this->getDashboard($customer)
+                    : Inertia::lazy(fn () => $this->getDashboard($customer)),
 
-                PortfolioDashboardTabsEnum::PORTFOLIO_CHANGELOG->value => $this->tab == PortfolioDashboardTabsEnum::PORTFOLIO_CHANGELOG->value ?
-                    fn () => HistoryResource::collection(IndexHistories::run(PortfolioWebsite::class))
-                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistories::run(PortfolioWebsite::class)))
+                SEODashboardTabsEnum::CHANGELOG->value => $this->tab == SEODashboardTabsEnum::CHANGELOG->value
+                    ?
+                    fn () => HistoryResource::collection(
+                        IndexCustomerModuleHistory::run(
+                            customer: $customer,
+                            tags: ['customer_seo'],
+                            prefix: SEODashboardTabsEnum::CHANGELOG->value
+                        )
+                    )
+                    : Inertia::lazy(fn () => HistoryResource::collection(
+                        IndexCustomerModuleHistory::run(
+                            customer: $customer,
+                            tags: ['customer_seo'],
+                            prefix: SEODashboardTabsEnum::CHANGELOG->value
+                        )
+                    ))
 
             ]
-        )->table(IndexHistories::make()->tableStructure());
+        )->table(
+            IndexCustomerModuleHistory::make()->tableStructure(
+                prefix: SEODashboardTabsEnum::CHANGELOG->value
+            )
+        );
     }
 
-    private function getDashboard(): array
+    private function getDashboard(Customer $customer): array
     {
-        $tenant=customer();
 
         return [
             'flatTreeMaps' => [
                 [
                     [
-                        'name'  => __('prospects'),
-                        'icon'  => ['fal', 'fa-transporter-2'],
+                        'name'  => __('websites'),
+                        'icon'  => ['fal', 'fa-globe'],
                         'href'  => ['customer.portfolio.websites.index'],
                         'index' => [
-                            'number' => $tenant->stats->number_websites
+                            'number' => 0 // todo make stats for portfolio division stuff
                         ]
                     ],
                 ]

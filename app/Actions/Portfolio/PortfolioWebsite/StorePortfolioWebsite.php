@@ -14,6 +14,7 @@ use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateCustomerW
 use App\Actions\Portfolio\PortfolioWebsite\Hydrators\PortfolioWebsiteHydrateUniversalSearch;
 use App\Http\Resources\Portfolio\PortfolioWebsiteResource;
 use App\Models\CRM\Customer;
+use App\Models\Organisation\Division;
 use App\Models\Portfolios\CustomerWebsite;
 use App\Models\Portfolio\PortfolioWebsite;
 use App\Rules\IUnique;
@@ -45,6 +46,8 @@ class StorePortfolioWebsite
 
         // Must be run to the website layout to work
         CustomerHydratePortfolioWebsites::run($portfolioWebsite->customer);
+
+        $portfolioWebsite->divisions()->attach(Division::pluck('id'));
 
         PortfolioWebsiteHydrateUniversalSearch::dispatch($portfolioWebsite);
         CustomerWebsiteHydrateUniversalSearch::dispatch(CustomerWebsite::find($portfolioWebsite->id));

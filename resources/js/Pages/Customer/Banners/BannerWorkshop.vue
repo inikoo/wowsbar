@@ -11,11 +11,9 @@ import { ref, reactive, onBeforeMount, watch, onBeforeUnmount, computed, nextTic
 import PageHeading from "@/Components/Headings/PageHeading.vue"
 import { capitalize } from "@/Composables/capitalize"
 import { library } from "@fortawesome/fontawesome-svg-core"
-import { trans } from "laravel-vue-i18n"
-import Button from "@/Components/Elements/Buttons/Button.vue"
 import BannerWorkshopComponent from '@/Components/Workshop/BannerWorkshopComponent.vue'
 import { useLayoutStore } from "@/Stores/layout"
-import { cloneDeep, set as setLodash } from "lodash"
+import { cloneDeep } from "lodash"
 import { set, onValue, get } from "firebase/database"
 import { getDbRef } from '@/Composables/firebase'
 

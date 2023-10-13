@@ -27,6 +27,7 @@ const props = defineProps<{
     blueprint: Array
     remove : Function
     common: any
+    bannerType: string
 }>()
 
 // console.log(props.common)
@@ -79,7 +80,7 @@ const current = ref(0);
         </aside>
 
         <!-- Content of forms -->
-        <div class="px-4 sm:px-6 md:px-4 pt-6 xl:pt-4 col-span-9 flex flex-grow justify-center overflow-auto">
+        <div class="px-4 sm:px-6 md:px-4 pt-6 xl:pt-4 col-span-9 flex flex-grow justify-center">
             <div class="flex flex-col w-full ">
                 <dl v-for="(fieldData, index ) in blueprint[current].fields" :key="index" class="pb-4 sm:pb-5 sm:gap-4 w-full">
                     <!-- Title -->
@@ -93,7 +94,9 @@ const current = ref(0);
                     <dd class="flex text-sm text-gray-700 sm:mt-0 w-full">
                         <div class="relative flex-grow">
                             <component :is="getComponent(fieldData['type'])" :data="currentComponentBeenEdited"
-                                :fieldName="fieldData.name" :fieldData="fieldData" :key="index" :counter="false" :common="common">
+                                :fieldName="fieldData.name" :fieldData="fieldData" :key="index" :counter="false" :common="common"
+                                :bannerType="bannerType"
+                            >
                             </component>
                         </div>
                     </dd>

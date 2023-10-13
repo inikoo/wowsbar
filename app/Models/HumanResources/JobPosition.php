@@ -31,9 +31,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property string|null $share_work_time
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \OwenIt\Auditing\Models\Audit> $audits
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Helpers\Audit> $audits
  * @property-read int|null $audits_count
- * @property-read array $es_audits
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Role> $roles
  * @property-read int|null $roles_count
  * @method static \Illuminate\Database\Eloquent\Builder|JobPosition newModelQuery()
@@ -61,11 +60,11 @@ class JobPosition extends Model implements Auditable
 
 
     protected $casts = [
-        'data'  => 'array',
+        'data' => 'array',
     ];
 
     protected $attributes = [
-        'data'  => '{}',
+        'data' => '{}',
     ];
 
     public function getSlugOptions(): SlugOptions
@@ -83,6 +82,18 @@ class JobPosition extends Model implements Auditable
     }
 
     protected $guarded = [];
+
+    public function generateTags(): array
+    {
+        return [
+            'hr'
+        ];
+    }
+
+    protected $auditExclude = [
+        'share_work_time',
+        'number_employees'
+    ];
 
     public function roles(): BelongsToMany
     {

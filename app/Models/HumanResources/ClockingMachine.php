@@ -34,11 +34,10 @@ use Spatie\Sluggable\SlugOptions;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property Carbon|null $deleted_at
- * @property-read Collection<int, \OwenIt\Auditing\Models\Audit> $audits
+ * @property-read Collection<int, \App\Models\Helpers\Audit> $audits
  * @property-read int|null $audits_count
  * @property-read Collection<int, \App\Models\HumanResources\Clocking> $clockings
  * @property-read int|null $clockings_count
- * @property-read array $es_audits
  * @property-read UniversalSearch|null $universalSearch
  * @property-read \App\Models\HumanResources\Workplace $workplace
  * @method static Builder|ClockingMachine newModelQuery()
@@ -79,6 +78,13 @@ class ClockingMachine extends Model implements Auditable
     public function getRouteKeyName(): string
     {
         return 'slug';
+    }
+
+    public function generateTags(): array
+    {
+        return [
+            'sysadmin'
+        ];
     }
 
     public function getSlugOptions(): SlugOptions

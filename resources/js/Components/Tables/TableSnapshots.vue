@@ -39,13 +39,13 @@ const props = defineProps<{
                         <Image :src="user.publisher_avatar" />
                     </div>
                 </div>
-                <div class="">{{ user.publisher }}</div>
+                <div class="">{{ user['publisher'] }}</div>
             </div>
         </template>
-        
+
         <!-- Date Published -->
         <template #cell(published_at)="{ item: user }">
-            <div class="text-gray-500">{{ useFormatTime(user.published_at, locale.language.code, true) }}</div>
+            <div class="text-gray-500">{{ useFormatTime(user['published_at'], locale.language.code, true) }}</div>
         </template>
 
         <!-- Published Until -->

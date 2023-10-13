@@ -21,7 +21,6 @@ enum BannerTabsEnum: string
 
     case CHANGELOG            = 'changelog';
 
-    case DATA                 = 'data';
 
 
     public function blueprint(): array
@@ -35,12 +34,7 @@ enum BannerTabsEnum: string
                 'title' => __('snapshots'),
                 'icon'  => 'fal fa-layer-group',
             ],
-            BannerTabsEnum::DATA => [
-                'title' => __('data'),
-                'icon'  => 'fal fa-database',
-                'type'  => 'icon',
-                'align' => 'right',
-            ],
+
             BannerTabsEnum::CHANGELOG => [
                 'title' => __('changelog'),
                 'icon'  => 'fal fa-clock',

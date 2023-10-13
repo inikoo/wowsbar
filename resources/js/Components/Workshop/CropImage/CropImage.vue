@@ -8,6 +8,7 @@
 import { ref } from "vue"
 import "swiper/css"
 import "swiper/css/navigation"
+import axios from 'axios'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faSpinnerThird } from '@/../private/pro-duotone-svg-icons'

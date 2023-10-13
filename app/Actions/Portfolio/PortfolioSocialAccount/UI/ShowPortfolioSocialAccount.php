@@ -7,7 +7,7 @@
 
 namespace App\Actions\Portfolio\PortfolioSocialAccount\UI;
 
-use App\Actions\Helpers\History\IndexHistories;
+use App\Actions\Helpers\History\IndexHistory;
 use App\Actions\InertiaAction;
 use App\Actions\UI\Customer\Portfolio\ShowPortfolio;
 use App\Actions\UI\WithInertia;
@@ -78,11 +78,11 @@ class ShowPortfolioSocialAccount extends InertiaAction
                 ],
 
                 PortfolioSocialAccountTabsEnum::CHANGELOG->value => $this->tab == PortfolioSocialAccountTabsEnum::CHANGELOG->value ?
-                    fn () => HistoryResource::collection(IndexHistories::run($portfolioSocialAccount))
-                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistories::run($portfolioSocialAccount))),
+                    fn () => HistoryResource::collection(IndexHistory::run($portfolioSocialAccount))
+                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistory::run($portfolioSocialAccount))),
             ]
         )
-            ->table(IndexHistories::make()->tableStructure());
+            ->table(IndexHistory::make()->tableStructure());
     }
 
     public function jsonResponse(PortfolioSocialAccount $portfolioSocialAccount): PortfolioSocialAccountResource

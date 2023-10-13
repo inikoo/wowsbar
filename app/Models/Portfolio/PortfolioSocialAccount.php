@@ -27,10 +27,9 @@ use Spatie\Sluggable\SlugOptions;
  * @property array $data
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \OwenIt\Auditing\Models\Audit> $audits
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Helpers\Audit> $audits
  * @property-read int|null $audits_count
  * @property-read Customer $customer
- * @property-read array $es_audits
  * @property-read Shop $shop
  * @method static \Illuminate\Database\Eloquent\Builder|PortfolioSocialAccount newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|PortfolioSocialAccount newQuery()

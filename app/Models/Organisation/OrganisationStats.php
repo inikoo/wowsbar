@@ -66,6 +66,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $number_webpages_state_ready
  * @property int $number_webpages_state_live
  * @property int $number_webpages_state_closed
+ * @property int $number_uploaded_images
+ * @property int $number_uploaded_images_scope_landscape
+ * @property int $number_uploaded_images_scope_square
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Organisation\Organisation $organisation
@@ -93,6 +96,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static Builder|OrganisationStats whereNumberShopsStateOpen($value)
  * @method static Builder|OrganisationStats whereNumberShopsTypeContentAsAService($value)
  * @method static Builder|OrganisationStats whereNumberShopsTypeDigitalMarketing($value)
+ * @method static Builder|OrganisationStats whereNumberUploadedImages($value)
+ * @method static Builder|OrganisationStats whereNumberUploadedImagesScopeLandscape($value)
+ * @method static Builder|OrganisationStats whereNumberUploadedImagesScopeSquare($value)
  * @method static Builder|OrganisationStats whereNumberWebpages($value)
  * @method static Builder|OrganisationStats whereNumberWebpagesPurposeAppointment($value)
  * @method static Builder|OrganisationStats whereNumberWebpagesPurposeArticle($value)

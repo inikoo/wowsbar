@@ -2,16 +2,13 @@
 
 namespace App\Imports\Auth;
 
-use App\Actions\Helpers\ExcelUpload\ExcelUploadRecord\UpdateImportExcelUploadStatus;
 use App\Actions\Organisation\Guest\StoreGuest;
 use App\Enums\Organisation\Guest\GuestTypeEnum;
-use App\Models\Auth\Guest;
-use App\Models\Helpers\Upload;
-use App\Models\Helpers\UploadRecord;
-use App\Rules\AlphaDashDot;
-use Illuminate\Support\Collection;
+use App\Imports\WithImport;
+use Exception;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
-use Maatwebsite\Excel\Concerns\SkipsFailures;
 use Maatwebsite\Excel\Concerns\SkipsOnFailure;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
@@ -19,45 +16,67 @@ use Maatwebsite\Excel\Concerns\WithValidation;
 
 class GuestImport implements ToCollection, WithHeadingRow, SkipsOnFailure, WithValidation
 {
-    use SkipsFailures;
+    use WithImport;
 
-    public Upload $guestUpload;
-    public function __construct(Upload $guestUpload)
+    public function storeModel($row, $uploadRecord): void
     {
-        $this->guestUpload = $guestUpload;
-    }
+        $row->put('contact_name', $row->get('name'));
 
-    /**
-    * @param Collection $collection
-    */
-    public function collection(Collection $collection): void
-    {
-        $totalImported = 1;
 
-        foreach ($collection as $guest) {
-            try {
-                $guest = UploadRecord::create([
-                    'excel_upload_id' => $this->guestUpload->id,
-                    'data'            => json_encode($guest)
-                ]);
+        $fields =
+            array_merge(
+                array_keys(
+                    Arr::except(
+                        $this->rules(),
+                        ['name']
+                    )
+                ),
+                [
+                    'contact_name',
+                ]
+            );
 
-                StoreGuest::run(json_decode($guest->data, true));
-                UpdateImportExcelUploadStatus::run($guest, count($collection), $totalImported++, Guest::class);
-            } catch (\Exception $e) {
-                $totalImported--;
-            }
+
+        try {
+            $modelData = $row->only($fields)->all();
+
+            StoreGuest::make()->action(
+                $modelData
+            );
+            $this->setRecordAsCompleted($uploadRecord);
+        } catch (Exception $e) {
+            $this->setRecordAsFailed($uploadRecord, [$e->getMessage()]);
         }
     }
+
+    public function prepareForValidation($data)
+    {
+        if (Arr::exists($data, 'username')) {
+            $data['username'] = Str::lower($data['username']);
+        }
+
+
+        $data['positions'] = explode(',', Arr::get($data, 'positions'));
+
+
+        return $data;
+    }
+
 
     public function rules(): array
     {
         return [
-            'type'         => ['required', Rule::in(GuestTypeEnum::values())],
-            'username'     => ['required', new AlphaDashDot(), 'unique:App\Models\Auth\OrganisationUser,username', Rule::notIn(['export', 'create'])],
-            'company_name' => ['nullable', 'string', 'max:255'],
-            'contact_name' => ['required', 'string', 'max:255'],
-            'phone'        => ['nullable'],
-            'email'        => ['nullable', 'email']
+            'type'            => ['required', Rule::in(GuestTypeEnum::values())],
+            'username'        => ['required', 'iunique:organisation_users', 'alpha_dash:ascii'],
+            'password'        => ['sometimes', 'string', 'min:8', 'max:64'],
+            'reset_password'  => ['sometimes', 'boolean'],
+            'company_name'    => ['nullable', 'string', 'max:255'],
+            'name'            => ['required', 'string', 'max:255'],
+            'phone'           => ['nullable'],
+            'email'           => ['nullable', 'email'],
+            'positions'       => ['required', 'array'],
+            'positions.*'     => ['exists:job_positions,slug'],
+            'alias'           => ['required', 'iunique:guests', 'string', 'max:16'],
         ];
     }
 }

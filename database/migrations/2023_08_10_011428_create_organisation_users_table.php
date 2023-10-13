@@ -17,10 +17,12 @@ return new class () extends Migration {
     {
         Schema::create('organisation_users', function (Blueprint $table) {
             $table->smallIncrements('id');
-            $table->unsignedInteger('parent_id')->nullable();
+            $table->string('slug')->unique()->index();
             $table->string('parent_type')->nullable();
+            $table->unsignedInteger('parent_id')->nullable();
             $table->string('username')->index()->collation('und_ns');
             $table->string('email')->index()->nullable()->collation('und_ns');
+            $table->boolean('reset_password')->default(false);
             $table = $this->userDetailsColumns($table);
             $table->timestampsTz();
             $table->softDeletesTz();
