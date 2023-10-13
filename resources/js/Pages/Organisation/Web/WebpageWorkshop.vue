@@ -6,7 +6,7 @@ import PageHeading from '@/Components/Headings/PageHeading.vue'
 import GrapeEditor from '@/Components/CMS/Workshops/GrapeEditor/GrapeEditor.vue'
 
 // import TailwindComponents from "grapesjs-tailwind";
-import { HeaderPlugins, FooterPlugins, HeroPlugins, AppointmentPlugins, BlogPlugins, StatisticsPlugins, PricingPlugins  } from "@/Components/CMS/Workshops/GrapeEditor/CustomBlocks/CustomBlock";
+import { HeaderPlugins, FooterPlugins, HeroPlugins, AppointmentPlugins, BlogPlugins, StatisticsPlugins, PricingPlugins, CtaPlugins  } from "@/Components/CMS/Workshops/GrapeEditor/CustomBlocks/CustomBlock";
 
 import Publish from '@/Components/Utils/Publish.vue'
 import { cloneDeep } from 'lodash'
@@ -93,7 +93,7 @@ const Book = {
     </PageHeading>
 
     <GrapeEditor @onSaveToServer="(isDirtyFromServer) => isDataDirty = isDirtyFromServer" :useBasic="true"
-        :plugins="pageCode == 'appointment' ? [AppointmentPlugins,HeroPlugins] : [HeroPlugins, BlogPlugins, StatisticsPlugins, PricingPlugins, FooterPlugins]" :updateRoute="updateRoute" :loadRoute="loadRoute"
+        :plugins="pageCode == 'appointment' ? [AppointmentPlugins,HeroPlugins] : [HeroPlugins, BlogPlugins, StatisticsPlugins, PricingPlugins, CtaPlugins]" :updateRoute="updateRoute" :loadRoute="loadRoute"
         :imagesUploadRoute="imagesUploadRoute">
        
     </GrapeEditor>

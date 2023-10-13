@@ -1,10 +1,12 @@
-import { headerBlock1, headerBlock2, headerBlock3, headerBlock4 } from './Header/Header'
+import { CtaBlock1 } from './CTA/CTA';
+import { headerBlock1, headerBlock3,} from './Header/Header'
 import { footerBlock1, footerBlock2, footerBlock3, footerBlock4 } from './Footer/Footer'
-import { heroBlock1 , heroBlock2, heroBlock3, heroBlock4, heroBlock5} from './Hero/Hero'
+import { heroBlock1 , heroBlock2, heroBlock3, heroBlock4} from './Hero/Hero'
 import { Appointment } from './Appointment/Appointment'
 import { BlogBlock1, BlogBlock2, BlogBlock3, BlogBlock4 } from './Blog/Blog'
 import { StatisticsBlock1, StatisticsBlock2, StatisticsBlock3, StatisticsBlock4 } from './Statistics/Statistics'
-import { PricingBlock1 } from './Pricing/Pricing'
+import { PricingBlock1, PricingBlock2, PricingBlock3, PricingBlock4 } from './Pricing/Pricing'
+import { CtaBlock1, CtaBlock2, CtaBlock3 } from './CTA/CTA'
 
 export const CustomBlock = (editor : Any) => {
     IconBlock(editor)
@@ -23,7 +25,7 @@ export const IconBlock = (editor : Any) => {
 }
 
 export const HeaderPlugins = (editor: any) => {
-    const header = [headerBlock1(),headerBlock2(),headerBlock3(),headerBlock4()]
+    const header = [headerBlock1(),headerBlock3()]
     header.map((item,index)=>{
         editor.Blocks.add(item.id,item);
     })
@@ -37,7 +39,7 @@ export const FooterPlugins = (editor: any) => {
 }
 
 export const HeroPlugins = (editor: any) => {
-    const hero = [heroBlock1(),heroBlock2(),heroBlock3(),heroBlock4(),heroBlock5()]
+    const hero = [heroBlock1(),heroBlock2(),heroBlock3(),heroBlock4()]
     hero.map((item,index)=>{
       editor.Blocks.add(item.id,item);
   })
@@ -66,8 +68,15 @@ export const StatisticsPlugins = (editor: any) => {
 }
 
 export const PricingPlugins = (editor: any) => {
-    const pricing = [PricingBlock1()]
+    const pricing = [PricingBlock1(), PricingBlock2(), PricingBlock3(),PricingBlock4()]
     pricing.map((item,index)=>{
+        editor.Blocks.add(item.id,item);
+    })
+}
+
+export const CtaPlugins = (editor: any) => {
+    const cta = [CtaBlock1(), CtaBlock2(), CtaBlock3()]
+    cta.map((item,index)=>{
         editor.Blocks.add(item.id,item);
     })
 }

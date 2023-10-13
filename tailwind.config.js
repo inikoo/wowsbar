@@ -46,7 +46,17 @@ export default {
         "md:flex-row ",
         "md:flex-nowrap",
         "flex-wrap", 
-        "lg:flex-nowrap"
+        "lg:flex-nowrap",
+        "md:grid-cols-3",
+        "md:divide-x",
+        "md:divide-y-0",
+        "grid-cols-1 ",
+        "gap-x-8",
+        "gap-y-16",
+        "text-center",
+        "lg:grid-cols-3",
+        "xl:grid-cols-4",
+        "rounded-3xl"
       ],
 
     plugins: [forms],
