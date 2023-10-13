@@ -35,7 +35,7 @@ const positionRibbon = computed(() => {
 </script>
 
 <template>
-    <div class=" text-white" :class="positionRibbon" :ribbon-text="data?.text" :style="[data?.color ? `--ribbon-color: ${data.color}` : 'rgba(55, 65, 81, 1)']">
+    <div class=" text-white whitespace-nowrap" :class="positionRibbon" :ribbon-text="data?.text" :style="[data?.color ? `--ribbon-color: ${data.color}` : 'rgba(55, 65, 81, 1)']">
         
     </div>
 </template>
