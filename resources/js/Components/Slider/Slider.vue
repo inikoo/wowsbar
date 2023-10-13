@@ -123,7 +123,7 @@ const actualSlides = computed(() => {
 })
 
 // Square: Double the actualSlides length to avoid Swiper bugs (Slides must 2x length from slidesPerView)
-const handleBannerLessSlide = computed(() => {
+const compHandleBannerLessSlide = computed(() => {
     return actualSlides.value.length <= 4
         ? screenBreakpoint.value == 'sm' || screenBreakpoint.value == 'xs'
             ? actualSlides.value.length == 1 ? actualSlides.value : [...actualSlides.value, ...actualSlides.value] 
@@ -132,16 +132,22 @@ const handleBannerLessSlide = computed(() => {
                 : actualSlides.value.length <= 4 ? actualSlides.value : [...actualSlides.value, ...actualSlides.value]
         : screenBreakpoint.value == 'sm' || screenBreakpoint.value == 'xs'
             ? actualSlides.value
-            : [...actualSlides.value, ...actualSlides.value]
+            : screenBreakpoint.value == 'md'
+                ? actualSlides.value.length >= 6 ? actualSlides.value : [...actualSlides.value, ...actualSlides.value]
+                : actualSlides.value.length >= 8 ? actualSlides.value : [...actualSlides.value, ...actualSlides.value]
 })
 
 </script>
 
 <template>
+    <!-- <div>{{ screenBreakpoint }} <br>compHandleBannerLessSlide: {{ compHandleBannerLessSlide.length }} <br> slide per view:{{  compSlidesPerView }}
+    <br> actualSlides: {{ actualSlides.length }}
+    </div> -->
+    
     <!-- Square -->
     <div v-if="bannerType == 'square'"
-        class="relative h-64 max-h-64 w-fit shadow overflow-hidden"
-        :class="[compSlidesPerView == 1 ? 'aspect-square' : `aspect-ratio[${compSlidesPerView}/1]`]"
+        class="relative h-auto max-h-48 lg:max-h-64 xl:max-h-96 w-fit shadow overflow-hidden"
+        :class="[compSlidesPerView == 1 ? 'aspect-square' : `aspect-[${compSlidesPerView}/1]`]"
     >
         <Swiper ref="swiperRef"
             :slideToClickedSlide="false"
@@ -158,9 +164,9 @@ const handleBannerLessSlide = computed(() => {
             }"
             :navigation="false"
             :modules="[Autoplay, Pagination, Navigation]" class="mySwiper">
-            <SwiperSlide v-for="component in handleBannerLessSlide" :key="component.id" class="overflow-hidden aspect-square">
+            <SwiperSlide v-for="component in compHandleBannerLessSlide" :key="component.id" class="h-full overflow-hidden aspect-square">
                 <!-- {{ data.common }} -->
-                <div class="relative w-full h-full">
+                <div class="relative h-full w-full">
                     <Image :src="get(component, ['image', `${$props.view}`, 'source'], component.image.desktop?.source)" alt="Wowsbar" />
                 </div>
                 <div v-if="get(component, ['visibility'], true) === false" class="absolute h-full w-full bg-gray-800/50 z-10 " />

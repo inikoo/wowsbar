@@ -2,16 +2,23 @@ import { format } from 'date-fns'
 import formatDistanceToNow from 'date-fns/formatDistanceToNow'
 import { zhCN, enUS, fr, de, id, ja, sk, es } from 'date-fns/locale'
 
-const localesCode = { zhCN, enUS, fr, de, id, ja, sk, es }
+interface optionsFormatTime {
+    hms: boolean
+}
+
+const localesCode: any = { zhCN, enUS, fr, de, id, ja, sk, es }
 
 // Basic formating
-export const useFormatTime = (dateIso: string, localeCode?: string, time?: boolean) => {
+export const useFormatTime = (dateIso: string, localeCode?: string, options?: {hms: boolean}) => {
+    if (!dateIso) return '-'  // If the provided data date is null
+    
     let tempLocaleCode = localeCode === 'zh-Hans' ? 'zhCN' : localeCode ?? 'enUS'
     let tempDateIso = new Date(dateIso)
 
-    if (!dateIso) return '-'  // If the provided data date is null
-    if (time) return format(tempDateIso, 'PPp', { locale: localesCode[tempLocaleCode] }) // Show AM/PM
+    // Oct 13, 2023, 8:40:38 AM
+    if (options?.hms) return format(tempDateIso, 'PPpp', { locale: localesCode[tempLocaleCode] })
 
+    // October 13th, 2023
     return format(tempDateIso, 'PPP', { locale: localesCode[tempLocaleCode] })
 }
 

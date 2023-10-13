@@ -40,9 +40,9 @@ const component = computed(() => {
 
     const components = {
         showcase: BannerShowcase,
+        snapshots: TableSnapshots,
         details: ModelDetails,
         changelog: TableCustomerHistories,
-        snapshots: TableSnapshots
     };
     return components[currentTab.value];
 
