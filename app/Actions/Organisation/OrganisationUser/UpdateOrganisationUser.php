@@ -25,7 +25,7 @@ class UpdateOrganisationUser
     public function handle(OrganisationUser $organisationUser, array $modelData): OrganisationUser
     {
         if(Arr::get($modelData, 'password')) {
-            data_set($modelData, 'reset_password', true);
+            data_set($modelData, 'reset_password', false);
         }
 
         return $this->update($organisationUser, $modelData, 'settings');
