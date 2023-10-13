@@ -29,6 +29,7 @@ class ShowOrganisationUser extends InertiaAction
     public function asController(OrganisationUser $organisationUser, ActionRequest $request): OrganisationUser
     {
         $this->initialisation($request)->withTab(OrganisationUserTabsEnum::values());
+
         return $organisationUser;
     }
 
@@ -40,6 +41,7 @@ class ShowOrganisationUser extends InertiaAction
     public function authorize(ActionRequest $request): bool
     {
         $this->canEdit = $request->user()->can('sysadmin.organisationUsers.edit');
+
         return $request->user()->can("sysadmin.view");
     }
 
@@ -55,11 +57,11 @@ class ShowOrganisationUser extends InertiaAction
                     $request->route()->getName(),
                     $request->route()->originalParameters()
                 ),
-                'navigation' => [
+                'navigation'  => [
                     'previous' => $this->getPrevious($organisationUser, $request),
                     'next'     => $this->getNext($organisationUser, $request),
                 ],
-                'pageHead' => [
+                'pageHead'    => [
                     'title'   => $organisationUser->username,
                     'actions' => [
                         $this->canEdit ? [
@@ -72,33 +74,32 @@ class ShowOrganisationUser extends InertiaAction
                         ] : [],
                     ]
                 ],
-                'tabs' => [
+                'tabs'        => [
                     'current'    => $this->tab,
                     'navigation' => OrganisationUserTabsEnum::navigation()
                 ],
 
                 OrganisationUserTabsEnum::SHOWCASE->value => $this->tab == OrganisationUserTabsEnum::SHOWCASE->value ?
-                    fn () => new OrganisationUserResource($organisationUser)
-                    : Inertia::lazy(fn () => new OrganisationUserResource($organisationUser)),
+                    fn() => new OrganisationUserResource($organisationUser)
+                    : Inertia::lazy(fn() => new OrganisationUserResource($organisationUser)),
 
 
                 OrganisationUserTabsEnum::REQUEST_LOGS->value => $this->tab == OrganisationUserTabsEnum::REQUEST_LOGS->value ?
-                    fn () => OrganisationUserRequestLogsResource::collection(IndexOrganisationUserRequestLogs::run($organisationUser))
-                    : Inertia::lazy(fn () => OrganisationUserRequestLogsResource::collection(IndexOrganisationUserRequestLogs::run($organisationUser))),
+                    fn() => OrganisationUserRequestLogsResource::collection(IndexOrganisationUserRequestLogs::run($organisationUser))
+                    : Inertia::lazy(fn() => OrganisationUserRequestLogsResource::collection(IndexOrganisationUserRequestLogs::run($organisationUser))),
 
                 OrganisationUserTabsEnum::HISTORY->value => $this->tab == OrganisationUserTabsEnum::HISTORY->value ?
-                    fn () => HistoryResource::collection(IndexHistory::run($organisationUser, 'history'))
-                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistory::run($organisationUser, 'history')))
+                    fn() => HistoryResource::collection(IndexHistory::run($organisationUser, OrganisationUserTabsEnum::HISTORY->value))
+                    : Inertia::lazy(fn() => HistoryResource::collection(IndexHistory::run($organisationUser, OrganisationUserTabsEnum::HISTORY->value)))
 
             ]
         )
             ->table(IndexOrganisationUserRequestLogs::make()->tableStructure($organisationUser))
-            ->table(IndexHistory::make()->tableStructure($organisationUser, 'history'));
+            ->table(IndexHistory::make()->tableStructure(prefix:OrganisationUserTabsEnum::HISTORY->value));
     }
 
     public function getBreadcrumbs(string $routeName, array $routeParameters, string $suffix = ''): array
     {
-
         $headCrumb = function (OrganisationUser $organisationUser, array $routeParameters, string $suffix) {
             return [
                 [
@@ -115,7 +116,7 @@ class ShowOrganisationUser extends InertiaAction
                         ],
 
                     ],
-                    'suffix' => $suffix
+                    'suffix'         => $suffix
 
                 ],
             ];
@@ -146,19 +147,19 @@ class ShowOrganisationUser extends InertiaAction
 
             default => []
         };
-
     }
 
     public function getPrevious(OrganisationUser $organisationUser, ActionRequest $request): ?array
     {
         $previous = OrganisationUser::where('username', '<', $organisationUser->username)->orderBy('username', 'desc')->first();
-        return $this->getNavigation($previous, $request->route()->getName());
 
+        return $this->getNavigation($previous, $request->route()->getName());
     }
 
     public function getNext(OrganisationUser $organisationUser, ActionRequest $request): ?array
     {
         $next = OrganisationUser::where('username', '>', $organisationUser->username)->orderBy('username')->first();
+
         return $this->getNavigation($next, $request->route()->getName());
     }
 
@@ -167,6 +168,7 @@ class ShowOrganisationUser extends InertiaAction
         if (!$organisationUser) {
             return null;
         }
+
         return match ($routeName) {
             'org.sysadmin.users.show' => [
                 'label' => $organisationUser->username,

@@ -22,6 +22,7 @@ return new class () extends Migration {
             $table->unsignedInteger('parent_id')->nullable();
             $table->string('username')->index()->collation('und_ns');
             $table->string('email')->index()->nullable()->collation('und_ns');
+            $table->boolean('update_password')->default(false);
             $table = $this->userDetailsColumns($table);
             $table->timestampsTz();
             $table->softDeletesTz();

@@ -62,7 +62,9 @@ php artisan customer:new-banner aiku 'My first banner 🫡' mw
 php artisan customer:new-banner aiku 'My first banner without website 🫡'
 pg_dump -Fc -f "devops/devel/snapshots/portfolio.dump" ${DB}
 php artisan workplace:create "Beach bar" hq
-#php artisan employee:import database/seeders/uploads/${IMPORT_DIR}/employees.xlsx
+pg_dump -Fc -f "devops/devel/snapshots/zz.dump" ${DB}
+
+php artisan employee:import -g wowsbar/data-sets/employees
 
 echo "🌱 All the employees are imported"
 pg_dump -Fc -f "devops/devel/snapshots/hr.dump" ${DB}

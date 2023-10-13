@@ -89,7 +89,7 @@ class ShowEmployee extends InertiaAction
                     'title'   => $employee->contact_name,
                     'meta'    => $meta,
                     'actions' => [
-                        !$this->canEdit ? [
+                        $this->canEdit ? [
                             'type'  => 'button',
                             'style' => 'edit',
                             'route' => [

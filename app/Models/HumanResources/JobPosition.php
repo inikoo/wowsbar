@@ -60,11 +60,11 @@ class JobPosition extends Model implements Auditable
 
 
     protected $casts = [
-        'data'  => 'array',
+        'data' => 'array',
     ];
 
     protected $attributes = [
-        'data'  => '{}',
+        'data' => '{}',
     ];
 
     public function getSlugOptions(): SlugOptions
@@ -89,6 +89,11 @@ class JobPosition extends Model implements Auditable
             'hr'
         ];
     }
+
+    protected $auditExclude = [
+        'share_work_time',
+        'number_employees'
+    ];
 
     public function roles(): BelongsToMany
     {

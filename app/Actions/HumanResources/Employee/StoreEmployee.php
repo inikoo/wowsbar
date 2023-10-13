@@ -37,32 +37,32 @@ class StoreEmployee
 
     public function handle(Organisation|Workplace $parent, array $modelData): Employee
     {
+        $positions = Arr::get($modelData, 'positions');
 
-        $positions=Arr::get($modelData, 'positions');
-
-        $credentials=Arr::only($modelData, ['username','password']);
+        $credentials = Arr::only($modelData, ['username', 'password', 'update_password']);
 
         Arr::forget($modelData, 'positions');
-        Arr::forget($modelData, ['username','password']);
+        Arr::forget($modelData, ['username', 'password', 'update_password']);
 
         $employee = match (class_basename($parent)) {
             'Workplace' => $parent->employees()->create($modelData),
-            default     => Employee::create($modelData)
+            default => Employee::create($modelData)
         };
 
 
-        if(Arr::get($credentials, 'username')) {
+        if (Arr::get($credentials, 'username')) {
             StoreOrganisationUser::make()->action(
                 $employee,
                 [
-                    'username' => Arr::get($credentials, 'username'),
-                    'password' => Arr::get(
+                    'username'        => Arr::get($credentials, 'username'),
+                    'password'        => Arr::get(
                         $credentials,
                         'password',
                         (app()->isLocal() ? 'hello' : wordwrap(Str::random(), 4, '-', true))
                     ),
-                    'contact_name' => $employee->contact_name,
-                    'email'        => $employee->work_email
+                    'contact_name'    => $employee->contact_name,
+                    'email'           => $employee->work_email,
+                    'update_password' => Arr::get($credentials, 'update_password', false),
                 ]
             );
         }
@@ -116,6 +116,7 @@ class StoreEmployee
             'positions'           => ['required', 'array'],
             'username'            => ['sometimes', 'required', 'iunique:organisation_users'],
             'password'            => ['sometimes', 'required', 'max:255', app()->isLocal() || app()->environment('testing') ? null : Password::min(8)->uncompromised()],
+            'update_password'     => ['sometimes', 'boolean']
 
 
         ];

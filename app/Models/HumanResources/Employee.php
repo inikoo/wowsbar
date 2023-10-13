@@ -139,7 +139,7 @@ class Employee extends Model implements HasMedia, Auditable
     public function generateTags(): array
     {
         return [
-            'sysadmin'
+            'hr'
         ];
     }
 
