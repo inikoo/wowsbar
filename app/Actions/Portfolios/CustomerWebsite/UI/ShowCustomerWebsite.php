@@ -120,19 +120,19 @@ class ShowCustomerWebsite extends InertiaAction
                 ],
 
                 CustomerWebsiteTabsEnum::SHOWCASE->value => $this->tab == CustomerWebsiteTabsEnum::SHOWCASE->value ?
-                    fn() => GetCustomerWebsiteShowcase::run($customerWebsite)
-                    : Inertia::lazy(fn() => GetCustomerWebsiteShowcase::run($customerWebsite)),
+                    fn () => GetCustomerWebsiteShowcase::run($customerWebsite)
+                    : Inertia::lazy(fn () => GetCustomerWebsiteShowcase::run($customerWebsite)),
 
 
                 CustomerWebsiteTabsEnum::CHANGELOG->value => $this->tab == CustomerWebsiteTabsEnum::CHANGELOG->value
                     ?
-                    fn() => HistoryResource::collection(
+                    fn () => HistoryResource::collection(
                         IndexHistory::run(
                             model: $customerWebsite,
                             prefix: CustomerWebsiteTabsEnum::CHANGELOG->value
                         )
                     )
-                    : Inertia::lazy(fn() => HistoryResource::collection(
+                    : Inertia::lazy(fn () => HistoryResource::collection(
                         IndexHistory::run(
                             model: $customerWebsite,
                             prefix: CustomerWebsiteTabsEnum::CHANGELOG->value

@@ -143,7 +143,6 @@ class Employee extends Model implements HasMedia, Auditable
         ];
     }
 
-
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()

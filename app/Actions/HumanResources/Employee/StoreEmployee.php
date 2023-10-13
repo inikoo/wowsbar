@@ -17,6 +17,7 @@ use App\Models\HumanResources\Employee;
 use App\Models\HumanResources\JobPosition;
 use App\Models\HumanResources\Workplace;
 use App\Models\Organisation\Organisation;
+use App\Rules\AlphaDashDot;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Redirect;
@@ -39,14 +40,14 @@ class StoreEmployee
     {
         $positions = Arr::get($modelData, 'positions');
 
-        $credentials = Arr::only($modelData, ['username', 'password', 'update_password']);
+        $credentials = Arr::only($modelData, ['username', 'password', 'reset_password']);
 
         Arr::forget($modelData, 'positions');
-        Arr::forget($modelData, ['username', 'password', 'update_password']);
+        Arr::forget($modelData, ['username', 'password', 'reset_password']);
 
         $employee = match (class_basename($parent)) {
             'Workplace' => $parent->employees()->create($modelData),
-            default => Employee::create($modelData)
+            default     => Employee::create($modelData)
         };
 
 
@@ -62,7 +63,7 @@ class StoreEmployee
                     ),
                     'contact_name'    => $employee->contact_name,
                     'email'           => $employee->work_email,
-                    'update_password' => Arr::get($credentials, 'update_password', false),
+                    'reset_password'  => Arr::get($credentials, 'reset_password', false),
                 ]
             );
         }
@@ -114,9 +115,9 @@ class StoreEmployee
             'positions.*'         => ['exists:job_positions,slug'],
             'email'               => ['present', 'nullable', 'email'],
             'positions'           => ['required', 'array'],
-            'username'            => ['sometimes', 'required', 'iunique:organisation_users'],
+            'username'            => ['sometimes', 'required',new AlphaDashDot(), 'iunique:organisation_users'],
             'password'            => ['sometimes', 'required', 'max:255', app()->isLocal() || app()->environment('testing') ? null : Password::min(8)->uncompromised()],
-            'update_password'     => ['sometimes', 'boolean']
+            'reset_password'      => ['sometimes', 'boolean']
 
 
         ];

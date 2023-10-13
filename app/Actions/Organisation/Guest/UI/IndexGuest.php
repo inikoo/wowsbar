@@ -84,8 +84,8 @@ class IndexGuest extends InertiaAction
 
         return $queryBuilder
             ->defaultSort('guests.slug')
-            ->select(['guests.id', 'slug', 'guests.contact_name','guests.email'])
-            ->allowedSorts(['slug', 'contact_name','email'])
+            ->select(['guests.id', 'slug', 'guests.contact_name','guests.email','alias'])
+            ->allowedSorts(['slug', 'contact_name','email','alias'])
             ->allowedFilters([$globalSearch])
             ->withPaginator($prefix)
             ->withQueryString();
@@ -127,7 +127,7 @@ class IndexGuest extends InertiaAction
                         ] : null
                     ]
                 )
-                ->column(key: 'slug', label: __('code'), canBeHidden: false, sortable: true, searchable: true)
+                ->column(key: 'alias', label: __('code'), canBeHidden: false, sortable: true, searchable: true)
                 ->column(key: 'contact_name', label: __('name'), canBeHidden: false, sortable: true, searchable: true)
                 ->column(key: 'email', label: __('email'), canBeHidden: false, sortable: true, searchable: true)
 

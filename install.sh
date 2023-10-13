@@ -35,9 +35,11 @@ php artisan migrate
 php artisan db:seed
 php artisan telescope:clear
 pg_dump -Fc -f "devops/devel/snapshots/fresh.dump" ${DB}
-echo "🏢 create organisation"
+echo "🏢 create organisation and guests"
 php artisan org:create wowsbar Wowsbar ID GBP
 php artisan org:create-guest 'Mr Aiku' aiku external_administrator -e aiku@inikoo.com
+php artisan guest:import -g wowsbar/data-sets/guests
+
 echo "🌱 create shop/website"
 php artisan shop:create awa 'aw-advantage' 'digital-marketing'
 php artisan shop:new-website awa 'awa.test'
@@ -61,13 +63,12 @@ php artisan customer:new-portfolio-website aiku http://hello.com 'My website �
 php artisan customer:new-banner aiku 'My first banner 🫡' mw
 php artisan customer:new-banner aiku 'My first banner without website 🫡'
 pg_dump -Fc -f "devops/devel/snapshots/portfolio.dump" ${DB}
+echo "🌱 Importing HR"
 php artisan workplace:create "Beach bar" hq
-pg_dump -Fc -f "devops/devel/snapshots/zz.dump" ${DB}
-
 php artisan employee:import -g wowsbar/data-sets/employees
-
-echo "🌱 All the employees are imported"
 pg_dump -Fc -f "devops/devel/snapshots/hr.dump" ${DB}
+
+
 #php artisan shop:import-prospects awa database/seeders/uploads/local/prospects.xlsx
 echo "🛃 Organisation prospects imported"
 

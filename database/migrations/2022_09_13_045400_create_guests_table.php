@@ -19,6 +19,7 @@ return new class () extends Migration {
         Schema::create('guests', function (Blueprint $table) {
             $table->smallIncrements('id');
             $table->string('slug')->unique()->collation('und_ns');
+            $table->string('alias')->collation('und_ns');
             $table->boolean('status')->index()->default(true);
             $table->string('type')->default(GuestTypeEnum::CONTRACTOR->value);
             $table = $this->contactFields(table: $table, withPersonalDetails: true);
@@ -27,6 +28,7 @@ return new class () extends Migration {
             $table->softDeletesTz();
         });
         //DB::statement('CREATE INDEX ON guests USING gin (remove_accents(contact_name) gin_trgm_ops) ');
+        DB::statement("CREATE INDEX ON employees (lower('alias')) ");
 
 
     }

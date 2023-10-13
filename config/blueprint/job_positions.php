@@ -10,9 +10,9 @@ return [
 
     'positions' => [
 
-        'dir'   => [
-            'code'       => 'dir',
-            'name'       => 'Director',
+        'admin'   => [
+            'code'       => 'admin',
+            'name'       => 'Administrator',
             'department' => 'admin',
             'roles'      => [
                 'super-admin'
@@ -184,10 +184,10 @@ return [
         'management' => [
             'title'     => 'management and operations',
             'positions' => [
-                'dir' => 'dir',
-                'acc' => 'acc',
-                'buy' => 'buy',
-                'hr'  => ['hr-m', 'hr-c'],
+                'admin' => 'admin',
+                'acc'   => 'acc',
+                'buy'   => 'buy',
+                'hr'    => ['hr-m', 'hr-c'],
 
 
             ]
