@@ -7,12 +7,14 @@
 
 namespace App\Actions\Organisation\OrganisationUser\UI;
 
+use App\Actions\Helpers\History\IndexHistory;
 use App\Actions\InertiaAction;
 use App\Actions\Organisation\OrganisationUser\IndexOrganisationUserRequestLogs;
 use App\Actions\UI\Organisation\SysAdmin\ShowSysAdminDashboard;
 use App\Enums\UI\Organisation\OrganisationUsersTabsEnum;
 use App\Http\Resources\Auth\OrganisationUserRequestLogsResource;
 use App\Http\Resources\Auth\OrganisationUserResource;
+use App\Http\Resources\History\HistoryResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\Auth\OrganisationUser;
 use Closure;
@@ -136,7 +138,7 @@ class IndexOrganisationUsers extends InertiaAction
 
     public function htmlResponse(LengthAwarePaginator $organisationUsers, ActionRequest $request): Response
     {
-        $organisation=organisation();
+        $organisation = organisation();
 
         return Inertia::render(
             'SysAdmin/OrganisationUsers',
@@ -146,8 +148,8 @@ class IndexOrganisationUsers extends InertiaAction
                 ),
                 'title'       => __('users'),
                 'pageHead'    => [
-                    'title'     => __('users'),
-                    'actions'   => [
+                    'title'   => __('users'),
+                    'actions' => [
                         $this->canEdit ? [
                             'type'  => 'button',
                             'style' => 'create',
@@ -176,13 +178,17 @@ class IndexOrganisationUsers extends InertiaAction
 
                 OrganisationUsersTabsEnum::USERS_REQUESTS->value => $this->tab == OrganisationUsersTabsEnum::USERS_REQUESTS->value ?
                     fn () => OrganisationUserRequestLogsResource::collection(IndexOrganisationUserRequestLogs::run($organisation))
-                    : Inertia::lazy(fn () => OrganisationUserRequestLogsResource::collection(IndexOrganisationUserRequestLogs::run($organisation)))
+                    : Inertia::lazy(fn () => OrganisationUserRequestLogsResource::collection(IndexOrganisationUserRequestLogs::run($organisation))),
+
+                OrganisationUsersTabsEnum::SYSADMIN_HISTORY->value => $this->tab == OrganisationUsersTabsEnum::SYSADMIN_HISTORY->value ?
+                    fn () => HistoryResource::collection(IndexHistory::run(model: $organisation, prefix: 'history'))
+                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistory::run(parent: $organisation, prefix: 'history')))
 
 
             ]
-        )->table(
-            $this->tableStructure(prefix: 'users')
-        )->table(IndexOrganisationUserRequestLogs::make()->tableStructure($organisation));
+        )->table($this->tableStructure(prefix: 'users'))
+            ->table(IndexHistory::make()->tableStructure(parent: $organisation, prefix: 'visit_log'))
+        ->table(IndexOrganisationUserRequestLogs::make()->tableStructure(parent: $organisation, prefix: 'visit_log'));
     }
 
     public function asController(ActionRequest $request): LengthAwarePaginator

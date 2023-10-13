@@ -19,7 +19,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $number_banners
  * @property int $number_historic_snapshots
  * @property int $number_banners_type_landscape
- * @property int $number_banners_type_portrait
+ * @property int $number_banners_type_square
  * @property int $number_banners_state_unpublished
  * @property int $number_banners_state_live
  * @property int $number_banners_state_retired
@@ -37,6 +37,12 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $number_prospects_gender_male
  * @property int $number_prospects_gender_female
  * @property int $number_prospects_gender_other
+ * @property int $number_stock_images
+ * @property int $number_stock_images_scope_landscape
+ * @property int $number_stock_images_scope_square
+ * @property int $number_uploaded_images
+ * @property int $number_uploaded_images_scope_landscape
+ * @property int $number_uploaded_images_scope_square
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerPortfolioStats newModelQuery()
@@ -55,7 +61,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerPortfolioStats whereNumberBannersStateRetired($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerPortfolioStats whereNumberBannersStateUnpublished($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerPortfolioStats whereNumberBannersTypeLandscape($value)
- * @method static \Illuminate\Database\Eloquent\Builder|CustomerPortfolioStats whereNumberBannersTypePortrait($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerPortfolioStats whereNumberBannersTypeSquare($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerPortfolioStats whereNumberHistoricSnapshots($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerPortfolioStats whereNumberPortfolioWebsites($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerPortfolioStats whereNumberProspects($value)
@@ -68,6 +74,12 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerPortfolioStats whereNumberProspectsStateNoContacted($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerPortfolioStats whereNumberProspectsStateNotInterested($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerPortfolioStats whereNumberProspectsStateRegistered($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerPortfolioStats whereNumberStockImages($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerPortfolioStats whereNumberStockImagesScopeLandscape($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerPortfolioStats whereNumberStockImagesScopeSquare($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerPortfolioStats whereNumberUploadedImages($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerPortfolioStats whereNumberUploadedImagesScopeLandscape($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerPortfolioStats whereNumberUploadedImagesScopeSquare($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerPortfolioStats whereUpdatedAt($value)
  * @mixin \Eloquent
  */

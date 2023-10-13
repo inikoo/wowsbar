@@ -1,5 +1,8 @@
 <?php
 
+
+use App\Models\Helpers\Audit;
+
 return [
 
     'enabled' => env('AUDITING_ENABLED', true),
@@ -13,7 +16,7 @@ return [
     |
     */
 
-    'implementation' => OwenIt\Auditing\Models\Audit::class,
+    'implementation' => Audit::class,
 
     /*
     |--------------------------------------------------------------------------
@@ -30,9 +33,9 @@ return [
             'web',
             'api',
             'org',
-            'public'
+            'customer'
         ],
-        'resolver'     => OwenIt\Auditing\Resolvers\UserResolver::class
+        'resolver'     => \App\AuditResolvers\AuditUserResolver::class
     ],
 
     /*
@@ -44,9 +47,14 @@ return [
     |
     */
     'resolvers' => [
-        'ip_address' => OwenIt\Auditing\Resolvers\IpAddressResolver::class,
-        'user_agent' => OwenIt\Auditing\Resolvers\UserAgentResolver::class,
-        'url'        => OwenIt\Auditing\Resolvers\UrlResolver::class,
+        'ip_address'       => OwenIt\Auditing\Resolvers\IpAddressResolver::class,
+        'user_agent'       => OwenIt\Auditing\Resolvers\UserAgentResolver::class,
+        'url'              => OwenIt\Auditing\Resolvers\UrlResolver::class,
+        'customer_id'      => \App\AuditResolvers\AuditCustomerResolver::class,
+        'customer_user_id' => \App\AuditResolvers\AuditCustomerUserResolver::class,
+        'shop_id'          => \App\AuditResolvers\AuditShopResolver::class,
+        'website_id'       => \App\AuditResolvers\AuditWebsiteResolver::class,
+
     ],
 
     /*
@@ -86,7 +94,7 @@ return [
     |
     */
 
-    'exclude' => ['id', 'password', 'slug', 'created_at', 'updated_at'],
+    'exclude' => ['id', 'password', 'slug', 'created_at', 'updated_at', 'uuid'],
 
     /*
     |--------------------------------------------------------------------------
@@ -103,9 +111,10 @@ return [
     |
     */
 
-    'empty_values'         => true,
+    'empty_values'         => false,
     'allowed_empty_values' => [
-        'retrieved'
+        'retrieved',
+        'created'
     ],
 
     /*
@@ -163,7 +172,7 @@ return [
     | Audit Console
     |--------------------------------------------------------------------------
     |
-    | Whether console events should be audited (eg. php artisan db:seed).
+    | Whether console events should be audited (e.g. php artisan db:seed).
     |
     */
 

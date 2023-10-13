@@ -9,7 +9,7 @@ namespace App\Actions\CRM\User\UI;
 
 use App\Actions\Auth\UserRequest\IndexUserRequestLogs;
 use App\Actions\CRM\Customer\UI\ShowCustomer;
-use App\Actions\Helpers\History\IndexHistories;
+use App\Actions\Helpers\History\IndexHistory;
 use App\Actions\InertiaAction;
 use App\Enums\UI\UsersTabsEnum;
 use App\Http\Resources\Auth\OrganisationUserRequestLogsResource;
@@ -202,8 +202,8 @@ class IndexUsers extends InertiaAction
                 */
 
                 UsersTabsEnum::USERS_HISTORIES->value => $this->tab == UsersTabsEnum::USERS_HISTORIES->value ?
-                    fn () => HistoryResource::collection(IndexHistories::run(User::class))
-                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistories::run(User::class)))
+                    fn () => HistoryResource::collection(IndexHistory::run(User::class))
+                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistory::run(User::class)))
 
             ]
         )->table(

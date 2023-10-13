@@ -11,7 +11,7 @@ import PageHeading from '@/Components/Headings/PageHeading.vue'
 import {computed, ref} from "vue"
 import {useTabChange} from "@/Composables/tab-change"
 import TableCustomerUserRequestLogs from "@/Components/Tables/TableCustomerUserRequestLogs.vue"
-import TableHistories from "@/Components/Tables/TableHistories.vue"
+import TableCustomerHistories from "@/Components/Tables/TableCustomerHistories.vue"
 import Tabs from "@/Components/Navigation/Tabs.vue"
 
 import {capitalize} from "@/Composables/capitalize"
@@ -39,7 +39,7 @@ const component = computed(() => {
 
     const components = {
         request_logs: TableCustomerUserRequestLogs,
-        history: TableHistories,
+        history: TableCustomerHistories,
         showcase: UsersShowcase
     }
     return components[currentTab.value]
@@ -52,5 +52,5 @@ const component = computed(() => {
     <Head :title="capitalize(title)"/>
     <PageHeading :data="pageHead"></PageHeading>
     <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate"/>
-    <component :is="component" :data="props[currentTab]"></component>
+    <component :is="component" :tab="currentTab"  :data="props[currentTab]"></component>
 </template>

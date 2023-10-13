@@ -7,7 +7,6 @@
 
 
 use App\Enums\Portfolio\Banner\BannerTypeEnum;
-use App\Stubs\Migrations\HasBannerStats;
 use App\Stubs\Migrations\HasPortfolioWebsitesStats;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -15,15 +14,15 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 
 return new class () extends Migration {
-    use HasBannerStats;
     use HasPortfolioWebsitesStats;
+
     public function up(): void
     {
         Schema::create('customer_portfolio_stats', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('customer_id');
             $table->foreign('customer_id')->references('id')->on('customers');
-            $table=$this->portfolioWebsiteStats($table);
+            $table=$this->portfolioWebsiteStats($table); //banners , prospects stats
 
             $table->unsignedSmallInteger('number_stock_images')->default(0);
             foreach (BannerTypeEnum::cases() as $case) {

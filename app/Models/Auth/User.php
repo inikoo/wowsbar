@@ -49,12 +49,11 @@ use Spatie\Sluggable\SlugOptions;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string|null $deleted_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \OwenIt\Auditing\Models\Audit> $audits
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Helpers\Audit> $audits
  * @property-read int|null $audits_count
  * @property-read Media|null $avatar
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Auth\CustomerUser> $customerUsers
  * @property-read int|null $customer_users_count
- * @property-read array $es_audits
  * @property-read Language $language
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, Media> $media
  * @property-read int|null $media_count
@@ -120,13 +119,18 @@ class User extends Authenticatable implements HasMedia, Auditable
         'remember_token',
     ];
 
-    protected $auditExclude = [
-        'password',
-        'id',
-        'slug',
+    public function generateTags(): array
+    {
+        return [
+            'crm'
+        ];
+    }
+
+    protected array $auditExclude = [
         'settings',
         'website_id',
-        'data'
+        'data',
+        'avatar_id'
     ];
 
     public function getSlugOptions(): SlugOptions

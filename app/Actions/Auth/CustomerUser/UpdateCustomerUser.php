@@ -14,9 +14,11 @@ use App\Actions\Traits\WithActionUpdate;
 use App\Http\Resources\Auth\CustomerUserResource;
 use App\Models\Auth\CustomerUser;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Validation\Validator;
 use Lorisleiva\Actions\ActionRequest;
+use OwenIt\Auditing\Events\AuditCustom;
 
 class UpdateCustomerUser
 {
@@ -26,15 +28,51 @@ class UpdateCustomerUser
 
     public function handle(CustomerUser $customerUser, array $modelData): CustomerUser
     {
+
+        $fields=[
+            'contact_name'=> $customerUser->user->contact_name,
+            'email'       => $customerUser->user->email,
+            'password'    => '*****',
+            'state'       => $customerUser->status
+        ];
+
+
         $customerUser = $this->update($customerUser, Arr::only($modelData, ['status']));
 
         if ($customerUser->wasChanged('status')) {
             CustomerHydrateCustomerUsers::run($customerUser->customer);
         }
 
-        UpdateUser::run($customerUser->user, Arr::only($modelData, ['contact_name', 'email', 'password']));
-
+        $user=UpdateUser::run($customerUser->user, Arr::only($modelData, ['contact_name', 'email', 'password']));
         $customerUser->refresh();
+
+        $customerUser->auditEvent    = 'updated';
+        $customerUser->isCustomEvent = true;
+
+        $oldFields=[];
+        $newFields=[];
+        foreach($user->getChanges() as $key=>$value) {
+            if(Arr::exists($fields, $key)) {
+                if($key=='password') {
+                    $value='******';
+                }
+                $oldFields[$key] = $fields[$key];
+                $newFields[$key] = $value;
+            }
+        }
+        foreach($customerUser->getChanges() as $key=>$value) {
+            if(Arr::exists($fields, $key)) {
+                $oldFields[$key] = $fields[$key];
+                $newFields[$key] = $value;
+            }
+        }
+
+
+        $customerUser->auditCustomOld = $oldFields;
+        $customerUser->auditCustomNew = $newFields;
+        Event::dispatch(AuditCustom::class, [$customerUser]);
+
+
         CustomerUserHydrateUniversalSearch::dispatch($customerUser);
 
         return $customerUser;

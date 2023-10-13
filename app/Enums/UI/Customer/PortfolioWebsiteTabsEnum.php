@@ -24,7 +24,6 @@ enum PortfolioWebsiteTabsEnum: string
 
     case CHANGELOG            = 'changelog';
 
-    case DATA                 = 'data';
 
     public function blueprint(): array
     {
@@ -49,12 +48,7 @@ enum PortfolioWebsiteTabsEnum: string
                 'title' => __('google Ads'),
                 'icon'  => 'fal fa-bullseye',
             ],
-            PortfolioWebsiteTabsEnum::DATA => [
-                'title' => __('data'),
-                'icon'  => 'fal fa-database',
-                'type'  => 'icon',
-                'align' => 'right',
-            ],
+
             PortfolioWebsiteTabsEnum::CHANGELOG => [
                 'title' => __('changelog'),
                 'icon'  => 'fal fa-clock',

@@ -7,7 +7,6 @@
 
 namespace App\Http\Resources\Catalogue;
 
-use App\Models\Catalogue\ProductCategory;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**

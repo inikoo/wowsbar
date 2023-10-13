@@ -7,12 +7,12 @@
 
 namespace App\Actions\Portfolio\PortfolioWebsite\UI;
 
-use App\Actions\Helpers\History\IndexHistories;
+use App\Actions\Helpers\History\IndexCustomerHistory;
 use App\Actions\InertiaAction;
 use App\Actions\UI\Customer\Portfolio\ShowPortfolio;
 use App\Enums\UI\Customer\PortfolioWebsitesTabsEnum;
 use App\Enums\UI\Organisation\CustomerWebsitesTabsEnum;
-use App\Http\Resources\History\HistoryResource;
+use App\Http\Resources\History\CustomerHistoryResource;
 use App\Http\Resources\Portfolio\PortfolioWebsiteResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\Portfolio\PortfolioWebsite;
@@ -89,12 +89,11 @@ class IndexPortfolioWebsites extends InertiaAction
                 ->withExportLinks($exportLinks)
                 ->column(key: 'name', label: __('name'), sortable: true)
                 ->column(key: 'url', label: __('url'), sortable: true)
-                ->column(key: 'leads', label: __('Leads'), sortable: false)
-                ->column(key: 'seo', label: __('SEO'), sortable: false)
-                ->column(key: 'ppc', label: __('Google Ads'), sortable: false)
-                ->column(key: 'social', label: __('Social'), sortable: false)
-
-                ->column(key: 'banners', label: __('banners'), sortable: false)
+                ->column(key: 'leads', label: __('Leads'))
+                ->column(key: 'seo', label: __('SEO'))
+                ->column(key: 'ppc', label: __('Google Ads'))
+                ->column(key: 'social', label: __('Social'))
+                ->column(key: 'banners', label: __('banners'))
                 ->defaultSort('slug');
         };
     }
@@ -106,6 +105,8 @@ class IndexPortfolioWebsites extends InertiaAction
 
     public function htmlResponse(LengthAwarePaginator $websites, ActionRequest $request): Response
     {
+        $customer = $request->get('customer');
+
         return Inertia::render(
             'Portfolio/PortfolioWebsites',
             [
@@ -144,8 +145,16 @@ class IndexPortfolioWebsites extends InertiaAction
                     : Inertia::lazy(fn () => PortfolioWebsiteResource::collection($websites)),
 
                 PortfolioWebsitesTabsEnum::CHANGELOG->value => $this->tab == PortfolioWebsitesTabsEnum::CHANGELOG->value ?
-                    fn () => HistoryResource::collection(IndexHistories::run(PortfolioWebsite::class))
-                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistories::run(PortfolioWebsite::class)))
+                    fn () => CustomerHistoryResource::collection(IndexCustomerHistory::run(
+                        customer:$customer,
+                        model:PortfolioWebsite::class,
+                        prefix: PortfolioWebsitesTabsEnum::CHANGELOG->value
+                    ))
+                    : Inertia::lazy(fn () => CustomerHistoryResource::collection(IndexCustomerHistory::run(
+                        customer:$customer,
+                        model:PortfolioWebsite::class,
+                        prefix: PortfolioWebsitesTabsEnum::CHANGELOG->value
+                    )))
             ]
         )->table(
             $this->tableStructure(
@@ -158,7 +167,9 @@ class IndexPortfolioWebsites extends InertiaAction
                 //     ]
                 // ]
             )
-        )->table(IndexHistories::make()->tableStructure());
+        )->table(IndexCustomerHistory::make()->tableStructure(
+            prefix: PortfolioWebsitesTabsEnum::CHANGELOG->value
+        ));
     }
 
     /** @noinspection PhpUnusedParameterInspection */

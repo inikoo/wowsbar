@@ -17,20 +17,25 @@ class CreateAuditsTable extends Migration
         $table      = config('audit.drivers.database.table', 'audits');
 
         Schema::connection($connection)->create($table, function (Blueprint $table) {
-
             $morphPrefix = config('audit.user.morph_prefix', 'user');
 
             $table->increments('id');
+            $table->unsignedInteger('shop_id')->nullable()->index();
+            $table->unsignedInteger('website_id')->nullable()->index();
+            $table->unsignedInteger('customer_id')->nullable()->index();
+            $table->unsignedInteger('customer_user_id')->nullable()->index();
             $table->string($morphPrefix . '_type')->nullable();
             $table->unsignedSmallInteger($morphPrefix . '_id')->nullable();
-            $table->string('event');
+            $table->jsonb('tags');
             $table->morphs('auditable');
-            $table->text('old_values')->nullable();
-            $table->text('new_values')->nullable();
+            $table->string('event');
+            $table->jsonb('old_values')->nullable();
+            $table->jsonb('new_values')->nullable();
+
+
             $table->text('url')->nullable();
             $table->ipAddress()->nullable();
             $table->string('user_agent', 1023)->nullable();
-            $table->string('tags')->nullable();
             $table->timestampsTz();
 
             $table->index([$morphPrefix . '_id', $morphPrefix . '_type']);

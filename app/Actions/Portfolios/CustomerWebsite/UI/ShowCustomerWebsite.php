@@ -8,7 +8,7 @@
 namespace App\Actions\Portfolios\CustomerWebsite\UI;
 
 use App\Actions\CRM\Customer\UI\ShowCustomer;
-use App\Actions\Helpers\History\IndexHistories;
+use App\Actions\Helpers\History\IndexHistory;
 use App\Actions\InertiaAction;
 use App\Actions\UI\WithInertia;
 use App\Enums\UI\Organisation\CustomerWebsiteTabsEnum;
@@ -101,7 +101,7 @@ class ShowCustomerWebsite extends InertiaAction
                         'icon'  => 'fal fa-briefcase'
                     ],
                     'container' => $container,
-                    'actions' => [
+                    'actions'   => [
                         $this->canEdit ? [
                             'type'  => 'button',
                             'style' => 'edit',
@@ -124,15 +124,15 @@ class ShowCustomerWebsite extends InertiaAction
 
 
                 CustomerWebsiteTabsEnum::CHANGELOG->value => $this->tab == CustomerWebsiteTabsEnum::CHANGELOG->value ?
-                    fn () => HistoryResource::collection(IndexHistories::run($customerWebsite))
-                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistories::run($customerWebsite))),
+                    fn () => HistoryResource::collection(IndexHistory::run($customerWebsite))
+                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistory::run($customerWebsite))),
                 /*
                                 CustomerWebsiteTabsEnum::BANNERS->value => $this->tab == CustomerWebsiteTabsEnum::BANNERS->value ?
                                     fn () => BannerResource::collection(IndexBanners::run($customerWebsite))
                                     : Inertia::lazy(fn () => BannerResource::collection(IndexBanners::run($customerWebsite)))
                 */
             ]
-        )->table(IndexHistories::make()->tableStructure());
+        )->table(IndexHistory::make()->tableStructure());
     }
 
     public function jsonResponse(CustomerWebsite $customerWebsite): CustomerWebsiteResource

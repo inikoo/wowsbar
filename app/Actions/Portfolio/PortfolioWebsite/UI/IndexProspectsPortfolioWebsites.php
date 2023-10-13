@@ -7,12 +7,10 @@
 
 namespace App\Actions\Portfolio\PortfolioWebsite\UI;
 
-use App\Actions\Helpers\History\IndexHistories;
 use App\Actions\InertiaAction;
-use App\Actions\UI\Customer\GoogleAds\ShowGoogleAdsDashboard;
-use App\Enums\UI\Customer\PortfolioWebsitesTabsEnum;
+use App\Actions\UI\Customer\Prospects\ShowProspectsDashboard;
+use App\Enums\UI\Customer\ProspectsWebsitesTabsEnum;
 use App\Enums\UI\Organisation\CustomerWebsitesTabsEnum;
-use App\Http\Resources\History\HistoryResource;
 use App\Http\Resources\Portfolio\PortfolioWebsiteResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\Organisation\Division;
@@ -27,13 +25,12 @@ use Lorisleiva\Actions\ActionRequest;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
-class IndexGoogleAdsPortfolioWebsites extends InertiaAction
+class IndexProspectsPortfolioWebsites extends InertiaAction
 {
     public function authorize(ActionRequest $request): bool
     {
-        $this->canEdit = $request->get('customerUser')->hasPermissionTo('portfolio.banners.edit');
-
-        return $request->get('customerUser')->hasPermissionTo('portfolio.banners.view');
+        $this->canEdit = $request->get('customerUser')->hasPermissionTo('portfolio.prospects.edit');
+        return $request->get('customerUser')->hasPermissionTo('portfolio.prospects.view');
     }
 
     public function asController(ActionRequest $request): LengthAwarePaginator
@@ -46,11 +43,11 @@ class IndexGoogleAdsPortfolioWebsites extends InertiaAction
     /** @noinspection PhpUndefinedMethodInspection */
     public function handle($prefix = null): LengthAwarePaginator
     {
-        $divisionId = Cache::get('ppc');
+        $divisionId = Cache::get('prospects');
 
         if(! $divisionId) {
-            $divisionId = Division::firstWhere('slug', 'ppc')->id;
-            Cache::put('ppc', $divisionId);
+            $divisionId = Division::firstWhere('slug', 'prospects')->id;
+            Cache::put('prospects', $divisionId);
         }
 
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
@@ -71,7 +68,7 @@ class IndexGoogleAdsPortfolioWebsites extends InertiaAction
             ->defaultSort('portfolio_websites.name')
             ->join('division_portfolio_websites', 'portfolio_websites.id', 'division_portfolio_websites.portfolio_website_id')
             ->join('portfolio_website_stats', 'portfolio_websites.id', 'portfolio_website_stats.portfolio_website_id')
-            ->allowedSorts(['slug', 'name', 'number_banners', 'url'])
+            ->allowedSorts(['slug', 'name', 'number_prospects', 'url'])
             ->where('division_portfolio_websites.division_id', $divisionId)
             ->allowedFilters([$globalSearch])
             ->withPaginator($prefix)
@@ -99,7 +96,7 @@ class IndexGoogleAdsPortfolioWebsites extends InertiaAction
                 ->withExportLinks($exportLinks)
                 ->column(key: 'name', label: __('name'), sortable: true)
                 ->column(key: 'url', label: __('url'), sortable: true)
-                ->column(key: 'number_banners', label: __('banners'), sortable: true)
+                ->column(key: 'number_prospects', label: __('prospects'), sortable: true)
                 ->defaultSort('slug');
         };
     }
@@ -112,15 +109,15 @@ class IndexGoogleAdsPortfolioWebsites extends InertiaAction
     public function htmlResponse(LengthAwarePaginator $websites, ActionRequest $request): Response
     {
         return Inertia::render(
-            'GoogleAds/GoogleAdsPortfolioWebsites',
+            'Prospects/ProspectsPortfolioWebsites',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->getName(),
                     $request->route()->parameters
                 ),
-                'title'       => __('websites'),
+                'title'       => __("Lead's websites"),
                 'pageHead'    => [
-                    'title'     => __('websites'),
+                    'title'     => __("Lead's websites"),
                     'iconRight' => [
                         'title' => __('website'),
                         'icon'  => 'fal fa-globe'
@@ -130,29 +127,20 @@ class IndexGoogleAdsPortfolioWebsites extends InertiaAction
                 ],
                 'tabs'        => [
                     'current'    => $this->tab,
-                    'navigation' => PortfolioWebsitesTabsEnum::navigation()
+                    'navigation' => ProspectsWebsitesTabsEnum::navigation()
                 ],
 
-                PortfolioWebsitesTabsEnum::WEBSITES->value => $this->tab == PortfolioWebsitesTabsEnum::WEBSITES->value ?
+                ProspectsWebsitesTabsEnum::WEBSITES->value => $this->tab == ProspectsWebsitesTabsEnum::WEBSITES->value ?
                     fn () => PortfolioWebsiteResource::collection($websites)
                     : Inertia::lazy(fn () => PortfolioWebsiteResource::collection($websites)),
 
-                PortfolioWebsitesTabsEnum::CHANGELOG->value => $this->tab == PortfolioWebsitesTabsEnum::CHANGELOG->value ?
-                    fn () => HistoryResource::collection(IndexHistories::run(PortfolioWebsite::class))
-                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistories::run(PortfolioWebsite::class)))
+
             ]
         )->table(
             $this->tableStructure(
                 prefix: 'websites',
-                // exportLinks: [
-                //     'export' => [
-                //         'route' => [
-                //             'name' => 'export.websites.index'
-                //         ]
-                //     ]
-                // ]
             )
-        )->table(IndexHistories::make()->tableStructure());
+        );
     }
 
     /** @noinspection PhpUnusedParameterInspection */
@@ -172,12 +160,12 @@ class IndexGoogleAdsPortfolioWebsites extends InertiaAction
         };
 
         return match ($routeName) {
-            'customer.ppc.websites.index' =>
+            'customer.prospects.websites.index' =>
             array_merge(
-                ShowGoogleAdsDashboard::make()->getBreadcrumbs(),
+                ShowProspectsDashboard::make()->getBreadcrumbs(),
                 $headCrumb(
                     [
-                        'name' => 'customer.ppc.websites.index',
+                        'name' => 'customer.prospects.websites.index',
                         null
                     ]
                 ),

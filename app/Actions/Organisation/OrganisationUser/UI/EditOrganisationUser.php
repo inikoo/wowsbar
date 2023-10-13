@@ -63,8 +63,8 @@ class EditOrganisationUser extends InertiaAction
                     ],
                     'args'      => [
                         'updateRoute' => [
-                            'name'       => 'org.models.user.update',
-                            'parameters' => [$this->originalParameters]
+                            'name'       => 'org.models.organisation-user.update',
+                            'parameters' => $organisationUser->id
                         ]
                     ],
                 ],

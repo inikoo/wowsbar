@@ -35,14 +35,13 @@ use Spatie\Sluggable\HasSlug;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \OwenIt\Auditing\Models\Audit> $audits
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Helpers\Audit> $audits
  * @property-read int|null $audits_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Banner> $banners
  * @property-read int|null $banners_count
  * @property-read Customer $customer
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Organisation\Division> $divisions
  * @property-read int|null $divisions_count
- * @property-read array $es_audits
  * @property-read PortfolioWebsiteStats|null $stats
  * @property-read \App\Models\Search\UniversalSearch|null $universalSearch
  * @method static Builder|CustomerWebsite newModelQuery()
@@ -83,6 +82,14 @@ class CustomerWebsite extends Model implements Auditable
     ];
 
     protected $guarded = [];
+
+    public function generateTags(): array
+    {
+        return [
+            'portfolios'
+        ];
+    }
+
 
     public function stats(): HasOne
     {

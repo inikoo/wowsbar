@@ -51,12 +51,11 @@ use Spatie\Sluggable\SlugOptions;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \OwenIt\Auditing\Models\Audit> $audits
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Helpers\Audit> $audits
  * @property-read int|null $audits_count
  * @property-read \App\Models\CRM\Customer $customer
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Deployment> $deployments
  * @property-read int|null $deployments_count
- * @property-read array $es_audits
  * @property-read Media|null $image
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, Media> $images
  * @property-read int|null $images_count
@@ -122,6 +121,16 @@ class Banner extends Model implements HasMedia, Auditable
 
     protected $guarded = [];
 
+    public function generateTags(): array
+    {
+        return [
+            'portfolio','caas'
+        ];
+    }
+
+    protected $auditExclude = [
+        'compiled_layout','unpublished_snapshot_id'
+    ];
 
     public function getRouteKeyName(): string
     {

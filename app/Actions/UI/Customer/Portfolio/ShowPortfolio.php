@@ -7,12 +7,11 @@
 
 namespace App\Actions\UI\Customer\Portfolio;
 
-use App\Actions\Helpers\History\IndexHistories;
+use App\Actions\Helpers\History\IndexCustomerModuleHistory;
 use App\Actions\InertiaAction;
 use App\Actions\UI\Customer\Dashboard\ShowDashboard;
 use App\Enums\UI\Customer\PortfolioDashboardTabsEnum;
 use App\Http\Resources\History\HistoryResource;
-use App\Models\Portfolio\PortfolioWebsite;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -28,47 +27,61 @@ class ShowPortfolio extends InertiaAction
     public function asController(ActionRequest $request): ActionRequest
     {
         $this->initialisation($request)->withTab(PortfolioDashboardTabsEnum::values());
+
         return $request;
     }
 
 
-
     public function htmlResponse(ActionRequest $request): Response
     {
-
+        $customer = $request->get('customer');
 
         return Inertia::render(
             'Portfolio/Portfolio',
             [
-                'breadcrumbs'  => $this->getBreadcrumbs(),
-                'title'        => __('portfolio'),
-                'pageHead'     => [
-                    'title'             => __('portfolio'),
-                    'icon'              => [
+                'breadcrumbs' => $this->getBreadcrumbs(),
+                'title'       => __('portfolio'),
+                'pageHead'    => [
+                    'title' => __('portfolio'),
+                    'icon'  => [
                         'icon'    => ['fal', 'fa-suitcase'],
                         'tooltip' => __('portfolio')
                     ],
                 ],
 
-                'tabs'                             => [
+                'tabs'                                       => [
                     'current'    => $this->tab,
                     'navigation' => PortfolioDashboardTabsEnum::navigation(),
                 ],
                 PortfolioDashboardTabsEnum::DASHBOARD->value => $this->tab == PortfolioDashboardTabsEnum::DASHBOARD->value ?
                     fn () => $this->getDashboard()
-                    : Inertia::lazy(fn () =>  $this->getDashboard()),
+                    : Inertia::lazy(fn () => $this->getDashboard()),
 
-                PortfolioDashboardTabsEnum::PORTFOLIO_CHANGELOG->value => $this->tab == PortfolioDashboardTabsEnum::PORTFOLIO_CHANGELOG->value ?
-                    fn () => HistoryResource::collection(IndexHistories::run(PortfolioWebsite::class))
-                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistories::run(PortfolioWebsite::class)))
+                PortfolioDashboardTabsEnum::CHANGELOG->value => $this->tab == PortfolioDashboardTabsEnum::CHANGELOG->value
+                    ?
+                    fn () => HistoryResource::collection(
+                        IndexCustomerModuleHistory::run(
+                            customer: $customer,
+                            tags: ['portfolio'],
+                            prefix: PortfolioDashboardTabsEnum::CHANGELOG->value
+                        )
+                    )
+                    : Inertia::lazy(fn () => HistoryResource::collection(
+                        IndexCustomerModuleHistory::run(
+                            customer: $customer,
+                            tags: ['portfolio'],
+                            prefix: PortfolioDashboardTabsEnum::CHANGELOG->value
+                        )
+                    ))
 
             ]
-        )->table(IndexHistories::make()->tableStructure());
+        )
+            ->table(IndexCustomerModuleHistory::make()->tableStructure(prefix:PortfolioDashboardTabsEnum::CHANGELOG->value));
     }
 
     private function getDashboard(): array
     {
-        $customer=customer();
+        $customer = customer();
 
 
         return [

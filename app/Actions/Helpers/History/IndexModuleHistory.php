@@ -1,7 +1,7 @@
 <?php
 /*
- * Author: Artha <artha@aw-advantage.com>
- * Created: Mon, 12 Jun 2023 16:00:25 Central Indonesia Time, Sanur, Bali, Indonesia
+ * Author: Raul Perusquia <raul@inikoo.com>
+ * Created: Fri, 13 Oct 2023 09:10:58 Malaysia Time, Office, Bali, Indonesia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
@@ -17,7 +17,7 @@ use OwenIt\Auditing\Models\Audit;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
-class IndexHistories
+class IndexModuleHistory
 {
     use AsAction;
     use WithAttributes;
@@ -25,9 +25,8 @@ class IndexHistories
 
     public string $model;
 
-    public function handle($model, $prefix = null): LengthAwarePaginator|array|bool
+    public function handle(array $tags, $prefix = null): LengthAwarePaginator|array|bool
     {
-        $this->model = isset($model->id) ? class_basename($model) : $model;
 
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
             $query->where(function ($query) use ($value) {
@@ -43,11 +42,11 @@ class IndexHistories
 
         $queryBuilder = QueryBuilder::for(Audit::class);
 
+        $queryBuilder->whereJsonContains('tags', [$tags]);
+
+
         $queryBuilder->orderBy('id', 'DESC');
-        $queryBuilder->where('auditable_type', $this->model);
-        if (isset($model->id)) {
-            $queryBuilder->where('auditable_id', $model->id);
-        }
+
 
         return $queryBuilder
             ->defaultSort('audits.created_at')
@@ -65,14 +64,15 @@ class IndexHistories
                 ->pageName('historyPage')
                 ->withGlobalSearch()
                 ->withExportLinks($exportLinks)
-                ->column(key: 'ip_address', label: __('IP Address'), canBeHidden: false, sortable: true, searchable: true)
-                ->column(key: 'user_id', label: __('Updated By'), canBeHidden: false, sortable: true)
-                ->column(key: 'url', label: __('URL'), canBeHidden: false, sortable: true, searchable: true)
-                ->column(key: 'old_values', label: __('Old Values'), canBeHidden: false, sortable: true)
-                ->column(key: 'new_values', label: __('New Values'), canBeHidden: false, sortable: true)
+                ->column(key: 'datetime', label: __('Date & Time'), canBeHidden: false, sortable: true)
+                ->column(key: 'user_id', label: __('User'), canBeHidden: false, sortable: true)
+
+                //->column(key: 'ip_address', label: __('IP Address'), canBeHidden: false, sortable: true, searchable: true)
+                //->column(key: 'url', label: __('URL'), canBeHidden: false, sortable: true, searchable: true)
+                //->column(key: 'old_values', label: __('Old Values'), canBeHidden: false, sortable: true)
+                //->column(key: 'new_values', label: __('New Values'), canBeHidden: false, sortable: true)
                 ->column(key: 'event', label: __('Action'), canBeHidden: false, sortable: true)
         //        ->column(key: 'auditable_type', label: __('Module'), canBeHidden: false)
-                ->column(key: 'datetime', label: __('Date & Time'), canBeHidden: false, sortable: true)
                 ->defaultSort('ip_address');
         };
     }

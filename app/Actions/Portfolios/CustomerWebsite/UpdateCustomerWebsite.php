@@ -13,7 +13,6 @@ use App\Http\Resources\Prospects\CustomerWebsiteResource;
 use App\Models\CRM\Customer;
 use App\Models\Portfolios\CustomerWebsite;
 use App\Rules\IUnique;
-use Illuminate\Support\Arr;
 use Lorisleiva\Actions\ActionRequest;
 
 class UpdateCustomerWebsite
@@ -59,7 +58,7 @@ class UpdateCustomerWebsite
                 ),
 
             ],
-            'name' => ['sometimes', 'string', 'max:128'],
+            'name'        => ['sometimes', 'string', 'max:128'],
             'property_id' => ['sometimes']
         ];
     }
@@ -76,7 +75,7 @@ class UpdateCustomerWebsite
     public function asController(Customer $customer, CustomerWebsite $customerWebsite, ActionRequest $request): CustomerWebsite
     {
         $this->customer = $customer;
-        $originalUrl = $request->input('url');
+        $originalUrl    = $request->input('url');
         $request->validate();
 
         $modelData = [];
@@ -85,7 +84,7 @@ class UpdateCustomerWebsite
                 $modelData,
                 match ($key) {
                     'property_id' => 'data.property_id',
-                    default => $key
+                    default       => $key
                 },
                 $value
             );
