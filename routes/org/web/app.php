@@ -6,16 +6,18 @@
  */
 
 use App\Actions\Organisation\OrganisationUser\UI\ShowResetPasswordUsers;
+use App\Actions\Organisation\OrganisationUser\UpdateOrganisationUser;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(["org-web"])->group(function () {
-
 
     Route::middleware(["org-auth:org",])->group(function () {
         Route::get('/', function () {
             return redirect('/dashboard');
         });
+
         Route::get('reset/password', ShowResetPasswordUsers::class)->name('reset.password');
+        Route::patch('reset/password', [UpdateOrganisationUser::class, 'inLoggedUser'])->name('update.password');
 
         Route::middleware(["reset-pass"])->group(function () {
             Route::prefix("dashboard")

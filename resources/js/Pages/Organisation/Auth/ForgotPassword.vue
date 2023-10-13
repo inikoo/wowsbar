@@ -16,7 +16,7 @@ const formReset = useForm({
 })
 
 const submitResetPassword = () => {
-    formReset.patch(route('org.models.organisation-user.update.password'), 
+    formReset.patch(route('org.update.password'),
     {
         onSuccess: () => {
             formReset.reset('password')
@@ -34,7 +34,7 @@ const submitResetPassword = () => {
 
 
 watchEffect(() => {
-    formReset.password == repeatPassword.value ? isPasswordSame.value = true : isPasswordSame.value = false 
+    formReset.password == repeatPassword.value ? isPasswordSame.value = true : isPasswordSame.value = false
 })
 </script>
 
