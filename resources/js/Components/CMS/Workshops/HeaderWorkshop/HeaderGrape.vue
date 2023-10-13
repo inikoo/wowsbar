@@ -30,6 +30,6 @@ library.add(
 </script>
 
 <template layout="OrgApp">
-    <GrapeEditor :plugins="[HeaderPlugins,BlogPlugins]" :updateRoute="updateRoutes.workshop_header" :loadRoute="updateRoutes.workshop_header" :imagesUploadRoute="imagesUploadRoute.workshop_header" />
+    <GrapeEditor :plugins="[HeaderPlugins]" :updateRoute="updateRoutes.workshop_header" :loadRoute="updateRoutes.workshop_header" :imagesUploadRoute="imagesUploadRoute.workshop_header" />
 </template>
 

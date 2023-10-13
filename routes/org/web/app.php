@@ -6,17 +6,15 @@
  */
 
 use App\Actions\Organisation\OrganisationUser\UI\ShowResetPasswordUsers;
+use App\Actions\Organisation\OrganisationUser\UpdateOrganisationUser;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(["org-web"])->group(function () {
-
 
     Route::middleware(["org-auth:org",])->group(function () {
         Route::get('/', function () {
             return redirect('/dashboard');
         });
-        Route::get('reset/password', ShowResetPasswordUsers::class)->name('reset.password');
-
         Route::middleware(["reset-pass"])->group(function () {
             Route::prefix("dashboard")
                 ->name("dashboard.")
@@ -76,6 +74,9 @@ Route::middleware(["org-web"])->group(function () {
                 ->name("downloads.")
                 ->group(__DIR__ . "/downloads.php");
         });
+            Route::prefix('passwords')
+                ->name('passwords.')
+                ->group(__DIR__ . "/passwords.php");
     });
 
 

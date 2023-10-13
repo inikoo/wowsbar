@@ -10,6 +10,7 @@ import { onMounted, ref } from "vue";
 import { loadCss } from "@/Composables/loadCss";
 import processClasses from "https://cdn.statically.io/gh/mudgen/runcss/master/src/runcss.min.js";
 
+
 const header = usePage().props.structure.header;
 const footer = usePage().props.structure.footer;
 const user = usePage().props.auth.user;
@@ -65,3 +66,7 @@ onMounted(() => {
     <slot />
     <div v-html="footer[0]?.html"></div>
 </template>
+
+<style>
+@import url("https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css");
+</style>

@@ -45,8 +45,7 @@ class UpdateOrganisationUser
         return [
             'username'     => ['sometimes', 'required', new AlphaDashDot(), 'unique:organisation_users,username'],
             'password'     => ['sometimes', 'required', app()->isLocal() || app()->environment('testing') ? null : Password::min(8)->uncompromised()],
-            'status'       => 'sometimes|required|boolean',
-            'reset_password' => ['sometimes']
+            'status'       => 'sometimes|required|boolean'
         ];
     }
 
@@ -61,7 +60,7 @@ class UpdateOrganisationUser
     public function inLoggedUser(ActionRequest $request): OrganisationUser
     {
         $request->validate();
-        return $this->handle($request->user(), $request->validated());
+        return $this->handle($request->user('org'), $request->validated());
     }
 
     public function asController(OrganisationUser $organisationUser, ActionRequest $request): OrganisationUser
