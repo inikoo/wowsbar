@@ -22,13 +22,16 @@ use Laravel\Sanctum\HasApiTokens;
 use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 /**
  * App\Models\Auth\OrganisationUser
  *
  * @property int $id
- * @property int|null $parent_id
+ * @property string $slug
  * @property string|null $parent_type
+ * @property int|null $parent_id
  * @property string $username
  * @property string|null $email
  * @property bool $status
@@ -43,12 +46,11 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string|null $deleted_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \OwenIt\Auditing\Models\Audit> $audits
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Helpers\Audit> $audits
  * @property-read int|null $audits_count
  * @property-read \App\Models\Media\Media|null $avatar
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Upload> $excelUploads
  * @property-read int|null $excel_uploads_count
- * @property-read array $es_audits
  * @property-read \App\Models\Assets\Language $language
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \App\Models\Media\Media> $media
  * @property-read int|null $media_count
@@ -80,6 +82,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @method static Builder|OrganisationUser wherePassword($value)
  * @method static Builder|OrganisationUser whereRememberToken($value)
  * @method static Builder|OrganisationUser whereSettings($value)
+ * @method static Builder|OrganisationUser whereSlug($value)
  * @method static Builder|OrganisationUser whereStatus($value)
  * @method static Builder|OrganisationUser whereUpdatedAt($value)
  * @method static Builder|OrganisationUser whereUsername($value)
@@ -94,6 +97,7 @@ class OrganisationUser extends Authenticatable implements HasMedia, Auditable
     use InteractsWithMedia;
     use HasHistory;
     use HasUniversalSearch;
+    use HasSlug;
 
 
     protected string $guard_name = 'org';
@@ -115,18 +119,38 @@ class OrganisationUser extends Authenticatable implements HasMedia, Auditable
         'settings' => '{}',
     ];
 
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
+
+    public function getSlugOptions(): SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom('username')
+            ->saveSlugsTo('slug')
+            ->doNotGenerateSlugsOnUpdate()
+            ->slugsShouldBeNoLongerThan(8);
+    }
+
     protected $guarded = [];
 
+    public function generateTags(): array
+    {
+        return [
+           'sysadmin'
+        ];
+    }
+
+    protected array $auditExclude = [
+        'id',
+        'avatar_id'
+    ];
 
     protected $hidden = [
         'password',
         'remember_token',
     ];
-
-    public function getRouteKeyName(): string
-    {
-        return 'username';
-    }
 
 
     public function stats(): HasOne

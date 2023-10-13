@@ -7,12 +7,13 @@
 
 namespace App\Actions\UI\Customer\Social;
 
-use App\Actions\Helpers\History\IndexHistories;
+use App\Actions\Helpers\History\IndexCustomerModuleHistory;
 use App\Actions\InertiaAction;
 use App\Actions\UI\Customer\Dashboard\ShowDashboard;
 use App\Enums\UI\Customer\PortfolioDashboardTabsEnum;
+use App\Enums\UI\Customer\PPCDashboardTabsEnum;
 use App\Http\Resources\History\HistoryResource;
-use App\Models\Portfolio\PortfolioWebsite;
+use App\Models\CRM\Customer;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -21,7 +22,7 @@ class ShowSocialDashboard extends InertiaAction
 {
     public function authorize(ActionRequest $request): bool
     {
-        return $request->get('customerUser')->hasPermissionTo("portfolio.view");
+        return $request->get('customerUser')->hasPermissionTo("portfolio.social.view");
     }
 
 
@@ -36,6 +37,7 @@ class ShowSocialDashboard extends InertiaAction
     public function htmlResponse(ActionRequest $request): Response
     {
 
+        $customer = $request->get('customer');
 
         return Inertia::render(
             'Social/SocialDashboard',
@@ -55,30 +57,46 @@ class ShowSocialDashboard extends InertiaAction
                     'navigation' => PortfolioDashboardTabsEnum::navigation(),
                 ],
                 PortfolioDashboardTabsEnum::DASHBOARD->value => $this->tab == PortfolioDashboardTabsEnum::DASHBOARD->value ?
-                    fn () => $this->getDashboard()
-                    : Inertia::lazy(fn () =>  $this->getDashboard()),
+                    fn () => $this->getDashboard($customer)
+                    : Inertia::lazy(fn () =>  $this->getDashboard($customer)),
 
-                PortfolioDashboardTabsEnum::PORTFOLIO_CHANGELOG->value => $this->tab == PortfolioDashboardTabsEnum::PORTFOLIO_CHANGELOG->value ?
-                    fn () => HistoryResource::collection(IndexHistories::run(PortfolioWebsite::class))
-                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistories::run(PortfolioWebsite::class)))
+                PPCDashboardTabsEnum::CHANGELOG->value => $this->tab == PPCDashboardTabsEnum::CHANGELOG->value
+                    ?
+                    fn () => HistoryResource::collection(
+                        IndexCustomerModuleHistory::run(
+                            customer: $customer,
+                            tags: ['customer_social'],
+                            prefix: PPCDashboardTabsEnum::CHANGELOG->value
+                        )
+                    )
+                    : Inertia::lazy(fn () => HistoryResource::collection(
+                        IndexCustomerModuleHistory::run(
+                            customer: $customer,
+                            tags: ['customer_social'],
+                            prefix: PPCDashboardTabsEnum::CHANGELOG->value
+                        )
+                    ))
 
             ]
-        )->table(IndexHistories::make()->tableStructure());
+        )->table(
+            IndexCustomerModuleHistory::make()->tableStructure(
+                prefix: PPCDashboardTabsEnum::CHANGELOG->value
+            )
+        );
     }
 
-    private function getDashboard(): array
+    private function getDashboard(Customer $customer): array
     {
-        $tenant=customer();
 
         return [
             'flatTreeMaps' => [
                 [
                     [
-                        'name'  => __('prospects'),
-                        'icon'  => ['fal', 'fa-transporter-2'],
+                        'name'  => __('websites'),
+                        'icon'  => ['fal', 'fa-globe'],
                         'href'  => ['customer.portfolio.websites.index'],
                         'index' => [
-                            'number' => $tenant->stats->number_websites
+                            'number' => 0 // todo make stats for portfolio division stuff
                         ]
                     ],
                 ]

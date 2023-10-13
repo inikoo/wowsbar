@@ -35,9 +35,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property Carbon|null $deleted_at
- * @property-read Collection<int, \OwenIt\Auditing\Models\Audit> $audits
+ * @property-read Collection<int, \App\Models\Helpers\Audit> $audits
  * @property-read int|null $audits_count
- * @property-read array $es_audits
  * @property-read \App\Models\Accounting\PaymentServiceProvider $paymentServiceProvider
  * @property-read Collection<int, \App\Models\Accounting\Payment> $payments
  * @property-read int|null $payments_count
@@ -76,6 +75,13 @@ class PaymentAccount extends Model implements Auditable
     ];
 
     protected $guarded = [];
+
+    public function generateTags(): array
+    {
+        return [
+            'accounting'
+        ];
+    }
 
     public function getRouteKeyName(): string
     {

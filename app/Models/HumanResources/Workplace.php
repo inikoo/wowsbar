@@ -11,6 +11,7 @@ use App\Actions\Utils\Abbreviate;
 use App\Enums\HumanResources\Workplace\WorkplaceTypeEnum;
 use App\Models\Assets\Timezone;
 use App\Models\Traits\HasAddress;
+use App\Models\Traits\HasHistory;
 use App\Models\Traits\HasUniversalSearch;
 use App\Models\WorkplaceStats;
 use Illuminate\Database\Eloquent\Model;
@@ -19,6 +20,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
@@ -39,6 +41,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Helpers\Address> $addresses
  * @property-read int|null $addresses_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Helpers\Audit> $audits
+ * @property-read int|null $audits_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\HumanResources\ClockingMachine> $clockingMachines
  * @property-read int|null $clocking_machines_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\HumanResources\Clocking> $clockings
@@ -71,12 +75,13 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|Workplace withoutTrashed()
  * @mixin \Eloquent
  */
-class Workplace extends Model
+class Workplace extends Model implements Auditable
 {
     use HasSlug;
     use HasUniversalSearch;
     use SoftDeletes;
     use HasAddress;
+    use HasHistory;
 
     protected $casts = [
         'data'     => 'array',
@@ -91,6 +96,17 @@ class Workplace extends Model
     ];
 
     protected $guarded = [];
+
+    public function generateTags(): array
+    {
+        return [
+            'hr'
+        ];
+    }
+
+    protected array $auditExclude = [
+        'location','id'
+    ];
 
     public function getRouteKeyName(): string
     {

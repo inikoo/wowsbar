@@ -7,12 +7,12 @@
 
 namespace App\Actions\UI\Customer\Prospects;
 
-use App\Actions\Helpers\History\IndexHistories;
+use App\Actions\Helpers\History\IndexCustomerModuleHistory;
 use App\Actions\InertiaAction;
 use App\Actions\UI\Customer\Dashboard\ShowDashboard;
-use App\Enums\UI\Customer\PortfolioDashboardTabsEnum;
+use App\Enums\UI\Customer\ProspectsDashboardTabsEnum;
 use App\Http\Resources\History\HistoryResource;
-use App\Models\Portfolio\PortfolioWebsite;
+use App\Models\CRM\Customer;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -27,49 +27,66 @@ class ShowProspectsDashboard extends InertiaAction
 
     public function asController(ActionRequest $request): ActionRequest
     {
-        $this->initialisation($request)->withTab(PortfolioDashboardTabsEnum::values());
+        $this->initialisation($request)->withTab(ProspectsDashboardTabsEnum::values());
+
         return $request;
     }
 
 
-
     public function htmlResponse(ActionRequest $request): Response
     {
-
+        $customer = $request->get('customer');
 
         return Inertia::render(
             'Prospects/ProspectsDashboard',
             [
-                'breadcrumbs'  => $this->getBreadcrumbs(),
-                'title'        => __('Leads'),
-                'pageHead'     => [
-                    'title'             => __('leads'),
-                    'icon'              => [
+                'breadcrumbs' => $this->getBreadcrumbs(),
+                'title'       => __('Leads'),
+                'pageHead'    => [
+                    'title' => __('leads'),
+                    'icon'  => [
                         'icon'    => ['fal', 'fa-transporter'],
                         'tooltip' => __('leads')
                     ],
                 ],
 
-                'tabs'                             => [
+                'tabs'                                       => [
                     'current'    => $this->tab,
-                    'navigation' => PortfolioDashboardTabsEnum::navigation(),
+                    'navigation' => ProspectsDashboardTabsEnum::navigation(),
                 ],
-                PortfolioDashboardTabsEnum::DASHBOARD->value => $this->tab == PortfolioDashboardTabsEnum::DASHBOARD->value ?
-                    fn () => $this->getDashboard()
-                    : Inertia::lazy(fn () =>  $this->getDashboard()),
+                ProspectsDashboardTabsEnum::DASHBOARD->value => $this->tab == ProspectsDashboardTabsEnum::DASHBOARD->value ?
+                    fn () => $this->getDashboard($customer)
+                    : Inertia::lazy(fn () => $this->getDashboard($customer)),
 
-                PortfolioDashboardTabsEnum::PORTFOLIO_CHANGELOG->value => $this->tab == PortfolioDashboardTabsEnum::PORTFOLIO_CHANGELOG->value ?
-                    fn () => HistoryResource::collection(IndexHistories::run(PortfolioWebsite::class))
-                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistories::run(PortfolioWebsite::class)))
+
+                ProspectsDashboardTabsEnum::CHANGELOG->value => $this->tab == ProspectsDashboardTabsEnum::CHANGELOG->value
+                    ?
+                    fn () => HistoryResource::collection(
+                        IndexCustomerModuleHistory::run(
+                            customer: $customer,
+                            tags: ['customer_prospects'],
+                            prefix: ProspectsDashboardTabsEnum::CHANGELOG->value
+                        )
+                    )
+                    : Inertia::lazy(fn () => HistoryResource::collection(
+                        IndexCustomerModuleHistory::run(
+                            customer: $customer,
+                            tags: ['customer_prospects'],
+                            prefix: ProspectsDashboardTabsEnum::CHANGELOG->value
+                        )
+                    ))
+
 
             ]
-        )->table(IndexHistories::make()->tableStructure());
+        )->table(
+            IndexCustomerModuleHistory::make()->tableStructure(
+                prefix: ProspectsDashboardTabsEnum::CHANGELOG->value
+            )
+        );
     }
 
-    private function getDashboard(): array
+    private function getDashboard(Customer $customer): array
     {
-        $tenant=customer();
-
         return [
             'flatTreeMaps' => [
                 [
@@ -78,7 +95,7 @@ class ShowProspectsDashboard extends InertiaAction
                         'icon'  => ['fal', 'fa-transporter-2'],
                         'href'  => ['customer.portfolio.websites.index'],
                         'index' => [
-                            'number' => $tenant->stats->number_websites
+                            'number' => $customer->portfolioStats->number_prospects
                         ]
                     ],
                 ]

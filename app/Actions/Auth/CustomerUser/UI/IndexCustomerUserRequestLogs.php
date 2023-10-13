@@ -7,7 +7,6 @@
 
 namespace App\Actions\Auth\CustomerUser\UI;
 
-use App\Actions\Auth\UserRequest\Traits\WithFormattedRequestLogs;
 use App\Actions\Elasticsearch\BuildElasticsearchClient;
 use App\InertiaTable\InertiaTable;
 use App\Models\Auth\CustomerUser;
@@ -103,7 +102,7 @@ class IndexCustomerUserRequestLogs
                 ->withGlobalSearch()
                 ->withExportLinks($exportLinks);
             if (class_basename($parent) == 'Customer') {
-                $table->column(key: 'username', label: __('Username'), canBeHidden: false, sortable: true, searchable: true);
+                $table->column(key: 'customer_user_slug', label: __('User'), canBeHidden: false, sortable: true, searchable: true);
             }
 
             $table->column(key: 'url', label: __('URL'), canBeHidden: false, sortable: true)

@@ -7,7 +7,7 @@
 
 namespace App\Actions\Portfolios\CustomerWebsite\UI;
 
-use App\Actions\Helpers\History\IndexHistories;
+use App\Actions\Helpers\History\IndexHistory;
 use App\Actions\InertiaAction;
 use App\Actions\UI\Organisation\Catalogue\ShowSocialDashboard;
 use App\Enums\UI\Organisation\CustomerWebsitesTabsEnum;
@@ -138,8 +138,8 @@ class IndexSocialCustomerWebsites extends InertiaAction
                     : Inertia::lazy(fn () => CustomerWebsiteResource::collection($websites)),
 
                 CustomerWebsitesTabsEnum::CHANGELOG->value => $this->tab == CustomerWebsitesTabsEnum::CHANGELOG->value ?
-                    fn () => HistoryResource::collection(IndexHistories::run(PortfolioWebsite::class))
-                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistories::run(PortfolioWebsite::class)))
+                    fn () => HistoryResource::collection(IndexHistory::run(PortfolioWebsite::class))
+                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistory::run(PortfolioWebsite::class)))
             ]
         )->table(
             $this->tableStructure(
@@ -152,7 +152,7 @@ class IndexSocialCustomerWebsites extends InertiaAction
                 //     ]
                 // ]
             )
-        )->table(IndexHistories::make()->tableStructure());
+        )->table(IndexHistory::make()->tableStructure());
     }
 
     /** @noinspection PhpUnusedParameterInspection */

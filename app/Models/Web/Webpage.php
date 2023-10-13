@@ -52,11 +52,10 @@ use Spatie\Sluggable\SlugOptions;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \OwenIt\Auditing\Models\Audit> $audits
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Helpers\Audit> $audits
  * @property-read int|null $audits_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Deployment> $deployments
  * @property-read int|null $deployments_count
- * @property-read array $es_audits
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \App\Models\Media\Media> $media
  * @property-read int|null $media_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Snapshot> $snapshots
@@ -120,6 +119,18 @@ class Webpage extends Model implements Auditable, HasMedia
     ];
 
     protected $guarded = [];
+
+    public function generateTags(): array
+    {
+        return [
+            'websites'
+        ];
+    }
+    protected array $auditExclude = [
+        'id','slug',
+        'live_snapshot_id','published_checksum',
+        'compiled_layout','unpublished_snapshot_id'
+    ];
 
     public function getSlugOptions(): SlugOptions
     {

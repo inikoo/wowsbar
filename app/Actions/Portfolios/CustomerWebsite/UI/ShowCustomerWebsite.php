@@ -8,8 +8,9 @@
 namespace App\Actions\Portfolios\CustomerWebsite\UI;
 
 use App\Actions\CRM\Customer\UI\ShowCustomer;
-use App\Actions\Helpers\History\IndexHistories;
+use App\Actions\Helpers\History\IndexHistory;
 use App\Actions\InertiaAction;
+use App\Actions\UI\Organisation\Portfolios\ShowPortfoliosDashboard;
 use App\Actions\UI\WithInertia;
 use App\Enums\UI\Organisation\CustomerWebsiteTabsEnum;
 use App\Http\Resources\Prospects\CustomerWebsiteResource;
@@ -34,7 +35,8 @@ class ShowCustomerWebsite extends InertiaAction
 
     public function handle(Organisation|Shop|Customer $parent, CustomerWebsite $customerWebsite): CustomerWebsite
     {
-        $this->parent=$parent;
+        $this->parent = $parent;
+
         return $customerWebsite;
     }
 
@@ -71,9 +73,8 @@ class ShowCustomerWebsite extends InertiaAction
 
     public function htmlResponse(CustomerWebsite $customerWebsite, ActionRequest $request): Response
     {
-
-        $scope    =$this->parent;
-        $container=null;
+        $scope     = $this->parent;
+        $container = null;
         if (class_basename($scope) == 'Customer') {
             $container = [
                 'icon'    => ['fal', 'fa-user'],
@@ -95,13 +96,13 @@ class ShowCustomerWebsite extends InertiaAction
                     'next'     => $this->getNext($customerWebsite, $request),
                 ],
                 'pageHead'    => [
-                    'title'      => __('Website').': '.$customerWebsite->name,
-                    'iconRight'  => [
+                    'title'     => __('Website').': '.$customerWebsite->name,
+                    'iconRight' => [
                         'title' => __('website'),
                         'icon'  => 'fal fa-briefcase'
                     ],
                     'container' => $container,
-                    'actions' => [
+                    'actions'   => [
                         $this->canEdit ? [
                             'type'  => 'button',
                             'style' => 'edit',
@@ -119,20 +120,31 @@ class ShowCustomerWebsite extends InertiaAction
                 ],
 
                 CustomerWebsiteTabsEnum::SHOWCASE->value => $this->tab == CustomerWebsiteTabsEnum::SHOWCASE->value ?
-                    fn () => GetCustomerWebsiteShowcase::run($customerWebsite)
-                    : Inertia::lazy(fn () => GetCustomerWebsiteShowcase::run($customerWebsite)),
+                    fn() => GetCustomerWebsiteShowcase::run($customerWebsite)
+                    : Inertia::lazy(fn() => GetCustomerWebsiteShowcase::run($customerWebsite)),
 
 
-                CustomerWebsiteTabsEnum::CHANGELOG->value => $this->tab == CustomerWebsiteTabsEnum::CHANGELOG->value ?
-                    fn () => HistoryResource::collection(IndexHistories::run($customerWebsite))
-                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistories::run($customerWebsite))),
+                CustomerWebsiteTabsEnum::CHANGELOG->value => $this->tab == CustomerWebsiteTabsEnum::CHANGELOG->value
+                    ?
+                    fn() => HistoryResource::collection(
+                        IndexHistory::run(
+                            model: $customerWebsite,
+                            prefix: CustomerWebsiteTabsEnum::CHANGELOG->value
+                        )
+                    )
+                    : Inertia::lazy(fn() => HistoryResource::collection(
+                        IndexHistory::run(
+                            model: $customerWebsite,
+                            prefix: CustomerWebsiteTabsEnum::CHANGELOG->value
+                        )
+                    )),
                 /*
                                 CustomerWebsiteTabsEnum::BANNERS->value => $this->tab == CustomerWebsiteTabsEnum::BANNERS->value ?
                                     fn () => BannerResource::collection(IndexBanners::run($customerWebsite))
                                     : Inertia::lazy(fn () => BannerResource::collection(IndexBanners::run($customerWebsite)))
                 */
             ]
-        )->table(IndexHistories::make()->tableStructure());
+        )->table(IndexHistory::make()->tableStructure(prefix: CustomerWebsiteTabsEnum::CHANGELOG->value));
     }
 
     public function jsonResponse(CustomerWebsite $customerWebsite): CustomerWebsiteResource
@@ -191,6 +203,30 @@ class ShowCustomerWebsite extends InertiaAction
                 ),
             ),
 
+            'org.portfolios.shop.customer-websites.show',
+            'org.portfolios.shop.customer-websites.edit' =>
+            array_merge(
+                ShowPortfoliosDashboard::make()->getBreadcrumbs(
+                    'org.portfolios.shop.dashboard',
+                    $routeParameters
+                ),
+                $headCrumb(
+                    'modelWithIndex',
+                    CustomerWebsite::where('slug', $routeParameters['customerWebsite'])->first(),
+                    [
+                        'index' => [
+                            'name'       => 'org.portfolios.shop.customer-websites.index',
+                            'parameters' => $routeParameters
+                        ],
+                        'model' => [
+                            'name'       => 'org.portfolios.shop.customer-websites.show',
+                            'parameters' => $routeParameters
+                        ]
+                    ],
+                    $suffix
+                ),
+            ),
+
             'org.portfolios.show',
             'org.portfolios.edit' =>
             array_merge(
@@ -240,7 +276,8 @@ class ShowCustomerWebsite extends InertiaAction
         }
 
         return match ($routeName) {
-            'org.portfolios.shop.customer-websites.show' => [
+            'org.portfolios.shop.customer-websites.show',
+            'org.crm.shop.customers.show.customer-websites.show' => [
                 'label' => $customerWebsite->name,
                 'route' => [
                     'name'       => $routeName,

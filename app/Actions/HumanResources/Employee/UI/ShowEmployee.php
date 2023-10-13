@@ -7,7 +7,7 @@
 
 namespace App\Actions\HumanResources\Employee\UI;
 
-use App\Actions\Helpers\History\IndexHistories;
+use App\Actions\Helpers\History\IndexHistory;
 use App\Actions\InertiaAction;
 use App\Actions\UI\Organisation\HumanResources\ShowHumanResourcesDashboard;
 use App\Enums\UI\Organisation\EmployeeTabsEnum;
@@ -118,10 +118,10 @@ class ShowEmployee extends InertiaAction
                     : Inertia::lazy(fn () => $this->getData($employee)),
 
                 EmployeeTabsEnum::HISTORY->value => $this->tab == EmployeeTabsEnum::HISTORY->value ?
-                    fn () => HistoryResource::collection(IndexHistories::run($employee))
-                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistories::run($employee)))
+                    fn () => HistoryResource::collection(IndexHistory::run($employee))
+                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistory::run($employee)))
             ]
-        )->table(IndexHistories::make()->tableStructure());
+        )->table(IndexHistory::make()->tableStructure());
     }
 
     public function getData(Employee $employee): array

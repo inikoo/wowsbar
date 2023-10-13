@@ -35,6 +35,7 @@ use App\Actions\Organisation\Guest\StoreGuest;
 use App\Actions\Organisation\Guest\UpdateGuest;
 use App\Actions\Organisation\Organisation\UpdateOrganisation;
 use App\Actions\Portfolio\PortfolioDivision\SyncDivisionPortfolioWebsite;
+use App\Actions\Organisation\OrganisationUser\UpdateOrganisationUser;
 use App\Actions\Portfolio\PortfolioWebsite\ImportPortfolioWebsite;
 use App\Actions\Portfolios\CustomerWebsite\StoreCustomerWebsite;
 use App\Actions\Catalogue\Product\StoreProduct;
@@ -152,3 +153,5 @@ Route::prefix('customer/{customer:id}')->as('customer.')->group(function () {
 Route::patch('websites/{customerWebsite}', UpdateCustomerWebsite::class)->name('customer-website.update');
 
 Route::patch('{portfolioWebsite}/interest', SyncDivisionPortfolioWebsite::class)->name('interest.store');
+
+Route::patch('/organisation-user/{organisationUser:id}', UpdateOrganisationUser::class)->name('organisation-user.update');

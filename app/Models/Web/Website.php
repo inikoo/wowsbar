@@ -64,11 +64,10 @@ use Spatie\Sluggable\SlugOptions;
  * @property string|null $closed_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property int|null $home_id
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \OwenIt\Auditing\Models\Audit> $audits
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Helpers\Audit> $audits
  * @property-read int|null $audits_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Deployment> $deployments
  * @property-read int|null $deployments_count
- * @property-read array $es_audits
  * @property-read \App\Models\Web\Webpage|null $home
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, Media> $images
  * @property-read int|null $images_count
@@ -147,10 +146,28 @@ class Website extends Model implements Auditable, HasMedia
 
     protected $guarded = [];
 
+    public function generateTags(): array
+    {
+        return [
+            'websites'
+        ];
+    }
+    protected array $auditExclude = [
+        'id',
+        'slug',
+        'home_id',
+        'live_header_snapshot_id',
+        'live_footer_snapshot_id','home_id',
+        'compiled_layout','unpublished_header_snapshot_id',
+        'unpublished_footer_snapshot_id',
+        'published_header_checksum','published_footer_checksum'
+    ];
+
     public function getRouteKeyName(): string
     {
         return 'slug';
     }
+
 
     public function getSlugOptions(): SlugOptions
     {

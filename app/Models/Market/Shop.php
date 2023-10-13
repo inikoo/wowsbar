@@ -25,6 +25,7 @@ use App\Models\Helpers\SerialReference;
 use App\Models\Leads\Prospect;
 use App\Models\OMS\Order;
 use App\Models\Portfolios\CustomerWebsite;
+use App\Models\Traits\HasHistory;
 use App\Models\Traits\HasUniversalSearch;
 use App\Models\Web\Website;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -35,6 +36,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
@@ -70,6 +72,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read \App\Models\Market\ShopAccountingStats|null $accountingStats
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Appointment> $appointment
  * @property-read int|null $appointment_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Helpers\Audit> $audits
+ * @property-read int|null $audits_count
  * @property-read \App\Models\Market\ShopCatalogueStats|null $catalogueStats
  * @property-read Country $country
  * @property-read \App\Models\Market\ShopCRMStats|null $crmStats
@@ -136,12 +140,13 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|Shop withoutTrashed()
  * @mixin \Eloquent
  */
-class Shop extends Model
+class Shop extends Model implements Auditable
 {
     use SoftDeletes;
     use HasSlug;
     use HasUniversalSearch;
     use HasFactory;
+    use HasHistory;
 
     protected $casts = [
         'data'     => 'array',
@@ -158,6 +163,17 @@ class Shop extends Model
     ];
 
     protected $guarded = [];
+
+    public function generateTags(): array
+    {
+        return [
+            'shops'
+        ];
+    }
+
+    protected $auditExclude = [
+        'location','settings','organisation_id','data'
+    ];
 
     public function getRouteKeyName(): string
     {

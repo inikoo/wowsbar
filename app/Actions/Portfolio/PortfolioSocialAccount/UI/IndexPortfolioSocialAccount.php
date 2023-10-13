@@ -7,7 +7,7 @@
 
 namespace App\Actions\Portfolio\PortfolioSocialAccount\UI;
 
-use App\Actions\Helpers\History\IndexHistories;
+use App\Actions\Helpers\History\IndexHistory;
 use App\Actions\InertiaAction;
 use App\Actions\UI\Customer\Portfolio\ShowPortfolio;
 use App\Enums\UI\Customer\PortfolioSocialAccountsTabsEnum;
@@ -139,8 +139,8 @@ class IndexPortfolioSocialAccount extends InertiaAction
                     : Inertia::lazy(fn () => PortfolioSocialAccountResource::collection($socialAccounts)),
 
                 PortfolioSocialAccountsTabsEnum::CHANGELOG->value => $this->tab == PortfolioSocialAccountsTabsEnum::CHANGELOG->value ?
-                    fn () => HistoryResource::collection(IndexHistories::run(PortfolioSocialAccount::class))
-                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistories::run(PortfolioSocialAccount::class)))
+                    fn () => HistoryResource::collection(IndexHistory::run(PortfolioSocialAccount::class))
+                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistory::run(PortfolioSocialAccount::class)))
             ]
         )->table(
             $this->tableStructure(
@@ -153,7 +153,7 @@ class IndexPortfolioSocialAccount extends InertiaAction
                 //     ]
                 // ]
             )
-        )->table(IndexHistories::make()->tableStructure());
+        )->table(IndexHistory::make()->tableStructure());
     }
 
     /** @noinspection PhpUnusedParameterInspection */

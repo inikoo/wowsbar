@@ -21,10 +21,12 @@ use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Redirect;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
+use OwenIt\Auditing\Events\AuditCustom;
 
 class StoreCustomerWebsite
 {
@@ -44,6 +46,24 @@ class StoreCustomerWebsite
         data_set($modelData, 'shop_id', $customer->shop_id);
         /** @var CustomerWebsite $customerWebsite */
         $customerWebsite = $customer->customerWebsites()->create($modelData);
+
+        //===
+
+        $portfolioWebsite=PortfolioWebsite::find($customerWebsite->id);
+
+        $portfolioWebsite->auditEvent    = 'created';
+        $portfolioWebsite->isCustomEvent = true;
+
+        $portfolioWebsite->auditCustomOld = [];
+        $portfolioWebsite->auditCustomNew = [
+            'url' => $portfolioWebsite->url,
+            'name'=> $portfolioWebsite->name
+        ];
+        Event::dispatch(AuditCustom::class, [$portfolioWebsite]);
+
+
+
+        //===
         $customerWebsite->stats()->create();
         CustomerHydratePortfolioWebsites::dispatch($customerWebsite->customer);
 
@@ -136,6 +156,7 @@ class StoreCustomerWebsite
             return 1;
         }
 
+        $this->customer=$customer;
         Config::set('global.customer_id', $customer->id);
 
         $this->setRawAttributes(

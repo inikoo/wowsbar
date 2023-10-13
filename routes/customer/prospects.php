@@ -6,7 +6,7 @@
  */
 
 
-use App\Actions\Portfolio\PortfolioWebsite\UI\IndexLeadsPortfolioWebsites;
+use App\Actions\Portfolio\PortfolioWebsite\UI\IndexProspectsPortfolioWebsites;
 use App\Actions\UI\Customer\Prospects\ShowProspectsDashboard;
 use Illuminate\Support\Facades\Route;
 
@@ -17,7 +17,7 @@ Route::get('/dashboard', [
 ])->name('dashboard');
 
 Route::get('/websites', [
-    'uses'  => IndexLeadsPortfolioWebsites::class,
+    'uses'  => IndexProspectsPortfolioWebsites::class,
     'icon'  => 'globe',
     'label' => 'websites'
 ])->name('websites.index');

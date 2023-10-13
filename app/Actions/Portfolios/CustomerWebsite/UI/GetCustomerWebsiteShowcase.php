@@ -8,7 +8,6 @@
 namespace App\Actions\Portfolios\CustomerWebsite\UI;
 
 use App\Http\Resources\Catalogue\BasketResource;
-use App\Models\Catalogue\ProductCategory;
 use App\Models\Portfolios\CustomerWebsite;
 use Lorisleiva\Actions\Concerns\AsObject;
 

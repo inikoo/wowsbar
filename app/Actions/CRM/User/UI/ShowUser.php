@@ -9,7 +9,7 @@ namespace App\Actions\CRM\User\UI;
 
 use App\Actions\Auth\UserRequest\ShowUserRequestLogs;
 use App\Actions\CRM\Customer\UI\ShowCustomer;
-use App\Actions\Helpers\History\IndexHistories;
+use App\Actions\Helpers\History\IndexHistory;
 use App\Actions\Helpers\History\ShowHistories;
 use App\Actions\InertiaAction;
 use App\Actions\Traits\WithElasticsearch;
@@ -117,7 +117,7 @@ class ShowUser extends InertiaAction
             ]
         )
             //->table(ShowUserRequestLogs::make()->tableStructure())
-            ->table(IndexHistories::make()->tableStructure());
+            ->table(IndexHistory::make()->tableStructure());
     }
 
     public function getBreadcrumbs(string $routeName, array $routeParameters, string $suffix = ''): array

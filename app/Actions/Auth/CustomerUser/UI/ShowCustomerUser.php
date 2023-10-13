@@ -7,14 +7,14 @@
 
 namespace App\Actions\Auth\CustomerUser\UI;
 
-use App\Actions\Helpers\History\IndexHistories;
+use App\Actions\Helpers\History\IndexCustomerHistory;
 use App\Actions\InertiaAction;
 use App\Actions\Traits\WithElasticsearch;
 use App\Actions\UI\Customer\SysAdmin\ShowSysAdminDashboard;
 use App\Enums\Auth\CustomerUser\CustomerUserTabsEnum;
 use App\Http\Resources\Auth\CustomerUserRequestLogsResource;
 use App\Http\Resources\Auth\CustomerUserResource;
-use App\Http\Resources\History\HistoryResource;
+use App\Http\Resources\History\CustomerHistoryResource;
 use App\Models\Auth\CustomerUser;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -45,7 +45,7 @@ class ShowCustomerUser extends InertiaAction
 
     public function htmlResponse(CustomerUser $customerUser, ActionRequest $request): Response
     {
-        $this->validateAttributes();
+        $customer = $request->get('customer');
 
         return Inertia::render(
             'SysAdmin/CustomerUser',
@@ -92,17 +92,13 @@ class ShowCustomerUser extends InertiaAction
                     : Inertia::lazy(fn () => CustomerUserRequestLogsResource::collection(IndexCustomerUserRequestLogs::run($customerUser))),
 
                 CustomerUserTabsEnum::HISTORY->value => $this->tab == CustomerUserTabsEnum::HISTORY->value ?
-                    fn () => HistoryResource::collection(IndexHistories::run($customerUser))
-                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistories::run($customerUser)))
+                    fn () => CustomerHistoryResource::collection(IndexCustomerHistory::run($customer, $customerUser, 'history'))
+                    : Inertia::lazy(fn () => CustomerHistoryResource::collection(IndexCustomerHistory::run($customer, $customerUser, 'history')))
 
             ]
         )
-            ->table(
-                IndexCustomerUserRequestLogs::make()->tableStructure(
-                    parent: $customerUser
-                )
-            )
-            ->table(IndexHistories::make()->tableStructure());
+            ->table(IndexCustomerUserRequestLogs::make()->tableStructure(parent: $customerUser))
+            ->table(IndexCustomerHistory::make()->tableStructure(prefix:'history'));
     }
 
     public function getBreadcrumbs(string $routeName, array $routeParameters, string $suffix = ''): array

@@ -28,7 +28,6 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
  * @method static Builder|BannerPortfolioWebsite whereCustomerId($value)
  * @method static Builder|BannerPortfolioWebsite whereId($value)
  * @method static Builder|BannerPortfolioWebsite wherePortfolioWebsiteId($value)
- * @method static Builder|BannerPortfolioWebsite wherePublishedHash($value)
  * @method static Builder|BannerPortfolioWebsite whereUlid($value)
  * @method static Builder|BannerPortfolioWebsite whereUpdatedAt($value)
  * @mixin \Eloquent

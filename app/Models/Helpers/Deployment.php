@@ -21,6 +21,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property string $model_type
  * @property int $model_id
  * @property string|null $scope
+ * @property string|null $publisher_type
+ * @property int|null $publisher_id
  * @property int|null $snapshot_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -33,6 +35,8 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|Deployment whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Deployment whereModelId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Deployment whereModelType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Deployment wherePublisherId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Deployment wherePublisherType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Deployment whereScope($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Deployment whereSlug($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Deployment whereSnapshotId($value)

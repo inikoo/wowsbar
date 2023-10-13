@@ -7,7 +7,7 @@
 
 namespace App\Actions\HumanResources\Clocking\UI;
 
-use App\Actions\Helpers\History\IndexHistories;
+use App\Actions\Helpers\History\IndexHistory;
 use App\Actions\HumanResources\ClockingMachine\UI\ShowClockingMachine;
 use App\Actions\HumanResources\Workplace\UI\ShowWorkplace;
 use App\Actions\InertiaAction;
@@ -138,10 +138,10 @@ class ShowClocking extends InertiaAction
                     : Inertia::lazy(fn () => GetClockingShowcase::run($clocking)),
 
                 ClockingTabsEnum::HISTORY->value => $this->tab == ClockingTabsEnum::HISTORY->value ?
-                    fn () => HistoryResource::collection(IndexHistories::run($clocking))
-                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistories::run($clocking)))
+                    fn () => HistoryResource::collection(IndexHistory::run($clocking))
+                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistory::run($clocking)))
             ]
-        )->table(IndexHistories::make()->tableStructure());
+        )->table(IndexHistory::make()->tableStructure());
     }
 
 
