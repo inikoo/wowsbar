@@ -11,6 +11,7 @@ use App\Actions\Traits\WithActionUpdate;
 use App\Http\Resources\Auth\OrganisationUserResource;
 use App\Models\Auth\OrganisationUser;
 use App\Rules\AlphaDashDot;
+use Illuminate\Support\Arr;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Validation\Validator;
 use Lorisleiva\Actions\ActionRequest;
@@ -23,6 +24,10 @@ class UpdateOrganisationUser
 
     public function handle(OrganisationUser $organisationUser, array $modelData): OrganisationUser
     {
+        if(Arr::get($modelData, 'password')) {
+            data_set($modelData, 'reset_password', true);
+        }
+
         return $this->update($organisationUser, $modelData, 'settings');
     }
 
