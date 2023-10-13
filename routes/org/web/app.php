@@ -15,10 +15,6 @@ Route::middleware(["org-web"])->group(function () {
         Route::get('/', function () {
             return redirect('/dashboard');
         });
-
-        Route::get('reset/password', ShowResetPasswordUsers::class)->name('reset.password');
-        Route::patch('reset/password', [UpdateOrganisationUser::class, 'inLoggedUser'])->name('update.password');
-
         Route::middleware(["reset-pass"])->group(function () {
             Route::prefix("dashboard")
                 ->name("dashboard.")
@@ -78,6 +74,9 @@ Route::middleware(["org-web"])->group(function () {
                 ->name("downloads.")
                 ->group(__DIR__ . "/downloads.php");
         });
+            Route::prefix('passwords')
+                ->name('passwords.')
+                ->group(__DIR__ . "/passwords.php");
     });
 
 

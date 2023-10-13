@@ -16,7 +16,7 @@ class ResetPasswordIfNeeded
     public function handle(Request $request, Closure $next): Response
     {
         if($request->user('org')->reset_password) {
-            return redirect()->route('org.reset.password');
+            return redirect()->route('org.passwords.reset.password');
         }
 
         return $next($request);

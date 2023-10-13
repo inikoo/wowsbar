@@ -16,7 +16,7 @@ const formReset = useForm({
 })
 
 const submitResetPassword = () => {
-    formReset.patch(route('org.update.password'),
+    formReset.patch(route('org.passwords.update.password'),
     {
         onSuccess: () => {
             formReset.reset('password')
