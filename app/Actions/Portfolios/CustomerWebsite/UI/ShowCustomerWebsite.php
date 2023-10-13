@@ -240,7 +240,8 @@ class ShowCustomerWebsite extends InertiaAction
         }
 
         return match ($routeName) {
-            'org.portfolios.shop.customer-websites.show' => [
+            'org.portfolios.shop.customer-websites.show',
+            'org.crm.shop.customers.show.customer-websites.show' => [
                 'label' => $customerWebsite->name,
                 'route' => [
                     'name'       => $routeName,
