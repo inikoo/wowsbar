@@ -7,8 +7,7 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3'
 import Table from '@/Components/Table/Table.vue'
-import { Website } from "@/types/website"
-import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
+
 
 const props = defineProps<{
     data: object
