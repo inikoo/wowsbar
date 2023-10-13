@@ -92,7 +92,6 @@ class IndexPortfolioWebsites extends InertiaAction
                 ->column(key: 'leads', label: __('Leads'))
                 ->column(key: 'seo', label: __('SEO'))
                 ->column(key: 'ppc', label: __('Google Ads'))
-                ->column(key: 'social', label: __('Social'))
                 ->column(key: 'banners', label: __('banners'))
                 ->defaultSort('slug');
         };
@@ -158,14 +157,7 @@ class IndexPortfolioWebsites extends InertiaAction
             ]
         )->table(
             $this->tableStructure(
-                prefix: 'websites',
-                // exportLinks: [
-                //     'export' => [
-                //         'route' => [
-                //             'name' => 'export.websites.index'
-                //         ]
-                //     ]
-                // ]
+                prefix: PortfolioWebsitesTabsEnum::WEBSITES->value,
             )
         )->table(IndexCustomerHistory::make()->tableStructure(
             prefix: PortfolioWebsitesTabsEnum::CHANGELOG->value

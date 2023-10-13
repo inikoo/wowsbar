@@ -5,8 +5,6 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-use App\Actions\Organisation\OrganisationUser\UI\ShowResetPasswordUsers;
-use App\Actions\Organisation\OrganisationUser\UpdateOrganisationUser;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(["org-web"])->group(function () {
@@ -74,9 +72,9 @@ Route::middleware(["org-web"])->group(function () {
                 ->name("downloads.")
                 ->group(__DIR__ . "/downloads.php");
         });
-            Route::prefix('passwords')
-                ->name('passwords.')
-                ->group(__DIR__ . "/passwords.php");
+        Route::prefix('passwords')
+            ->name('passwords.')
+            ->group(__DIR__ . "/passwords.php");
     });
 
 

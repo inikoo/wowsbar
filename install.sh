@@ -57,6 +57,8 @@ php artisan shop:new-customer awa devs@aw-advantage.com -C 'aw-advantage' -P hel
 #php artisan customer:new-user aiku -P hello -N 'Mary'
 #php artisan customer:new-user aw-advantage  -P hello -N 'Zoe'
 pg_dump -Fc -f "devops/devel/snapshots/customers.dump" ${DB}
+php artisan customer-website:import -g wowsbar/data-sets/customer-websites
+
 echo "🌱 create test website with a banner"
 php artisan customer:new-portfolio-website aiku http://hello.com 'My website 😸'
 php artisan customer:new-banner aiku 'My first banner 🫡' mw

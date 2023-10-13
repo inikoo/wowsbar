@@ -1,15 +1,15 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Fri, 28 Apr 2023 12:27:00 Malaysia Time, Kuala Lumpur, Malaysia
+ * Created: Fri, 13 Oct 2023 18:32:34 Malaysia Time, Office, Bali, Indonesia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Enums\Helpers\Interest;
+namespace App\Enums\Portfolio\PortfolioWebsite;
 
 use App\Enums\EnumHelperTrait;
 
-enum InterestEnum: string
+enum PortfolioWebsiteInterestEnum: string
 {
     use EnumHelperTrait;
 

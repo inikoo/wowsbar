@@ -7,6 +7,7 @@
 
 namespace App\Models\CRM;
 
+use App\Actions\Utils\Abbreviate;
 use App\Enums\CRM\Customer\CustomerStateEnum;
 use App\Enums\CRM\Customer\CustomerStatusEnum;
 use App\Enums\CRM\Customer\CustomerTradeStateEnum;
@@ -175,7 +176,13 @@ class Customer extends Model implements HasMedia, Auditable
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
-            ->generateSlugsFrom('name')
+            ->generateSlugsFrom(function () {
+                if(mb_strlen($this->name)>=6) {
+                    return Abbreviate::run($this->name);
+                } else {
+                    return  $this->name;
+                }
+            })
             ->saveSlugsTo('slug')
             ->slugsShouldBeNoLongerThan(12)
             ->doNotGenerateSlugsOnCreate();

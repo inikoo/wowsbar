@@ -9,7 +9,7 @@ namespace App\Actions\Portfolio\PortfolioDivision;
 
 use App\Actions\CRM\Customer\Hydrators\CustomerHydratePortfolioWebsites;
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateCustomerWebsites;
-use App\Enums\Helpers\Interest\InterestEnum;
+use App\Enums\Portfolio\PortfolioWebsite\PortfolioWebsiteInterestEnum;
 use App\Models\Organisation\Division;
 use App\Models\Portfolio\PortfolioWebsite;
 use Illuminate\Console\Command;
@@ -40,8 +40,8 @@ class SyncDivisionPortfolioWebsite
     public function rules(): array
     {
         return [
-            'division' => ['required'],
-            'interest' => ['required', Rule::in(InterestEnum::values())]
+            'division' => ['required', 'exists:divisions,slug'],
+            'interest' => ['required', Rule::in(PortfolioWebsiteInterestEnum::values())]
         ];
     }
 
@@ -63,7 +63,7 @@ class SyncDivisionPortfolioWebsite
 
         $this->handle($portfolioWebsite, $modelData);
 
-        echo $portfolioWebsite->name . " synced to " . $modelData['division'] . "\n";
+        echo $portfolioWebsite->name." synced to ".$modelData['division']."\n";
 
         return 0;
     }

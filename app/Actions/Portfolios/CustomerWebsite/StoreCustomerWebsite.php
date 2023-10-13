@@ -133,6 +133,7 @@ class StoreCustomerWebsite
 
     public function action(Customer $customer, array $objectData): CustomerWebsite
     {
+        $this->customer =$customer;
         $this->asAction = true;
         $this->setRawAttributes($objectData);
         $validatedData = $this->validateAttributes();
