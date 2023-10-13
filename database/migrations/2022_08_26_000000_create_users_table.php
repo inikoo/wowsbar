@@ -24,6 +24,7 @@ return new class () extends Migration {
             $table->foreign('website_id')->references('id')->on('websites');
             $table = $this->userDetailsColumns($table);
             $table->ulid('ulid')->index()->unique();
+            $table->boolean('reset_password')->default(false);
             $table->timestampsTz();
             $table->softDeletesTz();
             $table->unique(['website_id', 'email']);

@@ -83,16 +83,17 @@ class StoreUser
     public function rules(): array
     {
         return [
-            'password'     =>
+            'password'       =>
                 [
                     'sometimes',
                     'required',
                     app()->isLocal() || app()->environment('testing') ? null : Password::min(8)->uncompromised()
                 ],
-            'contact_name' => ['required', 'string', 'max:255'],
-            'email'        => 'required|iunique:users|email|max:255',
-            'is_root'      => ['sometimes', 'required', 'boolean'],
-            'roles'        => ['sometimes', 'required', 'array']
+            'contact_name'   => ['required', 'string', 'max:255'],
+            'email'          => 'required|iunique:users|email|max:255',
+            'is_root'        => ['sometimes', 'required', 'boolean'],
+            'roles'          => ['sometimes', 'required', 'array'],
+            'reset_password' => ['sometimes', 'boolean']
         ];
     }
 
