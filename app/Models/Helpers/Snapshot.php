@@ -134,6 +134,7 @@ class Snapshot extends Model
                 $slides         = $this->slides()->where('visibility', true)->get();
                 $compiledLayout = $this->layout;
                 data_set($compiledLayout, 'components', json_decode(SlideResource::collection($slides)->toJson(), true));
+                data_set($compiledLayout, 'type', $this->parent->type);
 
                 return $compiledLayout;
             case 'Website':

@@ -128,7 +128,7 @@ class Banner extends Model implements HasMedia, Auditable
         ];
     }
 
-    protected $auditExclude = [
+    protected array $auditExclude = [
         'compiled_layout','unpublished_snapshot_id'
     ];
 
