@@ -5,27 +5,28 @@
   -->
 
 <script setup lang="ts">
-import { Head, router, useForm, usePage } from "@inertiajs/vue3"
-import { notify } from "@kyvg/vue3-notification"
-import { ref, reactive, onBeforeMount, watch, onBeforeUnmount, computed, nextTick } from "vue"
+import {Head, router, useForm, usePage} from "@inertiajs/vue3"
+import {notify} from "@kyvg/vue3-notification"
+import {ref, reactive, onBeforeMount, watch, onBeforeUnmount, computed} from "vue"
 import PageHeading from "@/Components/Headings/PageHeading.vue"
-import { capitalize } from "@/Composables/capitalize"
-import { library } from "@fortawesome/fontawesome-svg-core"
+import {capitalize} from "@/Composables/capitalize"
+import {library} from "@fortawesome/fontawesome-svg-core"
 import BannerWorkshopComponent from '@/Components/Workshop/BannerWorkshopComponent.vue'
-import { useLayoutStore } from "@/Stores/layout"
-import { cloneDeep } from "lodash"
-import { set, onValue, get } from "firebase/database"
-import { getDbRef } from '@/Composables/firebase'
+import {useLayoutStore} from "@/Stores/layout"
+import {cloneDeep} from "lodash"
+import {set, onValue, get} from "firebase/database"
+import {getDbRef} from '@/Composables/firebase'
 
-import { useBannerHash } from "@/Composables/useBannerHash"
+import {useBannerHash} from "@/Composables/useBannerHash"
 import Publish from "@/Components/Utils/Publish.vue"
 
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
-import { faUser, faUserFriends } from "@/../private/pro-light-svg-icons"
-import { faRocketLaunch } from "@/../private/pro-regular-svg-icons"
-import { faAsterisk } from "@/../private/pro-solid-svg-icons"
-import { faSpinnerThird } from '@/../private/pro-duotone-svg-icons'
-library.add( faAsterisk, faRocketLaunch, faUser, faUserFriends, faSpinnerThird );
+import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome"
+import {faUser, faUserFriends} from "@/../private/pro-light-svg-icons"
+import {faRocketLaunch} from "@/../private/pro-regular-svg-icons"
+import {faAsterisk} from "@/../private/pro-solid-svg-icons"
+import {faSpinnerThird} from '@/../private/pro-duotone-svg-icons'
+
+library.add(faAsterisk, faRocketLaunch, faUser, faUserFriends, faSpinnerThird);
 
 interface Action {
     type: string,
@@ -88,11 +89,11 @@ const props = defineProps<{
         name: string
         parameters?: Array<string>
     },
-    autoSaveRoute : {
+    autoSaveRoute: {
         name: string
         parameters?: Array<string>
     },
-    publishRoute : {
+    publishRoute: {
         name: string
         parameters?: Array<string>
     }
@@ -105,7 +106,7 @@ const comment = ref('')
 const loadingState = ref(false)
 const isSetData = ref(false)
 
-const routeExit =  props.pageHead.actions.find((item)=> item.style == "exit")
+const routeExit = props.pageHead.actions.find((item) => item.style == "exit")
 const dbPath = 'customers' + '/' + useLayoutStore().user.customer.ulid + '/banner_workshop/' + props.banner.slug
 const data = reactive(cloneDeep(props.bannerLayout))
 let timeoutId: any
@@ -119,37 +120,36 @@ const sendDataToServer = async () => {
     isLoading.value = true
     const formValues = {
         ...deleteUser(),
-        ...(props.banner.state !== 'unpublished' && { comment: comment.value }),
+        ...(props.banner.state !== 'unpublished' && {comment: comment.value}),
     }
     const form = useForm(formValues)
 
     form.patch(
         route(props.publishRoute['name'], props.publishRoute['parameters']), {
-        onSuccess: async (res) => {
-            try {
-                await set(getDbRef(dbPath), { published_hash: compCurrentHash.value })
-            }
-            catch (error) {
-                console.log("============")
-                console.log(error)
-            }
-            isLoading.value = false
-            router.visit(route(routeExit['route']['name'], routeExit['route']['parameters']))
-            notify({
-                title: "Success!",
-                type: "success",
-                text: "Banner been updated and published.",
-            });
-        },
-        onError: (errors: any) => {
-            console.log(errors)
-            notify({
-                title: "Failed to update banner",
-                text: errors,
-                type: "error"
-            });
-        },
-    })
+            onSuccess: async () => {
+                try {
+                    await set(getDbRef(dbPath), {published_hash: compCurrentHash.value})
+                } catch (error) {
+                    console.log("============")
+                    console.log(error)
+                }
+                isLoading.value = false
+                router.visit(route(routeExit['route']['name'], routeExit['route']['parameters']))
+                notify({
+                    title: "Success!",
+                    type: "success",
+                    text: "Banner been updated and published.",
+                });
+            },
+            onError: (errors: any) => {
+                console.log(errors)
+                notify({
+                    title: "Failed to update banner",
+                    text: errors,
+                    type: "error"
+                });
+            },
+        })
 }
 
 
@@ -161,10 +161,10 @@ const fetchInitialData = async () => {
         const snapshot = await get(getDbRef(dbPath))
         const firebaseData = snapshot.exists() ? snapshot.val() : null
 
-        const newData = { ...(firebaseData || cloneDeep(props.bannerLayout)) }
+        const newData = {...(firebaseData || cloneDeep(props.bannerLayout))}
         Object.assign(data, newData)
 
-        await set(getDbRef(dbPath), { ...firebaseData, ...newData })
+        await set(getDbRef(dbPath), {...firebaseData, ...newData})
 
 
     } catch (error) {
@@ -172,11 +172,10 @@ const fetchInitialData = async () => {
         Object.assign(data, cloneDeep(props.bannerLayout))
 
 
-
     } finally {
         isSetData.value = false
         loadingState.value = false
-        if(props.banner.state == 'live'){
+        if (props.banner.state == 'live') {
             startInterval()
         }
     }
@@ -186,7 +185,7 @@ const fetchInitialData = async () => {
 onBeforeMount(fetchInitialData)
 
 const deleteUser = () => {
-    const set = { ...data }  // Creating a copy of the data object
+    const set = {...data}  // Creating a copy of the data object
     for (const index in set.components) {
         if (set.components[index].user == user.value.username) {
             delete set.components[index].user  // Removing the 'user' property from components
@@ -207,7 +206,7 @@ const updateData = async () => {
             const snapshot = await get(getDbRef(dbPath))
             if (snapshot.exists()) {
                 const firebaseData = snapshot.val()
-                await set(getDbRef(dbPath), { ...firebaseData, ...data })
+                await set(getDbRef(dbPath), {...firebaseData, ...data})
                 if (props.banner.state == 'unpublished') {
                     clearTimeout(timeoutId)
                     timeoutId = setTimeout(() => {
@@ -224,7 +223,7 @@ const updateData = async () => {
 onValue(getDbRef(dbPath), (snapshot) => {
     if (snapshot.exists()) {
         const firebaseData = snapshot.val()
-        Object.assign(data, { ...data, ...firebaseData })
+        Object.assign(data, {...data, ...firebaseData})
     }
 })
 
@@ -232,20 +231,13 @@ const autoSave = () => {
     const form = useForm(deleteUser());
     form.patch(
         route(props.autoSaveRoute.name, props.autoSaveRoute.parameters), {
-        onSuccess: async (res) => {
-            notify({
-                type: "success",
-                title: "Success!",
-                text: "Banner has been auto saved.",
-            })
-        },
-        onError: (errors: any) => {
-            console.log(errors)
-        },
-    })
+            onError: (errors: any) => {
+                console.log(errors)
+            },
+        })
 }
 
-watch(data, updateData, { deep: true })
+watch(data, updateData, {deep: true})
 
 
 // const validationState=()=>{
@@ -259,15 +251,15 @@ onBeforeUnmount(() => {
     stopInterval()
 })
 
-const  startInterval=()=>{
+const startInterval = () => {
     intervalAutoSave.value = setInterval(() => {
         autoSave();
-      }, 600000);
-    }
+    }, 600000);
+}
 
-const stopInterval=()=>{
-      clearInterval(intervalAutoSave.value);
-    }
+const stopInterval = () => {
+    clearInterval(intervalAutoSave.value);
+}
 
 
 const compIsHashSameWithPrevious = computed(() => {
@@ -284,11 +276,11 @@ const compIsDataFirstTimeCreated = computed(() => {
 
 
 <template layout="CustomerApp">
-    <Head :title="capitalize(title)" />
+    <Head :title="capitalize(title)"/>
     <!-- <pre>{{ props.banner.type }}</pre> -->
     <PageHeading :data="pageHead">
         <template #other="{ dataPageHead: head }">
-            <Publish 
+            <Publish
                 v-model="comment"
                 :isDataFirstTimeCreated="compIsDataFirstTimeCreated"
                 :isHashSame="compIsHashSameWithPrevious"
@@ -298,10 +290,10 @@ const compIsDataFirstTimeCreated = computed(() => {
             />
         </template>
     </PageHeading>
-    
+
     <section>
         <div v-if="loadingState" class="w-full min-h-screen flex justify-center items-center">
-            <FontAwesomeIcon icon='fad fa-spinner-third' class='animate-spin h-12 text-gray-600' aria-hidden='true' />
+            <FontAwesomeIcon icon='fad fa-spinner-third' class='animate-spin h-12 text-gray-600' aria-hidden='true'/>
         </div>
 
         <div v-else>
