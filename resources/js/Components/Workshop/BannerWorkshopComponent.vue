@@ -35,7 +35,7 @@ const screenView = ref("")
 
         <!-- Banner -->
         <div class="flex justify-center pr-0.5">
-            <Slider :bannerType="banner.type" :data="data" :jumpToIndex="jumpToIndex" :view="screenView" />
+            <Slider :data="data" :jumpToIndex="jumpToIndex" :view="screenView" />
         </div>
         
         <!-- Editor -->

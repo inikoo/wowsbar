@@ -76,9 +76,9 @@ const props = defineProps<{
         }[]
         
         delay: number
+        type: string
     }
     view?: string
-    bannerType?: string
 
 }>()
 
@@ -146,7 +146,7 @@ const compHandleBannerLessSlide = computed(() => {
     </div> -->
     
     <!-- Square -->
-    <div v-if="bannerType == 'square'"
+    <div v-if="data.type == 'square'"
         class="relative h-48 lg:h-64 xl:h-96 w-fit shadow overflow-hidden"
         :class="[compSlidesPerView == 1 ? 'aspect-square' : `aspect-[${compSlidesPerView}/1]`]"
     >

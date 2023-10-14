@@ -77,6 +77,7 @@ const props = defineProps<{
             link: string;
         }>;
         delay: number;
+        type: string
     };
     imagesUploadRoute: {
         name: string;
@@ -84,7 +85,6 @@ const props = defineProps<{
     };
     user: string
     screenView: String
-    bannerType: string
 }>();
 
 const emits = defineEmits<{
@@ -636,7 +636,7 @@ const uploadImageRespone = (res) => {
 
         <!-- The Editor: Slide -->
         <div class="border border-gray-300 w-3/4 rounded-md" v-if="currentComponentBeenEdited != null">
-            <SlideWorkshop ref="_SlideWorkshop" :bannerType="bannerType" :common="data.common" :currentComponentBeenEdited="currentComponentBeenEdited"
+            <SlideWorkshop ref="_SlideWorkshop" :bannerType="data.type" :common="data.common" :currentComponentBeenEdited="currentComponentBeenEdited"
                 :blueprint="ComponentsBlueprint" :remove="removeComponent" />
         </div>
 
@@ -651,7 +651,7 @@ const uploadImageRespone = (res) => {
         <Modal :isOpen="isOpenCropModal" @onClose="closeCropModal">
             <div>
                 <CropImage
-                    :ratio="bannerType == 'square' ? {w: 1, h: 1} : {w: 4, h: 1}"
+                    :ratio="data.type == 'square' ? {w: 1, h: 1} : {w: 4, h: 1}"
                     :data="uploadedFilesList"
                     :imagesUploadRoute="props.imagesUploadRoute"
                     :response="uploadImageRespone" />

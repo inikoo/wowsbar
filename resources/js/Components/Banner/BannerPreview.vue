@@ -28,7 +28,7 @@ const props = defineProps<{
     </div>
 
     <!-- If banner is 'square' -->
-    <div v-else class="flex flex-col h-48 lg:h-64 xl:h-96">
+    <div v-else class="flex flex-col">
         <div class="w-full bg-white flex flex-col md:flex-row items-center justify-between py-3 px-4 gap-y-1">
             <!-- Title -->
             <div class="flex gap-x-2">
@@ -44,7 +44,7 @@ const props = defineProps<{
             <!-- Published at -->
             <div class="text-sm italic text-gray-500 tracking-wide text-right font-light">Published at <span class="font-bold">{{ useRangeFromNow(data.published_snapshot.published_at) }}</span> ago</div>
         </div>
-        <Slider :data="data.compiled_layout" :bannerType="data.type"/>
+        <Slider :data="data.compiled_layout" />
     
     </div>
 </template>
