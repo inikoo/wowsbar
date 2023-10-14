@@ -10,6 +10,7 @@ namespace App\Actions\Portfolio\PortfolioWebsite\UI;
 use App\Actions\Helpers\History\IndexCustomerHistory;
 use App\Actions\InertiaAction;
 use App\Actions\Portfolio\Banner\UI\IndexBanners;
+use App\Actions\Traits\WelcomeWidgets\WithFirstBanner;
 use App\Actions\UI\Customer\Portfolio\ShowPortfolio;
 use App\Actions\UI\WithInertia;
 use App\Enums\UI\Customer\PortfolioWebsiteTabsEnum;
@@ -26,6 +27,7 @@ class ShowPortfolioWebsite extends InertiaAction
 {
     use AsAction;
     use WithInertia;
+    use WithFirstBanner;
 
 
     public function authorize(ActionRequest $request): bool
@@ -85,6 +87,7 @@ class ShowPortfolioWebsite extends InertiaAction
                     'current'    => $this->tab,
                     'navigation' => PortfolioWebsiteTabsEnum::navigation()
                 ],
+                'firstBanner' => $this->canEdit ? $this->getFirstBannerWidget($portfolioWebsite) : null,
 
                 PortfolioWebsiteTabsEnum::CHANGELOG->value => $this->tab == PortfolioWebsiteTabsEnum::CHANGELOG->value ?
                     fn () => CustomerHistoryResource::collection(IndexCustomerHistory::run(

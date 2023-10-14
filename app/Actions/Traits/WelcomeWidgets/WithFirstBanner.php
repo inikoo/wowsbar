@@ -1,0 +1,62 @@
+<?php
+/*
+ * Author: Raul Perusquia <raul@inikoo.com>
+ * Created: Sat, 14 Oct 2023 16:06:07 Malaysia Time, Office, Bali, Indonesia
+ * Copyright (c) 2023, Raul A Perusquia Flores
+ */
+
+namespace App\Actions\Traits\WelcomeWidgets;
+
+use App\Actions\Portfolio\PortfolioWebsite\UI\GetPortfolioWebsitesOptions;
+use App\Models\CRM\Customer;
+use App\Models\Portfolio\PortfolioWebsite;
+
+trait WithFirstBanner
+{
+    public function getFirstBannerWidget(Customer|PortfolioWebsite $scope): array
+    {
+        $firstBanner = null;
+
+        $textHtml = '<p>Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.</p>';
+
+        if (class_basename($scope) == 'PortfolioWebsite') {
+
+
+            if ($scope->stats->number_banners == 0) {
+                $firstBanner = [
+                    'text'        => $textHtml,
+                    'createRoute' => [
+                        'name'       => 'customer.models.portfolio-website.banner.store',
+                        'parameters' => $scope->id
+                    ]
+                ];
+            }
+        } else {
+            if ($scope->portfolioStats->number_banners == 0) {
+                $numberPortfolioWebsites = $scope->portfolioStats->number_portfolio_websites;
+                if ($numberPortfolioWebsites == 1) {
+                    $portfolioWebsiteID = PortfolioWebsite::first()->pluck('id');
+                    $firstBanner        = [
+                        'text'        => $textHtml,
+                        'createRoute' => [
+                            'name'       => 'customer.models.portfolio-website.banner.store',
+                            'parameters' => $portfolioWebsiteID
+                        ]
+                    ];
+                } elseif ($numberPortfolioWebsites > 1) {
+                    $firstBanner = [
+                        'text'           => $textHtml,
+                        'websiteOptions' => GetPortfolioWebsitesOptions::run(),
+                        'createRoute'    => [
+                            'name' => 'customer.models.banner.store',
+
+                        ]
+                    ];
+                }
+            }
+        }
+
+        return $firstBanner;
+    }
+
+}
