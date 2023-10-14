@@ -87,41 +87,46 @@ const handleToggleLeftbar = () => {
                     <!-- LeftSide Links -->
                     <div v-for="(item, itemKey) in layout.navigation"
                         :key="itemKey"
-                        
                     >
                         <!-- Navigation -->
                         <Link :href="route(item.route)"
                             class="flex items-center group text-sm font-medium py-2" 
                             :class="[
                                 itemKey === layout.currentModule || Object.keys(item.subNav ?? {}).some(subNav => subNav === layout.currentModule)
-                                    ? 'navigationActiveCustomer dark:border-gray-100 dark:bg-gray-600 px-0.5'
+                                    ? 'navigationActiveCustomer dark:border-gray-100 dark:bg-gray-600 '
                                     : 'navigationCustomer dark:hover:bg-dark-700 px-1',
-                                layout.leftSidebar.show ? 'px-3' : '',
+                                !layout.leftSidebar.show && Object.keys(item.subNav ?? {}).some(subNav => subNav === layout.currentModule) ? 'text-white border-l-1 border-transparent' : '',
                             ]"
                             :aria-current="itemKey === layout.currentModule ? 'page' : undefined"
                         >
                             <FontAwesomeIcon
                                 aria-hidden="true"
                                 class="dark:text-gray-200 ml-2 mr-3 flex-shrink-0 h-4 w-4"
-                                :icon="item.icon"/>
+                                :icon="item.icon" fixed-width />
                             <span class="capitalize leading-none whitespace-nowrap" :class="[layout.leftSidebar.show ? 'block md:block' : 'block md:hidden']">{{ trans(item.label) }}</span>
-                            <!-- <span >{{ Object.keys(item.subNav ?? {}).some(subNav => subNav === layout.currentModule) }}</span> -->
+                            <!-- <span >{{ itemKey }} -- {{ item.scope }} -- {{ Object.values(layout.navigation)[0].scope }}</span> -->
                         </Link>
 
                         <!-- Sub Navigation -->
                         <template v-if="item.subNav">
-                            <div class="flex flex-col pl-5">
+                            <div class="flex flex-col"
+                                :class="[layout.leftSidebar.show ? 'pl-2' : 'pl-0']"
+                            >
                                 <Link :href="route(subNav.route)" v-for="(subNav, subNavKey) in item.subNav"
                                     class="group flex items-center text-sm font-medium py-2"
                                     :class="[
                                         subNavKey === layout.currentModule
-                                            ? 'navigationActiveCustomer dark:border-gray-100 dark:bg-gray-600 px-0.5'
+                                            ? 'navigationActiveCustomer border-l-[3px] dark:border-gray-100 dark:bg-gray-600 px-0.5'
                                             : 'navigationCustomer dark:hover:bg-dark-700 px-1',
                                         layout.leftSidebar.show ? 'px-3' : '',
                                     ]"
                                     :aria-current="subNavKey === layout.currentModule ? 'page' : undefined"
                                 >
-                                    {{ subNav.label }}
+                                    <FontAwesomeIcon
+                                    aria-hidden="true"
+                                    class="dark:text-gray-200 ml-2 mr-3 flex-shrink-0 h-4 w-4"
+                                    :icon="subNav.icon"/>
+                                    <span class="whitespace-nowrap">{{ subNav.label }}</span>
                                 </Link>
                             </div>
                         </template>

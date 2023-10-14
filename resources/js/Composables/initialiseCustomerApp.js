@@ -41,6 +41,10 @@ export const initialiseCustomerApp = () => {
 
         let moduleName = layout.currentRoute.split('.');
         layout.currentModule = moduleName[1];
+        
+        // alert(layout.currentRoute)
+        // alert(moduleName)
+        // alert(layout.currentModule)
 
         layout.booted = true;
 

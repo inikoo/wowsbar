@@ -54,9 +54,20 @@ class GetLayout
             ],
         ];
 
+        // $navigation['portfolio'] = [
+        //     'scope'   => 'portfolio',
+        //     'icon'    => ['fal', 'fa-briefcase'],
+        //     'label'   => __('Portfolio'),
+        //     'route'   => 'customer.portfolio.dashboard',
+        //     'topMenu' => [
+        //         'subSections' => $portfolioSubsections
+        //     ]
+        // ];
+
+        // Nav: Social Accounts
         if ($customerUser->hasPermissionTo('portfolio.social.view')) {
             $navigation['social'] = [
-                'scope'   => 'social',
+                'scope'   => 'portfolio',
                 'icon'    => ['fal', 'fa-thumbs-up'],
                 'label'   => __('Social accounts'),
                 'route'   => 'customer.portfolio.social-accounts.index',
@@ -65,9 +76,7 @@ class GetLayout
                 ]
             ];
         }
-
-
-   
+        
 
         $websiteSubNav=[];
 
@@ -177,8 +186,9 @@ class GetLayout
             ];
         }
 
+        // Websites
         if ($customerUser->hasPermissionTo('portfolio.view')) {
-            $navigation['portfolio'] = [
+            $navigation['websites'] = [
                 'scope'   => 'portfolio',
                 'icon'    => ['fal', 'fa-globe'],
                 'label'   => __('websites'),
