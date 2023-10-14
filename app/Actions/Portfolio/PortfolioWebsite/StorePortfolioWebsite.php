@@ -8,10 +8,12 @@
 namespace App\Actions\Portfolio\PortfolioWebsite;
 
 use App\Actions\CRM\Customer\Hydrators\CustomerHydratePortfolioWebsites;
+use App\Actions\CRM\Customer\Hydrators\CustomerHydrateWelcomeStep;
 use App\Actions\Market\Shop\Hydrators\ShopHydrateCustomerWebsites;
 use App\Actions\Portfolios\CustomerWebsite\Hydrators\CustomerWebsiteHydrateUniversalSearch;
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateCustomerWebsites;
 use App\Actions\Portfolio\PortfolioWebsite\Hydrators\PortfolioWebsiteHydrateUniversalSearch;
+use App\Actions\Traits\WithPortfolioWebsiteAction;
 use App\Http\Resources\Portfolio\PortfolioWebsiteResource;
 use App\Models\CRM\Customer;
 use App\Models\Organisation\Division;
@@ -20,18 +22,17 @@ use App\Models\Portfolio\PortfolioWebsite;
 use App\Rules\IUnique;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
-use OwenIt\Auditing\Events\AuditCustom;
 
 class StorePortfolioWebsite
 {
     use AsAction;
     use WithAttributes;
+    use WithPortfolioWebsiteAction;
 
 
     private bool $asAction = false;
@@ -40,10 +41,12 @@ class StorePortfolioWebsite
     public function handle(Customer $customer, array $modelData): PortfolioWebsite
     {
         data_set($modelData, 'shop_id', $customer->shop_id);
+        // Note customer_id added magically by a global scope
         $portfolioWebsite = PortfolioWebsite::create($modelData);
         $portfolioWebsite->stats()->create();
 
-        $this->customerWebsiteAudit($portfolioWebsite);
+
+        $this->createAudit(CustomerWebsite::find($portfolioWebsite->id));
 
         // Must be run to the website layout to work
         CustomerHydratePortfolioWebsites::run($portfolioWebsite->customer);
@@ -55,22 +58,12 @@ class StorePortfolioWebsite
 
         OrganisationHydrateCustomerWebsites::dispatch();
         ShopHydrateCustomerWebsites::dispatch(customer()->shop);
+        CustomerHydrateWelcomeStep::make()->websiteAdded($customer);
 
         return $portfolioWebsite;
     }
 
-    private function customerWebsiteAudit(PortfolioWebsite $portfolioWebsite): void
-    {
-        $customerWebsite                 = CustomerWebsite::find($portfolioWebsite->id);
-        $customerWebsite->auditEvent     = 'created';
-        $customerWebsite->isCustomEvent  = true;
-        $customerWebsite->auditCustomOld = [];
-        $customerWebsite->auditCustomNew = [
-            'url'  => $customerWebsite->url,
-            'name' => $customerWebsite->name
-        ];
-        Event::dispatch(AuditCustom::class, [$customerWebsite]);
-    }
+
 
     public function authorize(ActionRequest $request): bool
     {

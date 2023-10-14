@@ -8,6 +8,7 @@
 namespace App\Actions\Portfolio\PortfolioDivision;
 
 use App\Actions\CRM\Customer\Hydrators\CustomerHydratePortfolioWebsites;
+use App\Actions\CRM\Customer\Hydrators\CustomerHydrateWelcomeStep;
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateCustomerWebsites;
 use App\Enums\Portfolio\PortfolioWebsite\PortfolioWebsiteInterestEnum;
 use App\Models\Organisation\Division;
@@ -35,6 +36,18 @@ class SyncDivisionPortfolioWebsite
 
         OrganisationHydrateCustomerWebsites::dispatch();
         CustomerHydratePortfolioWebsites::dispatch($portfolioWebsite->customer);
+
+
+        if (in_array($modelData['interest'], [
+            PortfolioWebsiteInterestEnum::NOT_INTERESTED,
+            PortfolioWebsiteInterestEnum::INTERESTED,
+        ])) {
+            CustomerHydrateWelcomeStep::make()->interestSet($portfolioWebsite->customer);
+        } elseif ($modelData['interest'] == PortfolioWebsiteInterestEnum::CUSTOMER) {
+
+            CustomerHydrateWelcomeStep::make()->isCustomer($portfolioWebsite->customer);
+        }
+
     }
 
     public function rules(): array
