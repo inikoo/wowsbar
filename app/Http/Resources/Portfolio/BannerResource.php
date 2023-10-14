@@ -84,7 +84,7 @@ class BannerResource extends JsonResource
                 'parameters' => [$banner->slug]
             ],
             'compiled_layout'    => $banner->compiled_layout,
-            'delivery_url'       => config('app.delivery_url').$banner->ulid,
+            'delivery_url'       => config('app.delivery_url').'/banners/'.$banner->ulid,
             'published_snapshot' => $publishedSnapshot
         ];
     }
