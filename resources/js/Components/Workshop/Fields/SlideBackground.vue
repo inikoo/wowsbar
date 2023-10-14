@@ -138,17 +138,17 @@ const screenViewChange = (value: string) => {
             <ScreenView @screenView="screenViewChange" />
         </div>
         
-        <div class="flex justify-center">
-            <div class="overflow-hidden border border-gray-300 shadow" :class="[
+        <div class="flex justify-center w-full">
+            <div class="w-fit h-32 lg:h-44 xl:h-64 overflow-hidden border border-gray-300 shadow transition-all duration-200 ease-in-out" :class="[
                 bannerType == 'square'
-                    ? 'aspect-square w-1/2'  // If banner is a square
+                    ? 'aspect-square'  // If banner is a square
                     : screenView
                         ? {
-                            'aspect-[2/1] w-1/2': screenView === 'mobile',
-                            'aspect-[3/1] w-3/4': screenView === 'tablet',
-                            'aspect-[4/1] w-full': screenView === 'desktop'
+                            'aspect-[2/1]': screenView === 'mobile',
+                            'aspect-[3/1]': screenView === 'tablet',
+                            'aspect-[4/1]': screenView === 'desktop'
                         }
-                        : 'w-full aspect-[2/1] md:aspect-[3/1] lg:aspect-[4/1]'
+                        : 'aspect-[2/1] md:aspect-[3/1] lg:aspect-[4/1]'
             ]">
                 <div class="relative w-full h-full flex items-center bg-gray-100">
                     <Image :src="get(value, [`${screenView}`, 'source'], value.desktop.source)"

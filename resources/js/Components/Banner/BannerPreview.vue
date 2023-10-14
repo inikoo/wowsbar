@@ -28,7 +28,7 @@ const props = defineProps<{
     </div>
 
     <!-- If banner is 'square' -->
-    <div v-else class="flex flex-col">
+    <div v-else class="flex flex-col h-48 lg:h-64 xl:h-96">
         <div class="w-full bg-white flex flex-col md:flex-row items-center justify-between py-3 px-4 gap-y-1">
             <!-- Title -->
             <div class="flex gap-x-2">
