@@ -59,9 +59,9 @@ pg_dump -Fc -f "devops/devel/snapshots/customers.dump" ${DB}
 php artisan customer-website:import -g wowsbar/data-sets/customer-websites
 
 echo "🌱 create test website with a banner"
-php artisan customer:new-portfolio-website aiku http://hello.com 'My website 😸'
-php artisan customer:new-banner aiku 'My first banner 🫡' mw
-php artisan customer:new-banner aiku 'My first banner without website 🫡'
+#php artisan customer:new-portfolio-website aiku http://hello.com 'My website 😸'
+#php artisan customer:new-banner aiku mw -N 'My first banner 🫡'
+php artisan customer:new-banner aiku mw
 pg_dump -Fc -f "devops/devel/snapshots/portfolio.dump" ${DB}
 echo "🌱 Importing HR"
 php artisan workplace:create "Beach bar" hq
