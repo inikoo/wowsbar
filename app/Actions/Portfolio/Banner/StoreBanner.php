@@ -224,6 +224,27 @@ class StoreBanner
         return 0;
     }
 
+
+    public function jsonResponse(Banner $banner): string
+    {
+        if (class_basename($this->parent) == 'PortfolioWebsite') {
+            return route(
+                'customer.portfolio.websites.show.banners.workshop',
+                [
+                    $this->parent->slug,
+                    $banner->slug
+                ]
+            );
+        }
+
+        return route(
+            'customer.caas.banners.workshop',
+            [
+                $banner->slug
+            ]
+        );
+    }
+
     public function htmlResponse(Banner $banner): RedirectResponse
     {
         if (class_basename($this->parent) == 'PortfolioWebsite') {
