@@ -64,7 +64,7 @@ class ShowProfile
                             ],
                             "avatar" => [
                                 "type"  => "avatar",
-                                "label" => __("photo"),
+                                "label" => __("avatar"),
                                 "value" => !blank($user->avatar_id) ? $user->avatarImageSources(320, 320) : null,
                             ],
 

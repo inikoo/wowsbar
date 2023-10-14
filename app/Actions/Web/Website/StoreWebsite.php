@@ -73,7 +73,7 @@ class StoreWebsite
                 ]
             ]
         );
-
+        SetInitialWebsiteLogo::dispatch($website);
         $website->webStats()->create();
 
 
