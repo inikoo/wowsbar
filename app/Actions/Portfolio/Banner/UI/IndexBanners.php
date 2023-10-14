@@ -8,6 +8,7 @@
 namespace App\Actions\Portfolio\Banner\UI;
 
 use App\Actions\InertiaAction;
+use App\Actions\Portfolio\PortfolioWebsite\UI\GetPortfolioWebsitesOptions;
 use App\Actions\Portfolio\PortfolioWebsite\UI\ShowPortfolioWebsite;
 use App\Actions\UI\Customer\CaaS\ShowCaaSDashboard;
 use App\Enums\Portfolio\Banner\BannerStateEnum;
@@ -197,14 +198,53 @@ class IndexBanners extends InertiaAction
     {
         $scope     = $this->parent;
         $container = null;
-        if (class_basename($scope) == 'PortfolioWebsite') {
-            $container = [
-                'icon'    => ['fal', 'fa-globe'],
-                'tooltip' => __('website'),
-                'label'   => Str::possessive($scope->name)
-            ];
-        }
 
+        $firstBanner = null;
+
+        if ($this->canEdit) {
+            $text = 'idem';
+
+            if (class_basename($scope) == 'PortfolioWebsite') {
+                $container = [
+                    'icon'    => ['fal', 'fa-globe'],
+                    'tooltip' => __('website'),
+                    'label'   => Str::possessive($scope->name)
+                ];
+
+                if ($scope->stats->number_banners == 0) {
+                    $firstBanner = [
+                        'text'        => $text,
+                        'createRoute' => [
+                            'name'       => 'customer.models.portfolio-website.banner.store',
+                            'parameters' => $scope->id
+                        ]
+                    ];
+                }
+            } else {
+                if ($scope->portfolioStats->number_banners == 0) {
+                    $numberPortfolioWebsites = $scope->portfolioStats->number_portfolio_websites;
+                    if ($numberPortfolioWebsites == 1) {
+                        $portfolioWebsiteID = PortfolioWebsite::first()->pluck('id');
+                        $firstBanner        = [
+                            'text'        => $text,
+                            'createRoute' => [
+                                'name'       => 'customer.models.portfolio-website.banner.store',
+                                'parameters' => $portfolioWebsiteID
+                            ]
+                        ];
+                    } elseif ($numberPortfolioWebsites > 1) {
+                        $firstBanner = [
+                            'text'           => $text,
+                            'websiteOptions' => GetPortfolioWebsitesOptions::run(),
+                            'createRoute'    => [
+                                'name' => 'customer.models.banner.store',
+
+                            ]
+                        ];
+                    }
+                }
+            }
+        }
 
         return Inertia::render(
             'Banners/Banners',
@@ -234,6 +274,8 @@ class IndexBanners extends InertiaAction
                         ]
 
                 ],
+                'firstBanner' => $firstBanner,
+
 
                 'data' => BannerResource::collection($banners),
             ]

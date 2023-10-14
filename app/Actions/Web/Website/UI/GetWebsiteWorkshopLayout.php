@@ -20,20 +20,15 @@ class GetWebsiteWorkshopLayout
             "formData" => [
                 "blueprint" => [
                     [
-                        "title"   => __("profile"),
-                        "icon"    => "fa-light fa-user-circle",
-                        "notes"   => __("This information will be synchronised in all your workspaces."),
+                        "title"   => __("art"),
+                        "icon"    => "fal fa-images",
                         "current" => true,
                         "fields"  => [
-                            "about"  => [
-                                "type"  => "textarea",
-                                "label" => __("about"),
-                                "value" => ''
-                            ],
-                            "avatar" => [
+                            "logo" => [
                                 "type"  => "avatar",
-                                "label" => __("photo"),
-                                "value" => ''
+                                "label" => __("logo"),
+                                "value" => !blank($website->logo_id) ? $website->logoImageSources(320, 320) : null,
+
                             ],
 
                         ],
@@ -42,7 +37,8 @@ class GetWebsiteWorkshopLayout
                 ],
                 "args"      => [
                     "updateRoute" => [
-                        "name"       => "org.models.website.layout.update"
+                        "name"       => "org.models.website.layout.update",
+                        'parameters' => $website->id
                     ],
                 ],
             ],

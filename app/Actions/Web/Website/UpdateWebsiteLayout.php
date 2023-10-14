@@ -7,12 +7,11 @@
 
 namespace App\Actions\Web\Website;
 
-use App\Actions\Helpers\Images\GetPictureSources;
 use App\Actions\Traits\WithActionUpdate;
-use App\Helpers\ImgProxy\Image;
-use App\Models\Media\Media;
 use App\Models\Web\Website;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Arr;
+use Illuminate\Validation\Rules\File;
 use Lorisleiva\Actions\ActionRequest;
 
 class UpdateWebsiteLayout
@@ -23,22 +22,22 @@ class UpdateWebsiteLayout
 
     public function handle(Website $website, array $modelData): Website
     {
-        $website->update(
-            [
-                'layout' => $modelData
-            ]
-        );
 
-        /*
-         *
-         *  $layoutData = (array) $request;
-        $media      = Media::find(Arr::get($layoutData, 'favicon'));
-        if($media) {
-            $favicon    = (new Image())->make($media->getImgProxyFilename())->resize(0, 180);
-            return array_merge($layoutData, ['faviconSrc' => GetPictureSources::run($favicon)]);
+        if(Arr::exists($modelData, 'logo')) {
+            /** @var UploadedFile $logo */
+            $logo=Arr::get($modelData, 'logo');
+            Arr::forget($modelData, 'logo');
+
+            UploadWebsiteLogo::run(
+                website: $website,
+                imagePath: $logo->getPathName(),
+                originalFilename: $logo->getClientOriginalName(),
+                extension: $logo->getClientOriginalExtension()
+            );
+
         }
-        return  $layoutData;
-         */
+
+
 
 
         return $website;
@@ -56,13 +55,12 @@ class UpdateWebsiteLayout
     public function rules(): array
     {
         return [
-            'layout'      => ['required', 'string'],
-            'footer'      => ['required', 'array'],
-            'header'      => ['required', 'array'],
-            'content'     => ['required', 'array'],
-            'favicon'     => ['required', 'integer'],
-            'imageLayout' => ['sometimes', 'nullable', 'integer'],
-            'colorLayout' => ['required', 'string'],
+            'logo'      => [
+                'sometimes',
+                'nullable',
+                File::image()
+                    ->max(12 * 1024)
+            ],
 
         ];
     }
