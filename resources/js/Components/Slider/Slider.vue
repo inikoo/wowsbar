@@ -42,6 +42,7 @@ interface Corners {
 }
 
 const props = defineProps<{
+    production: boolean
     jumpToIndex?: number
     data: {
         common: {
@@ -147,8 +148,10 @@ const compHandleBannerLessSlide = computed(() => {
     
     <!-- Square -->
     <div v-if="data.type == 'square'"
-        class="relative h-48 lg:h-64 xl:h-96 w-fit shadow overflow-hidden"
-        :class="[compSlidesPerView == 1 ? 'aspect-square' : `aspect-[${compSlidesPerView}/1]`]"
+        class="relative shadow overflow-hidden"
+        :class="[
+            production ? 'w-full' : 'h-48 lg:h-64 xl:h-96 w-fit',
+            compSlidesPerView == 1 ? 'aspect-square' : `aspect-[${compSlidesPerView}/1]`]"
     >
         <Swiper ref="swiperRef"
             :slideToClickedSlide="false"
@@ -193,9 +196,10 @@ const compHandleBannerLessSlide = computed(() => {
     </div>
 
     <!-- Landscape -->
-    <div v-else class="w-fit">
-        <div class="w-full relative h-48 lg:h-64 xl:h-96 transition-all duration-200 ease-in-out"
-            :class="[$props.view
+        <div v-else class="relative transition-all duration-200 ease-in-out"
+            :class="[
+                production ? 'w-full' : 'w-full h-48 lg:h-64 xl:h-96',
+            $props.view
                 ? { 'aspect-[2/1]' : $props.view == 'mobile',
                     'aspect-[3/1]' : $props.view == 'tablet',
                     'aspect-[4/1]' : $props.view == 'desktop'}
@@ -240,7 +244,6 @@ const compHandleBannerLessSlide = computed(() => {
             <!-- Reserved Corner: Button Controls -->
             <SlideCorner class="z-10" v-for="(corner, position) in filteredNulls(data.common.corners)" :position="position" :corner="corner"   :swiperRef="swiperRef"/>
         </div>
-    </div>
 </template>
 
 <style lang="scss">

@@ -32,7 +32,7 @@ const props = defineProps<{
 
 <template >
     <div class="w-full">
-        <Slider :data="data" class="h-full" />
+        <Slider :data="data" class="h-full" :production="true"/>
     </div>
 </template>
 
