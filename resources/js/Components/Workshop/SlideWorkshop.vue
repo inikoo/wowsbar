@@ -27,7 +27,7 @@ const props = defineProps<{
     blueprint: Array
     remove : Function
     common: any
-    bannerType: string
+    bannerType?: string
 }>()
 
 // console.log(props.common)

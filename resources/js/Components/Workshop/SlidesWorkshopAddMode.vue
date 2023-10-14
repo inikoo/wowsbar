@@ -35,12 +35,12 @@ const props = defineProps<{
             visibility: boolean
         }>
         delay: number
+        type: string
     }
     imagesUploadRoute: {
         name: string
         parameters: string[]
     }
-    bannerType: string
 }>()
 
 const isOpenModalCrop = ref(false)
@@ -97,7 +97,7 @@ const uploadImageRespone = (res) => {
 <template layout="CustomerApp">
     <Modal :isOpen="isOpenModalCrop" @onClose="closeModal">
         <div>
-            <CropImage :ratio="bannerType == 'square' ? {w: 1, h: 1} : {w: 4, h: 1}" :data="addedFiles" :imagesUploadRoute="props.imagesUploadRoute" :response="uploadImageRespone" />
+            <CropImage :ratio="data.type == 'square' ? {w: 1, h: 1} : {w: 4, h: 1}" :data="addedFiles" :imagesUploadRoute="props.imagesUploadRoute" :response="uploadImageRespone" />
         </div>
     </Modal>
     
@@ -109,7 +109,7 @@ const uploadImageRespone = (res) => {
     
     <div class="col-span-full p-3" >
         <SlideAddMode
-            :bannerType="bannerType"
+            :bannerType="data.type"
             :resetInput="true"
             @addedFiles="(files: any ) => addedFiles = files"
             @dragover="dragover"

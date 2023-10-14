@@ -45,7 +45,7 @@ const screenView = ref("")
 
     <!-- Section: Add slide if there is not exist -->
     <div v-if="data.components.filter((item: any) => item.ulid != null).length == 0">
-        <SlidesWorkshopAddMode :bannerType="banner.type" :data="data" :imagesUploadRoute="imagesUploadRoute" />
+        <SlidesWorkshopAddMode :data="data" :imagesUploadRoute="imagesUploadRoute" />
     </div>
 
 </template>

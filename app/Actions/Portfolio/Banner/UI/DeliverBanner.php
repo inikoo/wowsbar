@@ -41,7 +41,7 @@ class DeliverBanner
     {
 
         return Inertia::render(
-            'Delivery/Banner',
+            'Banner',
             [
                 'data' => $compiledLayout
             ]
