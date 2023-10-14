@@ -13,7 +13,7 @@ import {useTabChange} from "@/Composables/tab-change";
 import ModelDetails from "@/Pages/ModelDetails.vue";
 import Tabs from "@/Components/Navigation/Tabs.vue";
 import {capitalize} from "@/Composables/capitalize"
-import TableHistories from "@/Components/Tables/TableHistories.vue";
+import TableCustomerHistories from "@/Components/Tables/TableCustomerHistories.vue";
 import TableBanners from "@/Components/Tables/TableBanners.vue";
 
 import {faRectangleWide, faGlobe} from "@/../private/pro-light-svg-icons"
@@ -38,7 +38,7 @@ const component = computed(() => {
 
     const components = {
         details: ModelDetails,
-        changelog: TableHistories
+        changelog: TableCustomerHistories
     };
     return components[currentTab.value];
 

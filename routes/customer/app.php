@@ -20,19 +20,12 @@ Route::middleware([
         Route::prefix("dashboard")
             ->name("dashboard.")
             ->group(__DIR__."/dashboard.php");
-        /*
-        Route::prefix("customer")
-            ->name("customer.")
-            ->group(__DIR__."/tenant.php");
-        */
         Route::prefix("portfolio")
             ->name("portfolio.")
             ->group(__DIR__."/portfolio.php");
-
         Route::prefix("prospects")
             ->name("prospects.")
             ->group(__DIR__."/prospects.php");
-
         Route::prefix("seo")
             ->name("seo.")
             ->group(__DIR__."/seo.php");
@@ -63,6 +56,5 @@ Route::middleware([
 
     });
 
-    ;
     require __DIR__."/auth.php";
 });

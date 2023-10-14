@@ -6,7 +6,6 @@
 
 DB=wowsbar
 BACKUP_DB=wowsbar_backup
-IMPORT_DIR=production
 
 echo -e "🧼 Cleaning storage"
 rm -rf public/tenants
