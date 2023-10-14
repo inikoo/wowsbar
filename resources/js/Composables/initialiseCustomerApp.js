@@ -20,6 +20,7 @@ export const initialiseCustomerApp = () => {
                 usePage().props.layout.secondaryNavigation ?? null;
         }
 
+
         // Set data of Locale (Language)
         if (usePage().props.localeData) {
             locale.language = usePage().props.localeData.language;

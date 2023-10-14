@@ -13,6 +13,8 @@ export const useLayoutStore = defineStore('layout', {
                 slug         : '',
                 name         : '',
                 showLiveUsers: false,
+                logo: {},
+                url: ''
             },
             avatar_thumbnail      : {
                 original: '',

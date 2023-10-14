@@ -13,11 +13,11 @@ use App\Models\Portfolio\PortfolioWebsite;
 
 trait WithFirstBanner
 {
-    public function getFirstBannerWidget(Customer|PortfolioWebsite $scope): array
+    public function getFirstBannerWidget(Customer|PortfolioWebsite $scope): ?array
     {
         $firstBanner = null;
 
-        $textHtml = '<p>Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.</p>';
+        $textHtml = "<h1 class='text-xl'>Let's get started</h1><p>Our banner creator platform is the perfect way to create engaging and effective banners for all your online marketing needs.</p>";
 
         if (class_basename($scope) == 'PortfolioWebsite') {
 

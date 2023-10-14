@@ -15,6 +15,7 @@ import Tabs from "@/Components/Navigation/Tabs.vue";
 import {capitalize} from "@/Composables/capitalize"
 import TableCustomerHistories from "@/Components/Tables/TableCustomerHistories.vue";
 import TableBanners from "@/Components/Tables/TableBanners.vue";
+import FirstBannerWidget from "@/Components/EmptyState/FirstBannerWidget.vue";
 
 import {faRectangleWide, faGlobe} from "@/../private/pro-light-svg-icons"
 
@@ -29,6 +30,8 @@ const props = defineProps<{
     }
     changelog?: object
     banners?: object
+    firstBanner?: any
+    hasFirstBanner: boolean
 }>()
 
 let currentTab = ref(props.tabs.current);
@@ -39,7 +42,7 @@ const component = computed(() => {
     const components = {
         details: ModelDetails,
         changelog: TableCustomerHistories,
-        banners: TableBanners
+        banners: props.hasFirstBanner ? FirstBannerWidget : TableBanners
     };
     return components[currentTab.value];
 
@@ -49,6 +52,7 @@ const component = computed(() => {
 
 
 <template layout="CustomerApp">
+    <!-- <pre>{{ props }}</pre> -->
     <Head :title="capitalize(title)"/>
     <PageHeading :data="pageHead"></PageHeading>
     <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate"/>

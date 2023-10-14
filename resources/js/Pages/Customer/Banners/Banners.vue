@@ -12,6 +12,8 @@ import { capitalize } from "@/Composables/capitalize"
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { faGlobe,faImage } from "@/../private/pro-light-svg-icons"
 import TableBanners from "@/Components/Tables/TableBanners.vue"
+import FirstBannerWidget from '@/Components/EmptyState/FirstBannerWidget.vue'
+
 
 library.add(faGlobe,faImage)
 1995
@@ -33,9 +35,11 @@ const isOpen = ref(false)
 </script>
 
 <template layout="CustomerApp">
-    <pre>{{ props }}</pre>
+    <!-- <pre>{{ props }}</pre> -->
     <Head :title="capitalize(title)" />
     <PageHeading :data="pageHead"></PageHeading>
-    <TableBanners :data="data" :firstBanner="firstBanner" />
+
+    <FirstBannerWidget v-if="firstBanner" :data="firstBanner" />
+    <TableBanners v-else :data="data" />
 </template>
 

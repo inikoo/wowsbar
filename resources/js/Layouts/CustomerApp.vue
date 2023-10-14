@@ -62,11 +62,6 @@ const layoutState = useLayoutStore()
         <!-- Section: Topbar -->
         <TopBar v-model="layoutState.leftSidebar.show"
             :logoRoute="`customer.dashboard.show`" urlPrefix="customer.">
-            <span class="leading-none font-light xl:truncate text-white dark:text-gray-300"
-                :class="[layoutState.leftSidebar.show ? '' : '']"
-            >
-                {{ layoutState.app.name }}
-            </span>
         </TopBar>
 
         <!-- Breadcrumbs -->

@@ -52,7 +52,6 @@ class ShowPortfolioWebsite extends InertiaAction
 
         $firstBanners = $this->canEdit ? $this->getFirstBannerWidget($portfolioWebsite) : null;
 
-
         $inertia = Inertia::render(
             'Portfolio/PortfolioWebsite',
             [
@@ -107,13 +106,9 @@ class ShowPortfolioWebsite extends InertiaAction
 
                 PortfolioWebsiteTabsEnum::BANNERS->value => $this->tab == PortfolioWebsiteTabsEnum::BANNERS->value
                     ?
-                    fn() => is_null($firstBanners) ?
-                        BannerResource::collection(
-                            IndexBanners::run($portfolioWebsite, PortfolioWebsiteTabsEnum::BANNERS->value)
-                        ) : $firstBanners
-                    : Inertia::lazy(fn() => is_null($firstBanners) ?
-                        BannerResource::collection(IndexBanners::run($portfolioWebsite, PortfolioWebsiteTabsEnum::BANNERS->value))
-                        : $firstBanners
+                    fn() => $firstBanners ? $firstBanners : BannerResource::collection(IndexBanners::run($portfolioWebsite, PortfolioWebsiteTabsEnum::BANNERS->value))
+                    : Inertia::lazy(fn() =>
+                    $firstBanners ? $firstBanners : BannerResource::collection(IndexBanners::run($portfolioWebsite, PortfolioWebsiteTabsEnum::BANNERS->value))
                     )
             ]
         )
@@ -123,7 +118,7 @@ class ShowPortfolioWebsite extends InertiaAction
                 )
             );
 
-        if (!is_null($firstBanners)) {
+        if ($firstBanners) {
             $inertia->table(
                 IndexBanners::make()->tableStructure(
                     parent: $portfolioWebsite,

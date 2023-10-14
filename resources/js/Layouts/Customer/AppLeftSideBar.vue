@@ -93,7 +93,7 @@ const handleToggleLeftbar = () => {
                             class="flex items-center group text-sm font-medium py-2" 
                             :class="[
                                 itemKey === layout.currentModule || Object.keys(item.subNav ?? {}).some(subNav => subNav === layout.currentModule)
-                                    ? 'navigationActiveCustomer dark:border-gray-100 dark:bg-gray-600 '
+                                    ? 'navigationActiveCustomer dark:border-gray-100 dark:bg-gray-600 px-0.5'
                                     : 'navigationCustomer dark:hover:bg-dark-700 px-1',
                                 !layout.leftSidebar.show && Object.keys(item.subNav ?? {}).some(subNav => subNav === layout.currentModule) ? 'text-white border-l-1 border-transparent' : '',
                             ]"
