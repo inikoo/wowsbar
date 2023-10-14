@@ -37,8 +37,6 @@ class HandleCustomerInertiaRequests extends Middleware
             };
 
             $firstLoadOnlyProps['structure'] = $website->compiled_layout;
-            $firstLoadOnlyProps['logo']      = !blank($website->logo_id) ? $website->logoImageSources(0, 48) : null;
-
 
             if (Session::get('reloadLayout') == 'remove') {
                 Session::forget('reloadLayout');
