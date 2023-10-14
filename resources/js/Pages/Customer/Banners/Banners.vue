@@ -10,23 +10,32 @@ import { ref } from 'vue'
 import PageHeading from '@/Components/Headings/PageHeading.vue'
 import { capitalize } from "@/Composables/capitalize"
 import { library } from "@fortawesome/fontawesome-svg-core"
-import { faGlobe,faImage } from "../../../../private/pro-light-svg-icons"
+import { faGlobe,faImage } from "@/../private/pro-light-svg-icons"
 import TableBanners from "@/Components/Tables/TableBanners.vue"
 
 library.add(faGlobe,faImage)
+1995
 
-defineProps<{
+const props = defineProps<{
     pageHead: object
     title: string
     data: object
+    firstBanner?: {
+        text: string
+        createRoute: {
+            name: string
+            parameters?: any[]
+        }
+    }
 }>()
 
 const isOpen = ref(false)
 </script>
 
 <template layout="CustomerApp">
+    <pre>{{ props }}</pre>
     <Head :title="capitalize(title)" />
     <PageHeading :data="pageHead"></PageHeading>
-    <TableBanners :data="data" />
+    <TableBanners :data="data" :firstBanner="firstBanner" />
 </template>
 

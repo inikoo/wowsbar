@@ -10,10 +10,11 @@ import {library} from "@fortawesome/fontawesome-svg-core"
 import Table from '@/Components/Table/Table.vue'
 import {Banner} from "@/types/banner"
 import Icon from '@/Components/Icon.vue'
-import {faSeedling, faBroadcastTower, faImage} from "../../../private/pro-light-svg-icons"
+import {faSeedling, faBroadcastTower, faImage} from "@/../private/pro-light-svg-icons"
 import Image from "@/Components/Image.vue"
 import {useFormatTime} from '@/Composables/useFormatTime'
 import {useLocaleStore} from '@/Stores/locale'
+import EmptyStateBanners from '@/Components/EmptyState/EmptyStateBanners.vue'
 
 const locale = useLocaleStore()
 
@@ -22,6 +23,13 @@ library.add(faSeedling, faBroadcastTower, faImage)
 const props = defineProps<{
     data: object,
     tab?: string
+    firstBanner?: {
+        text: string
+        createRoute: {
+            name: string
+            parameters?: any[]
+        }
+    }
 }>()
 
 
@@ -55,7 +63,11 @@ function bannerRoute(banner: Banner) {
 </script>
 
 <template>
-    <Table :resource="data" :name="tab" class="mt-5">
+    <div v-if="firstBanner" class="pt-5">
+        <EmptyStateBanners :firstBanner="firstBanner" />
+    </div>
+
+    <Table v-else :resource="data" :name="tab" class="mt-5">
         <template #cell(slug)="{ item: banner }">
             <Link :href="bannerRoute(banner)" :id="banner['slug']" class="py-4 px-2">
                 {{ banner['slug'] }}

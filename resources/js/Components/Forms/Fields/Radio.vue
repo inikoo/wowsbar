@@ -87,8 +87,9 @@ const compareObjects = (objA, objB) => {
                 <div v-else v-for="(option, index) in fieldData.options"
                     :key="option.label + index" class="inline-flex gap-x-2.5 items-center">
                     <input v-model="form[fieldName]" :id="option.label + index" :key="option.label + index"
-                        :name="option.value" type="radio" :value="option.value" :checked="option.value == form[fieldName]"
-                        class="h-4 w-4 border-gray-300 text-orange-600 focus:ring-0 focus:outline-none focus:ring-transparent cursor-pointer" />
+                        name="radioDefault" type="radio" :value="option.value" :checked="option.value == form[fieldName]"
+                        class="h-4 w-4 border-gray-300 text-orange-600 focus:ring-0 focus:outline-none focus:ring-transparent cursor-pointer"
+                    />
                     <label :for="option.label + index" class="flex items-center gap-x-1.5 cursor-pointer">
                         <p class="text-sm font-medium leading-6 text-gray-700 capitalize">
                             {{ option.value }}

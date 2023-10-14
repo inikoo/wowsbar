@@ -202,7 +202,7 @@ class IndexBanners extends InertiaAction
         $firstBanner = null;
 
         if ($this->canEdit) {
-            $text = 'idem';
+            $textHtml = '<p>Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.</p>';
 
             if (class_basename($scope) == 'PortfolioWebsite') {
                 $container = [
@@ -213,7 +213,7 @@ class IndexBanners extends InertiaAction
 
                 if ($scope->stats->number_banners == 0) {
                     $firstBanner = [
-                        'text'        => $text,
+                        'text'        => $textHtml,
                         'createRoute' => [
                             'name'       => 'customer.models.portfolio-website.banner.store',
                             'parameters' => $scope->id
@@ -226,7 +226,7 @@ class IndexBanners extends InertiaAction
                     if ($numberPortfolioWebsites == 1) {
                         $portfolioWebsiteID = PortfolioWebsite::first()->pluck('id');
                         $firstBanner        = [
-                            'text'        => $text,
+                            'text'        => $textHtml,
                             'createRoute' => [
                                 'name'       => 'customer.models.portfolio-website.banner.store',
                                 'parameters' => $portfolioWebsiteID
@@ -234,7 +234,7 @@ class IndexBanners extends InertiaAction
                         ];
                     } elseif ($numberPortfolioWebsites > 1) {
                         $firstBanner = [
-                            'text'           => $text,
+                            'text'           => $textHtml,
                             'websiteOptions' => GetPortfolioWebsitesOptions::run(),
                             'createRoute'    => [
                                 'name' => 'customer.models.banner.store',
