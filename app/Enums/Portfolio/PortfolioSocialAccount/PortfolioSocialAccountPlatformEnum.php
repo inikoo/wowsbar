@@ -1,15 +1,15 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Tue, 25 Jul 2023 12:56:21 Malaysia Time, Kuala Lumpur, Malaysia
+ * Created: Sat, 14 Oct 2023 09:53:48 Malaysia Time, Office, Bali, Indonesia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Enums\SocialAccount;
+namespace App\Enums\Portfolio\PortfolioSocialAccount;
 
 use App\Enums\EnumHelperTrait;
 
-enum SocialAccountProviderEnum: string
+enum PortfolioSocialAccountPlatformEnum: string
 {
     use EnumHelperTrait;
 

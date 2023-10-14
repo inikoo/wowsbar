@@ -27,7 +27,6 @@ function accountRoute(account) {
 </script>
 
 <template>
-
     <Table :resource="data" :name="tab" class="mt-5">
         <template #cell(username)="{ item: account }">
             <Link :href="accountRoute(account)" :id="account['slug']" class="py-2 px-1">

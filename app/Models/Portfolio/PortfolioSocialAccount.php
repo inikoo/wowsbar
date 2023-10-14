@@ -1,16 +1,21 @@
 <?php
+/*
+ * Author: Raul Perusquia <raul@inikoo.com>
+ * Reviewed: Sat, 14 Oct 2023 09:52:05 Malaysia Time, Office, Bali, Indonesia
+ * Copyright (c) 2023, Raul A Perusquia Flores
+ */
 
 namespace App\Models\Portfolio;
 
+use App\Enums\Portfolio\PortfolioSocialAccount\PortfolioSocialAccountPlatformEnum;
 use App\Models\CRM\Customer;
 use App\Models\Market\Shop;
-use App\Models\Traits\HasHistory;
+use App\Models\Traits\IsSocialAccount;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\Sluggable\HasSlug;
-use Spatie\Sluggable\SlugOptions;
 
 /**
  * App\Models\Portfolio\PortfolioSocialAccount
@@ -18,8 +23,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property int $id
  * @property string|null $slug
  * @property string $username
- * @property string $url
- * @property string $provider
+ * @property string|null $url
+ * @property PortfolioSocialAccountPlatformEnum $platform
  * @property int $number_followers
  * @property int $number_posts
  * @property int $customer_id
@@ -40,7 +45,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|PortfolioSocialAccount whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|PortfolioSocialAccount whereNumberFollowers($value)
  * @method static \Illuminate\Database\Eloquent\Builder|PortfolioSocialAccount whereNumberPosts($value)
- * @method static \Illuminate\Database\Eloquent\Builder|PortfolioSocialAccount whereProvider($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PortfolioSocialAccount wherePlatform($value)
  * @method static \Illuminate\Database\Eloquent\Builder|PortfolioSocialAccount whereShopId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|PortfolioSocialAccount whereSlug($value)
  * @method static \Illuminate\Database\Eloquent\Builder|PortfolioSocialAccount whereUpdatedAt($value)
@@ -52,32 +57,30 @@ class PortfolioSocialAccount extends Model implements Auditable
 {
     use HasFactory;
     use HasSlug;
-    use HasHistory;
+    use IsSocialAccount;
 
     protected $guarded = [];
 
     protected $casts = [
-        'data'        => 'array',
+        'data'     => 'array',
+        'platform' => PortfolioSocialAccountPlatformEnum::class
     ];
 
     protected $attributes = [
         'data' => '{}'
     ];
 
-    protected $auditExclude = ['id', 'slug', 'shop_id', 'data', 'customer_id', 'created_at', 'updated_at'];
-
-    public function getSlugOptions(): SlugOptions
+    public function generateTags(): array
     {
-        return SlugOptions::create()
-            ->generateSlugsFrom('username')
-            ->saveSlugsTo('slug')
-            ->slugsShouldBeNoLongerThan(12);
+        return [
+            'portfolio',
+            'social'
+        ];
     }
 
-    public function getRouteKeyName(): string
-    {
-        return 'slug';
-    }
+    protected array $auditExclude = ['id', 'slug', 'shop_id', 'data', 'customer_id', 'created_at', 'updated_at'];
+
+
 
     public function shop(): BelongsTo
     {

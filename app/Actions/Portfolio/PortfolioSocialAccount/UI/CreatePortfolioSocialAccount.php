@@ -9,7 +9,7 @@ namespace App\Actions\Portfolio\PortfolioSocialAccount\UI;
 
 use App\Actions\InertiaAction;
 use App\Actions\Traits\Fields\WithPortfolioWebsiteFields;
-use App\Enums\SocialAccount\SocialAccountProviderEnum;
+use App\Enums\Portfolio\PortfolioSocialAccount\PortfolioSocialAccountPlatformEnum;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -63,11 +63,11 @@ class CreatePortfolioSocialAccount extends InertiaAction
                         [
                             'title'  => __('Account'),
                             'fields' => [
-                                'provider' => [
+                                'platform' => [
                                     'type'          => 'select',
-                                    'label'         => __('provider'),
-                                    'placeholder'   => 'Select Account Provider',
-                                    'options'       => Options::forEnum(SocialAccountProviderEnum::class)->toArray(),
+                                    'label'         => __('platform'),
+                                    'placeholder'   => __('Select social platform'),
+                                    'options'       => Options::forEnum(PortfolioSocialAccountPlatformEnum::class)->toArray(),
                                     'required'      => true,
                                     'mode'          => 'single'
                                 ],
@@ -77,12 +77,6 @@ class CreatePortfolioSocialAccount extends InertiaAction
                                     'required' => true,
                                     'value'    => '',
                                 ],
-                                'url' => [
-                                    'type'     => 'input',
-                                    'label'    => __('url'),
-                                    'required' => true,
-                                    'value'    => '',
-                                ]
                             ]
                         ],
 

@@ -43,25 +43,28 @@ class AppServiceProvider extends ServiceProvider
 
         Relation::morphMap(
             [
-                'Organisation'     => 'App\Models\Organisation\Organisation',
-                'User'             => 'App\Models\Auth\User',
-                'PortfolioWebsite' => 'App\Models\Portfolio\PortfolioWebsite',
-                'Banner'           => 'App\Models\Portfolio\Banner',
-                'OrganisationUser' => 'App\Models\Auth\OrganisationUser',
-                'Guest'            => 'App\Models\Auth\Guest',
-                'Shop'             => 'App\Models\Market\Shop',
-                'Website'          => 'App\Models\Web\Website',
-                'Webpage'          => 'App\Models\Web\Webpage',
-                'Customer'         => 'App\Models\CRM\Customer',
-                'Prospect'         => 'App\Models\Leads\Prospect',
-                'Workplace'        => 'App\Models\HumanResources\Workplace',
-                'Product'          => 'App\Models\Catalogue\Product',
-                'ProductCategory'  => 'App\Models\Catalogue\ProductCategory',
-                'CustomerUser'     => 'App\Models\Auth\CustomerUser',
-                'Employee'         => 'App\Models\HumanResources\Employee',
-                'CustomerWebsite'  => 'App\Models\Portfolios\CustomerWebsite',
-                'PaymentAccount'   => 'App\Models\Accounting\PaymentAccount',
-                'JobPosition'      => 'App\Models\HumanResources\JobPosition',
+                'Organisation'           => 'App\Models\Organisation\Organisation',
+                'User'                   => 'App\Models\Auth\User',
+                'PortfolioWebsite'       => 'App\Models\Portfolio\PortfolioWebsite',
+                'Banner'                 => 'App\Models\Portfolio\Banner',
+                'OrganisationUser'       => 'App\Models\Auth\OrganisationUser',
+                'Guest'                  => 'App\Models\Auth\Guest',
+                'Shop'                   => 'App\Models\Market\Shop',
+                'Website'                => 'App\Models\Web\Website',
+                'Webpage'                => 'App\Models\Web\Webpage',
+                'Customer'               => 'App\Models\CRM\Customer',
+                'Prospect'               => 'App\Models\Leads\Prospect',
+                'Workplace'              => 'App\Models\HumanResources\Workplace',
+                'Product'                => 'App\Models\Catalogue\Product',
+                'ProductCategory'        => 'App\Models\Catalogue\ProductCategory',
+                'CustomerUser'           => 'App\Models\Auth\CustomerUser',
+                'Employee'               => 'App\Models\HumanResources\Employee',
+                'CustomerWebsite'        => 'App\Models\Portfolios\CustomerWebsite',
+                'PaymentAccount'         => 'App\Models\Accounting\PaymentAccount',
+                'JobPosition'            => 'App\Models\HumanResources\JobPosition',
+                'PortfolioSocialAccount' => 'App\Models\Portfolio\PortfolioSocialAccount',
+                'CustomerSocialAccount'  => 'App\Models\Portfolios\CustomerSocialAccount'
+
 
             ]
         );

@@ -9,7 +9,7 @@ namespace App\Actions\Portfolio\PortfolioSocialAccount\UI;
 
 use App\Actions\InertiaAction;
 use App\Actions\Portfolio\PortfolioWebsite\UI\ShowPortfolioWebsite;
-use App\Enums\SocialAccount\SocialAccountProviderEnum;
+use App\Enums\Portfolio\PortfolioSocialAccount\PortfolioSocialAccountPlatformEnum;
 use App\Models\Portfolio\PortfolioSocialAccount;
 use Exception;
 use Inertia\Inertia;
@@ -90,7 +90,7 @@ class EditPortfolioSocialAccount extends InertiaAction
                                         'type'          => 'select',
                                         'label'         => __('provider'),
                                         'placeholder'   => 'Select Account Provider',
-                                        'options'       => Options::forEnum(SocialAccountProviderEnum::class)->toArray(),
+                                        'options'       => Options::forEnum(PortfolioSocialAccountPlatformEnum::class)->toArray(),
                                         'required'      => true,
                                         'value'         => $portfolioSocialAccount->provider,
                                         'mode'          => 'single'

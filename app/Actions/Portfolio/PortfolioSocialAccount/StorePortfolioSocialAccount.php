@@ -7,13 +7,12 @@
 
 namespace App\Actions\Portfolio\PortfolioSocialAccount;
 
-use App\Enums\SocialAccount\SocialAccountProviderEnum;
-use App\Models\CRM\Customer;
+use App\Actions\Traits\WithSocialAudit;
+use App\Enums\Portfolio\PortfolioSocialAccount\PortfolioSocialAccountPlatformEnum;
 use App\Models\Portfolio\PortfolioSocialAccount;
-use Exception;
-use Illuminate\Console\Command;
+use App\Models\Portfolios\CustomerSocialAccount;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Enum;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
@@ -22,7 +21,7 @@ class StorePortfolioSocialAccount
 {
     use AsAction;
     use WithAttributes;
-
+    use WithSocialAudit;
     private bool $asAction = false;
 
     public function handle(array $modelData): PortfolioSocialAccount
@@ -34,9 +33,12 @@ class StorePortfolioSocialAccount
 
         /** @var PortfolioSocialAccount $portfolioSocialAccount */
         $portfolioSocialAccount = PortfolioSocialAccount::create($modelData);
+        $this->createAudit(CustomerSocialAccount::find($portfolioSocialAccount->id));
 
         return $portfolioSocialAccount;
     }
+
+
 
     public function htmlResponse(): RedirectResponse
     {
@@ -49,15 +51,15 @@ class StorePortfolioSocialAccount
             return true;
         }
 
-        return $request->get('customerUser')->hasPermissionTo("portfolio.edit");
+        return $request->get('customerUser')->hasPermissionTo("portfolio.social.edit");
     }
 
     public function rules(): array
     {
         return [
-            'username'   => ['required', 'string'],
-            'url'        => ['required', 'active_url'],
-            'provider'   => ['required', 'string', Rule::in(SocialAccountProviderEnum::values())]
+            'username' => ['required', 'string', 'max:255'],
+            'url'      => ['sometimes', 'active_url', 'max:1000'],
+            'platform' => ['required', new Enum(PortfolioSocialAccountPlatformEnum::class)]
         ];
     }
 
@@ -77,34 +79,4 @@ class StorePortfolioSocialAccount
         return $this->handle($validatedData);
     }
 
-    public function getCommandSignature(): string
-    {
-        return 'portfolio:social-account {customer} {url} {provider}';
-    }
-
-    public function asCommand(Command $command): int
-    {
-        $this->asAction = true;
-        try {
-            $customer = Customer::where('slug', $command->argument('customer'))->firstOrFail();
-        } catch (Exception) {
-            $command->error('Customer not found');
-
-            return 1;
-        }
-
-        $this->setRawAttributes(
-            [
-                'domain' => $command->argument('url'),
-                'code'   => $command->argument('provider')
-            ]
-        );
-        $validatedData = $this->validateAttributes();
-
-        $portfolioSocialAccount = $this->handle($validatedData);
-
-        $command->info("Done! Account $portfolioSocialAccount->username created 🥳");
-
-        return 0;
-    }
 }

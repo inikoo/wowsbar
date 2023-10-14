@@ -20,11 +20,13 @@ use App\Models\Portfolio\PortfolioWebsite;
 use App\Rules\IUnique;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
+use OwenIt\Auditing\Events\AuditCustom;
 
 class StorePortfolioWebsite
 {
@@ -32,9 +34,6 @@ class StorePortfolioWebsite
     use WithAttributes;
 
 
-    /**
-     * @var true
-     */
     private bool $asAction = false;
 
 
@@ -43,6 +42,8 @@ class StorePortfolioWebsite
         data_set($modelData, 'shop_id', $customer->shop_id);
         $portfolioWebsite = PortfolioWebsite::create($modelData);
         $portfolioWebsite->stats()->create();
+
+        $this->customerWebsiteAudit($portfolioWebsite);
 
         // Must be run to the website layout to work
         CustomerHydratePortfolioWebsites::run($portfolioWebsite->customer);
@@ -56,6 +57,19 @@ class StorePortfolioWebsite
         ShopHydrateCustomerWebsites::dispatch(customer()->shop);
 
         return $portfolioWebsite;
+    }
+
+    private function customerWebsiteAudit(PortfolioWebsite $portfolioWebsite): void
+    {
+        $customerWebsite                 = CustomerWebsite::find($portfolioWebsite->id);
+        $customerWebsite->auditEvent     = 'created';
+        $customerWebsite->isCustomEvent  = true;
+        $customerWebsite->auditCustomOld = [];
+        $customerWebsite->auditCustomNew = [
+            'url'  => $customerWebsite->url,
+            'name' => $customerWebsite->name
+        ];
+        Event::dispatch(AuditCustom::class, [$customerWebsite]);
     }
 
     public function authorize(ActionRequest $request): bool

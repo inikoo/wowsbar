@@ -185,6 +185,7 @@ class Customer extends Model implements HasMedia, Auditable
             })
             ->saveSlugsTo('slug')
             ->slugsShouldBeNoLongerThan(12)
+            ->doNotGenerateSlugsOnUpdate()
             ->doNotGenerateSlugsOnCreate();
     }
 

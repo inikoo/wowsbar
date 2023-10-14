@@ -7,7 +7,7 @@
 
 namespace App\Actions\Portfolios\CustomerSocialAccount;
 
-use App\Enums\SocialAccount\SocialAccountProviderEnum;
+use App\Enums\Portfolio\PortfolioSocialAccount\PortfolioSocialAccountPlatformEnum;
 use App\Models\Portfolios\CustomerSocialAccount;
 use Illuminate\Validation\Rule;
 use Lorisleiva\Actions\ActionRequest;
@@ -41,7 +41,7 @@ class UpdateCustomerSocialAccount
     {
         return [
             'url'        => ['required', 'active_url'],
-            'provider'   => ['required', 'string', Rule::in(SocialAccountProviderEnum::values())]
+            'provider'   => ['required', 'string', Rule::in(PortfolioSocialAccountPlatformEnum::values())]
         ];
     }
 

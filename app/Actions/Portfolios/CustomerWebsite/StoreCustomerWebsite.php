@@ -47,23 +47,9 @@ class StoreCustomerWebsite
         /** @var CustomerWebsite $customerWebsite */
         $customerWebsite = $customer->customerWebsites()->create($modelData);
 
-        //===
 
-        $portfolioWebsite=PortfolioWebsite::find($customerWebsite->id);
+        $this->portfolioWebsiteAudit($customerWebsite);
 
-        $portfolioWebsite->auditEvent    = 'created';
-        $portfolioWebsite->isCustomEvent = true;
-
-        $portfolioWebsite->auditCustomOld = [];
-        $portfolioWebsite->auditCustomNew = [
-            'url' => $portfolioWebsite->url,
-            'name'=> $portfolioWebsite->name
-        ];
-        Event::dispatch(AuditCustom::class, [$portfolioWebsite]);
-
-
-
-        //===
         $customerWebsite->stats()->create();
         CustomerHydratePortfolioWebsites::dispatch($customerWebsite->customer);
 
@@ -77,6 +63,20 @@ class StoreCustomerWebsite
 
         return $customerWebsite;
     }
+
+    private function portfolioWebsiteAudit(CustomerWebsite $customerWebsite): void
+    {
+        $portfolioWebsite                 = PortfolioWebsite::find($customerWebsite->id);
+        $portfolioWebsite->auditEvent     = 'created';
+        $portfolioWebsite->isCustomEvent  = true;
+        $portfolioWebsite->auditCustomOld = [];
+        $portfolioWebsite->auditCustomNew = [
+            'url'  => $portfolioWebsite->url,
+            'name' => $portfolioWebsite->name
+        ];
+        Event::dispatch(AuditCustom::class, [$portfolioWebsite]);
+    }
+
 
     public function authorize(ActionRequest $request): bool
     {
@@ -102,13 +102,16 @@ class StoreCustomerWebsite
     public function rules(): array
     {
         return [
-            'url'  => ['required', 'url', 'max:500',
-                       new IUnique(
-                           table: 'portfolio_websites',
-                           extraConditions: [
-                               ['column' => 'customer_id', 'value' => $this->customer->id],
-                           ]
-                       ),
+            'url'  => [
+                'required',
+                'url',
+                'max:500',
+                new IUnique(
+                    table: 'portfolio_websites',
+                    extraConditions: [
+                        ['column' => 'customer_id', 'value' => $this->customer->id],
+                    ]
+                ),
             ],
             'name' => ['required', 'string', 'max:128']
         ];
@@ -133,7 +136,7 @@ class StoreCustomerWebsite
 
     public function action(Customer $customer, array $objectData): CustomerWebsite
     {
-        $this->customer =$customer;
+        $this->customer = $customer;
         $this->asAction = true;
         $this->setRawAttributes($objectData);
         $validatedData = $this->validateAttributes();
@@ -157,13 +160,13 @@ class StoreCustomerWebsite
             return 1;
         }
 
-        $this->customer=$customer;
+        $this->customer = $customer;
         Config::set('global.customer_id', $customer->id);
 
         $this->setRawAttributes(
             [
-                'url'    => $command->argument('url'),
-                'name'   => $command->argument('name')
+                'url'  => $command->argument('url'),
+                'name' => $command->argument('name')
             ]
         );
         $validatedData = $this->validateAttributes();
