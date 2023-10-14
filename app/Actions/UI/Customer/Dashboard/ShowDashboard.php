@@ -35,6 +35,7 @@ class ShowDashboard
 
         ];
 
+
         $welcomeStep = Arr::get($customer->data, 'welcome_step');
         if (in_array($welcomeStep, [1, 2, 3])) {
             $data['welcome'] = [

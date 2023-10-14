@@ -8,7 +8,7 @@
 namespace App\Actions\Portfolio\PortfolioSocialAccount;
 
 use App\Actions\Traits\WithActionUpdate;
-use App\Enums\SocialAccount\SocialAccountProviderEnum;
+use App\Enums\Portfolio\PortfolioSocialAccount\PortfolioSocialAccountPlatformEnum;
 use App\Models\Portfolio\PortfolioSocialAccount;
 use Illuminate\Validation\Rule;
 use Lorisleiva\Actions\ActionRequest;
@@ -42,7 +42,7 @@ class UpdatePortfolioSocialAccount
         return [
             'username'   => ['sometimes', 'string'],
             'url'        => ['sometimes', 'active_url'],
-            'provider'   => ['sometimes', 'string', Rule::in(SocialAccountProviderEnum::values())]
+            'provider'   => ['sometimes', 'string', Rule::in(PortfolioSocialAccountPlatformEnum::values())]
         ];
     }
 

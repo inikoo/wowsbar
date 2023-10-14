@@ -7,12 +7,14 @@
 
 namespace App\Actions\Portfolios\CustomerSocialAccount;
 
-use App\Enums\SocialAccount\SocialAccountProviderEnum;
+use App\Actions\Traits\WithSocialAudit;
+use App\Enums\Portfolio\PortfolioSocialAccount\PortfolioSocialAccountPlatformEnum;
 use App\Models\CRM\Customer;
+use App\Models\Portfolio\PortfolioSocialAccount;
 use App\Models\Portfolios\CustomerSocialAccount;
 use Exception;
 use Illuminate\Console\Command;
-use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Enum;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
@@ -21,6 +23,7 @@ class StoreCustomerSocialAccount
 {
     use AsAction;
     use WithAttributes;
+    use WithSocialAudit;
 
     private bool $asAction = false;
 
@@ -28,11 +31,15 @@ class StoreCustomerSocialAccount
     {
         data_set($modelData, 'shop_id', $customer->shop_id);
 
-        /** @var \App\Models\Portfolios\CustomerSocialAccount $customerSocialAccount */
+        /** @var CustomerSocialAccount $customerSocialAccount */
         $customerSocialAccount = $customer->socialAccounts()->create($modelData);
+
+        $this->createAudit(PortfolioSocialAccount::find($customerSocialAccount->id));
 
         return $customerSocialAccount;
     }
+
+
 
     public function authorize(ActionRequest $request): bool
     {
@@ -46,8 +53,9 @@ class StoreCustomerSocialAccount
     public function rules(): array
     {
         return [
-            'url'        => ['required', 'active_url'],
-            'provider'   => ['required', 'string', Rule::in(SocialAccountProviderEnum::values())]
+            'username' => ['required', 'string', 'max:255'],
+            'url'      => ['sometimes', 'active_url', 'max:1000'],
+            'platform' => ['required', new Enum(PortfolioSocialAccountPlatformEnum::class)]
         ];
     }
 
@@ -69,7 +77,7 @@ class StoreCustomerSocialAccount
 
     public function getCommandSignature(): string
     {
-        return 'customer:social-account {customer} {url} {provider}';
+        return 'customer:social-account {customer} {platform} {username}';
     }
 
     public function asCommand(Command $command): int
@@ -85,15 +93,15 @@ class StoreCustomerSocialAccount
 
         $this->setRawAttributes(
             [
-                'domain' => $command->argument('url'),
-                'code'   => $command->argument('provider')
+                'platform' => $command->argument('platform'),
+                'username' => $command->argument('username')
             ]
         );
         $validatedData = $this->validateAttributes();
 
         $customerSocialAccount = $this->handle($customer, $validatedData);
 
-        $command->info("Done! Account $customerSocialAccount->username created 🥳");
+        $command->info("Done! Social account $customerSocialAccount->platform  $customerSocialAccount->username created 🥳");
 
         return 0;
     }

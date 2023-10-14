@@ -7,6 +7,7 @@
 
 namespace App\Http\Resources\Portfolio;
 
+use App\Models\Portfolio\PortfolioSocialAccount;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
@@ -16,12 +17,13 @@ class PortfolioSocialAccountResource extends JsonResource
 {
     public function toArray($request): array
     {
-        /** @var \App\Models\Portfolio\PortfolioSocialAccount $socialAccount */
+        /** @var PortfolioSocialAccount $socialAccount */
         $socialAccount = $this;
 
         return [
+            'slug'             => $socialAccount->slug,
             'username'         => $socialAccount->username,
-            'provider'         => $socialAccount->provider,
+            'platform'         => $socialAccount->platform,
             'url'              => $socialAccount->url,
             'number_posts'     => $socialAccount->number_posts,
             'number_followers' => $socialAccount->number_followers

@@ -14,7 +14,6 @@ import ModelDetails from "@/Pages/ModelDetails.vue";
 import Tabs from "@/Components/Navigation/Tabs.vue";
 import {capitalize} from "@/Composables/capitalize"
 import TableCustomerHistories from "@/Components/Tables/TableCustomerHistories.vue";
-import TableBanners from "@/Components/Tables/TableBanners.vue";
 
 import {faRectangleWide, faGlobe} from "@/../private/pro-light-svg-icons"
 

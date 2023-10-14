@@ -13,7 +13,6 @@ use App\Actions\UI\Customer\Portfolio\ShowPortfolio;
 use App\Enums\UI\Customer\PortfolioSocialAccountsTabsEnum;
 use App\Http\Resources\History\HistoryResource;
 use App\Http\Resources\Portfolio\PortfolioSocialAccountResource;
-use App\Http\Resources\Portfolio\PortfolioWebsiteResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\Portfolio\PortfolioSocialAccount;
 use Closure;
@@ -60,7 +59,7 @@ class IndexPortfolioSocialAccounts extends InertiaAction
 
         return $queryBuilder
             ->defaultSort('username')
-            ->allowedSorts(['username', 'provider', 'number_followers', 'number_posts'])
+            ->allowedSorts(['username', 'platform', 'number_followers', 'number_posts','slug'])
             ->allowedFilters([$globalSearch])
             ->withPaginator($prefix)
             ->withQueryString();
@@ -85,8 +84,8 @@ class IndexPortfolioSocialAccounts extends InertiaAction
                     ]
                 )
                 ->withExportLinks($exportLinks)
+                ->column(key: 'platform', label: __('platform'), sortable: true)
                 ->column(key: 'username', label: __('username'), sortable: true)
-                ->column(key: 'provider', label: __('type'), sortable: true)
                 ->column(key: 'url', label: __('profile url'), sortable: true)
                 ->column(key: 'number_posts', label: __('number posts'), sortable: true)
                 ->column(key: 'number_followers', label: __('number followers'), sortable: true)
@@ -96,7 +95,7 @@ class IndexPortfolioSocialAccounts extends InertiaAction
 
     public function jsonResponse(): AnonymousResourceCollection
     {
-        return PortfolioWebsiteResource::collection($this->handle());
+        return PortfolioSocialAccountResource::collection($this->handle());
     }
 
     public function htmlResponse(LengthAwarePaginator $socialAccounts, ActionRequest $request): Response
