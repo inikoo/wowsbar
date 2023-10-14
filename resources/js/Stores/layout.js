@@ -29,7 +29,19 @@ export const useLayoutStore = defineStore('layout', {
             leftSidebar           : {
                 show: true,
             },
-            navigation            : [],
+            navigation            : [
+                {
+                    icon: '',
+                    subNav: [],
+                    scope: '',
+                    icon: [],
+                    label: '',
+                    route: '',
+                    topMenu: {
+                        subSections: []
+                    },
+                }
+            ],
             organisation          : {},
             rightSidebar          : {
                 activeUsers: {
