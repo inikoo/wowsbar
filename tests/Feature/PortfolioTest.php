@@ -63,10 +63,8 @@ test('create banners', function ($website) {
         ->and($customer->portfolioStats->number_banners_state_live)->toBe(0)
         ->and($customer->portfolioStats->number_banners_state_retired)->toBe(0);
 
-    $this->artisan("customer:new-banner $customer->slug  'My first banner' $website->slug ")->assertExitCode(0);
-
-    // without website
-    $this->artisan("customer:new-banner $customer->slug  'My first banner'")->assertExitCode(0);
+    $this->artisan("customer:new-banner $customer->slug  $website->slug -N 'My first banner' ")->assertExitCode(0);
+    $this->artisan("customer:new-banner $customer->slug  $website->slug -N 'My second banner' ")->assertExitCode(0);
 
     $customer->refresh();
     $website->fresh();
@@ -83,6 +81,6 @@ test('update banner', function ($banner) {
 
 test('delete banner', function ($banner) {
     $customer = customer();
-    DeleteBanner::make()->action($banner);
+    DeleteBanner::make()->action($customer, $banner);
     expect($customer->portfolioStats->number_banners)->toBe(2);
 })->depends('create banners');
