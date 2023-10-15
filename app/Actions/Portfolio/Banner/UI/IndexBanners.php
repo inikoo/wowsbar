@@ -8,7 +8,6 @@
 namespace App\Actions\Portfolio\Banner\UI;
 
 use App\Actions\InertiaAction;
-use App\Actions\Portfolio\PortfolioWebsite\UI\ShowPortfolioWebsite;
 use App\Actions\Traits\WelcomeWidgets\WithFirstBanner;
 use App\Actions\UI\Customer\Banners\ShowBannersDashboard;
 use App\Enums\Portfolio\Banner\BannerStateEnum;
@@ -155,18 +154,6 @@ class IndexBanners extends InertiaAction
                 'count'       => customer()->portfolioStats->number_banners,
                 'description' => $description,
                 'action'      => $action
-                /*
-                'action' => $canEdit && class_basename($parent) == 'PortfolioWebsite' ? [
-                    'type'    => 'button',
-                    'style'   => 'primary',
-                    'tooltip' => __('new banner'),
-                    'label'   => __('banner'),
-                    'route'   => [
-                        'name'       => 'customer.portfolio.websites.show.banners.create',
-                        'parameters' => ['website' => $parent->slug]
-                    ]
-                ] : null
-                */
             ];
 
 
@@ -263,19 +250,6 @@ class IndexBanners extends InertiaAction
         )->table(
             $this->tableStructure(
                 parent: $this->parent,
-                /*
-                modelOperations: [
-                    'createLink' => $this->canEdit ? [
-                        'route' => [
-                            'name'       => 'customer.portfolio.websites.show.banners.create',
-                            'parameters' => array_values([$this->parent->slug])
-                        ],
-                        'label' => __('banner'),
-                        'style' => 'primary',
-                        'icon'  => 'fas fa-plus'
-                    ] : false
-                ],
-                */
                 canEdit: $this->canEdit,
                 exportLinks: [
                     'export' => [
@@ -310,19 +284,6 @@ class IndexBanners extends InertiaAction
                 $headCrumb(
                     [
                         'name' => 'customer.banners.index'
-                    ]
-                ),
-            ),
-            'customer.portfolio.websites.show.banners.index' =>
-            array_merge(
-                ShowPortfolioWebsite::make()->getBreadcrumbs(
-                    'customer.portfolio.websites.show',
-                    $routeParameters
-                ),
-                $headCrumb(
-                    [
-                        'name'       => 'customer.portfolio.websites.show.banners.index',
-                        'parameters' => $routeParameters
                     ]
                 ),
             ),

@@ -6,17 +6,6 @@
  */
 
 
-use App\Actions\Helpers\Snapshot\UI\IndexSnapshots;
-use App\Actions\Helpers\Snapshot\UI\ShowSnapshot;
-use App\Actions\Portfolio\Banner\UI\CreateBanner;
-use App\Actions\Portfolio\Banner\UI\DuplicateBanner;
-use App\Actions\Portfolio\Banner\UI\EditBanner;
-use App\Actions\Portfolio\Banner\UI\IndexBanners;
-use App\Actions\Portfolio\Banner\UI\RemoveBanner;
-use App\Actions\Portfolio\Banner\UI\ShowBanner;
-use App\Actions\Portfolio\Banner\UI\ShowBannerWorkshop;
-use App\Actions\Portfolio\Banner\UI\ShowDeletedBanner;
-use App\Actions\Portfolio\Banner\UploadImagesToBanner;
 use App\Actions\Portfolio\PortfolioSocialAccount\UI\CreatePortfolioSocialAccount;
 use App\Actions\Portfolio\PortfolioSocialAccount\UI\EditPortfolioSocialAccount;
 use App\Actions\Portfolio\PortfolioSocialAccount\UI\IndexPortfolioSocialAccounts;
@@ -42,16 +31,6 @@ Route::prefix('websites')->name('websites.')->group(function () {
         Route::get('', ['icon' => 'globe', 'label' => 'websites'])->uses(ShowPortfolioWebsite::class)->name('show');
         Route::get('/edit', EditPortfolioWebsite::class)->name('edit');
         Route::get('/delete', RemovePortfolioWebsite::class)->withTrashed()->name('remove');
-
-        Route::get('/banners/create', [CreateBanner::class, 'inPortfolioWebsite'])->name('show.banners.create');
-        Route::get('/banners', [IndexBanners::class, 'inPortfolioWebsite'])->name('show.banners.index');
-        Route::get('/banners/{banner}', ['icon' => 'globe', 'label' => 'banner'])->uses([ShowBanner::class, 'inPortfolioWebsite'])->name('show.banners.show');
-        Route::get('/banners/{banner}/edit', ['icon' => 'globe', 'label' => 'banner'])->uses(EditBanner::class)->name('show.banners.edit');
-        Route::get('/banners/{banner}/workshop', [ShowBannerWorkshop::class, 'inPortfolioWebsite'])->name('show.banners.workshop');
-        Route::post('/banners/{banner}/workshop/images', [UploadImagesToBanner::class, 'inBannerInPortfolioWebsite'])->name('show.banners.workshop.images.store');
-        Route::get('/banners/{banner}/delete', [RemoveBanner::class, 'inPortfolioWebsite'])->withTrashed()->name('show.banners.remove');
-        Route::get('/banners/{banner}/snapshots', [IndexSnapshots::class, 'inWebsite'])->name('websites.snapshots.index');
-        Route::get('/banners/{banner}/snapshots/{snapshot}', [ShowSnapshot::class, 'inWebsite'])->name('websites.snapshots.show');
     });
 });
 

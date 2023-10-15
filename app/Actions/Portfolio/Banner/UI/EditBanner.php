@@ -148,7 +148,7 @@ class EditBanner extends InertiaAction
         $routeName = $request->route()->getName();
 
         return match ($routeName) {
-            'customer.portfolio.websites.show.banners.edit' => [
+            'customer.banners.edit' => [
                 'label' => $banner->name,
                 'route' => [
                     'name'       => $routeName,

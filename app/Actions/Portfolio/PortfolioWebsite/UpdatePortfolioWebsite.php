@@ -59,7 +59,7 @@ class UpdatePortfolioWebsite
 
     public function prepareForValidation(ActionRequest $request): void
     {
-        if($request->exists('url')){
+        if($request->exists('url')) {
             $request->replace([
                 'url' => 'https://' . $request->input('url')
             ]);

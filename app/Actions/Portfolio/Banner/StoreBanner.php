@@ -228,16 +228,6 @@ class StoreBanner
 
     public function jsonResponse(Banner $banner): string
     {
-        if (class_basename($this->parent) == 'PortfolioWebsite') {
-            return route(
-                'customer.portfolio.websites.show.banners.workshop',
-                [
-                    $this->parent->slug,
-                    $banner->slug
-                ]
-            );
-        }
-
         return route(
             'customer.banners.workshop',
             [
@@ -248,15 +238,6 @@ class StoreBanner
 
     public function htmlResponse(Banner $banner): RedirectResponse
     {
-        if (class_basename($this->parent) == 'PortfolioWebsite') {
-            return redirect()->route(
-                'customer.portfolio.websites.show.banners.workshop',
-                [
-                    $this->parent->slug,
-                    $banner->slug
-                ]
-            );
-        }
 
         return redirect()->route(
             'customer.banners.workshop',

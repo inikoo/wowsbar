@@ -10,7 +10,6 @@ namespace App\Actions\Portfolio\Banner\UI;
 use App\Actions\Helpers\History\IndexCustomerHistory;
 use App\Actions\Helpers\Snapshot\UI\IndexSnapshots;
 use App\Actions\InertiaAction;
-use App\Actions\Portfolio\PortfolioWebsite\UI\ShowPortfolioWebsite;
 use App\Actions\UI\Customer\Banners\ShowBannersDashboard;
 use App\Enums\Portfolio\Banner\BannerStateEnum;
 use App\Enums\UI\Customer\BannerTabsEnum;
@@ -266,30 +265,6 @@ class ShowBanner extends InertiaAction
                     $suffix
                 ),
             ),
-            'customer.portfolio.websites.show.banners.show',
-            'customer.portfolio.websites.show.banners.edit' =>
-            array_merge(
-                ShowPortfolioWebsite::make()->getBreadcrumbs(
-                    'customer.portfolio.websites.show',
-                    $routeParameters
-                ),
-                $headCrumb(
-                    'modelWithIndex',
-                    Banner::firstWhere('slug', $routeParameters['banner']),
-                    [
-                        'index' => [
-                            'name'       => 'customer.portfolio.websites.show.banners.index',
-                            'parameters' => $routeParameters
-                        ],
-                        'model' => [
-                            'name'       => 'customer.portfolio.websites.show.banners.show',
-                            'parameters' => $routeParameters
-                        ]
-                    ],
-                    $suffix
-                ),
-            ),
-
             default => []
         };
     }
@@ -337,17 +312,6 @@ class ShowBanner extends InertiaAction
                     ]
                 ]
             ],
-            'customer.portfolio.websites.show.banners.show',
-            'customer.portfolio.websites.show.banners.edit' => [
-                'label' => $banner->slug,
-                'route' => [
-                    'name'       => $routeName,
-                    'parameters' => [
-                        'portfolioWebsite' => $this->parent->slug,
-                        'banner'           => $banner->slug
-                    ]
-                ]
-            ]
         };
     }
 
