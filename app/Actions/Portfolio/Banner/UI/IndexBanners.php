@@ -58,7 +58,7 @@ class IndexBanners extends InertiaAction
     public function handle(Customer|PortfolioWebsite $parent, $prefix = null): LengthAwarePaginator
     {
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
-            $query->where('banners.slug', "%$value%");
+            $query->where('banners.name', "%$value%");
         });
 
         if ($prefix) {
@@ -184,7 +184,6 @@ class IndexBanners extends InertiaAction
                 ->withEmptyState($emptyState)
                 ->withExportLinks($exportLinks)
                 ->column(key: 'state', label: ['fal', 'fa-yin-yang'])
-                ->column(key: 'slug', label: __('code'), sortable: true)
                 ->column(key: 'name', label: __('name'), sortable: true)
                 ->column(key: 'image_thumbnail', label: ['fal', 'fa-image'])
                 ->column(key: 'websites', label: __('websites'))
