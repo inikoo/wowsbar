@@ -74,12 +74,9 @@ class ShowPortfolioWebsite extends InertiaAction
                         'icon'  => 'fal fa-globe'
                     ],
                     'iconActions' => [
-
                         $this->canDelete ? $this->getDeleteActionIcon($request) : null,
                         $this->canEdit ? $this->getEditActionIcon($request) : null,
                     ],
-
-
                 ],
                 'tabs'           => [
                     'current'    => $this->tab,

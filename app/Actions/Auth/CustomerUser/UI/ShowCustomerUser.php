@@ -9,6 +9,7 @@ namespace App\Actions\Auth\CustomerUser\UI;
 
 use App\Actions\Helpers\History\IndexCustomerHistory;
 use App\Actions\InertiaAction;
+use App\Actions\Traits\Actions\WithActionButtons;
 use App\Actions\Traits\WithElasticsearch;
 use App\Actions\UI\Customer\SysAdmin\ShowSysAdminDashboard;
 use App\Enums\Auth\CustomerUser\CustomerUserTabsEnum;
@@ -23,6 +24,8 @@ use Lorisleiva\Actions\ActionRequest;
 class ShowCustomerUser extends InertiaAction
 {
     use WithElasticsearch;
+    use WithActionButtons;
+
 
     public function asController(CustomerUser $customerUser, ActionRequest $request): CustomerUser
     {
@@ -66,16 +69,10 @@ class ShowCustomerUser extends InertiaAction
                     ],
                     'title'        => $customerUser->user->email,
                     'noCapitalise' => true,
-                    'actions'      => [
-                        $this->canEdit ? [
-                            'type'  => 'button',
-                            'style' => 'edit',
-                            'route' => [
-                                'name'       => preg_replace('/show$/', 'edit', $request->route()->getName()),
-                                'parameters' => array_values($request->route()->originalParameters())
-                            ]
-                        ] : [],
-                    ]
+                    'iconActions'  => [
+                        //  $this->canDelete ? $this->getDeleteActionIcon($request) : null,
+                        $this->canEdit ? $this->getEditActionIcon($request) : null,
+                    ],
                 ],
                 'tabs'        => [
                     'current'    => $this->tab,
@@ -83,22 +80,22 @@ class ShowCustomerUser extends InertiaAction
                 ],
 
                 CustomerUserTabsEnum::SHOWCASE->value => $this->tab == CustomerUserTabsEnum::SHOWCASE->value ?
-                    fn () => new CustomerUserResource($customerUser)
-                    : Inertia::lazy(fn () => new CustomerUserResource($customerUser)),
+                    fn() => new CustomerUserResource($customerUser)
+                    : Inertia::lazy(fn() => new CustomerUserResource($customerUser)),
 
 
                 CustomerUserTabsEnum::REQUEST_LOGS->value => $this->tab == CustomerUserTabsEnum::REQUEST_LOGS->value ?
-                    fn () => CustomerUserRequestLogsResource::collection(IndexCustomerUserRequestLogs::run($customerUser))
-                    : Inertia::lazy(fn () => CustomerUserRequestLogsResource::collection(IndexCustomerUserRequestLogs::run($customerUser))),
+                    fn() => CustomerUserRequestLogsResource::collection(IndexCustomerUserRequestLogs::run($customerUser))
+                    : Inertia::lazy(fn() => CustomerUserRequestLogsResource::collection(IndexCustomerUserRequestLogs::run($customerUser))),
 
                 CustomerUserTabsEnum::HISTORY->value => $this->tab == CustomerUserTabsEnum::HISTORY->value ?
-                    fn () => CustomerHistoryResource::collection(IndexCustomerHistory::run($customer, $customerUser, 'history'))
-                    : Inertia::lazy(fn () => CustomerHistoryResource::collection(IndexCustomerHistory::run($customer, $customerUser, 'history')))
+                    fn() => CustomerHistoryResource::collection(IndexCustomerHistory::run($customer, $customerUser, 'history'))
+                    : Inertia::lazy(fn() => CustomerHistoryResource::collection(IndexCustomerHistory::run($customer, $customerUser, 'history')))
 
             ]
         )
             ->table(IndexCustomerUserRequestLogs::make()->tableStructure(parent: $customerUser))
-            ->table(IndexCustomerHistory::make()->tableStructure(prefix:'history'));
+            ->table(IndexCustomerHistory::make()->tableStructure(prefix: 'history'));
     }
 
     public function getBreadcrumbs(string $routeName, array $routeParameters, string $suffix = ''): array

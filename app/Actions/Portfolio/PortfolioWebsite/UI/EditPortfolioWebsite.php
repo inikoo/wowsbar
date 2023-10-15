@@ -100,16 +100,11 @@ class EditPortfolioWebsite extends InertiaAction
                     'next'     => $this->getNext($portfolioWebsite, $request),
                 ],
                 'pageHead'    => [
-                    'title'     => $portfolioWebsite->name,
-                    'icon'      => [
+                    'title' => $portfolioWebsite->name,
+                    'icon'  => [
                         'title' => __('website'),
                         'icon'  => 'fal fa-globe'
                     ],
-                    'iconRight' =>
-                        [
-                            'icon'  => ['fal', 'fa-edit'],
-                            'title' => __("Editing website")
-                        ],
 
                     'actions' => [
                         [
@@ -126,7 +121,7 @@ class EditPortfolioWebsite extends InertiaAction
                 'formData'    => [
                     'current'   => $currentSection,
                     'blueprint' => $sections,
-                    'args' => [
+                    'args'      => [
                         'updateRoute' => [
                             'name'       => 'customer.models.portfolio-website.update',
                             'parameters' => $portfolioWebsite->id
