@@ -59,7 +59,7 @@ class AppointmentResource extends JsonResource
                     'icon'    => 'fal fa-ghost'
                 ],
                 AppointmentStateEnum::CANCEL => [
-                    'tooltip' => __('retired'),
+                    'tooltip' => __('canceled'),
                     'icon'    => 'fal fa-ghost'
                 ],
                 default=> []

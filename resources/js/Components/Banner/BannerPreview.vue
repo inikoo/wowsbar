@@ -24,7 +24,7 @@ const props = defineProps<{
             </div>
             <div class="text-sm text-gray-600 tracking-wide text-right">Published at <span class="font-bold">{{ useRangeFromNow(data.published_snapshot.published_at) }}</span> ago</div>
         </div>
-        <Slider :data="data.compiled_layout" />
+        <Slider :data="data.compiled_layout" :production="false" />
     </div>
 
     <!-- If banner is 'square' -->
@@ -44,8 +44,8 @@ const props = defineProps<{
             <div class="text-sm italic text-gray-500 tracking-wide text-right font-light">Published at <span class="font-bold">{{ useRangeFromNow(data.published_snapshot.published_at) }}</span> ago</div>
         </div>
             <div class="flex flex-col h-48 lg:h-64 xl:h-96 w-fit ">
-        <Slider :data="data.compiled_layout" />
-        
+        <Slider :data="data.compiled_layout" :production="false"/>
+
             </div>
     </div>
 </template>

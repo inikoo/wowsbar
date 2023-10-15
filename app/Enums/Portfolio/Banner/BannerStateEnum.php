@@ -15,14 +15,14 @@ enum BannerStateEnum: string
 
     case UNPUBLISHED = 'unpublished';
     case LIVE        = 'live';
-    case RETIRED     = 'retired';
+    case SWITCH_OFF     = 'switch_off';
 
     public static function labels(): array
     {
         return [
             'unpublished' => __('Unpublished'),
             'live'        => __('Live'),
-            'retired'     => __('Retired'),
+            'switch_off'     => __('Switch off'),
 
         ];
     }
@@ -44,9 +44,9 @@ enum BannerStateEnum: string
                 'class'   => 'text-green-600 animate-pulse'
 
             ],
-            'retired'     => [
+            'switch_off'     => [
 
-                'tooltip' => __('retired'),
+                'tooltip' => __('switch off'),
                 'icon'    => 'fal fa-eye-slash'
 
             ],
@@ -70,8 +70,8 @@ enum BannerStateEnum: string
                 'icon'    => 'fal fa-rocket',
 
             ],
-            'retired'     => [
-                'tooltip' => __('retired'),
+            'switch_off'     => [
+                'tooltip' => __('switch off'),
                 'icon'    => 'fal fa-do-not-enter',
                 'class'   => 'text-red-500'
 
@@ -88,7 +88,7 @@ enum BannerStateEnum: string
         return [
             'unpublished' => $stats->number_banners_state_unpublished,
             'live'        => $stats->number_banners_state_live,
-            'retired'     => $stats->number_banners_state_retired,
+            'switch_off'     => $stats->number_banners_state_switch_off,
         ];
     }
 

@@ -61,7 +61,7 @@ test('create banners', function ($website) {
         ->and($website->stats->number_banners)->toBe(1)
         ->and($customer->portfolioStats->number_banners_state_unpublished)->toBe(1)
         ->and($customer->portfolioStats->number_banners_state_live)->toBe(0)
-        ->and($customer->portfolioStats->number_banners_state_retired)->toBe(0);
+        ->and($customer->portfolioStats->number_banners_state_switch_off)->toBe(0);
 
     $this->artisan("customer:new-banner $customer->slug  $website->slug -N 'My first banner' ")->assertExitCode(0);
     $this->artisan("customer:new-banner $customer->slug  $website->slug -N 'My second banner' ")->assertExitCode(0);

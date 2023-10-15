@@ -45,7 +45,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property int|null $live_snapshot_id
  * @property string $date
  * @property string|null $live_at
- * @property string|null $retired_at
+ * @property string|null $switch_off_at
  * @property array $compiled_layout
  * @property array $data
  * @property int|null $image_id

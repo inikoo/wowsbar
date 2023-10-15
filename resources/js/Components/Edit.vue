@@ -5,27 +5,50 @@
   -->
 
 <script setup lang="ts">
-import { ref, onMounted, onBeforeUnmount } from 'vue'
+import {ref, onMounted, onBeforeUnmount} from 'vue'
 import Button from '@/Components/Elements/Buttons/Button.vue'
 import Action from '@/Components/Forms/Fields/Action.vue'
-import { jumpToElement } from "@/Composables/jumpToElement"
+import {jumpToElement} from "@/Composables/jumpToElement"
 
 import FieldForm from '@/Components/Forms/FieldForm.vue'
-import { library } from "@fortawesome/fontawesome-svg-core"
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
-import { faGoogle} from "@fortawesome/free-brands-svg-icons"
+import {library} from "@fortawesome/fontawesome-svg-core"
+import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome"
+import {faGoogle} from "@fortawesome/free-brands-svg-icons"
 
-import { faToggleOn,faEdit,faUserLock,faBell,faCopyright, faUserCircle, faKey, faClone, faPaintBrush, faMoonStars, faLightbulbOn, faCheck, faPhone, faIdCard, faFingerprint,faLanguage,faAddressBook,faTrashAlt } from "@/../private/pro-light-svg-icons"
+import {
+    faWindowClose,
+    faToggleOn,
+    faEdit,
+    faUserLock,
+    faBell,
+    faCopyright,
+    faUserCircle,
+    faKey,
+    faClone,
+    faPaintBrush,
+    faMoonStars,
+    faLightbulbOn,
+    faCheck,
+    faPhone,
+    faIdCard,
+    faFingerprint,
+    faLanguage,
+    faAddressBook,
+    faTrashAlt
+} from "@/../private/pro-light-svg-icons"
 
-library.add(faToggleOn,faEdit,faUserLock,faBell,faCopyright,faUserCircle, faKey, faClone, faPaintBrush, faMoonStars, faLightbulbOn, faCheck, faPhone, faIdCard, faFingerprint,faLanguage,faAddressBook,faTrashAlt, faGoogle)
+library.add(faToggleOn, faEdit, faUserLock, faBell, faCopyright, faUserCircle, faKey, faClone, faPaintBrush, faMoonStars, faLightbulbOn, faCheck, faPhone, faIdCard, faFingerprint, faLanguage, faAddressBook, faTrashAlt, faGoogle,
+    faWindowClose)
 
 const props = defineProps<{
 
     formData: {
+        current:string,
         blueprint: Array<{
-            title: string
+            label: string,
+            title: string,
+            subtitle?: string,
             icon: string
-            current: boolean
             fields: Array<
                 {
                     name: string,
@@ -53,7 +76,7 @@ const props = defineProps<{
 }>()
 
 
-const current = ref(0)
+const current = ref(props.formData.current)
 const buttonRefs = ref([])  // For click linked to Navigation
 const isMobile = ref(false)
 const tabActive: any = ref({})
@@ -103,8 +126,12 @@ onBeforeUnmount(() => {
             <!-- Tab: Navigation -->
             <aside class="bg-gray-50/50 py-0 lg:col-span-3 lg:h-full">
                 <div class="sticky top-16">
-                    <div v-for="(item, key) in formData['blueprint']" @click="jumpToElement(`field${key}`)" :class="[
-                        appName == 'customer'
+                    <div v-for="(item, key) in formData['blueprint']"
+
+                         @click="current=key"
+
+                         :class="[
+                             appName == 'customer'
                         ? tabActive[key]
                             ? 'navigationSecondActiveCustomer'
                             : 'navigationSecondCustomer'
@@ -113,13 +140,13 @@ onBeforeUnmount(() => {
                             : 'navigationOrganisation',
                         'cursor-pointer group border-l-4 px-3 py-2 flex items-center text-sm font-medium',
                         ]">
-                        <FontAwesomeIcon v-if="item.icon" aria-hidden="true" class="flex-shrink-0 -ml-1 mr-3 h-6 w-6"
-                            :class="[tabActive[key]
+                        <FontAwesomeIcon v-if="item.icon" aria-hidden="true" class="flex-shrink-0 -ml-1 mr-2 h-4 w-4"
+                                         :class="[tabActive[key]
                                 ? 'text-gray-400 group-hover:text-gray-500'
                                 : 'text-gray-400',
                             ]"
-                            :icon="item.icon" />
-                        <span class="capitalize truncate">{{ item.title }}</span>
+                                         :icon="item.icon"/>
+                        <span class="capitalize truncate">{{ item.label }}</span>
                     </div>
                 </div>
             </aside>
@@ -127,71 +154,71 @@ onBeforeUnmount(() => {
 
             <!-- Content of forms -->
             <div class="px-4 sm:px-6 md:px-4 col-span-9">
-                <div class="divide-y divide-gray-200 dark:divide-gray-500 flex flex-col">
 
-                    <div v-for="(sectionData, sectionIdx ) in formData.blueprint" :key="sectionIdx" class="relative py-4">
-                        <!-- Helper: Section click -->
-                        <div class="sr-only absolute -top-16" :id="`field${sectionIdx}`" />
-                        
-                        <!-- Title -->
-                        <div class="flex items-center gap-x-2"  ref="buttonRefs">
-                            <FontAwesomeIcon v-if="sectionData.icon" :icon='sectionData.icon' class='' aria-hidden='true' />
-                            <h3 v-if="sectionData.title" class="text-lg leading-6 font-medium text-gray-700 capitalize">
-                                {{ sectionData.title }}
-                            </h3>
-                            <p v-if="sectionData.subtitle" class="max-w-2xl text-sm text-gray-500">
-                                {{ sectionData.subtitle }}
-                            </p>
-                        </div>
 
-                        <div class="mt-2 pt-4 sm:pt-5">
-                            <div v-for="(fieldData, fieldName, index ) in sectionData.fields" :key="index" class="mt-1 ">
-                                <dl class="divide-y divide-green-200  ">
-                                    <div class="pb-4 sm:pb-5 sm:grid sm:grid-cols-3 sm:gap-4">
+                    <div v-for="(sectionData, sectionIdx ) in formData.blueprint" :key="sectionIdx" >
+                        <div v-show="sectionIdx===current" >
+                            <div class="sr-only absolute -top-16" :id="`field${sectionIdx}`"/>
+                            <!-- Title -->
+                            <div class="flex items-center gap-x-2" ref="buttonRefs">
+                                <h3 v-if="sectionData.title" class="text-lg leading-6 font-medium text-gray-700 capitalize">
+                                    {{ sectionData.title }}
+                                </h3>
+                                <p v-if="sectionData.subtitle" class="max-w-2xl text-sm text-gray-500">
+                                    {{ sectionData.subtitle }}
+                                </p>
+                            </div>
 
-                                        <!-- Field -->
-                                        <dd class="sm:col-span-3">
-                                            <div class="mt-1 flex text-sm text-gray-700 sm:mt-0">
-                                                <div class="relative flex-grow">
-                                                    <FieldForm :key="index" :field="fieldName" :fieldData="fieldData" :args="formData.args" :id="fieldData.name"/>
+                            <div class="mt-2 pt-4 sm:pt-5">
+                                <div v-for="(fieldData, fieldName, index ) in sectionData.fields" :key="index" class="mt-1 ">
+                                    <dl class="divide-y divide-green-200  ">
+                                        <div class="pb-4 sm:pb-5 sm:grid sm:grid-cols-3 sm:gap-4">
+
+                                            <!-- Field -->
+                                            <dd class="sm:col-span-3">
+                                                <div class="mt-1 flex text-sm text-gray-700 sm:mt-0">
+                                                    <div class="relative flex-grow">
+                                                        <Action v-if="fieldData.type==='action'" :action="fieldData.action"></Action>
+
+                                                        <FieldForm v-else :key="index" :field="fieldName" :fieldData="fieldData" :args="formData.args" :id="fieldData.name"/>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </dd>
-                                    </div>
-                                </dl>
+                                            </dd>
+                                        </div>
+                                    </dl>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="py-2 px-3 flex justify-end max-w-2xl" v-if="formData.blueprint[current].button"  :id="formData.title">
+                    <div class="py-2 px-3 flex justify-end max-w-2xl" v-if="formData.blueprint[current].button" :id="formData.title">
                         <component :is="formData.blueprint[current].button.disable ? 'div' : 'a'"
-                            :href="formData.blueprint[current].button.route" target="_blank" rel="noopener noreferrer"
-                            class="px-3 py-1.5 rounded"
-                            :class="[formData.blueprint[current].button.disable ? 'bg-orange-200 cursor-default text-white' : 'text-gray-100 bg-orange-500 hover:bg-orange-600']"
+                                   :href="formData.blueprint[current].button.route" target="_blank" rel="noopener noreferrer"
+                                   class="px-3 py-1.5 rounded"
+                                   :class="[formData.blueprint[current].button.disable ? 'bg-orange-200 cursor-default text-white' : 'text-gray-100 bg-orange-500 hover:bg-orange-600']"
                         >
                             {{ formData.blueprint[current].button.title }}
                         </component>
                     </div>
                 </div>
-            </div>
+
         </div>
 
         <!-- Mobile view -->
-        <div v-else class="">
+        <div v-else>
             <ul class="space-y-8">
                 <li v-for="(item, key) in formData['blueprint']" class="group font-medium" :aria-current="key === current ? 'page' : undefined">
                     <div class="bg-gray-200 py-2 pl-5 flex items-center">
                         <FontAwesomeIcon v-if="item.icon" aria-hidden="true" :icon="item.icon"
-                            :class="[
+                                         :class="[
                                 key === current ? 'text-gray-400' : 'text-gray-500',
                                 'flex-shrink-0 mr-3 h-5 w-5',
-                            ]" />
+                            ]"/>
                         <span class="capitalize truncate">{{ item.title }}</span>
                     </div>
                     <div class="pl-5">
-                        <!-- aaaaaa -->
                         <component :is="fieldData.type === 'action' ? Button : FieldForm" class=" pt-4 sm:pt-5 px-6 " v-for="(fieldData, field ) in formData.blueprint[key].fields"
-                        :key="field" :field="field" :fieldData="fieldData" :args="formData.args" :id="fieldData.name"/>
+                                   :key="field" :field="field" :fieldData="fieldData" :args="formData.args" :id="fieldData.name"/>
                     </div>
                 </li>
             </ul>

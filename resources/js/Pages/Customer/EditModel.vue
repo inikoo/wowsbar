@@ -11,9 +11,9 @@ import PageHeading from '@/Components/Headings/PageHeading.vue';
 import Edit from '@/Components/Edit.vue';
 import { library } from "@fortawesome/fontawesome-svg-core"
 import {
-    faEdit
+    faEdit,faPowerOff
 } from "@/../private/pro-light-svg-icons"
-library.add(faEdit);
+library.add(faEdit,faPowerOff);
 const props = defineProps<{
     title: string,
     pageHead: {

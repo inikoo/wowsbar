@@ -29,7 +29,7 @@ return new class () extends Migration {
             $table->unsignedSmallInteger('live_snapshot_id')->nullable()->index();
             $table->dateTimeTz('date')->index();
             $table->dateTimeTz('live_at')->nullable();
-            $table->dateTimeTz('retired_at')->nullable();
+            $table->dateTimeTz('switch_off_at')->nullable();
             $table->jsonb('compiled_layout');
             $table->jsonb('data');
             $table->unsignedInteger('image_id')->nullable();

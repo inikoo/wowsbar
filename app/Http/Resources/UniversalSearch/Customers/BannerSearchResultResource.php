@@ -46,8 +46,8 @@ class BannerSearchResultResource extends JsonResource
                     'icon'    => 'fal fa-seedling',
                     'class'   => 'text-indigo-500'
                 ],
-                BannerStateEnum::RETIRED => [
-                    'tooltip' => __('retired'),
+                BannerStateEnum::SWITCH_OFF => [
+                    'tooltip' => __('switch off'),
                     'icon'    => 'fal fa-eye-slash'
                 ]
             },

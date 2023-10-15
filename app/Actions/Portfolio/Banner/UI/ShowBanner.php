@@ -94,28 +94,7 @@ class ShowBanner extends InertiaAction
                         'icon'    => 'fal fa-sign'
                     ],
                     'container' => $container,
-                    'iconRight' =>
-                        match ($banner->state) {
-                            BannerStateEnum::LIVE => [
-
-                                'tooltip' => __('live'),
-                                'icon'    => 'fal fa-broadcast-tower',
-                                'class'   => 'text-green-600'
-
-                            ],
-                            BannerStateEnum::UNPUBLISHED => [
-
-                                'tooltip' => __('unpublished'),
-                                'icon'    => 'fal fa-seedling'
-
-                            ],
-                            BannerStateEnum::RETIRED => [
-
-                                'tooltip' => __('retired'),
-                                'icon'    => 'fal fa-eye-slash'
-
-                            ]
-                        }
+                    'iconRight' =>$banner->state->stateIcon()[$banner->state->value]
 
                     ,
                     'actions'   => [

@@ -1,25 +1,11 @@
 <script setup lang="ts">
-import { router } from '@inertiajs/vue3'
+import {Link, router} from '@inertiajs/vue3'
 import Button from '@/Components/Elements/Buttons/Button.vue'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faRocketLaunch } from '@/../private/pro-light-svg-icons'
-import { library } from '@fortawesome/fontawesome-svg-core'
-library.add(faRocketLaunch)
+
 
 const props = defineProps<{
-    fieldData: {
-        label: string,
-        icon?: string
-        button: {
-            style?: string
-            method: any
-            data: any
-            route: {
-                name: string
-                parameters?: string
-            }
-        }
-    }
+    action: any,
+    dataToSubmit?: any
 }>()
 
 const handleClick = () => {
@@ -32,8 +18,32 @@ const handleClick = () => {
 </script>
 
 <template>
-    <Button :style="props.fieldData.button.style" @click="handleClick">
-        {{ fieldData.label }}
-        <FontAwesomeIcon v-if="fieldData.icon" :icon='fieldData.icon' class='ml-1' aria-hidden='true' />
-    </Button>
+    <!-- Button -->
+    <Link v-if="action.type === 'button'" as="button"
+          :href="`${route(action['route']['name'], action['route']['parameters'])}`"
+          :method="action.method ?? 'get'"
+          :data="action.method !== 'get' ? dataToSubmit : null"
+    >
+        <Button :style="action.style" :label="action.label" :icon="action.icon"
+                class="capitalize inline-flex items-center rounded-md text-sm font-medium shadow-sm gap-x-2"
+        />
+    </Link>
+
+    <!--suppress HtmlUnknownTag -->
+    <!-- Button Group () -->
+    <div v-if="action.type === 'buttonGroup'" class="first:rounded-l last:rounded-r overflow-hidden ring-1 ring-gray-300 flex">
+        <slot v-for="(button, index) in action.buttons" :name="'button' + index">
+            <Link
+                :href="`${route(button['route']['name'], button['route']['parameters'])}`" class="">
+                <Button :style="button.style" :label="button.label" :icon="button.icon"
+                        class="capitalize inline-flex items-center rounded-none text-sm border-none font-medium shadow-sm focus:ring-transparent focus:ring-offset-transparent focus:ring-0">
+
+                </Button>
+            </Link>
+        </slot>
+    </div>
+
+    <slot v-if="action.type === 'modal'" name="modal" :data="{...props }"/>
+
+
 </template>

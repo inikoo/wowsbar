@@ -64,9 +64,9 @@ class BannerResource extends JsonResource
 
 
                 ],
-                BannerStateEnum::RETIRED => [
+                BannerStateEnum::SWITCH_OFF => [
 
-                    'tooltip' => __('retired'),
+                    'tooltip' => __('switch off'),
                     'icon'    => 'fal fa-eye-slash'
 
                 ]

@@ -47,7 +47,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $number_banners_type_square
  * @property int $number_banners_state_unpublished
  * @property int $number_banners_state_live
- * @property int $number_banners_state_retired
+ * @property int $number_banners_state_switch_off
  * @property int $number_banner_snapshots
  * @property int $number_banners_snapshots_state_unpublished
  * @property int $number_banners_snapshots_state_live

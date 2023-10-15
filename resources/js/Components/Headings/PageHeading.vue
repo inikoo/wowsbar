@@ -12,12 +12,10 @@ import { faEdit, faWindowMaximize, faDraftingCompass, faEmptySet, faMoneyCheckAl
 import { faRocketLaunch, faPencil, faArrowLeft, faBorderAll, faTrashAlt, faDesktop} from "@/../private/pro-regular-svg-icons"
 import { faPlus } from "@/../private/pro-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
-
-import Button from "@/Components/Elements/Buttons/Button.vue"
 import { capitalize } from "@/Composables/capitalize"
-
 import MetaLabel from "@/Components/Headings/MetaLabel.vue";
 import Container from "@/Components/Headings/Container.vue";
+import Action from "@/Components/Forms/Fields/Action.vue";
 
 interface Icon {
     icon: string[] | string
@@ -54,11 +52,9 @@ const props = defineProps<{
     dataToSubmitIsDirty?: any
 }>()
 
-// const locale = useLocaleStore()
 
 if (props.dataToSubmit && props.data.actionActualMethod) {
     props.dataToSubmit['_method'] = props.data.actionActualMethod
-    // console.log(props.dataToSubmit)
 }
 
 </script>
@@ -80,7 +76,6 @@ if (props.dataToSubmit && props.data.actionActualMethod) {
                         <Container :data="data.container" />
                     </div>
                 </div>
-
                 <div class="inline text-gray-400">
                     <FontAwesomeIcon v-if="data.icon" :title="capitalize(data.icon.tooltip ?? '')" aria-hidden="true"
                         :icon="data.icon.icon" size="sm" class="pr-2"/>
@@ -112,33 +107,7 @@ if (props.dataToSubmit && props.data.actionActualMethod) {
         <slot name="button" :dataPageHead="{...props }">
             <div class="flex items-center gap-2">
                 <div v-for="action in data.actions">
-
-                    <!-- Button -->
-                    <Link v-if="action.type === 'button'" as="button"
-                        :href="`${route(action['route']['name'], action['route']['parameters'])}`"
-                        :method="action.method ?? 'get'"
-                        :data="action.method !== 'get' ? dataToSubmit : null"
-                    >
-                        <Button :style="action.style" :label="action.label" :icon="action.icon"
-                            class="capitalize inline-flex items-center rounded-md text-sm font-medium shadow-sm gap-x-2"
-                        />
-                    </Link>
-
-                    <!--suppress HtmlUnknownTag -->
-                    <!-- Button Group () -->
-                    <div v-if="action.type === 'buttonGroup'" class="first:rounded-l last:rounded-r overflow-hidden ring-1 ring-gray-300 flex">
-                        <slot v-for="(button, index) in action.buttons" :name="'button' + index">
-                            <Link
-                                    :href="`${route(button['route']['name'], button['route']['parameters'])}`" class="">
-                                <Button :style="button.style" :label="button.label" :icon="button.icon"
-                                        class="capitalize inline-flex items-center rounded-none text-sm border-none font-medium shadow-sm focus:ring-transparent focus:ring-offset-transparent focus:ring-0">
-
-                                </Button>
-                            </Link>
-                        </slot>
-                    </div>
-
-                    <slot v-if="action.type === 'modal'" name="modal" :data="{...props }"/>
+                    <Action :action="action" :dataToSubmit="dataToSubmit"/>
                 </div>
                 <slot name="other" :dataPageHead="{...props }"/>
             </div>
