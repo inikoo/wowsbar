@@ -32,6 +32,7 @@ trait WithFirstBanner
                 ];
             }
         } else {
+
             if ($scope->portfolioStats->number_banners == 0) {
                 $numberPortfolioWebsites = $scope->portfolioStats->number_portfolio_websites;
                 if ($numberPortfolioWebsites == 1) {

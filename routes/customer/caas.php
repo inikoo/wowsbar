@@ -14,6 +14,7 @@ use App\Actions\Portfolio\Banner\UI\IndexBanners;
 use App\Actions\Portfolio\Banner\UI\RemoveBanner;
 use App\Actions\Portfolio\Banner\UI\ShowBanner;
 use App\Actions\Portfolio\Banner\UI\ShowBannerWorkshop;
+use App\Actions\Portfolio\Banner\UI\ShowDeletedBanner;
 use App\Actions\Portfolio\Gallery\DeleteUploadedImage;
 use App\Actions\Portfolio\Gallery\UI\ShowGallery;
 use App\Actions\Portfolio\Gallery\UI\StockImages\IndexStockImages;
@@ -55,6 +56,8 @@ Route::prefix('banners')->name('banners')->group(function () {
         Route::get('edit', ['icon' => 'globe', 'label' => 'banner'])->uses(EditBanner::class)->name('.edit');
         Route::get('workshop', ['icon' => 'globe', 'label' => 'banner'])->uses(ShowBannerWorkshop::class)->name('.workshop');
         Route::get('delete', ['icon' => 'globe', 'label' => 'banner'])->uses(RemoveBanner::class)->name('.remove');
+        Route::get('deleted', ['icon' => 'globe', 'label' => 'banner'])->withTrashed()->uses(ShowDeletedBanner::class)->name('.deleted');
+
         Route::get('snapshots', [IndexSnapshots::class, 'inBanner'])->name('.show.snapshots.index');
         Route::get('snapshots/{snapshot}', [ShowSnapshot::class, 'inBanner'])->name('.show.snapshots.show');
     });

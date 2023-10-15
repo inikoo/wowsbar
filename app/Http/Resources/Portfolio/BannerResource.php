@@ -26,6 +26,7 @@ class BannerResource extends JsonResource
         /** @var Banner $banner */
         $banner = $this;
 
+
         $image          = null;
         $imageThumbnail = null;
         if ($banner->image) {
@@ -76,7 +77,7 @@ class BannerResource extends JsonResource
                 'name'       => 'customer.caas.banners.show',
                 'parameters' => [$banner->slug]
             ],
-            'websites'           => implode(', ', $banner->portfolioWebsite->pluck('name')->toArray()),
+         //   'websites'           => implode(', ', $banner->portfolioWebsites()->pluck('name')->toArray()),
             'updated_at'         => $banner->updated_at,
             'created_at'         => $banner->created_at,
             'workshopRoute'      => [

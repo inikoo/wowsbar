@@ -7,13 +7,16 @@
 
 namespace App\Actions\Portfolio\Banner\UI;
 
-use App\Actions\Elasticsearch\History\IndexHistories;
+use App\Actions\Helpers\History\IndexCustomerHistory;
 use App\Actions\InertiaAction;
 use App\Actions\Portfolio\PortfolioWebsite\UI\ShowPortfolioWebsite;
 use App\Actions\UI\Customer\Portfolio\ShowPortfolio;
 use App\Enums\UI\Customer\BannerTabsEnum;
-use App\Enums\UI\Customer\PortfolioWebsiteTabsEnum;
-use App\Http\Resources\History\HistoryResource;
+use App\Http\Resources\History\CustomerHistoryResource;
+use App\Http\Resources\Portfolio\BannerResource;
+use App\Models\CRM\Customer;
+use App\Models\Market\Shop;
+use App\Models\Organisation\Organisation;
 use App\Models\Portfolio\Banner;
 use App\Models\Portfolio\PortfolioWebsite;
 use Inertia\Inertia;
@@ -22,15 +25,29 @@ use Lorisleiva\Actions\ActionRequest;
 
 class ShowDeletedBanner extends InertiaAction
 {
+    private Customer|Shop|PortfolioWebsite|Organisation $parent;
+
+    public function handle(Organisation|Shop|Customer|PortfolioWebsite $parent, Banner $banner): Banner
+    {
+        $this->parent = $parent;
+
+        return $banner;
+    }
+
     public function authorize(ActionRequest $request): bool
     {
-        $this->canRestore   = $request->get('customerUser')->hasPermissionTo('portfolio.edit');
+        $this->canRestore   = $request->get('customerUser')->hasPermissionTo('portfolio.banners.edit');
 
         return
             (
-                $request->user()->tokenCan('root') or
-                $request->get('customerUser')->hasPermissionTo('portfolio.view')
+                $request->get('customerUser')->hasPermissionTo('portfolio.banners.view')
             );
+    }
+
+    public function asController(Banner $banner, ActionRequest $request): Banner
+    {
+        $this->initialisation($request)->withTab(BannerTabsEnum::values());
+        return $this->handle($request->get('customer'), $banner);
     }
 
     public function inCustomer(Banner $banner, ActionRequest $request): Banner
@@ -40,23 +57,26 @@ class ShowDeletedBanner extends InertiaAction
         return $banner;
     }
 
+    /*
     public function inPortfolioWebsite(PortfolioWebsite $portfolioWebsite, Banner $banner, ActionRequest $request): Banner
     {
         $this->initialisation($request)->withTab(BannerTabsEnum::values());
 
         return $banner;
     }
+    */
 
 
     public function htmlResponse(Banner $banner, ActionRequest $request): Response
     {
+        $customer = $request->get('customer');
 
         return Inertia::render(
-            'Portfolio/Banner',
+            'Banners/Banner',
             [
                 'breadcrumbs'                    => $this->getBreadcrumbs(
                     $request->route()->getName(),
-                    $request->route()->parameters
+                    $request->route()->originalParameters()
                 ),
                 'title'                          => $banner->name,
                 'pageHead'                       => [
@@ -82,16 +102,35 @@ class ShowDeletedBanner extends InertiaAction
                     'current'    => $this->tab,
                     'navigation' => BannerTabsEnum::navigation()
                 ],
-                \App\Enums\UI\Customer\PortfolioWebsiteTabsEnum::SHOWCASE->value => $this->tab == PortfolioWebsiteTabsEnum::SHOWCASE->value ?
-                    fn () => $banner->compiled_layout
-                    : Inertia::lazy(fn () => $banner->compiled_layout),
-
-                PortfolioWebsiteTabsEnum::CHANGELOG->value => $this->tab == PortfolioWebsiteTabsEnum::CHANGELOG->value ?
-                    fn () => HistoryResource::collection(IndexHistories::run($banner))
-                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistories::run($banner)))
+                BannerTabsEnum::SHOWCASE->value => $this->tab == BannerTabsEnum::SHOWCASE->value
+                    ?
+                    fn () => BannerResource::make($banner)->getArray()
+                    : Inertia::lazy(
+                        fn () => BannerResource::make($banner)->getArray()
+                    ),
+                BannerTabsEnum::CHANGELOG->value => $this->tab == BannerTabsEnum::CHANGELOG->value
+                    ?
+                    fn () => CustomerHistoryResource::collection(
+                        IndexCustomerHistory::run(
+                            customer: $customer,
+                            model: $banner,
+                            prefix:  BannerTabsEnum::CHANGELOG->value
+                        )
+                    )
+                    : Inertia::lazy(fn () => CustomerHistoryResource::collection(
+                        IndexCustomerHistory::run(
+                            customer: $customer,
+                            model: $banner,
+                            prefix:  BannerTabsEnum::CHANGELOG->value
+                        )
+                    )),
 
             ]
-        )->table(IndexHistories::make()->tableStructure());
+        )->table(
+            IndexCustomerHistory::make()->tableStructure(
+                prefix: BannerTabsEnum::CHANGELOG->value
+            )
+        );
     }
 
     public function getBreadcrumbs(string $routeName, array $routeParameters, string $suffix = null): array

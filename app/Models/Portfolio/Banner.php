@@ -62,8 +62,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read Snapshot|null $liveSnapshot
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, Media> $media
  * @property-read int|null $media_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Portfolio\PortfolioWebsite> $portfolioWebsite
- * @property-read int|null $portfolio_website_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Portfolio\PortfolioWebsite> $portfolioWebsites
+ * @property-read int|null $portfolio_websites_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Snapshot> $snapshots
  * @property-read int|null $snapshots_count
  * @property-read \App\Models\Portfolio\BannerStats|null $stats
@@ -163,7 +163,7 @@ class Banner extends Model implements HasMedia, Auditable
         return $this->belongsTo(Snapshot::class, 'live_snapshot_id');
     }
 
-    public function portfolioWebsite(): BelongsToMany
+    public function portfolioWebsites(): BelongsToMany
     {
         return $this->belongsToMany(PortfolioWebsite::class)->using(BannerPortfolioWebsite::class)
             ->withTimestamps();

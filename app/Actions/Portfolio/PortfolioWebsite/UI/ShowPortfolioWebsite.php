@@ -89,14 +89,14 @@ class ShowPortfolioWebsite extends InertiaAction
 
                 PortfolioWebsiteTabsEnum::CHANGELOG->value => $this->tab == PortfolioWebsiteTabsEnum::CHANGELOG->value
                     ?
-                    fn() => CustomerHistoryResource::collection(
+                    fn () => CustomerHistoryResource::collection(
                         IndexCustomerHistory::run(
                             customer: $customer,
                             model: PortfolioWebsite::class,
                             prefix: PortfolioWebsiteTabsEnum::CHANGELOG->value
                         )
                     )
-                    : Inertia::lazy(fn() => CustomerHistoryResource::collection(
+                    : Inertia::lazy(fn () => CustomerHistoryResource::collection(
                         IndexCustomerHistory::run(
                             customer: $customer,
                             model: PortfolioWebsite::class,
@@ -106,8 +106,9 @@ class ShowPortfolioWebsite extends InertiaAction
 
                 PortfolioWebsiteTabsEnum::BANNERS->value => $this->tab == PortfolioWebsiteTabsEnum::BANNERS->value
                     ?
-                    fn() => $firstBanners ? $firstBanners : BannerResource::collection(IndexBanners::run($portfolioWebsite, PortfolioWebsiteTabsEnum::BANNERS->value))
-                    : Inertia::lazy(fn() =>
+                    fn () => $firstBanners ? $firstBanners : BannerResource::collection(IndexBanners::run($portfolioWebsite, PortfolioWebsiteTabsEnum::BANNERS->value))
+                    : Inertia::lazy(
+                        fn () =>
                     $firstBanners ? $firstBanners : BannerResource::collection(IndexBanners::run($portfolioWebsite, PortfolioWebsiteTabsEnum::BANNERS->value))
                     )
             ]

@@ -12,13 +12,15 @@ use App\Actions\Portfolio\PortfolioWebsite\UI\ShowPortfolioWebsite;
 use App\Actions\Traits\WelcomeWidgets\WithFirstBanner;
 use App\Actions\UI\Customer\CaaS\ShowCaaSDashboard;
 use App\Enums\Portfolio\Banner\BannerStateEnum;
-use App\Http\Resources\Portfolio\BannerResource;
+use App\Http\Resources\Portfolio\BannersResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\CRM\Customer;
 use App\Models\Portfolio\Banner;
 use App\Models\Portfolio\PortfolioWebsite;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Query\JoinClause;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -68,7 +70,20 @@ class IndexBanners extends InertiaAction
         if (class_basename($parent) == 'PortfolioWebsite') {
             $queryBuilder->leftJoin('banner_portfolio_website', 'banner_id', 'banners.id')
                 ->where('banner_portfolio_website.portfolio_website_id', $parent->id);
+        } else {
+            $websites = DB::table('banner_portfolio_website')
+                ->select('banner_id', DB::raw('jsonb_agg(json_build_object(\'slug\',portfolio_websites.slug,\'name\',portfolio_websites.name)) as websites'))
+               ->leftJoin('portfolio_websites', 'banner_portfolio_website.portfolio_website_id', 'portfolio_websites.id')
+                ->groupBy('banner_id');
+
+            $queryBuilder->joinSub($websites, 'websites', function (JoinClause $join) {
+                $join->on('banners.id', '=', 'websites.banner_id');
+            });
+
         }
+
+
+
 
 
         foreach ($this->getElementGroups() as $key => $elementGroup) {
@@ -83,7 +98,19 @@ class IndexBanners extends InertiaAction
 
         return $queryBuilder
             ->defaultSort('banners.slug')
-            ->select('banners.slug', 'banners.state', 'banners.name', 'banners.image_id', 'live_at', 'retired_at', 'banners.created_at', 'banners.updated_at')
+            ->select(
+                'websites',
+                'banners.slug',
+                'banners.state',
+                'banners.name',
+                'banners.image_id',
+                'live_at',
+                'retired_at',
+                'banners.created_at',
+                'banners.updated_at',
+                'banners.live_at',
+                'banners.retired_at'
+            )
             ->allowedSorts(['slug', 'name', 'created_at', 'updated_at'])
             ->allowedFilters([$globalSearch])
             ->withPaginator($prefix)
@@ -161,8 +188,7 @@ class IndexBanners extends InertiaAction
                 ->column(key: 'name', label: __('name'), sortable: true)
                 ->column(key: 'image_thumbnail', label: ['fal', 'fa-image'])
                 ->column(key: 'websites', label: __('websites'))
-                ->column(key: 'created_at', label: __('Date created'), sortable: true)
-                ->column(key: 'updated_at', label: __('Date updated'), sortable: true)
+                ->column(key: 'date', label: __('date'), sortable: true)
                 ->defaultSort('slug');
         };
     }
@@ -198,6 +224,8 @@ class IndexBanners extends InertiaAction
 
     public function htmlResponse(LengthAwarePaginator $banners, ActionRequest $request): Response
     {
+
+
         $scope     = $this->parent;
         $container = null;
 
@@ -242,7 +270,7 @@ class IndexBanners extends InertiaAction
                 'firstBanner' => $this->canEdit ? $this->getFirstBannerWidget($scope) : null,
 
 
-                'data' => BannerResource::collection($banners),
+                'data' => BannersResource::collection($banners),
             ]
         )->table(
             $this->tableStructure(

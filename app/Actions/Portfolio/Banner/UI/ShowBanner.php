@@ -52,8 +52,7 @@ class ShowBanner extends InertiaAction
     public function asController(Banner $banner, ActionRequest $request): Banner
     {
         $this->initialisation($request)->withTab(BannerTabsEnum::values());
-
-        return $this->handle(customer(), $banner);
+        return $this->handle($request->get('customer'), $banner);
     }
 
     public function inPortfolioWebsite(PortfolioWebsite $portfolioWebsite, Banner $banner, ActionRequest $request): Banner
@@ -193,24 +192,25 @@ class ShowBanner extends InertiaAction
                         IndexCustomerHistory::run(
                             customer: $customer,
                             model: $banner,
-                            prefix:  BannerTabsEnum::CHANGELOG->value
+                            prefix: BannerTabsEnum::CHANGELOG->value
                         )
                     )
                     : Inertia::lazy(fn () => CustomerHistoryResource::collection(
                         IndexCustomerHistory::run(
                             customer: $customer,
                             model: $banner,
-                            prefix:  BannerTabsEnum::CHANGELOG->value
+                            prefix: BannerTabsEnum::CHANGELOG->value
                         )
                     )),
 
             ]
         )->table(
             IndexCustomerHistory::make()->tableStructure(
-                prefix:  BannerTabsEnum::CHANGELOG->value
+                prefix: BannerTabsEnum::CHANGELOG->value
             )
         )->table(
-            IndexCustomerHistory::make()->tableStructure(
+            IndexSnapshots::make()->tableStructure(
+                parent: $banner,
                 prefix: BannerTabsEnum::SNAPSHOTS->value
             )
         );

@@ -107,7 +107,6 @@ class StoreBanner
 
         BannerHydrateUniversalSearch::dispatch($banner);
 
-        //  StoreBannerElasticsearch::run($banner);
 
         return $banner;
     }

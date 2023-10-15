@@ -13,7 +13,7 @@ return new class () extends Migration {
     public function up(): void
     {
         Schema::create('banner_portfolio_website', function (Blueprint $table) {
-            $table->integerIncrements('id');
+            $table->increments('id');
             $table->ulid()->index();
             $table->unsignedInteger('portfolio_website_id')->index()->nullable();
             $table->foreign('portfolio_website_id')->references('id')->on('portfolio_websites')->onUpdate('cascade')->onDelete('cascade');

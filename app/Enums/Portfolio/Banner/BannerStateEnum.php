@@ -27,6 +27,71 @@ enum BannerStateEnum: string
         ];
     }
 
+    public static function date(): array
+    {
+        return [
+            'unpublished' => 'created_at',
+            'live'        => 'live_at',
+            'retired'     => 'retired_at',
+
+        ];
+    }
+
+    public static function stateIcon(): array
+    {
+        return [
+            'unpublished' => [
+
+                'tooltip' => __('unpublished'),
+                'icon'    => 'fal fa-seedling',
+                'class'   => 'text-indigo-500'
+
+
+            ],
+            'live'        => [
+
+                'tooltip' => __('live'),
+                'icon'    => 'fal fa-broadcast-tower',
+                'class'   => 'text-green-600 animate-pulse'
+
+            ],
+            'retired'     => [
+
+                'tooltip' => __('retired'),
+                'icon'    => 'fal fa-eye-slash'
+
+            ],
+
+        ];
+    }
+
+    public static function dateIcon(): array
+    {
+        return [
+            'unpublished' => [
+
+                'tooltip' => __('created'),
+                'icon'    => 'fal fa-sparkles',
+                'class'   => 'text-yellow-500'
+
+
+            ],
+            'live'        => [
+                'tooltip' => __('published'),
+                'icon'    => 'fal fa-rocket',
+
+            ],
+            'retired'     => [
+                'tooltip' => __('retired'),
+                'icon'    => 'fal fa-do-not-enter',
+                'class'   => 'text-red-500'
+
+            ],
+
+        ];
+    }
+
+
     public static function count(): array
     {
         $stats = customer()->portfolioStats;

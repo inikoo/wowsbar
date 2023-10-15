@@ -8,62 +8,63 @@
 namespace App\Actions\Portfolio\Banner;
 
 use App\Actions\CRM\Customer\Hydrators\CustomerHydrateBanners;
+use App\Actions\Portfolio\Banner\Elasticsearch\DeleteBannerElasticsearch;
 use App\Actions\Portfolio\PortfolioWebsite\Hydrators\PortfolioWebsiteHydrateBanners;
+use App\Models\CRM\Customer;
 use App\Models\Portfolio\Banner;
-use App\Models\Portfolio\PortfolioWebsite;
 use Illuminate\Http\RedirectResponse;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
-use Lorisleiva\Actions\Concerns\AsController;
 use Lorisleiva\Actions\Concerns\WithAttributes;
 
 class DeleteBanner
 {
     use AsAction;
-    use AsController;
     use WithAttributes;
 
-    public bool $isAction                 = false;
-    public PortfolioWebsite|null $website = null;
+    public bool $isAction = false;
 
-    public function handle(Banner $banner): Banner
+    public function handle(Customer $customer, Banner $banner): Banner
     {
         $banner->delete();
 
-        CustomerHydrateBanners::dispatch(customer());
+        CustomerHydrateBanners::run($customer);
 
-        if(class_basename($banner->portfolioWebsite) == 'PortfolioWebsite') {
-            PortfolioWebsiteHydrateBanners::dispatch($banner->portfolioWebsite);
+        foreach($banner->portfolioWebsites as $portfolioWebsite) {
+            PortfolioWebsiteHydrateBanners::run($portfolioWebsite);
         }
 
-        // DeleteBannerElasticsearch::run($banner);
+        DeleteBannerElasticsearch::dispatch($banner);
 
         return $banner;
     }
 
     public function authorize(ActionRequest $request): bool
     {
-        if($this->isAction) {
+        if ($this->isAction) {
             return true;
         }
 
         return $request->get('customerUser')->hasPermissionTo("portfolio.banners.edit");
     }
 
-    public function action(Banner $banner): Banner
+    public function action(Customer $customer, Banner $banner): Banner
     {
-        return $this->handle($banner);
+        return $this->handle($customer, $banner);
     }
 
     public function asController(Banner $banner, ActionRequest $request): Banner
     {
         $request->validate();
-        return $this->handle($banner);
+
+        return $this->handle($request->get('customer'), $banner);
     }
 
 
-    public function htmlResponse(): RedirectResponse
+    public function htmlResponse(Banner $banner): RedirectResponse
     {
-        return back();
+        return redirect()->route(
+            'customer.caas.banners.index',
+        );
     }
 }
