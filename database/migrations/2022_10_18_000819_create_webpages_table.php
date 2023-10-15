@@ -6,11 +6,13 @@
  */
 
 use App\Enums\Organisation\Web\Webpage\WebpageStateEnum;
+use App\Stubs\Migrations\HasSoftDeletes;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class () extends Migration {
+    use HasSoftDeletes;
     public function up(): void
     {
         Schema::create('webpages', function (Blueprint $table) {
@@ -38,7 +40,7 @@ return new class () extends Migration {
             $table->jsonb('data');
             $table->jsonb('settings');
             $table->timestampsTz();
-            $table->softDeletesTz();
+            $table=$this->softDeletes($table);
         });
 
         DB::statement("CREATE INDEX ON webpages (lower('url')) ");

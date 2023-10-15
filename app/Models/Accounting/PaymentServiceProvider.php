@@ -29,6 +29,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string|null $last_used_at
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string|null $delete_comment
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Accounting\PaymentAccount> $accounts
  * @property-read int|null $accounts_count
@@ -44,6 +45,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder|PaymentServiceProvider whereCode($value)
  * @method static \Illuminate\Database\Eloquent\Builder|PaymentServiceProvider whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|PaymentServiceProvider whereData($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PaymentServiceProvider whereDeleteComment($value)
  * @method static \Illuminate\Database\Eloquent\Builder|PaymentServiceProvider whereDeletedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|PaymentServiceProvider whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|PaymentServiceProvider whereLastUsedAt($value)

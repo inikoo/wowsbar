@@ -6,11 +6,13 @@
  */
 
 use App\Enums\HumanResources\TimeTracking\TimeTrackingStatusEnum;
+use App\Stubs\Migrations\HasSoftDeletes;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class () extends Migration {
+    use HasSoftDeletes;
     public function up(): void
     {
         Schema::create('time_trackings', function (Blueprint $table) {
@@ -28,7 +30,7 @@ return new class () extends Migration {
             $table->unsignedBigInteger('end_clocking_id')->nullable()->index();
             $table->foreign('end_clocking_id')->references('id')->on('clockings');
             $table->timestampsTz();
-            $table->softDeletesTz();
+            $table=$this->softDeletes($table);
             $table->unique(['subject_type','subject_id']);
         });
 

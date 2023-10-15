@@ -34,6 +34,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property string|null $last_used_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
+ * @property string|null $delete_comment
  * @property Carbon|null $deleted_at
  * @property-read Collection<int, \App\Models\Helpers\Audit> $audits
  * @property-read int|null $audits_count
@@ -48,6 +49,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|PaymentAccount whereCode($value)
  * @method static Builder|PaymentAccount whereCreatedAt($value)
  * @method static Builder|PaymentAccount whereData($value)
+ * @method static Builder|PaymentAccount whereDeleteComment($value)
  * @method static Builder|PaymentAccount whereDeletedAt($value)
  * @method static Builder|PaymentAccount whereId($value)
  * @method static Builder|PaymentAccount whereLastUsedAt($value)

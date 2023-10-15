@@ -5,11 +5,13 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
+use App\Stubs\Migrations\HasSoftDeletes;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class () extends Migration {
+    use HasSoftDeletes;
     public function up(): void
     {
         Schema::create('slides', function (Blueprint $table) {
@@ -27,7 +29,7 @@ return new class () extends Migration {
             $table->unsignedInteger('tablet_image_id')->nullable();
             $table->foreign('tablet_image_id')->references('id')->on('media');
             $table->timestampsTz();
-            $table->softDeletesTz();
+            $table=$this->softDeletes($table);
         });
     }
 

@@ -65,6 +65,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string|null $launched_at
  * @property string|null $closed_at
+ * @property string|null $delete_comment
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property int|null $home_id
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Helpers\Audit> $audits
@@ -97,6 +98,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Website whereCreatedAt($value)
  * @method static Builder|Website whereCurrentLayoutId($value)
  * @method static Builder|Website whereData($value)
+ * @method static Builder|Website whereDeleteComment($value)
  * @method static Builder|Website whereDeletedAt($value)
  * @method static Builder|Website whereDomain($value)
  * @method static Builder|Website whereFooterIsDirty($value)

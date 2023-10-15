@@ -50,6 +50,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property string|null $cancelled_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
+ * @property string|null $delete_comment
  * @property Carbon|null $deleted_at
  * @property bool $with_refund
  * @property-read Currency $currency
@@ -68,6 +69,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Payment whereCustomerId($value)
  * @method static Builder|Payment whereData($value)
  * @method static Builder|Payment whereDate($value)
+ * @method static Builder|Payment whereDeleteComment($value)
  * @method static Builder|Payment whereDeletedAt($value)
  * @method static Builder|Payment whereId($value)
  * @method static Builder|Payment whereOrgAmount($value)

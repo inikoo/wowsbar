@@ -51,6 +51,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property int|null $image_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string|null $delete_comment
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Helpers\Audit> $audits
  * @property-read int|null $audits_count
@@ -80,6 +81,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Banner whereCustomerId($value)
  * @method static Builder|Banner whereData($value)
  * @method static Builder|Banner whereDate($value)
+ * @method static Builder|Banner whereDeleteComment($value)
  * @method static Builder|Banner whereDeletedAt($value)
  * @method static Builder|Banner whereId($value)
  * @method static Builder|Banner whereImageId($value)
@@ -87,9 +89,9 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Banner whereLiveSnapshotId($value)
  * @method static Builder|Banner whereName($value)
  * @method static Builder|Banner wherePortfolioWebsiteId($value)
- * @method static Builder|Banner whereRetiredAt($value)
  * @method static Builder|Banner whereSlug($value)
  * @method static Builder|Banner whereState($value)
+ * @method static Builder|Banner whereSwitchOffAt($value)
  * @method static Builder|Banner whereType($value)
  * @method static Builder|Banner whereUlid($value)
  * @method static Builder|Banner whereUnpublishedSnapshotId($value)

@@ -6,12 +6,14 @@
  */
 
 use App\Stubs\Migrations\HasAssetCodeDescription;
+use App\Stubs\Migrations\HasSoftDeletes;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class () extends Migration {
     use HasAssetCodeDescription;
+    use HasSoftDeletes;
     public function up(): void
     {
         Schema::create('product_categories', function (Blueprint $table) {
@@ -26,7 +28,7 @@ return new class () extends Migration {
             $table->string('interest')->nullable()->index();
             $table->jsonb('data');
             $table->timestampstz();
-            $table->softDeletesTz();
+            $table=$this->softDeletes($table);
             $table->index(['parent_type','parent_id']);
         });
 

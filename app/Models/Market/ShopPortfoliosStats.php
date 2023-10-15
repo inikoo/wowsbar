@@ -76,7 +76,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|ShopPortfoliosStats whereNumberBannersSnapshotsStateLive($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ShopPortfoliosStats whereNumberBannersSnapshotsStateUnpublished($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ShopPortfoliosStats whereNumberBannersStateLive($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ShopPortfoliosStats whereNumberBannersStateRetired($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ShopPortfoliosStats whereNumberBannersStateSwitchOff($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ShopPortfoliosStats whereNumberBannersStateUnpublished($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ShopPortfoliosStats whereNumberBannersTypeLandscape($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ShopPortfoliosStats whereNumberBannersTypeSquare($value)

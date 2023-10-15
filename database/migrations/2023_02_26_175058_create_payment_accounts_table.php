@@ -5,11 +5,13 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
+use App\Stubs\Migrations\HasSoftDeletes;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class () extends Migration {
+    use HasSoftDeletes;
     public function up(): void
     {
         Schema::create('payment_accounts', function (Blueprint $table) {
@@ -22,7 +24,7 @@ return new class () extends Migration {
             $table->jsonb('data');
             $table->dateTimeTz('last_used_at')->nullable();
             $table->timestampsTz();
-            $table->softDeletesTz();
+            $table=$this->softDeletes($table);
         });
     }
 

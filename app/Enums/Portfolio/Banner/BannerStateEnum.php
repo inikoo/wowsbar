@@ -13,15 +13,15 @@ enum BannerStateEnum: string
 {
     use EnumHelperTrait;
 
-    case UNPUBLISHED = 'unpublished';
-    case LIVE        = 'live';
+    case UNPUBLISHED    = 'unpublished';
+    case LIVE           = 'live';
     case SWITCH_OFF     = 'switch_off';
 
     public static function labels(): array
     {
         return [
-            'unpublished' => __('Unpublished'),
-            'live'        => __('Live'),
+            'unpublished'    => __('Unpublished'),
+            'live'           => __('Live'),
             'switch_off'     => __('Switch off'),
 
         ];
@@ -86,8 +86,8 @@ enum BannerStateEnum: string
         $stats = customer()->portfolioStats;
 
         return [
-            'unpublished' => $stats->number_banners_state_unpublished,
-            'live'        => $stats->number_banners_state_live,
+            'unpublished'    => $stats->number_banners_state_unpublished,
+            'live'           => $stats->number_banners_state_live,
             'switch_off'     => $stats->number_banners_state_switch_off,
         ];
     }

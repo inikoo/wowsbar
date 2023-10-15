@@ -10,6 +10,7 @@ use App\Enums\CRM\Customer\CustomerStatusEnum;
 use App\Enums\CRM\Customer\CustomerTradeStateEnum;
 use App\Stubs\Migrations\HasAssets;
 use App\Stubs\Migrations\HasContact;
+use App\Stubs\Migrations\HasSoftDeletes;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -17,7 +18,7 @@ use Illuminate\Support\Facades\Schema;
 return new class () extends Migration {
     use HasContact;
     use HasAssets;
-
+    use HasSoftDeletes;
     public function up(): void
     {
         Schema::create('customers', function (Blueprint $table) {
@@ -35,16 +36,14 @@ return new class () extends Migration {
             $table->foreign('shop_id')->references('id')->on('shops');
             $table->unsignedSmallInteger('website_id')->nullable()->index();
             $table->foreign('website_id')->references('id')->on('websites');
-
             $table->unsignedSmallInteger('language_id');
             $table->foreign('language_id')->references('id')->on('languages');
             $table->unsignedSmallInteger('timezone_id');
             $table->foreign('timezone_id')->references('id')->on('timezones');
-
             $table->unsignedBigInteger('image_id')->nullable();
             $table->ulid('ulid')->index()->unique();
             $table->timestampsTz();
-            $table->softDeletesTz();
+            $table=$this->softDeletes($table);
         });
     }
 

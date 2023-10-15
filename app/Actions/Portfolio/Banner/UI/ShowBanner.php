@@ -11,7 +11,6 @@ use App\Actions\Helpers\History\IndexCustomerHistory;
 use App\Actions\Helpers\Snapshot\UI\IndexSnapshots;
 use App\Actions\InertiaAction;
 use App\Actions\UI\Customer\Banners\ShowBannersDashboard;
-use App\Enums\Portfolio\Banner\BannerStateEnum;
 use App\Enums\UI\Customer\BannerTabsEnum;
 use App\Http\Resources\History\CustomerHistoryResource;
 use App\Http\Resources\Portfolio\BannerResource;
@@ -44,7 +43,7 @@ class ShowBanner extends InertiaAction
 
         return
             (
-            $request->get('customerUser')->hasPermissionTo('portfolio.banners.view')
+                $request->get('customerUser')->hasPermissionTo('portfolio.banners.view')
             );
     }
 
@@ -166,20 +165,20 @@ class ShowBanner extends InertiaAction
                 ],
                 BannerTabsEnum::SHOWCASE->value => $this->tab == BannerTabsEnum::SHOWCASE->value
                     ?
-                    fn() => BannerResource::make($banner)->getArray()
+                    fn () => BannerResource::make($banner)->getArray()
                     : Inertia::lazy(
-                        fn() => BannerResource::make($banner)->getArray()
+                        fn () => BannerResource::make($banner)->getArray()
                     ),
 
                 BannerTabsEnum::SNAPSHOTS->value => $this->tab == BannerTabsEnum::SNAPSHOTS->value
                     ?
-                    fn() => SnapshotResource::collection(
+                    fn () => SnapshotResource::collection(
                         IndexSnapshots::run(
                             parent: $banner,
                             prefix: BannerTabsEnum::SNAPSHOTS->value
                         )
                     )
-                    : Inertia::lazy(fn() => SnapshotResource::collection(
+                    : Inertia::lazy(fn () => SnapshotResource::collection(
                         IndexSnapshots::run(
                             parent: $banner,
                             prefix: BannerTabsEnum::SNAPSHOTS->value
@@ -188,14 +187,14 @@ class ShowBanner extends InertiaAction
 
                 BannerTabsEnum::CHANGELOG->value => $this->tab == BannerTabsEnum::CHANGELOG->value
                     ?
-                    fn() => CustomerHistoryResource::collection(
+                    fn () => CustomerHistoryResource::collection(
                         IndexCustomerHistory::run(
                             customer: $customer,
                             model: $banner,
                             prefix: BannerTabsEnum::CHANGELOG->value
                         )
                     )
-                    : Inertia::lazy(fn() => CustomerHistoryResource::collection(
+                    : Inertia::lazy(fn () => CustomerHistoryResource::collection(
                         IndexCustomerHistory::run(
                             customer: $customer,
                             model: $banner,

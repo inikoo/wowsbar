@@ -51,7 +51,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static Builder|PortfolioWebsiteStats whereNumberBannersSnapshotsStateLive($value)
  * @method static Builder|PortfolioWebsiteStats whereNumberBannersSnapshotsStateUnpublished($value)
  * @method static Builder|PortfolioWebsiteStats whereNumberBannersStateLive($value)
- * @method static Builder|PortfolioWebsiteStats whereNumberBannersStateRetired($value)
+ * @method static Builder|PortfolioWebsiteStats whereNumberBannersStateSwitchOff($value)
  * @method static Builder|PortfolioWebsiteStats whereNumberBannersStateUnpublished($value)
  * @method static Builder|PortfolioWebsiteStats whereNumberBannersTypeLandscape($value)
  * @method static Builder|PortfolioWebsiteStats whereNumberBannersTypeSquare($value)

@@ -7,11 +7,13 @@
 
 use App\Enums\Accounting\Payment\PaymentStateEnum;
 use App\Enums\Accounting\Payment\PaymentStatusEnum;
+use App\Stubs\Migrations\HasSoftDeletes;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class () extends Migration {
+    use HasSoftDeletes;
     public function up(): void
     {
         Schema::create('payments', function (Blueprint $table) {
@@ -31,13 +33,12 @@ return new class () extends Migration {
             $table->string('subsequent_status')->index()->nullable();
             $table->decimal('amount', 18);
             $table->decimal('org_amount', 18);
-
             $table->jsonb('data');
             $table->dateTimeTz('date')->index()->comment('Most relevant date at current state');
             $table->dateTimeTz('completed_at')->nullable();
             $table->dateTimeTz('cancelled_at')->nullable();
             $table->timestampsTz();
-            $table->softDeletesTz();
+            $table=$this->softDeletes($table);
             $table->boolean('with_refund')->default(false);
 
             $table->unique(['reference']);

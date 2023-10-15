@@ -6,16 +6,18 @@
  */
 
 use App\Enums\HumanResources\Workplace\WorkplaceTypeEnum;
+use App\Stubs\Migrations\HasSoftDeletes;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class () extends Migration {
+    use HasSoftDeletes;
     public function up(): void
     {
         Schema::create('workplaces', function (Blueprint $table) {
             $table->smallIncrements('id');
-            $table->boolean('status')->index()->default(true);
+            $table->boolean('status')->default(true);
             $table->string('type')->index()->default(WorkplaceTypeEnum::HQ->value);
             $table->string('slug')->unique()->collation('und_ns');
             $table->string('name')->collation('und_ns');
@@ -26,7 +28,9 @@ return new class () extends Migration {
             $table->jsonb('data');
             $table->jsonb('location');
             $table->timestampsTz();
-            $table->softDeletesTz();
+            $table=$this->softDeletes($table);
+            $table->index('status');
+
         });
         //DB::statement('CREATE INDEX ON workplaces USING gin (name gin_trgm_ops) ');
 

@@ -40,6 +40,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property array $data
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string|null $delete_comment
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read Currency $currency
  * @property-read Customer $customer
@@ -59,6 +60,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|Invoice whereCurrencyId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Invoice whereCustomerId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Invoice whereData($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice whereDeleteComment($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Invoice whereDeletedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Invoice whereExchange($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Invoice whereId($value)

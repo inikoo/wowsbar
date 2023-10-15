@@ -5,11 +5,13 @@
  *  Copyright (c) 2022, Raul A Perusquia Flores
  */
 
+use App\Stubs\Migrations\HasSoftDeletes;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class () extends Migration {
+    use HasSoftDeletes;
     public function up(): void
     {
         Schema::create('portfolio_websites', function (Blueprint $table) {
@@ -23,7 +25,7 @@ return new class () extends Migration {
             $table->string('name')->collation('und_ns');
             $table->jsonb('data');
             $table->timestampsTz();
-            $table->softDeletesTz();
+            $table=$this->softDeletes($table);
             $table->unique(['customer_id','url']);
         });
         DB::statement("CREATE INDEX ON portfolio_websites (lower('url')) ");

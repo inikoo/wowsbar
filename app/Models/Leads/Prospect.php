@@ -47,6 +47,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property array $data
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
+ * @property string|null $delete_comment
  * @property Carbon|null $deleted_at
  * @property-read Customer|null $customer
  * @property-read Shop|null $shop
@@ -61,6 +62,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Prospect whereCreatedAt($value)
  * @method static Builder|Prospect whereCustomerId($value)
  * @method static Builder|Prospect whereData($value)
+ * @method static Builder|Prospect whereDeleteComment($value)
  * @method static Builder|Prospect whereDeletedAt($value)
  * @method static Builder|Prospect whereEmail($value)
  * @method static Builder|Prospect whereId($value)
