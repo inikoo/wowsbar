@@ -8,8 +8,10 @@
 namespace App\Actions\Web\Website\UI;
 
 use App\Actions\InertiaAction;
+use App\Enums\Organisation\Web\Website\WebsiteStateEnum;
 use App\Models\Web\Website;
 use Exception;
+use Illuminate\Support\Arr;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -40,6 +42,173 @@ class EditWebsite extends InertiaAction
      */
     public function htmlResponse(Website $website, ActionRequest $request): Response
     {
+        $sections['properties'] = [
+            'label'  => __('Website properties'),
+            'icon'   => 'fal fa-sliders-h',
+            'fields' => [
+                'name'   => [
+                    'type'     => 'input',
+                    'label'    => __('name'),
+                    'value'    => $website->name,
+                    'required' => true,
+                ],
+                'domain' => [
+                    'type'      => 'inputWithAddOn',
+                    'label'     => __('domain'),
+                    'leftAddOn' => [
+                        'label' => 'http://www.'
+                    ],
+                    'value'     => $website->domain,
+                    'required'  => true,
+                ],
+            ]
+        ];
+
+        switch ($website->state) {
+            case WebsiteStateEnum::IN_PROCESS:
+                $sections['status'] = [
+                    'label'  => __('Status'),
+                    'icon'   => 'fal fa-yin-yang',
+                    'fields' => [
+                        'launch' => [
+                            'type'   => 'action',
+                            'action' => [
+                                'type'   => 'button',
+                                'style'  => 'positive',
+                                'label'  => __('Launch'),
+                                'icon'   => 'fal fa-rocket-launch',
+                                'method' => 'patch',
+                                'data'   => [
+                                    'state' => 'live'
+                                ],
+                                'route'  => [
+                                    'name'       => 'org.models.website.state.update',
+                                    'parameters' => $website->id
+                                ]
+
+                            ]
+                        ],
+                    ]
+                ];
+                break;
+            case WebsiteStateEnum::LIVE:
+
+                if ($website->status) {
+                    $sections['status'] = [
+                        'label'  => __('Maintenance mode'),
+                        'icon'   => 'fal fa-tools',
+                        'fields' => [
+                            'maintenance' => [
+                                'type'   => 'action',
+                                'action' => [
+                                    'type'   => 'button',
+                                    'style'  => 'delete',
+                                    'icon'   => 'fal fa-tools',
+                                    'label'  => __('Start Maintenance mode'),
+                                    'method' => 'patch',
+                                    'data'   => [
+                                        'state'  => 'live',
+                                        'status' => false
+                                    ],
+                                    'route'  => [
+                                        'name'       => 'org.models.website.state.update',
+                                        'parameters' => $website->id
+                                    ]
+                                ],
+
+
+                            ],
+                        ]
+                    ];
+
+                    $sections['close'] = [
+                        'label'  => __('Close down'),
+                        'icon'   => 'fal fa-do-not-enter',
+                        'fields' => [
+                            'maintenance' => [
+                                'type'   => 'action',
+                                'action' => [
+                                    'type'   => 'button',
+                                    'style'  => 'delete',
+                                    'icon'   => 'fal fa-do-not-enter',
+                                    'label'  => __('Close down website'),
+                                    'method' => 'patch',
+                                    'data'   => [
+                                        'state' => 'closed',
+                                    ],
+                                    'route'  => [
+                                        'name'       => 'org.models.website.state.update',
+                                        'parameters' => $website->id
+                                    ]
+                                ],
+
+
+                            ],
+                        ]
+                    ];
+                } else {
+                    $sections['status'] = [
+                        'label'  => __('Stop maintenance'),
+                        'icon'   => 'fal fa-tools',
+                        'fields' => [
+                            'maintenance' => [
+                                'type'   => 'action',
+                                'action' => [
+                                    'type'   => 'button',
+                                    'style'  => 'positive',
+                                    'icon'   => 'fal fa-tools',
+                                    'label'  => __('Stop Maintenance mode'),
+                                    'method' => 'patch',
+                                    'data'   => [
+                                        'state'  => 'live',
+                                        'status' => true
+                                    ],
+                                    'route'  => [
+                                        'name'       => 'org.models.website.state.update',
+                                        'parameters' => $website->id
+                                    ]
+                                ],
+
+
+                            ],
+                        ]
+                    ];
+                }
+
+
+                break;
+            case WebsiteStateEnum::CLOSED:
+                $sections['reopen'] = [
+                    'label'  => __('Reopen'),
+                    'icon'   => 'fal fa-door-open',
+                    'fields' => [
+                        'launch' => [
+                            'type'     => 'action',
+                            'label'    => __('Reopen'),
+                            'icon'     => 'fal fa-door-open',
+                            'value'    => false,
+                            'required' => true,
+                            'button'   => [
+                                'method' => 'patch',
+                                'data'   => [
+                                    'state' => 'live'
+                                ],
+                                'route'  => [
+                                    'name'       => 'org.models.website.state.update',
+                                    'parameters' => $website->id
+                                ]
+                            ]
+                        ],
+                    ]
+                ];
+                break;
+        }
+
+        $currentSection = 'properties';
+        if ($request->has('section') and Arr::has($sections, $request->get('section'))) {
+            $currentSection = $request->get('section');
+        }
+
         return Inertia::render(
             'EditModel',
             [
@@ -71,248 +240,12 @@ class EditWebsite extends InertiaAction
                     ],
                 ],
                 'formData' => [
-                    'blueprint' => [
-                        [
-                            'title'  => __('Registrations'),
-                            'icon'   => 'fal fa-user-plus',
-                            'fields' => [
-                                'approval'           => [
-                                    'type'     => 'toggle',
-                                    'label'    => __('Registrations Approval'),
-                                    'value'    => false,
-                                    'required' => true,
-                                ],
-                                'registrations_type' => [
-                                    'type'     => 'radio',
-                                    'mode'     => 'card',
-                                    'label'    => __('Registration Type'),
-                                    'value'    => [
-                                        'title'       => "type B",
-                                        'description' => 'This user able to create and delete',
-                                        'label'       => '17 users left',
-                                        'value'       => "typeB",
-                                    ],
-                                    'required' => true,
-                                    'options'  => [
-                                        [
-                                            'title'       => "type A",
-                                            'description' => 'This user able to edit',
-                                            'label'       => '425 users left',
-                                            'value'       => "typeA",
-                                        ],
-                                        [
-                                            'title'       => "type B",
-                                            'description' => 'This user able to create and delete',
-                                            'label'       => '17 users left',
-                                            'value'       => "typeB",
-                                        ],
-                                    ]
-                                ],
-                                'web_registrations'  => [
-                                    'type'     => 'webRegistrations',
-                                    'label'    => __('Web Registration'),
-                                    'value'    => [
-                                        [
-                                            'key'      => 'telephone',
-                                            'name'     => __('telephone'),
-                                            'show'     => true,
-                                            'required' => false,
-                                        ],
-                                        [
-                                            'key'      => 'address',
-                                            'name'     => __('address'),
-                                            'show'     => false,
-                                            'required' => false,
-                                        ],
-                                        [
-                                            'key'      => 'company',
-                                            'name'     => __('company'),
-                                            'show'     => false,
-                                            'required' => false,
-                                        ],
-                                        [
-                                            'key'      => 'contact_name',
-                                            'name'     => __('contact_name'),
-                                            'show'     => false,
-                                            'required' => false,
-                                        ],
-                                        [
-                                            'key'      => 'registration_number',
-                                            'name'     => __('registration number'),
-                                            'show'     => true,
-                                            'required' => false,
-                                        ],
-                                        [
-                                            'key'      => 'tax_number',
-                                            'name'     => __('tax number'),
-                                            'show'     => false,
-                                            'required' => false,
-                                        ],
-                                        [
-                                            'key'      => 'terms_and_conditions',
-                                            'name'     => __('terms and conditions'),
-                                            'show'     => true,
-                                            'required' => true,
-                                        ],
-                                        [
-                                            'key'      => 'marketing',
-                                            'name'     => __('marketing'),
-                                            'show'     => false,
-                                            'required' => false,
-                                        ],
-                                    ],
-                                    'required' => true,
-                                    'options'  => [
-                                        [
-                                            'key'      => 'telephone',
-                                            'name'     => __('telephone'),
-                                            'show'     => true,
-                                            'required' => false,
-                                        ],
-                                        [
-                                            'key'      => 'address',
-                                            'name'     => __('address'),
-                                            'show'     => false,
-                                            'required' => false,
-                                        ],
-                                        [
-                                            'key'      => 'company',
-                                            'name'     => __('company'),
-                                            'show'     => false,
-                                            'required' => false,
-                                        ],
-                                        [
-                                            'key'      => 'contact_name',
-                                            'name'     => __('contact name'),
-                                            'show'     => false,
-                                            'required' => false,
-                                        ],
-                                        [
-                                            'key'      => 'registration_number',
-                                            'name'     => __('registration number'),
-                                            'show'     => true,
-                                            'required' => false,
-                                        ],
-                                        [
-                                            'key'      => 'tax_number',
-                                            'name'     => __('tax number'),
-                                            'show'     => false,
-                                            'required' => false,
-                                        ],
-                                        [
-                                            'key'      => 'terms_and_conditions',
-                                            'name'     => __('terms and conditions'),
-                                            'show'     => true,
-                                            'required' => false,
-                                        ],
-                                        [
-                                            'key'      => 'marketing',
-                                            'name'     => __('marketing'),
-                                            'show'     => false,
-                                            'required' => false,
-                                        ],
-                                    ]
-                                ]
-                            ]
-                        ],
-                        [
-                            'title'  => 'state',
-                            'icon'   => 'fal fa-signal-stream',
-                            'fields' => [
-                                'launch' => [
-                                    'type'     => 'action',
-                                    'label'    => __('Launch'),
-                                    'icon'     => 'fal fa-rocket-launch',
-                                    'value'    => false,
-                                    'required' => true,
-                                    'button'   => [
-                                        'method' => 'patch',
-                                        'data'   => [
-                                            'state' => 'live'
-                                        ],
-                                        'route'  => [
-                                            'name' => 'org.models.website.state.update'
-                                        ]
-                                    ]
-                                ],
-                            ]
-                        ],
-                        [
-                            'title'  => 'state',
-                            'icon'   => 'fal fa-signal-stream',
-                            'fields' => [
-                                'maintenance' => [
-                                    'type'     => 'action',
-                                    'label'    => __('Maintenance'),
-                                    'icon'     => 'fal fa-rocket-launch',
-                                    'value'    => false,
-                                    'required' => true,
-                                    'button'   => [
-                                        'style'  => 'negative',
-                                        'method' => 'patch',
-                                        'data'   => [
-                                            'state'  => 'live',
-                                            'status' => false
-                                        ],
-                                        'route'  => [
-                                            'name' => 'org.models.website.state.update'
-                                        ]
-                                    ]
-                                ],
-                            ]
-                        ],
-                        [
-                            'title'  => 'state',
-                            'icon'   => 'fal fa-signal-stream',
-                            'fields' => [
-                                'restore' => [
-                                    'type'     => 'action',
-                                    'label'    => __('Restore'),
-                                    'icon'     => 'fal fa-rocket-launch',
-                                    'value'    => false,
-                                    'required' => true,
-                                    'button'   => [
-                                        'style'  => 'primary',
-                                        'method' => 'patch',
-                                        'data'   => [
-                                            'state'  => 'live',
-                                            'status' => true
-                                        ],
-                                        'route'  => [
-                                            'name' => 'org.models.website.state.update'
-                                        ]
-                                    ]
-                                ],
-                            ]
-                        ],
-                        [
-                            'title'  => 'state',
-                            'icon'   => 'fal fa-signal-stream',
-                            'fields' => [
-                                'closed' => [
-                                    'type'     => 'action',
-                                    'label'    => __('Closed'),
-                                    // 'icon'     => 'fal fa-rocket-launch',
-                                    'value'    => false,
-                                    'required' => true,
-                                    'button'   => [
-                                        'style'  => 'negative',
-                                        'method' => 'patch',
-                                        'data'   => [
-                                            'state' => 'closed',
-                                        ],
-                                        'route'  => [
-                                            'name' => 'org.models.website.state.update'
-                                        ]
-                                    ]
-                                ],
-                            ]
-                        ],
-                    ],
+                    'current'   => $currentSection,
+                    'blueprint' => $sections,
                     'args'      => [
                         'updateRoute' => [
                             'name'       => 'org.models.website.update',
-                            'parameters' => $website->slug
+                            'parameters' => $website->id
                         ],
                     ]
                 ],

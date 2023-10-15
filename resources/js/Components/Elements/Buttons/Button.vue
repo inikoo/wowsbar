@@ -42,6 +42,8 @@ if (props.style == 'primary' || props.style == 'create' || props.style == 'save'
 else if (props.style == 'secondary' || props.style == 'edit') styleClass = 'border border-gray-400/80 bg-gray-200 text-gray-700 hover:bg-gray-400/60'
 else if (props.style == 'tertiary') styleClass = 'border border-gray-300 dark:border-gray-500 bg-transparent text-gray-700 dark:text-gray-400 hover:bg-gray-200/70 dark:hover:bg-gray-600/90'
 else if (props.style == 'delete') styleClass = 'border border-red-400 dark:border-red-600 text-red-500 dark:text-red-600 hover:text-red-800 hover:bg-red-100 dark:hover:bg-red-100/10 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2'
+else if (props.style == 'positive') styleClass = 'border border-emerald-400 dark:border-emerald-600 text-emerald-500 dark:text-emerald-600 hover:text-emerald-800 hover:bg-emerald-100 dark:hover:bg-emerald-100/10 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2'
+
 else if (props.style == 'negative' || props.style == 'cancel') styleClass = 'border border-red-400 dark:border-red-800 text-red-600 dark:text-red-700 hover:text-red-800 hover:bg-red-100 dark:hover:bg-red-100/10 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2'
 else if (props.style == 'disabled') styleClass = 'cursor-not-allowed border border-gray-300 dark:border-gray-500 bg-transparent text-gray-700 dark:text-gray-400 hover:bg-gray-200/70 dark:hover:bg-gray-600/90'
 else styleClass = 'border border-gray-300 bg-transparent text-gray-700 dark:text-gray-400 hover:bg-gray-200/70'

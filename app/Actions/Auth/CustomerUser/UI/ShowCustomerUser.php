@@ -80,17 +80,17 @@ class ShowCustomerUser extends InertiaAction
                 ],
 
                 CustomerUserTabsEnum::SHOWCASE->value => $this->tab == CustomerUserTabsEnum::SHOWCASE->value ?
-                    fn() => new CustomerUserResource($customerUser)
-                    : Inertia::lazy(fn() => new CustomerUserResource($customerUser)),
+                    fn () => new CustomerUserResource($customerUser)
+                    : Inertia::lazy(fn () => new CustomerUserResource($customerUser)),
 
 
                 CustomerUserTabsEnum::REQUEST_LOGS->value => $this->tab == CustomerUserTabsEnum::REQUEST_LOGS->value ?
-                    fn() => CustomerUserRequestLogsResource::collection(IndexCustomerUserRequestLogs::run($customerUser))
-                    : Inertia::lazy(fn() => CustomerUserRequestLogsResource::collection(IndexCustomerUserRequestLogs::run($customerUser))),
+                    fn () => CustomerUserRequestLogsResource::collection(IndexCustomerUserRequestLogs::run($customerUser))
+                    : Inertia::lazy(fn () => CustomerUserRequestLogsResource::collection(IndexCustomerUserRequestLogs::run($customerUser))),
 
                 CustomerUserTabsEnum::HISTORY->value => $this->tab == CustomerUserTabsEnum::HISTORY->value ?
-                    fn() => CustomerHistoryResource::collection(IndexCustomerHistory::run($customer, $customerUser, 'history'))
-                    : Inertia::lazy(fn() => CustomerHistoryResource::collection(IndexCustomerHistory::run($customer, $customerUser, 'history')))
+                    fn () => CustomerHistoryResource::collection(IndexCustomerHistory::run($customer, $customerUser, 'history'))
+                    : Inertia::lazy(fn () => CustomerHistoryResource::collection(IndexCustomerHistory::run($customer, $customerUser, 'history')))
 
             ]
         )

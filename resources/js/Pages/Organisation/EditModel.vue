@@ -5,15 +5,15 @@
   -->
 
 <script setup lang="ts">
-import { Head } from '@inertiajs/vue3';
-import { capitalize } from "@/Composables/capitalize"
+import {Head} from '@inertiajs/vue3';
+import {capitalize} from "@/Composables/capitalize"
 import PageHeading from '@/Components/Headings/PageHeading.vue';
 import Edit from '@/Components/Edit.vue';
 import {library} from '@fortawesome/fontawesome-svg-core';
 
-import { faGlobe, faUserPlus, faSignalStream} from "@/../private/pro-light-svg-icons";
+import {faGlobe, faUserPlus, faSignalStream, faTools, faDoNotEnter} from "@/../private/pro-light-svg-icons";
 
-library.add(faGlobe, faUserPlus, faSignalStream)
+library.add(faGlobe, faUserPlus, faSignalStream, faTools, faDoNotEnter)
 
 const props = defineProps<{
     title: string,
@@ -58,9 +58,9 @@ const props = defineProps<{
 
 
 <template layout="OrgApp">
-    <Head :title="capitalize(title)" />
+    <Head :title="capitalize(title)"/>
     <PageHeading :data="pageHead"></PageHeading>
-    <Edit :form-data="formData" appName="organisation" />
+    <Edit :form-data="formData" appName="organisation"/>
 </template>
 
 

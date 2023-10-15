@@ -178,7 +178,7 @@ onBeforeUnmount(() => {
                                             <dd class="sm:col-span-3">
                                                 <div class="mt-1 flex text-sm text-gray-700 sm:mt-0">
                                                     <div class="relative flex-grow">
-                                                        <Action v-if="fieldData.type==='action'" :action="fieldData.action"></Action>
+                                                        <Action v-if="fieldData.type==='action'" :action="fieldData.action" :dataToSubmit="fieldData.action.data" ></Action>
                                                         <FieldForm v-else :key="index" :field="fieldName" :fieldData="fieldData" :args="formData.args" :id="fieldData.name"/>
                                                     </div>
                                                 </div>
