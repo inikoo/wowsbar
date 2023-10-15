@@ -3,7 +3,6 @@ import { loadCss } from "@/Composables/loadCss";
 import { ref, onMounted } from "vue";
 import Html from "@/Components/Blocks/Html.vue";
 import Appointment from "@/Components/Blocks/Appointment.vue";
-import processClasses from "https://cdn.statically.io/gh/mudgen/runcss/master/src/runcss.min.js";
 const props = defineProps<{
     content: {
         css: String;
@@ -37,12 +36,6 @@ onMounted(() => {
     const styleElement = document.createElement("style");
     styleElement.textContent = dynamicClasses;
     document.head.appendChild(styleElement);
-
-    // Append tailwind
-    for (const element of document.querySelectorAll("*[class]")) {
-        processClasses(element.classList);
-    }
-    document.body.style.display = "block";
 });
 
 </script>
