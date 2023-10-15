@@ -38,7 +38,7 @@ class IndexPortfolioWebsites extends InertiaAction
     {
         $this->initialisation($request)->withTab(CustomerWebsitesTabsEnum::values());
 
-        return $this->handle();
+        return $this->handle(prefix: PortfolioWebsitesTabsEnum::WEBSITES->value);
     }
 
 
