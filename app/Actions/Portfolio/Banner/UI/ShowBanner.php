@@ -44,13 +44,14 @@ class ShowBanner extends InertiaAction
 
         return
             (
-                $request->get('customerUser')->hasPermissionTo('portfolio.banners.view')
+            $request->get('customerUser')->hasPermissionTo('portfolio.banners.view')
             );
     }
 
     public function asController(Banner $banner, ActionRequest $request): Banner
     {
         $this->initialisation($request)->withTab(BannerTabsEnum::values());
+
         return $this->handle($request->get('customer'), $banner);
     }
 
@@ -88,24 +89,52 @@ class ShowBanner extends InertiaAction
                 ],
                 'title'                         => $banner->name,
                 'pageHead'                      => [
-                    'title'     => $banner->name,
-                    'icon'      => [
+                    'title'       => $banner->name,
+                    'icon'        => [
                         'tooltip' => __('banner'),
                         'icon'    => 'fal fa-sign'
                     ],
-                    'container' => $container,
-                    'iconRight' =>$banner->state->stateIcon()[$banner->state->value]
+                    'container'   => $container,
+                    'iconRight'   => $banner->state->stateIcon()[$banner->state->value],
+                    'iconActions' => [
 
-                    ,
-                    'actions'   => [
                         $this->canDelete ? [
-                            'type'  => 'button',
-                            'style' => 'delete',
-                            'route' => [
-                                'name'       => preg_replace('/show$/', 'remove', $request->route()->getName()),
-                                'parameters' => array_values($request->route()->originalParameters())
+                            'icon' => [
+                                'tooltip' => __('delete'),
+                                'icon'    => 'far fa-trash-alt',
+                            ],
+                            'href' => [
+                                'name'       => preg_replace('/show$/', 'edit', $request->route()->getName()),
+                                'parameters' => array_merge(
+                                    [
+                                        '_query' => [
+                                            'section' => 'delete'
+                                        ]
+                                    ],
+                                    $request->route()->originalParameters()
+                                )
                             ]
-                        ] : false,
+                        ] : null,
+                        $this->canEdit ? [
+                            'icon' => [
+                                'tooltip' => __('Edit'),
+                                'icon'    => 'fal fa-pencil',
+                            ],
+                            'href' => [
+                                'name'       => preg_replace('/show$/', 'edit', $request->route()->getName()),
+                                'parameters' => array_merge(
+                                    [
+                                        '_query' => [
+                                            'section' => 'properties'
+                                        ]
+                                    ],
+                                    $request->route()->originalParameters()
+                                )
+                            ]
+                        ] : null,
+                    ],
+                    'actions'     => [
+
                         /*
                         [
                             'type'  => 'button',
@@ -118,16 +147,7 @@ class ShowBanner extends InertiaAction
                             ]
                         ],
                         */
-                        $this->canEdit ? [
-                            'type'  => 'button',
-                            'style' => 'secondary',
-                            'label' => __('edit'),
-                            'icon'  => ["fal", "fa-pencil"],
-                            'route' => [
-                                'name'       => preg_replace('/show$/', 'edit', $request->route()->getName()),
-                                'parameters' => array_values($request->route()->originalParameters())
-                            ]
-                        ] : false,
+
                         $this->canEdit ? [
                             'type'  => 'button',
                             'style' => 'primary',
@@ -146,20 +166,20 @@ class ShowBanner extends InertiaAction
                 ],
                 BannerTabsEnum::SHOWCASE->value => $this->tab == BannerTabsEnum::SHOWCASE->value
                     ?
-                    fn () => BannerResource::make($banner)->getArray()
+                    fn() => BannerResource::make($banner)->getArray()
                     : Inertia::lazy(
-                        fn () => BannerResource::make($banner)->getArray()
+                        fn() => BannerResource::make($banner)->getArray()
                     ),
 
                 BannerTabsEnum::SNAPSHOTS->value => $this->tab == BannerTabsEnum::SNAPSHOTS->value
                     ?
-                    fn () => SnapshotResource::collection(
+                    fn() => SnapshotResource::collection(
                         IndexSnapshots::run(
                             parent: $banner,
                             prefix: BannerTabsEnum::SNAPSHOTS->value
                         )
                     )
-                    : Inertia::lazy(fn () => SnapshotResource::collection(
+                    : Inertia::lazy(fn() => SnapshotResource::collection(
                         IndexSnapshots::run(
                             parent: $banner,
                             prefix: BannerTabsEnum::SNAPSHOTS->value
@@ -168,14 +188,14 @@ class ShowBanner extends InertiaAction
 
                 BannerTabsEnum::CHANGELOG->value => $this->tab == BannerTabsEnum::CHANGELOG->value
                     ?
-                    fn () => CustomerHistoryResource::collection(
+                    fn() => CustomerHistoryResource::collection(
                         IndexCustomerHistory::run(
                             customer: $customer,
                             model: $banner,
                             prefix: BannerTabsEnum::CHANGELOG->value
                         )
                     )
-                    : Inertia::lazy(fn () => CustomerHistoryResource::collection(
+                    : Inertia::lazy(fn() => CustomerHistoryResource::collection(
                         IndexCustomerHistory::run(
                             customer: $customer,
                             model: $banner,

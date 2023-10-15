@@ -16,6 +16,7 @@ import { capitalize } from "@/Composables/capitalize"
 import MetaLabel from "@/Components/Headings/MetaLabel.vue";
 import Container from "@/Components/Headings/Container.vue";
 import Action from "@/Components/Forms/Fields/Action.vue";
+import Icon from "@/Components/Icon.vue";
 
 interface Icon {
     icon: string[] | string
@@ -36,6 +37,7 @@ const props = defineProps<{
         }
         actionActualMethod?: string
         meta?: any
+        iconActions?: any
         actions?: any
         iconRight?: {
             title: string
@@ -103,9 +105,17 @@ if (props.dataToSubmit && props.data.actionActualMethod) {
             </div>
         </div>
 
-        <!-- To replace the Button, call template in Parent -->
+
+
         <slot name="button" :dataPageHead="{...props }">
+
             <div class="flex items-center gap-2">
+
+                <div v-for="iconAction in data.iconActions" class="mr-3">
+                    <Link v-if="iconAction"  :href="route(iconAction.href.name,iconAction.href.parameters)">
+                        <Icon :data="iconAction.icon"  class='h-5'   />
+                    </Link>
+                </div>
                 <div v-for="action in data.actions">
                     <Action :action="action" :dataToSubmit="dataToSubmit"/>
                 </div>

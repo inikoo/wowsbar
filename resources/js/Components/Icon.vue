@@ -12,18 +12,18 @@ const props = defineProps<{
     data: {
         tooltip?: string,
         icon: object,
-        class?:string
-
+        class?: string
     },
 }>()
 </script>
 
 <template>
+
     <FontAwesomeIcon
-         :title="capitalize(data.tooltip ?? '')"
-         aria-hidden="true"
-         :icon="data.icon"
-         size="sm"
-         :class="data.class"
+        :title="capitalize(data.tooltip ?? '')"
+        aria-hidden="true"
+        :icon="data.icon"
+        :class="data.class"
     />
+
 </template>

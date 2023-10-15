@@ -13,6 +13,7 @@ use App\Enums\Portfolio\Banner\BannerStateEnum;
 use App\Models\Portfolio\Banner;
 use App\Models\Portfolio\PortfolioWebsite;
 use Exception;
+use Illuminate\Support\Arr;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -43,15 +44,6 @@ class EditBanner extends InertiaAction
      */
     public function htmlResponse(Banner $banner, ActionRequest $request): Response
     {
-        $currentSection = 'properties';
-        if ($request->has('shutdown')) {
-            $currentSection = 'shutdown';
-        }
-        if ($request->has('delete')) {
-            $currentSection = 'delete';
-        }
-
-
         $sections['properties'] = [
             'label'  => __('Banner properties'),
             'icon'   => 'fal fa-sliders-h',
@@ -119,6 +111,10 @@ class EditBanner extends InertiaAction
             ]
         ];
 
+        $currentSection = 'properties';
+        if ($request->has('section') and Arr::has($sections, $request->get('section'))) {
+            $currentSection = $request->get('section');
+        }
 
         return Inertia::render(
             'EditModel',
@@ -139,7 +135,7 @@ class EditBanner extends InertiaAction
                         'icon'    => 'fal fa-sign'
                     ],
                     'iconRight' => $banner->state->stateIcon()[$banner->state->value],
-                    'actions' => [
+                    'actions'   => [
                         [
                             'type'  => 'button',
                             'style' => 'exit',
