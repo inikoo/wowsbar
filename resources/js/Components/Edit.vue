@@ -179,7 +179,6 @@ onBeforeUnmount(() => {
                                                 <div class="mt-1 flex text-sm text-gray-700 sm:mt-0">
                                                     <div class="relative flex-grow">
                                                         <Action v-if="fieldData.type==='action'" :action="fieldData.action"></Action>
-
                                                         <FieldForm v-else :key="index" :field="fieldName" :fieldData="fieldData" :args="formData.args" :id="fieldData.name"/>
                                                     </div>
                                                 </div>

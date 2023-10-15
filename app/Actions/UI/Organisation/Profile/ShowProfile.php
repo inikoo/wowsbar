@@ -12,6 +12,7 @@ use App\Actions\UI\Customer\Dashboard\ShowDashboard;
 use App\Actions\UI\WithInertia;
 use App\Http\Resources\Auth\UserResource;
 use App\Models\Auth\OrganisationUser;
+use Illuminate\Support\Arr;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -24,18 +25,63 @@ class ShowProfile
 
     public function asController(ActionRequest $request): OrganisationUser
     {
-
-
         return $request->user();
     }
 
-    public function jsonResponse(OrganisationUser $user): UserResource
+    public function jsonResponse(OrganisationUser $organisationUser): UserResource
     {
-        return new UserResource($user);
+        return new UserResource($organisationUser);
     }
 
-    public function htmlResponse(OrganisationUser $user): Response
+    public function htmlResponse(OrganisationUser $organisationUser, ActionRequest $request): Response
     {
+        $sections['properties'] = [
+            'label'  => __('Profile'),
+            'icon'   => 'fal fa-user-circle',
+            'fields' => [
+                "about"  => [
+                    "type"  => "textarea",
+                    "label" => __("about"),
+                    "value" => $organisationUser->about,
+                ],
+                "avatar" => [
+                    "type"  => "avatar",
+                    "label" => __("photo"),
+                    "value" => $organisationUser->avatarImageSources(320, 320)
+                ],
+            ]
+        ];
+
+        $sections['password'] = [
+            'label'  => __('Password'),
+            'icon'   => 'fal fa-key',
+            'fields' => [
+                "password" => [
+                    "type"  => "password",
+                    "label" => __("password"),
+                    "value" => "",
+                ],
+            ]
+        ];
+
+        $sections['language'] = [
+            'label'  => __('Language'),
+            'icon'   => 'fal fa-language',
+            'fields' => [
+                "language_id" => [
+                    "type"     => "language",
+                    "label"    => __("language"),
+                    "value"    => $organisationUser->language_id,
+                    "options"  => GetLanguagesOptions::make()->translated(),
+                    "canClear" => false
+                ],
+            ]
+        ];
+
+        $currentSection = 'properties';
+        if ($request->has('section') and Arr::has($sections, $request->get('section'))) {
+            $currentSection = $request->get('section');
+        }
 
 
         return Inertia::render("EditModel", [
@@ -44,100 +90,12 @@ class ShowProfile
             "pageHead"    => [
                 "title" => __("My Profile"),
             ],
-
-
             "formData" => [
-                "blueprint" => [
-                    [
-                        "title"   => __("profile"),
-                        "icon"    => "fa-light fa-user-circle",
-                        "notes"   => __("This information will be synchronised in all your workspaces."),
-                        "current" => true,
-                        "fields"  => [
-                            "about"  => [
-                                "type"  => "textarea",
-                                "label" => __("about"),
-                                "value" => $user->about,
-                            ],
-                            "avatar" => [
-                                "type"  => "avatar",
-                                "label" => __("photo"),
-                                "value" => $user->avatarImageSources(320, 320)
-                            ],
-
-                        ],
-                    ],
-                    [
-                        "title"  => __("password"),
-                        "icon"   => "fa-light fa-key",
-                        "fields" => [
-                            "password" => [
-                                "type"  => "password",
-                                "label" => __("password"),
-                                "value" => "",
-                            ],
-                        ],
-                    ],
-                    [
-                        "title"  => __("language"),
-                        "icon"   => "fal fa-language",
-                        "fields" => [
-                            "language_id" => [
-                                "type"    => "language",
-                                "label"   => __("language"),
-                                "value"   => $user->language_id,
-                                'options' => GetLanguagesOptions::make()->translated(),
-                                "canClear"=> false
-
-                            ],
-                        ],
-                    ],
-                    // [
-                    //     "title"  => __("appearance"),
-                    //     "icon"   => "fa-light fa-paint-brush",
-                    //     "fields" => [
-                    //         "colorMode" => [
-                    //             "type"  => "colorMode",
-                    //             "label" => __("Dark/Light mode"),
-                    //             "value" => "",
-                    //         ],
-                    //         "theme"     => [
-                    //             "type"  => "theme",
-                    //             "label" => __("choose your theme"),
-                    //             "value" => "",
-                    //         ],
-                    //     ],
-                    // ],
-                    // [
-                    //     "title"  => __("notifications"),
-                    //     "icon"   => "fa-light fa-bell",
-                    //     "fields" => [
-                    //         "notifications" => [
-                    //             "type"  => "myNotifications",
-                    //             "label" => __("notifications"),
-                    //             "value" => [],
-                    //             "data"  => [
-                    //                 [
-                    //                     'type' => 'new-order',
-                    //                     'label'=> __('new order'),
-                    //                 ],
-                    //                 [
-                    //                     'type' => 'new re',
-                    //                     'label'=> __('new order'),
-                    //                 ],
-                    //                 [
-                    //                     'type' => 'new user',
-                    //                     'label'=> __('new order'),
-                    //                 ],
-                    //             ]
-                    //         ],
-
-                    //     ],
-                    // ],
-                ],
+                'current'   => $currentSection,
+                'blueprint' => $sections,
                 "args"      => [
                     "updateRoute" => [
-                        "name"       => "org.models.profile.update"
+                        "name" => "org.models.profile.update"
                     ],
                 ],
             ],
