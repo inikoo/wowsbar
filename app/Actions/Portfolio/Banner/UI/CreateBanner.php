@@ -145,16 +145,10 @@ class CreateBanner extends InertiaAction
     public function getBreadcrumbs(string $routeName, array $routeParameters): array
     {
         return array_merge(
-            match ($routeName) {
-                'customer.portfolio.banners.create' => IndexBanners::make()->getBreadcrumbs(
-                    'customer.portfolio.banners.index',
-                    $routeParameters
-                ),
-                default => IndexBanners::make()->getBreadcrumbs(
-                    'customer.banners.index',
-                    $routeParameters
-                )
-            },
+            IndexBanners::make()->getBreadcrumbs(
+                'customer.banners.index',
+                $routeParameters
+            ),
             [
                 [
                     'type'          => 'creatingModel',

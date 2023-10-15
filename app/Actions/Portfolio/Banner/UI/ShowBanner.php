@@ -128,16 +128,18 @@ class ShowBanner extends InertiaAction
                                 'parameters' => array_values($request->route()->originalParameters())
                             ]
                         ] : false,
+                        /*
                         [
                             'type'  => 'button',
                             'style' => 'tertiary',
                             'label' => __('clone this banner'),
                             'icon'  => ["fal", "fa-paste"],
                             'route' => [
-                                'name'       => 'customer.portfolio.banners.duplicate',
+                                'name'       => 'customer.banners.duplicate',
                                 'parameters' => array_values($request->route()->originalParameters())
                             ]
                         ],
+                        */
                         $this->canEdit ? [
                             'type'  => 'button',
                             'style' => 'secondary',
@@ -253,11 +255,11 @@ class ShowBanner extends InertiaAction
                     Banner::firstWhere('slug', $routeParameters['banner']),
                     [
                         'index' => [
-                            'name'       => 'customer.portfolio.banners.index',
+                            'name'       => 'customer.banners.index',
                             'parameters' => []
                         ],
                         'model' => [
-                            'name'       => 'customer.portfolio.banners.show',
+                            'name'       => 'customer.banners.show',
                             'parameters' => $routeParameters
                         ]
                     ],

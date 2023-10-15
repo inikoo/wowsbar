@@ -55,34 +55,9 @@ Route::prefix('websites')->name('websites.')->group(function () {
     });
 });
 
-Route::get('/banners', [IndexBanners::class, 'inCustomer'])->name('banners.index');
-
-
-
-Route::get('/banners/create', [CreateBanner::class, 'inCustomer'])->name('banners.create');
-
-Route::get('/banners/{banner}', [ShowBanner::class, 'inCustomer'])->name('banners.show');
-Route::get('/banners/{banner}/edit', EditBanner::class)->name('banners.edit');
-Route::get('/banners/{banner}/workshop', [ShowBannerWorkshop::class, 'inCustomer'])->name('banners.workshop');
-
-Route::get('/banners/{banner}/delete', [RemoveBanner::class, 'inCustomer'])->name('banners.remove');
-Route::get('/banners/{banner}/deleted', [ShowDeletedBanner::class, 'inCustomer'])->withTrashed()->name('banners.deleted');
-
-Route::get('/banners/{banner}/duplicate', DuplicateBanner::class)->name('banners.duplicate');
-
-Route::get('/banners/{banner}/snapshots', [IndexSnapshots::class, 'inBanner'])->name('banners.snapshots.index');
-Route::get('/banners/{banner}/snapshots/{snapshot}', [ShowSnapshot::class, 'inBanner'])->name('banners.snapshots.show');
-
-//Route::get('/banners/{banner}/delete', [RemoveBanner::class,'inCustomer'])->name('banners.remove');
-
-
-//Route::get('/images', IndexImages::class)->name('images.index');
-
 
 Route::get('/portfolio-websites/uploads/history', IndexPortfolioWebsiteUploads::class)->name('website.uploads.history');
 Route::get('/portfolio-websites/uploads/template/download', DownloadPortfolioWebsiteUploadsTemplate::class)->name('website.uploads.template.download');
-
-
 Route::get('/social-accounts', IndexPortfolioSocialAccounts::class)->name('social-accounts.index');
 Route::get('/social-accounts/create', CreatePortfolioSocialAccount::class)->name('social-accounts.create');
 Route::get('/social-accounts/{portfolioSocialAccount}', ShowPortfolioSocialAccount::class)->name('social-accounts.show');

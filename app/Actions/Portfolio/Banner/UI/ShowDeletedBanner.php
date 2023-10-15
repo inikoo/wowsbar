@@ -10,7 +10,6 @@ namespace App\Actions\Portfolio\Banner\UI;
 use App\Actions\Helpers\History\IndexCustomerHistory;
 use App\Actions\InertiaAction;
 use App\Actions\Portfolio\PortfolioWebsite\UI\ShowPortfolioWebsite;
-use App\Actions\UI\Customer\Portfolio\ShowPortfolio;
 use App\Enums\UI\Customer\BannerTabsEnum;
 use App\Http\Resources\History\CustomerHistoryResource;
 use App\Http\Resources\Portfolio\BannerResource;
@@ -160,25 +159,6 @@ class ShowDeletedBanner extends InertiaAction
 
         };
         return match ($routeName) {
-            'customer.portfolio.banners.deleted' =>
-            array_merge(
-                ShowPortfolio::make()->getBreadcrumbs(),
-                $headCrumb(
-                    'modelWithIndex',
-                    $routeParameters['banner'],
-                    [
-                        'index' => [
-                            'name'       => 'customer.portfolio.banners.index',
-                            'parameters' => []
-                        ],
-                        'model' => [
-                            'name'       => 'customer.portfolio.banners.deleted',
-                            'parameters' => [$routeParameters['banner']->slug]
-                        ]
-                    ],
-                    $suffix
-                ),
-            ),
             'customer.portfolio.websites.show.banners.deleted' =>
             array_merge(
                 ShowPortfolioWebsite::make()->getBreadcrumbs(
