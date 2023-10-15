@@ -31,6 +31,7 @@ use Spatie\QueryBuilder\QueryBuilder;
 class IndexBanners extends InertiaAction
 {
     use WithFirstBanner;
+
     private Customer|PortfolioWebsite $parent;
 
 
@@ -73,17 +74,13 @@ class IndexBanners extends InertiaAction
         } else {
             $websites = DB::table('banner_portfolio_website')
                 ->select('banner_id', DB::raw('jsonb_agg(json_build_object(\'slug\',portfolio_websites.slug,\'name\',portfolio_websites.name)) as websites'))
-               ->leftJoin('portfolio_websites', 'banner_portfolio_website.portfolio_website_id', 'portfolio_websites.id')
+                ->leftJoin('portfolio_websites', 'banner_portfolio_website.portfolio_website_id', 'portfolio_websites.id')
                 ->groupBy('banner_id');
 
             $queryBuilder->joinSub($websites, 'websites', function (JoinClause $join) {
                 $join->on('banners.id', '=', 'websites.banner_id');
             });
-
         }
-
-
-
 
 
         foreach ($this->getElementGroups() as $key => $elementGroup) {
@@ -97,21 +94,16 @@ class IndexBanners extends InertiaAction
 
 
         return $queryBuilder
-            ->defaultSort('banners.slug')
+            ->defaultSort('-banners.date')
             ->select(
                 'websites',
                 'banners.slug',
                 'banners.state',
                 'banners.name',
                 'banners.image_id',
-                'live_at',
-                'retired_at',
-                'banners.created_at',
-                'banners.updated_at',
-                'banners.live_at',
-                'banners.retired_at'
+                'banners.date'
             )
-            ->allowedSorts(['slug', 'name', 'created_at', 'updated_at'])
+            ->allowedSorts(['name', 'date'])
             ->allowedFilters([$globalSearch])
             ->withPaginator($prefix)
             ->withQueryString();
@@ -220,11 +212,8 @@ class IndexBanners extends InertiaAction
     }
 
 
-
     public function htmlResponse(LengthAwarePaginator $banners, ActionRequest $request): Response
     {
-
-
         $scope     = $this->parent;
         $container = null;
 

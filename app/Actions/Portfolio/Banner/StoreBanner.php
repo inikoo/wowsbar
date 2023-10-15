@@ -65,6 +65,8 @@ class StoreBanner
 
         data_set($modelData, 'data.website_slug', $parent->slug);
         data_set($modelData, 'ulid', Str::ulid());
+        data_set($modelData, 'date', now());
+
         if (class_basename($parent) == 'PortfolioWebsite') {
             data_set($modelData, 'portfolio_website_id', $parent->id);
         }

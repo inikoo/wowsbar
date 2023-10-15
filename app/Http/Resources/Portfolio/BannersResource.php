@@ -46,7 +46,7 @@ class BannersResource extends JsonResource
             'image_thumbnail' => $imageThumbnail ? GetPictureSources::run($imageThumbnail) : null,
             'image'           => $image ? GetPictureSources::run($image) : null,
             'websites'        => json_decode($this->websites),
-            'date'            => $this->{$banner->state->date()[$banner->state->value]}
+            'date'            => $banner->date
 
 
         ];

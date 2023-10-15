@@ -43,7 +43,7 @@ class PublishBanner
             ]);
         }
 
-        $layout                = Arr::pull($modelData, 'layout');
+        $layout = Arr::pull($modelData, 'layout');
         list($layout, $slides) = ParseBannerLayout::run($layout);
 
         /** @var Snapshot $snapshot */
@@ -83,6 +83,7 @@ class PublishBanner
 
         if ($banner->state == BannerStateEnum::UNPUBLISHED) {
             $updateData['live_at'] = now();
+            $updateData['date']    = now();
         }
 
         $banner->update($updateData);
@@ -90,7 +91,7 @@ class PublishBanner
         BannerHydrateUniversalSearch::dispatch($banner);
         CustomerHydrateBanners::dispatch(customer());
 
-        foreach($banner->portfolioWebsites as $portfolioWebsite) {
+        foreach ($banner->portfolioWebsites as $portfolioWebsite) {
             PortfolioWebsiteHydrateBanners::run($portfolioWebsite);
         }
 

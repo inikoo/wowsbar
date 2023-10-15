@@ -26,17 +26,6 @@ enum BannerStateEnum: string
 
         ];
     }
-
-    public static function date(): array
-    {
-        return [
-            'unpublished' => 'created_at',
-            'live'        => 'live_at',
-            'retired'     => 'retired_at',
-
-        ];
-    }
-
     public static function stateIcon(): array
     {
         return [

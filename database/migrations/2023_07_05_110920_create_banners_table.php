@@ -27,6 +27,7 @@ return new class () extends Migration {
             $table->string('state')->default(BannerStateEnum::UNPUBLISHED->value);
             $table->unsignedSmallInteger('unpublished_snapshot_id')->nullable()->index();
             $table->unsignedSmallInteger('live_snapshot_id')->nullable()->index();
+            $table->dateTimeTz('date')->index();
             $table->dateTimeTz('live_at')->nullable();
             $table->dateTimeTz('retired_at')->nullable();
             $table->jsonb('compiled_layout');
