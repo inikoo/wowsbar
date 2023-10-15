@@ -11,7 +11,7 @@ use App\Actions\Helpers\History\IndexCustomerHistory;
 use App\Actions\Helpers\Snapshot\UI\IndexSnapshots;
 use App\Actions\InertiaAction;
 use App\Actions\Portfolio\PortfolioWebsite\UI\ShowPortfolioWebsite;
-use App\Actions\UI\Customer\CaaS\ShowCaaSDashboard;
+use App\Actions\UI\Customer\Banners\ShowBannersDashboard;
 use App\Enums\Portfolio\Banner\BannerStateEnum;
 use App\Enums\UI\Customer\BannerTabsEnum;
 use App\Http\Resources\History\CustomerHistoryResource;
@@ -92,7 +92,7 @@ class ShowBanner extends InertiaAction
                     'title'     => $banner->name,
                     'icon'      => [
                         'tooltip' => __('banner'),
-                        'icon'    => 'fal fa-rectangle-wide'
+                        'icon'    => 'fal fa-sign'
                     ],
                     'container' => $container,
                     'iconRight' =>
@@ -244,10 +244,10 @@ class ShowBanner extends InertiaAction
 
 
         return match ($routeName) {
-            'customer.caas.banners.show',
-            'customer.caas.banners.edit' =>
+            'customer.banners.show',
+            'customer.banners.edit' =>
             array_merge(
-                ShowCaaSDashboard::make()->getBreadcrumbs(),
+                ShowBannersDashboard::make()->getBreadcrumbs(),
                 $headCrumb(
                     'modelWithIndex',
                     Banner::firstWhere('slug', $routeParameters['banner']),
@@ -325,8 +325,8 @@ class ShowBanner extends InertiaAction
 
 
         return match ($routeName) {
-            'customer.caas.banners.show',
-            'customer.caas.banners.edit' => [
+            'customer.banners.show',
+            'customer.banners.edit' => [
                 'label' => $banner->slug,
                 'route' => [
                     'name'       => $routeName,

@@ -13,7 +13,7 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { library } from "@fortawesome/fontawesome-svg-core"
 import {
     faTerminal, faUserAlien, faCog, faGlobe, faWindowMaximize, faBriefcase, faPhotoVideo, faBrowser,
-    faRectangleWide,faChartNetwork,faThumbsUp
+    faSign,faChartNetwork,faThumbsUp
 
 } from "@/../private/pro-light-svg-icons"
 import { useLayoutStore } from "@/Stores/layout"
@@ -21,7 +21,7 @@ import { useLayoutStore } from "@/Stores/layout"
 
 library.add(
     faTerminal, faUserAlien, faCog, faGlobe, faWindowMaximize, faBriefcase, faPhotoVideo,
-    faBrowser,faRectangleWide,faChartNetwork,faThumbsUp
+    faBrowser,faSign,faChartNetwork,faThumbsUp
 )
 
 const layout = useLayoutStore()

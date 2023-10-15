@@ -151,7 +151,7 @@ class CreateBanner extends InertiaAction
                     $routeParameters
                 ),
                 default => IndexBanners::make()->getBreadcrumbs(
-                    'customer.caas.banners.index',
+                    'customer.banners.index',
                     $routeParameters
                 )
             },

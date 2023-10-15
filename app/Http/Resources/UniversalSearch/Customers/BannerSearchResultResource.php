@@ -57,7 +57,7 @@ class BannerSearchResultResource extends JsonResource
                     $banner->slug
                 ]
             ],
-            'icon'   => ['fal', 'fa-rectangle-wide']
+            'icon'   => ['fal', 'fa-sign']
         ];
     }
 }

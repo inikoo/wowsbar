@@ -32,9 +32,9 @@ Route::middleware([
         Route::prefix("ppc")
             ->name("ppc.")
             ->group(__DIR__."/ppc.php");
-        Route::prefix("caas")
-            ->name("caas.")
-            ->group(__DIR__."/caas.php");
+        Route::prefix("banners")
+            ->name("banners.")
+            ->group(__DIR__."/banners.php");
         Route::prefix("media")
             ->name("media.")
             ->group(__DIR__."/media.php");

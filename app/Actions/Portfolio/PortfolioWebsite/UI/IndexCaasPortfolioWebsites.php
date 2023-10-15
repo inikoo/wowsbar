@@ -9,7 +9,7 @@ namespace App\Actions\Portfolio\PortfolioWebsite\UI;
 
 use App\Actions\Helpers\History\IndexHistory;
 use App\Actions\InertiaAction;
-use App\Actions\UI\Customer\CaaS\ShowCaaSDashboard;
+use App\Actions\UI\Customer\Banners\ShowBannersDashboard;
 use App\Enums\UI\Customer\PortfolioWebsitesTabsEnum;
 use App\Enums\UI\Organisation\CustomerWebsitesTabsEnum;
 use App\Http\Resources\History\HistoryResource;
@@ -172,12 +172,12 @@ class IndexCaasPortfolioWebsites extends InertiaAction
         };
 
         return match ($routeName) {
-            'customer.caas.websites.index' =>
+            'customer.banners.websites.index' =>
             array_merge(
-                ShowCaaSDashboard::make()->getBreadcrumbs(),
+                ShowBannersDashboard::make()->getBreadcrumbs(),
                 $headCrumb(
                     [
-                        'name' => 'customer.caas.websites.index',
+                        'name' => 'customer.banners.websites.index',
                         null
                     ]
                 ),

@@ -8,10 +8,10 @@
 import {Head} from '@inertiajs/vue3';
 import PageHeading from '@/Components/Headings/PageHeading.vue';
 import { capitalize } from "@/Composables/capitalize"
-import {faRectangleWide} from "@/../private/pro-light-svg-icons"
+import {faSign} from "@/../private/pro-light-svg-icons"
 import {library} from "@fortawesome/fontawesome-svg-core";
 import TableStockImages from "@/Components/Tables/TableStockImages.vue";
-library.add(faRectangleWide)
+library.add(faSign)
 
 const props = defineProps <{
     pageHead: object

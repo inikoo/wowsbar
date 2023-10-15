@@ -18,12 +18,12 @@ import {
     faNewspaper, faPaperPlane,
     faRoad,
     faTransporter, faShoppingCart,
-    faWallet, faRectangleWide
+    faWallet, faSign
 } from "@/../private/pro-light-svg-icons"
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faGoogle } from "@fortawesome/free-brands-svg-icons"
 
-library.add(faInfoCircle, faTachometerAlt, faRoad, faWallet, faRectangleWide, faClock, faDatabase, faGoogle, faTransporter, faShoppingCart, faBullseye, faNewspaper, faPaperPlane, faAd, faEnvelopeOpenText)
+library.add(faInfoCircle, faTachometerAlt, faRoad, faWallet, faSign, faClock, faDatabase, faGoogle, faTransporter, faShoppingCart, faBullseye, faNewspaper, faPaperPlane, faAd, faEnvelopeOpenText)
 
 const props = defineProps<{
     navigation: any
@@ -78,7 +78,7 @@ const tabIconClass = (current: string | boolean, type: string, align: string, ex
                                 <span v-if="tab.type !== 'icon'" class="capitalize">
                                     {{ trans(tab.title) }}
                                     <slot name="addTitle" :tabSlug="tabSlug">
-                                        
+
                                     </slot>
                                 </span>
                             </button>

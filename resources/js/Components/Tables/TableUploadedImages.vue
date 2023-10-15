@@ -32,9 +32,9 @@ const emits = defineEmits<{
 
 function imageRoute(image) {
     switch (route().current()) {
-        case 'customer.caas.gallery':
+        case 'customer.banners.gallery':
             return route(
-                'customer.caas.gallery.uploaded-images.show',
+                'customer.banners.gallery.uploaded-images.show',
                 [image.slug])
     }
 }

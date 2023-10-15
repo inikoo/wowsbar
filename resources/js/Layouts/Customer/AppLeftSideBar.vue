@@ -13,7 +13,7 @@ import {router} from '@inertiajs/vue3'
 
 import {library} from "@fortawesome/fontawesome-svg-core"
 import {
-    faBrowser, faRectangleWide, faUserCog, faTachometerAlt,
+    faBrowser, faSign, faUserCog, faTachometerAlt,
     faTransporter, faAd, faThumbsUp, faEnvelope
 } from "@/../private/pro-light-svg-icons"
 import {faGoogle} from '@fortawesome/free-brands-svg-icons'
@@ -22,7 +22,7 @@ import {faChevronLeft} from "@/../private/pro-regular-svg-icons"
 import {useLayoutStore} from "@/Stores/layout.js"
 import {computed} from "vue"
 
-library.add(faBrowser, faRectangleWide, faUserCog, faChevronLeft, faTachometerAlt,
+library.add(faBrowser, faSign, faUserCog, faChevronLeft, faTachometerAlt,
     faGoogle, faTransporter, faAd, faThumbsUp, faEnvelope
 )
 
@@ -90,7 +90,7 @@ const handleToggleLeftbar = () => {
                     >
                         <!-- Navigation -->
                         <Link :href="route(item.route)"
-                            class="flex items-center group text-sm font-medium py-2" 
+                            class="flex items-center group text-sm font-medium py-2"
                             :class="[
                                 itemKey === layout.currentModule || Object.keys(item.subNav ?? {}).some(subNav => subNav === layout.currentModule)
                                     ? 'navigationActiveCustomer dark:border-gray-100 dark:bg-gray-600 px-0.5'

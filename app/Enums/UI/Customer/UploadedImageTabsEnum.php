@@ -30,7 +30,7 @@ enum UploadedImageTabsEnum: string
             ],
             UploadedImageTabsEnum::BANNERS => [
                 'title' => __('banners'),
-                'icon'  => 'fal fa-rectangle-wide',
+                'icon'  => 'fal fa-sign',
             ],
             UploadedImageTabsEnum::DATA => [
                 'title' => __('data'),

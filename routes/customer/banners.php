@@ -5,7 +5,6 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-
 use App\Actions\Helpers\Snapshot\UI\IndexSnapshots;
 use App\Actions\Helpers\Snapshot\UI\ShowSnapshot;
 use App\Actions\Portfolio\Banner\UI\CreateBanner;
@@ -24,14 +23,26 @@ use App\Actions\Portfolio\Gallery\UI\UploadedImages\IndexUploadedImages;
 use App\Actions\Portfolio\Gallery\UI\UploadedImages\ShowUploadedImage;
 use App\Actions\Portfolio\PortfolioWebsite\UI\IndexCaasPortfolioWebsites;
 use App\Actions\Portfolio\PortfolioWebsite\UI\ShowPortfolioWebsite;
-use App\Actions\UI\Customer\CaaS\ShowCaaSDashboard;
+use App\Actions\UI\Customer\Banners\ShowBannersDashboard;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/dashboard', ['icon' => 'rectangle-wide', 'label' => 'banners dashboard'])->uses(ShowCaaSDashboard::class)->name('dashboard');
+Route::get('', [IndexBanners::class, 'inCustomer'])->name('index');
+Route::get('/dashboard', ['icon' => 'rectangle-wide', 'label' => 'banners dashboard'])->uses(ShowBannersDashboard::class)->name('dashboard');
+Route::get('/create', [CreateBanner::class, 'inCustomer'])->name('create');
+Route::prefix('{banner}')->group(function () {
+    Route::get('', ['icon' => 'globe', 'label' => 'banner'])->uses(ShowBanner::class)->name('show');
+    Route::get('edit', ['icon' => 'globe', 'label' => 'banner'])->uses(EditBanner::class)->name('edit');
+    Route::get('workshop', ['icon' => 'globe', 'label' => 'banner'])->uses(ShowBannerWorkshop::class)->name('workshop');
+    Route::get('delete', ['icon' => 'globe', 'label' => 'banner'])->uses(RemoveBanner::class)->name('remove');
+    Route::get('deleted', ['icon' => 'globe', 'label' => 'banner'])->withTrashed()->uses(ShowDeletedBanner::class)->name('deleted');
+    Route::get('snapshots', [IndexSnapshots::class, 'inBanner'])->name('show.snapshots.index');
+    Route::get('snapshots/{snapshot}', [ShowSnapshot::class, 'inBanner'])->name('show.snapshots.show');
+});
+
 Route::prefix('websites')->name('websites')->group(function () {
     Route::get('/websites', ['icon' => 'globe', 'label' => 'websites'])->uses(IndexCaasPortfolioWebsites::class)->name('.index');
     Route::prefix('{portfolioWebsite}')->group(function () {
-        Route::get('', ['icon' => 'globe', 'label' => 'websites'])->uses([ShowPortfolioWebsite::class,'inCaas'])->name('.show');
+        Route::get('', ['icon' => 'globe', 'label' => 'websites'])->uses([ShowPortfolioWebsite::class, 'inCaas'])->name('.show');
     });
 });
 Route::prefix('gallery')->name('gallery')->group(function () {
@@ -45,20 +56,5 @@ Route::prefix('gallery')->name('gallery')->group(function () {
     Route::prefix('stock-images')->name('.stock-images')->group(function () {
         Route::get('', IndexStockImages::class)->name('.index');
         Route::get('{media}', ShowStockImage::class)->name('.show');
-    });
-});
-
-Route::prefix('banners')->name('banners')->group(function () {
-    Route::get('', [IndexBanners::class, 'inCustomer'])->name('.index');
-    Route::get('/create', [CreateBanner::class, 'inCustomer'])->name('.create');
-    Route::prefix('{banner}')->group(function () {
-        Route::get('', ['icon' => 'globe', 'label' => 'banner'])->uses(ShowBanner::class)->name('.show');
-        Route::get('edit', ['icon' => 'globe', 'label' => 'banner'])->uses(EditBanner::class)->name('.edit');
-        Route::get('workshop', ['icon' => 'globe', 'label' => 'banner'])->uses(ShowBannerWorkshop::class)->name('.workshop');
-        Route::get('delete', ['icon' => 'globe', 'label' => 'banner'])->uses(RemoveBanner::class)->name('.remove');
-        Route::get('deleted', ['icon' => 'globe', 'label' => 'banner'])->withTrashed()->uses(ShowDeletedBanner::class)->name('.deleted');
-
-        Route::get('snapshots', [IndexSnapshots::class, 'inBanner'])->name('.show.snapshots.index');
-        Route::get('snapshots/{snapshot}', [ShowSnapshot::class, 'inBanner'])->name('.show.snapshots.show');
     });
 });

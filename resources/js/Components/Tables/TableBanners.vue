@@ -28,56 +28,14 @@ const props = defineProps<{
 
 function bannerRoute(banner: Banner) {
     return route(
-        'customer.caas.banners.show',
+        'customer.banners.show',
         [banner.slug]);
-    /*
-    switch (route().current()) {
-        case 'customer.portfolio.banners.index':
-            return route(
-                'customer.portfolio.banners.show',
-                [banner.slug])
-        case 'customer.portfolio.websites.show':
-            return route(
-                'customer.portfolio.websites.show.banners.show',
-                [route().params['portfolioWebsite'], banner.slug])
-        case 'customer.portfolio.websites.show.banners.index':
-            return route(
-                'customer.portfolio.websites.show.banners.show',
-                [route().params['portfolioWebsite'], banner.slug])
-        default:
-            return route(
-                'customer.caas.banners.show',
-                [banner.slug])
-                }
-     */
-
 }
 
 function websiteRoute(banner: Banner, slug) {
     return route(
-        'customer.caas.websites.show',
+        'customer.banners.websites.show',
         [slug]);
-    /*
-    switch (route().current()) {
-        case 'customer.portfolio.banners.index':
-            return route(
-                'customer.portfolio.banners.show',
-                [banner.slug])
-        case 'customer.portfolio.websites.show':
-            return route(
-                'customer.portfolio.websites.show.banners.show',
-                [route().params['portfolioWebsite'], banner.slug])
-        case 'customer.portfolio.websites.show.banners.index':
-            return route(
-                'customer.portfolio.websites.show.banners.show',
-                [route().params['portfolioWebsite'], banner.slug])
-        default:
-            return route(
-                'customer.caas.banners.show',
-                [banner.slug])
-                }
-     */
-
 }
 
 

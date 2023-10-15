@@ -142,39 +142,39 @@ class GetLayout
 
 
         if ($customerUser->hasPermissionTo('portfolio.banners.view') && $number_portfolio_websites > 0) {
-            $websiteSubNav['caas'] = [
-                'scope'   => 'caas',
-                'icon'    => ['fal', 'fa-rectangle-wide'],
+            $websiteSubNav['banners'] = [
+                'scope'   => 'banners',
+                'icon'    => ['fal', 'fa-sign'],
                 'label'   => __('Banners'),
-                'route'   => 'customer.caas.banners.index',
+                'route'   => 'customer.banners.index',
                 'topMenu' => [
                     'subSections' => [
 
                         [
                             'icon'  => ['fal', 'fa-chart-network'],
                             'route' => [
-                                'name' => 'customer.caas.dashboard',
+                                'name' => 'customer.banners.dashboard',
                             ]
                         ],
                         [
-                            'icon'  => ['fal', 'fa-rectangle-wide'],
+                            'icon'  => ['fal', 'fa-sign'],
                             'label' => __('banners'),
                             'route' => [
-                                'name' => 'customer.caas.banners.index',
+                                'name' => 'customer.banners.index',
                             ]
                         ],
                         [
                             'icon'  => ['fal', 'fa-globe'],
                             'label' => __('websites'),
                             'route' => [
-                                'name' => 'customer.caas.websites.index',
+                                'name' => 'customer.banners.websites.index',
                             ]
                         ],
                         [
                             'icon'  => ['fal', 'fa-photo-video'],
                             'label' => __('gallery'),
                             'route' => [
-                                'name' => 'customer.caas.gallery',
+                                'name' => 'customer.banners.gallery',
                             ]
                         ],
 

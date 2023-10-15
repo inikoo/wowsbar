@@ -11,7 +11,6 @@ import Table from '@/Components/Table/Table.vue'
 import IconGroupInterested from '@/Components/Table/IconGroupInterested.vue'
 import ModalDivision from '@/Components/Utils/ModalDivision.vue'
 import { Website } from "@/types/website"
-// import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faCheckCircle as fasCheckCircle } from '@/../private/pro-solid-svg-icons'
 import { library } from '@fortawesome/fontawesome-svg-core'
 library.add(fasCheckCircle)
@@ -36,20 +35,6 @@ function websiteRoute(website: Website) {
                 'customer.portfolio.websites.show',
                 [website.slug])
     }
-
-    /*
-    switch (route().current()) {
-        case 'customer.caas.websites.index':
-            return route(
-                'customer.caas.websites.show',
-                [website.slug]);
-        case 'customer.portfolio.websites.index':
-            return route(
-                'customer.portfolio.websites.show',
-                [website.slug]);
-    }
-
-     */
 }
 
 const selectedColumn = ref({

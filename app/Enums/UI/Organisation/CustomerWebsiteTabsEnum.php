@@ -35,7 +35,7 @@ enum CustomerWebsiteTabsEnum: string
             ],
             CustomerWebsiteTabsEnum::BANNERS => [
                 'title' => __('banners'),
-                'icon'  => 'fal fa-rectangle-wide',
+                'icon'  => 'fal fa-sign',
             ],
             CustomerWebsiteTabsEnum::LEADS => [
                 'title' => __('leads'),

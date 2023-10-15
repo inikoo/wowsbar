@@ -124,7 +124,7 @@ class Banner extends Model implements HasMedia, Auditable
     public function generateTags(): array
     {
         return [
-            'portfolio','caas'
+            'portfolio','banners'
         ];
     }
 

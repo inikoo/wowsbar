@@ -64,7 +64,7 @@ class DeleteBanner
     public function htmlResponse(Banner $banner): RedirectResponse
     {
         return redirect()->route(
-            'customer.caas.banners.index',
+            'customer.banners.index',
         );
     }
 }

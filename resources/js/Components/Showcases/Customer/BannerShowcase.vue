@@ -14,12 +14,12 @@ import { cloneDeep } from 'lodash'
 import Button from '@/Components/Elements/Buttons/Button.vue'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faRectangleWide, faGlobe } from "@/../private/pro-light-svg-icons"
+import { faSign, faGlobe } from "@/../private/pro-light-svg-icons"
 import { faLink } from "@/../private/pro-regular-svg-icons"
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { useCopyText } from '@/Composables/useCopyText'
 
-library.add(faRectangleWide, faGlobe, faLink)
+library.add(faSign, faGlobe, faLink)
 
 const props = defineProps<{
     data: any
@@ -62,6 +62,6 @@ onMounted(() => {
             </div>
         </div>
     </div>
-    
+
 </template>
 

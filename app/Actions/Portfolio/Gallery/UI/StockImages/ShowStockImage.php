@@ -81,16 +81,16 @@ class ShowStockImage extends InertiaAction
         };
 
         return match ($routeName) {
-            'customer.caas.gallery.stock-images.show' =>
+            'customer.banners.gallery.stock-images.show' =>
             array_merge(
                 ShowGallery::make()->getBreadcrumbs(
-                    'customer.caas.gallery',
+                    'customer.banners.gallery',
                     []
                 ),
                 $headCrumb(
                     Media::firstWhere('slug', $routeParameters['media']),
                     [
-                        'name'       => 'customer.caas.gallery.stock-images.show',
+                        'name'       => 'customer.banners.gallery.stock-images.show',
                         'parameters' => $routeParameters
                     ]
                 ),

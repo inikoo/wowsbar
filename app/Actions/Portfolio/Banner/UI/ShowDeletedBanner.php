@@ -83,7 +83,7 @@ class ShowDeletedBanner extends InertiaAction
                     'title'   => $banner->name,
                     'icon'    => [
                         'title' => __('banner'),
-                        'icon'  => 'fal fa-rectangle-wide'
+                        'icon'  => 'fal fa-sign'
                     ],
                     'actions' => [
                         $this->canRestore ? [
