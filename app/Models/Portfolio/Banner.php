@@ -43,6 +43,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property BannerStateEnum $state
  * @property int|null $unpublished_snapshot_id
  * @property int|null $live_snapshot_id
+ * @property string $date
  * @property string|null $live_at
  * @property string|null $retired_at
  * @property array $compiled_layout
@@ -78,6 +79,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Banner whereCreatedAt($value)
  * @method static Builder|Banner whereCustomerId($value)
  * @method static Builder|Banner whereData($value)
+ * @method static Builder|Banner whereDate($value)
  * @method static Builder|Banner whereDeletedAt($value)
  * @method static Builder|Banner whereId($value)
  * @method static Builder|Banner whereImageId($value)

@@ -94,7 +94,7 @@ class IndexBanners extends InertiaAction
 
 
         return $queryBuilder
-            ->defaultSort('-banners.date')
+            ->defaultSort('-date')
             ->select(
                 'websites',
                 'banners.slug',
@@ -180,7 +180,7 @@ class IndexBanners extends InertiaAction
                 ->column(key: 'image_thumbnail', label: ['fal', 'fa-image'])
                 ->column(key: 'websites', label: __('websites'))
                 ->column(key: 'date', label: __('date'), sortable: true)
-                ->defaultSort('slug');
+                ->defaultSort('-date');
         };
     }
 

@@ -56,7 +56,16 @@ function websiteRoute(banner: Banner, slug) {
 
         <template #cell(image_thumbnail)="{ item: banner }">
             <div class="h-11 overflow-hidden aspect-[4/1]">
-                <Image :src="banner['image_thumbnail']"/>
+                <Image v-if="banner['image_thumbnail']"  :src="banner['image_thumbnail']"/>
+                <svg v-else xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+                    <defs>
+                        <pattern id="pattern_mQij" patternUnits="userSpaceOnUse" width="13" height="13" patternTransform="rotate(45)">
+                            <line x1="0" y="0" x2="0" y2="13" stroke="#CCCCCC" stroke-width="12" />
+                        </pattern>
+                    </defs>
+                    <rect width="100%" height="100%" fill="url(#pattern_mQij)" :opacity="0.4" />
+                </svg>
+
             </div>
         </template>
 
