@@ -18,7 +18,6 @@ class CreateAuditsTable extends Migration
 
         Schema::connection($connection)->create($table, function (Blueprint $table) {
             $morphPrefix = config('audit.user.morph_prefix', 'user');
-
             $table->increments('id');
             $table->unsignedInteger('shop_id')->nullable()->index();
             $table->unsignedInteger('website_id')->nullable()->index();
@@ -29,15 +28,13 @@ class CreateAuditsTable extends Migration
             $table->jsonb('tags');
             $table->morphs('auditable');
             $table->string('event');
+            $table->string('comments')->nullable();
             $table->jsonb('old_values')->nullable();
             $table->jsonb('new_values')->nullable();
-
-
             $table->text('url')->nullable();
             $table->ipAddress()->nullable();
             $table->string('user_agent', 1023)->nullable();
             $table->timestampsTz();
-
             $table->index([$morphPrefix . '_id', $morphPrefix . '_type']);
         });
     }
