@@ -56,8 +56,7 @@ class StoreEmployee
                 $employee,
                 [
                     'username'        => Arr::get($credentials, 'username'),
-                    'password'        => Arr::get(
-                        $credentials,
+                    'password'        => Arr::get($credentials,
                         'password',
                         (app()->isLocal() ? 'hello' : wordwrap(Str::random(), 4, '-', true))
                     ),

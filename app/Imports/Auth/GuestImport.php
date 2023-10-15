@@ -39,10 +39,7 @@ class GuestImport implements ToCollection, WithHeadingRow, SkipsOnFailure, WithV
 
         try {
             $modelData = $row->only($fields)->all();
-
-            StoreGuest::make()->action(
-                $modelData
-            );
+            StoreGuest::make()->action($modelData);
             $this->setRecordAsCompleted($uploadRecord);
         } catch (Exception $e) {
             $this->setRecordAsFailed($uploadRecord, [$e->getMessage()]);

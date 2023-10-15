@@ -48,14 +48,11 @@ class StoreGuest
         );
         OrganisationHydrateGuests::dispatch();
         GuestHydrateUniversalSearch::dispatch($guest);
-
-
-
         StoreOrganisationUser::make()->action(
             $guest,
             [
                 'username'        => Arr::get($modelData, 'username'),
-                'password'        => (app()->isLocal() ? 'hello' : wordwrap(Str::random(), 4, '-', true)),
+                'password'        => Arr::get($modelData, 'password'),
                 'contact_name'    => $guest->contact_name,
                 'email'           => $guest->email,
                 'reset_password'  => Arr::get($modelData, 'reset_password', false),
