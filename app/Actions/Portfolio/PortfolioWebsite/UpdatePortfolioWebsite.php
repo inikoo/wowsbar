@@ -57,11 +57,14 @@ class UpdatePortfolioWebsite
         ];
     }
 
-    public function prepareForValidation(\Lorisleiva\Actions\ActionRequest $request): void
+    public function prepareForValidation(ActionRequest $request): void
     {
-        $request->replace([
-            'url' => 'https://' . $request->input('url')
-        ]);
+        if($request->exists('url')){
+            $request->replace([
+                'url' => 'https://' . $request->input('url')
+            ]);
+        }
+
     }
 
     public function asController(PortfolioWebsite $portfolioWebsite, ActionRequest $request): PortfolioWebsite
