@@ -10,6 +10,7 @@ namespace App\Actions\Portfolio\PortfolioWebsite\UI;
 use App\Actions\Helpers\History\IndexCustomerHistory;
 use App\Actions\InertiaAction;
 use App\Actions\Portfolio\Banner\UI\IndexBanners;
+use App\Actions\Traits\Actions\WithActionButtons;
 use App\Actions\Traits\WelcomeWidgets\WithFirstBanner;
 use App\Actions\UI\Customer\Portfolio\ShowPortfolio;
 use App\Actions\UI\WithInertia;
@@ -28,6 +29,7 @@ class ShowPortfolioWebsite extends InertiaAction
     use AsAction;
     use WithInertia;
     use WithFirstBanner;
+    use WithActionButtons;
 
 
     public function authorize(ActionRequest $request): bool
@@ -48,6 +50,7 @@ class ShowPortfolioWebsite extends InertiaAction
 
     public function htmlResponse(PortfolioWebsite $portfolioWebsite, ActionRequest $request): Response
     {
+
         $customer = $request->get('customer');
 
         $firstBanners = $this->canEdit ? $this->getFirstBannerWidget($portfolioWebsite) : null;
@@ -70,16 +73,13 @@ class ShowPortfolioWebsite extends InertiaAction
                         'title' => __('website'),
                         'icon'  => 'fal fa-globe'
                     ],
-                    'actions' => [
-                        $this->canEdit ? [
-                            'type'  => 'button',
-                            'style' => 'edit',
-                            'route' => [
-                                'name'       => preg_replace('/show$/', 'edit', $request->route()->getName()),
-                                'parameters' => array_values($request->route()->originalParameters())
-                            ]
-                        ] : []
-                    ]
+                    'iconActions' => [
+
+                        $this->canDelete ? $this->getDeleteActionIcon($request) : null,
+                        $this->canEdit ? $this->getEditActionIcon($request) : null,
+                    ],
+
+
                 ],
                 'tabs'           => [
                     'current'    => $this->tab,

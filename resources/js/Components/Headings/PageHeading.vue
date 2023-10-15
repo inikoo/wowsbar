@@ -111,11 +111,15 @@ if (props.dataToSubmit && props.data.actionActualMethod) {
 
             <div class="flex items-center gap-2">
 
-                <div v-for="iconAction in data.iconActions" class="mr-3">
+
+                <div v-for="iconAction in data.iconActions"  >
                     <Link v-if="iconAction"  :href="route(iconAction.href.name,iconAction.href.parameters)">
-                        <Icon :data="iconAction.icon"  class='h-5'   />
+                       <div class="py-1 px-2 border border-grey-200 text-gray-500 hover:text-gray-800 rounded ">
+                        <Icon :data="iconAction.icon"  class='h-4'   />
+                       </div>
                     </Link>
                 </div>
+
                 <div v-for="action in data.actions">
                     <Action :action="action" :dataToSubmit="dataToSubmit"/>
                 </div>

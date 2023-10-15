@@ -133,7 +133,7 @@ class StoreBanner
     public function rules(): array
     {
         return [
-            'portfolio_website_id' => ['sometimes', 'nullable', 'exists:portfolio_websites,id'],
+            'portfolio_website_id' => ['required', 'nullable', 'exists:portfolio_websites,id'],
             'name'                 => ['required', 'string', 'max:255'],
             'type'                 => ['required', new Enum(BannerTypeEnum::class)],
         ];

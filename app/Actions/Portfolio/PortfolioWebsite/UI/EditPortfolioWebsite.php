@@ -10,6 +10,7 @@ namespace App\Actions\Portfolio\PortfolioWebsite\UI;
 use App\Actions\InertiaAction;
 use App\Models\Portfolio\PortfolioWebsite;
 use Exception;
+use Illuminate\Support\Arr;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -24,13 +25,14 @@ class EditPortfolioWebsite extends InertiaAction
     public function authorize(ActionRequest $request): bool
     {
         $this->canEdit = $request->get('customerUser')->hasPermissionTo('portfolio.edit');
-        return $request->get('customerUser')->hasPermissionTo("portfolio.edit");
 
+        return $request->get('customerUser')->hasPermissionTo("portfolio.edit");
     }
 
     public function asController(PortfolioWebsite $portfolioWebsite, ActionRequest $request): PortfolioWebsite
     {
         $this->initialisation($request);
+
         return $this->handle($portfolioWebsite);
     }
 
@@ -39,76 +41,100 @@ class EditPortfolioWebsite extends InertiaAction
      */
     public function htmlResponse(PortfolioWebsite $portfolioWebsite, ActionRequest $request): Response
     {
+        $sections['properties'] = [
+            'label'  => __('Banner properties'),
+            'icon'   => 'fal fa-sliders-h',
+            'fields' => [
+                'name' => [
+                    'type'     => 'input',
+                    'label'    => __('name'),
+                    'value'    => $portfolioWebsite->name,
+                    'required' => true,
+                ],
+                'url'  => [
+                    'type'      => 'inputWithAddOn',
+                    'leftAddOn' => [
+                        'label' => 'https://'
+                    ],
+                    'label'     => __('url'),
+                    'value'     => preg_replace('/^https?:\/\//', '', $portfolioWebsite->url),
+                    'required'  => true,
+                ],
+            ]
+        ];
+
+        $sections['delete'] = [
+            'label'  => __('Delete'),
+            'icon'   => 'fal fa-trash-alt',
+            'fields' => [
+                'name' => [
+                    'type'   => 'action',
+                    'action' => [
+                        'type'  => 'button',
+                        'style' => 'delete',
+                        'label' => __('delete website'),
+                        'route' => [
+                            'name'       => 'customer.models.portfolio-website.delete',
+                            'parameters' => $portfolioWebsite->id
+                        ]
+                    ],
+                ]
+            ]
+        ];
+
+        $currentSection = 'properties';
+        if ($request->has('section') and Arr::has($sections, $request->get('section'))) {
+            $currentSection = $request->get('section');
+        }
+
         return Inertia::render(
             'EditModel',
             [
-                    'title'       => __("PortfolioWebsite's settings"),
-                    'breadcrumbs' => $this->getBreadcrumbs(
-                        $request->route()->getName(),
-                        $request->route()->originalParameters()
-                    ),
-                    'navigation'   => [
-                        'previous' => $this->getPrevious($portfolioWebsite, $request),
-                        'next'     => $this->getNext($portfolioWebsite, $request),
+                'title'       => __("PortfolioWebsite's settings"),
+                'breadcrumbs' => $this->getBreadcrumbs(
+                    $request->route()->getName(),
+                    $request->route()->originalParameters()
+                ),
+                'navigation'  => [
+                    'previous' => $this->getPrevious($portfolioWebsite, $request),
+                    'next'     => $this->getNext($portfolioWebsite, $request),
+                ],
+                'pageHead'    => [
+                    'title'     => $portfolioWebsite->name,
+                    'icon'      => [
+                        'title' => __('website'),
+                        'icon'  => 'fal fa-globe'
                     ],
-                    'pageHead'    => [
-                        'title'   => $portfolioWebsite->name,
-                        'icon'    => [
-                            'title' => __('website'),
-                            'icon'  => 'fal fa-globe'
+                    'iconRight' =>
+                        [
+                            'icon'  => ['fal', 'fa-edit'],
+                            'title' => __("Editing website")
                         ],
-                        'iconRight'    =>
-                            [
-                                'icon'  => ['fal', 'fa-edit'],
-                                'title' => __("Editing website")
-                            ],
 
-                        'actions'   => [
-                            [
-                                'type'  => 'button',
-                                'style' => 'exit',
-                                'label' => __('Exit edit'),
-                                'route' => [
-                                    'name'       => preg_replace('/edit$/', 'show', $request->route()->getName()),
-                                    'parameters' => array_values($request->route()->originalParameters())
-                                ]
+                    'actions' => [
+                        [
+                            'type'  => 'button',
+                            'style' => 'exit',
+                            'label' => __('Exit edit'),
+                            'route' => [
+                                'name'       => preg_replace('/edit$/', 'show', $request->route()->getName()),
+                                'parameters' => array_values($request->route()->originalParameters())
                             ]
-                        ],
-                    ],
-                    'formData' => [
-                        'blueprint' => [
-                            [
-                                'title'  => __('ID/URL'),
-                                'icon'   => 'fa-light fa-id-card',
-                                'fields' => [
-                                    'name' => [
-                                        'type'     => 'input',
-                                        'label'    => __('name'),
-                                        'value'    => $portfolioWebsite->name,
-                                        'required' => true,
-                                    ],
-                                    'url' => [
-                                        'type'      => 'inputWithAddOn',
-                                        'leftAddOn' => [
-                                            'label' => 'https://'
-                                        ],
-                                        'label'     => __('url'),
-                                        'value'     => preg_replace('/^https?:\/\//', '', $portfolioWebsite->url),
-                                        'required'  => true,
-                                    ],
-                                ]
-                            ],
-
-                    ],
-                        'args'      => [
-                            'updateRoute' => [
-                                'name'       => 'customer.models.portfolio-website.update',
-                                'parameters' => $portfolioWebsite->id
-                            ],
                         ]
                     ],
+                ],
+                'formData'    => [
+                    'current'   => $currentSection,
+                    'blueprint' => $sections,
+                    'args' => [
+                        'updateRoute' => [
+                            'name'       => 'customer.models.portfolio-website.update',
+                            'parameters' => $portfolioWebsite->id
+                        ],
+                    ]
+                ],
 
-                ]
+            ]
         );
     }
 

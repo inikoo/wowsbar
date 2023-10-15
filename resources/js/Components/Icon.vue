@@ -24,6 +24,7 @@ const props = defineProps<{
         aria-hidden="true"
         :icon="data.icon"
         :class="data.class"
+        fixed-width
     />
 
 </template>
