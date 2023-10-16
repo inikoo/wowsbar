@@ -15,28 +15,25 @@ const props = defineProps<{
     counter: boolean
 }>()
 
-const options = [
-    {
-        "label": "Align left",
-        "value": "left",
-        "icon": "fal fa-align-left"
-    },
-    {
-        "label": "Align center",
-        "value": "center",
-        "icon": "fal fa-align-center"
-    },
-    {
-        "label": "Align right",
-        "value": "right",
-        "icon": "fal fa-align-right"
-    }
-]
 
-const compOptions = computed(() => {
-    // Handle if parent provide options = ['left', 'center', 'right']
-    return props.fieldData?.options ? options.filter((option: any) => props.fieldData?.options.includes(option.value)) : options
-})
+// const options = [
+//     {
+//         "label": "Align left",
+//         "value": "left",
+//         "icon": "fal fa-align-left"
+//     },
+//     {
+//         "label": "Align center",
+//         "value": "center",
+//         "icon": "fal fa-align-center"
+//     },
+//     {
+//         "label": "Align right",
+//         "value": "right",
+//         "icon": "fal fa-align-right"
+//     }
+// ]
+
 
 const { data, fieldName } = toRefs(props)
 const emits = defineEmits()
@@ -82,7 +79,7 @@ const updateLocalFormValue = (newValue) => {
 <template>
     <div class="py-1">
         <div class="flex gap-x-2">
-            <div v-for="option in compOptions" @click="value = option.value" class="flex items-center justify-center bg-gray-100 rounded p-2 ring-1 ring-gray-300 cursor-pointer"
+            <div v-for="option in props.fieldData?.options " @click="value = option.value" class="flex items-center justify-center bg-gray-100 rounded p-2 ring-1 ring-gray-300 cursor-pointer"
                 :class="[ value == option.value ? 'bg-gray-300' : 'hover:bg-gray-200']"
             >
                 <FontAwesomeIcon :icon='option.icon' class='' aria-hidden='true' />

@@ -15,7 +15,6 @@ const props = defineProps<{
     }
     swiperRef?: Element 
 }>()
-console.log('ssss',props.data)
 </script>
 
 <template>

@@ -19,9 +19,11 @@ const props = defineProps<{
     swiperRef?: Element 
 }>()
 
+console.log(props)
+
 </script>
 
 <template>
-    <div v-if="data?.title" class="text-gray-100 drop-shadow-md text-5xl font-bold" :class="data?.fontSize?.fontTitle" :style="`color: ${data?.color}`">{{ data?.title }}</div>
-    <div v-if="data?.subtitle" class="text-gray-300 drop-shadow text-base italic tracking-widest" :class="data?.fontSize?.fontSubtitle" :style="`color: ${data?.color}`">{{ data?.subtitle }}</div>
+    <div v-if="data?.title" class="text-gray-100 drop-shadow-md text-5xl font-bold overflow-hidden truncate " :class="data?.fontSize?.fontTitle" :style="`color: ${data?.color}; width: ${data.width}%`">{{ data?.title }}</div>
+    <div v-if="data?.subtitle" class="text-gray-300 drop-shadow text-base italic tracking-widest  overflow-hidden truncate " :class="data?.fontSize?.fontSubtitle" :style="`color: ${data?.color}; width: ${data.width}%`">{{ data?.subtitle }}</div>
 </template>
