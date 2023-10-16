@@ -63,7 +63,7 @@ const positionClasses = computed(() => {
     return classes;
 });
 
-const components = {
+const components: any = {
     'slideControls': SlideControls,
     'linkButton': LinkButton,
     'cornerText': CornerText,

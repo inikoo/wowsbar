@@ -45,6 +45,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property array $data
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
+ * @property string|null $delete_comment
  * @property Carbon|null $deleted_at
  * @property-read Collection<int, \App\Models\Helpers\Audit> $audits
  * @property-read int|null $audits_count
@@ -63,6 +64,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|ProductCategory whereCode($value)
  * @method static Builder|ProductCategory whereCreatedAt($value)
  * @method static Builder|ProductCategory whereData($value)
+ * @method static Builder|ProductCategory whereDeleteComment($value)
  * @method static Builder|ProductCategory whereDeletedAt($value)
  * @method static Builder|ProductCategory whereDescription($value)
  * @method static Builder|ProductCategory whereId($value)

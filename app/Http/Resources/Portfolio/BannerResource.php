@@ -26,6 +26,7 @@ class BannerResource extends JsonResource
         /** @var Banner $banner */
         $banner = $this;
 
+
         $image          = null;
         $imageThumbnail = null;
         if ($banner->image) {
@@ -63,9 +64,9 @@ class BannerResource extends JsonResource
 
 
                 ],
-                BannerStateEnum::RETIRED => [
+                BannerStateEnum::SWITCH_OFF => [
 
-                    'tooltip' => __('retired'),
+                    'tooltip' => __('switch off'),
                     'icon'    => 'fal fa-eye-slash'
 
                 ]
@@ -73,18 +74,18 @@ class BannerResource extends JsonResource
             'image_thumbnail'    => $imageThumbnail ? GetPictureSources::run($imageThumbnail) : null,
             'image'              => $image ? GetPictureSources::run($image) : null,
             'route'              => [
-                'name'       => 'customer.caas.banners.show',
+                'name'       => 'customer.banners.show',
                 'parameters' => [$banner->slug]
             ],
-            'websites'           => implode(', ', $banner->portfolioWebsite->pluck('name')->toArray()),
+         //   'websites'           => implode(', ', $banner->portfolioWebsites()->pluck('name')->toArray()),
             'updated_at'         => $banner->updated_at,
             'created_at'         => $banner->created_at,
             'workshopRoute'      => [
-                'name'       => 'customer.caas.banners.workshop',
+                'name'       => 'customer.banners.workshop',
                 'parameters' => [$banner->slug]
             ],
             'compiled_layout'    => $banner->compiled_layout,
-            'delivery_url'       => config('app.delivery_url').$banner->ulid,
+            'delivery_url'       => config('app.delivery_url').'/banners/'.$banner->ulid,
             'published_snapshot' => $publishedSnapshot
         ];
     }

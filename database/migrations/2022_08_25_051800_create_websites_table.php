@@ -7,11 +7,13 @@
 
 
 use App\Enums\Organisation\Web\Website\WebsiteStateEnum;
+use App\Stubs\Migrations\HasSoftDeletes;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class () extends Migration {
+    use HasSoftDeletes;
     public function up(): void
     {
         Schema::create('websites', function (Blueprint $table) {
@@ -37,14 +39,14 @@ return new class () extends Migration {
             $table->unsignedSmallInteger('live_footer_snapshot_id')->nullable()->index();
             $table->string('published_footer_checksum')->nullable()->index();
             $table->boolean('footer_is_dirty')->index()->default(false);
-
             $table->unsignedSmallInteger('current_layout_id')->index()->nullable();
             $table->unsignedSmallInteger('organisation_id');
             $table->foreign('organisation_id')->references('id')->on('organisations')->onUpdate('cascade')->onDelete('cascade');
+            $table->unsignedInteger('logo_id')->nullable();
             $table->timestampsTz();
             $table->timestampTz('launched_at')->nullable();
             $table->timestampTz('closed_at')->nullable();
-            $table->softDeletesTz();
+            $table=$this->softDeletes($table);
         });
         DB::statement("CREATE INDEX ON websites (lower('code')) ");
         DB::statement("CREATE INDEX ON websites (lower('domain')) ");

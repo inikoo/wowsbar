@@ -25,7 +25,9 @@ trait IsWebsitePortfolio
     {
         return SlugOptions::create()
             ->generateSlugsFrom(function () {
-                return Abbreviate::run(string:$this->name);
+
+                $name=preg_replace('/\./', ' ', $this->name);
+                return Abbreviate::run(string:$name);
             })
             ->doNotGenerateSlugsOnUpdate()
             ->saveSlugsTo('slug')
@@ -40,6 +42,7 @@ trait IsWebsitePortfolio
 
     public function divisions(): BelongsToMany
     {
-        return $this->belongsToMany(Division::class, 'division_portfolio_websites', 'portfolio_website_id')->withPivot('interest');
+        return $this->belongsToMany(Division::class, 'division_portfolio_websites', 'portfolio_website_id')
+            ->withPivot('interest')->withTimestamps();
     }
 }

@@ -31,9 +31,9 @@ class IndexCaasCustomerWebsites extends InertiaAction
 {
     public function authorize(ActionRequest $request): bool
     {
-        $this->canEdit = $request->user()->hasPermissionTo('catalogue.caas.edit');
+        $this->canEdit = $request->user()->hasPermissionTo('catalogue.banners.edit');
 
-        return $request->user()->hasPermissionTo('catalogue.caas.view');
+        return $request->user()->hasPermissionTo('catalogue.banners.view');
     }
 
     public function asController(ActionRequest $request): LengthAwarePaginator
@@ -172,12 +172,12 @@ class IndexCaasCustomerWebsites extends InertiaAction
         };
 
         return match ($routeName) {
-            'org.caas.websites.index' =>
+            'org.banners.websites.index' =>
             array_merge(
                 ShowCaaSDashboard::make()->getBreadcrumbs(),
                 $headCrumb(
                     [
-                        'name' => 'org.caas.websites.index',
+                        'name' => 'org.banners.websites.index',
                         null
                     ]
                 ),

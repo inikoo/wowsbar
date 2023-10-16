@@ -7,7 +7,7 @@
 
 namespace App\Actions\CRM\Customer\Hydrators;
 
-use App\Enums\Helpers\Interest\InterestEnum;
+use App\Enums\Portfolio\PortfolioWebsite\PortfolioWebsiteInterestEnum;
 use App\Models\CRM\Customer;
 use Illuminate\Support\Str;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -28,14 +28,14 @@ class CustomerHydratePortfolioWebsites
                 $counts = $portfolioWebsite->divisions()->where('slug', $division['slug'])->count();
             });
 
-            $stats['number_portfolio_websites_division_' . $division['slug']] = $counts;
+            $stats['number_portfolio_websites_division_' . $division['slug']] = $counts??0;
 
-            foreach (InterestEnum::cases() as $case) {
+            foreach (PortfolioWebsiteInterestEnum::cases() as $case) {
                 $customer->portfolioWebsites()->each(function ($portfolioWebsite) use (&$counts, $case, $division) {
                     $counts = $portfolioWebsite->divisions()->where('slug', $division['slug'])->wherePivot('interest', $case)->count();
                 });
 
-                $stats['number_portfolio_websites_' . $division['slug'] . '_' . Str::replace('-', '_', $case->snake())] = $counts;
+                $stats['number_portfolio_websites_' . $division['slug'] . '_' . Str::replace('-', '_', $case->snake())] = $counts??0;
             }
         }
 

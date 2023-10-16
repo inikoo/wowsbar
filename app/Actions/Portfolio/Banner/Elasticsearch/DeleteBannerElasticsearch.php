@@ -9,7 +9,7 @@ namespace App\Actions\Portfolio\Banner\Elasticsearch;
 
 use App\Actions\Elasticsearch\BuildElasticsearchClient;
 use App\Models\Portfolio\Banner;
-use Elastic\Elasticsearch\Response\Elasticsearch;
+use Exception;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
 
@@ -21,15 +21,18 @@ class DeleteBannerElasticsearch
 
     private bool $asAction = false;
 
-    public function handle(Banner $banner): Elasticsearch
+    public function handle(Banner $banner): void
     {
         $client = BuildElasticsearchClient::run();
 
         $params = [
-            'id'     => 'banner_'.$banner->ulid,
-            'index'  => config('elasticsearch.index_prefix') .'content_blocks',
+            'id'    => 'banner_'.$banner->ulid,
+            'index' => config('elasticsearch.index_prefix').'content_blocks',
         ];
 
-        return $client->delete($params);
+        try {
+            $client->delete($params);
+        } catch (Exception) {
+        }
     }
 }

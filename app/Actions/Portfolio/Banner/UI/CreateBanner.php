@@ -99,24 +99,12 @@ class CreateBanner extends InertiaAction
                         [
                             'type'  => 'button',
                             'style' => 'cancel',
-                            'route' =>
-                                match ($request->route()->getName()) {
-                                    'customer.portfolio.websites.show.banners.create' =>
-                                    [
-                                        'name'       => 'customer.portfolio.websites.show',
-                                        'parameters' => array_values($request->route()->originalParameters())
-                                    ],
-                                    default => [
-                                        'name'       => preg_replace('/create$/', 'index', $request->route()->getName()),
-                                        'parameters' => array_values($request->route()->originalParameters())
-                                    ]
-                                }
-
-
+                            'route' => [
+                                'name'       => preg_replace('/create$/', 'index', $request->route()->getName()),
+                                'parameters' => array_values($request->route()->originalParameters())
+                            ]
                         ]
                     ]
-
-
                 ],
                 'formData'    => [
                     'blueprint' => $fields,
@@ -145,16 +133,10 @@ class CreateBanner extends InertiaAction
     public function getBreadcrumbs(string $routeName, array $routeParameters): array
     {
         return array_merge(
-            match ($routeName) {
-                'customer.portfolio.banners.create' => IndexBanners::make()->getBreadcrumbs(
-                    'customer.portfolio.banners.index',
-                    $routeParameters
-                ),
-                default => IndexBanners::make()->getBreadcrumbs(
-                    'customer.caas.banners.index',
-                    $routeParameters
-                )
-            },
+            IndexBanners::make()->getBreadcrumbs(
+                'customer.banners.index',
+                $routeParameters
+            ),
             [
                 [
                     'type'          => 'creatingModel',

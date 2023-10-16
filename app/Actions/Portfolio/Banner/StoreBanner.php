@@ -26,6 +26,7 @@ use Illuminate\Validation\Rules\Enum;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
+use LCherone\PHPPetname as PetName;
 
 class StoreBanner
 {
@@ -64,6 +65,8 @@ class StoreBanner
 
         data_set($modelData, 'data.website_slug', $parent->slug);
         data_set($modelData, 'ulid', Str::ulid());
+        data_set($modelData, 'date', now());
+
         if (class_basename($parent) == 'PortfolioWebsite') {
             data_set($modelData, 'portfolio_website_id', $parent->id);
         }
@@ -106,7 +109,6 @@ class StoreBanner
 
         BannerHydrateUniversalSearch::dispatch($banner);
 
-        //  StoreBannerElasticsearch::run($banner);
 
         return $banner;
     }
@@ -120,10 +122,18 @@ class StoreBanner
         return $request->get('customerUser')->hasPermissionTo("portfolio.banners.edit");
     }
 
+    public function prepareForValidation(ActionRequest $request): void
+    {
+        if (!$request->get('name')) {
+            $name = PetName::Generate(2, ' ').' banner';
+            $request->merge(['name' => $name]);
+        }
+    }
+
     public function rules(): array
     {
         return [
-            'portfolio_website_id' => ['sometimes', 'nullable', 'exists:portfolio_websites,id'],
+            'portfolio_website_id' => ['required', 'nullable', 'exists:portfolio_websites,id'],
             'name'                 => ['required', 'string', 'max:255'],
             'type'                 => ['required', new Enum(BannerTypeEnum::class)],
         ];
@@ -181,7 +191,7 @@ class StoreBanner
 
     public function getCommandSignature(): string
     {
-        return 'customer:new-banner {customer} {name} {portfolio-website?} {--T|type=landscape}';
+        return 'customer:new-banner {customer} {portfolio-website} {--T|type=landscape} {--N|name=}';
     }
 
     public function asCommand(Command $command): int
@@ -195,16 +205,14 @@ class StoreBanner
         }
         Config::set('global.customer_id', $customer->id);
 
-        if ($website = $command->argument('portfolio-website')) {
-            $portfolioWebsite = PortfolioWebsite::where('slug', $website)->firstOrFail();
-        }
+        $portfolioWebsite = PortfolioWebsite::where('slug', $command->argument('portfolio-website'))->firstOrFail();
 
 
         $this->asAction = true;
         $this->setRawAttributes(
             [
-                'name'                 => $command->argument('name'),
-                'portfolio_website_id' => $portfolioWebsite->id ?? null,
+                'name'                 => $command->option('name') ?? PetName::Generate(2).' banner',
+                'portfolio_website_id' => $portfolioWebsite->id,
                 'type'                 => $command->option('type')
             ]
         );
@@ -212,25 +220,27 @@ class StoreBanner
 
         $banner = $this->handle($portfolioWebsite ?? $customer, $validatedData);
 
-        $command->info("Done! Banner $banner->slug created 🎉");
+        $command->info("Done! Banner $banner->slug ($banner->name) created 🎉");
 
         return 0;
     }
 
+
+    public function jsonResponse(Banner $banner): string
+    {
+        return route(
+            'customer.banners.workshop',
+            [
+                $banner->slug
+            ]
+        );
+    }
+
     public function htmlResponse(Banner $banner): RedirectResponse
     {
-        if (class_basename($this->parent) == 'PortfolioWebsite') {
-            return redirect()->route(
-                'customer.portfolio.websites.show.banners.workshop',
-                [
-                    $this->parent->slug,
-                    $banner->slug
-                ]
-            );
-        }
 
         return redirect()->route(
-            'customer.caas.banners.workshop',
+            'customer.banners.workshop',
             [
                 $banner->slug
             ]

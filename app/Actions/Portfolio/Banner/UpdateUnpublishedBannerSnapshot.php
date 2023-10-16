@@ -71,9 +71,10 @@ class UpdateUnpublishedBannerSnapshot
         BannerHydrateUniversalSearch::dispatch($banner);
         CustomerHydrateBanners::dispatch(customer());
 
-        if (class_basename($banner->portfolioWebsite) == 'PortfolioWebsite') {
-            PortfolioWebsiteHydrateBanners::dispatch($banner->portfolioWebsite);
+        foreach($banner->portfolioWebsites as $portfolioWebsite) {
+            PortfolioWebsiteHydrateBanners::run($portfolioWebsite);
         }
+
 
         return $banner;
     }

@@ -6,11 +6,13 @@
  */
 
 use App\Enums\Market\Shop\ShopStateEnum;
+use App\Stubs\Migrations\HasSoftDeletes;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class () extends Migration {
+    use HasSoftDeletes;
     public function up(): void
     {
         Schema::create('shops', function (Blueprint $table) {
@@ -44,7 +46,7 @@ return new class () extends Migration {
             $table->unsignedSmallInteger('organisation_id');
             $table->foreign('organisation_id')->references('id')->on('organisations')->onUpdate('cascade')->onDelete('cascade');
             $table->timestampsTz();
-            $table->softDeletesTz();
+            $table=$this->softDeletes($table);
         });
         DB::statement("CREATE INDEX ON shops (lower('code')) ");
 

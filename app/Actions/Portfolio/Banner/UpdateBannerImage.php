@@ -23,7 +23,7 @@ class UpdateBannerImage
     public function handle(Banner $banner): Banner
     {
         $snapshot = match ($banner->state) {
-            BannerStateEnum::LIVE, BannerStateEnum::RETIRED => $banner->liveSnapshot,
+            BannerStateEnum::LIVE, BannerStateEnum::SWITCH_OFF => $banner->liveSnapshot,
             default => $banner->unpublishedSnapshot,
         };
 

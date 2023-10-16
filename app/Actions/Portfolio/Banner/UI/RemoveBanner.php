@@ -64,7 +64,7 @@ class RemoveBanner extends InertiaAction
                 'pageHead'    => [
                     'icon'    =>
                         [
-                            'icon'  => 'fal fa-rectangle-wide',
+                            'icon'  => 'fal fa-sign',
                             'title' => __('banner')
                         ],
                     'title'   => $banner->slug,

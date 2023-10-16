@@ -20,6 +20,7 @@ export const initialiseCustomerApp = () => {
                 usePage().props.layout.secondaryNavigation ?? null;
         }
 
+
         // Set data of Locale (Language)
         if (usePage().props.localeData) {
             locale.language = usePage().props.localeData.language;
@@ -41,6 +42,10 @@ export const initialiseCustomerApp = () => {
 
         let moduleName = layout.currentRoute.split('.');
         layout.currentModule = moduleName[1];
+        
+        // alert(layout.currentRoute)
+        // alert(moduleName)
+        // alert(layout.currentModule)
 
         layout.booted = true;
 

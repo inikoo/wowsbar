@@ -7,12 +7,12 @@
 
 namespace App\Actions\Portfolio\PortfolioSocialAccount\UI;
 
-use App\Actions\Helpers\History\IndexHistory;
+use App\Actions\Helpers\History\IndexCustomerHistory;
 use App\Actions\InertiaAction;
 use App\Actions\UI\Customer\Portfolio\ShowPortfolio;
 use App\Actions\UI\WithInertia;
 use App\Enums\UI\Customer\PortfolioSocialAccountTabsEnum;
-use App\Http\Resources\History\HistoryResource;
+use App\Http\Resources\History\CustomerHistoryResource;
 use App\Http\Resources\Portfolio\PortfolioSocialAccountResource;
 use App\Models\Portfolio\PortfolioSocialAccount;
 use Inertia\Inertia;
@@ -43,6 +43,7 @@ class ShowPortfolioSocialAccount extends InertiaAction
 
     public function htmlResponse(PortfolioSocialAccount $portfolioSocialAccount, ActionRequest $request): Response
     {
+        $customer=$request->get('customer');
         return Inertia::render(
             'Portfolio/PortfolioSocialAccount',
             [
@@ -59,7 +60,7 @@ class ShowPortfolioSocialAccount extends InertiaAction
                     'title'   => $portfolioSocialAccount->username,
                     'icon'    => [
                         'title' => __('portfolio social account'),
-                        'icon'  => 'fal fa-globe'
+                        'icon'  => 'fal fa-thumbs-up'
                     ],
                     'actions' => [
                         $this->canEdit ? [
@@ -78,11 +79,19 @@ class ShowPortfolioSocialAccount extends InertiaAction
                 ],
 
                 PortfolioSocialAccountTabsEnum::CHANGELOG->value => $this->tab == PortfolioSocialAccountTabsEnum::CHANGELOG->value ?
-                    fn () => HistoryResource::collection(IndexHistory::run($portfolioSocialAccount))
-                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistory::run($portfolioSocialAccount))),
+                    fn () => CustomerHistoryResource::collection(IndexCustomerHistory::run(
+                        customer:$customer,
+                        model:$portfolioSocialAccount,
+                        prefix:PortfolioSocialAccountTabsEnum::CHANGELOG->value
+                    ))
+                    : Inertia::lazy(fn () => CustomerHistoryResource::collection(IndexCustomerHistory::run(
+                        customer:$customer,
+                        model:$portfolioSocialAccount,
+                        prefix:PortfolioSocialAccountTabsEnum::CHANGELOG->value
+                    ))),
             ]
         )
-            ->table(IndexHistory::make()->tableStructure());
+            ->table(IndexCustomerHistory::make()->tableStructure(prefix: PortfolioSocialAccountTabsEnum::CHANGELOG->value));
     }
 
     public function jsonResponse(PortfolioSocialAccount $portfolioSocialAccount): PortfolioSocialAccountResource
@@ -103,13 +112,13 @@ class ShowPortfolioSocialAccount extends InertiaAction
                         ],
                         'model' => [
                             'route' => $routeParameters['model'],
-                            'label' => $portfolioSocialAccount->slug,
+                            'label' => $portfolioSocialAccount->username,
                         ],
 
                     ],
                     'simple'         => [
                         'route' => $routeParameters['model'],
-                        'label' => $portfolioSocialAccount->slug
+                        'label' => $portfolioSocialAccount->username
                     ],
                     'suffix'         => $suffix
                 ],
@@ -117,8 +126,8 @@ class ShowPortfolioSocialAccount extends InertiaAction
         };
 
         return match ($routeName) {
-            'customer.portfolio.social-account.show',
-            'customer.portfolio.social-account.edit' =>
+            'customer.portfolio.social-accounts.show',
+            'customer.portfolio.social-accounts.edit' =>
             array_merge(
                 ShowPortfolio::make()->getBreadcrumbs(),
                 $headCrumb(
@@ -126,11 +135,11 @@ class ShowPortfolioSocialAccount extends InertiaAction
                     PortfolioSocialAccount::firstWhere('slug', $routeParameters['portfolioSocialAccount']),
                     [
                         'index' => [
-                            'name'       => 'customer.portfolio.social-account.index',
+                            'name'       => 'customer.portfolio.social-accounts.index',
                             'parameters' => []
                         ],
                         'model' => [
-                            'name'       => 'customer.portfolio.social-account.show',
+                            'name'       => 'customer.portfolio.social-accounts.show',
                             'parameters' => $routeParameters
                         ]
                     ],
@@ -163,9 +172,9 @@ class ShowPortfolioSocialAccount extends InertiaAction
 
 
         return match ($routeName) {
-            'customer.portfolio.social-account.show',
-            'customer.portfolio.social-account.edit' => [
-                'label' => $portfolioSocialAccount->slug,
+            'customer.portfolio.social-accounts.show',
+            'customer.portfolio.social-accounts.edit' => [
+                'label' => $portfolioSocialAccount->username,
                 'route' => [
                     'name'       => $routeName,
                     'parameters' => [

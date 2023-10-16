@@ -7,11 +7,13 @@
 
 use App\Enums\Portfolio\Banner\BannerStateEnum;
 use App\Enums\Portfolio\Banner\BannerTypeEnum;
+use App\Stubs\Migrations\HasSoftDeletes;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class () extends Migration {
+    use HasSoftDeletes;
     public function up(): void
     {
         Schema::create('banners', function (Blueprint $table) {
@@ -27,14 +29,15 @@ return new class () extends Migration {
             $table->string('state')->default(BannerStateEnum::UNPUBLISHED->value);
             $table->unsignedSmallInteger('unpublished_snapshot_id')->nullable()->index();
             $table->unsignedSmallInteger('live_snapshot_id')->nullable()->index();
+            $table->dateTimeTz('date')->index();
             $table->dateTimeTz('live_at')->nullable();
-            $table->dateTimeTz('retired_at')->nullable();
+            $table->dateTimeTz('switch_off_at')->nullable();
             $table->jsonb('compiled_layout');
             $table->jsonb('data');
             $table->unsignedInteger('image_id')->nullable();
             $table->foreign('image_id')->references('id')->on('media');
             $table->timestampsTz();
-            $table->softDeletesTz();
+            $table=$this->softDeletes($table);
             $table->unique(['customer_id', 'slug']);
         });
     }

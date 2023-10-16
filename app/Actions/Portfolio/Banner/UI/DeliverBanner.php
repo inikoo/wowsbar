@@ -19,6 +19,8 @@ class DeliverBanner
 
     public function handle(string $ulid): array
     {
+
+
         $client = BuildElasticsearchClient::run();
 
         $params = [
@@ -26,7 +28,10 @@ class DeliverBanner
             'id'    => 'banner_'.$ulid
         ];
 
+
         $response = $client->get($params)->asString();
+
+
 
         return Arr::get(json_decode($response, true), '_source');
     }
@@ -34,8 +39,9 @@ class DeliverBanner
 
     public function htmlResponse(array $compiledLayout): Response
     {
+
         return Inertia::render(
-            'Delivery/Banner',
+            'Banner',
             [
                 'data' => $compiledLayout
             ]

@@ -68,7 +68,7 @@ class SnapshotResource extends JsonResource
                     'class'   => 'text-indigo-500'
                 ],
                 SnapshotStateEnum::HISTORIC => [
-                    'tooltip' => __('retired'),
+                    'tooltip' => __('historic'),
                     'icon'    => 'fal fa-ghost'
                 ]
             },

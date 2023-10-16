@@ -13,7 +13,7 @@ import {router} from '@inertiajs/vue3'
 
 import {library} from "@fortawesome/fontawesome-svg-core"
 import {
-    faBrowser, faRectangleWide, faUserCog, faTachometerAlt,
+    faBrowser, faSign, faUserCog, faTachometerAlt,
     faTransporter, faAd, faThumbsUp, faEnvelope
 } from "@/../private/pro-light-svg-icons"
 import {faGoogle} from '@fortawesome/free-brands-svg-icons'
@@ -22,7 +22,7 @@ import {faChevronLeft} from "@/../private/pro-regular-svg-icons"
 import {useLayoutStore} from "@/Stores/layout.js"
 import {computed} from "vue"
 
-library.add(faBrowser, faRectangleWide, faUserCog, faChevronLeft, faTachometerAlt,
+library.add(faBrowser, faSign, faUserCog, faChevronLeft, faTachometerAlt,
     faGoogle, faTransporter, faAd, faThumbsUp, faEnvelope
 )
 
@@ -64,7 +64,6 @@ const handleToggleLeftbar = () => {
     localStorage.setItem('leftSideBar', (!layout.leftSidebar.show).toString())
     layout.leftSidebar.show = !layout.leftSidebar.show
 }
-
 </script>
 
 <template>
@@ -86,25 +85,52 @@ const handleToggleLeftbar = () => {
             <div class="flex flex-grow flex-col pb-16">
                 <nav class="flex-1 space-y-1" aria-label="Sidebar">
                     <!-- LeftSide Links -->
-                    <Link v-for="(item, itemKey) in layout.navigation"
-                        :key="itemKey" :href="route(item.route)"
-                        :class="[
-							itemKey === layout.currentModule
-								? 'navigationActiveCustomer dark:border-gray-100 dark:bg-gray-600 px-0.5'
-								: 'navigationCustomer dark:hover:bg-dark-700 px-1',
-							layout.leftSidebar.show ? 'px-3' : '',
-							'group flex items-center text-sm font-medium py-2',
-						]"
-                        :aria-current="itemKey === layout.currentModule ? 'page' : undefined"
+                    <div v-for="(item, itemKey) in layout.navigation"
+                        :key="itemKey"
                     >
-                        <div class="flex items-center">
+                        <!-- Navigation -->
+                        <Link :href="route(item.route)"
+                            class="flex items-center group text-sm font-medium py-2"
+                            :class="[
+                                itemKey === layout.currentModule || Object.keys(item.subNav ?? {}).some(subNav => subNav === layout.currentModule)
+                                    ? 'navigationActiveCustomer dark:border-gray-100 dark:bg-gray-600 px-0.5'
+                                    : 'navigationCustomer dark:hover:bg-dark-700 px-1',
+                                !layout.leftSidebar.show && Object.keys(item.subNav ?? {}).some(subNav => subNav === layout.currentModule) ? 'text-white border-l-1 border-transparent' : '',
+                            ]"
+                            :aria-current="itemKey === layout.currentModule ? 'page' : undefined"
+                        >
                             <FontAwesomeIcon
                                 aria-hidden="true"
                                 class="dark:text-gray-200 ml-2 mr-3 flex-shrink-0 h-4 w-4"
-                                :icon="item.icon"/>
-                        </div>
-                        <span class="capitalize leading-none whitespace-nowrap" :class="[layout.leftSidebar.show ? 'block md:block' : 'block md:hidden']">{{ trans(item.label) }}</span>
-                    </Link>
+                                :icon="item.icon" fixed-width />
+                            <span class="capitalize leading-none whitespace-nowrap" :class="[layout.leftSidebar.show ? 'block md:block' : 'block md:hidden']">{{ trans(item.label) }}</span>
+                            <!-- <span >{{ itemKey }} -- {{ item.scope }} -- {{ Object.values(layout.navigation)[0].scope }}</span> -->
+                        </Link>
+
+                        <!-- Sub Navigation -->
+                        <template v-if="item.subNav">
+                            <div class="flex flex-col"
+                                :class="[layout.leftSidebar.show ? 'pl-2' : 'pl-0']"
+                            >
+                                <Link :href="route(subNav.route)" v-for="(subNav, subNavKey) in item.subNav"
+                                    class="group flex items-center text-sm font-medium py-2"
+                                    :class="[
+                                        subNavKey === layout.currentModule
+                                            ? 'navigationActiveCustomer border-l-[3px] dark:border-gray-100 dark:bg-gray-600 px-0.5'
+                                            : 'navigationCustomer dark:hover:bg-dark-700 px-1',
+                                        layout.leftSidebar.show ? 'px-3' : '',
+                                    ]"
+                                    :aria-current="subNavKey === layout.currentModule ? 'page' : undefined"
+                                >
+                                    <FontAwesomeIcon
+                                    aria-hidden="true"
+                                    class="dark:text-gray-200 ml-2 mr-3 flex-shrink-0 h-4 w-4"
+                                    :icon="subNav.icon"/>
+                                    <span class="whitespace-nowrap">{{ subNav.label }}</span>
+                                </Link>
+                            </div>
+                        </template>
+                    </div>
                 </nav>
             </div>
         </div>

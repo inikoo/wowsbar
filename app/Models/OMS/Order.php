@@ -60,6 +60,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property array $data
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string|null $delete_comment
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read Customer $customer
  * @property-read Collection<int, Invoice> $invoices
@@ -84,6 +85,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Order whereCustomerNumber($value)
  * @method static Builder|Order whereData($value)
  * @method static Builder|Order whereDate($value)
+ * @method static Builder|Order whereDeleteComment($value)
  * @method static Builder|Order whereDeletedAt($value)
  * @method static Builder|Order whereDispatchedAt($value)
  * @method static Builder|Order whereExchange($value)

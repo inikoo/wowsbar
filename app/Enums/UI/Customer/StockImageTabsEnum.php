@@ -29,7 +29,7 @@ enum StockImageTabsEnum: string
             ],
             StockImageTabsEnum::BANNERS => [
                 'title' => __('banners'),
-                'icon'  => 'fal fa-rectangle-wide',
+                'icon'  => 'fal fa-sign',
             ],
             StockImageTabsEnum::DATA => [
                 'title' => __('data'),

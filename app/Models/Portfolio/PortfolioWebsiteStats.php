@@ -22,7 +22,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $number_banners_type_square
  * @property int $number_banners_state_unpublished
  * @property int $number_banners_state_live
- * @property int $number_banners_state_retired
+ * @property int $number_banners_state_switch_off
  * @property int $number_banner_snapshots
  * @property int $number_banners_snapshots_state_unpublished
  * @property int $number_banners_snapshots_state_live
@@ -51,7 +51,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static Builder|PortfolioWebsiteStats whereNumberBannersSnapshotsStateLive($value)
  * @method static Builder|PortfolioWebsiteStats whereNumberBannersSnapshotsStateUnpublished($value)
  * @method static Builder|PortfolioWebsiteStats whereNumberBannersStateLive($value)
- * @method static Builder|PortfolioWebsiteStats whereNumberBannersStateRetired($value)
+ * @method static Builder|PortfolioWebsiteStats whereNumberBannersStateSwitchOff($value)
  * @method static Builder|PortfolioWebsiteStats whereNumberBannersStateUnpublished($value)
  * @method static Builder|PortfolioWebsiteStats whereNumberBannersTypeLandscape($value)
  * @method static Builder|PortfolioWebsiteStats whereNumberBannersTypeSquare($value)

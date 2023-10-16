@@ -10,6 +10,7 @@ namespace App\Actions\Web\Website;
 use App\Actions\Traits\WithActionUpdate;
 use App\Enums\Organisation\Web\Website\WebsiteStateEnum;
 use App\Models\Web\Website;
+use App\Rules\IUnique;
 use Illuminate\Validation\Rules\Enum;
 use Lorisleiva\Actions\ActionRequest;
 
@@ -37,6 +38,15 @@ class UpdateWebsite
     {
         return [
             'state' => ['sometimes', new Enum(WebsiteStateEnum::class)],
+            'url'  => [
+                'sometimes',
+                'required',
+                'url',
+                'max:500',
+                'iunique:websites'
+
+            ],
+            'name' => ['sometimes', 'required', 'string', 'max:128']
 
         ];
     }

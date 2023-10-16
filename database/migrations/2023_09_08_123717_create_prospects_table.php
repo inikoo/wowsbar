@@ -7,12 +7,14 @@
 
 use App\Enums\CRM\Prospect\ProspectStateEnum;
 use App\Stubs\Migrations\HasContact;
+use App\Stubs\Migrations\HasSoftDeletes;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class () extends Migration {
     use HasContact;
+    use HasSoftDeletes;
     public function up(): void
     {
         Schema::create('prospects', function (Blueprint $table) {
@@ -32,7 +34,7 @@ return new class () extends Migration {
             $table->string('state')->index()->default(ProspectStateEnum::NO_CONTACTED->value);
             $table->jsonb('data');
             $table->timestampsTz();
-            $table->softDeletesTz();
+            $table=$this->softDeletes($table);
             $table->unique(['scope_type','scope_id','email']);
             $table->unique(['scope_type','scope_id','phone']);
 

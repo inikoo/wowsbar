@@ -117,13 +117,15 @@ const optionType = [
                 name: 'title',
                 type: 'input',
                 label: trans('title'),
-                value: null
+                value: null,
+                placeholder: "Holiday Sales!"
             },
             {
                 name: 'subtitle',
                 type: 'input',
                 label: trans('subtitle'),
-                value: null
+                value: null,
+                placeholder: "Holiday sales up to 80% all items."
             },
             {
                 name: 'color',
@@ -368,25 +370,29 @@ defineExpose({
 
 
 <template>
-    <div class="h-24 space-y-8">
+    <div class="space-y-8">
         <!-- Choose: The Corners box -->
-        <div class="grid grid-cols-2 gap-0.5 h-full bg-orange-400">
+        <div class="grid grid-cols-2 gap-0.5 h-full bg-amber-400 border border-gray-300">
             <div v-for="(corner, index) in corners" :key="corner.id"
-                class="flex items-center justify-center capitalize flex-grow text-base font-semibold"
+                class="relative overflow-hidden flex items-center justify-center flex-grow text-base font-semibold py-4"
                 :class="[
-                    common && common.corners?.hasOwnProperty(corner.id) ? 'cursor-not-allowed bg-gray-500 text-gray-300' : get(area, 'id') == corner.id ? 'bg-gray-300 hover:bg-gray-300 text-gray-600 cursor-pointer' : 'bg-gray-100 hover:bg-gray-200 text-gray-500 cursor-pointer'
+                    common && common.corners?.hasOwnProperty(corner.id) ? 'cursor-not-allowed bg-gray-200 text-red-500' : get(area, 'id') == corner.id ? 'bg-amber-300 text-gray-600 cursor-pointer' : 'bg-gray-100 hover:bg-gray-200 text-gray-400 cursor-pointer'
                 ]"
                 @click="()=>{
                     common && common.corners?.hasOwnProperty(corner.id) ?  null : cornerClick(corner)
                     }"
             >
-                <span v-if="common && common.corners?.hasOwnProperty(corner.id)" class="text-sm italic font-normal text-gray-300">{{ trans('Reserved') }}</span>
-                <span v-else>{{ corner.label }}</span>
+                <div v-if="common && common.corners?.hasOwnProperty(corner.id)" class="isolate text-sm italic">
+                    <div class="">{{ trans('Reserved for common') }}</div>
+                    <div class="-z-10 absolute left-0 top-1/2 -translate-x-10 bg-gray-400/50 h-0.5 rotate-[9deg] w-[120%]"></div>
+                    <div class="-z-10 absolute left-0 top-1/2 -translate-x-10 bg-gray-400/50 h-0.5 -rotate-[9deg] w-[120%]"></div>
+                </div>
+                <span v-else class="capitalize">{{ corner.label }}</span>
             </div>
         </div>
 
         <!-- Choose: The type of component (after select Corners) -->
-        <div v-if="area != null">
+        <div v-if="area != null" class="h-full">
             <!-- Choose: Card -->
             <div class="w-full flex">
                 <span class="isolate flex w-full rounded-md gap-x-2">
@@ -400,8 +406,8 @@ defineExpose({
             </div>
 
             <!-- Field -->
-            <div class="mt-6">
-                <div v-for="(field, index ) in currentTypeFields" :key="index">
+            <div class="mt-6 block">
+                <div v-for="(field, index ) in currentTypeFields" :key="field.name + index">
                     <dl class="pb-4 flex flex-col max-w-lg gap-1">
                         <dt class="text-sm font-medium text-gray-500 capitalize">
                             <div class="inline-flex items-start leading-none">

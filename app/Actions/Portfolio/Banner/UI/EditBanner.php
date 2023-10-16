@@ -9,10 +9,11 @@ namespace App\Actions\Portfolio\Banner\UI;
 
 use App\Actions\InertiaAction;
 use App\Actions\Portfolio\PortfolioWebsite\UI\GetPortfolioWebsitesOptions;
+use App\Enums\Portfolio\Banner\BannerStateEnum;
 use App\Models\Portfolio\Banner;
 use App\Models\Portfolio\PortfolioWebsite;
 use Exception;
-use Illuminate\Support\Str;
+use Illuminate\Support\Arr;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -43,10 +44,82 @@ class EditBanner extends InertiaAction
      */
     public function htmlResponse(Banner $banner, ActionRequest $request): Response
     {
+        $sections['properties'] = [
+            'label'  => __('Banner properties'),
+            'icon'   => 'fal fa-sliders-h',
+            'fields' => [
+                'name'                 => [
+                    'type'     => 'input',
+                    'label'    => __('name'),
+                    'value'    => $banner->name,
+                    'required' => true,
+                ],
+                'portfolio_website_id' => [
+                    'type'     => 'select',
+                    'label'    => __('website'),
+                    'value'    => $banner->portfolio_website_id,
+                    'options'  => GetPortfolioWebsitesOptions::run(),
+                    'required' => true,
+                ],
+            ]
+        ];
+
+
+        if ($banner->state == BannerStateEnum::LIVE) {
+            $sections['shutdown'] = [
+                'label'  => __('Shutdown'),
+                'icon'   => 'fal fa-power-off',
+                'title'  => '',
+                'fields' => [
+                    'shutdown_action' => [
+                        'type'   => 'action',
+                        'action' => [
+                            'type'  => 'button',
+                            'style' => 'secondary',
+                            'icon'  => ['fal', 'fa-power-off'],
+                            'label' => __('Shutdown banner'),
+                            'route' => [
+                                'name'       => 'customer.models.banner.shutdown',
+                                'parameters' => [
+                                    'banner' => $banner->id
+                                ]
+                            ]
+                        ],
+                    ]
+                ]
+            ];
+        }
+
+        $sections['delete'] = [
+            'label'  => __('Delete'),
+            'icon'   => 'fal fa-trash-alt',
+            'fields' => [
+                'name' => [
+                    'type'   => 'action',
+                    'action' => [
+                        'type'  => 'button',
+                        'style' => 'delete',
+                        'label' => __('delete banner'),
+                        'route' => [
+                            'name'       => 'customer.models.banner.delete',
+                            'parameters' => [
+                                'banner' => $banner->id
+                            ]
+                        ]
+                    ],
+                ]
+            ]
+        ];
+
+        $currentSection = 'properties';
+        if ($request->has('section') and Arr::has($sections, $request->get('section'))) {
+            $currentSection = $request->get('section');
+        }
+
         return Inertia::render(
             'EditModel',
             [
-                'title'       => __("Website's settings"),
+                'title'       => __("Edit banner"),
                 'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->getName(),
                     $request->route()->originalParameters()
@@ -56,20 +129,13 @@ class EditBanner extends InertiaAction
                     'next'     => $this->getNext($banner, $request),
                 ],
                 'pageHead'    => [
-                    'title'     => __('Edit banner'),
-                    'container' => [
-                        'icon'    => ['fal', 'fa-globe'],
-                        'tooltip' => __('Website'),
-                        'label'   => Str::possessive($banner->name)
+                    'title'     => $banner->name,
+                    'icon'      => [
+                        'tooltip' => __('banner'),
+                        'icon'    => 'fal fa-sign'
                     ],
-
-                    'iconRight' =>
-                        [
-                            'icon'  => ['fal', 'fa-edit'],
-                            'title' => __("Editing banner")
-                        ],
-
-                    'actions' => [
+                    'iconRight' => $banner->state->stateIcon()[$banner->state->value],
+                    'actions'   => [
                         [
                             'type'  => 'button',
                             'style' => 'exit',
@@ -82,27 +148,8 @@ class EditBanner extends InertiaAction
                     ],
                 ],
                 'formData'    => [
-                    'blueprint' => [
-                        [
-                            'title'  => __('ID/domain'),
-                            'icon'   => 'fa-light fa-id-card',
-                            'fields' => [
-                                'name'                 => [
-                                    'type'     => 'input',
-                                    'label'    => __('name'),
-                                    'value'    => $banner->name,
-                                    'required' => true,
-                                ],
-                                'portfolio_website_id' => [
-                                    'type'    => 'select',
-                                    'label'   => __('website'),
-                                    'value'   => $banner->portfolio_website_id,
-                                    'options' => GetPortfolioWebsitesOptions::run()
-                                ],
-                            ]
-                        ],
-
-                    ],
+                    'current'   => $currentSection,
+                    'blueprint' => $sections,
                     'args'      => [
                         'updateRoute' => [
                             'name'       => 'customer.models.banner.update',
@@ -148,7 +195,7 @@ class EditBanner extends InertiaAction
         $routeName = $request->route()->getName();
 
         return match ($routeName) {
-            'customer.portfolio.websites.show.banners.edit' => [
+            'customer.banners.edit' => [
                 'label' => $banner->name,
                 'route' => [
                     'name'       => $routeName,

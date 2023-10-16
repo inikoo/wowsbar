@@ -5,15 +5,16 @@
   -->
 
 <script setup lang="ts">
-import { Head } from '@inertiajs/vue3';
-import { capitalize } from "@/Composables/capitalize"
+import {Head} from '@inertiajs/vue3';
+import {capitalize} from "@/Composables/capitalize"
 import PageHeading from '@/Components/Headings/PageHeading.vue';
 import Edit from '@/Components/Edit.vue';
-import { library } from "@fortawesome/fontawesome-svg-core"
+import {library} from "@fortawesome/fontawesome-svg-core"
 import {
-    faEdit
+    faEdit, faPowerOff, faShield, faToggleOn
 } from "@/../private/pro-light-svg-icons"
-library.add(faEdit);
+
+library.add(faEdit, faPowerOff, faShield, faToggleOn);
 const props = defineProps<{
     title: string,
     pageHead: {
@@ -57,9 +58,9 @@ const props = defineProps<{
 </script>
 
 <template layout="CustomerApp">
-    <Head :title="capitalize(title)" />
+    <Head :title="capitalize(title)"/>
     <PageHeading :data="pageHead"></PageHeading>
-    <Edit :form-data="formData" appName="customer" />
+    <Edit :form-data="formData" appName="customer"/>
 </template>
 
 

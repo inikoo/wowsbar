@@ -33,6 +33,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property string $price unit price
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string|null $delete_comment
  * @property string|null $deleted_at
  * @property ProductTypeEnum $type
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \App\Models\Media\Media> $media
@@ -45,6 +46,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|ShopProduct newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|ShopProduct query()
  * @method static \Illuminate\Database\Eloquent\Builder|ShopProduct whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ShopProduct whereDeleteComment($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ShopProduct whereDeletedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ShopProduct whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ShopProduct wherePrice($value)

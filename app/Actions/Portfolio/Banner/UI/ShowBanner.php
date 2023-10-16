@@ -10,9 +10,8 @@ namespace App\Actions\Portfolio\Banner\UI;
 use App\Actions\Helpers\History\IndexCustomerHistory;
 use App\Actions\Helpers\Snapshot\UI\IndexSnapshots;
 use App\Actions\InertiaAction;
-use App\Actions\Portfolio\PortfolioWebsite\UI\ShowPortfolioWebsite;
-use App\Actions\UI\Customer\CaaS\ShowCaaSDashboard;
-use App\Enums\Portfolio\Banner\BannerStateEnum;
+use App\Actions\Traits\Actions\WithActionButtons;
+use App\Actions\UI\Customer\Banners\ShowBannersDashboard;
 use App\Enums\UI\Customer\BannerTabsEnum;
 use App\Http\Resources\History\CustomerHistoryResource;
 use App\Http\Resources\Portfolio\BannerResource;
@@ -29,6 +28,8 @@ use Lorisleiva\Actions\ActionRequest;
 
 class ShowBanner extends InertiaAction
 {
+    use WithActionButtons;
+
     private Customer|Shop|PortfolioWebsite|Organisation $parent;
 
     public function handle(Organisation|Shop|Customer|PortfolioWebsite $parent, Banner $banner): Banner
@@ -53,7 +54,7 @@ class ShowBanner extends InertiaAction
     {
         $this->initialisation($request)->withTab(BannerTabsEnum::values());
 
-        return $this->handle(customer(), $banner);
+        return $this->handle($request->get('customer'), $banner);
     }
 
     public function inPortfolioWebsite(PortfolioWebsite $portfolioWebsite, Banner $banner, ActionRequest $request): Banner
@@ -90,65 +91,33 @@ class ShowBanner extends InertiaAction
                 ],
                 'title'                         => $banner->name,
                 'pageHead'                      => [
-                    'title'     => $banner->name,
-                    'icon'      => [
+                    'title'       => $banner->name,
+                    'icon'        => [
                         'tooltip' => __('banner'),
-                        'icon'    => 'fal fa-rectangle-wide'
+                        'icon'    => 'fal fa-sign'
                     ],
-                    'container' => $container,
-                    'iconRight' =>
-                        match ($banner->state) {
-                            BannerStateEnum::LIVE => [
+                    'container'   => $container,
+                    'iconRight'   => $banner->state->stateIcon()[$banner->state->value],
+                    'iconActions' => [
 
-                                'tooltip' => __('live'),
-                                'icon'    => 'fal fa-broadcast-tower',
-                                'class'   => 'text-green-600'
+                        $this->canDelete ? $this->getDeleteActionIcon($request) : null,
+                        $this->canEdit ? $this->getEditActionIcon($request) : null,
+                    ],
+                    'actions'     => [
 
-                            ],
-                            BannerStateEnum::UNPUBLISHED => [
-
-                                'tooltip' => __('unpublished'),
-                                'icon'    => 'fal fa-seedling'
-
-                            ],
-                            BannerStateEnum::RETIRED => [
-
-                                'tooltip' => __('retired'),
-                                'icon'    => 'fal fa-eye-slash'
-
-                            ]
-                        }
-
-                    ,
-                    'actions'   => [
-                        $this->canDelete ? [
-                            'type'  => 'button',
-                            'style' => 'delete',
-                            'route' => [
-                                'name'       => preg_replace('/show$/', 'remove', $request->route()->getName()),
-                                'parameters' => array_values($request->route()->originalParameters())
-                            ]
-                        ] : false,
+                        /*
                         [
                             'type'  => 'button',
                             'style' => 'tertiary',
                             'label' => __('clone this banner'),
                             'icon'  => ["fal", "fa-paste"],
                             'route' => [
-                                'name'       => 'customer.portfolio.banners.duplicate',
+                                'name'       => 'customer.banners.duplicate',
                                 'parameters' => array_values($request->route()->originalParameters())
                             ]
                         ],
-                        $this->canEdit ? [
-                            'type'  => 'button',
-                            'style' => 'secondary',
-                            'label' => __('edit'),
-                            'icon'  => ["fal", "fa-pencil"],
-                            'route' => [
-                                'name'       => preg_replace('/show$/', 'edit', $request->route()->getName()),
-                                'parameters' => array_values($request->route()->originalParameters())
-                            ]
-                        ] : false,
+                        */
+
                         $this->canEdit ? [
                             'type'  => 'button',
                             'style' => 'primary',
@@ -193,24 +162,25 @@ class ShowBanner extends InertiaAction
                         IndexCustomerHistory::run(
                             customer: $customer,
                             model: $banner,
-                            prefix:  BannerTabsEnum::CHANGELOG->value
+                            prefix: BannerTabsEnum::CHANGELOG->value
                         )
                     )
                     : Inertia::lazy(fn () => CustomerHistoryResource::collection(
                         IndexCustomerHistory::run(
                             customer: $customer,
                             model: $banner,
-                            prefix:  BannerTabsEnum::CHANGELOG->value
+                            prefix: BannerTabsEnum::CHANGELOG->value
                         )
                     )),
 
             ]
         )->table(
             IndexCustomerHistory::make()->tableStructure(
-                prefix:  BannerTabsEnum::CHANGELOG->value
+                prefix: BannerTabsEnum::CHANGELOG->value
             )
         )->table(
-            IndexCustomerHistory::make()->tableStructure(
+            IndexSnapshots::make()->tableStructure(
+                parent: $banner,
                 prefix: BannerTabsEnum::SNAPSHOTS->value
             )
         );
@@ -244,50 +214,26 @@ class ShowBanner extends InertiaAction
 
 
         return match ($routeName) {
-            'customer.caas.banners.show',
-            'customer.caas.banners.edit' =>
+            'customer.banners.show',
+            'customer.banners.edit' =>
             array_merge(
-                ShowCaaSDashboard::make()->getBreadcrumbs(),
+                ShowBannersDashboard::make()->getBreadcrumbs(),
                 $headCrumb(
                     'modelWithIndex',
                     Banner::firstWhere('slug', $routeParameters['banner']),
                     [
                         'index' => [
-                            'name'       => 'customer.portfolio.banners.index',
+                            'name'       => 'customer.banners.index',
                             'parameters' => []
                         ],
                         'model' => [
-                            'name'       => 'customer.portfolio.banners.show',
+                            'name'       => 'customer.banners.show',
                             'parameters' => $routeParameters
                         ]
                     ],
                     $suffix
                 ),
             ),
-            'customer.portfolio.websites.show.banners.show',
-            'customer.portfolio.websites.show.banners.edit' =>
-            array_merge(
-                ShowPortfolioWebsite::make()->getBreadcrumbs(
-                    'customer.portfolio.websites.show',
-                    $routeParameters
-                ),
-                $headCrumb(
-                    'modelWithIndex',
-                    Banner::firstWhere('slug', $routeParameters['banner']),
-                    [
-                        'index' => [
-                            'name'       => 'customer.portfolio.websites.show.banners.index',
-                            'parameters' => $routeParameters
-                        ],
-                        'model' => [
-                            'name'       => 'customer.portfolio.websites.show.banners.show',
-                            'parameters' => $routeParameters
-                        ]
-                    ],
-                    $suffix
-                ),
-            ),
-
             default => []
         };
     }
@@ -325,8 +271,8 @@ class ShowBanner extends InertiaAction
 
 
         return match ($routeName) {
-            'customer.caas.banners.show',
-            'customer.caas.banners.edit' => [
+            'customer.banners.show',
+            'customer.banners.edit' => [
                 'label' => $banner->slug,
                 'route' => [
                     'name'       => $routeName,
@@ -335,17 +281,6 @@ class ShowBanner extends InertiaAction
                     ]
                 ]
             ],
-            'customer.portfolio.websites.show.banners.show',
-            'customer.portfolio.websites.show.banners.edit' => [
-                'label' => $banner->slug,
-                'route' => [
-                    'name'       => $routeName,
-                    'parameters' => [
-                        'portfolioWebsite' => $this->parent->slug,
-                        'banner'           => $banner->slug
-                    ]
-                ]
-            ]
         };
     }
 

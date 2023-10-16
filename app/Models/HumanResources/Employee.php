@@ -56,6 +56,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property array $errors
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string|null $delete_comment
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Helpers\Audit> $audits
  * @property-read int|null $audits_count
@@ -75,6 +76,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|Employee whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Employee whereData($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Employee whereDateOfBirth($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Employee whereDeleteComment($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Employee whereDeletedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Employee whereEmail($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Employee whereEmergencyContact($value)

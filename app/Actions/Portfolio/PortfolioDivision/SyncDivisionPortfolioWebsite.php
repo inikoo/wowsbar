@@ -8,8 +8,9 @@
 namespace App\Actions\Portfolio\PortfolioDivision;
 
 use App\Actions\CRM\Customer\Hydrators\CustomerHydratePortfolioWebsites;
+use App\Actions\CRM\Customer\Hydrators\CustomerHydrateWelcomeStep;
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateCustomerWebsites;
-use App\Enums\Helpers\Interest\InterestEnum;
+use App\Enums\Portfolio\PortfolioWebsite\PortfolioWebsiteInterestEnum;
 use App\Models\Organisation\Division;
 use App\Models\Portfolio\PortfolioWebsite;
 use Illuminate\Console\Command;
@@ -35,13 +36,25 @@ class SyncDivisionPortfolioWebsite
 
         OrganisationHydrateCustomerWebsites::dispatch();
         CustomerHydratePortfolioWebsites::dispatch($portfolioWebsite->customer);
+
+
+        if (in_array($modelData['interest'], [
+            PortfolioWebsiteInterestEnum::NOT_INTERESTED,
+            PortfolioWebsiteInterestEnum::INTERESTED,
+        ])) {
+            CustomerHydrateWelcomeStep::make()->interestSet($portfolioWebsite->customer);
+        } elseif ($modelData['interest'] == PortfolioWebsiteInterestEnum::CUSTOMER) {
+
+            CustomerHydrateWelcomeStep::make()->isCustomer($portfolioWebsite->customer);
+        }
+
     }
 
     public function rules(): array
     {
         return [
-            'division' => ['required'],
-            'interest' => ['required', Rule::in(InterestEnum::values())]
+            'division' => ['required', 'exists:divisions,slug'],
+            'interest' => ['required', Rule::in(PortfolioWebsiteInterestEnum::values())]
         ];
     }
 
@@ -63,7 +76,7 @@ class SyncDivisionPortfolioWebsite
 
         $this->handle($portfolioWebsite, $modelData);
 
-        echo $portfolioWebsite->name . " synced to " . $modelData['division'] . "\n";
+        echo $portfolioWebsite->name." synced to ".$modelData['division']."\n";
 
         return 0;
     }

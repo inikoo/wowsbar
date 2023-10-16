@@ -34,6 +34,7 @@ use Spatie\Sluggable\HasSlug;
  * @property array $data
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string|null $delete_comment
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Helpers\Audit> $audits
  * @property-read int|null $audits_count
@@ -53,6 +54,7 @@ use Spatie\Sluggable\HasSlug;
  * @method static Builder|PortfolioWebsite whereCreatedAt($value)
  * @method static Builder|PortfolioWebsite whereCustomerId($value)
  * @method static Builder|PortfolioWebsite whereData($value)
+ * @method static Builder|PortfolioWebsite whereDeleteComment($value)
  * @method static Builder|PortfolioWebsite whereDeletedAt($value)
  * @method static Builder|PortfolioWebsite whereId($value)
  * @method static Builder|PortfolioWebsite whereName($value)

@@ -30,6 +30,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property int|null $tablet_image_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string|null $delete_comment
  * @property string|null $deleted_at
  * @property-read \App\Models\CRM\Customer $customer
  * @property-read Media|null $image
@@ -43,6 +44,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @method static Builder|Slide query()
  * @method static Builder|Slide whereCreatedAt($value)
  * @method static Builder|Slide whereCustomerId($value)
+ * @method static Builder|Slide whereDeleteComment($value)
  * @method static Builder|Slide whereDeletedAt($value)
  * @method static Builder|Slide whereId($value)
  * @method static Builder|Slide whereImageId($value)

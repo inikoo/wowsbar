@@ -9,6 +9,7 @@ namespace App\Actions\Organisation\Guest\UI;
 
 use App\Actions\InertiaAction;
 use App\Models\Auth\Guest;
+use Illuminate\Support\Arr;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -23,6 +24,7 @@ class EditGuest extends InertiaAction
     public function authorize(ActionRequest $request): bool
     {
         $this->canEdit = $request->user()->hasPermissionTo('sysadmin.edit');
+
         return $request->user()->hasPermissionTo("sysadmin.view");
     }
 
@@ -34,10 +36,34 @@ class EditGuest extends InertiaAction
     }
 
 
-
     public function htmlResponse(Guest $guest, ActionRequest $request): Response
     {
+        $sections['properties'] = [
+            'label'  => __('personal information'),
+            'icon'   => 'fal fa-id-card',
+            'fields' => [
+                'contact_name' => [
+                    'type'  => 'input',
+                    'label' => __('name'),
+                    'value' => $guest->contact_name
+                ],
+                'email'        => [
+                    'type'  => 'input',
+                    'label' => __('email'),
+                    'value' => $guest->email
+                ],
+                'phone'        => [
+                    'type'  => 'phone',
+                    'label' => __('phone'),
+                    'value' => $guest->phone
+                ],
+            ]
+        ];
 
+        $currentSection = 'properties';
+        if ($request->has('section') and Arr::has($sections, $request->get('section'))) {
+            $currentSection = $request->get('section');
+        }
 
         return Inertia::render(
             'EditModel',
@@ -48,8 +74,8 @@ class EditGuest extends InertiaAction
                     $request->route()->parameters
                 ),
                 'pageHead'    => [
-                    'title'     => $guest->contact_name,
-                    'actions'   => [
+                    'title'   => $guest->contact_name,
+                    'actions' => [
                         [
                             'type'  => 'button',
                             'style' => 'cancel',
@@ -62,35 +88,12 @@ class EditGuest extends InertiaAction
                 ],
 
                 'formData' => [
-                    'blueprint' => [
-                        [
-                            'title'  => __('personal information'),
-                            'fields' => [
-
-                                'contact_name' => [
-                                    'type'  => 'input',
-                                    'label' => __('name'),
-                                    'value' => $guest->contact_name
-                                ],
-                                'email' => [
-                                    'type'  => 'input',
-                                    'label' => __('email'),
-                                    'value' => $guest->email
-                                ],
-                                'phone' => [
-                                    'type'  => 'phone',
-                                    'label' => __('phone'),
-                                    'value' => $guest->phone
-                                ],
-
-                            ]
-                        ]
-
-                    ],
-                    'args' => [
+                    'current'   => $currentSection,
+                    'blueprint' => $sections,
+                    'args'      => [
                         'updateRoute' => [
-                            'name'      => 'org.models.guests.update',
-                            'parameters'=> $guest->slug
+                            'name'       => 'org.models.guests.update',
+                            'parameters' => $guest->slug
                         ],
                     ]
                 ]

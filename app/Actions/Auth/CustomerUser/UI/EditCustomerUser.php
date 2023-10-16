@@ -10,6 +10,7 @@ namespace App\Actions\Auth\CustomerUser\UI;
 use App\Actions\InertiaAction;
 use App\Actions\Traits\Fields\WithCustomerUserFields;
 use App\Models\Auth\CustomerUser;
+use Illuminate\Support\Arr;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -38,75 +39,59 @@ class EditCustomerUser extends InertiaAction
 
     public function htmlResponse(CustomerUser $customerUser, ActionRequest $request): Response
     {
-        $fields = [
-            [
-                'title'   => __('credentials'),
-                'icon'    => 'fal fa-key',
-                'current' => false,
-                'fields'  => [
-                    'email'    => [
-                        'type'  => 'input',
-                        'label' => __('email'),
-                        'value' => $customerUser->user->email
-                    ],
-                    'password' => [
-                        'type'  => 'password',
-                        'label' => __('password'),
-                        'value' => ''
-                    ],
-                ]
-            ],
-            [
-                'title'   => __('name'),
-                'icon'    => 'fal fa-user',
-                'current' => true,
-                'fields'  => [
-                    'contact_name' => [
-                        'type'  => 'input',
-                        'label' => __('name'),
-                        'value' => $customerUser->user->contact_name
-                    ],
-
-
-                ]
-            ],
+        $sections['properties'] = [
+            'label'  => __('User properties'),
+            'icon'   => 'fal fa-sliders-h',
+            'fields' => [
+                'email'        => [
+                    'type'  => 'input',
+                    'label' => __('email'),
+                    'value' => $customerUser->user->email
+                ],
+                'password'     => [
+                    'type'  => 'password',
+                    'label' => __('password'),
+                    'value' => ''
+                ],
+                'contact_name' => [
+                    'type'  => 'input',
+                    'label' => __('name'),
+                    'value' => $customerUser->user->contact_name
+                ],
+            ]
         ];
 
 
         if (!$customerUser->is_root) {
-            $fields = array_merge(
-                $fields,
-                [
-                    [
-                        'title'   => __('Status'),
-                        'icon'    => 'fal fa-toggle-on',
-                        'current' => false,
-                        'fields'  => [
-                            'status' => [
-                                'type'      => 'toggleSquare',
-                                'typeLabel' => ['suspended', 'active'],
-                                'label'     => __('Status'),
-                                'value'     => $customerUser->status
-                            ],
-                        ]
-                    ],
-
-                    [
-                        'title'   => __('Permissions'),
-                        'icon'    => 'fal fa-user-lock',
-                        'current' => false,
-                        'fields'  => [
-                            'roles' => [
-                                'type'    => 'customerRoles',
-                                'label'   => __('roles'),
-                                'value'   => $customerUser->getRoleNames()->all(),
-                            ],
-                        ]
+            $sections['permissions'] = [
+                'label'  => __('Permissions'),
+                'icon'   => 'fal fa-shield',
+                'fields' => [
+                    'roles' => [
+                        'type'  => 'customerRoles',
+                        'label' => __('roles'),
+                        'value' => $customerUser->getRoleNames()->all(),
                     ],
                 ]
-            );
+            ];
+            $sections['status']      = [
+                'label'  => __('Status'),
+                'icon'   => 'fal fa-toggle-on',
+                'fields' => [
+                    'status' => [
+                        'type'      => 'toggleSquare',
+                        'typeLabel' => ['suspended', 'active'],
+                        'label'     => __('Status'),
+                        'value'     => $customerUser->status
+                    ],
+                ]
+            ];
         }
 
+        $currentSection = 'properties';
+        if ($request->has('section') and Arr::has($sections, $request->get('section'))) {
+            $currentSection = $request->get('section');
+        }
 
         return Inertia::render(
             'EditModel',
@@ -117,13 +102,13 @@ class EditCustomerUser extends InertiaAction
                     $request->route()->originalParameters()
                 ),
                 'pageHead'    => [
-                    'title'   => $customerUser->user->email,
-                    'icon'    => [
-                        'icon'   => 'fal fa-terminal',
-                        'tooltip'=> __('User')
+                    'title'        => $customerUser->user->email,
+                    'icon'         => [
+                        'icon'    => 'fal fa-terminal',
+                        'tooltip' => __('User')
                     ],
-                    'noCapitalise'=> true,
-                    'actions'     => [
+                    'noCapitalise' => true,
+                    'actions'      => [
                         [
                             'type'  => 'button',
                             'style' => 'exit',
@@ -136,7 +121,8 @@ class EditCustomerUser extends InertiaAction
                 ],
 
                 'formData' => [
-                    'blueprint' => $fields,
+                    'current'   => $currentSection,
+                    'blueprint' => $sections,
                     'args'      => [
                         'updateRoute' => [
                             'name'       => 'customer.models.user.update',

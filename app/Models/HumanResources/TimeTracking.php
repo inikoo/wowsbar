@@ -29,12 +29,14 @@ use Spatie\Sluggable\SlugOptions;
  * @property int|null $end_clocking_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string|null $delete_comment
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @method static Builder|TimeTracking newModelQuery()
  * @method static Builder|TimeTracking newQuery()
  * @method static Builder|TimeTracking onlyTrashed()
  * @method static Builder|TimeTracking query()
  * @method static Builder|TimeTracking whereCreatedAt($value)
+ * @method static Builder|TimeTracking whereDeleteComment($value)
  * @method static Builder|TimeTracking whereDeletedAt($value)
  * @method static Builder|TimeTracking whereEndClockingId($value)
  * @method static Builder|TimeTracking whereEndsAt($value)

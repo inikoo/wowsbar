@@ -23,7 +23,7 @@ enum PortfolioWebsitesTabsEnum: string
         return match ($this) {
             PortfolioWebsitesTabsEnum::WEBSITES => [
                 'title' => __('websites'),
-                'icon'  => 'fas fa-info-circle',
+                'icon'  => 'fal fa-bars',
             ],
 
             PortfolioWebsitesTabsEnum::CHANGELOG => [

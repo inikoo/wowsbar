@@ -35,7 +35,7 @@ const screenView = ref("")
 
         <!-- Banner -->
         <div class="flex justify-center pr-0.5">
-            <Slider :bannerType="banner.type" :data="data" :jumpToIndex="jumpToIndex" :view="screenView" />
+            <Slider :data="data" :jumpToIndex="jumpToIndex" :view="screenView" />
         </div>
         
         <!-- Editor -->
@@ -43,9 +43,9 @@ const screenView = ref("")
             :imagesUploadRoute="imagesUploadRoute" :user="user" :screenView="screenView" />
     </div>
 
-    <!-- Component: Add slide if there is not exist -->
+    <!-- Section: Add slide if there is not exist -->
     <div v-if="data.components.filter((item: any) => item.ulid != null).length == 0">
-        <SlidesWorkshopAddMode :bannerType="banner.type" :data="data" :imagesUploadRoute="imagesUploadRoute" />
+        <SlidesWorkshopAddMode :data="data" :imagesUploadRoute="imagesUploadRoute" />
     </div>
 
 </template>

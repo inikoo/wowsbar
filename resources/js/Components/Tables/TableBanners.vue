@@ -10,14 +10,15 @@ import {library} from "@fortawesome/fontawesome-svg-core"
 import Table from '@/Components/Table/Table.vue'
 import {Banner} from "@/types/banner"
 import Icon from '@/Components/Icon.vue'
-import {faSeedling, faBroadcastTower, faImage} from "../../../private/pro-light-svg-icons"
+import {faSeedling, faBroadcastTower, faImage, faSparkles, faRocket, faDoNotEnter} from "@/../private/pro-light-svg-icons"
 import Image from "@/Components/Image.vue"
 import {useFormatTime} from '@/Composables/useFormatTime'
 import {useLocaleStore} from '@/Stores/locale'
 
+
 const locale = useLocaleStore()
 
-library.add(faSeedling, faBroadcastTower, faImage)
+library.add(faSeedling, faBroadcastTower, faImage, faSparkles, faRocket, faDoNotEnter)
 
 const props = defineProps<{
     data: object,
@@ -27,38 +28,25 @@ const props = defineProps<{
 
 function bannerRoute(banner: Banner) {
     return route(
-        'customer.caas.banners.show',
+        'customer.banners.show',
         [banner.slug]);
-    /*
-    switch (route().current()) {
-        case 'customer.portfolio.banners.index':
-            return route(
-                'customer.portfolio.banners.show',
-                [banner.slug])
-        case 'customer.portfolio.websites.show':
-            return route(
-                'customer.portfolio.websites.show.banners.show',
-                [route().params['portfolioWebsite'], banner.slug])
-        case 'customer.portfolio.websites.show.banners.index':
-            return route(
-                'customer.portfolio.websites.show.banners.show',
-                [route().params['portfolioWebsite'], banner.slug])
-        default:
-            return route(
-                'customer.caas.banners.show',
-                [banner.slug])
-                }
-     */
-
 }
+
+function websiteRoute(banner: Banner, slug) {
+    return route(
+        'customer.banners.websites.show',
+        [slug]);
+}
+
 
 </script>
 
 <template>
+
     <Table :resource="data" :name="tab" class="mt-5">
-        <template #cell(slug)="{ item: banner }">
-            <Link :href="bannerRoute(banner)" :id="banner['slug']" class="py-4 px-2">
-                {{ banner['slug'] }}
+        <template #cell(name)="{ item: banner }">
+            <Link :href="bannerRoute(banner)" :id="banner['slug']" class="special-underline py-4 px-2">
+                {{ banner['name'] }}
             </Link>
         </template>
 
@@ -68,19 +56,27 @@ function bannerRoute(banner: Banner) {
 
         <template #cell(image_thumbnail)="{ item: banner }">
             <div class="h-11 overflow-hidden aspect-[4/1]">
-                <Image :src="banner['image_thumbnail']"/>
+                <Image v-if="banner['image_thumbnail']"  :src="banner['image_thumbnail']"/>
+                <svg v-else xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+                    <defs>
+                        <pattern id="pattern_mQij" patternUnits="userSpaceOnUse" width="13" height="13" patternTransform="rotate(45)">
+                            <line x1="0" y="0" x2="0" y2="13" stroke="#CCCCCC" stroke-width="12" />
+                        </pattern>
+                    </defs>
+                    <rect width="100%" height="100%" fill="url(#pattern_mQij)" :opacity="0.4" />
+                </svg>
+
             </div>
         </template>
 
-        <template #cell(created_at)="{ item:banner }">
-            <div class="text-gray-500">
-                {{ useFormatTime(banner['created_at'], locale.language.code) }}
-            </div>
+        <template #cell(websites)="{ item: banner }">
+            <Link v-for="website in banner['websites']" :href="websiteRoute(banner,website.slug)"  class="special-underline py-4 px-2 mr-2" >{{website.name}}</Link>
         </template>
 
-        <template #cell(updated_at)="{ item:banner }">
+        <template #cell(date)="{ item:banner }">
             <div class="text-gray-500">
-                {{ useFormatTime(banner['updated_at'], locale.language.code) }}
+                {{ useFormatTime(banner['date'], locale.language.code, 'hm') }}
+                <Icon class="ml-1" :data="banner['date_icon']"/>
             </div>
         </template>
     </Table>

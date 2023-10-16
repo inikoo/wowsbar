@@ -9,10 +9,9 @@ namespace App\Actions\CRM\Customer\Hydrators;
 
 use App\Enums\Portfolio\Banner\BannerStateEnum;
 use App\Models\CRM\Customer;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Lorisleiva\Actions\Concerns\AsAction;
 
-class CustomerHydrateBanners implements ShouldBeUnique
+class CustomerHydrateBanners
 {
     use AsAction;
 

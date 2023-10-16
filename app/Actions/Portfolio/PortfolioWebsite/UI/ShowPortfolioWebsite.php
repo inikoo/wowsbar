@@ -10,6 +10,8 @@ namespace App\Actions\Portfolio\PortfolioWebsite\UI;
 use App\Actions\Helpers\History\IndexCustomerHistory;
 use App\Actions\InertiaAction;
 use App\Actions\Portfolio\Banner\UI\IndexBanners;
+use App\Actions\Traits\Actions\WithActionButtons;
+use App\Actions\Traits\WelcomeWidgets\WithFirstBanner;
 use App\Actions\UI\Customer\Portfolio\ShowPortfolio;
 use App\Actions\UI\WithInertia;
 use App\Enums\UI\Customer\PortfolioWebsiteTabsEnum;
@@ -26,6 +28,8 @@ class ShowPortfolioWebsite extends InertiaAction
 {
     use AsAction;
     use WithInertia;
+    use WithFirstBanner;
+    use WithActionButtons;
 
 
     public function authorize(ActionRequest $request): bool
@@ -39,77 +43,89 @@ class ShowPortfolioWebsite extends InertiaAction
     public function asController(PortfolioWebsite $portfolioWebsite, ActionRequest $request): PortfolioWebsite
     {
         $this->initialisation($request)->withTab(PortfolioWebsiteTabsEnum::values());
+
         return $portfolioWebsite;
     }
 
-    public function inCass(PortfolioWebsite $portfolioWebsite, ActionRequest $request): PortfolioWebsite
-    {
-        $this->initialisation($request)->withTab(PortfolioWebsiteTabsEnum::values());
-        return $portfolioWebsite;
-    }
 
     public function htmlResponse(PortfolioWebsite $portfolioWebsite, ActionRequest $request): Response
     {
+
         $customer = $request->get('customer');
 
-        return Inertia::render(
+        $firstBanners = $this->canEdit ? $this->getFirstBannerWidget($portfolioWebsite) : null;
+
+        $inertia = Inertia::render(
             'Portfolio/PortfolioWebsite',
             [
-                'title'       => __('PortfolioWebsite'),
-                'breadcrumbs' => $this->getBreadcrumbs(
+                'title'          => __('PortfolioWebsite'),
+                'breadcrumbs'    => $this->getBreadcrumbs(
                     $request->route()->getName(),
                     $request->route()->originalParameters()
                 ),
-                'navigation'  => [
+                'navigation'     => [
                     'previous' => $this->getPrevious($portfolioWebsite, $request),
                     'next'     => $this->getNext($portfolioWebsite, $request),
                 ],
-                'pageHead'    => [
+                'pageHead'       => [
                     'title'   => $portfolioWebsite->name,
                     'icon'    => [
                         'title' => __('website'),
                         'icon'  => 'fal fa-globe'
                     ],
-                    'actions' => [
-                        $this->canEdit ? [
-                            'type'  => 'button',
-                            'style' => 'edit',
-                            'route' => [
-                                'name'       => preg_replace('/show$/', 'edit', $request->route()->getName()),
-                                'parameters' => array_values($request->route()->originalParameters())
-                            ]
-                        ] : []
-                    ]
+                    'iconActions' => [
+                        $this->canDelete ? $this->getDeleteActionIcon($request) : null,
+                        $this->canEdit ? $this->getEditActionIcon($request) : null,
+                    ],
                 ],
-                'tabs'        => [
+                'tabs'           => [
                     'current'    => $this->tab,
                     'navigation' => PortfolioWebsiteTabsEnum::navigation()
                 ],
+                'hasFirstBanner' => !is_null($firstBanners),
 
-                PortfolioWebsiteTabsEnum::CHANGELOG->value => $this->tab == PortfolioWebsiteTabsEnum::CHANGELOG->value ?
-                    fn () => CustomerHistoryResource::collection(IndexCustomerHistory::run(
-                        customer:$customer,
-                        model:PortfolioWebsite::class,
-                        prefix: PortfolioWebsiteTabsEnum::CHANGELOG->value
-                    ))
-                    : Inertia::lazy(fn () => CustomerHistoryResource::collection(IndexCustomerHistory::run(
-                        customer:$customer,
-                        model:PortfolioWebsite::class,
-                        prefix: PortfolioWebsiteTabsEnum::CHANGELOG->value
-                    ))),
+                PortfolioWebsiteTabsEnum::CHANGELOG->value => $this->tab == PortfolioWebsiteTabsEnum::CHANGELOG->value
+                    ?
+                    fn () => CustomerHistoryResource::collection(
+                        IndexCustomerHistory::run(
+                            customer: $customer,
+                            model: PortfolioWebsite::class,
+                            prefix: PortfolioWebsiteTabsEnum::CHANGELOG->value
+                        )
+                    )
+                    : Inertia::lazy(fn () => CustomerHistoryResource::collection(
+                        IndexCustomerHistory::run(
+                            customer: $customer,
+                            model: PortfolioWebsite::class,
+                            prefix: PortfolioWebsiteTabsEnum::CHANGELOG->value
+                        )
+                    )),
 
-                PortfolioWebsiteTabsEnum::BANNERS->value => $this->tab == PortfolioWebsiteTabsEnum::BANNERS->value ?
-                    fn () => BannerResource::collection(IndexBanners::run($portfolioWebsite, PortfolioWebsiteTabsEnum::BANNERS->value))
-                    : Inertia::lazy(fn () => BannerResource::collection(IndexBanners::run($portfolioWebsite, PortfolioWebsiteTabsEnum::BANNERS->value)))
+                PortfolioWebsiteTabsEnum::BANNERS->value => $this->tab == PortfolioWebsiteTabsEnum::BANNERS->value
+                    ?
+                    fn () => $firstBanners ? $firstBanners : BannerResource::collection(IndexBanners::run($portfolioWebsite, PortfolioWebsiteTabsEnum::BANNERS->value))
+                    : Inertia::lazy(
+                        fn () =>
+                    $firstBanners ? $firstBanners : BannerResource::collection(IndexBanners::run($portfolioWebsite, PortfolioWebsiteTabsEnum::BANNERS->value))
+                    )
             ]
         )
-            ->table(IndexBanners::make()->tableStructure(
-                parent:$portfolioWebsite,
-                prefix: PortfolioWebsiteTabsEnum::BANNERS->value
-            ))
-            ->table(IndexCustomerHistory::make()->tableStructure(
-                prefix: PortfolioWebsiteTabsEnum::CHANGELOG->value
-            ));
+            ->table(
+                IndexCustomerHistory::make()->tableStructure(
+                    prefix: PortfolioWebsiteTabsEnum::CHANGELOG->value
+                )
+            );
+
+        if ($firstBanners) {
+            $inertia->table(
+                IndexBanners::make()->tableStructure(
+                    parent: $portfolioWebsite,
+                    prefix: PortfolioWebsiteTabsEnum::BANNERS->value
+                )
+            );
+        }
+
+        return $inertia;
     }
 
     public function jsonResponse(PortfolioWebsite $portfolioWebsite): PortfolioWebsiteResource
@@ -182,6 +198,7 @@ class ShowPortfolioWebsite extends InertiaAction
 
         return $this->getNavigation($next, $request->route()->getName());
     }
+
     private function getNavigation(?PortfolioWebsite $portfolioWebsite, string $routeName): ?array
     {
         if (!$portfolioWebsite) {

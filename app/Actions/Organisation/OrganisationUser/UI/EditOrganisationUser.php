@@ -9,6 +9,7 @@ namespace App\Actions\Organisation\OrganisationUser\UI;
 
 use App\Actions\InertiaAction;
 use App\Models\Auth\OrganisationUser;
+use Illuminate\Support\Arr;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -19,8 +20,32 @@ class EditOrganisationUser extends InertiaAction
     {
         return $organisationUser;
     }
+
     public function htmlResponse(OrganisationUser $organisationUser, ActionRequest $request): Response
     {
+        $sections['credentials'] = [
+            'label'  => __('Credentials'),
+            'icon'   => 'fal fa-key',
+            'fields' => [
+                'username' => [
+                    'type'  => 'input',
+                    'label' => __('username'),
+                    'value' => $organisationUser->username
+                ],
+                'password' => [
+                    'type'  => 'password',
+                    'label' => __('password'),
+                    'value' => ''
+                ],
+            ]
+        ];
+
+        $currentSection = 'credentials';
+        if ($request->has('section') and Arr::has($sections, $request->get('section'))) {
+            $currentSection = $request->get('section');
+        }
+
+
         return Inertia::render(
             'EditModel',
             [
@@ -41,26 +66,8 @@ class EditOrganisationUser extends InertiaAction
                     ]
                 ],
                 'formData'    => [
-                    'blueprint' => [
-                        [
-                            'title'   => __('credentials'),
-                            'icon'    => 'fal fa-key',
-                            'fields'  => [
-
-                                'username'     => [
-                                    'type'  => 'input',
-                                    'label' => __('username'),
-                                    'value' => $organisationUser->username
-                                ],
-                                'password'     => [
-                                    'type'  => 'password',
-                                    'label' => __('password'),
-                                    'value' => ''
-                                ],
-
-                            ]
-                        ]
-                    ],
+                    'current'   => $currentSection,
+                    'blueprint' => $sections,
                     'args'      => [
                         'updateRoute' => [
                             'name'       => 'org.models.organisation-user.update',

@@ -8,15 +8,15 @@
 import {Head} from '@inertiajs/vue3';
 import PageHeading from '@/Components/Headings/PageHeading.vue';
 import { capitalize } from "@/Composables/capitalize"
-import {faRectangleWide} from "../../../../private/pro-light-svg-icons"
+import {faSign} from "../../../../private/pro-light-svg-icons"
 import {library} from "@fortawesome/fontawesome-svg-core";
 import Tabs from "@/Components/Navigation/Tabs.vue";
 import {computed, ref} from "vue";
 import {useTabChange} from "@/Composables/tab-change";
 import ModelDetails from "@/Pages/ModelDetails.vue";
-import TableHistories from "@/Components/Tables/TableHistories.vue";
+import TableCustomerHistories from "@/Components/Tables/TableCustomerHistories.vue";
 import TableBanners from "@/Components/Tables/TableBanners.vue";
-library.add(faRectangleWide)
+library.add(faSign)
 
 const props = defineProps <{
     title: string,
@@ -34,7 +34,7 @@ const handleTabUpdate = (tabSlug) => useTabChange(tabSlug, currentTab);
 const component = computed(() => {
     const components = {
         details: ModelDetails,
-        changelog: TableHistories,
+        changelog: TableCustomerHistories,
         banners: TableBanners
     };
     return components[currentTab.value];

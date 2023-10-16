@@ -47,7 +47,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $number_banners_type_square
  * @property int $number_banners_state_unpublished
  * @property int $number_banners_state_live
- * @property int $number_banners_state_retired
+ * @property int $number_banners_state_switch_off
  * @property int $number_banner_snapshots
  * @property int $number_banners_snapshots_state_unpublished
  * @property int $number_banners_snapshots_state_live
@@ -76,7 +76,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|ShopPortfoliosStats whereNumberBannersSnapshotsStateLive($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ShopPortfoliosStats whereNumberBannersSnapshotsStateUnpublished($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ShopPortfoliosStats whereNumberBannersStateLive($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ShopPortfoliosStats whereNumberBannersStateRetired($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ShopPortfoliosStats whereNumberBannersStateSwitchOff($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ShopPortfoliosStats whereNumberBannersStateUnpublished($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ShopPortfoliosStats whereNumberBannersTypeLandscape($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ShopPortfoliosStats whereNumberBannersTypeSquare($value)

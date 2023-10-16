@@ -64,7 +64,7 @@ class ShowBannerWorkshop extends InertiaAction
 
                     'title'     => __('Workshop'),
                     'container' => [
-                        'icon'    => ['fal', 'fa-rectangle-wide'],
+                        'icon'    => ['fal', 'fa-sign'],
                         'tooltip' => __('Banner'),
                         'label'   => Str::possessive($banner->name)
                     ],
@@ -140,8 +140,7 @@ class ShowBannerWorkshop extends InertiaAction
         }
 
         return match ($routeName) {
-            'customer.caas.banners.workshop',
-            'customer.portfolio.websites.show.banners.workshop' => [
+            'customer.banners.workshop', => [
                 'label' => $banner->name,
                 'route' => [
                     'name'       => $routeName,

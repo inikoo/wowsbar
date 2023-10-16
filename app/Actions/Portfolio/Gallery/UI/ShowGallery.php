@@ -10,7 +10,7 @@ namespace App\Actions\Portfolio\Gallery\UI;
 use App\Actions\InertiaAction;
 use App\Actions\Portfolio\Gallery\UI\StockImages\IndexStockImages;
 use App\Actions\Portfolio\Gallery\UI\UploadedImages\IndexUploadedImages;
-use App\Actions\UI\Customer\CaaS\ShowCaaSDashboard;
+use App\Actions\UI\Customer\Banners\ShowBannersDashboard;
 use App\Enums\UI\Customer\GalleryTabsEnum;
 use App\Http\Resources\Gallery\ImageResource;
 use Inertia\Inertia;
@@ -148,12 +148,12 @@ class ShowGallery extends InertiaAction
         };
 
         return match ($routeName) {
-            'customer.caas.gallery' =>
+            'customer.banners.gallery' =>
             array_merge(
-                ShowCaaSDashboard::make()->getBreadcrumbs(),
+                ShowBannersDashboard::make()->getBreadcrumbs(),
                 $headCrumb(
                     [
-                        'name' => 'customer.caas.gallery',
+                        'name' => 'customer.banners.gallery',
                         null
                     ]
                 ),

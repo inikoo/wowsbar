@@ -6,12 +6,14 @@
  */
 
 use App\Stubs\Migrations\HasAssetCodeDescription;
+use App\Stubs\Migrations\HasSoftDeletes;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class () extends Migration {
     use HasAssetCodeDescription;
+    use HasSoftDeletes;
     public function up(): void
     {
         Schema::create('shop_product', function (Blueprint $table) {
@@ -25,7 +27,7 @@ return new class () extends Migration {
             $table->boolean('status')->nullable()->index();
             $table->unsignedDecimal('price', 18)->comment('unit price');
             $table->timestampsTz();
-            $table->softDeletesTz();
+            $table=$this->softDeletes($table);
         });
     }
 

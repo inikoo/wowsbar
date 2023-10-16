@@ -43,13 +43,15 @@ use Spatie\Sluggable\SlugOptions;
  * @property BannerStateEnum $state
  * @property int|null $unpublished_snapshot_id
  * @property int|null $live_snapshot_id
+ * @property string $date
  * @property string|null $live_at
- * @property string|null $retired_at
+ * @property string|null $switch_off_at
  * @property array $compiled_layout
  * @property array $data
  * @property int|null $image_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string|null $delete_comment
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Helpers\Audit> $audits
  * @property-read int|null $audits_count
@@ -62,8 +64,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read Snapshot|null $liveSnapshot
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, Media> $media
  * @property-read int|null $media_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Portfolio\PortfolioWebsite> $portfolioWebsite
- * @property-read int|null $portfolio_website_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Portfolio\PortfolioWebsite> $portfolioWebsites
+ * @property-read int|null $portfolio_websites_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Snapshot> $snapshots
  * @property-read int|null $snapshots_count
  * @property-read \App\Models\Portfolio\BannerStats|null $stats
@@ -78,6 +80,8 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Banner whereCreatedAt($value)
  * @method static Builder|Banner whereCustomerId($value)
  * @method static Builder|Banner whereData($value)
+ * @method static Builder|Banner whereDate($value)
+ * @method static Builder|Banner whereDeleteComment($value)
  * @method static Builder|Banner whereDeletedAt($value)
  * @method static Builder|Banner whereId($value)
  * @method static Builder|Banner whereImageId($value)
@@ -85,9 +89,9 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Banner whereLiveSnapshotId($value)
  * @method static Builder|Banner whereName($value)
  * @method static Builder|Banner wherePortfolioWebsiteId($value)
- * @method static Builder|Banner whereRetiredAt($value)
  * @method static Builder|Banner whereSlug($value)
  * @method static Builder|Banner whereState($value)
+ * @method static Builder|Banner whereSwitchOffAt($value)
  * @method static Builder|Banner whereType($value)
  * @method static Builder|Banner whereUlid($value)
  * @method static Builder|Banner whereUnpublishedSnapshotId($value)
@@ -124,11 +128,11 @@ class Banner extends Model implements HasMedia, Auditable
     public function generateTags(): array
     {
         return [
-            'portfolio','caas'
+            'portfolio','banners'
         ];
     }
 
-    protected $auditExclude = [
+    protected array $auditExclude = [
         'compiled_layout','unpublished_snapshot_id'
     ];
 
@@ -163,7 +167,7 @@ class Banner extends Model implements HasMedia, Auditable
         return $this->belongsTo(Snapshot::class, 'live_snapshot_id');
     }
 
-    public function portfolioWebsite(): BelongsToMany
+    public function portfolioWebsites(): BelongsToMany
     {
         return $this->belongsToMany(PortfolioWebsite::class)->using(BannerPortfolioWebsite::class)
             ->withTimestamps();

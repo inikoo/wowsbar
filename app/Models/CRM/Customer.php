@@ -7,6 +7,7 @@
 
 namespace App\Models\CRM;
 
+use App\Actions\Utils\Abbreviate;
 use App\Enums\CRM\Customer\CustomerStateEnum;
 use App\Enums\CRM\Customer\CustomerStatusEnum;
 use App\Enums\CRM\Customer\CustomerTradeStateEnum;
@@ -70,6 +71,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property string $ulid
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
+ * @property string|null $delete_comment
  * @property Carbon|null $deleted_at
  * @property-read Collection<int, \App\Models\CRM\Appointment> $appointment
  * @property-read int|null $appointment_count
@@ -109,6 +111,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Customer whereContactWebsite($value)
  * @method static Builder|Customer whereCreatedAt($value)
  * @method static Builder|Customer whereData($value)
+ * @method static Builder|Customer whereDeleteComment($value)
  * @method static Builder|Customer whereDeletedAt($value)
  * @method static Builder|Customer whereEmail($value)
  * @method static Builder|Customer whereId($value)
@@ -175,9 +178,16 @@ class Customer extends Model implements HasMedia, Auditable
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
-            ->generateSlugsFrom('name')
+            ->generateSlugsFrom(function () {
+                if(mb_strlen($this->name)>=6) {
+                    return Abbreviate::run($this->name);
+                } else {
+                    return  $this->name;
+                }
+            })
             ->saveSlugsTo('slug')
             ->slugsShouldBeNoLongerThan(12)
+            ->doNotGenerateSlugsOnUpdate()
             ->doNotGenerateSlugsOnCreate();
     }
 

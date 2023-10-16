@@ -68,6 +68,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property int $organisation_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string|null $delete_comment
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read \App\Models\Market\ShopAccountingStats|null $accountingStats
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Appointment> $appointment
@@ -119,6 +120,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|Shop whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Shop whereCurrencyId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Shop whereData($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Shop whereDeleteComment($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Shop whereDeletedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Shop whereEmail($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Shop whereId($value)

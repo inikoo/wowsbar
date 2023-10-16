@@ -1,6 +1,6 @@
 /* Navigation: Customer */
 .navigationActiveCustomer {
-    @apply bg-slate-700 sm:border-l-4 sm:border-amber-300 text-amber-300 transition-all duration-100 ease-in-out
+    @apply sm:border-l-4 sm:border-amber-300 text-amber-300 transition-all duration-100 ease-in-out
 }
 .navigationCustomer {
     @apply hover:bg-gray-200/30 text-white transition-all duration-100 ease-in-out

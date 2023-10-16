@@ -15,7 +15,6 @@ enum BannerTypeEnum: string
 
     case LANDSCAPE       = 'landscape';
     case SQUARE          = 'square';
-    // case PORTRAIT        = 'portrait';
 
 
     public static function labels(): array

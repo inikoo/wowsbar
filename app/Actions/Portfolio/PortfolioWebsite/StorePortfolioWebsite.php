@@ -8,10 +8,12 @@
 namespace App\Actions\Portfolio\PortfolioWebsite;
 
 use App\Actions\CRM\Customer\Hydrators\CustomerHydratePortfolioWebsites;
+use App\Actions\CRM\Customer\Hydrators\CustomerHydrateWelcomeStep;
 use App\Actions\Market\Shop\Hydrators\ShopHydrateCustomerWebsites;
 use App\Actions\Portfolios\CustomerWebsite\Hydrators\CustomerWebsiteHydrateUniversalSearch;
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateCustomerWebsites;
 use App\Actions\Portfolio\PortfolioWebsite\Hydrators\PortfolioWebsiteHydrateUniversalSearch;
+use App\Actions\Traits\WithPortfolioWebsiteAction;
 use App\Http\Resources\Portfolio\PortfolioWebsiteResource;
 use App\Models\CRM\Customer;
 use App\Models\Organisation\Division;
@@ -30,19 +32,21 @@ class StorePortfolioWebsite
 {
     use AsAction;
     use WithAttributes;
+    use WithPortfolioWebsiteAction;
 
 
-    /**
-     * @var true
-     */
     private bool $asAction = false;
 
 
     public function handle(Customer $customer, array $modelData): PortfolioWebsite
     {
         data_set($modelData, 'shop_id', $customer->shop_id);
+        // Note customer_id added magically by a global scope
         $portfolioWebsite = PortfolioWebsite::create($modelData);
         $portfolioWebsite->stats()->create();
+
+
+        $this->createAudit(CustomerWebsite::find($portfolioWebsite->id));
 
         // Must be run to the website layout to work
         CustomerHydratePortfolioWebsites::run($portfolioWebsite->customer);
@@ -54,9 +58,12 @@ class StorePortfolioWebsite
 
         OrganisationHydrateCustomerWebsites::dispatch();
         ShopHydrateCustomerWebsites::dispatch(customer()->shop);
+        CustomerHydrateWelcomeStep::make()->websiteAdded($customer);
 
         return $portfolioWebsite;
     }
+
+
 
     public function authorize(ActionRequest $request): bool
     {

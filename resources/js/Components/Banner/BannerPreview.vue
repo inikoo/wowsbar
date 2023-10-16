@@ -24,12 +24,12 @@ const props = defineProps<{
             </div>
             <div class="text-sm text-gray-600 tracking-wide text-right">Published at <span class="font-bold">{{ useRangeFromNow(data.published_snapshot.published_at) }}</span> ago</div>
         </div>
-        <Slider :data="data.compiled_layout" />
+        <Slider :data="data.compiled_layout" :production="false" />
     </div>
 
     <!-- If banner is 'square' -->
-    <div v-else class="flex flex-col">
-        <div class="w-full bg-white flex flex-col md:flex-row items-center justify-between py-3 px-4 gap-y-1">
+        <div v-else>
+        <div class="w-fit bg-white flex flex-col md:flex-row items-center justify-between py-3 px-4 gap-y-1">
             <!-- Title -->
             <div class="flex gap-x-2">
                 <div class="h-5 aspect-square rounded-full overflow-hidden ring-1 ring-gray-300">
@@ -40,11 +40,12 @@ const props = defineProps<{
                     ({{ data.published_snapshot.comment }})
                 </div>
             </div>
-
             <!-- Published at -->
             <div class="text-sm italic text-gray-500 tracking-wide text-right font-light">Published at <span class="font-bold">{{ useRangeFromNow(data.published_snapshot.published_at) }}</span> ago</div>
         </div>
-        <Slider :data="data.compiled_layout" :bannerType="data.type"/>
-    
+            <div class="flex flex-col h-48 lg:h-64 xl:h-96 w-fit ">
+        <Slider :data="data.compiled_layout" :production="false"/>
+
+            </div>
     </div>
 </template>

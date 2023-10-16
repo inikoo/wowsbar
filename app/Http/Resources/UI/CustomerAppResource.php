@@ -23,6 +23,8 @@ class CustomerAppResource extends JsonResource
         return [
             'slug' => $website->slug,
             'name' => $website->name,
+            'logo' => !blank($website->logo_id) ? $website->logoImageSources(0, 48) : null,
+            'url'  => (app()->environment(['local']) ? 'http://' : 'https://').$website->domain
         ];
     }
 }

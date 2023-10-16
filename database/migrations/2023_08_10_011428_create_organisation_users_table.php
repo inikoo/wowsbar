@@ -5,6 +5,7 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
+use App\Stubs\Migrations\HasSoftDeletes;
 use App\Stubs\Migrations\HasUserDetails;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -12,7 +13,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class () extends Migration {
     use HasUserDetails;
-
+    use HasSoftDeletes;
     public function up(): void
     {
         Schema::create('organisation_users', function (Blueprint $table) {
@@ -25,7 +26,7 @@ return new class () extends Migration {
             $table->boolean('reset_password')->default(false);
             $table = $this->userDetailsColumns($table);
             $table->timestampsTz();
-            $table->softDeletesTz();
+            $table=$this->softDeletes($table);
             $table->unique(['parent_type', 'parent_id']);
         });
     }

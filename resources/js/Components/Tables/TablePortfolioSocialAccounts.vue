@@ -7,8 +7,7 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3'
 import Table from '@/Components/Table/Table.vue'
-import { Website } from "@/types/website"
-import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
+
 
 const props = defineProps<{
     data: object
@@ -18,9 +17,9 @@ const props = defineProps<{
 
 function accountRoute(account) {
     switch (route().current()) {
-        case 'customer.portfolio.social.account.index':
+        case 'customer.portfolio.social-accounts.index':
             return route(
-                'customer.portfolio.social.account.show',
+                'customer.portfolio.social-accounts.show',
                 [account.slug]);
     }
 }
@@ -28,7 +27,6 @@ function accountRoute(account) {
 </script>
 
 <template>
-
     <Table :resource="data" :name="tab" class="mt-5">
         <template #cell(username)="{ item: account }">
             <Link :href="accountRoute(account)" :id="account['slug']" class="py-2 px-1">

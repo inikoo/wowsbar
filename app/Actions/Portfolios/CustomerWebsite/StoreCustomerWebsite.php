@@ -8,10 +8,12 @@
 namespace App\Actions\Portfolios\CustomerWebsite;
 
 use App\Actions\CRM\Customer\Hydrators\CustomerHydratePortfolioWebsites;
+use App\Actions\CRM\Customer\Hydrators\CustomerHydrateWelcomeStep;
 use App\Actions\Market\Shop\Hydrators\ShopHydrateCustomerWebsites;
 use App\Actions\Portfolio\PortfolioWebsite\Hydrators\PortfolioWebsiteHydrateUniversalSearch;
 use App\Actions\Portfolios\CustomerWebsite\Hydrators\CustomerWebsiteHydrateUniversalSearch;
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateCustomerWebsites;
+use App\Actions\Traits\WithPortfolioWebsiteAction;
 use App\Models\CRM\Customer;
 use App\Models\Organisation\Division;
 use App\Models\Portfolio\PortfolioWebsite;
@@ -21,17 +23,16 @@ use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Redirect;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
-use OwenIt\Auditing\Events\AuditCustom;
 
 class StoreCustomerWebsite
 {
     use AsAction;
     use WithAttributes;
+    use WithPortfolioWebsiteAction;
 
 
     private bool $asAction = false;
@@ -47,36 +48,27 @@ class StoreCustomerWebsite
         /** @var CustomerWebsite $customerWebsite */
         $customerWebsite = $customer->customerWebsites()->create($modelData);
 
-        //===
-
         $portfolioWebsite=PortfolioWebsite::find($customerWebsite->id);
+        $this->createAudit($portfolioWebsite);
 
-        $portfolioWebsite->auditEvent    = 'created';
-        $portfolioWebsite->isCustomEvent = true;
-
-        $portfolioWebsite->auditCustomOld = [];
-        $portfolioWebsite->auditCustomNew = [
-            'url' => $portfolioWebsite->url,
-            'name'=> $portfolioWebsite->name
-        ];
-        Event::dispatch(AuditCustom::class, [$portfolioWebsite]);
-
-
-
-        //===
         $customerWebsite->stats()->create();
+
         CustomerHydratePortfolioWebsites::dispatch($customerWebsite->customer);
 
         $customerWebsite->divisions()->attach(Division::pluck('id'));
 
-        PortfolioWebsiteHydrateUniversalSearch::dispatch(PortfolioWebsite::find($customerWebsite->id));
+        PortfolioWebsiteHydrateUniversalSearch::dispatch($portfolioWebsite);
         CustomerWebsiteHydrateUniversalSearch::dispatch($customerWebsite);
 
         OrganisationHydrateCustomerWebsites::dispatch();
         ShopHydrateCustomerWebsites::dispatch($customer->shop);
 
+        CustomerHydrateWelcomeStep::make()->websiteAdded($customer);
         return $customerWebsite;
     }
+
+
+
 
     public function authorize(ActionRequest $request): bool
     {
@@ -102,13 +94,16 @@ class StoreCustomerWebsite
     public function rules(): array
     {
         return [
-            'url'  => ['required', 'url', 'max:500',
-                       new IUnique(
-                           table: 'portfolio_websites',
-                           extraConditions: [
-                               ['column' => 'customer_id', 'value' => $this->customer->id],
-                           ]
-                       ),
+            'url'  => [
+                'required',
+                'url',
+                'max:500',
+                new IUnique(
+                    table: 'portfolio_websites',
+                    extraConditions: [
+                        ['column' => 'customer_id', 'value' => $this->customer->id],
+                    ]
+                ),
             ],
             'name' => ['required', 'string', 'max:128']
         ];
@@ -133,6 +128,7 @@ class StoreCustomerWebsite
 
     public function action(Customer $customer, array $objectData): CustomerWebsite
     {
+        $this->customer = $customer;
         $this->asAction = true;
         $this->setRawAttributes($objectData);
         $validatedData = $this->validateAttributes();
@@ -156,13 +152,13 @@ class StoreCustomerWebsite
             return 1;
         }
 
-        $this->customer=$customer;
+        $this->customer = $customer;
         Config::set('global.customer_id', $customer->id);
 
         $this->setRawAttributes(
             [
-                'url'    => $command->argument('url'),
-                'name'   => $command->argument('name')
+                'url'  => $command->argument('url'),
+                'name' => $command->argument('name')
             ]
         );
         $validatedData = $this->validateAttributes();

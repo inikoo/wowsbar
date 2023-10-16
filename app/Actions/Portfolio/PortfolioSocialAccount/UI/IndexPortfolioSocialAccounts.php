@@ -13,7 +13,6 @@ use App\Actions\UI\Customer\Portfolio\ShowPortfolio;
 use App\Enums\UI\Customer\PortfolioSocialAccountsTabsEnum;
 use App\Http\Resources\History\HistoryResource;
 use App\Http\Resources\Portfolio\PortfolioSocialAccountResource;
-use App\Http\Resources\Portfolio\PortfolioWebsiteResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\Portfolio\PortfolioSocialAccount;
 use Closure;
@@ -25,7 +24,7 @@ use Lorisleiva\Actions\ActionRequest;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
-class IndexPortfolioSocialAccount extends InertiaAction
+class IndexPortfolioSocialAccounts extends InertiaAction
 {
     public function authorize(ActionRequest $request): bool
     {
@@ -60,7 +59,7 @@ class IndexPortfolioSocialAccount extends InertiaAction
 
         return $queryBuilder
             ->defaultSort('username')
-            ->allowedSorts(['username', 'provider', 'number_followers', 'number_posts'])
+            ->allowedSorts(['username', 'platform', 'number_followers', 'number_posts','slug'])
             ->allowedFilters([$globalSearch])
             ->withPaginator($prefix)
             ->withQueryString();
@@ -85,8 +84,8 @@ class IndexPortfolioSocialAccount extends InertiaAction
                     ]
                 )
                 ->withExportLinks($exportLinks)
+                ->column(key: 'platform', label: __('platform'), sortable: true)
                 ->column(key: 'username', label: __('username'), sortable: true)
-                ->column(key: 'provider', label: __('type'), sortable: true)
                 ->column(key: 'url', label: __('profile url'), sortable: true)
                 ->column(key: 'number_posts', label: __('number posts'), sortable: true)
                 ->column(key: 'number_followers', label: __('number followers'), sortable: true)
@@ -96,7 +95,7 @@ class IndexPortfolioSocialAccount extends InertiaAction
 
     public function jsonResponse(): AnonymousResourceCollection
     {
-        return PortfolioWebsiteResource::collection($this->handle());
+        return PortfolioSocialAccountResource::collection($this->handle());
     }
 
     public function htmlResponse(LengthAwarePaginator $socialAccounts, ActionRequest $request): Response
@@ -108,12 +107,12 @@ class IndexPortfolioSocialAccount extends InertiaAction
                     $request->route()->getName(),
                     $request->route()->parameters
                 ),
-                'title'       => __('social account'),
+                'title'       => __('social accounts'),
                 'pageHead'    => [
-                    'title'     => __('social account'),
+                    'title'     => __('social accounts'),
                     'iconRight' => [
-                        'title' => __('social account'),
-                        'icon'  => 'fal fa-globe'
+                        'title' => __('social accounts'),
+                        'icon'  => 'fal fa-thumbs-up'
                     ],
                     'actions'   => [
                         $this->canEdit ? [
@@ -121,7 +120,7 @@ class IndexPortfolioSocialAccount extends InertiaAction
                             'style' => 'create',
                             'label' => __('Create social account'),
                             'route' => [
-                                'name'       => 'customer.portfolio.social.account.create',
+                                'name'       => 'customer.portfolio.social-accounts.create',
                                 'parameters' => $request->route()->originalParameters()
                             ],
 
@@ -144,14 +143,7 @@ class IndexPortfolioSocialAccount extends InertiaAction
             ]
         )->table(
             $this->tableStructure(
-                prefix: 'accounts',
-                // exportLinks: [
-                //     'export' => [
-                //         'route' => [
-                //             'name' => 'export.websites.index'
-                //         ]
-                //     ]
-                // ]
+                prefix:PortfolioSocialAccountsTabsEnum::ACCOUNTS->value,
             )
         )->table(IndexHistory::make()->tableStructure());
     }
@@ -165,7 +157,7 @@ class IndexPortfolioSocialAccount extends InertiaAction
                     'type'   => 'simple',
                     'simple' => [
                         'route' => $routeParameters,
-                        'label' => __('accounts'),
+                        'label' => __('social accounts'),
                         'icon'  => 'fal fa-bars'
                     ],
                 ],
@@ -173,12 +165,12 @@ class IndexPortfolioSocialAccount extends InertiaAction
         };
 
         return match ($routeName) {
-            'customer.portfolio.websites.index' =>
+            'customer.portfolio.social-accounts.index' =>
             array_merge(
                 ShowPortfolio::make()->getBreadcrumbs(),
                 $headCrumb(
                     [
-                        'name' => 'customer.portfolio.websites.index',
+                        'name' => 'customer.portfolio.social-accounts.index',
                         null
                     ]
                 ),

@@ -53,6 +53,9 @@ Route::prefix('/banner')->name('banner.')->group(function () {
         Route::post('images', UploadImagesToBanner::class)->name('images.store');
         Route::patch('state/{state}', UpdateBannerState::class)->name('update-state');
         Route::delete('', DeleteBanner::class)->name('delete');
+        Route::patch('shutdown', PublishBanner::class)->name('shutdown');
+        Route::patch('switch-on', PublishBanner::class)->name('switch-on');
+
     });
 });
 Route::patch('/images/{media}', UpdateUploadedImage::class)->name('images.update');

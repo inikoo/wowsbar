@@ -36,9 +36,10 @@ use Spatie\Sluggable\SlugOptions;
  * @property int|null $address_id
  * @property array $data
  * @property array $location
+ * @property string|null $delete_comment
+ * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Helpers\Address> $addresses
  * @property-read int|null $addresses_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Helpers\Audit> $audits
@@ -62,6 +63,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|Workplace whereAddressId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Workplace whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Workplace whereData($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Workplace whereDeleteComment($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Workplace whereDeletedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Workplace whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Workplace whereLocation($value)

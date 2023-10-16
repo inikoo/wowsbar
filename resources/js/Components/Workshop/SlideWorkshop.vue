@@ -27,14 +27,14 @@ const props = defineProps<{
     blueprint: Array
     remove : Function
     common: any
-    bannerType: string
+    bannerType?: string
 }>()
 
 // console.log(props.common)
 
 
 const getComponent = (componentName: string) => {
-    const components = {
+    const components: any = {
         'text': PrimitiveInput,
         'radio': Radio,
         'slideBackground': SlideBackground,
@@ -57,13 +57,13 @@ const current = ref(0);
 </script>
 
 <template>
-    <div class="divide-y divide-gray-200 lg:grid grid-flow-col lg:grid-cols-12 lg:divide-y-0 lg:divide-x min-h-full w-full">
+    <div class="divide-y divide-gray-200 lg:grid grid-flow-col lg:grid-cols-12 lg:divide-y-0 lg:divide-x w-full">
 
         <!-- Left Tab: Navigation -->
         <aside class="py-0 lg:col-span-3 lg:h-full">
             <nav role="navigation" class="space-y-1">
                 <ul class="flex sm:block">
-                    <li v-for="(item, key) in blueprint" @click="current = key"
+                    <li v-for="(item, key) in blueprint" :key="key" @click="current = key"
                         :class="[
                             'group cursor-pointer px-6 sm:px-3 py-2 flex items-center justify-center sm:justify-start text-sm font-medium',
                             key == current
@@ -81,7 +81,7 @@ const current = ref(0);
 
         <!-- Content of forms -->
         <div class="px-4 sm:px-6 md:px-4 pt-6 xl:pt-4 col-span-9 flex flex-grow justify-center">
-            <div class="flex flex-col w-full ">
+            <div class="flex flex-col w-full">
                 <dl v-for="(fieldData, index ) in blueprint[current].fields" :key="index" class="pb-4 sm:pb-5 sm:gap-4 w-full">
                     <!-- Title -->
                     <dt v-if="fieldData.name != 'image_source' && fieldData.label" class="text-sm font-medium text-gray-500 capitalize">

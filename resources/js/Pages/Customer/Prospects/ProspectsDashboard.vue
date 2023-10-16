@@ -11,7 +11,7 @@ import { capitalize } from "@/Composables/capitalize.ts"
 import Tabs from '@/Components/Navigation/Tabs.vue';
 import {computed, ref} from 'vue';
 import {useTabChange} from '@/Composables/tab-change.js';
-import TableHistories from '@/Components/Tables/TableHistories.vue';
+import TableCustomerHistories from '@/Components/Tables/TableCustomerHistories.vue';
 import PortfolioDashboard from "@/Components/Dashboard/PortfolioDashboard.vue";
 import {faTransporter2
 } from '@/../private/pro-light-svg-icons'
@@ -38,7 +38,7 @@ const component = computed(() => {
 
     const components = {
         dashboard: PortfolioDashboard,
-        history: TableHistories
+        history: TableCustomerHistories
     };
     return components[currentTab.value];
 

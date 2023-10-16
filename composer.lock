@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a5e9f8525b87062a37fc4d83d2b5830e",
+    "content-hash": "fe5245171fd31afcde3787fe9a58c337",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -4165,6 +4165,57 @@
                 "source": "https://github.com/laravel/tinker/tree/v2.8.2"
             },
             "time": "2023-08-15T14:27:00+00:00"
+        },
+        {
+            "name": "lcherone/php-petname",
+            "version": "v1.0.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/lcherone/php-petname.git",
+                "reference": "fa4031ecbefdba0ba3b5ef8f6c6e81ce403cf937"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/lcherone/php-petname/zipball/fa4031ecbefdba0ba3b5ef8f6c6e81ce403cf937",
+                "reference": "fa4031ecbefdba0ba3b5ef8f6c6e81ce403cf937",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "LCherone\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Lawrence Cherone",
+                    "email": "lawrence@cherone.co.uk",
+                    "homepage": "https://github.com/lcherone/php-petname"
+                }
+            ],
+            "description": "Library for generating human-readable, random names for objects.",
+            "homepage": "https://github.com/lcherone/php-petname",
+            "keywords": [
+                "generate",
+                "hostname",
+                "library",
+                "names",
+                "petname",
+                "petnames",
+                "random"
+            ],
+            "support": {
+                "issues": "https://github.com/lcherone/php-petname/issues",
+                "source": "https://github.com/lcherone/php-petname/tree/master"
+            },
+            "time": "2017-07-15T23:10:27+00:00"
         },
         {
             "name": "lcobucci/clock",
@@ -17246,10 +17297,11 @@
     "prefer-lowest": false,
     "platform": {
         "php": "^8.2",
+        "ext-bcmath": "*",
         "ext-dom": "*",
         "ext-fileinfo": "*",
         "ext-pdo": "*"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.2.0"
 }

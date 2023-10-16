@@ -26,8 +26,8 @@ class UpdateBannerState
             case BannerStateEnum::LIVE->value:
                 $modelData['live_at'] = now();
                 break;
-            case BannerStateEnum::RETIRED->value:
-                $modelData['retired_at'] = now();
+            case BannerStateEnum::SWITCH_OFF->value:
+                $modelData['switch_off_at'] = now();
                 break;
         }
 
