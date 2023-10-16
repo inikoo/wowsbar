@@ -36,12 +36,6 @@ onMounted(() => {
     const styleElement = document.createElement("style");
     styleElement.textContent = dynamicClasses;
     document.head.appendChild(styleElement);
-
-    // Append tailwind
-    for (const element of document.querySelectorAll("*[class]")) {
-        // processClasses(element.classList);
-    }
-    document.body.style.display = "block";
 });
 
 </script>
