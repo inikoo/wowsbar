@@ -12,9 +12,9 @@ use App\Actions\HydrateModel;
 use App\Models\Helpers\Address;
 use Illuminate\Support\Collection;
 
-class HydrateAddress extends HydrateModel
+class HydrateAddresses extends HydrateModel
 {
-    public string $commandSignature = 'hydrate:address {tenants?*} {--i|id=}';
+    public string $commandSignature = 'hydrate:addresses {slugs?*}';
 
 
     public function handle(Address $address): void
@@ -22,7 +22,7 @@ class HydrateAddress extends HydrateModel
         AddressHydrateUsage::run($address);
     }
 
-    protected function getModel(int $id): Address
+    protected function getModel($id): Address
     {
         return Address::find($id);
     }

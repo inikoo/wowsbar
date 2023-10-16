@@ -14,6 +14,7 @@ use App\Http\Resources\Helpers\AddressFormFieldsResource;
 use App\Models\Helpers\Address;
 use App\Models\HumanResources\Workplace;
 use Exception;
+use Illuminate\Support\Arr;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -44,13 +45,90 @@ class EditWorkplace extends InertiaAction
      */
     public function htmlResponse(Workplace $workplace, ActionRequest $request): Response
     {
+
+        $sections['properties'] = [
+            'label'  => __('Properties'),
+            'icon'   => 'fal fa-key',
+            'fields' => [
+                'name' => [
+                    'type'          => 'input',
+                    'label'         => __('name'),
+                    'placeholder'   => __('Input your name'),
+                    'value'         => $workplace->name,
+                    'required'      => true
+                ],
+                'type' => [
+                    'type'        => 'select',
+                    'label'       => __('type'),
+                    'options'     => Options::forEnum(WorkplaceTypeEnum::class),
+                    'placeholder' => __('Select a type'),
+                    'mode'        => 'single',
+                    'value'       => $workplace->type,
+                    'required'    => true,
+                    'searchable'  => true
+                ],
+                'address'      => [
+                    'type'    => 'address',
+                    'label'   => __('Address'),
+                    'value'   => AddressFormFieldsResource::make(
+                        new Address(
+                            [
+                                'country_id' => organisation()->country_id,
+
+                            ]
+                        )
+                    )->getArray(),
+                    'options' => [
+                        'countriesAddressData' => GetAddressData::run()
+
+                    ],
+                    'required'    => true
+                ]
+            ]
+        ];
+
+        $sections['delete'] = [
+            'label'  => __('Delete'),
+            'icon'   => 'fal fa-trash-alt',
+            'fields' => [
+                'name' => [
+                    'type'   => 'action',
+                    'action' => [
+                        'type'  => 'button',
+                        'style' => 'delete',
+                        'label' => __('delete workplace'),
+                        'route' => [
+                            'name'       => 'customer.models.banner.delete',
+                            'parameters' => [
+                                'banner' => $workplace->id
+                            ]
+                        ]
+                    ],
+                ]
+            ]
+        ];
+
+        $currentSection = 'properties';
+        if ($request->has('section') and Arr::has($sections, $request->get('section'))) {
+            $currentSection = $request->get('section');
+        }
+
         return Inertia::render(
             'EditModel',
             [
-                'title'       => __('working place'),
-                'breadcrumbs' => $this->getBreadcrumbs($workplace),
+                'title'                            => __('editing working place'),
+                'breadcrumbs'                      => $this->getBreadcrumbs($workplace),
+                'navigation'                       => [
+                    'previous' => $this->getPrevious($workplace, $request),
+                    'next'     => $this->getNext($workplace, $request),
+                ],
                 'pageHead'    => [
                     'title'    => $workplace->name,
+                    'icon'     =>
+                        [
+                            'icon'  => ['fal', 'building'],
+                            'title' => __('working place')
+                        ],
                     'actions'  => [
                         [
                             'type'  => 'button',
@@ -64,52 +142,12 @@ class EditWorkplace extends InertiaAction
                 ],
 
                 'formData' => [
-                    'blueprint' => [
-                        [
-                            'title'  => __('edit working place'),
-                            'fields' => [
-                                'name' => [
-                                    'type'          => 'input',
-                                    'label'         => __('name'),
-                                    'placeholder'   => __('Input your name'),
-                                    'value'         => $workplace->name,
-                                    'required'      => true
-                                ],
-                                'type' => [
-                                    'type'        => 'select',
-                                    'label'       => __('type'),
-                                    'options'     => Options::forEnum(WorkplaceTypeEnum::class),
-                                    'placeholder' => __('Select a type'),
-                                    'mode'        => 'single',
-                                    'value'       => $workplace->type,
-                                    'required'    => true,
-                                    'searchable'  => true
-                                ],
-                                'address'      => [
-                                    'type'    => 'address',
-                                    'label'   => __('Address'),
-                                    'value'   => AddressFormFieldsResource::make(
-                                        new Address(
-                                            [
-                                                'country_id' => organisation()->country_id,
-
-                                            ]
-                                        )
-                                    )->getArray(),
-                                    'options' => [
-                                        'countriesAddressData' => GetAddressData::run()
-
-                                    ],
-                                    'required'    => true
-                                ]
-                            ]
-                        ],
-
-                    ],
+                    'current'   => $currentSection,
+                    'blueprint' => $sections,
                     'args'      => [
                         'updateRoute' => [
                             'name'       => 'models.workplace.update',
-                            'parameters' => $workplace->slug
+                            'parameters' => $workplace->id
 
                         ],
                     ]
@@ -123,5 +161,38 @@ class EditWorkplace extends InertiaAction
     public function getBreadcrumbs(Workplace $workplace): array
     {
         return ShowWorkplace::make()->getBreadcrumbs(workplace: $workplace, suffix: '('.__('editing').')');
+    }
+
+    public function getPrevious(Workplace $workplace, ActionRequest $request): ?array
+    {
+        $previous = Workplace::where('slug', '<', $workplace->slug)->orderBy('slug', 'desc')->first();
+
+        return $this->getNavigation($previous, $request->route()->getName());
+    }
+
+    public function getNext(Workplace $workplace, ActionRequest $request): ?array
+    {
+        $next = Workplace::where('slug', '>', $workplace->slug)->orderBy('slug')->first();
+
+        return $this->getNavigation($next, $request->route()->getName());
+    }
+
+    private function getNavigation(?Workplace $workplace, string $routeName): ?array
+    {
+        if (!$workplace) {
+            return null;
+        }
+
+        return match ($routeName) {
+            'org.hr.workplaces.show' => [
+                'label' => $workplace->name,
+                'route' => [
+                    'name'       => $routeName,
+                    'parameters' => [
+                        'workplace' => $workplace->slug
+                    ]
+                ]
+            ]
+        };
     }
 }

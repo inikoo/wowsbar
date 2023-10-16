@@ -51,7 +51,6 @@ return [
         'media'  => [
             'driver' => 'local',
             'root'   => storage_path('app/media'),
-            //    'url'        => env('APP_URL').'/tenants/storage',
             'throw'  => false,
         ],
 

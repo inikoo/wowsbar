@@ -12,9 +12,9 @@ use App\Actions\HydrateModel;
 use App\Models\Accounting\PaymentAccount;
 use Illuminate\Support\Collection;
 
-class HydratePaymentAccount extends HydrateModel
+class HydratePaymentAccounts extends HydrateModel
 {
-    public string $commandSignature = 'hydrate:payment-account {tenants?*} {--i|id=} ';
+    public string $commandSignature = 'hydrate:payment-accounts {slugs?*} ';
 
     public function handle(PaymentAccount $paymentAccount): void
     {
@@ -22,9 +22,9 @@ class HydratePaymentAccount extends HydrateModel
     }
 
 
-    protected function getModel(int $id): PaymentAccount
+    protected function getModel(string $slug): PaymentAccount
     {
-        return PaymentAccount::find($id);
+        return PaymentAccount::firstWhere('slug', $slug);
     }
 
     protected function getAllModels(): Collection

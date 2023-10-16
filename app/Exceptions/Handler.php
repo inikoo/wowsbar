@@ -75,7 +75,7 @@ class Handler extends ExceptionHandler
 
                 $errorData = match (class_basename($user)) {
                     'User' => array_merge(
-                        GetFirstLoadProps::run($user),
+                        GetFirstLoadProps::run($request->get('customerUser')),
                         $errorData,
                         [
                             'auth' => [

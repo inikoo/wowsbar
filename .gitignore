@@ -32,7 +32,6 @@ lang/php_*.json
 /.env.local
 /.env.prod
 /public/public.hot
-/public/tenant.hot
 /public/delivery.hot
 /public/customer.hot
 /public/customer/

@@ -26,8 +26,8 @@ class UpdateHistoricAddressToModel
         $model->addresses()->attach([$address->id], $scopeData);
         $model->addresses()->detach([$currentAddress->id]);
 
-        HydrateAddress::run($address);
-        HydrateAddress::run($currentAddress);
+        HydrateAddresses::run($address);
+        HydrateAddresses::run($currentAddress);
         if ($currentAddress->usage == 0) {
             $currentAddress->delete();
         }

@@ -11,7 +11,7 @@ use App\Actions\Helpers\History\IndexHistory;
 use App\Actions\HumanResources\Clocking\UI\IndexClockings;
 use App\Actions\HumanResources\ClockingMachine\UI\IndexClockingMachines;
 use App\Actions\InertiaAction;
-use App\Actions\Traits\WithElasticsearch;
+use App\Actions\Traits\Actions\WithActionButtons;
 use App\Actions\UI\Organisation\HumanResources\ShowHumanResourcesDashboard;
 use App\Enums\UI\Organisation\WorkplaceTabsEnum;
 use App\Http\Resources\History\HistoryResource;
@@ -25,8 +25,7 @@ use Lorisleiva\Actions\ActionRequest;
 
 class ShowWorkplace extends InertiaAction
 {
-    use WithElasticsearch;
-
+    use WithActionButtons;
     public function handle(Workplace $workplace): Workplace
     {
         return $workplace;
@@ -65,25 +64,10 @@ class ShowWorkplace extends InertiaAction
                             'icon'  => ['fal', 'building'],
                             'title' => __('working place')
                         ],
-                    'title'   => $workplace->name,
-                    'actions' => [
-                        $this->canEdit ? [
-                            'type'  => 'button',
-                            'style' => 'edit',
-                            'route' => [
-                                'name'       => preg_replace('/show$/', 'edit', $request->route()->getName()),
-                                'parameters' => $request->route()->originalParameters()
-                            ]
-                        ] : [],
-                        $this->canDelete ? [
-                            'type'  => 'button',
-                            'style' => 'delete',
-                            'route' => [
-                                'name'       => 'org.hr.workplaces.remove',
-                                'parameters' => $request->route()->originalParameters()
-                            ]
-
-                        ] : []
+                    'title'       => $workplace->name,
+                    'iconActions' => [
+                        $this->canDelete ? $this->getDeleteActionIcon($request) : null,
+                        $this->canEdit ? $this->getEditActionIcon($request) : null,
                     ],
 
                     'meta' => [

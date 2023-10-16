@@ -123,21 +123,21 @@ class ShowWebsiteWorkshop extends InertiaAction
 
                 WebsiteWorkshopTabsEnum::LAYOUT->value => $this->tab == WebsiteWorkshopTabsEnum::LAYOUT->value
                     ?
-                    fn () => GetWebsiteWorkshopLayout::run($website)
+                    fn() => GetWebsiteWorkshopLayout::run($website, $request)
                     : Inertia::lazy(
-                        fn () => GetWebsiteWorkshopLayout::run($website)
+                        fn() => GetWebsiteWorkshopLayout::run($website, $request)
                     ),
 
                 WebsiteWorkshopTabsEnum::HEADER->value => $this->tab == WebsiteWorkshopTabsEnum::HEADER->value
                     ?
-                    fn () => GetWebsiteWorkshopHeader::run($website)
+                    fn() => GetWebsiteWorkshopHeader::run($website)
                     : Inertia::lazy(
-                        fn () => GetWebsiteWorkshopHeader::run($website)
+                        fn() => GetWebsiteWorkshopHeader::run($website)
                     ),
 
                 WebsiteWorkshopTabsEnum::FOOTER->value => $this->tab == WebsiteWorkshopTabsEnum::FOOTER->value ?
-                    fn () => GetWebsiteWorkshopFooter::run($website)
-                    : Inertia::lazy(fn () => GetWebsiteWorkshopFooter::run($website)),
+                    fn() => GetWebsiteWorkshopFooter::run($website)
+                    : Inertia::lazy(fn() => GetWebsiteWorkshopFooter::run($website)),
 
 
             ]

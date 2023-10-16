@@ -17,7 +17,7 @@ class ResetPasswordIfNeeded
     public function handle(Request $request, Closure $next): Response
     {
         if($request->user(Auth::getDefaultDriver())->reset_password) {
-            return redirect()->route('org.passwords.reset.password');
+            return redirect()->route(Auth::getDefaultDriver() . '.passwords.reset.password');
         }
 
         return $next($request);

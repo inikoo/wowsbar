@@ -1,4 +1,5 @@
 import:
+  - deploy/env.php
   - recipe/laravel.php
   - deploy/lib/common.php
   - deploy/supervisor.php
@@ -16,7 +17,7 @@ config:
   db_collate: 'C.UTF-8'
   writable_use_sudo: true
   root_path: '/var/www/wowsbar'
-  app_url: 'wowsbar.com'
+  app_urls: 'wowsbar.com *.wowsbar.com awads.io *.awads.io'
   http_port: 8080
 
 hosts:
