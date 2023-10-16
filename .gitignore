@@ -33,6 +33,8 @@ lang/php_*.json
 /.env.prod
 /public/public.hot
 /public/tenant.hot
+/public/delivery.hot
 /public/customer.hot
 /public/customer/
 import-customers.sh
+
