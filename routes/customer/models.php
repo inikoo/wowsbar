@@ -6,6 +6,8 @@
  */
 
 
+use App\Actions\Accounting\Payment\StorePayment;
+use App\Actions\Accounting\PaymentGateway\Xendit\Channels\Invoice\MakePaymentUsingInvoice;
 use App\Actions\Auth\CustomerUser\UpdateCustomerUser;
 use App\Actions\Auth\User\StoreUser;
 use App\Actions\Media\ImageGenerator;
@@ -72,3 +74,5 @@ Route::post('/portfolio-websites/imports/upload', ImportPortfolioWebsite::class)
 
 
 Route::post('/gallery/images/upload', UploadImagesToGallery::class)->name('gallery.images.upload');
+
+Route::post('/billings/pay', StorePayment::class)->name('billings.pay');

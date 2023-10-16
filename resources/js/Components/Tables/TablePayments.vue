@@ -38,6 +38,10 @@ function paymentsRoute(payment: Payment) {
             return route(
                 'org.accounting.payment-accounts.show.payments.show',
                 [payment.payment_accounts_slug, payment.slug]);
+        case 'customer.billings.dashboard':
+            return route(
+                'customer.billings.show',
+                [payment.slug]);
         default:
             return route(
                 'org.accounting.payments.index',
@@ -45,6 +49,7 @@ function paymentsRoute(payment: Payment) {
     }
 
 }
+
 </script>
 
 <template>

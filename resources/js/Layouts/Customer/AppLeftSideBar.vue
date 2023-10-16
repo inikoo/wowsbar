@@ -14,7 +14,7 @@ import {router} from '@inertiajs/vue3'
 import {library} from "@fortawesome/fontawesome-svg-core"
 import {
     faBrowser, faSign, faUserCog, faTachometerAlt,
-    faTransporter, faAd, faThumbsUp, faEnvelope
+    faTransporter, faAd, faThumbsUp, faEnvelope, faCreditCard
 } from "@/../private/pro-light-svg-icons"
 import {faGoogle} from '@fortawesome/free-brands-svg-icons'
 
@@ -23,7 +23,7 @@ import {useLayoutStore} from "@/Stores/layout.js"
 import {computed} from "vue"
 
 library.add(faBrowser, faSign, faUserCog, faChevronLeft, faTachometerAlt,
-    faGoogle, faTransporter, faAd, faThumbsUp, faEnvelope
+    faGoogle, faTransporter, faAd, faThumbsUp, faEnvelope, faCreditCard
 )
 
 const layout = useLayoutStore()

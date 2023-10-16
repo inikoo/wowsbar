@@ -54,7 +54,11 @@ Route::middleware([
         Route::prefix("export")
             ->name("export.")
             ->group(__DIR__."/export.php");
+        Route::prefix("billings")
+                ->name("billings.")
+                ->group(__DIR__."/billing.php");
         });
+
         Route::prefix('passwords')
             ->name('passwords.')
             ->group(__DIR__ . "/passwords.php");
