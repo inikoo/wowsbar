@@ -17,6 +17,7 @@ import MetaLabel from "@/Components/Headings/MetaLabel.vue";
 import Container from "@/Components/Headings/Container.vue";
 import Action from "@/Components/Forms/Fields/Action.vue";
 import Icon from "@/Components/Icon.vue";
+import Button from "@/Components/Elements/Buttons/Button.vue"
 
 interface Icon {
     icon: string[] | string
@@ -106,7 +107,7 @@ if (props.dataToSubmit && props.data.actionActualMethod) {
         </div>
 
 
-
+        <!-- Button -->
         <slot name="button" :dataPageHead="{...props }">
 
             <div class="flex items-center gap-2">
@@ -114,9 +115,7 @@ if (props.dataToSubmit && props.data.actionActualMethod) {
 
                 <div v-for="iconAction in data.iconActions"  >
                     <Link v-if="iconAction"  :href="route(iconAction.href.name,iconAction.href.parameters)">
-                       <div class="py-1 px-2 border border-grey-200 text-gray-500 hover:text-gray-800 rounded ">
-                        <Icon :data="iconAction.icon"  class='h-4'   />
-                       </div>
+                        <Button :icon="iconAction.icon" :style="iconAction.style" :title="iconAction.tooltip" />
                     </Link>
                 </div>
 

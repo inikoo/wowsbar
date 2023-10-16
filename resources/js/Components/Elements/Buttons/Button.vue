@@ -38,9 +38,9 @@ let iconClass = ''
 let sizeClass = ''
 
 // Styling the Button depends on the 'style' props
-if (props.style == 'primary' || props.style == 'create' || props.style == 'save') styleClass = 'bg-gradient-to-r from-gray-600 to-gray-800 text-white dark:text-gray-700 hover:bg-gray-800 dark:hover:bg-gray-300'
-else if (props.style == 'secondary' || props.style == 'edit') styleClass = 'border border-gray-400/80 bg-gray-200 text-gray-700 hover:bg-gray-400/60'
-else if (props.style == 'tertiary') styleClass = 'border border-gray-300 dark:border-gray-500 bg-transparent text-gray-700 dark:text-gray-400 hover:bg-gray-200/70 dark:hover:bg-gray-600/90'
+if (props.style == 'primary' || props.style == 'create' || props.style == 'save') styleClass = 'bg-gray-800 bg-gradient-to-r from-gray-600 to-gray-800 text-white dark:text-gray-700 hover:bg-none'
+else if (props.style == 'secondary' || props.style == 'edit') styleClass = 'bg-gray-300 bg-gradient-to-r from-gray-100 to-gray-300 border border-gray-400/80 text-gray-600 hover:bg-none'
+else if (props.style == 'tertiary') styleClass = 'bg-transparent border border-gray-300 text-gray-700 dark:text-gray-400 hover:bg-gray-200/70 dark:hover:bg-gray-600/90'
 else if (props.style == 'delete') styleClass = 'border border-red-400 dark:border-red-600 text-red-500 dark:text-red-600 hover:text-red-800 hover:bg-red-100 dark:hover:bg-red-100/10 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2'
 else if (props.style == 'positive') styleClass = 'border border-emerald-400 dark:border-emerald-600 text-emerald-500 dark:text-emerald-600 hover:text-emerald-800 hover:bg-emerald-100 dark:hover:bg-emerald-100/10 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2'
 
@@ -127,17 +127,19 @@ const getActionIcon = (icon: any) => {
 
 <template>
     <button type="button"
-        :class="['inline-flex items-center gap-x-2 font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-500 dark:focus:ring-gray-400 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-70',
-        icon ? 'px-2 sm:px-4' : 'px-3 sm:px-5 ',
-        full ? 'w-full justify-center' : 'min-w-max',
-        styleClass,
-        sizeClass
-    ]" :disabled="style == 'disabled'">
+        class="leading-4 inline-flex items-center gap-x-2 font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-70"
+        :class="[
+            icon ? 'px-2 sm:px-4' : 'px-3 sm:px-5 ',
+            full ? 'w-full justify-center' : 'min-w-max',
+            styleClass,
+            sizeClass
+        ]"
+        :disabled="style == 'disabled'">
         <slot>
             <slot name="icon">
-                <FontAwesomeIcon v-if="getActionIcon(icon)" :icon="getActionIcon(icon)" class="" aria-hidden="true"/>
+                <FontAwesomeIcon fixed-width v-if="getActionIcon(icon)" :icon="getActionIcon(icon)" class="" aria-hidden="true"/>
             </slot>
-            <span class="">{{ getActionLabel(label) }}</span>
+            <span v-if="getActionLabel(label)" class="">{{ getActionLabel(label) }}</span>
         </slot>
     </button>
 </template>

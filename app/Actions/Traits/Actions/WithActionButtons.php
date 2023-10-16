@@ -14,10 +14,9 @@ trait WithActionButtons
     protected function getDeleteActionIcon(ActionRequest $request): array
     {
         return [
-            'icon' => [
-                'tooltip' => __('delete'),
-                'icon'    => 'far fa-trash-alt',
-            ],
+            'tooltip' => __('delete'),
+            'icon'    => 'far fa-trash-alt',
+            'style'   => 'negative',
             'href' => [
                 'name'       => preg_replace('/show$/', 'edit', $request->route()->getName()),
                 'parameters' => array_merge(
@@ -35,10 +34,9 @@ trait WithActionButtons
     protected function getEditActionIcon(ActionRequest $request, string $sectionName = 'properties'): array
     {
         return [
-            'icon' => [
-                'tooltip' => __('Edit'),
-                'icon'    => 'far fa-pencil',
-            ],
+            'tooltip' => __('Edit'),
+            'icon'    => 'far fa-pencil',
+            'style'   => 'secondary',
             'href' => [
                 'name'       => preg_replace('/show$/', 'edit', $request->route()->getName()),
                 'parameters' => array_merge(

@@ -120,7 +120,7 @@ class ShowBanner extends InertiaAction
                         $this->canEdit ? [
                             'type'  => 'button',
                             'style' => 'primary',
-                            'label' => __('workshop'),
+                            'label' => __('Workshop'),
                             'icon'  => ["fal", "fa-drafting-compass"],
                             'route' => [
                                 'name'       => preg_replace('/show$/', 'workshop', $request->route()->getName()),
