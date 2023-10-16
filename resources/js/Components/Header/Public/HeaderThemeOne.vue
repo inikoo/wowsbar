@@ -2,7 +2,7 @@
 import { Link, usePage } from '@inertiajs/vue3'
 import Button from '@/Components/Elements/Buttons/Button.vue'
 import Image from "@/Components/Image.vue"
-import Text from '@/Pages/Public/PageComponents/Text.vue'
+
 
 const props = defineProps<{
     data?: {

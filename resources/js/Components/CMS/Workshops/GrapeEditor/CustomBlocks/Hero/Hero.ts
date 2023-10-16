@@ -49,7 +49,7 @@ export const heroBlock2 = () => {
   </div>
 </div>
 
-          </section
+          </section>
   `,
     };
 };

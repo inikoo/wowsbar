@@ -3,7 +3,6 @@ import { loadCss } from "@/Composables/loadCss";
 import { ref, onMounted } from "vue";
 import Html from "@/Components/Blocks/Html.vue";
 import Appointment from "@/Components/Blocks/Appointment.vue";
-import processClasses from "https://cdn.statically.io/gh/mudgen/runcss/master/src/runcss.min.js";
 const props = defineProps<{
     content: {
         css: String;
