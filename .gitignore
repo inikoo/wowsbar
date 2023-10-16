@@ -36,4 +36,4 @@ lang/php_*.json
 /public/customer.hot
 /public/customer/
 import-customers.sh
-
+/private
