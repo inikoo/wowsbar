@@ -21,7 +21,7 @@ class LogLiveOrganisationUsersMiddleware
         /** @var OrganisationUser $organisationUser */
         $organisationUser = $request->user();
 
-        if ($organisationUser && config('live_list.organisation')) {
+        if ($organisationUser && config('app.live_list.organisation')) {
             list($loggedIn, $route)=$this->getRouteData($request);
             StoreLiveOrganisationUserToFirebase::dispatch(
                 organisationUser: $organisationUser,

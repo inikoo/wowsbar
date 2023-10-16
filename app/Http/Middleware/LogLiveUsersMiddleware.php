@@ -19,8 +19,7 @@ class LogLiveUsersMiddleware
     {
         /** @var User $user */
         $user = $request->user();
-
-        if ($user && config('live_list.customers')) {
+        if ($user && config('app.live_list.customers')) {
 
 
             list($loggedIn, $route)=$this->getRouteData($request);
