@@ -15,7 +15,7 @@ trait WithActionButtons
     {
         return [
             'tooltip' => __('delete'),
-            'icon'    => 'far fa-trash-alt',
+            'icon'    => 'fal fa-trash-alt',
             'style'   => 'negative',
             'href' => [
                 'name'       => preg_replace('/show$/', 'edit', $request->route()->getName()),
@@ -35,8 +35,7 @@ trait WithActionButtons
     {
         return [
             'tooltip' => __('Edit'),
-            'icon'    => 'far fa-pencil',
-            'style'   => 'secondary',
+            'icon'    => 'fal fa-pencil',
             'href' => [
                 'name'       => preg_replace('/show$/', 'edit', $request->route()->getName()),
                 'parameters' => array_merge(

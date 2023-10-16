@@ -17,7 +17,7 @@ import MetaLabel from "@/Components/Headings/MetaLabel.vue";
 import Container from "@/Components/Headings/Container.vue";
 import Action from "@/Components/Forms/Fields/Action.vue";
 import Icon from "@/Components/Icon.vue";
-import Button from "@/Components/Elements/Buttons/Button.vue"
+import IconAction from "@/Components/Elements/Buttons/IconAction.vue"
 
 interface Icon {
     icon: string[] | string
@@ -114,9 +114,7 @@ if (props.dataToSubmit && props.data.actionActualMethod) {
 
 
                 <div v-for="iconAction in data.iconActions"  >
-                    <Link v-if="iconAction"  :href="route(iconAction.href.name,iconAction.href.parameters)">
-                        <Button :icon="iconAction.icon" :style="iconAction.style" :title="iconAction.tooltip" />
-                    </Link>
+                    <IconAction v-if="iconAction" :iconAction="iconAction"/>
                 </div>
 
                 <div v-for="action in data.actions">
