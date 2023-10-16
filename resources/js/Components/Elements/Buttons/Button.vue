@@ -34,7 +34,6 @@ interface Icon {
 library.add(faPlus, faSave, fadSave, faUpload, faDownload, faArrowLeft)
 
 let styleClass = ''
-let iconClass = ''
 let sizeClass = ''
 
 // Styling the Button depends on the 'style' props
@@ -52,23 +51,18 @@ else styleClass = 'border border-gray-300 bg-transparent text-gray-700 dark:text
 switch (props.size) {
     case 'xs':
         sizeClass = 'rounded px-2.5 py-1.5 text-xs'
-        iconClass = '-ml-0.5 mr-2 h-3 w-3 '
         break
     case 's':
         sizeClass = 'rounded-md px-3 py-2 text-sm'
-        iconClass = '-ml-0.5 mr-2 h-4 w-4'
         break
     case 'm':
-        sizeClass = 'rounded-md x-4 py-2 text-sm'
-        iconClass = '-ml-1 mr-2 '
+        sizeClass = 'rounded-md px-4 py-2 text-sm'
         break
     case 'l':
         sizeClass = 'rounded-md px-4 py-2 text-base'
-        iconClass = '-ml-1 mr-3 h-5 w-5'
         break
     case 'xl':
         sizeClass = 'rounded-md px-6 py-3 text-base'
-        iconClass = 'ml-1 mr-3 h-5 w-5'
         break
 }
 
