@@ -17,6 +17,7 @@ Route::middleware([
         Route::get('/', function () {
             return redirect('/app/dashboard');
         });
+        Route::middleware(["reset-pass"])->group(function () {
         Route::prefix("dashboard")
             ->name("dashboard.")
             ->group(__DIR__."/dashboard.php");
@@ -53,6 +54,10 @@ Route::middleware([
         Route::prefix("export")
             ->name("export.")
             ->group(__DIR__."/export.php");
+        });
+        Route::prefix('passwords')
+            ->name('passwords.')
+            ->group(__DIR__ . "/passwords.php");
 
     });
 
