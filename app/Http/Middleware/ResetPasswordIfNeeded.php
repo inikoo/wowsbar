@@ -1,4 +1,9 @@
 <?php
+/*
+ * Author: Raul Perusquia <raul@inikoo.com>
+ * Reviewed: Mon, 16 Oct 2023 14:37:39 Malaysia Time, Office, Bali, Indonesia
+ * Copyright (c) 2023, Raul A Perusquia Flores
+ */
 
 namespace App\Http\Middleware;
 
@@ -9,17 +14,11 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ResetPasswordIfNeeded
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
-     */
     public function handle(Request $request, Closure $next): Response
     {
         if($request->user(Auth::getDefaultDriver())->reset_password) {
-            return redirect()->route(Auth::getDefaultDriver() . '.passwords.reset.password');
+            return redirect()->route(Auth::getDefaultDriver() . '.reset-password.edit');
         }
-
         return $next($request);
     }
 }

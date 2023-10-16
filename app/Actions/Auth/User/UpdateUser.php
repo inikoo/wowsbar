@@ -10,7 +10,6 @@ namespace App\Actions\Auth\User;
 use App\Actions\CRM\Customer\Hydrators\CustomerHydrateCustomerUsers;
 use App\Actions\Traits\WithActionUpdate;
 use App\Http\Resources\Auth\UserResource;
-use App\Models\Auth\CustomerUser;
 use App\Models\Auth\User;
 use App\Rules\AlphaDashDot;
 use Illuminate\Validation\Rules\Password;

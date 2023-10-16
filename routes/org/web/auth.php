@@ -6,6 +6,8 @@
  */
 
 use App\Actions\Organisation\OrganisationUser\Login;
+use App\Actions\Organisation\OrganisationUser\UI\ShowResetOrganisationUserPassword;
+use App\Actions\Organisation\OrganisationUser\UpdateOrganisationUserPassword;
 use App\Actions\UI\Common\Auth\Logout;
 use App\Actions\UI\Common\Auth\ShowLogin;
 use Illuminate\Support\Facades\Route;
@@ -17,4 +19,6 @@ Route::middleware('guest:org')->group(function () {
 
 Route::middleware('org-auth:org')->group(function () {
     Route::post('logout', Logout::class)->name('logout');
+    Route::get('reset/password', ShowResetOrganisationUserPassword::class)->name('reset-password.edit');
+    Route::patch('reset/password', UpdateOrganisationUserPassword::class)->name('reset-password.update');
 });

@@ -200,6 +200,18 @@ class GetLayout
             ];
         }
 
+        if ($customerUser->hasPermissionTo('billing.view')) {
+            $navigation['billings'] = [
+                'scope'   => 'billings',
+                'icon'    => ['fal', 'fa-credit-card'],
+                'label'   => __('billings'),
+                'route'   => 'customer.billings.dashboard',
+                'topMenu' => [
+                    'subSections' => []
+                ]
+            ];
+        }
+
 
         if ($customerUser->hasPermissionTo('sysadmin.view')) {
             $navigation['sysadmin'] = [
