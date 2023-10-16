@@ -8,7 +8,7 @@
 import {Head} from '@inertiajs/vue3';
 import PageHeading from '@/Components/Headings/PageHeading.vue';
 import { capitalize } from "@/Composables/capitalize"
-import {faSign} from "../../../../private/pro-light-'@fas/'"
+import {faSign} from '@fal/'
 import {library} from "@fortawesome/fontawesome-svg-core";
 import Tabs from "@/Components/Navigation/Tabs.vue";
 import {computed, ref} from "vue";
