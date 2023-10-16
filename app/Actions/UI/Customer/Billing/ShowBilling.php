@@ -67,7 +67,7 @@ class ShowBilling extends InertiaAction
                         'type'   => 'simple',
                         'simple' => [
                             'route' => [
-                                'name' => 'customer.billings.dashboard'
+                                'name' => 'customer.billing.dashboard'
                             ],
                             'label' => __('billing'),
                         ]

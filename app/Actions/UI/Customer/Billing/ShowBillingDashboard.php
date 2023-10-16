@@ -52,7 +52,7 @@ class ShowBillingDashboard extends InertiaAction
                             'style' => 'create',
                             'label' => __('Create Billing'),
                             'route' => [
-                                'name'       => 'customer.billings.create',
+                                'name'       => 'customer.billing.create',
                                 'parameters' => []
                             ],
                         ]
@@ -93,7 +93,7 @@ class ShowBillingDashboard extends InertiaAction
                         'type'   => 'simple',
                         'simple' => [
                             'route' => [
-                                'name' => 'customer.billings.dashboard'
+                                'name' => 'customer.billing.dashboard'
                             ],
                             'label' => __('Billing'),
                         ]

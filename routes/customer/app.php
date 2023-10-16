@@ -36,6 +36,9 @@ Route::middleware([
             Route::prefix("banners")
                 ->name("banners.")
                 ->group(__DIR__."/banners.php");
+            Route::prefix("billing")
+                ->name("billing.")
+                ->group(__DIR__."/billing.php");
             Route::prefix("media")
                 ->name("media.")
                 ->group(__DIR__."/media.php");

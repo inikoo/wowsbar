@@ -38,9 +38,9 @@ function paymentsRoute(payment: Payment) {
             return route(
                 'org.accounting.payment-accounts.show.payments.show',
                 [payment.payment_accounts_slug, payment.slug]);
-        case 'customer.billings.dashboard':
+        case 'customer.billing.dashboard':
             return route(
-                'customer.billings.show',
+                'customer.billing.show',
                 [payment.slug]);
         default:
             return route(

@@ -205,7 +205,7 @@ class GetLayout
                 'scope'   => 'billings',
                 'icon'    => ['fal', 'fa-credit-card'],
                 'label'   => __('billings'),
-                'route'   => 'customer.billings.dashboard',
+                'route'   => 'customer.billing.dashboard',
                 'topMenu' => [
                     'subSections' => []
                 ]
