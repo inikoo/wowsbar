@@ -8,10 +8,10 @@ import Button from '@/Components/Elements/Buttons/Button.vue'
 import { componentBlocks } from '@/types/WebPageWorkshop'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faTrashAlt, faTimes } from "@/../private/pro-light-svg-icons"
-import { faText, faWindowMaximize } from "@/../private/pro-regular-svg-icons"
-import { faEye, faEyeSlash } from '@/../private/pro-solid-svg-icons'
-import { faRectangleWide } from "@/../private/pro-duotone-svg-icons"
+import { faTrashAlt, faTimes } from '@fal/'
+import { faText, faWindowMaximize } from '@far/'
+import { faEye, faEyeSlash } from '@fas/'
+import { faRectangleWide } from '@fad/'
 import { library } from '@fortawesome/fontawesome-svg-core'
 
 const props = defineProps<{

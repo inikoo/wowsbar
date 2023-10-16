@@ -12,7 +12,7 @@ import Edit from '@/Components/Edit.vue';
 import {library} from "@fortawesome/fontawesome-svg-core"
 import {
     faEdit, faPowerOff, faShield, faToggleOn
-} from "@/../private/pro-light-svg-icons"
+} from '@fal/'
 
 library.add(faEdit, faPowerOff, faShield, faToggleOn);
 const props = defineProps<{

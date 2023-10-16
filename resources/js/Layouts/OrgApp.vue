@@ -31,8 +31,8 @@ import {
     faChevronDown,
     faGlobe,
     faLanguage, faUsers, faNetworkWired, faCalendar, faStopwatch, faBuilding, faHandshake
-} from "@/../private/pro-light-svg-icons"
-import { faSearch, faBell} from "../../private/pro-regular-svg-icons"
+} from '@fal/'
+import { faSearch, faBell} from "@far/"
 
 
 library.add(

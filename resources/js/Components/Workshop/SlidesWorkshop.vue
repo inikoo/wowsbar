@@ -13,9 +13,9 @@ import {
     faCog,
     faImage,
     faLock,
-} from "@/../private/pro-light-svg-icons"
-// import {  } from "@/../private/pro-regular-svg-icons"
-import { faEye, faEyeSlash } from "@/../private/pro-solid-svg-icons"
+} from '@fal/'
+// import {  } from '@far/'
+import { faEye, faEyeSlash } from '@fas/'
 import { library } from "@fortawesome/fontawesome-svg-core"
 import draggable from "vuedraggable"
 import { ulid } from "ulid"
@@ -624,7 +624,7 @@ const uploadImageRespone = (res) => {
             <!-- Button: Add slide, Gallery -->
             <div class="flex flex-wrap md:flex-row gap-x-2 gap-y-1 lg:gap-y-0 w-full justify-between">
                 <Button @click="isOpenGalleryImages = !isOpen" :style="`tertiary`" icon="fal fa-photo-video" label="Gallery" size="xs" class="relative w-full flex justify-center lg:w-fit lg:inline space-x-2" id="gallery" />
-                
+
                 <Button :style="`secondary`" size="xs" class="relative w-full flex justify-center lg:w-fit lg:inline space-x-2">
                     <FontAwesomeIcon icon='fas fa-plus' class='' aria-hidden='true' />
                     <span>{{ trans("Add slide") }}</span>

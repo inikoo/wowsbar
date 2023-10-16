@@ -9,7 +9,7 @@ import { ref, watch, reactive } from 'vue'
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { RadioGroup, RadioGroupLabel, RadioGroupOption } from '@headlessui/vue'
 import Menu from '@/Components/CMS/Menu/index.vue'
-import { faHandPointer, faHandRock, faPlus, faLink, faObjectGroup } from '@/../private/pro-solid-svg-icons';
+import { faHandPointer, faHandRock, faPlus, faLink, faObjectGroup } from '@fas/';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { ulid } from 'ulid';
 import HyperlinkTools from '@/Components/CMS/Fields/Hyperlinktools.vue'
@@ -70,7 +70,7 @@ const addNewSubMenu = () => {
 }
 
 </script>
-  
+
 <template>
     <div class="bg-white">
         <div class="w-[100px] sm:w-[200px] p-6 overflow-y-auto overflow-x-hidden h-[46rem]">
@@ -158,4 +158,3 @@ const addNewSubMenu = () => {
         </div>
     </div>
 </template>
-  

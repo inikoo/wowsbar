@@ -30,7 +30,7 @@ import {
     faShapes,
     faSortAmountDownAlt,
     faLayerGroup
-} from "@/../private/pro-light-svg-icons";
+} from '@fal/';
 import WebpageShowcase from "@/Pages/Organisation/Web/WebpageShowcase.vue";
 import WebpageAnalytics from "@/Pages/Organisation/Web/WebpageAnalytics.vue";
 import TableSnapshots from "@/Components/Tables/TableSnapshots.vue";

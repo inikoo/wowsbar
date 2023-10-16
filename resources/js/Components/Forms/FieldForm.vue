@@ -31,9 +31,9 @@ import ToggleSquare from './Fields/ToggleSquare.vue'
 import CustomerRoles from '@/Components/Forms/Fields/CustomerRoles.vue'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faSave as fadSave } from '@/../private/pro-duotone-svg-icons'
-import { faSave as falSave } from '@/../private/pro-light-svg-icons'
-import { faAsterisk } from '@/../private/pro-solid-svg-icons'
+import { faSave as fadSave } from '@fad/'
+import { faSave as falSave } from '@fal/'
+import { faAsterisk } from '@fas/'
 import { library } from '@fortawesome/fontawesome-svg-core'
 library.add(fadSave, falSave, faAsterisk)
 

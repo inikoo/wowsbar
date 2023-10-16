@@ -9,10 +9,10 @@
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import PureInputWithAddOn from '@/Components/Pure/PureInputWithAddOn.vue'
 
-import { faDollarSign } from "@/../private/pro-regular-svg-icons"
+import { faDollarSign } from '@far/'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faExclamationCircle, faCheckCircle } from "@/../private/pro-solid-svg-icons"
-import { faSpinnerThird } from "@/../private/pro-duotone-svg-icons"
+import { faExclamationCircle, faCheckCircle } from '@fas/'
+import { faSpinnerThird } from '@fad/'
 library.add(faExclamationCircle, faCheckCircle, faSpinnerThird, faDollarSign)
 
 const props = defineProps<{

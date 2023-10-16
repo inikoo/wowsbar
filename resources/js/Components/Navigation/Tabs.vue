@@ -9,7 +9,7 @@ import { ref, Ref } from "vue"
 import { capitalize } from "@/Composables/capitalize"
 import { trans } from 'laravel-vue-i18n'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faInfoCircle, faTachometerAlt } from "@/../private/pro-solid-svg-icons"
+import { faInfoCircle, faTachometerAlt } from '@fas/'
 import {
     faAd,
     faBullseye,
@@ -19,7 +19,7 @@ import {
     faRoad,
     faTransporter, faShoppingCart,
     faWallet, faSign
-} from "@/../private/pro-light-svg-icons"
+} from '@fal/'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faGoogle } from "@fortawesome/free-brands-svg-icons"
 

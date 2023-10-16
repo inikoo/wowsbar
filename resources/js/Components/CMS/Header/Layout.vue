@@ -7,7 +7,7 @@ import Search from "@/Components/CMS/Utils/Search.vue";
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faHandPointer, faHandRock, faPlus, faText, faSearch, faImage } from '@/../private/pro-solid-svg-icons';
+import { faHandPointer, faHandRock, faPlus, faText, faSearch, faImage } from '@fas/';
 import Input from "../Fields/Input.vue"
 library.add(faHandPointer, faText, faSearch, faImage)
 const props = defineProps<{
@@ -103,7 +103,7 @@ const generateThumbnail = (file) => {
 		@resize:end="eHandler" @drag:move="eHandler" @drag:start="eHandler" @drag:end="eHandler">
 			<div v-for="(item, index) in props.data.slice().reverse()" :key="item.id" :fit-parent="true">
 				<div v-if="item.type == 'text'" :ref="(refValue) => setdragElement(refValue, item)"
-					class="col-sm-10 draggable-component" 
+					class="col-sm-10 draggable-component"
 					:style="{
 							top: item.style?.top + 'px',
 							left: item.style?.left + 'px',
@@ -145,9 +145,9 @@ const generateThumbnail = (file) => {
           :key="item.id"
           :maxWidth="layout.height"
           :maxHeight="1233"
-          v-if="item.type == 'image'" 
-          :ref="(refValue) => setdragElement(refValue.$el, item)" 
-          class="col-sm-10 draggable-component" 
+          v-if="item.type == 'image'"
+          :ref="(refValue) => setdragElement(refValue.$el, item)"
+          class="col-sm-10 draggable-component"
           :style="{ ...item.style }"
         >
 

@@ -7,7 +7,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
-import { faImage, faExpandArrows, faAlignCenter, faTrash, faStopwatch } from "../../../private/pro-light-svg-icons"
+import { faImage, faExpandArrows, faAlignCenter, faTrash, faStopwatch } from '@fal/'
 import PrimitiveInput from '@/Components/Forms/Fields/Primitive/PrimitiveInput.vue'
 import Corners from "@/Components/Workshop/Fields/Corners.vue"
 import Range from "@/Components/Workshop/Fields/Range.vue"

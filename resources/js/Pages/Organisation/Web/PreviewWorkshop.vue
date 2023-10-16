@@ -19,7 +19,7 @@
   import { getDbRef } from '@/Composables/firebase'
   import { set, onValue, get } from "firebase/database"
   import { notify } from "@kyvg/vue3-notification"
-  import { faSpinnerThird } from '@/../private/pro-duotone-svg-icons'
+  import { faSpinnerThird } from '@fad/'
   import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
   import { library } from "@fortawesome/fontawesome-svg-core"
   import PageHeading from "@/Components/Headings/PageHeading.vue";
@@ -34,7 +34,7 @@ const props = defineProps({
     title: String,
     pageHead: Object,
 });
-  
+
 
 const dbPath = 'org/websites'
 const data =  ref(null)
@@ -71,33 +71,33 @@ const getHeaderComponent = computed(() => {
         'HeaderThemeOne': HeaderThemeOne
     }
 
-    console.log(data.value.header)    
+    console.log(data.value.header)
     return componentList['HeaderThemeOne']
 })
-  
+
   const getMenuComponent = computed(() => {
       const componentList = {
           'MenuOne': MenuOne,
           'MenuTwo': MenuTwo
       }
-  
+
       return componentList[data.value?.menu?.theme?.name ?? 'MenuTwo']
   })
-  
+
   const getFooterComponent = computed(() => {
       const componentList = {
           'FooterThemeOne': FooterThemeOne,
           'FooterThemeTwo': FooterThemeTwo,
           'FooterThemeThree': FooterThemeThree,
       }
-  
+
       return componentList[data.value?.footer?.theme?.name ?? 'FooterThemeOne']
   })
 
 
-  
+
   </script>
-  
+
   <template>
     <Head :title="capitalize(title)" />
     <PageHeading :data="pageHead"></PageHeading>
@@ -109,7 +109,7 @@ const getHeaderComponent = computed(() => {
               <!-- <component :is="getHeaderComponent" :data="data.header"></component> -->
 
               <component v-if="_get(data,'menu')" :is="getMenuComponent" :data="data.menu"></component>
-  
+
               <!-- Background: Square line -->
               <svg class="absolute inset-0 -z-10 h-full w-full stroke-gray-200 [mask-image:radial-gradient(100%_100%_at_top_right,white,transparent)]"
                   aria-hidden="true">
@@ -121,15 +121,14 @@ const getHeaderComponent = computed(() => {
                   </defs>
                   <rect width="100%" height="100%" stroke-width="0" fill="url(#0787a7c5-978c-4f66-83c7-11c213f99cb7)" />
               </svg>
-  
+
               <!-- Main content of page -->
               <slot />
-  
+
               <component v-if="_get(data,'footer')" :is="getFooterComponent" :data="data.footer.data" />
           </section>
       </div>
-  
+
       <!-- <Cookies /> -->
   </template>
-  
-  
+

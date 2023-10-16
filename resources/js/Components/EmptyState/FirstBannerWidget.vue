@@ -9,9 +9,9 @@ import { router } from '@inertiajs/vue3'
 import axios from 'axios'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faGlobe } from '@/../private/pro-light-svg-icons'
-import { faCheckCircle } from '@/../private/pro-solid-svg-icons'
-import { faSpinnerThird } from '@/../private/pro-duotone-svg-icons'
+import { faGlobe } from '@fal/'
+import { faCheckCircle } from '@fas/'
+import { faSpinnerThird } from '@fad/'
 // import { useLayoutStore } from '@/Stores/layout'
 import { library } from '@fortawesome/fontawesome-svg-core'
 library.add(faCheckCircle, faSpinnerThird, faGlobe)
@@ -51,7 +51,7 @@ const handleCreateButton = async () => {
     try {
         const response = await axios.post(
             route(props.data.createRoute.name, props.data.createRoute.parameters),
-            { 
+            {
                 type: dataToSubmit.orientation,
                 portfolio_website_id: dataToSubmit.selectedWebsiteId
             }

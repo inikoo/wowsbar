@@ -8,7 +8,7 @@
 import {Head} from '@inertiajs/vue3';
 import PageHeading from '@/Components/Headings/PageHeading.vue';
 import { capitalize } from "@/Composables/capitalize"
-import {faSign} from "@/../private/pro-light-svg-icons"
+import {faSign} from '@fal/'
 import {library} from "@fortawesome/fontawesome-svg-core";
 import TableStockImages from "@/Components/Tables/TableStockImages.vue";
 library.add(faSign)

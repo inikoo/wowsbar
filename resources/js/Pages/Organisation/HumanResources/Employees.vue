@@ -8,8 +8,8 @@ import TableEmployees from "@/Components/Tables/TableEmployees.vue"
 import ModalUpload from '@/Components/Utils/ModalUpload.vue'
 import Button from '@/Components/Elements/Buttons/Button.vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faUpload } from '@/../private/pro-solid-svg-icons'
-import { faTimes } from '@/../private/pro-light-svg-icons'
+import { faUpload } from '@fas/'
+import { faTimes } from '@fal/'
 import { library } from '@fortawesome/fontawesome-svg-core'
 library.add(faUpload, faTimes)
 

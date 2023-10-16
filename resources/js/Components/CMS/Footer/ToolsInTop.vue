@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { faHandPointer, faHandRock, faPlus } from '@/../private/pro-solid-svg-icons';
+import { faHandPointer, faHandRock, faPlus } from '@fas/';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { toRefs, watch, ref } from 'vue'
@@ -90,7 +90,7 @@ const columChange = (index) => {
     </div>
   </div>
 </template>
-  
+
 
 <style></style>
 

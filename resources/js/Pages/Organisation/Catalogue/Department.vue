@@ -10,7 +10,7 @@ import {library} from '@fortawesome/fontawesome-svg-core';
 import {
     faCube,
     faFolder, faMoneyBillWave, faRoad
-} from "@/../private/pro-light-svg-icons";
+} from '@fal/';
 import PageHeading from '@/Components/Headings/PageHeading.vue';
 import ModelDetails from "@/Pages/ModelDetails.vue";
 import {useTabChange} from "@/Composables/tab-change";

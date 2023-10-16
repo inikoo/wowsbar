@@ -7,9 +7,9 @@
 <script setup lang="ts">
 import PureInput from "@/Components/Pure/PureInput.vue"
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faExclamationCircle, faCheckCircle } from "@/../private/pro-solid-svg-icons";
-import { faCopy } from "@/../private/pro-light-svg-icons";
-import { faSpinnerThird } from "@/../private/pro-duotone-svg-icons";
+import { faExclamationCircle, faCheckCircle } from '@fas/';
+import { faCopy } from '@fal/';
+import { faSpinnerThird } from '@fad/';
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { set, get } from "lodash";
 library.add(faExclamationCircle, faCheckCircle, faSpinnerThird, faCopy);
@@ -97,4 +97,3 @@ const updateFormValue = (newValue) => {
         {{ form.errors[fieldName] }}
     </p>
 </template>
-  

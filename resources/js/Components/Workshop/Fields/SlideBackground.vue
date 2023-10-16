@@ -12,7 +12,7 @@ import { set, get } from 'lodash'
 import ScreenView from "@/Components/ScreenView.vue"
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faUpload } from '@/../private/pro-solid-svg-icons'
+import { faUpload } from '@fas/'
 import { library } from '@fortawesome/fontawesome-svg-core'
 library.add(faUpload)
 
@@ -87,7 +87,7 @@ const uploadImageRespone = (res) => {
     isOpen.value = false
 }
 
-const ratio = ref(props.bannerType == 'square' ? { w: 1 , h: 1} : { w: 4 , h: 1})  // if Square then 1:1 
+const ratio = ref(props.bannerType == 'square' ? { w: 1 , h: 1} : { w: 4 , h: 1})  // if Square then 1:1
 
 const screenViewChange = (value: string) => {
     screenView.value = value
@@ -129,7 +129,7 @@ const screenViewChange = (value: string) => {
                 <CropImage
                     :data="addFiles"
                     :imagesUploadRoute="props.fieldData.uploadRoute"
-                    :response="uploadImageRespone" 
+                    :response="uploadImageRespone"
                     :ratio="ratio"/>
             </div>
         </Modal>
@@ -137,7 +137,7 @@ const screenViewChange = (value: string) => {
         <div v-if="bannerType != 'square'" class="flex justify-end">
             <ScreenView @screenView="screenViewChange" />
         </div>
-        
+
         <div class="flex justify-center w-full">
             <div class="w-fit h-32 lg:h-44 xl:h-64 overflow-hidden border border-gray-300 shadow transition-all duration-200 ease-in-out" :class="[
                 bannerType == 'square'

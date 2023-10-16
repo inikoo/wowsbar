@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { faHandPointer, faHandRock, faPlus } from '@/../private/pro-solid-svg-icons';
+import { faHandPointer, faHandRock, faPlus } from '@fas/';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {  ref } from 'vue'
 
@@ -43,7 +43,7 @@ const Bluprint = [
     </div>
   </div>
 </template>
-  
+
 
 <style></style>
 

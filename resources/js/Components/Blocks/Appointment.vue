@@ -5,7 +5,7 @@ import {
     faRocketLaunch,
     faClock,
     faVideo,
-} from "@/../private/pro-regular-svg-icons";
+} from '@far/';
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { isNull } from "lodash";
 import { useFormatTime } from "@/Composables/useFormatTime";

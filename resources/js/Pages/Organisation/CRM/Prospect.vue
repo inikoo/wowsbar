@@ -16,7 +16,7 @@ import {
     faMoneyBill,
     faPaperclip, faPaperPlane, faStickyNote,
     faTags,faCube,faCodeBranch
-} from "@/../private/pro-light-svg-icons";
+} from '@fal/';
 import ModelDetails from "@/Pages/ModelDetails.vue";
 import {useTabChange} from "@/Composables/tab-change";
 import {computed, defineAsyncComponent, ref} from "vue";

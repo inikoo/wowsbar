@@ -1,7 +1,7 @@
 <script setup lang='ts'>
 import { useCopyText } from '@/Composables/useCopyText'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faCopy } from '@/../private/pro-light-svg-icons'
+import { faCopy } from '@fal/'
 import { library } from '@fortawesome/fontawesome-svg-core'
 library.add(faCopy)
 
@@ -36,7 +36,7 @@ const emits = defineEmits<{
             class="py-2.5 px-3 block w-full shadow rounded-md
                 ring-1 ring-gray-300
                 text-gray-600 dark:bg-gray-600 dark:text-gray-400 sm:text-sm border-gray-300 dark:border-gray-500 placeholder:text-gray-400
-                focus:ring-2 focus:ring-gray-500 focus:border-gray-500 
+                focus:ring-2 focus:ring-gray-500 focus:border-gray-500
                 read-only:bg-gray-100 read-only:ring-0 read-only:ring-transparent read-only:focus:border-transparent read-only:focus:border-gray-300 read-only:text-gray-500
             "
         />

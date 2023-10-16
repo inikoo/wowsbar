@@ -21,8 +21,8 @@ import { Ref } from 'vue'
 // import { router } from "@inertiajs/vue3"
 import { trans } from 'laravel-vue-i18n'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faSpinnerThird } from '@/../private/pro-duotone-svg-icons'
-import { faSeedling } from '@/../private/pro-light-svg-icons'
+import { faSpinnerThird } from '@fad/'
+import { faSeedling } from '@fal/'
 import { library } from '@fortawesome/fontawesome-svg-core'
 library.add(faSpinnerThird, faSeedling)
 
@@ -130,7 +130,7 @@ function handleKeyDown() {
                                                     </div>
                                                     <FontAwesomeIcon icon="fa-regular fa-chevron-right" v-if="active" class="relative h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
 
-                                                    
+
                                                 </Link>
                                             </div>
                                         </ComboboxOption>

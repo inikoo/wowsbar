@@ -12,7 +12,7 @@ import Create from "@/Components/Create.vue";
 import {library} from '@fortawesome/fontawesome-svg-core';
 import {
 faFingerprint,faIndent,faShapes
-} from "@/../private/pro-light-svg-icons";
+} from '@fal/';
 
 library.add(
     faFingerprint,faIndent,faShapes

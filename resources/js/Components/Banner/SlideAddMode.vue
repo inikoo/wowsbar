@@ -5,7 +5,7 @@ import Button from "@/Components/Elements/Buttons/Button.vue"
 
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
-import { faImage, faPhotoVideo } from "@/../private/pro-light-svg-icons"
+import { faImage, faPhotoVideo } from '@fal/'
 library.add(faImage, faPhotoVideo)
 
 const props = defineProps<{
@@ -42,7 +42,7 @@ const onChange = () => {
                 <!-- <span>{{ trans("Click") }}</span> -->
                 <input type="file" multiple name="file" id="fileInput" class="sr-only" @change="onChange" ref="fileInput" />
             </label>
-            
+
             <div class="text-center text-white">
                 <FontAwesomeIcon :icon="['fal', 'image']" class="mx-auto h-12 w-12 text-gray-300" aria-hidden="true" />
                 <div class="mt-2 flex  justify-center text-3xl font-semibold leading-6 ">

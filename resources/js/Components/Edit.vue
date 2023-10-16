@@ -36,7 +36,7 @@ import {
     faLanguage,
     faAddressBook,
     faTrashAlt
-} from "@/../private/pro-light-svg-icons"
+} from '@fal/'
 
 library.add(faToggleOn, faEdit, faUserLock, faBell, faCopyright, faUserCircle, faKey, faClone, faPaintBrush, faMoonStars, faLightbulbOn, faCheck, faPhone, faIdCard, faFingerprint, faLanguage, faAddressBook, faTrashAlt, faGoogle,
     faWindowClose)
@@ -195,7 +195,7 @@ onBeforeUnmount(() => {
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- For button Authorize Google -->
                 <div class="py-2 px-3 flex justify-end max-w-2xl" v-if="formData.blueprint[currentTab].button" :id="formData.title">
                     <component :is="formData.blueprint[currentTab].button.disable ? 'div' : 'a'"

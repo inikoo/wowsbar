@@ -8,7 +8,7 @@
 import { ref, onBeforeMount, watch, onMounted, onUnmounted } from 'vue';
 import Popper from "vue3-popper";
 import SettingColums from './SettingColums.vue';
-import { faEllipsisV } from '@/../private/pro-regular-svg-icons';
+import { faEllipsisV } from '@far/';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 library.add(faEllipsisV);

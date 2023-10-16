@@ -4,7 +4,7 @@ import { Ref, ref } from 'vue'
 import WebpageColorPicker from '@/Components/CMS/Workshops/WorkshopComponents/WebpageColorPicker.vue'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faImage } from '@/../private/pro-light-svg-icons'
+import { faImage } from '@fal/'
 import { library } from '@fortawesome/fontawesome-svg-core'
 library.add(faImage)
 

@@ -15,7 +15,7 @@ import Tabs from "@/Components/Navigation/Tabs.vue";
 import {capitalize} from "@/Composables/capitalize"
 import TableCustomerHistories from "@/Components/Tables/TableCustomerHistories.vue";
 
-import {faRectangleWide, faGlobe} from "@/../private/pro-light-svg-icons"
+import {faRectangleWide, faGlobe} from '@fal/'
 
 library.add(faRectangleWide, faGlobe)
 

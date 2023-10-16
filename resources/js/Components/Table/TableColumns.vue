@@ -2,8 +2,8 @@
 import { trans } from 'laravel-vue-i18n'
 import ButtonWithDropdown from "./ButtonWithDropdown.vue"
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faYinYang, faUserCircle, } from "@/../private/pro-light-svg-icons"
-import { faEye } from "@/../private/pro-solid-svg-icons"
+import { faYinYang, faUserCircle, } from '@fal/'
+import { faEye } from '@fas/'
 import { library } from '@fortawesome/fontawesome-svg-core'
 library.add(faYinYang, faUserCircle, faEye)
 

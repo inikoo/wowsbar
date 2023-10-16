@@ -3,7 +3,7 @@ import { trans } from 'laravel-vue-i18n'
 import { ref, reactive } from 'vue'
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faChevronDown, faCheckSquare, faSquare } from "@/../private/pro-regular-svg-icons"
+import { faChevronDown, faCheckSquare, faSquare } from '@far/'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { onMounted } from 'vue'
 library.add(faChevronDown, faCheckSquare, faSquare)
@@ -20,7 +20,7 @@ const props = defineProps<{
 // console.log(props.elements)
 
 const emits = defineEmits(['checkboxChanged'])
-const isChecked = ref({})   
+const isChecked = ref({})
 const selectedGroup = ref(Object.keys(props.elements)[0]) ?? ref('')
 const selectedElement: any = reactive({
     [selectedGroup.value]: props.elements[selectedGroup.value]?.elements ? Object.keys(props.elements[selectedGroup.value].elements) : []
@@ -145,10 +145,10 @@ onMounted(() => {
             </Menu>
         </div>
 
-        
+
         <!-- <div v-s -->
     </div>
-    
+
     <!-- <pre>{{ Object.keys(props.elements[selectedGroup].elements) }}
 {{ selectedElement }}</pre> -->
 </template>

@@ -8,9 +8,9 @@
 import { Link } from "@inertiajs/vue3"
 
 import { library } from "@fortawesome/fontawesome-svg-core"
-import { faEdit, faWindowMaximize, faDraftingCompass, faEmptySet, faMoneyCheckAlt, faPeopleArrows, faSlidersH, faSave, faSuitcase, faBroadcastTower, faUpload, faLevelUp, faUserPlus, faTimes, faClock, faSeedling} from "@/../private/pro-light-svg-icons"
-import { faRocketLaunch, faPencil, faArrowLeft, faBorderAll, faTrashAlt, faDesktop} from "@/../private/pro-regular-svg-icons"
-import { faPlus } from "@/../private/pro-solid-svg-icons"
+import { faEdit, faWindowMaximize, faDraftingCompass, faEmptySet, faMoneyCheckAlt, faPeopleArrows, faSlidersH, faSave, faSuitcase, faBroadcastTower, faUpload, faLevelUp, faUserPlus, faTimes, faClock, faSeedling} from '@fal/'
+import { faRocketLaunch, faPencil, faArrowLeft, faBorderAll, faTrashAlt, faDesktop} from '@far/'
+import { faPlus } from '@fas/'
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { capitalize } from "@/Composables/capitalize"
 import MetaLabel from "@/Components/Headings/MetaLabel.vue";

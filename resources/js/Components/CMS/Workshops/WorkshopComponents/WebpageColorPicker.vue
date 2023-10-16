@@ -1,4 +1,4 @@
-  
+
 <script  setup lang="ts">
 import { ColorPicker } from 'vue-color-kit'
 import 'vue-color-kit/dist/vue-color-kit.css'
@@ -6,7 +6,7 @@ import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue'
 import { ref } from 'vue'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faPaintBrushAlt } from '@/../private/pro-regular-svg-icons'
+import { faPaintBrushAlt } from '@far/'
 import { library } from '@fortawesome/fontawesome-svg-core'
 library.add(faPaintBrushAlt)
 
@@ -66,7 +66,7 @@ const changeColor = (value: valueColorPicker) => {
             <div class="bg-rose-500 border border-slate-300 rounded w-6 h-6 shadow cursor-pointer hover:scale-110 transition-transform duration-100 ease-in-out" @click="() => changeColor({ rgba: { r: 244, g: 63, b: 94, a: 255 } })" />
         </div>
 
-        
+
 
 
     </div>

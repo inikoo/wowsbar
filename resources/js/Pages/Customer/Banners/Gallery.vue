@@ -13,9 +13,9 @@ import { computed, ref, Ref, reactive } from "vue"
 import { trans } from 'laravel-vue-i18n'
 import Select from '@/Components/Forms/Fields/Primitive/PrimitiveSelect.vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faImagePolaroid, faCloudUpload, faTimes } from '@/../private/pro-light-svg-icons'
-import { faArrowRight } from '@/../private/pro-regular-svg-icons'
-import { faSpinnerThird } from '@/../private/pro-duotone-svg-icons'
+import { faImagePolaroid, faCloudUpload, faTimes } from '@fal/'
+import { faArrowRight } from '@far/'
+import { faSpinnerThird } from '@fad/'
 import { library } from '@fortawesome/fontawesome-svg-core'
 
 import { useTabChange } from "@/Composables/tab-change"
@@ -76,7 +76,7 @@ const compCombinedImages: Ref<any> = computed(() => {
             return accumulator
         }
     }, [])
-    return abcdef 
+    return abcdef
 })
 
 const compWebsitesList = computed(() => {
@@ -136,7 +136,7 @@ const createBanner = async () => {
     }
 }
 
-// Modal: delete Selected Images 
+// Modal: delete Selected Images
 const deleteImageSelected = (imageId: number) => {
     if(selectedImages.uploaded_images?.includes(imageId)){
         let indexDeletedImageId = selectedImages.uploaded_images.indexOf(imageId)

@@ -15,8 +15,8 @@ import { breakpointType } from '@/Composables/useWindowSize'
 import { useWindowSize } from '@vueuse/core'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faEyeSlash } from '@/../private/pro-solid-svg-icons'
-import { faExternalLink, faExclamationTriangle } from '@/../private/pro-regular-svg-icons'
+import { faEyeSlash } from '@fas/'
+import { faExternalLink, faExclamationTriangle } from '@far/'
 import { library } from '@fortawesome/fontawesome-svg-core'
 library.add(faExternalLink, faEyeSlash, faExclamationTriangle)
 
@@ -75,7 +75,7 @@ const props = defineProps<{
             imageAlt: string
             link: string
         }[]
-        
+
         delay: number
         type: string
     }
@@ -127,7 +127,7 @@ const actualSlides = computed(() => {
 const compHandleBannerLessSlide = computed(() => {
     return actualSlides.value.length <= 4
         ? screenBreakpoint.value == 'sm' || screenBreakpoint.value == 'xs'
-            ? actualSlides.value.length == 1 ? actualSlides.value : [...actualSlides.value, ...actualSlides.value] 
+            ? actualSlides.value.length == 1 ? actualSlides.value : [...actualSlides.value, ...actualSlides.value]
             : screenBreakpoint.value == 'md'
                 ? actualSlides.value.length <= 3 ? actualSlides.value : [...actualSlides.value, ...actualSlides.value]
                 : actualSlides.value.length <= 4 ? actualSlides.value : [...actualSlides.value, ...actualSlides.value]
@@ -145,7 +145,7 @@ const compHandleBannerLessSlide = computed(() => {
     <!-- <div>{{ screenBreakpoint }} <br>compHandleBannerLessSlide: {{ compHandleBannerLessSlide.length }} <br> slide per view:{{  compSlidesPerView }}
     <br> actualSlides: {{ actualSlides.length }}
     </div> -->
-    
+
     <!-- Square -->
     <div v-if="data.type == 'square'"
         class="relative shadow overflow-hidden"

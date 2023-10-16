@@ -17,7 +17,7 @@ import {
     faRocketLaunch,
     faClock,
     faVideo,
-} from "@/../private/pro-regular-svg-icons";
+} from '@far/';
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 library.add(faRocketLaunch, faClock, faVideo);
@@ -95,7 +95,7 @@ const Book = {
     <GrapeEditor @onSaveToServer="(isDirtyFromServer) => isDataDirty = isDirtyFromServer" :useBasic="true"
         :plugins="pageCode == 'appointment' ? [AppointmentPlugins,HeroPlugins] : [HeroPlugins, BlogPlugins, StatisticsPlugins, PricingPlugins, CtaPlugins]" :updateRoute="updateRoute" :loadRoute="loadRoute"
         :imagesUploadRoute="imagesUploadRoute">
-       
+
     </GrapeEditor>
 </template>
 

@@ -11,7 +11,7 @@ import {capitalize} from "@/Composables/capitalize"
 import Tabs from "@/Components/Navigation/Tabs.vue";
 import {computed, ref} from "vue";
 import {useTabChange} from "@/Composables/tab-change";
-import {faTachometer, faMailBulk} from "@/../private/pro-light-svg-icons"
+import {faTachometer, faMailBulk} from '@fal/'
 import {library} from "@fortawesome/fontawesome-svg-core";
 
 library.add(faTachometer, faMailBulk);

@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { faArrowAltToTop, faArrowAltToBottom, faBars, faBrowser, faCube, faPalette, faCookieBite, faTrashAlt, faTimes } from "@/../private/pro-light-svg-icons"
-import { faText, faWindowMaximize } from "@/../private/pro-regular-svg-icons"
-import { faEye, faEyeSlash } from '@/../private/pro-solid-svg-icons'
-import { faRectangleWide } from "@/../private/pro-duotone-svg-icons"
+import { faArrowAltToTop, faArrowAltToBottom, faBars, faBrowser, faCube, faPalette, faCookieBite, faTrashAlt, faTimes } from '@fal/'
+import { faText, faWindowMaximize } from '@far/'
+import { faEye, faEyeSlash } from '@fas/'
+import { faRectangleWide } from '@fad/'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import GrapeEditor from '@/Components/CMS/Workshops/GrapeEditor/GrapeEditor.vue'
 
@@ -10,7 +10,7 @@ import { FooterPlugins } from "@/Components/CMS/Workshops/GrapeEditor/CustomBloc
 
 
 const props = defineProps<{
-    imagesUploadRoute: Object 
+    imagesUploadRoute: Object
     updateRoutes: Array
 }>();
 

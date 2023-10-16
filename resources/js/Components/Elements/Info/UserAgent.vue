@@ -8,7 +8,7 @@
 import {capitalize} from "@/Composables/capitalize"
 import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
 import {faFirefoxBrowser, faWindows, faChrome} from "@fortawesome/free-brands-svg-icons"
-import {faDesktop, faMobile, faDesktopAlt} from '@/../private/pro-regular-svg-icons'
+import {faDesktop, faMobile, faDesktopAlt} from '@far/'
 import {library} from '@fortawesome/fontawesome-svg-core'
 
 library.add(faDesktop, faMobile, faDesktopAlt, faFirefoxBrowser, faWindows, faChrome)

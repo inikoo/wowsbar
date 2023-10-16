@@ -8,8 +8,8 @@
 // This file is used on CustomerApp, PublicApp
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faLanguage } from '../../../private/pro-light-svg-icons'
-import { faSpinnerThird } from '../../../private/pro-duotone-svg-icons'
+import { faLanguage } from '@fal/'
+import { faSpinnerThird } from '@fad/'
 import { library } from '@fortawesome/fontawesome-svg-core'
 library.add(faLanguage, faSpinnerThird)
 import { useLocaleStore } from "@/Stores/locale"

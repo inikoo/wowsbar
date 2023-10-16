@@ -16,7 +16,7 @@ import {capitalize} from "@/Composables/capitalize"
 import TableCustomerHistories from "@/Components/Tables/TableCustomerHistories.vue";
 import BannerShowcase from "@/Components/Showcases/Customer/BannerShowcase.vue";
 
-import {faSign, faGlobe, faPencil, faSeedling, faPaste,faLayerGroup} from "../../../../private/pro-light-svg-icons"
+import {faSign, faGlobe, faPencil, faSeedling, faPaste,faLayerGroup} from '@fal/'
 import TableSnapshots from '@/Components/Tables/TableSnapshots.vue';
 
 library.add(faSign, faGlobe, faPencil,faSeedling, faPaste,faLayerGroup)

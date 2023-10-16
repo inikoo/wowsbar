@@ -16,7 +16,7 @@ import {
     faFolderTree, faCube, faTransporter, faEnvelope, faCoins, faFileInvoice, faMoneyCheckAlt, faChartNetwork,
     faInboxOut,faThumbsUp
 
-} from "@/../private/pro-light-svg-icons"
+} from '@fal/'
 import {useLayoutStore} from "@/Stores/layout"
 
 library.add(

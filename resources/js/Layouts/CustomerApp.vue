@@ -26,8 +26,8 @@ import {
     faTachometerAltFast,
     faUser,
     faLanguage
-} from "@/../private/pro-light-svg-icons"
-import { faSearch, faBell } from "@/../private/pro-regular-svg-icons"
+} from '@fal/'
+import { faSearch, faBell } from '@far/'
 
 
 library.add(

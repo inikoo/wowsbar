@@ -6,11 +6,11 @@
 
 <script setup lang="ts">
 import { trans } from 'laravel-vue-i18n'
-import { faSave as fadSave } from "@/../private/pro-duotone-svg-icons"
+import { faSave as fadSave } from '@fad/'
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faDownload } from '@/../private/pro-light-svg-icons';
-import { faArrowLeft } from '@/../private/pro-regular-svg-icons';
-import { faPlus, faSave, faUpload } from '@/../private/pro-solid-svg-icons';
+import { faDownload } from '@fal/';
+import { faArrowLeft } from '@far/';
+import { faPlus, faSave, faUpload } from '@fas/';
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 const props = withDefaults(defineProps<{

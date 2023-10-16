@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { reactive, watch, ref, watchEffect } from 'vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faLock } from '@/../private/pro-light-svg-icons'
+import { faLock } from '@fal/'
 import { library } from '@fortawesome/fontawesome-svg-core'
 library.add(faLock)
 

@@ -7,9 +7,9 @@ import { computed, ref } from 'vue'
 import md5 from 'md5'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faSpinnerThird } from '@/../private/pro-duotone-svg-icons'
-import { faAsterisk } from '@/../private/pro-solid-svg-icons'
-import { faRocketLaunch } from '@/../private/pro-regular-svg-icons'
+import { faSpinnerThird } from '@fad/'
+import { faAsterisk } from '@fas/'
+import { faRocketLaunch } from '@far/'
 import { library } from '@fortawesome/fontawesome-svg-core'
 library.add(faSpinnerThird, faAsterisk, faRocketLaunch)
 

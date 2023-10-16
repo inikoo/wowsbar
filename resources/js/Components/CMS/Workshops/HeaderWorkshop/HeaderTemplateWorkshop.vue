@@ -14,7 +14,7 @@ import {
     faImage,
     faTrash,
     faBars,
-} from "@/../private/pro-solid-svg-icons";
+} from '@fas/';
 import ToolsTopHeader from "@/Components/CMS/Header/ToolsTop.vue";
 import ToolsTopMenu from "@/Components/CMS/Menu/ToolsInTop.vue";
 import Header from "@/Components/CMS/Header/index.vue";

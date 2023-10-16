@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faCheck } from '@/../private/pro-light-svg-icons'
+import { faCheck } from '@fal/'
 import { library } from '@fortawesome/fontawesome-svg-core'
 library.add(faCheck)
 
@@ -53,7 +53,7 @@ const props = defineProps<{
                                     <span v-else class="">{{ step.id }}</span>
                                 </span>
                             </span>
-                            
+
                             <!-- The title and description -->
                             <span class="text-sm ml-4 mt-0.5 flex min-w-0 flex-col"
                                 :class="[

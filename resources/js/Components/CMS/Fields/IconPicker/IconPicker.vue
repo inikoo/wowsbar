@@ -2,16 +2,16 @@
 import { ref, computed } from 'vue'
 import fontLibrary from './Components/fonts.js'
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
-import { faEnvelope as fasEnvelope, faPhone as fasPhone, faBuilding as fasBuilding, faCircle as fasCircle, faMap as fasMap, faUser as fasUser, faStar } from '@/../private/pro-solid-svg-icons';
-import { faEnvelope as falEnvelope, faPhone as falPhone, faBuilding as falBuilding, faCircle as falCircle, faMap as falMap, faUser as falUser } from '@/../private/pro-light-svg-icons';
-import { faEnvelope as farEnvelope, faPhone as farPhone, faBuilding as farBuilding, faCircle as farCircle, faMap as farMap, faUser as farUser, faDotCircle } from '@/../private/pro-regular-svg-icons';
-import { faEnvelope as fadEnvelope, faPhone as fadPhone, faBuilding as fadBuilding, faCircle as fadCircle, faMap as fadMap, faUser as fadUser } from '@/../private/pro-duotone-svg-icons';
+import { faEnvelope as fasEnvelope, faPhone as fasPhone, faBuilding as fasBuilding, faCircle as fasCircle, faMap as fasMap, faUser as fasUser, faStar } from '@fas/';
+import { faEnvelope as falEnvelope, faPhone as falPhone, faBuilding as falBuilding, faCircle as falCircle, faMap as falMap, faUser as falUser } from '@fal/';
+import { faEnvelope as farEnvelope, faPhone as farPhone, faBuilding as farBuilding, faCircle as farCircle, faMap as farMap, faUser as farUser, faDotCircle } from '@far/';
+import { faEnvelope as fadEnvelope, faPhone as fadPhone, faBuilding as fadBuilding, faCircle as fadCircle, faMap as fadMap, faUser as fadUser } from '@fad/';
 import { faTiktok, faFacebook, faFacebookF, faSquareFacebook, faInstagram, faSquareInstagram , faWhatsapp, faSquareWhatsapp } from "@fortawesome/free-brands-svg-icons"
 import { library } from '@fortawesome/fontawesome-svg-core'
 import Popover from '@/Components/Utils/Popover.vue'
 import { upperFirst } from 'lodash'
-library.add( 
-faTiktok, faFacebook, faFacebookF, faSquareFacebook, faInstagram, faSquareInstagram , faWhatsapp, faSquareWhatsapp, 
+library.add(
+faTiktok, faFacebook, faFacebookF, faSquareFacebook, faInstagram, faSquareInstagram , faWhatsapp, faSquareWhatsapp,
 fasEnvelope, fasPhone, fasBuilding, fasCircle, fasMap, fasUser, faStar,
 falEnvelope, falPhone, falBuilding, falCircle, falMap, falUser,
 farEnvelope, farPhone, farBuilding, farCircle, farMap, farUser, faDotCircle,
@@ -55,7 +55,7 @@ const activeGlyph = ref(props.data.icon)
 
 
     const getGlyphName = glyph =>
-      upperFirst(glyph.replace(/f.. fa-/g, '').replace('-', ' ')) 
+      upperFirst(glyph.replace(/f.. fa-/g, '').replace('-', ' '))
 
 </script>
 
@@ -83,7 +83,7 @@ const activeGlyph = ref(props.data.icon)
         <span class="text-xs">{{ getGlyphName(glyph) }}</span>
       </div>
       </div>
-     
+
     </div>
   </template>
 </Popover>

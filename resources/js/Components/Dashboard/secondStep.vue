@@ -8,7 +8,7 @@ import IconGroupInterested from '@/Components/Table/IconGroupInterested.vue'
 import { notify } from "@kyvg/vue3-notification"
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faArrowRight } from '@/../private/pro-regular-svg-icons'
+import { faArrowRight } from '@far/'
 import { library } from '@fortawesome/fontawesome-svg-core'
 library.add(faArrowRight)
 
@@ -135,7 +135,7 @@ const handleButtonNext = async () => {
             <span class="text-3xl">Next</span>
             <FontAwesomeIcon icon='far fa-arrow-right' class='text-3xl' aria-hidden='true' />
         </Button>
-        
+
         <!-- Modal: on click interest -->
         <ModalDivision
             :isModalOpen="isModalOpen"

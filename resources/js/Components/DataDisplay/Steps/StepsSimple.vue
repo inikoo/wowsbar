@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faCheck } from '@/../private/pro-light-svg-icons'
+import { faCheck } from '@fal/'
 import { library } from '@fortawesome/fontawesome-svg-core'
 library.add(faCheck)
 
@@ -40,13 +40,13 @@ const props = defineProps<{
                         <span class="ml-4 text-sm" :class="[
                                 stepIdx + 1 <= currentStep.id  // Previous step and current step
                                     ? 'text-gray-700 font-semibold'
-                                    : 'text-gray-400' 
+                                    : 'text-gray-400'
                         ]">
                             {{ step.label }}
                         </span>
                     </span>
                 </div>
-                
+
                 <!-- Arrow separator -->
                 <template v-if="stepIdx !== stepsList.length - 1">
                     <div class="absolute right-0 top-0 hidden h-full w-5 md:block" aria-hidden="true">

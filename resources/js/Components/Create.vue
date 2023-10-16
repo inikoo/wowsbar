@@ -9,7 +9,7 @@ import {  useForm } from '@inertiajs/vue3'
 import { jumpToElement } from "@/Composables/jumpToElement"
 import Button from '@/Components/Elements/Buttons/Button.vue'
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
-import { faExclamationCircle, faCheckCircle, faAsterisk } from "@/../private/pro-solid-svg-icons"
+import { faExclamationCircle, faCheckCircle, faAsterisk } from '@fas/'
 import { library } from "@fortawesome/fontawesome-svg-core"
 library.add(faExclamationCircle, faAsterisk, faCheckCircle)
 

@@ -21,10 +21,10 @@ import {useBannerHash} from "@/Composables/useBannerHash"
 import Publish from "@/Components/Utils/Publish.vue"
 
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome"
-import {faUser, faUserFriends} from "@/../private/pro-light-svg-icons"
-import {faRocketLaunch} from "@/../private/pro-regular-svg-icons"
-import {faAsterisk} from "@/../private/pro-solid-svg-icons"
-import {faSpinnerThird} from '@/../private/pro-duotone-svg-icons'
+import {faUser, faUserFriends} from '@fal/'
+import {faRocketLaunch} from '@far/'
+import {faAsterisk} from '@fas/'
+import {faSpinnerThird} from '@fad/'
 
 library.add(faAsterisk, faRocketLaunch, faUser, faUserFriends, faSpinnerThird);
 

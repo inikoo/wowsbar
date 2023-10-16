@@ -1,7 +1,7 @@
 <script setup>
 import { trans } from 'laravel-vue-i18n'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faFilter, faTimesCircle } from "@/../private/pro-regular-svg-icons"
+import { faFilter, faTimesCircle } from '@far/'
 import { library } from '@fortawesome/fontawesome-svg-core'
 library.add(faFilter, faTimesCircle)
 

@@ -12,7 +12,7 @@ import {
     faBullhorn, faCameraRetro,
     faCube,
     faFolder, faMoneyBillWave, faProjectDiagram, faRoad, faShoppingCart, faStream, faUsers
-} from "@/../private/pro-light-svg-icons";
+} from '@fal/';
 import PageHeading from '@/Components/Headings/PageHeading.vue';
 import ModelDetails from "@/Pages/ModelDetails.vue";
 import {useTabChange} from "@/Composables/tab-change";

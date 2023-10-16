@@ -10,7 +10,7 @@ import { ref } from 'vue'
 import PageHeading from '@/Components/Headings/PageHeading.vue'
 import { capitalize } from "@/Composables/capitalize"
 import { library } from "@fortawesome/fontawesome-svg-core"
-import { faGlobe,faImage } from "@/../private/pro-light-svg-icons"
+import { faGlobe,faImage } from '@fal/'
 import TableBanners from "@/Components/Tables/TableBanners.vue"
 import FirstBannerWidget from '@/Components/EmptyState/FirstBannerWidget.vue'
 

@@ -2,7 +2,7 @@
 import { ref } from "vue"
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faUser, faHeart, faShoppingCart, faSignOut } from '@/../private/pro-solid-svg-icons'
+import { faUser, faHeart, faShoppingCart, faSignOut } from '@fas/'
 import { library } from "@fortawesome/fontawesome-svg-core"
 import Popover from "@/Components/Utils/Popover.vue"
 import { Link } from "@inertiajs/vue3"
@@ -100,7 +100,7 @@ console.log(props.data.navigation.categories)
                 <div class="bg-gray-600 bg-opacity-10">
                     <div class="mx-auto px-4 sm:px-6 lg:px-4">
                         <div class="flex h-16 items-center w-full">
-                            
+
                             <!-- Group: Navigation -->
                             <div class="h-full flex text-gray-200 justify-around w-full">
                                 <div v-for="category in data.navigation.categories" class="flex space-x-8 h-fit">

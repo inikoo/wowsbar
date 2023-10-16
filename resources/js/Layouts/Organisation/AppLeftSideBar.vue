@@ -12,9 +12,9 @@ import {ref, onMounted, onUnmounted} from 'vue'
 import {router} from '@inertiajs/vue3'
 
 import {library} from "@fortawesome/fontawesome-svg-core"
-import {faShapes, faBriefcase, faEnvelope, faPuzzlePiece, faThumbsUp, faAd, faAlbumCollection} from "@/../private/pro-light-svg-icons"
+import { faShapes,faBriefcase, faEnvelope, faPuzzlePiece, faThumbsUp, faAd, faAlbumCollection} from '@fal/'
 import {faGoogle} from "@fortawesome/free-brands-svg-icons"
-import {faChevronLeft} from "@/../private/pro-regular-svg-icons"
+import {faChevronLeft} from '@far/'
 import {useLayoutStore} from "@/Stores/layout.js"
 import {computed} from "vue"
 

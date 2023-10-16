@@ -17,7 +17,7 @@ import TableHistories from "@/Components/Tables/TableHistories.vue";
 import TableBanners from "@/Components/Tables/TableBanners.vue";
 import PortfolioWebsiteShowcase from '@/Pages/Organisation/Portfolios/PortfolioWebsiteShowcase.vue';
 
-import {faWindowMaximize, faGlobe} from "@/../private/pro-light-svg-icons"
+import {faWindowMaximize, faGlobe} from '@fal/'
 
 library.add(faWindowMaximize, faGlobe)
 

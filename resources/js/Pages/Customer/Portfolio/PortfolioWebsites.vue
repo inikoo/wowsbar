@@ -10,8 +10,8 @@ import { Head } from '@inertiajs/vue3'
 import PageHeading from '@/Components/Headings/PageHeading.vue'
 import TablePortfolioWebsites from "@/Components/Tables/TablePortfolioWebsites.vue"
 import { capitalize } from "@/Composables/capitalize"
-import { faUpload, faFile as falFile, faTimes } from '@/../private/pro-light-svg-icons'
-import { faFile as fasFile, faFileDownload } from '@/../private/pro-solid-svg-icons'
+import { faUpload, faFile as falFile, faTimes } from '@fal/'
+import { faFile as fasFile, faFileDownload } from '@fas/'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import Tabs from "@/Components/Navigation/Tabs.vue";
 import {useTabChange} from "@/Composables/tab-change";

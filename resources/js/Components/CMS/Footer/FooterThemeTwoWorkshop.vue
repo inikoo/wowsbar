@@ -1,6 +1,6 @@
 <!--
   This example requires some changes to your config:
-  
+
   ```
   // tailwind.config.js
   module.exports = {
@@ -19,7 +19,7 @@ import TextArea from "../Fields/TextArea.vue"
 import HyperLink from "../Fields/Hyperlink.vue"
 import IconPicker from "../Fields/IconPicker/IconPicker.vue"
 import SocialMediaPicker from "@/Components/CMS/Fields/IconPicker/SocialMediaTools.vue"
-import { faEnvelope, faPhone } from '@/../private/pro-solid-svg-icons';
+import { faEnvelope, faPhone } from '@fas/';
 import { get } from 'lodash'
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -125,7 +125,7 @@ const props = defineProps<{
 					<div :class="`mt-4 text-xs flex leading-6 text-${layout.colorScheme}-500 md:order-1 md:mt-0`"> &copy; 2023 &nbsp;
 						<span class="font-bold">
 							<Input :data="data.copyright" keyValue="label" />
-							<!-- <HyperLink :useDelete="false" :data="data.copyright" label="label" 
+							<!-- <HyperLink :useDelete="false" :data="data.copyright" label="label"
 							:formList="{
 								label: 'label',
 							}" /> -->

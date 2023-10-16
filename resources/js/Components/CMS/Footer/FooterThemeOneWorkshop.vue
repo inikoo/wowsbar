@@ -9,7 +9,7 @@ import { get } from "lodash";
 import Image from "@/Components/Image.vue";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faEnvelope, faPhone } from '@/../private/pro-solid-svg-icons';
+import { faEnvelope, faPhone } from '@fas/';
 library.add( faEnvelope, faPhone )
 
 const props = defineProps<{

@@ -1,7 +1,7 @@
 <script setup>
 
 import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
-import { faExclamationCircle ,faCheckCircle} from "@/../private/pro-solid-svg-icons";
+import { faExclamationCircle ,faCheckCircle} from '@fas/';
 import {library} from '@fortawesome/fontawesome-svg-core';
 import PureTextarea from '@/Components/Pure/PureTextarea.vue';
 library.add(faExclamationCircle,faCheckCircle);
@@ -32,7 +32,7 @@ if(props.options!==undefined && props.options.type ){
                 :inputName="fieldName"
                 :counter="fieldData.counter"
             >
-            
+
             </PureTextarea>
         </div>
 

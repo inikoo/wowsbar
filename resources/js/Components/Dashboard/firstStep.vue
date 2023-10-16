@@ -6,7 +6,7 @@ import { notify } from "@kyvg/vue3-notification"
 
 import Button from '@/Components/Elements/Buttons/Button.vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faArrowRight } from '@/../private/pro-regular-svg-icons'
+import { faArrowRight } from '@far/'
 import { library } from '@fortawesome/fontawesome-svg-core'
 library.add(faArrowRight)
 

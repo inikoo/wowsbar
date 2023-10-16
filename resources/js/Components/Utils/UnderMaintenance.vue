@@ -5,8 +5,8 @@ import { trans } from 'laravel-vue-i18n'
 
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faRocketLaunch, faDoNotEnter } from '@/../private/pro-solid-svg-icons'
-import { faConstruction, faDraftingCompass } from '@/../private/pro-light-svg-icons'
+import { faRocketLaunch, faDoNotEnter } from '@fas/'
+import { faConstruction, faDraftingCompass } from '@fal/'
 import { library } from '@fortawesome/fontawesome-svg-core'
 library.add(faConstruction, faRocketLaunch, faDoNotEnter, faDraftingCompass)
 

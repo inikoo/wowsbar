@@ -10,7 +10,7 @@ import {library} from "@fortawesome/fontawesome-svg-core"
 import Table from '@/Components/Table/Table.vue'
 import {Banner} from "@/types/banner"
 import Icon from '@/Components/Icon.vue'
-import {faSeedling, faBroadcastTower, faImage, faSparkles, faRocket, faDoNotEnter} from "@/../private/pro-light-svg-icons"
+import {faSeedling, faBroadcastTower, faImage, faSparkles, faRocket, faDoNotEnter} from '@fal/'
 import Image from "@/Components/Image.vue"
 import {useFormatTime} from '@/Composables/useFormatTime'
 import {useLocaleStore} from '@/Stores/locale'

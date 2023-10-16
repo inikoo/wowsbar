@@ -15,7 +15,7 @@ import {
     faTerminal, faUserAlien, faCog, faGlobe, faWindowMaximize, faBriefcase, faPhotoVideo, faBrowser,
     faSign,faChartNetwork,faThumbsUp
 
-} from "@/../private/pro-light-svg-icons"
+} from '@fal/'
 import { useLayoutStore } from "@/Stores/layout"
 
 

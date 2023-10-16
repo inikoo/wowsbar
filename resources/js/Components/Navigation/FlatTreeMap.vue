@@ -7,7 +7,7 @@
 import { trans } from 'laravel-vue-i18n'
 import { Link } from '@inertiajs/vue3'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faEmptySet, faStar, faWrench, faWarehouse, faStore, faCashRegister, faMoneyCheckAlt } from '@/../private/pro-light-svg-icons'
+import { faEmptySet, faStar, faWrench, faWarehouse, faStore, faCashRegister, faMoneyCheckAlt } from '@fal/'
 library.add(faEmptySet, faStar, faWrench, faWarehouse, faStore, faCashRegister, faMoneyCheckAlt)
 import { useLocaleStore } from '@/Stores/locale.js'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -31,7 +31,7 @@ const locale = useLocaleStore()
                                 <span class="hidden lg:inline">{{ trans(node.name) }}</span>
                                 <span class="inline lg:hidden">{{ node.shortName ? trans(node.shortName) : trans(node.name) }}</span>
                             </p>
-                            
+
                             <!-- Bars and count -->
                             <span v-if="node.index" class="font-medium whitespace-nowrap text-gray-400">
                                 <FontAwesomeIcon icon="fal fa-bars" class="mr-1" />

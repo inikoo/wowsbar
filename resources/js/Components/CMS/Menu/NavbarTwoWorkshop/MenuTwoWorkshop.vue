@@ -4,7 +4,7 @@ import { ref } from "vue";
 import draggable from "vuedraggable";
 import HyperLink from "@/Components/CMS/Fields/Hyperlink.vue";
 import SubMenu from "../SubMenu.vue";
-import { faUser, faHeart, faShoppingCart, faSignOut } from '../../../../../private/pro-solid-svg-icons';
+import { faUser, faHeart, faShoppingCart, faSignOut } from '@fas/';
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { get } from "lodash";
 import IconPicker from "@/Components/CMS/Fields/IconPicker/IconPicker.vue";
@@ -81,8 +81,8 @@ const openNav = ref(null);
 
                                                     <!-- Popup: Navigation -->
                                                     <div v-if="openNav == category.id">
-                                                        <SubMenu 
-                                                            :data="category" 
+                                                        <SubMenu
+                                                            :data="category"
                                                             @OnClose="() => {changeNavActive(null),(openNav = null)}"
                                                             :tool="tool"
                                                         />
@@ -108,14 +108,14 @@ const openNav = ref(null);
                                                   />
                                                 </div>
                                                 </div>
-                                              
+
                                                   <!-- menus -->
                                             </div>
                                         </template>
                                     </draggable>
                                 </div>
                             </div>
-                      
+
                     </div>
                 </div>
             </nav>
