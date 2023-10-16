@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, watchEffect } from 'vue'
-import { useForm } from '@inertiajs/vue3'
+import { useForm, usePage } from '@inertiajs/vue3'
 import { trans } from 'laravel-vue-i18n'
 import ValidationErrors from '@/Components/ValidationErrors.vue'
 import { notify } from '@kyvg/vue3-notification'
@@ -18,16 +18,17 @@ const formReset = useForm({
 const submitResetPassword = () => {
     formReset.patch(route('org.passwords.update.password'),
     {
-        onSuccess: () => {
-            formReset.reset('password')
-            repeatPassword.value = ''
-            notify({
-                title: "Success!",
-                type: "success",
-                text: "Reset password complete.",
-            })
-            router.visit('/dashboard')
-        }
+        // onSuccess: () => {
+        //     formReset.reset('password')
+        //     repeatPassword.value = ''
+        //     console.log("ddddddddddddddddddd")
+        //     // notify({
+        //     //     title: "Success!",
+        //     //     type: "success",
+        //     //     text: "Reset password complete.",
+        //     // })
+        //     router.visit('/password-resetted')
+        // }
     })
 }
 
