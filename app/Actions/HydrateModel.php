@@ -7,27 +7,22 @@
 
 namespace App\Actions;
 
-use App\Actions\Traits\WithTenantsArgument;
-use App\Models\Tenancy\Tenant;
 use Illuminate\Console\Command;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class HydrateModel
 {
     use AsAction;
-    use WithTenantsArgument;
-
-    protected Tenant $tenant;
 
 
-    protected function getModel(int $id): ?Model
+
+    protected function getModel(string $slug)
     {
         return null;
     }
 
-    protected function getAllModels(): Collection
+    protected function getAllModels()
     {
         return new Collection();
     }
@@ -35,28 +30,22 @@ class HydrateModel
 
     public function asCommand(Command $command): int
     {
-        $tenants  = $this->getTenants($command);
-
         $exitCode = 0;
+        if(!$command->argument('slugs')) {
+            $this->loopAll($command);
+        } else {
 
-        foreach ($tenants as $tenant) {
-            $result = (int)$tenant->execute(function () use ($command) {
-                if ($command->option('id')) {
-                    if ($model = $this->getModel($command->option('id'))) {
-                        $this->handle($model);
-                        $command->info('Done!');
-                    }
-                } else {
-                    $this->loopAll($command);
-                }
-            });
-
-            if ($result !== 0) {
-                $exitCode = $result;
+            foreach($command->argument('slugs') as $slug) {
+                $model=$this->getModel($slug);
+                $this->handle($model);
+                $command->line(class_basename($model)." $model->name hydrated 💦");
             }
         }
 
+
+
         return $exitCode;
+
     }
 
 

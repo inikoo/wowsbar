@@ -6,6 +6,7 @@
  */
 
 namespace Deployer;
+
 use Dotenv\Dotenv;
 
 require __DIR__ . '/../vendor/autoload.php';
@@ -18,10 +19,10 @@ desc('Inject all necessary .env variables inside deployer config');
 task('install:env', function () {
 
     $websites_urls='';
-    foreach(explode(',',env('DEPLOY_WEBSITES_URLS')) as $urls){
+    foreach(explode(',', env('DEPLOY_WEBSITES_URLS')) as $urls) {
         $websites_urls.=" $urls *.$urls";
     }
 
-    set('nginx_urls',env('DEPLOY_APP_URL').' *.'.env('DEPLOY_APP_URL').$websites_urls);
+    set('nginx_urls', env('DEPLOY_APP_URL').' *.'.env('DEPLOY_APP_URL').$websites_urls);
 
 });

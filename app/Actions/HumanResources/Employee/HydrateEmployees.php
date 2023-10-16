@@ -5,17 +5,17 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\HumanResources\ClockingMachine;
+namespace App\Actions\HumanResources\Employee;
 
 use App\Actions\HumanResources\Employee\Hydrators\EmployeeHydrateJobPositionsShare;
 use App\Actions\HumanResources\Employee\Hydrators\EmployeeHydrateWeekWorkingHours;
 use App\Actions\HydrateModel;
 use App\Models\HumanResources\Employee;
-use Illuminate\Support\Collection;
+use Lorisleiva\Actions\Concerns\AsAction;
 
-class HydrateClockingMachine extends HydrateModel
+class HydrateEmployees extends HydrateModel
 {
-    public string $commandSignature = 'hydrate:employee {tenants?*} {--i|id=}';
+    use asAction;
 
 
     public function handle(Employee $employee): void
@@ -25,13 +25,17 @@ class HydrateClockingMachine extends HydrateModel
     }
 
 
-    protected function getModel(int $id): Employee
+    public string $commandSignature = 'hydrate:employees {slugs?*}';
+
+
+    public function getAllModels(): \Illuminate\Support\Collection
     {
-        return Employee::findOrFail($id);
+        return Employee::all();
     }
 
-    protected function getAllModels(): Collection
+    public function getModel(string $slug): Employee
     {
-        return Employee::get();
+        return Employee::firstWhere('slug', $slug);
     }
+
 }
