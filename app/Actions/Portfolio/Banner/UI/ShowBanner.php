@@ -99,7 +99,6 @@ class ShowBanner extends InertiaAction
                     'container'   => $container,
                     'iconRight'   => $banner->state->stateIcon()[$banner->state->value],
                     'iconActions' => [
-
                         $this->canDelete ? $this->getDeleteActionIcon($request) : null,
                         $this->canEdit ? $this->getEditActionIcon($request) : null,
                     ],
