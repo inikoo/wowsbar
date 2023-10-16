@@ -14,6 +14,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property string $date
  * @property int $data
  * @property string $slug
+ * @property string $amount
  * @property string $reference
  * @property mixed $created_at
  * @property mixed $updated_at
@@ -32,6 +33,7 @@ class PaymentResource extends JsonResource
             'status'                         => $this->status,
             'date'                           => $this->date,
             'reference'                      => $this->reference,
+            'amount'                         => $this->amount,
             'created_at'                     => $this->created_at,
             'updated_at'                     => $this->updated_at,
         );

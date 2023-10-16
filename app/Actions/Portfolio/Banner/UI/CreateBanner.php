@@ -54,7 +54,7 @@ class CreateBanner extends InertiaAction
                         'placeholder' => __('Select a website'),
                         'options'     => GetPortfolioWebsitesOptions::run(),
                         'value'       => null,
-                        'required'    => false,
+                        'required'    => true,
                         'mode'        => 'single'
                     ],
 

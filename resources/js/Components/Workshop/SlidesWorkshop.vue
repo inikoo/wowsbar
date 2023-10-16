@@ -220,7 +220,7 @@ const ComponentsBlueprint = ref([
                 type: "corners",
                 label: null,
                 value: null,
-                optionType: ["cornerFooter", "cornerText", "linkButton", "ribbon"],
+                optionType: ["cornerText", "linkButton", "ribbon", 'clear'],
             },
         ],
     },
@@ -329,7 +329,12 @@ const ComponentsBlueprint = ref([
                 label: trans("color"),
                 value: ["layout", "centralStage", "style", "color"],
             },
-            
+            // {
+            //     name: ["layout", "centralStage", "style", "textShadow"],
+            //     type: "TextShadow",
+            //     label: trans("Text Shadow"),
+            //     value: ["layout", "centralStage", "style", "TextShadow"],
+            // },
         ],
     },
     // {
@@ -374,7 +379,7 @@ const CommonBlueprint = ref([
                 type: "corners",
                 label: null,
                 value: null,
-                optionType: ["cornerFooter", "cornerText", "linkButton", "slideControls", "ribbon"],
+                optionType: ["cornerText", "linkButton", "slideControls", "ribbon", 'clear'],
             },
         ],
     },
@@ -472,6 +477,12 @@ const CommonBlueprint = ref([
                 label: trans("color"),
                 value: ["common", "centralStage", "style", "color"],
             },
+            // {
+            //     name: ["common", "centralStage", "style", "textShadow"],
+            //     type: "TextShadow",
+            //     label: trans("Text Shadow"),
+            //     value: ["common", "centralStage", "style", "textShadow"],
+            // },
         ],
     },
 ]);

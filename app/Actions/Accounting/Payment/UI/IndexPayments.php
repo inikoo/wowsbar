@@ -29,7 +29,7 @@ use Spatie\QueryBuilder\QueryBuilder;
 class IndexPayments extends InertiaAction
 {
     /** @noinspection PhpUndefinedMethodInspection */
-    public function handle($parent, $prefix=null): LengthAwarePaginator
+    public function handle($parent = null, $prefix=null): LengthAwarePaginator
     {
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
             $query->where(function ($query) use ($value) {
@@ -59,10 +59,11 @@ class IndexPayments extends InertiaAction
             ->select([
                 'payments.reference',
                 'payments.slug',
+                'payments.amount',
                 'payments.status',
                 'payments.date',
                 'payment_accounts.slug as payment_accounts_slug',
-                'payment_service_providers.slug as payment_service_providers_slug'
+                'payment_service_providers.code as payment_service_providers_slug'
             ])
             ->leftJoin('payment_accounts', 'payments.payment_account_id', 'payment_accounts.id')
             ->leftJoin('payment_service_providers', 'payment_accounts.payment_service_provider_id', 'payment_service_providers.id')
@@ -103,6 +104,7 @@ class IndexPayments extends InertiaAction
                 ->withModelOperations($modelOperations)
                 ->defaultSort('reference')
                 ->column(key: 'reference', label: __('reference'), canBeHidden: false, sortable: true, searchable: true)
+                ->column(key: 'amount', label: __('amount'), canBeHidden: false, sortable: true, searchable: true)
                 ->column(key: 'status', label: __('status'), canBeHidden: false, sortable: true, searchable: true)
                 ->column(key: 'date', label: __('date'), canBeHidden: false, sortable: true, searchable: true);
         };

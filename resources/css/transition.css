@@ -1,3 +1,14 @@
+/* Transition without name */
+.v-enter-active,
+.v-leave-active {
+    transition: opacity 0.2s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+    opacity: 0;
+}
+
 /* Transition name="slide-to-right" */
 .slide-to-right-enter-active {
     transition: all 0.1s ease-out;
@@ -28,4 +39,21 @@
 .slide-to-left-leave-to {
     transform: translateX(-20px);
     opacity: 0;
+}
+
+/* Transition for <li> vertical */
+.list-move,
+.list-enter-active,
+.list-leave-active {
+    transition: all 0.2s ease-in-out;
+}
+
+.list-enter-from,
+.list-leave-to {
+    opacity: 0;
+    transform: translateX(30px);
+}
+
+.list-leave-active {
+    position: absolute;
 }

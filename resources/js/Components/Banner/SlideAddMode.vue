@@ -34,7 +34,7 @@ const onChange = () => {
 
 <template>
     <div class="w-full h-full space-y-2" @dragover="emits('dragOver')" @dragleave="emits('dragLeave')" @drop="emits('drop')">
-        <div class="relative mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10 bg-gray-400/10 hover:bg-gray-400/20"
+        <div class="relative mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10 bg-gradient-to-r from-green-300 via-blue-500 to-purple-600 hover:bg-gray-400/20"
             :class="bannerType == 'square' ? 'h-72 aspect-square mx-auto' : ''"
         >
             <label for="fileInput"
@@ -43,18 +43,18 @@ const onChange = () => {
                 <input type="file" multiple name="file" id="fileInput" class="sr-only" @change="onChange" ref="fileInput" />
             </label>
             
-            <div class="text-center text-gray-500">
+            <div class="text-center text-white">
                 <FontAwesomeIcon :icon="['fal', 'image']" class="mx-auto h-12 w-12 text-gray-300" aria-hidden="true" />
-                <div class="mt-2 flex  justify-center text-lg font-medium leading-6 ">
-                    <p class="pl-1">{{ trans("Upload Image") }}</p>
+                <div class="mt-2 flex  justify-center text-3xl font-semibold leading-6 ">
+                    <p class="pl-1">{{ trans("Let's get started.") }}</p>
                 </div>
-                <div class="flex text-sm leading-6 ">
-                    <p class="pl-1">{{ trans("Click or drag & drop") }}</p>
+                <div class="flex text-sm leading-6 justify-center mt-4">
+                    <p class="pl-1">{{ trans("Click me or drag some images here.") }}</p>
                 </div>
                 <p class="text-[0.7rem]">
                     {{ trans("PNG, JPG, GIF up to 10MB") }}
                 </p>
-                <Button id="gallery" :style="`primary`" :icon="'fal fa-photo-video'" label="Gallery" size="xs"
+                <Button id="gallery" :style="`white`" :icon="'fal fa-photo-video'" label="Gallery" size="xs"
                     class="relative m-2.5" @click="emits('onClickButtonGallery')" />
             </div>
         </div>

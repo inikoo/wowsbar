@@ -96,15 +96,3 @@ const layoutState = useLayoutStore()
     <Footer />
     <notifications dangerously-set-inner-html :max="3" :width="500" />
 </template>
-
-<style>
-.v-enter-active,
-.v-leave-active {
-    transition: opacity 0.2s ease;
-}
-
-.v-enter-from,
-.v-leave-to {
-    opacity: 0;
-}
-</style>
