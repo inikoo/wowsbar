@@ -8,33 +8,40 @@
 namespace App\Actions\Web\Website\UI;
 
 use App\Models\Web\Website;
+use Illuminate\Support\Arr;
+use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsObject;
 
 class GetWebsiteWorkshopLayout
 {
     use AsObject;
 
-    public function handle(Website $website): array
+    public function handle(Website $website, ActionRequest $request): array
     {
-        return [
-            "formData" => [
-                "blueprint" => [
-                    [
-                        "title"   => __("art"),
-                        "icon"    => "fal fa-images",
-                        "current" => true,
-                        "fields"  => [
-                            "logo" => [
-                                "type"  => "avatar",
-                                "label" => __("logo"),
-                                "value" => !blank($website->logo_id) ? $website->logoImageSources(320, 320) : null,
 
-                            ],
-
-                        ],
-                    ],
+        $sections['properties'] = [
+            'label'  => __('Properties'),
+            'icon'   => 'fal fa-key',
+            'fields' => [
+                "logo" => [
+                    "type"  => "avatar",
+                    "label" => __("logo"),
+                    "value" => !blank($website->logo_id) ? $website->logoImageSources(320, 320) : null,
 
                 ],
+            ]
+        ];
+
+        $currentSection = 'properties';
+        if ($request->has('section') and Arr::has($sections, $request->get('section'))) {
+            $currentSection = $request->get('section');
+        }
+
+
+        return [
+            "formData" => [
+                'current'   => $currentSection,
+                'blueprint' => $sections,
                 "args"      => [
                     "updateRoute" => [
                         "name"       => "org.models.website.layout.update",

@@ -22,7 +22,7 @@ class AttachHistoricAddressToModel
         array $scopeData
     ): Address {
         $model->addresses()->attach($address->id, $scopeData);
-        HydrateAddress::run($address);
+        HydrateAddresses::run($address);
 
         return $address;
     }

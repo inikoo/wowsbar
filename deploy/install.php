@@ -97,6 +97,7 @@ task('install:build', function () {
 
 desc('Install wowsbar');
 task('install', [
+    'install:env',
     'install:delete_deploy_path',
     'install:reset-db',
     'deploy:info',

@@ -13,9 +13,9 @@ use App\Actions\HydrateModel;
 use App\Models\Accounting\PaymentServiceProvider;
 use Illuminate\Support\Collection;
 
-class HydratePaymentServiceProvider extends HydrateModel
+class HydratePaymentServiceProviders extends HydrateModel
 {
-    public string $commandSignature = 'hydrate:payment-service-providers {tenants?*} {--i|id=} ';
+    public string $commandSignature = 'hydrate:payment-service-providers {slugs?*}';
 
     public function handle(PaymentServiceProvider $paymentServiceProvider): void
     {
@@ -24,9 +24,9 @@ class HydratePaymentServiceProvider extends HydrateModel
     }
 
 
-    protected function getModel(int $id): PaymentServiceProvider
+    protected function getModel(string $slug): PaymentServiceProvider
     {
-        return PaymentServiceProvider::find($id);
+        return PaymentServiceProvider::firstWhere('slug', $slug);
     }
 
     protected function getAllModels(): Collection

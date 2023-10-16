@@ -11,9 +11,9 @@ use App\Actions\HydrateModel;
 use App\Models\Market\ShopProduct;
 use Illuminate\Support\Collection;
 
-class HydrateProduct extends HydrateModel
+class HydrateProducts extends HydrateModel
 {
-    public string $commandSignature = 'hydrate:product {tenants?*} {--i|id=} ';
+    public string $commandSignature = 'hydrate:products {slugs?*}';
 
 
     public function handle(ShopProduct $product): void
@@ -21,9 +21,9 @@ class HydrateProduct extends HydrateModel
     }
 
 
-    protected function getModel(int $id): ShopProduct
+    protected function getModel(string $slug): ShopProduct
     {
-        return ShopProduct::find($id);
+        return ShopProduct::firstWhere('slug', $slug);
     }
 
     protected function getAllModels(): Collection

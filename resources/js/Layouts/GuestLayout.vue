@@ -26,7 +26,6 @@ const publicUrl=usePage().props.layout.publicUrl;
             <a :href="publicUrl" class="mx-auto">
                 <Image :class="'mx-auto h-16 -mb-3 w-auto'" :src="logoSrc" alt="Wowsbar" />
             </a>
-            <!-- <h2 class="font-logo mt-6 text-center text-3xl text-gray-600">@{{layout.tenant.code}} 😃</h2> -->
         </div>
 
         <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
