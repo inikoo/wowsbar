@@ -231,6 +231,7 @@ const autoSave = () => {
     const form = useForm(deleteUser());
     form.patch(
         route(props.autoSaveRoute.name, props.autoSaveRoute.parameters), {
+            preserveScroll: true,
             onError: (errors: any) => {
                 console.log(errors)
             },
