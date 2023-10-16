@@ -1,12 +1,10 @@
 <script setup lang="ts">
 import { ref, watchEffect } from 'vue'
-import { useForm } from '@inertiajs/vue3'
+import {Head, useForm} from '@inertiajs/vue3'
 import { trans } from 'laravel-vue-i18n'
 import ValidationErrors from '@/Components/ValidationErrors.vue'
-import { notify } from '@kyvg/vue3-notification'
 import PureInput from '@/Components/Pure/PureInput.vue'
 import Button from '@/Components/Elements/Buttons/Button.vue'
-import { router } from '@inertiajs/vue3'
 
 const isPasswordSame = ref(false)
 const repeatPassword = ref('')
@@ -16,19 +14,7 @@ const formReset = useForm({
 })
 
 const submitResetPassword = () => {
-    formReset.patch(route('customer.passwords.update.password'),
-    {
-        onSuccess: () => {
-            formReset.reset('password')
-            repeatPassword.value = ''
-            notify({
-                title: "Success!",
-                type: "success",
-                text: "Reset password complete.",
-            })
-            router.visit(window.location.origin + '/app/dashboard')
-        }
-    })
+    formReset.patch(route('customer.reset-password.update'), {})
 }
 
 
@@ -38,33 +24,28 @@ watchEffect(() => {
 })
 </script>
 
-<template layout="OrgAppGuest">
-    <!-- <pre>{{ usePage().props }}</pre> -->
-    <!-- Forgot Password: if click the 'forgot password' -->
-    <div class="space-y-4 text-gray-600">
-        <!-- <div class="flex items-center gap-x-1 text-gray-500 cursor-pointer hover:text-gray-700" @click="">
-            <FontAwesomeIcon icon="fal fa-arrow-left" class="w-2" aria-hidden="true" />
-            <span class="text-xs">{{ trans("Back to login") }}</span>
-        </div> -->
+<template layout="Public">
+    <Head title="Reset Password"/>
+    <div class="mt-16 sm:mx-auto sm:w-full sm:max-w-md">
+        <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
 
         <form class="space-y-8" @submit.prevent="submitResetPassword">
             <div class="text-center font-semibold text-xl">
-                {{ trans("The Administrator Ask You To Reset password") }}
+                {{ trans("For security reasons please change your password") }}
             </div>
 
             <div class="flex flex-col gap-y-4">
                 <!-- Field: Password -->
                 <div class="">
-                    <label for="password">New Password</label>
+                    <label for="password">{{ trans('New Password') }}</label>
                     <PureInput v-model="formReset.password" type="password" inputName="password" placeholder="Enter new password" />
                     <div v-if="formReset.errors.password">{{ formReset.errors.password }}</div>
                 </div>
 
                 <!-- Field: Repeat Password -->
                 <div class="">
-                    <label for="repeatPassword">Repeat New Password</label>
+                    <label for="repeatPassword">{{ trans('Repeat New Password') }}</label>
                     <PureInput v-model="repeatPassword" type="password" inputName="repeatPassword" placeholder="Repeat your new password" />
-                    <!-- <div v-if="formReset.errors.repeatPassword">{{ formReset.errors.repeatPassword }}</div> -->
                     <div v-if="!isPasswordSame && repeatPassword && formReset.password" class="text-red-500 mt-1 text-sm">Password is not match</div>
                 </div>
             </div>
@@ -75,4 +56,5 @@ watchEffect(() => {
         </form>
     </div>
     <ValidationErrors />
+    </div>
 </template>

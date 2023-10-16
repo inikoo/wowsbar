@@ -15,12 +15,12 @@ const props = defineProps<{
     }
     swiperRef?: Element 
 }>()
-
+console.log('ssss',props.data)
 </script>
 
 <template>
-    <Link :href="data.target"
-        class="bg-gray-800/40 text-gray-100 border border-gray-50/50 rounded-md px-3 py-1 hover:bg-gray-900/60 whitespace-nowrap">
+    <a :href="data.target" :target="data.target_window == 'In This Window' ? '_self' : '_blank'"  :style="`background : ${data.button_color}; color: ${data.text_color};`"
+        class="border border-gray-50/50 rounded-md px-3 py-1 hover:bg-gray-900/60 whitespace-nowrap">
         {{ data.text?.length == 0 ? trans('Open') : data.text }}
-    </Link>
+    </a>
 </template>

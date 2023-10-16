@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import {computed} from 'vue'
+import {get} from 'lodash'
 const props = defineProps<{
     data?: {
         text?: string
@@ -7,7 +8,8 @@ const props = defineProps<{
             fontSubtitle?: string
             fontTitle?: string
         }
-        color?: string
+        ribbon_color?: string
+        text_color?:string
     }
     swiperRef?: Element
     position: string
@@ -35,9 +37,17 @@ const positionRibbon = computed(() => {
 </script>
 
 <template>
-    <div v-if="data?.text" class=" text-white whitespace-nowrap" :class="positionRibbon" :ribbon-text="data?.text" :style="[data?.color ? `--ribbon-color: ${data.color}` : 'rgba(244, 63, 94, 255)']">
-        
-    </div>
+   <div v-if="data && data.text" 
+     class="text-white whitespace-nowrap" 
+     :class="positionRibbon" 
+     :ribbon-text="data.text" 
+     :style="{
+       '--ribbon-color': data && data.ribbon_color ? data.ribbon_color : 'rgba(244, 63, 94, 255)',
+       'color': get(data, 'text_color', 'black')
+     }">
+     <!-- Your content goes here -->
+</div>
+
 </template>
 
 <style>

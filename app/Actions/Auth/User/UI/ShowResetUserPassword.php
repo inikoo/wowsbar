@@ -5,24 +5,19 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Organisation\OrganisationUser\UI;
+namespace App\Actions\Auth\User\UI;
 
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\Concerns\AsController;
 
-class ShowResetPasswordUsers
+class ShowResetUserPassword
 {
     use AsController;
 
     public function handle(): Response
     {
-        return Inertia::render(
-            'Auth/ForgotPassword',
-            [
-                'status'    => session('status'),
-            ]
-        );
+        return Inertia::render('Auth/ResetUserPassword');
     }
 
 }

@@ -72,9 +72,6 @@ Route::middleware(["org-web"])->group(function () {
                 ->name("downloads.")
                 ->group(__DIR__ . "/downloads.php");
         });
-        Route::prefix('passwords')
-            ->name('passwords.')
-            ->group(__DIR__ . "/passwords.php");
     });
 
 
