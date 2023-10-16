@@ -182,6 +182,7 @@ class StoreBanner
 
     public function action(PortfolioWebsite $portfolioWebsite, array $objectData): Banner
     {
+        data_set($objectData, 'portfolio_website_id', $portfolioWebsite->id);
         $this->asAction = true;
         $this->setRawAttributes($objectData);
         $validatedData = $this->validateAttributes();
@@ -238,7 +239,6 @@ class StoreBanner
 
     public function htmlResponse(Banner $banner): RedirectResponse
     {
-
         return redirect()->route(
             'customer.banners.workshop',
             [

@@ -6,6 +6,7 @@ import Input from '@/Components/Forms/Fields/Primitive/PrimitiveInput.vue'
 import ColorPicker from "@/Components/Workshop/Fields/ColorPicker.vue"
 import Radio from '@/Components/Forms/Fields/Primitive/PrimitiveRadio.vue'
 import { get, cloneDeep, set } from 'lodash'
+import  Select from '@/Components/Forms/Fields/Primitive/PrimitiveSelect.vue'
 
 const props = defineProps<{
     data: any
@@ -49,66 +50,66 @@ const corners = ref([
 ])
 
 const optionType = [
-    {
-        label: 'Footer',
-        value: 'cornerFooter',
-        fields: [
-            {
-                name: 'text',
-                type: 'input',
-                label: trans('Text'),
-                value: null,
-                placeholder: "Christmas Sales on 20-31 December!"
-            },
-            {
-                name: "color",
-                type: 'colorPicker',
-                label: trans('color'),
-                value: null
-            },
-            {
-                name: "fontSize",
-                type: "radio",
-                label: trans("Font Size"),
-                value: null,
-                defaultValue: { fontTitle: "text-[25px] lg:text-[44px]", fontSubtitle: "text-[12px] lg:text-[20px]" },
-                options: [
-                    { label: "Extra Small", value: {
-                            fontTitle: "text-[13px] lg:text-[21px]",
-                            fontSubtitle: "text-[8px] lg:text-[12px]"
-                        }
-                    },
-                    {
-                        label: "Small",
-                        value: {
-                            fontTitle: "text-[18px] lg:text-[32px]",
-                            fontSubtitle: "text-[10px] lg:text-[15px]"
-                        }
-                    },
-                    {
-                        label: "Normal",
-                        value: {
-                            fontTitle: "text-[25px] lg:text-[44px]",
-                            fontSubtitle: "text-[12px] lg:text-[20px]"
-                        }
-                    },
-                    {
-                        label: "Large", value: {
-                            fontTitle: "text-[30px] lg:text-[60px]",
-                            fontSubtitle: "text-[15px] lg:text-[25px]"
-                        }
-                    },
-                    {
-                        label: "Extra Large",
-                        value: {
-                            fontTitle: "text-[40px] lg:text-[70px]",
-                            fontSubtitle: "text-[20px] lg:text-[30px]"
-                        },
-                    },
-                ],
-            },
-        ]
-    },
+    // {
+    //     label: 'Footer',
+    //     value: 'cornerFooter',
+    //     fields: [
+    //         {
+    //             name: 'text',
+    //             type: 'input',
+    //             label: trans('Text'),
+    //             value: null,
+    //             placeholder: "Christmas Sales on 20-31 December!"
+    //         },
+    //         {
+    //             name: "color",
+    //             type: 'colorPicker',
+    //             label: trans('color'),
+    //             value: null
+    //         },
+    //         {
+    //             name: "fontSize",
+    //             type: "radio",
+    //             label: trans("Font Size"),
+    //             value: null,
+    //             defaultValue: { fontTitle: "text-[25px] lg:text-[44px]", fontSubtitle: "text-[12px] lg:text-[20px]" },
+    //             options: [
+    //                 { label: "Extra Small", value: {
+    //                         fontTitle: "text-[13px] lg:text-[21px]",
+    //                         fontSubtitle: "text-[8px] lg:text-[12px]"
+    //                     }
+    //                 },
+    //                 {
+    //                     label: "Small",
+    //                     value: {
+    //                         fontTitle: "text-[18px] lg:text-[32px]",
+    //                         fontSubtitle: "text-[10px] lg:text-[15px]"
+    //                     }
+    //                 },
+    //                 {
+    //                     label: "Normal",
+    //                     value: {
+    //                         fontTitle: "text-[25px] lg:text-[44px]",
+    //                         fontSubtitle: "text-[12px] lg:text-[20px]"
+    //                     }
+    //                 },
+    //                 {
+    //                     label: "Large", value: {
+    //                         fontTitle: "text-[30px] lg:text-[60px]",
+    //                         fontSubtitle: "text-[15px] lg:text-[25px]"
+    //                     }
+    //                 },
+    //                 {
+    //                     label: "Extra Large",
+    //                     value: {
+    //                         fontTitle: "text-[40px] lg:text-[70px]",
+    //                         fontSubtitle: "text-[20px] lg:text-[30px]"
+    //                     },
+    //                 },
+    //             ],
+    //         },
+    //     ]
+    // },
     {
         label: 'Corner text',
         value: 'cornerText',
@@ -126,6 +127,14 @@ const optionType = [
                 label: trans('subtitle'),
                 value: null,
                 placeholder: "Holiday sales up to 80% all items."
+            },
+            {
+                name: 'width',
+                type: 'number',
+                label: trans('width'),
+                value: 100,
+                placeholder: "100",
+                suffix: "%",
             },
             {
                 name: 'color',
@@ -194,6 +203,25 @@ const optionType = [
                 value: null,
                 prefix: "https://",
             },
+            {
+                name: 'button_color',
+                type: 'colorPicker',
+                label: trans('Button color'),
+                value: 'rgb(244, 63, 94)'
+            },
+            {
+                name: 'text_color',
+                type: 'colorPicker',
+                label: trans('Text color'),
+                value: 'rgb(244, 63, 94)'
+            },
+            {
+                name: 'target_window',
+                type: 'select',
+                label: trans('Target Window'),
+                value:  'In This Window',
+                option : [ 'In This Window', 'New Window']
+            },
         ]
     },
     {
@@ -213,12 +241,23 @@ const optionType = [
                 placeholder: 'Holiday Sales!'
             },
             {
-                name: 'color',
+                name: 'ribbon_color',
                 type: 'colorPicker',
                 label: trans('Ribbon color'),
                 value: 'rgb(244, 63, 94)'
             },
+            {
+                name: 'text_color',
+                type: 'colorPicker',
+                label: trans('Text color'),
+                value: 'rgb(0, 0, 0)'
+            },
         ]
+    },
+    {
+        label: 'Clear',
+        value: 'clear',
+        fields: [],
     },
 ]
 
@@ -307,6 +346,13 @@ const setUpData = () => {
                 }
             }
         }
+        if(Type[current.value].value == 'clear'){
+            for(const set in value.value){
+                if(area.value.id == set){
+                    delete value.value[set]
+                }
+            }
+        }
     }
 
     // console.log('iniiiii',value.value)
@@ -315,6 +361,7 @@ const setUpData = () => {
 };
 
 const typeClick = (key) => {
+    console.log('key',key)
     current.value = key 
     setUpData();
 }
@@ -398,8 +445,12 @@ defineExpose({
                 <span class="isolate flex w-full rounded-md gap-x-2">
                     <!-- Select the corners -->
                     <button v-for="(item, key) in Type" :key="item.value" type="button" @click="typeClick(key)"
-                        class="py-2 px-4 rounded"
-                        :class="[current === key ? 'bg-gray-300 text-gray-600 ring-2 ring-gray-500' : 'hover:bg-gray-200/70 border border-gray-400']">
+                    :class="[
+                            'py-2', 'px-4', 'rounded',
+                            current === key ? 'bg-gray-300 text-gray-600 ring-2 ring-gray-500' : 'hover:bg-gray-200/70 border border-gray-400',
+                            item.value == 'clear' ? 'bg-red-500 text-white' : ''
+                        ]"
+                        >
                         {{ item.label }}
                     </button>
                 </span>
@@ -416,7 +467,7 @@ defineExpose({
                         </dt>
                         <dd class="sm:col-span-2">
                             <div class="mt-1 flex text-sm text-gray-700 sm:mt-0">
-                                <div class="relative flex-grow" v-if="field.type == 'input'">
+                                <div class="relative flex-grow" v-if="field.type == 'input' || field.type == 'number' ">
                                     <Input :key="field.label + index" :value="field.value" @input="setUpData"  @onChange="(newValue)=>OnchangeFields(field,newValue)" :fieldData="field" />
                                 </div>
                                 <div class="relative flex-grow" v-if="field.type == 'colorPicker'">
@@ -425,14 +476,14 @@ defineExpose({
                                 <div class="relative flex-grow" v-if="field.type == 'radio'">
                                     <Radio :key="field.label + index" :radioValue="field.value" :fieldData="field" @onChange="(newValue)=>OnchangeFields(field,newValue)"/>
                                 </div>
+                                <div class="relative flex-grow" v-if="field.type == 'select'">
+                                    <Select :value="field.value"  :key="field.label + index" :fieldData="{ options: field.option }" @onChange="(newValue) => OnchangeFields(field,newValue)" />
+                                </div>
                             </div>
                         </dd>
                     </dl>
                 </div>
             </div>
-
         </div>
-
-
     </div>
 </template>

@@ -22,5 +22,11 @@
     "portfolio.seo.view",
     "portfolio.ppc.view",
     "portfolio.social.view",
-    "portfolio.prospects.view"
+    "portfolio.prospects.view",
+
+    "billing",
+    "billing.view",
+    "billing.create",
+    "billing.edit",
+    "billing.delete"
 ]

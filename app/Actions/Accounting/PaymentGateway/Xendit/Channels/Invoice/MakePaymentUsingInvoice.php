@@ -23,7 +23,8 @@ class MakePaymentUsingInvoice
 
     public function handle(Payment $payment): array
     {
-        Xendit::setApiKey(Arr::get($payment->paymentAccount->paymentServiceProvider->data, 'api_key'));
+//        Xendit::setApiKey(Arr::get($payment->paymentAccount->paymentServiceProvider->data, 'api_key'));
+        Xendit::setApiKey(env('XENDIT_APP_KEY'));
 
         $customer   = $payment->customer;
         $externalId = $payment->reference;
@@ -34,8 +35,8 @@ class MakePaymentUsingInvoice
             'description'      => 'Invoice for ' . $customer->name,
             'invoice_duration' => 3600,
             'customer'         => [
-                'surname'       => $customer->name,
-                'email'         => $customer->email
+                'given_names'   => $customer->name,
+                'email'        => $customer->email
             ],
             'success_redirect_url' => url('/org'),
             'failure_redirect_url' => url('/org')
