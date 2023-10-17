@@ -66,7 +66,7 @@ const setThemeRoles = (roles: string) => {
     <Table :resource="data" :name="tab" class="mt-5">
         <template #cell(slug)="{ item: user }">
             <Link :href="userRoute(user)" class="w-full h-full py-2" :id="user.slug">
-                {{ user.slug }}
+                {{ user['slug'] }}
             </Link>
         </template>
 
@@ -77,7 +77,7 @@ const setThemeRoles = (roles: string) => {
         </template>
 
         <template #cell(status)="{ item: user }">
-            <Tag :theme="setThemeStatus(user.status)" :key="user.id">{{ user.status }}</Tag>
+            <Tag :theme="setThemeStatus(user.status)" :key="user.id">{{ user['status'] }}</Tag>
         </template>
         <template #cell(rolesz)="{ item: user }">
             <div class="flex gap-x-1 flex-wrap gap-y-1">
