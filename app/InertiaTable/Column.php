@@ -18,7 +18,7 @@ class Column implements Arrayable
         public bool $hidden,
         public bool $sortable,
         public bool|string $sorted,
-        public string $type
+        public ?string $type
     ) {
     }
 
