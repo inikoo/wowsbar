@@ -29,13 +29,13 @@ const resetPassword = useForm({
 })
 
 const submitResetPassword = () => {
-    resetPassword.post(route('customer.password.email'), {
+    resetPassword.post(route('public.password.email'), {
         onFinish: () => form.reset('email'),
     })
 }
 
 const submit = () => {
-    form.post(route('customer.login'), {
+    form.post(route('public.login'), {
         onFinish: () => form.reset('password'),
     })
 }

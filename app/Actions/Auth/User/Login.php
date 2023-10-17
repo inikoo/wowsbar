@@ -54,8 +54,6 @@ class Login
         /** @var User $user */
         $user = Auth::guard('customer')->user();
 
-
-
         $this->logCustomerUser($user);
 
         return back();
@@ -68,8 +66,6 @@ class Login
         /** @var CustomerUser $customerUser */
         $customerUser = $user->customerUsers()->where('status', true)->first();
         if (!$customerUser) {
-
-
 
             Auth::guard('customer')->logout();
             session()->invalidate();
