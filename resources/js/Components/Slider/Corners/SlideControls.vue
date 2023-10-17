@@ -29,7 +29,7 @@ const toggleAutoplay = (swiper: any) => {
 </script>
 
 <template>
-    <div class="opacity-50  flex justify-center items-center gap-x-3 my-3 text-gray-800/40">
+    <div class="opacity-80  flex justify-center items-center gap-x-3 my-3 text-gray-800/40">
         <!-- Button: Play/pause -->
         <div @click="toggleAutoplay(props.swiperRef.$el.swiper)"
             class="flex items-center justify-center cursor-pointer w-9 aspect-square border border-gray-400 bg-gray-300/50 rounded-full hover:bg-gray-400/50 hover:text-gray-800/60 active:bg-gray-300/80"
