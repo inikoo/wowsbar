@@ -93,7 +93,7 @@ onMounted(() => {
         noticeOnUnload: false,
         plugins: plugin,
         canvas: {
-            styles: ['https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css'],
+            styles: ['https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css','https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css'],
             scripts:['https://cdn.tailwindcss.com']
         },
         storageManager: {
