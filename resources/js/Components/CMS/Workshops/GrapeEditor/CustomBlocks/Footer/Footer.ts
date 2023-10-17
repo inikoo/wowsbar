@@ -350,22 +350,22 @@ export const footerBlock4 = () => {
         <!-- Section: Social -->
         <section class="text-center justify-center flex mb-5">
           <a href="" class="text-white me-4">
-          <img  src="https://dummyimage.com"" alt="GitHub Icon" width="32" height="32">
+          <img  src="https://dummyimage.com/300" alt="GitHub Icon" width="32" height="32">
           </a>
           <a href="" class="text-white me-4">
-          <img  src="https://dummyimage.com" alt="GitHub Icon" width="32" height="32">
+          <img  src="https://dummyimage.com/300" alt="GitHub Icon" width="32" height="32">
           </a>
           <a href="" class="text-white me-4">
-          <img  src="https://dummyimage.com" alt="GitHub Icon" width="32" height="32">
+          <img  src="https://dummyimage.com/300" alt="GitHub Icon" width="32" height="32">
           </a>
           <a href="" class="text-white me-4">
-          <img  src="https://dummyimage.com" alt="GitHub Icon" width="32" height="32">
+          <img  src="https://dummyimage.com/300" alt="GitHub Icon" width="32" height="32">
           </a>
           <a href="" class="text-white me-4">
-          <img  src="https://dummyimage.com" alt="GitHub Icon" width="32" height="32">
+          <img  src="https://dummyimage.com/300" alt="GitHub Icon" width="32" height="32">
           </a>
           <a href="" class="text-white me-4">
-          <img  src="https://dummyimage.com" alt="GitHub Icon" width="32" height="32">
+          <img  src="https://dummyimage.com/300" alt="GitHub Icon" width="32" height="32">
           </a>
         </section>
         <!-- Section: Social -->
