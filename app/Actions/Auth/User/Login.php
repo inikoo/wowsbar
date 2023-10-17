@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use Inertia\Inertia;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 
@@ -27,7 +28,6 @@ class Login
     use AsAction;
 
     private string $credentialHandler = 'email';
-    private string $home              = 'app/dashboard';
 
 
     /**
@@ -107,14 +107,18 @@ class Login
         ];
     }
 
-    /**
-     * @throws \Illuminate\Validation\ValidationException
-     */
-    public function asController(ActionRequest $request): RedirectResponse
+
+    public function asController(ActionRequest $request): \Symfony\Component\HttpFoundation\Response
     {
         $this->handle($request);
+        Inertia::setRootView('app-customer');
 
-        return redirect()->intended($this->home);
+        $url = session()->pull('url.intended', 'app/dashboard');
+
+        return Inertia::location($url);
+
+
+
     }
 
 

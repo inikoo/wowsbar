@@ -7,10 +7,10 @@
 
 namespace App\Actions\Auth\User;
 
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Inertia\Inertia;
 use Lorisleiva\Actions\Concerns\AsController;
 
 class Logout
@@ -18,17 +18,14 @@ class Logout
     use AsController;
 
 
-    public function handle(Request $request): RedirectResponse
+    public function handle(Request $request): \Symfony\Component\HttpFoundation\Response
     {
-        $gate        = 'customer';
-        $redirectUrl = '/app/login';
 
-        Auth::guard($gate)->logout();
+        Auth::guard('customer')->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         Session::put('reloadLayout', '1');
-
-        return redirect($redirectUrl);
+        return Inertia::location('/');
     }
 
 }
