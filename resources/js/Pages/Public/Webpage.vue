@@ -3,12 +3,17 @@ import { loadCss } from "@/Composables/loadCss";
 import { ref, onMounted } from "vue";
 import Html from "@/Components/Blocks/Html.vue";
 import Appointment from "@/Components/Blocks/Appointment.vue";
+
+
+
 const props = defineProps<{
+    structure: object
     content: {
         css: String;
         js: String;
         blocks: Array;
-    };
+    }
+    auth: object
 }>();
 
 
@@ -36,18 +41,27 @@ onMounted(() => {
     const styleElement = document.createElement("style");
     styleElement.textContent = dynamicClasses;
     document.head.appendChild(styleElement);
+
+    // set Login Button logic
+    const loginButton = document.querySelectorAll(
+        '*[data-wowsbar-element="login"]'
+    );
+    if (props.auth.user) {
+        loginButton.forEach((button) => {
+            button.innerHTML = 'Dashboard'
+        });
+    }
 });
 
 </script>
 
-<template layout='Public'>
+<template>
+    <div v-html="props.structure.header[0]?.html"></div>
     <div v-for="(blockData, index) in content.blocks" :key="index">
-        <component
-            :is="getComponent(blockData['type'])"
-            :data="blockData.content"
-        >
+        <component :is="getComponent(blockData['type'])" :data="blockData.content">
         </component>
     </div>
+    <div v-html="props.structure.footer[0]?.html"></div>
 </template>
 
 <style scoped>

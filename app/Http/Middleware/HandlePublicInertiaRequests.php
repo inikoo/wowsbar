@@ -25,11 +25,11 @@ class HandlePublicInertiaRequests extends Middleware
             ]);
         };
 
-        $firstLoadOnlyProps['structure']=$request->get('website')->compiled_layout;
 
         return array_merge(
             $firstLoadOnlyProps,
             [
+                'structure' => $request->get('website')->compiled_layout,
                 'auth'  => [
                     'user' => $request->user() ? LoggedUserResource::make($request->user())->getArray() : null,
                 ],

@@ -200,11 +200,11 @@ class GetLayout
             ];
         }
 
-        if ($customerUser->hasPermissionTo('billing.view')) {
-            $navigation['billings'] = [
-                'scope'   => 'billings',
+        if ($customerUser->hasPermissionTo('billing.view') and app()->environment('local')) {
+            $navigation['billing'] = [
+                'scope'   => 'billing',
                 'icon'    => ['fal', 'fa-credit-card'],
-                'label'   => __('billings'),
+                'label'   => __('billing'),
                 'route'   => 'customer.billing.dashboard',
                 'topMenu' => [
                     'subSections' => []
