@@ -10,6 +10,7 @@ import Password from '@/Components/Auth/LoginPassword.vue'
 import Checkbox from '@/Components/Checkbox.vue'
 import ValidationErrors from '@/Components/ValidationErrors.vue'
 import { trans } from 'laravel-vue-i18n'
+import PureInput from '@/Components/Pure/PureInput.vue'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faSpinnerThird } from '@fad/'
@@ -27,9 +28,6 @@ const submit = () => {
         {
         onFinish: () => form.reset('password'),
         });
-
-
-
 }
 
 </script>
@@ -49,7 +47,7 @@ const submit = () => {
         <div>
             <label for="password" class="block text-sm font-medium text-gray-600"> {{ trans('Password') }} </label>
             <div class="mt-1 flex rounded-md shadow-sm">
-                <Password id="password" name="password" v-model="form.password"/>
+                <PureInput v-model="form.password" type="password" inputName="password" placeholder="Enter password" />
             </div>
         </div>
 

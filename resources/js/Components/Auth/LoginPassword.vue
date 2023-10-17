@@ -26,8 +26,11 @@ onMounted(() => {
 
 <template>
     <div class="relative flex items-stretch flex-grow focus-within:z-10">
-
-        <input :value="modelValue" @input="$emit('update:modelValue', $event.target.value)" ref="input" :id="id" :name="name" :type="showPassword ? 'text' : 'password'" autocomplete="current-password" required=""
+        <input ref="input" :id="id" :name="name"
+            :value="modelValue" @input="$emit('update:modelValue', $event.target.value)"
+            :type="showPassword ? 'text' : 'password'"
+            autocomplete="current-password"
+            required=""
             class="focus:ring-gray-500 focus:border-gray-500 block w-full rounded-none rounded-l-md border-gray-300"/>
     </div>
     <button
