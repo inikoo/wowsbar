@@ -98,8 +98,8 @@ class ShowOrgCustomerUser extends InertiaAction
                 ],
 
                 UserTabsEnum::SHOWCASE->value => $this->tab == UserTabsEnum::SHOWCASE->value ?
-                    fn() => new UserResource($customerUser)
-                    : Inertia::lazy(fn() => new UserResource($customerUser)),
+                    fn () => new UserResource($customerUser)
+                    : Inertia::lazy(fn () => new UserResource($customerUser)),
                 /*
                                 UserTabsEnum::REQUEST_LOGS->value => $this->tab == UserTabsEnum::REQUEST_LOGS->value ?
                                     fn () => UserRequestLogsResource::collection(ShowUserRequestLogs::run($customerUser->slug))

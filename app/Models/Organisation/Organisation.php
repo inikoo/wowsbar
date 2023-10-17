@@ -13,6 +13,7 @@ use App\Models\Auth\OrganisationUser;
 use App\Models\Catalogue\Product;
 use App\Models\Market\Shop;
 use App\Models\Catalogue\ProductCategory;
+use App\Models\Traits\HasLogo;
 use App\Models\Web\Website;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -79,6 +80,7 @@ class Organisation extends Model implements HasMedia
 {
     use InteractsWithMedia;
     use HasFactory;
+    use HasLogo;
 
     protected $casts = [
         'data'     => 'array',

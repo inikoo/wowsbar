@@ -164,7 +164,7 @@ class IndexOrgCustomerUsers extends InertiaAction
 
         return
             (
-            $request->user()->hasPermissionTo('crm.view')
+                $request->user()->hasPermissionTo('crm.view')
             );
     }
 
@@ -235,8 +235,8 @@ class IndexOrgCustomerUsers extends InertiaAction
                 ],
 
                 UsersTabsEnum::USERS->value => $this->tab == UsersTabsEnum::USERS->value ?
-                    fn() => OrgCustomerUsersResource::collection($users)
-                    : Inertia::lazy(fn() => OrgCustomerUsersResource::collection($users)),
+                    fn () => OrgCustomerUsersResource::collection($users)
+                    : Inertia::lazy(fn () => OrgCustomerUsersResource::collection($users)),
 
                 /*
                 UsersTabsEnum::USERS_REQUESTS->value => $this->tab == UsersTabsEnum::USERS_REQUESTS->value ?
@@ -245,8 +245,8 @@ class IndexOrgCustomerUsers extends InertiaAction
                 */
 
                 UsersTabsEnum::USERS_HISTORIES->value => $this->tab == UsersTabsEnum::USERS_HISTORIES->value ?
-                    fn() => HistoryResource::collection(IndexHistory::run(User::class))
-                    : Inertia::lazy(fn() => HistoryResource::collection(IndexHistory::run(User::class)))
+                    fn () => HistoryResource::collection(IndexHistory::run(User::class))
+                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistory::run(User::class)))
 
             ]
         )->table(
