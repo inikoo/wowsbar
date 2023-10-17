@@ -7,9 +7,10 @@ import ColorPicker from "@/Components/Workshop/Fields/ColorPicker.vue"
 import Radio from '@/Components/Forms/Fields/Primitive/PrimitiveRadio.vue'
 import { get, cloneDeep, set } from 'lodash'
 import  Select from '@/Components/Forms/Fields/Primitive/PrimitiveSelect.vue'
-import { faAlignLeft, faAlignCenter, faAlignRight } from '@fal/'
+import { faLock } from '@fas/'
 import { library } from '@fortawesome/fontawesome-svg-core'
-library.add(faAlignLeft, faAlignCenter, faAlignRight)
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+library.add( faLock )
 
 const props = defineProps<{
     data: any
@@ -433,9 +434,9 @@ defineExpose({
                     }"
             >
                 <div v-if="common && common.corners?.hasOwnProperty(corner.id)" class="isolate text-sm italic">
-                    <div class="">{{ trans('Reserved for common') }}</div>
-                    <div class="-z-10 absolute left-0 top-1/2 -translate-x-10 bg-gray-400/50 h-0.5 rotate-[9deg] w-[120%]"></div>
-                    <div class="-z-10 absolute left-0 top-1/2 -translate-x-10 bg-gray-400/50 h-0.5 -rotate-[9deg] w-[120%]"></div>
+                    <div class=""><font-awesome-icon :icon="['fas', 'lock']" class="mr-2"/> Already used in common</div>
+                    <!-- <div class="-z-10 absolute left-0 top-1/2 -translate-x-10 bg-gray-400/50 h-0.5 rotate-[9deg] w-[120%]"></div>
+                    <div class="-z-10 absolute left-0 top-1/2 -translate-x-10 bg-gray-400/50 h-0.5 -rotate-[9deg] w-[120%]"></div> -->
                 </div>
                 <span v-else class="capitalize">{{ corner.label }}</span>
             </div>

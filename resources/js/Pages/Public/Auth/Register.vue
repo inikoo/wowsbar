@@ -1,6 +1,6 @@
 <!--
   - Author: Raul Perusquia <raul@inikoo.com>
-  - Created: Mon, 09 Oct 2023 09:38:44 Malaysia Time, Office, Bali, Indonesia
+  - Created: Tue, 17 Oct 2023 11:48:56 Malaysia Time, Office, Bali, Indonesia
   - Copyright (c) 2023, Raul A Perusquia Flores
   -->
 
@@ -82,7 +82,7 @@ const submit = () => {
         <div class="">
             <div class="text-sm font-light text-gray-500 dark:text-gray-400">
                 {{ trans('Already registered?') }}
-                <Link :href="route('customer.login')" id="login-link"
+                <Link :href="route('public.login')" id="login-link"
                     class="font-bold text-primary-700 hover:underline dark:text-primary-500">{{ trans('Login') }}</Link>
             </div>
         </div>

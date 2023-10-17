@@ -15,16 +15,16 @@ use App\Actions\UI\Public\Auth\ShowRegister;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest:customer')->group(function () {
-    Route::get('login', ShowLogin::class)->name('login');
-    Route::post('login', Login::class)->name('login.store');
-    Route::get('register', ShowRegister::class)->name('register');
-    Route::post('register', Register::class);
+    //Route::get('login', ShowLogin::class)->name('login');
+    //Route::post('login', Login::class)->name('login.store');
+    //Route::get('register', ShowRegister::class)->name('register');
+    //Route::post('register', Register::class);
 
 });
 
 Route::middleware('auth')->group(function () {
     Route::post('logout', Logout::class)->name('logout');
-    Route::get('reset/password', ShowResetUserPassword::class)->name('reset-password.edit');
-    Route::patch('reset/password', UpdateUserPassword::class)->name('reset-password.update');
+    //Route::get('reset/password', ShowResetUserPassword::class)->name('reset-password.edit');
+    //Route::patch('reset/password', UpdateUserPassword::class)->name('reset-password.update');
 
 });

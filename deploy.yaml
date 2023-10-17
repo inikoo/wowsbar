@@ -5,6 +5,7 @@ import:
   - deploy/supervisor.php
   - deploy/nginx.php
   - deploy/install.php
+  - deploy/deploy.php
   - contrib/npm.php
 
 config:
