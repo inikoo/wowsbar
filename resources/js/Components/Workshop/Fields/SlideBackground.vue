@@ -125,7 +125,7 @@ const screenViewChange = (value: string) => {
 
         <!-- Popup: Crop when add image -->
         <Modal :isOpen="isOpenCropModal" @onClose="closeModalisOpenCropModal">
-            <div>
+            <div>    
                 <CropImage
                     :data="addFiles"
                     :imagesUploadRoute="props.fieldData.uploadRoute"
@@ -150,7 +150,7 @@ const screenViewChange = (value: string) => {
                         }
                         : 'aspect-[2/1] md:aspect-[3/1] lg:aspect-[4/1]'
             ]">
-                <div class="relative w-full h-full flex items-center bg-gray-100">
+                <div class="relative w-full h-full flex items-center bg-gray-100 overflow-hidden">
                     <Image :src="get(value, [`${screenView}`, 'source'], value.desktop.source)"
                         :alt="value.name" :imageCover="true"/>
                 </div>

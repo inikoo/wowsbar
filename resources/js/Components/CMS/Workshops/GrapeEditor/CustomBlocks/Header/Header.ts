@@ -90,7 +90,7 @@ export const headerBlock3 = () => {
             <div class="col-md-9">
             <div class="flex justify-content-start">
             <div class="d-flex justify-content-start gap-3">
-            <a href="/app/login" data-wowsbar-element="login" class="btn btn-primary">Log in</a>
+            <a href="/login" data-wowsbar-element="login" class="btn btn-primary">Log in</a>
                     <a href="/appointment" data-wowsbar-element="appointment" class="btn btn-outline-dark mr-3">Appointment</a>
                  
                 </div>
