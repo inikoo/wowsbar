@@ -72,7 +72,10 @@ class IndexBanners extends InertiaAction
                 ->where('banner_portfolio_website.portfolio_website_id', $parent->id);
         } else {
             $websites = DB::table('banner_portfolio_website')
-                ->select('banner_id', DB::raw('jsonb_agg(json_build_object(\'slug\',portfolio_websites.slug,\'name\',portfolio_websites.name)) as websites'))
+                ->select(
+                    'banner_id',
+                    DB::raw('jsonb_agg(json_build_object(\'slug\',portfolio_websites.slug,\'name\',portfolio_websites.name)) as websites')
+                )
                 ->leftJoin('portfolio_websites', 'banner_portfolio_website.portfolio_website_id', 'portfolio_websites.id')
                 ->groupBy('banner_id');
 

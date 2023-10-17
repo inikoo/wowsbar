@@ -72,7 +72,7 @@ class ShowCustomer extends InertiaAction
                     'meta'    => [
                         [
                             'href'     => [
-                                'name'       => $request->route()->getName().'.web-users.index',
+                                'name'       => $request->route()->getName().'.customer-users.index',
                                 'parameters' => $request->route()->originalParameters()
                             ],
                             'number'   => $customer->stats->number_users_status_active,

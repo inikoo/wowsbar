@@ -63,6 +63,10 @@ class ShowOrganisationUser extends InertiaAction
                 ],
                 'pageHead'    => [
                     'title'   => $organisationUser->username,
+                    'icon'    => [
+                        'title' => __('users'),
+                        'icon'  => 'fal fa-terminal'
+                    ],
                     'actions' => [
                         $this->canEdit ? [
                             'type'  => 'button',
@@ -80,22 +84,22 @@ class ShowOrganisationUser extends InertiaAction
                 ],
 
                 OrganisationUserTabsEnum::SHOWCASE->value => $this->tab == OrganisationUserTabsEnum::SHOWCASE->value ?
-                    fn () => new OrganisationUserResource($organisationUser)
-                    : Inertia::lazy(fn () => new OrganisationUserResource($organisationUser)),
+                    fn() => new OrganisationUserResource($organisationUser)
+                    : Inertia::lazy(fn() => new OrganisationUserResource($organisationUser)),
 
 
                 OrganisationUserTabsEnum::REQUEST_LOGS->value => $this->tab == OrganisationUserTabsEnum::REQUEST_LOGS->value ?
-                    fn () => OrganisationUserRequestLogsResource::collection(IndexOrganisationUserRequestLogs::run($organisationUser))
-                    : Inertia::lazy(fn () => OrganisationUserRequestLogsResource::collection(IndexOrganisationUserRequestLogs::run($organisationUser))),
+                    fn() => OrganisationUserRequestLogsResource::collection(IndexOrganisationUserRequestLogs::run($organisationUser))
+                    : Inertia::lazy(fn() => OrganisationUserRequestLogsResource::collection(IndexOrganisationUserRequestLogs::run($organisationUser))),
 
                 OrganisationUserTabsEnum::HISTORY->value => $this->tab == OrganisationUserTabsEnum::HISTORY->value ?
-                    fn () => HistoryResource::collection(IndexHistory::run($organisationUser, OrganisationUserTabsEnum::HISTORY->value))
-                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistory::run($organisationUser, OrganisationUserTabsEnum::HISTORY->value)))
+                    fn() => HistoryResource::collection(IndexHistory::run($organisationUser, OrganisationUserTabsEnum::HISTORY->value))
+                    : Inertia::lazy(fn() => HistoryResource::collection(IndexHistory::run($organisationUser, OrganisationUserTabsEnum::HISTORY->value)))
 
             ]
         )
             ->table(IndexOrganisationUserRequestLogs::make()->tableStructure($organisationUser))
-            ->table(IndexHistory::make()->tableStructure(prefix:OrganisationUserTabsEnum::HISTORY->value));
+            ->table(IndexHistory::make()->tableStructure(prefix: OrganisationUserTabsEnum::HISTORY->value));
     }
 
     public function getBreadcrumbs(string $routeName, array $routeParameters, string $suffix = ''): array
