@@ -61,9 +61,9 @@ use App\Actions\Web\Website\UpdateWebsiteState;
 use App\Actions\Web\Website\UploadImagesToWebsite;
 
 Route::patch('/profile', UpdateProfile::class)->name('profile.update');
-Route::patch('/employee/{employee}', UpdateEmployee::class)->name('employee.update');
+Route::patch('/employee/{employee:id}', UpdateEmployee::class)->name('employee.update');
 Route::post('/employee/', StoreEmployee::class)->name('employee.store');
-Route::delete('/employee/{employee}', DeleteEmployee::class)->name('employee.delete');
+Route::delete('/employee/{employee:id}', DeleteEmployee::class)->name('employee.delete');
 
 
 Route::patch('/organisation', UpdateOrganisation::class)->name('organisation.update');
@@ -75,17 +75,17 @@ Route::delete('/prospect/{prospect:id}', RemoveProspect::class)->name('prospect.
 Route::post('/products/imports/upload', ImportProducts::class)->name('products.upload');
 
 Route::post('/guests/imports/upload', ImportGuests::class)->name('guests.upload');
-Route::patch('/guest/{guest}', UpdateGuest::class)->name('guests.update');
+Route::patch('/guest/{guest:id}', UpdateGuest::class)->name('guests.update');
 Route::post('/guest', StoreGuest::class)->name('guests.store');
-Route::delete('/guest/{guest}', DeleteGuest::class)->name('guests.delete');
+Route::delete('/guest/{guest:id}', DeleteGuest::class)->name('guests.delete');
 
-Route::patch('/provider/{paymentServiceProvider}', UpdatePaymentServiceProvider::class)->name('payment-service-provider.update');
-Route::delete('/provider/{paymentServiceProvider}', DeletePaymentServiceProvider::class)->name('payment-service-provider.delete');
-Route::patch('/payment/{payment}', UpdatePayment::class)->name('payment.update');
-Route::patch('/payment-account/{paymentAccount}', UpdatePaymentAccount::class)->name('payment-account.update');
+Route::patch('/provider/{paymentServiceProvider:id}', UpdatePaymentServiceProvider::class)->name('payment-service-provider.update');
+Route::delete('/provider/{paymentServiceProvider:id}', DeletePaymentServiceProvider::class)->name('payment-service-provider.delete');
+Route::patch('/payment/{payment:id}', UpdatePayment::class)->name('payment.update');
+Route::patch('/payment-account/{paymentAccount:id}', UpdatePaymentAccount::class)->name('payment-account.update');
 Route::post('/payment-account', StorePaymentAccount::class)->name('payment-account.store');
-Route::patch('/product/{product}', UpdateProduct::class)->name('product.update');
-Route::delete('/product/{product}', UpdateProduct::class)->name('product.delete');
+Route::patch('/product/{product:id}', UpdateProduct::class)->name('product.update');
+Route::delete('/product/{product:id}', UpdateProduct::class)->name('product.delete');
 
 Route::patch('product-category/{productCategory}', UpdateProductCategory::class)->name('product-category.update');
 
@@ -136,13 +136,13 @@ Route::prefix('webpage')->as('webpage.')->group(function () {
 
 Route::prefix('appointment')->as('appointment.')->group(function () {
     Route::post('/', StoreAppointment::class)->name('store');
-    Route::patch('/{appointment}', UpdateAppointment::class)->name('update');
-    Route::patch('/assign/{organisationUser}', AssignAppointmentUser::class)->name('assign');
+    Route::patch('/{appointment:id}', UpdateAppointment::class)->name('update');
+    Route::patch('/assign/{organisationUser:id}', AssignAppointmentUser::class)->name('assign');
 });
 
-Route::patch('/workplace/{workplace}', UpdateWorkplace::class)->name('workplace.update');
+Route::patch('/workplace/{workplace:id}', UpdateWorkplace::class)->name('workplace.update');
 Route::post('/workplace/', StoreWorkplace::class)->name('workplace.store');
-Route::delete('/workplace/{workplace}', DeleteWorkplace::class)->name('workplace.delete');
+Route::delete('/workplace/{workplace:id}', DeleteWorkplace::class)->name('workplace.delete');
 
 Route::prefix('customer/{customer:id}')->as('customer.')->group(function () {
     Route::patch('', UpdateCustomer::class)->name('update');
@@ -150,7 +150,7 @@ Route::prefix('customer/{customer:id}')->as('customer.')->group(function () {
     Route::post('websites', StoreCustomerWebsite::class)->name('customer-website.store');
 });
 
-Route::patch('websites/{customerWebsite}', UpdateCustomerWebsite::class)->name('customer-website.update');
+Route::patch('websites/{customerWebsite:id}', UpdateCustomerWebsite::class)->name('customer-website.update');
 
 Route::patch('{portfolioWebsite}/interest', SyncDivisionPortfolioWebsite::class)->name('interest.store');
 
