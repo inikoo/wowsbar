@@ -96,14 +96,12 @@ const logoutAuth = () => {
                     :class="[layout.leftSidebar.show ? 'md:w-56 md:pr-4' : 'md:w-10']"
                 >
                     <a :href="layout.app.url"
-                        class="hidden md:flex items-center h-full overflow-hidden gap-x-3"
+                        class="hidden md:flex flex-nowrap items-center h-full overflow-hidden gap-x-3"
                     >
-                        <Image :src="layout.app.logo" class="aspect-square"/>
-                        <Transition name="fade">
-                            <p v-if="layout.leftSidebar.show" class="bg-gradient-to-r from-gray-100 to-gray-300 text-transparent text-lg bg-clip-text font-bold whitespace-nowrap leading-none lg:truncate">
-                                {{ layout.app.name }}
-                            </p>
-                        </Transition>
+                        <Image :src="layout.app.logo" class="aspect-square h-full"/>
+                        <p class="bg-gradient-to-r from-gray-100 to-gray-300 text-transparent text-lg bg-clip-text font-bold whitespace-nowrap leading-none lg:truncate">
+                            {{ layout.app.name }}
+                        </p>
                     </a>
                 </div>
             </div>
