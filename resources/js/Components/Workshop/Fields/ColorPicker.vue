@@ -5,10 +5,11 @@ import 'vue-color-kit/dist/vue-color-kit.css'
 import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue'
 import { set, get } from 'lodash'
 import { ref, watch } from 'vue'
+
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faPaintBrushAlt } from '@far/'
+import { faPaintBrushAlt, faText } from '@far/'
 import { library } from '@fortawesome/fontawesome-svg-core'
-library.add(faPaintBrushAlt)
+library.add(faPaintBrushAlt, faText)
 
 
 const props = withDefaults(defineProps<{
@@ -17,6 +18,7 @@ const props = withDefaults(defineProps<{
         placeholder: string;
         readonly: boolean;
         copyButton: boolean;
+        icon?: string
     };
     data?: Object;
     color?: String;
@@ -25,7 +27,10 @@ const props = withDefaults(defineProps<{
     mode?: String
 }>(), {
     colorSuggestions: true,
-    mode: 'color'
+    mode: 'color',
+    fieldData: {
+        icon: 'far fa-paint-brush'
+    }
 })
 
 
@@ -85,10 +90,11 @@ const updateFormValue = (newValue) => {
     <div class="flex gap-3" v-if="mode == 'color'">
         <Popover v-slot="{ open }">
             <div class="relative">
+                <!-- Button: picker -->
                 <PopoverButton>
                     <div class="border border-slate-300 rounded-full w-10 h-10 flex justify-center items-center"
                         :style="`background-color: ${color}`">
-                        <FontAwesomeIcon icon='far fa-paint-brush-alt' class='text-gray-300 text-lg' aria-hidden='true' />
+                        <FontAwesomeIcon :icon="fieldData.icon?.length ? fieldData.icon : 'far fa-paint-brush-alt'" class='text-gray-300 text-lg' aria-hidden='true' />
                     </div>
                 </PopoverButton>
 
@@ -116,19 +122,20 @@ const updateFormValue = (newValue) => {
                 @click="() => changeColor({ rgba: { r: 16, g: 185, b: 129, a: 255 } })" />
             <div class="bg-sky-500 border border-slate-300 rounded w-6 h-6 shadow cursor-pointer hover:scale-110 transition-transform duration-100 ease-in-out"
                 @click="() => changeColor({ rgba: { r: 14, g: 165, b: 233, a: 255 } })" />
-            <div class="bg-fuchsia-500 border border-slate-300 rounded w-6 h-6 shadow cursor-pointer hover:scale-110 transition-transform duration-100 ease-in-out"
+            <div class="bg-indigo-500 border border-slate-300 rounded w-6 h-6 shadow cursor-pointer hover:scale-110 transition-transform duration-100 ease-in-out"
                 @click="() => changeColor({ rgba: { r: 99, g: 102, b: 241, a: 255 } })" />
             <div class="bg-rose-500 border border-slate-300 rounded w-6 h-6 shadow cursor-pointer hover:scale-110 transition-transform duration-100 ease-in-out"
                 @click="() => changeColor({ rgba: { r: 244, g: 63, b: 94, a: 255 } })" />
         </div>
     </div>
+    
     <div class="flex gap-3" v-if="mode == 'scheme'">
         <Popover v-slot="{ open }">
             <div class="relative">
                 <PopoverButton>
                 <slot name="button">
                     <div class="border border-slate-300 rounded-full w-10 h-10 flex justify-center items-center" :class="`bg-${color}-500`">
-                        <FontAwesomeIcon icon='far fa-paint-brush-alt' class='text-gray-300 text-lg' aria-hidden='true' />
+                        <FontAwesomeIcon :icon="[fieldData?.icon ? 'far fa-text' : 'far fa-paint-brush-alt']" class='text-gray-300 text-lg' aria-hidden='true' />
                     </div>
                 </slot>
 

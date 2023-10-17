@@ -31,7 +31,7 @@ const positionClasses = computed(() => {
     if(props.corner.type != 'ribbon') {
         switch (props.position) {
             case 'topRight':
-                classes = 'top-0 right-7 text-right';
+                classes = 'top-6 right-7 text-right';
                 break;
             case 'topLeft':
                 classes = 'top-6 left-7 text-left';
