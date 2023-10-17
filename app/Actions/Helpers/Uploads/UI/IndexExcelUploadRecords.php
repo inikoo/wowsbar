@@ -9,7 +9,6 @@ namespace App\Actions\Helpers\Uploads\UI;
 
 use App\Actions\InertiaAction;
 use App\Actions\UI\Organisation\HumanResources\ShowHumanResourcesDashboard;
-use App\Http\Resources\HumanResources\EmployeeInertiaResource;
 use App\Http\Resources\HumanResources\EmployeeResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\Helpers\UploadRecord;
@@ -92,7 +91,7 @@ class IndexExcelUploadRecords extends InertiaAction
                 'pageHead'    => [
                     'title'  => __('employees'),
                 ],
-                'data'        => EmployeeInertiaResource::collection($employees),
+                'data'        => EmployeeResource::collection($employees),
             ]
         )->table($this->tableStructure());
     }

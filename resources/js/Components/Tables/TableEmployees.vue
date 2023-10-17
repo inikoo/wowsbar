@@ -8,6 +8,7 @@
 import {Link} from '@inertiajs/vue3';
 import Table from '@/Components/Table/Table.vue';
 import JobPositionBadges from "@/Components/Elements/Badges/JobPositionBadges.vue";
+import Icon from "@/Components/Icon.vue";
 
 const props = defineProps<{
     data: object,
@@ -34,8 +35,12 @@ function employeeRoute(employee) {
                 {{ employee['slug'] }}
             </Link>
         </template>
-        <template #cell(job_positions)="{ item: employee }">
-            <job-position-badges :job_positions="employee['job_positions']"/>
+        <template  #cell(state)="{ item: employee }">
+            <Icon :data="employee['state_icon']"/>
+        </template>
+
+        <template #cell(positions)="{ item: employee }">
+            <job-position-badges :job_positions="employee['positions']"/>
         </template>
 
 

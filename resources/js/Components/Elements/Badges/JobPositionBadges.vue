@@ -9,7 +9,7 @@ defineProps(['job_positions']);
 
 const color = (position) => {
     switch (position) {
-        case 'prod-w':
+        case 'seo-w':
             return 'bg-pink-100 text-pink-800';
 
         default:

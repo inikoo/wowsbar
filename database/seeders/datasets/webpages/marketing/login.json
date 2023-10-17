@@ -1,6 +1,6 @@
 {
     "code": "login",
-    "url": "app/login",
+    "url": "login",
     "type": "auth",
     "purpose": "login"
 }
