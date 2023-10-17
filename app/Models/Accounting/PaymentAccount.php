@@ -34,8 +34,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property string|null $last_used_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @property string|null $delete_comment
  * @property Carbon|null $deleted_at
+ * @property string|null $delete_comment
  * @property-read Collection<int, \App\Models\Helpers\Audit> $audits
  * @property-read int|null $audits_count
  * @property-read \App\Models\Accounting\PaymentServiceProvider $paymentServiceProvider

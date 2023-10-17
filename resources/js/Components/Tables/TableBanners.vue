@@ -51,7 +51,7 @@ function websiteRoute(banner: Banner, slug) {
         </template>
 
         <template #cell(state)="{ item: banner }">
-            <Icon :data="banner['state_icon']"/>
+            <Icon :data="banner['state_icon']" class="px-1"/>
         </template>
 
         <template #cell(image_thumbnail)="{ item: banner }">

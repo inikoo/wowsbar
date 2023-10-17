@@ -23,7 +23,8 @@ use App\Http\Middleware\OrgAuthenticate;
 use App\Http\Middleware\PreventRequestsDuringMaintenance;
 use App\Http\Middleware\PublicAuthenticate;
 use App\Http\Middleware\RedirectIfAuthenticated;
-use App\Http\Middleware\ResetPasswordIfNeeded;
+use App\Http\Middleware\ResetOrganisationUserPasswordMiddleware;
+use App\Http\Middleware\ResetUserPasswordMiddleware;
 use App\Http\Middleware\SetUserCustomerMiddleware;
 use App\Http\Middleware\TrimStrings;
 use App\Http\Middleware\TrustProxies;
@@ -73,7 +74,7 @@ class Kernel extends HttpKernel
             HandleDeliveryInertiaRequests::class,
             AddLinkHeadersForPreloadedAssets::class,
         ],
-        'org-web' => [
+        'org-web'  => [
             EncryptCookies::class,
             AddQueuedCookiesToResponse::class,
             StartSession::class,
@@ -85,7 +86,7 @@ class Kernel extends HttpKernel
             LogLiveOrganisationUsersMiddleware::class,
             LogOrganisationUserRequestMiddleware::class
         ],
-        'public' => [
+        'public'   => [
             DetectWebsite::class,
             CheckWebsiteState::class,
             EncryptCookies::class,
@@ -115,7 +116,6 @@ class Kernel extends HttpKernel
         ],
 
 
-
         'webhooks-api' => [
             EnsureFrontendRequestsAreStateful::class,
             SubstituteBindings::class,
@@ -128,24 +128,24 @@ class Kernel extends HttpKernel
         ],
 
 
-
     ];
 
 
     protected $middlewareAliases = [
-        'auth'             => Authenticate::class,
-        'org-auth'         => OrgAuthenticate::class,
-        'public-auth'      => PublicAuthenticate::class,
-        'auth.basic'       => AuthenticateWithBasicAuth::class,
-        'auth.session'     => AuthenticateSession::class,
-        'cache.headers'    => SetCacheHeaders::class,
-        'can'              => Authorize::class,
-        'guest'            => RedirectIfAuthenticated::class,
-        'password.confirm' => RequirePassword::class,
-        'precognitive'     => HandlePrecognitiveRequests::class,
-        'signed'           => ValidateSignature::class,
-        'throttle'         => ThrottleRequests::class,
-        'verified'         => EnsureEmailIsVerified::class,
-        'reset-pass'       => ResetPasswordIfNeeded::class
+        'auth'                => Authenticate::class,
+        'org-auth'            => OrgAuthenticate::class,
+        'public-auth'         => PublicAuthenticate::class,
+        'auth.basic'          => AuthenticateWithBasicAuth::class,
+        'auth.session'        => AuthenticateSession::class,
+        'cache.headers'       => SetCacheHeaders::class,
+        'can'                 => Authorize::class,
+        'guest'               => RedirectIfAuthenticated::class,
+        'password.confirm'    => RequirePassword::class,
+        'precognitive'        => HandlePrecognitiveRequests::class,
+        'signed'              => ValidateSignature::class,
+        'throttle'            => ThrottleRequests::class,
+        'verified'            => EnsureEmailIsVerified::class,
+        'org-reset-pass'      => ResetOrganisationUserPasswordMiddleware::class,
+        'customer-reset-pass' => ResetUserPasswordMiddleware::class
     ];
 }

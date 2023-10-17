@@ -63,11 +63,11 @@ const handleEyeIcon = () => {
                     aria-hidden="true" />
             </div>
         </div>
-        
+
         <button v-if="props.type == 'password'"
             @click="handleEyeIcon"
             type="button"
-            name="showPassword" id="showPassword"
+            name="showPassword"
             class="-ml-px relative inline-flex items-center px-4 py-2 border-l border-gray-300 text-sm font-medium rounded-r-md text-gray-700 bg-gray-50 hover:bg-gray-200 ">
             <FontAwesomeIcon v-show="showPassword == 'text'" aria-hidden="true" class="h-5 w-5 text-gray-400" icon="fa-regular fa-eye"/>
             <FontAwesomeIcon v-show="showPassword == 'password'" aria-hidden="true" class="h-5 w-5 text-gray-400" icon="fa-regular fa-eye-slash"/>

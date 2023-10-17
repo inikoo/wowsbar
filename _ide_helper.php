@@ -20281,20 +20281,6 @@
      
 }
 
-    namespace Spatie\MediaLibrary\MediaCollections\Models\Collections { 
-            /**
-     * 
-     *
-     * @template TKey of array-key
-     * @template TModel of \Spatie\MediaLibrary\MediaCollections\Models\Media
-     * @extends Collection<TKey, TModel>
-     */ 
-        class MediaCollection {
-         
-    }
-     
-}
-
     namespace Inertia { 
             /**
      * 

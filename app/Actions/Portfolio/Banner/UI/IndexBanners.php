@@ -162,7 +162,7 @@ class IndexBanners extends InertiaAction
                 ->withGlobalSearch()
                 ->withEmptyState($emptyState)
                 ->withExportLinks($exportLinks)
-                ->column(key: 'state', label: ['fal', 'fa-yin-yang'])
+                ->column(key: 'state', label: ['fal', 'fa-yin-yang'], type: 'icon')
                 ->column(key: 'name', label: __('name'), sortable: true)
                 ->column(key: 'image_thumbnail', label: ['fal', 'fa-image'])
                 ->column(key: 'websites', label: __('websites'))

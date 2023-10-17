@@ -110,7 +110,7 @@ class IndexCustomerUsers extends InertiaAction
                 ->withGlobalSearch()
                 ->withModelOperations($modelOperations)
                 ->withExportLinks($exportLinks)
-                ->column(key: 'avatar', label: ['fal', 'fa-user-circle'])
+                ->column(key: 'avatar', label: ['fal', 'fa-user-circle'], type: 'avatar')
                 ->column(key: 'slug', label: __('code'), canBeHidden: false, sortable: true, searchable: true)
                 ->column(key: 'contact_name', label: __('name'), canBeHidden: false, sortable: true, searchable: true)
                 ->column(key: 'email', label: __('email'), canBeHidden: false, sortable: true, searchable: true)

@@ -71,8 +71,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property string $ulid
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @property string|null $delete_comment
  * @property Carbon|null $deleted_at
+ * @property string|null $delete_comment
  * @property-read Collection<int, \App\Models\CRM\Appointment> $appointment
  * @property-read int|null $appointment_count
  * @property-read Collection<int, \App\Models\Helpers\Audit> $audits

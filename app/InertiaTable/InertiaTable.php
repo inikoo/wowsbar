@@ -10,8 +10,8 @@ use Inertia\Response;
 
 class InertiaTable
 {
-    private string $name = 'default';
-    private string $pageName = 'page';
+    private string $name          = 'default';
+    private string $pageName      = 'page';
     private array $perPageOptions = [10, 25, 50, 100, 250];
     private Request $request;
     private Collection $columns;
@@ -116,7 +116,7 @@ class InertiaTable
             'filters'                         => $this->transformFilters(),
             'hasFilters'                      => $this->filters->isNotEmpty(),
             'hasEnabledFilters'               => $this->filters->filter->value->isNotEmpty(),
-            'searchInputs'                    => $searchInputs = $this->transformSearchInputs(),
+            'searchInputs'                    => $searchInputs              = $this->transformSearchInputs(),
             'searchInputsWithoutGlobal'       => $searchInputsWithoutGlobal = $searchInputs->where('key', '!=', 'global'),
             'hasSearchInputs'                 => $searchInputsWithoutGlobal->isNotEmpty(),
             'hasSearchInputsWithValue'        => $searchInputsWithoutGlobal->whereNotNull('value')->isNotEmpty(),
@@ -248,8 +248,8 @@ class InertiaTable
         bool $hidden = false,
         bool $sortable = false,
         bool $searchable = false,
-        string $type = null): self
-    {
+        string $type = null
+    ): self {
         if (is_string($label)) {
             $label = $label ?: Str::headline($key);
             $key   = $key ?: Str::kebab($label);

@@ -29,8 +29,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string|null $last_used_at
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property string|null $delete_comment
  * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property string|null $delete_comment
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Accounting\PaymentAccount> $accounts
  * @property-read int|null $accounts_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Country> $countries

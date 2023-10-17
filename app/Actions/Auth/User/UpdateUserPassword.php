@@ -9,10 +9,9 @@ namespace App\Actions\Auth\User;
 
 use App\Actions\Traits\WithActionUpdate;
 use App\Models\Auth\User;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\Rules\Password;
+use Inertia\Inertia;
 use Lorisleiva\Actions\ActionRequest;
 
 class UpdateUserPassword
@@ -52,9 +51,9 @@ class UpdateUserPassword
         return $this->handle($user, $validatedData);
     }
 
-    public function htmlResponse(): RedirectResponse
+    public function htmlResponse(): \Symfony\Component\HttpFoundation\Response
     {
         Session::put('reloadLayout', '1');
-        return Redirect::route('customer.dashboard.show');
+        return Inertia::location(route('customer.dashboard.show'));
     }
 }
