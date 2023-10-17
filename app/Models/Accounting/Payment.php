@@ -50,8 +50,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property string|null $cancelled_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @property string|null $delete_comment
  * @property Carbon|null $deleted_at
+ * @property string|null $delete_comment
  * @property bool $with_refund
  * @property-read Currency $currency
  * @property-read Customer $customer

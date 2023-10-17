@@ -7,11 +7,9 @@
 
 namespace App\Actions\UI\Customer\Billing;
 
-use App\Actions\Helpers\History\IndexCustomerModuleHistory;
 use App\Actions\InertiaAction;
 use App\Actions\UI\Customer\Dashboard\ShowDashboard;
 use App\Enums\UI\Customer\PortfolioDashboardTabsEnum;
-use App\Http\Resources\History\HistoryResource;
 use App\Models\Accounting\Payment;
 use Illuminate\Support\Arr;
 use Inertia\Inertia;

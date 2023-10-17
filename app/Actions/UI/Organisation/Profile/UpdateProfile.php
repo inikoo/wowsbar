@@ -7,13 +7,11 @@
 
 namespace App\Actions\UI\Organisation\Profile;
 
-use App\Actions\Auth\User\UI\SetUserAvatarFromImage;
+use App\Actions\Organisation\OrganisationUser\UI\SetOrganisationUserAvatarFromImage;
 use App\Actions\Traits\WithActionUpdate;
 use App\Models\Auth\OrganisationUser;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Validation\Rules\File;
 use Illuminate\Validation\Rules\Password;
 use Lorisleiva\Actions\ActionRequest;
@@ -27,9 +25,8 @@ class UpdateProfile
 
     public function handle(OrganisationUser $organisationUser, array $modelData, ?UploadedFile $avatar): OrganisationUser
     {
-
         if ($avatar) {
-            SetUserAvatarFromImage::run(
+            SetOrganisationUserAvatarFromImage::run(
                 organisationUser: $organisationUser,
                 imagePath: $avatar->getPathName(),
                 originalFilename: $avatar->getClientOriginalName(),
@@ -45,7 +42,6 @@ class UpdateProfile
     {
         return [
             'password'    => ['sometimes', 'required', app()->isLocal() || app()->environment('testing') ? null : Password::min(8)->uncompromised()],
-            //'email'       => 'sometimes|required|email|unique:organisationUsers,email',
             'about'       => 'sometimes|nullable|string|max:255',
             'language_id' => ['sometimes', 'required', 'exists:central.languages,id'],
             'avatar'      => [
@@ -70,8 +66,5 @@ class UpdateProfile
 
 
 
-    public function htmlResponse(OrganisationUser $organisationUser): RedirectResponse
-    {
-        return Redirect::route('org.profile.show');
-    }
+
 }

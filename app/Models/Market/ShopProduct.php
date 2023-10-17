@@ -33,8 +33,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property string $price unit price
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property string|null $delete_comment
  * @property string|null $deleted_at
+ * @property string|null $delete_comment
  * @property ProductTypeEnum $type
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \App\Models\Media\Media> $media
  * @property-read int|null $media_count

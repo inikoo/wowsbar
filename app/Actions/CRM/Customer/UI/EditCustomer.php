@@ -10,6 +10,7 @@ namespace App\Actions\CRM\Customer\UI;
 use App\Actions\InertiaAction;
 use App\Models\CRM\Customer;
 use App\Models\Market\Shop;
+use Illuminate\Support\Arr;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -44,6 +45,35 @@ class EditCustomer extends InertiaAction
 
     public function htmlResponse(Customer $customer, ActionRequest $request): Response
     {
+        $sections['properties'] = [
+            'label'  => __('Properties'),
+            'icon'   => 'fal fa-sliders-h',
+            'fields' => [
+                'contact_name' => [
+                    'type'  => 'input',
+                    'label' => __('contact name'),
+                    'value' => $customer->contact_name
+                ],
+                'company_name' => [
+                    'type'  => 'input',
+                    'label' => __('company'),
+                    'value' => $customer->company_name
+                ],
+                'phone'        => [
+                    'type'  => 'phone',
+                    'label' => __('Phone'),
+                    'value' => $customer->phone
+                ],
+
+
+            ]
+        ];
+
+        $currentSection = 'properties';
+        if ($request->has('section') and Arr::has($sections, $request->get('section'))) {
+            $currentSection = $request->get('section');
+        }
+
         return Inertia::render(
             'EditModel',
             [
@@ -57,16 +87,12 @@ class EditCustomer extends InertiaAction
                     'next'     => $this->getNext($customer, $request),
                 ],
                 'pageHead'    => [
-                    'title'     => $customer->name,
-                    'icon'      => [
+                    'title' => $customer->name,
+                    'icon'  => [
                         'title' => __('customer'),
                         'icon'  => 'fal fa-user'
                     ],
-                    'iconRight' =>
-                        [
-                            'icon'  => ['fal', 'fa-edit'],
-                            'title' => __("Editing customer")
-                        ],
+
 
                     'actions' => [
                         [
@@ -83,35 +109,12 @@ class EditCustomer extends InertiaAction
                 ],
 
                 'formData' => [
-                    'blueprint' => [
-                        [
-                            'title'  => __('contact information'),
-                            'fields' => [
-
-                                'contact_name' => [
-                                    'type'  => 'input',
-                                    'label' => __('contact name'),
-                                    'value' => $customer->contact_name
-                                ],
-                                'company_name' => [
-                                    'type'  => 'input',
-                                    'label' => __('company'),
-                                    'value' => $customer->company_name
-                                ],
-                                'phone'        => [
-                                    'type'  => 'phone',
-                                    'label' => __('Phone'),
-                                    'value' => $customer->phone
-                                ],
-
-                            ]
-                        ]
-
-                    ],
+                    'current'   => $currentSection,
+                    'blueprint' => $sections,
                     'args'      => [
                         'updateRoute' => [
                             'name'       => 'org.models.customer.update',
-                            'parameters' => $customer->slug
+                            'parameters' => $customer->id
                         ],
                     ]
 

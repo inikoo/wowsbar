@@ -59,16 +59,6 @@ class ShowWebsiteWorkshop extends InertiaAction
                                 'parameters' => array_values($request->route()->originalParameters()),
                             ]
                         ],
-                        [
-                            'type'  => 'button',
-                            'style' => 'exit',
-                            'icon'  => 'far fa-desktop',
-                            'label' => __('Preview'),
-                            'route' => [
-                                'name'       => preg_replace('/workshop$/', 'preview', $request->route()->getName()),
-                                'parameters' => array_values($request->route()->originalParameters())
-                            ]
-                        ]
                     ],
                 ],
                 'tabs'              => [

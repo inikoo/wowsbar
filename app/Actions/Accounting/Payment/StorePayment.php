@@ -38,7 +38,7 @@ class StorePayment
     {
         return DB::transaction(function () use ($customer, $paymentAccount, $modelData) {
             $modelData['customer_id'] = $customer->id;
-            $modelData['shop_id'] = $customer->shop_id;
+            $modelData['shop_id']     = $customer->shop_id;
 
             $modelData['org_amount'] = $modelData['amount'];
 

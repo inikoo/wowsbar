@@ -40,7 +40,7 @@ const generateThumbnail = (fileOrUrl) => {
             <Cropper ref="_cropper" class="w-[400px] md:w-[440px] h-[200px] rounded-2xl object-cover" :src="generateThumbnail(props.data)" :stencil-props="{
                 aspectRatio:  props.ratio.w / props.ratio.h,
                 movable: true,
-                resizable: false,
+                resizable: true,
             }" :auto-zoom="true"  @ready="onReady" @change="cropOnChange" >
             </Cropper>
         </div>

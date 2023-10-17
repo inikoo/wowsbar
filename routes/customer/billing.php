@@ -7,10 +7,8 @@
 
 
 use App\Actions\Accounting\Payment\UI\CreatePayment;
-use App\Actions\Portfolio\PortfolioWebsite\UI\IndexSeoPortfolioWebsites;
 use App\Actions\UI\Customer\Billing\ShowBilling;
 use App\Actions\UI\Customer\Billing\ShowBillingDashboard;
-use App\Actions\UI\Customer\SEO\ShowSeoDashboard;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/dashboard', [

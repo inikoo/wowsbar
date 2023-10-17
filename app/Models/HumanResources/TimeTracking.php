@@ -29,8 +29,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property int|null $end_clocking_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property string|null $delete_comment
  * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property string|null $delete_comment
  * @method static Builder|TimeTracking newModelQuery()
  * @method static Builder|TimeTracking newQuery()
  * @method static Builder|TimeTracking onlyTrashed()

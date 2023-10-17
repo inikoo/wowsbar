@@ -47,8 +47,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property array $data
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @property string|null $delete_comment
  * @property Carbon|null $deleted_at
+ * @property string|null $delete_comment
  * @property-read Customer|null $customer
  * @property-read Shop|null $shop
  * @property-read UniversalSearch|null $universalSearch

@@ -8,6 +8,7 @@
 namespace App\Enums\HumanResources\Employee;
 
 use App\Enums\EnumHelperTrait;
+use App\Models\Organisation\Organisation;
 
 enum EmployeeStateEnum: string
 {
@@ -26,13 +27,37 @@ enum EmployeeStateEnum: string
         ];
     }
 
-    public static function count(): array
+    public static function count(Organisation $organisation): array
     {
-        $stats=customer()->stats;
+        $stats=$organisation->humanResourcesStats;
         return [
             'hired'         => $stats->number_employees_state_hired,
             'working'       => $stats->number_employees_state_working,
             'left'          => $stats->number_employees_state_left,
+        ];
+    }
+
+    public static function stateIcon(): array
+    {
+        return [
+            'hired' => [
+
+                'tooltip' => __('hired'),
+                'icon'    => 'fal fa-hand-holding-seedling',
+
+
+            ],
+            'working'        => [
+                'tooltip' => __('working'),
+                'icon'    => 'fal fa-handshake',
+
+            ],
+            'left'     => [
+                'tooltip' => __('ex-worker'),
+                'icon'    => 'fal fa-handshake-alt-slash'
+
+            ],
+
         ];
     }
 

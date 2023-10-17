@@ -112,8 +112,6 @@ class EditBanner extends InertiaAction
             ]
         ];
 
-
-
         $currentSection = 'properties';
         if ($request->has('section') and Arr::has($sections, $request->get('section'))) {
             $currentSection = $request->get('section');

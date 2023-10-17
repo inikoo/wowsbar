@@ -49,8 +49,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property bool $reset_password
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property string|null $delete_comment
  * @property string|null $deleted_at
+ * @property string|null $delete_comment
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Helpers\Audit> $audits
  * @property-read int|null $audits_count
  * @property-read Media|null $avatar

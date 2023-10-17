@@ -30,8 +30,8 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property int|null $tablet_image_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property string|null $delete_comment
  * @property string|null $deleted_at
+ * @property string|null $delete_comment
  * @property-read \App\Models\CRM\Customer $customer
  * @property-read Media|null $image
  * @property-read Media|null $imageMobile

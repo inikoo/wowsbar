@@ -21,6 +21,7 @@ namespace App\Models\Helpers;
  * @property string $auditable_type
  * @property int $auditable_id
  * @property string $event
+ * @property string|null $comments
  * @property array|null $old_values
  * @property array|null $new_values
  * @property string|null $url
@@ -35,6 +36,7 @@ namespace App\Models\Helpers;
  * @method static \Illuminate\Database\Eloquent\Builder|Audit query()
  * @method static \Illuminate\Database\Eloquent\Builder|Audit whereAuditableId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Audit whereAuditableType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Audit whereComments($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Audit whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Audit whereCustomerId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Audit whereCustomerUserId($value)

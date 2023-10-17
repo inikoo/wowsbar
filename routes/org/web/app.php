@@ -13,7 +13,7 @@ Route::middleware(["org-web"])->group(function () {
         Route::get('/', function () {
             return redirect('/dashboard');
         });
-        Route::middleware(["reset-pass"])->group(function () {
+        Route::middleware(["org-reset-pass"])->group(function () {
             Route::prefix("dashboard")
                 ->name("dashboard.")
                 ->group(__DIR__ . "/dashboard.php");
