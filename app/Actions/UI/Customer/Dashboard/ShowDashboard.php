@@ -9,6 +9,7 @@ namespace App\Actions\UI\Customer\Dashboard;
 
 use App\Actions\Portfolio\Banner\UI\GetLastEditedBanner;
 use App\Actions\Traits\WelcomeWidgets\WithFirstBanner;
+use App\Models\CRM\Customer;
 use Illuminate\Support\Arr;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -20,10 +21,11 @@ class ShowDashboard
     use AsAction;
     use WithFirstBanner;
 
-    public function asController(ActionRequest $request): Response
-    {
-        $customer = customer();
+    protected bool $canEditBanners = false;
 
+
+    public function handle(Customer $customer, ActionRequest $request): array
+    {
         $latestBanners = GetLastEditedBanner::run($customer);
 
 
@@ -34,7 +36,7 @@ class ShowDashboard
             'latest_banners_count'     => $latestBanners->count(),
             'portfolio_websites_count' => $customer->portfolioStats->number_portfolio_websites,
             'name'                     => $request->user()->contact_name ?? $request->user()->slug,
-            'firstBanner'              => $this->canEdit ? $this->getFirstBannerWidget($customer) : null,
+            'firstBanner'              => $this->canEditBanners ? $this->getFirstBannerWidget($customer) : null,
         ];
 
 
@@ -104,6 +106,26 @@ class ShowDashboard
             ];
         }
 
+        return $data;
+    }
+
+    public function authorize(ActionRequest $request): bool
+    {
+        $this->canEditBanners = $request->get('customerUser')->hasPermissionTo('portfolio.banners.edit');
+
+        return
+            (
+                $request->user()->tokenCan('root') or
+                $request->get('customerUser')->hasPermissionTo('portfolio.banners.view')
+            );
+    }
+
+
+    public function asController(ActionRequest $request): Response
+    {
+        $request->validate();
+        $customer = $request->get('customer');
+        $data     = $this->handle($customer, $request);
 
         return Inertia::render('Dashboard', $data);
     }
