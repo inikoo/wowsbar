@@ -1,3 +1,9 @@
+<!--
+  - Author: Raul Perusquia <raul@inikoo.com>
+  - Created: Tue, 17 Oct 2023 15:50:08 Malaysia Time, Office, Bali, Indonesia
+  - Copyright (c) 2023, Raul A Perusquia Flores
+  -->
+
 <script setup lang="ts">
 import { ref, watchEffect } from 'vue'
 import {Head, useForm} from '@inertiajs/vue3'
@@ -14,7 +20,7 @@ const formReset = useForm({
 })
 
 const submitResetPassword = () => {
-    formReset.patch(route('customer.reset-password.update'), {})
+    formReset.patch(route('public.reset-password.update'), {})
 }
 
 

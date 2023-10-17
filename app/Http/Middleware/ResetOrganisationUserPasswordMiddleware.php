@@ -12,12 +12,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class ResetPasswordIfNeeded
+class ResetOrganisationUserPasswordMiddleware
 {
     public function handle(Request $request, Closure $next): Response
     {
         if($request->user(Auth::getDefaultDriver())->reset_password) {
-            return redirect()->route(Auth::getDefaultDriver() . '.reset-password.edit');
+            return redirect()->route('org.reset-password.edit');
         }
         return $next($request);
     }

@@ -17,7 +17,7 @@ Route::middleware([
         Route::get('/', function () {
             return redirect('/app/dashboard');
         });
-        Route::middleware(["reset-pass"])->group(function () {
+        Route::middleware(["customer-reset-pass"])->group(function () {
             Route::prefix("dashboard")
                 ->name("dashboard.")
                 ->group(__DIR__."/dashboard.php");
