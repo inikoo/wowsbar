@@ -31,6 +31,9 @@ const options = [
     "Laila",
     "Port Lligat Slab",
     "Playfair",
+    "Raleway",
+    "Roman Melikhov",
+    "Source Sans Pro",
     "Quicksand",
     "Times New Roman",
     "Yatra One"
