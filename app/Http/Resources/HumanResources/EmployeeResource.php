@@ -33,10 +33,10 @@ class EmployeeResource extends JsonResource
             'salary'              => $employee->salary,
             'user'                => $employee->organisationUser?->only('username', 'status'),
             'positions'           => JobPositionLightResource::collection($employee->jobPositions),
-            'emergency_contact' => $employee->emergency_contact,
-            'state_icon'        => $employee->state->stateIcon()[$employee->state->value],
-            'created_at'        => $employee->created_at,
-            'updated_at'        => $employee->updated_at,
+            'emergency_contact'   => $employee->emergency_contact,
+            'state_icon'          => $employee->state->stateIcon()[$employee->state->value],
+            'created_at'          => $employee->created_at,
+            'updated_at'          => $employee->updated_at,
         ];
     }
 }

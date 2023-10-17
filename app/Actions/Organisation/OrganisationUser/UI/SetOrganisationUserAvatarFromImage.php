@@ -5,26 +5,28 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Auth\User\UI;
+namespace App\Actions\Organisation\OrganisationUser\UI;
 
 use App\Actions\Traits\WithActionUpdate;
 use App\Actions\Traits\WIthUploadProfileImage;
-use App\Models\Auth\User;
+use App\Models\Auth\OrganisationUser;
 use Lorisleiva\Actions\Concerns\AsAction;
 
-class SetUserAvatarFromImage
+class SetOrganisationUserAvatarFromImage
 {
     use AsAction;
     use WithActionUpdate;
     use WIthUploadProfileImage;
 
+
     /**
      * @throws \Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist
      * @throws \Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig
      */
-    public function handle(User $user, string $imagePath, string $originalFilename, string $extension = null): User
+    public function handle(OrganisationUser $organisationUser, string $imagePath, string $originalFilename, string $extension = null): OrganisationUser
     {
-        return $this->uploadProfileImage($user, $imagePath, $originalFilename, $extension);
+
+        return $this->uploadProfileImage($organisationUser, $imagePath, $originalFilename, $extension);
 
 
     }
