@@ -55,13 +55,13 @@ onMounted(() => {
 
 </script>
 
-<template>
-    <div v-html="props.structure.header[0]?.html"></div>
+<template layout="Public">
+    <!-- <div v-html="props.structure.header[0]?.html"></div> -->
     <div v-for="(blockData, index) in content.blocks" :key="index">
         <component :is="getComponent(blockData['type'])" :data="blockData.content">
         </component>
     </div>
-    <div v-html="props.structure.footer[0]?.html"></div>
+    <!-- <div v-html="props.structure.footer[0]?.html"></div> -->
 </template>
 
 <style scoped>

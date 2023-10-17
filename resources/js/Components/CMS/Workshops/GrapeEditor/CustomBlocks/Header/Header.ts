@@ -31,7 +31,7 @@ export const headerBlock1 = () => {
                       </div>
                       <div class="d-flex justify-content-end">
                           <a href="/appointment" data-wowsbar-element="appointment" class="btn btn-outline-dark mr-3">Appointment</a>
-                          <a href="/app/login" data-wowsbar-element="login" class="btn btn-primary">Log in</a>
+                          <a href="/login" data-wowsbar-element="login" class="btn btn-primary">Log in</a>
                       </div>
                   </div>
               </div>
@@ -140,7 +140,7 @@ export const headerBlock4 = () => {
     
           <div class="col-md-3 text-end">
           <a href="/appointment" data-wowsbar-element="appointment" class="btn btn-outline-dark mr-3">Appointment</a>
-          <a href="/app/login" data-wowsbar-element="login" class="btn btn-primary" style='margin:0px 5px'>Log in</a>
+          <a href="/login" data-wowsbar-element="login" class="btn btn-primary" style='margin:0px 5px'>Log in</a>
           </div>
         </Header>
 `,
