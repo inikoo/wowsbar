@@ -19,7 +19,7 @@ import TextAlign from './Fields/TextAlign.vue'
 
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { trans } from "laravel-vue-i18n"
-import TextShadow from '@/Components/Workshop/Fields/TextShadow.vue'
+import Toogle from '@/Components/Forms/Fields/Primitive/PrimitiveToggle.vue'
 
 
 library.add(faImage, faExpandArrows, faAlignCenter, faTrash, faStopwatch)
@@ -44,7 +44,7 @@ const getComponent = (componentName: string) => {
         'select': Select,
         'selectFont': SelectFont,
         'textAlign': TextAlign,
-        'TextShadow':TextShadow
+        'toogle':Toogle
     };
     return components[componentName]
 };

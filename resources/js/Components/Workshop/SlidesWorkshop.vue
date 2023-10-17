@@ -329,12 +329,12 @@ const ComponentsBlueprint = ref([
                 label: trans("color"),
                 value: ["layout", "centralStage", "style", "color"],
             },
-            // {
-            //     name: ["layout", "centralStage", "style", "textShadow"],
-            //     type: "TextShadow",
-            //     label: trans("Text Shadow"),
-            //     value: ["layout", "centralStage", "style", "TextShadow"],
-            // },
+            {
+                name: ["layout", "centralStage", "style", "textShadow"],
+                type: "toogle",
+                label: trans("Text Shadow"),
+                value: ["layout", "centralStage", "style", "TextShadow"],
+            },
         ],
     },
     // {
