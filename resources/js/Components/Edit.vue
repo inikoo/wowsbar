@@ -59,8 +59,7 @@ const props = defineProps<{
                 value: string | object
                 icon?: string
                 action?: {
-                    data?: {
-                    }
+                    data?: any
                     method?: string
                 }
             }[]
@@ -100,6 +99,8 @@ onMounted(() => {
     updateViewportWidth()
     window.addEventListener('resize', updateViewportWidth)
 
+    route().v().query ? currentTab == getLodash(route().v().query, 'section') : ''  // To auto open the navigation as the 'section' in url
+
     // To indicate active state that on viewport
     buttonRefs.value.forEach((element, index) => {
         const observer = new IntersectionObserver(handleIntersection(element, index));
@@ -133,8 +134,7 @@ onBeforeUnmount(() => {
             <aside class="bg-gray-50/50 py-0 lg:col-span-3 lg:h-full">
                 <div class="sticky top-16">
                     <template v-for="(item, key) in formData.blueprint">
-                        <div v-if="route().v().query && getLodash(route().v().query, 'section') == key"
-                            @click="currentTab = key"
+                        <div @click="currentTab = key"
                             :class="[
                                 appName == 'customer'
                                 ? key == currentTab
@@ -176,7 +176,7 @@ onBeforeUnmount(() => {
                         </div>
 
                         <div class="mt-2 pt-4 sm:pt-5 space-y-1">
-                            <div v-for="(fieldData, fieldName, index ) in sectionData.fields" :key="index" class="divide-y divide-green-200">
+                            <div v-for="(fieldData, fieldName, index) in sectionData.fields" :key="index" class="divide-y divide-green-200">
                                 <dl class="divide-y divide-green-200  ">
                                     <div class="pb-4 sm:pb-5 sm:grid sm:grid-cols-3 sm:gap-4">
 
@@ -212,22 +212,25 @@ onBeforeUnmount(() => {
 
         <!-- Mobile view -->
         <ul v-else class="space-y-8">
-            <template v-for="(item, key) in formData.blueprint">
-                <li class="group font-medium" :aria-current="key === currentTab ? 'page' : undefined">
-                    <div class="bg-gray-200 py-2 pl-5 flex items-center">
-                        <FontAwesomeIcon v-if="item.icon" aria-hidden="true" :icon="item.icon"
-                            :class="[
-                                key === currentTab ? 'text-gray-400' : 'text-gray-500',
-                                'flex-shrink-0 mr-3 h-5 w-5',
-                            ]"/>
-                        <span class="capitalize truncate">{{ item.title }}</span>
+            <li v-for="(item, key) in formData.blueprint"
+                class="group font-medium"
+                :aria-current="key === currentTab ? 'page' : undefined"
+            >
+                <div class="bg-gray-200 py-3 pl-5 flex items-center">
+                    <FontAwesomeIcon v-if="item.icon" aria-hidden="true" :icon="item.icon"
+                        class="flex-shrink-0 mr-3 h-5 w-5"
+                        :class="[
+                            key === currentTab ? 'text-gray-400' : 'text-gray-500',
+                        ]"/>
+                    <span class="capitalize truncate">{{ item.title }}</span>
+                </div>
+                <div class="px-5">
+                    <div v-for="(fieldData, fieldName, index) in formData.blueprint[key].fields" class="py-4">
+                        <Action v-if="fieldData.type === 'action'" :action="fieldData.action" :dataToSubmit="fieldData.action?.data" />
+                        <FieldForm v-else :key="index" :field="fieldName" :fieldData="fieldData" :args="formData.args" :id="fieldData.name" />
                     </div>
-                    <div class="pl-5">
-                        <component :is="fieldData.type === 'action' ? Button : FieldForm" class=" pt-4 sm:pt-5 px-6 " v-for="(fieldData, field ) in formData.blueprint[key].fields"
-                            :key="field" :field="field" :fieldData="fieldData" :args="formData.args" :id="fieldData.name"/>
-                    </div>
-                </li>
-            </template>
+                </div>
+            </li>
         </ul>
 
     </div>

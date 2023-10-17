@@ -2,24 +2,24 @@
 import { Link } from '@inertiajs/vue3'
 import Button from '@/Components/Elements/Buttons/Button.vue'
 
-interface route {
+interface Route {
     name: string
-    parameters: string | string[]
+    parameters: any
 }
 
 const props = defineProps<{
     action: {
-        icon: string | string[]
+        icon?: string | string[]
         label?: string
         method?: string
-        route: route
+        route: Route
         style: string
         type: string
         buttons?: {
-            route: route
+            route: Route
             style: string
-            label: string
-            icon: string | string[]
+            label?: string
+            icon?: string | string[]
         }[]
     },
     dataToSubmit?: any
