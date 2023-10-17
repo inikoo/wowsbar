@@ -708,6 +708,7 @@ watch(name, () => {
                                                         <span v-else class="capitalize">{{ column.label ? trans(column.label) : '' }}</span>
                                                     </slot>
 
+                                                    <!-- Icon: arrow sort -->
                                                     <svg v-if="column.sortable" aria-hidden="true" class="w-3 h-3 ml-2" :class="{
                                                         'text-gray-400': !column.sorted,
                                                         'text-green-500': column.sorted,
@@ -733,22 +734,22 @@ watch(name, () => {
                                 <slot name="body" :show="show">
                                     <tr v-for="(item, key) in compResourceData" :key="`table-${name}-row-${key}`"
                                         class=""
-                                        :class="{
+                                        :class="[{
                                             'bg-gray-50': striped && key % 2,
-                                            'hover:bg-gray-100 dark:hover:bg-gray-500/50': striped,
-                                            'hover:bg-gray-50 dark:hover:bg-gray-500/20': !striped,
-                                        }
-                                    ">
+                                        },
+                                            striped ? 'hover:bg-gray-100' : 'hover:bg-gray-50'
+                                        ]"
+                                    >
                                         <td v-for="column in queryBuilderProps.columns" v-show="show(column.key)"
                                             :key="`table-${name}-row-${key}-column-${column.key}`"
+                                            class="text-sm py-2 text-gray-800 whitespace-normal h-full"
                                             :class="[
                                                 typeof item[column.key] == 'number' ? 'text-right' : '',
-                                                column.key === 'avatar' ? '' : 'px-6 min-w-fit max-w-[450px]',
-                                                'text-sm py-2 text-gray-800 dark:text-gray-300 whitespace-normal',
+                                                column.type === 'avatar' || column.type === 'icon' ? 'text-center' : 'px-6 min-w-fit max-w-[450px]',
                                                 { 'first:border-l-4 first:border-gray-700 bg-gray-200/75': selectedRow?.[name]?.includes(item.id) }
                                         ]">
                                             <slot :name="`cell(${column.key})`" :item="item" :tabName="name" class="">
-                                                <div class="text-gray-500 dark:text-gray-400">{{ item[column.key] }}</div>
+                                                <div class="text-gray-500">{{ item[column.key] }}</div>
                                             </slot>
                                         </td>
                                     </tr>
