@@ -7,9 +7,11 @@ import { BlogBlock1, BlogBlock2, BlogBlock3, BlogBlock4 } from './Blog/Blog'
 import { StatisticsBlock1, StatisticsBlock2, StatisticsBlock3, StatisticsBlock4 } from './Statistics/Statistics'
 import { PricingBlock1, PricingBlock2, PricingBlock3, PricingBlock4 } from './Pricing/Pricing'
 import { CtaBlock1, CtaBlock2, CtaBlock3 } from './CTA/CTA'
+import loadStyles from '@/Components/CMS/Workshops/GrapeEditor/CustomStyle/styles';
 
 export const CustomBlock = (editor : Any) => {
     IconBlock(editor)
+    Gradient(editor)
 
     setTimeout(()=>{
       let categories = editor.BlockManager.getCategories();
@@ -86,4 +88,22 @@ export const CtaPlugins = (editor: any) => {
 export const addNewBlocks  = (editor: any, blocks : Array) => {
     const bm = editor.BlockManager;
     blocks.map((item)=>bm.add(item.id,item))
+};
+
+export const Gradient  = (editor: any) => {
+ editor.StyleManager.addProperty('decorations', {
+  extend: 'background-image', 
+  name: 'Gradient Background',
+})}
+
+
+export  const GradientTypography  = (editor: any) => {
+  const options: PluginOptions = {
+    grapickOpts: {},
+    selectEdgeStops: true,
+    styleType: 'gradient',
+    builtInType: 'background',
+    ...opts,
+  };
+  loadStyles(editor, options);
 };

@@ -30,6 +30,5 @@ export const loadCss = (cssString: string) => {
             });
         }
     });
-    console.log(styles);
     return styles;
 };
