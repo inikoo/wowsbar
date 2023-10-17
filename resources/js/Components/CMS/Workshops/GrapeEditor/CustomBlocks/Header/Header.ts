@@ -30,7 +30,7 @@ export const headerBlock1 = () => {
                           </nav>
                       </div>
                       <div class="d-flex justify-content-end">
-                          <a href="/appointment" data-wowsbar-element="appointment" class="btn btn-outline-dark mr-3">Appointment</a>
+                      
                           <a href="/login" data-wowsbar-element="login" class="btn btn-primary">Log in</a>
                       </div>
                   </div>
@@ -91,7 +91,7 @@ export const headerBlock3 = () => {
             <div class="flex justify-content-start">
             <div class="d-flex justify-content-start gap-3">
             <a href="/login" data-wowsbar-element="login" class="btn btn-primary">Log in</a>
-                    <a href="/appointment" data-wowsbar-element="appointment" class="btn btn-outline-dark mr-3">Appointment</a>
+                  
                  
                 </div>
                 <div style="padding:0px 10px">
@@ -139,7 +139,7 @@ export const headerBlock4 = () => {
           </ul>
     
           <div class="col-md-3 text-end">
-          <a href="/appointment" data-wowsbar-element="appointment" class="btn btn-outline-dark mr-3">Appointment</a>
+      
           <a href="/login" data-wowsbar-element="login" class="btn btn-primary" style='margin:0px 5px'>Log in</a>
           </div>
         </Header>
