@@ -17,6 +17,7 @@ task('deploy:build', function () {
     run("cd {{release_path}} && {{bin/npm}} run build");
 });
 
+set('shared_dirs', ['storage','private']);
 
 desc('Deploys your project');
 task('deploy', [
@@ -28,5 +29,7 @@ task('deploy', [
     'artisan:view:cache',
     'artisan:event:cache',
     'artisan:migrate',
+    'deploy:build',
     'deploy:publish',
+    'artisan:horizon:terminate'
 ]);

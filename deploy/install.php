@@ -77,12 +77,6 @@ task('install:run', function () {
     run("cd {{release_path}} && ./install.sh");
 });
 
-desc('🌱 Symlink private folder to resources dir');
-task('install:shared-private', function () {
-    $sharedPath = "{{deploy_path}}/shared";
-    $dir        ='private';
-    run("{{bin/symlink}} $sharedPath/$dir {{release_path}}/resources/$dir");
-});
 
 desc('🚡 Migrating database');
 task('install:migrate', function () {
@@ -94,6 +88,9 @@ desc('🏗️ Build vue app');
 task('install:build', function () {
     run("cd {{release_path}} && {{bin/npm}} run build");
 });
+
+set('shared_dirs', ['storage','private']);
+
 
 desc('Install wowsbar');
 task('install', [
@@ -108,7 +105,6 @@ task('install', [
     'install:copy-env',
     'deploy:release',
     'deploy:update_code',
-    'install:shared-private',
     'deploy:shared',
     'deploy:writable',
     'install:migrate',
