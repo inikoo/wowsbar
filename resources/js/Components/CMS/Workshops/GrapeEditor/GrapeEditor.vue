@@ -8,6 +8,7 @@ import Basic from "grapesjs-blocks-basic";
 import grapesjsIcons from "grapesjs-icons";
 import { CustomBlock } from "@/Components/CMS/Workshops/GrapeEditor/CustomBlocks/CustomBlock";
 import axios from "axios"
+import gradient from 'grapesjs-style-gradient';
 
 
 const emits = defineEmits(['onSaveToServer']);
@@ -80,7 +81,7 @@ const Load = async (data) => {
     }
 }
 
-const plugin = props.useBasic ?  [Webpage, Basic, usePlugin(grapesjsIcons, options),...props.plugins] :  [Webpage, usePlugin(grapesjsIcons, options),...props.plugins]
+const plugin = props.useBasic ?  [Webpage, Basic, usePlugin(grapesjsIcons, options),...props.plugins,gradient] :  [Webpage, usePlugin(grapesjsIcons, options),...props.plugins,gradient]
 
 
 onMounted(() => {
@@ -286,5 +287,78 @@ onMounted(() => {
 
 .gjs-clm-tags #gjs-clm-new {
     @apply text-gray-600;
+}
+
+.grp-wrapper {
+  background-image: url("data:image/png:base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAIAAADZF8uwAAAAGUlEQVQYV2M4gwH+YwCGIasIUwhT25BVBADtzYNYrHvv4gAAAABJRU5ErkJggg==");
+}
+.grp-preview {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  cursor: crosshair;
+}
+.grp-handler {
+  width: 4px;
+  margin-left: -2px;
+  user-select: none;
+  height: 100%;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+}
+
+.grp-handler-close {
+  color: rgba(0, 0, 0, 0.4);
+  border-radius: 0 2px 10px rgba(0, 0, 0, 0.25);
+  background-color: #fff;
+  text-align: center;
+  width: 15px;
+  height: 15px;
+  margin-left: -5px;
+  line-height: 10px;
+  font-size: 21px;
+  cursor: pointer;
+}
+
+.grp-handler-close {
+  position: absolute;
+  top: -17px;
+}
+
+.grp-handler-drag {
+  background-color: rgba(0, 0, 0, 0.5);
+  cursor: col-resize;
+  width: 100%;
+  height: 100%;
+}
+
+.grp-handler-selected .grap-handler-drag {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.grp-handler-cp-c {
+  display: none;
+}
+
+.grp-handler-selected .grp-handler-cp-c {
+  display: block;
+}
+
+.grp-handler-cp-wrap {
+  width: 15px;
+  height: 15px;
+  margin-left: -8px;
+  border: 3px solid #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  border-radius: 100%;
+  cursor: pointer;
+}
+
+.grp-handler-cp-wrap input[type="color"] {
+  opacity: 0;
+  cursor: pointer;
 }
 </style>
