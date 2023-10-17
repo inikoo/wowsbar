@@ -14,3 +14,6 @@ Route::get('/appointment', ShowPublicAppointment::class)->name('appointment.show
 Route::prefix("disclosure")
     ->name("disclosure.")
     ->group(__DIR__."/disclosure.php");
+
+require __DIR__."/auth.php";
+
