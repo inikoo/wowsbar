@@ -613,7 +613,7 @@ watch(name, () => {
                             <slot v-if="queryBuilderProps.modelOperations?.uploadFile" name="uploadFile"  id="uploadFile" :item="queryBuilderProps.modelOperations?.uploadFile"/>
 
                             <!-- Search Input Button -->
-                            <div v-if="queryBuilderProps.globalSearch && compResourceMeta.total >= 5"
+                            <div v-if="queryBuilderProps.globalSearch"
                                 class="flex flex-row">
                                 <slot name="tableFilterSearch" :has-global-search="queryBuilderProps.globalSearch"
                                     :label="queryBuilderProps.globalSearch ? queryBuilderProps.globalSearch.label : null"
