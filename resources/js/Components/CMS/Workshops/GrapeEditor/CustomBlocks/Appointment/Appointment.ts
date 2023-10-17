@@ -5,20 +5,19 @@ export const Appointment = () => {
       category: 'Appointment',
       label : 'appointment',
       content :`
-      <section data-id="appointment-block-1" data-type="appointment" data-group="contact" class="wowsbar-block" class="gjs-row">
-        <div class="flex justify-center mt-12">
-            <div class="bg-white w-fit grid grid-cols-2 max-w-3xl justify-center border-2 border-gray-300 overflow-hidden rounded-md divide-x divide-gray-100">
-                <div class="overflow-hidden bg-white sm:rounded-lg">
-                    <div class="px-4 py-5 sm:p-6">
+      <section data-id="appointment-block-1" data-type="appointment" data-group="contact" class="wowsbar-block flex justify-center mt-12" class="gjs-row" data-gjs-editable="false" data-gjs-droppable="false"  data-gjs-removable="false">
+            <div class="bg-white w-fit grid grid-cols-2 max-w-3xl justify-center border-2 border-gray-300 overflow-hidden rounded-md divide-x divide-gray-100" class="gjs-row" data-gjs-editable="false" data-gjs-droppable="false"  data-gjs-removable="false">
+                <div class="overflow-hidden bg-white sm:rounded-lg" class="gjs-row" data-gjs-editable="false" data-gjs-droppable="false"  data-gjs-removable="false" >
+                    <div class="px-4 py-5 sm:p-6" class="gjs-row" data-gjs-editable="false" data-gjs-droppable="false"  data-gjs-removable="false">
                         <section data-id="info" class="wowsbar-appointment-block">
-                            <div class="flex justify-center align-middle ">
+                            <div class="flex justify-center align-middle">
                                 <img src="https://dummyimage.com/50x50" data-gjs-removable="false" class="h-14 aspect-square"
                                     alt="Description of the image">
                             </div>
-                            <div class="text-lg text-slate-400">
+                            <div class="text-lg text-slate-400" class="gjs-row" data-gjs-droppable="false" >
                                 Hi you can create appointment
                             </div>
-                            <div class="text-xl font-medium">
+                            <div class="text-xl font-medium" class="gjs-row"  data-gjs-droppable="false" >
                                 Request a one-to-one appointemt with us
                             </div>
                             <div class="flex justify-start my-2 gap-3 items-center text-slate-400">
@@ -41,23 +40,22 @@ export const Appointment = () => {
                         </section>
                     </div>
                 </div>
-                <div class="w-96">
-                    <div class="divide-y divide-gray-200 overflow-hidden rounded-lg bg-white space-y-4">
-                        <div class="px-4 py-5 sm:px-6">
+                <div class="w-96" class="gjs-row" data-gjs-editable="false" data-gjs-droppable="false" >
+                    <div class="divide-y divide-gray-200 overflow-hidden rounded-lg bg-white space-y-4" class="gjs-row" data-gjs-editable="false" data-gjs-droppable="false" >
+                        <div class="px-4 py-5 sm:px-6" class="gjs-row" data-gjs-editable="false" data-gjs-droppable="false" >
                             <section data-id="title" class="wowsbar-appointment-block">
                                 Select data & time
                             </section>
                         </div>
-                        <div class="px-4 py-5 sm:p-0 text-center">
-                            <img src="https://dummyimage.com/330x270/c4a4c4/fff&text=calendar" data-gjs-removable="false" class="inline"
+                        <div class="px-4 py-5 sm:p-0 text-center" class="gjs-row" data-gjs-editable="false" data-gjs-droppable="false" >
+                            <img src="https://dummyimage.com/330x100?text=calendar" data-gjs-removable="false" class="inline" data-gjs-editable="false" data-gjs-droppable="false" />
                         </div>
                         <div class="px-4 py-4 sm:p-0 mt-4 text-center">
-                            <img src="https://dummyimage.com/330x100/c4a4c4/fff&text=times" data-gjs-removable="false" class="inline"
+                            <img src="https://dummyimage.com/330x100?text=time" data-gjs-removable="false" class="inline"  data-gjs-editable="false" data-gjs-droppable="false"/>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
       </section>
   `
     }
