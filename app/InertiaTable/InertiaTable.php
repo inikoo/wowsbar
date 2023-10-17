@@ -10,8 +10,8 @@ use Inertia\Response;
 
 class InertiaTable
 {
-    private string $name          = 'default';
-    private string $pageName      = 'page';
+    private string $name = 'default';
+    private string $pageName = 'page';
     private array $perPageOptions = [10, 25, 50, 100, 250];
     private Request $request;
     private Collection $columns;
@@ -108,7 +108,6 @@ class InertiaTable
 
     protected function getQueryBuilderProps(): array
     {
-
         return [
             'defaultVisibleToggleableColumns' => $this->columns->reject->hidden->map->key->sort()->values(),
             'columns'                         => $this->transformColumns(),
@@ -117,7 +116,7 @@ class InertiaTable
             'filters'                         => $this->transformFilters(),
             'hasFilters'                      => $this->filters->isNotEmpty(),
             'hasEnabledFilters'               => $this->filters->filter->value->isNotEmpty(),
-            'searchInputs'                    => $searchInputs              = $this->transformSearchInputs(),
+            'searchInputs'                    => $searchInputs = $this->transformSearchInputs(),
             'searchInputsWithoutGlobal'       => $searchInputsWithoutGlobal = $searchInputs->where('key', '!=', 'global'),
             'hasSearchInputs'                 => $searchInputsWithoutGlobal->isNotEmpty(),
             'hasSearchInputsWithValue'        => $searchInputsWithoutGlobal->whereNotNull('value')->isNotEmpty(),
@@ -194,6 +193,7 @@ class InertiaTable
             if (array_key_exists($elementGroup->key, $queryElements)) {
                 $elementGroup->values = explode(',', $queryElements[$elementGroup->key]);
             }
+
             return $elementGroup;
         });
     }
@@ -227,8 +227,7 @@ class InertiaTable
         }
 
 
-
-        $this->elementGroups ->put(
+        $this->elementGroups->put(
             $key,
             new ElementGroup(
                 key: $key,
@@ -238,12 +237,18 @@ class InertiaTable
         );
 
 
-
         return $this;
     }
 
 
-    public function column(string $key = null, array|string $label = null, bool $canBeHidden = true, bool $hidden = false, bool $sortable = false, bool $searchable = false): self
+    public function column(
+        string $key = null,
+        array|string $label = null,
+        bool $canBeHidden = true,
+        bool $hidden = false,
+        bool $sortable = false,
+        bool $searchable = false,
+        string $type = null): self
     {
         if (is_string($label)) {
             $label = $label ?: Str::headline($key);
@@ -262,13 +267,15 @@ class InertiaTable
                 canBeHidden: $canBeHidden,
                 hidden: $hidden,
                 sortable: $sortable,
-                sorted: false
+                sorted: false,
+                type: $type
             )
         )->values();
 
         if ($searchable) {
             $this->searchInput($column->key, $column->label);
         }
+
 
         return $this;
     }
@@ -281,7 +288,6 @@ class InertiaTable
 
     public function withModelOperations(array $modelOperations = null): self
     {
-
         $this->modelOperations = collect($modelOperations);
 
         return $this;
@@ -289,7 +295,6 @@ class InertiaTable
 
     public function withExportLinks(array $exportLinks = null): self
     {
-
         $this->exportLinks = collect($exportLinks);
 
         return $this;
@@ -354,6 +359,7 @@ class InertiaTable
         $props = array_merge($response->getQueryBuilderProps(), [
             $this->name => $this->getQueryBuilderProps(),
         ]);
+
         return $response->with('queryBuilderProps', $props);
     }
 }

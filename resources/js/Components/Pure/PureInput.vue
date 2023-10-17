@@ -16,6 +16,9 @@ const props = defineProps<{
     maxLength?: number
     type?: string
     copyButton?: boolean
+    autofocus?: boolean
+    required?: boolean
+    autocomplete?: string
 }>()
 
 const emits = defineEmits<{
@@ -30,7 +33,7 @@ const handleEyeIcon = () => {
 </script>
 
 <template>
-    <div class="flex group relative ring-1 ring-gray-300 focus-within:ring-2 focus-within:ring-gray-500 shadow rounded-md overflow-hidden">
+    <div class="w-full flex group relative ring-1 ring-gray-300 focus-within:ring-2 focus-within:ring-gray-500 shadow rounded-md overflow-hidden">
         <div class="relative w-full">
             <input
                 :value="modelValue"
@@ -41,6 +44,9 @@ const handleEyeIcon = () => {
                 :type="showPassword"
                 :placeholder="placeholder"
                 :maxlength="maxLength"
+                :autofocus="autofocus"
+                :required="required"
+                :autocomplete="autocomplete"
                 class="py-2.5 px-3 block w-full
                     text-gray-600 sm:text-sm placeholder:text-gray-400
                     border-transparent
