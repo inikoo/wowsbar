@@ -65,8 +65,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string|null $launched_at
  * @property string|null $closed_at
- * @property string|null $delete_comment
  * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property string|null $delete_comment
  * @property int|null $home_id
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Helpers\Audit> $audits
  * @property-read int|null $audits_count

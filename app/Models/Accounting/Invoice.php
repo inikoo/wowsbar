@@ -40,8 +40,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property array $data
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property string|null $delete_comment
  * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property string|null $delete_comment
  * @property-read Currency $currency
  * @property-read Customer $customer
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Accounting\InvoiceTransaction> $invoiceTransactions

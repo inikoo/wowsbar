@@ -50,8 +50,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property array $data
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @property string|null $delete_comment
  * @property Carbon|null $deleted_at
+ * @property string|null $delete_comment
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Helpers\Audit> $audits
  * @property-read int|null $audits_count
  * @property-read MediaCollection<int, \App\Models\Media\Media> $media
