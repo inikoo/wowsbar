@@ -9,6 +9,7 @@ namespace App\Actions\HumanResources\Employee\UI;
 
 use App\Actions\Helpers\History\IndexHistory;
 use App\Actions\InertiaAction;
+use App\Actions\Traits\Actions\WithActionButtons;
 use App\Actions\UI\Organisation\HumanResources\ShowHumanResourcesDashboard;
 use App\Enums\UI\Organisation\EmployeeTabsEnum;
 use App\Http\Resources\History\HistoryResource;
@@ -21,6 +22,8 @@ use Lorisleiva\Actions\ActionRequest;
 
 class ShowEmployee extends InertiaAction
 {
+    use WithActionButtons;
+
     public function handle(Employee $employee): Employee
     {
         return $employee;
@@ -86,27 +89,17 @@ class ShowEmployee extends InertiaAction
                     'next'     => $this->getNext($employee, $request),
                 ],
                 'pageHead'    => [
-                    'title'   => $employee->contact_name,
-                    'meta'    => $meta,
-                    'actions' => [
-                        $this->canEdit ? [
-                            'type'  => 'button',
-                            'style' => 'edit',
-                            'route' => [
-                                'name'       => preg_replace('/show$/', 'edit', $request->route()->getName()),
-                                'parameters' => $request->route()->originalParameters()
-                            ]
-                        ] : [],
-                        $this->canDelete ? [
-                            'type'  => 'button',
-                            'style' => 'delete',
-                            'route' => [
-                                'name'       => 'org.hr.employees.remove',
-                                'parameters' => $request->route()->originalParameters()
-                            ]
-
-                        ] : []
-                    ]
+                    'title'     => $employee->contact_name,
+                    'icon'      => [
+                        'title' => __('employee'),
+                        'icon'  => 'fal fa-user-hard-hat'
+                    ],
+                    'iconRight'   => $employee->state->stateIcon()[$employee->state->value],
+                    'meta'        => $meta,
+                    'iconActions' => [
+                        $this->canDelete ? $this->getDeleteActionIcon($request) : null,
+                        $this->canEdit ? $this->getEditActionIcon($request) : null,
+                    ],
                 ],
                 'tabs'        => [
                     'current'    => $this->tab,

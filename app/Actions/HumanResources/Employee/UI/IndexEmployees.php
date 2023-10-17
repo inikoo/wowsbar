@@ -11,7 +11,6 @@ use App\Actions\InertiaAction;
 use App\Actions\UI\Organisation\HumanResources\ShowHumanResourcesDashboard;
 use App\Enums\HumanResources\Employee\EmployeeStateEnum;
 use App\Enums\HumanResources\Employee\EmployeeTypeEnum;
-use App\Http\Resources\HumanResources\EmployeeInertiaResource;
 use App\Http\Resources\HumanResources\EmployeeResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\HumanResources\Employee;
@@ -128,8 +127,7 @@ class IndexEmployees extends InertiaAction
                         ] : null
                     ]
                 )
-                ->column(key: 'state', label: __('state'), canBeHidden: false)
-
+                ->column(key: 'state', label: ['fal', 'fa-yin-yang'], type: 'icon')
                 ->column(key: 'slug', label: __('code'), canBeHidden: false, sortable: true, searchable: true)
                 ->column(key: 'contact_name', label: __('name'), canBeHidden: false, sortable: true, searchable: true)
                 ->column(key: 'job_title', label: __('job title'), canBeHidden: false)
@@ -187,7 +185,7 @@ class IndexEmployees extends InertiaAction
                         ] : false
                     ]
                 ],
-                'data'        => EmployeeInertiaResource::collection($employees),
+                'data'        => EmployeeResource::collection($employees),
             ]
         )->table($this->tableStructure());
     }

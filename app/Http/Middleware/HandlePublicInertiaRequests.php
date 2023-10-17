@@ -30,7 +30,7 @@ class HandlePublicInertiaRequests extends Middleware
             $firstLoadOnlyProps,
             [
                 'structure' => $request->get('website')->compiled_layout,
-                'auth'  => [
+                'auth'      => [
                     'user' => $request->user() ? LoggedUserResource::make($request->user())->getArray() : null,
                 ],
             ],

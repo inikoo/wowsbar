@@ -16,4 +16,3 @@ Route::prefix("disclosure")
     ->group(__DIR__."/disclosure.php");
 
 require __DIR__."/auth.php";
-

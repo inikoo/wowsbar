@@ -20,22 +20,12 @@ class Logout
 
     public function handle(Request $request): RedirectResponse
     {
-        switch ($request->route()->getName()) {
-            case 'org.logout':
-                $gate        = 'org';
-                $redirectUrl = '/login';
-                break;
-            default:
-                $gate        = 'customer';
-                $redirectUrl = '/app/login';
-        }
-
-        Auth::guard($gate)->logout();
+        Auth::guard('org')->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         Session::put('reloadLayout', '1');
 
-        return redirect($redirectUrl);
+        return redirect('/login');
     }
 
 }
