@@ -7,10 +7,10 @@
 <script setup lang="ts">
 import { ref, Ref } from 'vue'
 import { Head, Link, useForm } from '@inertiajs/vue3'
-import Password from '@/Components/Auth/LoginPassword.vue'
 import Checkbox from '@/Components/Checkbox.vue'
 import ValidationErrors from '@/Components/ValidationErrors.vue'
 import { trans } from 'laravel-vue-i18n'
+import PureInput from '@/Components/Pure/PureInput.vue'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faArrowLeft } from '@fal/'
@@ -53,14 +53,15 @@ const condition: Ref<string | boolean> = ref(false)
                     <label for="login" class="block text-sm font-medium text-gray-600">{{ trans('Email') }}</label>
                     <div class="mt-1">
                         <input v-model="form.email" id="email" name="email" autocomplete="email" required autofocus
-                               class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-gray-500 focus:border-gray-500 sm:text-sm"/>
+                            class="appearance-none block w-full px-3 py-3 text-gray-600 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-gray-500 focus:border-gray-500 sm:text-sm"/>
+                        
                     </div>
                 </div>
 
                 <div>
                     <label for="password" class="block text-sm font-medium text-gray-600"> {{ trans('Password') }} </label>
-                    <div class="mt-1 flex rounded-md shadow-sm">
-                        <Password id="password" name="password" v-model="form.password"/>
+                    <div class="mt-1">
+                        <PureInput v-model="form.password" type="password" inputName="password" placeholder="Enter password" />
                     </div>
                     <div @click="condition = 'forgotPassword'" class="text-xs mt-2 pl-1 text-gray-500 cursor-pointer hover:text-gray-700">
                         Forgot password?
@@ -102,8 +103,8 @@ const condition: Ref<string | boolean> = ref(false)
                     <div class="flex flex-col">
                         <div class="mt-1">
                             <input v-model="resetPassword.email"  name="email" autocomplete="email" type="email" required
-                                   class="text-gray-700 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-gray-500 focus:border-gray-500 sm:text-sm"
-                                   placeholder="Enter your email"
+                                class="text-gray-700 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-gray-500 focus:border-gray-500 sm:text-sm"
+                                placeholder="Enter your email"
                             />
                             <div v-if="resetPassword.errors.email">{{ resetPassword.errors.email }}</div>
                         </div>

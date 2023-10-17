@@ -20,7 +20,7 @@ const emits = defineEmits<{
 
 <template>
     <!-- <pre>{{ options }}</pre> -->
-    <div class="relative w-full">
+    <div class="relative w-full text-gray-600">
         <Multiselect
             :value="modelValue"
             @input="(keyOption: any) => emits('update:modelValue', keyOption)"

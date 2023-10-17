@@ -10,7 +10,28 @@ import { capitalize } from "@/Composables/capitalize"
 import { trans } from 'laravel-vue-i18n'
 import { useLayoutStore } from '@/Stores/layout'
 import LastEditedBanners from '@/Components/LastEditedBanners.vue'
+import BoxCreateBanner from '@/Components/Elements/BoxCreateBanner.vue'
 import WelcomeSteps from '@/Components/Dashboard/WelcomeSteps.vue'
+
+const props = defineProps<{
+    title: string
+    latest_banners?: {}
+    latest_banners_count: number
+    portfolio_websites_count: number
+    name: string
+    welcome?: any
+    firstBanner: {
+        text: string
+        websiteOptions: {
+            1: {
+                label: string
+            }
+        }
+        createRoute: {
+            name: string
+        }
+    }
+}>()
 
 const currentHour = new Date().getHours();
 
@@ -26,21 +47,10 @@ const greetingMessage =
 
 const layout = useLayoutStore()
 
-const props = defineProps<{
-    title: string
-    latest_banners?: any
-    latest_banners_count: number
-    portfolio_websites_count: number
-    name: string
-    welcome?: any
-}>()
-
-
-
-// const backAction = ref(false) // True/false to define the Transition name
 </script>
 
 <template layout="CustomerApp">
+    <!-- <pre>{{ props }}</pre> -->
     <Head :title="capitalize(title)" />
     <div class="max-w-7xl px-4 sm:px-6 lg:px-8 lg:py-6">
         <!-- Greeting Message -->
@@ -49,11 +59,18 @@ const props = defineProps<{
         </div>
         
         <!-- Last Edited Banners -->
-        <!-- <div class="">
+        <div v-if="latest_banners_count > 0" class="">
             <hr class="mt-3 mb-8">
-            <LastEditedBanners v-if="latest_banners_count > 0" :banners="latest_banners" />
-        </div> -->
+            <LastEditedBanners :banners="latest_banners" />
+        </div>
 
+        <!-- Box Create Banner (if banner is 0) -->
+        <div v-if="firstBanner" class="">
+            <hr class="mt-3 mb-8">
+            <BoxCreateBanner :text="firstBanner.text" :websiteOptions="firstBanner.websiteOptions" :createRoute="firstBanner.createRoute"/>
+        </div>
+
+        <!-- Welcome Steps (if website is 0) -->
         <WelcomeSteps v-if="welcome" :data="welcome" />
     </div>
 </template>
