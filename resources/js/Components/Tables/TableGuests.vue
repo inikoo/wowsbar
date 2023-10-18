@@ -7,6 +7,7 @@
 <script setup lang="ts">
 import {Link} from '@inertiajs/vue3';
 import Table from '@/Components/Table/Table.vue';
+import JobPositionBadges from "@/Components/Elements/Badges/JobPositionBadges.vue";
 
 const props = defineProps<{
     data: object,
@@ -32,6 +33,9 @@ function guestRoute(guest) {
             <Link :href="guestRoute(guest)">
                 {{ guest['alias'] }}
             </Link>
+        </template>
+        <template #cell(positions)="{ item: guest }">
+            <job-position-badges :job_positions="guest['positions']"/>
         </template>
     </Table>
 </template>

@@ -9,6 +9,7 @@ namespace App\Actions\Organisation\Guest\UI;
 
 use App\Actions\Helpers\History\IndexHistory;
 use App\Actions\InertiaAction;
+use App\Actions\Traits\Actions\WithActionButtons;
 use App\Actions\UI\Organisation\SysAdmin\ShowSysAdminDashboard;
 use App\Enums\UI\Organisation\GuestTabsEnum;
 use App\Http\Resources\History\HistoryResource;
@@ -20,6 +21,8 @@ use Lorisleiva\Actions\ActionRequest;
 
 class ShowGuest extends InertiaAction
 {
+    use WithActionButtons;
+
     public function asController(Guest $guest, ActionRequest $request): Guest
     {
         $this->initialisation($request)->withTab(GuestTabsEnum::values());
@@ -55,25 +58,11 @@ class ShowGuest extends InertiaAction
                     'next'     => $this->getNext($guest, $request),
                 ],
                 'pageHead'                     => [
-                    'title'   => $guest->contact_name,
-                    'actions' => [
-                        $this->canEdit ? [
-                            'type'  => 'button',
-                            'style' => 'edit',
-                            'route' => [
-                                'name'       => preg_replace('/show$/', 'edit', $request->route()->getName()),
-                                'parameters' => array_values($request->route()->originalParameters())
-                            ]
-                        ] : false,
-                        $this->canDelete ? [
-                            'type'  => 'button',
-                            'style' => 'delete',
-                            'route' => [
-                                'name'       => 'org.sysadmin.guests.remove',
-                                'parameters' => array_values($request->route()->originalParameters())
-                            ]
-                        ] : false
-                    ]
+                    'title'       => $guest->contact_name,
+                    'iconActions' => [
+                        $this->canDelete ? $this->getDeleteActionIcon($request) : null,
+                        $this->canEdit ? $this->getEditActionIcon($request) : null,
+                    ],
                 ],
                 'tabs'                         => [
                     'current'    => $this->tab,
