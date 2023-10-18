@@ -41,6 +41,7 @@ import Currency from "@/Components/Forms/Fields/Currency.vue"
 import InputWithAddOn from '@/Components/Forms/Fields/InputWithAddOn.vue'
 import Password from "@/Components/Forms/Fields/Password.vue"
 import CustomerRoles from '@/Components/Forms/Fields/CustomerRoles.vue'
+import JobPosition from '@/Components/Forms/Fields/JobPosition.vue'
 
 import { ref, onMounted } from 'vue'
 import Textarea from "@/Components/Forms/Fields/Textarea.vue";
@@ -58,7 +59,8 @@ const getComponent = (componentName: string) => {
         'currency': Currency,
         'password': Password,
         'customerRoles': CustomerRoles,
-        'textarea': Textarea
+        'textarea': Textarea,
+        'jobPosition': JobPosition
     };
     return components[componentName] ?? null;
 
