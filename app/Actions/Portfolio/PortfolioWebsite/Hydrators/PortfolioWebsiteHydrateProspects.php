@@ -8,10 +8,9 @@
 namespace App\Actions\Portfolio\PortfolioWebsite\Hydrators;
 
 use App\Models\Portfolio\PortfolioWebsite;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Lorisleiva\Actions\Concerns\AsAction;
 
-class PortfolioWebsiteHydrateProspects implements ShouldBeUnique
+class PortfolioWebsiteHydrateProspects
 {
     use AsAction;
 

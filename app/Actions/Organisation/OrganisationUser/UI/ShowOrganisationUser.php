@@ -63,6 +63,10 @@ class ShowOrganisationUser extends InertiaAction
                 ],
                 'pageHead'    => [
                     'title'   => $organisationUser->username,
+                    'icon'    => [
+                        'title' => __('users'),
+                        'icon'  => 'fal fa-terminal'
+                    ],
                     'actions' => [
                         $this->canEdit ? [
                             'type'  => 'button',
@@ -95,7 +99,7 @@ class ShowOrganisationUser extends InertiaAction
             ]
         )
             ->table(IndexOrganisationUserRequestLogs::make()->tableStructure($organisationUser))
-            ->table(IndexHistory::make()->tableStructure(prefix:OrganisationUserTabsEnum::HISTORY->value));
+            ->table(IndexHistory::make()->tableStructure(prefix: OrganisationUserTabsEnum::HISTORY->value));
     }
 
     public function getBreadcrumbs(string $routeName, array $routeParameters, string $suffix = ''): array

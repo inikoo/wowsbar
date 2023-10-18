@@ -7,33 +7,33 @@
 
 namespace App\Actions\CRM\User\UI;
 
-use App\Actions\Auth\UserRequest\IndexUserRequestLogs;
 use App\Actions\CRM\Customer\UI\ShowCustomer;
 use App\Actions\Helpers\History\IndexHistory;
 use App\Actions\InertiaAction;
 use App\Enums\UI\UsersTabsEnum;
-use App\Http\Resources\Auth\OrganisationUserRequestLogsResource;
 use App\Http\Resources\Auth\UserResource;
+use App\Http\Resources\CRM\OrgCustomerUsersResource;
 use App\Http\Resources\History\HistoryResource;
 use App\InertiaTable\InertiaTable;
+use App\Models\Auth\CustomerUser;
 use App\Models\Auth\User;
 use App\Models\CRM\Customer;
 use App\Models\Market\Shop;
 use App\Models\Organisation\Organisation;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
-class IndexUsers extends InertiaAction
+class IndexOrgCustomerUsers extends InertiaAction
 {
-    /**
-     * @var \App\Models\CRM\Customer|\App\Models\Organisation\Organisation
-     */
     private Customer|Organisation $parent;
 
     protected function getElementGroups(Organisation|Customer $parent): array
@@ -64,6 +64,7 @@ class IndexUsers extends InertiaAction
 
     public function handle(Organisation|Customer $parent, $prefix = null): LengthAwarePaginator
     {
+        $this->parent = $parent;
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
             $query->where(function ($query) use ($value) {
                 $query->whereAnyWordStartWith('contact_name', $value)
@@ -77,14 +78,15 @@ class IndexUsers extends InertiaAction
         }
 
 
-        $queryBuilder = QueryBuilder::for(User::class);
+        $queryBuilder = QueryBuilder::for(CustomerUser::class);
+        $queryBuilder->leftJoin('users', 'users.id', 'customer_user.user_id');
 
-
-        if(class_basename($parent)=='Customer') {
+        if (class_basename($parent) == 'Customer') {
             $queryBuilder->where('customer_id', $parent->id);
         }
 
         foreach ($this->getElementGroups($parent) as $key => $elementGroup) {
+            /** @noinspection PhpUndefinedMethodInspection */
             $queryBuilder->whereElementGroup(
                 prefix: $prefix,
                 key: $key,
@@ -93,10 +95,33 @@ class IndexUsers extends InertiaAction
             );
         }
 
+
+        $roles = DB::table('model_has_roles')
+            ->select(
+                'model_id',
+                DB::raw('jsonb_agg(json_build_object(\'name\',roles.name)) as roles')
+            )
+            ->leftJoin('roles', 'model_has_roles.role_id', 'roles.id')
+            ->where('model_type', 'CustomerUser')
+            ->groupBy('model_id');
+        $queryBuilder->joinSub($roles, 'roles', function (JoinClause $join) {
+            $join->on('customer_user.id', '=', 'roles.model_id');
+        });
+
+        /** @noinspection PhpUndefinedMethodInspection */
         return $queryBuilder
-            ->defaultSort('username')
-            ->allowedSorts(['username', 'email', 'contact_name'])
-            ->allowedFilters([$globalSearch, 'email', 'contact_name', 'username'])
+            ->select(
+                'customer_user.slug',
+                'roles',
+                'avatar_id',
+                'email',
+                'contact_name',
+                'customer_user.status',
+                'is_root'
+            )
+            ->defaultSort('customer_user.slug')
+            ->allowedSorts(['customer_user.slug', 'email', 'contact_name'])
+            ->allowedFilters([$globalSearch, 'email', 'contact_name'])
             ->withPaginator($prefix)
             ->withQueryString();
     }
@@ -123,8 +148,8 @@ class IndexUsers extends InertiaAction
                 ->withGlobalSearch()
                 ->withModelOperations($modelOperations)
                 ->withExportLinks($exportLinks)
-                ->column(key: 'avatar', label: ['fal', 'fa-user-circle'])
-                ->column(key: 'username', label: __('username'), canBeHidden: false, sortable: true, searchable: true)
+                ->column(key: 'avatar', label: ['fal', 'fa-user-circle'], type: 'avatar')
+                ->column(key: 'slug', label: __('code'), canBeHidden: false, sortable: true, searchable: true)
                 ->column(key: 'contact_name', label: __('name'), canBeHidden: false, sortable: true, searchable: true)
                 ->column(key: 'email', label: __('email'), canBeHidden: false, sortable: true, searchable: true)
                 ->column(key: 'status', label: __('status'), canBeHidden: false, sortable: true)
@@ -135,12 +160,11 @@ class IndexUsers extends InertiaAction
 
     public function authorize(ActionRequest $request): bool
     {
-        $this->canEdit = $request->user()->hasPermissionTo('sysadmin.edit');
+        $this->canEdit = $request->user()->hasPermissionTo('crm.edit');
 
         return
             (
-                $request->user()->tokenCan('root') or
-                $request->user()->hasPermissionTo('sysadmin.view')
+                $request->user()->hasPermissionTo('crm.view')
             );
     }
 
@@ -153,9 +177,31 @@ class IndexUsers extends InertiaAction
 
     public function htmlResponse(LengthAwarePaginator $users, ActionRequest $request): Response
     {
+        $scope     = $this->parent;
+        $container = null;
+
+
+        if (class_basename($scope) == 'Shop' and organisation()->stats->number_shops > 1) {
+            $container = [
+                'icon'    => ['fal', 'fa-store-alt'],
+                'tooltip' => __('Shop'),
+                'label'   => Str::possessive($scope->name)
+            ];
+        } elseif (class_basename($scope) == 'Customer') {
+            $container = [
+                'icon'    => ['fal', 'fa-user'],
+                'tooltip' => __('Customer'),
+                'label'   => Str::possessive($scope->name),
+                'href'    => [
+                    'name'       => 'org.crm.shop.customers.show',
+                    'parameters' => $request->route()->originalParameters()
+                ]
+            ];
+        }
+
 
         return Inertia::render(
-            'CRM/Users',
+            'CRM/OrganisationCustomerUsers',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->getName(),
@@ -163,10 +209,11 @@ class IndexUsers extends InertiaAction
                 ),
                 'title'       => __('users'),
                 'pageHead'    => [
+                    'container' => $container,
                     'title'     => __('users'),
                     'iconRight' => [
                         'title' => __('users'),
-                        'icon'  => 'fal fa-user'
+                        'icon'  => 'fal fa-terminal'
                     ],
                     'actions'   => [
                         [
@@ -182,18 +229,14 @@ class IndexUsers extends InertiaAction
                 ],
 
 
-                'labels' => [
-                    'usernameNoSet' => __('username no set')
-                ],
-
                 'tabs' => [
                     'current'    => $this->tab,
                     'navigation' => UsersTabsEnum::navigation(),
                 ],
 
                 UsersTabsEnum::USERS->value => $this->tab == UsersTabsEnum::USERS->value ?
-                    fn () => UserResource::collection($users)
-                    : Inertia::lazy(fn () => UserResource::collection($users)),
+                    fn () => OrgCustomerUsersResource::collection($users)
+                    : Inertia::lazy(fn () => OrgCustomerUsersResource::collection($users)),
 
                 /*
                 UsersTabsEnum::USERS_REQUESTS->value => $this->tab == UsersTabsEnum::USERS_REQUESTS->value ?
@@ -209,17 +252,9 @@ class IndexUsers extends InertiaAction
         )->table(
             $this->tableStructure(
                 $this->parent,
-                prefix: 'users',
-                exportLinks: [
-                    'export' => [
-                        'route' => [
-                            'name' => 'export.users.index'
-                        ]
-                    ]
-                ]
+                prefix: UsersTabsEnum::USERS->value,
             )
-        )
-            /*
+        )/*
             ->table(IndexUserRequestLogs::make()->tableStructure())
             ->table(
                 IndexHistories::make()->tableStructure(
@@ -232,7 +267,7 @@ class IndexUsers extends InertiaAction
                     ]
                 )
             );
-            */;
+            */ ;
     }
 
     public function asController(ActionRequest $request): LengthAwarePaginator
@@ -278,22 +313,22 @@ class IndexUsers extends InertiaAction
         };
 
         return match ($routeName) {
-            'org.crm.customers.show.web-users.index' =>
+            'org.crm.customers.show.customer-users.index' =>
             array_merge(
                 ShowCustomer::make()->getBreadcrumbs('org.crm.customers.show', $routeParameters),
                 $headCrumb(
                     [
-                        'name'       => 'org.crm.customers.show.web-users.index',
+                        'name'       => 'org.crm.customers.show.customer-users.index',
                         'parameters' => $routeParameters
                     ]
                 ),
             ),
-            'org.crm.shop.customers.show.web-users.index' =>
+            'org.crm.shop.customers.show.customer-users.index' =>
             array_merge(
                 ShowCustomer::make()->getBreadcrumbs('org.crm.shop.customers.show', $routeParameters),
                 $headCrumb(
                     [
-                        'name'       => 'org.crm.shop.customers.show.web-users.index',
+                        'name'       => 'org.crm.shop.customers.show.customer-users.index',
                         'parameters' => $routeParameters
                     ]
                 ),

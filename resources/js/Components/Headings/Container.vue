@@ -22,6 +22,6 @@ const locale = useLocaleStore()
 <template>
     <FontAwesomeIcon v-if="data.icon" :title="capitalize(data.tooltip)"
                      aria-hidden="true" :icon="data.icon" size="xs"/>
-    <span class="leading-none">{{ data.label }}</span>
+    <span class="leading-none mr-1 ml-1">{{ data.label }}</span>
     <FontAwesomeIcon flip="horizontal" :icon="'fal fa-level-up'" :class="'mr-2'" />
 </template>

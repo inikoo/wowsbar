@@ -9,7 +9,12 @@ namespace App\Actions\Organisation\Organisation;
 
 use App\Actions\Traits\WithActionUpdate;
 use App\Models\Organisation\Organisation;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Validation\Rules\File;
 use Lorisleiva\Actions\ActionRequest;
+use Illuminate\Http\UploadedFile;
 
 class UpdateOrganisation
 {
@@ -18,6 +23,20 @@ class UpdateOrganisation
 
     public function handle(Organisation $organisation, array $modelData): Organisation
     {
+        if(Arr::exists($modelData, 'logo')) {
+            /** @var UploadedFile $logo */
+            $logo=Arr::get($modelData, 'logo');
+            Arr::forget($modelData, 'logo');
+
+            UploadOrganisationLogo::run(
+                organisation: $organisation,
+                imagePath: $logo->getPathName(),
+                originalFilename: $logo->getClientOriginalName(),
+                extension: $logo->getClientOriginalExtension()
+            );
+
+        }
+
         return $this->update($organisation, $modelData, ['data']);
     }
 
@@ -31,7 +50,13 @@ class UpdateOrganisation
     public function rules(): array
     {
         return [
-            'name'   => ['sometimes','required','max:64']
+            'name'      => ['sometimes','required','max:64','iunique:organisations'],
+            'logo'      => [
+                'sometimes',
+                'nullable',
+                File::image()
+                    ->max(12 * 1024)
+            ],
         ];
     }
 
@@ -41,6 +66,10 @@ class UpdateOrganisation
         return $this->handle(organisation(), $this->validateAttributes());
     }
 
-
+    public function htmlResponse(): RedirectResponse
+    {
+        Session::put('reloadLayout', '1');
+        return back();
+    }
 
 }

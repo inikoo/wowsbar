@@ -9,11 +9,10 @@ namespace App\Actions\Accounting\PaymentServiceProvider\Hydrators;
 
 use App\Enums\Accounting\Payment\PaymentStateEnum;
 use App\Models\Accounting\PaymentServiceProvider;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Support\Arr;
 use Lorisleiva\Actions\Concerns\AsAction;
 
-class PaymentServiceProviderHydratePayments implements ShouldBeUnique
+class PaymentServiceProviderHydratePayments
 {
     use AsAction;
 

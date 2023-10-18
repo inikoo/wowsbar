@@ -10,14 +10,13 @@
 
 namespace App\Models\Web;
 
-use App\Actions\Helpers\Images\GetPictureSources;
 use App\Enums\Organisation\Web\Website\WebsiteStateEnum;
-use App\Helpers\ImgProxy\Image;
 use App\Models\Helpers\Deployment;
 use App\Models\Helpers\Snapshot;
 use App\Models\Market\Shop;
 use App\Models\Media\Media;
 use App\Models\Traits\HasHistory;
+use App\Models\Traits\HasLogo;
 use App\Models\Traits\HasUniversalSearch;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -134,7 +133,7 @@ class Website extends Model implements Auditable, HasMedia
     use HasHistory;
     use HasUniversalSearch;
     use InteractsWithMedia;
-
+    use HasLogo;
 
     protected $casts = [
         'data'               => 'array',
@@ -249,19 +248,7 @@ class Website extends Model implements Auditable, HasMedia
         return $this->morphMany(Deployment::class, 'model');
     }
 
-    public function logo(): HasOne
-    {
-        return $this->hasOne(Media::class, 'id', 'logo_id');
-    }
 
-    public function logoImageSources($width = 0, $height = 0)
-    {
-        if($this->logo) {
-            $logoThumbnail = (new Image())->make($this->logo->getImgProxyFilename())->resize($width, $height);
-            return GetPictureSources::run($logoThumbnail);
-        }
-        return null;
-    }
 
 
 

@@ -22,13 +22,13 @@ const props = defineProps<{
 function userRoute(user: User) {
     console.log(route().current())
     switch (route().current()) {
-        case 'org.crm.shop.customers.show.web-users.index':
+        case 'org.crm.shop.customers.show.customer-users.index':
             return route(
-                'org.crm.shop.customers.show.web-users.show',
+                'org.crm.shop.customers.show.customer-users.show',
                 [route().params['shop'],route().params['customer'],user.username]);
-        case 'org.crm.customers.show.web-users.index':
+        case 'org.crm.customers.show.customer-users.index':
             return route(
-                'org.crm.customers.show.web-users.show',
+                'org.crm.customers.show.customer-users.show',
                 [route().params['customer'],user.username]);
 
     }

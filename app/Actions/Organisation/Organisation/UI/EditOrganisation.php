@@ -10,6 +10,7 @@ namespace App\Actions\Organisation\Organisation\UI;
 use App\Actions\UI\Organisation\SysAdmin\ShowSysAdminDashboard;
 use App\Actions\UI\WithInertia;
 use App\Models\Organisation\Organisation;
+use Illuminate\Support\Arr;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -32,8 +33,29 @@ class EditOrganisation
     }
 
 
-    public function htmlResponse(Organisation $organisation): Response
+    public function htmlResponse(Organisation $organisation, ActionRequest $request): Response
     {
+        $sections['properties'] = [
+            'label'  => __('Properties'),
+            'icon'   => 'fal fa-sliders-h',
+            'fields' => [
+                "name" => [
+                    "type"  => "input",
+                    "label" => __("Name"),
+                    "value" => $organisation->name
+                ],
+                "logo" => [
+                    "type"  => "avatar",
+                    "label" => __("logo"),
+                    "value" => !blank($organisation->logo_id) ? $organisation->logoImageSources(320, 320) : null,
+                ],
+            ]
+        ];
+
+        $currentSection = 'properties';
+        if ($request->has('section') and Arr::has($sections, $request->get('section'))) {
+            $currentSection = $request->get('section');
+        }
 
         return Inertia::render(
             'EditModel',
@@ -43,55 +65,18 @@ class EditOrganisation
                 'pageHead'    => [
                     'title' => __('system settings'),
                 ],
-                "formData" => [
-                    "blueprint" => [
-
-                        [
-                            "title"  => __("branding"),
-                            "icon"   => "fa-light fa-copyright",
-                            "fields" => [
-                                "name" => [
-                                    "type"  => "input",
-                                    "label" => __("Name"),
-                                    "value" => $organisation->name
-                                ],
-                                "logo" => [
-                                    "type"  => "avatar",
-                                    "label" => __("logo"),
-                                    "value" => $organisation->logo_id,
-                                ],
-                            ],
-                        ],
-
-                        // [
-                        //     "title"  => __("appearance"),
-                        //     "icon"   => "fa-light fa-paint-brush",
-                        //     "fields" => [
-                        //         "colorMode" => [
-                        //             "type"  => "colorMode",
-                        //             "label" => __("turn dark mode"),
-                        //             "value" => "",
-                        //         ],
-                        //         "theme"     => [
-                        //             "type"  => "theme",
-                        //             "label" => __("choose your theme"),
-                        //             "value" => "",
-                        //         ],
-                        //     ],
-                        // ],
-                    ],
+                "formData"    => [
+                    'current'   => $currentSection,
+                    'blueprint' => $sections,
                     "args"      => [
                         "updateRoute" => [
-                            "name"       => "org.models.organisation.update"
+                            "name" => "org.models.organisation.update"
                         ],
                     ],
                 ],
-
-
             ]
         );
     }
-
 
 
     public function getBreadcrumbs(): array
@@ -106,7 +91,7 @@ class EditOrganisation
                             'route' => [
                                 'name' => 'org.sysadmin.organisation.edit'
                             ],
-                            'label'  => __('settings'),
+                            'label' => __('settings'),
                         ]
                     ]
                 ]

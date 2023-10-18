@@ -8,7 +8,7 @@
 namespace App\Actions\Organisation\OrganisationUser\UI;
 
 use App\Actions\Traits\WithActionUpdate;
-use App\Actions\Traits\WIthUploadProfileImage;
+use App\Actions\Traits\WIthSaveUploadedImage;
 use App\Models\Auth\OrganisationUser;
 use Lorisleiva\Actions\Concerns\AsAction;
 
@@ -16,7 +16,7 @@ class SetOrganisationUserAvatarFromImage
 {
     use AsAction;
     use WithActionUpdate;
-    use WIthUploadProfileImage;
+    use WIthSaveUploadedImage;
 
 
     /**
@@ -26,7 +26,14 @@ class SetOrganisationUserAvatarFromImage
     public function handle(OrganisationUser $organisationUser, string $imagePath, string $originalFilename, string $extension = null): OrganisationUser
     {
 
-        return $this->uploadProfileImage($organisationUser, $imagePath, $originalFilename, $extension);
+        return $this->saveUploadedImage(
+            model: $organisationUser,
+            collection: 'profile',
+            field: 'avatar_id',
+            imagePath: $imagePath,
+            originalFilename: $originalFilename,
+            extension: $extension,
+        );
 
 
     }

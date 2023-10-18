@@ -8,7 +8,7 @@
 namespace App\Actions\Auth\User\UI;
 
 use App\Actions\Traits\WithActionUpdate;
-use App\Actions\Traits\WIthUploadProfileImage;
+use App\Actions\Traits\WIthSaveUploadedImage;
 use App\Models\Auth\User;
 use Lorisleiva\Actions\Concerns\AsAction;
 
@@ -16,7 +16,7 @@ class SetUserAvatarFromImage
 {
     use AsAction;
     use WithActionUpdate;
-    use WIthUploadProfileImage;
+    use WIthSaveUploadedImage;
 
     /**
      * @throws \Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist
@@ -24,8 +24,13 @@ class SetUserAvatarFromImage
      */
     public function handle(User $user, string $imagePath, string $originalFilename, string $extension = null): User
     {
-        return $this->uploadProfileImage($user, $imagePath, $originalFilename, $extension);
-
-
+        return $this->saveUploadedImage(
+            model: $user,
+            collection: 'profile',
+            field: 'avatar_id',
+            imagePath: $imagePath,
+            originalFilename: $originalFilename,
+            extension: $extension,
+        );
     }
 }

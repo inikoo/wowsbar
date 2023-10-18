@@ -1,31 +1,32 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Sat, 14 Oct 2023 13:42:01 Malaysia Time, Office, Bali, Indonesia
+ * Created: Tue, 17 Oct 2023 19:39:52 Malaysia Time, Office, Bali, Indonesia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Web\Website;
+namespace App\Actions\Organisation\Organisation;
 
 use App\Actions\Traits\WithActionUpdate;
 use App\Actions\Traits\WIthSaveUploadedImage;
-use App\Models\Web\Website;
+use App\Models\Organisation\Organisation;
 use Lorisleiva\Actions\Concerns\AsAction;
 
-class UploadWebsiteLogo
+class UploadOrganisationLogo
 {
     use AsAction;
     use WithActionUpdate;
     use WIthSaveUploadedImage;
 
+
     /**
      * @throws \Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist
      * @throws \Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig
      */
-    public function handle(Website $website, string $imagePath, string $originalFilename, string $extension = null): Website
+    public function handle(Organisation $organisation, string $imagePath, string $originalFilename, string $extension = null): Organisation
     {
         return $this->saveUploadedImage(
-            model: $website,
+            model: $organisation,
             collection: 'logo',
             field: 'logo_id',
             imagePath: $imagePath,

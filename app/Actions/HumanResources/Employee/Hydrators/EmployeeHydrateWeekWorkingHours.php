@@ -8,11 +8,10 @@
 namespace App\Actions\HumanResources\Employee\Hydrators;
 
 use App\Models\HumanResources\Employee;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Support\Arr;
 use Lorisleiva\Actions\Concerns\AsAction;
 
-class EmployeeHydrateWeekWorkingHours implements ShouldBeUnique
+class EmployeeHydrateWeekWorkingHours
 {
     use AsAction;
 

@@ -6,12 +6,12 @@
 
 <script setup lang="ts">
 import { Head } from '@inertiajs/vue3'
-import TableUsers from "@/Components/Tables/TableUsers.vue"
+import TableOrganisationCustomerUsers from "@/Components/Tables/TableOrgCustomerUsers.vue"
 import Tabs from "@/Components/Navigation/Tabs.vue"
 import { computed, ref } from "vue"
 import { useTabChange } from "@/Composables/tab-change"
 import { faRoad, faTerminal, faUserCircle } from '@fal/'
-import TableUserRequestLogs from "@/Components/Tables/TableUserRequestLogs.vue"
+//import TableUserRequestLogs from "@/Components/Tables/TableUserRequestLogs.vue"
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { capitalize } from "@/Composables/capitalize"
 import PageHeading from "@/Components/Headings/PageHeading.vue";
@@ -36,8 +36,8 @@ const handleTabUpdate = (tabSlug) => useTabChange(tabSlug, currentTab);
 
 const component = computed(() => {
     const components = {
-        users: TableUsers,
-        users_requests: TableUserRequestLogs,
+        users: TableOrganisationCustomerUsers,
+       // users_requests: TableUserRequestLogs,
         history: TableHistories
     };
     return components[currentTab.value];

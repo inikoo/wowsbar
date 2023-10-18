@@ -7,17 +7,12 @@
 
 namespace App\Actions\CRM\User\UI;
 
-use App\Actions\Auth\UserRequest\ShowUserRequestLogs;
 use App\Actions\CRM\Customer\UI\ShowCustomer;
-use App\Actions\Helpers\History\IndexHistory;
-use App\Actions\Helpers\History\ShowHistories;
 use App\Actions\InertiaAction;
 use App\Actions\Traits\WithElasticsearch;
 use App\Enums\UI\UserTabsEnum;
-use App\Http\Resources\History\HistoryResource;
-use App\Http\Resources\SysAdmin\UserRequestLogsResource;
 use App\Http\Resources\SysAdmin\UserResource;
-use App\Models\Auth\User;
+use App\Models\Auth\CustomerUser;
 use App\Models\CRM\Customer;
 use App\Models\Market\Shop;
 use App\Models\Organisation\Organisation;
@@ -25,43 +20,39 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
 
-class ShowUser extends InertiaAction
+class ShowOrgCustomerUser extends InertiaAction
 {
     use WithElasticsearch;
 
 
     private Customer|Organisation $parent;
 
-    public function asController(User $user, ActionRequest $request): User
+    public function asController(CustomerUser $customerUser, ActionRequest $request): CustomerUser
     {
         $this->initialisation($request)->withTab(UserTabsEnum::values());
         $this->parent = organisation();
 
-        return $user;
+        return $customerUser;
     }
 
     /** @noinspection PhpUnusedParameterInspection */
-    public function inCustomer(Customer $customer, User $user, ActionRequest $request): User
+    public function inCustomer(Customer $customer, CustomerUser $customerUser, ActionRequest $request): CustomerUser
     {
         $this->initialisation($request)->withTab(UserTabsEnum::values());
         $this->parent = $customer;
 
-        return $user;
+        return $customerUser;
     }
 
     /** @noinspection PhpUnusedParameterInspection */
-    public function inCustomerInShop(Shop $shop, Customer $customer, User $user, ActionRequest $request): User
+    public function inCustomerInShop(Shop $shop, Customer $customer, CustomerUser $customerUser, ActionRequest $request): CustomerUser
     {
         $this->initialisation($request)->withTab(UserTabsEnum::values());
         $this->parent = $customer;
 
-        return $user;
+        return $customerUser;
     }
 
-    public function jsonResponse(User $user): UserResource
-    {
-        return new UserResource($user);
-    }
 
     public function authorize(ActionRequest $request): bool
     {
@@ -70,22 +61,26 @@ class ShowUser extends InertiaAction
         return $request->user()->hasPermissionTo("crm.view");
     }
 
-    public function htmlResponse(User $user, ActionRequest $request): Response
+    public function htmlResponse(CustomerUser $customerUser, ActionRequest $request): Response
     {
         return Inertia::render(
-            'CRM/User',
+            'CRM/OrgCustomerUser',
             [
-                'title'       => __('user'),
+                'title'       => __('customerUser'),
                 'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->getName(),
                     $request->route()->originalParameters()
                 ),
                 'navigation'  => [
-                    'previous' => $this->getPrevious($user, $request),
-                    'next'     => $this->getNext($user, $request),
+                    'previous' => $this->getPrevious($customerUser, $request),
+                    'next'     => $this->getNext($customerUser, $request),
                 ],
                 'pageHead'    => [
-                    'title'   => $user->username,
+                    'title'   => $customerUser->slug,
+                    'icon'    => [
+                        'title' => __('user'),
+                        'icon'  => 'fal fa-terminal'
+                    ],
                     'actions' => [
                         $this->canEdit ? [
                             'type'  => 'button',
@@ -103,26 +98,26 @@ class ShowUser extends InertiaAction
                 ],
 
                 UserTabsEnum::SHOWCASE->value => $this->tab == UserTabsEnum::SHOWCASE->value ?
-                    fn () => new UserResource($user)
-                    : Inertia::lazy(fn () => new UserResource($user)),
-/*
-                UserTabsEnum::REQUEST_LOGS->value => $this->tab == UserTabsEnum::REQUEST_LOGS->value ?
-                    fn () => UserRequestLogsResource::collection(ShowUserRequestLogs::run($user->username))
-                    : Inertia::lazy(fn () => UserRequestLogsResource::collection(ShowUserRequestLogs::run($user->username))),
-*/
-                UserTabsEnum::HISTORY->value => $this->tab == UserTabsEnum::HISTORY->value ?
-                    fn () => HistoryResource::collection(ShowHistories::run($user))
-                    : Inertia::lazy(fn () => HistoryResource::collection(ShowHistories::run($user)))
+                    fn () => new UserResource($customerUser)
+                    : Inertia::lazy(fn () => new UserResource($customerUser)),
+                /*
+                                UserTabsEnum::REQUEST_LOGS->value => $this->tab == UserTabsEnum::REQUEST_LOGS->value ?
+                                    fn () => UserRequestLogsResource::collection(ShowUserRequestLogs::run($customerUser->slug))
+                                    : Inertia::lazy(fn () => UserRequestLogsResource::collection(ShowUserRequestLogs::run($customerUser->slug))),
+                */
+                // UserTabsEnum::HISTORY->value => $this->tab == UserTabsEnum::HISTORY->value ?
+                //     fn () => HistoryResource::collection(ShowHistories::run($customerUser))
+                //     : Inertia::lazy(fn () => HistoryResource::collection(ShowHistories::run($customerUser)))
 
             ]
-        )
-            //->table(ShowUserRequestLogs::make()->tableStructure())
-            ->table(IndexHistory::make()->tableStructure());
+        );
+        //->table(ShowUserRequestLogs::make()->tableStructure())
+        //->table(IndexHistory::make()->tableStructure());
     }
 
     public function getBreadcrumbs(string $routeName, array $routeParameters, string $suffix = ''): array
     {
-        $headCrumb = function (User $user, array $routeParameters, string $suffix) {
+        $headCrumb = function (CustomerUser $customerUser, array $routeParameters, string $suffix) {
             return [
                 [
 
@@ -134,7 +129,7 @@ class ShowUser extends InertiaAction
                         ],
                         'model' => [
                             'route' => $routeParameters['model'],
-                            'label' => $user->username,
+                            'label' => $customerUser->slug,
                         ],
 
                     ],
@@ -145,40 +140,40 @@ class ShowUser extends InertiaAction
         };
 
         return match ($routeName) {
-            'org.crm.customers.show.web-users.show',
-            'org.crm.customers.show.web-users.edit' =>
+            'org.crm.customers.show.customer-users.show',
+            'org.crm.customers.show.customer-users.edit' =>
 
             array_merge(
                 ShowCustomer::make()->getBreadcrumbs('org.crm.customers.show', $routeParameters),
                 $headCrumb(
-                    User::where('username', $routeParameters['user'])->first(),
+                    CustomerUser::where('slug', $routeParameters['customerUser'])->first(),
                     [
                         'index' => [
-                            'name'       => 'org.crm.customers.show.web-users.index',
+                            'name'       => 'org.crm.customers.show.customer-users.index',
                             'parameters' => $routeParameters
                         ],
                         'model' => [
-                            'name'       => 'org.crm.customers.show.web-users.show',
+                            'name'       => 'org.crm.customers.show.customer-users.show',
                             'parameters' => $routeParameters
                         ]
                     ],
                     $suffix
                 ),
             ),
-            'org.crm.shop.customers.show.web-users.show',
-            'org.crm.shop.customers.show.web-users.edit' =>
+            'org.crm.shop.customers.show.customer-users.show',
+            'org.crm.shop.customers.show.customer-users.edit' =>
 
             array_merge(
                 ShowCustomer::make()->getBreadcrumbs('org.crm.shop.customers.show', $routeParameters),
                 $headCrumb(
-                    User::where('username', $routeParameters['user'])->first(),
+                    CustomerUser::where('slug', $routeParameters['customerUser'])->first(),
                     [
                         'index' => [
-                            'name'       => 'org.crm.shop.customers.show.web-users.index',
+                            'name'       => 'org.crm.shop.customers.show.customer-users.index',
                             'parameters' => $routeParameters
                         ],
                         'model' => [
-                            'name'       => 'org.crm.shop.customers.show.web-users.show',
+                            'name'       => 'org.crm.shop.customers.show.customer-users.show',
                             'parameters' => $routeParameters
                         ]
                     ],
@@ -190,47 +185,42 @@ class ShowUser extends InertiaAction
         };
     }
 
-    public function getPrevious(User $user, ActionRequest $request): ?array
+    public function getPrevious(CustomerUser $customerUser, ActionRequest $request): ?array
     {
-        $query = User::where('username', '<', $user->username);
+        $query = CustomerUser::where('slug', '<', $customerUser->slug);
         if (class_basename($this->parent) == 'Customer') {
             $query->where('customer_id', $this->parent->id);
         }
-        $previous = $query->orderBy('username', 'desc')->first();
+        $previous = $query->orderBy('slug', 'desc')->first();
 
-        return $this->getNavigation($previous, $request->route()->getName());
+        return $this->getNavigation($previous, $request);
     }
 
-    public function getNext(User $user, ActionRequest $request): ?array
+    public function getNext(CustomerUser $customerUser, ActionRequest $request): ?array
     {
-        $query = User::where('username', '>', $user->username);
+        $query = CustomerUser::where('slug', '>', $customerUser->slug);
         if (class_basename($this->parent) == 'Customer') {
             $query->where('customer_id', $this->parent->id);
         }
-        $next = $query->orderBy('username')->first();
+        $next = $query->orderBy('slug')->first();
 
-        return $this->getNavigation($next, $request->route()->getName());
+        return $this->getNavigation($next, $request);
     }
 
-    private function getNavigation(?User $user, string $routeName): ?array
+    private function getNavigation(?CustomerUser $customerUser, ActionRequest $request): ?array
     {
-        if (!$user) {
+        $routeName = $request->route()->getName();
+
+        if (!$customerUser) {
             return null;
         }
 
         return match ($routeName) {
-            'org.crm.customers.show.web-users.show' => [
-                'label' => $user->username,
+            'org.crm.customers.show.customer-users.show', 'org.crm.shop.customers.show.customer-users.show' => [
+                'label' => $customerUser->slug,
                 'route' => [
                     'name'       => $routeName,
-                    'parameters' => [$user->customer->slug, $user->username]
-                ]
-            ],
-            'org.crm.shop.customers.show.web-users.show' => [
-                'label' => $user->username,
-                'route' => [
-                    'name'       => $routeName,
-                    'parameters' => [$user->customer->shop->slug, $user->customer->slug, $user->username]
+                    'parameters' => array_merge($request->route()->originalParameters(), [$customerUser->slug])
                 ]
             ]
         };

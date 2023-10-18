@@ -93,7 +93,7 @@ class CreateUser extends InertiaAction
     public function getBreadcrumbs(string $routeName, array $routeParameters): array
     {
         return array_merge(
-            IndexUsers::make()->getBreadcrumbs(
+            IndexOrgCustomerUsers::make()->getBreadcrumbs(
                 preg_replace('/create$/', 'index', $routeName),
                 $routeParameters
             ),
