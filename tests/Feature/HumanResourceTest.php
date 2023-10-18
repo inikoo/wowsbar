@@ -40,7 +40,7 @@ test('create employee successful', function () {
         'date_of_birth'     => '2019-01-01',
         'job_title'         => 'director',
         'state'             => EmployeeStateEnum::WORKING,
-        'positions'         => ['acc']
+        'positions'         => ['acc-m']
     ];
 
     $employee = StoreEmployee::run(organisation(), $arrayData);

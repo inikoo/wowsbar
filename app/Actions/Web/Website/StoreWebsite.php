@@ -53,7 +53,6 @@ class StoreWebsite
                     true
                 )
             ]
-
         );
         $footerSnapshot = StoreWebsiteSnapshot::run(
             $website,

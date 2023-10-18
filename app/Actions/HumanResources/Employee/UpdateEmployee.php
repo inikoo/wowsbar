@@ -26,9 +26,14 @@ class UpdateEmployee
 
     public function handle(Employee $employee, array $modelData): Employee
     {
-        $positions = Arr::get($modelData, 'positions');
-        Arr::forget($modelData, 'positions');
+        if (Arr::exists($modelData, 'positions')) {
+            foreach (Arr::get($modelData, 'positions', []) as $position) {
+                $jobPosition = JobPosition::firstWhere('slug', $position);
+                AttachJobPosition::run($employee, $jobPosition);
+            }
 
+            Arr::forget($modelData, 'positions');
+        }
         $employee = $this->update($employee, $modelData, ['data', 'salary',]);
 
         if ($employee->wasChanged(['worker_number', 'worker_number', 'contact_name', 'work_email', 'job_title', 'email'])) {
@@ -37,10 +42,7 @@ class UpdateEmployee
         if ($employee->wasChanged(['state'])) {
             OrganisationHydrateEmployees::dispatch();
         }
-        foreach ($positions as $position) {
-            $jobPosition = JobPosition::firstWhere('slug', $position);
-            AttachJobPosition::run($employee, $jobPosition);
-        }
+
 
         return $employee;
     }
