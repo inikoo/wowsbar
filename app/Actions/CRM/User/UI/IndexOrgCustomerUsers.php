@@ -219,7 +219,7 @@ class IndexOrgCustomerUsers extends InertiaAction
                         [
                             'type'  => 'button',
                             'style' => 'create',
-                            'label' => __('create user'),
+                            'label' => __('create customer user'),
                             'route' => [
                                 'name'       => preg_replace('/index$/', 'create', $request->route()->getName()),
                                 'parameters' => array_values($request->route()->originalParameters())
