@@ -19,11 +19,11 @@ class LogCustomerUserRequest
     use AsAction;
     use WithLogRequest;
 
-    public function handle(Carbon $datetime, array $routeData, string $ip, string $customerUserAgent, string $type, CustomerUser $customerUser): void
+    public function handle(Carbon $datetime, array $routeData, string $ip, string $userAgent, string $type, CustomerUser $customerUser): void
     {
         $index = config('elasticsearch.index_prefix').'customer_users_requests';
 
-        $parsedUserAgent = (new Browser())->parse($customerUserAgent);
+        $parsedUserAgent = (new Browser())->parse($userAgent);
 
         $body = [
             'type'               => $type,
@@ -33,11 +33,12 @@ class LogCustomerUserRequest
             'customer_user_slug' => $customerUser->slug,
             'customer_user_id'   => $customerUser->id,
             'customer_id'        => $customerUser->customer->id,
+            'user_id'            => $customerUser->user->id,
             'route'              => $routeData,
             'module'             => explode('.', $routeData['name'])[0],
             'ip_address'         => $ip,
             'location'           => json_encode($this->getLocation($ip)), // reference: https://github.com/stevebauman/location
-            'user_agent'         => $customerUserAgent,
+            'user_agent'         => $userAgent,
             'device_type'        => json_encode([
                 'title' => $parsedUserAgent->deviceType(),
                 'icon'  => $this->getDeviceIcon($parsedUserAgent->deviceType())

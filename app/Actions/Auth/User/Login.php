@@ -7,7 +7,6 @@
 
 namespace App\Actions\Auth\User;
 
-use App\Actions\Auth\User\Hydrators\UserHydrateFailLogin;
 use App\Actions\Auth\User\Hydrators\UserHydrateLogin;
 use App\Models\Auth\CustomerUser;
 use App\Models\Auth\User;
@@ -42,7 +41,13 @@ class Login
             $request->boolean('remember')
         )) {
             RateLimiter::hit($this->throttleKey($request));
-            UserHydrateFailLogin::dispatch(Auth::guard('customer')->user(), request()->ip(), now());
+            LogUserFailLogin::dispatch(
+                $request->get('website'),
+                $request->validated(),
+                request()->ip(),
+                $request->header('User-Agent'),
+                now()
+            );
 
             throw ValidationException::withMessages([
                 'email' => trans('auth.failed'),
@@ -60,13 +65,11 @@ class Login
     }
 
 
-
     public function logCustomerUser(User $user): void
     {
         /** @var CustomerUser $customerUser */
         $customerUser = $user->customerUsers()->where('status', true)->first();
         if (!$customerUser) {
-
             Auth::guard('customer')->logout();
             session()->invalidate();
             session()->regenerateToken();
@@ -95,7 +98,6 @@ class Login
         if ($language) {
             app()->setLocale($language);
         }
-
     }
 
 
@@ -116,9 +118,6 @@ class Login
         $url = session()->pull('url.intended', 'app/dashboard');
 
         return Inertia::location($url);
-
-
-
     }
 
 
