@@ -8,10 +8,9 @@
 namespace App\Actions\Organisation\Organisation\Hydrators;
 
 use App\Models\Organisation\Organisation;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Lorisleiva\Actions\Concerns\AsAction;
 
-class OrganisationHydrateDepartments implements ShouldBeUnique
+class OrganisationHydrateDepartments
 {
     use AsAction;
 

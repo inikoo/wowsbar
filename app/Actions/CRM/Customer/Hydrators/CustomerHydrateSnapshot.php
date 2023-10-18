@@ -9,10 +9,9 @@ namespace App\Actions\CRM\Customer\Hydrators;
 
 use App\Enums\Portfolio\Snapshot\SnapshotStateEnum;
 use App\Models\CRM\Customer;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Lorisleiva\Actions\Concerns\AsAction;
 
-class CustomerHydrateSnapshot implements ShouldBeUnique
+class CustomerHydrateSnapshot
 {
     use AsAction;
 

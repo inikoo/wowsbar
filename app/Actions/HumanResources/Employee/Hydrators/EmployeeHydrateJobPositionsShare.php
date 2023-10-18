@@ -9,10 +9,9 @@ namespace App\Actions\HumanResources\Employee\Hydrators;
 
 use App\Actions\Traits\WithNormalise;
 use App\Models\HumanResources\Employee;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Lorisleiva\Actions\Concerns\AsAction;
 
-class EmployeeHydrateJobPositionsShare implements ShouldBeUnique
+class EmployeeHydrateJobPositionsShare
 {
     use AsAction;
     use WithNormalise;
