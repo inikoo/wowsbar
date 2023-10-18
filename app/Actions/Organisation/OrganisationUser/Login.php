@@ -7,8 +7,6 @@
 
 namespace App\Actions\Organisation\OrganisationUser;
 
-use App\Actions\Organisation\OrganisationUser\Hydrators\OrganisationUserHydrateFailLogin;
-use App\Actions\Organisation\OrganisationUser\Hydrators\OrganisationUserHydrateLogin;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
@@ -23,10 +21,9 @@ class Login
 {
     use AsController;
 
-    private string $credentialHandler         = 'username';
-    private string $home                      = '/dashboard';
-    private string $gate                      = 'org';
-
+    private string $credentialHandler = 'username';
+    private string $home              = '/dashboard';
+    private string $gate              = 'org';
 
 
     /**
@@ -42,7 +39,13 @@ class Login
         )) {
             RateLimiter::hit($this->throttleKey($request));
 
-            OrganisationUserHydrateFailLogin::dispatch(Auth::guard($this->gate)->user(), request()->ip(), now());
+            LogOrganisationUserFailLogin::dispatch(
+                organisation: organisation(),
+                credentials: $request->validated(),
+                ip: request()->ip(),
+                userAgent: $request->header('User-Agent'),
+                datetime: now()
+            );
 
 
             throw ValidationException::withMessages([
@@ -52,15 +55,21 @@ class Login
 
         RateLimiter::clear($this->throttleKey($request));
 
-        OrganisationUserHydrateLogin::dispatch(Auth::guard($this->gate)->user(), request()->ip(), now());
+        /** @var \App\Models\Auth\OrganisationUser $organisationUser */
+        $organisationUser = auth($this->gate)->user();
 
-
+        LogOrganisationUserLogin::dispatch(
+            organisation:organisation(),
+            organisationUser:$organisationUser,
+            ip: request()->ip(),
+            userAgent: $request->header('User-Agent'),
+            datetime: now()
+        );
 
         $request->session()->regenerate();
         Session::put('reloadLayout', '1');
 
-        /** @var \App\Models\Auth\OrganisationUser $organisationUser */
-        $organisationUser = auth($this->gate)->user();
+
 
         $language = $organisationUser->language;
         if ($language) {
@@ -69,7 +78,6 @@ class Login
 
         return back();
     }
-
 
 
     public function rules(): array

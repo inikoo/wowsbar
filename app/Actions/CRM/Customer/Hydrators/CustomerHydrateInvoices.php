@@ -10,11 +10,10 @@ namespace App\Actions\CRM\Customer\Hydrators;
 use App\Actions\Traits\WithElasticsearch;
 use App\Enums\CRM\Customer\CustomerTradeStateEnum;
 use App\Models\CRM\Customer;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Support\Arr;
 use Lorisleiva\Actions\Concerns\AsAction;
 
-class CustomerHydrateInvoices implements ShouldBeUnique
+class CustomerHydrateInvoices
 {
     use AsAction;
     use WithElasticsearch;

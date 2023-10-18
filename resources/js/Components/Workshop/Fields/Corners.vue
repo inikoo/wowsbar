@@ -8,9 +8,10 @@ import Radio from '@/Components/Forms/Fields/Primitive/PrimitiveRadio.vue'
 import { get, cloneDeep, set } from 'lodash'
 import  Select from '@/Components/Forms/Fields/Primitive/PrimitiveSelect.vue'
 import { faLock } from '@fas/'
+import { faTimes } from '@fal/'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-library.add( faLock )
+library.add(faLock, faTimes)
 
 const props = defineProps<{
     data: any
@@ -118,6 +119,7 @@ const optionType = [
         label: 'Corner text',
         value: 'cornerText',
         fields: [
+            // List field on Slides - Corners - [Top Left] - Corner Text
             {
                 name: 'title',
                 type: 'input',
@@ -143,7 +145,8 @@ const optionType = [
             {
                 name: 'color',
                 type: 'colorPicker',
-                label: trans('color'),
+                label: trans('text color'),
+                icon: 'far fa-text',
                 value: null
             },
             {
@@ -217,6 +220,7 @@ const optionType = [
                 name: 'text_color',
                 type: 'colorPicker',
                 label: trans('Text color'),
+                icon: 'far fa-text',
                 value: 'rgb(244, 63, 94)'
             },
             {
@@ -254,14 +258,10 @@ const optionType = [
                 name: 'text_color',
                 type: 'colorPicker',
                 label: trans('Text color'),
+                icon: 'far fa-text',
                 value: 'rgb(0, 0, 0)'
             },
         ]
-    },
-    {
-        label: 'Clear',
-        value: 'clear',
-        fields: [],
     },
 ]
 
@@ -451,12 +451,17 @@ defineExpose({
                     <button v-for="(item, key) in Type" :key="item.value" type="button" @click="typeClick(key)"
                     :class="[
                             'py-2', 'px-4', 'rounded',
-                            current === key ? 'bg-gray-300 text-gray-600 ring-2 ring-gray-500' : 'hover:bg-gray-200/70 border border-gray-400',
-                            item.value == 'clear' ? 'bg-red-500 text-white' : ''
+                            current === key ? 'bg-gray-300 text-gray-600 ring-2 ring-gray-500' : 'hover:bg-gray-200/70 border border-gray-400'
                         ]"
-                        >
+                    >
                         {{ item.label }}
                     </button>
+
+                    <!-- Button: clear -->
+                    <div class="px-1.5 flex items-center gap-x-1 text-red-500 hover:text-red-600 cursor-pointer">
+                        <FontAwesomeIcon icon='fal fa-times' class='text-sm' aria-hidden='true' />
+                        <span>{{ trans('Clear') }}</span>
+                    </div>
                 </span>
             </div>
 

@@ -19,29 +19,42 @@ class ShowSysAdminDashboard
     use AsAction;
     use WithInertia;
 
+    private bool $canEdit=false;
+
     public function authorize(ActionRequest $request): bool
     {
+        $this->canEdit = $request->get('customerUser')->hasPermissionTo('sysadmin.edit');
         return $request->get('customerUser')->hasPermissionTo("sysadmin.view");
     }
 
 
-    public function asController(): bool
+    public function asController(ActionRequest $request): ActionRequest
     {
-        return true;
+        $request->validate();
+        return $request;
     }
 
 
-    public function htmlResponse(): Response
+    public function htmlResponse(ActionRequest $request): Response
     {
-        $customer=customer();
-
+        $customer=$request->get('customer');
         return Inertia::render(
             'SysAdmin/SysAdminDashboard',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(),
                 'title'       => __('account management'),
                 'pageHead'    => [
-                    'title' => __('account management'),
+                    'title'     => __('account management'),
+                    'actions'   => [
+                        $this->canEdit ? [
+                            'type'  => 'button',
+                            'style' => 'create',
+                            'label' => __('create user'),
+                            'route' => [
+                                'name'       => 'customer.sysadmin.users.create'
+                            ]
+                        ] : []
+                    ]
                 ],
                 'stats' => [
                     [

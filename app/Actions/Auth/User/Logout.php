@@ -20,11 +20,20 @@ class Logout
 
     public function handle(Request $request): \Symfony\Component\HttpFoundation\Response
     {
+        LogUserLogout::dispatch(
+            customerUser: $request->get('customerUser'),
+            ip: request()->ip(),
+            userAgent: $request->header('User-Agent'),
+            datetime: now()
+        );
 
         Auth::guard('customer')->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
+
+
         Session::put('reloadLayout', '1');
+
         return Inertia::location('/');
     }
 

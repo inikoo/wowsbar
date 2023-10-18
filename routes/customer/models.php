@@ -62,7 +62,6 @@ Route::prefix('/banner')->name('banner.')->group(function () {
 Route::patch('/images/{media}', UpdateUploadedImage::class)->name('images.update');
 
 Route::post('/user', StoreUser::class)->name('user.store');
-
 Route::patch('/user/{customerUser:id}', UpdateCustomerUser::class)->name('user.update');
 Route::patch('/profile', UpdateProfile::class)->name('profile.update');
 
@@ -74,4 +73,4 @@ Route::post('/portfolio-websites/imports/upload', ImportPortfolioWebsite::class)
 
 Route::post('/gallery/images/upload', UploadImagesToGallery::class)->name('gallery.images.upload');
 
-Route::post('/billing/pay', StorePayment::class)->name('billing.pay');
+Route::post('/billing', StorePayment::class)->name('billing.store');

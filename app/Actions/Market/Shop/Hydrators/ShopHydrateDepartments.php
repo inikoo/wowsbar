@@ -10,11 +10,10 @@ namespace App\Actions\Market\Shop\Hydrators;
 use App\Enums\Catalogue\ProductCategory\ProductCategoryStateEnum;
 use App\Models\Market\ShopProductCategory;
 use App\Models\Market\Shop;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Support\Arr;
 use Lorisleiva\Actions\Concerns\AsAction;
 
-class ShopHydrateDepartments implements ShouldBeUnique
+class ShopHydrateDepartments
 {
     use AsAction;
 

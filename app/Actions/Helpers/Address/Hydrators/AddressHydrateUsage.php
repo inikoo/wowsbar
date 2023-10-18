@@ -8,11 +8,10 @@
 namespace App\Actions\Helpers\Address\Hydrators;
 
 use App\Models\Helpers\Address;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Support\Facades\DB;
 use Lorisleiva\Actions\Concerns\AsAction;
 
-class AddressHydrateUsage implements ShouldBeUnique
+class AddressHydrateUsage
 {
     use AsAction;
 

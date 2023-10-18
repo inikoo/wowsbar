@@ -39,14 +39,21 @@ class StoreUser
 
     public function handle(Website $website, Customer $customer, array $modelData = []): CustomerUser
     {
+
+
+
         data_set($modelData, 'ulid', Str::ulid());
         data_set($modelData, 'website_id', $website->id);
         /** @var User $user */
         $user = User::create(Arr::except($modelData, ['is_root', 'roles']));
 
+        /** @var CustomerUser $customerUser */
         $customerUser = StoreCustomerUser::run($customer, $user, Arr::only($modelData, ['is_root']));
 
+        $customerUser->refresh();
+
         foreach (Arr::get($modelData, 'roles', []) as $roleName) {
+
             $role = Role::where('guard_name', 'customer')->where('name', $roleName)->first();
             if ($role) {
                 $customerUser->assignRole($role);

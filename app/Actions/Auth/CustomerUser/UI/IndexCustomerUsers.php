@@ -72,6 +72,7 @@ class IndexCustomerUsers extends InertiaAction
         $queryBuilder = QueryBuilder::for(CustomerUser::class);
         $queryBuilder->where('customer_id', customer()->id);
         foreach ($this->getElementGroups() as $key => $elementGroup) {
+            /** @noinspection PhpUndefinedMethodInspection */
             $queryBuilder->whereElementGroup(
                 prefix: $prefix,
                 key: $key,
@@ -81,6 +82,7 @@ class IndexCustomerUsers extends InertiaAction
         }
 
 
+        /** @noinspection PhpUndefinedMethodInspection */
         return $queryBuilder
             ->defaultSort('customer_user.slug')
             ->allowedSorts(['slug', 'email', 'contact_name'])

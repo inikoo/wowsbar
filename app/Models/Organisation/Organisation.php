@@ -46,6 +46,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, ProductCategory> $departments
  * @property-read int|null $departments_count
  * @property-read \App\Models\Organisation\OrganisationHumanResourcesStats|null $humanResourcesStats
+ * @property-read \App\Models\Media\Media|null $logo
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \App\Models\Media\Media> $media
  * @property-read int|null $media_count
  * @property-read \App\Models\Organisation\OrganisationPortfoliosStats|null $portfoliosStats

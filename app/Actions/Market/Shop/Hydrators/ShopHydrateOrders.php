@@ -10,11 +10,10 @@ namespace App\Actions\Market\Shop\Hydrators;
 use App\Enums\OMS\Order\OrderStateEnum;
 use App\Models\Market\Shop;
 use App\Models\OMS\Order;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Support\Arr;
 use Lorisleiva\Actions\Concerns\AsAction;
 
-class ShopHydrateOrders implements ShouldBeUnique
+class ShopHydrateOrders
 {
     use AsAction;
 

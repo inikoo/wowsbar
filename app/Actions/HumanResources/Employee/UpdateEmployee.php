@@ -7,12 +7,15 @@
 
 namespace App\Actions\HumanResources\Employee;
 
+use App\Actions\HumanResources\AttachJobPosition;
 use App\Actions\HumanResources\Employee\Hydrators\EmployeeHydrateUniversalSearch;
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateEmployees;
 use App\Actions\Traits\WithActionUpdate;
 use App\Enums\HumanResources\Employee\EmployeeStateEnum;
 use App\Http\Resources\HumanResources\EmployeeResource;
 use App\Models\HumanResources\Employee;
+use App\Models\HumanResources\JobPosition;
+use Illuminate\Support\Arr;
 use Illuminate\Validation\Rules\Enum;
 use Illuminate\Validation\Rules\Password;
 use Lorisleiva\Actions\ActionRequest;
@@ -23,6 +26,9 @@ class UpdateEmployee
 
     public function handle(Employee $employee, array $modelData): Employee
     {
+        $positions = Arr::get($modelData, 'positions');
+        Arr::forget($modelData, 'positions');
+
         $employee = $this->update($employee, $modelData, ['data', 'salary',]);
 
         if ($employee->wasChanged(['worker_number', 'worker_number', 'contact_name', 'work_email', 'job_title', 'email'])) {
@@ -31,7 +37,10 @@ class UpdateEmployee
         if ($employee->wasChanged(['state'])) {
             OrganisationHydrateEmployees::dispatch();
         }
-
+        foreach ($positions as $position) {
+            $jobPosition = JobPosition::firstWhere('slug', $position);
+            AttachJobPosition::run($employee, $jobPosition);
+        }
 
         return $employee;
     }

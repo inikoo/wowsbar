@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 
-import {computed} from 'vue'
+import { computed } from 'vue'
 import SlideControls from "@/Components/Slider/Corners/SlideControls.vue";
 import LinkButton from "@/Components/Slider/Corners/LinkButton.vue";
 import CornerText from "@/Components/Slider/Corners/CornerText.vue";
@@ -28,7 +28,7 @@ const props = defineProps<{
 
 const positionClasses = computed(() => {
     let classes;
-    if(props.corner.type != 'ribbon') {
+    if (props.corner.type != 'ribbon') {
         switch (props.position) {
             case 'topRight':
                 classes = 'top-6 right-7 text-right';
@@ -44,6 +44,7 @@ const positionClasses = computed(() => {
                 break;
         }
     } else {
+        // Ribbon
         switch (props.position) {
             case 'topRight':
                 classes = 'top-0 right-0 text-right';
@@ -79,9 +80,8 @@ const getComponent = (componentName: any) => {
 
 <template>
     <div :class="positionClasses" class="absolute">
-    <!-- {{ positionClasses }} -->
-        <component :is="getComponent(corner.type)" :data="corner.data" :swiperRef="props.swiperRef" :position="position"/>
+        <!-- {{ positionClasses }} -->
+        <component :is="getComponent(corner.type)" :data="corner.data" :swiperRef="swiperRef" :position="position" />
     </div>
-
 </template>
 

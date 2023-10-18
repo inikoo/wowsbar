@@ -36,8 +36,16 @@ return [
                 'human-resources'
             ]
         ],
-        'acc'   => [
-            'code'       => 'acc',
+        'acc-m'   => [
+            'code'       => 'acc-m',
+            'department' => 'admin',
+            'name'       => 'Accounting manager',
+            'roles'      => [
+                'accounting-supervisor'
+            ]
+        ],
+        'acc-c'   => [
+            'code'       => 'acc-c',
             'department' => 'admin',
             'name'       => 'Accounts',
             'roles'      => [

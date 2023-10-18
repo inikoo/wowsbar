@@ -40,7 +40,7 @@ class ShowBilling extends InertiaAction
         return Inertia::render(
             'Billing/Billing',
             [
-                'breadcrumbs' => $this->getBreadcrumbs(),
+                'breadcrumbs' => $this->getBreadcrumbs($payment),
                 'title'       => __('billing'),
                 'pageHead'    => [
                     'title' => __($payment->reference),
@@ -55,19 +55,16 @@ class ShowBilling extends InertiaAction
         );
     }
 
-    public function getBreadcrumbs(): array
+    public function getBreadcrumbs(Payment $payment): array
     {
         return
             array_merge(
-                ShowDashboard::make()->getBreadcrumbs(),
+                ShowBillingDashboard::make()->getBreadcrumbs(),
                 [
                     [
                         'type'   => 'simple',
                         'simple' => [
-                            'route' => [
-                                'name' => 'customer.billing.dashboard'
-                            ],
-                            'label' => __('billing'),
+                            'label' => __($payment->reference),
                         ]
                     ]
                 ]
