@@ -20,7 +20,7 @@ use App\Models\Market\Shop;
 use Illuminate\Console\Command;
 use Lorisleiva\Actions\Concerns\AsAction;
 
-class HydrateShop
+class HydrateShops
 {
     use asAction;
 

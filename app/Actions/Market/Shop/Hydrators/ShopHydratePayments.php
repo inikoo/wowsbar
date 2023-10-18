@@ -10,11 +10,10 @@ namespace App\Actions\Market\Shop\Hydrators;
 use App\Enums\Accounting\Payment\PaymentStateEnum;
 use App\Models\Accounting\Payment;
 use App\Models\Market\Shop;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Support\Arr;
 use Lorisleiva\Actions\Concerns\AsAction;
 
-class ShopHydratePayments implements ShouldBeUnique
+class ShopHydratePayments
 {
     use AsAction;
 

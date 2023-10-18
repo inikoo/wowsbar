@@ -19,7 +19,7 @@ const props = defineProps<{
     swiperRef?: Element 
 }>()
 
-console.log(props)
+// console.log(props)
 
 </script>
 

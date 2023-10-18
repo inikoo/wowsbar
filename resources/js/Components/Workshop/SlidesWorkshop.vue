@@ -326,7 +326,8 @@ const ComponentsBlueprint = ref([
             {
                 name: ["layout", "centralStage", "style", "color"],
                 type: "colorpicker",
-                label: trans("color"),
+                label: trans("Text Color"),
+                icon: 'far fa-text',
                 value: ["layout", "centralStage", "style", "color"],
             },
             {

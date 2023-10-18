@@ -9,10 +9,9 @@ namespace App\Actions\Portfolio\PortfolioWebsite\Hydrators;
 
 use App\Enums\Portfolio\Banner\BannerStateEnum;
 use App\Models\Portfolio\PortfolioWebsite;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Lorisleiva\Actions\Concerns\AsAction;
 
-class PortfolioWebsiteHydrateBanners implements ShouldBeUnique
+class PortfolioWebsiteHydrateBanners
 {
     use AsAction;
 

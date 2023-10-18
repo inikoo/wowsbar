@@ -185,9 +185,9 @@ const compHandleBannerLessSlide = computed(() => {
                 <a target="_blank" v-if="!!component?.layout?.link" :href="component?.layout?.link" class="absolute bg-transparent w-full h-full" />
                 <SlideCorner v-for="(slideCorner, position) in filteredNulls(component?.layout?.corners)" :position="position" :corner="slideCorner" :commonCorner="data.common.corners" />
 
-                <!-- CentralStage: common.centralStage (prioritize) and layout.centralstage -->
-                <CentralStage v-if="data.common?.centralStage?.title?.length > 0 || data.common?.centralStage?.subtitle?.length > 0" :data="data.common?.centralStage" />
-                <CentralStage v-else-if="component?.layout?.centralStage" :data="component?.layout?.centralStage" />
+                <!-- CentralStage: slide-centralstage (prioritize) and common-centralStage -->
+                <CentralStage v-if="component?.layout?.centralStage.title?.length > 0 || component?.layout?.centralStage.subtitle?.length > 0" :data="component?.layout?.centralStage" />
+                    <CentralStage v-else-if="data.common?.centralStage?.title?.length > 0 || data.common?.centralStage?.subtitle?.length > 0" :data="data.common?.centralStage" />
             </SwiperSlide>
         </Swiper>
 
@@ -236,9 +236,9 @@ const compHandleBannerLessSlide = computed(() => {
                     <FontAwesomeIcon v-if="!!component?.layout?.link" icon='far fa-external-link' class='text-gray-300/50 text-xl absolute top-2 right-2' aria-hidden='true' />
                     <a v-if="!!component?.layout?.link" :href="`https://${component?.layout?.link}`" target="_blank" class="absolute bg-transparent w-full h-full" />
                     <SlideCorner v-for="(slideCorner, position) in filteredNulls(component?.layout?.corners)" :position="position" :corner="slideCorner" :commonCorner="data.common.corners" />
-                    <!-- CentralStage: common.centralStage (prioritize) and layout.centralstage -->
-                    <CentralStage v-if="data.common?.centralStage?.title?.length > 0 || data.common?.centralStage?.subtitle?.length > 0" :data="data.common?.centralStage" />
-                    <CentralStage v-else-if="component?.layout?.centralStage" :data="component?.layout?.centralStage" />
+                    <!-- CentralStage: slide-centralstage (prioritize) and common-centralStage -->
+                    <CentralStage v-if="component?.layout?.centralStage?.title?.length > 0 || component?.layout?.centralStage?.subtitle?.length > 0" :data="component?.layout?.centralStage" />
+                    <CentralStage v-else-if="data.common?.centralStage?.title?.length > 0 || data.common?.centralStage?.subtitle?.length > 0" :data="data.common?.centralStage" />
                 </SwiperSlide>
             </Swiper>
             <!-- Reserved Corner: Button Controls -->
