@@ -7,10 +7,14 @@
 
 namespace App\Actions\Organisation\Guest;
 
+use App\Actions\HumanResources\AttachJobPosition;
+use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateGuests;
 use App\Actions\Traits\WithActionUpdate;
 use App\Enums\Organisation\Guest\GuestTypeEnum;
 use App\Http\Resources\SysAdmin\GuestResource;
 use App\Models\Auth\Guest;
+use App\Models\HumanResources\JobPosition;
+use Illuminate\Support\Arr;
 use Illuminate\Validation\Rule;
 use Lorisleiva\Actions\ActionRequest;
 
@@ -22,9 +26,23 @@ class UpdateGuest
 
     public function handle(Guest $guest, array $modelData): Guest
     {
-        return $this->update($guest, $modelData, [
+        $positions = Arr::get($modelData, 'positions');
+        Arr::forget($modelData, 'positions');
+
+        $guest= $this->update($guest, $modelData, [
             'data',
         ]);
+
+        if ($guest->wasChanged(['state'])) {
+            OrganisationHydrateGuests::dispatch();
+        }
+
+        foreach ($positions as $position) {
+            $jobPosition = JobPosition::firstWhere('slug', $position);
+            AttachJobPosition::run($guest, $jobPosition);
+        }
+
+        return $guest;
     }
 
     public function authorize(ActionRequest $request): bool
@@ -45,6 +63,7 @@ class UpdateGuest
             'identity_document_number' => ['sometimes', 'nullable', 'string'],
             'identity_document_type'   => ['sometimes', 'nullable', 'string'],
             'type'                     => ['sometimes', 'required', Rule::in(GuestTypeEnum::values())],
+            'positions'                => ['sometimes', 'required', 'array'],
 
         ];
     }

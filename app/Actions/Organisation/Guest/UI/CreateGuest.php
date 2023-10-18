@@ -8,7 +8,7 @@
 namespace App\Actions\Organisation\Guest\UI;
 
 use App\Actions\InertiaAction;
-use App\Enums\Organisation\Guest\GuestTypeEnum;
+use App\Models\HumanResources\JobPosition;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -42,64 +42,7 @@ class CreateGuest extends InertiaAction
                 ],
                 'formData'    => [
                     'blueprint' => [
-                        [
-                            'title' => __('Type/Login credentials'),
 
-                            'fields' => [
-                                'type'             => [
-                                    'type'    => 'radio',
-                                    'mode'    => 'normal',
-                                    'label'   => __('type'),
-                                    'value'   => GuestTypeEnum::CONTRACTOR->value,
-                                    'options' => Options::forEnum(GuestTypeEnum::class)
-                                ],
-                                'guestCredentials' => [
-                                    'type'    => 'guest-credentials',
-                                    'apiUrl'  => '/', // route('json.group-users.index') . '?filter[contact_name]=',
-                                    'label'   => 'Guest Credentials',
-                                    'value'   => 'newGroupUser',
-                                    'options' => [
-                                        'newGroupUser' => [
-                                            'label'             => __('Create new user'),
-                                            'hooks'             => [
-                                                'route' => [
-                                                    'name' => 'org.models.guest.store',
-                                                ],
-                                                'field' => [
-                                                    'username' => [
-                                                        'type'     => 'input',
-                                                        'label'    => __('username'),
-                                                        'value'    => '',
-                                                        'required' => true,
-                                                    ],
-                                                ]
-                                            ],
-                                            'existingGroupUser' => [
-                                                'label' => __('Use existing user from other aiku account'),
-                                                'hooks' => [
-                                                    'route' => [
-                                                        'name' => 'org.models.group-user.guest.store',
-                                                    ],
-                                                ],
-                                                'field' => [
-                                                    'group_user_id' => [
-                                                        'type'     => 'async-combobox',
-                                                        'label'    => __('user'),
-                                                        'value'    => '',
-                                                        'required' => true,
-                                                    ],
-                                                ]
-
-
-                                            ]
-                                        ]
-                                    ],
-
-
-                                ]
-                            ],
-
-                        ],
                         [
                             'title'  => __('personal information'),
                             'fields' => [
@@ -126,7 +69,37 @@ class CreateGuest extends InertiaAction
                                 ],
                             ]
                         ],
+                        [
+                            'title'  => __('Credentials'),
+                            'fields' => [
+                                'username' => [
+                                    'type'  => 'input',
+                                    'label' => __('username'),
+                                    'value' => ''
 
+                                ],
+                                'password' => [
+                                    'type'  => 'password',
+                                    'label' => __('password'),
+
+                                ],
+
+                                ]
+                        ],
+                        [
+                            'title'  => __('Job Position'),
+                            'fields' => [
+                                'fields' => [
+                                    'positions' => [
+                                        'type'        => 'jobPosition',
+                                        'label'       => __('position'),
+                                        'options'     => Options::forModels(JobPosition::class, label: 'name', value: 'name'),
+                                        'placeholder' => __('Select a job position'),
+                                    ],
+                                ]
+
+                            ]
+                        ],
                     ],
                     'route'     => [
                         'name' => 'org.models.guests.store',

@@ -8,6 +8,7 @@
 
 namespace App\Http\Resources\SysAdmin;
 
+use App\Http\Resources\HumanResources\JobPositionLightResource;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Http\Resources\Json\JsonResource;
 use JsonSerializable;
@@ -20,14 +21,16 @@ class GuestResource extends JsonResource
         $guest = $this;
 
         return [
-            'id'            => $guest->id,
-            'alias'         => $guest->alias,
-            'slug'          => $guest->slug,
-            'contact_name'  => $guest->contact_name,
-            'email'         => $guest->email,
-            'user'          => GuestResource::collection($this->whenLoaded('users')),
-            'created_at'    => $guest->created_at,
-            'updated_at'    => $guest->updated_at,
+            'id'           => $guest->id,
+            'alias'        => $guest->alias,
+            'slug'         => $guest->slug,
+            'contact_name' => $guest->contact_name,
+            'email'        => $guest->email,
+            'user'         => GuestResource::collection($this->whenLoaded('users')),
+            'created_at'   => $guest->created_at,
+            'updated_at'   => $guest->updated_at,
+            'positions'    => JobPositionLightResource::collection($guest->jobPositions),
+
         ];
     }
 }

@@ -9,10 +9,12 @@ namespace App\Actions\Organisation\Guest\UI;
 
 use App\Actions\InertiaAction;
 use App\Models\Auth\Guest;
+use App\Models\HumanResources\JobPosition;
 use Illuminate\Support\Arr;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
+use Spatie\LaravelOptions\Options;
 
 class EditGuest extends InertiaAction
 {
@@ -57,6 +59,42 @@ class EditGuest extends InertiaAction
                     'label' => __('phone'),
                     'value' => $guest->phone
                 ],
+            ]
+        ];
+
+        $sections['job_position'] = [
+            'label'  => __('Job position'),
+            'icon'   => 'fal fa-handshake',
+            'fields' => [
+                'positions' => [
+                    'type'        => 'jobPosition',
+                    'label'       => __('position'),
+                    'options'     => Options::forModels(JobPosition::class, label: 'name', value: 'name'),
+                    'placeholder' => __('Select a job position'),
+                    'value'       => $guest->jobPositions,
+                ],
+            ]
+        ];
+
+        $sections['delete'] = [
+            'label'  => __('Delete'),
+            'icon'   => 'fal fa-trash-alt',
+            'fields' => [
+                'name' => [
+                    'type'   => 'action',
+                    'action' => [
+                        'type'  => 'button',
+                        'style' => 'delete',
+                        'label' => __('delete guest'),
+                        'method'=> 'delete',
+                        'route' => [
+                            'name'       => 'org.models.guests.delete',
+                            'parameters' => [
+                                'guest' => $guest->id
+                            ]
+                        ]
+                    ],
+                ]
             ]
         ];
 
