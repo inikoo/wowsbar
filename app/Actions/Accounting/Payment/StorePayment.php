@@ -15,10 +15,13 @@ use App\Models\Accounting\Payment;
 use App\Models\Accounting\PaymentAccount;
 use App\Models\CRM\Customer;
 use Illuminate\Console\Command;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Validation\Rule;
+use Inertia\Inertia;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
@@ -64,14 +67,15 @@ class StorePayment
             return true;
         }
 
-        return $request->user()->hasPermissionTo("accounting.edit");
+        return $request->get('customerUser')->hasPermissionTo("billing.edit");
     }
 
-    public function asController(ActionRequest $request): Response
+    public function asController(ActionRequest $request): Payment
     {
         $request->validate();
+        $paymentAccount = PaymentAccount::findOrFail($request->input('payment_account_id'));
 
-        return $this->handle(customer(), '', $request->validated());
+        return $this->handle(customer(), $paymentAccount, $request->validated());
     }
 
     public function rules(): array
@@ -84,9 +88,9 @@ class StorePayment
         ];
     }
 
-    public function htmlResponse(Payment $payment): Response
+    public function htmlResponse(Payment $payment): RedirectResponse
     {
-        return Arr::get($payment->data, 'invoice_url');
+        return Redirect::route('customer.billing.show', $payment->slug);
     }
 
     public function action(Customer $customer, PaymentAccount $paymentAccount, array $objectData): Payment
