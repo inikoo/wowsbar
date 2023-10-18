@@ -12,7 +12,7 @@ return [
      * to learn how to get this file. You can also pass the credentials as an array
      * instead of a file path.
      */
-    'service_account_credentials_json' => base_path('private/google/wowsbar-analytics.json'),
+    'service_account_credentials_json' => base_path(env('ANALYTICS_CREDENTIALS')),
 
     /*
      * The amount of minutes the Google API responses will be cached.
