@@ -10,6 +10,7 @@ namespace App\Actions\Accounting\Payment\UI;
 use App\Actions\InertiaAction;
 use App\Models\Accounting\PaymentAccount;
 use App\Models\Assets\Currency;
+use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -28,7 +29,7 @@ class CreatePayment extends InertiaAction
                     'cancelCreate' => [
                         'route' => [
                             'name' => match ($request->route()->getName()) {
-                                'org.accounting.payment-accounts.show.payments.create' => 'org.accounting.payment-accounts.show',
+                                'customer.billing.create' => 'customer.billing.show',
                                 default                                                => preg_replace('/create$/', 'index', $request->route()->getName())
                             },
                             'parameters' => array_values($this->originalParameters)
@@ -43,12 +44,8 @@ class CreatePayment extends InertiaAction
                                 'reference' => [
                                     'type'  => 'input',
                                     'label' => __('reference'),
-                                    'value' => ''
-                                ],
-                                'customer' => [
-                                    'type'  => 'select',
-                                    'label' => __('customer'),
-                                    'value' => ''
+                                    'value' => Str::upper(Str::random()),
+                                    'readonly' => true
                                 ]
                             ]
                         ],
@@ -60,21 +57,10 @@ class CreatePayment extends InertiaAction
                                     'label' => __('amount'),
                                     'value' => ''
                                 ],
-                                'gc_amount' => [
-                                    'type'  => 'input',
-                                    'label' => __('group currency amount'),
-                                    'value' => ''
-                                ],
                                 'org_amount' => [
                                     'type'  => 'input',
                                     'label' => __('customer currency amount'),
                                     'value' => ''
-                                ],
-                                'currency_id' => [
-                                    'type'    => 'currency',
-                                    'label'   => __('currency'),
-                                    'value'   => '',
-                                    'options' => Currency::get()->pluck('code')
                                 ],
                                 'date' => [
                                     'type'  => 'date',
@@ -85,7 +71,7 @@ class CreatePayment extends InertiaAction
                         ]
                     ],
                     'route' => [
-                        'name' => 'models.payment-account.store'
+                        'name' => 'customer.models.billing.store'
                     ]
                 ],
             ]

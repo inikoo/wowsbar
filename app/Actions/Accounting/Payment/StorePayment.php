@@ -67,6 +67,13 @@ class StorePayment
         return $request->user()->hasPermissionTo("accounting.edit");
     }
 
+    public function asController(ActionRequest $request): Response
+    {
+        $request->validate();
+
+        return $this->handle(customer(), '', $request->validated());
+    }
+
     public function rules(): array
     {
         return [

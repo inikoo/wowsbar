@@ -8,6 +8,10 @@
 import {Link} from '@inertiajs/vue3';
 import Table from '@/Components/Table/Table.vue';
 import {Payment} from "@/types/payment";
+import {useFormatTime} from "@/Composables/useFormatTime";
+import { useLocaleStore } from "@/Stores/locale"
+
+const locale = useLocaleStore()
 
 const props = defineProps<{
     data: object,
@@ -59,7 +63,8 @@ function paymentsRoute(payment: Payment) {
                 {{ payment['reference'] }}
             </Link>
         </template>
+        <template #cell(date)="{ item: payment }">
+            {{ useFormatTime(payment.date, locale.language.code, 'hms') }}
+        </template>
     </Table>
 </template>
-
-

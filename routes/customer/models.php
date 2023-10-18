@@ -74,4 +74,4 @@ Route::post('/portfolio-websites/imports/upload', ImportPortfolioWebsite::class)
 
 Route::post('/gallery/images/upload', UploadImagesToGallery::class)->name('gallery.images.upload');
 
-Route::post('/billing/pay', StorePayment::class)->name('billing.pay');
+Route::post('/billing', StorePayment::class)->name('billing.store');
