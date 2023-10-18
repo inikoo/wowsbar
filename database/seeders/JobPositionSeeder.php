@@ -50,9 +50,6 @@ class JobPositionSeeder extends Seeder
                 }
             }
 
-            print "$jobPosition->name \n";
-            print_r($roles);
-
             $jobPosition->roles()->sync($roles);
         }
     }

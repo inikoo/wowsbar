@@ -7,8 +7,6 @@
 
 namespace App\Actions\Auth\User;
 
-use App\Actions\Auth\User\Hydrators\UserHydrateFailLogin;
-use App\Actions\Auth\User\Hydrators\UserHydrateLogin;
 use App\Models\Auth\CustomerUser;
 use App\Models\Auth\User;
 use Illuminate\Auth\Events\Lockout;
@@ -42,7 +40,13 @@ class Login
             $request->boolean('remember')
         )) {
             RateLimiter::hit($this->throttleKey($request));
-            UserHydrateFailLogin::dispatch(Auth::guard('customer')->user(), request()->ip(), now());
+            LogUserFailLogin::dispatch(
+                $request->get('website'),
+                $request->validated(),
+                request()->ip(),
+                $request->header('User-Agent'),
+                now()
+            );
 
             throw ValidationException::withMessages([
                 'email' => trans('auth.failed'),
@@ -54,19 +58,17 @@ class Login
         /** @var User $user */
         $user = Auth::guard('customer')->user();
 
-        $this->logCustomerUser($user);
+        $this->logCustomerUser($user, $request);
 
         return back();
     }
 
 
-
-    public function logCustomerUser(User $user): void
+    public function logCustomerUser(User $user, ActionRequest $request): void
     {
         /** @var CustomerUser $customerUser */
         $customerUser = $user->customerUsers()->where('status', true)->first();
         if (!$customerUser) {
-
             Auth::guard('customer')->logout();
             session()->invalidate();
             session()->regenerateToken();
@@ -85,7 +87,13 @@ class Login
             'customer_name'    => $customerUser->customer->name,
             'customer_ulid'    => $customerUser->customer->ulid
         ]);
-        UserHydrateLogin::dispatch(Auth::guard('customer')->user(), request()->ip(), now());
+        LogUserLogin::dispatch(
+            $request->get('website'),
+            $customerUser,
+            request()->ip(),
+            $request->header('User-Agent'),
+            now()
+        );
 
         session()->regenerate();
         Session::put('reloadLayout', '1');
@@ -95,7 +103,6 @@ class Login
         if ($language) {
             app()->setLocale($language);
         }
-
     }
 
 
@@ -116,9 +123,6 @@ class Login
         $url = session()->pull('url.intended', 'app/dashboard');
 
         return Inertia::location($url);
-
-
-
     }
 
 

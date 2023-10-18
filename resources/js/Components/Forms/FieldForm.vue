@@ -27,7 +27,8 @@ import Language from "@/Components/Forms/Fields/Language.vue"
 import Permissions from "@/Components/Forms/Fields/Permissions.vue"
 import InputWithAddOn from '@/Components/Forms/Fields/InputWithAddOn.vue'
 import Checkbox from '@/Components/Forms/Fields/Checkbox.vue'
-import ToggleSquare from './Fields/ToggleSquare.vue'
+import JobPosition from '@/Components/Forms/Fields/JobPosition.vue'
+import ToggleSquare from '@/Components/Forms/Fields/ToggleSquare.vue'
 import CustomerRoles from '@/Components/Forms/Fields/CustomerRoles.vue'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -81,7 +82,8 @@ const components = {
     'permissions': Permissions,
     'toggleSquare': ToggleSquare,
     'checkbox': Checkbox,
-    'customerRoles': CustomerRoles
+    'customerRoles': CustomerRoles,
+    'jobPosition': JobPosition,
 };
 
 const getComponent = (componentName) => {

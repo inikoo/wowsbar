@@ -76,6 +76,11 @@ return new class () extends Migration {
                 $table->unsignedSmallInteger('number_uploaded_images_scope_' . Str::replace('-', '_', $case->snake()))->default(0);
             }
 
+            $table->unsignedBigInteger('number_logins')->default(0);
+            $table->datetime('last_login_at')->nullable();
+            $table->unsignedInteger('number_failed_logins')->default(0);
+            $table->datetime('last_failed_login_at')->nullable();
+
 
             $table->timestampsTz();
         });

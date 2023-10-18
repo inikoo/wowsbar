@@ -89,12 +89,10 @@ class EditEmployee extends InertiaAction
                     'required' => true
                 ],
                 'positions'           => [
-                    'type'        => 'select',
+                    'type'        => 'jobPosition',
                     'label'       => __('position'),
                     'options'     => Options::forModels(JobPosition::class, label: 'name', value: 'name'),
                     'placeholder' => __('Select a job position'),
-                    'mode'        => 'single',
-                    'searchable'  => true,
                     'value'       => $employee->jobPositions,
                 ],
                 'job_title'           => [

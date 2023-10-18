@@ -69,6 +69,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $number_uploaded_images
  * @property int $number_uploaded_images_scope_landscape
  * @property int $number_uploaded_images_scope_square
+ * @property int $number_logins
+ * @property string|null $last_login_at
+ * @property string|null $last_active_at
+ * @property int $number_failed_logins
+ * @property string|null $last_failed_login_at
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Organisation\Organisation $organisation
@@ -79,11 +84,16 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static Builder|OrganisationStats whereFilesizeAttachments($value)
  * @method static Builder|OrganisationStats whereFilesizeImages($value)
  * @method static Builder|OrganisationStats whereId($value)
+ * @method static Builder|OrganisationStats whereLastActiveAt($value)
+ * @method static Builder|OrganisationStats whereLastFailedLoginAt($value)
+ * @method static Builder|OrganisationStats whereLastLoginAt($value)
  * @method static Builder|OrganisationStats whereNumberAttachments($value)
+ * @method static Builder|OrganisationStats whereNumberFailedLogins($value)
  * @method static Builder|OrganisationStats whereNumberGuests($value)
  * @method static Builder|OrganisationStats whereNumberGuestsStatusActive($value)
  * @method static Builder|OrganisationStats whereNumberGuestsStatusInactive($value)
  * @method static Builder|OrganisationStats whereNumberImages($value)
+ * @method static Builder|OrganisationStats whereNumberLogins($value)
  * @method static Builder|OrganisationStats whereNumberOrganisationUsers($value)
  * @method static Builder|OrganisationStats whereNumberOrganisationUsersStatusActive($value)
  * @method static Builder|OrganisationStats whereNumberOrganisationUsersStatusInactive($value)

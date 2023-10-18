@@ -15,7 +15,10 @@ trait HasWebStats
     {
 
         $table->unsignedInteger('number_webpages')->default(0);
-
+        $table->unsignedBigInteger('number_logins')->default(0);
+        $table->datetime('last_login_at')->nullable();
+        $table->unsignedBigInteger('number_failed_logins')->default(0);
+        $table->datetime('last_failed_login_at')->nullable();
 
         return $table;
     }

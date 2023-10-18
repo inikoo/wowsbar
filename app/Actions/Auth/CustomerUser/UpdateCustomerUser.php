@@ -13,6 +13,7 @@ use App\Actions\CRM\Customer\Hydrators\CustomerHydrateCustomerUsers;
 use App\Actions\Traits\WithActionUpdate;
 use App\Http\Resources\Auth\CustomerUserResource;
 use App\Models\Auth\CustomerUser;
+use App\Models\Auth\Role;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Validation\Rules\Password;
@@ -42,6 +43,14 @@ class UpdateCustomerUser
 
         if ($customerUser->wasChanged('status')) {
             CustomerHydrateCustomerUsers::run($customerUser->customer);
+        }
+
+        foreach (Arr::get($modelData, 'roles', []) as $roleName) {
+
+            $role = Role::where('guard_name', 'customer')->where('name', $roleName)->first();
+            if ($role) {
+                $customerUser->assignRole($role);
+            }
         }
 
         $user = UpdateUser::run($customerUser->user, Arr::only($modelData, ['contact_name', 'email', 'password', 'reset_password']));
@@ -100,7 +109,9 @@ class UpdateCustomerUser
             'contact_name' => ['sometimes', 'required', 'max:255'],
             'email'        => ['sometimes', 'required', 'max:500', 'email', 'iunique:users,email'],
             'password'     => ['sometimes', 'required', 'max:255', app()->isLocal() || app()->environment('testing') ? null : Password::min(8)->uncompromised()],
-            'status'       => 'sometimes|required|boolean'
+            'status'       => 'sometimes|required|boolean',
+            'roles'        => ['sometimes', 'required', 'array'],
+
         ];
     }
 

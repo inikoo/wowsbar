@@ -8,7 +8,7 @@
 namespace App\Http\Middleware;
 
 use App\Actions\Organisation\OrganisationUser\LogOrganisationUserRequest;
-use App\Enums\Elasticsearch\ElasticsearchTypeEnum;
+use App\Enums\Elasticsearch\ElasticsearchUserRequestTypeEnum;
 use App\Models\Auth\OrganisationUser;
 use Closure;
 use Illuminate\Http\Request;
@@ -17,6 +17,10 @@ class LogOrganisationUserRequestMiddleware
 {
     public function handle(Request $request, Closure $next)
     {
+        if($request->route()->getName()=='org.logout') {
+            return $next($request);
+        }
+
         /* @var OrganisationUser $organisationUser */
         $organisationUser = $request->user();
 
@@ -30,7 +34,7 @@ class LogOrganisationUserRequestMiddleware
                 ],
                 $request->ip(),
                 $request->header('User-Agent'),
-                ElasticsearchTypeEnum::VISIT->value,
+                ElasticsearchUserRequestTypeEnum::VISIT->value,
                 $organisationUser,
             );
 
