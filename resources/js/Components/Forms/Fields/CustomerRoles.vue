@@ -56,8 +56,8 @@ const optionsRoles3 = reactive([
     },
     {
         label: 'ppc',
-        name: 'googleads',
-        value: props.form[props.fieldName].includes("googleads"),
+        name: 'ppc',
+        value: props.form[props.fieldName].includes("ppc"),
         disabled: false
     },
     {

@@ -5,9 +5,10 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\UI\Customer\Billing;
+namespace App\Actions\Accounting\Billing\UI;
 
 use App\Actions\InertiaAction;
+use App\Actions\UI\Customer\Billing\ShowBillingDashboard;
 use App\Enums\UI\Customer\PortfolioDashboardTabsEnum;
 use App\Models\Accounting\Payment;
 use Illuminate\Support\Arr;

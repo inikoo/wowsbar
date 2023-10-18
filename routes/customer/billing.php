@@ -6,8 +6,8 @@
  */
 
 
-use App\Actions\Accounting\Payment\UI\CreatePayment;
-use App\Actions\UI\Customer\Billing\ShowBilling;
+use App\Actions\Accounting\Billing\UI\CreateBilling;
+use App\Actions\Accounting\Billing\UI\ShowBilling;
 use App\Actions\UI\Customer\Billing\ShowBillingDashboard;
 use Illuminate\Support\Facades\Route;
 
@@ -18,7 +18,7 @@ Route::get('/dashboard', [
 ])->name('dashboard');
 
 Route::get('/create', [
-    'uses'  => CreatePayment::class,
+    'uses'  => CreateBilling::class,
     'icon'  => 'cash',
     'label' => 'billing'
 ])->name('create');

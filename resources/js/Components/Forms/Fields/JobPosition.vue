@@ -1,16 +1,18 @@
 <script setup lang="ts">
 import { watchEffect, ref, reactive, computed } from 'vue'
-import PureRadio from '@/Components/Pure/PureRadio.vue'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { faGoogle } from "@fortawesome/free-brands-svg-icons"
+import { faAbacus, faUser, faAd, faThumbsUp, faShapes, faCommentsDollar } from '@fal'
+import { faCheckCircle } from '@fas'
+import { library } from '@fortawesome/fontawesome-svg-core'
+library.add(faGoogle, faAbacus, faUser, faAd, faThumbsUp, faShapes, faCommentsDollar, faCheckCircle)
+// import PureRadio from '@/Components/Pure/PureRadio.vue'
 
 const props = defineProps<{
     form?: any
-    fieldName: any
+    fieldName: string
     options: string[] | object
     fieldData?: {
-        placeholder?: string
-        required?: boolean
-        mode?: string
-        searchable?: boolean
     }
 }>()
 
@@ -30,165 +32,173 @@ interface selectedJob {
 const optionsJob = {
     "admin": [
         {
+            "icon": 'fal fa-users-cog',
             "code": "admin",
             "name": "Administrator",
             "department": "admin",
-            "roles": ["super-admin"]
-        }
-    ],
-    "hr": [
-        {
-            "code": "hr-m",
-            "grade": "manager",
-            "department": "admin",
-            "name": "Human resources supervisor",
-            "roles": ["human-resources-supervisor"]
-        }, {
-            "code": "hr-c",
-            "name": "Human resources clerk",
-            "department": "admin",
-            "grade": "clerk",
-            "roles": ["human-resources"]
-        }
-    ],
-
-    "acc": [
-        {
-            "code": "acc-m",
-            "department": "admin",
-            "name": "Accounting manager",
-            "roles": ["accounting-supervisor"]
-        }, {
-            "code": "acc-c",
-            "department": "admin",
-            "name": "Accounts",
-            "roles": ["accounting"]
-        }
-    ],
-
-    "mrk": [
-        {
-            "code": "mrk-m",
-            "grade": "manager",
-            "department": "marketing",
-            "name": "Marketing supervisor",
-            "roles": ["services-manager"]
-        }, {
-            "code": "mrk-c",
-            "grade": "clerk",
-            "department": "marketing",
-            "name": "Marketing clerk",
-            "roles": ["services"]
-        }
-    ],
-
-    "web": [
-        {
-            "code": "web-m",
-            "grade": "manager",
-            "department": "marketing",
-            "name": "Webmaster supervisor",
-            "roles": ["web-master"]
-        }, {
-            "code": "web-c",
-            "grade": "clerk",
-            "department": "marketing",
-            "name": "Webmaster clerk",
-            "roles": ["web-editor"]
-        }
-    ],
-
-    "seo": [
-        {
-            "code": "seo-m",
-            "team": "seo",
-            "department": "content",
-            "name": "Seo supervisor",
-            "roles": ["seo-supervisor"]
-        }, {
-            "code": "seo-w",
-            "team": "seo",
-            "department": "content",
-            "name": "SEO",
-            "roles": ["seo"]
-        }
-    ],
-
-    "ppc": [
-        {
-            "code": "ppc-m",
-            "team": "ppc",
-            "department": "content",
-            "name": "PPC supervisor",
-            "roles": ["ppc-supervisor"]
-        }, {
-            "code": "ppc-w",
-            "team": "ppc",
-            "department": "content",
-            "name": "PPC",
-            "roles": ["ppc"]
-        }
-    ],
-
-    "social": [
-        {
-            "code": "social-m",
-            "team": "social",
-            "department": "content",
-            "name": "Social media supervisor",
-            "roles": ["social-supervisor"]
-        }, {
-            "code": "social-w",
-            "team": "social",
-            "department": "content",
-            "name": "Social media",
-            "roles": ["social"]
-        }
-    ],
-
-    "deve": [
-        {
-            "code": "dev-m",
-            "team": "developer",
-            "department": "development",
-            "name": "Developer supervisor",
-            "roles": ["caas-supervisor"]
-        }, {
-            "code": "dev-w",
-            "team": "developer",
-            "department": "development",
-            "name": "Developer",
-            "roles": ["caas"]
         }
     ],
 
     "cus": [
         {
+            "icon": "fal fa-user ",
             "code": "cus-m",
             "grade": "manager",
-            "department": "customer-services",
-            "name": "Customer service supervisor",
-            "roles": ["customer-services-supervisor"]
+            "department": "Customers",
+            "name": "Manager",
         }, {
             "code": "cus-c",
             "grade": "clerk",
-            "department": "customer-services",
-            "name": "Customer service",
-            "roles": ["customer-services"]
+            "department": "Customers",
+            "name": "Worker",
         }
-    ]
+    ],
+
+    "mrk": [
+        {
+            "icon": "fal fa-comments-dollar",
+            "code": "mrk-m",
+            "grade": "manager",
+            "department": "marketing",
+            "name": "Manager",
+        }, {
+            "code": "mrk-c",
+            "grade": "clerk",
+            "department": "marketing",
+            "name": "Worker",
+        }
+    ],
+
+    "web": [
+        {
+            "icon": 'fal fa-globe',
+            "code": "web-m",
+            "grade": "manager",
+            "department": "Website",
+            "name": "Manager",
+        }, {
+            "code": "web-c",
+            "grade": "clerk",
+            "department": "Website",
+            "name": "Worker",
+        }
+    ],
+
+    "seo": [
+        {
+            "icon": "fab fa-google",
+            "code": "seo-m",
+            "team": "seo",
+            "department": "SEO",
+            "name": "Manager",
+        }, {
+            "code": "seo-w",
+            "team": "seo",
+            "department": "SEO",
+            "name": "Worker",
+        }
+    ],
+
+    "ppc": [
+        {
+            "icon": "fal fa-ad",
+            "code": "ppc-m",
+            "team": "ppc",
+            "department": "Ads",
+            "name": "Manager",
+        }, {
+            "code": "ppc-w",
+            "team": "ppc",
+            "department": "Ads",
+            "name": "Worker",
+        }
+    ],
+
+    "social": [
+        {
+            "icon": "fal fa-thumbs-up ",
+            "code": "social-m",
+            "team": "social",
+            "department": "Social",
+            "name": "Manager",
+        }, {
+            "code": "social-w",
+            "team": "social",
+            "department": "Social",
+            "name": "Worker",
+        }
+    ],
+
+    "deve": [
+        {
+            "icon": "fal fa-shapes ",
+            "code": "dev-m",
+            "team": "developer",
+            "department": "CaaS",
+            "name": "Manager",
+        }, {
+            "code": "dev-w",
+            "team": "developer",
+            "department": "CaaS",
+            "name": "Worker",
+        }
+    ],
+
+    "acc": [
+        {
+            "icon": "fal fa-abacus",
+            "code": "acc-m",
+            "department": "Accounting",
+            "name": "Manager",
+        }, {
+            "code": "acc-c",
+            "department": "Accounting",
+            "name": "Worker",
+        }
+    ],
+    
+    "hr": [
+        {
+            "icon": "fal fa-user-hard-hat",
+            "code": "hr-m",
+            "grade": "manager",
+            "department": "Human Resources",
+            "name": "Manager",
+        }, {
+            "code": "hr-c",
+            "name": "Worker",
+            "department": "Human Resources",
+            "grade": "clerk",
+        }
+    ],
 }
 
 // Temporary data
-const selectedBox: selectedJob = reactive({
-})
+const selectedBox: selectedJob = reactive({})
+
+// To preserved on first load (so the box is selected)
+for (const key in optionsJob) {
+    for (const item of optionsJob[key]) {
+        if ((props.form[props.fieldName].map(option => option = option.code)).includes(item.code)) {
+            selectedBox[key] = item.code;
+        }
+    }
+}
 
 // When the box is clicked
-const handleClickBox = (jobGroupName: string, job: any) => {
-    if(selectedBox[jobGroupName as keyof selectedJob] == job) {  // When active box clicked
-        selectedBox[jobGroupName as keyof selectedJob] = ''  // Deselect value
-    } else {
-        selectedBox[jobGroupName as keyof selectedJob] = job
+const handleClickBox = (jobGroupName: string, jobCode: any) => {
+    if(selectedBox[jobGroupName as keyof selectedJob] == 'admin'){  // If the box clicked is 'admin'
+        if(selectedBox[jobGroupName as keyof selectedJob] == jobCode) {  // When active box clicked
+            selectedBox[jobGroupName as keyof selectedJob] = ""  // Deselect value
+        } else {
+            selectedBox[jobGroupName as keyof selectedJob] = jobCode
+        }
+    } else { // If the box clicked is not 'admin'
+        if(selectedBox[jobGroupName as keyof selectedJob] == jobCode && props.form[props.fieldName].length > 1) {  // When active box clicked
+            selectedBox[jobGroupName as keyof selectedJob] = ""  // Deselect value
+        } else {
+            selectedBox[jobGroupName as keyof selectedJob] = jobCode
+        }
     }
 }
 
@@ -196,24 +206,32 @@ const handleClickBox = (jobGroupName: string, job: any) => {
 watchEffect(() => {
     const tempObject = {...selectedBox}
     selectedBox.admin ? '' : delete tempObject.admin
-    props.form[props.fieldName] = selectedBox.admin ? [selectedBox.admin] : Object.values(tempObject)
+    props.form[props.fieldName] = selectedBox.admin ? [selectedBox.admin] : Object.values(tempObject).filter(item=> item)
 })
 </script>
 
 <template>
     <div>
-        <div class="flex gap-y-1 flex-col text-xs">
-            <div v-for="(jobGroup, keyJob) in optionsJob" class="grid grid-cols-2 gap-x-1.5 gap-y-1">
+    <!-- <pre>{{ props.form[props.fieldName] }}</pre> -->
+        <div class="flex flex-col text-xs divide-y-[1px]">
+            <div v-for="(jobGroup, keyJob) in optionsJob" class="grid grid-cols-3 gap-x-1.5 gap-y-1 py-1 px-2 items-center even:bg-gray-100">
                 <!-- The box -->
+                <div class="flex items-center capitalize gap-x-1.5">
+                    <FontAwesomeIcon :icon="jobGroup[0].icon" class='text-gray-400 text-lg' aria-hidden='true' />
+                    {{ jobGroup[0].department }}
+                </div>
                 <button v-for="job in jobGroup"
                     @click.prevent="handleClickBox(keyJob, job.code)"
-                    class="cursor-pointer active:ring-2 active:ring-gray-600 active:ring-offset-2 flex items-center justify-center rounded-md py-3 px-3 font-medium capitalize disabled:bg-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed disabled:ring-0 disabled:active:active:ring-offset-0"
+                    class="h-full cursor-pointer active:ring-2 active:ring-gray-600 active:ring-offset-2 flex items-center justify-center rounded-md py-3 px-3 font-medium capitalize disabled:bg-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed disabled:ring-0 disabled:active:active:ring-offset-0"
                     :class="[
                         selectedBox[keyJob as keyof selectedJob] == job.code ? 'bg-gray-600 text-lime-300 hover:bg-gray-700' : 'ring-1 ring-inset ring-gray-300 hover:ring-2 hover:ring-gray-500 bg-white hover:bg-gray-200 text-gray-600 '
                     ]"
                     :disabled="selectedBox.admin && job.code != 'admin'? true : false"
                 >
+                    <span class="relative">
+                        <FontAwesomeIcon v-if="selectedBox[keyJob as keyof selectedJob] == job.code" icon='fas fa-check-circle' class='absolute -left-1 -translate-x-full top-1/2 -translate-y-1/2' aria-hidden='true' />
                         {{job.name}}
+                    </span>
                 </button>
             </div>
         </div>

@@ -27,9 +27,9 @@ import Language from "@/Components/Forms/Fields/Language.vue"
 import Permissions from "@/Components/Forms/Fields/Permissions.vue"
 import InputWithAddOn from '@/Components/Forms/Fields/InputWithAddOn.vue'
 import Checkbox from '@/Components/Forms/Fields/Checkbox.vue'
-import JobPosition from '@/Components/Forms/Fields/JobPosition.vue'
 import ToggleSquare from '@/Components/Forms/Fields/ToggleSquare.vue'
 import CustomerRoles from '@/Components/Forms/Fields/CustomerRoles.vue'
+import JobPosition from '@/Components/Forms/Fields/JobPosition.vue'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faSave as fadSave } from '@fad/'
@@ -124,7 +124,7 @@ function submit() {
                         <!-- Button: Save -->
                         <span class="ml-2 flex-shrink-0">
                             <button class="align-bottom" :disabled="form.processing || !form.isDirty" type="submit">
-                                <FontAwesomeIcon v-if="form.isDirty" icon="fad fa-save" class="h-8 text-gray-600" style="--fa-secondary-color: rgb(255, 0, 0);" aria-hidden="true" />
+                                <FontAwesomeIcon v-if="form.isDirty" icon="fad fa-save" class="h-8 text-gray-600" style="--fa-secondary-color: rgb(0, 255, 4);" aria-hidden="true" />
                                 <FontAwesomeIcon v-else icon="fal fa-save" class="h-8 text-gray-300 dark:text-gray-500" aria-hidden="true" />
                             </button>
                         </span>
