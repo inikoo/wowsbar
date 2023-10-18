@@ -114,21 +114,21 @@ class CreateEmployee extends InertiaAction
                         [
                             'title'  => __('job'),
                             'fields' => [
-                                'positions' => [
-                                    'type'        => 'select',
-                                    'label'       => __('position'),
-                                    'options'     => Options::forModels(JobPosition::class, label: 'name', value: 'name'),
-                                    'placeholder' => __('Select a job position'),
-                                    'mode'        => 'multiple',
-                                    'searchable'  => true,
-                                    'value'       => [],
-                                ],
                                 'job_title' => [
                                     'type'        => 'input',
                                     'label'       => __('job title'),
                                     'placeholder' => __('Job title'),
                                     'searchable'  => true,
                                     'value'       => ''
+                                ],
+                                'positions' => [
+                                    'type'        => 'jobPosition',
+                                    'label'       => __('position'),
+                                    'options'     => Options::forModels(JobPosition::class, label: 'name', value: 'name'),
+                                    'placeholder' => __('Select a job position'),
+                                    'mode'        => 'multiple',
+                                    'searchable'  => true,
+                                    'value'       => [],
                                 ],
                             ]
                         ],
