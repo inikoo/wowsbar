@@ -1,11 +1,12 @@
 <script setup lang="ts">
+import { trans } from 'laravel-vue-i18n'
 import { watchEffect, ref, reactive, computed } from 'vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faGoogle } from "@fortawesome/free-brands-svg-icons"
-import { faAbacus, faUser, faAd, faThumbsUp, faShapes, faCommentsDollar } from '@fal'
+import { faAbacus, faUser, faAd, faThumbsUp, faShapes, faCommentsDollar, faCircle, faCrown } from '@fal'
 import { faCheckCircle } from '@fas'
 import { library } from '@fortawesome/fontawesome-svg-core'
-library.add(faGoogle, faAbacus, faUser, faAd, faThumbsUp, faShapes, faCommentsDollar, faCheckCircle)
+library.add(faGoogle, faAbacus, faUser, faAd, faThumbsUp, faShapes, faCommentsDollar, faCircle, faCrown, faCheckCircle)
 // import PureRadio from '@/Components/Pure/PureRadio.vue'
 
 const props = defineProps<{
@@ -32,7 +33,7 @@ interface selectedJob {
 const optionsJob = {
     "admin": [
         {
-            "icon": 'fal fa-users-cog',
+            "icon": 'fal fa-crown',
             "code": "admin",
             "name": "Administrator",
             "department": "admin",
@@ -44,12 +45,12 @@ const optionsJob = {
             "icon": "fal fa-user ",
             "code": "cus-m",
             "grade": "manager",
-            "department": "Customers",
+            "department": trans("Customers Services"),
             "name": "Manager",
         }, {
             "code": "cus-c",
             "grade": "clerk",
-            "department": "Customers",
+            "department": "Customers Services",
             "name": "Worker",
         }
     ],
@@ -74,12 +75,12 @@ const optionsJob = {
             "icon": 'fal fa-globe',
             "code": "web-m",
             "grade": "manager",
-            "department": "Website",
+            "department": "Website Master",
             "name": "Manager",
         }, {
             "code": "web-c",
             "grade": "clerk",
-            "department": "Website",
+            "department": "Website Master",
             "name": "Worker",
         }
     ],
@@ -214,23 +215,31 @@ watchEffect(() => {
     <div>
     <!-- <pre>{{ props.form[props.fieldName] }}</pre> -->
         <div class="flex flex-col text-xs divide-y-[1px]">
-            <div v-for="(jobGroup, keyJob) in optionsJob" class="grid grid-cols-3 gap-x-1.5 gap-y-1 py-1 px-2 items-center even:bg-gray-100">
+            <div v-for="(jobGroup, keyJob) in optionsJob" class="grid grid-cols-3 gap-x-1.5 px-2 items-center">
                 <!-- The box -->
                 <div class="flex items-center capitalize gap-x-1.5">
-                    <FontAwesomeIcon :icon="jobGroup[0].icon" class='text-gray-400 text-lg' aria-hidden='true' />
+                    <FontAwesomeIcon :icon="jobGroup[0].icon" class='text-gray-400' aria-hidden='true' />
                     {{ jobGroup[0].department }}
                 </div>
+
+                <!-- The Clickable area -->
                 <button v-for="job in jobGroup"
                     @click.prevent="handleClickBox(keyJob, job.code)"
-                    class="h-full cursor-pointer active:ring-2 active:ring-gray-600 active:ring-offset-2 flex items-center justify-center rounded-md py-3 px-3 font-medium capitalize disabled:bg-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed disabled:ring-0 disabled:active:active:ring-offset-0"
+                    class="group h-full cursor-pointer flex items-center justify-start even:pl-10 odd:justify-center rounded-md py-3 px-3 font-medium capitalize disabled:text-gray-400 disabled:cursor-not-allowed disabled:ring-0 disabled:active:active:ring-offset-0"
                     :class="[
-                        selectedBox[keyJob as keyof selectedJob] == job.code ? 'bg-gray-600 text-lime-300 hover:bg-gray-700' : 'ring-1 ring-inset ring-gray-300 hover:ring-2 hover:ring-gray-500 bg-white hover:bg-gray-200 text-gray-600 '
+                        selectedBox[keyJob as keyof selectedJob] == job.code ? 'text-lime-500' : ' text-gray-600'
                     ]"
                     :disabled="selectedBox.admin && job.code != 'admin'? true : false"
                 >
                     <span class="relative">
-                        <FontAwesomeIcon v-if="selectedBox[keyJob as keyof selectedJob] == job.code" icon='fas fa-check-circle' class='absolute -left-1 -translate-x-full top-1/2 -translate-y-1/2' aria-hidden='true' />
-                        {{job.name}}
+                        <FontAwesomeIcon v-if="selectedBox[keyJob as keyof selectedJob] == 'admin'" icon='fas fa-check-circle' class='absolute -left-1 -translate-x-full top-1/2 -translate-y-1/2' aria-hidden='true' />
+                        <FontAwesomeIcon v-else-if="selectedBox[keyJob as keyof selectedJob] == job.code && !selectedBox.admin" icon='fas fa-check-circle' class='absolute -left-1 -translate-x-full top-1/2 -translate-y-1/2' aria-hidden='true' />
+                        <FontAwesomeIcon v-else icon='fal fa-circle' class='absolute -left-1 -translate-x-full top-1/2 -translate-y-1/2' aria-hidden='true' />
+                        <span :class="[
+                            selectedBox.admin && selectedBox[keyJob as keyof selectedJob] != 'admin' ? 'text-gray-300' : ' text-gray-500 group-hover:text-gray-800'
+                        ]">
+                            {{job.name}}
+                        </span>
                     </span>
                 </button>
             </div>
