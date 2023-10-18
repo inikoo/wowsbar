@@ -104,7 +104,7 @@ class IndexOrgCustomerUsers extends InertiaAction
             ->leftJoin('roles', 'model_has_roles.role_id', 'roles.id')
             ->where('model_type', 'CustomerUser')
             ->groupBy('model_id');
-        $queryBuilder->joinSub($roles, 'roles', function (JoinClause $join) {
+        $queryBuilder->leftJoinSub($roles, 'roles', function (JoinClause $join) {
             $join->on('customer_user.id', '=', 'roles.model_id');
         });
 
