@@ -24,21 +24,20 @@ class ShowSysAdminDashboard
     public function authorize(ActionRequest $request): bool
     {
         $this->canEdit = $request->get('customerUser')->hasPermissionTo('sysadmin.edit');
-
         return $request->get('customerUser')->hasPermissionTo("sysadmin.view");
     }
 
 
     public function asController(ActionRequest $request): ActionRequest
     {
+        $request->validate();
         return $request;
     }
 
 
     public function htmlResponse(ActionRequest $request): Response
     {
-        $customer=customer();
-
+        $customer=$request->get('customer');
         return Inertia::render(
             'SysAdmin/SysAdminDashboard',
             [

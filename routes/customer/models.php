@@ -62,7 +62,6 @@ Route::prefix('/banner')->name('banner.')->group(function () {
 Route::patch('/images/{media}', UpdateUploadedImage::class)->name('images.update');
 
 Route::post('/user', StoreUser::class)->name('user.store');
-
 Route::patch('/user/{customerUser:id}', UpdateCustomerUser::class)->name('user.update');
 Route::patch('/profile', UpdateProfile::class)->name('profile.update');
 
