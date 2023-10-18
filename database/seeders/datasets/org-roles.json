@@ -55,10 +55,16 @@
         ]
     },
     {
-        "name": "accounting",
+        "name": "accounting-supervisor",
         "permissions": [
             "accounting",
             "supervisor.accounting"
+        ]
+    },
+    {
+        "name": "accounting",
+        "permissions": [
+            "accounting"
         ]
     },
     {
