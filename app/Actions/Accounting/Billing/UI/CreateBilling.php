@@ -49,8 +49,8 @@ class CreateBilling extends InertiaAction
                                     'readonly' => true
                                 ],
                                 'payment_account_id' => [
-                                    'type'  => 'select',
-                                    'label' => __('payment account'),
+                                    'type'    => 'select',
+                                    'label'   => __('payment account'),
                                     'options' => Options::forModels(PaymentAccount::class)
                                 ]
                             ]
