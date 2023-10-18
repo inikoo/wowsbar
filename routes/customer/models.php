@@ -6,6 +6,7 @@
  */
 
 
+use App\Actions\Accounting\Billing\StoreBilling;
 use App\Actions\Accounting\Payment\StorePayment;
 use App\Actions\Auth\CustomerUser\UpdateCustomerUser;
 use App\Actions\Auth\User\StoreUser;
@@ -73,4 +74,4 @@ Route::post('/portfolio-websites/imports/upload', ImportPortfolioWebsite::class)
 
 Route::post('/gallery/images/upload', UploadImagesToGallery::class)->name('gallery.images.upload');
 
-Route::post('/billing', StorePayment::class)->name('billing.store');
+Route::post('/billing', StoreBilling::class)->name('billing.store');
