@@ -10,8 +10,11 @@ import FooterTabActiveUsers from '@/Layouts/Organisation/FooterActiveUsers.vue'
 import FooterLanguage from '@/Components/Footer/FooterLanguage.vue'
 import {usePage} from "@inertiajs/vue3";
 import Image from "@/Components/Image.vue";
+import { faDiscord } from '@fortawesome/free-brands-svg-icons'
+import {library} from "@fortawesome/fontawesome-svg-core";
+import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 
-
+library.add(faDiscord)
 
 const isTabActive: Ref<boolean | string> = ref(false)
 const logoSrc=usePage().props.art.footer_logo;
@@ -29,6 +32,15 @@ const logoSrc=usePage().props.art.footer_logo;
             <!-- Left: Logo Section -->
             <div class="pl-4 flex items-center gap-x-1.5 py-1">
                 <Image class="h-auto w-14 select-none" :src="logoSrc" alt="Org-Wowsbar" />
+            </div>
+
+            <div class="pl-4 flex items-center gap-x-1.5 py-1">
+                <a href="https://discord.gg/C7bCmMaTxP" target="_blank">
+                    <span class="text-slate-400	 text-xs">
+                        <FontAwesomeIcon :icon="['fab', 'discord']" class="text-white mx-1" aria-hidden='true'/>
+                        Give us feedback from your journey
+                    </span>
+                </a>
             </div>
 
             <!-- Right: Tab Section -->

@@ -11,13 +11,14 @@ import FooterLanguage from '@/Components/Footer/FooterLanguage.vue'
 import {usePage} from "@inertiajs/vue3";
 import Image from "@/Components/Image.vue";
 import {faHeart,faComputerClassic} from '@fas/'
+import { faDiscord } from '@fortawesome/free-brands-svg-icons'
 import {library} from "@fortawesome/fontawesome-svg-core";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 
 const isTabActive: Ref<boolean | string> = ref(false)
 const logoSrc=usePage().props.art.footer_logo;
 
-library.add(faHeart,faComputerClassic)
+library.add(faHeart,faComputerClassic,faDiscord)
 
 </script>
 
@@ -31,6 +32,7 @@ library.add(faHeart,faComputerClassic)
         <div class="flex justify-between">
             <!-- Left: Logo Section -->
             <div class="pl-4 flex items-center gap-x-1.5 py-1">
+          
                 <Image class="h-4 select-none"  :src="logoSrc" alt="T-Wowsbar" />
                 <span class="text-slate-400	 text-xs">
                     Made with
@@ -39,6 +41,16 @@ library.add(faHeart,faComputerClassic)
                     <FontAwesomeIcon icon='fas fa-computer-classic' class="mx-1" aria-hidden='true'/>
                     in Bali
                 </span>
+        
+            </div>
+
+            <div class="pl-4 flex items-center gap-x-1.5 py-1">
+                <a href="https://discord.gg/C7bCmMaTxP" target="_blank">
+                    <span class="text-slate-400	 text-xs">
+                        <FontAwesomeIcon :icon="['fab', 'discord']" class="text-white mx-1" aria-hidden='true'/>
+                        Give us feedback from your journey
+                    </span>
+                </a>
             </div>
 
 
