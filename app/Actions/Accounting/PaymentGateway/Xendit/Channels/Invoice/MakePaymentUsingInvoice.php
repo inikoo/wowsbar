@@ -38,8 +38,8 @@ class MakePaymentUsingInvoice
                 'given_names'   => $customer->name,
                 'email'         => $customer->email
             ],
-            'success_redirect_url' => url('/org'),
-            'failure_redirect_url' => url('/org')
+            'success_redirect_url' => route('customer.billing.dashboard'),
+            'failure_redirect_url' => route('customer.billing.dashboard')
         ];
 
         $response = Invoice::create($params);

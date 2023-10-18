@@ -13,6 +13,7 @@ use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
+use Spatie\LaravelOptions\Options;
 
 class CreatePayment extends InertiaAction
 {
@@ -45,6 +46,11 @@ class CreatePayment extends InertiaAction
                                     'label'    => __('reference'),
                                     'value'    => Str::upper(Str::random()),
                                     'readonly' => true
+                                ],
+                                'payment_account_id' => [
+                                    'type'  => 'select',
+                                    'label' => __('payment account'),
+                                    'options' => Options::forModels(PaymentAccount::class)
                                 ]
                             ]
                         ],
@@ -54,11 +60,6 @@ class CreatePayment extends InertiaAction
                                 'amount' => [
                                     'type'  => 'input',
                                     'label' => __('amount'),
-                                    'value' => ''
-                                ],
-                                'org_amount' => [
-                                    'type'  => 'input',
-                                    'label' => __('customer currency amount'),
                                     'value' => ''
                                 ],
                                 'date' => [
