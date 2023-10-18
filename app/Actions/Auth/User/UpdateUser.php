@@ -56,12 +56,6 @@ class UpdateUser
         ];
     }
 
-    public function inLoggedUser(ActionRequest $request): User
-    {
-        $request->validate();
-
-        return $this->handle($request->user('customer'), $request->validated());
-    }
 
     public function afterValidator(Validator $validator, ActionRequest $request): void
     {

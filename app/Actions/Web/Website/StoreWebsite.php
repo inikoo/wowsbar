@@ -16,6 +16,7 @@ use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Validator;
 use Lorisleiva\Actions\ActionRequest;
@@ -40,16 +41,19 @@ class StoreWebsite
 
 
         /** @var Website $website */
-        $website        = $shop->website()->create($modelData);
+        $website = $shop->website()->create($modelData);
+
+
         $headerSnapshot = StoreWebsiteSnapshot::run(
             $website,
             [
                 'scope'  => 'header',
-                'layout' => [
-                    'src'  => null,
-                    'html' => ''
-                ]
-            ],
+                'layout' => json_decode(
+                    Storage::disk('datasets')->get('header.json'),
+                    true
+                )
+            ]
+
         );
         $footerSnapshot = StoreWebsiteSnapshot::run(
             $website,
@@ -68,8 +72,8 @@ class StoreWebsite
                 'unpublished_header_snapshot_id' => $headerSnapshot->id,
                 'unpublished_footer_snapshot_id' => $footerSnapshot->id,
                 'compiled_layout'                => [
-                    'header'=> $headerSnapshot->compiledLayout(),
-                    'footer'=> $footerSnapshot->compiledLayout()
+                    'header' => $headerSnapshot->compiledLayout(),
+                    'footer' => $footerSnapshot->compiledLayout()
                 ]
             ]
         );
@@ -82,8 +86,6 @@ class StoreWebsite
         $website->refresh();
 
         WebsiteHydrateUniversalSearch::dispatch($website);
-
-        // $website = ResetWebsiteStructure::run($website);
 
         return SeedWebsiteFixedWebpages::run($website);
     }
