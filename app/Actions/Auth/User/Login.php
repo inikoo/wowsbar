@@ -59,13 +59,13 @@ class Login
         /** @var User $user */
         $user = Auth::guard('customer')->user();
 
-        $this->logCustomerUser($user);
+        $this->logCustomerUser($user, $request);
 
         return back();
     }
 
 
-    public function logCustomerUser(User $user): void
+    public function logCustomerUser(User $user, ActionRequest $request): void
     {
         /** @var CustomerUser $customerUser */
         $customerUser = $user->customerUsers()->where('status', true)->first();
@@ -89,6 +89,13 @@ class Login
             'customer_ulid'    => $customerUser->customer->ulid
         ]);
         UserHydrateLogin::dispatch(Auth::guard('customer')->user(), request()->ip(), now());
+        LogUserLogin::dispatch(
+            $request->get('website'),
+            $customerUser,
+            request()->ip(),
+            $request->header('User-Agent'),
+            now()
+        );
 
         session()->regenerate();
         Session::put('reloadLayout', '1');
