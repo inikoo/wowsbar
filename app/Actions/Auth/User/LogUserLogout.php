@@ -1,32 +1,41 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Wed, 11 Oct 2023 17:06:28 Malaysia Time, Office, Bali, Indonesia
+ * Created: Wed, 18 Oct 2023 11:52:43 Malaysia Time, Office, Bali, Indonesia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Auth\CustomerUser;
+namespace App\Actions\Auth\User;
 
 use App\Actions\Elasticsearch\IndexElasticsearchDocument;
 use App\Actions\Traits\WithLogRequest;
+use App\Enums\Elasticsearch\ElasticsearchUserRequestTypeEnum;
 use App\Models\Auth\CustomerUser;
 use hisorange\BrowserDetect\Parser as Browser;
 use Illuminate\Support\Carbon;
 use Lorisleiva\Actions\Concerns\AsAction;
 
-class LogCustomerUserRequest
+class LogUserLogout
 {
     use AsAction;
     use WithLogRequest;
 
-    public function handle(Carbon $datetime, array $routeData, string $ip, string $userAgent, string $type, CustomerUser $customerUser): void
+    public function handle(CustomerUser $customerUser, string $ip, string $userAgent, Carbon $datetime): void
     {
 
+        $this->log($datetime, $ip, $userAgent, $customerUser);
+
+    }
+
+
+    public function log(Carbon $datetime, string $ip, string $userAgent, CustomerUser $customerUser): void
+    {
         $index = config('elasticsearch.index_prefix').'customer_users_requests';
+
         $parsedUserAgent = (new Browser())->parse($userAgent);
 
         $body = [
-            'type'               => $type,
+            'type'               => ElasticsearchUserRequestTypeEnum::LOGOUT->value,
             'datetime'           => $datetime,
             'customer'           => $customerUser->customer->slug,
             'username'           => $customerUser->user->email,
@@ -34,8 +43,6 @@ class LogCustomerUserRequest
             'customer_user_id'   => $customerUser->id,
             'customer_id'        => $customerUser->customer->id,
             'user_id'            => $customerUser->user->id,
-            'route'              => $routeData,
-            'module'             => explode('.', $routeData['name'])[0],
             'ip_address'         => $ip,
             'location'           => json_encode($this->getLocation($ip)), // reference: https://github.com/stevebauman/location
             'user_agent'         => $userAgent,
@@ -43,19 +50,17 @@ class LogCustomerUserRequest
                 'title' => $parsedUserAgent->deviceType(),
                 'icon'  => $this->getDeviceIcon($parsedUserAgent->deviceType())
             ]),
-            'platform'           => json_encode([
+            'platform'    => json_encode([
                 'title' => $this->detectWindows11($parsedUserAgent),
                 'icon'  => $this->getPlatformIcon($this->detectWindows11($parsedUserAgent))
             ]),
-            'browser'            => json_encode([
+            'browser'     => json_encode([
                 'title' => explode(' ', $parsedUserAgent->browserName())[0],
                 'icon'  => $this->getBrowserIcon(strtolower($parsedUserAgent->browserName()))
             ])
         ];
 
-
         IndexElasticsearchDocument::dispatch(index: $index, body: $body);
-        $customerUser->user->stats->update(['last_active_at' => $datetime]);
     }
 
 

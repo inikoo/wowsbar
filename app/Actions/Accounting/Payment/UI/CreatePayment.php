@@ -9,7 +9,6 @@ namespace App\Actions\Accounting\Payment\UI;
 
 use App\Actions\InertiaAction;
 use App\Models\Accounting\PaymentAccount;
-use App\Models\Assets\Currency;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -29,7 +28,7 @@ class CreatePayment extends InertiaAction
                     'cancelCreate' => [
                         'route' => [
                             'name' => match ($request->route()->getName()) {
-                                'customer.billing.create' => 'customer.billing.show',
+                                'customer.billing.create'                              => 'customer.billing.show',
                                 default                                                => preg_replace('/create$/', 'index', $request->route()->getName())
                             },
                             'parameters' => array_values($this->originalParameters)
@@ -42,9 +41,9 @@ class CreatePayment extends InertiaAction
                             'title'  => __('payment'),
                             'fields' => [
                                 'reference' => [
-                                    'type'  => 'input',
-                                    'label' => __('reference'),
-                                    'value' => Str::upper(Str::random()),
+                                    'type'     => 'input',
+                                    'label'    => __('reference'),
+                                    'value'    => Str::upper(Str::random()),
                                     'readonly' => true
                                 ]
                             ]
