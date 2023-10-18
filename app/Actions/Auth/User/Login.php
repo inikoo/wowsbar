@@ -7,7 +7,6 @@
 
 namespace App\Actions\Auth\User;
 
-use App\Actions\Auth\User\Hydrators\UserHydrateLogin;
 use App\Models\Auth\CustomerUser;
 use App\Models\Auth\User;
 use Illuminate\Auth\Events\Lockout;
@@ -88,7 +87,6 @@ class Login
             'customer_name'    => $customerUser->customer->name,
             'customer_ulid'    => $customerUser->customer->ulid
         ]);
-        UserHydrateLogin::dispatch(Auth::guard('customer')->user(), request()->ip(), now());
         LogUserLogin::dispatch(
             $request->get('website'),
             $customerUser,

@@ -1,42 +1,37 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Wed, 18 Oct 2023 12:22:39 Malaysia Time, Office, Bali, Indonesia
+ * Created: Wed, 18 Oct 2023 12:12:02 Malaysia Time, Office, Bali, Indonesia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Auth\User\Traits;
+namespace App\Actions\Organisation\OrganisationUser\Traits;
 
 use App\Actions\Elasticsearch\IndexElasticsearchDocument;
 use App\Actions\Traits\WithLogRequest;
-use App\Models\Auth\CustomerUser;
+use App\Models\Auth\OrganisationUser;
 use hisorange\BrowserDetect\Parser as Browser;
 use Illuminate\Support\Carbon;
 
-trait WithAuthLog
+trait WithOrgAuthLog
 {
     use WithLogRequest;
 
-
-    public function logAuthAction($type, Carbon $datetime, string $ip, string $userAgent, CustomerUser $customerUser): void
+    public function logOrgAuthAction($type, Carbon $datetime, string $ip, string $userAgent, OrganisationUser $organisationUser): void
     {
-        $index = config('elasticsearch.index_prefix').'customer_users_requests';
+        $index = config('elasticsearch.index_prefix').'organisation_users_requests';
 
         $parsedUserAgent = (new Browser())->parse($userAgent);
 
         $body = [
-            'type'               => $type,
-            'datetime'           => $datetime,
-            'customer'           => $customerUser->customer->slug,
-            'username'           => $customerUser->user->email,
-            'customer_user_slug' => $customerUser->slug,
-            'customer_user_id'   => $customerUser->id,
-            'customer_id'        => $customerUser->customer->id,
-            'user_id'            => $customerUser->user->id,
-            'ip_address'         => $ip,
-            'location'           => json_encode($this->getLocation($ip)), // reference: https://github.com/stevebauman/location
-            'user_agent'         => $userAgent,
-            'device_type'        => json_encode([
+            'type'                 => $type,
+            'datetime'             => $datetime,
+            'username'             => $organisationUser->username,
+            'organisation_user_id' => $organisationUser->id,
+            'ip_address'           => $ip,
+            'location'             => json_encode($this->getLocation($ip)), // reference: https://github.com/stevebauman/location
+            'user_agent'           => $userAgent,
+            'device_type'          => json_encode([
                 'title' => $parsedUserAgent->deviceType(),
                 'icon'  => $this->getDeviceIcon($parsedUserAgent->deviceType())
             ]),

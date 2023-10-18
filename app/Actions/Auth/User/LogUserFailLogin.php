@@ -47,7 +47,7 @@ class LogUserFailLogin
     }
 
 
-    public function log(Carbon $datetime, string $ip, string $userAgent, string $username, ?int $user_id): void
+    public function log(Carbon $datetime, string $ip, string $userAgent, string $username, ?int $userId): void
     {
         $index = config('elasticsearch.index_prefix').'customer_users_requests';
 
@@ -57,7 +57,7 @@ class LogUserFailLogin
             'type'        => ElasticsearchUserRequestTypeEnum::FAIL_LOGIN->value,
             'datetime'    => $datetime,
             'username'    => $username,
-            'user_id'     => $user_id,
+            'user_id'     => $userId,
             'ip_address'  => $ip,
             'location'    => json_encode($this->getLocation($ip)), // reference: https://github.com/stevebauman/location
             'user_agent'  => $userAgent,

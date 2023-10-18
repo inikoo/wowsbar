@@ -20,7 +20,6 @@ class LogCustomerUserRequestMiddleware
 
         if($request->route()->getName()=='customer.logout') {
             return $next($request);
-
         }
 
         /** @var CustomerUser $customerUser */
