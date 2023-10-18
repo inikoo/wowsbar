@@ -30,9 +30,6 @@ class PermissionSeeder extends Seeder
         $publicRoles       = collect(json_decode(Storage::disk('datasets')->get('customer-roles.json'), true));
 
         $this->storePermissionsRoles($publicPermissions, $publicRoles, 'customer');
-
-
-
     }
 
 
@@ -46,12 +43,10 @@ class PermissionSeeder extends Seeder
 
 
         $currentRoles = Role::where('guard_name', $guard)->pluck('name');
-
-        $currentRoles->diff(collect(config("blueprint.roles"))->keys())
+        $currentRoles->diff($roles->pluck('name'))
             ->each(function ($roleName) use ($guard) {
                 Role::where('name', $roleName)->where('guard_name', $guard)->first()->delete();
             });
-
 
         $permissions->each(function ($permissionName) use ($guard) {
             try {
@@ -67,13 +62,8 @@ class PermissionSeeder extends Seeder
 
 
         $roles->each(function ($roleData) use ($guard) {
-
-
             if (!$role = (new Role())->where('name', $roleData['name'])->where('guard_name', $guard)
                 ->first()) {
-
-
-
                 $role = Role::create([
                     'guard_name' => $guard,
                     'name'       => $roleData['name']
