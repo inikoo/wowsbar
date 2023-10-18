@@ -1,28 +1,27 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Wed, 11 Oct 2023 17:06:28 Malaysia Time, Office, Bali, Indonesia
+ * Created: Wed, 18 Oct 2023 12:22:39 Malaysia Time, Office, Bali, Indonesia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Auth\CustomerUser;
+namespace App\Actions\Auth\User\Traits;
 
 use App\Actions\Elasticsearch\IndexElasticsearchDocument;
 use App\Actions\Traits\WithLogRequest;
 use App\Models\Auth\CustomerUser;
 use hisorange\BrowserDetect\Parser as Browser;
 use Illuminate\Support\Carbon;
-use Lorisleiva\Actions\Concerns\AsAction;
 
-class LogCustomerUserRequest
+trait WithAuthLog
 {
-    use AsAction;
     use WithLogRequest;
 
-    public function handle(Carbon $datetime, array $routeData, string $ip, string $userAgent, string $type, CustomerUser $customerUser): void
-    {
 
-        $index           = config('elasticsearch.index_prefix').'customer_users_requests';
+    public function logAuthAction($type, Carbon $datetime, string $ip, string $userAgent, CustomerUser $customerUser): void
+    {
+        $index = config('elasticsearch.index_prefix').'customer_users_requests';
+
         $parsedUserAgent = (new Browser())->parse($userAgent);
 
         $body = [
@@ -34,8 +33,6 @@ class LogCustomerUserRequest
             'customer_user_id'   => $customerUser->id,
             'customer_id'        => $customerUser->customer->id,
             'user_id'            => $customerUser->user->id,
-            'route'              => $routeData,
-            'module'             => explode('.', $routeData['name'])[0],
             'ip_address'         => $ip,
             'location'           => json_encode($this->getLocation($ip)), // reference: https://github.com/stevebauman/location
             'user_agent'         => $userAgent,
@@ -53,10 +50,6 @@ class LogCustomerUserRequest
             ])
         ];
 
-
         IndexElasticsearchDocument::dispatch(index: $index, body: $body);
-        $customerUser->user->stats->update(['last_active_at' => $datetime]);
     }
-
-
 }

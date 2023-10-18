@@ -17,6 +17,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $id
  * @property int $website_id
  * @property int $number_webpages
+ * @property int $number_logins
+ * @property string|null $last_login_at
+ * @property int $number_failed_logins
+ * @property string|null $last_failed_login_at
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Web\Website $website
@@ -25,6 +29,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static Builder|WebsiteStats query()
  * @method static Builder|WebsiteStats whereCreatedAt($value)
  * @method static Builder|WebsiteStats whereId($value)
+ * @method static Builder|WebsiteStats whereLastFailedLoginAt($value)
+ * @method static Builder|WebsiteStats whereLastLoginAt($value)
+ * @method static Builder|WebsiteStats whereNumberFailedLogins($value)
+ * @method static Builder|WebsiteStats whereNumberLogins($value)
  * @method static Builder|WebsiteStats whereNumberWebpages($value)
  * @method static Builder|WebsiteStats whereUpdatedAt($value)
  * @method static Builder|WebsiteStats whereWebsiteId($value)

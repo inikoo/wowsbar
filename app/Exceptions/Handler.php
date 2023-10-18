@@ -45,7 +45,7 @@ class Handler extends ExceptionHandler
     {
         $response = parent::render($request, $e);
 
-        if (!app()->environment(['local', 'testing']) && in_array($response->status(), [500, 503, 404, 403, 422])) {
+        if (!app()->environment(['localx', 'testing']) && in_array($response->status(), [500, 503, 404, 403, 422])) {
             $errorData = match ($response->status()) {
                 403 => [
                     'status'      => $response->status(),
@@ -88,22 +88,27 @@ class Handler extends ExceptionHandler
             }
 
             $host = Request::getHost();
+
             if ($host == config('app.delivery_domain')) {
                 Inertia::setRootView('app-delivery');
+                $app='delivery';
             } elseif ($host == config('app.domain')) {
                 Inertia::setRootView('app-organisation');
+                $app='org';
             } else {
                 $path = Request::path();
-                if (preg_match('/^auth\//', $path)) {
+                if (preg_match('/^app\//', $path)) {
                     Inertia::setRootView('app-customer');
+                    $app='customer';
                 } else {
                     Inertia::setRootView('app-public');
+                    $app='public';
                 }
             }
 
 
             return Inertia::render(
-                $this->getInertiaPage($e),
+                $this->getInertiaPage($e, $app),
                 $errorData
             )
                 ->toResponse($request)
@@ -126,13 +131,20 @@ class Handler extends ExceptionHandler
         ];
     }
 
-    public function getInertiaPage(Throwable $e): string
+    public function getInertiaPage(Throwable $e, string $app): string
     {
-        if (get_class($e) == 'Exceptions\NoCustomer') {
+        if (get_class($e) == 'Exceptions\NoCustomer' and $app=='customer') {
             return 'Utils/CustomerNotFound';
         }
 
-        return Auth::check() ? 'Utils/ErrorInApp' : 'Utils/Error';
+        $page='Utils/Error';
+
+        if($app=='org' or $app=='customer') {
+            $page= Auth::check() ? 'Utils/ErrorInApp' : 'Utils/Error';
+        }
+
+        return $page;
+
     }
 
 }
