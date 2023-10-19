@@ -607,7 +607,7 @@ const addSlide=()=>{
 
                             <!-- Image slide -->
                             <div v-if="slide.image">
-                                <Image :src="get(slide,['image',`${screenView}`,'thumbnail'],slide.image.desktop.thumbnail)" class="h-full w-10 sm:w-10 flex items-center justify-center py-1"/>
+                                <Image :src="get(slide, ['image', `${screenView}`, 'thumbnail'], slide.image?.desktop?.thumbnail)" class="h-full w-10 sm:w-10 flex items-center justify-center py-1"/>
                             </div>
                             <div v-else>
                                 <div :style="{ background :get(slide,'background','red')}" class="h-full w-10 sm:w-10 flex items-center justify-center py-1"/>
