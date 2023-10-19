@@ -15,9 +15,18 @@ import Tabs from "@/Components/Navigation/Tabs.vue";
 import {capitalize} from "@/Composables/capitalize"
 import TableCustomerHistories from "@/Components/Tables/TableCustomerHistories.vue";
 
-import {faRectangleWide, faGlobe} from '@fal/'
+import {faRectangleWide, faGlobe, faMoneyBill, faLayerGroup} from '@fal/'
+import {
+    faFacebook,
+    faInstagram,
+    faLinkedin,
+    faPinterest,
+    faTiktok,
+    faTwitter, faYoutube
+} from "@fortawesome/free-brands-svg-icons";
+import { faMicrophoneStand } from '@fal/'
 
-library.add(faRectangleWide, faGlobe)
+library.add(faRectangleWide, faMoneyBill, faLayerGroup, faGlobe, faFacebook, faTwitter, faTiktok, faPinterest, faLinkedin, faInstagram, faYoutube, faMicrophoneStand)
 
 const props = defineProps<{
     title: string,
@@ -28,6 +37,8 @@ const props = defineProps<{
     }
     changelog?: object
     account?: object
+    posts?: object
+    ads?: object
 }>()
 
 let currentTab = ref(props.tabs.current);

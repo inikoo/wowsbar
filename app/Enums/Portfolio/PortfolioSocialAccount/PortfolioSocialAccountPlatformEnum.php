@@ -34,7 +34,8 @@ enum PortfolioSocialAccountPlatformEnum: string
             self::INSTAGRAM->value        => [
 
                 'tooltip' => __(self::INSTAGRAM->value),
-                'icon'    => 'fab fa-instagram'
+                'icon'    => 'fab fa-instagram',
+                'class'   => 'text-red-500'
 
             ],
             self::TIKTOK->value     => [
@@ -54,7 +55,8 @@ enum PortfolioSocialAccountPlatformEnum: string
             self::LINKEDIN->value     => [
 
                 'tooltip' => __(self::LINKEDIN->value),
-                'icon'    => 'fab fa-linkedin'
+                'icon'    => 'fab fa-linkedin',
+                'class'   => 'text-blue-500'
 
             ],
             self::TWITTER->value     => [

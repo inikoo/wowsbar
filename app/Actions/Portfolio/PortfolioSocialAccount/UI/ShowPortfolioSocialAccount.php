@@ -60,7 +60,7 @@ class ShowPortfolioSocialAccount extends InertiaAction
                     'title'   => $portfolioSocialAccount->username,
                     'icon'    => [
                         'title' => __('portfolio social account'),
-                        'icon'  => 'fal fa-thumbs-up'
+                        'icon'  => $portfolioSocialAccount->platform->platformIcon()[$portfolioSocialAccount->platform->value]['icon']
                     ],
                     'actions' => [
                         $this->canEdit ? [
