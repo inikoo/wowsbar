@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 import { ref, watch, computed } from 'vue'
-import { get } from 'lodash'
+import { get, isNull } from 'lodash'
 import SlideCorner from "@/Components/Slider/SlideCorner.vue"
 import Image from "@/Components/Image.vue"
 import CentralStage from "@/Components/Slider/CentralStage.vue"
@@ -222,9 +222,10 @@ const compHandleBannerLessSlide = computed(() => {
                 :modules="[Autoplay, Pagination, Navigation]" class="mySwiper">
                 <SwiperSlide v-for="component in data.components.filter((item)=>item.ulid)" :key="component.id">
                     <!-- {{ data.common }} -->
-                    <div class="relative w-full h-full">
-                        <Image :src="get(component, ['image', `${$props.view}`, 'source'], component.image.desktop?.source)" alt="Wowsbar" />
+                    <div class="relative w-full h-full"  v-if="component.image">
+                        <Image :src="get(component, ['image', `${$props.view}`, 'source'], component.image?.desktop?.source)" alt="Wowsbar" />
                     </div>
+                    <div v-else :style="{ background :get(component,'background','red')}" class="w-full h-full">hello</div>
                     <div v-if="get(component, ['visibility'], true) === false" class="absolute h-full w-full bg-gray-800/50 z-10 " />
                     <div class="z-[11] absolute left-7 flex flex-col gap-y-2">
                         <FontAwesomeIcon v-if="get(component, ['visibility'], true) === false" icon='fas fa-eye-slash' class=' text-orange-400 text-4xl' aria-hidden='true' />
