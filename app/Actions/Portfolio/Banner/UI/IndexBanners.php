@@ -237,7 +237,7 @@ class IndexBanners extends InertiaAction
                             [
                                 'type'  => 'button',
                                 'style' => 'create',
-                                'label' => __('create banner'),
+                                'label' => __('Create Banner'),
                                 'route' => [
                                     'name' => 'customer.banners.create',
                                 ]

@@ -6,7 +6,6 @@
 
 <script setup lang="ts">
 import {ref, onMounted, onBeforeUnmount, Ref} from 'vue'
-import Button from '@/Components/Elements/Buttons/Button.vue'
 import Action from '@/Components/Forms/Fields/Action.vue'
 import FieldForm from '@/Components/Forms/FieldForm.vue'
 import { get as getLodash } from 'lodash'

@@ -14,14 +14,16 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { trans } from 'laravel-vue-i18n'
 library.add(faExclamationCircle, faCheckCircle, faEye, faEyeSlash, faSpinnerThird)
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
     'form': any
     'fieldName': string
     'showProcessing'?: boolean
     'placeholder'?: string
     'options'?: {} | []
     'fieldData'?: {} | []
-}>()
+}>(), {
+    showProcessing: true
+})
 
 const handleChange = (form) => {
     if (form.fieldType === 'edit') {
