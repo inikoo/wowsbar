@@ -84,7 +84,7 @@ class IndexPortfolioSocialAccounts extends InertiaAction
                     ]
                 )
                 ->withExportLinks($exportLinks)
-                ->column(key: 'platform', label: __('platform'), sortable: true)
+                ->column(key: 'platform', label: ['fal', 'microphone-stand'], sortable: true, type: 'icon')
                 ->column(key: 'username', label: __('username'), sortable: true)
                 ->column(key: 'url', label: __('profile url'), sortable: true)
                 ->column(key: 'number_posts', label: __('number posts'), sortable: true)

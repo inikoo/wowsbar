@@ -23,6 +23,8 @@ const props = defineProps<{
     bannerType: string
 }>()
 
+console.log('sss',props)
+
 const { data, fieldName } = toRefs(props)
 const isOpen = ref(false)
 const fileInput = ref(null)
@@ -149,10 +151,12 @@ const screenViewChange = (value: string) => {
                             'aspect-[4/1]': screenView === 'desktop'
                         }
                         : 'aspect-[2/1] md:aspect-[3/1] lg:aspect-[4/1]'
-            ]">
-                <div class="relative w-full h-full flex items-center bg-gray-100 overflow-hidden">
+            ]" :style="{ background: get(data,'background','red')}">
+            <div class="relative flex items-center overflow-hidden" >
+                <div v-if="value">
                     <Image :src="get(value, [`${screenView}`, 'source'], value.desktop.source)"
                         :alt="value.name" :imageCover="true"/>
+                </div>
                 </div>
             </div>
         </div>

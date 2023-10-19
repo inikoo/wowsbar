@@ -37,6 +37,8 @@ Route::prefix('websites')->name('websites.')->group(function () {
 
 Route::get('/portfolio-websites/uploads/history', IndexPortfolioWebsiteUploads::class)->name('website.uploads.history');
 Route::get('/portfolio-websites/uploads/template/download', DownloadPortfolioWebsiteUploadsTemplate::class)->name('website.uploads.template.download');
+
+
 Route::get('/social-accounts', IndexPortfolioSocialAccounts::class)->name('social-accounts.index');
 Route::get('/social-accounts/create', CreatePortfolioSocialAccount::class)->name('social-accounts.create');
 Route::get('/social-accounts/{portfolioSocialAccount}', ShowPortfolioSocialAccount::class)->name('social-accounts.show');

@@ -26,7 +26,8 @@ class PortfolioSocialAccountResource extends JsonResource
             'platform'         => $socialAccount->platform,
             'url'              => $socialAccount->url,
             'number_posts'     => $socialAccount->number_posts,
-            'number_followers' => $socialAccount->number_followers
+            'number_followers' => $socialAccount->number_followers,
+            'platform_icon'    => $socialAccount->platform->platformIcon()[$socialAccount->platform->value]
         ];
     }
 }

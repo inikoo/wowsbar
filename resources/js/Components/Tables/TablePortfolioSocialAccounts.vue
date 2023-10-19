@@ -7,7 +7,19 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3'
 import Table from '@/Components/Table/Table.vue'
+import Icon from "@/Components/Icon.vue";
+import {library} from "@fortawesome/fontawesome-svg-core";
+import {
+    faFacebook,
+    faInstagram,
+    faLinkedin,
+    faPinterest,
+    faTiktok,
+    faTwitter, faYoutube
+} from "@fortawesome/free-brands-svg-icons";
+import { faMicrophoneStand } from '@fal/'
 
+library.add(faFacebook, faTwitter, faTiktok, faPinterest, faLinkedin, faInstagram, faYoutube, faMicrophoneStand)
 
 const props = defineProps<{
     data: object
@@ -28,6 +40,11 @@ function accountRoute(account) {
 
 <template>
     <Table :resource="data" :name="tab" class="mt-5">
+        <template #cell(platform)="{ item: account }">
+            <div class="text-gray-500">
+                <Icon class="ml-1" :data="account['platform_icon']"/>
+            </div>
+        </template>
         <template #cell(username)="{ item: account }">
             <Link :href="accountRoute(account)" :id="account['slug']" class="py-2 px-1">
                 {{ account['username'] }}

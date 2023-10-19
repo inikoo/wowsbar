@@ -282,6 +282,7 @@ const compIsDataFirstTimeCreated = computed(() => {
     <PageHeading :data="pageHead">
         <template #other="{ dataPageHead: head }">
             <Publish
+                v-if="data.components.length > 0"
                 v-model="comment"
                 :isDataFirstTimeCreated="compIsDataFirstTimeCreated"
                 :isHashSame="compIsHashSameWithPrevious"
