@@ -73,7 +73,7 @@ class UploadImagesToBanner
     public function rules(): array
     {
         return [
-            'images' => ['required'],
+            'images'   => ['required'],
             'images.*' => ["mimes:jpg,png,jpeg|max:102400"]
         ];
     }

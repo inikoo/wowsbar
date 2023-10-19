@@ -169,7 +169,7 @@ class GetLayout
                             'route' => [
                                 'name' => 'customer.banners.websites.index',
                             ]
-                        ],
+                        ],/*
                         [
                             'icon'  => ['fal', 'fa-photo-video'],
                             'label' => __('gallery'),
@@ -177,7 +177,7 @@ class GetLayout
                                 'name' => 'customer.banners.gallery',
                             ]
                         ],
-
+                        */
                     ],
 
                 ]
