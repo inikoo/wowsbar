@@ -33,10 +33,11 @@ const galleryStore = ref(useGalleryStore())
 const isDragging = ref(false);
 const isOpenCropModal = ref(false);
 const uploadedFilesList =ref([])
+const fileInput = ref(null);
 
 const closeCropModal = () => {
-    uploadedFilesList.value = [];
     isOpenCropModal.value = false;
+    fileInput.value.value = "";
 };
 
 
@@ -95,7 +96,6 @@ const collectImage = (image) => {
 }
 
 const dragover = (e) => {
-    console.log(e)
     e.preventDefault();
     isDragging.value = true;
 };
@@ -113,11 +113,13 @@ const drop = (e) => {
 };
 
 const uploadImageRespone = (res) => {
+   fileInput.value.value = "";
    galleryStore.value.uploaded_images.push(...res.data)
+   uploadedFilesList.value = []
    isOpenCropModal.value = false
 };
 
-const addComponent = async (element) => {
+const addComponent =  (element) => {
     uploadedFilesList.value = element.target.files;
     isOpenCropModal.value = true;
 };
@@ -194,8 +196,7 @@ const addComponent = async (element) => {
         <Button :style="`tertiary`" class="relative">
             <FontAwesomeIcon icon='fas fa-plus' class='' aria-hidden='true' />
                 <span>{{ trans("Add Images") }}</span>
-                    <label class="bg-transparent inset-0 absolute inline-block cursor-pointer" id="input-slide-large-mask"
-                        for="fileInput" />
+                    <label class="bg-transparent inset-0 absolute inline-block cursor-pointer" id="input-slide-large-mask" for="fileInput" />
                     <input ref="fileInput" type="file" multiple name="file" id="fileInput" @change="addComponent"
                         accept="image/*" class="absolute cursor-pointer rounded-md border-gray-300 sr-only" />
         </Button>
