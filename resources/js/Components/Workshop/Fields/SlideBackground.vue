@@ -23,7 +23,6 @@ const props = defineProps<{
     bannerType: string
 }>()
 
-console.log('sss',props)
 
 const { data, fieldName } = toRefs(props)
 const isOpen = ref(false)

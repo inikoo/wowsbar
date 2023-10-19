@@ -536,6 +536,7 @@ const uploadImageRespone = (res) => {
     props.data.components = [...props.data.components, ...newFiles];
     isOpenCropModal.value = false;
     isOpenGalleryImages.value = false
+    commonEditActive.value = false
     currentComponentBeenEdited.value = props.data.components[ props.data.components.length - 1 ]
 };
 
@@ -687,7 +688,12 @@ const addSlide=()=>{
         <!-- Modal: Gallery -->
         <Modal :isOpen="isOpenGalleryImages" @onClose="isOpenGalleryImages = false">
             <div>
-                <GalleryImages :addImage="uploadImageRespone" :closeModal="()=>isOpenGalleryImages = false"/>
+                <GalleryImages
+                 :addImage="uploadImageRespone" 
+                 :closeModal="()=>isOpenGalleryImages = false"  
+                 :imagesUploadRoute="props.imagesUploadRoute"  
+                 :ratio="data.type == 'square' ? {w: 1, h: 1} : {w: 4, h: 1}" 
+                 />
             </div>
         </Modal>
 

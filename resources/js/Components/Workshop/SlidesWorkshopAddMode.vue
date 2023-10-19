@@ -50,14 +50,12 @@ const isOpenGalleryImages = ref(false)
 const closeModal = () => {
     addedFiles.value.files = null
     isOpenModalCrop.value = false
-    // fileInput.value.value = ""
 }
 
 const isDragging = ref(false)
 
 
 const dragover = (e) => {
-    console.log(e)
     e.preventDefault()
     isDragging.value = true
 }
