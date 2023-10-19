@@ -27,7 +27,7 @@ const props = defineProps<{
 
 const emits = defineEmits()
 
-const area = ref(null)
+const cornerArea = ref(null)  // { "label": "Bottom right", "valueForm": null, "id": "bottomRight" } 
 
 const setFormValue = (data: Object, fieldName: String) => {
     if (Array.isArray(fieldName)) {
@@ -46,12 +46,13 @@ const getNestedValue = (obj: Object, keys: Array) => {
 
 
 
-const value = ref(setFormValue(props.data, props.fieldName))
-const corners = ref([
-    { label: trans('top left'), valueForm: get(value.value, [`topLeft`], null), id: 'topLeft' },
-    { label: trans('Top right'), valueForm: get(value.value, [`topRight`], null), id: 'topRight' },
-    { label: trans('bottom left'), valueForm: get(value.value, [`bottomLeft`], null), id: 'bottomLeft' },
-    { label: trans('Bottom right'), valueForm: get(value.value, [`bottomRight`], null), id: 'bottomRight' },
+const cornersValue = ref(setFormValue(props.data, props.fieldName))
+
+const cornersSection = ref([
+    { label: trans('top left'), valueForm: get(cornersValue.value, [`topLeft`], null), id: 'topLeft' },
+    { label: trans('Top right'), valueForm: get(cornersValue.value, [`topRight`], null), id: 'topRight' },
+    { label: trans('bottom left'), valueForm: get(cornersValue.value, [`bottomLeft`], null), id: 'bottomLeft' },
+    { label: trans('Bottom right'), valueForm: get(cornersValue.value, [`bottomRight`], null), id: 'bottomRight' },
 ])
 
 const optionType = [
@@ -265,7 +266,6 @@ const optionType = [
     },
 ]
 
-
 const filterType = () => {
     if (props.fieldData?.optionType) {
         const data = optionType.filter((item) => {
@@ -280,16 +280,16 @@ const filterType = () => {
 const Type = filterType()
 
 const defaultCurrent = computed(() => {
-    if (area.value != null) {
-        if(value.value){
-        const areaType = value.value[area.value.id]?.type;
-        const index = Type.findIndex(item => item.value === areaType);
-        return index == -1 ? 0 : index
-        }else return 0
+    if (cornerArea.value != null) { // If Corner area is selected yet
+        if(cornersValue.value) {
+            const areaType = cornersValue.value[cornerArea.value.id]?.type;
+            const index = Type.findIndex(item => item.value === areaType);
+            return index == -1 ? 0 : index
+        } else return 0
     } else {
-        return 0; // Return 0 if area.value is null
+        return 0; // Return 0 if cornerArea.value is null
     }
-});
+})
 
 // Set current to the default index
 const current = ref(defaultCurrent.value)
@@ -299,43 +299,44 @@ const currentTypeFields = computed(() => {
     return currentType.fields.map((field) => {
         return {
             ...field,
-            value: currentType.value === Type[current.value].value && get(area.value, ['valueForm', 'type']) == currentType.value ? get(area.value, ['valueForm', 'data', `${field.name}`]) : null,
+            value: currentType.value === Type[current.value].value && get(cornerArea.value, ['valueForm', 'type']) == currentType.value ? get(cornerArea.value, ['valueForm', 'data', `${field.name}`]) : null,
         }
     })
 })
 
-
-const cornerClick = (corner) => {
-    area.value = corner;
+// When section Corner Side clicked
+const cornerSideClick = (cornerSection) => {
+    console.log('aaaa', cornerSection)
+    cornerArea.value = cornerSection
     current.value = defaultCurrent.value
-    setUpData();
+    setUpData()
 }
 
 const setUpData = () => {
     const currentType = Type[current.value];
     let data = {};
+
     for (const s of currentTypeFields.value) {
-        // set(data,s.name,get(s,'value',null))
-        data[s.name] = s.value;
+        data[s.name] = s.value
     }
 
-    if (!value.value) {
-        value.value = {}; // Initialize corners as an empty object
+    if (!cornersValue.value) {
+        cornersValue.value = {}; // Initialize corners if null
     }
 
-    let setData = cloneDeep(value.value[area.value.id]);
+    let setData = cloneDeep(cornersValue.value[cornerArea.value.id]);
     setData = {
         type: currentType.value,
         data: { ...data },
     };
-
-    value.value[area.value.id] = setData;
+    
+    cornersValue.value[cornerArea.value.id] = setData;
 
     // Check if corners is an object, and convert it to an array if needed
-    let cornersArray = Array.isArray(corners) ? corners : Object.values(corners);
+    let cornersArray = Array.isArray(cornersSection.value) ? cornersSection.value : Object.values(cornersSection.value);
 
     // Find the index in the cornersArray
-    const indexCorners = cornersArray.findIndex((item) => item.id == area.value.id);
+    const indexCorners = cornersArray.findIndex((item) => item.id == cornerArea.value.id);
 
     // Use optional chaining (?.) to check if valueForm is defined
     if (indexCorners !== -1 && cornersArray[indexCorners]?.valueForm != null) {
@@ -344,38 +345,31 @@ const setUpData = () => {
 
     if(Type[current.value]){
         if(Type[current.value].value == 'slideControls'){
-            for(const set in value.value){
-                if(value.value[set].type == 'slideControls' && area.value.id != set){
-                    delete value.value[set]
+            for(const set in cornersValue.value){
+                if(cornersValue.value[set].type == 'slideControls' && cornerArea.value.id != set){
+                    delete cornersValue.value[set]
                 }
             }
         }
         if(Type[current.value].value == 'clear'){
-            for(const set in value.value){
-                if(area.value.id == set){
-                    delete value.value[set]
+            for(const set in cornersValue.value){
+                if(cornerArea.value.id == set){
+                    delete cornersValue.value[set]
                 }
             }
         }
     }
-
-    // console.log('iniiiii',value.value)
     
-    updateFormValue(value.value)
+    updateFormValue(cornersValue.value)
 };
 
-const typeClick = (key) => {
-    console.log('key',key)
+const clickTypeCorner = (key) => {
+    console.log('key', key)
     current.value = key 
     setUpData();
 }
 
-
-
 const updateFormValue = (newValue) => {
-    // Step 1: Log the newValue
-
-
     // Step 2: Iterate over properties of newValue
     for (const v in newValue) {
         if (newValue[v].type != 'slideControls') {
@@ -408,8 +402,11 @@ const updateFormValue = (newValue) => {
     emits("update:data", target);
 };
 
-const OnchangeFields=(field,value)=>{
-    field.value = value
+// When field inside corner updated
+const onUpdateFieldCorner = (field, newValue: string | number) =>{
+    console.log(field)
+    // Input, color picker, dll
+    field.value = newValue
     setUpData()
 }
 
@@ -424,34 +421,35 @@ defineExpose({
     <div class="space-y-8">
         <!-- Choose: The Corners box -->
         <div class="grid grid-cols-2 gap-0.5 h-full bg-amber-400 border border-gray-300">
-            <div v-for="(corner, index) in corners" :key="corner.id"
+            <div v-for="(cornerSection, index) in cornersSection" :key="cornerSection.id"
                 class="relative overflow-hidden flex items-center justify-center flex-grow text-base font-semibold py-4"
                 :class="[
-                    common && common.corners?.hasOwnProperty(corner.id) ? 'cursor-not-allowed bg-gray-200 text-red-500' : get(area, 'id') == corner.id ? 'bg-amber-300 text-gray-600 cursor-pointer' : 'bg-gray-100 hover:bg-gray-200 text-gray-400 cursor-pointer'
+                    common && common.corners?.hasOwnProperty(cornerSection.id) ? 'cursor-not-allowed bg-gray-200 text-red-500' : get(cornerArea, 'id') == cornerSection.id ? 'bg-amber-300 text-gray-600 cursor-pointer' : 'bg-gray-100 hover:bg-gray-200 text-gray-400 cursor-pointer'
                 ]"
                 @click="()=>{
-                    common && common.corners?.hasOwnProperty(corner.id) ?  null : cornerClick(corner)
-                    }"
+                    common && common.corners?.hasOwnProperty(cornerSection.id) ?  null : cornerSideClick(cornerSection)
+                }"
             >
-                <div v-if="common && common.corners?.hasOwnProperty(corner.id)" class="isolate text-sm italic">
+                <div v-if="common && common.corners?.hasOwnProperty(cornerSection.id)" class="isolate text-sm italic">
                     <div class=""><font-awesome-icon :icon="['fas', 'lock']" class="mr-2"/> Already used in common</div>
                     <!-- <div class="-z-10 absolute left-0 top-1/2 -translate-x-10 bg-gray-400/50 h-0.5 rotate-[9deg] w-[120%]"></div>
                     <div class="-z-10 absolute left-0 top-1/2 -translate-x-10 bg-gray-400/50 h-0.5 -rotate-[9deg] w-[120%]"></div> -->
                 </div>
-                <span v-else class="capitalize">{{ corner.label }}</span>
+                <span v-else class="capitalize">{{ cornerSection.label }}</span>
             </div>
         </div>
 
         <!-- Choose: The type of component (after select Corners) -->
-        <div v-if="area != null" class="h-full">
+        <div v-if="cornerArea != null" class="h-full">
             <!-- Choose: Card -->
             <div class="w-full flex">
                 <span class="isolate flex w-full rounded-md gap-x-2">
-                    <!-- Select the corners -->
-                    <button v-for="(item, key) in Type" :key="item.value" type="button" @click="typeClick(key)"
-                    :class="[
+                    <!-- Select the type of Corner: Text, Link Button, Slide Controls, Ribbon -->
+                    <button v-for="(item, index) in Type" :key="item.value" type="button"
+                        @click="clickTypeCorner(index)"
+                        :class="[
                             'py-2', 'px-4', 'rounded',
-                            current === key ? 'bg-gray-300 text-gray-600 ring-2 ring-gray-500' : 'hover:bg-gray-200/70 border border-gray-400'
+                            current === index ? 'bg-gray-300 text-gray-600 ring-2 ring-gray-500' : 'hover:bg-gray-200/70 border border-gray-400'
                         ]"
                     >
                         {{ item.label }}
@@ -467,31 +465,30 @@ defineExpose({
 
             <!-- Field -->
             <div class="mt-6 block">
-                <div v-for="(field, index ) in currentTypeFields" :key="field.name + index">
-                    <dl class="pb-4 flex flex-col max-w-lg gap-1">
-                        <dt class="text-sm font-medium text-gray-500 capitalize">
-                            <div class="inline-flex items-start leading-none">
-                                <span>{{ field.label }}</span>
+                <dl v-for="(field, index ) in currentTypeFields" :key="field.name + index" class="pb-4 flex flex-col max-w-lg gap-1">
+                    <dt class="text-sm font-medium text-gray-500 capitalize">
+                        <div class="inline-flex items-start leading-none">
+                            <span>{{ field.label }}</span>
+                        </div>
+                    </dt>
+                    <dd class="sm:col-span-2">
+                        <!-- Available Field on Corners -->
+                        <div class="mt-1 flex text-sm text-gray-700 sm:mt-0">
+                            <div class="relative flex-grow" v-if="field.type == 'input' || field.type == 'number' ">
+                                <Input :key="field.label + index" :value="field.value" @input="setUpData"  @onChange="(newValue)=>onUpdateFieldCorner(field, newValue)" :fieldData="field" />
                             </div>
-                        </dt>
-                        <dd class="sm:col-span-2">
-                            <div class="mt-1 flex text-sm text-gray-700 sm:mt-0">
-                                <div class="relative flex-grow" v-if="field.type == 'input' || field.type == 'number' ">
-                                    <Input :key="field.label + index" :value="field.value" @input="setUpData"  @onChange="(newValue)=>OnchangeFields(field,newValue)" :fieldData="field" />
-                                </div>
-                                <div class="relative flex-grow" v-if="field.type == 'colorPicker'">
-                                    <ColorPicker  :key="field.label + index" :color=field.value @onChange="(newValue)=>OnchangeFields(field,newValue)" :fieldData="field"/>
-                                </div>
-                                <div class="relative flex-grow" v-if="field.type == 'radio'">
-                                    <Radio :key="field.label + index" :radioValue="field.value" :fieldData="field" @onChange="(newValue)=>OnchangeFields(field,newValue)"/>
-                                </div>
-                                <div class="relative flex-grow" v-if="field.type == 'select'">
-                                    <Select :value="field.value"  :key="field.label + index" :fieldData="{ options: field.option }" @onChange="(newValue) => OnchangeFields(field,newValue)" />
-                                </div>
+                            <div class="relative flex-grow" v-if="field.type == 'colorPicker'">
+                                <ColorPicker  :key="field.label + index" :color=field.value @onChange="(newValue)=>onUpdateFieldCorner(field, newValue)" :fieldData="field"/>
                             </div>
-                        </dd>
-                    </dl>
-                </div>
+                            <div class="relative flex-grow" v-if="field.type == 'radio'">
+                                <Radio :key="field.label + index" :radioValue="field.value" :fieldData="field" @onChange="(newValue)=>onUpdateFieldCorner(field, newValue)"/>
+                            </div>
+                            <div class="relative flex-grow" v-if="field.type == 'select'">
+                                <Select :value="field.value"  :key="field.label + index" :fieldData="{ options: field.option }" @onChange="(newValue) => onUpdateFieldCorner(field, newValue)" />
+                            </div>
+                        </div>
+                    </dd>
+                </dl>
             </div>
         </div>
     </div>
