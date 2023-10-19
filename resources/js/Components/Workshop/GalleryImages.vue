@@ -199,7 +199,9 @@ const addComponent = async (element) => {
                     <input ref="fileInput" type="file" multiple name="file" id="fileInput" @change="addComponent"
                         accept="image/*" class="absolute cursor-pointer rounded-md border-gray-300 sr-only" />
         </Button>
-        <Button @click="addImage(ImageDataCollect)" id="add-image" >Selected images ({{ ImageDataCollect.data.length }})</Button>
+        <Button @click="addImage(ImageDataCollect)" id="add-image" v-if="ImageDataCollect.data.length > 0">
+             Selected images ({{ ImageDataCollect.data.length }})
+        </Button>
     </div>
 
 
