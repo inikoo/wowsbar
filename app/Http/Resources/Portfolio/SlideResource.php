@@ -24,9 +24,9 @@ class SlideResource extends JsonResource
             'layout'     => $slide->layout,
             'visibility' => $slide->visibility,
             'image'      => [
-                'desktop'=> ImageResource::make($slide->image)->getArray(),
-                'mobile' => $slide->mobile_image_id ? ImageResource::make($slide->imageMobile)->getArray() : null,
-                'tablet' => $slide->tablet_image_id ? ImageResource::make($slide->imageTablet)->getArray() : null
+                'desktop' => $slide->image_id ? ImageResource::make($slide->image)->getArray() : null,
+                'mobile'  => $slide->mobile_image_id ? ImageResource::make($slide->imageMobile)->getArray() : null,
+                'tablet'  => $slide->tablet_image_id ? ImageResource::make($slide->imageTablet)->getArray() : null
             ]
         ];
     }

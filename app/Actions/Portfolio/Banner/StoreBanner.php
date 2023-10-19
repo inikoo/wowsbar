@@ -124,6 +124,15 @@ class StoreBanner
 
     public function prepareForValidation(ActionRequest $request): void
     {
+        if (!$request->exists('portfolio_website_id')) {
+            $count = $request->get('customer')->portfolioWebsites()->count();
+            if ($count == 1) {
+                $portfolioWebsite = $request->get('customer')->portfolioWebsites()->first();
+
+                $request->merge(['portfolio_website_id' => $portfolioWebsite->id]);
+            }
+        }
+
         if (!$request->get('name')) {
             $name = PetName::Generate(2, ' ').' banner';
             $request->merge(['name' => $name]);
