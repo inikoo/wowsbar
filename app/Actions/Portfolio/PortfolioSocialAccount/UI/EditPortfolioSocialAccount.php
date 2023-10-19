@@ -8,10 +8,12 @@
 namespace App\Actions\Portfolio\PortfolioSocialAccount\UI;
 
 use App\Actions\InertiaAction;
+use App\Actions\Portfolio\PortfolioWebsite\UI\GetPortfolioWebsitesOptions;
 use App\Actions\Portfolio\PortfolioWebsite\UI\ShowPortfolioWebsite;
 use App\Enums\Portfolio\PortfolioSocialAccount\PortfolioSocialAccountPlatformEnum;
 use App\Models\Portfolio\PortfolioSocialAccount;
 use Exception;
+use Illuminate\Support\Arr;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -43,83 +45,89 @@ class EditPortfolioSocialAccount extends InertiaAction
      */
     public function htmlResponse(PortfolioSocialAccount $portfolioSocialAccount, ActionRequest $request): Response
     {
+        $sections['properties'] = [
+            'label'  => __('Social account properties'),
+            'icon'   => 'fal fa-sliders-h',
+            'fields' => [
+                'provider' => [
+                    'type' => 'select',
+                    'label' => __('provider'),
+                    'placeholder' => 'Select Account Provider',
+                    'options' => Options::forEnum(PortfolioSocialAccountPlatformEnum::class)->toArray(),
+                    'required' => true,
+                    'value' => $portfolioSocialAccount->platform,
+                    'mode' => 'single'
+                ],
+                'username' => [
+                    'type' => 'input',
+                    'label' => __('username'),
+                    'required' => true,
+                    'value' => $portfolioSocialAccount->username
+                ],
+                'url' => [
+                    'type' => 'input',
+                    'label' => __('profile url'),
+                    'required' => true,
+                    'value' => $portfolioSocialAccount->url
+                ]
+            ]
+        ];
+
+        $currentSection = 'properties';
+        if ($request->has('section') and Arr::has($sections, $request->get('section'))) {
+            $currentSection = $request->get('section');
+        }
+
         return Inertia::render(
             'EditModel',
             [
-                    'title'       => __("Social Account"),
-                    'breadcrumbs' => $this->getBreadcrumbs(
-                        $request->route()->getName(),
-                        $request->route()->originalParameters()
-                    ),
-                    'navigation'   => [
-                        'previous' => $this->getPrevious($portfolioSocialAccount, $request),
-                        'next'     => $this->getNext($portfolioSocialAccount, $request),
+                'title' => __("Social Account"),
+                'breadcrumbs' => $this->getBreadcrumbs(
+                    $request->route()->getName(),
+                    $request->route()->originalParameters()
+                ),
+                'navigation' => [
+                    'previous' => $this->getPrevious($portfolioSocialAccount, $request),
+                    'next' => $this->getNext($portfolioSocialAccount, $request),
+                ],
+                'pageHead' => [
+                    'title' => $portfolioSocialAccount->username,
+                    'icon' => [
+                        'title' => __('social account'),
+                        'icon' => 'fal fa-globe'
                     ],
-                    'pageHead'    => [
-                        'title'   => $portfolioSocialAccount->username,
-                        'icon'    => [
-                            'title' => __('social account'),
-                            'icon'  => 'fal fa-globe'
+
+
+                    'iconRight' =>
+                        [
+                            'icon' => ['fal', 'fa-edit'],
+                            'title' => __("Editing social account")
                         ],
 
-
-                        'iconRight'    =>
-                            [
-                                'icon'  => ['fal', 'fa-edit'],
-                                'title' => __("Editing social account")
-                            ],
-
-                        'actions'   => [
-                            [
-                                'type'  => 'button',
-                                'style' => 'exit',
-                                'label' => __('Exit edit'),
-                                'route' => [
-                                    'name'       => preg_replace('/edit$/', 'show', $request->route()->getName()),
-                                    'parameters' => array_values($request->route()->originalParameters())
-                                ]
+                    'actions' => [
+                        [
+                            'type' => 'button',
+                            'style' => 'exit',
+                            'label' => __('Exit edit'),
+                            'route' => [
+                                'name' => preg_replace('/edit$/', 'show', $request->route()->getName()),
+                                'parameters' => array_values($request->route()->originalParameters())
                             ]
-                        ],
-                    ],
-                    'formData' => [
-                        'blueprint' => [
-                            [
-                                'title'  => __('Account'),
-                                'fields' => [
-                                    'provider' => [
-                                        'type'          => 'select',
-                                        'label'         => __('provider'),
-                                        'placeholder'   => 'Select Account Provider',
-                                        'options'       => Options::forEnum(PortfolioSocialAccountPlatformEnum::class)->toArray(),
-                                        'required'      => true,
-                                        'value'         => $portfolioSocialAccount->provider,
-                                        'mode'          => 'single'
-                                    ],
-                                    'username' => [
-                                        'type'     => 'input',
-                                        'label'    => __('username'),
-                                        'required' => true,
-                                        'value'    => $portfolioSocialAccount->username
-                                    ],
-                                    'url' => [
-                                        'type'     => 'input',
-                                        'label'    => __('url'),
-                                        'required' => true,
-                                        'value'    => $portfolioSocialAccount->url
-                                    ]
-                                ]
-                            ],
-
-                    ],
-                        'args'      => [
-                            'updateRoute' => [
-                                'name'       => 'customer.models.portfolio-social-account.update',
-                                'parameters' => $portfolioSocialAccount->slug
-                            ],
                         ]
                     ],
+                ],
+                'formData' => [
+                    'current'   => $currentSection,
+                    'blueprint' => $sections,
+                    'args' => [
+                        'updateRoute' => [
+                            'name' => 'customer.models.portfolio-social-account.update',
+                            'parameters' => $portfolioSocialAccount->slug
+                        ],
+                    ]
+                ],
 
-                ]
+            ]
         );
     }
 
@@ -129,7 +137,7 @@ class EditPortfolioSocialAccount extends InertiaAction
         return ShowPortfolioWebsite::make()->getBreadcrumbs(
             $routeName,
             $routeParameters,
-            suffix: '('.__('editing').')'
+            suffix: '(' . __('editing') . ')'
         );
     }
 
@@ -154,12 +162,12 @@ class EditPortfolioSocialAccount extends InertiaAction
         }
 
         return match ($routeName) {
-            'customer.portfolio.social-account.edit' => [
+            'customer.portfolio.social-accounts.edit' => [
                 'label' => $portfolioSocialAccount->username,
                 'route' => [
-                    'name'       => $routeName,
+                    'name' => $routeName,
                     'parameters' => [
-                        'portfolioWebsite' => $portfolioSocialAccount
+                        'portfolioSocialAccount' => $portfolioSocialAccount->slug
                     ]
                 ]
             ]

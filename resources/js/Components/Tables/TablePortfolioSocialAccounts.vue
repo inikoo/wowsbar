@@ -39,7 +39,7 @@ function accountRoute(account) {
 </script>
 
 <template>
-    <Table :resource="data" :name="tab" class="mt-5">
+    <Table :resource="data" :name="'social_account'" class="mt-5">
         <template #cell(platform)="{ item: account }">
             <div class="text-gray-500">
                 <Icon class="ml-1" :data="account['platform_icon']"/>

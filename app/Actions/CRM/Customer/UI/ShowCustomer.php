@@ -8,12 +8,14 @@
 namespace App\Actions\CRM\Customer\UI;
 
 use App\Actions\CRM\Appointment\UI\IndexAppointments;
+use App\Actions\Portfolio\PortfolioSocialAccount\UI\IndexPortfolioSocialAccounts;
 use App\Actions\Portfolios\CustomerWebsite\UI\IndexCustomerWebsites;
 use App\Actions\InertiaAction;
 use App\Actions\Organisation\UI\CRM\ShowCRMDashboard;
 use App\Enums\UI\Customer\CustomerTabsEnum;
 use App\Http\Resources\CRM\AppointmentResource;
 use App\Http\Resources\CRM\CustomerResource;
+use App\Http\Resources\Portfolio\PortfolioSocialAccountResource;
 use App\Models\CRM\Customer;
 use App\Models\Market\Shop;
 use Inertia\Inertia;
@@ -147,6 +149,10 @@ class ShowCustomer extends InertiaAction
                     fn () => IndexCustomerWebsites::run($customer)
                     : Inertia::lazy(fn () => IndexCustomerWebsites::run($customer)),
 
+                CustomerTabsEnum::SOCIAL_ACCOUNT->value => $this->tab == CustomerTabsEnum::SOCIAL_ACCOUNT->value ?
+                    fn () => PortfolioSocialAccountResource::collection(IndexPortfolioSocialAccounts::run($customer))
+                    : Inertia::lazy(fn () => PortfolioSocialAccountResource::collection(IndexPortfolioSocialAccounts::run($customer))),
+
             ]
         )->table(IndexAppointments::make()->tableStructure(parent: $customer, prefix: CustomerTabsEnum::APPOINTMENTS->value))
             ->table(IndexCustomerWebsites::make()->tableStructure(
@@ -182,7 +188,7 @@ class ShowCustomer extends InertiaAction
                 //         ]
                 //     ]
                 // ]
-            ));
+            ))->table(IndexPortfolioSocialAccounts::make()->tableStructure(prefix: CustomerTabsEnum::SOCIAL_ACCOUNT->value));
     }
 
     public function jsonResponse(Customer $customer): CustomerResource

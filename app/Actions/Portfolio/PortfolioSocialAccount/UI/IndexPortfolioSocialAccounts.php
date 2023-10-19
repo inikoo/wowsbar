@@ -14,6 +14,7 @@ use App\Enums\UI\Customer\PortfolioSocialAccountsTabsEnum;
 use App\Http\Resources\History\HistoryResource;
 use App\Http\Resources\Portfolio\PortfolioSocialAccountResource;
 use App\InertiaTable\InertiaTable;
+use App\Models\CRM\Customer;
 use App\Models\Portfolio\PortfolioSocialAccount;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -42,7 +43,7 @@ class IndexPortfolioSocialAccounts extends InertiaAction
 
 
     /** @noinspection PhpUndefinedMethodInspection */
-    public function handle($prefix = null): LengthAwarePaginator
+    public function handle(Customer $customer = null, $prefix = null): LengthAwarePaginator
     {
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
             $query->where(function ($query) use ($value) {
@@ -56,6 +57,10 @@ class IndexPortfolioSocialAccounts extends InertiaAction
         }
 
         $queryBuilder = QueryBuilder::for(PortfolioSocialAccount::class);
+
+        if($customer) {
+            $queryBuilder->where('customer_id', $customer->id);
+        }
 
         return $queryBuilder
             ->defaultSort('username')
@@ -143,7 +148,7 @@ class IndexPortfolioSocialAccounts extends InertiaAction
             ]
         )->table(
             $this->tableStructure(
-                prefix:PortfolioSocialAccountsTabsEnum::ACCOUNTS->value,
+                prefix: 'social_account',
             )
         )->table(IndexHistory::make()->tableStructure());
     }
