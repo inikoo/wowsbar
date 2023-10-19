@@ -138,6 +138,10 @@ class StoreBanner
             $name = PetName::Generate(2, ' ').' banner';
             $request->merge(['name' => $name]);
         }
+        if (!$request->get('type')) {
+            $request->merge(['type' => BannerTypeEnum::LANDSCAPE->value]);
+        }
+
     }
 
     public function rules(): array
