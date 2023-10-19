@@ -16,7 +16,7 @@ enum PortfolioSocialAccountTabsEnum: string
     use HasTabs;
 
     case ACCOUNT = 'account';
-    case POSTS = 'posts';
+    case POST = 'post';
     case ADS = 'ads';
     case CHANGELOG = 'changelog';
 
@@ -27,7 +27,7 @@ enum PortfolioSocialAccountTabsEnum: string
                 'title' => __('account'),
                 'icon' => 'fas fa-info-circle',
             ],
-            PortfolioSocialAccountTabsEnum::POSTS => [
+            PortfolioSocialAccountTabsEnum::POST => [
                 'title' => __('posts'),
                 'icon' => 'fal fa-layer-group',
             ],
