@@ -163,13 +163,14 @@ class GetLayout
                                 'name' => 'customer.banners.banners.index',
                             ]
                         ],
+                        /*
                         [
                             'icon'  => ['fal', 'fa-globe'],
                             'label' => __('websites'),
                             'route' => [
                                 'name' => 'customer.banners.websites.index',
                             ]
-                        ],/*
+                        ],
                         [
                             'icon'  => ['fal', 'fa-photo-video'],
                             'label' => __('gallery'),
