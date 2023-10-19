@@ -13,19 +13,33 @@ import { useTruncate } from '@/Composables/useTruncate.js'
 import Button from '../Elements/Buttons/Button.vue'
 import EmptyState from '@/Components/Utils/EmptyState.vue'
 import { trans } from "laravel-vue-i18n"
+import CropImage from "@/Components/Workshop/CropImage/CropImage.vue"
+import Modal from '@/Components/Utils/Modal.vue'
 
 library.add(faCloudUpload, faImagePolaroid, faSpinnerThird)
 
 const props = defineProps({
     addImage: Function,
     closeModal: Function,
+    imagesUploadRoute : Object,
+    ratio : Object,
     multiple: {
         type: Boolean,
         default: true
     }
 });
 
-const galleryStore = useGalleryStore()
+const galleryStore = ref(useGalleryStore())
+const isDragging = ref(false);
+const isOpenCropModal = ref(false);
+const uploadedFilesList =ref([])
+const fileInput = ref(null);
+
+const closeCropModal = () => {
+    isOpenCropModal.value = false;
+    fileInput.value.value = "";
+};
+
 
 // const galleryData: any = reactive({
 //     'uploaded_images': [],
@@ -47,7 +61,7 @@ const getData = async (tabName: string, routeUrl: string) => {
         const response = await axios.get(
             route(routeUrl)
         )
-        galleryStore[tabName].push(...response.data.data)
+        galleryStore.value[tabName].push(...response.data.data)
         // console.log(galleryStore[tabName])
         loadingState.value = false
     } catch (error) {
@@ -59,9 +73,9 @@ const getData = async (tabName: string, routeUrl: string) => {
 // Use watch to fetch at first load
 watch(activeSidebar, (newSidebar: string) => {
     if(newSidebar == 'uploaded_images') {
-        galleryStore[newSidebar].length === 0 ? getData(newSidebar, 'customer.banners.gallery.uploaded-images.index') : false
+        galleryStore.value[newSidebar].length === 0 ? getData(newSidebar, 'customer.banners.gallery.uploaded-images.index') : false
     } else if (newSidebar == 'stock_images') {
-        galleryStore[newSidebar].length === 0 ? getData(newSidebar, 'customer.banners.gallery.stock-images.index') : false
+        galleryStore.value[newSidebar].length === 0 ? getData(newSidebar, 'customer.banners.gallery.stock-images.index') : false
     }
 }, { immediate: true })
 
@@ -80,6 +94,35 @@ const collectImage = (image) => {
     }
 
 }
+
+const dragover = (e) => {
+    e.preventDefault();
+    isDragging.value = true;
+};
+
+const dragleave = () => {
+    isDragging.value = false;
+};
+
+const drop = (e) => {
+    e.preventDefault();
+    uploadedFilesList.value = e.dataTransfer.files;
+    if( e.dataTransfer.files.length > 0 ) isOpenCropModal.value = true;
+    isDragging.value = false;
+    isOpenCropModal.value = true
+};
+
+const uploadImageRespone = (res) => {
+   fileInput.value.value = "";
+   galleryStore.value.uploaded_images.push(...res.data)
+   uploadedFilesList.value = []
+   isOpenCropModal.value = false
+};
+
+const addComponent =  (element) => {
+    uploadedFilesList.value = element.target.files;
+    isOpenCropModal.value = true;
+};
 
 </script>
 
@@ -107,7 +150,7 @@ const collectImage = (image) => {
         </section>
 
         <!-- Main content -->
-        <section class="bg-gray-50 h-96 w-full rounded-r-md">
+        <section class="bg-gray-50 h-96 w-full rounded-r-md"  @dragover="dragover" @dragleave="dragleave" @drop="drop">
             <div v-if="loadingState" class="w-full h-full flex justify-center items-start">
                 <div class="pt-6 px-4 grid grid-cols-4 gap-x-3 gap-y-6 max-h-96 w-full overflow-auto">
                     <div v-for="imageData in 7" class="relative flex flex-col gap-y-1">
@@ -122,7 +165,7 @@ const collectImage = (image) => {
                 <div v-if="galleryStore?.[activeSidebar].length == 0" class="h-full flex justify-center items-center">
                     <EmptyState :data="{
                         title: trans('You haven\'t uploaded any images yet.'),
-                        description: trans('Create new slides in the workshop to get started.'),
+                        description: trans(''),
                     }" />
                 </div>
 
@@ -148,9 +191,29 @@ const collectImage = (image) => {
         </section>
 
     </div>
-    <div class="flex justify-end p-2.5 gap-3 pb-0">
-        <Button @click="closeModal" :style="'tertiary'">Cancel</Button>
-        <Button @click="addImage(ImageDataCollect)" id="add-image" >Add image ({{ ImageDataCollect.data.length }})</Button>
+    <div class="flex justify-end py-2.5 gap-3 pb-0">
+        <Button class=" bg-red-600 text-white" @click="closeModal" :style="'tertiary'">Close</Button>
+        <Button :style="`tertiary`" class="relative">
+            <FontAwesomeIcon icon='fas fa-plus' class='' aria-hidden='true' />
+                <span>{{ trans("Add Images") }}</span>
+                    <label class="bg-transparent inset-0 absolute inline-block cursor-pointer" id="input-slide-large-mask" for="fileInput" />
+                    <input ref="fileInput" type="file" multiple name="file" id="fileInput" @change="addComponent"
+                        accept="image/*" class="absolute cursor-pointer rounded-md border-gray-300 sr-only" />
+        </Button>
+        <Button @click="addImage(ImageDataCollect)" id="add-image" v-if="ImageDataCollect.data.length > 0">
+             Selected images ({{ ImageDataCollect.data.length }})
+        </Button>
     </div>
+
+
+    <Modal :isOpen="isOpenCropModal" @onClose="closeCropModal">
+            <div>
+                <CropImage
+                    :ratio="ratio"
+                    :data="uploadedFilesList"
+                    :imagesUploadRoute="imagesUploadRoute"
+                    :response="uploadImageRespone" />
+            </div>
+        </Modal>
 
 </template>

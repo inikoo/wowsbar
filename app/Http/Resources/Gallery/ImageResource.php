@@ -23,21 +23,21 @@ class ImageResource extends JsonResource
         $media = $this;
 
 
-
         $image          = (new Image())->make($media->getImgProxyFilename(), $media->is_animated);
         $imageThumbnail = (new Image())->make($media->getImgProxyFilename(), $media->is_animated)->resize(0, 48);
 
 
         return [
-            'id'         => $media->id,
-            'slug'       => $media->slug,
-            'uuid'       => $media->uuid,
-            'name'       => $media->name,
-            'mime_type'  => $media->mime_type,
-            'size'       => NaturalLanguage::make()->fileSize($media->size),
-            'thumbnail'  => GetPictureSources::run($imageThumbnail),
-            'source'     => GetPictureSources::run($image),
-            'created_at' => $media->created_at,
+            'id'                   => $media->id,
+            'slug'                 => $media->slug,
+            'uuid'                 => $media->uuid,
+            'name'                 => $media->name,
+            'mime_type'            => $media->mime_type,
+            'size'                 => NaturalLanguage::make()->fileSize($media->size),
+            'thumbnail'            => GetPictureSources::run($imageThumbnail),
+            'source'               => GetPictureSources::run($image),
+            'created_at'           => $media->created_at,
+            'was_recently_created' => $media->wasRecentlyCreated
         ];
     }
 }

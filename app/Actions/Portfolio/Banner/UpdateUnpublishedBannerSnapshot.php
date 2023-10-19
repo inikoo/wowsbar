@@ -29,14 +29,20 @@ class UpdateUnpublishedBannerSnapshot
 
     public function handle(Snapshot $snapshot, array $modelData): Banner
     {
+        $layout = Arr::pull($modelData, 'layout');
+
+        list($layout, $slides) = ParseBannerLayout::run($layout);
 
 
-        $layout                       = Arr::pull($modelData, 'layout');
-        list($layout, $slides)        = ParseBannerLayout::run($layout);
         data_set($modelData, 'layout', $layout);
+
+
+
+
 
         if ($slides) {
             foreach ($slides as $ulid => $slideData) {
+
                 $slide = Slide::where('ulid', $ulid)->first();
                 if ($slide) {
                     UpdateSlide::run(
@@ -44,7 +50,7 @@ class UpdateUnpublishedBannerSnapshot
                         Arr::only($slideData, ['layout', 'imageData'])
                     );
                 } else {
-                    data_set($slide, 'ulid', $ulid);
+                    data_set($slideData, 'ulid', $ulid);
                     StoreSlide::run(
                         snapshot: $snapshot,
                         modelData: $slideData,
@@ -53,8 +59,17 @@ class UpdateUnpublishedBannerSnapshot
             }
         }
 
+        $slidesULIDs=collect($slides)->keys();
 
-        $snapshot=$this->update($snapshot, $modelData, ['layout']);
+
+        $olsULIDs=$snapshot->slides()->pluck('ulid');
+        $olsULIDs->diff($slidesULIDs)->each(function (string $ulid) {
+            $slideToDelete=Slide::firstWhere('ulid', $ulid);
+            $slideToDelete?->delete();
+        });
+
+
+        $snapshot = $this->update($snapshot, $modelData, ['layout']);
 
         /** @var Banner $banner */
         $banner = $snapshot->parent;
@@ -62,7 +77,7 @@ class UpdateUnpublishedBannerSnapshot
 
         $banner->update(
             [
-                'compiled_layout'        => $snapshot->compiledLayout()
+                'compiled_layout' => $snapshot->compiledLayout()
             ]
         );
 
@@ -71,7 +86,7 @@ class UpdateUnpublishedBannerSnapshot
         BannerHydrateUniversalSearch::dispatch($banner);
         CustomerHydrateBanners::dispatch(customer());
 
-        foreach($banner->portfolioWebsites as $portfolioWebsite) {
+        foreach ($banner->portfolioWebsites as $portfolioWebsite) {
             PortfolioWebsiteHydrateBanners::run($portfolioWebsite);
         }
 
