@@ -33,7 +33,7 @@ const handleEyeIcon = () => {
 </script>
 
 <template>
-    <div class="w-full flex group relative ring-1 ring-gray-300 focus-within:ring-2 focus-within:ring-gray-500 shadow rounded-md overflow-hidden">
+    <div class="bg-white w-full flex group relative ring-1 ring-gray-300 focus-within:ring-2 focus-within:ring-gray-500 shadow rounded-md overflow-hidden">
         <div class="relative w-full">
             <input
                 :value="modelValue"
@@ -47,7 +47,7 @@ const handleEyeIcon = () => {
                 :autofocus="autofocus"
                 :required="required"
                 :autocomplete="autocomplete"
-                class="py-2.5 px-3 block w-full
+                class="bg-transparent py-2.5 px-3 block w-full
                     text-gray-600 sm:text-sm placeholder:text-gray-400
                     border-transparent
                     focus:ring-0 focus:ring-gray-500 focus:outline-0 focus:border-transparent
@@ -63,6 +63,12 @@ const handleEyeIcon = () => {
                     aria-hidden="true" />
             </div>
         </div>
+
+        <!-- Slot: for icon error/success/loading in field edit -->
+        <div class="align-middle">
+            <slot name="stateIcon"/>
+        </div>
+
 
         <button v-if="props.type == 'password'"
             @click="handleEyeIcon"

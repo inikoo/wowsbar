@@ -141,7 +141,7 @@ const screenViewChange = (value: string) => {
         </div>
 
         <div class="flex justify-center w-full">
-            <div class="w-fit h-32 lg:h-44 xl:h-64 overflow-hidden border border-gray-300 shadow transition-all duration-200 ease-in-out" :class="[
+            <div class="w-fit max-h-20 lg:max-h-32 overflow-hidden border border-gray-300 shadow transition-all duration-200 ease-in-out" :class="[
                 bannerType == 'square'
                     ? 'aspect-square'  // If banner is a square
                     : screenView
