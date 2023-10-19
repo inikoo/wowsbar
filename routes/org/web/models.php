@@ -17,6 +17,8 @@ use App\Actions\CRM\Appointment\StoreAppointment;
 use App\Actions\CRM\Appointment\UpdateAppointment;
 use App\Actions\CRM\Customer\StoreCustomer;
 use App\Actions\CRM\Customer\UpdateCustomer;
+use App\Actions\CRM\User\StoreOrgCustomerUser;
+use App\Actions\CRM\User\UpdateOrgCustomerUser;
 use App\Actions\HumanResources\Employee\DeleteEmployee;
 use App\Actions\HumanResources\Employee\StoreEmployee;
 use App\Actions\HumanResources\Employee\UpdateEmployee;
@@ -148,6 +150,8 @@ Route::prefix('customer/{customer:id}')->as('customer.')->group(function () {
     Route::patch('', UpdateCustomer::class)->name('update');
     Route::post('websites/upload', ImportPortfolioWebsite::class)->name('website.upload');
     Route::post('websites', StoreCustomerWebsite::class)->name('customer-website.store');
+    Route::post('users', StoreOrgCustomerUser::class)->name('customer-user.store');
+
 });
 
 Route::patch('websites/{customerWebsite:id}', UpdateCustomerWebsite::class)->name('customer-website.update');
@@ -155,3 +159,4 @@ Route::patch('websites/{customerWebsite:id}', UpdateCustomerWebsite::class)->nam
 Route::patch('{portfolioWebsite}/interest', SyncDivisionPortfolioWebsite::class)->name('interest.store');
 
 Route::patch('/organisation-user/{organisationUser:id}', UpdateOrganisationUser::class)->name('organisation-user.update');
+Route::patch('/customer-user/{customerUser:id}', UpdateOrgCustomerUser::class)->name('customer-user.update');

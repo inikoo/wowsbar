@@ -19,13 +19,13 @@ class ParseBannerLayout
     {
         $slides = [];
 
-        foreach (Arr::get($layout, 'components') as $key => $slideData) {
+        foreach (Arr::get($layout, 'components', []) as $key => $slideData) {
             $slides[Arr::get($slideData, 'ulid', $key)] = [
-                'layout'            => Arr::get($slideData, 'layout'),
-                'visibility'        => Arr::get($slideData, 'visibility'),
-                'image_id'          => Arr::get($slideData, 'image.desktop.id'),
-                'mobile_image_id'   => Arr::get($slideData, 'image.mobile.id'),
-                'tablet_image_id'   => Arr::get($slideData, 'image.tablet.id')
+                'layout'          => Arr::get($slideData, 'layout'),
+                'visibility'      => Arr::get($slideData, 'visibility'),
+                'image_id'        => Arr::get($slideData, 'image.desktop.id'),
+                'mobile_image_id' => Arr::get($slideData, 'image.mobile.id'),
+                'tablet_image_id' => Arr::get($slideData, 'image.tablet.id')
             ];
         }
 

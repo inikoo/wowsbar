@@ -15,8 +15,8 @@ use App\Actions\CRM\Customer\UI\EditCustomer;
 use App\Actions\CRM\Customer\UI\IndexCustomers;
 use App\Actions\CRM\Customer\UI\RemoveCustomer;
 use App\Actions\CRM\Customer\UI\ShowCustomer;
-use App\Actions\CRM\User\UI\CreateUser;
-use App\Actions\CRM\User\UI\EditUser;
+use App\Actions\CRM\User\UI\CreateOrgCustomerUser;
+use App\Actions\CRM\User\UI\EditOrgCustomerUser;
 use App\Actions\CRM\User\UI\IndexOrgCustomerUsers;
 use App\Actions\CRM\User\UI\ShowOrgCustomerUser;
 use App\Actions\Leads\Prospect\UI\CreateProspect;
@@ -42,9 +42,9 @@ Route::prefix('customers/{customer}')->as('customers.')->group(function () {
     Route::get('edit', [EditCustomer::class, 'inOrganisation'])->name('edit');
     Route::get('delete', RemoveCustomer::class)->name('remove');
     Route::get('customer-users', [IndexOrgCustomerUsers::class, 'inCustomer'])->name('show.customer-users.index');
-    Route::get('customer-users/create', [CreateUser::class, 'inCustomer'])->name('show.customer-users.create');
+    Route::get('customer-users/create', [CreateOrgCustomerUser::class, 'inCustomer'])->name('show.customer-users.create');
     Route::get('customer-users/{user}', [ShowOrgCustomerUser::class, 'inCustomer'])->name('show.customer-users.show');
-    Route::get('customer-users/{user}/edit', [EditUser::class, 'inCustomer'])->name('show.customer-users.edit');
+    Route::get('customer-users/{user}/edit', [EditOrgCustomerUser::class, 'inCustomer'])->name('show.customer-users.edit');
 
 
 });
@@ -67,9 +67,9 @@ Route::prefix('shop/{shop}')->as('shop.')->group(function () {
         Route::get('/edit', [EditCustomer::class, 'inShop'])->name('edit');
 
         Route::get('/users', [IndexOrgCustomerUsers::class, 'inCustomerInShop'])->name('show.customer-users.index');
-        Route::get('/users/create', [CreateUser::class, 'inCustomerInShop'])->name('show.customer-users.create');
+        Route::get('/users/create', [CreateOrgCustomerUser::class, 'inCustomerInShop'])->name('show.customer-users.create');
         Route::get('/users/{customerUser}', [ShowOrgCustomerUser::class, 'inCustomerInShop'])->name('show.customer-users.show');
-        Route::get('users/{customerUser}/edit', [EditUser::class, 'inCustomerInShop'])->name('show.customer-users.edit');
+        Route::get('users/{customerUser}/edit', [EditOrgCustomerUser::class, 'inCustomerInShop'])->name('show.customer-users.edit');
 
         Route::get('/customer-websites', [IndexCustomerWebsites::class, 'inCustomerInShop'])->name('show.customer-websites.index');
         Route::get('/customer-websites/create', [CreateCustomerWebsite::class, 'inCustomerInShop'])->name('show.customer-websites.create');

@@ -8,13 +8,15 @@
 namespace App\Actions\CRM\User\UI;
 
 use App\Actions\InertiaAction;
+use App\Models\CRM\Customer;
+use App\Models\Market\Shop;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
 
-class CreateUser extends InertiaAction
+class CreateOrgCustomerUser extends InertiaAction
 {
-    public function handle(ActionRequest $request): Response
+    public function handle(Customer $customer, ActionRequest $request): Response
     {
         return Inertia::render(
             'CreateModel',
@@ -25,31 +27,32 @@ class CreateUser extends InertiaAction
                 ),
                 'title'       => __('new user'),
                 'pageHead'    => [
-                    'title'        => __('new user'),
-                    'actions'      => [
+                    'title'   => __('new user'),
+                    'actions' => [
                         [
                             'type'  => 'button',
                             'style' => 'cancel',
                             'label' => __('cancel'),
                             'route' => [
-                                'name'       => 'sysadmin.users.index',
+                                'name'       => preg_replace('/create$/', 'index', $request->route()->getName()),
                                 'parameters' => array_values($request->route()->originalParameters())
-                            ],
+                            ]
                         ]
                     ]
                 ],
-                'formData' => [
+                'formData'    => [
                     'blueprint' => [
                         [
-                            'title'  => __('create user'),
+                            'title'  => __('credentials'),
+                            'icon'   => 'fal fa-key',
                             'fields' => [
 
-                                'username' => [
+                                'email'        => [
                                     'type'  => 'input',
-                                    'label' => __('username'),
+                                    'label' => __('email'),
                                     'value' => ''
                                 ],
-                                'password' => [
+                                'password'     => [
                                     'type'  => 'password',
                                     'label' => __('password'),
                                     'value' => ''
@@ -58,17 +61,26 @@ class CreateUser extends InertiaAction
                                     'type'  => 'input',
                                     'label' => __('name'),
                                     'value' => ''
-                                ],
-                                'email' => [
-                                    'type'  => 'input',
-                                    'label' => __('email'),
-                                    'value' => ''
+                                ]
+                            ]
+                        ],
+                        [
+                            'title'   => __('Permissions'),
+                            'icon'    => 'fal fa-user-lock',
+                            'current' => false,
+                            'fields'  => [
+                                'roles' => [
+                                    'type'  => 'customerRoles',
+                                    'label' => __('roles'),
+                                    'value' => []
                                 ],
                             ]
-                        ]
+                        ],
                     ],
-                    'route'      => [
-                        'name'       => 'models.user.store',
+
+                    'route' => [
+                        'name'       => 'org.models.customer.customer-user.store',
+                        'parameters' => $customer->id
                     ]
                 ],
 
@@ -79,15 +91,23 @@ class CreateUser extends InertiaAction
 
     public function authorize(ActionRequest $request): bool
     {
-        return $request->user()->hasPermissionTo('sysadmin.users.edit');
+        return $request->user()->hasPermissionTo('crm.edit');
     }
 
 
-    public function asController(ActionRequest $request): Response
+    /** @noinspection PhpUnusedParameterInspection */
+    public function inCustomerInShop(Shop $shop, Customer $customer, ActionRequest $request): Response
     {
         $this->initialisation($request);
 
-        return $this->handle($request);
+        return $this->handle($customer, $request);
+    }
+
+    public function inCustomer(Customer $customer, ActionRequest $request): Response
+    {
+        $this->initialisation($request);
+
+        return $this->handle($customer, $request);
     }
 
     public function getBreadcrumbs(string $routeName, array $routeParameters): array

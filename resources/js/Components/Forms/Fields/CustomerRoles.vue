@@ -21,8 +21,8 @@ const props = defineProps<{
 const optionsRoles1 = ref(
 {
     label: 'Super admin',
-    name: 'superadmin',
-    value: props.form[props.fieldName].includes("superadmin"),
+    name: 'super-admin',
+    value: props.form[props.fieldName].includes("super-admin"),
     disabled: false
 })
 
@@ -39,7 +39,7 @@ const optionsRoles3 = reactive([
     {
         label: 'Banners',
         name: 'banners',
-        value: props.form[props.fieldName].includes("superadmin"),
+        value: props.form[props.fieldName].includes("super-admin"),
         disabled: false
     },
     {
@@ -56,8 +56,8 @@ const optionsRoles3 = reactive([
     },
     {
         label: 'ppc',
-        name: 'googleads',
-        value: props.form[props.fieldName].includes("googleads"),
+        name: 'ppc',
+        value: props.form[props.fieldName].includes("ppc"),
         disabled: false
     },
     {

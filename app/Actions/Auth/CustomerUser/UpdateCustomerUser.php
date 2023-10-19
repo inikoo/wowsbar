@@ -38,20 +38,25 @@ class UpdateCustomerUser
 
         data_set($modelData, 'reset_password', false);
 
-
+        /** @var CustomerUser $customerUser */
         $customerUser = $this->update($customerUser, Arr::only($modelData, ['status']));
 
         if ($customerUser->wasChanged('status')) {
             CustomerHydrateCustomerUsers::run($customerUser->customer);
         }
 
+        $customerUser->refresh();
+
+
         foreach (Arr::get($modelData, 'roles', []) as $roleName) {
 
             $role = Role::where('guard_name', 'customer')->where('name', $roleName)->first();
             if ($role) {
+
                 $customerUser->assignRole($role);
             }
         }
+
 
         $user = UpdateUser::run($customerUser->user, Arr::only($modelData, ['contact_name', 'email', 'password', 'reset_password']));
         $customerUser->refresh();
@@ -131,12 +136,6 @@ class UpdateCustomerUser
         return $this->handle($customerUser, $request->validated());
     }
 
-    public function inLoggedUser(ActionRequest $request): CustomerUser
-    {
-        $request->validate();
-
-        return $this->handle($request->get('customerUser'), $request->validated());
-    }
 
     public function action(CustomerUser $customerUser, $objectData): CustomerUser
     {
