@@ -14,6 +14,7 @@ use App\Models\Traits\IsSocialAccount;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\Sluggable\HasSlug;
 
@@ -35,6 +36,7 @@ use Spatie\Sluggable\HasSlug;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Helpers\Audit> $audits
  * @property-read int|null $audits_count
  * @property-read Customer $customer
+ * @property-read \App\Models\Portfolio\PortfolioSocialAccountPost $posts
  * @property-read Shop $shop
  * @method static \Illuminate\Database\Eloquent\Builder|PortfolioSocialAccount newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|PortfolioSocialAccount newQuery()
@@ -90,5 +92,10 @@ class PortfolioSocialAccount extends Model implements Auditable
     public function customer(): BelongsTo
     {
         return $this->belongsTo(Customer::class);
+    }
+
+    public function posts(): HasMany
+    {
+        return $this->hasMany(PortfolioSocialAccountPost::class);
     }
 }

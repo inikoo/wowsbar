@@ -9,10 +9,12 @@ namespace App\Actions\Portfolio\PortfolioSocialAccount\UI;
 
 use App\Actions\Helpers\History\IndexCustomerHistory;
 use App\Actions\InertiaAction;
+use App\Actions\Portfolio\PortfolioSocialAccount\PortfolioSocialAccountPost\UI\IndexPortfolioSocialAccountPosts;
 use App\Actions\UI\Customer\Portfolio\ShowPortfolio;
 use App\Actions\UI\WithInertia;
 use App\Enums\UI\Customer\PortfolioSocialAccountTabsEnum;
 use App\Http\Resources\History\CustomerHistoryResource;
+use App\Http\Resources\Portfolio\PortfolioSocialAccountPostsResource;
 use App\Http\Resources\Portfolio\PortfolioSocialAccountResource;
 use App\Models\Portfolio\PortfolioSocialAccount;
 use Inertia\Inertia;
@@ -79,6 +81,14 @@ class ShowPortfolioSocialAccount extends InertiaAction
                     'navigation' => PortfolioSocialAccountTabsEnum::navigation()
                 ],
 
+                PortfolioSocialAccountTabsEnum::POST->value => $this->tab == PortfolioSocialAccountTabsEnum::POST->value ?
+                    fn () => PortfolioSocialAccountPostsResource::collection(IndexPortfolioSocialAccountPosts::run($portfolioSocialAccount, tab: $this->tab))
+                    : Inertia::lazy(fn () => PortfolioSocialAccountPostsResource::collection(IndexPortfolioSocialAccountPosts::run($portfolioSocialAccount, tab: $this->tab))),
+
+                PortfolioSocialAccountTabsEnum::ADS->value => $this->tab == PortfolioSocialAccountTabsEnum::ADS->value ?
+                    fn () => PortfolioSocialAccountPostsResource::collection(IndexPortfolioSocialAccountPosts::run($portfolioSocialAccount, tab: $this->tab))
+                    : Inertia::lazy(fn () => PortfolioSocialAccountPostsResource::collection(IndexPortfolioSocialAccountPosts::run($portfolioSocialAccount, tab: $this->tab))),
+
                 PortfolioSocialAccountTabsEnum::CHANGELOG->value => $this->tab == PortfolioSocialAccountTabsEnum::CHANGELOG->value ?
                     fn () => CustomerHistoryResource::collection(IndexCustomerHistory::run(
                         customer:$customer,
@@ -92,6 +102,17 @@ class ShowPortfolioSocialAccount extends InertiaAction
                     ))),
             ]
         )
+            ->table(IndexPortfolioSocialAccountPosts::make()->tableStructure(modelOperations: [
+                'createLink' => [
+                    $this->canEdit ? [
+                        'route' => [
+                            'name'       => 'customer.billing.create',
+                            'parameters' => array_values($this->originalParameters)
+                        ],
+                        'label' => __('post')
+                    ] : false
+                ],
+            ], prefix: $this->tab))
             ->table(IndexCustomerHistory::make()->tableStructure(prefix: PortfolioSocialAccountTabsEnum::CHANGELOG->value));
     }
 

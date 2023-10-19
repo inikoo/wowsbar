@@ -25,6 +25,7 @@ import {
     faTwitter, faYoutube
 } from "@fortawesome/free-brands-svg-icons";
 import { faMicrophoneStand } from '@fal/'
+import TablePortfolioSocialAccountPosts from "@/Components/Tables/TablePortfolioSocialAccountPosts.vue";
 
 library.add(faRectangleWide, faMoneyBill, faLayerGroup, faGlobe, faFacebook, faTwitter, faTiktok, faPinterest, faLinkedin, faInstagram, faYoutube, faMicrophoneStand)
 
@@ -37,7 +38,7 @@ const props = defineProps<{
     }
     changelog?: object
     account?: object
-    posts?: object
+    post?: object
     ads?: object
 }>()
 
@@ -48,7 +49,9 @@ const component = computed(() => {
 
     const components = {
         details: ModelDetails,
-        changelog: TableCustomerHistories
+        changelog: TableCustomerHistories,
+        post: TablePortfolioSocialAccountPosts,
+        ads: TablePortfolioSocialAccountPosts,
     };
     return components[currentTab.value];
 
@@ -56,11 +59,9 @@ const component = computed(() => {
 
 </script>
 
-
 <template layout="CustomerApp">
     <Head :title="capitalize(title)"/>
     <PageHeading :data="pageHead"></PageHeading>
     <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate"/>
-    <component :is="component"  :tab="currentTab" :data="props[currentTab]"></component>
+    <component :is="component" :key="currentTab"  :tab="currentTab" :data="props[currentTab]"></component>
 </template>
-
