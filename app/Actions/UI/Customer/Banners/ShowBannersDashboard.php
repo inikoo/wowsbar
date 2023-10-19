@@ -76,7 +76,7 @@ class ShowBannersDashboard extends InertiaAction
                     [
                         'name'  => __('banners'),
                         'icon'  => ['fal', 'fa-sign'],
-                        'href'  => ['customer.banners.index'],
+                        'href'  => ['customer.banners.banners.index'],
                         'index' => [
                             'number' => $customer->portfolioStats->number_banners
                         ]

@@ -136,7 +136,7 @@ class CreateBanner extends InertiaAction
     {
         return array_merge(
             IndexBanners::make()->getBreadcrumbs(
-                'customer.banners.index',
+                'customer.banners.banners.index',
                 $routeParameters
             ),
             [

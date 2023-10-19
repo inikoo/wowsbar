@@ -28,7 +28,7 @@ const props = defineProps<{
 
 function bannerRoute(banner: Banner) {
     return route(
-        'customer.banners.show',
+        'customer.banners.banners.show',
         [banner.slug]);
 }
 

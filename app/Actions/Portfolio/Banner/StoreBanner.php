@@ -250,7 +250,7 @@ class StoreBanner
     public function jsonResponse(Banner $banner): string
     {
         return route(
-            'customer.banners.workshop',
+            'customer.banners.banners.workshop',
             [
                 $banner->slug
             ]
@@ -260,7 +260,7 @@ class StoreBanner
     public function htmlResponse(Banner $banner): RedirectResponse
     {
         return redirect()->route(
-            'customer.banners.workshop',
+            'customer.banners.banners.workshop',
             [
                 $banner->slug
             ]

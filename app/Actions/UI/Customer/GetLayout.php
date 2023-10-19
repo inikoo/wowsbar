@@ -146,7 +146,7 @@ class GetLayout
                 'scope'   => 'banners',
                 'icon'    => ['fal', 'fa-sign'],
                 'label'   => __('Banners'),
-                'route'   => 'customer.banners.index',
+                'route'   => 'customer.banners.banners.index',
                 'topMenu' => [
                     'subSections' => [
 
@@ -160,7 +160,7 @@ class GetLayout
                             'icon'  => ['fal', 'fa-sign'],
                             'label' => __('banners'),
                             'route' => [
-                                'name' => 'customer.banners.index',
+                                'name' => 'customer.banners.banners.index',
                             ]
                         ],
                         [
