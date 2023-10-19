@@ -12,11 +12,26 @@ import loadStyles from '@/Components/CMS/Workshops/GrapeEditor/CustomStyle/style
 export const CustomBlock = (editor : Any) => {
     IconBlock(editor)
     Gradient(editor)
-
+    CodeEditor(editor)
     setTimeout(()=>{
       let categories = editor.BlockManager.getCategories();
       categories.each((category)=>category.set("open",false))
     },500)
+}
+
+export const CodeEditor = (editor : Any )=>{
+    const panelViews = editor.Panels.addPanel({
+        id: 'views'
+      });
+      panelViews.get('buttons').add([{
+        attributes: {
+           title: 'Open Code'
+        },
+        className: 'fa fa-file-code-o',
+        command: 'open-code',
+        togglable: false, //do not close when button is clicked again
+        id: 'open-code'
+      }]);
 }
 
 export const IconBlock = (editor : Any) => {

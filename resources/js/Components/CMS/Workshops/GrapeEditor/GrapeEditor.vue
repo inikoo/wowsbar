@@ -9,6 +9,9 @@ import grapesjsIcons from "grapesjs-icons";
 import { CustomBlock } from "@/Components/CMS/Workshops/GrapeEditor/CustomBlocks/CustomBlock";
 import axios from "axios"
 import gradient from 'grapesjs-style-gradient';
+import CKEeditor from 'grapesjs-plugin-ckeditor'
+import codeEditor from 'grapesjs-component-code-editor';
+import 'grapesjs-component-code-editor/dist/grapesjs-component-code-editor.min.css';
 
 
 const emits = defineEmits(['onSaveToServer']);
@@ -22,6 +25,9 @@ const props = withDefaults(defineProps<{
 }>(),{
     useBasic: true,
 });
+
+;
+
 
 const editorInstance = ref(null);
 const options = { collections: ["ri", "mdi", "uim", "streamline-emojis"]};
@@ -81,7 +87,7 @@ const Load = async (data) => {
     }
 }
 
-const plugin = props.useBasic ?  [Webpage, Basic, usePlugin(grapesjsIcons, options),...props.plugins,gradient] :  [Webpage, usePlugin(grapesjsIcons, options),...props.plugins,gradient]
+const plugin = props.useBasic ?  [Webpage, Basic, usePlugin(grapesjsIcons, options),...props.plugins,gradient,CKEeditor,codeEditor] :  [Webpage, usePlugin(grapesjsIcons, options),...props.plugins,gradient,CKEeditor,codeEditor]
 
 
 onMounted(() => {
@@ -93,8 +99,8 @@ onMounted(() => {
         noticeOnUnload: false,
         plugins: plugin,
         canvas: {
-            styles: ['https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css','https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css'],
-            scripts:['https://cdn.tailwindcss.com']
+            styles: ['https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css' ],
+            scripts:['https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js',"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"]
         },
         storageManager: {
             type: 'remote',
@@ -361,4 +367,12 @@ onMounted(() => {
   opacity: 0;
   cursor: pointer;
 }
+
+
+.gjs-frame a {
+    /* color: #0d6efd; */
+    background-color: red !important;
+    text-decoration: none !important;
+}
+
 </style>

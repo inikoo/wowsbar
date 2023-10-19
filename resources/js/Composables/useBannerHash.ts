@@ -7,6 +7,7 @@ export const useBannerHash = (bannerObject: any) => {
 
     dataFiltered.components.map((component: any) => {
         // To remove all keys but 'id' inside each Slide 
+        if(component.image)
         Object.keys(component.image).forEach(key => {
             // key is mobile, tablet, desktop
             let idImage = get(component.image[key], 'id', null)

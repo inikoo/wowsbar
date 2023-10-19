@@ -539,6 +539,22 @@ const uploadImageRespone = (res) => {
     currentComponentBeenEdited.value = props.data.components[ props.data.components.length - 1 ]
 };
 
+const addSlide=()=>{
+    let setData = [];
+        setData.push({
+            id:  null,
+            ulid: ulid(),
+            layout: {
+                imageAlt: 'New slide',
+            },
+            image: null,
+            background : '#b45309',
+            visibility: true,
+        });
+    const newFiles = [...setData];
+    props.data.components = [...props.data.components, ...newFiles];
+}
+
 </script>
 
 <template>
@@ -589,8 +605,11 @@ const uploadImageRespone = (res) => {
                                 class="handle p-1 text-xs sm:text-base sm:p-2.5 text-gray-700 cursor-grab place-self-center" />
 
                             <!-- Image slide -->
-                            <div>
+                            <div v-if="slide.image">
                                 <Image :src="get(slide,['image',`${screenView}`,'thumbnail'],slide.image.desktop.thumbnail)" class="h-full w-10 sm:w-10 flex items-center justify-center py-1"/>
+                            </div>
+                            <div v-else>
+                                <div :style="{ background :get(slide,'background','red')}" class="h-full w-10 sm:w-10 flex items-center justify-center py-1"/>
                             </div>
 
                             <!-- Label slide -->
@@ -632,14 +651,21 @@ const uploadImageRespone = (res) => {
             <div class="flex flex-wrap md:flex-row gap-x-2 gap-y-1 lg:gap-y-0 w-full justify-between">
                 <Button @click="isOpenGalleryImages = !isOpen" :style="`tertiary`" icon="fal fa-photo-video" label="Gallery" size="xs" class="relative w-full flex justify-center lg:w-fit lg:inline space-x-2" id="gallery" />
 
-                <Button :style="`secondary`" size="xs" class="relative w-full flex justify-center lg:w-fit lg:inline space-x-2">
+                <!-- <Button :style="`secondary`" size="xs" class="relative w-full flex justify-center lg:w-fit lg:inline space-x-2">
                     <FontAwesomeIcon icon='fas fa-plus' class='' aria-hidden='true' />
                     <span>{{ trans("Add slide") }}</span>
                     <label class="bg-transparent inset-0 absolute inline-block cursor-pointer" id="input-slide-large-mask"
                         for="fileInput" />
                     <input ref="fileInput" type="file" multiple name="file" id="fileInput" @change="addComponent"
                         accept="image/*" class="absolute cursor-pointer rounded-md border-gray-300 sr-only" />
+                </Button> -->
+
+                 <Button :style="`secondary`" size="xs" @click="addSlide" class="relative w-full flex justify-center lg:w-fit lg:inline space-x-2">
+                    <FontAwesomeIcon icon='fas fa-plus' class='' aria-hidden='true' />
+                    <span>{{ trans("Add slide") }}</span>
                 </Button>
+
+                
             </div>
             <div class="text-xs text-gray-400 py-1">
                 The recommended image size is 1800 x 450
