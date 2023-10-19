@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref, watch, watchEffect } from 'vue';
 import axios from 'axios'
 
 import Image from '@/Components/Image.vue'
@@ -33,7 +33,7 @@ const galleryStore = ref(useGalleryStore())
 const isDragging = ref(false);
 const isOpenCropModal = ref(false);
 const uploadedFilesList =ref([])
-const fileInput = ref(null);
+const fileInput = ref();
 
 const closeCropModal = () => {
     isOpenCropModal.value = false;
@@ -50,9 +50,9 @@ const activeTab = ref(0)
 const activeSidebar = ref('uploaded_images')
 const loadingState = ref(false)
 
-const changeTab = (index: number) => {
-    activeTab.value = index
-}
+// const changeTab = (index: number) => {
+//     activeTab.value = index
+// }
 
 // Fetch images from API
 const getData = async (tabName: string, routeUrl: string) => {
@@ -79,18 +79,18 @@ watch(activeSidebar, (newSidebar: string) => {
     }
 }, { immediate: true })
 
-const ImageDataCollect = ref({data : []})
+const imagesSelected = ref({data : []})
 
 const collectImage = (image) => {
     // console.log(image)
-    const index = ImageDataCollect.value.data.findIndex((item)=>item.id == image.id)
+    const index = imagesSelected.value.data.findIndex((item)=>item.id == image.id)
     if(props.multiple){
-        if(ImageDataCollect.value.data.length > 0){
-        if(index == -1) ImageDataCollect.value.data.push(image)
-        else ImageDataCollect.value.data.splice(index, 1)
-    }else ImageDataCollect.value.data.push(image)
+        if(imagesSelected.value.data.length > 0){
+        if(index == -1) imagesSelected.value.data.push(image)
+        else imagesSelected.value.data.splice(index, 1)
+    }else imagesSelected.value.data.push(image)
     }else{
-        ImageDataCollect.value.data = [{...image}]
+        imagesSelected.value.data = [{...image}]
     }
 
 }
@@ -112,17 +112,22 @@ const drop = (e) => {
     isOpenCropModal.value = true
 };
 
-const uploadImageRespone = (res) => {
-   fileInput.value.value = "";
-   galleryStore.value.uploaded_images.push(...res.data)
-   uploadedFilesList.value = []
-   isOpenCropModal.value = false
+const uploadImageRespone = (res: { data: File | File[]}) => {
+    fileInput.value.value = ""
+    // If cropped image is duplicate then not add it to Store
+    galleryStore.value.uploaded_images.push(...res.data.filter(item => item.was_recently_created))
+    uploadedFilesList.value = []
+    isOpenCropModal.value = false
 };
 
 const addComponent =  (element) => {
     uploadedFilesList.value = element.target.files;
     isOpenCropModal.value = true;
 };
+
+// watchEffect(() => {
+//     useGalleryStore().uploaded_images
+// })
 
 </script>
 
@@ -170,50 +175,50 @@ const addComponent =  (element) => {
                 </div>
 
                 <div v-else class="pt-6 px-4 grid grid-cols-4 gap-x-3 gap-y-6 max-h-96 overflow-auto">
-                    <div  v-for="imageData in galleryStore?.[activeSidebar]" :key="imageData.id"
+                    <!-- Image list: Uploaded Images & Stock Images -->
+                    <div v-for="imageData in galleryStore?.[activeSidebar]" :key="imageData.id"
                         @click="() => collectImage(imageData)"
                         class="group cursor-pointer relative flex flex-col gap-y-1"
-                        :class="ImageDataCollect.data.find((item: any) => item.id === imageData.id) ? 'font-bold text-gray-500 rounded-md' : 'text-gray-500 opacity-70 hover:opacity-100'"
+                        :class="imagesSelected.data.find((item: any) => item.id === imageData.id) ? 'font-bold text-gray-500' : 'text-gray-500 opacity-70 hover:opacity-100'"
                     >
-                        <div class="flex-none aspect-[4/1] bg-white overflow-hidden rounded" :id="imageData.id"
-                            :class="ImageDataCollect.data.find((item: any) => item.id === imageData.id) ? 'ring-2 ring-orange-500 ring-offset-2' : 'ring-offset-2 group-hover:ring-2 group-hover:ring-gray-300'"
+                        <div class="flex-none aspect-[4/1] bg-white overflow-hidden rounded-sm" :id="imageData.id"
+                            :class="imagesSelected.data.find((item: any) => item.id === imageData.id) ? 'ring-2 ring-amber-400 ring-offset-2' : 'ring-offset-2 group-hover:ring-2 group-hover:ring-gray-300'"
                         >
                             <Image :src="imageData.source" :alt="imageData.imageAlt" class="h-full w-full object-cover object-center" />
                         </div>
-                        <h3 class="overflow-hidden text-xs flex justify-start items-center">
-                            {{ useTruncate(imageData.name, 17, 4) }}
+                        <h3 class="text-xs flex justify-start items-center truncate">
+                            {{ imageData.name }}
                         </h3>
                     </div>
                 </div>
             </div>
-
-
         </section>
-
     </div>
+    
     <div class="flex justify-end py-2.5 gap-3 pb-0">
-        <Button class=" bg-red-600 text-white" @click="closeModal" :style="'tertiary'">Close</Button>
+        <Button class=" bg-red-600 hover:bg-red-400 text-white" @click="closeModal" :style="'tertiary'">Close</Button>
         <Button :style="`tertiary`" class="relative">
             <FontAwesomeIcon icon='fas fa-plus' class='' aria-hidden='true' />
-                <span>{{ trans("Add Images") }}</span>
-                    <label class="bg-transparent inset-0 absolute inline-block cursor-pointer" id="input-slide-large-mask" for="fileInput" />
-                    <input ref="fileInput" type="file" multiple name="file" id="fileInput" @change="addComponent"
-                        accept="image/*" class="absolute cursor-pointer rounded-md border-gray-300 sr-only" />
+            <span>{{ trans("Add Images") }}</span>
+            <label class="bg-transparent inset-0 absolute inline-block cursor-pointer" id="input-slide-large-mask" for="fileInput" />
+            <input ref="fileInput" type="file" multiple name="file" id="fileInput" @change="addComponent"
+                accept="image/*" class="absolute cursor-pointer rounded-md border-gray-300 sr-only" />
         </Button>
-        <Button @click="addImage(ImageDataCollect)" id="add-image" v-if="ImageDataCollect.data.length > 0">
-             Selected images ({{ ImageDataCollect.data.length }})
+        <Button @click="addImage(imagesSelected)" id="add-image"
+            :key="imagesSelected.data.length"
+            :style="imagesSelected.data.length > 0 ? 'primary' : 'disabled'">
+            Selected images ({{ imagesSelected.data.length }})
         </Button>
     </div>
 
-
     <Modal :isOpen="isOpenCropModal" @onClose="closeCropModal">
-            <div>
-                <CropImage
-                    :ratio="ratio"
-                    :data="uploadedFilesList"
-                    :imagesUploadRoute="imagesUploadRoute"
-                    :response="uploadImageRespone" />
-            </div>
-        </Modal>
+        <div>
+            <CropImage
+                :ratio="ratio"
+                :data="uploadedFilesList"
+                :imagesUploadRoute="imagesUploadRoute"
+                :response="uploadImageRespone" />
+        </div>
+    </Modal>
 
 </template>
