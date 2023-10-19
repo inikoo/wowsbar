@@ -90,7 +90,7 @@ const handleToggleLeftbar = () => {
                     >
                         <!-- Navigation -->
 
-                        <Link v-if="item.route"  :href="route('customer.dashboard.show')"
+                        <Link v-if="item.route"  :href="route(item.route)"
                             class="flex items-center group text-sm font-medium py-2"
                             :class="[
                                 itemKey === layout.currentModule || Object.keys(item.subNav ?? {}).some(subNav => subNav === layout.currentModule)
