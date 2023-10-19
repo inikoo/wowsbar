@@ -8,18 +8,20 @@
 namespace App\Actions\Portfolio\PortfolioSocialAccount\PortfolioSocialAccountPost;
 
 use App\Actions\Traits\WithSocialAudit;
+use App\Enums\Portfolio\PortfolioSocialAccount\PortfolioSocialAccountPostTypeEnum;
 use App\Enums\UI\Customer\PortfolioSocialAccountTabsEnum;
 use App\Models\Portfolio\PortfolioSocialAccount;
 use App\Models\Portfolio\PortfolioSocialAccountPost;
 use Illuminate\Console\Command;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Carbon;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\AsCommand;
 use Lorisleiva\Actions\Concerns\WithAttributes;
 
-class StorePortfolioSocialAccountPost
+class StorePortfolioSocialAccountAds
 {
     use AsAction;
     use WithAttributes;
@@ -27,10 +29,13 @@ class StorePortfolioSocialAccountPost
     use AsCommand;
 
     private bool $asAction = false;
-    public string $commandSignature = 'post:create {account} {type}';
+    public string $commandSignature = 'ads:create {account}';
 
     public function handle(PortfolioSocialAccount $portfolioSocialAccount, array $modelData): Model
     {
+        data_set($modelData, 'type', PortfolioSocialAccountPostTypeEnum::ADS->value);
+        data_set($modelData, 'duration', Carbon::make($modelData['start_at'])->diffInDays($modelData['end_at']));
+
         return $portfolioSocialAccount->posts()->create($modelData);
     }
 
@@ -38,7 +43,7 @@ class StorePortfolioSocialAccountPost
     {
         return redirect()->route('customer.portfolio.social-accounts.show', [
             'portfolioSocialAccount' => $post->platform->slug,
-            'tab' => PortfolioSocialAccountTabsEnum::POST->value
+            'tab' => PortfolioSocialAccountTabsEnum::ADS->value
         ]);
     }
 
@@ -55,7 +60,8 @@ class StorePortfolioSocialAccountPost
     {
         return [
             'task_name' => ['required', 'string', 'max:255'],
-            'start_at' => ['required', 'string']
+            'start_at' => ['required', 'string'],
+            'end_at' => ['required', 'string']
         ];
     }
 
@@ -83,11 +89,11 @@ class StorePortfolioSocialAccountPost
             'task_name' => fake()->title,
             'start_at' => now(),
             'end_at' => now()->addDays(5),
-            'type' => $command->argument('type'),
+            'type' => PortfolioSocialAccountPostTypeEnum::ADS,
             'duration' => 5
         ]);
 
-        echo "Damnn u create a post 🤖" . "\n";
+        echo "Damnn u create a ads 🤖" . "\n";
 
         return 0;
     }

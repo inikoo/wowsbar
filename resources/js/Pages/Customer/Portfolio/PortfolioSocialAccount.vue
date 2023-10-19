@@ -26,6 +26,7 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import { faMicrophoneStand } from '@fal/'
 import TablePortfolioSocialAccountPosts from "@/Components/Tables/TablePortfolioSocialAccountPosts.vue";
+import TablePortfolioSocialAccountAds from "@/Components/Tables/TablePortfolioSocialAccountAds.vue";
 
 library.add(faRectangleWide, faMoneyBill, faLayerGroup, faGlobe, faFacebook, faTwitter, faTiktok, faPinterest, faLinkedin, faInstagram, faYoutube, faMicrophoneStand)
 
@@ -51,7 +52,7 @@ const component = computed(() => {
         details: ModelDetails,
         changelog: TableCustomerHistories,
         post: TablePortfolioSocialAccountPosts,
-        ads: TablePortfolioSocialAccountPosts,
+        ads: TablePortfolioSocialAccountAds,
     };
     return components[currentTab.value];
 

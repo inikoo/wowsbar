@@ -104,13 +104,19 @@ class ShowPortfolioSocialAccount extends InertiaAction
         )
             ->table(IndexPortfolioSocialAccountPosts::make()->tableStructure(modelOperations: [
                 'createLink' => [
-                    $this->canEdit ? [
+                    $this->tab == PortfolioSocialAccountTabsEnum::POST->value ? [
                         'route' => [
-                            'name'       => 'customer.billing.create',
+                            'name'       => 'customer.portfolio.social-accounts.post.create',
                             'parameters' => array_values($this->originalParameters)
                         ],
                         'label' => __('post')
-                    ] : false
+                    ] : [
+                        'route' => [
+                            'name'       => 'customer.portfolio.social-accounts.ads.create',
+                            'parameters' => array_values($this->originalParameters)
+                        ],
+                        'label' => __('ads')
+                    ]
                 ],
             ], prefix: $this->tab))
             ->table(IndexCustomerHistory::make()->tableStructure(prefix: PortfolioSocialAccountTabsEnum::CHANGELOG->value));

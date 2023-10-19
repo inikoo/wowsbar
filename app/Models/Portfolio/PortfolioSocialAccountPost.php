@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 /**
  *
  * @property string $task_name
+ * @property string $portfolio_social_account_id
  * @property string $start_at
  * @property string $end_at
  * @property string $duration
