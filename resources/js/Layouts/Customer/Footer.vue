@@ -17,6 +17,7 @@ import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 
 const isTabActive: Ref<boolean | string> = ref(false)
 const logoSrc=usePage().props.art.footer_logo;
+import {trans} from "laravel-vue-i18n";
 
 library.add(faHeart,faComputerClassic,faDiscord)
 
@@ -32,23 +33,21 @@ library.add(faHeart,faComputerClassic,faDiscord)
         <div class="flex justify-between">
             <!-- Left: Logo Section -->
             <div class="pl-4 flex items-center gap-x-1.5 py-1">
-          
-                <Image class="h-4 select-none"  :src="logoSrc" alt="T-Wowsbar" />
-                <span class="text-slate-400	 text-xs">
-                    Made with
+
+                <Image class="h-4 select-none hidden lg:inline"  :src="logoSrc" alt="T-Wowsbar" />
+                <span class="text-slate-400	text-xs hidden lg:inline">
+                    {{trans('Made with')}}
                     <FontAwesomeIcon icon='fas fa-heart' class="text-red-500 mx-1" aria-hidden='true'/>
-                    and
-                    <FontAwesomeIcon icon='fas fa-computer-classic' class="mx-1" aria-hidden='true'/>
-                    in Bali
+                    {{trans('and')}} <FontAwesomeIcon icon='fas fa-computer-classic' class="mx-1" aria-hidden='true'/> {{'in Bali'}}
                 </span>
-        
+
             </div>
 
             <div class="pl-4 flex items-center gap-x-1.5 py-1">
                 <a href="https://discord.gg/C7bCmMaTxP" target="_blank">
                     <span class="text-slate-400	 text-xs">
                         <FontAwesomeIcon :icon="['fab', 'discord']" class="text-white mx-1" aria-hidden='true'/>
-                        Give us feedback from your journey
+                        <span class="hidden sm:inline">{{trans("Join our community")}}</span> <span class="hidden lg:inline">{{trans('announcements/feedback/wishlists')}}</span>
                     </span>
                 </a>
             </div>
