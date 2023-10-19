@@ -78,7 +78,7 @@ class GetLayout
         }
 
 
-        $websiteSubNav=[];
+        $websiteSubNav = [];
 
         if ($customerUser->hasPermissionTo('portfolio.prospects.view') && $number_portfolio_websites > 0) {
             $websiteSubNav['prospects'] = [
@@ -192,11 +192,11 @@ class GetLayout
                 'scope'   => 'portfolio',
                 'icon'    => ['fal', 'fa-globe'],
                 'label'   => __('websites'),
-                'route'   => 'customer.portfolio.websites.index',
+                'route'   => $customerUser->hasPermissionTo('portfolio') ? 'customer.portfolio.websites.index' : null,
                 'topMenu' => [
                     'subSections' => $portfolioSubsections
                 ],
-                'subNav'    => $websiteSubNav,
+                'subNav'  => $websiteSubNav,
             ];
         }
 
