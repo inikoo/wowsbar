@@ -112,10 +112,25 @@ const screenViewChange = (value: string) => {
     }
 }
 
+const backgroundColorList = [
+    'rgb(99, 102, 241)', // Indigo
+    'rgb(243, 244, 246)', // Gray
+    'rgb(41, 37, 36)', // Stone
+    'rgb(245, 158, 11)', // Amber
+    'linear-gradient(to right, rgb(59, 130, 246), rgb(37, 99, 235))',
+    'linear-gradient(to right, rgb(59, 130, 246), rgb(147, 51, 234)',
+    'linear-gradient(to right, rgb(244, 63, 94), rgb(248, 113, 113), rgb(239, 68, 68))',
+    'linear-gradient(to left bottom, rgb(49, 46, 129), rgb(129, 140, 248), rgb(49, 46, 129))',
+    'radial-gradient(at right center, rgb(186, 230, 253), rgb(129, 140, 248))',
+    'linear-gradient(to right, rgb(255, 228, 230), rgb(204, 251, 241))',
+]
+
 
 </script>
 
 <template>
+    <!-- <pre>{{ value }}</pre>
+    <pre>{{ data }}</pre> -->
     <div class="block w-full">
         <!-- Popup: add image from Gallery -->
         <Modal :show="isOpen" @onClose="closeModal">
@@ -140,9 +155,9 @@ const screenViewChange = (value: string) => {
             <ScreenView @screenView="screenViewChange" />
         </div>
 
-        <!-- If Banner square -->
+        <!-- Preview -->
         <div class="flex justify-center w-full">
-            <div class="w-fit max-h-20 lg:max-h-32 overflow-hidden border border-gray-300 shadow transition-all duration-200 ease-in-out" :class="[
+            <div class="w-fit max-h-20 lg:max-h-32 border border-gray-300 shadow transition-all duration-200 ease-in-out" :class="[
                 bannerType == 'square'
                     ? 'aspect-square'  // If banner is a square
                     : screenView
@@ -153,19 +168,26 @@ const screenViewChange = (value: string) => {
                         }
                         : 'aspect-[2/1] md:aspect-[3/1] lg:aspect-[4/1]'
             ]">
-                <div class="h-full relative flex items-center overflow-hidden" >
-                    <div v-if="value" class="h-full">
+                <div class="h-full relative flex items-center" >
+                    <div v-if="typeof data.image[screenView ?? 'desktop'] === 'object'"
+                        class="group h-full relative"
+                    >
+                        <!-- <div class="group-hover:bg-gray-700/50 inset-0 absolute h-full"></div>
+                        <div class="hidden group-hover:flex absolute inset-0 justify-center items-center text-white">
+                            <FontAwesomeIcon icon='fal fa-trash-alt' class='text-3xl text-red-500' aria-hidden='true' />
+                        </div>
+                        <FontAwesomeIcon icon='fal fa-times' class='absolute top-0 -right-8 text-3xl text-red-400 hover:text-red-500' aria-hidden='true' /> -->
                         <Image v-if="get(value, [`${screenView}`, 'source'], value.desktop.source)" :src="get(value, [`${screenView}`, 'source'], value.desktop.source)"
                             :alt="value.name" :imageCover="true"/>
                     </div>
-                    <div v-else class="h-full w-96" :style="{ background: get(data, 'background', 'red')}">
+                    <div v-else class="h-full w-96" :style="{ background: data.image[screenView ?? 'desktop']}">
                         <!-- If the background is a color -->
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- If banner Landscape or something -->
+        <!-- Button -->
         <div class="w-full relative space-y-4 mt-2.5">
             <div class="flex gap-x-2">
                 <Button v-if="bannerType != 'square'" :style="`secondary`" class="relative" size="xs">
@@ -179,7 +201,21 @@ const screenViewChange = (value: string) => {
                 </Button>
 
                 <Button :style="`tertiary`" icon="fal fa-photo-video" label="Gallery" size="xs" class="relative" @click="isOpen = !isOpen" />
+                
+                <!-- List: Background Color -->
+                <div class="flex items-center w-full">
+                    <div class="relative h-8 flex items-center gap-x-1 px-2">
+                        <!-- <div v-if="value" class="absolute inset-0 flex items-center justify-center bg-gray-700/60 text-white font-medium">Delete the image to use awesome background color.</div> -->
+                        <!-- Add conditional click() to avoid user change color via inspect -->
+                        <div v-for="bgColor in backgroundColorList"
+                            @click="data.image[screenView ?? 'desktop'] = bgColor"
+                            class="w-full rounded h-full aspect-square shadow cursor-pointer"
+                            :class="data.image[screenView ?? 'desktop'] ===  bgColor ? 'ring-2 ring-offset-2 ring-gray-600' : 'hover:ring-2 hover:ring-offset-0 hover:ring-gray-500'"
+                            :style="{background: bgColor}" />
+                    </div>
+                </div>
             </div>
+
         </div>
     </div>
 </template>

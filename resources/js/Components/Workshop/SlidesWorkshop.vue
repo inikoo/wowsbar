@@ -184,8 +184,7 @@ const changeVisibility = (slide: any) => {
     const index = props.data.components.findIndex((item) => item.ulid === slide.ulid);
     if (index !== -1) {
         props.data.components[index].hasOwnProperty("visibility")
-            ? (props.data.components[index].visibility = !props.data.components[index]
-                .visibility)
+            ? (props.data.components[index].visibility = !props.data.components[index].visibility)
             : (props.data.components[index].visibility = false);
     }
 };
@@ -548,8 +547,9 @@ const addNewSlide = () => {
             layout: {
                 imageAlt: 'New slide',
             },
-            image: null,
-            background : 'linear-gradient(to right, rgb(59, 130, 246), rgb(147, 51, 234))',
+            image: {
+                desktop: 'linear-gradient(to right, rgb(59, 130, 246), rgb(147, 51, 234))'
+            },
             visibility: true,
         });
     const newFiles = [...setData];
@@ -606,12 +606,13 @@ const addNewSlide = () => {
                                 class="handle p-1 text-xs sm:text-base sm:p-2.5 text-gray-700 cursor-grab place-self-center" />
 
                             <!-- Image slide -->
-                            <div v-if="slide.image">
+                            <div v-if="typeof get(slide.image, 'desktop', false) === 'object'">
                                 <Image :src="get(slide, ['image', `${screenView}`, 'thumbnail'], slide.image?.desktop?.thumbnail)" class="h-full w-10 sm:w-10 flex items-center justify-center py-1"/>
                             </div>
+                            
                             <div v-else>
                                 <!-- If the slide is color -->
-                                <div :style="{ background: get(slide, 'background', 'red')}" class="h-full w-10 sm:w-10 flex items-center justify-center py-1"/>
+                                <div :style="{ background: get(slide.image, 'desktop', 'red')}" class="h-full w-10 sm:w-10 flex items-center justify-center py-1"/>
                             </div>
 
                             <!-- Label slide -->
