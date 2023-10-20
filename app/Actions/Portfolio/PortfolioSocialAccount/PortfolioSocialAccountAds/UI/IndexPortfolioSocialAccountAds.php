@@ -80,8 +80,8 @@ class IndexPortfolioSocialAccountAds extends InertiaAction
                 ->withGlobalSearch()
                 ->withEmptyState(
                     [
-                        'title' => __('No ads found'),
-                        'count' => 0,
+                        'title'       => __('No ads found'),
+                        'count'       => 0,
                         'action'      => $prefix == PortfolioSocialAccountTabsEnum::ADS->value ? [
                             'type'    => 'button',
                             'style'   => 'create',
@@ -119,11 +119,11 @@ class IndexPortfolioSocialAccountAds extends InertiaAction
         $headCrumb = function (array $routeParameters = []) {
             return [
                 [
-                    'type' => 'simple',
+                    'type'   => 'simple',
                     'simple' => [
                         'route' => $routeParameters,
                         'label' => __('social accounts'),
-                        'icon' => 'fal fa-bars'
+                        'icon'  => 'fal fa-bars'
                     ],
                 ],
             ];

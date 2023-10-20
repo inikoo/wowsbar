@@ -7,24 +7,17 @@
 
 namespace App\Actions\Portfolio\PortfolioSocialAccount\PortfolioSocialAccountPost\UI;
 
-use App\Actions\Helpers\History\IndexHistory;
 use App\Actions\InertiaAction;
 use App\Actions\UI\Customer\Portfolio\ShowPortfolio;
 use App\Enums\Portfolio\PortfolioSocialAccount\PortfolioSocialAccountPostTypeEnum;
-use App\Enums\UI\Customer\PortfolioSocialAccountsTabsEnum;
 use App\Enums\UI\Customer\PortfolioSocialAccountTabsEnum;
-use App\Http\Resources\History\HistoryResource;
 use App\Http\Resources\Portfolio\PortfolioSocialAccountPostsResource;
-use App\Http\Resources\Portfolio\PortfolioSocialAccountResource;
 use App\InertiaTable\InertiaTable;
-use App\Models\CRM\Customer;
 use App\Models\Portfolio\PortfolioSocialAccount;
 use App\Models\Portfolio\PortfolioSocialAccountPost;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use Inertia\Inertia;
-use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -87,8 +80,8 @@ class IndexPortfolioSocialAccountPosts extends InertiaAction
                 ->withGlobalSearch()
                 ->withEmptyState(
                     [
-                        'title' => __('No posts found'),
-                        'count' => 0,
+                        'title'       => __('No posts found'),
+                        'count'       => 0,
                         'action'      => $prefix == PortfolioSocialAccountTabsEnum::POST->value ? [
                             'type'    => 'button',
                             'style'   => 'create',
@@ -130,11 +123,11 @@ class IndexPortfolioSocialAccountPosts extends InertiaAction
         $headCrumb = function (array $routeParameters = []) {
             return [
                 [
-                    'type' => 'simple',
+                    'type'   => 'simple',
                     'simple' => [
                         'route' => $routeParameters,
                         'label' => __('social accounts'),
-                        'icon' => 'fal fa-bars'
+                        'icon'  => 'fal fa-bars'
                     ],
                 ],
             ];

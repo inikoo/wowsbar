@@ -9,6 +9,7 @@
 use App\Actions\Portfolio\PortfolioSocialAccount\PortfolioSocialAccountAds\UI\CreatePortfolioSocialAccountAds;
 use App\Actions\Portfolio\PortfolioSocialAccount\PortfolioSocialAccountAds\UI\ShowPortfolioSocialAccountAds;
 use App\Actions\Portfolio\PortfolioSocialAccount\PortfolioSocialAccountPost\UI\CreatePortfolioSocialAccountPost;
+use App\Actions\Portfolio\PortfolioSocialAccount\PortfolioSocialAccountPost\UI\EditPortfolioSocialAccountPost;
 use App\Actions\Portfolio\PortfolioSocialAccount\PortfolioSocialAccountPost\UI\ShowPortfolioSocialAccountPost;
 use App\Actions\Portfolio\PortfolioSocialAccount\UI\CreatePortfolioSocialAccount;
 use App\Actions\Portfolio\PortfolioSocialAccount\UI\EditPortfolioSocialAccount;
@@ -50,6 +51,7 @@ Route::get('/social-accounts/{portfolioSocialAccount}/edit', EditPortfolioSocial
 
 Route::get('/social-accounts/{portfolioSocialAccount}/post/create', CreatePortfolioSocialAccountPost::class)->name('social-accounts.post.create');
 Route::get('/social-accounts/{portfolioSocialAccount}/post/{post}', ShowPortfolioSocialAccountPost::class)->name('social-accounts.post.show');
+Route::get('/social-accounts/{portfolioSocialAccount}/post/{post}/edit', EditPortfolioSocialAccountPost::class)->name('social-accounts.post.edit');
 
 Route::get('/social-accounts/{portfolioSocialAccount}/ads/create', CreatePortfolioSocialAccountAds::class)->name('social-accounts.ads.create');
 Route::get('/social-accounts/{portfolioSocialAccount}/ads/{ads}', ShowPortfolioSocialAccountAds::class)->name('social-accounts.ads.show');
