@@ -8,7 +8,9 @@
 namespace App\Actions\HumanResources\JobPosition\UI;
 
 use App\Actions\Helpers\History\IndexHistory;
+use App\Actions\HumanResources\Employee\UI\IndexEmployees;
 use App\Actions\InertiaAction;
+use App\Actions\Traits\Actions\WithActionButtons;
 use App\Actions\UI\Organisation\HumanResources\ShowHumanResourcesDashboard;
 use App\Enums\UI\Organisation\JobPositionTabsEnum;
 use App\Http\Resources\History\HistoryResource;
@@ -21,6 +23,8 @@ use Lorisleiva\Actions\ActionRequest;
 
 class ShowJobPosition extends InertiaAction
 {
+    use WithActionButtons;
+
     public function handle(JobPosition $jobPosition): JobPosition
     {
         return $jobPosition;
@@ -29,8 +33,9 @@ class ShowJobPosition extends InertiaAction
 
     public function authorize(ActionRequest $request): bool
     {
-        $this->canEdit   = $request->user()->hasPermissionTo('hr.edit');
-        $this->canDelete = $request->user()->hasPermissionTo('hr.edit');
+        $this->canEdit   = false;//$request->user()->hasPermissionTo('hr.edit');
+        $this->canDelete = false;//$request->user()->hasPermissionTo('hr.edit');
+
         return $request->user()->hasPermissionTo("hr.view");
     }
 
@@ -53,26 +58,11 @@ class ShowJobPosition extends InertiaAction
                     'next'     => $this->getNext($jobPosition, $request),
                 ],
                 'pageHead'    => [
-                    'title'   => $jobPosition->name,
-                    'actions' => [
-                        $this->canEdit ? [
-                            'type'  => 'button',
-                            'style' => 'edit',
-                            'route' => [
-                                'name'       => preg_replace('/show$/', 'edit', $request->route()->getName()),
-                                'parameters' => $request->route()->originalParameters()
-                            ]
-                        ] : [],
-                        $this->canDelete ? [
-                            'type'  => 'button',
-                            'style' => 'delete',
-                            'route' => [
-                                'name'       => 'hr.job-positions.remove',
-                                'parameters' => $request->route()->originalParameters()
-                            ]
-
-                        ] : []
-                    ]
+                    'title'       => $jobPosition->name,
+                    'iconActions' => [
+                        $this->canDelete ? $this->getDeleteActionIcon($request) : null,
+                        $this->canEdit ? $this->getEditActionIcon($request) : null,
+                    ],
                 ],
                 'tabs'        => [
                     'current'    => $this->tab,
@@ -80,41 +70,49 @@ class ShowJobPosition extends InertiaAction
                 ],
 
                 JobPositionTabsEnum::SHOWCASE->value => $this->tab == JobPositionTabsEnum::SHOWCASE->value ?
-                fn () => GetJobPositionShowcase::run($jobPosition)
-                : Inertia::lazy(fn () => GetJobPositionShowcase::run($jobPosition)),
+                    fn() => GetJobPositionShowcase::run($jobPosition)
+                    : Inertia::lazy(fn() => GetJobPositionShowcase::run($jobPosition)),
 
-                JobPositionTabsEnum::EMPLOYEES->value       => $this->tab == JobPositionTabsEnum::EMPLOYEES->value ?
-                fn () => EmployeeResource::collection(
-                    \App\Actions\HumanResources\Employee\UI\IndexEmployees::run(
-                        prefix: 'employees'
+                JobPositionTabsEnum::EMPLOYEES->value => $this->tab == JobPositionTabsEnum::EMPLOYEES->value
+                    ?
+                    fn() => EmployeeResource::collection(
+                        IndexEmployees::run(
+                            parent: $jobPosition,
+                            prefix: JobPositionTabsEnum::EMPLOYEES->value
+                        )
                     )
-                )
-                : Inertia::lazy(fn () => EmployeeResource::collection(
-                    \App\Actions\HumanResources\Employee\UI\IndexEmployees::run(
-                        prefix: 'employees'
-                    )
-                )),
+                    : Inertia::lazy(fn() => EmployeeResource::collection(
+                        IndexEmployees::run(
+                            parent: $jobPosition,
+                            prefix: JobPositionTabsEnum::EMPLOYEES->value
+                        )
+                    )),
 
-//               JobPositionTabsEnum::ROLES->value => $this->tab == JobPositionTabsEnum::ROLES->value
-//        ?
-//        fn () => RoleResource::collection(
-//            IndexRoles::run(
-//                parent: $jobPosition,
-//                prefix: 'roles'
-//            )
-//        )
-//        : Inertia::lazy(fn () => RoleResource::collection(
-//            IndexRoles::run(
-//                parent: $this->warehouse,
-//                prefix: 'roles'
-//            )
-//        )),
+                //               JobPositionTabsEnum::ROLES->value => $this->tab == JobPositionTabsEnum::ROLES->value
+                //        ?
+                //        fn () => RoleResource::collection(
+                //            IndexRoles::run(
+                //                parent: $jobPosition,
+                //                prefix: 'roles'
+                //            )
+                //        )
+                //        : Inertia::lazy(fn () => RoleResource::collection(
+                //            IndexRoles::run(
+                //                parent: $this->warehouse,
+                //                prefix: 'roles'
+                //            )
+                //        )),
 
 
                 JobPositionTabsEnum::HISTORY->value => $this->tab == JobPositionTabsEnum::HISTORY->value ?
-                fn () => HistoryResource::collection(IndexHistory::run($jobPosition))
-                : Inertia::lazy(fn () => HistoryResource::collection(IndexHistory::run($jobPosition)))
+                    fn() => HistoryResource::collection(IndexHistory::run($jobPosition))
+                    : Inertia::lazy(fn() => HistoryResource::collection(IndexHistory::run($jobPosition)))
             ]
+        )->table(
+            IndexEmployees::make()->tableStructure(
+                parent: $jobPosition,
+                prefix: JobPositionTabsEnum::EMPLOYEES->value
+            )
         );
     }
 
@@ -134,13 +132,13 @@ class ShowJobPosition extends InertiaAction
                     'modelWithIndex' => [
                         'index' => [
                             'route' => [
-                                'name' => 'hr.job-positions.index',
+                                'name' => 'org.hr.job-positions.index',
                             ],
                             'label' => __('positions')
                         ],
                         'model' => [
                             'route' => [
-                                'name'       => 'hr.job-positions.show',
+                                'name'       => 'org.hr.job-positions.show',
                                 'parameters' => [$jobPosition->slug]
                             ],
                             'label' => $jobPosition->name,
@@ -174,7 +172,7 @@ class ShowJobPosition extends InertiaAction
         }
 
         return match ($routeName) {
-            'hr.job-positions.show' => [
+            'org.hr.job-positions.show' => [
                 'label' => $jobPosition->name,
                 'route' => [
                     'name'       => $routeName,

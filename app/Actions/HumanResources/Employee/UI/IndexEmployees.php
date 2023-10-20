@@ -14,6 +14,8 @@ use App\Enums\HumanResources\Employee\EmployeeTypeEnum;
 use App\Http\Resources\HumanResources\EmployeeResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\HumanResources\Employee;
+use App\Models\HumanResources\JobPosition;
+use App\Models\Organisation\Organisation;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -25,18 +27,21 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class IndexEmployees extends InertiaAction
 {
-    protected function getElementGroups(): void
+
+    private JobPosition|Organisation $parent;
+
+    protected function getElementGroups(Organisation|JobPosition $parent): array
     {
-        $this->elementGroups =
-            [
+
+        return    [
                 'state' => [
                     'label'    => __('State'),
                     'elements' => array_merge_recursive(
                         EmployeeStateEnum::labels(),
-                        EmployeeStateEnum::count()
+                        EmployeeStateEnum::count($parent)
                     ),
 
-                    'engine'   => function ($query, $elements) {
+                    'engine' => function ($query, $elements) {
                         $query->whereIn('state', $elements);
                     }
 
@@ -52,8 +57,9 @@ class IndexEmployees extends InertiaAction
     }
 
 
-    public function handle($prefix=null): LengthAwarePaginator
+    public function handle(Organisation|JobPosition $parent, $prefix = null): LengthAwarePaginator
     {
+        $this->parent=$parent;
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
             $query->where(function ($query) use ($value) {
                 $query->whereAnyWordStartWith('employees.contact_name', $value)
@@ -66,8 +72,8 @@ class IndexEmployees extends InertiaAction
         }
 
 
-        $queryBuilder=QueryBuilder::for(Employee::class);
-        foreach ($this->elementGroups as $key => $elementGroup) {
+        $queryBuilder = QueryBuilder::for(Employee::class);
+        foreach ($this->getElementGroups($parent) as $key => $elementGroup) {
             /** @noinspection PhpUndefinedMethodInspection */
             $queryBuilder->whereElementGroup(
                 prefix: $prefix,
@@ -77,11 +83,19 @@ class IndexEmployees extends InertiaAction
             );
         }
 
+        if (class_basename($parent) == 'Organisation') {
+            $queryBuilder->with('jobPositions');
+        } else {
+            $queryBuilder->leftJoin('job_positionables','job_positionables.job_positionable_id','employees.id')
+            ->where('job_positionables.job_positionable_type','Employee')
+            ->where('job_position_id',$parent->id);
+        }
+
+
         /** @noinspection PhpUndefinedMethodInspection */
         return $queryBuilder
             ->defaultSort('employees.slug')
-            ->select(['slug', 'id', 'job_title', 'contact_name', 'state'])
-            ->with('jobPositions')
+            ->select(['slug', 'job_title', 'contact_name', 'state'])
             ->allowedSorts(['slug', 'state', 'contact_name', 'job_title'])
             ->allowedFilters([$globalSearch, 'slug', 'contact_name', 'state'])
             ->withPaginator($prefix)
@@ -89,10 +103,9 @@ class IndexEmployees extends InertiaAction
     }
 
 
-
-    public function tableStructure(?array $modelOperations = null, $prefix=null): Closure
+    public function tableStructure(Organisation|JobPosition $parent, ?array $modelOperations = null, $prefix = null): Closure
     {
-        return function (InertiaTable $table) use ($modelOperations, $prefix) {
+        return function (InertiaTable $table) use ($modelOperations, $prefix, $parent) {
             if ($prefix) {
                 $table
                     ->name($prefix)
@@ -130,10 +143,12 @@ class IndexEmployees extends InertiaAction
                 ->column(key: 'state', label: ['fal', 'fa-yin-yang'], type: 'icon')
                 ->column(key: 'slug', label: __('code'), canBeHidden: false, sortable: true, searchable: true)
                 ->column(key: 'contact_name', label: __('name'), canBeHidden: false, sortable: true, searchable: true)
-                ->column(key: 'job_title', label: __('job title'), canBeHidden: false)
-                ->column(key: 'positions', label: __('positions'), canBeHidden: false)
+                ->column(key: 'job_title', label: __('job title'), canBeHidden: false);
 
-                ->defaultSort('slug');
+            if (class_basename($parent) == 'Organisation') {
+                $table->column(key: 'positions', label: __('positions'), canBeHidden: false);
+            }
+            $table->defaultSort('slug');
         };
     }
 
@@ -141,8 +156,7 @@ class IndexEmployees extends InertiaAction
     {
         $this->canEdit = $request->user()->hasPermissionTo('hr.edit');
 
-        return  $request->user()->hasPermissionTo('hr.view');
-
+        return $request->user()->hasPermissionTo('hr.view');
     }
 
 
@@ -159,8 +173,8 @@ class IndexEmployees extends InertiaAction
                 'breadcrumbs' => $this->getBreadcrumbs(),
                 'title'       => __('employees'),
                 'pageHead'    => [
-                    'title'  => __('employees'),
-                    'actions'=> [
+                    'title'   => __('employees'),
+                    'actions' => [
                         $this->canEdit ? [
                             'type'    => 'buttonGroup',
                             'buttons' => [
@@ -169,7 +183,7 @@ class IndexEmployees extends InertiaAction
                                     'icon'  => ['fal', 'fa-upload'],
                                     'label' => 'upload',
                                     'route' => [
-                                        'name'       => 'org.models.employees.upload'
+                                        'name' => 'org.models.employees.upload'
                                     ],
                                 ],
                                 [
@@ -187,7 +201,7 @@ class IndexEmployees extends InertiaAction
                 ],
                 'data'        => EmployeeResource::collection($employees),
             ]
-        )->table($this->tableStructure());
+        )->table($this->tableStructure($this->parent));
     }
 
 
@@ -195,7 +209,7 @@ class IndexEmployees extends InertiaAction
     {
         $this->initialisation($request);
 
-        return $this->handle();
+        return $this->handle(organisation());
     }
 
 

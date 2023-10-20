@@ -68,7 +68,7 @@ class CreateOrganisationUserFromEmployee
         /** @var \App\Models\HumanResources\Employee $employee */
         $employee = $organisationUser->parent;
 
-        return Redirect::route('hr.employees.show', $employee->id)->with('notification', [
+        return Redirect::route('org.hr.employees.show', $employee->id)->with('notification', [
             'type'   => 'newUser',
             'message'=> __('New user created'),
             'fields' => [
