@@ -174,11 +174,11 @@ const compHandleBannerLessSlide = computed(() => {
                 :navigation="false"
                 :modules="[Autoplay, Pagination, Navigation]" class="mySwiper">
                 <SwiperSlide v-for="component in data.components.filter((item)=>item.ulid)" :key="component.id">
-                    <!-- {{ data.common }} -->
-                    <div class="relative w-full h-full"  v-if="component.image">
-                        <Image :src="get(component, ['image', `${$props.view}`, 'source'], component.image?.desktop?.source)" alt="Wowsbar" />
-                    </div>
-                    <div v-else :style="{ background: get(component, 'background', 'red')}" class="w-full h-full" />
+                <!-- {{ data.common }} -->
+                    <div v-if="typeof get(component, ['image', `${$props.view}`, 'source'], component.image?.desktop?.source) === 'object'" class="relative w-full h-full">
+                    <Image :src="get(component, ['image', `${$props.view}`, 'source'], component.image?.desktop?.source)" alt="Wowsbar" />
+                </div>
+                <div v-else :style="{ background: get(component.image, `${$props.view}`, component.image?.desktop ?? 'red')}" class="w-full h-full" />
 
 
                     <!-- Section: Not Visible (for workshop) -->

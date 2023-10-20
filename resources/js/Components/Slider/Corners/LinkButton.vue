@@ -15,7 +15,7 @@ const props = defineProps<{
     swiperRef?: Element
 }>()
 
-let url = props.data.target
+let url = props.data.target ?? ''
 
 url = url.replace(/^https?:\/\//g, '');
 
