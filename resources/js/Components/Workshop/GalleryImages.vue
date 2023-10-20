@@ -125,7 +125,7 @@ const addComponent =  (element) => {
     isOpenCropModal.value = true;
 };
 
-console.log(galleryStore.value)
+// console.log(galleryStore.value)
 
 </script>
 
@@ -202,7 +202,7 @@ console.log(galleryStore.value)
                 <span class="leading-none">Close</span>
             </div>
         </Button>
-        <Button :style="`delete`" class="relative">
+        <Button :style="`secondary`" class="relative">
             <FontAwesomeIcon icon='fas fa-plus' class='' aria-hidden='true' />
             <span>{{ trans("Add Images") }}</span>
             <label class="bg-transparent inset-0 absolute inline-block cursor-pointer" id="input-slide-large-mask" for="fileInput" />

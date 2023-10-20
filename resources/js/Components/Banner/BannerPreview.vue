@@ -10,6 +10,7 @@ const props = defineProps<{
 </script>
 
 <template>
+    <!-- <pre>{{ data }}</pre> -->
     <!-- If banner is 'landscape' -->
     <div v-if="data.type == 'landscape'">
         <div v-if="data.published_snapshot" class="w-full bg-white flex items-center justify-between py-3 px-4">
