@@ -30,7 +30,8 @@ hosts:
 tasks:
   build:
     - run: uptime
-
+before:
+  deploy: install:env
 after:
   deploy:failed: [deploy:unlock, discord:notify:failure]
   deploy:success: [ discord:notify:success ]
