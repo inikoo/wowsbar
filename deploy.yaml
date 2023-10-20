@@ -7,7 +7,7 @@ import:
   - deploy/install.php
   - deploy/deploy.php
   - contrib/npm.php
-  - contrib/discord.php;
+  - contrib/discord.php
 
 config:
   application: 'wowsbar'
