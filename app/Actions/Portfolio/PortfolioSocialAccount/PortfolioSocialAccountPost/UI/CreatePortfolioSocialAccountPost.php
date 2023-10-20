@@ -12,6 +12,7 @@ use App\Actions\Portfolio\PortfolioSocialAccount\UI\IndexPortfolioSocialAccounts
 use App\Actions\Traits\Fields\WithPortfolioWebsiteFields;
 use App\Enums\Portfolio\PortfolioSocialAccount\PortfolioSocialAccountPlatformEnum;
 use App\Enums\Portfolio\PortfolioSocialAccount\PortfolioSocialAccountPostStatusEnum;
+use App\Enums\Portfolio\PortfolioSocialAccount\PortfolioSocialAccountPostTypeEnum;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -53,7 +54,7 @@ class CreatePortfolioSocialAccountPost extends InertiaAction
                             'label' => __('cancel'),
                             'route' => [
                                 'name'       => 'customer.portfolio.social-accounts.show',
-                                'parameters' => array_values($request->route()->originalParameters())
+                                'parameters' => array_merge($request->route()->originalParameters(), ['tab' => PortfolioSocialAccountPostTypeEnum::POST->value])
                             ],
                         ]
                     ]

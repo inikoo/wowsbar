@@ -10,6 +10,7 @@ namespace App\Actions\Portfolio\PortfolioSocialAccount\PortfolioSocialAccountAds
 use App\Actions\InertiaAction;
 use App\Actions\Portfolio\PortfolioSocialAccount\UI\IndexPortfolioSocialAccounts;
 use App\Actions\Traits\Fields\WithPortfolioWebsiteFields;
+use App\Enums\Portfolio\PortfolioSocialAccount\PortfolioSocialAccountPostTypeEnum;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -50,12 +51,10 @@ class CreatePortfolioSocialAccountAds extends InertiaAction
                             'label' => __('cancel'),
                             'route' => [
                                 'name'       => 'customer.portfolio.social-accounts.show',
-                                'parameters' => array_values($request->route()->originalParameters())
+                                'parameters' => array_merge($request->route()->originalParameters(), ['tab' => PortfolioSocialAccountPostTypeEnum::ADS->value])
                             ],
                         ]
                     ]
-
-
                 ],
                 'formData' => [
                     'blueprint' => [

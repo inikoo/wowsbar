@@ -95,8 +95,8 @@ class IndexPortfolioSocialAccountPosts extends InertiaAction
                             'tooltip' => __('new post'),
                             'label'   => __('post'),
                             'route'   => [
-                                'name'       => 'customer.portfolio.social-accounts.index',
-                                'parameters' => array_values($this->originalParameters)
+                                'name'       => 'customer.portfolio.social-accounts.post.create',
+                                'parameters' => request()->route()->originalParameters()
                             ]
                         ] : null
                     ]
