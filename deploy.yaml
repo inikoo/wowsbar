@@ -7,6 +7,7 @@ import:
   - deploy/install.php
   - deploy/deploy.php
   - contrib/npm.php
+  - contrib/discord.php;
 
 config:
   application: 'wowsbar'
@@ -31,5 +32,6 @@ tasks:
     - run: uptime
 
 after:
-  deploy:failed: deploy:unlock
+  deploy:failed: [deploy:unlock, discord:notify:failure]
+  deploy:success: [ discord:notify:success ]
   deploy:update_code: [npm:install, deploy:vendors]
