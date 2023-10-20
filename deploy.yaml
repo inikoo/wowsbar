@@ -22,7 +22,7 @@ config:
   http_port: 8080
 
 hosts:
-  prod_helio:
+  wowsbar:
     environment: 'prod'
     deploy_path: '{{root_path}}/prod'
     branch: production
