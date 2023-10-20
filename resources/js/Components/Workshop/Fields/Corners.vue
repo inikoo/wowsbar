@@ -224,13 +224,6 @@ const optionType = [
                 icon: 'far fa-text',
                 value: 'rgb(244, 63, 94)'
             },
-            {
-                name: 'target_window',
-                type: 'select',
-                label: trans('Target Window'),
-                value:  'In This Window',
-                option : [ 'In This Window', 'New Window']
-            },
         ]
     },
     {
