@@ -239,7 +239,7 @@ class IndexBanners extends InertiaAction
                                 'style' => 'create',
                                 'label' => __('Create Banner'),
                                 'route' => [
-                                    'name' => 'customer.banners.create',
+                                    'name' => 'customer.banners.banners.create',
                                 ]
                             ]
                         ]
@@ -281,12 +281,12 @@ class IndexBanners extends InertiaAction
         };
 
         return match ($routeName) {
-            'customer.banners.index' =>
+            'customer.banners.banners.index' =>
             array_merge(
                 ShowBannersDashboard::make()->getBreadcrumbs(),
                 $headCrumb(
                     [
-                        'name' => 'customer.banners.index'
+                        'name' => 'customer.banners.banners.index'
                     ]
                 ),
             ),
