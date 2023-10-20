@@ -8,7 +8,6 @@
 import { ref, computed } from 'vue'
 import { Head } from '@inertiajs/vue3'
 import PageHeading from '@/Components/Headings/PageHeading.vue'
-import TablePortfolioWebsites from "@/Components/Tables/TablePortfolioWebsites.vue"
 import { capitalize } from "@/Composables/capitalize"
 import { faUpload, faFile as falFile, faTimes } from '@fal/'
 import { faFile as fasFile, faFileDownload } from '@fas/'

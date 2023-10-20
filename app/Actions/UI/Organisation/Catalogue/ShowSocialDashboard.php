@@ -7,8 +7,10 @@
 
 namespace App\Actions\UI\Organisation\Catalogue;
 
+use App\Actions\Portfolio\PortfolioSocialAccount\UI\IndexPortfolioSocialAccounts;
 use App\Actions\UI\Organisation\Dashboard\ShowDashboard;
 use App\Actions\UI\WithInertia;
+use App\Http\Resources\Portfolio\PortfolioSocialAccountResource;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -36,26 +38,17 @@ class ShowSocialDashboard
         $org = organisation();
 
         return Inertia::render(
-            'Catalogue/CatalogueDashboard',
+            'Catalogue/Social/Socials',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(),
                 'title'       => __('social dashboard'),
                 'pageHead'    => [
                     'title' => __('social dashboard'),
                 ],
-                'stats'       => [
-                    [
-                        'name' => __('websites'),
-                        'stat' => $org->crmStats->number_customer_websites_social,
-                        'href' => [
-                            'name' => 'org.ppc.websites.index'
-                        ]
-                    ],
 
-                ]
-
+                'data' => PortfolioSocialAccountResource::collection(IndexPortfolioSocialAccounts::run())
             ]
-        );
+        )->table(IndexPortfolioSocialAccounts::make()->tableStructure(prefix: 'social_account'));
     }
 
     public function getBreadcrumbs(): array

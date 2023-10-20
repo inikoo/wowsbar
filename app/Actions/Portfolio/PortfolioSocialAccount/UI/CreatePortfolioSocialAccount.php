@@ -77,6 +77,12 @@ class CreatePortfolioSocialAccount extends InertiaAction
                                     'required' => true,
                                     'value'    => '',
                                 ],
+                                'url' => [
+                                    'type'     => 'input',
+                                    'label'    => __('profile url'),
+                                    'required' => true,
+                                    'value'    => '',
+                                ],
                             ]
                         ],
 
