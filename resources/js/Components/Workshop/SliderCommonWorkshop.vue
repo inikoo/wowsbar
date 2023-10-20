@@ -9,7 +9,7 @@ import { ref } from 'vue'
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { faImage, faExpandArrows, faAlignCenter, faTrash, faStopwatch } from '@fal/'
 import PrimitiveInput from '@/Components/Forms/Fields/Primitive/PrimitiveInput.vue'
-import Corners from "@/Components/Workshop/Fields/Corners.vue"
+import Corners from "@/Components/Workshop/Fields/Corners/Corners.vue"
 import Range from "@/Components/Workshop/Fields/Range.vue"
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { trans } from "laravel-vue-i18n"
