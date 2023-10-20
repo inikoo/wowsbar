@@ -136,9 +136,11 @@ const screenViewChange = (value: string) => {
         </Modal>
 
         <div v-if="bannerType != 'square'" class="flex justify-end">
+            <!-- Screenview only for landscape view on each breakpoints -->
             <ScreenView @screenView="screenViewChange" />
         </div>
 
+        <!-- If Banner square -->
         <div class="flex justify-center w-full">
             <div class="w-fit max-h-20 lg:max-h-32 overflow-hidden border border-gray-300 shadow transition-all duration-200 ease-in-out" :class="[
                 bannerType == 'square'
@@ -150,16 +152,20 @@ const screenViewChange = (value: string) => {
                             'aspect-[4/1]': screenView === 'desktop'
                         }
                         : 'aspect-[2/1] md:aspect-[3/1] lg:aspect-[4/1]'
-            ]" :style="{ background: get(data,'background','red')}">
-            <div class="relative flex items-center overflow-hidden" >
-                <div v-if="value">
-                    <Image :src="get(value, [`${screenView}`, 'source'], value.desktop.source)"
-                        :alt="value.name" :imageCover="true"/>
-                </div>
+            ]">
+                <div class="h-full relative flex items-center overflow-hidden" >
+                    <div v-if="value" class="h-full">
+                        <Image v-if="get(value, [`${screenView}`, 'source'], value.desktop.source)" :src="get(value, [`${screenView}`, 'source'], value.desktop.source)"
+                            :alt="value.name" :imageCover="true"/>
+                    </div>
+                    <div v-else class="h-full w-96" :style="{ background: get(data, 'background', 'red')}">
+                        <!-- If the background is a color -->
+                    </div>
                 </div>
             </div>
         </div>
 
+        <!-- If banner Landscape or something -->
         <div class="w-full relative space-y-4 mt-2.5">
             <div class="flex gap-x-2">
                 <Button v-if="bannerType != 'square'" :style="`secondary`" class="relative" size="xs">
