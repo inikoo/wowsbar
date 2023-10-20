@@ -10,13 +10,10 @@ namespace App\Actions\Portfolio\PortfolioSocialAccount\PortfolioSocialAccountPos
 use App\Actions\InertiaAction;
 use App\Actions\Portfolio\PortfolioSocialAccount\UI\IndexPortfolioSocialAccounts;
 use App\Actions\Traits\Fields\WithPortfolioWebsiteFields;
-use App\Enums\Portfolio\PortfolioSocialAccount\PortfolioSocialAccountPlatformEnum;
-use App\Enums\Portfolio\PortfolioSocialAccount\PortfolioSocialAccountPostStatusEnum;
 use App\Enums\Portfolio\PortfolioSocialAccount\PortfolioSocialAccountPostTypeEnum;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
-use Spatie\LaravelOptions\Options;
 
 class CreatePortfolioSocialAccountPost extends InertiaAction
 {
@@ -95,7 +92,7 @@ class CreatePortfolioSocialAccountPost extends InertiaAction
 
                     ],
                     'route' => [
-                        'name' => 'customer.models.portfolio-social-account.post.store',
+                        'name'       => 'customer.models.portfolio-social-account.post.store',
                         'parameters' => $this->originalParameters
                     ],
                 ],

@@ -26,7 +26,8 @@ use Spatie\Sluggable\SlugOptions;
 
 class PortfolioSocialAccountPost extends Model
 {
-    use HasFactory, HasSlug;
+    use HasFactory;
+    use HasSlug;
 
     protected $guarded = [];
 
@@ -35,10 +36,16 @@ class PortfolioSocialAccountPost extends Model
         return $this->belongsTo(PortfolioSocialAccount::class, 'portfolio_social_account_id');
     }
 
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
+
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
             ->generateSlugsFrom('task_name')
-            ->saveSlugsTo('slug');
+            ->saveSlugsTo('slug')
+            ->doNotGenerateSlugsOnUpdate();
     }
 }

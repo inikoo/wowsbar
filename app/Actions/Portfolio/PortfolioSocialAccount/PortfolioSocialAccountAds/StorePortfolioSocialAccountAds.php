@@ -28,7 +28,7 @@ class StorePortfolioSocialAccountAds
     use WithSocialAudit;
     use AsCommand;
 
-    private bool $asAction = false;
+    private bool $asAction          = false;
     public string $commandSignature = 'ads:create {account}';
 
     public function handle(PortfolioSocialAccount $portfolioSocialAccount, array $modelData): Model
@@ -43,7 +43,7 @@ class StorePortfolioSocialAccountAds
     {
         return redirect()->route('customer.portfolio.social-accounts.show', [
             'portfolioSocialAccount' => $post->platform->slug,
-            'tab' => PortfolioSocialAccountTabsEnum::ADS->value
+            'tab'                    => PortfolioSocialAccountTabsEnum::ADS->value
         ]);
     }
 
@@ -59,9 +59,11 @@ class StorePortfolioSocialAccountAds
     public function rules(): array
     {
         return [
-            'task_name' => ['required', 'string', 'max:255'],
-            'start_at' => ['required', 'string'],
-            'end_at' => ['required', 'string']
+            'task_name'   => ['required', 'string', 'max:255'],
+            'start_at'    => ['required', 'string'],
+            'end_at'      => ['required', 'string'],
+            'description' => ['nullable', 'string'],
+            'notes'       => ['nullable', 'string']
         ];
     }
 
@@ -87,10 +89,10 @@ class StorePortfolioSocialAccountAds
 
         $this->handle($portfolioSocialAccount, [
             'task_name' => fake()->title,
-            'start_at' => now(),
-            'end_at' => now()->addDays(5),
-            'type' => PortfolioSocialAccountPostTypeEnum::ADS,
-            'duration' => 5
+            'start_at'  => now(),
+            'end_at'    => now()->addDays(5),
+            'type'      => PortfolioSocialAccountPostTypeEnum::ADS,
+            'duration'  => 5
         ]);
 
         echo "Damnn u create a ads 🤖" . "\n";

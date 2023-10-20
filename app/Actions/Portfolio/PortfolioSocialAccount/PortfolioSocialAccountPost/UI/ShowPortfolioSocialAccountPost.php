@@ -8,15 +8,12 @@
 namespace App\Actions\Portfolio\PortfolioSocialAccount\PortfolioSocialAccountPost\UI;
 
 use App\Actions\InertiaAction;
-use App\Actions\Portfolio\PortfolioSocialAccount\UI\IndexPortfolioSocialAccounts;
 use App\Actions\Traits\Fields\WithPortfolioWebsiteFields;
-use App\Enums\Portfolio\PortfolioSocialAccount\PortfolioSocialAccountPlatformEnum;
-use App\Enums\Portfolio\PortfolioSocialAccount\PortfolioSocialAccountPostStatusEnum;
-use App\Enums\Portfolio\PortfolioSocialAccount\PortfolioSocialAccountPostTypeEnum;
+use App\Models\Portfolio\PortfolioSocialAccount;
+use App\Models\Portfolio\PortfolioSocialAccountPost;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
-use Spatie\LaravelOptions\Options;
 
 class ShowPortfolioSocialAccountPost extends InertiaAction
 {
@@ -28,94 +25,58 @@ class ShowPortfolioSocialAccountPost extends InertiaAction
     }
 
 
-    public function asController(ActionRequest $request): ActionRequest
+    public function asController(PortfolioSocialAccount $portfolioSocialAccount, PortfolioSocialAccountPost $post, ActionRequest $request): PortfolioSocialAccountPost
     {
         $this->initialisation($request);
-        return $request;
 
+        return $post;
     }
 
 
-    public function htmlResponse(ActionRequest $request): Response
+    public function htmlResponse(PortfolioSocialAccountPost $post, ActionRequest $request): \Illuminate\Http\Response|Response
     {
         $request->route()->getName();
 
         return Inertia::render(
-            'CreateModel',
+            'Portfolio/PortfolioSocialAccountPost',
             [
-                'breadcrumbs' => $this->getBreadcrumbs(),
-                'title'       => __('new post'),
+                'breadcrumbs' => $this->getBreadcrumbs($post),
+                'title'       => __('post'),
                 'pageHead'    => [
-                    'title'   => __('post'),
+                    'title'   => __("$post->task_name"),
                     'actions' => [
                         [
                             'type'  => 'button',
-                            'style' => 'cancel',
-                            'label' => __('cancel'),
+                            'style' => 'edit',
+                            'label' => __('Edit Post'),
                             'route' => [
-                                'name'       => 'customer.portfolio.social-accounts.show',
-                                'parameters' => array_merge($request->route()->originalParameters(), ['tab' => PortfolioSocialAccountPostTypeEnum::POST->value])
+                                'name'       => 'customer.portfolio.social-accounts.post.edit',
+                                'parameters' => array_values($this->originalParameters)
                             ],
                         ]
                     ]
-
-
-                ],
-                'formData' => [
-                    'blueprint' => [
-                        [
-                            'title'  => __('Post'),
-                            'fields' => [
-                                'task_name' => [
-                                    'type'     => 'input',
-                                    'label'    => __('task name'),
-                                    'required' => true,
-                                    'value'    => '',
-                                ],
-                                'start_at' => [
-                                    'type'     => 'date',
-                                    'label'    => __('upload at'),
-                                    'required' => true,
-                                    'value'    => '',
-                                ],
-                                'description' => [
-                                    'type'     => 'textarea',
-                                    'label'    => __('description'),
-                                    'required' => true,
-                                    'value'    => '',
-                                ],
-                                'notes' => [
-                                    'type'     => 'textarea',
-                                    'label'    => __('notes'),
-                                    'required' => true,
-                                    'value'    => '',
-                                ],
-                            ]
-                        ],
-
-                    ],
-                    'route' => [
-                        'name' => 'customer.models.portfolio-social-account.post.store',
-                        'parameters' => $this->originalParameters
-                    ],
                 ],
             ]
         );
     }
 
 
-    public function getBreadcrumbs(): array
+    public function getBreadcrumbs(PortfolioSocialAccountPost $post): array
     {
         return array_merge(
-            IndexPortfolioSocialAccounts::make()->getBreadcrumbs(
+            IndexPortfolioSocialAccountPosts::make()->getBreadcrumbs(
                 'customer.portfolio.social-accounts.index',
                 []
             ),
             [
                 [
-                    'type'          => 'creatingModel',
-                    'creatingModel' => [
-                        'label' => __("creating post"),
+                    'type'   => 'simple',
+                    'simple' => [
+                        'route' => [
+                            'name'       => 'customer.portfolio.social-accounts.show',
+                            'parameters' => $this->originalParameters
+                        ],
+                        'label' => __($post->slug),
                     ]
                 ]
             ]

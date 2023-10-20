@@ -13,13 +13,13 @@ enum PortfolioSocialAccountPlatformEnum: string
 {
     use EnumHelperTrait;
 
-    case FACEBOOK         = 'facebook';
-    case INSTAGRAM        = 'instagram';
-    case TIKTOK           = 'tiktok';
+    case FACEBOOK            = 'facebook';
+    case INSTAGRAM           = 'instagram';
+    case TIKTOK              = 'tiktok';
     case PINTEREST           = 'pinterest';
-    case LINKEDIN           = 'linkedin';
-    case TWITTER           = 'twitter';
-    case YOUTUBE           = 'youtube';
+    case LINKEDIN            = 'linkedin';
+    case TWITTER             = 'twitter';
+    case YOUTUBE             = 'youtube';
 
     public static function platformIcon(): array
     {

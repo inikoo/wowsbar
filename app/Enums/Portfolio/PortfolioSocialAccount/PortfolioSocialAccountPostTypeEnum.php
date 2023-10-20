@@ -9,11 +9,10 @@ namespace App\Enums\Portfolio\PortfolioSocialAccount;
 
 use App\Enums\EnumHelperTrait;
 
-enum
-PortfolioSocialAccountPostTypeEnum: string
+enum PortfolioSocialAccountPostTypeEnum: string
 {
     use EnumHelperTrait;
 
     case POST = 'post';
-    case ADS = 'ads';
+    case ADS  = 'ads';
 }

@@ -9,13 +9,12 @@ namespace App\Enums\Portfolio\PortfolioSocialAccount;
 
 use App\Enums\EnumHelperTrait;
 
-enum
-PortfolioSocialAccountPostStatusEnum: string
+enum PortfolioSocialAccountPostStatusEnum: string
 {
     use EnumHelperTrait;
 
-    case CREATING = 'creating';
-    case ON_HOLD = 'on_hold';
+    case CREATING  = 'creating';
+    case ON_HOLD   = 'on_hold';
     case NEED_HELP = 'need_help';
-    case FINISHED = 'finished';
+    case FINISHED  = 'finished';
 }

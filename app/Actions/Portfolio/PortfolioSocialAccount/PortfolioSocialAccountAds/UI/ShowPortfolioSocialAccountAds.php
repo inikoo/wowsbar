@@ -96,7 +96,7 @@ class ShowPortfolioSocialAccountAds extends InertiaAction
 
                     ],
                     'route' => [
-                        'name' => 'customer.models.portfolio-social-account.ads.store',
+                        'name'       => 'customer.models.portfolio-social-account.ads.store',
                         'parameters' => $this->originalParameters
                     ],
                 ],

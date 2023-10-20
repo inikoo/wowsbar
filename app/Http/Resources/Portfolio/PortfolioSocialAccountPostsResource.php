@@ -7,7 +7,6 @@
 
 namespace App\Http\Resources\Portfolio;
 
-use App\Models\Portfolio\PortfolioSocialAccount;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
@@ -21,16 +20,16 @@ class PortfolioSocialAccountPostsResource extends JsonResource
         $post = $this;
 
         return [
-            'slug' => $post->slug,
-            'task_name' => $post->task_name,
-            'start_at' => $post->start_at,
-            'end_at' => $post->end_at,
-            'duration' => $post->duration,
-            'type' => $post->type,
-            'status' => $post->status,
+            'slug'        => $post->slug,
+            'task_name'   => $post->task_name,
+            'start_at'    => $post->start_at,
+            'end_at'      => $post->end_at,
+            'duration'    => $post->duration,
+            'type'        => $post->type,
+            'status'      => $post->status,
             'description' => $post->description,
-            'notes' => $post->notes,
-            'platform' => $post->platform->platform->platformIcon()[$post->platform->platform->value]
+            'notes'       => $post->notes,
+            'platform'    => $post->platform->platform->platformIcon()[$post->platform->platform->value]
         ];
     }
 }
