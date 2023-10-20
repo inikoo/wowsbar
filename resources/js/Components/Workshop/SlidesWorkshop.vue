@@ -540,7 +540,7 @@ const uploadImageRespone = (res) => {
     currentComponentBeenEdited.value = props.data.components[ props.data.components.length - 1 ]
 };
 
-const addSlide=()=>{
+const addNewSlide = () => {
     let setData = [];
         setData.push({
             id:  null,
@@ -549,7 +549,7 @@ const addSlide=()=>{
                 imageAlt: 'New slide',
             },
             image: null,
-            background : '#b45309',
+            background : 'linear-gradient(to right, rgb(59, 130, 246), rgb(147, 51, 234))',
             visibility: true,
         });
     const newFiles = [...setData];
@@ -610,7 +610,8 @@ const addSlide=()=>{
                                 <Image :src="get(slide, ['image', `${screenView}`, 'thumbnail'], slide.image?.desktop?.thumbnail)" class="h-full w-10 sm:w-10 flex items-center justify-center py-1"/>
                             </div>
                             <div v-else>
-                                <div :style="{ background :get(slide,'background','red')}" class="h-full w-10 sm:w-10 flex items-center justify-center py-1"/>
+                                <!-- If the slide is color -->
+                                <div :style="{ background: get(slide, 'background', 'red')}" class="h-full w-10 sm:w-10 flex items-center justify-center py-1"/>
                             </div>
 
                             <!-- Label slide -->
@@ -661,7 +662,7 @@ const addSlide=()=>{
                         accept="image/*" class="absolute cursor-pointer rounded-md border-gray-300 sr-only" />
                 </Button> -->
 
-                 <Button :style="`secondary`" size="xs" @click="addSlide" class="relative w-full flex justify-center lg:w-fit lg:inline space-x-2">
+                 <Button :style="`secondary`" size="xs" @click="addNewSlide" class="relative w-full flex justify-center lg:w-fit lg:inline space-x-2">
                     <FontAwesomeIcon icon='fas fa-plus' class='' aria-hidden='true' />
                     <span>{{ trans("Add slide") }}</span>
                 </Button>
