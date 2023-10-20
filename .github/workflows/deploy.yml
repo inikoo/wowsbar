@@ -1,0 +1,35 @@
+name: Deploy
+
+on:
+  push:
+    branches: [ "production" ]
+
+concurrency: production_environment
+
+env:
+  HOME: /home/devops
+
+jobs:
+  laravel-tests:
+    name: Deploy wowsbar 🚀
+    runs-on: [ self-hosted, linux, x64 ]
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v35
+      - name: Npm install
+        run: npm ci
+      - name: Composer install
+        run: composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+      - name: Prepare environment
+        run:  |
+          ln -s ../../../../env.wowsbar.testing .env.testing
+          ln -s ../../../../env.wowsbar.testing .env
+      - name: Generate database dumps 📚
+        run: ./generate_testing_db_dumps.sh ${{vars.TESTING_DB_PORT}}
+      - name: Run test
+        run: vendor/bin/pest
