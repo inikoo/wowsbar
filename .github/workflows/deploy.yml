@@ -31,3 +31,4 @@ jobs:
         with:
           dep: deploy
           skip-ssh-setup: true
+          ssh-config: ${{ secrets.DEPLOY_SSH_CONFIG }}
