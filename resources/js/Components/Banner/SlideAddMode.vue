@@ -19,6 +19,7 @@ const emits = defineEmits<{
     (e: 'onChangeInput'): void
     (e: 'onClickButtonGallery'): void
     (e: 'addedFiles', files: File[]): void
+    (e: 'onClickQuickStart'): void
 }>()
 
 const fileInput: Ref<any> = ref(null)
@@ -51,11 +52,15 @@ const onChange = () => {
                 <div class="flex text-sm leading-6 justify-center mt-4">
                     <p class="pl-1">{{ trans("Click me or drag some images here.") }}</p>
                 </div>
-                <p class="text-[0.7rem]">
+                <p class="text-[0.7rem] mb-2.5">
                     {{ trans("PNG, JPG, GIF up to 10MB") }}
                 </p>
-                <Button id="gallery" :style="`white`" :icon="'fal fa-photo-video'" label="Gallery" size="xs"
-                    class="relative m-2.5" @click="emits('onClickButtonGallery')" />
+                <div class="mt-2.5 flex items-center justify-center gap-x-2">
+                    <Button id="gallery" :style="`tertiary`" :icon="'fal fa-photo-video'" label="Gallery" size="xs"
+                        class="relative text-white hover:text-gray-700" @click="emits('onClickButtonGallery')" />
+                    <Button id="quickStart" :style="`secondary`" :icon="''" label="Quick Start" size="xs"
+                        class="relative" @click="emits('onClickQuickStart')" />
+                </div>
             </div>
         </div>
         <div v-if="bannerType == 'landscape'" class="text-xs text-gray-400 py-1">{{ trans("The recommended image size is 1800 x 450") }}</div>

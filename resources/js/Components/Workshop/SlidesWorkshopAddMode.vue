@@ -5,7 +5,7 @@ import Modal from '@/Components/Utils/Modal.vue'
 import CropImage from "./CropImage/CropImage.vue"
 import GalleryImages from "@/Components/Workshop/GalleryImages.vue"
 import SlideAddMode from '@/Components/Banner/SlideAddMode.vue'
-
+import { useBannerBackgroundColor } from '@/Composables/useColorList'
 const props = defineProps<{
     data: {
         common: {
@@ -90,6 +90,31 @@ const uploadImageRespone = (res) => {
     props.data.components = [...props.data.components, ...newFiles]
     isOpenModalCrop.value = false
 }
+
+const onClickQuickStart = () => {
+    props.data.components.push({
+        id:  null,
+        ulid: ulid(),
+        layout: {
+            imageAlt: 'New slide',
+            centralStage: {
+                title: "Hello World!",
+                style: {
+                    color: "rgba(253, 224, 71, 255)",
+                    fontSize: {
+                        fontTitle: "text-[30px] lg:text-[60px]",
+                        fontSubtitle: "text-[15px] lg:text-[25px]"
+                    }
+                }
+            }
+        },
+        image: {
+            desktop: useBannerBackgroundColor()[Math.floor(Math.random() * useBannerBackgroundColor().length)] // To random the background color on new slide
+        },
+        visibility: true,
+    }
+)}
+
 </script>
 
 <template layout="CustomerApp">
@@ -115,6 +140,7 @@ const uploadImageRespone = (res) => {
             @drop="drop"
             @onClickButtonGallery="isOpenGalleryImages = true"
             @onChangeInput="isOpenModalCrop = true"
+            @onClickQuickStart="onClickQuickStart"
         />
     </div>
 </template>
