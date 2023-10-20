@@ -23,9 +23,10 @@ jobs:
         uses: tj-actions/changed-files@v35
       - name: Composer install
         run: composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-      - name: deploy
-        run:  echo 'x'
-      - name: Generate database dumps 📚
+      - name: Prepare environment
+        run: |
+          ln -s ../../../../env.wowsbar.deploy .env
+      - name: Launch 🚀
         uses: deployphp/action@v1
         with:
           dep: deploy
