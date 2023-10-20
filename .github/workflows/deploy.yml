@@ -30,3 +30,4 @@ jobs:
         uses: deployphp/action@v1
         with:
           dep: deploy
+          skip-ssh-setup: true
