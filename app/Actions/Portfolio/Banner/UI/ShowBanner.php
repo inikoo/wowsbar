@@ -111,7 +111,7 @@ class ShowBanner extends InertiaAction
                             'label' => __('clone this banner'),
                             'icon'  => ["fal", "fa-paste"],
                             'route' => [
-                                'name'       => 'customer.banners.duplicate',
+                                'name'       => 'customer.banners.banners.duplicate',
                                 'parameters' => array_values($request->route()->originalParameters())
                             ]
                         ],
@@ -213,8 +213,8 @@ class ShowBanner extends InertiaAction
 
 
         return match ($routeName) {
-            'customer.banners.show',
-            'customer.banners.edit' =>
+            'customer.banners.banners.show',
+            'customer.banners.banners.edit' =>
             array_merge(
                 ShowBannersDashboard::make()->getBreadcrumbs(),
                 $headCrumb(
@@ -222,11 +222,11 @@ class ShowBanner extends InertiaAction
                     Banner::firstWhere('slug', $routeParameters['banner']),
                     [
                         'index' => [
-                            'name'       => 'customer.banners.index',
+                            'name'       => 'customer.banners.banners.index',
                             'parameters' => []
                         ],
                         'model' => [
-                            'name'       => 'customer.banners.show',
+                            'name'       => 'customer.banners.banners.show',
                             'parameters' => $routeParameters
                         ]
                     ],
@@ -270,8 +270,8 @@ class ShowBanner extends InertiaAction
 
 
         return match ($routeName) {
-            'customer.banners.show',
-            'customer.banners.edit' => [
+            'customer.banners.banners.show',
+            'customer.banners.banners.edit' => [
                 'label' => $banner->slug,
                 'route' => [
                     'name'       => $routeName,

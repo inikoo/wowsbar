@@ -5,7 +5,7 @@
   -->
 
 <script setup lang="ts">
-import { Link, router } from "@inertiajs/vue3"
+import {  router } from "@inertiajs/vue3"
 import { useLayoutStore } from "@/Stores/layout"
 import TopBarNavs from "@/Layouts/Customer/TopBarNavs.vue"
 import { ref, onMounted } from "vue"
@@ -68,7 +68,7 @@ onMounted(() => {
 })
 
 const logoutAuth = () => {
-    // Signout from app and Firebase
+    // Sign-out from app and Firebase
     router.post(route(props.urlPrefix + 'logout'))
     useSignOutFirebase()
 }
