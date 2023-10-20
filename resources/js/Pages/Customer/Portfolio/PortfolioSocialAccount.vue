@@ -52,7 +52,7 @@ const component = computed(() => {
         details: ModelDetails,
         changelog: TableCustomerHistories,
         post: TablePortfolioSocialAccountPosts,
-        ads: TablePortfolioSocialAccountAds,
+        ads: TablePortfolioSocialAccountAds
     };
     return components[currentTab.value];
 
@@ -64,5 +64,5 @@ const component = computed(() => {
     <Head :title="capitalize(title)"/>
     <PageHeading :data="pageHead"></PageHeading>
     <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate"/>
-    <component :is="component" :key="currentTab"  :tab="currentTab" :data="props[currentTab]"></component>
+    <component :is="component"  :tab="currentTab" :data="props[currentTab]"></component>
 </template>

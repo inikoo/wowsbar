@@ -5,17 +5,14 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Portfolio\PortfolioSocialAccount\PortfolioSocialAccountPost\UI;
+namespace App\Actions\Portfolio\PortfolioSocialAccount\PortfolioSocialAccountAds\UI;
 
 use App\Actions\InertiaAction;
 use App\Actions\Portfolio\PortfolioSocialAccount\UI\IndexPortfolioSocialAccounts;
 use App\Actions\Traits\Fields\WithPortfolioWebsiteFields;
-use App\Enums\Portfolio\PortfolioSocialAccount\PortfolioSocialAccountPlatformEnum;
-use App\Enums\Portfolio\PortfolioSocialAccount\PortfolioSocialAccountPostStatusEnum;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
-use Spatie\LaravelOptions\Options;
 
 class CreatePortfolioSocialAccountAds extends InertiaAction
 {
