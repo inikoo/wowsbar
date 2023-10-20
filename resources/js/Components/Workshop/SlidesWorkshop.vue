@@ -6,6 +6,7 @@
 
 <script setup lang="ts">
 import { ref, watch, } from "vue"
+import { useBannerBackgroundColor } from "@/Composables/useColorList"
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import {
     faTrashAlt,
@@ -540,25 +541,28 @@ const uploadImageRespone = (res) => {
 };
 
 const addNewSlide = () => {
-    let setData = [];
-        setData.push({
-            id:  null,
-            ulid: ulid(),
-            layout: {
-                imageAlt: 'New slide',
-            },
-            image: {
-                desktop: 'linear-gradient(to right, rgb(59, 130, 246), rgb(147, 51, 234))'
-            },
-            visibility: true,
-        });
+    let setData = []
+    setData.push({
+        id:  null,
+        ulid: ulid(),
+        layout: {
+            imageAlt: 'New slide',
+        },
+        image: {
+            desktop: backgroundColorList[Math.floor(Math.random() * backgroundColorList.length)] // To random the background color on new slide
+        },
+        visibility: true,
+    });
     const newFiles = [...setData];
     props.data.components = [...props.data.components, ...newFiles];
 }
 
+const backgroundColorList = useBannerBackgroundColor() // Fetch color list from Composables
+
 </script>
 
 <template>
+    
     <div class="flex flex-grow gap-2.5">
         <div class="p-2.5 border rounded h-fit shadow w-1/4"
             v-if="data.components" @dragover="dragover" @dragleave="dragleave" @drop="drop">

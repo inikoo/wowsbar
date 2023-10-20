@@ -10,6 +10,7 @@ import GalleryImages from "@/Components/Workshop/GalleryImages.vue"
 import Image from '@/Components/Image.vue'
 import { set, get } from 'lodash'
 import ScreenView from "@/Components/ScreenView.vue"
+import { useBannerBackgroundColor } from "@/Composables/useColorList"
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faUpload } from '@fas/'
@@ -112,25 +113,12 @@ const screenViewChange = (value: string) => {
     }
 }
 
-const backgroundColorList = [
-    'rgb(99, 102, 241)', // Indigo
-    'rgb(243, 244, 246)', // Gray
-    'rgb(41, 37, 36)', // Stone
-    'rgb(245, 158, 11)', // Amber
-    'linear-gradient(to right, rgb(59, 130, 246), rgb(37, 99, 235))',
-    'linear-gradient(to right, rgb(59, 130, 246), rgb(147, 51, 234)',
-    'linear-gradient(to right, rgb(244, 63, 94), rgb(248, 113, 113), rgb(239, 68, 68))',
-    'linear-gradient(to left bottom, rgb(49, 46, 129), rgb(129, 140, 248), rgb(49, 46, 129))',
-    'radial-gradient(at right center, rgb(186, 230, 253), rgb(129, 140, 248))',
-    'linear-gradient(to right, rgb(255, 228, 230), rgb(204, 251, 241))',
-]
+const backgroundColorList = useBannerBackgroundColor() // Fetch color list from Composables
 
-
+// console.log(props.data)
 </script>
 
 <template>
-    <!-- <pre>{{ value }}</pre>
-    <pre>{{ data }}</pre> -->
     <div class="block w-full">
         <!-- Popup: add image from Gallery -->
         <Modal :show="isOpen" @onClose="closeModal">
@@ -189,24 +177,28 @@ const backgroundColorList = [
 
         <!-- Button -->
         <div class="w-full relative space-y-4 mt-2.5">
-            <div class="flex gap-x-2">
-                <Button v-if="bannerType != 'square'" :style="`secondary`" class="relative" size="xs">
-                    <FontAwesomeIcon icon='fas fa-upload' class='' aria-hidden='true' />
-                    {{ trans(`Upload image ${screenView}`) }}
-                    <label class="bg-transparent inset-0 absolute inline-block cursor-pointer" id="input-slide-large-mask"
-                        for="input-slide-large" />
-                    <input type="file" @change="onFileChange" id="input-slide-large" name="input-slide-large"
-                        ref="fileInput" accept="image/*"
-                        class="absolute cursor-pointer rounded-md border-gray-300 sr-only" />
-                </Button>
-
-                <Button :style="`tertiary`" icon="fal fa-photo-video" label="Gallery" size="xs" class="relative" @click="isOpen = !isOpen" />
+            <div class="flex flex-col gap-y-2">
+                <div class="flex items-center gap-x-4">
+                    <div>An Image:</div>
+                    <div class="space-x-2">
+                        <Button v-if="bannerType != 'square'" :style="`secondary`" class="relative" size="xs">
+                            <FontAwesomeIcon icon='fas fa-upload' class='' aria-hidden='true' />
+                            {{ trans(`Upload image ${screenView}`) }}
+                            <label class="bg-transparent inset-0 absolute inline-block cursor-pointer" id="input-slide-large-mask"
+                                for="input-slide-large" />
+                            <input type="file" @change="onFileChange" id="input-slide-large" name="input-slide-large"
+                                ref="fileInput" accept="image/*"
+                                class="absolute cursor-pointer rounded-md border-gray-300 sr-only" />
+                        </Button>
+                        <Button :style="`tertiary`" icon="fal fa-photo-video" label="Gallery" size="xs" class="relative" @click="isOpen = !isOpen" />
+                    </div>
+                </div>
                 
                 <!-- List: Background Color -->
-                <div class="flex items-center w-full">
-                    <div class="relative h-8 flex items-center gap-x-1 px-2">
-                        <!-- <div v-if="value" class="absolute inset-0 flex items-center justify-center bg-gray-700/60 text-white font-medium">Delete the image to use awesome background color.</div> -->
-                        <!-- Add conditional click() to avoid user change color via inspect -->
+                <div class="flex items-center gap-x-4">
+                    <div class="whitespace-nowrap">Or a color:</div>
+                    <!-- Add conditional click() to avoid user change color via inspect -->
+                    <div class="h-8 flex items-center w-fit gap-x-1.5">
                         <div v-for="bgColor in backgroundColorList"
                             @click="data.image[screenView ?? 'desktop'] = bgColor"
                             class="w-full rounded h-full aspect-square shadow cursor-pointer"
