@@ -18,6 +18,7 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import { faMicrophoneStand } from '@fal/'
 import {useFormatTime} from "@/Composables/useFormatTime";
+import {Link} from "@inertiajs/vue3";
 
 library.add(faFacebook, faTwitter, faTiktok, faPinterest, faLinkedin, faInstagram, faYoutube, faMicrophoneStand)
 
@@ -26,24 +27,38 @@ const props = defineProps<{
     tab?: string
 }>()
 
+function adsRoute(post) {
+    console.log(route().current());
+    switch (route().current()) {
+        case 'customer.portfolio.social-accounts.show':
+            return route(
+                'customer.portfolio.social-accounts.ads.show',
+                [route().params.portfolioSocialAccount, post.slug]);
+    }
+}
 
 </script>
 
 <template>
     <Table :resource="data" :name="tab" class="mt-5">
-        <template #cell(platform)="{ item: account }">
+        <template #cell(task_name)="{ item: ads }">
+            <Link :href="adsRoute(ads)" :id="ads['slug']" class="py-2 px-1">
+                {{ ads['task_name'] }}
+            </Link>
+        </template>
+        <template #cell(platform)="{ item: ads }">
             <div class="text-gray-500">
-                <Icon class="ml-1" :data="account['platform']"/>
+                <Icon class="ml-1" :data="ads['platform']"/>
             </div>
         </template>
-        <template #cell(start_at)="{ item: account }">
+        <template #cell(start_at)="{ item: ads }">
             <div class="text-gray-500">
-                {{ useFormatTime(account['start_at']) }}
+                {{ useFormatTime(ads['start_at']) }}
             </div>
         </template>
-        <template #cell(end_at)="{ item: account }">
+        <template #cell(end_at)="{ item: ads }">
             <div class="text-gray-500">
-                {{ useFormatTime(account['end_at']) }}
+                {{ useFormatTime(ads['end_at']) }}
             </div>
         </template>
     </Table>

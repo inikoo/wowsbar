@@ -21,6 +21,7 @@ class PortfolioSocialAccountPostsResource extends JsonResource
         $post = $this;
 
         return [
+            'slug' => $post->slug,
             'task_name' => $post->task_name,
             'start_at' => $post->start_at,
             'end_at' => $post->end_at,

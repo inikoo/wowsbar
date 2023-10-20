@@ -5,9 +5,12 @@ namespace App\Models\Portfolio;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 /**
  *
+ * @property string $slug
  * @property string $task_name
  * @property string $portfolio_social_account_id
  * @property string $start_at
@@ -23,12 +26,19 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class PortfolioSocialAccountPost extends Model
 {
-    use HasFactory;
+    use HasFactory, HasSlug;
 
     protected $guarded = [];
 
     public function platform(): BelongsTo
     {
         return $this->belongsTo(PortfolioSocialAccount::class, 'portfolio_social_account_id');
+    }
+
+    public function getSlugOptions(): SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom('task_name')
+            ->saveSlugsTo('slug');
     }
 }

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
 
             $table->string('task_name');
+            $table->string('slug');
             $table->dateTimeTz('start_at');
             $table->dateTimeTz('end_at')->nullable();
             $table->string('duration')->default(0);
