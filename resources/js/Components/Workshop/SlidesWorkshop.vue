@@ -6,6 +6,7 @@
 
 <script setup lang="ts">
 import { ref, watch, } from "vue"
+import { useBannerBackgroundColor } from "@/Composables/useColorList"
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import {
     faTrashAlt,
@@ -184,8 +185,7 @@ const changeVisibility = (slide: any) => {
     const index = props.data.components.findIndex((item) => item.ulid === slide.ulid);
     if (index !== -1) {
         props.data.components[index].hasOwnProperty("visibility")
-            ? (props.data.components[index].visibility = !props.data.components[index]
-                .visibility)
+            ? (props.data.components[index].visibility = !props.data.components[index].visibility)
             : (props.data.components[index].visibility = false);
     }
 };
@@ -540,25 +540,29 @@ const uploadImageRespone = (res) => {
     currentComponentBeenEdited.value = props.data.components[ props.data.components.length - 1 ]
 };
 
-const addSlide=()=>{
-    let setData = [];
-        setData.push({
-            id:  null,
-            ulid: ulid(),
-            layout: {
-                imageAlt: 'New slide',
-            },
-            image: null,
-            background : '#b45309',
-            visibility: true,
-        });
+const addNewSlide = () => {
+    let setData = []
+    setData.push({
+        id:  null,
+        ulid: ulid(),
+        layout: {
+            imageAlt: 'New slide',
+        },
+        image: {
+            desktop: backgroundColorList[Math.floor(Math.random() * backgroundColorList.length)] // To random the background color on new slide
+        },
+        visibility: true,
+    });
     const newFiles = [...setData];
     props.data.components = [...props.data.components, ...newFiles];
 }
 
+const backgroundColorList = useBannerBackgroundColor() // Fetch color list from Composables
+
 </script>
 
 <template>
+    
     <div class="flex flex-grow gap-2.5">
         <div class="p-2.5 border rounded h-fit shadow w-1/4"
             v-if="data.components" @dragover="dragover" @dragleave="dragleave" @drop="drop">
@@ -606,11 +610,13 @@ const addSlide=()=>{
                                 class="handle p-1 text-xs sm:text-base sm:p-2.5 text-gray-700 cursor-grab place-self-center" />
 
                             <!-- Image slide -->
-                            <div v-if="slide.image">
+                            <div v-if="typeof get(slide.image, 'desktop', false) === 'object'">
                                 <Image :src="get(slide, ['image', `${screenView}`, 'thumbnail'], slide.image?.desktop?.thumbnail)" class="h-full w-10 sm:w-10 flex items-center justify-center py-1"/>
                             </div>
+                            
                             <div v-else>
-                                <div :style="{ background :get(slide,'background','red')}" class="h-full w-10 sm:w-10 flex items-center justify-center py-1"/>
+                                <!-- If the slide is color -->
+                                <div :style="{ background: get(slide.image, 'desktop', 'red')}" class="h-full w-10 sm:w-10 flex items-center justify-center py-1"/>
                             </div>
 
                             <!-- Label slide -->
@@ -661,7 +667,7 @@ const addSlide=()=>{
                         accept="image/*" class="absolute cursor-pointer rounded-md border-gray-300 sr-only" />
                 </Button> -->
 
-                 <Button :style="`secondary`" size="xs" @click="addSlide" class="relative w-full flex justify-center lg:w-fit lg:inline space-x-2">
+                 <Button :style="`secondary`" size="xs" @click="addNewSlide" class="relative w-full flex justify-center lg:w-fit lg:inline space-x-2">
                     <FontAwesomeIcon icon='fas fa-plus' class='' aria-hidden='true' />
                     <span>{{ trans("Add slide") }}</span>
                 </Button>
