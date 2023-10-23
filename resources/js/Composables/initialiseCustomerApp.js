@@ -42,10 +42,16 @@ export const initialiseCustomerApp = () => {
 
         let moduleName = layout.currentRoute.split('.');
         layout.currentModule = moduleName[1];
-        
-        // alert(layout.currentRoute)
-        // alert(moduleName)
-        // alert(layout.currentModule)
+
+
+        if(layout.currentModule==='banners'){
+            layout.currentParentModule='websites';
+        }else{
+            layout.currentParentModule=null;
+        }
+
+        console.log(layout.currentRoute)
+        console.log(moduleName[1])
 
         layout.booted = true;
 

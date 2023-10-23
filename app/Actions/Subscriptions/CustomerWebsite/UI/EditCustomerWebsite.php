@@ -5,7 +5,7 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Portfolios\CustomerWebsite\UI;
+namespace App\Actions\Subscriptions\CustomerWebsite\UI;
 
 use App\Actions\InertiaAction;
 use App\Models\CRM\Customer;
@@ -178,7 +178,7 @@ class EditCustomerWebsite extends InertiaAction
 
         return match ($routeName) {
             'customer.portfolio.websites.edit',
-            'org.portfolios.shop.customer-websites.edit',
+            'org.subscriptions.shop.customer-websites.edit',
             'org.crm.shop.customers.show.customer-websites.edit' => [
                 'label' => $customerWebsite->name,
                 'route' => [

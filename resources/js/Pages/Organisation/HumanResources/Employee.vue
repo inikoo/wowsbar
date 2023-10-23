@@ -30,7 +30,7 @@ library.add(
 )
 
 const createEmployeeUser = () =>{
-    router.post(route('hr.employees.show.user.store',props['employee'].data.id), {})
+    router.post(route('org.hr.employees.show.user.store',props['employee'].data.id), {})
 }
 
 const ModelChangelog = defineAsyncComponent(() => import('@/Pages/ModelChangelog.vue'))
@@ -108,6 +108,6 @@ const component = computed(() => {
         </div>
     -->
     <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate"/>
-    <component :is="component" :data="props[currentTab]"></component>
+    <component :is="component" :tab="currentTab" :data="props[currentTab]"></component>
 </template>
 

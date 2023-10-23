@@ -5,7 +5,7 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Portfolios\CustomerWebsite\UI;
+namespace App\Actions\Subscriptions\CustomerWebsite\UI;
 
 use App\Actions\Helpers\History\IndexHistory;
 use App\Actions\InertiaAction;

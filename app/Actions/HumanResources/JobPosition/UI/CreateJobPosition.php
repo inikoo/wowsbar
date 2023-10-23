@@ -28,35 +28,35 @@ class CreateJobPosition extends InertiaAction
                 'breadcrumbs' => $this->getBreadcrumbs(),
                 'title'       => __('new job position'),
                 'pageHead'    => [
-                    'title'        => __('new job position'),
+                    'title' => __('new job position'),
 
-                    'actions'      => [
+                    'actions' => [
                         [
                             'type'  => 'button',
                             'style' => 'cancel',
                             'label' => __('cancel'),
                             'route' => [
-                                'name'       => 'hr.job-positions.index',
+                                'name'       => 'org.hr.job-positions.index',
                                 'parameters' => array_values($this->originalParameters)
                             ],
                         ]
                     ]
 
                 ],
-                'formData' => [
+                'formData'    => [
                     'blueprint' => [
                         [
                             'title'  => __('creating job positions'),
                             'fields' => [
-                                'code' => [
-                                    'type'      => 'input',
-                                    'label'     => __('code'),
-                                    'required'  => true
+                                'code'       => [
+                                    'type'     => 'input',
+                                    'label'    => __('code'),
+                                    'required' => true
                                 ],
-                                'name' => [
-                                    'type'      => 'input',
-                                    'label'     => __('name'),
-                                    'required'  => true
+                                'name'       => [
+                                    'type'     => 'input',
+                                    'label'    => __('name'),
+                                    'required' => true
                                 ],
                                 'department' => [
                                     'type'        => 'select',
@@ -69,13 +69,12 @@ class CreateJobPosition extends InertiaAction
                         ]
 
                     ],
-                    'route'      => [
-                            'name'       => 'models.job-position.store',
+                    'route'     => [
+                        'name' => 'models.job-position.store',
 
                     ]
 
                 ],
-
 
 
             ]
@@ -84,7 +83,7 @@ class CreateJobPosition extends InertiaAction
 
     public function authorize(ActionRequest $request): bool
     {
-        return $request->user()->hasPermissionTo('hr.edit');
+        return false;//$request->user()->hasPermissionTo('hr.edit');
     }
 
 

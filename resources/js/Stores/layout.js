@@ -28,12 +28,12 @@ export const useLayoutStore = defineStore('layout', {
             currentRoute          : '',
             currentRouteParameters: {},
             currentModule         : '',
+            currentParentModule         : '',
             leftSidebar           : {
                 show: true,
             },
             navigation            : [
                 {
-                    icon: '',
                     subNav: [],
                     scope: '',
                     icon: [],

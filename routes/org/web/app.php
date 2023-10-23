@@ -26,9 +26,9 @@ Route::middleware(["org-web"])->group(function () {
             Route::prefix("websites")
                 ->name("websites.")
                 ->group(__DIR__ . "/websites.php");
-            Route::prefix("portfolios")
-                ->name("portfolios.")
-                ->group(__DIR__ . "/portfolios.php");
+            Route::prefix("subscriptions")
+                ->name("subscriptions.")
+                ->group(__DIR__."/subscriptions.php");
             Route::prefix("catalogue")
                 ->name("catalogue.")
                 ->group(__DIR__ . "/catalogue.php");

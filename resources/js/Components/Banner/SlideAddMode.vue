@@ -33,7 +33,7 @@ const onChange = () => {
 </script>
 
 <template>
-    <div class="w-full h-full space-y-2" @dragover="emits('dragOver')" @dragleave="emits('dragLeave')" @drop="emits('drop')">
+    <div class="w-full h-full space-y-2" @dragover="emits('dragOver')" @dragleave="emits('dragLeave')" @drop="(value)=>emits('drop',value)">
         <div class="relative mt-2 flex justify-center rounded-lg border border-indigo-400 shadow-lg px-6 py-10 bg-gradient-to-r from-green-300 via-blue-500 to-purple-600 hover:bg-gray-400/20"
             :class="bannerType == 'square' ? 'h-72 aspect-square mx-auto' : ''"
         >

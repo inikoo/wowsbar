@@ -78,7 +78,7 @@ class GetLayout
         }
 
 
-        $websiteSubNav=[];
+        $websiteSubNav = [];
 
         if ($customerUser->hasPermissionTo('portfolio.prospects.view') && $number_portfolio_websites > 0) {
             $websiteSubNav['prospects'] = [
@@ -146,7 +146,7 @@ class GetLayout
                 'scope'   => 'banners',
                 'icon'    => ['fal', 'fa-sign'],
                 'label'   => __('Banners'),
-                'route'   => 'customer.banners.index',
+                'route'   => 'customer.banners.banners.index',
                 'topMenu' => [
                     'subSections' => [
 
@@ -160,9 +160,10 @@ class GetLayout
                             'icon'  => ['fal', 'fa-sign'],
                             'label' => __('banners'),
                             'route' => [
-                                'name' => 'customer.banners.index',
+                                'name' => 'customer.banners.banners.index',
                             ]
                         ],
+                        /*
                         [
                             'icon'  => ['fal', 'fa-globe'],
                             'label' => __('websites'),
@@ -177,7 +178,7 @@ class GetLayout
                                 'name' => 'customer.banners.gallery',
                             ]
                         ],
-
+                        */
                     ],
 
                 ]
@@ -192,11 +193,11 @@ class GetLayout
                 'scope'   => 'portfolio',
                 'icon'    => ['fal', 'fa-globe'],
                 'label'   => __('websites'),
-                'route'   => 'customer.portfolio.websites.index',
+                'route'   => $customerUser->hasPermissionTo('portfolio') ? 'customer.portfolio.websites.index' : null,
                 'topMenu' => [
                     'subSections' => $portfolioSubsections
                 ],
-                'subNav'    => $websiteSubNav,
+                'subNav'  => $websiteSubNav,
             ];
         }
 

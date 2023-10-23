@@ -99,11 +99,11 @@ class ShowClocking extends InertiaAction
                         ] : [],
                         $this->canDelete ?
                             match ($request->route()->getName()) {
-                                'hr.clockings.show' => [
+                                'org.hr.clockings.show' => [
                                     'type'  => 'button',
                                     'style' => 'delete',
                                     'route' => [
-                                        'name'       => 'hr.clockings.remove',
+                                        'name'       => 'org.hr.clockings.remove',
                                         'parameters' => $request->route()->originalParameters()
                                     ],
 
@@ -173,18 +173,18 @@ class ShowClocking extends InertiaAction
         };
 
         return match ($routeName) {
-            'hr.clockings.show' =>
+            'org.hr.clockings.show' =>
             array_merge(
                 ShowHumanResourcesDashboard::make()->getBreadcrumbs(),
                 $headCrumb(
                     $routeParameters['clocking'],
                     [
                         'index' => [
-                            'name'       => 'hr.clockings.index',
+                            'name'       => 'org.hr.clockings.index',
                             'parameters' => []
                         ],
                         'model' => [
-                            'name'       => 'hr.clockings.show',
+                            'name'       => 'org.hr.clockings.show',
                             'parameters' => [$routeParameters['clocking']->slug]
                         ]
                     ],
@@ -213,9 +213,9 @@ class ShowClocking extends InertiaAction
                     $suffix
                 )
             ),
-            'hr.clocking-machines.show.clockings.show' => array_merge(
+            'org.hr.clocking-machines.show.clockings.show' => array_merge(
                 (new ShowClockingMachine())->getBreadcrumbs(
-                    'hr.clocking-machines.show',
+                    'org.hr.clocking-machines.show',
                     [
                        'clockingMachine' => $routeParameters['clockingMachine']
                     ]
@@ -224,13 +224,13 @@ class ShowClocking extends InertiaAction
                     $routeParameters['clocking'],
                     [
                         'index' => [
-                            'name'       => 'hr.clocking-machines.show.clockings.index',
+                            'name'       => 'org.hr.clocking-machines.show.clockings.index',
                             'parameters' => [
                                 $routeParameters['clockingMachine']->slug,
                             ]
                         ],
                         'model' => [
-                            'name'       => 'hr.clocking-machines.show.clockings.show',
+                            'name'       => 'org.hr.clocking-machines.show.clockings.show',
                             'parameters' => [
                                 $routeParameters['clockingMachine']->slug,
                                 $routeParameters['clocking']->slug
@@ -283,7 +283,7 @@ class ShowClocking extends InertiaAction
                     $query->where('clockings.workplace_id', $clocking->workplace_id);
                     break;
                 case 'org.hr.workplaces.show.clocking-machines.show.clockings.show':
-                case 'hr.clocking-machines.show.clockings.show':
+                case 'org.hr.clocking-machines.show.clockings.show':
                     $query->where('clockings.clocking_machine_id', $clocking->clocking_machine_id);
                     break;
 
@@ -302,7 +302,7 @@ class ShowClocking extends InertiaAction
                     $query->where('clockings.workplace_id', $clocking->workplace_id);
                     break;
                 case 'org.hr.workplaces.show.clocking-machines.show.clockings.show':
-                case 'hr.clocking-machines.show.clockings.show':
+                case 'org.hr.clocking-machines.show.clockings.show':
                     $query->where('clockings.clocking_machine_id', $clocking->clocking_machine_id);
                     break;
 
@@ -318,7 +318,7 @@ class ShowClocking extends InertiaAction
             return null;
         }
         return match ($routeName) {
-            'hr.clockings.show'=> [
+            'org.hr.clockings.show'=> [
                 'label'=> $clocking->slug,
                 'route'=> [
                     'name'      => $routeName,
@@ -328,7 +328,7 @@ class ShowClocking extends InertiaAction
 
                 ]
             ],
-            'hr.clocking-machines.show.clockings.show' => [
+            'org.hr.clocking-machines.show.clockings.show' => [
                 'label'=> $clocking->slug,
                 'route'=> [
                     'name'      => $routeName,

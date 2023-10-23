@@ -74,14 +74,13 @@ class BannerResource extends JsonResource
             'image_thumbnail'    => $imageThumbnail ? GetPictureSources::run($imageThumbnail) : null,
             'image'              => $image ? GetPictureSources::run($image) : null,
             'route'              => [
-                'name'       => 'customer.banners.show',
+                'name'       => 'customer.banners.banners.show',
                 'parameters' => [$banner->slug]
             ],
-         //   'websites'           => implode(', ', $banner->portfolioWebsites()->pluck('name')->toArray()),
             'updated_at'         => $banner->updated_at,
             'created_at'         => $banner->created_at,
             'workshopRoute'      => [
-                'name'       => 'customer.banners.workshop',
+                'name'       => 'customer.banners.banners.workshop',
                 'parameters' => [$banner->slug]
             ],
             'compiled_layout'    => $banner->compiled_layout,

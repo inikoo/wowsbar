@@ -31,43 +31,43 @@ test('create portfolio websites', function () {
     $customer  = customer();
     $modelData = PortfolioWebsite::factory()->definition();
 
-    $website   = StorePortfolioWebsite::make()->action($customer, $modelData);
+    $portfolioWebsite = StorePortfolioWebsite::make()->action($customer, $modelData);
     $customer->refresh();
-    expect($website)->toBeInstanceOf(PortfolioWebsite::class)
+    expect($portfolioWebsite)->toBeInstanceOf(PortfolioWebsite::class)
         ->and($customer->portfolioStats->number_portfolio_websites)->toBe(1);
-    $modelData = PortfolioWebsite::factory()->definition();
-    $website2  = StorePortfolioWebsite::make()->action($customer, $modelData);
+    $modelData         = PortfolioWebsite::factory()->definition();
+    $portfolioWebsite2 = StorePortfolioWebsite::make()->action($customer, $modelData);
     $customer->refresh();
-    expect($website2)->toBeInstanceOf(PortfolioWebsite::class)
+    expect($portfolioWebsite2)->toBeInstanceOf(PortfolioWebsite::class)
         ->and($customer->portfolioStats->number_portfolio_websites)->toBe(2);
 
     $this->artisan("customer:new-portfolio-website $customer->slug https://hello-world.com  Hello")->assertExitCode(0);
     $customer->refresh();
     expect($customer->portfolioStats->number_portfolio_websites)->toBe(3);
 
-    return $website;
+    return $portfolioWebsite;
 });
 
 
-test('create banners', function ($website) {
+test('create banners', function ($portfolioWebsite) {
     $customer = customer();
 
     $modelData = Banner::factory()->definition();
 
-    $banner = StoreBanner::make()->action($website, $modelData);
+    $banner = StoreBanner::make()->action($portfolioWebsite, $modelData);
     $customer->refresh();
     expect($banner)->toBeInstanceOf(Banner::class)
         ->and($customer->portfolioStats->number_banners)->toBe(1)
-        ->and($website->stats->number_banners)->toBe(1)
+        ->and($portfolioWebsite->stats->number_banners)->toBe(1)
         ->and($customer->portfolioStats->number_banners_state_unpublished)->toBe(1)
         ->and($customer->portfolioStats->number_banners_state_live)->toBe(0)
         ->and($customer->portfolioStats->number_banners_state_switch_off)->toBe(0);
 
-    $this->artisan("customer:new-banner $customer->slug  $website->slug -N 'My first banner' ")->assertExitCode(0);
-    $this->artisan("customer:new-banner $customer->slug  $website->slug -N 'My second banner' ")->assertExitCode(0);
+    $this->artisan("customer:new-banner $customer->slug  $portfolioWebsite->slug -N 'My first banner' ")->assertExitCode(0);
+    $this->artisan("customer:new-banner $customer->slug  $portfolioWebsite->slug -N 'My second banner' ")->assertExitCode(0);
 
     $customer->refresh();
-    $website->fresh();
+    $portfolioWebsite->fresh();
     expect($customer->portfolioStats->number_banners)->toBe(3);
 
     return $banner;
