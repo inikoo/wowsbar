@@ -70,18 +70,18 @@ class ShowJobPosition extends InertiaAction
                 ],
 
                 JobPositionTabsEnum::SHOWCASE->value => $this->tab == JobPositionTabsEnum::SHOWCASE->value ?
-                    fn() => GetJobPositionShowcase::run($jobPosition)
-                    : Inertia::lazy(fn() => GetJobPositionShowcase::run($jobPosition)),
+                    fn () => GetJobPositionShowcase::run($jobPosition)
+                    : Inertia::lazy(fn () => GetJobPositionShowcase::run($jobPosition)),
 
                 JobPositionTabsEnum::EMPLOYEES->value => $this->tab == JobPositionTabsEnum::EMPLOYEES->value
                     ?
-                    fn() => EmployeeResource::collection(
+                    fn () => EmployeeResource::collection(
                         IndexEmployees::run(
                             parent: $jobPosition,
                             prefix: JobPositionTabsEnum::EMPLOYEES->value
                         )
                     )
-                    : Inertia::lazy(fn() => EmployeeResource::collection(
+                    : Inertia::lazy(fn () => EmployeeResource::collection(
                         IndexEmployees::run(
                             parent: $jobPosition,
                             prefix: JobPositionTabsEnum::EMPLOYEES->value
@@ -105,8 +105,8 @@ class ShowJobPosition extends InertiaAction
 
 
                 JobPositionTabsEnum::HISTORY->value => $this->tab == JobPositionTabsEnum::HISTORY->value ?
-                    fn() => HistoryResource::collection(IndexHistory::run($jobPosition))
-                    : Inertia::lazy(fn() => HistoryResource::collection(IndexHistory::run($jobPosition)))
+                    fn () => HistoryResource::collection(IndexHistory::run($jobPosition))
+                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistory::run($jobPosition)))
             ]
         )->table(
             IndexEmployees::make()->tableStructure(

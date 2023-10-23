@@ -42,11 +42,11 @@ class BannersResource extends JsonResource
             'state_label' => $banner->state->labels()[$banner->state->value],
             'state_icon'  => $banner->state->stateIcon()[$banner->state->value],
             'date_icon'   => $banner->state->dateIcon()[$banner->state->value],
-
             'image_thumbnail' => $imageThumbnail ? GetPictureSources::run($imageThumbnail) : null,
             'image'           => $image ? GetPictureSources::run($image) : null,
             'websites'        => json_decode($this->websites),
-            'date'            => $banner->date
+            'date'            => $banner->date,
+            'delivery_url'       => config('app.delivery_url').'/banners/'.$banner->ulid,
 
 
         ];

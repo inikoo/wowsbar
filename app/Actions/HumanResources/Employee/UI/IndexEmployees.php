@@ -27,7 +27,6 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class IndexEmployees extends InertiaAction
 {
-
     private JobPosition|Organisation $parent;
 
     protected function getElementGroups(Organisation|JobPosition $parent): array
@@ -59,7 +58,7 @@ class IndexEmployees extends InertiaAction
 
     public function handle(Organisation|JobPosition $parent, $prefix = null): LengthAwarePaginator
     {
-        $this->parent=$parent;
+        $this->parent =$parent;
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
             $query->where(function ($query) use ($value) {
                 $query->whereAnyWordStartWith('employees.contact_name', $value)
@@ -86,9 +85,9 @@ class IndexEmployees extends InertiaAction
         if (class_basename($parent) == 'Organisation') {
             $queryBuilder->with('jobPositions');
         } else {
-            $queryBuilder->leftJoin('job_positionables','job_positionables.job_positionable_id','employees.id')
-            ->where('job_positionables.job_positionable_type','Employee')
-            ->where('job_position_id',$parent->id);
+            $queryBuilder->leftJoin('job_positionables', 'job_positionables.job_positionable_id', 'employees.id')
+            ->where('job_positionables.job_positionable_type', 'Employee')
+            ->where('job_position_id', $parent->id);
         }
 
 

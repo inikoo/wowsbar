@@ -62,7 +62,7 @@ class IndexJobPositions extends InertiaAction
 
     public function authorize(ActionRequest $request): bool
     {
-        $this->canEdit = false;//$request->user()->hasPermissionTo('hr.edit');
+        $this->canEdit  = false;//$request->user()->hasPermissionTo('hr.edit');
         $this->canCreate=false;
         return
             (

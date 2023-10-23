@@ -15,9 +15,9 @@ enum EmployeeStateEnum: string
 {
     use EnumHelperTrait;
 
-    case HIRED = 'hired';
+    case HIRED   = 'hired';
     case WORKING = 'working';
-    case LEFT = 'left';
+    case LEFT    = 'left';
 
     public static function labels(): array
     {
