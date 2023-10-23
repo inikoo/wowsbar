@@ -145,7 +145,7 @@ return [
                 'social'
             ]
         ],
-        'deve-m' => [
+        'dev-m' => [
             'code'       => 'dev-m',
             'team'       => 'developer',
             'department' => 'development',
@@ -154,7 +154,7 @@ return [
                 'caas-supervisor'
             ]
         ],
-        'deve' => [
+        'dev' => [
             'code'       => 'dev-w',
             'team'       => 'developer',
             'department' => 'development',
