@@ -22,9 +22,13 @@ const props = defineProps<{
                     ({{ data.published_snapshot.comment }})
                 </div>
             </div>
-            <div v-if="data.published_snapshot.published_at" class="text-sm text-gray-600 tracking-wide text-right">Published at <span class="font-bold">{{ useRangeFromNow(data.published_snapshot.published_at) }}</span> ago</div>
+            <div v-if="data.published_snapshot.published_at" class="text-sm text-gray-600 tracking-wide text-right">
+                Published at <span class="font-bold">{{ useRangeFromNow(data.published_snapshot.published_at) }}</span> ago
+            </div>
         </div>
-        <Slider :data="data.compiled_layout" :production="false" />
+        <div class="aspect-[2/1] md:aspect-[3/1] lg:aspect-[4/1] w-fit h-56 md:h-60">
+            <Slider :data="data.compiled_layout" :production="false" />
+        </div>
     </div>
 
     <!-- If banner is 'square' -->
@@ -41,11 +45,11 @@ const props = defineProps<{
                 </div>
             </div>
             <!-- Published at -->
-            <div class="text-sm italic text-gray-500 tracking-wide text-right font-light">Published at <span class="font-bold">{{ useRangeFromNow(data.published_snapshot.published_at) }}</span> ago</div>
+            <div class="text-sm italic text-gray-500 tracking-wide text-right font-light">Published at <span
+                    class="font-bold">{{ useRangeFromNow(data.published_snapshot.published_at) }}</span> ago</div>
         </div>
-            <div class="flex flex-col h-48 lg:h-64 xl:h-96 w-fit ">
-        <Slider :data="data.compiled_layout" :production="false"/>
-
-            </div>
+        <div class="flex flex-col h-48 lg:h-64 xl:h-96 w-fit ">
+            <Slider :data="data.compiled_layout" :production="false" />
+        </div>
     </div>
 </template>

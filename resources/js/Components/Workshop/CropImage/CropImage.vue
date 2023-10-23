@@ -155,11 +155,9 @@ const generateGif = (file) => {
                     <div @click="current = index" :class="['p-2.5 border border-solid rounded-lg cursor-pointer ', setData[current] == item ?  'border-gray-400 bg-gray-200'  : 'border-gray-300']">
                         <CropComponents v-if="item.originalFile.type !== 'image/gif'" :data="item"  :ratio="ratio"/>
                         <div v-else> <img :src="generateGif(item.originalFile)" :alt="item.originalFile.name"></div>
-                        <div class="flex justify-center align-middle">
-                            <h3 :class="['leading-4 tracking-tight', setData[current] == item ? 'text-orange-500 font-semibold' : 'text-gray-500']">
-                                {{ item.originalFile.name }}
-                            </h3>
-                        </div>
+                        <h3 class="flex justify-start align-middle leading-5 tracking-tight truncate w-full" :class="[setData[current] == item ? 'text-amber-500 font-semibold' : 'text-gray-500']">
+                            {{ item.originalFile.name }}
+                        </h3>
                     </div>
                 </li>
             </ul>

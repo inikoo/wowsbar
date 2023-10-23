@@ -23,7 +23,8 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class IndexJobPositions extends InertiaAction
 {
-    /** @noinspection PhpUndefinedMethodInspection */
+    private false $canCreate;
+
     public function handle(string $prefix = null): LengthAwarePaginator
     {
         if ($prefix) {
@@ -40,6 +41,7 @@ class IndexJobPositions extends InertiaAction
 
         $queryBuilder=QueryBuilder::for(JobPosition::class);
         foreach ($this->elementGroups as $key => $elementGroup) {
+            /** @noinspection PhpUndefinedMethodInspection */
             $queryBuilder->whereElementGroup(
                 prefix: $prefix,
                 key: $key,
@@ -48,6 +50,7 @@ class IndexJobPositions extends InertiaAction
             );
         }
 
+        /** @noinspection PhpUndefinedMethodInspection */
         return $queryBuilder
             ->defaultSort('job_positions.slug')
             ->select(['slug', 'id', 'name', 'number_employees'])
@@ -59,7 +62,8 @@ class IndexJobPositions extends InertiaAction
 
     public function authorize(ActionRequest $request): bool
     {
-        $this->canEdit = $request->user()->hasPermissionTo('hr.edit');
+        $this->canEdit  = false;//$request->user()->hasPermissionTo('hr.edit');
+        $this->canCreate=false;
         return
             (
                 $request->user()->tokenCan('root') or
@@ -89,9 +93,9 @@ class IndexJobPositions extends InertiaAction
                 ->withEmptyState(
                     [
                         'title'       => __('no job positions'),
-                        'description' => $this->canEdit ? __('Get started by creating a new job position.') : null,
-                        'count'       => organisation()->humanResourcesStats->number_job_position,
-                        'action'      => $this->canEdit ? [
+                        'description' => $this->canCreate ? __('Get started by creating a new job position.') : null,
+                        'count'       => organisation()->humanResourcesStats->number_job_positions,
+                        'action'      => $this->canCreate ? [
                             'type'    => 'button',
                             'style'   => 'create',
                             'tooltip' => __('new job position'),
@@ -120,7 +124,7 @@ class IndexJobPositions extends InertiaAction
                 'pageHead'    => [
                     'title'  => __('positions'),
                     'actions'=> [
-                        $this->canEdit ? [
+                        $this->canCreate ? [
                             'type'  => 'button',
                             'style' => 'create',
                             'label' => __('job position'),

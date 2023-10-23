@@ -39,11 +39,10 @@ class UploadImagesToBanner
                 extension: $imageFile->guessClientExtension()
             );
 
+
             $medias[] = $media;
-
-
-            $scope = 'unpublished-slide';
-            $count = $banner->images()->wherePivot('scope', $scope)->count();
+            $scope    = 'unpublished-slide';
+            $count    = $banner->images()->wherePivot('scope', $scope)->count();
 
             if ($count == 0) {
                 $banner->images()->attach(
@@ -53,18 +52,14 @@ class UploadImagesToBanner
                     ]
                 );
 
-                if($banner->state == BannerStateEnum::UNPUBLISHED) {
+                if ($banner->state == BannerStateEnum::UNPUBLISHED) {
                     $banner->update(
                         [
-                            'data->unpublished_image_id'=> $media->id
+                            'data->unpublished_image_id' => $media->id
                         ]
                     );
                 }
-
             }
-
-
-
         }
 
         return collect($medias);
@@ -72,7 +67,7 @@ class UploadImagesToBanner
 
     public function authorize(ActionRequest $request): bool
     {
-        return $request->get('customerUser')->hasPermissionTo("portfolio.edit");
+        return $request->get('customerUser')->hasPermissionTo("portfolio.banners.edit");
     }
 
     public function rules(): array

@@ -5,7 +5,7 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Portfolios\CustomerWebsite\UI;
+namespace App\Actions\Subscriptions\CustomerWebsite\UI;
 
 use App\Actions\CRM\Customer\UI\ShowCustomer;
 use App\Actions\Helpers\History\IndexHistory;
@@ -84,7 +84,7 @@ class ShowCustomerWebsite extends InertiaAction
         }
 
         return Inertia::render(
-            'Portfolios/CustomerWebsite',
+            'Subscriptions/CustomerWebsite',
             [
                 'title'       => __('CustomerWebsite'),
                 'breadcrumbs' => $this->getBreadcrumbs(
@@ -203,11 +203,11 @@ class ShowCustomerWebsite extends InertiaAction
                 ),
             ),
 
-            'org.portfolios.shop.customer-websites.show',
-            'org.portfolios.shop.customer-websites.edit' =>
+            'org.subscriptions.shop.customer-websites.show',
+            'org.subscriptions.shop.customer-websites.edit' =>
             array_merge(
                 ShowPortfoliosDashboard::make()->getBreadcrumbs(
-                    'org.portfolios.shop.dashboard',
+                    'org.subscriptions.shop.dashboard',
                     $routeParameters
                 ),
                 $headCrumb(
@@ -215,11 +215,11 @@ class ShowCustomerWebsite extends InertiaAction
                     CustomerWebsite::where('slug', $routeParameters['customerWebsite'])->first(),
                     [
                         'index' => [
-                            'name'       => 'org.portfolios.shop.customer-websites.index',
+                            'name'       => 'org.subscriptions.shop.customer-websites.index',
                             'parameters' => $routeParameters
                         ],
                         'model' => [
-                            'name'       => 'org.portfolios.shop.customer-websites.show',
+                            'name'       => 'org.subscriptions.shop.customer-websites.show',
                             'parameters' => $routeParameters
                         ]
                     ],
@@ -227,11 +227,11 @@ class ShowCustomerWebsite extends InertiaAction
                 ),
             ),
 
-            'org.portfolios.show',
-            'org.portfolios.edit' =>
+            'org.subscriptions.show',
+            'org.subscriptions.edit' =>
             array_merge(
                 IndexCustomerWebsites::make()->getBreadcrumbs(
-                    'org.portfolios.index',
+                    'org.subscriptions.index',
                     []
                 ),
                 $headCrumb(
@@ -239,11 +239,11 @@ class ShowCustomerWebsite extends InertiaAction
                     CustomerWebsite::where('slug', $routeParameters['customerWebsite'])->first(),
                     [
                         'index' => [
-                            'name'       => 'org.portfolios.index',
+                            'name'       => 'org.subscriptions.index',
                             'parameters' => []
                         ],
                         'model' => [
-                            'name'       => 'org.portfolios.show',
+                            'name'       => 'org.subscriptions.show',
                             'parameters' => $routeParameters
                         ]
                     ],
@@ -276,7 +276,7 @@ class ShowCustomerWebsite extends InertiaAction
         }
 
         return match ($routeName) {
-            'org.portfolios.shop.customer-websites.show',
+            'org.subscriptions.shop.customer-websites.show',
             'org.crm.shop.customers.show.customer-websites.show' => [
                 'label' => $customerWebsite->name,
                 'route' => [
@@ -288,7 +288,7 @@ class ShowCustomerWebsite extends InertiaAction
                     ]
                 ]
             ],
-            'org.portfolios.show' => [
+            'org.subscriptions.show' => [
                 'label' => $customerWebsite->name,
                 'route' => [
                     'name'       => $routeName,

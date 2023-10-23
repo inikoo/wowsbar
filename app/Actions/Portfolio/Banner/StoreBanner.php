@@ -37,6 +37,7 @@ class StoreBanner
 
     private Customer|PortfolioWebsite $parent;
     private string $scope;
+    private Customer $customer;
 
 
     public function handle(Customer|PortfolioWebsite $parent, array $modelData): Banner
@@ -124,10 +125,23 @@ class StoreBanner
 
     public function prepareForValidation(ActionRequest $request): void
     {
+        if (!$request->exists('portfolio_website_id')) {
+            $count = $this->customer->portfolioWebsites()->count();
+            if ($count == 1) {
+                $portfolioWebsite = $request->get('customer')->portfolioWebsites()->first();
+
+                $request->merge(['portfolio_website_id' => $portfolioWebsite->id]);
+            }
+        }
+
         if (!$request->get('name')) {
             $name = PetName::Generate(2, ' ').' banner';
             $request->merge(['name' => $name]);
         }
+        if (!$request->get('type')) {
+            $request->merge(['type' => BannerTypeEnum::LANDSCAPE->value]);
+        }
+
     }
 
     public function rules(): array
@@ -142,7 +156,8 @@ class StoreBanner
 
     public function inCustomer(ActionRequest $request): Banner
     {
-        $this->scope = 'customer';
+        $this->scope    = 'customer';
+        $this->customer = $request->get('customer');
 
         $parent = customer();
         $request->validate();
@@ -158,9 +173,10 @@ class StoreBanner
 
     public function fromGallery(ActionRequest $request): Banner
     {
-        $this->scope = 'gallery';
+        $this->scope    = 'gallery';
+        $this->customer = $request->get('customer');
 
-        $parent = customer();
+        $parent = $this->customer;
         $request->validate();
 
         $validatedData = $request->validated();
@@ -174,6 +190,8 @@ class StoreBanner
 
     public function inPortfolioWebsite(PortfolioWebsite $portfolioWebsite, ActionRequest $request): Banner
     {
+        $this->customer = $request->get('customer');
+
         $this->scope = 'portfolioWebsite';
         $request->validate();
 
@@ -182,11 +200,12 @@ class StoreBanner
 
     public function action(PortfolioWebsite $portfolioWebsite, array $objectData): Banner
     {
+        $this->customer = $portfolioWebsite->customer;
         data_set($objectData, 'portfolio_website_id', $portfolioWebsite->id);
         $this->asAction = true;
         $this->setRawAttributes($objectData);
-        $validatedData = $this->validateAttributes();
 
+        $validatedData = $this->validateAttributes();
         return $this->handle($portfolioWebsite, $validatedData);
     }
 
@@ -205,6 +224,7 @@ class StoreBanner
             return 1;
         }
         Config::set('global.customer_id', $customer->id);
+        $this->customer=$customer;
 
         $portfolioWebsite = PortfolioWebsite::where('slug', $command->argument('portfolio-website'))->firstOrFail();
 
@@ -230,7 +250,7 @@ class StoreBanner
     public function jsonResponse(Banner $banner): string
     {
         return route(
-            'customer.banners.workshop',
+            'customer.banners.banners.workshop',
             [
                 $banner->slug
             ]
@@ -240,7 +260,7 @@ class StoreBanner
     public function htmlResponse(Banner $banner): RedirectResponse
     {
         return redirect()->route(
-            'customer.banners.workshop',
+            'customer.banners.banners.workshop',
             [
                 $banner->slug
             ]

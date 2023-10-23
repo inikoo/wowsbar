@@ -92,7 +92,7 @@ class IndexCalendars extends InertiaAction
                     'title'  => __('employees'),
                     'create' => $this->canEdit ? [
                         'route' => [
-                            'name'       => 'hr.employees.create',
+                            'name'       => 'org.hr.employees.create',
                             'parameters' => array_values($this->originalParameters)
                         ],
                         'label' => __('employee')
@@ -121,7 +121,7 @@ class IndexCalendars extends InertiaAction
                     'type'   => 'simple',
                     'simple' => [
                         'route' => [
-                            'name' => 'hr.employees.index'
+                            'name' => 'org.hr.employees.index'
                         ],
                         'label' => __('employees'),
                         'icon'  => 'fal fa-bars',

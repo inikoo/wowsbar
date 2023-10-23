@@ -26,7 +26,7 @@ interface selectedJob {
     seo?: string
     ppc?: string
     social?: string
-    deve?: string
+    dev?: string
     cus?: string
 }
 
@@ -130,7 +130,7 @@ const optionsJob = {
         }
     ],
 
-    "deve": [
+    "dev": [
         {
             "icon": "fal fa-shapes ",
             "code": "dev-m",
@@ -157,7 +157,7 @@ const optionsJob = {
             "name": "Worker",
         }
     ],
-    
+
     "hr": [
         {
             "icon": "fal fa-user-hard-hat",

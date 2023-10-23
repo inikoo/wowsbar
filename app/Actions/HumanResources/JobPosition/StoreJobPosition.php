@@ -51,6 +51,6 @@ class StoreJobPosition
 
     public function htmlResponse(JobPosition $jobPosition): RedirectResponse
     {
-        return Redirect::route('hr.job-positions.show', $jobPosition->slug);
+        return Redirect::route('org.hr.job-positions.show', $jobPosition->slug);
     }
 }

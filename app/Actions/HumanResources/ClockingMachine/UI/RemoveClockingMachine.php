@@ -84,7 +84,7 @@ class RemoveClockingMachine extends InertiaAction
                 'data'     => $this->getAction(
                     route:
                     match ($request->route()->getName()) {
-                        'hr.clocking-machines.remove' => [
+                        'org.hr.clocking-machines.remove' => [
                             'name'       => 'models.clocking-machine.delete',
                             'parameters' => $request->route()->originalParameters()
                         ],

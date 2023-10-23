@@ -5,6 +5,7 @@ namespace App\Models\Portfolio;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
@@ -28,6 +29,7 @@ class SocialPost extends Model
 {
     use HasFactory;
     use HasSlug;
+    use SoftDeletes;
 
     protected $guarded = [];
 
