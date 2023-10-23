@@ -150,6 +150,10 @@ const compHandleBannerLessSlide = computed(() => {
                 : actualSlides.value.length >= 8 ? actualSlides.value : [...actualSlides.value, ...actualSlides.value]
 })
 
+const cleanUrl = (url: string) => {
+    if(!url) { return ''}
+    return url.replace(/^https?:\/\/?/, '')
+}
 </script>
 
 <template>
@@ -201,7 +205,7 @@ const compHandleBannerLessSlide = computed(() => {
                         </span>
                     </div>
                     <!-- <FontAwesomeIcon v-if="!!component?.layout?.link" icon='far fa-external-link' class='text-gray-300/50 text-xl absolute top-2 right-2' aria-hidden='true' /> -->
-                    <a v-if="!!component?.layout?.link" :href="`${component?.layout?.link}`" target="_top" class="absolute bg-transparent w-full h-full" />
+                    <a v-if="!!component?.layout?.link" :href="`https://${cleanUrl(component?.layout?.link)}`" target="_top" class="absolute bg-transparent w-full h-full" />
                     <SlideCorner v-for="(slideCorner, position) in filteredNulls(component?.layout?.corners)" :position="position" :corner="slideCorner" :commonCorner="data.common.corners" />
 
                     <!-- CentralStage: slide-centralstage (prioritize) and common-centralStage -->
