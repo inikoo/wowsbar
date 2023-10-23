@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { trans } from "laravel-vue-i18n"
 import Button from "@/Components/Elements/Buttons/Button.vue"
-import { ref, toRefs, watch } from "vue"
+import { ref, toRefs, watch, reactive } from "vue"
 import 'vue-advanced-cropper/dist/style.css'
 import 'vue-advanced-cropper/dist/theme.compact.css'
 import Modal from '@/Components/Utils/Modal.vue'
@@ -55,7 +55,7 @@ const getNestedValue = (obj, keys) => {
     }, obj)
 }
 
-const value = ref(setFormValue(props.data, props.fieldName))
+const value = ref(setFormValue(props.data, 'background'))
 
 watch(data, (newValue) => {
     value.value = setFormValue(newValue, props.fieldName)
@@ -81,12 +81,25 @@ const updateLocalFormValue = (newValue) => {
     set(props.data, [props.fieldName], newValue )
 }
 
+// When select image from modal Gallery
 const uploadImageRespone = (res) => {
-    const set =  {...value.value}
-    set[screenView.value] = { ...res.data[0] }
-    value.value = set
+    props.data.background.image = {
+        [screenView.value ?? 'desktop']: res.data[0]
+    }
+    props.data.background.color.isSelected = false
+    props.data.background.image.isSelected = true
+
     isOpenCropModal.value = false
     isOpen.value = false
+}
+
+// When click on the list background color
+const onChangeBackgroundColor = (bgColor: string) => {
+    props.data.background.color = {
+        [screenView.value ?? 'desktop']: bgColor
+    }
+    props.data.background.color.isSelected = true,
+    props.data.background.image.isSelected = false
 }
 
 const ratio = ref(props.bannerType == 'square' ? { w: 1 , h: 1} : { w: 4 , h: 1})  // if Square then 1:1
@@ -115,7 +128,6 @@ const screenViewChange = (value: string) => {
 
 const backgroundColorList = useBannerBackgroundColor() // Fetch color list from Composables
 
-// console.log(props.data)
 </script>
 
 <template>
@@ -157,7 +169,7 @@ const backgroundColorList = useBannerBackgroundColor() // Fetch color list from 
                         : 'aspect-[2/1] md:aspect-[3/1] lg:aspect-[4/1]'
             ]">
                 <div class="h-full relative flex items-center" >
-                    <div v-if="typeof data.image[screenView ?? 'desktop'] === 'object'"
+                    <div v-if="data?.background?.image?.isSelected == true"
                         class="group h-full relative"
                     >
                         <!-- <div class="group-hover:bg-gray-700/50 inset-0 absolute h-full"></div>
@@ -165,10 +177,10 @@ const backgroundColorList = useBannerBackgroundColor() // Fetch color list from 
                             <FontAwesomeIcon icon='fal fa-trash-alt' class='text-3xl text-red-500' aria-hidden='true' />
                         </div>
                         <FontAwesomeIcon icon='fal fa-times' class='absolute top-0 -right-8 text-3xl text-red-400 hover:text-red-500' aria-hidden='true' /> -->
-                        <Image v-if="get(value, [`${screenView}`, 'source'], value.desktop.source)" :src="get(value, [`${screenView}`, 'source'], value.desktop.source)"
-                            :alt="value.name" :imageCover="true"/>
+                        <Image v-if="get(data.background, ['image', `${screenView ? screenView : 'desktop'}`, 'source'], false)" :src="get(data.background, ['image', `${screenView ?? 'desktop'}`, 'source'], data.background.image?.desktop?.source)"
+                            :alt="data.background.name" :imageCover="true"/>
                     </div>
-                    <div v-else class="h-full w-96" :style="{ background: data.image[screenView ?? 'desktop']}">
+                    <div v-else class="h-full w-96" :style="{ background: data.background?.color?.[screenView ?? 'desktop']}">
                         <!-- If the background is a color -->
                     </div>
                 </div>
@@ -180,7 +192,7 @@ const backgroundColorList = useBannerBackgroundColor() // Fetch color list from 
             <div class="flex flex-col gap-y-2">
                 <div class="flex items-center gap-x-4">
                     <div>An Image:</div>
-                    <div class="space-x-2">
+                    <div class="flex items-center gap-x-2">
                         <Button v-if="bannerType != 'square'" :style="`secondary`" class="relative" size="xs">
                             <FontAwesomeIcon icon='fas fa-upload' class='' aria-hidden='true' />
                             {{ trans(`Upload image ${screenView}`) }}
@@ -191,6 +203,13 @@ const backgroundColorList = useBannerBackgroundColor() // Fetch color list from 
                                 class="absolute cursor-pointer rounded-md border-gray-300 sr-only" />
                         </Button>
                         <Button :style="`tertiary`" icon="fal fa-photo-video" label="Gallery" size="xs" class="relative" @click="isOpen = !isOpen" />
+                        
+                        <Image v-if="get(data.background, ['image', `${screenView ?? 'desktop'}`, 'thumbnail'], false)" :src="get(data.background, ['image', `${screenView ?? 'desktop'}`, 'thumbnail'], data.background.image?.desktop?.thumbnail)"
+                            :alt="data.background.name" :imageCover="true"
+                            @click="data.background.image.isSelected = true, data.background.color.isSelected = false"
+                            class="h-auto w-3/12 cursor-pointer rounded overflow-hidden"
+                            :class="get(data.background, ['image', 'isSelected'], false) ? 'ring-2 ring-offset-2 ring-gray-600' : ''"
+                        />
                     </div>
                 </div>
                 
@@ -200,14 +219,17 @@ const backgroundColorList = useBannerBackgroundColor() // Fetch color list from 
                     <!-- Add conditional click() to avoid user change color via inspect -->
                     <div class="h-8 flex items-center w-fit gap-x-1.5">
                         <div v-for="bgColor in backgroundColorList"
-                            @click="data.image[screenView ?? 'desktop'] = bgColor"
+                            @click="onChangeBackgroundColor(bgColor)"
                             class="w-full rounded h-full aspect-square shadow cursor-pointer"
-                            :class="data.image[screenView ?? 'desktop'] ===  bgColor ? 'ring-2 ring-offset-2 ring-gray-600' : 'hover:ring-2 hover:ring-offset-0 hover:ring-gray-500'"
+                            :class="data?.background?.color?.[screenView ?? 'desktop'] ===  bgColor && data?.background?.color?.isSelected 
+                                ? 'ring-2 ring-offset-2 ring-gray-600'
+                                : 'hover:ring-2 hover:ring-offset-0 hover:ring-gray-500'"
                             :style="{background: bgColor}" />
                     </div>
                 </div>
             </div>
-
+<!-- <pre>{{ value }}</pre>
+<pre>{{ data.background }}</pre> -->
         </div>
     </div>
 </template>

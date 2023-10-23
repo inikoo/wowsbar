@@ -80,8 +80,11 @@ const uploadImageRespone = (res) => {
             layout: {
                 imageAlt: set.name,
             },
-            image: {
-                desktop : set
+            background: {
+                image: {
+                    desktop : set,
+                    isSelected: true
+                }
             },
             visibility: true,
         })
@@ -108,8 +111,19 @@ const onClickQuickStart = () => {
                 }
             }
         },
-        image: {
-            desktop: useBannerBackgroundColor()[Math.floor(Math.random() * useBannerBackgroundColor().length)] // To random the background color on new slide
+        background: {
+            image: {
+                desktop: {},
+                tablet: {},
+                mobile: {},
+                isSelected: false
+            },
+            color: {
+                desktop: useBannerBackgroundColor()[Math.floor(Math.random() * useBannerBackgroundColor().length)], // To random the background color on new slide
+                tablet: useBannerBackgroundColor()[Math.floor(Math.random() * useBannerBackgroundColor().length)],
+                mobile: useBannerBackgroundColor()[Math.floor(Math.random() * useBannerBackgroundColor().length)],
+                isSelected: true
+            }
         },
         visibility: true,
     }

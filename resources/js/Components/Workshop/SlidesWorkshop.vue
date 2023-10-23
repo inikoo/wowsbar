@@ -526,8 +526,11 @@ const uploadImageRespone = (res) => {
             layout: {
                 imageAlt: set.name,
             },
-            image: {
-                desktop : set
+            background: {
+                image: {
+                    desktop: set,
+                    isSelected: true
+                }
             },
             visibility: true,
         });
@@ -540,6 +543,7 @@ const uploadImageRespone = (res) => {
     currentComponentBeenEdited.value = props.data.components[ props.data.components.length - 1 ]
 };
 
+// Onclick button 'Add Slide'
 const addNewSlide = () => {
     let setData = []
     setData.push({
@@ -548,8 +552,19 @@ const addNewSlide = () => {
         layout: {
             imageAlt: 'New slide',
         },
-        image: {
-            desktop: backgroundColorList[Math.floor(Math.random() * backgroundColorList.length)] // To random the background color on new slide
+        background: {
+            image: {
+                desktop: {},
+                tablet: {},
+                mobile: {},
+                isSelected: false
+            },
+            color: {
+                desktop: backgroundColorList[Math.floor(Math.random() * backgroundColorList.length)], // To random the background color on new slide
+                tablet: backgroundColorList[Math.floor(Math.random() * backgroundColorList.length)],
+                mobile: backgroundColorList[Math.floor(Math.random() * backgroundColorList.length)],
+                isSelected: true
+            }
         },
         visibility: true,
     });
@@ -562,7 +577,7 @@ const backgroundColorList = useBannerBackgroundColor() // Fetch color list from 
 </script>
 
 <template>
-    
+    <!-- <pre>{{ data.components }}</pre> -->
     <div class="flex flex-grow gap-2.5">
         <div class="p-2.5 border rounded h-fit shadow w-1/4"
             v-if="data.components" @dragover="dragover" @dragleave="dragleave" @drop="drop">
@@ -609,14 +624,15 @@ const backgroundColorList = useBannerBackgroundColor() // Fetch color list from 
                             <FontAwesomeIcon icon="fal fa-bars"
                                 class="handle p-1 text-xs sm:text-base sm:p-2.5 text-gray-700 cursor-grab place-self-center" />
 
-                            <!-- Image slide -->
-                            <div v-if="typeof get(slide.image, 'desktop', false) === 'object'">
-                                <Image :src="get(slide, ['image', `${screenView}`, 'thumbnail'], slide.image?.desktop?.thumbnail)" class="h-full w-10 sm:w-10 flex items-center justify-center py-1"/>
+                            <!-- Image slide: if Image is selected in SlideBackground -->
+                            <div v-if="get(slide, ['background', 'image', 'isSelected'], false) === true">
+                                <Image :src="get(slide.background, ['image', `${screenView}`, 'thumbnail'], slide.background.image?.desktop?.thumbnail)" class="h-full w-10 sm:w-10 flex items-center justify-center py-1"/>
                             </div>
                             
                             <div v-else>
                                 <!-- If the slide is color -->
-                                <div :style="{ background: get(slide.image, 'desktop', 'red')}" class="h-full w-10 sm:w-10 flex items-center justify-center py-1"/>
+                                <!-- {{ slide.background.color.desktop }} -->
+                                <div :style="{ background: get(slide, ['background', 'color', `${screenView ? screenView  : 'desktop'}`], 'gray')}" class="h-full w-10 sm:w-10 flex items-center justify-center py-1"/>
                             </div>
 
                             <!-- Label slide -->

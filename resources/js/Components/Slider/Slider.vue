@@ -67,10 +67,17 @@ const props = defineProps<{
                     // footer?: string
                 }
             }
-            image: {
-                desktop: {} | string
-                tablet: {} | string
-                mobile: {} | string
+            background: {
+                image: {
+                    desktop: {} | string
+                    tablet: {} | string
+                    mobile: {} | string
+                }
+                color: {
+                    desktop: string
+                    tablet: string
+                    mobile: string
+                }
             }
             visibility: boolean
             corners: Corners
@@ -174,11 +181,11 @@ const compHandleBannerLessSlide = computed(() => {
                 :navigation="false"
                 :modules="[Autoplay, Pagination, Navigation]" class="mySwiper">
                 <SwiperSlide v-for="component in data.components.filter((item)=>item.ulid)" :key="component.id">
-                <!-- {{ data.common }} -->
-                    <div v-if="typeof get(component, ['image', `${$props.view}`, 'source'], component.image?.desktop?.source) === 'object'" class="relative w-full h-full">
-                    <Image :src="get(component, ['image', `${$props.view}`, 'source'], component.image?.desktop?.source)" alt="Wowsbar" />
-                </div>
-                <div v-else :style="{ background: get(component.image, `${$props.view}`, component.image?.desktop ?? 'red')}" class="w-full h-full" />
+                <!-- aa{{ get(component, ['background', 'image', `${$props.view ? props.view : 'desktop'}`], false) }}dd -->
+                    <div v-if="get(component, ['background', 'image', 'isSelected'], false) && get(component, ['background', 'image', `${$props.view ? props.view : 'desktop'}`, 'source'], false)" class="relative w-full h-full">
+                        <Image :src="get(component, ['background', 'image', `${$props.view ? props.view : 'desktop'}`, 'source'], false)" alt="Wowsbar" />
+                    </div>
+                    <div v-else :style="{ background: get(component, ['background', 'color', `${$props.view ? props.view : 'desktop'}`], gray)}" class="w-full h-full" />
 
 
                     <!-- Section: Not Visible (for workshop) -->
