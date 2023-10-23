@@ -67,17 +67,20 @@ const props = defineProps<{
                     // footer?: string
                 }
             }
+            image: {
+                desktop: {} | string
+                tablet: {} | string
+                mobile: {} | string
+            }
             background: {
-                image: {
-                    desktop: {} | string
-                    tablet: {} | string
-                    mobile: {} | string
-                }
-                color: {
-                    desktop: string
-                    tablet: string
-                    mobile: string
-                }
+                desktop: string
+                tablet: string
+                mobile: string
+            }
+            backgroundType: {
+                desktop: string
+                tablet: string
+                mobile: string
             }
             visibility: boolean
             corners: Corners
@@ -181,11 +184,11 @@ const compHandleBannerLessSlide = computed(() => {
                 :navigation="false"
                 :modules="[Autoplay, Pagination, Navigation]" class="mySwiper">
                 <SwiperSlide v-for="component in data.components.filter((item)=>item.ulid)" :key="component.id">
-                <!-- aa{{ get(component, ['background', 'image', `${$props.view ? props.view : 'desktop'}`], false) }}dd -->
-                    <div v-if="get(component, ['background', 'image', 'isSelected'], false) && get(component, ['background', 'image', `${$props.view ? props.view : 'desktop'}`, 'source'], false)" class="relative w-full h-full">
-                        <Image :src="get(component, ['background', 'image', `${$props.view ? props.view : 'desktop'}`, 'source'], false)" alt="Wowsbar" />
+                    <!-- Slide: Image -->
+                    <div v-if="get(component, ['backgroundType', $props.view ? $props.view : 'desktop'], false) == 'image'" class="relative w-full h-full">
+                        <Image :src="get(component, ['image', `${$props.view ? props.view : 'desktop'}`, 'source'], null)" alt="Wowsbar" />
                     </div>
-                    <div v-else :style="{ background: get(component, ['background', 'color', `${$props.view ? props.view : 'desktop'}`], gray)}" class="w-full h-full" />
+                    <div v-else :style="{ background: get(component, ['background', $props.view ? props.view : 'desktop'], 'gray')}" class="w-full h-full" />
 
 
                     <!-- Section: Not Visible (for workshop) -->
@@ -234,11 +237,12 @@ const compHandleBannerLessSlide = computed(() => {
             :navigation="false"
             :modules="[Autoplay, Pagination, Navigation]" class="mySwiper">
             <SwiperSlide v-for="component in compHandleBannerLessSlide" :key="component.id" class="h-full overflow-hidden aspect-square">
-                <!-- {{ data.common }} -->
-                <div v-if="typeof get(component, ['image', `${$props.view}`, 'source'], component.image?.desktop?.source) === 'object'" class="relative w-full h-full">
-                    <Image :src="get(component, ['image', `${$props.view}`, 'source'], component.image?.desktop?.source)" alt="Wowsbar" />
+
+                <!-- Section: image or background -->
+                <div v-if="get(component, ['backgroundType', $props.view ? $props.view : 'desktop'], '') === 'image'" class="relative w-full h-full">
+                    <Image :src="get(component, ['image', $props.view ? $props.view : 'desktop', 'source'], null)" alt="Wowsbar" />
                 </div>
-                <div v-else :style="{ background: get(component.image, `${$props.view}`, component.image?.desktop ?? 'red')}" class="w-full h-full" />
+                <div v-else :style="{ background: get(component.background, $props.view ? $props.view : 'desktop', component.background?.desktop ?? 'gray')}" class="w-full h-full" />
 
                 <!-- Section: Not Visible (for workshop) -->
                 <div v-if="get(component, ['visibility'], true) === false" class="absolute h-full w-full bg-gray-800/50 z-10 " />
@@ -257,7 +261,7 @@ const compHandleBannerLessSlide = computed(() => {
 
                 <!-- CentralStage: slide-centralstage (prioritize) and common-centralStage -->
                 <CentralStage v-if="component?.layout?.centralStage?.title?.length > 0 || component?.layout?.centralStage?.subtitle?.length > 0" :data="component?.layout?.centralStage" />
-                    <CentralStage v-else-if="data.common?.centralStage?.title?.length > 0 || data.common?.centralStage?.subtitle?.length > 0" :data="data.common?.centralStage" />
+                <CentralStage v-else-if="data.common?.centralStage?.title?.length > 0 || data.common?.centralStage?.subtitle?.length > 0" :data="data.common?.centralStage" />
             </SwiperSlide>
         </Swiper>
 
