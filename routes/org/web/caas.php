@@ -6,6 +6,7 @@
  */
 
 use App\Actions\CaaS\Banners\UI\IndexBanners;
+use App\Actions\CaaS\Banners\UI\ShowBanner;
 use App\Actions\Subscriptions\CustomerWebsite\UI\IndexCaasCustomerWebsites;
 use App\Actions\UI\Organisation\Catalogue\ShowCaaSDashboard;
 use Illuminate\Support\Facades\Route;
@@ -15,4 +16,5 @@ Route::get('/dashboard', ['icon'  => 'globe', 'label' => 'Caas'])->uses(ShowCaaS
 
 Route::get('/websites', ['icon'  => 'globe', 'label' => 'websites'])->uses(IndexCaasCustomerWebsites::class)->name('websites.index');
 Route::get('/banners', ['icon'  => 'globe', 'label' => 'banners'])->uses(IndexBanners::class)->name('banners.index');
+Route::get('/banners/{banner}', ['icon'  => 'globe', 'label' => 'Caas'])->uses(ShowBanner::class)->name('banners.show');
 //todo Route::get('/banners/{banner}', ['icon'  => 'globe', 'label' => 'banners'])->uses(IndexBanners::class)->name('banners.show');
