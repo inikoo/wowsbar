@@ -80,11 +80,11 @@ const uploadImageRespone = (res) => {
             layout: {
                 imageAlt: set.name,
             },
-            background: {
-                image: {
-                    desktop : set,
-                    isSelected: true
-                }
+            image: {
+                desktop: set,
+            },
+            backgroundType: {
+                desktop: 'image'
             },
             visibility: true,
         })

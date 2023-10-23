@@ -5,7 +5,7 @@
   -->
 
 <script setup lang="ts">
-import Slider from "@/Components/Slider/Slider.vue";
+import SliderLandscape from "@/Components/Slider/SliderLandscape.vue";
 
 const props = defineProps<{
     data: {
@@ -32,7 +32,7 @@ const props = defineProps<{
 
 <template >
     <div class="w-full">
-        <Slider :data="data" class="h-full" :production="true"/>
+        <SliderLandscape :data="data" class="h-full" :production="true"/>
     </div>
 </template>
 

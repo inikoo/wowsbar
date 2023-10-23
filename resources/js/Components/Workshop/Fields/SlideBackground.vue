@@ -97,10 +97,12 @@ const uploadImageRespone = (res) => {
 // When click on the list background color
 const onChangeBackgroundColor = (bgColor: string) => {
     props.data.background = {
-        ...{[screenView.value ?? 'desktop']: bgColor}
+        ...props.data.background,
+        [screenView.value ?? 'desktop']: bgColor
     }
     props.data.backgroundType = {
-        ...{[screenView.value ?? 'desktop']: 'color'}
+        ...props.data.backgroundType,
+        [screenView.value ?? 'desktop']: 'color'
     }
 }
 
@@ -159,15 +161,11 @@ const backgroundColorList = useBannerBackgroundColor() // Fetch color list from 
 
         <!-- Preview -->
         <div class="flex justify-center w-full">
-            <div class="w-fit max-h-20 lg:max-h-32 border border-gray-300 shadow transition-all duration-200 ease-in-out" :class="[
+            <div class="w-fit max-h-20 lg:max-h-32 border border-gray-300 rounded-md overflow-hidden shadow transition-all duration-200 ease-in-out" :class="[
                 bannerType == 'square'
                     ? 'aspect-square'  // If banner is a square
                     : screenView
-                        ? {
-                            'aspect-[2/1]': screenView === 'mobile',
-                            'aspect-[3/1]': screenView === 'tablet',
-                            'aspect-[4/1]': screenView === 'desktop'
-                        }
+                        ? `aspect-[${ratio.w}/${ratio.h}]`
                         : 'aspect-[2/1] md:aspect-[3/1] lg:aspect-[4/1]'
             ]">
                 <div class="h-full relative flex items-center" >
@@ -206,13 +204,15 @@ const backgroundColorList = useBannerBackgroundColor() // Fetch color list from 
                         </Button>
                         <Button :style="`tertiary`" icon="fal fa-photo-video" label="Gallery" size="xs" class="relative" @click="isOpen = !isOpen" />
                         
-                        <Image
-                            :src="get(data, ['image', screenView ? screenView : 'desktop', 'thumbnail'])"
-                            :alt="data.image?.name" :imageCover="true"
-                            @click="data.backgroundType[screenView ? screenView : 'desktop'] = 'image'"
-                            class="h-auto w-3/12 cursor-pointer rounded overflow-hidden"
-                            :class="get(data, ['backgroundType', screenView ? screenView : 'desktop'], 'image') == 'image' ? 'ring-2 ring-offset-2 ring-gray-600' : ''"
-                        />
+                        <div class="overflow-hidden h-7 rounded shadow-md"
+                            :class="[get(data, ['backgroundType', screenView ? screenView : 'desktop'], 'image') == 'image' ? 'ring-2 ring-offset-2 ring-gray-600' : 'hover:ring-2 hover:ring-offset-2 hover:ring-gray-400', `aspect-[${ratio.w}/${ratio.h}]`]">
+                            <Image
+                                :src="get(data, ['image', screenView ? screenView : 'desktop', 'thumbnail'])"
+                                :alt="data.image?.name" :imageCover="true"
+                                @click="data.backgroundType[screenView ? screenView : 'desktop'] = 'image'"
+                                class="h-auto cursor-pointer rounded overflow-hidden"
+                            />
+                        </div>
                     </div>
                 </div>
                 
@@ -231,8 +231,6 @@ const backgroundColorList = useBannerBackgroundColor() // Fetch color list from 
                     </div>
                 </div>
             </div>
-<!-- <pre>{{ value }}</pre>
-<pre>{{ data.background }}</pre> -->
         </div>
     </div>
 </template>

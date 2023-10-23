@@ -6,7 +6,7 @@ import { ref, reactive, onBeforeMount, watch, onBeforeUnmount, computed } from "
 // import { notify } from "@kyvg/vue3-notification"
 
 import SlidesWorkshop from "@/Components/Workshop/SlidesWorkshop.vue"
-import Slider from "@/Components/Slider/Slider.vue"
+import SliderLandscape from "@/Components/Slider/SliderLandscape.vue"
 import SlidesWorkshopAddMode from "@/Components/Workshop/SlidesWorkshopAddMode.vue"
 import ScreenView from "@/Components/ScreenView.vue"
 // import Button from "@/Components/Elements/Buttons/Button.vue"
@@ -35,7 +35,7 @@ const screenView = ref("")
 
         <!-- Banner -->
         <div class="flex justify-center pr-0.5">
-            <Slider :data="data" :jumpToIndex="jumpToIndex" :view="screenView" />
+            <SliderLandscape :data="data" :jumpToIndex="jumpToIndex" :view="screenView" />
         </div>
         
         <!-- Editor -->

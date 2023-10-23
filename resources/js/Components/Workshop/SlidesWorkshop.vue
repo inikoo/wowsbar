@@ -629,7 +629,7 @@ const backgroundColorList = useBannerBackgroundColor() // Fetch color list from 
                             
                             <!-- Image slide: if Image is selected in SlideBackground -->
                             <div v-if="get(slide, ['backgroundType', screenView ? screenView : 'desktop'], 'image') === 'image'">
-                                <Image :src="get(slide, ['image', screenView ? screenView : 'desktop', 'thumbnail'], null)" class="h-full w-10 sm:w-10 flex items-center justify-center py-1"/>
+                                <Image :src="get(slide, ['image', screenView ? screenView : 'desktop', 'thumbnail'])" class="h-full w-10 sm:w-10 flex items-center justify-center py-1"/>
                             </div>
                             
                             <div v-else>
