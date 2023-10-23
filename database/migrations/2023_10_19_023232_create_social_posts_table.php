@@ -12,10 +12,12 @@ return new class () extends Migration {
      */
     public function up(): void
     {
-        Schema::create('portfolio_social_account_posts', function (Blueprint $table) {
+        Schema::create('social_posts', function (Blueprint $table) {
             $table->id();
 
-            $table->string('task_name');
+            $table->unsignedBigInteger('task_id');
+            $table->foreign('task_id')->references('id')->on('tasks')->onDelete('cascade');
+
             $table->string('slug');
             $table->dateTimeTz('start_at');
             $table->dateTimeTz('end_at')->nullable();

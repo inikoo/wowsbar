@@ -16,7 +16,7 @@ class PortfolioSocialAccountPostsResource extends JsonResource
 {
     public function toArray($request): array
     {
-        /** @var \App\Models\Portfolio\PortfolioSocialAccountPost $post */
+        /** @var \App\Models\Portfolio\SocialPost $post */
         $post = $this;
 
         return [

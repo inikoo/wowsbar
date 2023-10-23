@@ -36,7 +36,7 @@ use Spatie\Sluggable\HasSlug;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Helpers\Audit> $audits
  * @property-read int|null $audits_count
  * @property-read Customer $customer
- * @property-read \App\Models\Portfolio\PortfolioSocialAccountPost $posts
+ * @property-read \App\Models\Portfolio\SocialPost $posts
  * @property-read Shop $shop
  * @method static \Illuminate\Database\Eloquent\Builder|PortfolioSocialAccount newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|PortfolioSocialAccount newQuery()
@@ -96,6 +96,6 @@ class PortfolioSocialAccount extends Model implements Auditable
 
     public function posts(): HasMany
     {
-        return $this->hasMany(PortfolioSocialAccountPost::class);
+        return $this->hasMany(SocialPost::class);
     }
 }

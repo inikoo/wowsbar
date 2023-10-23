@@ -24,7 +24,7 @@ use Spatie\Sluggable\SlugOptions;
  * @mixin \Eloquent
  */
 
-class PortfolioSocialAccountPost extends Model
+class SocialPost extends Model
 {
     use HasFactory;
     use HasSlug;
