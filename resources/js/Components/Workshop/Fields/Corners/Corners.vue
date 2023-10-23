@@ -99,7 +99,7 @@ const clear=(section)=>{
                 :key="cornerSection.id"
                 class="relative overflow-hidden flex items-center justify-center flex-grow text-base font-semibold py-4"
                 :class="[ common &&
-                    common.corners[cornerSection.id] &&  !isNull(common.corners[cornerSection.id])
+                get(common,['corners',cornerSection.id]) &&  !isNull(common.corners[cornerSection.id])
                         ? 'cursor-not-allowed bg-gray-200 text-red-500'
                         : get(section, 'id') == cornerSection.id
                         ? 'bg-amber-300 text-gray-600 cursor-pointer'
@@ -107,14 +107,14 @@ const clear=(section)=>{
                 ]"
                 @click="
                     () => {
-                        common && common.corners[cornerSection.id]  &&  !isNull(common.corners[cornerSection.id]) ? null : cornerSideClick(cornerSection);
+                        common && get(common,['corners',cornerSection.id])  &&  !isNull(common.corners[cornerSection.id]) ? null : cornerSideClick(cornerSection);
                     }
                 "
             >
                 <div
                     v-if="
                         common &&
-                        common.corners[cornerSection.id] &&  !isNull(common.corners[cornerSection.id])
+                        get(common,['corners',cornerSection.id]) &&  !isNull(common.corners[cornerSection.id])
                     "
                     class="isolate text-sm italic"
                 >
