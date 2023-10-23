@@ -39,7 +39,7 @@ import Tabs from "@/Components/Navigation/Tabs.vue";
 
 
 const createClocking = () =>{
-    router.post(route('hr.clockings.store',props['clocking'].data.id), {})
+    router.post(route('org.hr.clockings.store',props['clocking'].data.id), {})
 }
 
 const ModelChangelog = defineAsyncComponent(() => import('@/Pages/ModelChangelog.vue'))
@@ -77,6 +77,6 @@ const component = computed(() => {
     <Head :title="capitalize(title)" />
     <PageHeading :data="pageHead"></PageHeading>
     <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate"/>
-    <component :is="component" :data="props[currentTab]"></component>
+    <component :is="component" :tab="currentTab" :data="props[currentTab]"></component>
 </template>
 

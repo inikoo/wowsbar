@@ -7,6 +7,7 @@ import:
   - deploy/install.php
   - deploy/deploy.php
   - contrib/npm.php
+  - contrib/discord.php
 
 config:
   application: 'wowsbar'
@@ -22,14 +23,16 @@ config:
   http_port: 8080
 
 hosts:
-  prod_helio:
+  wowsbar:
     environment: 'prod'
     deploy_path: '{{root_path}}/prod'
     branch: production
 tasks:
   build:
     - run: uptime
-
+before:
+  deploy: install:env
 after:
-  deploy:failed: deploy:unlock
+  deploy:failed: [deploy:unlock, discord:notify:failure]
+  deploy:success: [ discord:notify:success ]
   deploy:update_code: [npm:install, deploy:vendors]

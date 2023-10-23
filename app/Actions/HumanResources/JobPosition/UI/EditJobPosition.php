@@ -25,7 +25,7 @@ class EditJobPosition extends InertiaAction
 
     public function authorize(ActionRequest $request): bool
     {
-        return $request->user()->hasPermissionTo("hr.edit");
+        return false;//$request->user()->hasPermissionTo("hr.edit");
     }
 
     public function asController(JobPosition $jobPosition, ActionRequest $request): JobPosition

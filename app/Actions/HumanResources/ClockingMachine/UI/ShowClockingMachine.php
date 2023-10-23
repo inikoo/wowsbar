@@ -96,7 +96,7 @@ class ShowClockingMachine extends InertiaAction
                                         [$clockingMachine->workplace->slug, $clockingMachine->slug]
                                     ],
                                     default => [
-                                        'hr.clocking-machines.show.clockings.index',
+                                        'org.hr.clocking-machines.show.clockings.index',
                                         $clockingMachine->slug
                                     ]
                                 }
@@ -160,18 +160,18 @@ class ShowClockingMachine extends InertiaAction
             ];
         };
         return match ($routeName) {
-            'hr.clocking-machines.show' =>
+            'org.hr.clocking-machines.show' =>
             array_merge(
                 (new ShowHumanResourcesDashboard())->getBreadcrumbs(),
                 $headCrumb(
                     $routeParameters['clockingMachine'],
                     [
                         'index' => [
-                            'name'       => 'hr.clocking-machines.index',
+                            'name'       => 'org.hr.clocking-machines.index',
                             'parameters' => []
                         ],
                         'model' => [
-                            'name'       => 'hr.clocking-machines.show',
+                            'name'       => 'org.hr.clocking-machines.show',
                             'parameters' => [
                                 $routeParameters['clockingMachine']->slug
                             ]
@@ -226,7 +226,7 @@ class ShowClockingMachine extends InertiaAction
         }
 
         return match ($routeName) {
-            'hr.clocking-machines.show' => [
+            'org.hr.clocking-machines.show' => [
                 'label' => $clockingMachine->code,
                 'route' => [
                     'name'       => $routeName,

@@ -8,6 +8,7 @@
 namespace App\Enums\HumanResources\Employee;
 
 use App\Enums\EnumHelperTrait;
+use App\Models\HumanResources\JobPosition;
 use App\Models\Organisation\Organisation;
 
 enum EmployeeStateEnum: string
@@ -21,38 +22,49 @@ enum EmployeeStateEnum: string
     public static function labels(): array
     {
         return [
-            'hired'         => __('Hired'),
-            'working'       => __('Working'),
-            'left'          => __('Left'),
+            'hired'   => __('Hired'),
+            'working' => __('Working'),
+            'left'    => __('Left'),
         ];
     }
 
-    public static function count(Organisation $organisation): array
+    public static function count(Organisation|JobPosition $parent): array
     {
-        $stats=$organisation->humanResourcesStats;
+        //todo Make jo position stats model/migration
+        //temporal fix
+        if (class_basename($parent) == 'JobPosition') {
+            return [
+                'hired'   => 0,
+                'working' => 0,
+                'left'    => 0
+            ];
+        }
+
+        $stats = $parent->humanResourcesStats;
+
         return [
-            'hired'         => $stats->number_employees_state_hired,
-            'working'       => $stats->number_employees_state_working,
-            'left'          => $stats->number_employees_state_left,
+            'hired'   => $stats->number_employees_state_hired,
+            'working' => $stats->number_employees_state_working,
+            'left'    => $stats->number_employees_state_left,
         ];
     }
 
     public static function stateIcon(): array
     {
         return [
-            'hired' => [
+            'hired'   => [
 
                 'tooltip' => __('hired'),
                 'icon'    => 'fal fa-hand-holding-seedling',
 
 
             ],
-            'working'        => [
+            'working' => [
                 'tooltip' => __('working'),
                 'icon'    => 'fal fa-handshake',
 
             ],
-            'left'     => [
+            'left'    => [
                 'tooltip' => __('ex-worker'),
                 'icon'    => 'fal fa-handshake-alt-slash'
 

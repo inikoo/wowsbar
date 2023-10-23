@@ -145,7 +145,7 @@ class IndexClockings extends InertiaAction
 
     public function authorize(ActionRequest $request): bool
     {
-        $this->canEdit = $request->user()->hasPermissionTo('hr.clockings.edit');
+        $this->canEdit = $request->user()->hasPermissionTo('org.hr.clockings.edit');
 
         return
             (
@@ -218,12 +218,12 @@ class IndexClockings extends InertiaAction
             ];
         };
         return match ($routeName) {
-            'hr.clockings.index' =>
+            'org.hr.clockings.index' =>
             array_merge(
                 (new HumanResourcesDashboard())->getBreadcrumbs(),
                 $headCrumb(
                     [
-                        'name' => 'hr.clockings.index',
+                        'name' => 'org.hr.clockings.index',
                         null
                     ]
                 )
@@ -239,16 +239,16 @@ class IndexClockings extends InertiaAction
                         ]
                 ])
             ),
-            'hr.clocking-machines.show.clockings.index' =>
+            'org.hr.clocking-machines.show.clockings.index' =>
             array_merge(
                 (new \App\Actions\HumanResources\ClockingMachine\UI\ShowClockingMachine())->getBreadcrumbs(
-                    'hr.clocking-machines.show',
+                    'org.hr.clocking-machines.show',
                     [
                         'clockingMachine' => $routeParameters['clockingMachine']
                     ]
                 ),
                 $headCrumb([
-                    'name'       => 'hr.clocking-machines.show.clockings.index',
+                    'name'       => 'org.hr.clocking-machines.show.clockings.index',
                     'parameters' =>
                         [
                             $routeParameters['clockingMachine']->slug

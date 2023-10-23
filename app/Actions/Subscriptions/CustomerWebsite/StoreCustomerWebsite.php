@@ -5,13 +5,13 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Portfolios\CustomerWebsite;
+namespace App\Actions\Subscriptions\CustomerWebsite;
 
 use App\Actions\CRM\Customer\Hydrators\CustomerHydratePortfolioWebsites;
 use App\Actions\CRM\Customer\Hydrators\CustomerHydrateWelcomeStep;
 use App\Actions\Market\Shop\Hydrators\ShopHydrateCustomerWebsites;
 use App\Actions\Portfolio\PortfolioWebsite\Hydrators\PortfolioWebsiteHydrateUniversalSearch;
-use App\Actions\Portfolios\CustomerWebsite\Hydrators\CustomerWebsiteHydrateUniversalSearch;
+use App\Actions\Subscriptions\CustomerWebsite\Hydrators\CustomerWebsiteHydrateUniversalSearch;
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateCustomerWebsites;
 use App\Actions\Traits\WithPortfolioWebsiteAction;
 use App\Models\CRM\Customer;

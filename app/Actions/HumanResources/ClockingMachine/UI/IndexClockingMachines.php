@@ -82,7 +82,7 @@ class IndexClockingMachines extends InertiaAction
                             'tooltip' => __('new clocking machine'),
                             'label'   => __('clocking machine'),
                             'route'   => [
-                                'name'       => 'hr.clocking-machines.create',
+                                'name'       => 'org.hr.clocking-machines.create',
                                 'parameters' => array_values($this->originalParameters)
                             ]
                         ] : null
@@ -173,12 +173,12 @@ class IndexClockingMachines extends InertiaAction
         };
 
         return match ($routeName) {
-            'hr.clocking-machines.index' =>
+            'org.hr.clocking-machines.index' =>
             array_merge(
                 (new HumanResourcesDashboard())->getBreadcrumbs(),
                 $headCrumb(
                     [
-                        'name' => 'hr.clocking-machines.index',
+                        'name' => 'org.hr.clocking-machines.index',
                         null
                     ]
                 )

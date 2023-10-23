@@ -5,7 +5,7 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-use App\Actions\Portfolios\CustomerWebsite\UI\IndexGoogleAdsCustomerWebsites;
+use App\Actions\Subscriptions\CustomerWebsite\UI\IndexGoogleAdsCustomerWebsites;
 use App\Actions\UI\Organisation\Catalogue\ShowGoogleAdsDashboard;
 use Illuminate\Support\Facades\Route;
 

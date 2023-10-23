@@ -51,6 +51,13 @@ class ShowCaaSDashboard
                             'name' => 'org.caas.websites.index'
                         ]
                     ],
+                    [
+                        'name' => __('banners'),
+                        'stat' => $org->portfoliosStats->number_banners,
+                        'href' => [
+                            'name' => 'org.caas.banners.index'
+                        ]
+                    ],
                 ]
             ]
         );
