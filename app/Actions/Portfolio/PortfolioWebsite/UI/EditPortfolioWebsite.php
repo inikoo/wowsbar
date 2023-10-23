@@ -8,8 +8,6 @@
 namespace App\Actions\Portfolio\PortfolioWebsite\UI;
 
 use App\Actions\InertiaAction;
-use App\Models\CRM\Customer;
-use App\Models\Portfolio\Banner;
 use App\Models\Portfolio\PortfolioWebsite;
 use Exception;
 use Illuminate\Support\Arr;
@@ -19,12 +17,8 @@ use Lorisleiva\Actions\ActionRequest;
 
 class EditPortfolioWebsite extends InertiaAction
 {
-    private Customer|Banner $parent;
-
-    public function handle(Customer|Banner $parent, PortfolioWebsite $portfolioWebsite): PortfolioWebsite
+    public function handle(PortfolioWebsite $portfolioWebsite): PortfolioWebsite
     {
-        $this->parent = $parent;
-
         return $portfolioWebsite;
     }
 
@@ -39,15 +33,10 @@ class EditPortfolioWebsite extends InertiaAction
     {
         $this->initialisation($request);
 
-        return $this->handle($request->get('customer'), $portfolioWebsite);
+        return $this->handle($portfolioWebsite);
     }
 
-    public function inBanner(Banner $banner, PortfolioWebsite $portfolioWebsite, ActionRequest $request): PortfolioWebsite
-    {
-        $this->initialisation($request);
 
-        return $this->handle(parent: $banner, portfolioWebsite: $portfolioWebsite);
-    }
 
     /**
      * @throws Exception

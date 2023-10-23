@@ -15,7 +15,7 @@ use JsonSerializable;
 /**
  * @property mixed $job_positions
  */
-class EmployesResource extends JsonResource
+class EmployeeResource extends JsonResource
 {
     public function toArray($request): array|Arrayable|JsonSerializable
     {
