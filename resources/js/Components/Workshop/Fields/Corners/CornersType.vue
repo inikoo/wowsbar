@@ -111,8 +111,13 @@ const optionType = [
                 name: 'target',
                 type: 'input',
                 label: trans('Link'),
-                value: null,
-                prefix: "https://",
+                value: 'null',
+                defaultValue : 'https://',
+                info : 'use https:// or http://',
+                rules:{
+                    pattern : '^(http|https)://',
+                    message : 'please input https:// or http://'
+                }
             },
             {
                 name: 'button_color',

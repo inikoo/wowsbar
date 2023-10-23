@@ -207,7 +207,11 @@ const ComponentsBlueprint = ref([
                 type: "text",
                 label: trans("Link"),
                 value: ["layout", "link"],
-                prefix: "https://",
+                defaultValue : 'https://',
+                rules:{
+                    pattern : '^(http|https)://',
+                    message : 'please input https:// or http://'
+                }
             },
         ],
     },
