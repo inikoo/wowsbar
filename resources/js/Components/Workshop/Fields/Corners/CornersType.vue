@@ -250,7 +250,6 @@ watch(props.section, (newValue) => {
                 </dt>
                 <dd class="sm:col-span-2">
                     <!-- Available Field on Corners -->
-                    {{ section.valueForm }}
                     <div class="mt-1 flex text-sm text-gray-700 sm:mt-0">
                         <div class="relative flex-grow" v-if="field.type == 'input' || field.type == 'number'">
                             <Input :key="field.label + section.id"
