@@ -16,6 +16,5 @@ Route::get('/dashboard', ['icon'  => 'globe', 'label' => 'Caas'])->uses(ShowCaaS
 
 Route::get('/websites', ['icon'  => 'globe', 'label' => 'websites'])->uses(IndexCaasCustomerWebsites::class)->name('websites.index');
 Route::get('/banners', ['icon'  => 'globe', 'label' => 'banners'])->uses(IndexBanners::class)->name('banners.index');
-Route::get('{banner}', ['icon'  => 'globe', 'label' => 'Caas'])->uses(ShowBanner::class)->name('banners.show');
-Route::get('{banner}/edit', ['icon'  => 'globe', 'label' => 'Caas'])->uses(ShowBanner::class)->name('banners.edit');
+Route::get('/banners/{banner}', ['icon'  => 'globe', 'label' => 'Caas'])->uses(ShowBanner::class)->name('banners.show');
 //todo Route::get('/banners/{banner}', ['icon'  => 'globe', 'label' => 'banners'])->uses(IndexBanners::class)->name('banners.show');

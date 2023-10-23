@@ -218,10 +218,9 @@ class ShowBanner extends InertiaAction
             return null;
         }
 
-
         return match ($routeName) {
-            'customer.banners.show',
-            'customer.banners.edit' => [
+            'org.caas.banners.show',
+            'org.caas.banners.edit' => [
                 'label' => $banner->slug,
                 'route' => [
                     'name'       => $routeName,
