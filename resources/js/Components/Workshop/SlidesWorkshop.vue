@@ -258,9 +258,12 @@ const ComponentsBlueprint = ref([
                     "Laila",
                     "Port Lligat Slab",
                     "Playfair",
+                    "Raleway",
+                    "Roman Melikhov",
+                    "Source Sans Pro",
                     "Quicksand",
                     "Times New Roman",
-                    "Yatra One",
+                    "Yatra One"
                 ],
             },
             {
