@@ -243,6 +243,7 @@ const ComponentsBlueprint = ref([
                 name: ["layout", "centralStage", "subtitle"],
                 type: "text",
                 label: trans("subtitle"),
+                defaultValue : '',
                 value: ["layout", "centralStage", "subtitle"],
                 placeholder: "Holiday sales up to 80% all items."
             },
