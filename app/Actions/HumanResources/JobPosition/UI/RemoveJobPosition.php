@@ -22,7 +22,7 @@ class RemoveJobPosition extends InertiaAction
 
     public function authorize(ActionRequest $request): bool
     {
-        return $request->user()->hasPermissionTo("inventory.edit");
+        return false;//$request->user()->hasPermissionTo("supervisor.hr");
     }
 
     public function asController(JobPosition $jobPosition, ActionRequest $request): JobPosition

@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use OwenIt\Auditing\Contracts\Auditable;
 
 /**
- * App\Models\Portfolios\CustomerSocialAccount
+ * App\Models\Subscriptions\CustomerSocialAccount
  *
  * @property int $id
  * @property string|null $slug

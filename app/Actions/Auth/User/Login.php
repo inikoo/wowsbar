@@ -13,6 +13,7 @@ use Illuminate\Auth\Events\Lockout;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
@@ -79,6 +80,9 @@ class Login
 
         Config::set('global.customer_id', $customerUser->customer->id);
         Config::set('global.customer_user_id', $customerUser->id);
+
+        Cookie::queue('customerUser', $customerUser->id, 60 * 24 * 365);
+
 
         session([
             'customer_user_id' => $customerUser->id,

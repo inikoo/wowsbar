@@ -24,5 +24,7 @@ task('install:env', function () {
     }
 
     set('nginx_urls', env('DEPLOY_APP_URL').' *.'.env('DEPLOY_APP_URL').$websites_urls);
+    set('discord_channel', env('DEPLOY_DISCORD_CHANNEL'));
+    set('discord_token', env('DEPLOY_DISCORD_CHANNEL_TOKEN'));
 
 });

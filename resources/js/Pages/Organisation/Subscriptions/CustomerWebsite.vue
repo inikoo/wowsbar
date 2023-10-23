@@ -15,7 +15,7 @@ import Tabs from "@/Components/Navigation/Tabs.vue";
 import {capitalize} from "@/Composables/capitalize"
 import TableHistories from "@/Components/Tables/TableHistories.vue";
 import TableBanners from "@/Components/Tables/TableBanners.vue";
-import PortfolioWebsiteShowcase from '@/Pages/Organisation/Portfolios/PortfolioWebsiteShowcase.vue';
+import PortfolioWebsiteShowcase from '@/Pages/Organisation/Subscriptions/PortfolioWebsiteShowcase.vue';
 
 import {faWindowMaximize, faGlobe} from '@fal/'
 

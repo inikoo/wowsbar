@@ -49,7 +49,7 @@ class ShowPortfoliosDashboard
     {
 
         return Inertia::render(
-            'Portfolios/PortfoliosDashboard',
+            'Subscriptions/PortfoliosDashboard',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->getName(),
@@ -65,11 +65,11 @@ class ShowPortfoliosDashboard
                         'stat' => $parent->crmStats->number_customer_websites,
                         'href' => match (class_basename($parent)) {
                             'Shop'=> [
-                                'name'      => 'org.portfolios.shop.customer-websites.index',
+                                'name'      => 'org.subscriptions.shop.customer-websites.index',
                                 'parameters'=> $request->route()->originalParameters()
                             ],
                             default=> [
-                                'name'=> 'org.portfolios.customer-websites.index'
+                                'name'=> 'org.subscriptions.customer-websites.index'
                             ]
                         }
                     ],
@@ -84,14 +84,14 @@ class ShowPortfoliosDashboard
     {
         return
             match($routeName) {
-                'org.portfolios.shop.dashboard'=> array_merge(
+                'org.subscriptions.shop.dashboard'=> array_merge(
                     ShowDashboard::make()->getBreadcrumbs(),
                     [
                         [
                             'type'   => 'simple',
                             'simple' => [
                                 'route' => [
-                                    'name'      => 'org.portfolios.shop.dashboard',
+                                    'name'      => 'org.subscriptions.shop.dashboard',
                                     'parameters'=> $routeParameters
                                 ],
                                 'label' => __("portfolios"),
@@ -106,7 +106,7 @@ class ShowPortfoliosDashboard
                             'type'   => 'simple',
                             'simple' => [
                                 'route' => [
-                                    'name' => 'org.portfolios.dashboard',
+                                    'name' => 'org.subscriptions.dashboard',
                                 ],
                                 'label' => __("portfolios"),
                             ]

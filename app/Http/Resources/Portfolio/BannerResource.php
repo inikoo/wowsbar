@@ -77,7 +77,6 @@ class BannerResource extends JsonResource
                 'name'       => 'customer.banners.banners.show',
                 'parameters' => [$banner->slug]
             ],
-         //   'websites'           => implode(', ', $banner->portfolioWebsites()->pluck('name')->toArray()),
             'updated_at'         => $banner->updated_at,
             'created_at'         => $banner->created_at,
             'workshopRoute'      => [

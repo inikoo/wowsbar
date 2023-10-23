@@ -1,0 +1,34 @@
+name: Deploy
+
+on:
+  push:
+    branches: [ "production" ]
+
+concurrency: production_environment
+
+env:
+  HOME: /home/devops
+
+jobs:
+  laravel-tests:
+    name: Deploy wowsbar 🚀
+    runs-on: [ self-hosted, linux, x64 ]
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v35
+      - name: Composer install
+        run: composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+      - name: Prepare environment
+        run: |
+          ln -s ../../../../env.wowsbar.deploy .env
+      - name: Launch 🚀
+        uses: deployphp/action@v1
+        with:
+          dep: deploy
+          skip-ssh-setup: true
+          ssh-config: ${{ secrets.DEPLOY_SSH_CONFIG }}

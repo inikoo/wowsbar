@@ -18,9 +18,9 @@ const props = defineProps<{
 function websiteRoute(website: Website) {
 
     switch (route().current()) {
-        case  'org.portfolios.shop.customer-websites.index':
+        case  'org.subscriptions.shop.customer-websites.index':
             return route(
-                'org.portfolios.shop.customer-websites.show',
+                'org.subscriptions.shop.customer-websites.show',
                 [
                     route().params['shop'],
                     website.slug
@@ -33,9 +33,9 @@ function websiteRoute(website: Website) {
                     route().params['customer'],
                     website.slug
                 ]);
-        case 'org.portfolios.index':
+        case 'org.subscriptions.index':
             return route(
-                'org.portfolios.show',
+                'org.subscriptions.show',
                 [website.slug]);
     }
 }
@@ -43,7 +43,7 @@ function websiteRoute(website: Website) {
 function customerRoute(website: Website) {
 
     switch (route().current()) {
-        case  'org.portfolios.shop.customer-websites.index':
+        case  'org.subscriptions.shop.customer-websites.index':
             return route(
                 'org.crm.shop.customers.show',
                 [
