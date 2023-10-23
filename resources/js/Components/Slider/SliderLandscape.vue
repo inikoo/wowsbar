@@ -114,7 +114,7 @@ watch(() => props.jumpToIndex, (newVal) => {
 
 <template>
     <div class="relative w-full">
-        <div class="mx-auto transition-all duration-200 ease-in-out" :class="[
+        <div class="relative mx-auto transition-all duration-200 ease-in-out" :class="[
             // production ? 'w-full' : 'mx-auto',
             $props.view
                 ? { 'aspect-[2/1] w-[50%]' : $props.view == 'mobile',
@@ -140,9 +140,9 @@ watch(() => props.jumpToIndex, (newVal) => {
                 <SwiperSlide v-for="component in data.components.filter((item)=>item.ulid)" :key="component.id">
                     <!-- Slide: Image -->
                     <div v-if="get(component, ['backgroundType', $props.view ? $props.view : 'desktop'], 'image') == 'image'" class="relative w-full h-full">
-                        <Image :src="get(component, ['image', `${$props.view ? props.view : 'desktop'}`, 'source'])" alt="Wowsbar" />
+                        <Image :src="get(component, ['image', props.view ? props.view : 'desktop', 'source'], get(component, ['image', 'desktop', 'source']))" alt="Wowsbar" />
                     </div>
-                    <div v-else :style="{ background: get(component, ['background', $props.view ? props.view : 'desktop'], 'gray')}" class="w-full h-full" />
+                    <div v-else :style="{ background: get(component, ['background', props.view ? props.view : 'desktop'], get(component, ['background', 'desktop'], 'gray'))}" class="w-full h-full" />
 
                     <!-- Section: Not Visible (for workshop) -->
                     <div v-if="get(component, ['visibility'], true) === false" class="absolute h-full w-full bg-gray-800/50 z-10 " />

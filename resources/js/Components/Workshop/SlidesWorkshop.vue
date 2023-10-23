@@ -632,14 +632,14 @@ const backgroundColorList = useBannerBackgroundColor() // Fetch color list from 
                                 class="handle p-1 text-xs sm:text-base sm:p-2.5 text-gray-700 cursor-grab place-self-center" />
                             
                             <!-- Image slide: if Image is selected in SlideBackground -->
-                            <div v-if="get(slide, ['backgroundType', screenView ? screenView : 'desktop'], 'image') === 'image'">
-                                <Image :src="get(slide, ['image', screenView ? screenView : 'desktop', 'thumbnail'])" class="h-full w-10 sm:w-10 flex items-center justify-center py-1"/>
+                            <div v-if="get(slide, ['backgroundType', screenView ? screenView : 'desktop'], get(slide, ['backgroundType', 'desktop'], 'image')) === 'image'">
+                                <Image :src="get(slide, ['image', screenView ? screenView : 'desktop', 'thumbnail'], get(slide, ['image', 'desktop', 'thumbnail']))" class="h-full w-10 sm:w-10 flex items-center justify-center py-1"/>
                             </div>
                             
                             <div v-else>
                                 <!-- If the slide is color -->
                                 <!-- {{ slide.backgroundType.desktop }} -->
-                                <div :style="{ background: get(slide, ['background', screenView ? screenView : 'desktop'], 'gray')}" class="h-full w-10 sm:w-10 flex items-center justify-center py-1"/>
+                                <div :style="{ background: get(slide, ['background', screenView ? screenView : 'desktop'], get(slide, ['background', 'desktop'], 'gray'))}" class="h-full w-10 sm:w-10 flex items-center justify-center py-1"/>
                             </div>
 
                             <!-- Label slide -->

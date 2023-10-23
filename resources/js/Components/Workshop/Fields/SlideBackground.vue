@@ -180,7 +180,7 @@ const backgroundColorList = useBannerBackgroundColor() // Fetch color list from 
                         <Image :src="get(data, ['image', screenView ? screenView : 'desktop', 'source'])"
                             :alt="data.image?.name" :imageCover="true"/>
                     </div>
-                    <div v-else class="h-full w-96" :style="{ background: data.background?.[screenView ? screenView : 'desktop']}">
+                    <div v-else class="h-full w-96" :style="{ background: get(data, ['background', screenView], get(data, ['background', 'desktop', 'gray']))}">
                         <!-- If the background is a color -->
                     </div>
                 </div>
@@ -190,7 +190,9 @@ const backgroundColorList = useBannerBackgroundColor() // Fetch color list from 
         <!-- Button -->
         <div class="w-full relative space-y-4 mt-2.5">
             <div class="flex flex-col gap-y-2">
-                <div class="flex items-center gap-x-4">
+                <div class="flex items-center gap-x-4 py-1"
+                    :class="[get(data, ['backgroundType', screenView ? screenView : 'desktop'], 'image') == 'image' ? 'border-l-4 border-amber-400 pl-1.5 bg-amber-50' : '']"
+                >
                     <div>An Image:</div>
                     <div class="flex items-center gap-x-2">
                         <Button v-if="bannerType != 'square'" :style="`secondary`" class="relative" size="xs">
@@ -217,7 +219,11 @@ const backgroundColorList = useBannerBackgroundColor() // Fetch color list from 
                 </div>
                 
                 <!-- List: Background Color -->
-                <div class="flex items-center gap-x-4">
+                <div class="flex items-center gap-x-4"
+                    :class="get(data, ['backgroundType', screenView ? screenView : 'desktop'], get(data, ['backgroundType', 'desktop'], '')) === 'color'
+                        ? 'border-l-4 border-amber-400 pl-1.5 bg-amber-50'
+                        : ''"
+                >
                     <div class="whitespace-nowrap">Or a color:</div>
                     <!-- Add conditional click() to avoid user change color via inspect -->
                     <div class="h-8 flex items-center w-fit gap-x-1.5">
