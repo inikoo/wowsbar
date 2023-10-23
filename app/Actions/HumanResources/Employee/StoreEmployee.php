@@ -7,9 +7,9 @@
 
 namespace App\Actions\HumanResources\Employee;
 
-use App\Actions\HumanResources\AttachJobPosition;
 use App\Actions\HumanResources\Employee\Hydrators\EmployeeHydrateUniversalSearch;
 use App\Actions\HumanResources\Employee\Hydrators\EmployeeHydrateWeekWorkingHours;
+use App\Actions\HumanResources\SyncJobPosition;
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateEmployees;
 use App\Actions\Organisation\OrganisationUser\StoreOrganisationUser;
 use App\Enums\HumanResources\Employee\EmployeeStateEnum;
@@ -38,7 +38,7 @@ class StoreEmployee
 
     public function handle(Organisation|Workplace $parent, array $modelData): Employee
     {
-        $positions = Arr::get($modelData, 'positions');
+        $positions = Arr::get($modelData, 'positions', []);
 
         $credentials = Arr::only($modelData, ['username', 'password', 'reset_password']);
 
@@ -55,23 +55,26 @@ class StoreEmployee
             StoreOrganisationUser::make()->action(
                 $employee,
                 [
-                    'username'        => Arr::get($credentials, 'username'),
-                    'password'        => Arr::get(
+                    'username'       => Arr::get($credentials, 'username'),
+                    'password'       => Arr::get(
                         $credentials,
                         'password',
                         (app()->isLocal() ? 'hello' : wordwrap(Str::random(), 4, '-', true))
                     ),
-                    'contact_name'    => $employee->contact_name,
-                    'email'           => $employee->work_email,
-                    'reset_password'  => Arr::get($credentials, 'reset_password', false),
+                    'contact_name'   => $employee->contact_name,
+                    'email'          => $employee->work_email,
+                    'reset_password' => Arr::get($credentials, 'reset_password', false),
                 ]
             );
         }
 
+
+        $jobPositions = [];
         foreach ($positions as $position) {
-            $jobPosition = JobPosition::firstWhere('slug', $position);
-            AttachJobPosition::run($employee, $jobPosition);
+            $jobPosition    = JobPosition::firstWhere('slug', $position);
+            $jobPositions[] = $jobPosition->id;
         }
+        SyncJobPosition::run($employee, $jobPositions);
 
 
         EmployeeHydrateWeekWorkingHours::dispatch($employee);
@@ -115,7 +118,7 @@ class StoreEmployee
             'positions.*'         => ['exists:job_positions,slug'],
             'email'               => ['present', 'nullable', 'email'],
             'positions'           => ['required', 'array'],
-            'username'            => ['sometimes', 'required',new AlphaDashDot(), 'iunique:organisation_users'],
+            'username'            => ['sometimes', 'required', new AlphaDashDot(), 'iunique:organisation_users'],
             'password'            => ['sometimes', 'required', 'max:255', app()->isLocal() || app()->environment('testing') ? null : Password::min(8)->uncompromised()],
             'reset_password'      => ['sometimes', 'boolean']
 

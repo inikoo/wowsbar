@@ -7,7 +7,7 @@
 
 namespace App\Actions\Organisation\Guest;
 
-use App\Actions\HumanResources\AttachJobPosition;
+use App\Actions\HumanResources\SyncJobPosition;
 use App\Actions\Organisation\Guest\Hydrators\GuestHydrateUniversalSearch;
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateGuests;
 use App\Actions\Organisation\OrganisationUser\StoreOrganisationUser;
@@ -35,7 +35,7 @@ class StoreGuest
 
     public function handle(array $modelData): Guest
     {
-        $positions = Arr::get($modelData, 'positions');
+        $positions = Arr::get($modelData, 'positions', []);
         Arr::forget($modelData, 'positions');
 
 
@@ -51,18 +51,21 @@ class StoreGuest
         StoreOrganisationUser::make()->action(
             $guest,
             [
-                'username'        => Arr::get($modelData, 'username'),
-                'password'        => Arr::get($modelData, 'password'),
-                'contact_name'    => $guest->contact_name,
-                'email'           => $guest->email,
-                'reset_password'  => Arr::get($modelData, 'reset_password', false),
+                'username'       => Arr::get($modelData, 'username'),
+                'password'       => Arr::get($modelData, 'password'),
+                'contact_name'   => $guest->contact_name,
+                'email'          => $guest->email,
+                'reset_password' => Arr::get($modelData, 'reset_password', false),
             ]
         );
 
+        $jobPositions = [];
         foreach ($positions as $position) {
-            $jobPosition = JobPosition::firstWhere('slug', $position);
-            AttachJobPosition::run($guest, $jobPosition);
+            $jobPosition    = JobPosition::firstWhere('slug', $position);
+            $jobPositions[] = $jobPosition->id;
         }
+        SyncJobPosition::run($guest, $jobPositions);
+
 
         return $guest;
     }
@@ -86,16 +89,16 @@ class StoreGuest
     public function rules(): array
     {
         return [
-            'type'            => ['required', Rule::in(GuestTypeEnum::values())],
-            'alias'           => ['required', 'iunique:employees', 'string', 'max:12'],
-            'username'        => ['required', 'required', new AlphaDashDot(), 'iunique:organisation_users'],
-            'company_name'    => ['nullable', 'string', 'max:255'],
-            'contact_name'    => ['required', 'string', 'max:255'],
-            'phone'           => ['nullable', 'phone:AUTO'],
-            'email'           => ['nullable', 'email'],
-            'positions.*'     => ['exists:job_positions,slug'],
-            'password'        => ['sometimes', 'required', 'max:255', app()->isLocal() || app()->environment('testing') ? null : Password::min(8)->uncompromised()],
-            'reset_password'  => ['sometimes', 'boolean']
+            'type'           => ['required', Rule::in(GuestTypeEnum::values())],
+            'alias'          => ['required', 'iunique:employees', 'string', 'max:12'],
+            'username'       => ['required', 'required', new AlphaDashDot(), 'iunique:organisation_users'],
+            'company_name'   => ['nullable', 'string', 'max:255'],
+            'contact_name'   => ['required', 'string', 'max:255'],
+            'phone'          => ['nullable', 'phone:AUTO'],
+            'email'          => ['nullable', 'email'],
+            'positions.*'    => ['exists:job_positions,slug'],
+            'password'       => ['sometimes', 'required', 'max:255', app()->isLocal() || app()->environment('testing') ? null : Password::min(8)->uncompromised()],
+            'reset_password' => ['sometimes', 'boolean']
 
         ];
     }

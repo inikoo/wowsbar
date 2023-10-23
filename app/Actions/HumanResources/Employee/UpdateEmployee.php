@@ -7,8 +7,8 @@
 
 namespace App\Actions\HumanResources\Employee;
 
-use App\Actions\HumanResources\AttachJobPosition;
 use App\Actions\HumanResources\Employee\Hydrators\EmployeeHydrateUniversalSearch;
+use App\Actions\HumanResources\SyncJobPosition;
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateEmployees;
 use App\Actions\Traits\WithActionUpdate;
 use App\Enums\HumanResources\Employee\EmployeeStateEnum;
@@ -27,11 +27,12 @@ class UpdateEmployee
     public function handle(Employee $employee, array $modelData): Employee
     {
         if (Arr::exists($modelData, 'positions')) {
+            $jobPositions=[];
             foreach (Arr::get($modelData, 'positions', []) as $position) {
-                $jobPosition = JobPosition::firstWhere('slug', $position);
-                AttachJobPosition::run($employee, $jobPosition);
+                $jobPosition   = JobPosition::firstWhere('slug', $position);
+                $jobPositions[]=$jobPosition->id;
             }
-
+            SyncJobPosition::run($employee, $jobPositions);
             Arr::forget($modelData, 'positions');
         }
         $employee = $this->update($employee, $modelData, ['data', 'salary',]);

@@ -19,17 +19,21 @@ class HydrateJobPosition
     use WithNormalise;
 
 
-    public function handle(JobPosition $jobPosition): void
+    public function handle(int $jobPositionID): void
     {
-        $jobPosition->update(
-            [
-                'number_employees' => DB::table('job_positionables')->where('job_position_id', $jobPosition->id)->count(),
-                'number_work_time' => DB::table('job_positionables')->where('job_position_id', $jobPosition->id)->sum('share'),
-            ]
-        );
+
+        $jobPosition=JobPosition::find($jobPositionID);
+        if($jobPosition) {
+            $jobPosition->update(
+                [
+                    'number_employees' => DB::table('job_positionables')->where('job_position_id', $jobPosition->id)->count(),
+                    'number_work_time' => DB::table('job_positionables')->where('job_position_id', $jobPosition->id)->sum('share'),
+                ]
+            );
 
 
-        $this->updateNormalisedJobPositionsShare();
+            $this->updateNormalisedJobPositionsShare();
+        }
     }
 
     private function updateNormalisedJobPositionsShare(): void

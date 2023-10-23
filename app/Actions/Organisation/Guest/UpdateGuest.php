@@ -7,7 +7,7 @@
 
 namespace App\Actions\Organisation\Guest;
 
-use App\Actions\HumanResources\AttachJobPosition;
+use App\Actions\HumanResources\SyncJobPosition;
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateGuests;
 use App\Actions\Traits\WithActionUpdate;
 use App\Enums\Organisation\Guest\GuestTypeEnum;
@@ -26,8 +26,16 @@ class UpdateGuest
 
     public function handle(Guest $guest, array $modelData): Guest
     {
-        $positions = Arr::get($modelData, 'positions');
-        Arr::forget($modelData, 'positions');
+        if (Arr::exists($modelData, 'positions')) {
+            $jobPositions=[];
+            foreach (Arr::get($modelData, 'positions', []) as $position) {
+                $jobPosition   = JobPosition::firstWhere('slug', $position);
+                $jobPositions[]=$jobPosition->id;
+            }
+            SyncJobPosition::run($guest, $jobPositions);
+            Arr::forget($modelData, 'positions');
+        }
+
 
         $guest= $this->update($guest, $modelData, [
             'data',
@@ -35,11 +43,6 @@ class UpdateGuest
 
         if ($guest->wasChanged(['state'])) {
             OrganisationHydrateGuests::dispatch();
-        }
-
-        foreach ($positions as $position) {
-            $jobPosition = JobPosition::firstWhere('slug', $position);
-            AttachJobPosition::run($guest, $jobPosition);
         }
 
         return $guest;

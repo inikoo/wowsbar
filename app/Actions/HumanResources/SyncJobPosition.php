@@ -11,22 +11,32 @@ use App\Actions\HumanResources\Employee\Hydrators\EmployeeHydrateJobPositionsSha
 use App\Actions\HumanResources\JobPosition\HydrateJobPosition;
 use App\Models\Auth\Guest;
 use App\Models\HumanResources\Employee;
-use App\Models\HumanResources\JobPosition;
 use Lorisleiva\Actions\Concerns\AsAction;
 
-class AttachJobPosition
+class SyncJobPosition
 {
     use AsAction;
 
-    // todo transform EmployeeJobPosition to a polymorphic stuff
-    public function handle(Employee|Guest $model, JobPosition $jobPosition): void
+    public function handle(Employee|Guest $model, array $jobPositions): void
     {
-        $model->jobPositions()->attach($jobPosition->id);
-        $model->organisationUser?->assignJoBPositionRoles($jobPosition);
+        $model->jobPositions()->sync($jobPositions);
+        if($organisationUser=$model->organisationUser) {
+
+            $roles=[];
+            foreach($model->jobPositions as $jobPosition) {
+                $roles=array_merge($roles, $jobPosition->roles()->pluck('id')->all());
+            }
+
+            $organisationUser->roles()->sync($roles);
+            $organisationUser->refresh();
+        }
+
 
         if(class_basename($model)=='Employee') {
             EmployeeHydrateJobPositionsShare::dispatch($model);
-            HydrateJobPosition::dispatch($jobPosition);
+            foreach($jobPositions as $jobPositionId) {
+                HydrateJobPosition::dispatch($jobPositionId);
+            }
         }
 
 
