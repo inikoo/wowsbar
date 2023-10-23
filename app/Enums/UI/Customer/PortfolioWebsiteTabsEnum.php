@@ -15,8 +15,7 @@ enum PortfolioWebsiteTabsEnum: string
     use EnumHelperTrait;
     use HasTabs;
 
-    case SHOWCASE             = 'showcase';
-
+    case SHOWCASE               = 'showcase';
     case BANNERS                = 'banners';
     case SEO                    = 'seo';
     case GOOGLE_ADS             = 'google_ads';

@@ -5,14 +5,14 @@
   -->
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
-import { Head } from '@inertiajs/vue3'
+import {ref, computed} from 'vue'
+import {Head} from '@inertiajs/vue3'
 import PageHeading from '@/Components/Headings/PageHeading.vue'
-import TablePortfolioWebsites from "@/Components/Tables/TablePortfolioWebsites.vue"
-import { capitalize } from "@/Composables/capitalize"
-import { faUpload, faFile as falFile, faTimes } from '@fal/'
-import { faFile as fasFile, faFileDownload } from '@fas/'
-import { library } from '@fortawesome/fontawesome-svg-core'
+import TableBannersPortfolioWebsites from "@/Components/Tables/TableBannersPortfolioWebsites.vue"
+import {capitalize} from "@/Composables/capitalize"
+import {faUpload, faFile as falFile, faTimes} from '@fal/'
+import {faFile as fasFile, faFileDownload} from '@fas/'
+import {library} from '@fortawesome/fontawesome-svg-core'
 import Tabs from "@/Components/Navigation/Tabs.vue";
 import {useTabChange} from "@/Composables/tab-change";
 import ModelDetails from "@/Pages/ModelDetails.vue";
@@ -38,18 +38,17 @@ const component = computed(() => {
     const components = {
         details: ModelDetails,
         changelog: TableCustomerHistories,
-        websites: TablePortfolioWebsites,
+        websites: TableBannersPortfolioWebsites,
     };
 
     return components[currentTab.value];
 });
 
 
-
 </script>
 
 <template layout="CustomerApp">
-    <Head :title="capitalize(title)" />
+    <Head :title="capitalize(title)"/>
     <PageHeading :data="pageHead">
     </PageHeading>
     <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate"/>

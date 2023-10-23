@@ -16,8 +16,10 @@ use App\Actions\UI\Customer\Portfolio\ShowPortfolio;
 use App\Actions\UI\WithInertia;
 use App\Enums\UI\Customer\PortfolioWebsiteTabsEnum;
 use App\Http\Resources\History\CustomerHistoryResource;
-use App\Http\Resources\Portfolio\BannerResource;
+use App\Http\Resources\Portfolio\BannersResource;
 use App\Http\Resources\Portfolio\PortfolioWebsiteResource;
+use App\Models\CRM\Customer;
+use App\Models\Portfolio\Banner;
 use App\Models\Portfolio\PortfolioWebsite;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -32,6 +34,15 @@ class ShowPortfolioWebsite extends InertiaAction
     use WithActionButtons;
 
 
+    private Customer|Banner $parent;
+
+    public function handle(Customer|Banner $parent, PortfolioWebsite $portfolioWebsite): PortfolioWebsite
+    {
+        $this->parent = $parent;
+
+        return $portfolioWebsite;
+    }
+
     public function authorize(ActionRequest $request): bool
     {
         $this->canEdit   = $request->get('customerUser')->hasPermissionTo('portfolio.edit');
@@ -44,13 +55,12 @@ class ShowPortfolioWebsite extends InertiaAction
     {
         $this->initialisation($request)->withTab(PortfolioWebsiteTabsEnum::values());
 
-        return $portfolioWebsite;
+        return $this->handle(parent: $request->get('customer'), portfolioWebsite: $portfolioWebsite);
     }
 
 
     public function htmlResponse(PortfolioWebsite $portfolioWebsite, ActionRequest $request): Response
     {
-
         $customer = $request->get('customer');
 
         $firstBanners = $this->canEdit ? $this->getFirstBannerWidget($portfolioWebsite) : null;
@@ -68,8 +78,8 @@ class ShowPortfolioWebsite extends InertiaAction
                     'next'     => $this->getNext($portfolioWebsite, $request),
                 ],
                 'pageHead'       => [
-                    'title'   => $portfolioWebsite->name,
-                    'icon'    => [
+                    'title'       => $portfolioWebsite->name,
+                    'icon'        => [
                         'title' => __('website'),
                         'icon'  => 'fal fa-globe'
                     ],
@@ -103,10 +113,9 @@ class ShowPortfolioWebsite extends InertiaAction
 
                 PortfolioWebsiteTabsEnum::BANNERS->value => $this->tab == PortfolioWebsiteTabsEnum::BANNERS->value
                     ?
-                    fn () => $firstBanners ? $firstBanners : BannerResource::collection(IndexBanners::run($portfolioWebsite, PortfolioWebsiteTabsEnum::BANNERS->value))
+                    fn () => $firstBanners ?: BannersResource::collection(IndexBanners::run($portfolioWebsite, PortfolioWebsiteTabsEnum::BANNERS->value))
                     : Inertia::lazy(
-                        fn () =>
-                    $firstBanners ? $firstBanners : BannerResource::collection(IndexBanners::run($portfolioWebsite, PortfolioWebsiteTabsEnum::BANNERS->value))
+                        fn () => $firstBanners ?: BannersResource::collection(IndexBanners::run($portfolioWebsite, PortfolioWebsiteTabsEnum::BANNERS->value))
                     )
             ]
         )
@@ -116,7 +125,7 @@ class ShowPortfolioWebsite extends InertiaAction
                 )
             );
 
-        if ($firstBanners) {
+        if (!$firstBanners) {
             $inertia->table(
                 IndexBanners::make()->tableStructure(
                     parent: $portfolioWebsite,
@@ -160,6 +169,27 @@ class ShowPortfolioWebsite extends InertiaAction
         };
 
         return match ($routeName) {
+            'customer.banners.websites.show',
+            'customer.banners.websites.edit' =>
+            array_merge(
+                ShowPortfolio::make()->getBreadcrumbs(),
+                $headCrumb(
+                    'modelWithIndex',
+                    PortfolioWebsite::firstWhere('slug', $routeParameters['portfolioWebsite']),
+                    [
+                        'index' => [
+                            'name'       => 'customer.banners.websites.index',
+                            'parameters' => []
+                        ],
+                        'model' => [
+                            'name'       => 'customer.banners.websites.show',
+                            'parameters' => $routeParameters
+                        ]
+                    ],
+                    $suffix
+                ),
+            ),
+
             'customer.portfolio.websites.show',
             'customer.portfolio.websites.edit' =>
             array_merge(
@@ -207,16 +237,27 @@ class ShowPortfolioWebsite extends InertiaAction
 
 
         return match ($routeName) {
-            'customer.portfolio.websites.show',
-            'customer.portfolio.websites.edit' => [
+            'customer.banners.websites.show',
+            'customer.banners.websites.edit' => [
                 'label' => $portfolioWebsite->slug,
                 'route' => [
                     'name'       => $routeName,
                     'parameters' => [
+                        'banner'           => $this->parent->slug,
                         'portfolioWebsite' => $portfolioWebsite->slug
                     ]
                 ]
+            ],
+            'customer.portfolio.websites.show',
+            'customer.portfolio.websites.edit' => [
+        'label' => $portfolioWebsite->slug,
+        'route' => [
+            'name'       => $routeName,
+            'parameters' => [
+                'portfolioWebsite' => $portfolioWebsite->slug
             ]
+        ]
+    ]
         };
     }
 }

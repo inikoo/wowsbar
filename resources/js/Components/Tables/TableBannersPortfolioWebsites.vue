@@ -19,7 +19,7 @@ function websiteRoute(website: Website) {
     switch (route().current()) {
         case 'customer.banners.websites.index':
             return route(
-                'customer.portfolio.websites.show',
+                'customer.banners.websites.show',
                 [website.slug]);
     }
 }
@@ -29,9 +29,9 @@ function websiteRoute(website: Website) {
 <template>
 
     <Table :resource="data" :name="tab" class="mt-5">
-        <template #cell(code)="{ item: website }">
+        <template #cell(name)="{ item: website }">
             <Link :href="websiteRoute(website)" :id="website['slug']" class="py-2 px-1">
-                {{ website['code'] }}
+                {{ website['name'] }}
             </Link>
         </template>
     </Table>

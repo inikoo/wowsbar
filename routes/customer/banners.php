@@ -22,8 +22,9 @@ use App\Actions\Portfolio\Gallery\UI\StockImages\ShowStockImage;
 use App\Actions\Portfolio\Gallery\UI\UploadedImages\EditUploadedImage;
 use App\Actions\Portfolio\Gallery\UI\UploadedImages\IndexUploadedImages;
 use App\Actions\Portfolio\Gallery\UI\UploadedImages\ShowUploadedImage;
-use App\Actions\Portfolio\PortfolioWebsite\UI\IndexCaasPortfolioWebsites;
-use App\Actions\Portfolio\PortfolioWebsite\UI\ShowPortfolioWebsite;
+use App\Actions\Portfolio\PortfolioWebsite\UI\EditPortfolioWebsite;
+use App\Actions\Portfolio\PortfolioWebsite\UI\IndexBannersPortfolioWebsites;
+use App\Actions\Portfolio\PortfolioWebsite\UI\ShowBannersPortfolioWebsite;
 use App\Actions\UI\Customer\Banners\ShowBannersDashboard;
 use Illuminate\Support\Facades\Route;
 
@@ -48,9 +49,10 @@ Route::name('banners.')->prefix('cms')->group(function () {
 });
 
 Route::prefix('websites')->name('websites')->group(function () {
-    Route::get('/websites', ['icon' => 'globe', 'label' => 'websites'])->uses(IndexCaasPortfolioWebsites::class)->name('.index');
+    Route::get('/websites', ['icon' => 'globe', 'label' => 'websites'])->uses(IndexBannersPortfolioWebsites::class)->name('.index');
     Route::prefix('{portfolioWebsite}')->group(function () {
-        Route::get('', ['icon' => 'globe', 'label' => 'websites'])->uses([ShowPortfolioWebsite::class, 'inCaas'])->name('.show');
+        Route::get('', ['icon' => 'globe', 'label' => 'websites'])->uses(ShowBannersPortfolioWebsite::class)->name('.show');
+        Route::get('/edit')->uses([EditPortfolioWebsite::class, 'inBanner'])->name('.edit');
     });
 });
 Route::prefix('gallery')->name('gallery')->group(function () {

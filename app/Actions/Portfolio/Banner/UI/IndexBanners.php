@@ -66,6 +66,13 @@ class IndexBanners extends InertiaAction
         }
 
         $queryBuilder = QueryBuilder::for(Banner::class);
+        $queryBuilder->select(
+            'banners.slug',
+            'banners.state',
+            'banners.name',
+            'banners.image_id',
+            'banners.date'
+        );
 
         if (class_basename($parent) == 'PortfolioWebsite') {
             $queryBuilder->leftJoin('banner_portfolio_website', 'banner_id', 'banners.id')
@@ -82,6 +89,7 @@ class IndexBanners extends InertiaAction
             $queryBuilder->joinSub($websites, 'websites', function (JoinClause $join) {
                 $join->on('banners.id', '=', 'websites.banner_id');
             });
+            $queryBuilder->addSelect('websites');
         }
 
 
@@ -97,14 +105,6 @@ class IndexBanners extends InertiaAction
 
         return $queryBuilder
             ->defaultSort('-date')
-            ->select(
-                'websites',
-                'banners.slug',
-                'banners.state',
-                'banners.name',
-                'banners.image_id',
-                'banners.date'
-            )
             ->allowedSorts(['name', 'date'])
             ->allowedFilters([$globalSearch])
             ->withPaginator($prefix)
@@ -167,9 +167,13 @@ class IndexBanners extends InertiaAction
                 ->withExportLinks($exportLinks)
                 ->column(key: 'state', label: ['fal', 'fa-yin-yang'], type: 'icon')
                 ->column(key: 'name', label: __('name'), sortable: true)
-                ->column(key: 'image_thumbnail', label: ['fal', 'fa-image'])
-                ->column(key: 'websites', label: __('websites'))
-                ->column(key: 'date', label: __('date'), sortable: true)
+                ->column(key: 'image_thumbnail', label: ['fal', 'fa-image']);
+            if (class_basename($parent) != 'PortfolioWebsite') {
+                $table->column(key: 'websites', label: __('websites'));
+            }
+
+
+            $table->column(key: 'date', label: __('date'), sortable: true)
                 ->defaultSort('-date');
         };
     }

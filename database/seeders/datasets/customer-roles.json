@@ -14,7 +14,7 @@
     {
         "name":"banners",
         "permissions": [
-            "portfolio.view","portfolio.banners"
+           "portfolio.banners"
         ]
     },
     {

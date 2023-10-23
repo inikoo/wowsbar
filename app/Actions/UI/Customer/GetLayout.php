@@ -140,8 +140,8 @@ class GetLayout
             ];
         }
 
-
         if ($customerUser->hasPermissionTo('portfolio.banners.view') && $number_portfolio_websites > 0) {
+
             $websiteSubNav['banners'] = [
                 'scope'   => 'banners',
                 'icon'    => ['fal', 'fa-sign'],
@@ -163,7 +163,7 @@ class GetLayout
                                 'name' => 'customer.banners.banners.index',
                             ]
                         ],
-                        /*
+
                         [
                             'icon'  => ['fal', 'fa-globe'],
                             'label' => __('websites'),
@@ -171,6 +171,7 @@ class GetLayout
                                 'name' => 'customer.banners.websites.index',
                             ]
                         ],
+                        /*
                         [
                             'icon'  => ['fal', 'fa-photo-video'],
                             'label' => __('gallery'),
@@ -188,7 +189,7 @@ class GetLayout
         }
 
         // Websites
-        if ($customerUser->hasPermissionTo('portfolio.view')) {
+        if ($customerUser->hasPermissionTo('portfolio.view') or $customerUser->hasPermissionTo('portfolio.banners.view')) {
             $navigation['websites'] = [
                 'scope'   => 'portfolio',
                 'icon'    => ['fal', 'fa-globe'],
