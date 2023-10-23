@@ -12,7 +12,7 @@ import PrimitiveInput from '@/Components/Forms/Fields/Primitive/PrimitiveInput.v
 import Select from '@/Components/Forms/Fields/Primitive/PrimitiveSelect.vue'
 import Radio from '@/Components/Forms/Fields/Primitive/PrimitiveRadio.vue'
 import SlideBackground from "@/Components/Workshop/Fields/SlideBackground.vue"
-import Corners from "@/Components/Workshop/Fields/Corners.vue"
+import Corners from "@/Components/Workshop/Fields/Corners/Corners.vue"
 import Colorpicker from '@/Components/Workshop/Fields/ColorPicker.vue'
 import SelectFont from '@/Components/Workshop/Fields/SelectFont.vue'
 import TextAlign from './Fields/TextAlign.vue'

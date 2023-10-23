@@ -15,7 +15,7 @@ const props = defineProps<{
     swiperRef?: Element
 }>()
 
-let url = props.data.target ?? ''
+let url = props.data?.target ?? ''
 
 url = url.replace(/^https?:\/\//g, '');
 
@@ -23,9 +23,9 @@ url = url.replace(/^https?:\/\//g, '');
 </script>
 
 <template>
-    <a :href="`https://${url}`" target="_top" :style="`background : ${data.button_color}; color: ${data.text_color};`"
+    <a :href="`https://${url}`" target="_top" :style="`background : ${data?.button_color}; color: ${data?.text_color};`"
        class="border border-gray-50/50 rounded-md px-3 py-1 hover:bg-gray-900/60 whitespace-nowrap">
-        {{ data.text?.length == 0 ? trans('Open') : data.text }}
+        {{ data?.text?.length == 0 ? trans('Open') : data?.text }}
 
     </a>
 </template>
