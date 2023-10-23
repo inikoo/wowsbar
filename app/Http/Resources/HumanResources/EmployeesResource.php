@@ -1,8 +1,9 @@
 <?php
 /*
- * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Mon, 23 Oct 2023 15:46:47 Malaysia Time, Kuala Lumpur, Malaysia
- * Copyright (c) 2023, Raul A Perusquia Flores
+ *  Author: Raul Perusquia <raul@inikoo.com>
+ *  Created: Thu, 21 Oct 2021 12:37:51 Malaysia Time, Kuala Lumpur, Malaysia
+ *  Copyright (c) 2021, Inikoo
+ *  Version 4.0
  */
 
 namespace App\Http\Resources\HumanResources;
@@ -15,7 +16,7 @@ use JsonSerializable;
 /**
  * @property mixed $job_positions
  */
-class EmployesResource extends JsonResource
+class EmployeesResource extends JsonResource
 {
     public function toArray($request): array|Arrayable|JsonSerializable
     {
@@ -30,16 +31,8 @@ class EmployesResource extends JsonResource
             'job_title'           => $employee->job_title,
             'worker_number'       => $employee->worker_number,
             'state'               => $employee->state,
-            'employment_start_at' => $employee->employment_start_at,
-            'employment_end_at'   => $employee->employment_end_at,
-            'salary'              => $employee->salary,
-            'user'                => $employee->organisationUser?->only('username', 'status'),
-            'positions'           => JobPositionLightResource::collection($employee->jobPositions),
-            'emergency_contact'   => $employee->emergency_contact,
+            'positions'           => JobPositionLightResource::collection(json_decode($this->job_positions)),
             'state_icon'          => $employee->state->stateIcon()[$employee->state->value],
-            'created_at'          => $employee->created_at,
-            'updated_at'          => $employee->updated_at,
         ];
     }
 }
-

@@ -11,14 +11,16 @@ use App\Actions\InertiaAction;
 use App\Actions\UI\Organisation\HumanResources\ShowHumanResourcesDashboard;
 use App\Enums\HumanResources\Employee\EmployeeStateEnum;
 use App\Enums\HumanResources\Employee\EmployeeTypeEnum;
-use App\Http\Resources\HumanResources\EmployeeResource;
+use App\Http\Resources\HumanResources\EmployeesResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\HumanResources\Employee;
 use App\Models\HumanResources\JobPosition;
 use App\Models\Organisation\Organisation;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -82,8 +84,23 @@ class IndexEmployees extends InertiaAction
             );
         }
 
+        $queryBuilder->select(['slug', 'job_title', 'contact_name', 'state']);
+
         if (class_basename($parent) == 'Organisation') {
-            $queryBuilder->with('jobPositions');
+
+            $jobPositions = DB::table('job_positionables')
+                ->select(
+                    'job_positionable_id',
+                    DB::raw('jsonb_agg(json_build_object(\'name\',job_positions.name,\'slug\',job_positions.slug)) as job_positions')
+                )
+                ->leftJoin('job_positions', 'job_positionables.job_position_id', 'job_positions.id')
+                ->where('job_positionable_type', 'Employee')
+                ->groupBy('job_positionable_id');
+            $queryBuilder->leftJoinSub($jobPositions, 'job_positions', function (JoinClause $join) {
+                $join->on('employees.id', '=', 'job_positions.job_positionable_id');
+            });
+            $queryBuilder->addSelect('job_positions');
+
         } else {
             $queryBuilder->leftJoin('job_positionables', 'job_positionables.job_positionable_id', 'employees.id')
             ->where('job_positionables.job_positionable_type', 'Employee')
@@ -94,8 +111,7 @@ class IndexEmployees extends InertiaAction
         /** @noinspection PhpUndefinedMethodInspection */
         return $queryBuilder
             ->defaultSort('employees.slug')
-            ->select(['slug', 'job_title', 'contact_name', 'state'])
-            ->allowedSorts(['slug', 'state', 'contact_name', 'job_title'])
+            ->allowedSorts(['slug', 'state', 'contact_name', 'job_title','worker_number'])
             ->allowedFilters([$globalSearch, 'slug', 'contact_name', 'state'])
             ->withPaginator($prefix)
             ->withQueryString();
@@ -166,6 +182,7 @@ class IndexEmployees extends InertiaAction
 
     public function htmlResponse(LengthAwarePaginator $employees): Response
     {
+
         return Inertia::render(
             'HumanResources/Employees',
             [
@@ -198,7 +215,7 @@ class IndexEmployees extends InertiaAction
                         ] : false
                     ]
                 ],
-                'data'        => EmployeeResource::collection($employees),
+                'data'        => EmployeesResource::collection($employees),
             ]
         )->table($this->tableStructure($this->parent));
     }

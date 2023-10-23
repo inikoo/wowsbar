@@ -5,6 +5,8 @@
   -->
 
 <script setup>
+import {Link} from '@inertiajs/vue3';
+
 defineProps(['job_positions']);
 
 const color = (position) => {
@@ -21,7 +23,10 @@ const color = (position) => {
 </script>
 
 <template>
-    <span v-for="(job_position, key) in job_positions" :key="key" :title="job_position.code" :class="[color(job_position.slug),'inline-flex items-center rounded-full  px-3 py-0.5 text-sm font-medium  mr-2']">{{ job_position.slug }}</span>
+    <Link v-for="(job_position, key) in job_positions" :key="key"
+          :href="route('org.hr.job-positions.show',job_position.slug)"
+          :title="job_position.name" :class="[color(job_position.slug),'inline-flex items-center rounded-full  px-3 py-0.5 text-sm font-medium  mr-2']">{{ job_position.slug }}
+    </Link>
 </template>
 
 
