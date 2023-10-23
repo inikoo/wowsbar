@@ -5,7 +5,7 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Portfolios\CustomerWebsite\Hydrators;
+namespace App\Actions\Subscriptions\CustomerWebsite\Hydrators;
 
 use App\Models\Portfolios\CustomerWebsite;
 use Lorisleiva\Actions\Concerns\AsAction;

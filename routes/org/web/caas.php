@@ -5,7 +5,7 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-use App\Actions\Portfolios\CustomerWebsite\UI\IndexCaasCustomerWebsites;
+use App\Actions\Subscriptions\CustomerWebsite\UI\IndexCaasCustomerWebsites;
 use App\Actions\UI\Organisation\Catalogue\ShowCaaSDashboard;
 use Illuminate\Support\Facades\Route;
 

@@ -222,15 +222,15 @@ class GetLayout
             $navigation['portfolios'] = [
                 'scope' => 'portfolios',
                 'icon'  => ['fal', 'fa-briefcase'],
-                'label' => __('Portfolios'),
+                'label' => __('Subscriptions'),
                 'route' =>
                     match ($shopsCount) {
                         1 => [
-                            'name'       => 'org.portfolios.shop.dashboard',
+                            'name'       => 'org.subscriptions.shop.dashboard',
                             'parameters' => $shop->slug
                         ],
                         default => [
-                            'name' => 'org.portfolios.index',
+                            'name' => 'org.subscriptions.index',
                         ],
                     },
 
@@ -243,7 +243,7 @@ class GetLayout
                                 [
                                     'icon'  => ['fal', 'fa-chart-network'],
                                     'route' => [
-                                        'name'       => 'org.portfolios.shop.dashboard',
+                                        'name'       => 'org.subscriptions.shop.dashboard',
                                         'parameters' => $shop->slug
                                     ]
                                 ],
@@ -252,7 +252,7 @@ class GetLayout
                                     'label' => __("Customer's websites"),
                                     'icon'  => ['fal', 'fa-briefcase'],
                                     'route' => [
-                                        'name'       => 'org.portfolios.shop.customer-websites.index',
+                                        'name'       => 'org.subscriptions.shop.customer-websites.index',
                                         'parameters' => $shop->slug
                                     ]
                                 ],
@@ -264,7 +264,6 @@ class GetLayout
                 ]
             ];
         }
-
 
         if ($user->hasPermissionTo('catalogue.view')) {
             $navigation['catalogue'] = [
