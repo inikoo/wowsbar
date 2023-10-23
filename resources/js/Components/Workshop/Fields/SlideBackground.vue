@@ -84,10 +84,10 @@ const updateLocalFormValue = (newValue) => {
 // When select image from modal Gallery
 const uploadImageRespone = (res) => {
     props.data.image = {
-        [screenView.value ?? 'desktop']: res.data[0]
+        ...{[screenView.value ?? 'desktop']: res.data[0]}
     }
     props.data.backgroundType = {
-        [screenView.value ?? 'desktop']: 'image'
+        ...{[screenView.value ?? 'desktop']: 'image'}
     }
 
     isOpenCropModal.value = false
@@ -171,7 +171,7 @@ const backgroundColorList = useBannerBackgroundColor() // Fetch color list from 
                         : 'aspect-[2/1] md:aspect-[3/1] lg:aspect-[4/1]'
             ]">
                 <div class="h-full relative flex items-center" >
-                    <div v-if="get(data, ['backgroundType', screenView ? screenView : 'desktop'], '') === 'image'"
+                    <div v-if="get(data, ['backgroundType', screenView ? screenView : 'desktop'], 'image') === 'image'"
                         class="group h-full relative"
                     >
                         <!-- <div class="group-hover:bg-gray-700/50 inset-0 absolute h-full"></div>
@@ -211,7 +211,7 @@ const backgroundColorList = useBannerBackgroundColor() // Fetch color list from 
                             :alt="data.image?.name" :imageCover="true"
                             @click="data.backgroundType[screenView ? screenView : 'desktop'] = 'image'"
                             class="h-auto w-3/12 cursor-pointer rounded overflow-hidden"
-                            :class="get(data, ['backgroundType', screenView ? screenView : 'desktop'], '') == 'image' ? 'ring-2 ring-offset-2 ring-gray-600' : ''"
+                            :class="get(data, ['backgroundType', screenView ? screenView : 'desktop'], 'image') == 'image' ? 'ring-2 ring-offset-2 ring-gray-600' : ''"
                         />
                     </div>
                 </div>

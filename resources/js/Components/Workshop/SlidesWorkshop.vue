@@ -628,7 +628,7 @@ const backgroundColorList = useBannerBackgroundColor() // Fetch color list from 
                                 class="handle p-1 text-xs sm:text-base sm:p-2.5 text-gray-700 cursor-grab place-self-center" />
                             
                             <!-- Image slide: if Image is selected in SlideBackground -->
-                            <div v-if="get(slide, ['backgroundType', screenView ? screenView : 'desktop'], '') === 'image'">
+                            <div v-if="get(slide, ['backgroundType', screenView ? screenView : 'desktop'], 'image') === 'image'">
                                 <Image :src="get(slide, ['image', screenView ? screenView : 'desktop', 'thumbnail'], null)" class="h-full w-10 sm:w-10 flex items-center justify-center py-1"/>
                             </div>
                             
