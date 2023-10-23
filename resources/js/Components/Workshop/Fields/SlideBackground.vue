@@ -23,6 +23,7 @@ const props = defineProps<{
     bannerType: string
 }>()
 
+
 const { data, fieldName } = toRefs(props)
 const isOpen = ref(false)
 const fileInput = ref(null)
@@ -139,7 +140,7 @@ const screenViewChange = (value: string) => {
         </div>
 
         <div class="flex justify-center w-full">
-            <div class="w-fit h-32 lg:h-44 xl:h-64 overflow-hidden border border-gray-300 shadow transition-all duration-200 ease-in-out" :class="[
+            <div class="w-fit max-h-20 lg:max-h-32 overflow-hidden border border-gray-300 shadow transition-all duration-200 ease-in-out" :class="[
                 bannerType == 'square'
                     ? 'aspect-square'  // If banner is a square
                     : screenView
@@ -149,10 +150,12 @@ const screenViewChange = (value: string) => {
                             'aspect-[4/1]': screenView === 'desktop'
                         }
                         : 'aspect-[2/1] md:aspect-[3/1] lg:aspect-[4/1]'
-            ]">
-                <div class="relative w-full h-full flex items-center bg-gray-100 overflow-hidden">
+            ]" :style="{ background: get(data,'background','red')}">
+            <div class="relative flex items-center overflow-hidden" >
+                <div v-if="value">
                     <Image :src="get(value, [`${screenView}`, 'source'], value.desktop.source)"
                         :alt="value.name" :imageCover="true"/>
+                </div>
                 </div>
             </div>
         </div>

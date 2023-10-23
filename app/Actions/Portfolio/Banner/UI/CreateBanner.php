@@ -66,6 +66,7 @@ class CreateBanner extends InertiaAction
             'title'  => '',
             'fields' => [
 
+                /*
                 'type' => [
                     'type'        => 'radio',
                     'label'       => __('orientation'),
@@ -74,6 +75,7 @@ class CreateBanner extends InertiaAction
                     'options'     => Options::forEnum(BannerTypeEnum::class)
 
                 ],
+                */
                 'name' => [
                     'type'        => 'input',
                     'label'       => __('name'),
@@ -134,7 +136,7 @@ class CreateBanner extends InertiaAction
     {
         return array_merge(
             IndexBanners::make()->getBreadcrumbs(
-                'customer.banners.index',
+                'customer.banners.banners.index',
                 $routeParameters
             ),
             [

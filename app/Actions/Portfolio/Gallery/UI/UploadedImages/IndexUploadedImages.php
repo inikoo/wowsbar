@@ -11,6 +11,7 @@ use App\Actions\InertiaAction;
 use App\Actions\UI\Customer\Portfolio\ShowPortfolio;
 use App\Http\Resources\Gallery\ImageResource;
 use App\InertiaTable\InertiaTable;
+use App\Models\CRM\Customer;
 use App\Models\Media\Media;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -36,14 +37,15 @@ class IndexUploadedImages extends InertiaAction
 
     public function asController(ActionRequest $request): LengthAwarePaginator
     {
+        $customer = $request->get('customer');
         $this->initialisation($request);
 
-        return $this->handle();
+        return $this->handle($customer);
     }
 
 
     /** @noinspection PhpUndefinedMethodInspection */
-    public function handle($prefix = null): LengthAwarePaginator
+    public function handle(Customer $customer, $prefix = null): LengthAwarePaginator
     {
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
             $query->where(function ($query) use ($value) {
@@ -59,9 +61,10 @@ class IndexUploadedImages extends InertiaAction
 
         return $queryBuilder
             ->defaultSort('media.name')
+            ->where('customer_id', $customer->id)
             ->where('collection_name', 'content_block')
-            ->select(['media.name','media.id','size','mime_type','file_name','disk','media.slug', 'media.created_at','media.is_animated'])
-            ->allowedSorts(['name','size', 'created_at'])
+            ->select(['media.name', 'media.id', 'size', 'mime_type', 'file_name', 'disk', 'media.slug', 'media.created_at', 'media.is_animated'])
+            ->allowedSorts(['name', 'size', 'created_at'])
             ->allowedFilters([$globalSearch])
             ->withPaginator($prefix)
             ->withQueryString();
@@ -73,7 +76,7 @@ class IndexUploadedImages extends InertiaAction
             if ($prefix) {
                 $table
                     ->name($prefix)
-                    ->pageName($prefix . 'Page');
+                    ->pageName($prefix.'Page');
             }
 
             $table
@@ -89,12 +92,12 @@ class IndexUploadedImages extends InertiaAction
         };
     }
 
-    public function jsonResponse(): AnonymousResourceCollection
+    public function jsonResponse(LengthAwarePaginator $images): AnonymousResourceCollection
     {
-        return ImageResource::collection($this->handle());
+        return ImageResource::collection($images);
     }
 
-    public function htmlResponse(LengthAwarePaginator $websites, ActionRequest $request): Response
+    public function htmlResponse(LengthAwarePaginator $images, ActionRequest $request): Response
     {
         return Inertia::render(
             'Portfolio/Images',
@@ -103,25 +106,27 @@ class IndexUploadedImages extends InertiaAction
                     $request->route()->getName(),
                     $request->route()->parameters
                 ),
-                'title'    => __('stock images'),
-                'pageHead' => [
+                'title'       => __('stock images'),
+                'pageHead'    => [
                     'title'     => __('stock images'),
                     'iconRight' => [
                         'title' => __('image'),
                         'icon'  => 'fal fa-image-polaroid'
                     ],
                 ],
-                'data' => ImageResource::collection($websites),
+                'data'        => ImageResource::collection($images),
             ]
-        )->table($this->tableStructure(
-            exportLinks: [
-            'export' => [
-                'route' => [
-                    'name' => 'customer.export.stock.images.index'
+        )->table(
+            $this->tableStructure(
+                exportLinks: [
+                    'export' => [
+                        'route' => [
+                            'name' => 'customer.export.stock.images.index'
+                        ]
+                    ]
                 ]
-            ]
-        ]
-        ));
+            )
+        );
     }
 
     /** @noinspection PhpUnusedParameterInspection */

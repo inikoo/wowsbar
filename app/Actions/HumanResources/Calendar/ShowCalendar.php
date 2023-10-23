@@ -99,13 +99,13 @@ class ShowCalendar extends InertiaAction
                     'modelWithIndex' => [
                         'index' => [
                             'route' => [
-                                'name' => 'hr.employees.index',
+                                'name' => 'org.hr.employees.index',
                             ],
                             'label' => __('employees')
                         ],
                         'model' => [
                             'route' => [
-                                'name'       => 'hr.employees.show',
+                                'name'       => 'org.hr.employees.show',
                                 'parameters' => [$employee->slug]
                             ],
                             'label' => $employee->worker_number,
@@ -137,7 +137,7 @@ class ShowCalendar extends InertiaAction
             return null;
         }
         return match ($routeName) {
-            'hr.employees.show'=> [
+            'org.hr.employees.show'=> [
                 'label'=> $employee->contact_name,
                 'route'=> [
                     'name'      => $routeName,

@@ -5,7 +5,7 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Portfolios\CustomerSocialAccount;
+namespace App\Actions\Subscriptions\CustomerSocialAccount;
 
 use App\Actions\Traits\WithSocialAudit;
 use App\Enums\Portfolio\PortfolioSocialAccount\PortfolioSocialAccountPlatformEnum;

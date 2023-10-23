@@ -78,13 +78,13 @@ class DeleteClocking
             );
         } elseif (class_basename($parent::class) == 'Workplace') {
             return Redirect::route(
-                route: 'hr.clocking-machines.show.clockings.index',
+                route: 'org.hr.clocking-machines.show.clockings.index',
                 parameters: [
                     'workplace' => $parent->slug
                 ]
             );
         } else {
-            return Redirect::route('hr.clockings.index');
+            return Redirect::route('org.hr.clockings.index');
         }
     }
 

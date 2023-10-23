@@ -133,7 +133,7 @@ watch(compProgressBar, () => {
         </template>
     </PageHeading>
     <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate"/>
-    <component :is="component"  :tab="currentTab" :data="props[currentTab]"></component>
+    <component :is="component" :tab="currentTab" :data="props[currentTab]"></component>
 
     <!-- Modal: Upload -->
     <Modal :isOpen="isModalOpen" @onClose="isModalOpen = false">

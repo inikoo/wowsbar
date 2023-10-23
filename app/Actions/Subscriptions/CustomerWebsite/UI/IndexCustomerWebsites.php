@@ -5,7 +5,7 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Portfolios\CustomerWebsite\UI;
+namespace App\Actions\Subscriptions\CustomerWebsite\UI;
 
 use App\Actions\CRM\Customer\UI\ShowCustomer;
 use App\Actions\Helpers\History\IndexHistory;
@@ -173,7 +173,7 @@ class IndexCustomerWebsites extends InertiaAction
 
 
         return Inertia::render(
-            'Portfolios/CustomerWebsites',
+            'Subscriptions/CustomerWebsites',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->getName(),
@@ -262,25 +262,25 @@ class IndexCustomerWebsites extends InertiaAction
                     ]
                 ),
             ),
-            'org.portfolios.customer-websites.index' =>
+            'org.subscriptions.customer-websites.index' =>
             array_merge(
                 ShowDashboard::make()->getBreadcrumbs(),
                 $headCrumb(
                     [
-                        'name' => 'org.portfolios.customer-websites.index',
+                        'name' => 'org.subscriptions.customer-websites.index',
                         null
                     ]
                 ),
             ),
-            'org.portfolios.shop.customer-websites.index' =>
+            'org.subscriptions.shop.customer-websites.index' =>
             array_merge(
                 ShowPortfoliosDashboard::make()->getBreadcrumbs(
-                    'org.portfolios.shop.dashboard',
+                    'org.subscriptions.shop.dashboard',
                     $routeParameters
                 ),
                 $headCrumb(
                     [
-                        'name'      => 'org.portfolios.shop.customer-websites.index',
+                        'name'      => 'org.subscriptions.shop.customer-websites.index',
                         'parameters'=> $routeParameters
                     ]
                 ),

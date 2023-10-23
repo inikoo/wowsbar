@@ -53,8 +53,7 @@ onMounted(() => {
 
         <!-- Box: Url (copy button) -->
         <div v-if="data.state !== 'unpublished'" class="" :class="[!data.compiled_layout?.components?.length ?  'flex justify-center' : '' ]">
-            <!-- <Input :fieldData="{ copyButton: true, readonly: true }" fieldName='url' :form="{ url: data.delivery_url }" /> -->
-            <div class="bg-white border border-gray-300 flex items-center mx-auto space-x-3 rounded-md md:w-fit ">
+            <div class="bg-white border border-gray-300 flex items-center justify-between mx-auto gap-x-3 rounded-md md:w-fit ">
                 <a :href="data.delivery_url" target="_blank" class="pl-4 md:pl-5 inline-block py-2 text-xxs md:text-base text-gray-400">{{ data.delivery_url }}</a>
                 <Button :style="'secondary'" class="" size="xl" @click="useCopyText(data.delivery_url)" title="Copy url to clipboard">
                     <FontAwesomeIcon icon='far fa-link' class='text-gray-500' aria-hidden='true' />

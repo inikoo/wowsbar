@@ -23,6 +23,8 @@ import { faSpinnerThird } from '@fad/'
 import { library } from '@fortawesome/fontawesome-svg-core'
 library.add(faArrowLeft, faSpinnerThird)
 
+const isLoading = ref(false)
+
 const form = useForm({
     email: '',
     password: '',
@@ -40,8 +42,13 @@ const submitResetPassword = () => {
 }
 
 const submit = () => {
+    isLoading.value = true
     form.post(route('public.login'), {
         onFinish: () => form.reset('password'),
+        onError: errors => {
+            isLoading.value = false
+        },
+
     })
 }
 
@@ -88,7 +95,7 @@ const condition: Ref<string | boolean> = ref(false)
                         {{ trans('Login') }}
                         <FontAwesomeIcon icon="fad fa-spinner-third"
                             class="ml-2 h-5 w-5 animate-spin dark:text-gray-200 opacity-0"
-                            :class="{ 'opacity-100': form.processing }" />
+                            :class="{ 'opacity-100': isLoading }" />
                     </button>
                 </div>
 

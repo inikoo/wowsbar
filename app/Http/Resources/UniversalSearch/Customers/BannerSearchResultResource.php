@@ -52,7 +52,7 @@ class BannerSearchResultResource extends JsonResource
                 ]
             },
             'route'          => [
-                'name'       => 'customer.banners.show',
+                'name'       => 'customer.banners.banners.show',
                 'parameters' => [
                     $banner->slug
                 ]

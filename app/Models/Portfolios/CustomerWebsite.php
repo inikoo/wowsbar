@@ -23,7 +23,7 @@ use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\Sluggable\HasSlug;
 
 /**
- * App\Models\Portfolios\CustomerWebsite
+ * App\Models\Subscriptions\CustomerWebsite
  *
  * @property int $id
  * @property string $slug

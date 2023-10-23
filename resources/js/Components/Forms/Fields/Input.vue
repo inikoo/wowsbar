@@ -71,14 +71,16 @@ const updateFormValue = (newValue) => {
                 :type="fieldData?.type ?? 'text'" :placeholder="fieldData?.placeholder" :maxlength="fieldData?.maxLength"
                 :copyButton="fieldData?.copyButton">
                 <!-- Icon: Error, Success, Loading -->
-                <div class="mr-2 h-full flex items-center pointer-events-none">
-                    <FontAwesomeIcon v-if="get(form, ['errors', `${fieldName}`])" icon="fas fa-exclamation-circle"
-                        class="h-5 w-5 text-red-500" aria-hidden="true" />
-                    <FontAwesomeIcon v-if="form.recentlySuccessful" icon="fas fa-check-circle"
-                        class="h-5 w-5 text-green-500" aria-hidden="true" />
-                    <FontAwesomeIcon v-if="form.processing" icon="fad fa-spinner-third"
-                        class="h-5 w-5 animate-spin dark:text-gray-200" />
-                </div>
+                <template #stateIcon>
+                    <div class="mr-2 h-full flex items-center pointer-events-none">
+                        <FontAwesomeIcon v-if="get(form, ['errors', `${fieldName}`])" icon="fas fa-exclamation-circle"
+                            class="h-5 w-5 text-red-500" aria-hidden="true" />
+                        <FontAwesomeIcon v-if="form.recentlySuccessful" icon="fas fa-check-circle"
+                            class="h-5 w-5 text-green-500" aria-hidden="true" />
+                        <FontAwesomeIcon v-if="form.processing" icon="fad fa-spinner-third"
+                            class="h-5 w-5 animate-spin dark:text-gray-200" />
+                    </div>
+                </template>
             </PureInput>
 
 

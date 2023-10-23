@@ -46,6 +46,10 @@ onMounted(() => {
 </template>
 
 
-<style scoped>
+<style>
 @import url("https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css");
+a {
+    color: black;
+    text-decoration: none !important;
+}
 </style>

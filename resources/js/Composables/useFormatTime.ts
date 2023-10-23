@@ -21,6 +21,8 @@ export const useFormatTime = (dateIso: string, localeCode?: string, dateFormat?:
 
 // Relative time range
 export const useRangeFromNow = (dateIso: string, localeCode?: any) => {
+    if (!dateIso) return '-'  // If the provided data date is null
+    
     let tempLocaleCode = localeCode === 'zh-Hans' ? 'zhCN' : 'localeCode'
     const date = new Date(dateIso)
     return formatDistanceToNow(date, { locale: localesCode[tempLocaleCode] })

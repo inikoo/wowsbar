@@ -5,21 +5,27 @@
   -->
 
 <script setup lang="ts">
-import { Link } from "@inertiajs/vue3";
-import { trans } from "laravel-vue-i18n";
+import {trans} from "laravel-vue-i18n";
 
 const props = defineProps<{
     data: {
         text?: string
         target: string
     }
-    swiperRef?: Element 
+    swiperRef?: Element
 }>()
+
+let url = props.data.target
+
+url = url.replace(/^https?:\/\//g, '');
+
+
 </script>
 
 <template>
-    <a :href="data.target" :target="data.target_window == 'In This Window' ? '_self' : '_blank'"  :style="`background : ${data.button_color}; color: ${data.text_color};`"
-        class="border border-gray-50/50 rounded-md px-3 py-1 hover:bg-gray-900/60 whitespace-nowrap">
+    <a :href="`https://${url}`" target="_top" :style="`background : ${data.button_color}; color: ${data.text_color};`"
+       class="border border-gray-50/50 rounded-md px-3 py-1 hover:bg-gray-900/60 whitespace-nowrap">
         {{ data.text?.length == 0 ? trans('Open') : data.text }}
+
     </a>
 </template>
