@@ -15,7 +15,7 @@ import {
     faGraduationCap,
     faMoneyBill,
     faPaperclip, faPaperPlane, faStickyNote,
-    faTags,faCube,faCodeBranch
+    faTags, faCube, faCodeBranch, faMicrophoneStand
 } from '@fal/'
 import ModelDetails from "@/Pages/ModelDetails.vue"
 import {useTabChange} from "@/Composables/tab-change"
@@ -32,6 +32,7 @@ import {
 import TablePortfolioWebsites from "@/Components/Tables/TablePortfolioWebsites.vue"
 import { routeType } from '@/types/route'
 import TableAppointments from "@/Components/Tables/TableAppointments.vue";
+import TablePortfolioSocialAccounts from "@/Components/Tables/TablePortfolioSocialAccounts.vue";
 
 library.add(
     faStickyNote,
@@ -43,7 +44,8 @@ library.add(
     faPaperclip,
     faPaperPlane,
     faCube,
-    faCodeBranch
+    faCodeBranch,
+    faMicrophoneStand
 )
 
 const ModelChangelog = defineAsyncComponent(() => import('@/Pages/ModelChangelog.vue'))
@@ -57,6 +59,7 @@ const props = defineProps<{
     }
     showcase?:object
     portfolio?: object
+    social_account?: object
     appointments?: object
     uploadRoutes: {
         upload: routeType
@@ -74,7 +77,8 @@ const components = {
     details: ModelDetails,
     history: ModelChangelog,
     portfolio: TablePortfolioWebsites,
-    appointments: TableAppointments
+    appointments: TableAppointments,
+    social_account: TablePortfolioSocialAccounts
 }
 
 // Selected component

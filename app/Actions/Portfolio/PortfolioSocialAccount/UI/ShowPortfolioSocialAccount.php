@@ -66,6 +66,7 @@ class ShowPortfolioSocialAccount extends InertiaAction
                         $this->canEdit ? [
                             'type'  => 'button',
                             'style' => 'edit',
+                            'label' => 'Edit Social Account',
                             'route' => [
                                 'name'       => preg_replace('/show$/', 'edit', $request->route()->getName()),
                                 'parameters' => array_values($request->route()->originalParameters())
@@ -178,7 +179,7 @@ class ShowPortfolioSocialAccount extends InertiaAction
                 'route' => [
                     'name'       => $routeName,
                     'parameters' => [
-                        'portfolioWebsite' => $portfolioSocialAccount->slug
+                        'portfolioSocialAccount' => $portfolioSocialAccount->slug
                     ]
                 ]
             ]

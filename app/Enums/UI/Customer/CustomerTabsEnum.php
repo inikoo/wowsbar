@@ -18,6 +18,7 @@ enum CustomerTabsEnum: string
     case SHOWCASE = 'showcase';
 
     case PORTFOLIO = 'portfolio';
+    case SOCIAL_ACCOUNT = 'social_account';
     case ORDERS    = 'orders';
 
 
@@ -47,6 +48,10 @@ enum CustomerTabsEnum: string
             CustomerTabsEnum::PORTFOLIO => [
                 'title' => __('portfolio websites'),
                 'icon'  => 'fal fa-briefcase',
+            ],
+            CustomerTabsEnum::SOCIAL_ACCOUNT => [
+                'title' => __('customer social account'),
+                'icon'  => 'fal fa-microphone-stand',
             ],
 
             CustomerTabsEnum::ORDERS => [
