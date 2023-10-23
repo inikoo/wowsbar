@@ -71,6 +71,6 @@ const component = computed(() => {
     <PageHeading :data="pageHead"></PageHeading>
     <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate"/>
     <!-- <pre>{{ props.showcase }}</pre> -->
-    <component :is="component" :data="props[currentTab]"></component>
+    <component :is="component" :tab="currentTab" :data="props[currentTab]"></component>
 
 </template>

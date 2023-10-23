@@ -12,6 +12,7 @@ use App\Models\CRM\Customer;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Cookie;
 use Symfony\Component\HttpFoundation\Response;
 
 class SetUserCustomerMiddleware
@@ -19,8 +20,36 @@ class SetUserCustomerMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         if ($request->user()) {
-            Config::set('global.customer_id', session('customer_id'));
-            Config::set('global.customer_user_id', session('customer_user_id'));
+
+
+
+            if( session('customer_id') and  session('customer_user_id')){
+                Config::set('global.customer_id', session('customer_id'));
+                Config::set('global.customer_user_id', session('customer_user_id'));
+            }else{
+                if($request->cookie('customerUser')){
+                    $customerUser=CustomerUser::find($request->cookie('customerUser'));
+                }else {
+                    $customerUser = $request->user()->customerUsers()->where('status', true)->first();
+                    Cookie::queue('customerUser', $customerUser->id, 60 * 24 * 365);
+
+                }
+
+                Config::set('global.customer_id', $customerUser->customer->id);
+                Config::set('global.customer_user_id', $customerUser->id);
+
+
+                session([
+                    'customer_user_id' => $customerUser->id,
+                    'customer_id'      => $customerUser->customer->id,
+                    'customer_slug'    => $customerUser->customer->slug,
+                    'customer_name'    => $customerUser->customer->name,
+                    'customer_ulid'    => $customerUser->customer->ulid
+                ]);
+
+            }
+
+
 
             $request->merge(
                 [

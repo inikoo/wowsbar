@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { trans } from "laravel-vue-i18n";
 import { ref, computed, watch, reactive } from "vue";
-import { get, cloneDeep, set } from "lodash";
+import { get, cloneDeep, set, isNull } from "lodash";
 import { faLock } from "@fas/";
 import { faTimes } from "@fal/";
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -98,8 +98,8 @@ const clear=(section)=>{
                 v-for="(cornerSection, index) in cornersSection"
                 :key="cornerSection.id"
                 class="relative overflow-hidden flex items-center justify-center flex-grow text-base font-semibold py-4"
-                :class="[
-                    common && common.corners?.hasOwnProperty(cornerSection.id)
+                :class="[ common &&
+                    common.corners[cornerSection.id] &&  !isNull(common.corners[cornerSection.id])
                         ? 'cursor-not-allowed bg-gray-200 text-red-500'
                         : get(section, 'id') == cornerSection.id
                         ? 'bg-amber-300 text-gray-600 cursor-pointer'
@@ -107,17 +107,14 @@ const clear=(section)=>{
                 ]"
                 @click="
                     () => {
-                        common &&
-                        common.corners?.hasOwnProperty(cornerSection.id)
-                            ? null
-                            : cornerSideClick(cornerSection);
+                        common && common.corners[cornerSection.id]  &&  !isNull(common.corners[cornerSection.id]) ? null : cornerSideClick(cornerSection);
                     }
                 "
             >
                 <div
                     v-if="
                         common &&
-                        common.corners?.hasOwnProperty(cornerSection.id)
+                        common.corners[cornerSection.id] &&  !isNull(common.corners[cornerSection.id])
                     "
                     class="isolate text-sm italic"
                 >

@@ -13,6 +13,7 @@ import Image from "@/Components/Image.vue";
 import { faDiscord } from '@fortawesome/free-brands-svg-icons'
 import {library} from "@fortawesome/fontawesome-svg-core";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
+import {trans} from "laravel-vue-i18n";
 
 library.add(faDiscord)
 
@@ -38,7 +39,7 @@ const logoSrc=usePage().props.art.footer_logo;
                 <a href="https://discord.gg/C7bCmMaTxP" target="_blank">
                     <span class="text-slate-400	 text-xs">
                         <FontAwesomeIcon :icon="['fab', 'discord']" class="text-white mx-1" aria-hidden='true'/>
-                        Give us feedback from your journey
+                        {{trans("Customer's community channel")}}
                     </span>
                 </a>
             </div>

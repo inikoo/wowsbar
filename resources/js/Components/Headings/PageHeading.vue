@@ -8,7 +8,7 @@
 import { Link } from "@inertiajs/vue3"
 
 import { library } from "@fortawesome/fontawesome-svg-core"
-import { faEdit, faWindowMaximize, faDraftingCompass, faEmptySet, faMoneyCheckAlt, faPeopleArrows, faSlidersH, faSave, faSuitcase, faBroadcastTower, faUpload, faLevelUp, faUserPlus, faTimes, faClock, faSeedling} from '@fal/'
+import { faSign,faEdit, faWindowMaximize, faDraftingCompass, faEmptySet, faMoneyCheckAlt, faPeopleArrows, faSlidersH, faSave, faSuitcase, faBroadcastTower, faUpload, faLevelUp, faUserPlus, faTimes, faClock, faSeedling} from '@fal/'
 import { faRocketLaunch, faPencil, faArrowLeft, faBorderAll, faTrashAlt, faDesktop} from '@far/'
 import { faPlus } from '@fas/'
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
@@ -25,7 +25,7 @@ interface Icon {
 
 library.add(faEdit, faWindowMaximize, faRocketLaunch, faDraftingCompass, faEmptySet, faMoneyCheckAlt, faPeopleArrows, faSlidersH, faPlus,
     faPencil, faArrowLeft, faBorderAll, faTrashAlt, faSave, faSuitcase,
-    faBroadcastTower, faUpload, faDesktop,faLevelUp, faUserPlus, faTimes, faClock, faSeedling
+    faBroadcastTower, faUpload, faDesktop,faLevelUp, faUserPlus, faTimes, faClock, faSeedling,faSign
 )
 
 const props = defineProps<{
