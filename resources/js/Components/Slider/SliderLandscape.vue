@@ -92,6 +92,8 @@ const props = defineProps<{
 
 }>()
 
+
+
 const swiperRef = ref()
 
 const filteredNulls = (corners: Corners) => {
