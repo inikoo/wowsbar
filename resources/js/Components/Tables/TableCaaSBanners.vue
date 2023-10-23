@@ -39,7 +39,7 @@ function bannerRoute(banner: Banner) {
 <template>
 
     <Table :resource="data" :name="tab" class="mt-5">
-        <template #cell(name_todo)="{ item: banner }">
+        <template #cell(name)="{ item: banner }">
             <Link :href="bannerRoute(banner)" :id="banner['slug']" class="special-underline py-4 px-2 whitespace-nowrap">
                 {{ banner['name'] }}
             </Link>

@@ -6,14 +6,16 @@
  */
 
 use App\Actions\CaaS\Banners\UI\IndexBanners;
+use App\Actions\CaaS\Banners\UI\ShowBanner;
 use App\Actions\Subscriptions\CustomerWebsite\UI\IndexCaasCustomerWebsites;
 use App\Actions\UI\Organisation\Catalogue\ShowCaaSDashboard;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {return redirect('/caas/dashboard');})->name('root');
 Route::get('/dashboard', ['icon'  => 'globe', 'label' => 'Caas'])->uses(ShowCaaSDashboard::class)->name('dashboard');
-Route::get('{banner}', ['icon'  => 'globe', 'label' => 'Caas'])->uses([ShowBanner::class, 'inPortfolioWebsite'])->name('banner.show');
 
 Route::get('/websites', ['icon'  => 'globe', 'label' => 'websites'])->uses(IndexCaasCustomerWebsites::class)->name('websites.index');
 Route::get('/banners', ['icon'  => 'globe', 'label' => 'banners'])->uses(IndexBanners::class)->name('banners.index');
+Route::get('{banner}', ['icon'  => 'globe', 'label' => 'Caas'])->uses(ShowBanner::class)->name('banners.show');
+Route::get('{banner}/edit', ['icon'  => 'globe', 'label' => 'Caas'])->uses(ShowBanner::class)->name('banners.edit');
 //todo Route::get('/banners/{banner}', ['icon'  => 'globe', 'label' => 'banners'])->uses(IndexBanners::class)->name('banners.show');

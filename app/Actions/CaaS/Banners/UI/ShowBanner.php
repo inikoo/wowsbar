@@ -5,17 +5,15 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\CaaS\Banner\UI;
+namespace App\Actions\CaaS\Banners\UI;
 
 use App\Actions\Helpers\History\IndexCustomerHistory;
-use App\Actions\Helpers\Snapshot\UI\IndexSnapshots;
 use App\Actions\InertiaAction;
 use App\Actions\Traits\Actions\WithActionButtons;
 use App\Actions\UI\Customer\Banners\ShowBannersDashboard;
 use App\Enums\UI\Customer\BannerTabsEnum;
 use App\Http\Resources\History\CustomerHistoryResource;
 use App\Http\Resources\Portfolio\BannerResource;
-use App\Http\Resources\Portfolio\SnapshotResource;
 use App\Models\CRM\Customer;
 use App\Models\Market\Shop;
 use App\Models\Organisation\Organisation;
@@ -30,38 +28,25 @@ class ShowBanner extends InertiaAction
 {
     use WithActionButtons;
 
-    private Customer|Shop|PortfolioWebsite|Organisation $parent;
+    private Customer|Shop|PortfolioWebsite|Organisation|null $parent = null;
 
-    public function handle(Organisation|Shop|Customer|PortfolioWebsite $parent, Banner $banner): Banner
+    public function handle(Banner $banner): Banner
     {
-        $this->parent = $parent;
-
         return $banner;
     }
 
     public function authorize(ActionRequest $request): bool
     {
-        $this->canEdit   = $request->user()->hasPermissionTo('portfolio.banners.edit');
-        $this->canDelete = $request->user()->hasPermissionTo('portfolio.banners.edit');
+        $this->canEdit = $request->user()->hasPermissionTo('catalogue.caas.edit');
 
-        return
-            (
-                $request->user()->hasPermissionTo('portfolio.banners.view')
-            );
+        return $request->user()->hasPermissionTo('catalogue.caas.view');
     }
 
     public function asController(Banner $banner, ActionRequest $request): Banner
     {
         $this->initialisation($request)->withTab(BannerTabsEnum::values());
 
-        return $this->handle($request->get('customer'), $banner);
-    }
-
-    public function inPortfolioWebsite(PortfolioWebsite $portfolioWebsite, Banner $banner, ActionRequest $request): Banner
-    {
-        $this->initialisation($request)->withTab(BannerTabsEnum::values());
-
-        return $this->handle($portfolioWebsite, $banner);
+        return $this->handle($banner);
     }
 
     public function htmlResponse(Banner $banner, ActionRequest $request): Response
@@ -79,7 +64,7 @@ class ShowBanner extends InertiaAction
 
 
         return Inertia::render(
-            'Banners/Banner',
+            'Catalogue/CaaS/Banner',
             [
                 'breadcrumbs'                   => $this->getBreadcrumbs(
                     $request->route()->getName(),
@@ -98,10 +83,6 @@ class ShowBanner extends InertiaAction
                     ],
                     'container'   => $container,
                     'iconRight'   => $banner->state->stateIcon()[$banner->state->value],
-                    'iconActions' => [
-                        $this->canDelete ? $this->getDeleteActionIcon($request) : null,
-                        $this->canEdit ? $this->getEditActionIcon($request) : null,
-                    ],
                     'actions'     => [
 
                         /*
