@@ -85,7 +85,7 @@ const props = defineProps<{
         arguments: string[]
     };
     user: string
-    screenView: String
+    screenView: string
 }>();
 
 const emits = defineEmits<{
@@ -530,11 +530,11 @@ const uploadImageRespone = (res) => {
             layout: {
                 imageAlt: set.name,
             },
-            background: {
-                image: {
-                    desktop: set,
-                    isSelected: true
-                }
+            image: {
+                desktop: set,
+            },
+            backgroundType: {
+                desktop: 'image'
             },
             visibility: true,
         });
@@ -556,19 +556,18 @@ const addNewSlide = () => {
         layout: {
             imageAlt: 'New slide',
         },
+        image: {
+            desktop: {},
+            tablet: {},
+            mobile: {},
+        },
         background: {
-            image: {
-                desktop: {},
-                tablet: {},
-                mobile: {},
-                isSelected: false
-            },
-            color: {
-                desktop: backgroundColorList[Math.floor(Math.random() * backgroundColorList.length)], // To random the background color on new slide
-                tablet: backgroundColorList[Math.floor(Math.random() * backgroundColorList.length)],
-                mobile: backgroundColorList[Math.floor(Math.random() * backgroundColorList.length)],
-                isSelected: true
-            }
+            desktop: backgroundColorList[Math.floor(Math.random() * backgroundColorList.length)], // To random the background color on new slide
+            tablet: backgroundColorList[Math.floor(Math.random() * backgroundColorList.length)],
+            mobile: backgroundColorList[Math.floor(Math.random() * backgroundColorList.length)],
+        },
+        backgroundType: {
+            desktop: 'color'
         },
         visibility: true,
     });
@@ -607,11 +606,11 @@ const backgroundColorList = useBannerBackgroundColor() // Fetch color list from 
                 :onChange="(e: any) => emits('jumpToIndex', e.moved.newIndex)">
                 <template #item="{ element: slide }">
                     <div @mousedown="
-                        selectComponentForEdition(slide),
-                        emits(
-                            'jumpToIndex',
-                            data.components.findIndex(obj => obj.ulid === slide.ulid)
-                        )"
+                            selectComponentForEdition(slide),
+                            emits(
+                                'jumpToIndex',
+                                data.components.findIndex(obj => obj.ulid === slide.ulid)
+                            )"
                         v-if="slide.ulid" :class="[
                             'grid grid-flow-col relative sm:py-1 mb-2 items-center justify-between ring-1 ring-gray-300',
                             slide.ulid == get(currentComponentBeenEdited, 'ulid')
@@ -627,21 +626,20 @@ const backgroundColorList = useBannerBackgroundColor() // Fetch color list from 
                             <!-- Icon: Bars, class 'handle' to grabable -->
                             <FontAwesomeIcon icon="fal fa-bars"
                                 class="handle p-1 text-xs sm:text-base sm:p-2.5 text-gray-700 cursor-grab place-self-center" />
-
+                            
                             <!-- Image slide: if Image is selected in SlideBackground -->
-                            <div v-if="get(slide, ['background', 'image', 'isSelected'], false) === true">
-                                <Image :src="get(slide.background, ['image', `${screenView}`, 'thumbnail'], slide.background.image?.desktop?.thumbnail)" class="h-full w-10 sm:w-10 flex items-center justify-center py-1"/>
+                            <div v-if="get(slide, ['backgroundType', screenView ? screenView : 'desktop'], '') === 'image'">
+                                <Image :src="get(slide, ['image', screenView ? screenView : 'desktop', 'thumbnail'], null)" class="h-full w-10 sm:w-10 flex items-center justify-center py-1"/>
                             </div>
                             
                             <div v-else>
                                 <!-- If the slide is color -->
-                                <!-- {{ slide.background.color.desktop }} -->
-                                <div :style="{ background: get(slide, ['background', 'color', `${screenView ? screenView  : 'desktop'}`], 'gray')}" class="h-full w-10 sm:w-10 flex items-center justify-center py-1"/>
+                                <!-- {{ slide.backgroundType.desktop }} -->
+                                <div :style="{ background: get(slide, ['background', screenView ? screenView : 'desktop'], 'gray')}" class="h-full w-10 sm:w-10 flex items-center justify-center py-1"/>
                             </div>
 
                             <!-- Label slide -->
-                            <div
-                                class="hidden lg:inline-flex overflow-hidden whitespace-nowrap overflow-ellipsis pl-2 leading-tight flex-auto items-center">
+                            <div class="hidden lg:inline-flex overflow-hidden whitespace-nowrap overflow-ellipsis pl-2 leading-tight flex-auto items-center">
                                 <div class="overflow-hidden whitespace-nowrap overflow-ellipsis lg:text-xs xl:text-sm">
                                     {{ slide?.layout?.imageAlt ?? "Image " + slide.id }}
                                 </div>
@@ -650,7 +648,7 @@ const backgroundColorList = useBannerBackgroundColor() // Fetch color list from 
 
                         <!-- Button: Show/hide, delete slide -->
                         <div class="flex justify-center items-center pr-2 justify-self-end"  v-if="slide.user == props.user || !slide.user">
-                            <button  class="px-2 py-1 bg-grays-500 text-red-500/60 hover:text-red-500" type="button" v-if="!slide.visibility"
+                            <button class="px-2 py-1 bg-grays-500 text-red-500/60 hover:text-red-500" type="button" v-if="!slide.visibility"
                                 @click="(e)=>{ e.stopPropagation()
                                     removeComponent(slide)}"
                                 title="Delete the slide">
