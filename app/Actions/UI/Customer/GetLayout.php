@@ -45,34 +45,35 @@ class GetLayout
                     'name' => 'customer.portfolio.websites.index',
                 ]
             ],
-            [
-                'icon'  => ['fal', 'fa-thumbs-up'],
-                'label' => __('social accounts'),
-                'route' => [
-                    'name' => 'customer.portfolio.social-accounts.index',
-                ]
-            ],
+
         ];
 
-        // $navigation['portfolio'] = [
-        //     'scope'   => 'portfolio',
-        //     'icon'    => ['fal', 'fa-briefcase'],
-        //     'label'   => __('Portfolio'),
-        //     'route'   => 'customer.portfolio.dashboard',
-        //     'topMenu' => [
-        //         'subSections' => $portfolioSubsections
-        //     ]
-        // ];
+
 
         // Nav: Social Accounts
         if ($customerUser->hasPermissionTo('portfolio.social.view')) {
-            $navigation['social'] = [
-                'scope'   => 'portfolio',
+            $navigation['social-accounts'] = [
+                'scope'   => 'social-accounts',
                 'icon'    => ['fal', 'fa-thumbs-up'],
                 'label'   => __('Social accounts'),
                 'route'   => 'customer.portfolio.social-accounts.index',
                 'topMenu' => [
-                    'subSections' => $portfolioSubsections
+                    'subSections' => [
+                        [
+                            'icon'  => ['fal', 'fa-briefcase'],
+                            'route' => [
+                                'name' => 'customer.portfolio.dashboard',
+                            ]
+                        ],
+                        [
+                            'icon'  => ['fal', 'fa-thumbs-up'],
+                            'label' => __('social accounts'),
+                            'route' => [
+                                'name' => 'customer.portfolio.social-accounts.index',
+                            ]
+                        ],
+
+                    ]
                 ]
             ];
         }
@@ -191,7 +192,7 @@ class GetLayout
         // Websites
         if ($customerUser->hasPermissionTo('portfolio.view') or $customerUser->hasPermissionTo('portfolio.banners.view')) {
             $navigation['websites'] = [
-                'scope'   => 'portfolio',
+                'scope'   => 'websites',
                 'icon'    => ['fal', 'fa-globe'],
                 'label'   => __('websites'),
                 'route'   => $customerUser->hasPermissionTo('portfolio') ? 'customer.portfolio.websites.index' : null,
@@ -236,7 +237,6 @@ class GetLayout
 
                             ]
                         ],
-
                     ]
                 ]
             ];

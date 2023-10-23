@@ -43,6 +43,11 @@ export const initialiseCustomerApp = () => {
         let moduleName = layout.currentRoute.split('.');
         layout.currentModule = moduleName[1];
 
+        if(layout.currentModule==='portfolio'){
+            layout.currentModule = moduleName[2];
+
+        }
+
 
         if(layout.currentModule==='banners'){
             layout.currentParentModule='websites';
@@ -51,7 +56,7 @@ export const initialiseCustomerApp = () => {
         }
 
         console.log(layout.currentRoute)
-        console.log(moduleName[1])
+        console.log(moduleName)
 
         layout.booted = true;
 
