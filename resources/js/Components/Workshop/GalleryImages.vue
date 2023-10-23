@@ -5,7 +5,7 @@ import axios from 'axios'
 import Image from '@/Components/Image.vue'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faCloudUpload, faImagePolaroid } from '@fal/'
+import { faCloudUpload, faImagePolaroid, faTimes } from '@fal/'
 import { faSpinnerThird } from '@fad/'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { useGalleryStore } from '@/Stores/gallery.js'
@@ -16,7 +16,7 @@ import { trans } from "laravel-vue-i18n"
 import CropImage from "@/Components/Workshop/CropImage/CropImage.vue"
 import Modal from '@/Components/Utils/Modal.vue'
 
-library.add(faCloudUpload, faImagePolaroid, faSpinnerThird)
+library.add(faCloudUpload, faImagePolaroid, faTimes, faSpinnerThird)
 
 const props = defineProps({
     addImage: Function,
@@ -125,13 +125,12 @@ const addComponent =  (element) => {
     isOpenCropModal.value = true;
 };
 
-// watchEffect(() => {
-//     useGalleryStore().uploaded_images
-// })
+// console.log(galleryStore.value)
 
 </script>
 
 <template>
+    <div tabindex="0" class="sr-only"></div>
     <div class="flex gap-x-2">
         <!-- Sidebar -->
         <section class="bg-gray-50 w-64">
@@ -174,17 +173,17 @@ const addComponent =  (element) => {
                     }" />
                 </div>
 
+                <!-- Image list: Uploaded Images & Stock Images -->
                 <div v-else class="pt-6 px-4 grid grid-cols-4 gap-x-3 gap-y-6 max-h-96 overflow-auto">
-                    <!-- Image list: Uploaded Images & Stock Images -->
                     <div v-for="imageData in galleryStore?.[activeSidebar]" :key="imageData.id"
                         @click="() => collectImage(imageData)"
                         class="group cursor-pointer relative flex flex-col gap-y-1"
                         :class="imagesSelected.data.find((item: any) => item.id === imageData.id) ? 'font-bold text-gray-500' : 'text-gray-500 opacity-70 hover:opacity-100'"
                     >
-                        <div class="flex-none aspect-[4/1] bg-white overflow-hidden rounded-sm" :id="imageData.id"
+                        <div class="flex-none shadow aspect-[4/1] bg-white overflow-hidden rounded-sm" :id="imageData.id"
                             :class="imagesSelected.data.find((item: any) => item.id === imageData.id) ? 'ring-2 ring-amber-400 ring-offset-2' : 'ring-offset-2 group-hover:ring-2 group-hover:ring-gray-300'"
                         >
-                            <Image :src="imageData.source" :alt="imageData.imageAlt" class="h-full w-full object-cover object-center" />
+                            <Image :src="imageData.source" :alt="imageData.imageAlt" class="h-full w-fit flex justify-center" />
                         </div>
                         <h3 class="text-xs flex justify-start items-center truncate">
                             {{ imageData.name }}
@@ -195,9 +194,15 @@ const addComponent =  (element) => {
         </section>
     </div>
     
+    <!-- Button -->
     <div class="flex justify-end py-2.5 gap-3 pb-0">
-        <Button class=" bg-red-600 hover:bg-red-400 text-white" @click="closeModal" :style="'tertiary'">Close</Button>
-        <Button :style="`tertiary`" class="relative">
+        <Button @click="closeModal" :style="'red'">
+            <div class="flex items-center">
+                <FontAwesomeIcon icon='fal fa-times' fixed-width class='' aria-hidden='true' />
+                <span class="leading-none">Close</span>
+            </div>
+        </Button>
+        <Button :style="`secondary`" class="relative">
             <FontAwesomeIcon icon='fas fa-plus' class='' aria-hidden='true' />
             <span>{{ trans("Add Images") }}</span>
             <label class="bg-transparent inset-0 absolute inline-block cursor-pointer" id="input-slide-large-mask" for="fileInput" />
