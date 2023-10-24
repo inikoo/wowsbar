@@ -14,7 +14,7 @@ use App\Enums\UI\Customer\PortfolioSocialAccountTabsEnum;
 use App\Http\Resources\Portfolio\PortfolioSocialAccountPostsResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\Portfolio\PortfolioSocialAccount;
-use App\Models\Portfolio\PortfolioSocialAccountPost;
+use App\Models\Portfolio\SocialPost;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -52,7 +52,7 @@ class IndexPortfolioSocialAccountAds extends InertiaAction
             InertiaTable::updateQueryBuilderParameters($prefix);
         }
 
-        $queryBuilder = QueryBuilder::for(PortfolioSocialAccountPost::class);
+        $queryBuilder = QueryBuilder::for(SocialPost::class);
 
         $queryBuilder->where('type', PortfolioSocialAccountPostTypeEnum::ADS->value);
         $queryBuilder->where('portfolio_social_account_id', $portfolioSocialAccount->id);

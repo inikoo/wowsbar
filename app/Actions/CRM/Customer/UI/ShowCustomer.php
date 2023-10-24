@@ -8,6 +8,7 @@
 namespace App\Actions\CRM\Customer\UI;
 
 use App\Actions\CRM\Appointment\UI\IndexAppointments;
+use App\Actions\Portfolio\PortfolioSocialAccount\UI\IndexPortfolioSocialAccounts;
 use App\Actions\Subscriptions\CustomerWebsite\UI\IndexCustomerWebsites;
 use App\Actions\InertiaAction;
 use App\Actions\Organisation\UI\CRM\ShowCRMDashboard;

@@ -32,6 +32,8 @@ return new class () extends Migration {
             $table->string('description')->nullable();
             $table->string('notes')->nullable();
 
+            $table->softDeletes();
+
             $table->timestamps();
         });
     }
