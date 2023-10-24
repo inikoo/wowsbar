@@ -493,6 +493,12 @@ const CommonBlueprint = ref([
                 value: ["common", "centralStage", "style", "TextShadow"],
             },
             // {
+            //     name: ["common", "centralStage", "style", "textGradient"],
+            //     type: "gradientColor",
+            //     label: trans("Text gradient"),
+            //     value: ["common", "centralStage", "style", "textGradient"],
+            // },
+            // {
             //     name: ["common", "centralStage", "style", "textShadow"],
             //     type: "TextShadow",
             //     label: trans("Text Shadow"),

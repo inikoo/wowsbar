@@ -49,9 +49,9 @@ const getComponent = (componentName: string) => {
 
 const current = ref(0);
 
-// defineExpose({
-//     current,
-// });
+defineExpose({
+    current,
+});
 
 </script>
 

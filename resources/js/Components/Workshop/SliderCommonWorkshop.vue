@@ -19,6 +19,7 @@ import Radio from '@/Components/Forms/Fields/Primitive/PrimitiveRadio.vue'
 import TextAlign from './Fields/TextAlign.vue'
 import SelectFont from './Fields/SelectFont.vue'
 import Toogle from '@/Components/Forms/Fields/Primitive/PrimitiveToggle.vue'
+import GradientColor from './Fields/GradientColor.vue'
 
 library.add(faImage, faExpandArrows, faAlignCenter, faTrash, faStopwatch)
 const props = defineProps<{
@@ -38,7 +39,8 @@ const getComponent = (componentName: string) => {
         'radio': Radio,
         'textAlign': TextAlign,
         'selectFont': SelectFont,
-        'toogle':Toogle
+        'toogle':Toogle,
+        'gradientColor' : GradientColor,
     };
     return components[componentName]
 };
