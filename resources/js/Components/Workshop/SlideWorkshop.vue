@@ -5,7 +5,7 @@
   -->
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { faImage, faExpandArrows, faAlignCenter, faTrash, faStopwatch } from '@fal/'
 import PrimitiveInput from '@/Components/Forms/Fields/Primitive/PrimitiveInput.vue'
@@ -31,9 +31,6 @@ const props = defineProps<{
     bannerType?: string
 }>()
 
-// console.log(props.common)
-
-
 const getComponent = (componentName: string) => {
     const components: any = {
         'text': PrimitiveInput,
@@ -52,9 +49,9 @@ const getComponent = (componentName: string) => {
 
 const current = ref(0);
 
-defineExpose({
-    current,
-});
+// defineExpose({
+//     current,
+// });
 
 </script>
 
