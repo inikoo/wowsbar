@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 import { ref, watch, } from "vue"
-import { useBannerBackgroundColor } from "@/Composables/useColorList"
+import { useBannerBackgroundColor, useHeadlineText } from "@/Composables/useCommonList"
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import {
     faTrashAlt,
@@ -559,6 +559,16 @@ const addNewSlide = () => {
         ulid: ulid(),
         layout: {
             imageAlt: 'New slide',
+            centralStage: {
+                title: useHeadlineText()[Math.floor(Math.random() * useHeadlineText().length)],
+                style: {
+                    color: "rgba(253, 224, 71, 255)",
+                    fontSize: {
+                        fontTitle: "text-[18px] lg:text-[32px]",
+                        fontSubtitle: "text-[10px] lg:text-[15px]"
+                    }
+                }
+            }
         },
         image: {
             desktop: {},
@@ -632,14 +642,18 @@ const backgroundColorList = useBannerBackgroundColor() // Fetch color list from 
                                 class="handle p-1 text-xs sm:text-base sm:p-2.5 text-gray-700 cursor-grab place-self-center" />
                             
                             <!-- Image slide: if Image is selected in SlideBackground -->
-                            <div v-if="get(slide, ['backgroundType', screenView ? screenView : 'desktop'], get(slide, ['backgroundType', 'desktop'], 'image')) === 'image'">
-                                <Image :src="get(slide, ['image', screenView ? screenView : 'desktop', 'thumbnail'], get(slide, ['image', 'desktop', 'thumbnail']))" class="h-full w-10 sm:w-10 flex items-center justify-center py-1"/>
-                            </div>
+                            <div v-if="data.type === 'square'" class="">
+                                <!-- If Banner Square -->
+                                <Image v-if="get(slide, ['backgroundType', 'desktop'], get(slide, ['backgroundType', 'desktop'], 'image')) === 'image'" :src="get(slide, ['image', 'desktop', 'thumbnail'], get(slide, ['image', 'desktop', 'thumbnail']))" class="h-full w-10 sm:w-10 flex items-center justify-center py-1"/>
                             
-                            <div v-else>
                                 <!-- If the slide is color -->
-                                <!-- {{ slide.backgroundType.desktop }} -->
-                                <div :style="{ background: get(slide, ['background', screenView ? screenView : 'desktop'], get(slide, ['background', 'desktop'], 'gray'))}" class="h-full w-10 sm:w-10 flex items-center justify-center py-1"/>
+                                <div v-else :style="{ background: get(slide, ['background', 'desktop'], get(slide, ['background', 'desktop'], 'gray'))}" class="h-full w-10 sm:w-10 flex items-center justify-center py-1"/>
+                            </div>
+                            <div v-else>
+                                <Image v-if="get(slide, ['backgroundType', screenView ? screenView : 'desktop'], get(slide, ['backgroundType', 'desktop'], 'image')) === 'image'" :src="get(slide, ['image', screenView ? screenView : 'desktop', 'thumbnail'], get(slide, ['image', 'desktop', 'thumbnail']))" class="h-full w-10 sm:w-10 flex items-center justify-center py-1"/>
+                            
+                                <!-- If the slide is color -->
+                                <div v-else :style="{ background: get(slide, ['background', screenView ? screenView : 'desktop'], get(slide, ['background', 'desktop'], 'gray'))}" class="h-full w-10 sm:w-10 flex items-center justify-center py-1"/>
                             </div>
 
                             <!-- Label slide -->

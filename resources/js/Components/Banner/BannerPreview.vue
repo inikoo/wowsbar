@@ -1,6 +1,7 @@
 <script setup lang='ts'>
 import { useRangeFromNow } from '@/Composables/useFormatTime'
 import SliderLandscape from "@/Components/Slider/SliderLandscape.vue"
+import SliderSquare from "@/Components/Slider/SliderSquare.vue"
 import Image from '@/Components/Image.vue'
 
 const props = defineProps<{
@@ -33,7 +34,7 @@ const props = defineProps<{
     </div>
 
     <!-- If banner is 'square' -->
-    <!-- <div v-else>
+    <div v-else class="flex flex-col w-fit justify-center pr-0.5">
         <div class="bg-white flex flex-col md:flex-row items-center justify-between py-3 px-4 gap-y-1 gap-x-1">
             <div v-if="data.published_snapshot.publisher_avatar || data.published_snapshot.publisher || data.published_snapshot.comment"
                 class="flex gap-x-2"
@@ -56,8 +57,8 @@ const props = defineProps<{
                 <span class="font-bold">{{ useRangeFromNow(data.published_snapshot.published_at) }}</span> ago
             </div>
         </div>
-        <div class="flex flex-col h-48 lg:h-64 xl:h-96 w-fit ">
-            <SliderLandscape :data="data.compiled_layout" :production="false" />
+        <div class="h-full">
+            <SliderSquare :data="data.compiled_layout" />
         </div>
-    </div> -->
+    </div>
 </template>
