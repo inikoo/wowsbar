@@ -19,11 +19,13 @@ import {
 import {faGoogle} from '@fortawesome/free-brands-svg-icons'
 
 import {faChevronLeft} from '@far/'
+import {faCircle} from '@fas/'
 import {useLayoutStore} from "@/Stores/layout.js"
 import {computed} from "vue"
 
 library.add(faBrowser, faSign, faUserCog, faChevronLeft, faTachometerAlt,
-    faGoogle, faTransporter, faAd, faThumbsUp, faEnvelope, faCreditCard
+    faGoogle, faTransporter, faAd, faThumbsUp, faEnvelope, faCreditCard,
+    faCircle
 )
 
 const layout = useLayoutStore()
@@ -93,13 +95,14 @@ const handleToggleLeftbar = () => {
                         <Link v-if="item.route"  :href="route(item.route)"
                             class="flex items-center group text-sm font-medium py-2"
                             :class="[
-                                itemKey === layout.currentModule || Object.keys(item.subNav ?? {}).some(subNav => subNav === layout.currentModule)
+                                itemKey === layout.currentModule
                                     ? 'navigationActiveCustomer dark:border-gray-100 dark:bg-gray-600 px-0.5'
                                     : 'navigationCustomer dark:hover:bg-dark-700 px-1',
                                 !layout.leftSidebar.show && Object.keys(item.subNav ?? {}).some(subNav => subNav === layout.currentModule) ? 'text-white border-l-1 border-transparent' : '',
                             ]"
                             :aria-current="itemKey === layout.currentModule ? 'page' : undefined"
                         >
+                            <FontAwesomeIcon v-if="Object.keys(item.subNav ?? {}).some(subNav => subNav === layout.currentModule)" icon='fas fa-circle' class='absolute left-0.5 h-1.5 text-amber-300' aria-hidden='true' />
                             <FontAwesomeIcon
                                 aria-hidden="true"
                                 class="dark:text-gray-200 ml-2 mr-3 flex-shrink-0 h-4 w-4"
