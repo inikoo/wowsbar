@@ -17,9 +17,9 @@ enum CustomerTabsEnum: string
 
     case SHOWCASE = 'showcase';
 
-    case PORTFOLIO = 'portfolio';
+    case PORTFOLIO      = 'portfolio';
     case SOCIAL_ACCOUNT = 'social_account';
-    case ORDERS    = 'orders';
+    case ORDERS         = 'orders';
 
 
     case DATA               = 'data';

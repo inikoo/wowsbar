@@ -42,7 +42,7 @@ class IndexBanners extends InertiaAction
     {
         $this->initialisation($request)->withTab(BannersTabsEnum::values());
 
-        return $this->handle(parent:organisation(),prefix:BannersTabsEnum::BANNERS->value);
+        return $this->handle(parent:organisation(), prefix:BannersTabsEnum::BANNERS->value);
     }
 
 
