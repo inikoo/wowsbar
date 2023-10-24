@@ -43,7 +43,7 @@ return new class () extends Migration {
             $table->unsignedBigInteger('image_id')->nullable();
             $table->ulid('ulid')->index()->unique();
             $table->timestampsTz();
-            $table=$this->softDeletes($table);
+            $this->softDeletes($table);
         });
     }
 
