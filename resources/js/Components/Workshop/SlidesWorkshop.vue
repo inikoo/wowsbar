@@ -62,7 +62,7 @@ const props = defineProps<{
             id: number;
             image_id: number;
             image_source: string;
-            ulid?: number;
+            ulid?: string;
             layout: {
                 link?: string;
                 centralStage: {
@@ -89,7 +89,7 @@ const props = defineProps<{
 }>();
 
 const emits = defineEmits<{
-    (e: "jumpToIndex", id: number): void;
+    (e: "jumpToIndex", id: string): void;
 }>();
 
 const isDragging = ref(false);
@@ -167,15 +167,16 @@ const selectComponentForEdition = (slide) => {
 
 watch(
     currentComponentBeenEdited,
-    (value, oldValue) => {
-        if (value !== null) {
+    (newValue) => {
+        if (newValue !== null) {
             const component = [...props.data.components]; // Create a shallow copy of the components array
-            const index = component.findIndex((item) => item.ulid === value.ulid);
+            const index = component.findIndex((item) => item.ulid === newValue.ulid);
             if (index !== -1) {
-                component[index] = { ...value };
+                component[index] = { ...newValue };
                 props.data.components = component;
             }
         }
+        emits('jumpToIndex', newValue.ulid)  // Jump to related Slide when update the data
     },
     { deep: true }
 );

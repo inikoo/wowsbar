@@ -5,7 +5,7 @@
   -->
 
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref, watch, toRef, computed } from 'vue'
 import { get } from 'lodash'
 import SlideCorner from "@/Components/Slider/SlideCorner.vue"
 import Image from "@/Components/Image.vue"
@@ -40,7 +40,7 @@ interface Corners {
 
 const props = defineProps<{
     production?: boolean
-    jumpToIndex?: number
+    jumpToIndex?: string  // ulid
     data: {
         common: {
             centralStage: {
@@ -92,8 +92,6 @@ const props = defineProps<{
 
 }>()
 
-
-
 const swiperRef = ref()
 
 const filteredNulls = (corners: Corners) => {
@@ -104,11 +102,15 @@ const filteredNulls = (corners: Corners) => {
     return ''
 }
 
-// Jump view to slide (banner) on click slide (SlidesWorkshop)
-watch(() => props.jumpToIndex, (newVal) => {
-    swiperRef.value.$el.swiper.slideToLoop(newVal, 0, false)
+const componentEdited = toRef(() => props.data.components.filter(component => component.ulid == props.jumpToIndex))  // make jumpToIndex to reactive to watch() it 
+const compIndexCurrentComponent = computed(() => {
+    return props.data.components.findIndex(component => component.ulid == props.jumpToIndex)
 })
 
+// Jump view to slide (banner) on click slide (SlidesWorkshop)
+watch(componentEdited, (newVal) => {
+    swiperRef.value.$el.swiper.slideToLoop(compIndexCurrentComponent.value, 0, false)
+})
 
 </script>
 

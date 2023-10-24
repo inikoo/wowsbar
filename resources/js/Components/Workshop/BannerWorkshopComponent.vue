@@ -22,7 +22,7 @@ const props = defineProps<{
     banner: any
 }>()
 
-const jumpToIndex = ref(0)
+const jumpToIndex = ref('')
 const screenView = ref("")
 
 </script>
@@ -54,7 +54,7 @@ const screenView = ref("")
         </div>
         
         <!-- Editor -->
-        <SlidesWorkshop :bannerType="banner.type" class="clear-both mt-2 p-2.5" :data="data" @jumpToIndex="(val) => jumpToIndex = val"
+        <SlidesWorkshop :bannerType="banner.type" class="clear-both mt-2 p-2.5" :data="data" @jumpToIndex="(val) => (jumpToIndex = val)"
             :imagesUploadRoute="imagesUploadRoute" :user="user" :screenView="screenView" />
     </div>
 

@@ -25,7 +25,7 @@ library.add(
 )
 
 const layout = useLayoutStore()
-console.log(layout.navigation?.[layout.currentParentModule]?.subNav)
+// console.log(layout.navigation?.[layout.currentParentModule]?.subNav)
 
 
 

@@ -5,12 +5,11 @@
   -->
 
 <script setup lang="ts">
-import { ref, watch, computed } from 'vue'
-import { get, isNull } from 'lodash'
+import { ref, watch, computed, toRef } from 'vue'
+import { get } from 'lodash'
 import SlideCorner from "@/Components/Slider/SlideCorner.vue"
 import Image from "@/Components/Image.vue"
 import CentralStage from "@/Components/Slider/CentralStage.vue"
-import { Link } from '@inertiajs/vue3'
 import { breakpointType } from '@/Composables/useWindowSize'
 import { useWindowSize } from '@vueuse/core'
 
@@ -43,7 +42,7 @@ interface Corners {
 
 const props = defineProps<{
     production?: boolean
-    jumpToIndex?: number
+    jumpToIndex?: string  // ulid
     data: {
         common: {
             centralStage: {
@@ -106,9 +105,14 @@ const filteredNulls = (corners: Corners) => {
     return ''
 }
 
+const componentEdited = toRef(() => props.data.components.filter(component => component.ulid == props.jumpToIndex))  // make jumpToIndex to reactive to watch() it 
+const compIndexCurrentComponent = computed(() => {
+    return props.data.components.findIndex(component => component.ulid == props.jumpToIndex)
+})
+
 // Jump view to slide (banner) on click slide (SlidesWorkshop)
-watch(() => props.jumpToIndex, (newVal) => {
-    swiperRef.value.$el.swiper.slideToLoop(newVal, 0, false)
+watch(componentEdited, (newVal) => {
+    swiperRef.value.$el.swiper.slideToLoop(compIndexCurrentComponent.value, 0, false)
 })
 
 const screenBreakpoint = computed(() => {
