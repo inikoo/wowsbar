@@ -37,7 +37,17 @@ const screenView = ref("")
 
         <!-- Banner: Square or Landscape -->
         <div class="flex justify-center pr-0.5">
-            <div v-if="data.type === 'square'" class="w-full">
+            <div v-if="data.type === 'square'" 
+                :class="[
+                    screenView == 'mobile'
+                        ? 'w-1/4'
+                        : screenView == 'tablet'
+                            ? 'w-3/4'
+                            : data.components.length < 4
+                                ? `w-${data.components.length}/4`
+                                : 'w-full'
+                ]"
+            >
                 <SliderSquare :data="data" :jumpToIndex="jumpToIndex" :view="screenView" />
             </div>
             <SliderLandscape v-else :data="data" :jumpToIndex="jumpToIndex" :view="screenView" />

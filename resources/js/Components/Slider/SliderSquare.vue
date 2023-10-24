@@ -154,10 +154,7 @@ const compHandleBannerLessSlide = computed(() => {
 
 <template>
     <!-- Square -->
-    <div class="relative shadow overflow-hidden mx-auto transition-all duration-200 ease-in-out" :class="[
-        compSlidesPerView == 1 ? 'aspect-square' : `aspect-[${compSlidesPerView}/1]`,
-        compSlidesPerView == 4 ? 'w-full' : `w-${compSlidesPerView}/4`
-        ]">
+    <div class="w-full relative shadow overflow-hidden mx-auto transition-all duration-200 ease-in-out">
         <Swiper ref="swiperRef" :slideToClickedSlide="false" :spaceBetween="0" :slidesPerView="compSlidesPerView"
             :centeredSlides="false" :loop="true" :autoplay="{
                 delay: data.delay,

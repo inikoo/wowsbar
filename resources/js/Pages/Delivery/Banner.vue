@@ -6,6 +6,7 @@
 
 <script setup lang="ts">
 import SliderLandscape from "@/Components/Slider/SliderLandscape.vue";
+import SliderSquare from "@/Components/Slider/SliderSquare.vue";
 
 const props = defineProps<{
     data: {
@@ -25,6 +26,7 @@ const props = defineProps<{
                 ]
             }
         }
+        type: string
     }
     tab?: string
 }>()
@@ -32,7 +34,7 @@ const props = defineProps<{
 
 <template >
     <div class="w-full">
-        <SliderLandscape :data="data" class="h-full" :production="true"/>
+        <SliderLandscape v-if="data.type == 'landscape'" :data="data" class="h-full" :production="true"/>
+        <SliderSquare v-if="data.type == 'square'" :data="data" class="h-full" :production="true"/>
     </div>
 </template>
-
