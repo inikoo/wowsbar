@@ -20,7 +20,7 @@ class TaskActivity extends Model
 
     protected $guarded = [];
 
-    public function authorable(): MorphTo
+    public function author(): MorphTo
     {
         return $this->morphTo();
     }
