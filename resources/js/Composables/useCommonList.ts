@@ -12,3 +12,17 @@ export const useBannerBackgroundColor = () => {
         'linear-gradient(to right, rgb(255, 228, 230), rgb(204, 251, 241))',
     ]
 }
+
+export const useHeadlineText = () => {
+    return [
+        'Hello World!',
+        'The Industry Standard.',
+        'Market Dynamics Overview.',
+        'A Business Simulation.',
+        'Economic Trends.',
+        'Corporate Review.',
+        'Industry Analysis.',
+        'Case Study.',
+        'Market Trends Review.',
+    ]
+}

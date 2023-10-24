@@ -10,7 +10,7 @@ import GalleryImages from "@/Components/Workshop/GalleryImages.vue"
 import Image from '@/Components/Image.vue'
 import { set, get } from 'lodash'
 import ScreenView from "@/Components/ScreenView.vue"
-import { useBannerBackgroundColor } from "@/Composables/useColorList"
+import { useBannerBackgroundColor, useHeadlineText } from "@/Composables/useCommonList"
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faUpload } from '@fas/'
@@ -206,13 +206,23 @@ const backgroundColorList = useBannerBackgroundColor() // Fetch color list from 
                         </Button>
                         <Button :style="`tertiary`" icon="fal fa-photo-video" label="Gallery" size="xs" class="relative" @click="isOpen = !isOpen" />
                         
-                        <div class="overflow-hidden h-7 rounded shadow-md"
+                        <div v-if="bannerType === 'landscape'" class="overflow-hidden h-7 rounded shadow-md"
                             :class="[get(data, ['backgroundType', screenView ? screenView : 'desktop'], 'image') == 'image' ? 'ring-2 ring-offset-2 ring-gray-600' : 'hover:ring-2 hover:ring-offset-2 hover:ring-gray-400', `aspect-[${ratio.w}/${ratio.h}]`]">
                             <Image
                                 :src="get(data, ['image', screenView ? screenView : 'desktop', 'thumbnail'])"
                                 :alt="data.image?.name" :imageCover="true"
                                 @click="data.backgroundType[screenView ? screenView : 'desktop'] = 'image'"
                                 class="h-auto cursor-pointer rounded overflow-hidden"
+                            />
+                        </div>
+                        <div v-else class="ml-1 h-10 aspect-square overflow-hidden rounded shadow-md cursor-pointer"
+                            :class="[get(data, ['backgroundType', 'desktop'], 'image') == 'image' ? 'ring-2 ring-offset-2 ring-gray-600' : 'hover:ring-2 hover:ring-offset-2 hover:ring-gray-400']"
+                            @click="data.backgroundType['desktop'] = 'image'"
+                        >
+                            <Image
+                                :src="get(data, ['image', 'desktop', 'thumbnail'])"
+                                :alt="data.image?.name" :imageCover="true"
+                                class="rounded h-full"
                             />
                         </div>
                     </div>
