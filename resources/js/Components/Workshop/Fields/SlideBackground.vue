@@ -84,9 +84,11 @@ const updateLocalFormValue = (newValue) => {
 // When select image from modal Gallery
 const uploadImageRespone = (res) => {
     props.data.image = {
+        ...props.data.image,
         ...{[screenView.value ?? 'desktop']: res.data[0]}
     }
     props.data.backgroundType = {
+        ...props.data.backgroundType,
         ...{[screenView.value ?? 'desktop']: 'image'}
     }
 
@@ -136,6 +138,7 @@ const backgroundColorList = useBannerBackgroundColor() // Fetch color list from 
 
 <template>
     <div class="block w-full">
+    <pre>{{ props.data.image }}</pre>
         <!-- Popup: add image from Gallery -->
         <Modal :show="isOpen" @onClose="closeModal">
             <div>
