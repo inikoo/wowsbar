@@ -29,7 +29,7 @@ watchEffect(() => {
 
         <form class="space-y-8" @submit.prevent="submitResetPassword">
             <div class="text-center font-semibold text-xl">
-                {{ trans("The Administrator ssk you to reset password") }}
+                {{ trans("The Administrator ask you to reset password") }}
             </div>
 
             <div class="flex flex-col gap-y-4">
