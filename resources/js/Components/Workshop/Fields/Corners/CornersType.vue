@@ -113,7 +113,7 @@ const optionType = [
                 label: trans('Link'),
                 value: 'null',
                 defaultValue : 'https://',
-                info : 'use https:// or http://',
+                // info : 'use https:// or http://',
                 rules:{
                     pattern : '^(http|https)://',
                     message : 'please input https:// or http://'

@@ -5,6 +5,7 @@
   -->
 
 <script setup lang="ts">
+import { get } from 'lodash'
 const props = defineProps<{
     data?: {
         title?: string
@@ -21,12 +22,14 @@ const props = defineProps<{
 
 }>()
 
+console.log('centralStage',props.data )
+
 </script>
 
 <template>
-    <div class="absolute px-4 lg:px-6" :class="[{ 'left-0 text-left': data?.textAlign == 'left', 'right-0 text-right': data?.textAlign == 'right' }]">
+    <div class="absolute px-4 lg:px-6" :class="[{ 'left-0 text-left': data?.textAlign == 'left', 'right-0 text-right': data?.textAlign == 'right' }]" :style="`text-shadow : ${get(data,['style','textShadow']) ? '2px 2px black;' : 'none'} `">
         <!-- Fallback for FontSize is normal size -->
-        <div v-if="data?.title" :style="{...data?.style }" :class="[data?.style?.fontSize?.fontTitle ?? 'text-[25px] lg:text-[44px]']" class="text-gray-100 drop-shadow-md leading-none font-bold">{{ data?.title }}</div>
+        <div v-if="data?.title" :style="{ ...data?.style }" :class="[data?.style?.fontSize?.fontTitle ?? 'text-[25px] lg:text-[44px]']" class="text-gray-100 drop-shadow-md leading-none font-bold">{{ data?.title }}</div>
         <div v-if="data?.subtitle" :style="{...data?.style}" :class="[data?.style?.fontSize?.fontSubtitle ?? 'text-[12px] lg:text-[20px]']" class="text-gray-300 drop-shadow leading-none tracking-widest">{{ data?.subtitle }}</div>
     </div>
 </template>
