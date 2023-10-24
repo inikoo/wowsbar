@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 import { ref, watch, } from "vue"
-import { useBannerBackgroundColor } from "@/Composables/useColorList"
+import { useBannerBackgroundColor, useHeadlineText } from "@/Composables/useCommonList"
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import {
     faTrashAlt,
@@ -62,7 +62,7 @@ const props = defineProps<{
             id: number;
             image_id: number;
             image_source: string;
-            ulid?: number;
+            ulid?: string;
             layout: {
                 link?: string;
                 centralStage: {
@@ -89,7 +89,7 @@ const props = defineProps<{
 }>();
 
 const emits = defineEmits<{
-    (e: "jumpToIndex", id: number): void;
+    (e: "jumpToIndex", id: string): void;
 }>();
 
 const isDragging = ref(false);
@@ -167,15 +167,16 @@ const selectComponentForEdition = (slide) => {
 
 watch(
     currentComponentBeenEdited,
-    (value, oldValue) => {
-        if (value !== null) {
+    (newValue) => {
+        if (newValue !== null) {
             const component = [...props.data.components]; // Create a shallow copy of the components array
-            const index = component.findIndex((item) => item.ulid === value.ulid);
+            const index = component.findIndex((item) => item.ulid === newValue.ulid);
             if (index !== -1) {
-                component[index] = { ...value };
+                component[index] = { ...newValue };
                 props.data.components = component;
             }
         }
+        emits('jumpToIndex', newValue.ulid)  // Jump to related Slide when update the data
     },
     { deep: true }
 );
@@ -243,6 +244,7 @@ const ComponentsBlueprint = ref([
                 name: ["layout", "centralStage", "subtitle"],
                 type: "text",
                 label: trans("subtitle"),
+                defaultValue : '',
                 value: ["layout", "centralStage", "subtitle"],
                 placeholder: "Holiday sales up to 80% all items."
             },
@@ -258,9 +260,12 @@ const ComponentsBlueprint = ref([
                     "Laila",
                     "Port Lligat Slab",
                     "Playfair",
+                    "Raleway",
+                    "Roman Melikhov",
+                    "Source Sans Pro",
                     "Quicksand",
                     "Times New Roman",
-                    "Yatra One",
+                    "Yatra One"
                 ],
             },
             {
@@ -334,12 +339,12 @@ const ComponentsBlueprint = ref([
                 icon: 'far fa-text',
                 value: ["layout", "centralStage", "style", "color"],
             },
-            // {
-            //     name: ["layout", "centralStage", "style", "textShadow"],
-            //     type: "toogle",
-            //     label: trans("Text Shadow"),
-            //     value: ["layout", "centralStage", "style", "TextShadow"],
-            // },
+            {
+                name: ["layout", "centralStage", "style", "textShadow"],
+                type: "toogle",
+                label: trans("Text Shadow"),
+                value: ["layout", "centralStage", "style", "TextShadow"],
+            },
         ],
     },
     // {
@@ -482,11 +487,17 @@ const CommonBlueprint = ref([
                 label: trans("color"),
                 value: ["common", "centralStage", "style", "color"],
             },
+            {
+                name: ["common", "centralStage", "style", "textShadow"],
+                type: "toogle",
+                label: trans("Text Shadow"),
+                value: ["common", "centralStage", "style", "TextShadow"],
+            },
             // {
-            //     name: ["layout", "centralStage", "style", "textShadow"],
-            //     type: "toogle",
-            //     label: trans("Text Shadow"),
-            //     value: ["layout", "centralStage", "style", "TextShadow"],
+            //     name: ["common", "centralStage", "style", "textGradient"],
+            //     type: "gradientColor",
+            //     label: trans("Text gradient"),
+            //     value: ["common", "centralStage", "style", "textGradient"],
             // },
             // {
             //     name: ["common", "centralStage", "style", "textShadow"],
@@ -555,6 +566,16 @@ const addNewSlide = () => {
         ulid: ulid(),
         layout: {
             imageAlt: 'New slide',
+            centralStage: {
+                title: useHeadlineText()[Math.floor(Math.random() * useHeadlineText().length)],
+                style: {
+                    color: "rgba(253, 224, 71, 255)",
+                    fontSize: {
+                        fontTitle: "text-[18px] lg:text-[32px]",
+                        fontSubtitle: "text-[10px] lg:text-[15px]"
+                    }
+                }
+            }
         },
         image: {
             desktop: {},
@@ -628,14 +649,18 @@ const backgroundColorList = useBannerBackgroundColor() // Fetch color list from 
                                 class="handle p-1 text-xs sm:text-base sm:p-2.5 text-gray-700 cursor-grab place-self-center" />
                             
                             <!-- Image slide: if Image is selected in SlideBackground -->
-                            <div v-if="get(slide, ['backgroundType', screenView ? screenView : 'desktop'], 'image') === 'image'">
-                                <Image :src="get(slide, ['image', screenView ? screenView : 'desktop', 'thumbnail'], null)" class="h-full w-10 sm:w-10 flex items-center justify-center py-1"/>
-                            </div>
+                            <div v-if="data.type === 'square'" class="">
+                                <!-- If Banner Square -->
+                                <Image v-if="get(slide, ['backgroundType', 'desktop'], get(slide, ['backgroundType', 'desktop'], 'image')) === 'image'" :src="get(slide, ['image', 'desktop', 'thumbnail'], get(slide, ['image', 'desktop', 'thumbnail']))" class="h-full w-10 sm:w-10 flex items-center justify-center py-1"/>
                             
-                            <div v-else>
                                 <!-- If the slide is color -->
-                                <!-- {{ slide.backgroundType.desktop }} -->
-                                <div :style="{ background: get(slide, ['background', screenView ? screenView : 'desktop'], 'gray')}" class="h-full w-10 sm:w-10 flex items-center justify-center py-1"/>
+                                <div v-else :style="{ background: get(slide, ['background', 'desktop'], get(slide, ['background', 'desktop'], 'gray'))}" class="h-full w-10 sm:w-10 flex items-center justify-center py-1"/>
+                            </div>
+                            <div v-else>
+                                <Image v-if="get(slide, ['backgroundType', screenView ? screenView : 'desktop'], get(slide, ['backgroundType', 'desktop'], 'image')) === 'image'" :src="get(slide, ['image', screenView ? screenView : 'desktop', 'thumbnail'], get(slide, ['image', 'desktop', 'thumbnail']))" class="h-full w-10 sm:w-10 flex items-center justify-center py-1"/>
+                            
+                                <!-- If the slide is color -->
+                                <div v-else :style="{ background: get(slide, ['background', screenView ? screenView : 'desktop'], get(slide, ['background', 'desktop'], 'gray'))}" class="h-full w-10 sm:w-10 flex items-center justify-center py-1"/>
                             </div>
 
                             <!-- Label slide -->

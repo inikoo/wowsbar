@@ -5,7 +5,7 @@ import Modal from '@/Components/Utils/Modal.vue'
 import CropImage from "./CropImage/CropImage.vue"
 import GalleryImages from "@/Components/Workshop/GalleryImages.vue"
 import SlideAddMode from '@/Components/Banner/SlideAddMode.vue'
-import { useBannerBackgroundColor } from '@/Composables/useColorList'
+import { useBannerBackgroundColor, useHeadlineText } from '@/Composables/useCommonList'
 const props = defineProps<{
     data: {
         common: {
@@ -80,11 +80,11 @@ const uploadImageRespone = (res) => {
             layout: {
                 imageAlt: set.name,
             },
-            background: {
-                image: {
-                    desktop : set,
-                    isSelected: true
-                }
+            image: {
+                desktop: set,
+            },
+            backgroundType: {
+                desktop: 'image'
             },
             visibility: true,
         })
@@ -95,39 +95,70 @@ const uploadImageRespone = (res) => {
 }
 
 const onClickQuickStart = () => {
-    props.data.components.push({
-        id:  null,
-        ulid: ulid(),
-        layout: {
-            imageAlt: 'New slide',
-            centralStage: {
-                title: "Hello World!",
-                style: {
-                    color: "rgba(253, 224, 71, 255)",
-                    fontSize: {
-                        fontTitle: "text-[30px] lg:text-[60px]",
-                        fontSubtitle: "text-[15px] lg:text-[25px]"
+    if(props.data.type === 'square'){
+        // 'Quick Start' if square
+        props.data.components.push({
+            id:  null,
+            ulid: ulid(),
+            layout: {
+                imageAlt: 'New slide',
+                centralStage: {
+                    title: useHeadlineText()[Math.floor(Math.random() * useHeadlineText().length)],
+                    style: {
+                        color: "rgba(253, 224, 71, 255)",
+                        fontSize: {
+                            fontTitle: "text-[18px] lg:text-[32px]",
+                            fontSubtitle: "text-[15px] lg:text-[25px]"
+                        }
                     }
                 }
-            }
-        },
-        background: {
+            },
+            image: {
+                desktop: {},
+            },
+            background: {
+                desktop: useBannerBackgroundColor()[Math.floor(Math.random() * useBannerBackgroundColor().length)], // To random the background color on new slide
+            },
+            backgroundType: {
+                desktop: 'color',
+            },
+            visibility: true,
+        })
+    } else {
+        // 'Quick Start' if landscape
+        props.data.components.push({
+            id:  null,
+            ulid: ulid(),
+            layout: {
+                imageAlt: 'New slide',
+                centralStage: {
+                    title: "Hello World!",
+                    style: {
+                        color: "rgba(253, 224, 71, 255)",
+                        fontSize: {
+                            fontTitle: "text-[18px] lg:text-[32px]",
+                            fontSubtitle: "text-[10px] lg:text-[15px]"
+                        }
+                    }
+                }
+            },
             image: {
                 desktop: {},
                 tablet: {},
                 mobile: {},
-                isSelected: false
             },
-            color: {
+            background: {
                 desktop: useBannerBackgroundColor()[Math.floor(Math.random() * useBannerBackgroundColor().length)], // To random the background color on new slide
                 tablet: useBannerBackgroundColor()[Math.floor(Math.random() * useBannerBackgroundColor().length)],
                 mobile: useBannerBackgroundColor()[Math.floor(Math.random() * useBannerBackgroundColor().length)],
-                isSelected: true
-            }
-        },
-        visibility: true,
+            },
+            backgroundType: {
+                desktop: 'color',
+            },
+            visibility: true,
+        })
     }
-)}
+}
 
 </script>
 
