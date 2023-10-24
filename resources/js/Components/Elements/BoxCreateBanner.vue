@@ -72,7 +72,7 @@ const handleCreateButton = async () => {
                 <PureMultiselect v-model="dataToSubmit.selectedWebsiteId" :required="true" :options="websiteOptions" />
             </div>
         </div>
-        <div class="text-center hidden" >
+        <div class="text-center" >
             <!-- <label class="text-lg">Select banner orientation</label> -->
             <RadioGroup v-model="dataToSubmit.orientation" class="">
                 <RadioGroupLabel class="sr-only">Choose the radio</RadioGroupLabel>
