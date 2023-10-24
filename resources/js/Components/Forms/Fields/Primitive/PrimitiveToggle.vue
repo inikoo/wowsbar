@@ -49,6 +49,7 @@ const updateFormValue = (newValue) => {
     }
 
     // Emit an event to notify the parent component
+    console.log(target)
     emit('input', target);
 };
 </script>

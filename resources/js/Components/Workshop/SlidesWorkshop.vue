@@ -338,12 +338,12 @@ const ComponentsBlueprint = ref([
                 icon: 'far fa-text',
                 value: ["layout", "centralStage", "style", "color"],
             },
-            // {
-            //     name: ["layout", "centralStage", "style", "textShadow"],
-            //     type: "toogle",
-            //     label: trans("Text Shadow"),
-            //     value: ["layout", "centralStage", "style", "TextShadow"],
-            // },
+            {
+                name: ["layout", "centralStage", "style", "textShadow"],
+                type: "toogle",
+                label: trans("Text Shadow"),
+                value: ["layout", "centralStage", "style", "TextShadow"],
+            },
         ],
     },
     // {
@@ -486,12 +486,12 @@ const CommonBlueprint = ref([
                 label: trans("color"),
                 value: ["common", "centralStage", "style", "color"],
             },
-            // {
-            //     name: ["layout", "centralStage", "style", "textShadow"],
-            //     type: "toogle",
-            //     label: trans("Text Shadow"),
-            //     value: ["layout", "centralStage", "style", "TextShadow"],
-            // },
+            {
+                name: ["common", "centralStage", "style", "textShadow"],
+                type: "toogle",
+                label: trans("Text Shadow"),
+                value: ["common", "centralStage", "style", "TextShadow"],
+            },
             // {
             //     name: ["common", "centralStage", "style", "textShadow"],
             //     type: "TextShadow",
