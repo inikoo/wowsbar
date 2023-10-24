@@ -113,7 +113,7 @@ const optionType = [
                 label: trans('Link'),
                 value: 'null',
                 defaultValue : 'https://',
-                info : 'use https:// or http://',
+                // info : 'use https:// or http://',
                 rules:{
                     pattern : '^(http|https)://',
                     message : 'please input https:// or http://'
@@ -232,7 +232,7 @@ watch(props.section, (newValue) => {
                 </button>
 
                 <!-- Button: clear -->
-                <div @click="onClear" class="px-1.5 flex items-center gap-x-1 text-red-500 hover:text-red-600 cursor-pointer" >
+                <div v-if="get(activeType,'value')"  @click="onClear" class="px-1.5 flex items-center gap-x-1 text-red-500 hover:text-red-600 cursor-pointer" >
                     <FontAwesomeIcon icon='fal fa-times' class='text-sm' aria-hidden='true' />
                     <span>{{ trans('Clear') }}</span>
                 </div>

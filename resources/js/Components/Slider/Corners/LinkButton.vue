@@ -6,7 +6,7 @@
 
   <script setup lang="ts">
   import {trans} from "laravel-vue-i18n";
-  
+
   const props = defineProps<{
       data: {
           text?: string
@@ -14,12 +14,12 @@
       }
       swiperRef?: Element
   }>()
-  
+
   let url = props.data?.target ?? ''
-  
+
   url = url.replace(/^https?:\/\//g, '');
-  
-  
+
+
   </script>
 
 <template>
