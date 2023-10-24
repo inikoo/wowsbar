@@ -74,6 +74,14 @@ class ShowPortfolioSocialAccount extends InertiaAction
                                 'name'       => preg_replace('/show$/', 'edit', $request->route()->getName()),
                                 'parameters' => array_values($request->route()->originalParameters())
                             ]
+                        ] : [],
+                        $this->canDelete ? [
+                            'type'  => 'button',
+                            'style' => 'delete',
+                            'route' => [
+                                'name'       => preg_replace('/show$/', 'delete', $request->route()->getName()),
+                                'parameters' => array_values($request->route()->originalParameters())
+                            ]
                         ] : []
                     ]
                 ],

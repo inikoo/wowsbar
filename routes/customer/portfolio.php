@@ -6,6 +6,7 @@
  */
 
 
+use App\Actions\Portfolio\PortfolioSocialAccount\DeletePortfolioSocialAccount;
 use App\Actions\Portfolio\PortfolioSocialAccount\PortfolioSocialAccountAds\UI\CreatePortfolioSocialAccountAds;
 use App\Actions\Portfolio\PortfolioSocialAccount\PortfolioSocialAccountAds\UI\ShowPortfolioSocialAccountAds;
 use App\Actions\Portfolio\PortfolioSocialAccount\PortfolioSocialAccountPost\UI\CreatePortfolioSocialAccountPost;
@@ -48,6 +49,7 @@ Route::get('/social-accounts', IndexPortfolioSocialAccounts::class)->name('socia
 Route::get('/social-accounts/create', CreatePortfolioSocialAccount::class)->name('social-accounts.create');
 Route::get('/social-accounts/{portfolioSocialAccount}', ShowPortfolioSocialAccount::class)->name('social-accounts.show');
 Route::get('/social-accounts/{portfolioSocialAccount}/edit', EditPortfolioSocialAccount::class)->name('social-accounts.edit');
+Route::get('/social-accounts/{portfolioSocialAccount}/delete', DeletePortfolioSocialAccount::class)->name('social-accounts.delete');
 
 Route::get('/social-accounts/{portfolioSocialAccount}/post/create', CreatePortfolioSocialAccountPost::class)->name('social-accounts.post.create');
 Route::get('/social-accounts/{portfolioSocialAccount}/post/{post}', ShowPortfolioSocialAccountPost::class)->name('social-accounts.post.show');
