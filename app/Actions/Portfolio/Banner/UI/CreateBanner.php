@@ -66,7 +66,7 @@ class CreateBanner extends InertiaAction
             'title'  => '',
             'fields' => [
 
-                /*
+
                 'type' => [
                     'type'        => 'radio',
                     'label'       => __('orientation'),
@@ -75,7 +75,7 @@ class CreateBanner extends InertiaAction
                     'options'     => Options::forEnum(BannerTypeEnum::class)
 
                 ],
-                */
+
                 'name' => [
                     'type'        => 'input',
                     'label'       => __('name'),
