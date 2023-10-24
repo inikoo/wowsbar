@@ -35,17 +35,17 @@ class BannersResource extends JsonResource
 
 
         return [
-            'type'        => $banner->type,
-            'slug'        => $banner->slug,
-            'name'        => $banner->name,
-            'state'       => $banner->state,
-            'state_label' => $banner->state->labels()[$banner->state->value],
-            'state_icon'  => $banner->state->stateIcon()[$banner->state->value],
-            'date_icon'   => $banner->state->dateIcon()[$banner->state->value],
-            'image_thumbnail' => $imageThumbnail ? GetPictureSources::run($imageThumbnail) : null,
-            'image'           => $image ? GetPictureSources::run($image) : null,
-            'websites'        => json_decode($this->websites),
-            'date'            => $banner->date,
+            'type'               => $banner->type,
+            'slug'               => $banner->slug,
+            'name'               => $banner->name,
+            'state'              => $banner->state,
+            'state_label'        => $banner->state->labels()[$banner->state->value],
+            'state_icon'         => $banner->state->stateIcon()[$banner->state->value],
+            'date_icon'          => $banner->state->dateIcon()[$banner->state->value],
+            'image_thumbnail'    => $imageThumbnail ? GetPictureSources::run($imageThumbnail) : null,
+            'image'              => $image ? GetPictureSources::run($image) : null,
+            'websites'           => json_decode($this->websites),
+            'date'               => $banner->date,
             'delivery_url'       => config('app.delivery_url').'/banners/'.$banner->ulid,
 
 

@@ -42,4 +42,3 @@ class EmployesResource extends JsonResource
         ];
     }
 }
-
