@@ -33,36 +33,11 @@ library.add(faRectangleWide, faMoneyBill, faLayerGroup, faGlobe, faFacebook, faT
 const props = defineProps<{
     title: string,
     pageHead: object,
-    tabs: {
-        current: string;
-        navigation: object;
-    }
-    changelog?: object
-    account?: object
-    post?: object
-    ads?: object
 }>()
-
-let currentTab = ref(props.tabs.current);
-const handleTabUpdate = (tabSlug) => useTabChange(tabSlug, currentTab);
-
-const component = computed(() => {
-
-    const components = {
-        details: ModelDetails,
-        changelog: TableCustomerHistories,
-        post: TablePortfolioSocialAccountPosts,
-        ads: TablePortfolioSocialAccountAds
-    };
-    return components[currentTab.value];
-
-});
 
 </script>
 
 <template layout="CustomerApp">
     <Head :title="capitalize(title)"/>
     <PageHeading :data="pageHead"></PageHeading>
-    <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate"/>
-    <component :is="component" :tab="currentTab" :data="props[currentTab]"></component>
 </template>

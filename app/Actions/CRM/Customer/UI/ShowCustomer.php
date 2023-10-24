@@ -8,8 +8,8 @@
 namespace App\Actions\CRM\Customer\UI;
 
 use App\Actions\CRM\Appointment\UI\IndexAppointments;
-use App\Actions\Subscriptions\CustomerWebsite\UI\IndexCustomerWebsites;
 use App\Actions\Portfolio\PortfolioSocialAccount\UI\IndexPortfolioSocialAccounts;
+use App\Actions\Subscriptions\CustomerWebsite\UI\IndexCustomerWebsites;
 use App\Actions\InertiaAction;
 use App\Actions\Organisation\UI\CRM\ShowCRMDashboard;
 use App\Enums\UI\Customer\CustomerTabsEnum;
@@ -188,7 +188,7 @@ class ShowCustomer extends InertiaAction
                 //         ]
                 //     ]
                 // ]
-            ));
+            ))->table(IndexPortfolioSocialAccounts::make()->tableStructure(prefix: CustomerTabsEnum::SOCIAL_ACCOUNT->value));
     }
 
     public function jsonResponse(Customer $customer): CustomerResource

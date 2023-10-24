@@ -15,8 +15,10 @@ enum PortfolioSocialAccountTabsEnum: string
     use EnumHelperTrait;
     use HasTabs;
 
-    case ACCOUNT              = 'account';
-    case CHANGELOG            = 'changelog';
+    case ACCOUNT   = 'account';
+    case POST      = 'post';
+    case ADS       = 'ads';
+    case CHANGELOG = 'changelog';
 
     public function blueprint(): array
     {
@@ -24,6 +26,14 @@ enum PortfolioSocialAccountTabsEnum: string
             PortfolioSocialAccountTabsEnum::ACCOUNT => [
                 'title' => __('account'),
                 'icon'  => 'fas fa-info-circle',
+            ],
+            PortfolioSocialAccountTabsEnum::POST => [
+                'title' => __('posts'),
+                'icon'  => 'fal fa-layer-group',
+            ],
+            PortfolioSocialAccountTabsEnum::ADS => [
+                'title' => __('ads'),
+                'icon'  => 'fal fa-money-bill',
             ],
 
             PortfolioSocialAccountTabsEnum::CHANGELOG => [

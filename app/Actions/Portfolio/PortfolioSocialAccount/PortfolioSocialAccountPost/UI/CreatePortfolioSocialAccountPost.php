@@ -5,17 +5,17 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Portfolio\PortfolioSocialAccount\UI;
+namespace App\Actions\Portfolio\PortfolioSocialAccount\PortfolioSocialAccountPost\UI;
 
 use App\Actions\InertiaAction;
+use App\Actions\Portfolio\PortfolioSocialAccount\UI\IndexPortfolioSocialAccounts;
 use App\Actions\Traits\Fields\WithPortfolioWebsiteFields;
-use App\Enums\Portfolio\PortfolioSocialAccount\PortfolioSocialAccountPlatformEnum;
+use App\Enums\Portfolio\PortfolioSocialAccount\PortfolioSocialAccountPostTypeEnum;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
-use Spatie\LaravelOptions\Options;
 
-class CreatePortfolioSocialAccount extends InertiaAction
+class CreatePortfolioSocialAccountPost extends InertiaAction
 {
     use WithPortfolioWebsiteFields;
 
@@ -41,17 +41,17 @@ class CreatePortfolioSocialAccount extends InertiaAction
             'CreateModel',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(),
-                'title'       => __('new social account'),
+                'title'       => __('new post'),
                 'pageHead'    => [
-                    'title'   => __('social account'),
+                    'title'   => __('post'),
                     'actions' => [
                         [
                             'type'  => 'button',
                             'style' => 'cancel',
                             'label' => __('cancel'),
                             'route' => [
-                                'name'       => preg_replace('/create$/', 'index', $request->route()->getName()),
-                                'parameters' => array_values($request->route()->originalParameters())
+                                'name'       => 'customer.portfolio.social-accounts.show',
+                                'parameters' => array_merge($request->route()->originalParameters(), ['tab' => PortfolioSocialAccountPostTypeEnum::POST->value])
                             ],
                         ]
                     ]
@@ -61,25 +61,29 @@ class CreatePortfolioSocialAccount extends InertiaAction
                 'formData' => [
                     'blueprint' => [
                         [
-                            'title'  => __('Account'),
+                            'title'  => __('Post'),
                             'fields' => [
-                                'platform' => [
-                                    'type'          => 'select',
-                                    'label'         => __('platform'),
-                                    'placeholder'   => __('Select social platform'),
-                                    'options'       => Options::forEnum(PortfolioSocialAccountPlatformEnum::class)->toArray(),
-                                    'required'      => true,
-                                    'mode'          => 'single'
-                                ],
-                                'username' => [
+                                'task_name' => [
                                     'type'     => 'input',
-                                    'label'    => __('username'),
+                                    'label'    => __('task name'),
                                     'required' => true,
                                     'value'    => '',
                                 ],
-                                'url' => [
-                                    'type'     => 'input',
-                                    'label'    => __('profile url'),
+                                'start_at' => [
+                                    'type'     => 'date',
+                                    'label'    => __('upload at'),
+                                    'required' => true,
+                                    'value'    => '',
+                                ],
+                                'description' => [
+                                    'type'     => 'textarea',
+                                    'label'    => __('description'),
+                                    'required' => true,
+                                    'value'    => '',
+                                ],
+                                'notes' => [
+                                    'type'     => 'textarea',
+                                    'label'    => __('notes'),
                                     'required' => true,
                                     'value'    => '',
                                 ],
@@ -88,7 +92,8 @@ class CreatePortfolioSocialAccount extends InertiaAction
 
                     ],
                     'route' => [
-                        'name' => 'customer.models.portfolio-social-account.store',
+                        'name'       => 'customer.models.portfolio-social-account.post.store',
+                        'parameters' => $this->originalParameters
                     ],
                 ],
             ]
@@ -107,7 +112,7 @@ class CreatePortfolioSocialAccount extends InertiaAction
                 [
                     'type'          => 'creatingModel',
                     'creatingModel' => [
-                        'label' => __("creating social account"),
+                        'label' => __("creating post"),
                     ]
                 ]
             ]

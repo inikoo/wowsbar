@@ -9,10 +9,13 @@ namespace App\Actions\Portfolio\PortfolioSocialAccount\UI;
 
 use App\Actions\Helpers\History\IndexCustomerHistory;
 use App\Actions\InertiaAction;
+use App\Actions\Portfolio\PortfolioSocialAccount\PortfolioSocialAccountAds\UI\IndexPortfolioSocialAccountAds;
+use App\Actions\Portfolio\PortfolioSocialAccount\PortfolioSocialAccountPost\UI\IndexPortfolioSocialAccountPosts;
 use App\Actions\UI\Customer\Portfolio\ShowPortfolio;
 use App\Actions\UI\WithInertia;
 use App\Enums\UI\Customer\PortfolioSocialAccountTabsEnum;
 use App\Http\Resources\History\CustomerHistoryResource;
+use App\Http\Resources\Portfolio\PortfolioSocialAccountPostsResource;
 use App\Http\Resources\Portfolio\PortfolioSocialAccountResource;
 use App\Models\Portfolio\PortfolioSocialAccount;
 use Inertia\Inertia;
@@ -43,7 +46,7 @@ class ShowPortfolioSocialAccount extends InertiaAction
 
     public function htmlResponse(PortfolioSocialAccount $portfolioSocialAccount, ActionRequest $request): Response
     {
-        $customer=$request->get('customer');
+        $customer = $request->get('customer');
         return Inertia::render(
             'Portfolio/PortfolioSocialAccount',
             [
@@ -52,15 +55,15 @@ class ShowPortfolioSocialAccount extends InertiaAction
                     $request->route()->getName(),
                     $request->route()->originalParameters()
                 ),
-                'navigation'  => [
+                'navigation' => [
                     'previous' => $this->getPrevious($portfolioSocialAccount, $request),
                     'next'     => $this->getNext($portfolioSocialAccount, $request),
                 ],
-                'pageHead'    => [
-                    'title'   => $portfolioSocialAccount->username,
-                    'icon'    => [
+                'pageHead' => [
+                    'title' => $portfolioSocialAccount->username,
+                    'icon'  => [
                         'title' => __('portfolio social account'),
-                        'icon'  => 'fal fa-thumbs-up'
+                        'icon'  => $portfolioSocialAccount->platform->platformIcon()[$portfolioSocialAccount->platform->value]['icon']
                     ],
                     'actions' => [
                         $this->canEdit ? [
@@ -71,27 +74,65 @@ class ShowPortfolioSocialAccount extends InertiaAction
                                 'name'       => preg_replace('/show$/', 'edit', $request->route()->getName()),
                                 'parameters' => array_values($request->route()->originalParameters())
                             ]
+                        ] : [],
+                        $this->canDelete ? [
+                            'type'  => 'button',
+                            'style' => 'delete',
+                            'route' => [
+                                'name'       => preg_replace('/show$/', 'delete', $request->route()->getName()),
+                                'parameters' => array_values($request->route()->originalParameters())
+                            ]
                         ] : []
                     ]
                 ],
-                'tabs'        => [
+                'tabs' => [
                     'current'    => $this->tab,
                     'navigation' => PortfolioSocialAccountTabsEnum::navigation()
                 ],
 
+                PortfolioSocialAccountTabsEnum::POST->value => $this->tab == PortfolioSocialAccountTabsEnum::POST->value ?
+                    fn () => PortfolioSocialAccountPostsResource::collection(IndexPortfolioSocialAccountPosts::run($portfolioSocialAccount, tab: $this->tab))
+                    : Inertia::lazy(fn () => PortfolioSocialAccountPostsResource::collection(IndexPortfolioSocialAccountPosts::run($portfolioSocialAccount, tab: $this->tab))),
+
+                PortfolioSocialAccountTabsEnum::ADS->value => $this->tab == PortfolioSocialAccountTabsEnum::ADS->value ?
+                    fn () => PortfolioSocialAccountPostsResource::collection(IndexPortfolioSocialAccountPosts::run($portfolioSocialAccount, tab: $this->tab))
+                    : Inertia::lazy(fn () => PortfolioSocialAccountPostsResource::collection(IndexPortfolioSocialAccountPosts::run($portfolioSocialAccount, tab: $this->tab))),
+
                 PortfolioSocialAccountTabsEnum::CHANGELOG->value => $this->tab == PortfolioSocialAccountTabsEnum::CHANGELOG->value ?
                     fn () => CustomerHistoryResource::collection(IndexCustomerHistory::run(
-                        customer:$customer,
-                        model:$portfolioSocialAccount,
-                        prefix:PortfolioSocialAccountTabsEnum::CHANGELOG->value
+                        customer: $customer,
+                        model: $portfolioSocialAccount,
+                        prefix: PortfolioSocialAccountTabsEnum::CHANGELOG->value
                     ))
                     : Inertia::lazy(fn () => CustomerHistoryResource::collection(IndexCustomerHistory::run(
-                        customer:$customer,
-                        model:$portfolioSocialAccount,
-                        prefix:PortfolioSocialAccountTabsEnum::CHANGELOG->value
+                        customer: $customer,
+                        model: $portfolioSocialAccount,
+                        prefix: PortfolioSocialAccountTabsEnum::CHANGELOG->value
                     ))),
             ]
         )
+            ->table(IndexPortfolioSocialAccountPosts::make()->tableStructure(modelOperations: [
+                'createLink' => [
+                    [
+                        'route' => [
+                            'name'       => 'customer.portfolio.social-accounts.post.create',
+                            'parameters' => array_values($this->originalParameters)
+                        ],
+                        'label' => __('post')
+                    ]
+                ],
+            ], prefix: 'post'))
+            ->table(IndexPortfolioSocialAccountAds::make()->tableStructure(modelOperations: [
+                'createLink' => [
+                    [
+                        'route' => [
+                            'name'       => 'customer.portfolio.social-accounts.ads.create',
+                            'parameters' => array_values($this->originalParameters)
+                        ],
+                        'label' => __('ads')
+                    ]
+                ],
+            ], prefix: 'ads'))
             ->table(IndexCustomerHistory::make()->tableStructure(prefix: PortfolioSocialAccountTabsEnum::CHANGELOG->value));
     }
 
@@ -117,11 +158,11 @@ class ShowPortfolioSocialAccount extends InertiaAction
                         ],
 
                     ],
-                    'simple'         => [
+                    'simple' => [
                         'route' => $routeParameters['model'],
                         'label' => $portfolioSocialAccount->username
                     ],
-                    'suffix'         => $suffix
+                    'suffix' => $suffix
                 ],
             ];
         };
@@ -165,6 +206,7 @@ class ShowPortfolioSocialAccount extends InertiaAction
 
         return $this->getNavigation($next, $request->route()->getName());
     }
+
     private function getNavigation(?PortfolioSocialAccount $portfolioSocialAccount, string $routeName): ?array
     {
         if (!$portfolioSocialAccount) {

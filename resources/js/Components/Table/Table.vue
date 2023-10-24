@@ -284,11 +284,11 @@ function resetQuery() {
         queryBuilderData.value.elements[key].value = null;
     });
 
-    forEach(queryBuilderData.value.columns, (column, key) => {
-        queryBuilderData.value.columns[key].hidden = column.can_be_hidden
-            ? !queryBuilderProps.value.defaultVisibleToggleableColumns.includes(column.key)
-            : false;
-    });
+    // forEach(queryBuilderData.value.columns, (column, key) => {
+    //     queryBuilderData.value.columns[key].hidden = column.can_be_hidden
+    //         ? !queryBuilderProps.value.defaultVisibleToggleableColumns.includes(column.key)
+    //         : false;
+    // });
 
     queryBuilderData.value.sort = null;
     queryBuilderData.value.cursor = null;
@@ -637,7 +637,7 @@ watch(name, () => {
                                     :filters="queryBuilderProps.filters" :on-filter-change="changeFilterValue" />
                             </slot>
                         </div> -->
-                        
+
                         <!-- Element Filter -->
                         <div class="" @checkboxChanged="handleElementsChange">
                             <TableElements v-if="queryBuilderProps.elementGroups" :elements="queryBuilderProps.elementGroups" @checkboxChanged="handleElementsChange" :title="queryBuilderData.title" :name="props.name"/>
