@@ -59,3 +59,12 @@ jobs:
           guid: ${{ secrets.NEW_RELIC_DEPLOYMENT_ENTITY_GUID }}
           version: ${{ steps.semver.outputs.next }}
           user: "${{ github.actor }}"
+      - name: Create Sentry release
+        uses: getsentry/action-release@v1
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
+        with:
+          environment: production
+          projects: ${{ secrets.SENTRY_PROJECTS }}
+          version: ${{ steps.semver.outputs.next }}
