@@ -138,7 +138,6 @@ const backgroundColorList = useBannerBackgroundColor() // Fetch color list from 
 
 <template>
     <div class="block w-full">
-    <pre>{{ props.data.image }}</pre>
         <!-- Popup: add image from Gallery -->
         <Modal :show="isOpen" @onClose="closeModal">
             <div>
