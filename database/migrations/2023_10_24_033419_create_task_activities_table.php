@@ -18,7 +18,6 @@ return new class extends Migration
     {
         Schema::create('task_activities', function (Blueprint $table) {
             $table->increments('id');
-            $table->morphs('authorable');
             $table->unsignedBigInteger('author_id')->nullable()->comment('Employee|Guest');
             $table->string('author_type')->nullable();
             $table->unsignedBigInteger('activity_id')->nullable()->comment('can be social post id');
