@@ -12,6 +12,7 @@ import LinkButton from "@/Components/Slider/Corners/LinkButton.vue";
 import CornerText from "@/Components/Slider/Corners/CornerText.vue";
 import CornerFooter from "@/Components/Slider/Corners/CornerFooter.vue";
 import Ribbon from "@/Components/Slider/Corners/Ribbon.vue";
+import { get } from 'lodash'
 
 const props = defineProps<{
     position: string,
@@ -79,7 +80,7 @@ const getComponent = (componentName: any) => {
 </script>
 
 <template>
-    <div :class="positionClasses" class="absolute">
+    <div :class="positionClasses" class="absolute" :style="`width : ${get(corner,['data','width'])}%`">
         <!-- {{ positionClasses }} -->
         <component :is="getComponent(corner.type)" :data="corner.data" :swiperRef="swiperRef" :position="position" />
     </div>

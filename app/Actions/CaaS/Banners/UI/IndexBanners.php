@@ -13,7 +13,6 @@ use App\Actions\UI\Organisation\Catalogue\ShowCaaSDashboard;
 use App\Enums\UI\Organisation\BannersTabsEnum;
 use App\Http\Resources\History\HistoryResource;
 use App\Http\Resources\Portfolio\BannersResource;
-use App\Http\Resources\Prospects\CustomerWebsiteResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\CRM\Customer;
 use App\Models\Organisation\Organisation;

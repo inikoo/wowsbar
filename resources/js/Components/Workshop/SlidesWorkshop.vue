@@ -6,6 +6,7 @@
 
 <script setup lang="ts">
 import { ref, watch, } from "vue"
+import { useBannerBackgroundColor } from "@/Composables/useColorList"
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import {
     faTrashAlt,
@@ -84,7 +85,7 @@ const props = defineProps<{
         arguments: string[]
     };
     user: string
-    screenView: String
+    screenView: string
 }>();
 
 const emits = defineEmits<{
@@ -184,8 +185,7 @@ const changeVisibility = (slide: any) => {
     const index = props.data.components.findIndex((item) => item.ulid === slide.ulid);
     if (index !== -1) {
         props.data.components[index].hasOwnProperty("visibility")
-            ? (props.data.components[index].visibility = !props.data.components[index]
-                .visibility)
+            ? (props.data.components[index].visibility = !props.data.components[index].visibility)
             : (props.data.components[index].visibility = false);
     }
 };
@@ -207,7 +207,11 @@ const ComponentsBlueprint = ref([
                 type: "text",
                 label: trans("Link"),
                 value: ["layout", "link"],
-                prefix: "https://",
+                // defaultValue : 'https://',
+                rules:{
+                    pattern : '^(http|https)://',
+                    message : 'please input https:// or http://'
+                }
             },
         ],
     },
@@ -330,12 +334,12 @@ const ComponentsBlueprint = ref([
                 icon: 'far fa-text',
                 value: ["layout", "centralStage", "style", "color"],
             },
-            {
-                name: ["layout", "centralStage", "style", "textShadow"],
-                type: "toogle",
-                label: trans("Text Shadow"),
-                value: ["layout", "centralStage", "style", "TextShadow"],
-            },
+            // {
+            //     name: ["layout", "centralStage", "style", "textShadow"],
+            //     type: "toogle",
+            //     label: trans("Text Shadow"),
+            //     value: ["layout", "centralStage", "style", "TextShadow"],
+            // },
         ],
     },
     // {
@@ -478,12 +482,12 @@ const CommonBlueprint = ref([
                 label: trans("color"),
                 value: ["common", "centralStage", "style", "color"],
             },
-            {
-                name: ["layout", "centralStage", "style", "textShadow"],
-                type: "toogle",
-                label: trans("Text Shadow"),
-                value: ["layout", "centralStage", "style", "TextShadow"],
-            },
+            // {
+            //     name: ["layout", "centralStage", "style", "textShadow"],
+            //     type: "toogle",
+            //     label: trans("Text Shadow"),
+            //     value: ["layout", "centralStage", "style", "TextShadow"],
+            // },
             // {
             //     name: ["common", "centralStage", "style", "textShadow"],
             //     type: "TextShadow",
@@ -527,7 +531,10 @@ const uploadImageRespone = (res) => {
                 imageAlt: set.name,
             },
             image: {
-                desktop : set
+                desktop: set,
+            },
+            backgroundType: {
+                desktop: 'image'
             },
             visibility: true,
         });
@@ -540,25 +547,40 @@ const uploadImageRespone = (res) => {
     currentComponentBeenEdited.value = props.data.components[ props.data.components.length - 1 ]
 };
 
-const addSlide=()=>{
-    let setData = [];
-        setData.push({
-            id:  null,
-            ulid: ulid(),
-            layout: {
-                imageAlt: 'New slide',
-            },
-            image: null,
-            background : '#b45309',
-            visibility: true,
-        });
+// Onclick button 'Add Slide'
+const addNewSlide = () => {
+    let setData = []
+    setData.push({
+        id:  null,
+        ulid: ulid(),
+        layout: {
+            imageAlt: 'New slide',
+        },
+        image: {
+            desktop: {},
+            tablet: {},
+            mobile: {},
+        },
+        background: {
+            desktop: backgroundColorList[Math.floor(Math.random() * backgroundColorList.length)], // To random the background color on new slide
+            tablet: backgroundColorList[Math.floor(Math.random() * backgroundColorList.length)],
+            mobile: backgroundColorList[Math.floor(Math.random() * backgroundColorList.length)],
+        },
+        backgroundType: {
+            desktop: 'color'
+        },
+        visibility: true,
+    });
     const newFiles = [...setData];
     props.data.components = [...props.data.components, ...newFiles];
 }
 
+const backgroundColorList = useBannerBackgroundColor() // Fetch color list from Composables
+
 </script>
 
 <template>
+    <!-- <pre>{{ data.components }}</pre> -->
     <div class="flex flex-grow gap-2.5">
         <div class="p-2.5 border rounded h-fit shadow w-1/4"
             v-if="data.components" @dragover="dragover" @dragleave="dragleave" @drop="drop">
@@ -584,11 +606,11 @@ const addSlide=()=>{
                 :onChange="(e: any) => emits('jumpToIndex', e.moved.newIndex)">
                 <template #item="{ element: slide }">
                     <div @mousedown="
-                        selectComponentForEdition(slide),
-                        emits(
-                            'jumpToIndex',
-                            data.components.findIndex(obj => obj.ulid === slide.ulid)
-                        )"
+                            selectComponentForEdition(slide),
+                            emits(
+                                'jumpToIndex',
+                                data.components.findIndex(obj => obj.ulid === slide.ulid)
+                            )"
                         v-if="slide.ulid" :class="[
                             'grid grid-flow-col relative sm:py-1 mb-2 items-center justify-between ring-1 ring-gray-300',
                             slide.ulid == get(currentComponentBeenEdited, 'ulid')
@@ -604,18 +626,20 @@ const addSlide=()=>{
                             <!-- Icon: Bars, class 'handle' to grabable -->
                             <FontAwesomeIcon icon="fal fa-bars"
                                 class="handle p-1 text-xs sm:text-base sm:p-2.5 text-gray-700 cursor-grab place-self-center" />
-
-                            <!-- Image slide -->
-                            <div v-if="slide.image">
-                                <Image :src="get(slide, ['image', `${screenView}`, 'thumbnail'], slide.image?.desktop?.thumbnail)" class="h-full w-10 sm:w-10 flex items-center justify-center py-1"/>
+                            
+                            <!-- Image slide: if Image is selected in SlideBackground -->
+                            <div v-if="get(slide, ['backgroundType', screenView ? screenView : 'desktop'], 'image') === 'image'">
+                                <Image :src="get(slide, ['image', screenView ? screenView : 'desktop', 'thumbnail'], null)" class="h-full w-10 sm:w-10 flex items-center justify-center py-1"/>
                             </div>
+                            
                             <div v-else>
-                                <div :style="{ background :get(slide,'background','red')}" class="h-full w-10 sm:w-10 flex items-center justify-center py-1"/>
+                                <!-- If the slide is color -->
+                                <!-- {{ slide.backgroundType.desktop }} -->
+                                <div :style="{ background: get(slide, ['background', screenView ? screenView : 'desktop'], 'gray')}" class="h-full w-10 sm:w-10 flex items-center justify-center py-1"/>
                             </div>
 
                             <!-- Label slide -->
-                            <div
-                                class="hidden lg:inline-flex overflow-hidden whitespace-nowrap overflow-ellipsis pl-2 leading-tight flex-auto items-center">
+                            <div class="hidden lg:inline-flex overflow-hidden whitespace-nowrap overflow-ellipsis pl-2 leading-tight flex-auto items-center">
                                 <div class="overflow-hidden whitespace-nowrap overflow-ellipsis lg:text-xs xl:text-sm">
                                     {{ slide?.layout?.imageAlt ?? "Image " + slide.id }}
                                 </div>
@@ -624,7 +648,7 @@ const addSlide=()=>{
 
                         <!-- Button: Show/hide, delete slide -->
                         <div class="flex justify-center items-center pr-2 justify-self-end"  v-if="slide.user == props.user || !slide.user">
-                            <button  class="px-2 py-1 bg-grays-500 text-red-500/60 hover:text-red-500" type="button" v-if="!slide.visibility"
+                            <button class="px-2 py-1 bg-grays-500 text-red-500/60 hover:text-red-500" type="button" v-if="!slide.visibility"
                                 @click="(e)=>{ e.stopPropagation()
                                     removeComponent(slide)}"
                                 title="Delete the slide">
@@ -661,7 +685,7 @@ const addSlide=()=>{
                         accept="image/*" class="absolute cursor-pointer rounded-md border-gray-300 sr-only" />
                 </Button> -->
 
-                 <Button :style="`secondary`" size="xs" @click="addSlide" class="relative w-full flex justify-center lg:w-fit lg:inline space-x-2">
+                 <Button :style="`secondary`" size="xs" @click="addNewSlide" class="relative w-full flex justify-center lg:w-fit lg:inline space-x-2">
                     <FontAwesomeIcon icon='fas fa-plus' class='' aria-hidden='true' />
                     <span>{{ trans("Add slide") }}</span>
                 </Button>
