@@ -23,13 +23,13 @@ class SetUserCustomerMiddleware
 
 
 
-            if( session('customer_id') and  session('customer_user_id')){
+            if(session('customer_id') and  session('customer_user_id')) {
                 Config::set('global.customer_id', session('customer_id'));
                 Config::set('global.customer_user_id', session('customer_user_id'));
-            }else{
-                if($request->cookie('customerUser')){
+            } else {
+                if($request->cookie('customerUser')) {
                     $customerUser=CustomerUser::find($request->cookie('customerUser'));
-                }else {
+                } else {
                     $customerUser = $request->user()->customerUsers()->where('status', true)->first();
                     Cookie::queue('customerUser', $customerUser->id, 60 * 24 * 365);
 

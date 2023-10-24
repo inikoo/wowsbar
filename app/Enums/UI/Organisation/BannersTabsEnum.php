@@ -15,7 +15,7 @@ enum BannersTabsEnum: string
     use EnumHelperTrait;
     use HasTabs;
 
-    case BANNERS             = 'banners';
+    case BANNERS              = 'banners';
     case CHANGELOG            = 'changelog';
 
     public function blueprint(): array
