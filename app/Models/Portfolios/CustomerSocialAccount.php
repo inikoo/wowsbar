@@ -2,6 +2,7 @@
 
 namespace App\Models\Portfolios;
 
+use App\Enums\Portfolio\PortfolioSocialAccount\PortfolioSocialAccountPlatformEnum;
 use App\Models\CRM\Customer;
 use App\Models\Market\Shop;
 use App\Models\Traits\IsSocialAccount;
@@ -16,7 +17,7 @@ use OwenIt\Auditing\Contracts\Auditable;
  * @property string|null $slug
  * @property string $username
  * @property string|null $url
- * @property string $platform
+ * @property PortfolioSocialAccountPlatformEnum $platform
  * @property int $number_followers
  * @property int $number_posts
  * @property int $customer_id
@@ -53,6 +54,7 @@ class CustomerSocialAccount extends Model implements Auditable
 
     protected $casts = [
         'data'        => 'array',
+        'platform' => PortfolioSocialAccountPlatformEnum::class
     ];
 
     protected $attributes = [

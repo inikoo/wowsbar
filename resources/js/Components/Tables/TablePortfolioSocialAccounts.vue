@@ -33,6 +33,10 @@ function accountRoute(account) {
             return route(
                 'customer.portfolio.social-accounts.show',
                 [account.slug]);
+        case 'org.crm.shop.customers.show':
+            return route(
+                'org.crm.shop.customers.show.customer-social-accounts.show',
+                [route().params.shop, route().params.customer, account.slug]);
     }
 }
 

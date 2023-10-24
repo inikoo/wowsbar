@@ -20,6 +20,7 @@ use App\Actions\CRM\User\UI\EditOrgCustomerUser;
 use App\Actions\CRM\User\UI\IndexOrgCustomerUsers;
 use App\Actions\CRM\User\UI\ShowOrgCustomerUser;
 use App\Actions\Leads\Prospect\UI\CreateProspect;
+use App\Actions\Subscriptions\CustomerSocialAccount\UI\ShowCustomerSocialAccount;
 use App\Actions\Subscriptions\CustomerWebsite\UI\CreateCustomerWebsite;
 use App\Actions\Subscriptions\CustomerWebsite\UI\EditCustomerWebsite;
 use App\Actions\Subscriptions\CustomerWebsite\UI\IndexCustomerWebsites;
@@ -65,6 +66,8 @@ Route::prefix('shop/{shop}')->as('shop.')->group(function () {
     Route::prefix('customers/{customer}')->as('customers.')->group(function () {
         Route::get('', [ShowCustomer::class, 'inShop'])->name('show');
         Route::get('/edit', [EditCustomer::class, 'inShop'])->name('edit');
+
+        Route::get('/social-accounts/{customerSocialAccount}', [ShowCustomerSocialAccount::class, 'inCustomer'])->name('show.customer-social-accounts.show');
 
         Route::get('/users', [IndexOrgCustomerUsers::class, 'inCustomerInShop'])->name('show.customer-users.index');
         Route::get('/users/create', [CreateOrgCustomerUser::class, 'inCustomerInShop'])->name('show.customer-users.create');
