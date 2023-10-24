@@ -9,11 +9,14 @@ namespace App\Actions\Web\Webpage;
 
 use App\Http\Resources\Gallery\ImageResource;
 use App\Models\Web\Webpage;
+use Exception;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Collection;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
+
+use function Sentry\captureException;
 
 class UploadImagesToWebpage
 {
@@ -57,7 +60,11 @@ class UploadImagesToWebpage
 
     public function asController(Webpage $webpage, ActionRequest $request): Collection
     {
-        $request->validate();
+        try {
+            $request->validate();
+        } catch (Exception $e) {
+            captureException($e);
+        }
         return $this->handle($webpage, 'header', $request->validated('images'));
     }
 

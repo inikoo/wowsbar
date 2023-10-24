@@ -10,11 +10,14 @@ namespace App\Actions\Portfolio\Gallery;
 use App\Actions\CRM\Customer\AttachImageToCustomer;
 use App\Http\Resources\Gallery\ImageResource;
 use App\Models\Portfolio\PortfolioWebsite;
+use Exception;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Collection;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
+
+use function Sentry\captureException;
 
 class UploadImagesToGallery
 {
@@ -57,7 +60,11 @@ class UploadImagesToGallery
 
     public function asController(ActionRequest $request): Collection
     {
-        $request->validate();
+        try {
+            $request->validate();
+        } catch (Exception $e) {
+            captureException($e);
+        }
         return $this->handle($request->validated('images'));
     }
 

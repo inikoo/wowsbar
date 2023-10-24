@@ -12,11 +12,14 @@ use App\Enums\Portfolio\Banner\BannerStateEnum;
 use App\Http\Resources\Gallery\ImageResource;
 use App\Models\Portfolio\Banner;
 use App\Models\Portfolio\PortfolioWebsite;
+use Exception;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Collection;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
+
+use function Sentry\captureException;
 
 class UploadImagesToBanner
 {
@@ -81,10 +84,15 @@ class UploadImagesToBanner
 
     public function asController(Banner $banner, ActionRequest $request): Collection
     {
-        $request->validate();
-
+        try {
+            $request->validate();
+        } catch (Exception $e) {
+            captureException($e);
+        }
         return $this->handle($banner, $request->validated('images'));
     }
+
+
 
     public function jsonResponse($medias): AnonymousResourceCollection
     {

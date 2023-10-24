@@ -20,6 +20,7 @@
         "google/apiclient": "^2.15",
         "hisorange/browser-detect": "^4.5",
         "inertiajs/inertia-laravel": "^0.6.8",
+        "jackwh/laravel-new-relic": "^1.0",
         "kreait/laravel-firebase": "^5.2",
         "laravel/framework": "^10.10",
         "laravel/horizon": "^5.17",
