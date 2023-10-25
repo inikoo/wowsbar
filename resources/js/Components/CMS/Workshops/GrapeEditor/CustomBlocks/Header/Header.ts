@@ -3,7 +3,7 @@ export const headerBlock1 = () => {
         disable: false,
         activate: false,
         category: "Header",
-        label: `<svg fill="none" viewBox="0 0 266 150" width="100%" height="100%"><path fill="#FFFFFF" d="M0 0h266v150H0z"></path><path stroke="#E2E8F0" d="M266 38.5H0" fill="none"></path><rect x="217" y="14" width="29" height="10" rx="2" fill="#CBD5E0"></rect><circle cx="29" cy="19" r="9" fill="#6366F1"></circle><rect x="150.132" y="17" width="16.604" height="4" rx="2" fill="#4A5568"></rect><rect x="171.264" y="17" width="16.604" height="4" rx="2" fill="#4A5568"></rect><rect x="192.396" y="17" width="16.604" height="4" rx="2" fill="#4A5568"></rect><rect x="129" y="17" width="16.604" height="4" rx="2" fill="#4A5568"></rect></svg>`,
+        label: `Header One`,
         id: "header-block-1",
         content: `
         <style>
@@ -13,7 +13,7 @@ export const headerBlock1 = () => {
                 }
             }
         </style>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light" data-gjs-droppable="false">
         <div class="container-fluid">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -35,8 +35,7 @@ export const headerBlock1 = () => {
                     </li>
                 </ul>
                 <div class="d-flex align-items-center">
-                    <a href="/login" data-wowsbar-element="login" class="btn btn-primary" style="margin: 0px 5px">Log
-                        in</a>
+                    <a href="/login" data-wowsbar-element="login" class="btn btn-primary" data-gjs-removable="false" style="margin: 0px 5px">Log in</a>
                 </div>
             </div>
         </div>
@@ -45,19 +44,18 @@ export const headerBlock1 = () => {
     };
 };
 
-export const headerBlock3 = () => {
+export const headerBlock2 = () => {
     return {
         disable: false,
         activate: false,
         category: "Header",
-        label: `<svg fill="none" viewBox="0 0 266 150" width="100%" height="100%"><path fill="#FFFFFF" d="M0 0h266v150H0z"></path><path stroke="#E2E8F0" d="M266 38.5H0" fill="none"></path><rect x="217" y="14" width="29" height="10" rx="2" fill="#CBD5E0"></rect><circle cx="133" cy="19" r="9" fill="#6366F1"></circle><rect x="62.264" y="17" width="16.604" height="4" rx="2" fill="#4A5568"></rect><rect x="41.132" y="17" width="16.604" height="4" rx="2" fill="#4A5568"></rect><rect x="83.396" y="17" width="16.604" height="4" rx="2" fill="#4A5568"></rect><rect x="20" y="17" width="16.604" height="4" rx="2" fill="#4A5568"></rect></svg>`,
-        id: "header-block-3",
+        label: `Header Two`,
+        id: "header-block-2",
         content: `
-        <nav class="navbar navbar-expand-lg fixed-top bg-light navbar-light">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+        <nav class="navbar navbar-expand-lg fixed-top bg-light navbar-light" data-gjs-droppable="false">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
         <div class="container d-flex justify-content-center collapse navbar-collapse">
             <div class="row">
                 <div class="col-12 d-flex justify-content-center mb-3">
@@ -75,7 +73,7 @@ export const headerBlock3 = () => {
                                 <a class="nav-link mx-2" href="#!"><i class="fas fa-bell pe-2"></i>Alerts</a>
                             </li>
                             <li class="nav-item">
-                            <a class="nav-link mx-2" href="/login" data-wowsbar-element="login"><i class="fas fa-bell pe-2"></i>Log In</a>
+                            <a class="nav-link mx-2" href="/login" data-wowsbar-element="login" data-gjs-removable="false"><i class="fas fa-bell pe-2"></i>Log In</a>
                             </li>
                         </ul>
                     </div>
@@ -88,15 +86,15 @@ export const headerBlock3 = () => {
     };
 };
 
-export const headerBlock4 = () => {
+export const headerBlock3 = () => {
     return {
         disable: false,
         activate: false,
         category: "Header",
-        label: `<svg fill="none" viewBox="0 0 266 150" width="100%" height="100%"><path fill="#FFFFFF" d="M0 0h266v150H0z"></path><path stroke="#E2E8F0" d="M266 38.5H0" fill="none"></path><rect x="217" y="14" width="29" height="10" rx="2" fill="#CBD5E0"></rect><circle cx="29" cy="19" r="9" fill="#6366F1"></circle><rect x="129.264" y="17" width="16.604" height="4" rx="2" fill="#4A5568"></rect><rect x="108.132" y="17" width="16.604" height="4" rx="2" fill="#4A5568"></rect><rect x="150.396" y="17" width="16.604" height="4" rx="2" fill="#4A5568"></rect><rect x="87" y="17" width="16.604" height="4" rx="2" fill="#4A5568"></rect></svg>`,
-        id: "header-block-4",
+        label: `Header three`,
+        id: "header-block-3",
         content: `
-        <Header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 border-bottom" style='padding:0px 10px'>
+        <Header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 border-bottom" style='padding:0px 10px' data-gjs-droppable="false">
           <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
           <img src="https://dummyimage.com/45x30" alt="Description of the image">
           </a>
@@ -110,7 +108,7 @@ export const headerBlock4 = () => {
           </ul>
     
           <div class="col-md-3 text-end">
-          <a href="/login" data-wowsbar-element="login" class="btn btn-primary" style='margin:0px 5px'>Log in</a>
+          <a href="/login" data-wowsbar-element="login" class="btn btn-primary" style='margin:0px 5px' data-gjs-removable="false">Log in</a>
           </div>
         </Header>
 `,
