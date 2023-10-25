@@ -216,7 +216,7 @@ class IndexProspects extends InertiaAction
             'org.crm.shop.prospects.index' =>
             array_merge(
                 (new ShowCRMDashboard())->getBreadcrumbs(
-                    'crm.shop.dashboard',
+                    'org.crm.shop.dashboard',
                     $routeParameters
                 ),
                 $headCrumb(

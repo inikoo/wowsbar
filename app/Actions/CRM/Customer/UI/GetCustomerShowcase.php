@@ -29,7 +29,7 @@ class GetCustomerShowcase
                     ],
                     'webUsers'   => [
                         'title' => __('webusers'),
-                        'icon'  => ['fal', 'fa-usd-globe']
+                        'icon'  => ['fal', 'fa-terminal']
                     ]
                 ],
                 'current'=> 'contact'
