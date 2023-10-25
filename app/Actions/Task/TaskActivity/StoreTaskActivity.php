@@ -9,6 +9,8 @@ namespace App\Actions\Task\TaskActivity;
 
 use App\Models\Auth\Guest;
 use App\Models\HumanResources\Employee;
+use App\Models\Portfolio\SocialPost;
+use App\Models\Task\Task;
 use Illuminate\Database\Eloquent\Model;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -21,9 +23,21 @@ class StoreTaskActivity
 
     private bool $trusted = false;
 
-    public function handle(Employee|Guest $parent, array $modelData): Model
+    public function handle(Task $task, array $modelData, Employee|Guest $parent = null, SocialPost $activity = null): Model
     {
-        return $parent->tasks()->create($modelData);
+        data_set($modelData, 'task_id', $task->id);
+
+        if($parent) {
+            data_set($modelData, 'author_id', $parent->id);
+            data_set($modelData, 'author_type', $parent::class);
+        }
+
+        if($activity) {
+            data_set($modelData, 'activity_id', $activity->id);
+            data_set($modelData, 'activity_type', $activity::class);
+        }
+
+        return $task->activities()->create($modelData);
     }
 
     public function authorize(ActionRequest $request): bool
@@ -38,33 +52,32 @@ class StoreTaskActivity
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string'],
-            'code' => ['required', 'iunique:task_types', 'string', 'max:12'],
+            'date' => ['required', 'string']
         ];
     }
 
-    public function inEmployee(Employee $employee, ActionRequest $request): Model
+    public function inEmployee(Task $task, Employee $employee, ActionRequest $request): Model
     {
         $request->validate();
         $modelData = $request->validated();
 
-        return $this->handle($employee, $modelData);
+        return $this->handle($task, $modelData, $employee);
     }
 
-    public function inGuest(Guest $guest, ActionRequest $request): Model
+    public function inGuest(Task $task, Guest $guest, ActionRequest $request): Model
     {
         $request->validate();
         $modelData = $request->validated();
 
-        return $this->handle($guest, $modelData);
+        return $this->handle($task, $modelData, $guest);
     }
 
-    public function action(Employee|Guest $parent, array $objectData): Model
+    public function action(Task $task, array $objectData): Model
     {
         $this->trusted = true;
         $this->setRawAttributes($objectData);
         $validatedData = $this->validateAttributes();
 
-        return $this->handle($parent, $validatedData);
+        return $this->handle($task, $validatedData);
     }
 }

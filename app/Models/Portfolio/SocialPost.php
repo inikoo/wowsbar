@@ -11,6 +11,7 @@ use Spatie\Sluggable\SlugOptions;
 
 /**
  *
+ * @property int $id
  * @property string $slug
  * @property string $task_name
  * @property string $portfolio_social_account_id

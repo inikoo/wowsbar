@@ -74,6 +74,9 @@ Route::middleware(["org-web"])->group(function () {
             Route::get('phpinfo', function () {
                 phpinfo();
             })->name('phpinfo');
+            Route::prefix("tasks")
+                ->name("tasks.")
+                ->group(__DIR__ . "/tasks.php");
         });
     });
 
