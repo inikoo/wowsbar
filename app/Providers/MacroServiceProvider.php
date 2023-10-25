@@ -32,7 +32,7 @@ class MacroServiceProvider extends ServiceProvider
         Str::macro('possessive', function (string $string): string {
             return $string.'\''.(
                 Str::endsWith($string, ['s', 'S']) ? '' : 's'
-                );
+            );
         });
 
         InertiaResponse::macro('getQueryBuilderProps', function (): array {

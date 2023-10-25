@@ -132,8 +132,8 @@ class IndexProspectsPortfolioWebsites extends InertiaAction
                 ],
 
                 ProspectsWebsitesTabsEnum::WEBSITES->value => $this->tab == ProspectsWebsitesTabsEnum::WEBSITES->value ?
-                    fn() => PortfolioWebsiteResource::collection($websites)
-                    : Inertia::lazy(fn() => PortfolioWebsiteResource::collection($websites)),
+                    fn () => PortfolioWebsiteResource::collection($websites)
+                    : Inertia::lazy(fn () => PortfolioWebsiteResource::collection($websites)),
 
 
             ]

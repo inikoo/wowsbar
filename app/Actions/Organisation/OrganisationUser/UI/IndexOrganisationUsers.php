@@ -174,17 +174,17 @@ class IndexOrganisationUsers extends InertiaAction
                 ],
 
                 OrganisationUsersTabsEnum::USERS->value => $this->tab == OrganisationUsersTabsEnum::USERS->value ?
-                    fn() => OrganisationUserResource::collection($organisationUsers)
-                    : Inertia::lazy(fn() => OrganisationUserResource::collection($organisationUsers)),
+                    fn () => OrganisationUserResource::collection($organisationUsers)
+                    : Inertia::lazy(fn () => OrganisationUserResource::collection($organisationUsers)),
 
 
                 OrganisationUsersTabsEnum::USERS_REQUESTS->value => $this->tab == OrganisationUsersTabsEnum::USERS_REQUESTS->value ?
-                    fn() => OrganisationUserRequestLogsResource::collection(IndexOrganisationUserRequestLogs::run($organisation))
-                    : Inertia::lazy(fn() => OrganisationUserRequestLogsResource::collection(IndexOrganisationUserRequestLogs::run($organisation))),
+                    fn () => OrganisationUserRequestLogsResource::collection(IndexOrganisationUserRequestLogs::run($organisation))
+                    : Inertia::lazy(fn () => OrganisationUserRequestLogsResource::collection(IndexOrganisationUserRequestLogs::run($organisation))),
 
                 OrganisationUsersTabsEnum::SYSADMIN_HISTORY->value => $this->tab == OrganisationUsersTabsEnum::SYSADMIN_HISTORY->value ?
-                    fn() => HistoryResource::collection(IndexHistory::run(model: OrganisationUser::class, prefix: OrganisationUsersTabsEnum::SYSADMIN_HISTORY->value))
-                    : Inertia::lazy(fn() => HistoryResource::collection(IndexHistory::run(model: OrganisationUser::class, prefix: OrganisationUsersTabsEnum::SYSADMIN_HISTORY->value)))
+                    fn () => HistoryResource::collection(IndexHistory::run(model: OrganisationUser::class, prefix: OrganisationUsersTabsEnum::SYSADMIN_HISTORY->value))
+                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistory::run(model: OrganisationUser::class, prefix: OrganisationUsersTabsEnum::SYSADMIN_HISTORY->value)))
 
 
             ]
