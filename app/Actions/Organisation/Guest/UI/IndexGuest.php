@@ -53,8 +53,10 @@ class IndexGuest extends InertiaAction
     {
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
             $query->where(function ($query) use ($value) {
-                $query->whereAnyWordStartWith('contact_name', $value)
-                    ->orWhere('guests.slug', 'ILIKE', "$value%");
+                $query->where(function ($query) use ($value) {
+                    $query->whereAnyWordStartWith('guests.contact_name', $value)
+                        ->orWhereStartWith('guests.alias', $value);
+                });
             });
         });
 
@@ -64,14 +66,6 @@ class IndexGuest extends InertiaAction
 
         $queryBuilder = QueryBuilder::for(Guest::class);
 
-        //            ->leftJoin(
-        //                'users',
-        //                function ($leftJoin) {
-        //                    $leftJoin
-        //                        ->on('users.parent_id', '=', 'guests.id')
-        //                        ->where('users.parent_type', '=', 'Guest');
-        //                }
-        //            )->leftJoin('user_stats', 'user_stats.user_id', 'users.id');
 
         foreach ($this->getElementGroups() as $key => $elementGroup) {
             $queryBuilder->whereElementGroup(
@@ -84,9 +78,9 @@ class IndexGuest extends InertiaAction
 
         return $queryBuilder
             ->defaultSort('guests.slug')
-            ->select(['guests.id', 'slug', 'guests.contact_name','guests.email','alias'])
+            ->select(['guests.id', 'slug', 'guests.contact_name', 'guests.email', 'alias'])
             ->with('jobPositions')
-            ->allowedSorts(['slug', 'contact_name','email','alias'])
+            ->allowedSorts(['slug', 'contact_name', 'email', 'alias'])
             ->allowedFilters([$globalSearch])
             ->withPaginator($prefix)
             ->withQueryString();
@@ -132,7 +126,6 @@ class IndexGuest extends InertiaAction
                 ->column(key: 'contact_name', label: __('name'), canBeHidden: false, sortable: true, searchable: true)
                 ->column(key: 'email', label: __('email'), canBeHidden: false, sortable: true, searchable: true)
                 ->column(key: 'positions', label: __('positions'), canBeHidden: false)
-
                 ->defaultSort('slug');
         };
     }
@@ -163,8 +156,8 @@ class IndexGuest extends InertiaAction
                 'breadcrumbs' => $this->getBreadcrumbs(),
                 'title'       => __('guests'),
                 'pageHead'    => [
-                    'title'  => __('guests'),
-                    'actions'=> [
+                    'title'   => __('guests'),
+                    'actions' => [
                         $this->canEdit ? [
                             'type'    => 'buttonGroup',
                             'buttons' => [
@@ -173,7 +166,7 @@ class IndexGuest extends InertiaAction
                                     'icon'  => ['fal', 'fa-upload'],
                                     'label' => 'upload',
                                     'route' => [
-                                        'name'       => 'org.models.guests.upload'
+                                        'name' => 'org.models.guests.upload'
                                     ],
                                 ],
                                 [

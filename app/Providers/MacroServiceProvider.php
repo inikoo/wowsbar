@@ -32,7 +32,7 @@ class MacroServiceProvider extends ServiceProvider
         Str::macro('possessive', function (string $string): string {
             return $string.'\''.(
                 Str::endsWith($string, ['s', 'S']) ? '' : 's'
-            );
+                );
         });
 
         InertiaResponse::macro('getQueryBuilderProps', function (): array {
@@ -52,8 +52,25 @@ class MacroServiceProvider extends ServiceProvider
         Builder::macro('whereAnyWordStartWith', function (string $column, string $value): Builder {
             $quotedValue = DB::connection()->getPdo()->quote($value);
 
-            return $this->where(DB::raw("extensions.remove_accents(".$column.")"), '~*', DB::raw("('\y' ||  extensions.remove_accents($quotedValue) ||   '.*\y')"));
+            return $this->where(DB::raw("extensions.remove_accents(".$column.")  COLLATE \"C\""), '~*', DB::raw("('\y' ||  extensions.remove_accents($quotedValue) ||   '.*\y')"));
         });
+
+        Builder::macro('orWhereStartWith', function (string $column, string $value): Builder {
+            return $this->orWhereRaw("$column COLLATE \"C\" ILIKE ?", $value.'%');
+        });
+
+        Builder::macro('orWhereWith', function (string $column, string $value): Builder {
+            return $this->orWhereRaw("$column COLLATE \"C\" ILIKE ?", "%".$value.'%');
+        });
+
+        Builder::macro('whereStartWith', function (string $column, string $value): Builder {
+            return $this->whereRaw("$column COLLATE \"C\" ILIKE ?", $value.'%');
+        });
+
+        Builder::macro('whereWith', function (string $column, string $value): Builder {
+            return $this->whereRaw("$column COLLATE \"C\" ILIKE ?", "%".$value.'%');
+        });
+
 
         Builder::macro('whereElementGroup', function (string $key, array $allowedElements, callable $engine, ?string $prefix = null): Builder {
             $elementsData = null;
