@@ -13,7 +13,6 @@ use App\Enums\Portfolio\PortfolioSocialAccount\PortfolioSocialAccountPostTypeEnu
 use App\Enums\UI\Customer\PortfolioSocialAccountTabsEnum;
 use App\Http\Resources\Portfolio\PortfolioSocialAccountPostsResource;
 use App\InertiaTable\InertiaTable;
-use App\Models\Portfolio\PortfolioSocialAccount;
 use App\Models\Portfolio\SocialPost;
 use App\Models\Portfolios\CustomerSocialAccount;
 use Closure;
