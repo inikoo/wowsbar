@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { trans } from "laravel-vue-i18n"
 import Button from "@/Components/Elements/Buttons/Button.vue"
-import { ref, toRefs, watch, reactive } from "vue"
+import { ref, toRefs, watch } from "vue"
 import 'vue-advanced-cropper/dist/style.css'
 import 'vue-advanced-cropper/dist/theme.compact.css'
 import Modal from '@/Components/Utils/Modal.vue'
@@ -10,7 +10,7 @@ import GalleryImages from "@/Components/Workshop/GalleryImages.vue"
 import Image from '@/Components/Image.vue'
 import { set, get } from 'lodash'
 import ScreenView from "@/Components/ScreenView.vue"
-import { useBannerBackgroundColor, useHeadlineText } from "@/Composables/useCommonList"
+import { useBannerBackgroundColor } from "@/Composables/useCommonList"
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faUpload } from '@fas/'
@@ -141,11 +141,17 @@ const backgroundColorList = useBannerBackgroundColor() // Fetch color list from 
         <!-- Popup: add image from Gallery -->
         <Modal :show="isOpen" @onClose="closeModal">
             <div>
-                <GalleryImages :addImage="uploadImageRespone" :closeModal="() => isOpen = false" :multiple="false" />
+                <GalleryImages
+                    :imagesUploadRoute="props.fieldData.uploadRoute"
+                    :addImage="uploadImageRespone"
+                    :closeModal="() => isOpen = false"
+                    :multiple="false"
+                    :ratio="bannerType === 'square' ? {w : 1, h : 1} : undefined"    
+                />
             </div>
         </Modal>
 
-        <!-- Popup: Crop when add image -->
+        <!-- Popup: Crop when add image (landscape) -->
         <Modal :isOpen="isOpenCropModal" @onClose="closeModalisOpenCropModal">
             <div>    
                 <CropImage
