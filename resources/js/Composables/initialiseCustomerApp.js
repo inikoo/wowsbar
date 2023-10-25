@@ -55,8 +55,8 @@ export const initialiseCustomerApp = () => {
             layout.currentParentModule=null;
         }
 
-        console.log(layout.currentRoute)
-        console.log(moduleName)
+        // console.log(layout.currentRoute)
+        // console.log(moduleName)
 
         layout.booted = true;
 

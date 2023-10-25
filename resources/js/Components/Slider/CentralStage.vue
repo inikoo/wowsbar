@@ -22,8 +22,6 @@ const props = defineProps<{
 
 }>()
 
-console.log('centralStage',props.data )
-
 </script>
 
 <template>
