@@ -11,6 +11,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string $task_type_id
  * @property string $organisation_user_id
  * @property string $date
+ * @property \App\Models\Task\TaskType $type
+ * @property \App\Models\Task\TaskActivity $activity
  * @mixin \Eloquent
  */
 class Task extends Model
@@ -19,8 +21,13 @@ class Task extends Model
 
     protected $guarded = [];
 
-    public function activities(): BelongsTo
+    public function activity(): BelongsTo
     {
         return $this->belongsTo(Task::class);
+    }
+
+    public function type(): BelongsTo
+    {
+        return $this->belongsTo(TaskType::class);
     }
 }

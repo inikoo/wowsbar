@@ -46,7 +46,7 @@ class StoreTaskActivity
             return true;
         }
 
-        return $request->user()->hasPermissionTo("sysadmin.edit");
+        return $request->user()->hasPermissionTo("tasks.edit");
     }
 
     public function rules(): array
