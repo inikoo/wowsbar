@@ -622,7 +622,7 @@ const backgroundColorList = useBannerBackgroundColor() // Fetch color list from 
             </div>
 
             <!-- Slides/Drag area -->
-            <div class="text-lg font-medium leading-none">{{ trans("Slides") }}</div>
+            <div class="text-lg font-medium leading-none">{{ trans("Slides") }} <span class='text-dase'>({{ data.components.length }})</span></div>
             <draggable :list="data.components" group="slide " item-key="ulid" handle=".handle" class="max-h-96 overflow-auto p-0.5"
                 :onChange="(e: any) => emits('jumpToIndex', e.moved.newIndex)">
                 <template #item="{ element: slide }">
