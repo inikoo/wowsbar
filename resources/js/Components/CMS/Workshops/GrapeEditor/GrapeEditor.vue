@@ -3,14 +3,14 @@ import { onMounted, ref } from "vue";
 import "grapesjs/dist/css/grapes.min.css";
 import grapesjs, { usePlugin } from "grapesjs";
 import Webpage from "grapesjs-preset-webpage";
-import { router } from '@inertiajs/vue3'
+// import { router } from '@inertiajs/vue3'
 import Basic from "grapesjs-blocks-basic";
 import grapesjsIcons from "grapesjs-icons";
 import { CustomBlock } from "@/Components/CMS/Workshops/GrapeEditor/CustomBlocks/CustomBlock";
 import axios from "axios"
 import gradient from 'grapesjs-style-gradient';
-import CKEeditor from 'grapesjs-plugin-ckeditor'
-import codeEditor from 'grapesjs-component-code-editor';
+// import CKEeditor from 'grapesjs-plugin-ckeditor'
+// import codeEditor from 'grapesjs-component-code-editor';
 import 'grapesjs-component-code-editor/dist/grapesjs-component-code-editor.min.css';
 
 
@@ -87,7 +87,7 @@ const Load = async (data) => {
     }
 }
 
-const plugin = props.useBasic ?  [Webpage, Basic, usePlugin(grapesjsIcons, options),...props.plugins,gradient,CKEeditor,codeEditor] :  [Webpage, usePlugin(grapesjsIcons, options),...props.plugins,gradient,CKEeditor,codeEditor]
+const plugin = props.useBasic ?  [Webpage, Basic, usePlugin(grapesjsIcons, options),...props.plugins,gradient] :  [Webpage, usePlugin(grapesjsIcons, options),...props.plugins,gradient]
 
 
 onMounted(() => {

@@ -1,6 +1,6 @@
 import { CtaBlock1 } from './CTA/CTA';
-import { headerBlock1, headerBlock3,headerBlock4} from './Header/Header'
-import { footerBlock1, footerBlock2, footerBlock3, footerBlock4 } from './Footer/Footer'
+import { headerBlock1, headerBlock2,headerBlock3} from './Header/Header'
+import { footerBlock1, footerBlock2, footerBlock3 } from './Footer/Footer'
 import { heroBlock1 , heroBlock2, heroBlock3, heroBlock4} from './Hero/Hero'
 import { Appointment } from './Appointment/Appointment'
 import { BlogBlock1, BlogBlock2, BlogBlock3, BlogBlock4 } from './Blog/Blog'
@@ -42,14 +42,14 @@ export const IconBlock = (editor : Any) => {
 }
 
 export const HeaderPlugins = (editor: any) => {
-    const header = [headerBlock1(),headerBlock3(),headerBlock4()]
+    const header = [headerBlock1(),headerBlock2(),headerBlock3()]
     header.map((item,index)=>{
         editor.Blocks.add(item.id,item);
     })
 }
 
 export const FooterPlugins = (editor: any) => {
-  const footer = [footerBlock1(),footerBlock2(),footerBlock3(),footerBlock4()]
+  const footer = [footerBlock1(),footerBlock2(),footerBlock3()]
   footer.map((item,index)=>{
     editor.Blocks.add(item.id,item);
 })
