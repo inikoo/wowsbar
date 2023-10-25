@@ -4,7 +4,7 @@ import { footerBlock1, footerBlock2, footerBlock3 } from './Footer/Footer'
 import { heroBlock1 , heroBlock2, heroBlock3, heroBlock4} from './Hero/Hero'
 import { Appointment } from './Appointment/Appointment'
 import { BlogBlock1, BlogBlock2, BlogBlock4 } from './Blog/Blog'
-import { StatisticsBlock1, StatisticsBlock2, StatisticsBlock3, StatisticsBlock4 } from './Statistics/Statistics'
+import { StatisticsBlock1, StatisticsBlock2, StatisticsBlock3 } from './Statistics/Statistics'
 import { PricingBlock1, PricingBlock2, PricingBlock3, PricingBlock4 } from './Pricing/Pricing'
 import { CtaBlock1, CtaBlock2, CtaBlock3 } from './CTA/CTA'
 import loadStyles from '@/Components/CMS/Workshops/GrapeEditor/CustomStyle/styles';
@@ -78,7 +78,7 @@ export const BlogPlugins = (editor: any) => {
 }
 
 export const StatisticsPlugins = (editor: any) => {
-    const statistics = [StatisticsBlock1(), StatisticsBlock2(), StatisticsBlock3(), StatisticsBlock4()]
+    const statistics = [StatisticsBlock1(), StatisticsBlock2(), StatisticsBlock3()]
     statistics.map((item,index)=>{
         editor.Blocks.add(item.id,item);
     })
