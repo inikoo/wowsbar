@@ -90,6 +90,8 @@ const addComponent = async () => {
     await Promise.all(setData.value.map(processItem));
     for (const [key, value] of form.value.entries()) {
         SendData.push(value)
+        // console.log(SendData)
+        console.log((value.size / (1024 * 1024)).toFixed(2))
     }
 
     try {
