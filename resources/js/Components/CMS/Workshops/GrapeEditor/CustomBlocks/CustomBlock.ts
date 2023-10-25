@@ -13,6 +13,7 @@ export const CustomBlock = (editor : Any) => {
     IconBlock(editor)
     Gradient(editor)
     CodeEditor(editor)
+    IFrameBlocks(editor)
     setTimeout(()=>{
       let categories = editor.BlockManager.getCategories();
       categories.each((category)=>category.set("open",false))
@@ -122,3 +123,11 @@ export  const GradientTypography  = (editor: any) => {
   };
   loadStyles(editor, options);
 };
+
+
+export const IFrameBlocks  = (editor: any) => {
+    editor.BlockManager.add('iframe', {
+      label: 'iframe',
+      content: '<section data-id="hero-iFrame" data-type="html"class="wowsbar-block"><iframe style="width:100%;" src="<your iframe src here>"></iframe></section>',
+    });
+  };
