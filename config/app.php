@@ -209,7 +209,11 @@ return [
     'live_list'=> [
         'organisation'=> env('ORGANISATION_USER_LIVE_LIST', true),
         'customers'   => env('CUSTOMER_USER_LIVE_LIST', true),
-    ]
+    ],
 
+    'analytics'=> [
+        'organisation'=> env('ANALYTICS_ORGANISATION'),
+        'delivery'    => env('ANALYTICS_DELIVERY'),
+    ]
 
 ];

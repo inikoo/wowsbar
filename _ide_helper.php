@@ -10481,6 +10481,104 @@
                         return $instance->setConnectionName($name);
         }
                     /**
+         * Get the number of queue jobs that are ready to process.
+         *
+         * @param string|null $queue
+         * @return int 
+         * @static 
+         */ 
+        public static function readyNow($queue = null)
+        {
+                        /** @var \Laravel\Horizon\RedisQueue $instance */
+                        return $instance->readyNow($queue);
+        }
+                    /**
+         * Migrate the delayed jobs that are ready to the regular queue.
+         *
+         * @param string $from
+         * @param string $to
+         * @return void 
+         * @static 
+         */ 
+        public static function migrateExpiredJobs($from, $to)
+        {
+                        /** @var \Laravel\Horizon\RedisQueue $instance */
+                        $instance->migrateExpiredJobs($from, $to);
+        }
+                    /**
+         * Delete a reserved job from the queue.
+         *
+         * @param string $queue
+         * @param \Illuminate\Queue\Jobs\RedisJob $job
+         * @return void 
+         * @static 
+         */ 
+        public static function deleteReserved($queue, $job)
+        {
+                        /** @var \Laravel\Horizon\RedisQueue $instance */
+                        $instance->deleteReserved($queue, $job);
+        }
+                    /**
+         * Delete a reserved job from the reserved queue and release it.
+         *
+         * @param string $queue
+         * @param \Illuminate\Queue\Jobs\RedisJob $job
+         * @param int $delay
+         * @return void 
+         * @static 
+         */ 
+        public static function deleteAndRelease($queue, $job, $delay)
+        {
+                        /** @var \Laravel\Horizon\RedisQueue $instance */
+                        $instance->deleteAndRelease($queue, $job, $delay);
+        }
+                    /**
+         * Delete all of the jobs from the queue.
+         *
+         * @param string $queue
+         * @return int 
+         * @static 
+         */ 
+        public static function clear($queue)
+        {            //Method inherited from \Illuminate\Queue\RedisQueue         
+                        /** @var \Laravel\Horizon\RedisQueue $instance */
+                        return $instance->clear($queue);
+        }
+                    /**
+         * Get the queue or return the default.
+         *
+         * @param string|null $queue
+         * @return string 
+         * @static 
+         */ 
+        public static function getQueue($queue)
+        {            //Method inherited from \Illuminate\Queue\RedisQueue         
+                        /** @var \Laravel\Horizon\RedisQueue $instance */
+                        return $instance->getQueue($queue);
+        }
+                    /**
+         * Get the connection for the queue.
+         *
+         * @return \Illuminate\Redis\Connections\Connection 
+         * @static 
+         */ 
+        public static function getConnection()
+        {            //Method inherited from \Illuminate\Queue\RedisQueue         
+                        /** @var \Laravel\Horizon\RedisQueue $instance */
+                        return $instance->getConnection();
+        }
+                    /**
+         * Get the underlying Redis instance.
+         *
+         * @return \Illuminate\Contracts\Redis\Factory 
+         * @static 
+         */ 
+        public static function getRedis()
+        {            //Method inherited from \Illuminate\Queue\RedisQueue         
+                        /** @var \Laravel\Horizon\RedisQueue $instance */
+                        return $instance->getRedis();
+        }
+                    /**
          * Get the backoff for an object-based queue handler.
          *
          * @param mixed $job
@@ -10489,7 +10587,7 @@
          */ 
         public static function getJobBackoff($job)
         {            //Method inherited from \Illuminate\Queue\Queue         
-                        /** @var \Illuminate\Queue\SyncQueue $instance */
+                        /** @var \Laravel\Horizon\RedisQueue $instance */
                         return $instance->getJobBackoff($job);
         }
                     /**
@@ -10501,7 +10599,7 @@
          */ 
         public static function getJobExpiration($job)
         {            //Method inherited from \Illuminate\Queue\Queue         
-                        /** @var \Illuminate\Queue\SyncQueue $instance */
+                        /** @var \Laravel\Horizon\RedisQueue $instance */
                         return $instance->getJobExpiration($job);
         }
                     /**
@@ -10513,7 +10611,7 @@
          */ 
         public static function createPayloadUsing($callback)
         {            //Method inherited from \Illuminate\Queue\Queue         
-                        \Illuminate\Queue\SyncQueue::createPayloadUsing($callback);
+                        \Laravel\Horizon\RedisQueue::createPayloadUsing($callback);
         }
                     /**
          * Get the container instance being used by the connection.
@@ -10523,7 +10621,7 @@
          */ 
         public static function getContainer()
         {            //Method inherited from \Illuminate\Queue\Queue         
-                        /** @var \Illuminate\Queue\SyncQueue $instance */
+                        /** @var \Laravel\Horizon\RedisQueue $instance */
                         return $instance->getContainer();
         }
                     /**
@@ -10535,7 +10633,7 @@
          */ 
         public static function setContainer($container)
         {            //Method inherited from \Illuminate\Queue\Queue         
-                        /** @var \Illuminate\Queue\SyncQueue $instance */
+                        /** @var \Laravel\Horizon\RedisQueue $instance */
                         $instance->setContainer($container);
         }
          
@@ -18633,6 +18731,142 @@
      
 }
 
+    namespace JackWH\LaravelNewRelic\Facades { 
+            /**
+     * 
+     *
+     * @see \JackWH\LaravelNewRelic\NewRelicTransaction
+     */ 
+        class NewRelicTransaction {
+                    /**
+         * Run a Closure when the facade has been resolved.
+         *
+         * @param \Closure $callback
+         * @return void 
+         * @static 
+         */ 
+        public static function resolved($callback)
+        {            //Method inherited from \Illuminate\Support\Facades\Facade         
+                        \JackWH\LaravelNewRelic\Facades\NewRelicTransaction::resolved($callback);
+        }
+                    /**
+         * Convert the facade into a Mockery spy.
+         *
+         * @return \Mockery\MockInterface 
+         * @static 
+         */ 
+        public static function spy()
+        {            //Method inherited from \Illuminate\Support\Facades\Facade         
+                        return \JackWH\LaravelNewRelic\Facades\NewRelicTransaction::spy();
+        }
+                    /**
+         * Initiate a partial mock on the facade.
+         *
+         * @return \Mockery\MockInterface 
+         * @static 
+         */ 
+        public static function partialMock()
+        {            //Method inherited from \Illuminate\Support\Facades\Facade         
+                        return \JackWH\LaravelNewRelic\Facades\NewRelicTransaction::partialMock();
+        }
+                    /**
+         * Initiate a mock expectation on the facade.
+         *
+         * @return \Mockery\Expectation 
+         * @static 
+         */ 
+        public static function shouldReceive()
+        {            //Method inherited from \Illuminate\Support\Facades\Facade         
+                        return \JackWH\LaravelNewRelic\Facades\NewRelicTransaction::shouldReceive();
+        }
+                    /**
+         * Initiate a mock expectation on the facade.
+         *
+         * @return \Mockery\Expectation 
+         * @static 
+         */ 
+        public static function expects()
+        {            //Method inherited from \Illuminate\Support\Facades\Facade         
+                        return \JackWH\LaravelNewRelic\Facades\NewRelicTransaction::expects();
+        }
+                    /**
+         * Hotswap the underlying instance behind the facade.
+         *
+         * @param mixed $instance
+         * @return void 
+         * @static 
+         */ 
+        public static function swap($instance)
+        {            //Method inherited from \Illuminate\Support\Facades\Facade         
+                        \JackWH\LaravelNewRelic\Facades\NewRelicTransaction::swap($instance);
+        }
+                    /**
+         * Get the root object behind the facade.
+         *
+         * @return mixed 
+         * @static 
+         */ 
+        public static function getFacadeRoot()
+        {            //Method inherited from \Illuminate\Support\Facades\Facade         
+                        return \JackWH\LaravelNewRelic\Facades\NewRelicTransaction::getFacadeRoot();
+        }
+                    /**
+         * Clear a resolved facade instance.
+         *
+         * @param string $name
+         * @return void 
+         * @static 
+         */ 
+        public static function clearResolvedInstance($name)
+        {            //Method inherited from \Illuminate\Support\Facades\Facade         
+                        \JackWH\LaravelNewRelic\Facades\NewRelicTransaction::clearResolvedInstance($name);
+        }
+                    /**
+         * Clear all of the resolved instances.
+         *
+         * @return void 
+         * @static 
+         */ 
+        public static function clearResolvedInstances()
+        {            //Method inherited from \Illuminate\Support\Facades\Facade         
+                        \JackWH\LaravelNewRelic\Facades\NewRelicTransaction::clearResolvedInstances();
+        }
+                    /**
+         * Get the application default aliases.
+         *
+         * @return \Illuminate\Support\Collection 
+         * @static 
+         */ 
+        public static function defaultAliases()
+        {            //Method inherited from \Illuminate\Support\Facades\Facade         
+                        return \JackWH\LaravelNewRelic\Facades\NewRelicTransaction::defaultAliases();
+        }
+                    /**
+         * Get the application instance behind the facade.
+         *
+         * @return \Illuminate\Contracts\Foundation\Application 
+         * @static 
+         */ 
+        public static function getFacadeApplication()
+        {            //Method inherited from \Illuminate\Support\Facades\Facade         
+                        return \JackWH\LaravelNewRelic\Facades\NewRelicTransaction::getFacadeApplication();
+        }
+                    /**
+         * Set the application instance.
+         *
+         * @param \Illuminate\Contracts\Foundation\Application $app
+         * @return void 
+         * @static 
+         */ 
+        public static function setFacadeApplication($app)
+        {            //Method inherited from \Illuminate\Support\Facades\Facade         
+                        \JackWH\LaravelNewRelic\Facades\NewRelicTransaction::setFacadeApplication($app);
+        }
+         
+    }
+     
+}
+
     namespace Kreait\Laravel\Firebase\Facades { 
             /**
      * 
@@ -19384,13 +19618,9 @@
                         return $instance->captureLastError($hint);
         }
                     /**
-         * 
+         * {@inheritdoc}
          *
-         * @param string $slug Identifier of the Monitor
-         * @param \Sentry\CheckInStatus $status The status of the check-in
-         * @param int|float|null $duration The duration of the check-in
-         * @param \Sentry\MonitorConfig|null $monitorConfig Configuration of the Monitor
-         * @param string|null $checkInId A check-in ID from the previous check-in
+         * @param int|float|null $duration
          * @static 
          */ 
         public static function captureCheckIn($slug, $status, $duration = null, $monitorConfig = null, $checkInId = null)
@@ -21892,6 +22122,62 @@ namespace  {
              * 
              *
              * @see \App\Providers\MacroServiceProvider::boot()
+             * @param string $column
+             * @param string $value
+             * @return \Illuminate\Database\Eloquent\Builder|static 
+             * @static 
+             */ 
+            public static function orWhereStartWith($column, $value)
+            {
+                                return \Illuminate\Database\Eloquent\Builder::orWhereStartWith($column, $value);
+            }
+             
+                /**
+             * 
+             *
+             * @see \App\Providers\MacroServiceProvider::boot()
+             * @param string $column
+             * @param string $value
+             * @return \Illuminate\Database\Eloquent\Builder|static 
+             * @static 
+             */ 
+            public static function orWhereWith($column, $value)
+            {
+                                return \Illuminate\Database\Eloquent\Builder::orWhereWith($column, $value);
+            }
+             
+                /**
+             * 
+             *
+             * @see \App\Providers\MacroServiceProvider::boot()
+             * @param string $column
+             * @param string $value
+             * @return \Illuminate\Database\Eloquent\Builder|static 
+             * @static 
+             */ 
+            public static function whereStartWith($column, $value)
+            {
+                                return \Illuminate\Database\Eloquent\Builder::whereStartWith($column, $value);
+            }
+             
+                /**
+             * 
+             *
+             * @see \App\Providers\MacroServiceProvider::boot()
+             * @param string $column
+             * @param string $value
+             * @return \Illuminate\Database\Eloquent\Builder|static 
+             * @static 
+             */ 
+            public static function whereWith($column, $value)
+            {
+                                return \Illuminate\Database\Eloquent\Builder::whereWith($column, $value);
+            }
+             
+                /**
+             * 
+             *
+             * @see \App\Providers\MacroServiceProvider::boot()
              * @param string $key
              * @param array $allowedElements
              * @param callable $engine
@@ -24220,6 +24506,7 @@ namespace  {
             class Vite extends \Illuminate\Support\Facades\Vite {}
             class Browser extends \hisorange\BrowserDetect\Facade {}
             class Image extends \Intervention\Image\Facades\Image {}
+            class NewRelicTransaction extends \JackWH\LaravelNewRelic\Facades\NewRelicTransaction {}
             class Firebase extends \Kreait\Laravel\Firebase\Facades\Firebase {}
             class Horizon extends \Laravel\Horizon\Horizon {}
             class Action extends \Lorisleiva\Actions\Facades\Actions {}

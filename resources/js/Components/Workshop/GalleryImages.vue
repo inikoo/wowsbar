@@ -22,7 +22,7 @@ const props = defineProps({
     addImage: Function,
     closeModal: Function,
     imagesUploadRoute : Object,
-    ratio : Object,
+    ratio: Object,
     multiple: {
         type: Boolean,
         default: true

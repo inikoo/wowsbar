@@ -59,7 +59,7 @@ class IndexOrganisationUsers extends InertiaAction
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
             $query->where(function ($query) use ($value) {
                 $query->whereAnyWordStartWith('contact_name', $value)
-                    ->orWhere('organisation_users.username', 'ILIKE', "$value%");
+                    ->orWhereStartWith('organisation_users.username', $value);
             });
         });
 
@@ -71,6 +71,7 @@ class IndexOrganisationUsers extends InertiaAction
 
         $queryBuilder = QueryBuilder::for(OrganisationUser::class);
         foreach ($this->getElementGroups() as $key => $elementGroup) {
+            /** @noinspection PhpUndefinedMethodInspection */
             $queryBuilder->whereElementGroup(
                 prefix: $prefix,
                 key: $key,
@@ -80,6 +81,7 @@ class IndexOrganisationUsers extends InertiaAction
         }
 
 
+        /** @noinspection PhpUndefinedMethodInspection */
         return $queryBuilder
             ->defaultSort('username')
             ->allowedSorts(['username', 'email', 'contact_name'])
@@ -188,7 +190,7 @@ class IndexOrganisationUsers extends InertiaAction
             ]
         )->table($this->tableStructure(prefix: 'users'))
             ->table(IndexHistory::make()->tableStructure(prefix: OrganisationUsersTabsEnum::SYSADMIN_HISTORY->value))
-        ->table(IndexOrganisationUserRequestLogs::make()->tableStructure(parent: $organisation, prefix: 'visit_log'));
+            ->table(IndexOrganisationUserRequestLogs::make()->tableStructure(parent: $organisation, prefix: 'visit_log'));
     }
 
     public function asController(ActionRequest $request): LengthAwarePaginator

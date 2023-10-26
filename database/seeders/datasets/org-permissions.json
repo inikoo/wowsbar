@@ -51,5 +51,8 @@
     "catalogue.ppc.view",
     "catalogue.ppc.edit",
     "catalogue.caas.view",
-    "catalogue.caas.edit"
+    "catalogue.caas.edit",
+    "tasks",
+    "tasks.view",
+    "tasks.edit"
 ]

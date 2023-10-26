@@ -20,7 +20,6 @@ use App\Http\Resources\Portfolio\PortfolioSocialAccountPostsResource;
 use App\Http\Resources\Portfolio\PortfolioSocialAccountResource;
 use App\Models\CRM\Customer;
 use App\Models\Market\Shop;
-use App\Models\Portfolio\PortfolioSocialAccount;
 use App\Models\Portfolios\CustomerSocialAccount;
 use Inertia\Inertia;
 use Inertia\Response;

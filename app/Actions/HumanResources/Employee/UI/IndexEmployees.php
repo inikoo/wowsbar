@@ -11,6 +11,7 @@ use App\Actions\InertiaAction;
 use App\Actions\UI\Organisation\HumanResources\ShowHumanResourcesDashboard;
 use App\Enums\HumanResources\Employee\EmployeeStateEnum;
 use App\Enums\HumanResources\Employee\EmployeeTypeEnum;
+use App\Http\Resources\HumanResources\EmployeeResource;
 use App\Http\Resources\HumanResources\EmployeesResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\HumanResources\Employee;
@@ -33,38 +34,37 @@ class IndexEmployees extends InertiaAction
 
     protected function getElementGroups(Organisation|JobPosition $parent): array
     {
+        return [
+            'state' => [
+                'label'    => __('State'),
+                'elements' => array_merge_recursive(
+                    EmployeeStateEnum::labels(),
+                    EmployeeStateEnum::count($parent)
+                ),
 
-        return    [
-                'state' => [
-                    'label'    => __('State'),
-                    'elements' => array_merge_recursive(
-                        EmployeeStateEnum::labels(),
-                        EmployeeStateEnum::count($parent)
-                    ),
+                'engine' => function ($query, $elements) {
+                    $query->whereIn('state', $elements);
+                }
 
-                    'engine' => function ($query, $elements) {
-                        $query->whereIn('state', $elements);
-                    }
-
-                ],
-                'type'  => [
-                    'label'    => __('Type'),
-                    'elements' => EmployeeTypeEnum::labels(),
-                    'engine'   => function ($query, $elements) {
-                        $query->whereIn('type', $elements);
-                    }
-                ],
-            ];
+            ],
+            'type'  => [
+                'label'    => __('Type'),
+                'elements' => EmployeeTypeEnum::labels(),
+                'engine'   => function ($query, $elements) {
+                    $query->whereIn('type', $elements);
+                }
+            ],
+        ];
     }
 
 
     public function handle(Organisation|JobPosition $parent, $prefix = null): LengthAwarePaginator
     {
-        $this->parent =$parent;
+        $this->parent = $parent;
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
             $query->where(function ($query) use ($value) {
                 $query->whereAnyWordStartWith('employees.contact_name', $value)
-                    ->orWhere('employees.slug', 'ILIKE', "$value%");
+                    ->orWhereStartWith('employees.alias', $value);
             });
         });
 
@@ -87,7 +87,6 @@ class IndexEmployees extends InertiaAction
         $queryBuilder->select(['slug', 'job_title', 'contact_name', 'state']);
 
         if (class_basename($parent) == 'Organisation') {
-
             $jobPositions = DB::table('job_positionables')
                 ->select(
                     'job_positionable_id',
@@ -100,18 +99,17 @@ class IndexEmployees extends InertiaAction
                 $join->on('employees.id', '=', 'job_positions.job_positionable_id');
             });
             $queryBuilder->addSelect('job_positions');
-
         } else {
             $queryBuilder->leftJoin('job_positionables', 'job_positionables.job_positionable_id', 'employees.id')
-            ->where('job_positionables.job_positionable_type', 'Employee')
-            ->where('job_position_id', $parent->id);
+                ->where('job_positionables.job_positionable_type', 'Employee')
+                ->where('job_position_id', $parent->id);
         }
 
 
         /** @noinspection PhpUndefinedMethodInspection */
         return $queryBuilder
             ->defaultSort('employees.slug')
-            ->allowedSorts(['slug', 'state', 'contact_name', 'job_title','worker_number'])
+            ->allowedSorts(['slug', 'state', 'contact_name', 'job_title', 'worker_number'])
             ->allowedFilters([$globalSearch, 'slug', 'contact_name', 'state'])
             ->withPaginator($prefix)
             ->withQueryString();
@@ -182,7 +180,6 @@ class IndexEmployees extends InertiaAction
 
     public function htmlResponse(LengthAwarePaginator $employees): Response
     {
-
         return Inertia::render(
             'HumanResources/Employees',
             [

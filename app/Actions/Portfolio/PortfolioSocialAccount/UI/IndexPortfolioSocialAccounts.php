@@ -48,8 +48,7 @@ class IndexPortfolioSocialAccounts extends InertiaAction
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
             $query->where(function ($query) use ($value) {
                 $query->whereAnyWordStartWith('username', $value)
-                    ->orWhere('url', 'ilike', "%$value%")
-                    ->orWhere('username', 'ilike', "$value%");
+                    ->orWhereWith('url', $value);
             });
         });
         if ($prefix) {

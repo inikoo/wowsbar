@@ -29,8 +29,8 @@ class IndexWorkplaces extends InertiaAction
     {
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
             $query->where(function ($query) use ($value) {
-                $query->where('workplaces.name', 'ILIKE', "%$value%")
-                    ->orWhere('workplaces.slug', 'ILIKE', "%$value%");
+                $query->whereAnyWordStartWith('workplaces.name', $value)
+                    ->orWhereStartWith('workplaces.slug', $value);
             });
         });
 

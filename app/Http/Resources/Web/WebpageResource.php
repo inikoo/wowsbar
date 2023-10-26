@@ -24,13 +24,14 @@ class WebpageResource extends JsonResource
             'slug'       => $webpage->slug,
             'level'      => $webpage->level,
             'code'       => $webpage->code,
+            'url'        => $webpage->url,
             'type'       => $webpage->type,
             'typeIcon'   => match ($webpage->type) {
                 WebpageTypeEnum::STOREFRONT => ['fal', 'fa-home'],
                 WebpageTypeEnum::ENGAGEMENT => ['fal', 'fa-ufo-beam'],
                 WebpageTypeEnum::AUTH       => ['fal', 'fa-sign-in'],
                 WebpageTypeEnum::BLOG       => ['fal', 'fa-newspaper'],
-                default                     => ['fal','fa-browser']
+                default                     => ['fal', 'fa-browser']
             },
             'purpose'    => $webpage->purpose,
             'created_at' => $webpage->created_at,

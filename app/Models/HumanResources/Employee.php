@@ -18,7 +18,6 @@ use App\Models\Traits\HasUniversalSearch;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -67,6 +66,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \App\Models\Media\Media> $media
  * @property-read int|null $media_count
  * @property-read OrganisationUser|null $organisationUser
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, TaskActivity> $tasks
+ * @property-read int|null $tasks_count
  * @property-read \App\Models\Search\UniversalSearch|null $universalSearch
  * @property-read \App\Models\HumanResources\Workplace|null $workplace
  * @method static \Illuminate\Database\Eloquent\Builder|Employee newModelQuery()

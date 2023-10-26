@@ -27,10 +27,10 @@ class ShowProspect extends InertiaAction
 
     public function authorize(ActionRequest $request): bool
     {
-        $this->canEdit   = $request->user()->hasPermissionTo('crm.Prospects.edit');
-        $this->canDelete = $request->user()->hasPermissionTo('crm.Prospects.edit');
+        $this->canEdit   = $request->user()->hasPermissionTo('crm.prospects.edit');
+        $this->canDelete = $request->user()->hasPermissionTo('crm.prospects.edit');
 
-        return $request->user()->hasPermissionTo("shops.Prospects.view");
+        return $request->user()->hasPermissionTo("crm.prospects.view");
     }
 
     public function asController(Prospect $prospect, ActionRequest $request): Prospect
@@ -62,8 +62,9 @@ class ShowProspect extends InertiaAction
                     'next'     => $this->getNext($prospect, $request),
                 ],
                 'pageHead'    => [
-                    'title'   => $prospect->name,
-                    'icon'    => [
+                    'title'       => $prospect->name??$prospect->email??$prospect->slug,
+                    'noCapitalise'=> !$prospect->name,
+                    'icon'        => [
                         'icon'  => ['fal', 'fa-transporter'],
                         'title' => __('Prospect')
                     ],
@@ -119,7 +120,7 @@ class ShowProspect extends InertiaAction
                         ],
                         'model' => [
                             'route' => $routeParameters['model'],
-                            'label' => $prospect->name,
+                            'label' => $prospect->slug,
                         ],
 
                     ],

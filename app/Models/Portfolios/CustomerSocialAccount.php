@@ -54,7 +54,7 @@ class CustomerSocialAccount extends Model implements Auditable
 
     protected $casts = [
         'data'        => 'array',
-        'platform' => PortfolioSocialAccountPlatformEnum::class
+        'platform'    => PortfolioSocialAccountPlatformEnum::class
     ];
 
     protected $attributes = [

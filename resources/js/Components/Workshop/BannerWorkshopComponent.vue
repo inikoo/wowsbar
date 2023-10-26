@@ -42,7 +42,9 @@ const screenView = ref("")
                     screenView == 'mobile'
                         ? 'w-1/4'
                         : screenView == 'tablet'
-                            ? 'w-3/4'
+                            ? data.components.length < 3
+                                ? `w-${data.components.length}/4`
+                                : 'w-3/4'
                             : data.components.length < 4
                                 ? `w-${data.components.length}/4`
                                 : 'w-full'
