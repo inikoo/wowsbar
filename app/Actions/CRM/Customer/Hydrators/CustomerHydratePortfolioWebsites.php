@@ -7,6 +7,7 @@
 
 namespace App\Actions\CRM\Customer\Hydrators;
 
+use App\Enums\Divisions\DivisionEnum;
 use App\Enums\Portfolio\PortfolioWebsite\PortfolioWebsiteInterestEnum;
 use App\Models\CRM\Customer;
 use Illuminate\Support\Str;
@@ -18,26 +19,27 @@ class CustomerHydratePortfolioWebsites
 
     public function handle(Customer $customer): void
     {
-
         $stats = [
-            'number_portfolio_websites'       => $customer->portfolioWebsites()->count(),
+            'number_portfolio_websites' => $customer->portfolioWebsites()->count(),
         ];
 
-        foreach (json_decode(file_get_contents(base_path('database/seeders/datasets/divisions.json')), true) as $division) {
+
+        foreach (DivisionEnum::cases() as $division) {
             $customer->portfolioWebsites()->each(function ($portfolioWebsite) use (&$counts, $division) {
-                $counts = $portfolioWebsite->divisions()->where('slug', $division['slug'])->count();
+                $counts = $portfolioWebsite->divisions()->where('slug', $division->snake())->count();
             });
 
-            $stats['number_portfolio_websites_division_' . $division['slug']] = $counts??0;
+            $stats['number_portfolio_websites_division_'.$division->snake()] = $counts ?? 0;
 
             foreach (PortfolioWebsiteInterestEnum::cases() as $case) {
                 $customer->portfolioWebsites()->each(function ($portfolioWebsite) use (&$counts, $case, $division) {
-                    $counts = $portfolioWebsite->divisions()->where('slug', $division['slug'])->wherePivot('interest', $case)->count();
+                    $counts = $portfolioWebsite->divisions()->where('slug', $division->snake())->wherePivot('interest', $case)->count();
                 });
 
-                $stats['number_portfolio_websites_' . $division['slug'] . '_' . Str::replace('-', '_', $case->snake())] = $counts??0;
+                $stats['number_portfolio_websites_'.$division->snake().'_'.Str::replace('-', '_', $case->snake())] = $counts ?? 0;
             }
         }
+
 
         $customer->portfolioStats()->update($stats);
     }
