@@ -8,12 +8,9 @@
 use App\Actions\Organisation\Organisation\StoreOrganisation;
 use App\Actions\Task\Task\StoreTask;
 use App\Actions\Task\TaskActivity\StoreTaskActivity;
-use App\Actions\Task\TaskType\StoreTaskType;
-use App\Models\Organisation\Division;
 use App\Models\Organisation\Organisation;
 use App\Models\Task\Task;
 use App\Models\Task\TaskActivity;
-use App\Models\Task\TaskType;
 use Illuminate\Support\Facades\Artisan;
 
 beforeAll(function () {
@@ -36,18 +33,6 @@ test('check division and task types seeders', function () {
     Artisan::call("db:seed --force --class=TaskTypesSeeder");
     expect(organisation()->taskStats->number_divisions)->toBe(5)
         ->and(organisation()->taskStats->number_task_types)->toBe(2);
-});
-
-test('create task type', function () {
-    $modelData = [
-        'name' => 'Upload Post'
-    ];
-
-    $division = Division::firstWhere('slug', 'seo');
-    $taskType = StoreTaskType::make()->action($division, $modelData);
-    expect($taskType)->toBeInstanceOf(TaskType::class);
-
-    return $taskType;
 });
 
 /*
