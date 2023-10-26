@@ -7,6 +7,7 @@
 
 namespace App\Actions\Task\TaskType;
 
+use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateTaskTypes;
 use App\Models\Organisation\Division;
 use App\Models\Task\TaskType;
 use Lorisleiva\Actions\ActionRequest;
@@ -22,8 +23,10 @@ class StoreTaskType
 
     public function handle(Division $division, array $modelData): TaskType
     {
-        /** @var TaskType */
-        return $division->taskTypes()->create($modelData);
+        /** @var TaskType $taskType */
+        $taskType= $division->taskTypes()->create($modelData);
+        OrganisationHydrateTaskTypes::dispatch();
+        return $taskType;
     }
 
     public function authorize(ActionRequest $request): bool

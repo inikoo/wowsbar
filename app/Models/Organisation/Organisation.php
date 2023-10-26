@@ -55,7 +55,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Shop> $shops
  * @property-read int|null $shops_count
  * @property-read \App\Models\Organisation\OrganisationStats|null $stats
- * @property-read OrganisationTaskStats|null $taskStats
+ * @property-read \App\Models\Organisation\OrganisationTaskStats|null $taskStats
  * @property-read \Illuminate\Database\Eloquent\Collection<int, OrganisationUser> $users
  * @property-read int|null $users_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Website> $websites

@@ -54,6 +54,8 @@ class StoreOrganisation
 
         Artisan::call("db:seed --force --class=StockImageSeeder");
         Artisan::call("db:seed --force --class=JobPositionSeeder");
+        Artisan::call("db:seed --force --class=DivisionSeeder");
+        Artisan::call("db:seed --force --class=TaskTypesSeeder");
 
 
 

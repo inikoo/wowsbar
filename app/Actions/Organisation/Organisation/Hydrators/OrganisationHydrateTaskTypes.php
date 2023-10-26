@@ -8,13 +8,11 @@
 namespace App\Actions\Organisation\Organisation\Hydrators;
 
 use App\Enums\Divisions\DivisionEnum;
-use App\Enums\Portfolio\Banner\BannerStateEnum;
 use App\Models\Organisation\Division;
-use App\Models\Portfolio\Banner;
 use App\Models\Task\TaskType;
 use Lorisleiva\Actions\Concerns\AsAction;
 
-class OrganisationHydrateTasks
+class OrganisationHydrateTaskTypes
 {
     use AsAction;
 
@@ -26,7 +24,7 @@ class OrganisationHydrateTasks
         ];
 
         foreach (DivisionEnum::cases() as $state) {
-            $division = Division::where('slug', $state->value)->first();
+            $division                                             = Division::where('slug', $state->value)->first();
             $stats['number_task_types_division_'.$state->snake()] = TaskType::where('division_id', $division->id)->count();
         }
 

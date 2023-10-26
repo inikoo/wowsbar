@@ -8,9 +8,7 @@
 namespace App\Actions\Organisation\Division\Hydrators;
 
 use App\Enums\Divisions\DivisionEnum;
-use App\Enums\Portfolio\Banner\BannerStateEnum;
 use App\Models\Organisation\Division;
-use App\Models\Portfolio\Banner;
 use App\Models\Task\TaskType;
 use Lorisleiva\Actions\Concerns\AsAction;
 

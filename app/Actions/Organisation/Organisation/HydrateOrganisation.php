@@ -10,10 +10,12 @@ namespace App\Actions\Organisation\Organisation;
 use App\Actions\HydrateModel;
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateCustomers;
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateCustomerWebsites;
+use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateDivisions;
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateEmployees;
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateGuests;
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateJobPositions;
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateShops;
+use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateTaskTypes;
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateWebsites;
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateWorkplaces;
 use App\Actions\Traits\WithNormalise;
@@ -28,9 +30,11 @@ class HydrateOrganisation extends HydrateModel
 
     public function handle(): void
     {
+        OrganisationHydrateDivisions::run();
+        OrganisationHydrateTaskTypes::run();
+        OrganisationHydrateJobPositions::run();
         OrganisationHydrateGuests::run();
         OrganisationHydrateEmployees::run();
-        OrganisationHydrateJobPositions::run();
         OrganisationHydrateShops::run();
         OrganisationHydrateWebsites::run();
         OrganisationHydrateCustomers::run();
