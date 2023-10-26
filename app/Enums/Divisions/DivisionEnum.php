@@ -13,8 +13,8 @@ enum DivisionEnum: string
 {
     use EnumHelperTrait;
     case SEO             = 'seo';
-    case PPC      = 'ppc';
-    case SOCIAL = 'social';
-    case PROSPECTS = 'prospects';
-    case BANNERS = 'banners';
+    case PPC             = 'ppc';
+    case SOCIAL          = 'social';
+    case PROSPECTS       = 'prospects';
+    case BANNERS         = 'banners';
 }

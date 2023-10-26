@@ -11,8 +11,6 @@ use App\Actions\Organisation\Division\StoreDivision;
 use App\Enums\Divisions\DivisionEnum;
 use App\Models\Organisation\Division;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class DivisionSeeder extends Seeder

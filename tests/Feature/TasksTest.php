@@ -1,4 +1,9 @@
 <?php
+/*
+ * Author: Raul Perusquia <raul@inikoo.com>
+ * Created: Thu, 26 Oct 2023 14:21:23 Malaysia Time, Kuala Lumpur, Malaysia
+ * Copyright (c) 2023, Raul A Perusquia Flores
+ */
 
 use App\Actions\HumanResources\Employee\CreateOrganisationUserFromEmployee;
 use App\Actions\HumanResources\Employee\StoreEmployee;
