@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faAlignLeft, faAlignCenter, faAlignRight } from '@fal/'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { ref, watch, toRefs, computed } from "vue"
-import { set } from "lodash"
+import { set, get } from "lodash"
 library.add(faAlignLeft, faAlignCenter, faAlignRight)
 
 const props = defineProps<{
@@ -42,14 +42,14 @@ const setFormValue = (data: Object, fieldName: string | []) => {
     if (Array.isArray(fieldName)) {
         return getNestedValue(data, fieldName)
     } else {
-        return data[fieldName]
+        return get(data,fieldName,get(props,['fieldData','defaultValue']))
     }
 }
 
 const getNestedValue = (obj: Object, keys: string[]) => {
     return keys.reduce((acc, key) => {
-        if (acc && typeof acc === "object" && key in acc) return acc[key]
-        return null
+        if (acc && typeof acc === "object" && key in acc) return get(acc,key,get(props,['fieldData','defaultValue']))
+        return get(props,['fieldData','defaultValue'],null)
     }, obj)
 }
 
