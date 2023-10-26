@@ -259,7 +259,7 @@ watch(props.section, (newValue) => {
                         </div>
                         <div class="relative flex-grow" v-if="field.type == 'colorPicker'">
                             <ColorPicker :key="field.label + section.id"
-                                :value="get(section, ['valueForm', 'data', field.name],get(section, ['valueForm', 'temporaryData', activeType.value, field.name]))"
+                                :color="get(section, ['valueForm', 'data', field.name],get(section, ['valueForm', 'temporaryData', activeType.value, field.name]))"
                                 :fieldData="{...field,...get(section, ['valueForm', 'temporaryData', activeType.value])}" 
                                 @onChange="(newValue)=>onUpdateFieldCorner(field, newValue)"
                                 />

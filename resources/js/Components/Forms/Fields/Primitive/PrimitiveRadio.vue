@@ -12,7 +12,6 @@ const props = defineProps<{
 }>()
 const emit = defineEmits()
 
-console.log('iniii',props)
 
 const setFormValue = (data: Object, fieldName: String) => {
     if (Array.isArray(fieldName)) {

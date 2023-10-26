@@ -125,7 +125,7 @@ export  const GradientTypography  = (editor: any) => {
 };
 
 
-export const IFrameBlocks  = (editor: any) => {
+export const IFrameBlocks  = (editor) => {
     editor.BlockManager.add('iframe', {
       label: 'iframe',
       content: '<section data-id="hero-iFrame" data-type="html"class="wowsbar-block"><iframe style="width:100%;" src="<your iframe src here>"></iframe></section>',
