@@ -10,6 +10,7 @@ namespace App\Models\Organisation;
 use App\Models\Task\TaskType;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * App\Models\Organisation\Division
@@ -44,6 +45,11 @@ class Division extends Model
     public function taskTypes(): HasMany
     {
         return $this->hasMany(TaskType::class);
+    }
+
+    public function taskStats(): HasOne
+    {
+        return $this->hasOne(DivisionTaskStats::class);
     }
 
 }

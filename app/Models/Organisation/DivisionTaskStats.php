@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Organisation;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @mixin \Eloquent
  */
-class OrganisationTaskStats extends Model
+class DivisionTaskStats extends Model
 {
     use HasFactory;
 
