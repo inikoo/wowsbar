@@ -28,13 +28,9 @@ class TaskTypesSeeder extends Seeder
 
         $taskTypesData->each(function ($modelData) {
 
+            $division = Division::where('slug', Arr::get($modelData, 'division_slug'))->first();
 
-            $taskType = TaskType::where('slug', Arr::get($modelData, 'slug'))->first();
-
-            if(!$taskType) {
-                StoreTaskType::run($modelData);
-            }
-
+            StoreTaskType::run($division, $modelData);
 
         });
     }
