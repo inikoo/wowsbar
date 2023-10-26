@@ -124,7 +124,7 @@ const selectComponentForEdition = (slide: SlideWorkshopData) => {
 watch(
     currentComponentBeenEdited,
     (newValue) => {
-        if (newValue !== null) {
+        if (newValue !== null) {  // If clicked on Slides not on 'Common Properties'
             const component = [...props.data.components]; // Create a shallow copy of the components array
             const index = component.findIndex((item) => item.ulid === newValue.ulid);
             if (index !== -1) {
@@ -589,15 +589,9 @@ const backgroundColorList = useBannerBackgroundColor() // Fetch color list from 
 
             <!-- Slides/Drag area -->
             <div class="text-lg font-medium leading-none">{{ trans("Slides") }} <span class='text-dase'>({{ data.components.length }})</span></div>
-            <draggable :list="data.components" group="slide " item-key="ulid" handle=".handle" class="max-h-96 overflow-auto p-0.5"
-                :onChange="(e: any) => emits('jumpToIndex', e.moved.newIndex)">
+            <draggable :list="data.components" group="slide " item-key="ulid" handle=".handle" class="max-h-96 overflow-auto p-0.5">
                 <template #item="{ element: slide }">
-                    <div @mousedown="
-                            selectComponentForEdition(slide),
-                            emits(
-                                'jumpToIndex',
-                                data.components.findIndex(obj => obj.ulid === slide.ulid)
-                            )"
+                    <div @mousedown="selectComponentForEdition(slide)"
                         v-if="slide.ulid" :class="[
                             'grid grid-flow-col relative sm:py-1 mb-2 items-center justify-between ring-1 ring-gray-300',
                             slide.ulid == get(currentComponentBeenEdited, 'ulid')

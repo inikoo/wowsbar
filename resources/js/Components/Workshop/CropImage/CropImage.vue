@@ -5,7 +5,7 @@
   -->
 
 <script setup lang="ts">
-import { ref } from "vue"
+import { ref, defineEmits } from 'vue';
 import "swiper/css"
 import "swiper/css/navigation"
 import axios from 'axios'
@@ -33,6 +33,10 @@ const props = withDefaults(defineProps<{
 }>(), {
     ratio: { w : 4, h : 1 }
 })
+
+const emits = defineEmits<{
+    (e: 'onFinishCropped', image: any): void
+}>()
 
 const setData2 = () => {
     const data = []
@@ -104,6 +108,7 @@ const addComponent = async () => {
         );
         form.value = new FormData()
         props.response(response.data)
+        emits('onFinishCropped', response.data)
         loadingState.value = false
     } catch (error) {
         console.log(error)
