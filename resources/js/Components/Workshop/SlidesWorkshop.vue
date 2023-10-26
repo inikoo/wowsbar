@@ -30,60 +30,15 @@ import Modal from '@/Components/Utils/Modal.vue'
 import GalleryImages from "@/Components/Workshop/GalleryImages.vue"
 import CropImage from "@/Components/Workshop/CropImage/CropImage.vue"
 import Image from "@/Components/Image.vue"
+import { BannerWorkshop, CornersData, SlideWorkshopData } from '@/types/BannerWorkshop'
+import { routeType } from '@/types/route'
 
 library.add(faEye, faEyeSlash, faTrashAlt, faAlignJustify, faCog, faImage, faLock)
 
-interface CornersPositionData {
-    data: {
-        text: string;
-        target: string;
-    };
-    type: string;
-}
-
-interface Corners {
-    topLeft?: CornersPositionData;
-    topRight?: CornersPositionData;
-    bottomLeft?: CornersPositionData;
-    bottomRight?: CornersPositionData;
-}
 
 const props = defineProps<{
-    data: {
-        common: {
-            centralStage: {
-                subtitle?: string;
-                text?: string;
-                title?: string;
-            };
-            corners: Corners;
-        };
-        components: Array<{
-            id: number;
-            image_id: number;
-            image_source: string;
-            ulid?: string;
-            layout: {
-                link?: string;
-                centralStage: {
-                    title?: string;
-                    subtitle?: string;
-                    // text?: string,
-                    // footer?: string
-                };
-            };
-            visibility: boolean;
-            corners: Corners;
-            imageAlt: string;
-            link: string;
-        }>;
-        delay: number;
-        type: string
-    };
-    imagesUploadRoute: {
-        name: string;
-        arguments: string[]
-    };
+    data: BannerWorkshop
+    imagesUploadRoute: routeType
     user: string
     screenView: string
 }>();
@@ -93,7 +48,7 @@ const emits = defineEmits<{
 }>();
 
 const isDragging = ref(false);
-const fileInput = ref(null);
+const fileInput = ref();
 const currentComponentBeenEdited = ref();
 const commonEditActive = ref(true);
 const isOpenGalleryImages = ref(false);
@@ -136,7 +91,7 @@ const drop = (e) => {
     isDragging.value = false;
 };
 
-const selectComponentForEdition = (slide) => {
+const selectComponentForEdition = (slide: SlideWorkshopData) => {
     const componentToEdit = props.data.components.find((item) => item.ulid === slide.ulid);
 
     if (!componentToEdit) {
@@ -699,7 +654,7 @@ const backgroundColorList = useBannerBackgroundColor() // Fetch color list from 
 
             <!-- Button: Add slide, Gallery -->
             <div class="flex flex-wrap md:flex-row gap-x-2 gap-y-1 lg:gap-y-0 w-full justify-between">
-                <Button @click="isOpenGalleryImages = !isOpen" :style="`tertiary`" icon="fal fa-photo-video" label="Gallery" size="xs" class="relative w-full flex justify-center lg:w-fit lg:inline space-x-2" id="gallery" />
+                <Button @click="isOpenGalleryImages = true" :style="`tertiary`" icon="fal fa-photo-video" label="Gallery" size="xs" class="relative w-full flex justify-center lg:w-fit lg:inline space-x-2" id="gallery" />
 
                 <!-- <Button :style="`secondary`" size="xs" class="relative w-full flex justify-center lg:w-fit lg:inline space-x-2">
                     <FontAwesomeIcon icon='fas fa-plus' class='' aria-hidden='true' />
@@ -710,7 +665,7 @@ const backgroundColorList = useBannerBackgroundColor() // Fetch color list from 
                         accept="image/*" class="absolute cursor-pointer rounded-md border-gray-300 sr-only" />
                 </Button> -->
 
-                 <Button :style="`secondary`" size="xs" @click="addNewSlide" class="relative w-full flex justify-center lg:w-fit lg:inline space-x-2">
+                <Button :style="`secondary`" size="xs" @click="addNewSlide" class="relative w-full flex justify-center lg:w-fit lg:inline space-x-2">
                     <FontAwesomeIcon icon='fas fa-plus' class='' aria-hidden='true' />
                     <span>{{ trans("Add slide") }}</span>
                 </Button>
@@ -738,11 +693,11 @@ const backgroundColorList = useBannerBackgroundColor() // Fetch color list from 
         <Modal :isOpen="isOpenGalleryImages" @onClose="isOpenGalleryImages = false">
             <div>
                 <GalleryImages
-                 :addImage="uploadImageRespone" 
-                 :closeModal="()=>isOpenGalleryImages = false"  
-                 :imagesUploadRoute="props.imagesUploadRoute"  
-                 :ratio="data.type == 'square' ? {w: 1, h: 1} : {w: 4, h: 1}" 
-                 />
+                    :addImage="uploadImageRespone" 
+                    :closeModal="()=>isOpenGalleryImages = false"  
+                    :imagesUploadRoute="props.imagesUploadRoute"  
+                    :ratio="data.type == 'square' ? {w: 1, h: 1} : {w: 4, h: 1}" 
+                />
             </div>
         </Modal>
 
