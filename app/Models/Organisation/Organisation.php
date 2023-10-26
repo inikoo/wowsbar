@@ -13,6 +13,7 @@ use App\Models\Auth\OrganisationUser;
 use App\Models\Catalogue\Product;
 use App\Models\Market\Shop;
 use App\Models\Catalogue\ProductCategory;
+use App\Models\OrganisationTaskStats;
 use App\Models\Traits\HasLogo;
 use App\Models\Web\Website;
 use Illuminate\Database\Eloquent\Builder;
@@ -55,6 +56,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Shop> $shops
  * @property-read int|null $shops_count
  * @property-read \App\Models\Organisation\OrganisationStats|null $stats
+ * @property-read OrganisationTaskStats|null $taskStats
  * @property-read \Illuminate\Database\Eloquent\Collection<int, OrganisationUser> $users
  * @property-read int|null $users_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Website> $websites
@@ -119,6 +121,11 @@ class Organisation extends Model implements HasMedia
     public function portfoliosStats(): HasOne
     {
         return $this->hasOne(OrganisationPortfoliosStats::class);
+    }
+
+    public function taskStats(): HasOne
+    {
+        return $this->hasOne(OrganisationTaskStats::class);
     }
 
     public function websites(): HasMany
