@@ -17,6 +17,7 @@ import {
 } from '@fal/'
 // import {  } from '@far/'
 import { faEye, faEyeSlash } from '@fas/'
+import { faClone } from '@fad/'
 import { library } from "@fortawesome/fontawesome-svg-core"
 import draggable from "vuedraggable"
 import { ulid } from "ulid"
@@ -33,7 +34,7 @@ import Image from "@/Components/Image.vue"
 import { BannerWorkshop, CornersData, SlideWorkshopData } from '@/types/BannerWorkshop'
 import { routeType } from '@/types/route'
 
-library.add(faEye, faEyeSlash, faTrashAlt, faAlignJustify, faCog, faImage, faLock)
+library.add(faEye, faEyeSlash, faTrashAlt, faAlignJustify, faCog, faImage, faLock, faClone)
 
 
 const props = defineProps<{
@@ -130,8 +131,8 @@ watch(
                 component[index] = { ...newValue };
                 props.data.components = component;
             }
+            emits('jumpToIndex', newValue.ulid)  // Jump to related Slide when update the data
         }
-        emits('jumpToIndex', newValue.ulid)  // Jump to related Slide when update the data
     },
     { deep: true }
 );
@@ -551,6 +552,16 @@ const addNewSlide = () => {
     props.data.components = [...props.data.components, ...newFiles];
 }
 
+// When on click to icon 'clone'
+const duplicateSlide = (selectedSlide: SlideWorkshopData) => {
+    const modifiedSlide = {
+        ...selectedSlide,
+        ulid: ulid()
+    }
+    let indexOfSelectedSlide = props.data.components.findIndex(item => item.ulid == selectedSlide.ulid)
+    props.data.components.splice(indexOfSelectedSlide+1, 0, modifiedSlide)
+}
+
 const backgroundColorList = useBannerBackgroundColor() // Fetch color list from Composables
 
 </script>
@@ -628,17 +639,21 @@ const backgroundColorList = useBannerBackgroundColor() // Fetch color list from 
 
                         <!-- Button: Show/hide, delete slide -->
                         <div class="flex justify-center items-center pr-2 justify-self-end"  v-if="slide.user == props.user || !slide.user">
-                            <button class="px-2 py-1 bg-grays-500 text-red-500/60 hover:text-red-500" type="button" v-if="!slide.visibility"
+                            <button v-if="!slide.visibility" class="px-2 py-1 bg-grays-500 text-red-500/60 hover:text-red-500" type="button"
                                 @click="(e)=>{ e.stopPropagation()
                                     removeComponent(slide)}"
-                                title="Delete the slide">
+                                title="Delete this slide">
                                 <FontAwesomeIcon :icon="['fal', 'fa-trash-alt']"  class="text-xs sm:text-sm" />
                             </button>
-                            <button class="px-2 py-1 text-gray-400 hover:text-gray-500" type="button"
-                                @click="changeVisibility(slide)" title="Show/hide the slide">
+                            <button class="qwezxcpx-2 py-1 text-gray-400 hover:text-gray-500" type="button"
+                                @click="changeVisibility(slide)" title="Show/hide this slide">
                                 <FontAwesomeIcon v-if="slide.hasOwnProperty('visibility') ? slide.visibility : true"
                                     icon="fas fa-eye" class="text-xs sm:text-sm " />
                                 <FontAwesomeIcon v-else icon="fas fa-eye-slash" class="text-xs sm:text-sm" />
+                            </button>
+                            <button class="px-2 py-1 text-gray-400 hover:text-gray-500" type="button"
+                                @click="duplicateSlide(slide)" title="Duplicate this slide">
+                                <FontAwesomeIcon icon="fad fa-clone" class="text-xs sm:text-sm " />
                             </button>
                         </div>
 
