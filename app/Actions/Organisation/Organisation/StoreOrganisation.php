@@ -35,6 +35,7 @@ class StoreOrganisation
         $organisation->crmStats()->create();
         $organisation->catalogueStats()->create();
         $organisation->portfoliosStats()->create();
+        $organisation->taskStats()->create();
 
         AttachImageToOrganisation::run(
             organisation: $organisation,

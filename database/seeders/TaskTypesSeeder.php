@@ -7,10 +7,8 @@
 
 namespace Database\Seeders;
 
-use App\Actions\Organisation\Division\StoreDivision;
 use App\Actions\Task\TaskType\StoreTaskType;
 use App\Models\Organisation\Division;
-use App\Models\Task\TaskType;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
@@ -30,6 +28,7 @@ class TaskTypesSeeder extends Seeder
 
             $division = Division::where('slug', Arr::get($modelData, 'division_slug'))->first();
 
+            Arr::forget($modelData, 'division_slug');
             StoreTaskType::run($division, $modelData);
 
         });

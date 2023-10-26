@@ -23,7 +23,7 @@ class StoreTaskType
     public function handle(Division $division, array $modelData): TaskType
     {
         /** @var TaskType */
-        return $division->taskType()->create($modelData);
+        return $division->taskTypes()->create($modelData);
     }
 
     public function authorize(ActionRequest $request): bool

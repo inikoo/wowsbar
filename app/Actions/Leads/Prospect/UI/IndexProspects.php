@@ -9,6 +9,7 @@ namespace App\Actions\Leads\Prospect\UI;
 
 use App\Actions\InertiaAction;
 use App\Actions\Organisation\UI\CRM\ShowCRMDashboard;
+use App\Enums\UI\Organisation\ProspectsTabsEnum;
 use App\Http\Resources\CRM\ProspectResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\Leads\Prospect;
@@ -40,7 +41,7 @@ class IndexProspects extends InertiaAction
 
     public function asController(ActionRequest $request): LengthAwarePaginator
     {
-        $this->initialisation($request);
+        $this->initialisation($request)->withTab(ProspectsTabsEnum::values());
         $this->parent = organisation();
 
         return $this->handle($this->parent);
@@ -48,7 +49,7 @@ class IndexProspects extends InertiaAction
 
     public function inShop(Shop $shop, ActionRequest $request): LengthAwarePaginator
     {
-        $this->initialisation($request);
+        $this->initialisation($request)->withTab(ProspectsTabsEnum::values());
         $this->parent = $shop;
 
         return $this->handle($shop);
