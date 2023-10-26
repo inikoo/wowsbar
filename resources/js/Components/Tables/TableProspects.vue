@@ -8,6 +8,7 @@
 import {Link} from '@inertiajs/vue3';
 import Table from '@/Components/Table/Table.vue';
 import {Prospect} from "@/types/prospect";
+import {trans} from "laravel-vue-i18n";
 
 const props = defineProps<{
     data: object,
@@ -35,7 +36,7 @@ function prospectRoute(prospect: Prospect) {
     <Table :resource="data" :name="tab" class="mt-5">
         <template #cell(name)="{ item: prospect }">
             <Link :href="prospectRoute(prospect)">
-                {{ prospect['name'] }}
+                <span v-if="prospect.name">{{ prospect['name'] }}</span><span v-else class="italic opacity-50">{{trans('Unknown')}}</span>
             </Link>
         </template>
     </Table>

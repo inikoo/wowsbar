@@ -24,7 +24,8 @@ class EditCustomer extends InertiaAction
 
     public function authorize(ActionRequest $request): bool
     {
-        $this->canEdit = $request->user()->hasPermissionTo('crm.customers.edit');
+        $this->canEdit   = $request->user()->hasPermissionTo('crm.customers.edit');
+        $this->canDelete = $request->user()->hasPermissionTo('supervisor.crm');
 
         return $request->user()->hasPermissionTo("shops.customers.edit");
     }
@@ -68,6 +69,30 @@ class EditCustomer extends InertiaAction
 
             ]
         ];
+
+        if($this->canDelete) {
+            $sections['delete'] = [
+                'label'  => __('Delete'),
+                'icon'   => 'fal fa-trash-alt',
+                'fields' => [
+                    'name' => [
+                        'type'   => 'action',
+                        'action' => [
+                            'type'   => 'button',
+                            'style'  => 'delete',
+                            'label'  => __('delete customer'),
+                            'method' => 'delete',
+                            'route'  => [
+                                'name'       => 'org.models.customer.delete',
+                                'parameters' => [
+                                    'customer' => $customer->id
+                                ]
+                            ]
+                        ],
+                    ]
+                ]
+            ];
+        }
 
         $currentSection = 'properties';
         if ($request->has('section') and Arr::has($sections, $request->get('section'))) {

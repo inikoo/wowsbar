@@ -30,12 +30,14 @@ class IndexProspectsPortfolioWebsites extends InertiaAction
     public function authorize(ActionRequest $request): bool
     {
         $this->canEdit = $request->get('customerUser')->hasPermissionTo('portfolio.prospects.edit');
+
         return $request->get('customerUser')->hasPermissionTo('portfolio.prospects.view');
     }
 
     public function asController(ActionRequest $request): LengthAwarePaginator
     {
         $this->initialisation($request)->withTab(CustomerWebsitesTabsEnum::values());
+
         return $this->handle();
     }
 
@@ -45,7 +47,7 @@ class IndexProspectsPortfolioWebsites extends InertiaAction
     {
         $divisionId = Cache::get('prospects');
 
-        if(! $divisionId) {
+        if (!$divisionId) {
             $divisionId = Division::firstWhere('slug', 'prospects')->id;
             Cache::put('prospects', $divisionId);
         }
@@ -53,9 +55,8 @@ class IndexProspectsPortfolioWebsites extends InertiaAction
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
             $query->where(function ($query) use ($value) {
                 $query->whereAnyWordStartWith('portfolio_websites.name', $value)
-                    ->orWhere('portfolio_websites.url', 'ilike', "%$value%")
-                    ->orWhere('portfolio_websites.slug', 'ilike', "$value%")
-                    ->orWhere('portfolio_websites.name', 'ilike', "$value%");
+                    ->orWhereWith('portfolio_websites.url', $value)
+                    ->orWhereStartWith('portfolio_websites.slug', $value);
             });
         });
         if ($prefix) {

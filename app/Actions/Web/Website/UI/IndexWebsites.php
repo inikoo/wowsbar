@@ -67,8 +67,8 @@ class IndexWebsites extends InertiaAction
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
             $query->where(function ($query) use ($value) {
                 $query->whereAnyWordStartWith('websites.name', $value)
-                    ->orWhere('websites.domain', 'ilike', "%$value%")
-                    ->orWhere('websites.code', 'ilike', "$value%");
+                    ->orWhereStartWith('websites.domain', $value)
+                    ->orWhereStartWith('websites.code', $value);
             });
         });
         if ($prefix) {
@@ -88,7 +88,7 @@ class IndexWebsites extends InertiaAction
 
         return $queryBuilder
             ->defaultSort('websites.slug')
-            ->select([ 'websites.name', 'websites.slug','websites.code', 'websites.domain','websites.status', 'websites.state'])
+            ->select(['websites.name', 'websites.slug', 'websites.code', 'websites.domain', 'websites.status', 'websites.state'])
             ->allowedSorts(['slug', 'domain', 'name'])
             ->allowedFilters([$globalSearch])
             ->withPaginator($prefix)
@@ -146,8 +146,8 @@ class IndexWebsites extends InertiaAction
                 ),
                 'title'       => __('websites'),
                 'pageHead'    => [
-                    'title'   => __('websites'),
-                    'icon'    => [
+                    'title' => __('websites'),
+                    'icon'  => [
                         'title' => __('website'),
                         'icon'  => 'fal fa-globe'
                     ],

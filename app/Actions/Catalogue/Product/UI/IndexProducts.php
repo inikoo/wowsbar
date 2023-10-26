@@ -60,7 +60,7 @@ class IndexProducts extends InertiaAction
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
             $query->where(function ($query) use ($value) {
                 $query->whereAnyWordStartWith('products.name', $value)
-                    ->orWhere('products.slug', 'ilike', "$value%");
+                    ->orWhereStartWith('products.slug', $value);
             });
         });
 

@@ -7,21 +7,12 @@
 
 namespace App\Actions\Task\TaskActivity\UI;
 
-use App\Actions\Helpers\Snapshot\UI\IndexSnapshots;
 use App\Actions\InertiaAction;
 use App\Actions\UI\WithInertia;
-use App\Actions\Web\HasWorkshopAction;
-use App\Actions\Web\Webpage\IndexWebpages;
 use App\Actions\Web\Website\UI\ShowWebsite;
-use App\Enums\Organisation\Web\Webpage\WebpagePurposeEnum;
-use App\Enums\Organisation\Web\Webpage\WebpageTypeEnum;
 use App\Enums\UI\Organisation\TaskActivityTabsEnum;
-use App\Enums\UI\Organisation\WebpageTabsEnum;
-use App\Http\Resources\Portfolio\SnapshotResource;
-use App\Http\Resources\Web\WebpageResource;
 use App\Models\Task\TaskActivity;
 use App\Models\Web\Webpage;
-use App\Models\Web\Website;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;

@@ -43,18 +43,21 @@ class IndexWebpages extends InertiaAction
     public function asController(ActionRequest $request): LengthAwarePaginator
     {
         $this->initialisation($request);
+
         return $this->handle(organisation());
     }
 
     public function inWebsite(Website $website, ActionRequest $request): LengthAwarePaginator
     {
         $this->initialisation($request);
+
         return $this->handle($website);
     }
 
     public function inWebpage(Webpage $webpage, ActionRequest $request): LengthAwarePaginator
     {
         $this->initialisation($request);
+
         return $this->handle($webpage);
     }
 
@@ -62,11 +65,11 @@ class IndexWebpages extends InertiaAction
     /** @noinspection PhpUndefinedMethodInspection */
     public function handle(Website|Webpage|Organisation $parent, $prefix = null): LengthAwarePaginator
     {
-        $this->parent =$parent;
+        $this->parent = $parent;
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
             $query->where(function ($query) use ($value) {
-                $query->where('webpages.code', 'LIKE', "%$value%")
-                    ->orWhere('webpages.url', 'LIKE', "%$value%");
+                $query->whereStartWith('webpages.code', $value)
+                    ->orWhereWith('webpages.url', $value);
             });
         });
 
@@ -77,14 +80,14 @@ class IndexWebpages extends InertiaAction
         $queryBuilder = QueryBuilder::for(Webpage::class);
 
 
-        if(class_basename($parent)=='Webpage') {
+        if (class_basename($parent) == 'Webpage') {
             $queryBuilder->where('parent_id', $parent->id);
         }
 
 
         return $queryBuilder
             ->defaultSort('webpages.level')
-            ->select(['code', 'id', 'type', 'slug', 'level', 'purpose'])
+            ->select(['code', 'id', 'type', 'slug', 'level', 'purpose', 'url'])
             ->allowedSorts(['code', 'type', 'level'])
             ->allowedFilters([$globalSearch])
             ->withPaginator($prefix)
@@ -108,9 +111,10 @@ class IndexWebpages extends InertiaAction
                         'count' => organisation()->stats->number_webpages,
                     ]
                 )
-                ->column(key: 'level', label: ['fal', 'fa-sort-amount-down-alt'], canBeHidden: false, sortable: true)
-                ->column(key: 'type', label: ['fal', 'fa-shapes'], canBeHidden: false)
+                ->column(key: 'level', label: ['fal', 'fa-sort-amount-down-alt'], canBeHidden: false, sortable: true, type: 'avatar')
+                ->column(key: 'type', label: ['fal', 'fa-shapes'], canBeHidden: false, type: 'icon')
                 ->column(key: 'code', label: __('code'), canBeHidden: false, sortable: true, searchable: true)
+                ->column(key: 'url', label: __('url'), canBeHidden: false, sortable: true, searchable: true)
                 ->defaultSort('level');
         };
     }
@@ -180,19 +184,17 @@ class IndexWebpages extends InertiaAction
 
         return match ($routeName) {
             'org.websites.show.webpages.index',
-            'org.websites.show.webpages.create'=>
+            'org.websites.show.webpages.create' =>
             array_merge(
                 (new ShowWebsite())->getBreadcrumbs($routeParameters),
                 $headCrumb(
                     [
-                        'name'      => 'org.websites.show.webpages.index',
-                        'parameters'=> $routeParameters
+                        'name'       => 'org.websites.show.webpages.index',
+                        'parameters' => $routeParameters
                     ]
                 ),
             ),
-            default=> []
+            default => []
         };
-
-
     }
 }

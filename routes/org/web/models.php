@@ -15,6 +15,7 @@ use App\Actions\Catalogue\ProductCategory\UpdateProductCategory;
 use App\Actions\CRM\Appointment\AssignAppointmentUser;
 use App\Actions\CRM\Appointment\StoreAppointment;
 use App\Actions\CRM\Appointment\UpdateAppointment;
+use App\Actions\CRM\Customer\DeleteCustomer;
 use App\Actions\CRM\Customer\StoreCustomer;
 use App\Actions\CRM\Customer\UpdateCustomer;
 use App\Actions\CRM\User\StoreOrgCustomerUser;
@@ -96,7 +97,7 @@ Route::prefix('shop')->as('shop.')->group(function () {
     Route::prefix('{shop:id}')->group(function () {
         Route::post('website/', StoreWebsite::class)->name('website.store');
         Route::post('customer/', [StoreCustomer::class, 'inShop'])->name('customer.store');
-        Route::post('prospect/upload', ImportShopProspects::class)->name('prospect.upload');
+        Route::post('prospect/upload', ImportShopProspects::class)->name('prospects.upload');
         Route::post('prospect', [StoreProspect::class, 'inShop'])->name('prospect.store');
         Route::patch('prospect/{prospect:id}', [UpdateProspect::class, 'inShop'])->name('prospect.update');
         Route::post('product', [StoreProduct::class, 'inShop'])->name('product.store');
@@ -151,6 +152,7 @@ Route::prefix('customer/{customer:id}')->as('customer.')->group(function () {
     Route::post('websites/upload', ImportPortfolioWebsite::class)->name('website.upload');
     Route::post('websites', StoreCustomerWebsite::class)->name('customer-website.store');
     Route::post('users', StoreOrgCustomerUser::class)->name('customer-user.store');
+    Route::delete('', DeleteCustomer::class)->name('delete');
 
 });
 

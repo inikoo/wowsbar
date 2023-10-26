@@ -31,15 +31,14 @@ class IndexJobPositions extends InertiaAction
             InertiaTable::updateQueryBuilderParameters($prefix);
         }
 
-
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
             $query->where(function ($query) use ($value) {
                 $query->whereAnyWordStartWith('job_positions.name', $value)
-                    ->orWhere('job_positions.slug', 'ILIKE', "$value%");
+                    ->orWhereStartWith('job_positions.slug', $value);
             });
         });
 
-        $queryBuilder=QueryBuilder::for(JobPosition::class);
+        $queryBuilder = QueryBuilder::for(JobPosition::class);
         foreach ($this->elementGroups as $key => $elementGroup) {
             /** @noinspection PhpUndefinedMethodInspection */
             $queryBuilder->whereElementGroup(
@@ -62,8 +61,9 @@ class IndexJobPositions extends InertiaAction
 
     public function authorize(ActionRequest $request): bool
     {
-        $this->canEdit  = false;//$request->user()->hasPermissionTo('hr.edit');
-        $this->canCreate=false;
+        $this->canEdit   = false;//$request->user()->hasPermissionTo('hr.edit');
+        $this->canCreate = false;
+
         return
             (
                 $request->user()->tokenCan('root') or
@@ -122,8 +122,8 @@ class IndexJobPositions extends InertiaAction
                 'breadcrumbs' => $this->getBreadcrumbs(),
                 'title'       => __('job positions'),
                 'pageHead'    => [
-                    'title'  => __('positions'),
-                    'actions'=> [
+                    'title'   => __('positions'),
+                    'actions' => [
                         $this->canCreate ? [
                             'type'  => 'button',
                             'style' => 'create',

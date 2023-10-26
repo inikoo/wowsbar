@@ -12,6 +12,7 @@ use App\Actions\Portfolio\PortfolioSocialAccount\UI\IndexPortfolioSocialAccounts
 use App\Actions\Subscriptions\CustomerWebsite\UI\IndexCustomerWebsites;
 use App\Actions\InertiaAction;
 use App\Actions\Organisation\UI\CRM\ShowCRMDashboard;
+use App\Actions\Traits\Actions\WithActionButtons;
 use App\Enums\UI\Customer\CustomerTabsEnum;
 use App\Http\Resources\CRM\AppointmentResource;
 use App\Http\Resources\CRM\CustomerResource;
@@ -24,6 +25,8 @@ use Lorisleiva\Actions\ActionRequest;
 
 class ShowCustomer extends InertiaAction
 {
+    use WithActionButtons;
+
     public function handle(Customer $customer): Customer
     {
         return $customer;
@@ -89,7 +92,7 @@ class ShowCustomer extends InertiaAction
                                 'name'       => $request->route()->getName().'.customer-websites.index',
                                 'parameters' => $request->route()->originalParameters()
                             ],
-                            'number'   => $customer->stats->number_portfolio_websites,
+                            'number'   => $customer->portfolioStats->number_portfolio_websites,
                             'label'    => __('Websites'),
                             'leftIcon' => [
                                 'icon'    => 'fal fa-briefcase',
@@ -97,25 +100,11 @@ class ShowCustomer extends InertiaAction
                             ]
                         ],
                     ],
-                    'actions' => [
-                        $this->canEdit ? [
-                            'type'  => 'button',
-                            'style' => 'edit',
-                            'route' => [
-                                'name'       => preg_replace('/show$/', 'edit', $request->route()->getName()),
-                                'parameters' => $request->route()->originalParameters()
-                            ]
-                        ] : [],
-                        $this->canDelete ? [
-                            'type'  => 'button',
-                            'style' => 'delete',
-                            'route' => [
-                                'name'       => 'org.crm.customers.remove',
-                                'parameters' => $request->route()->originalParameters()
-                            ]
+                    'iconActions' => [
+                        $this->canDelete ? $this->getDeleteActionIcon($request) : null,
+                        $this->canEdit ? $this->getEditActionIcon($request) : null,
+                    ],
 
-                        ] : []
-                    ]
                 ],
                 'tabs'        => [
                     'current'    => $this->tab,

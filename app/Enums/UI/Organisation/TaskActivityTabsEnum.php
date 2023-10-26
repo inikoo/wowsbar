@@ -16,7 +16,7 @@ enum TaskActivityTabsEnum: string
     use HasTabs;
 
     case ACTIVITIES             = 'activities';
-    case CHANGELOG            = 'changelog';
+    case CHANGELOG              = 'changelog';
 
     public function blueprint(): array
     {

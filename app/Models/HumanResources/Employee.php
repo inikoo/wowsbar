@@ -66,6 +66,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \App\Models\Media\Media> $media
  * @property-read int|null $media_count
  * @property-read OrganisationUser|null $organisationUser
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, TaskActivity> $tasks
+ * @property-read int|null $tasks_count
  * @property-read \App\Models\Search\UniversalSearch|null $universalSearch
  * @property-read \App\Models\HumanResources\Workplace|null $workplace
  * @method static \Illuminate\Database\Eloquent\Builder|Employee newModelQuery()

@@ -7,7 +7,6 @@
 
 namespace App\Http\Resources\Task;
 
-use App\Models\Portfolio\PortfolioSocialAccount;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
@@ -21,10 +20,10 @@ class TaskActivityResource extends JsonResource
         $taskActivity = $this;
 
         return [
-            'author_name' => $taskActivity->author->contact_name,
+            'author_name'   => $taskActivity->author->contact_name,
             'activity_name' => $taskActivity->activity->slug,
-            'task' => $taskActivity->task->type->name,
-            'date' => $taskActivity->date
+            'task'          => $taskActivity->task->type->name,
+            'date'          => $taskActivity->date
         ];
     }
 }
