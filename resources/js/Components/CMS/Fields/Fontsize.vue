@@ -33,7 +33,6 @@ watch(value, (newValue) => {
     updateFormValue(newValue);
 });
 
-console.log('fontsize',props.data,value)
 
 const updateFormValue = (newValue: any) => {
     let target = { ...props.data };

@@ -12,23 +12,25 @@ const props = defineProps<{
 }>()
 const emit = defineEmits()
 
+console.log('iniii',props)
+
 const setFormValue = (data: Object, fieldName: String) => {
     if (Array.isArray(fieldName)) {
         return getNestedValue(data, fieldName);
     } else {
-        return data[fieldName];
+        return get(acc,key,get(props,['fieldData','defaultValue']))
     }
 }
 
 const getNestedValue = (obj: Object, keys: Array) => {
     return keys.reduce((acc, key) => {
-        if (acc && typeof acc === 'object' && key in acc) return acc[key];
+        if (acc && typeof acc === 'object' && key in acc) return get(acc,key,get(props,['fieldData','defaultValue']))
         return props.fieldData.defaultValue ? props.fieldData.defaultValue : null;
     }, obj);
 }
 
 
-const value = ref(props.data ? setFormValue(props.data, props.fieldName) : get(props,'radioValue',null))
+const value = ref(props.data ? setFormValue(props.data, props.fieldName) : get(props,'radioValue',get(props,['fieldData','defaultValue'])))
 
 watch(value, (newValue) => {
     emit('onChange', newValue);
