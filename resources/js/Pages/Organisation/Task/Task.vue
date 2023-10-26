@@ -47,11 +47,9 @@ const component = computed(() => {
 
 </script>
 
-
 <template layout="OrgApp">
     <Head :title="capitalize(title)"/>
     <PageHeading :data="pageHead"></PageHeading>
     <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate"/>
     <component :is="component" :tab="currentTab" :data="props[currentTab]"></component>
 </template>
-

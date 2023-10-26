@@ -67,7 +67,7 @@ class ShowTaskActivity extends InertiaAction
                 'pageHead'    => [
                     'title'   => $taskActivity->task->type->name,
                     'icon'    => [
-                        'title' => __('webpage'),
+                        'title' => __('task activity'),
                         'icon'  => 'fal fa-browser'
                     ],
                 ],
