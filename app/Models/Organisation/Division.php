@@ -7,7 +7,9 @@
 
 namespace App\Models\Organisation;
 
+use App\Models\Task\TaskType;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * App\Models\Organisation\Division
@@ -36,5 +38,10 @@ class Division extends Model
     }
 
     protected $guarded = [];
+
+    public function taskType(): BelongsTo
+    {
+        return $this->belongsTo(TaskType::class);
+    }
 
 }

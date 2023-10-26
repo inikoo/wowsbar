@@ -21,9 +21,4 @@ class StoreDivision
     {
         return Division::create($modelData);
     }
-
-
-
-
-
 }

@@ -7,6 +7,7 @@
 
 namespace App\Actions\Task\TaskType;
 
+use App\Models\Organisation\Division;
 use App\Models\Task\TaskType;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -19,9 +20,10 @@ class StoreTaskType
 
     private bool $trusted = false;
 
-    public function handle(array $modelData): TaskType
+    public function handle(Division $division, array $modelData): TaskType
     {
-        return TaskType::create($modelData);
+        /** @var TaskType */
+        return $division->taskType()->create($modelData);
     }
 
     public function authorize(ActionRequest $request): bool
@@ -40,20 +42,20 @@ class StoreTaskType
         ];
     }
 
-    public function asController(ActionRequest $request): TaskType
+    public function asController(Division $division, ActionRequest $request): TaskType
     {
         $request->validate();
         $modelData = $request->validated();
 
-        return $this->handle($modelData);
+        return $this->handle($division, $modelData);
     }
 
-    public function action(array $objectData): TaskType
+    public function action(Division $division, array $objectData): TaskType
     {
         $this->trusted = true;
         $this->setRawAttributes($objectData);
         $validatedData = $this->validateAttributes();
 
-        return $this->handle($validatedData);
+        return $this->handle($division, $validatedData);
     }
 }
