@@ -165,6 +165,7 @@ const ComponentsBlueprint = ref([
                 label: trans("Link"),
                 value: ["layout", "link"],
                 // defaultValue : 'https://',
+                placeholder: "https://www.example.com",
                 rules:{
                     pattern : '^(http|https)://',
                     message : 'please input https:// or http://'
@@ -229,6 +230,7 @@ const ComponentsBlueprint = ref([
                 type: "textAlign",
                 label: trans("Text Align"),
                 value: ["layout", "centralStage", "textAlign"],
+                defaultValue: 'center',
                 options: [
                     {
                         label: "Align left",
@@ -378,6 +380,7 @@ const CommonBlueprint = ref([
                 type: "textAlign",
                 label: trans("Text Align"),
                 value: ["common", "centralStage", "textAlign"],
+                defaultValue: "center",
                 options: [
                     {
                         label: "Align left",
@@ -403,7 +406,9 @@ const CommonBlueprint = ref([
                 value: ["common", "centralStage", "style", "fontSize"],
                 defaultValue: { fontTitle: "text-[25px] lg:text-[44px]", fontSubtitle: "text-[12px] lg:text-[20px]" },
                 options: [
-                    { label: "Extra Small", value: {
+                    {
+                        label: "Extra Small",
+                        value: {
                             fontTitle: "text-[13px] lg:text-[21px]",
                             fontSubtitle: "text-[8px] lg:text-[12px]"
                         }
@@ -440,8 +445,9 @@ const CommonBlueprint = ref([
             {
                 name: ["common", "centralStage", "style", "color"],
                 type: "colorpicker",
-                label: trans("color"),
+                label: trans("Text Color"),
                 value: ["common", "centralStage", "style", "color"],
+                icon: 'far fa-text'
             },
             {
                 name: ["common", "centralStage", "style", "textShadow"],

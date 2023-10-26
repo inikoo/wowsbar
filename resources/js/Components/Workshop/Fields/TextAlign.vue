@@ -4,14 +4,21 @@ import { faAlignLeft, faAlignCenter, faAlignRight } from '@fal/'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { ref, watch, toRefs, computed } from "vue"
 import { set } from "lodash"
+import { BannerWorkshop } from '@/types/BannerWorkshop'
+
+
 library.add(faAlignLeft, faAlignCenter, faAlignRight)
 
 const props = defineProps<{
     fieldName: string | []
     fieldData?: {
-        options: string[]
+        options: {
+            label: string
+            value: string
+            icon: string | string[]
+        }[]
     }
-    data: Object
+    data: BannerWorkshop
     counter: boolean
 }>()
 
@@ -78,6 +85,7 @@ const updateLocalFormValue = (newValue) => {
 
 <template>
     <div class="py-1">
+    <!-- <pre>{{ data.common }}</pre> -->
         <div class="flex gap-x-2">
             <div v-for="option in props.fieldData?.options " @click="value = option.value" class="flex items-center justify-center bg-gray-100 rounded p-2 ring-1 ring-gray-300 cursor-pointer"
                 :class="[ value == option.value ? 'bg-gray-300' : 'hover:bg-gray-200']"

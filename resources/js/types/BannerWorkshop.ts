@@ -73,13 +73,15 @@ export interface SlideWorkshopData {
     user?: string
 }
 
+export interface CommonData {
+    centralStage?: CentralStageData
+    corners?: CornersData
+    user?: string
+}
+
 // Full Banner Data
 export interface BannerWorkshop {
-    common: {
-        centralStage?: CentralStageData
-        corners?: CornersData
-        user?: string
-    }
+    common: CommonData
     components: SlideWorkshopData[]
     delay: number
     type: string

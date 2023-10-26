@@ -67,12 +67,12 @@
       emits("update:data", localData); 
     }
   
-  const isValidPattern = (value: string): boolean => {
-      if (props.fieldData?.rules && props.fieldData?.rules?.pattern) {
-          return new RegExp(props.fieldData.rules.pattern).test(value);
-      }
-      return true;
-  };
+//   const isValidPattern = (value: string): boolean => {
+//       if (props.fieldData?.rules && props.fieldData?.rules?.pattern) {
+//           return new RegExp(props.fieldData.rules.pattern).test(value);
+//       }
+//       return true;
+//   };
   
   
   </script>
@@ -96,8 +96,8 @@
                   {{ fieldData?.suffix }}
               </span>
           </div>
-          <div v-if="isValidPattern(valued) && props.fieldData.info" class="text-gray-400 text-xs mt-1">{{props.fieldData.info}}</div>
-          <div v-if="!isValidPattern(valued)" class="text-red-500 text-xs mt-1">{{ get(props.fieldData,['rules','message'],'invalid pattern') }}</div>
+          <!-- <div v-if="isValidPattern(valued) && props.fieldData.info" class="text-gray-400 text-xs mt-1">{{props.fieldData.info}}</div>
+          <div v-if="!isValidPattern(valued)" class="text-red-500 text-xs mt-1">{{ get(props.fieldData,['rules','message'],'invalid pattern') }}</div> -->
   
   
           <!-- Counter: Letters and Words -->
