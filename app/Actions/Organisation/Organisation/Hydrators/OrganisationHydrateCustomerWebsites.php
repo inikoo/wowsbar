@@ -7,17 +7,17 @@
 
 namespace App\Actions\Organisation\Organisation\Hydrators;
 
+use App\Actions\Traits\WithDivision;
 use App\Actions\Traits\WithEnumStats;
-use App\Models\Organisation\Division;
+use App\Enums\Divisions\DivisionEnum;
 use App\Models\Portfolios\CustomerWebsite;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Str;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class OrganisationHydrateCustomerWebsites
 {
     use AsAction;
     use WithEnumStats;
+    use WithDivision;
 
     public function handle(): void
     {
@@ -25,18 +25,12 @@ class OrganisationHydrateCustomerWebsites
             'number_customer_websites' => CustomerWebsite::count()
         ];
 
-        foreach (json_decode(file_get_contents(base_path('database/seeders/datasets/divisions.json')), true) as $division) {
-            $divisionId = Cache::get($division['slug']);
-
-            if(! $divisionId) {
-                $divisionId = Division::firstWhere('slug', $division['slug'])->id;
-                Cache::put($division['slug'], $divisionId);
-            }
-
+        foreach (DivisionEnum::cases() as $division) {
+            $divisionId           = $this->getCachedDivisionId($division->snake());
             $customerWebsiteCount = CustomerWebsite::join('division_portfolio_websites', 'portfolio_websites.id', 'division_portfolio_websites.portfolio_website_id')
                 ->where('division_portfolio_websites.division_id', $divisionId)->count();
 
-            $stats['number_customer_websites_' . Str::replace('-', '_', $division['slug'])] = $customerWebsiteCount;
+            $stats['number_customer_websites_'.$division->snake()] = $customerWebsiteCount;
         }
 
         organisation()->crmStats()->update($stats);
