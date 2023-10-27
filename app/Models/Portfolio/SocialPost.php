@@ -10,19 +10,45 @@ use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
 /**
+ * App\Models\Portfolio\SocialPost
  *
  * @property int $id
+ * @property int $task_id
  * @property string $slug
- * @property string $task_name
- * @property string $portfolio_social_account_id
  * @property string $start_at
- * @property string $end_at
- * @property string $duration
+ * @property string|null $end_at
+ * @property int $duration days
+ * @property int $portfolio_social_account_id
  * @property string $type
  * @property string $status
- * @property string $description
- * @property string $notes
- * @property \App\Models\Portfolio\PortfolioSocialAccount $platform
+ * @property string|null $description
+ * @property string|null $notes
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property string|null $delete_comment
+ * @property-read \App\Models\Portfolio\PortfolioSocialAccount $platform
+ * @method static \Illuminate\Database\Eloquent\Builder|SocialPost newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|SocialPost newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|SocialPost onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|SocialPost query()
+ * @method static \Illuminate\Database\Eloquent\Builder|SocialPost whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|SocialPost whereDeleteComment($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|SocialPost whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|SocialPost whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|SocialPost whereDuration($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|SocialPost whereEndAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|SocialPost whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|SocialPost whereNotes($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|SocialPost wherePortfolioSocialAccountId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|SocialPost whereSlug($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|SocialPost whereStartAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|SocialPost whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|SocialPost whereTaskId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|SocialPost whereType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|SocialPost whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|SocialPost withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|SocialPost withoutTrashed()
  * @mixin \Eloquent
  */
 

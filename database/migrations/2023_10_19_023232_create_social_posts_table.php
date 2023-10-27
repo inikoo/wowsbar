@@ -19,26 +19,25 @@ return new class () extends Migration {
     {
         Schema::create('social_posts', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('task_id');
+            $table->unsignedInteger('task_id')->index();
             $table->foreign('task_id')->references('id')->on('tasks')->onDelete('cascade');
             $table->string('slug')->unique()->collation('und_ns');
             $table->dateTimeTz('start_at');
             $table->dateTimeTz('end_at')->nullable();
             $table->unsignedInteger('duration')->default(0)->comment('days');
-            $table->unsignedSmallInteger('portfolio_social_account_id');
+            $table->unsignedSmallInteger('portfolio_social_account_id')->index();
             $table->foreign('portfolio_social_account_id')->references('id')->on('portfolio_social_accounts')->onDelete('cascade');
-            $table->string('type')->default(PortfolioSocialAccountPostTypeEnum::POST->value);
-            $table->string('status')->default(PortfolioSocialAccountPostStatusEnum::CREATING->value);
+            $table->string('type')->default(PortfolioSocialAccountPostTypeEnum::POST->value)->index();
+            $table->string('status')->default(PortfolioSocialAccountPostStatusEnum::CREATING->value)->index();
             $table->string('description')->nullable();
             $table->string('notes')->nullable();
             $table->timestampsTz();
             $this->softDeletes($table);
-
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('portfolio_social_account_posts');
+        Schema::dropIfExists('social_posts');
     }
 };

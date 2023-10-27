@@ -23,8 +23,6 @@ class DatabaseSeeder extends Seeder
             TimezoneSeeder::class,
             LanguageSeeder::class,
             PaymentServiceProviderSeeder::class,
-            DivisionSeeder::class
-
         ]);
     }
 }

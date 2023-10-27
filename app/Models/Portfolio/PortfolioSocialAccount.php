@@ -36,7 +36,8 @@ use Spatie\Sluggable\HasSlug;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Helpers\Audit> $audits
  * @property-read int|null $audits_count
  * @property-read Customer $customer
- * @property-read \App\Models\Portfolio\SocialPost $posts
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Portfolio\SocialPost> $posts
+ * @property-read int|null $posts_count
  * @property-read Shop $shop
  * @method static \Illuminate\Database\Eloquent\Builder|PortfolioSocialAccount newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|PortfolioSocialAccount newQuery()

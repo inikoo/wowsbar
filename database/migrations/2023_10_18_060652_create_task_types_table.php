@@ -14,12 +14,13 @@ return new class () extends Migration {
     {
         Schema::create('task_types', function (Blueprint $table) {
             $table->smallIncrements('id');
+            $table->unsignedBigInteger('division_id')->index();
+            $table->foreign('division_id')->references('id')->on('divisions')->onDelete('cascade');
             $table->string('slug')->unique()->collation('und_ns');
-            $table->string('name');
+            $table->string('name')->unique()->collation('und_ns_ci');
             $table->timestampsTz();
         });
     }
-
 
     public function down(): void
     {

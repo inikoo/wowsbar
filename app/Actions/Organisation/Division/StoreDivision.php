@@ -7,6 +7,7 @@
 
 namespace App\Actions\Organisation\Division;
 
+use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateDivisions;
 use App\Models\Organisation\Division;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
@@ -19,11 +20,9 @@ class StoreDivision
 
     public function handle(array $modelData): Division
     {
-        return Division::create($modelData);
+        $division= Division::create($modelData);
+        $division->taskStats()->create();
+        OrganisationHydrateDivisions::run();
+        return $division;
     }
-
-
-
-
-
 }

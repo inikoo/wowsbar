@@ -68,7 +68,7 @@ class IndexOrgCustomerUsers extends InertiaAction
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
             $query->where(function ($query) use ($value) {
                 $query->whereAnyWordStartWith('contact_name', $value)
-                    ->orWhere('users.username', 'ILIKE', "$value%");
+                    ->orWhereStartWith('users.username', $value);
             });
         });
 

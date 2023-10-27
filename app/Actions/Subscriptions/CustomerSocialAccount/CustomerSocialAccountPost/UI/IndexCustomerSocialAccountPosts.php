@@ -85,7 +85,7 @@ class IndexCustomerSocialAccountPosts extends InertiaAction
                     ]
                 )
                 ->withExportLinks($exportLinks)
-                ->column(key: 'task_name', label: 'Task Name', sortable: true)
+                ->column(key: 'task_name', label: 'Tasks Name', sortable: true)
                 ->column(key: 'start_at', label: __('Uploaded At'), sortable: true);
 
             if ($prefix == PortfolioSocialAccountPostTypeEnum::ADS->value) {

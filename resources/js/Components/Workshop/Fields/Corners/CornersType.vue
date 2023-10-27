@@ -58,9 +58,8 @@ const optionType = [
                 label: trans("Font Size"),
                 value: null,
                 defaultValue: { fontTitle: "text-[25px] lg:text-[44px]", fontSubtitle: "text-[12px] lg:text-[20px]" },
-                options: [
-                    {
-                        label: "Extra Small", value: {
+                    options: [
+                    { label: "Extra Small", value: {
                             fontTitle: "text-[13px] lg:text-[21px]",
                             fontSubtitle: "text-[8px] lg:text-[12px]"
                         }
@@ -261,15 +260,15 @@ watch(props.section, (newValue) => {
                         </div>
                         <div v-if="field.type == 'colorPicker'" class="relative flex-grow">
                             <ColorPicker :key="field.label + section.id"
-                                :value="get(section, ['valueForm', 'data', field.name],get(section, ['valueForm', 'temporaryData', activeType.value, field.name]))"
+                                :color="get(section, ['valueForm', 'data', field.name],get(section, ['valueForm', 'temporaryData', activeType.value, field.name]))"
                                 :fieldData="{...field,...get(section, ['valueForm', 'temporaryData', activeType.value])}" 
                                 @onChange="(newValue)=>onUpdateFieldCorner(field, newValue)"
                                 />
                         </div>
                         <div v-if="field.type == 'radio'" class="relative flex-grow">
                             <Radio :key="field.label + index"
-                                :value="get(section, ['valueForm', 'data', field.name],get(section, ['valueForm', 'temporaryData', activeType.value, field.name]))"
-                                :fieldData="{ options: field.options }" 
+                                :radioValue="get(section, ['valueForm', 'data', field.name],get(section, ['valueForm', 'temporaryData', activeType.value, field.name]))"
+                                :fieldData="{ options: field.options, defaultValue: field.defaultValue }" 
                                 @onChange="(newValue)=>onUpdateFieldCorner(field, newValue)"/>
                         </div>
                     </div>

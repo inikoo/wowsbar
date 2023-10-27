@@ -5,24 +5,30 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
+use App\Stubs\Migrations\HasSoftDeletes;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class () extends Migration {
+    use HasSoftDeletes;
+
     public function up(): void
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedBigInteger('organisation_user_id');
-            $table->foreign('organisation_user_id')->references('id')->on('organisation_users')->onDelete('cascade');
-            $table->unsignedSmallInteger('task_type_id');
+            $table->unsignedSmallInteger('task_type_id')->index();
             $table->foreign('task_type_id')->references('id')->on('task_types')->onDelete('cascade');
+            //$table->unsignedSmallInteger('organisation_user_id');
+            //$table->foreign('organisation_user_id')->references('id')->on('organisation_users');
+            $table->unsignedInteger('activity_id')->nullable()->comment('e.g. social post id');
+            $table->string('activity_type')->nullable();
             $table->dateTimeTz('date');
             $table->timestampsTz();
+            $table=$this->softDeletes($table);
+            $table->index(['activity_id','activity_type']);
         });
     }
-
 
     public function down(): void
     {

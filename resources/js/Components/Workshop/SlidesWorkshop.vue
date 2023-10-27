@@ -230,7 +230,7 @@ const ComponentsBlueprint = ref([
                 type: "textAlign",
                 label: trans("Text Align"),
                 value: ["layout", "centralStage", "textAlign"],
-                defaultValue: 'center',
+                defaultValue : "center",
                 options: [
                     {
                         label: "Align left",
@@ -379,6 +379,7 @@ const CommonBlueprint = ref([
                 name: ["common", "centralStage", "textAlign"],
                 type: "textAlign",
                 label: trans("Text Align"),
+                defaultValue : "center",
                 value: ["common", "centralStage", "textAlign"],
                 defaultValue: "center",
                 options: [

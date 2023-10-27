@@ -27,9 +27,8 @@ class IndexCalendars extends InertiaAction
     {
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
             $query->where(function ($query) use ($value) {
-                $query->where('employees.contact_name', 'ILIKE', "%$value%")
-                    ->orWhere('employees.slug', 'ILIKE', "%$value%")
-                    ->orWhere('employees.state', 'ILIKE', "%$value%");
+                $query->whereAnyWordStartWith('employees.contact_name', $value)
+                    ->orWhereStartWith('employees.alias', $value);
             });
         });
 

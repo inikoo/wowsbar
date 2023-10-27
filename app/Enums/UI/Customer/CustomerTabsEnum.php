@@ -50,7 +50,7 @@ enum CustomerTabsEnum: string
                 'icon'  => 'fal fa-briefcase',
             ],
             CustomerTabsEnum::SOCIAL_ACCOUNT => [
-                'title' => __('customer social account'),
+                'title' => __('social accounts'),
                 'icon'  => 'fal fa-microphone-stand',
             ],
 

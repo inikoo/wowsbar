@@ -5,10 +5,11 @@
   -->
 
 <script setup lang="ts">
-import ShowcaseStats from '@/Components/ShowcaseStats.vue'
-import ShowcaseContactCard from "@/Components/ShowcaseContactCard.vue";
-import FieldForm from "@/Components/Forms/FieldForm.vue";
+import { faUserCircle , faUsdCircle} from '@fal/';
+
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import {library} from "@fortawesome/fontawesome-svg-core";
+library.add(faUserCircle,faUsdCircle)
 
 const props = defineProps<{
   data: {
@@ -51,8 +52,8 @@ const props = defineProps<{
                                 key === data.current
                                     ? 'text-indigo-500 group-hover:text-indigo-500'
                                     : 'text-gray-400 group-hover:text-gray-500',
-                                'flex-shrink-0 -ml-1 mr-3 h-6 w-6',
-                            ]" :icon="item.icon" />
+                                'flex-shrink-0 -ml-1 mr-3 h-4 w-4',
+                            ]" :icon="item.icon" fixed-width />
 
                               <span class="capitalize truncate">{{ item.title }}</span>
                           </li>
