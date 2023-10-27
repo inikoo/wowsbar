@@ -33,7 +33,7 @@ class UploadExcelProgressEvent implements ShouldBroadcastNow
     public function broadcastOn(): array
     {
         return [
-            new Channel('uploads.org')
+            new Channel('uploads.org.' . $this->data->organisation_user_id)
         ];
     }
 
