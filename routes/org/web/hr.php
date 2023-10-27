@@ -57,7 +57,6 @@ Route::post('/employees/{employee}/user', ShowEmployee::class)->name('employees.
 Route::post('/employees/{employee}/user', CreateOrganisationUserFromEmployee::class)->name('employees.show.user.store');
 
 //Route::get('/portfolio-websites/uploads/history', IndexPortfolioWebsiteUploads::class)->name('website.uploads.history');
-Route::get('/employees/uploads/template/download', DownloadEmployeesTemplate::class)->name('employee.uploads.template.download');
 
 Route::get('/positions', IndexJobPositions::class)->name('job-positions.index');
 Route::get('/positions/create', CreateJobPosition::class)->name('job-positions.create');
