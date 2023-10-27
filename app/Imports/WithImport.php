@@ -48,7 +48,7 @@ trait WithImport
                 $totalRows = $event->getReader()->getTotalRows();
                 $this->upload->update(
                     [
-                        'number_rows' => $totalRows['Worksheet']
+                        'number_rows' => (int) $totalRows['Worksheet'] - 1
                     ]
                 );
             }
