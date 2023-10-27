@@ -52,10 +52,6 @@ class Upload extends Model
 
     protected $guarded = [];
 
-    protected $dispatchesEvents = [
-        'updated' => UploadExcelProgressEvent::class
-    ];
-
     public function getFullPath(): string
     {
         return $this->path . '/' . $this->filename;

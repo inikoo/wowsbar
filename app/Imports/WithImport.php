@@ -8,6 +8,7 @@
 namespace App\Imports;
 
 use App\Enums\Helpers\Import\UploadRecordStatusEnum;
+use App\Events\UploadExcelProgressEvent;
 use App\Models\Helpers\Upload;
 use App\Models\Helpers\UploadRecord;
 use Illuminate\Support\Arr;
@@ -119,6 +120,8 @@ trait WithImport
                 'number_fails'   => $this->upload->records()->where('status', UploadRecordStatusEnum::FAILED)->count(),
             ]
         );
+
+        event(new UploadExcelProgressEvent($this->upload));
     }
 
     protected function getFieldsFromRules($remove=[], $add=[]): array
