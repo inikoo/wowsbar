@@ -6,11 +6,7 @@
  */
 
 use App\Actions\Organisation\Organisation\StoreOrganisation;
-use App\Actions\Task\Task\StoreTask;
-use App\Actions\Task\TaskActivity\StoreTaskActivity;
 use App\Models\Organisation\Organisation;
-use App\Models\Task\Task;
-use App\Models\Task\TaskActivity;
 use Illuminate\Support\Facades\Artisan;
 
 beforeAll(function () {
@@ -43,7 +39,7 @@ test('create task', function ($taskType) {
 
     $task = StoreTask::make()->action(organisation()->users->first(), $taskType, $modelData);
 
-    expect($task)->toBeInstanceOf(Task::class);
+    expect($task)->toBeInstanceOf(Tasks::class);
 })->depends('create task type')->todo();
 
 test('create task activities', function ($task) {
@@ -51,8 +47,8 @@ test('create task activities', function ($task) {
         'date' => now()
     ];
 
-    $taskActivity = StoreTaskActivity::make()->action($task, $modelData);
+    $task = StoreTask::make()->action($task, $modelData);
 
-    expect($taskActivity)->toBeInstanceOf(TaskActivity::class);
+    expect($task)->toBeInstanceOf(Tasks::class);
 })->depends('create task')->todo();
 */

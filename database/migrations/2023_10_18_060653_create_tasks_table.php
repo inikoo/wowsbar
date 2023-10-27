@@ -19,15 +19,14 @@ return new class () extends Migration {
             $table->increments('id');
             $table->unsignedSmallInteger('task_type_id')->index();
             $table->foreign('task_type_id')->references('id')->on('task_types')->onDelete('cascade');
-            $table->unsignedSmallInteger('organisation_user_id');
-            $table->foreign('organisation_user_id')->references('id')->on('organisation_users');
+            //$table->unsignedSmallInteger('organisation_user_id');
+            //$table->foreign('organisation_user_id')->references('id')->on('organisation_users');
             $table->unsignedInteger('activity_id')->nullable()->comment('e.g. social post id');
             $table->string('activity_type')->nullable();
             $table->dateTimeTz('date');
             $table->timestampsTz();
             $table=$this->softDeletes($table);
             $table->index(['activity_id','activity_type']);
-            $table->index(['author_id','author_type']);
         });
     }
 

@@ -7,7 +7,7 @@
 
 namespace App\Models\Organisation;
 
-use App\Models\Task\TaskType;
+use App\Models\Tasks\TaskType;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;

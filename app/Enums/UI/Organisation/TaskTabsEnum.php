@@ -15,15 +15,15 @@ enum TaskTabsEnum: string
     use EnumHelperTrait;
     use HasTabs;
 
-    case ACTIVITIES             = 'activities';
+    case SHOWCASE               = 'showcase';
     case CHANGELOG              = 'changelog';
 
     public function blueprint(): array
     {
         return match ($this) {
-            TaskTabsEnum::ACTIVITIES => [
-                'title' => __('activities'),
-                'icon'  => 'fal fa-bars',
+            TaskTabsEnum::SHOWCASE => [
+                'title' => __('task'),
+                'icon'  => 'fas fa-info-circle',
             ],
 
             TaskTabsEnum::CHANGELOG => [

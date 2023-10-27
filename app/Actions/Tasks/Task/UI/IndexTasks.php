@@ -5,18 +5,18 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Task\TaskActivity\UI;
+namespace App\Actions\Tasks\Task\UI;
 
 use App\Actions\Helpers\History\IndexHistory;
 use App\Actions\InertiaAction;
-use App\Actions\UI\Customer\Portfolio\ShowPortfolio;
-use App\Enums\UI\Organisation\TaskActivityTabsEnum;
+use App\Actions\UI\Organisation\Tasks\ShowTasksDashboard;
+use App\Enums\UI\Organisation\TasksTabsEnum;
 use App\Http\Resources\History\HistoryResource;
-use App\Http\Resources\Task\TaskActivityResource;
+use App\Http\Resources\Tasks\TaskResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\Auth\Guest;
 use App\Models\HumanResources\Employee;
-use App\Models\Task\TaskActivity;
+use App\Models\Tasks\Task;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -26,7 +26,7 @@ use Lorisleiva\Actions\ActionRequest;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
-class IndexTaskActivity extends InertiaAction
+class IndexTasks extends InertiaAction
 {
     public function authorize(ActionRequest $request): bool
     {
@@ -55,7 +55,7 @@ class IndexTaskActivity extends InertiaAction
             InertiaTable::updateQueryBuilderParameters($prefix);
         }
 
-        $queryBuilder = QueryBuilder::for(TaskActivity::class);
+        $queryBuilder = QueryBuilder::for(Task::class);
         $queryBuilder->with(['task', 'activity', 'author']);
 
         if($parent) {
@@ -84,45 +84,45 @@ class IndexTaskActivity extends InertiaAction
                 ->withGlobalSearch()
                 ->withEmptyState(
                     [
-                        'title' => __('No task activities found'),
+                        'title' => __('No task found'),
                         'count' => 0
                     ]
                 )
                 ->withExportLinks($exportLinks)
-                ->column(key: 'author_name', label: 'Author Name', sortable: true)
+               // ->column(key: 'author_name', label: 'Author Name', sortable: true)
                 ->column(key: 'activity_name', label: __('activity name'), sortable: true)
-                ->column(key: 'task', label: __('task'), sortable: true)
-                ->column(key: 'date', label: __('date'), sortable: true)
+               // ->column(key: 'task', label: __('task'), sortable: true)
+               // ->column(key: 'date', label: __('date'), sortable: true)
                 ->defaultSort('date');
         };
     }
 
     public function jsonResponse(): AnonymousResourceCollection
     {
-        return TaskActivityResource::collection($this->handle());
+        return TaskResource::collection($this->handle());
     }
 
     public function htmlResponse(LengthAwarePaginator $taskActivities, ActionRequest $request): Response
     {
         return Inertia::render(
-            'Task/TaskActivities',
+            'Tasks/Tasks',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->getName(),
                     $request->route()->parameters
                 ),
-                'title'       => __('task activities'),
+                'title'       => __('task'),
                 'pageHead'    => [
-                    'title'     => __('task activities'),
+                    'title'     => __('task'),
                     'iconRight' => [
-                        'title' => __('task activities'),
-                        'icon'  => 'fal fa-thumbs-up'
+                        'title' => __('task'),
+                        'icon'  => 'fal fa-tasks'
                     ],
                     'actions'   => [
                         $this->canEdit ? [
                             'type'  => 'button',
                             'style' => 'create',
-                            'label' => __('Create task activity'),
+                            'label' => __('Create task'),
                             'route' => [
                                 'name'       => 'customer.portfolio.social-accounts.create',
                                 'parameters' => $request->route()->originalParameters()
@@ -134,20 +134,20 @@ class IndexTaskActivity extends InertiaAction
                 ],
                 'tabs'        => [
                     'current'    => $this->tab,
-                    'navigation' => TaskActivityTabsEnum::navigation()
+                    'navigation' => TasksTabsEnum::navigation()
                 ],
 
-                TaskActivityTabsEnum::ACTIVITIES->value => $this->tab == TaskActivityTabsEnum::ACTIVITIES->value ?
-                    fn () => TaskActivityResource::collection($taskActivities)
-                    : Inertia::lazy(fn () => TaskActivityResource::collection($taskActivities)),
+                TasksTabsEnum::TASKS->value => $this->tab == TasksTabsEnum::TASKS->value ?
+                    fn () => TaskResource::collection($taskActivities)
+                    : Inertia::lazy(fn () => TaskResource::collection($taskActivities)),
 
-                TaskActivityTabsEnum::CHANGELOG->value => $this->tab == TaskActivityTabsEnum::CHANGELOG->value ?
-                    fn () => HistoryResource::collection(IndexHistory::run(TaskActivity::class))
-                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistory::run(TaskActivity::class)))
+                TasksTabsEnum::CHANGELOG->value => $this->tab == TasksTabsEnum::CHANGELOG->value ?
+                    fn () => HistoryResource::collection(IndexHistory::run(Task::class))
+                    : Inertia::lazy(fn () => HistoryResource::collection(IndexHistory::run(Task::class)))
             ]
         )->table(
             $this->tableStructure(
-                prefix: 'task_activity',
+                prefix: TasksTabsEnum::TASKS->value
             )
         )->table(IndexHistory::make()->tableStructure());
     }
@@ -161,7 +161,7 @@ class IndexTaskActivity extends InertiaAction
                     'type'   => 'simple',
                     'simple' => [
                         'route' => $routeParameters,
-                        'label' => __('task activities'),
+                        'label' => __('task'),
                         'icon'  => 'fal fa-bars'
                     ],
                 ],
@@ -169,12 +169,12 @@ class IndexTaskActivity extends InertiaAction
         };
 
         return match ($routeName) {
-            'customer.portfolio.social-accounts.index' =>
+            'org.labour.tasks.index' =>
             array_merge(
-                ShowPortfolio::make()->getBreadcrumbs(),
+                ShowTasksDashboard::make()->getBreadcrumbs(),
                 $headCrumb(
                     [
-                        'name' => 'customer.portfolio.social-accounts.index',
+                        'name' => 'org.labour.tasks.index',
                         null
                     ]
                 ),

@@ -21,6 +21,7 @@ class StoreDivision
     public function handle(array $modelData): Division
     {
         $division= Division::create($modelData);
+        $division->taskStats()->create();
         OrganisationHydrateDivisions::run();
         return $division;
     }

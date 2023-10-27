@@ -7,6 +7,7 @@
 
 namespace App\Actions\Maintenance;
 
+use App\Models\Organisation\Division;
 use Lorisleiva\Actions\Concerns\AsCommand;
 
 class AddStats
@@ -22,6 +23,13 @@ class AddStats
         if (!$organisation->taskStats) {
             $organisation->taskStats()->create();
         }
+
+        foreach (Division::all() as $division) {
+            if (!$division->taskStats) {
+                $division->taskStats()->create();
+            }
+        }
+
         return 0;
     }
 }

@@ -21,6 +21,12 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $number_task_types_division_social
  * @property int $number_task_types_division_prospects
  * @property int $number_task_types_division_banners
+ * @property int $number_tasks
+ * @property int $number_tasks_division_seo
+ * @property int $number_tasks_division_ppc
+ * @property int $number_tasks_division_social
+ * @property int $number_tasks_division_prospects
+ * @property int $number_tasks_division_banners
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationTaskStats newModelQuery()
@@ -35,6 +41,12 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationTaskStats whereNumberTaskTypesDivisionProspects($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationTaskStats whereNumberTaskTypesDivisionSeo($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationTaskStats whereNumberTaskTypesDivisionSocial($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrganisationTaskStats whereNumberTasks($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrganisationTaskStats whereNumberTasksDivisionBanners($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrganisationTaskStats whereNumberTasksDivisionPpc($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrganisationTaskStats whereNumberTasksDivisionProspects($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrganisationTaskStats whereNumberTasksDivisionSeo($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrganisationTaskStats whereNumberTasksDivisionSocial($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationTaskStats whereOrganisationId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationTaskStats whereUpdatedAt($value)
  * @mixin \Eloquent

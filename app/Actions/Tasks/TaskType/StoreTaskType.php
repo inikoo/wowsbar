@@ -5,11 +5,11 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Task\TaskType;
+namespace App\Actions\Tasks\TaskType;
 
 use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateTaskTypes;
 use App\Models\Organisation\Division;
-use App\Models\Task\TaskType;
+use App\Models\Tasks\TaskType;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
@@ -25,6 +25,7 @@ class StoreTaskType
     {
         /** @var TaskType $taskType */
         $taskType= $division->taskTypes()->create($modelData);
+        $taskType->taskStats()->create();
         OrganisationHydrateTaskTypes::dispatch();
         return $taskType;
     }

@@ -5,13 +5,14 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Task\Task\UI;
+namespace App\Actions\Tasks\Task\UI;
 
 use App\Actions\InertiaAction;
 use App\Actions\UI\WithInertia;
 use App\Actions\Web\Website\UI\ShowWebsite;
 use App\Enums\UI\Organisation\TaskTabsEnum;
-use App\Models\Task\Task;
+use App\Models\Tasks\Task;
+use App\Models\Web\Webpage;
 use Inertia\Inertia;
 use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
@@ -37,20 +38,28 @@ class ShowTask extends InertiaAction
         return $task;
     }
 
+    /** @noinspection PhpUnusedParameterInspection */
+    public function inWebsite(Task $task, ActionRequest $request): Task
+    {
+        $this->initialisation($request)->withTab(TaskTabsEnum::values());
+
+        return $task;
+    }
+
     public function htmlResponse(Task $task, ActionRequest $request): Response
     {
         return Inertia::render(
-            'Task/Task',
+            'Tasks/Tasks',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(
                     $request->route()->originalParameters()
                 ),
-                'title'       => __('task'),
+                'title'       => __('task activity'),
                 'pageHead'    => [
-                    'title'   => $task->type->name,
+                    'title'   => $task->task->type->name,
                     'icon'    => [
-                        'title' => __('task'),
-                        'icon'  => 'fal fa-task'
+                        'title' => __('task activity'),
+                        'icon'  => 'fal fa-browser'
                     ],
                 ],
 
@@ -58,33 +67,61 @@ class ShowTask extends InertiaAction
                     'current'    => $this->tab,
                     'navigation' => TaskTabsEnum::navigation()
                 ],
+
             ]
         );
     }
 
     public function getBreadcrumbs(array $routeParameters, string $suffix = ''): array
     {
-        $headCrumb = function (Task $task, array $routeParameters, string $suffix) {
+        $headCrumb = function (Webpage $webpage, array $routeParameters, string $suffix) {
             return [
                 [
+
                     'type'           => 'modelWithIndex',
                     'modelWithIndex' => [
                         'index' => [
                             'route' => $routeParameters['index'],
-                            'label' => __('task')
+                            'label' => __('webpages')
                         ],
+                        'model' => [
+                            'route' => $routeParameters['model'],
+                            'label' => $webpage->code,
+                        ],
+
                     ],
                     'suffix'         => $suffix
+
                 ],
             ];
         };
 
-        //        return array_merge(
-        //            ShowWebsite::make()->getBreadcrumbs(
-        //                [
-        //                    'website'=> $routeParameters['website']
-        //                ]
-        //            ),
-        //        );
+        return array_merge(
+            ShowWebsite::make()->getBreadcrumbs(
+                [
+                    'website'=> $routeParameters['website']
+                ]
+            ),
+            $headCrumb(
+                Webpage::where('slug', $routeParameters['webpage'])->first(),
+                [
+                    'index' => [
+                        'name'       => 'org.websites.show.webpages.index',
+                        'parameters' => [
+                            'website' => $routeParameters['website']
+
+                        ]
+                    ],
+                    'model' => [
+                        'name'       => 'org.websites.show.webpages.show',
+                        'parameters' => [
+                            'website' => $routeParameters['website'],
+                            'webpage' => $routeParameters['webpage']
+                        ]
+                    ]
+                ],
+                $suffix
+            ),
+        );
     }
 }

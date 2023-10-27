@@ -9,7 +9,7 @@ namespace App\Actions\Organisation\Organisation\Hydrators;
 
 use App\Enums\Divisions\DivisionEnum;
 use App\Models\Organisation\Division;
-use App\Models\Task\TaskType;
+use App\Models\Tasks\TaskType;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class OrganisationHydrateTaskTypes

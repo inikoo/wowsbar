@@ -2,7 +2,6 @@
 
 namespace App\Models\Organisation;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -16,6 +15,12 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $number_task_types_division_social
  * @property int $number_task_types_division_prospects
  * @property int $number_task_types_division_banners
+ * @property int $number_tasks
+ * @property int $number_tasks_division_seo
+ * @property int $number_tasks_division_ppc
+ * @property int $number_tasks_division_social
+ * @property int $number_tasks_division_prospects
+ * @property int $number_tasks_division_banners
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @method static \Illuminate\Database\Eloquent\Builder|DivisionTaskStats newModelQuery()
@@ -30,12 +35,17 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|DivisionTaskStats whereNumberTaskTypesDivisionProspects($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DivisionTaskStats whereNumberTaskTypesDivisionSeo($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DivisionTaskStats whereNumberTaskTypesDivisionSocial($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|DivisionTaskStats whereNumberTasks($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|DivisionTaskStats whereNumberTasksDivisionBanners($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|DivisionTaskStats whereNumberTasksDivisionPpc($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|DivisionTaskStats whereNumberTasksDivisionProspects($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|DivisionTaskStats whereNumberTasksDivisionSeo($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|DivisionTaskStats whereNumberTasksDivisionSocial($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DivisionTaskStats whereUpdatedAt($value)
  * @mixin \Eloquent
  */
 class DivisionTaskStats extends Model
 {
-    use HasFactory;
-
+    protected $table   = 'division_task_stats';
     protected $guarded = [];
 }

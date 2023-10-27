@@ -6,25 +6,26 @@
  */
 
 use App\Enums\Divisions\DivisionEnum;
+use App\Stubs\Migrations\HasTasksStats;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class () extends Migration {
+    use HasTasksStats;
+
     public function up(): void
     {
         Schema::create('division_task_stats', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedInteger('division_id');
+            $table->smallIncrements('id');
+            $table->unsignedSmallInteger('division_id');
             $table->foreign('division_id')->references('id')->on('divisions');
-            $table->unsignedInteger('number_task_types')->default(0);
+            $table->unsignedSmallInteger('number_task_types')->default(0);
             foreach (DivisionEnum::cases() as $case) {
                 $table->unsignedInteger('number_task_types_division_' . $case->snake())->default(0);
             }
-            $table->unsignedInteger('number_tasks')->default(0);
-            foreach (DivisionEnum::cases() as $case) {
-                $table->unsignedInteger('number_tasks_division_' . $case->snake())->default(0);
-            }
+
+            $table=$this->taskStats($table);
             $table->timestampsTz();
         });
     }

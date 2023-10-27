@@ -12,13 +12,13 @@ import {ref, onMounted, onUnmounted} from 'vue'
 import {router} from '@inertiajs/vue3'
 
 import {library} from "@fortawesome/fontawesome-svg-core"
-import { faShapes,faBriefcase, faEnvelope, faPuzzlePiece, faThumbsUp, faAd, faAlbumCollection} from '@fal/'
+import {faTasksAlt, faShapes, faBriefcase, faEnvelope, faPuzzlePiece, faThumbsUp, faAd, faAlbumCollection} from '@fal/'
 import {faGoogle} from "@fortawesome/free-brands-svg-icons"
 import {faChevronLeft} from '@far/'
 import {useLayoutStore} from "@/Stores/layout.js"
 import {computed} from "vue"
 
-library.add(faShapes, faBriefcase, faPuzzlePiece, faChevronLeft, faEnvelope, faThumbsUp, faAd, faGoogle, faAlbumCollection)
+library.add(faTasksAlt, faShapes, faBriefcase, faPuzzlePiece, faChevronLeft, faEnvelope, faThumbsUp, faAd, faGoogle, faAlbumCollection)
 
 const layout = useLayoutStore()
 const isHover = ref(false)
@@ -63,13 +63,13 @@ const handleToggleLeftbar = () => {
 
 <template>
     <div class="mt-11 fixed md:flex md:flex-col md:inset-y-0 lg:mt-10 bg-gray-50 dark:bg-gray-800 dark:text-gray-100 h-full text-gray-400"
-        :class="[layout.leftSidebar.show ? 'w-8/12 md:w-56' : 'w-8/12 md:w-10']"
-        @mouseenter="isHover = true" @mouseleave="isHover = false"
+         :class="[layout.leftSidebar.show ? 'w-8/12 md:w-56' : 'w-8/12 md:w-10']"
+         @mouseenter="isHover = true" @mouseleave="isHover = false"
     >
         <!-- Toggle: collapse-expand LeftSideBar -->
         <div @click="handleToggleLeftbar"
-            class="hidden absolute z-10 right-0 top-2/4 -translate-y-full translate-x-1/2 w-7 aspect-square bg-gray-200 hover:bg-gray-300 border border-gray-300 rounded-full md:flex md:justify-center md:items-center cursor-pointer"
-            :title="layout.leftSidebar.show ? 'Collapse the bar' : 'Expand the bar'"
+             class="hidden absolute z-10 right-0 top-2/4 -translate-y-full translate-x-1/2 w-7 aspect-square bg-gray-200 hover:bg-gray-300 border border-gray-300 rounded-full md:flex md:justify-center md:items-center cursor-pointer"
+             :title="layout.leftSidebar.show ? 'Collapse the bar' : 'Expand the bar'"
         >
             <div class="flex items-center justify-center transition-all duration-200 ease-in-out" :class="{'rotate-180': !layout.leftSidebar.show}">
                 <FontAwesomeIcon icon='far fa-chevron-left' class='-translate-x-[1px] h-[14px]' aria-hidden='true'/>
@@ -81,16 +81,16 @@ const handleToggleLeftbar = () => {
                 <nav class="flex-1 space-y-1" aria-label="Sidebar">
                     <!-- LeftSide Links -->
                     <Link v-for="(item, itemKey) in layout.navigation"
-                        :key="itemKey"
-                        :href="route(item.route.name,item.route.parameters)"
-                        :class="[
+                          :key="itemKey"
+                          :href="route(item.route.name,item.route.parameters)"
+                          :class="[
 							itemKey === layout.currentModule
 								? 'navigationActiveOrganisation dark:border-gray-100 dark:bg-gray-600 px-0.5'
 								: 'navigationOrganisation dark:hover:bg-dark-700 px-1',
 							layout.leftSidebar.show ? 'px-3' : '',
 							'group flex items-center text-sm font-medium py-2',
 						]"
-                        :aria-current="itemKey === layout.currentModule ? 'page' : undefined"
+                          :aria-current="itemKey === layout.currentModule ? 'page' : undefined"
                     >
                         <div class="flex items-center">
                             <!--
@@ -102,9 +102,9 @@ const handleToggleLeftbar = () => {
 							]">
 							-->
                             <FontAwesomeIcon
-                                aria-hidden="true"
-                                class="text-gray-400 dark:text-gray-200 ml-2 mr-3 flex-shrink-0 h-4 w-4"
-                                :icon="item.icon"/>
+                                    aria-hidden="true"
+                                    class="text-gray-400 dark:text-gray-200 ml-2 mr-3 flex-shrink-0 h-4 w-4"
+                                    :icon="item.icon"/>
                         </div>
                         <span class="capitalize text-gray-600 leading-none whitespace-nowrap" :class="[layout.leftSidebar.show ? 'block md:block' : 'block md:hidden']">{{ trans(item.label) }}</span>
                     </Link>

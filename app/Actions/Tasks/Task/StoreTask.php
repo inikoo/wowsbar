@@ -5,39 +5,29 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-namespace App\Actions\Task\TaskActivity;
+namespace App\Actions\Tasks\Task;
 
 use App\Models\Auth\Guest;
 use App\Models\HumanResources\Employee;
-use App\Models\Portfolio\SocialPost;
-use App\Models\Task\Task;
+use App\Models\Tasks\Task;
+use App\Models\Tasks\TaskType;
 use Illuminate\Database\Eloquent\Model;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
 
-class StoreTaskActivity
+class StoreTask
 {
     use AsAction;
     use WithAttributes;
 
     private bool $trusted = false;
 
-    public function handle(Task $task, array $modelData, Employee|Guest $parent = null, SocialPost $activity = null): Model
+    public function handle(TaskType $taskType, array $modelData): Model
     {
-        data_set($modelData, 'task_id', $task->id);
-
-        if($parent) {
-            data_set($modelData, 'author_id', $parent->id);
-            data_set($modelData, 'author_type', $parent::class);
-        }
-
-        if($activity) {
-            data_set($modelData, 'activity_id', $activity->id);
-            data_set($modelData, 'activity_type', $activity::class);
-        }
-
-        return $task->activities()->create($modelData);
+        /** @var Task $task */
+        $task= $taskType->tasks()->create($modelData);
+        return $task;
     }
 
     public function authorize(ActionRequest $request): bool
@@ -45,7 +35,6 @@ class StoreTaskActivity
         if ($this->trusted) {
             return true;
         }
-
         return $request->user()->hasPermissionTo("tasks.edit");
     }
 

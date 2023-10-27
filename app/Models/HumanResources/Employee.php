@@ -11,7 +11,7 @@ use App\Enums\HumanResources\Employee\EmployeeStateEnum;
 use App\Enums\HumanResources\Employee\EmployeeTypeEnum;
 use App\Enums\Miscellaneous\GenderEnum;
 use App\Models\Auth\OrganisationUser;
-use App\Models\Task\TaskActivity;
+use App\Models\Tasks\Task;
 use App\Models\Traits\HasHistory;
 use App\Models\Traits\HasPhoto;
 use App\Models\Traits\HasUniversalSearch;
@@ -66,7 +66,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \App\Models\Media\Media> $media
  * @property-read int|null $media_count
  * @property-read OrganisationUser|null $organisationUser
- * @property-read \Illuminate\Database\Eloquent\Collection<int, TaskActivity> $tasks
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Task> $tasks
  * @property-read int|null $tasks_count
  * @property-read \App\Models\Search\UniversalSearch|null $universalSearch
  * @property-read \App\Models\HumanResources\Workplace|null $workplace
@@ -180,7 +180,7 @@ class Employee extends Model implements HasMedia, Auditable
 
     public function tasks(): MorphToMany
     {
-        return $this->morphToMany(TaskActivity::class, 'author');
+        return $this->morphToMany(Task::class, 'author');
     }
 
 

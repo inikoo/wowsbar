@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Models\Task;
+namespace App\Models\Tasks;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * App\Models\Task\OrganisationUserTask
+ * App\Models\Tasks\OrganisationUserTask
  *
  * @property int $id
  * @property int $organisation_user_id
