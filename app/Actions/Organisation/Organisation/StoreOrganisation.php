@@ -35,6 +35,7 @@ class StoreOrganisation
         $organisation->crmStats()->create();
         $organisation->catalogueStats()->create();
         $organisation->portfoliosStats()->create();
+        $organisation->taskStats()->create();
 
         AttachImageToOrganisation::run(
             organisation: $organisation,
@@ -53,6 +54,8 @@ class StoreOrganisation
 
         Artisan::call("db:seed --force --class=StockImageSeeder");
         Artisan::call("db:seed --force --class=JobPositionSeeder");
+        Artisan::call("db:seed --force --class=DivisionSeeder");
+        Artisan::call("db:seed --force --class=TaskTypesSeeder");
 
 
 

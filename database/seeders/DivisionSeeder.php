@@ -8,31 +8,30 @@
 namespace Database\Seeders;
 
 use App\Actions\Organisation\Division\StoreDivision;
+use App\Enums\Divisions\DivisionEnum;
 use App\Models\Organisation\Division;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class DivisionSeeder extends Seeder
 {
     public function run(): void
     {
-        $divisionsData = collect(
-            json_decode(
-                Storage::disk('datasets')->get('divisions.json'),
-                true
-            )
-        );
+        $divisionsData = collect(DivisionEnum::values());
 
-        $divisionsData->each(function ($modelData) {
+        $divisionsData->each(function ($slug) {
 
-
-            $division=Division::where('slug', Arr::get($modelData, 'slug'))->first();
+            $division=Division::where('slug', $slug)->first();
 
             if(!$division) {
+
+                $modelData = [
+                    'slug' => $slug,
+                    'name' => Str::ucfirst($slug),
+                ];
+
                 StoreDivision::run($modelData);
             }
-
 
         });
     }

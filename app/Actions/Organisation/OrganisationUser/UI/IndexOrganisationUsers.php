@@ -188,9 +188,9 @@ class IndexOrganisationUsers extends InertiaAction
 
 
             ]
-        )->table($this->tableStructure(prefix: 'users'))
+        )->table($this->tableStructure(prefix: OrganisationUsersTabsEnum::USERS->value))
             ->table(IndexHistory::make()->tableStructure(prefix: OrganisationUsersTabsEnum::SYSADMIN_HISTORY->value))
-            ->table(IndexOrganisationUserRequestLogs::make()->tableStructure(parent: $organisation, prefix: 'visit_log'));
+            ->table(IndexOrganisationUserRequestLogs::make()->tableStructure(parent: $organisation, prefix: OrganisationUsersTabsEnum::USERS_REQUESTS->value));
     }
 
     public function asController(ActionRequest $request): LengthAwarePaginator

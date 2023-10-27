@@ -12,6 +12,7 @@ import Image from "@/Components/Image.vue"
 import CentralStage from "@/Components/Slider/CentralStage.vue"
 import { breakpointType } from '@/Composables/useWindowSize'
 import { useWindowSize } from '@vueuse/core'
+import { BannerWorkshop, CornersData } from '@/types/BannerWorkshop'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faEyeSlash } from '@fas/'
@@ -25,79 +26,17 @@ import 'swiper/css'
 import 'swiper/css/navigation'
 
 
-interface CornersPositionData {
-    data: {
-        text: string
-        target: string
-    }
-    type: string
-}
-
-interface Corners {
-    topLeft?: CornersPositionData
-    topRight?: CornersPositionData
-    bottomLeft?: CornersPositionData
-    bottomRight?: CornersPositionData
-}
-
 const props = defineProps<{
     production?: boolean
     jumpToIndex?: string  // ulid
-    data: {
-        common: {
-            centralStage: {
-                subtitle?: string
-                text?: string
-                title?: string
-            }
-            corners: Corners
-        }
-        components: {
-            id: number
-            ulid: string
-            image_id: number
-            image_source: string
-            layout: {
-                link?: string,
-                centralStage: {
-                    title?: string
-                    subtitle?: string
-                    // text?: string,
-                    // footer?: string
-                }
-            }
-            image: {
-                desktop: {} | string
-                tablet: {} | string
-                mobile: {} | string
-            }
-            background: {
-                desktop: string
-                tablet: string
-                mobile: string
-            }
-            backgroundType: {
-                desktop: string
-                tablet: string
-                mobile: string
-            }
-            visibility: boolean
-            corners: Corners
-            imageAlt: string
-            link: string
-        }[]
-
-        delay: number
-        type: string
-    }
+    data: BannerWorkshop
     view?: string
-
 }>()
 
 const swiperRef = ref()
 const { width: screenWidth, height: screenHeight }: any = useWindowSize()  // To detect responsive
 
-const filteredNulls = (corners: Corners) => {
+const filteredNulls = (corners: CornersData) => {
     if (corners) {
         return Object.fromEntries(Object.entries(corners).filter(([_, v]) => v != null))
     }
@@ -158,6 +97,7 @@ const compHandleBannerLessSlide = computed(() => {
 
 <template>
     <!-- Square -->
+    <!-- <pre>{{ props.data.components[1] }}</pre> -->
     <div class="w-full relative shadow overflow-hidden mx-auto transition-all duration-200 ease-in-out">
         <Swiper ref="swiperRef" :slideToClickedSlide="false" :spaceBetween="0" :slidesPerView="compSlidesPerView"
             :centeredSlides="false" :loop="true" :autoplay="{
@@ -197,7 +137,7 @@ const compHandleBannerLessSlide = computed(() => {
                     class="absolute bg-transparent w-full h-full" />
 
                 <SlideCorner v-for="(slideCorner, position) in filteredNulls(component?.layout?.corners)"
-                    :position="position" :corner="slideCorner" :commonCorner="data.common.corners" />
+                    :position="position" :corner="slideCorner" />
 
                 <!-- CentralStage: slide-centralstage (prioritize) and common-centralStage -->
                 <CentralStage

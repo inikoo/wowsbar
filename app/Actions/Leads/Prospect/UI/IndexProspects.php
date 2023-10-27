@@ -9,6 +9,7 @@ namespace App\Actions\Leads\Prospect\UI;
 
 use App\Actions\InertiaAction;
 use App\Actions\Organisation\UI\CRM\ShowCRMDashboard;
+use App\Enums\UI\Organisation\ProspectsTabsEnum;
 use App\Http\Resources\CRM\ProspectResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\Leads\Prospect;
@@ -40,7 +41,7 @@ class IndexProspects extends InertiaAction
 
     public function asController(ActionRequest $request): LengthAwarePaginator
     {
-        $this->initialisation($request);
+        $this->initialisation($request)->withTab(ProspectsTabsEnum::values());
         $this->parent = organisation();
 
         return $this->handle($this->parent);
@@ -48,7 +49,7 @@ class IndexProspects extends InertiaAction
 
     public function inShop(Shop $shop, ActionRequest $request): LengthAwarePaginator
     {
-        $this->initialisation($request);
+        $this->initialisation($request)->withTab(ProspectsTabsEnum::values());
         $this->parent = $shop;
 
         return $this->handle($shop);
@@ -162,7 +163,22 @@ class IndexProspects extends InertiaAction
 
 
                         ] : false
-                    ]
+                    ],
+                    'meta'    => [
+
+                        [
+                            'href'     => [
+                                'name'       => 'org.crm.shop.prospects.mailshots.index',
+                                'parameters' => $request->route()->originalParameters()
+                            ],
+                            'number'   => 0,
+                            'label'    => __('Mailshots'),
+                            'leftIcon' => [
+                                'icon'    => 'fal fa-bulk-email',
+                                'tooltip' => __('mailshots')
+                            ]
+                        ],
+                    ],
                 ],
                 'uploads' => [
                     'templates' => [
@@ -187,11 +203,21 @@ class IndexProspects extends InertiaAction
                     //     'parameters' => $this->parent->id
                     // ]
                 ],
-                'data'         => ProspectResource::collection($prospects),
+
+                'tabs' => [
+                    'current'    => $this->tab,
+                    'navigation' => ProspectsTabsEnum::navigation(),
+                ],
+
+                ProspectsTabsEnum::PROSPECTS->value => $this->tab == ProspectsTabsEnum::PROSPECTS->value ?
+                    fn () => ProspectResource::collection($prospects)
+                    : Inertia::lazy(fn () => ProspectResource::collection($prospects)),
+
+
 
 
             ]
-        )->table($this->tableStructure());
+        )->table($this->tableStructure(prefix: ProspectsTabsEnum::PROSPECTS->value));
     }
 
     public function getBreadcrumbs(string $routeName, array $routeParameters): array

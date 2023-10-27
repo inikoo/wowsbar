@@ -26,7 +26,6 @@ const props = withDefaults(defineProps<{
     useBasic: true,
 });
 
-;
 
 
 const editorInstance = ref(null);
@@ -98,14 +97,16 @@ onMounted(() => {
         fromElement: true,
         noticeOnUnload: false,
         plugins: plugin,
+        colorPicker: { appendTo: 'parent',   offset: { top: 26, left: -166, }}, 
         canvas: {
             styles: ['https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css' ],
-            scripts:['https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js',"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"]
+            scripts:['https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js']
         },
         storageManager: {
             type: 'remote',
         },
         assetManager: {
+            // custom: true,
             storeAfterUpload  : false,
             uploadFile: async function (e) {
                 var files = e.dataTransfer ? e.dataTransfer.files : e.target.files;
@@ -173,8 +174,16 @@ onMounted(() => {
 
 .editor{
     width: 100%;
-    height: calc(100% - 5rem);
+    height: calc(100% - 4rem);
 }
+.gjs-mdl-container{
+    position: relative;
+}
+
+.gjs-pn-views{
+    background: #F3F4F6 !important;
+}
+
 .panel {
     width: 90%;
     max-width: 700px;

@@ -1,26 +1,23 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import {
-    faRocketLaunch,
-    faClock,
-    faVideo,
-} from '@far/';
+import { faRocketLaunch, faClock, faVideo } from "@far/";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { isNull } from "lodash";
 import { useFormatTime } from "@/Composables/useFormatTime";
-import { loadCss } from '@/Composables/loadCss';
+import { loadCss } from "@/Composables/loadCss";
 
 library.add(faRocketLaunch, faClock, faVideo);
 
 const props = defineProps<{
-    data: Object
-}>()
-console.log('ini', props.data)
-console.log('porpsd', props)
+    data: Object;
+}>();
+console.log("ini", props.data);
+console.log("porpsd", props);
 
 const Book = {
-    description: "The Basic tee is an honest new take on a classic. The tee uses super soft, pre-shrunk cotton for true comfort and a dependable fit",
+    description:
+        "The Basic tee is an honest new take on a classic. The tee uses super soft, pre-shrunk cotton for true comfort and a dependable fit",
     meet: {
         customerService: "Arya",
         duration: "30 mnt",
@@ -105,32 +102,49 @@ const getDate = () => {
     return ""; // Handle when no date is selected
 };
 </script>
-<template >
-    <div class="flex justify-center">
-        <div
-            class="mt-12 bg-white w-fit grid grid-cols-2 max-w-3xl justify-center border-2 border-gray-300 overflow-hidden rounded-md divide-x divide-gray-100">
-            <div class="overflow-hidden bg-white sm:rounded-lg">
-                <div class="px-4 py-5 sm:p-6">
-                    <div v-html="data.info"></div>
+<template>
+    <div style="margin: 20px;" >
+        <div class="container border-2" style="max-width: 800px;">
+        <div class="row">
+            <div class="col-md-6 p-0">
+                <div class="card text-center rounded-0 border-0">
+                    <div
+                        class="card-body"
+                     
+                    >
+                        <div v-html="data.info"></div>
+                    </div>
                 </div>
             </div>
-            <div class="w-96">
-                <div class="divide-y divide-gray-200 overflow-hidden rounded-lg bg-white">
-                    <div class="px-4 py-5 sm:px-6">
-                        <span v-html="data.title"></span>
-                    </div>
-                    <div class="px-4 py-5 sm:p-6">
-                        <VCalendar expanded :attributes="attrs" @dayclick="handleDateClick" />
-                    </div>
-                    <div class="px-4 py-4 sm:px-6">
-                        <div v-if="!isNull(selectedDate)">
-                            <div class="px-2.5">{{ getDate() }}</div>
-                            <div class="px-2.5 my-4">
-                                <div class="flex flex-wrap justify-start gap-3">
-                                    <button v-for="hour in hours" :key="hour" @click="selectHour(hour)"
-                                        class="rounded-md border border-transparent bg-indigo-600 px-2 py-1 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                                        {{ hour }}
-                                    </button>
+            <div class="col-md-6 p-0">
+                <div class="card text-center rounded-0 border-0">
+                    <div class="card-body" style="border-left: 1px solid #d1d5db; height:100%">
+                        <div class="bg-white rounded text-left">
+                            <span v-html="data.title"></span>
+                        </div>
+                        <div>
+                            <VCalendar
+                                expanded
+                                :attributes="attrs"
+                                @dayclick="handleDateClick"
+                            />
+                        </div>
+                        <div>
+                            <div v-if="!isNull(selectedDate)">
+                                <div class="px-2.5">{{ getDate() }}</div>
+                                <div class="px-2.5 my-4">
+                                    <div
+                                        class="flex flex-wrap justify-start gap-3"
+                                    >
+                                        <button
+                                            v-for="hour in hours"
+                                            :key="hour"
+                                            @click="selectHour(hour)"
+                                            class="rounded-md border border-transparent bg-indigo-600 px-2 py-1 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                                        >
+                                            {{ hour }}
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -139,4 +153,6 @@ const getDate = () => {
             </div>
         </div>
     </div>
+    </div>
+    
 </template>

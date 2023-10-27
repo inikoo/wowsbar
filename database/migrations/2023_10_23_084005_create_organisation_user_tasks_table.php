@@ -13,14 +13,13 @@ return new class () extends Migration {
     public function up(): void
     {
         Schema::create('organisation_user_tasks', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('organisation_user_id');
+            $table->increments('id');
+            $table->unsignedBigInteger('organisation_user_id')->index();
             $table->foreign('organisation_user_id')->references('id')->on('organisation_users')->onDelete('cascade');
-
-            $table->unsignedBigInteger('task_id');
+            $table->unsignedBigInteger('task_id')->index();
             $table->foreign('task_id')->references('id')->on('tasks')->onDelete('cascade');
-
-            $table->timestamps();
+            $table->timestampsTz();
+            $table->index(['organisation_user_id','task_id']);
         });
     }
 

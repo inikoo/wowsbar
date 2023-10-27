@@ -7,9 +7,10 @@
 
 namespace App\Models\Organisation;
 
-use App\Models\Task\TaskType;
+use App\Models\Tasks\TaskType;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * App\Models\Organisation\Division
@@ -19,6 +20,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string $name
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\Organisation\DivisionTaskStats|null $taskStats
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, TaskType> $taskTypes
+ * @property-read int|null $task_types_count
  * @method static \Illuminate\Database\Eloquent\Builder|Division newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Division newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Division query()
@@ -39,9 +43,14 @@ class Division extends Model
 
     protected $guarded = [];
 
-    public function taskType(): BelongsTo
+    public function taskTypes(): HasMany
     {
-        return $this->belongsTo(TaskType::class);
+        return $this->hasMany(TaskType::class);
+    }
+
+    public function taskStats(): HasOne
+    {
+        return $this->hasOne(DivisionTaskStats::class);
     }
 
 }

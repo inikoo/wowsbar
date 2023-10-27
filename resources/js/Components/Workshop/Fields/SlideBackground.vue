@@ -199,7 +199,7 @@ const backgroundColorList = useBannerBackgroundColor() // Fetch color list from 
         <div class="w-full relative space-y-4 mt-2.5">
             <div class="flex flex-col gap-y-2">
                 <div class="flex items-center gap-x-4 py-1"
-                    :class="[get(data, ['backgroundType', screenView ? screenView : 'desktop'], 'image') == 'image' ? 'border-l-4 border-amber-400 pl-1.5 bg-amber-50' : '']"
+                    :class="[get(data, ['backgroundType', screenView ? screenView : 'desktop'], 'image') == 'image' ? 'navigationSecondActiveCustomer pl-2' : 'navigationSecondCustomer']"
                 >
                     <div>An Image:</div>
                     <div class="flex items-center gap-x-2">
@@ -239,8 +239,8 @@ const backgroundColorList = useBannerBackgroundColor() // Fetch color list from 
                 <!-- List: Background Color -->
                 <div class="flex items-center gap-x-4"
                     :class="get(data, ['backgroundType', screenView ? screenView : 'desktop'], get(data, ['backgroundType', 'desktop'], '')) === 'color'
-                        ? 'border-l-4 border-amber-400 pl-1.5 bg-amber-50'
-                        : ''"
+                        ? 'navigationSecondActiveCustomer pl-2'
+                        : 'navigationSecondCustomer'"
                 >
                     <div class="whitespace-nowrap">Or a color:</div>
                     <!-- Add conditional click() to avoid user change color via inspect -->

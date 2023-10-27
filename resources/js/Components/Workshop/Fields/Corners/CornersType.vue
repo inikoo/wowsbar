@@ -58,9 +58,8 @@ const optionType = [
                 label: trans("Font Size"),
                 value: null,
                 defaultValue: { fontTitle: "text-[25px] lg:text-[44px]", fontSubtitle: "text-[12px] lg:text-[20px]" },
-                options: [
-                    {
-                        label: "Extra Small", value: {
+                    options: [
+                    { label: "Extra Small", value: {
                             fontTitle: "text-[13px] lg:text-[21px]",
                             fontSubtitle: "text-[8px] lg:text-[12px]"
                         }
@@ -113,11 +112,12 @@ const optionType = [
                 label: trans('Link'),
                 value: 'null',
                 defaultValue : 'https://',
+                placeholder: 'https://www.example.com'
                 // info : 'use https:// or http://',
-                rules:{
-                    pattern : '^(http|https)://',
-                    message : 'please input https:// or http://'
-                }
+                // rules:{
+                //     pattern : '^(http|https)://',
+                //     message : 'please input https:// or http://'
+                // }
             },
             {
                 name: 'button_color',
@@ -251,24 +251,24 @@ watch(props.section, (newValue) => {
                 <dd class="sm:col-span-2">
                     <!-- Available Field on Corners -->
                     <div class="mt-1 flex text-sm text-gray-700 sm:mt-0">
-                        <div class="relative flex-grow" v-if="field.type == 'input' || field.type == 'number'">
+                        <div v-if="field.type == 'input' || field.type == 'number'" class="relative flex-grow">
                             <Input :key="field.label + section.id"
                                 :value="get(section, ['valueForm', 'data', field.name],get(section, ['valueForm', 'temporaryData', activeType.value, field.name]))"
                                 @input="setUpData"
                                 :fieldData="{...field,...get(section, ['valueForm', 'temporaryData', activeType.value])}" 
                                 @onChange="(newValue)=>onUpdateFieldCorner(field, newValue)" />
                         </div>
-                        <div class="relative flex-grow" v-if="field.type == 'colorPicker'">
+                        <div v-if="field.type == 'colorPicker'" class="relative flex-grow">
                             <ColorPicker :key="field.label + section.id"
-                                :value="get(section, ['valueForm', 'data', field.name],get(section, ['valueForm', 'temporaryData', activeType.value, field.name]))"
+                                :color="get(section, ['valueForm', 'data', field.name],get(section, ['valueForm', 'temporaryData', activeType.value, field.name]))"
                                 :fieldData="{...field,...get(section, ['valueForm', 'temporaryData', activeType.value])}" 
                                 @onChange="(newValue)=>onUpdateFieldCorner(field, newValue)"
                                 />
                         </div>
-                        <div class="relative flex-grow" v-if="field.type == 'radio'">
+                        <div v-if="field.type == 'radio'" class="relative flex-grow">
                             <Radio :key="field.label + index"
-                                :value="get(section, ['valueForm', 'data', field.name],get(section, ['valueForm', 'temporaryData', activeType.value, field.name]))"
-                                :fieldData="{ options: field.options }" 
+                                :radioValue="get(section, ['valueForm', 'data', field.name],get(section, ['valueForm', 'temporaryData', activeType.value, field.name]))"
+                                :fieldData="{ options: field.options, defaultValue: field.defaultValue }" 
                                 @onChange="(newValue)=>onUpdateFieldCorner(field, newValue)"/>
                         </div>
                     </div>

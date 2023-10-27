@@ -187,8 +187,8 @@ return [
     |           name, e.g. $schedule->command('db:backup')->name('Backup DB').
     |           If unavailable, the task's command name will be used instead.
     |           You can specify an optional prefix to label scheduled tasks
-    |           with, e.g "Task " would label as "Task Backup DB" (or just
-    |           "Task db:backup" if no name has been set in the scheduler).
+    |           with, e.g "Tasks " would label as "Tasks Backup DB" (or just
+    |           "Tasks db:backup" if no name has been set in the scheduler).
     |
     | ignore:   If you want New Relic to ignore transactions for specific
     |           scheduled tasks, enter the task names/descriptions here.

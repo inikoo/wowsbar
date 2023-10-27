@@ -386,6 +386,28 @@ class GetLayout
             ];
         }
 
+        if ($user->hasPermissionTo('tasks.view')) {
+            $navigation['labour'] = [
+                'label'   => __('tasks'),
+                'icon'    => ['fal', 'fa-tasks-alt'],
+                'route'   =>
+                    [
+                        'name' => 'org.labour.dashboard'
+                    ],
+                'topMenu' => [
+                    'subSections' => [
+                        [
+                            'icon'  => ['fal', 'fa-chart-network'],
+                            'route' => [
+                                'name' => 'org.labour.dashboard'
+                            ]
+                        ],
+
+                    ]
+                ]
+            ];
+        }
+
 
         if ($user->hasPermissionTo('accounting.view')) {
             $navigation['accounting'] = [

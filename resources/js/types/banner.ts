@@ -11,5 +11,5 @@ export interface Banner {
     name: string
     created_at: string
     updated_at: string
-
+    state: string
 }

@@ -7,10 +7,9 @@
 
 namespace Database\Seeders;
 
-use App\Actions\Organisation\Division\StoreDivision;
-use App\Actions\Task\TaskType\StoreTaskType;
+use App\Actions\Tasks\TaskType\StoreTaskType;
 use App\Models\Organisation\Division;
-use App\Models\Task\TaskType;
+use App\Models\Tasks\TaskType;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
@@ -27,15 +26,11 @@ class TaskTypesSeeder extends Seeder
         );
 
         $taskTypesData->each(function ($modelData) {
-
-
-            $taskType = TaskType::where('slug', Arr::get($modelData, 'slug'))->first();
-
-            if(!$taskType) {
-                StoreTaskType::run($modelData);
+            $division = Division::where('slug', Arr::get($modelData, 'division_slug'))->first();
+            Arr::forget($modelData, 'division_slug');
+            if (!TaskType::where('name', Arr::get($modelData, 'name'))->count()) {
+                StoreTaskType::run($division, $modelData);
             }
-
-
         });
     }
 }

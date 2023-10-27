@@ -145,43 +145,43 @@ export const PricingBlock2 = () => {
         text-align: center;
         position: relative;
     }
-    .pricingTable .pricing_heading:after{
-        content: "";
-        width: 36px;
-        height: 29.5%;
-        background:#EF476F;
-        position: absolute;
-        top: -1px;
-        right: 0;
-        z-index: 2;
-        transform: skewY(45deg) translateY(18px);
-        transition: all 0.4s ease 0s;
-    }
-    .pricingTable .title{
-        font-size: 20px;
-        font-weight: 700;
-        line-height: 30px;
-        color: #000;
-        text-transform: uppercase;
-        background: #EF476F;
-        padding: 15px 0 0;
-        margin: 0 35px 0 0;
-        transition: all 0.4s ease 0s;
-    }
-    .pricingTable .value{
-        display: block;
-        font-size: 35px;
-        font-weight: 700;
-        color: #000;
-        background: #EF476F;
-        padding: 5px 0 10px;
-        margin: 0 35px 0 0;
-        transition: all 0.4s ease 0s;
-    }
-    .pricingTable:hover .title,
-    .pricingTable:hover .value{
-        color: #fff;
-    }
+    // .pricingTable .pricing_heading:after{
+    //     content: "";
+    //     width: 36px;
+    //     height: 29.5%;
+    //     background:#EF476F;
+    //     position: absolute;
+    //     top: -1px;
+    //     right: 0;
+    //     z-index: 2;
+    //     transform: skewY(45deg) translateY(18px);
+    //     transition: all 0.4s ease 0s;
+    // }
+    // .pricingTable .title{
+    //     font-size: 20px;
+    //     font-weight: 700;
+    //     line-height: 30px;
+    //     color: #000;
+    //     text-transform: uppercase;
+    //     background: #EF476F;
+    //     padding: 15px 0 0;
+    //     margin: 0 35px 0 0;
+    //     transition: all 0.4s ease 0s;
+    // }
+    // .pricingTable .value{
+    //     display: block;
+    //     font-size: 35px;
+    //     font-weight: 700;
+    //     color: #000;
+    //     background: #EF476F;
+    //     padding: 5px 0 10px;
+    //     margin: 0 35px 0 0;
+    //     transition: all 0.4s ease 0s;
+    // }
+    // .pricingTable:hover .title,
+    // .pricingTable:hover .value{
+    //     color: #fff;
+    // }
     .pricingTable .month{
         display: block;
         font-size: 13px;
@@ -236,16 +236,16 @@ export const PricingBlock2 = () => {
         background: #fff;
         transition: all 0.4s ease 0s;
     }
-    .pricingTable:hover .link a{
-        color: #fff;
-        background: #06D6A0;
-        border: 1px solid #06D6A0;
-    }
-    .pricingTable:hover .pricing_heading:after,
-    .pricingTable:hover .title,
-    .pricingTable:hover .value{
-        background:#06D6A0;
-    }
+    // .pricingTable:hover .link a{
+    //     color: #fff;
+    //     background: #06D6A0;
+    //     border: 1px solid #06D6A0;
+    // }
+    // .pricingTable:hover .pricing_heading:after,
+    // .pricingTable:hover .title,
+    // .pricingTable:hover .value{
+    //     background:#06D6A0;
+    // }
     @media only screen and (max-width: 990px){
         .pricingTable{
             margin-bottom: 35px;

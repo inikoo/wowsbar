@@ -95,7 +95,7 @@ class IndexPortfolioSocialAccountAds extends InertiaAction
                     ]
                 )
                 ->withExportLinks($exportLinks)
-                ->column(key: 'task_name', label: 'Task Name', sortable: true)
+                ->column(key: 'task_name', label: 'Tasks Name', sortable: true)
                 ->column(key: 'start_at', label: __('Uploaded At'), sortable: true)
                 ->column(key: 'end_at', label: __('Deleted At'), sortable: true)
                 ->column(key: 'duration', label: __('Duration'), sortable: true)

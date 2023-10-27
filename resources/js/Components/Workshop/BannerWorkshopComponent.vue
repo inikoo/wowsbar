@@ -56,7 +56,7 @@ const screenView = ref("")
         </div>
         
         <!-- Editor -->
-        <SlidesWorkshop :bannerType="banner.type" class="clear-both mt-2 p-2.5" :data="data" @jumpToIndex="(val) => (jumpToIndex = val)"
+        <SlidesWorkshop :bannerType="banner.type" class="clear-both mt-2 p-2.5" :data="data" @jumpToIndex="(UlidOfSlide) => jumpToIndex = UlidOfSlide"
             :imagesUploadRoute="imagesUploadRoute" :user="user" :screenView="screenView" />
     </div>
 
