@@ -25,7 +25,7 @@ class GuestsTemplateExport extends Factory implements FromArray
                 fake()->lexify,
                 fake()->name,
                 'admin',
-                fake()->userName,
+                fake()->lexify,
                 fake()->password,
                 TRUE
             ];

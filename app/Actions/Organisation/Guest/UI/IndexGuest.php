@@ -185,7 +185,7 @@ class IndexGuest extends InertiaAction
                 'uploads' => [
                     'templates' => [
                         'routes' => [
-                            'name' => 'org.downloads.templates.employees'
+                            'name' => 'org.downloads.templates.guests'
                         ]
                     ],
                     'event' => class_basename(Guest::class),

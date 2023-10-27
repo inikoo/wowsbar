@@ -167,7 +167,7 @@ class IndexProspects extends InertiaAction
                 'uploads' => [
                     'templates' => [
                         'routes' => [
-                            'name' => 'org.downloads.templates.employees'
+                            'name' => 'org.downloads.templates.prospects'
                         ]
                     ],
                     'event' => class_basename(Prospect::class),
