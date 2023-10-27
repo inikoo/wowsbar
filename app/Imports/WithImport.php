@@ -12,11 +12,13 @@ use App\Models\Helpers\Upload;
 use App\Models\Helpers\UploadRecord;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
+use Maatwebsite\Excel\Events\BeforeImport;
 use Maatwebsite\Excel\Validators\Failure;
 
 trait WithImport
 {
     public Upload $upload;
+    public int $totalRows = 0;
 
     public function __construct(Upload $upload)
     {
@@ -37,6 +39,20 @@ trait WithImport
             );
             $this->updateStats();
         }
+    }
+
+    public function registerEvents(): array
+    {
+        return [
+            BeforeImport::class => function (BeforeImport $event) {
+                $totalRows = $event->getReader()->getTotalRows();
+                $this->upload->update(
+                    [
+                        'number_rows' => $totalRows['Worksheet']
+                    ]
+                );
+            }
+        ];
     }
 
     public function collection(Collection $collection): void
@@ -99,7 +115,6 @@ trait WithImport
     {
         $this->upload->update(
             [
-                'number_rows'    => $this->upload->records()->count(),
                 'number_success' => $this->upload->records()->where('status', UploadRecordStatusEnum::COMPLETE)->count(),
                 'number_fails'   => $this->upload->records()->where('status', UploadRecordStatusEnum::FAILED)->count(),
             ]
