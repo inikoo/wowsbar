@@ -6,22 +6,11 @@
 
 <script setup lang="ts">
 import { get } from 'lodash'
+import { CentralStageData } from '@/types/BannerWorkshop'
 const props = defineProps<{
-    data?: {
-        title?: string
-        subtitle?: string
-        text?: string
-        style?: {
-            fontSize?: {
-                fontTitle: string
-                fontSubtitle: string
-            }
-        }
-        textAlign: string
-    }
-
+    data?: CentralStageData
 }>()
-
+// console.log("centralStage", props.data)
 </script>
 
 <template>

@@ -10,6 +10,7 @@ import { get } from 'lodash'
 import SlideCorner from "@/Components/Slider/SlideCorner.vue"
 import Image from "@/Components/Image.vue"
 import CentralStage from "@/Components/Slider/CentralStage.vue"
+import { BannerWorkshop, CornersData } from '@/types/BannerWorkshop'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faEyeSlash } from '@fas/'
@@ -22,79 +23,16 @@ import { Autoplay, Pagination, Navigation } from 'swiper/modules'
 import 'swiper/css'
 import 'swiper/css/navigation'
 
-
-interface CornersPositionData {
-    data: {
-        text: string
-        target: string
-    }
-    type: string
-}
-
-interface Corners {
-    topLeft?: CornersPositionData
-    topRight?: CornersPositionData
-    bottomLeft?: CornersPositionData
-    bottomRight?: CornersPositionData
-}
-
 const props = defineProps<{
     production?: boolean
     jumpToIndex?: string  // ulid
-    data: {
-        common: {
-            centralStage: {
-                subtitle?: string
-                text?: string
-                title?: string
-            }
-            corners: Corners
-        }
-        components: {
-            id: number
-            ulid: string
-            image_id: number
-            image_source: string
-            layout: {
-                link?: string,
-                centralStage: {
-                    title?: string
-                    subtitle?: string
-                    // text?: string,
-                    // footer?: string
-                }
-            }
-            image: {
-                desktop: {} | string
-                tablet: {} | string
-                mobile: {} | string
-            }
-            background: {
-                desktop: string
-                tablet: string
-                mobile: string
-            }
-            backgroundType: {
-                desktop: string
-                tablet: string
-                mobile: string
-            }
-            visibility: boolean
-            corners: Corners
-            imageAlt: string
-            link: string
-        }[]
-
-        delay: number
-        type: string
-    }
+    data: BannerWorkshop
     view?: string
-
 }>()
 
 const swiperRef = ref()
 
-const filteredNulls = (corners: Corners) => {
+const filteredNulls = (corners: CornersData) => {
     if(corners) {
         return Object.fromEntries(Object.entries(corners).filter(([_, v]) => v != null))
     }

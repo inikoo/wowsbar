@@ -19,6 +19,9 @@ import {getDbRef} from '@/Composables/firebase'
 
 import {useBannerHash} from "@/Composables/useBannerHash"
 import Publish from "@/Components/Utils/Publish.vue"
+import { BannerWorkshop, CornersData, SlideWorkshopData } from '@/types/BannerWorkshop'
+import { Banner } from '@/types/banner'
+import { routeType } from '@/types/route'
 
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome"
 import {faUser, faUserFriends} from '@fal/'
@@ -45,58 +48,11 @@ interface Action {
 const props = defineProps<{
     title: string
     pageHead: any
-    banner: {
-        slug: string,
-        ulid: string,
-        id: number,
-        code: string,
-        name: string
-        state: string
-        type: string
-    }
-    bannerLayout: {
-        delay: number
-        common: {
-            centralStage: string
-            corners: object
-        }
-        components: {
-            id: number
-            ulid: string
-            layout: {
-                link: null | string
-                corners: {
-                    bottomRight: {
-                        data: {
-                            text: string
-                            target: string
-                        }
-                        type: string
-                    }
-                }
-                imageAlt: string
-                centralStage: {
-                    title: string
-                    subtitle: string
-                }
-            }
-            visibility: boolean
-            image_id: number
-            image_source: string
-        }[]
-    }
-    imagesUploadRoute: {
-        name: string
-        parameters?: Array<string>
-    },
-    autoSaveRoute: {
-        name: string
-        parameters?: Array<string>
-    },
-    publishRoute: {
-        name: string
-        parameters?: Array<string>
-    }
+    banner: Banner
+    bannerLayout: BannerWorkshop
+    imagesUploadRoute: routeType
+    autoSaveRoute: routeType
+    publishRoute: routeType
 }>()
 
 

@@ -10,6 +10,8 @@ import { faSpinnerThird } from '@fad/'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { useGalleryStore } from '@/Stores/gallery.js'
 import { useTruncate } from '@/Composables/useTruncate.js'
+import { routeType } from '@/types/route'
+
 import Button from '../Elements/Buttons/Button.vue'
 import EmptyState from '@/Components/Utils/EmptyState.vue'
 import { trans } from "laravel-vue-i18n"
@@ -18,16 +20,18 @@ import Modal from '@/Components/Utils/Modal.vue'
 
 library.add(faCloudUpload, faImagePolaroid, faTimes, faSpinnerThird)
 
-const props = defineProps({
+const props = withDefaults(defineProps<{
     addImage: Function,
     closeModal: Function,
-    imagesUploadRoute : Object,
-    ratio: Object,
-    multiple: {
-        type: Boolean,
-        default: true
-    }
-});
+    imagesUploadRoute: routeType
+    ratio: {
+        w: number
+        h: number
+    },
+    multiple: boolean
+}>(), {
+    multiple: true
+})
 
 const galleryStore = ref(useGalleryStore())
 const isDragging = ref(false);
@@ -196,7 +200,7 @@ const addComponent =  (element) => {
     
     <!-- Button -->
     <div class="flex justify-end py-2.5 gap-3 pb-0">
-        <Button @click="closeModal" :style="'red'">
+        <Button @click="() => closeModal()" :style="'red'">
             <div class="flex items-center">
                 <FontAwesomeIcon icon='fal fa-times' fixed-width class='' aria-hidden='true' />
                 <span class="leading-none">Close</span>
@@ -222,7 +226,9 @@ const addComponent =  (element) => {
                 :ratio="ratio"
                 :data="uploadedFilesList"
                 :imagesUploadRoute="imagesUploadRoute"
-                :response="uploadImageRespone" />
+                :response="uploadImageRespone"
+                @onFinishCropped="(image) => addImage(image)"    
+            />
         </div>
     </Modal>
 

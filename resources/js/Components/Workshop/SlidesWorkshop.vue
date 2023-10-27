@@ -17,6 +17,7 @@ import {
 } from '@fal/'
 // import {  } from '@far/'
 import { faEye, faEyeSlash } from '@fas/'
+import { faClone } from '@fad/'
 import { library } from "@fortawesome/fontawesome-svg-core"
 import draggable from "vuedraggable"
 import { ulid } from "ulid"
@@ -30,60 +31,15 @@ import Modal from '@/Components/Utils/Modal.vue'
 import GalleryImages from "@/Components/Workshop/GalleryImages.vue"
 import CropImage from "@/Components/Workshop/CropImage/CropImage.vue"
 import Image from "@/Components/Image.vue"
+import { BannerWorkshop, CornersData, SlideWorkshopData } from '@/types/BannerWorkshop'
+import { routeType } from '@/types/route'
 
-library.add(faEye, faEyeSlash, faTrashAlt, faAlignJustify, faCog, faImage, faLock)
+library.add(faEye, faEyeSlash, faTrashAlt, faAlignJustify, faCog, faImage, faLock, faClone)
 
-interface CornersPositionData {
-    data: {
-        text: string;
-        target: string;
-    };
-    type: string;
-}
-
-interface Corners {
-    topLeft?: CornersPositionData;
-    topRight?: CornersPositionData;
-    bottomLeft?: CornersPositionData;
-    bottomRight?: CornersPositionData;
-}
 
 const props = defineProps<{
-    data: {
-        common: {
-            centralStage: {
-                subtitle?: string;
-                text?: string;
-                title?: string;
-            };
-            corners: Corners;
-        };
-        components: Array<{
-            id: number;
-            image_id: number;
-            image_source: string;
-            ulid?: string;
-            layout: {
-                link?: string;
-                centralStage: {
-                    title?: string;
-                    subtitle?: string;
-                    // text?: string,
-                    // footer?: string
-                };
-            };
-            visibility: boolean;
-            corners: Corners;
-            imageAlt: string;
-            link: string;
-        }>;
-        delay: number;
-        type: string
-    };
-    imagesUploadRoute: {
-        name: string;
-        arguments: string[]
-    };
+    data: BannerWorkshop
+    imagesUploadRoute: routeType
     user: string
     screenView: string
 }>();
@@ -93,7 +49,7 @@ const emits = defineEmits<{
 }>();
 
 const isDragging = ref(false);
-const fileInput = ref(null);
+const fileInput = ref();
 const currentComponentBeenEdited = ref();
 const commonEditActive = ref(true);
 const isOpenGalleryImages = ref(false);
@@ -136,7 +92,7 @@ const drop = (e) => {
     isDragging.value = false;
 };
 
-const selectComponentForEdition = (slide) => {
+const selectComponentForEdition = (slide: SlideWorkshopData) => {
     const componentToEdit = props.data.components.find((item) => item.ulid === slide.ulid);
 
     if (!componentToEdit) {
@@ -168,15 +124,15 @@ const selectComponentForEdition = (slide) => {
 watch(
     currentComponentBeenEdited,
     (newValue) => {
-        if (newValue !== null) {
+        if (newValue !== null) {  // If clicked on Slides not on 'Common Properties'
             const component = [...props.data.components]; // Create a shallow copy of the components array
             const index = component.findIndex((item) => item.ulid === newValue.ulid);
             if (index !== -1) {
                 component[index] = { ...newValue };
                 props.data.components = component;
             }
+            emits('jumpToIndex', newValue.ulid)  // Jump to related Slide when update the data
         }
-        emits('jumpToIndex', newValue.ulid)  // Jump to related Slide when update the data
     },
     { deep: true }
 );
@@ -209,6 +165,7 @@ const ComponentsBlueprint = ref([
                 label: trans("Link"),
                 value: ["layout", "link"],
                 // defaultValue : 'https://',
+                placeholder: "https://www.example.com",
                 rules:{
                     pattern : '^(http|https)://',
                     message : 'please input https:// or http://'
@@ -424,6 +381,7 @@ const CommonBlueprint = ref([
                 label: trans("Text Align"),
                 defaultValue : "center",
                 value: ["common", "centralStage", "textAlign"],
+                defaultValue: "center",
                 options: [
                     {
                         label: "Align left",
@@ -449,7 +407,9 @@ const CommonBlueprint = ref([
                 value: ["common", "centralStage", "style", "fontSize"],
                 defaultValue: { fontTitle: "text-[25px] lg:text-[44px]", fontSubtitle: "text-[12px] lg:text-[20px]" },
                 options: [
-                    { label: "Extra Small", value: {
+                    {
+                        label: "Extra Small",
+                        value: {
                             fontTitle: "text-[13px] lg:text-[21px]",
                             fontSubtitle: "text-[8px] lg:text-[12px]"
                         }
@@ -486,8 +446,9 @@ const CommonBlueprint = ref([
             {
                 name: ["common", "centralStage", "style", "color"],
                 type: "colorpicker",
-                label: trans("color"),
+                label: trans("Text Color"),
                 value: ["common", "centralStage", "style", "color"],
+                icon: 'far fa-text'
             },
             {
                 name: ["common", "centralStage", "style", "textShadow"],
@@ -598,6 +559,16 @@ const addNewSlide = () => {
     props.data.components = [...props.data.components, ...newFiles];
 }
 
+// When on click to icon 'clone'
+const duplicateSlide = (selectedSlide: SlideWorkshopData) => {
+    const modifiedSlide = {
+        ...selectedSlide,
+        ulid: ulid()
+    }
+    let indexOfSelectedSlide = props.data.components.findIndex(item => item.ulid == selectedSlide.ulid)
+    props.data.components.splice(indexOfSelectedSlide+1, 0, modifiedSlide)
+}
+
 const backgroundColorList = useBannerBackgroundColor() // Fetch color list from Composables
 
 </script>
@@ -625,15 +596,9 @@ const backgroundColorList = useBannerBackgroundColor() // Fetch color list from 
 
             <!-- Slides/Drag area -->
             <div class="text-lg font-medium leading-none">{{ trans("Slides") }} <span class='text-dase'>({{ data.components.length }})</span></div>
-            <draggable :list="data.components" group="slide " item-key="ulid" handle=".handle" class="max-h-96 overflow-auto p-0.5"
-                :onChange="(e: any) => emits('jumpToIndex', e.moved.newIndex)">
+            <draggable :list="data.components" group="slide " item-key="ulid" handle=".handle" class="max-h-96 overflow-auto p-0.5">
                 <template #item="{ element: slide }">
-                    <div @mousedown="
-                            selectComponentForEdition(slide),
-                            emits(
-                                'jumpToIndex',
-                                data.components.findIndex(obj => obj.ulid === slide.ulid)
-                            )"
+                    <div @mousedown="selectComponentForEdition(slide)"
                         v-if="slide.ulid" :class="[
                             'grid grid-flow-col relative sm:py-1 mb-2 items-center justify-between ring-1 ring-gray-300',
                             slide.ulid == get(currentComponentBeenEdited, 'ulid')
@@ -675,17 +640,21 @@ const backgroundColorList = useBannerBackgroundColor() // Fetch color list from 
 
                         <!-- Button: Show/hide, delete slide -->
                         <div class="flex justify-center items-center pr-2 justify-self-end"  v-if="slide.user == props.user || !slide.user">
-                            <button class="px-2 py-1 bg-grays-500 text-red-500/60 hover:text-red-500" type="button" v-if="!slide.visibility"
+                            <button v-if="!slide.visibility" class="px-2 py-1 bg-grays-500 text-red-500/60 hover:text-red-500" type="button"
                                 @click="(e)=>{ e.stopPropagation()
                                     removeComponent(slide)}"
-                                title="Delete the slide">
+                                title="Delete this slide">
                                 <FontAwesomeIcon :icon="['fal', 'fa-trash-alt']"  class="text-xs sm:text-sm" />
                             </button>
-                            <button class="px-2 py-1 text-gray-400 hover:text-gray-500" type="button"
-                                @click="changeVisibility(slide)" title="Show/hide the slide">
+                            <button class="qwezxcpx-2 py-1 text-gray-400 hover:text-gray-500" type="button"
+                                @click="changeVisibility(slide)" title="Show/hide this slide">
                                 <FontAwesomeIcon v-if="slide.hasOwnProperty('visibility') ? slide.visibility : true"
                                     icon="fas fa-eye" class="text-xs sm:text-sm " />
                                 <FontAwesomeIcon v-else icon="fas fa-eye-slash" class="text-xs sm:text-sm" />
+                            </button>
+                            <button class="px-2 py-1 text-gray-400 hover:text-gray-500" type="button"
+                                @click="duplicateSlide(slide)" title="Duplicate this slide">
+                                <FontAwesomeIcon icon="fad fa-clone" class="text-xs sm:text-sm " />
                             </button>
                         </div>
 
@@ -701,7 +670,7 @@ const backgroundColorList = useBannerBackgroundColor() // Fetch color list from 
 
             <!-- Button: Add slide, Gallery -->
             <div class="flex flex-wrap md:flex-row gap-x-2 gap-y-1 lg:gap-y-0 w-full justify-between">
-                <Button @click="isOpenGalleryImages = !isOpen" :style="`tertiary`" icon="fal fa-photo-video" label="Gallery" size="xs" class="relative w-full flex justify-center lg:w-fit lg:inline space-x-2" id="gallery" />
+                <Button @click="isOpenGalleryImages = true" :style="`tertiary`" icon="fal fa-photo-video" label="Gallery" size="xs" class="relative w-full flex justify-center lg:w-fit lg:inline space-x-2" id="gallery" />
 
                 <!-- <Button :style="`secondary`" size="xs" class="relative w-full flex justify-center lg:w-fit lg:inline space-x-2">
                     <FontAwesomeIcon icon='fas fa-plus' class='' aria-hidden='true' />
@@ -712,7 +681,7 @@ const backgroundColorList = useBannerBackgroundColor() // Fetch color list from 
                         accept="image/*" class="absolute cursor-pointer rounded-md border-gray-300 sr-only" />
                 </Button> -->
 
-                 <Button :style="`secondary`" size="xs" @click="addNewSlide" class="relative w-full flex justify-center lg:w-fit lg:inline space-x-2">
+                <Button :style="`secondary`" size="xs" @click="addNewSlide" class="relative w-full flex justify-center lg:w-fit lg:inline space-x-2">
                     <FontAwesomeIcon icon='fas fa-plus' class='' aria-hidden='true' />
                     <span>{{ trans("Add slide") }}</span>
                 </Button>
@@ -740,11 +709,11 @@ const backgroundColorList = useBannerBackgroundColor() // Fetch color list from 
         <Modal :isOpen="isOpenGalleryImages" @onClose="isOpenGalleryImages = false">
             <div>
                 <GalleryImages
-                 :addImage="uploadImageRespone" 
-                 :closeModal="()=>isOpenGalleryImages = false"  
-                 :imagesUploadRoute="props.imagesUploadRoute"  
-                 :ratio="data.type == 'square' ? {w: 1, h: 1} : {w: 4, h: 1}" 
-                 />
+                    :addImage="uploadImageRespone" 
+                    :closeModal="()=>isOpenGalleryImages = false"  
+                    :imagesUploadRoute="props.imagesUploadRoute"  
+                    :ratio="data.type == 'square' ? {w: 1, h: 1} : {w: 4, h: 1}" 
+                />
             </div>
         </Modal>
 

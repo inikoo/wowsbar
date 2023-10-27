@@ -5,7 +5,7 @@
   -->
 
 <script setup lang="ts">
-import { ref } from "vue"
+import { ref, defineEmits } from 'vue';
 import "swiper/css"
 import "swiper/css/navigation"
 import axios from 'axios'
@@ -19,14 +19,12 @@ library.add(faExclamation, faSpinnerThird)
 import { trans } from "laravel-vue-i18n"
 import Button from "@/Components/Elements/Buttons/Button.vue"
 import CropComponents from "@/Components/Workshop/CropImage/CropComponents.vue"
+import { routeType } from '@/types/route'
 
 
 const props = withDefaults(defineProps<{
     data: File[];
-    imagesUploadRoute: {
-        name: string
-        parameters: string[]
-    }
+    imagesUploadRoute: routeType
     response : Function
     ratio?:  {
         w: number
@@ -35,6 +33,10 @@ const props = withDefaults(defineProps<{
 }>(), {
     ratio: { w : 4, h : 1 }
 })
+
+const emits = defineEmits<{
+    (e: 'onFinishCropped', image: any): void
+}>()
 
 const setData2 = () => {
     const data = []
@@ -90,8 +92,7 @@ const addComponent = async () => {
     await Promise.all(setData.value.map(processItem));
     for (const [key, value] of form.value.entries()) {
         SendData.push(value)
-        // console.log(SendData)
-        console.log((value.size / (1024 * 1024)).toFixed(2))
+        // console.log((value.size / (1024 * 1024)).toFixed(2))
     }
 
     try {
@@ -107,6 +108,7 @@ const addComponent = async () => {
         );
         form.value = new FormData()
         props.response(response.data)
+        emits('onFinishCropped', response.data)
         loadingState.value = false
     } catch (error) {
         console.log(error)
@@ -119,8 +121,6 @@ const addComponent = async () => {
 
 const current = ref(0)
 
-
-
 const generateGif = (file) => {
 		let fileSrc = URL.createObjectURL(file)
 		setTimeout(() => {
@@ -129,13 +129,11 @@ const generateGif = (file) => {
 		return fileSrc
 	}
 
-
 </script>
 
 <template>
     <!-- Preview cropped image -->
     <div class="mb-6 relative w-full flex justify-center">
-
         <div class="flex items-center border-2 border-gray-500 shadow-md"
             :class="[
                 ratio ? `aspect-[${ratio.w}/${ratio.h}]` : 'aspect-[2/1] md:aspect-[3/1] lg:aspect-[4/1]',
@@ -149,8 +147,7 @@ const generateGif = (file) => {
     <!-- List: the uploaded images -->
     <div class="mb-6 space-y-3">
         <div class="max-w-full py-5 px-6 h-96 overflow-y-auto border border-solid border-gray-300 rounded-lg">
-            <ul
-                role="list"
+            <ul role="list"
                 class="mx-auto grid max-w-full grid-cols-1 gap-x-8 gap-y-16 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3"
             >
                 <li v-for="(item, index) in setData" :key="index">

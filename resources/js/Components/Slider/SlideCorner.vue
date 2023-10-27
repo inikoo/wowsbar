@@ -13,17 +13,11 @@ import CornerText from "@/Components/Slider/Corners/CornerText.vue";
 import CornerFooter from "@/Components/Slider/Corners/CornerFooter.vue";
 import Ribbon from "@/Components/Slider/Corners/Ribbon.vue";
 import { get } from 'lodash'
+import { CornerData } from '@/types/BannerWorkshop'
 
 const props = defineProps<{
-    position: string,
-    corner: {
-        type: string,
-        data?: object
-    },
-    commonCorner?: {
-        type: string,
-        data?: object
-    },
+    position: string  // topLeft, bottomRight, etc
+    corner: CornerData
     swiperRef?: Element
 }>()
 
