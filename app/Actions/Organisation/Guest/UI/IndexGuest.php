@@ -182,6 +182,11 @@ class IndexGuest extends InertiaAction
                         ] : false
                     ]
                 ],
+                'templates' => [
+                    'routes' => [
+                        'name' => 'org.downloads.templates.guests'
+                    ]
+                ],
                 'data'        => GuestResource::collection($guests),
             ]
         )->table($this->tableStructure());
