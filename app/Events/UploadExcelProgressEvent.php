@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Models\Helpers\Upload;
 use App\Models\Portfolio\PortfolioWebsite;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
@@ -18,12 +19,10 @@ class UploadExcelProgressEvent implements ShouldBroadcastNow
     /**
      * Create a new event instance.
      */
-    public array $data;
-    public string $event;
-    public function __construct($data, $event = PortfolioWebsite::class)
+    public Upload $data;
+    public function __construct(Upload $upload)
     {
-        $this->data   = $data;
-        $this->event  = $event;
+        $this->data   = $upload;
     }
 
     /**
@@ -40,6 +39,6 @@ class UploadExcelProgressEvent implements ShouldBroadcastNow
 
     public function broadcastAs(): string
     {
-        return $this->event;
+        return $this->data->type;
     }
 }

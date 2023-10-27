@@ -7,6 +7,7 @@
 
 namespace App\Models\Helpers;
 
+use App\Events\UploadExcelProgressEvent;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -50,6 +51,10 @@ class Upload extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    protected $dispatchesEvents = [
+        'updated' => UploadExcelProgressEvent::class
+    ];
 
     public function getFullPath(): string
     {
