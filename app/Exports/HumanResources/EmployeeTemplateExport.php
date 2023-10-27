@@ -7,6 +7,7 @@
 
 namespace App\Exports\HumanResources;
 
+use App\Models\HumanResources\JobPosition;
 use Faker\Factory;
 use Maatwebsite\Excel\Concerns\FromArray;
 
@@ -15,18 +16,34 @@ class EmployeeTemplateExport extends Factory implements FromArray
     public function array(): array
     {
         $array = [
-            ['Code', 'Contact Name', 'Date of Birth', 'Job Title', 'Email']
+              [
+                  'Worker Number',
+                  'Name',
+                  'Alias',
+                  'Job Title',
+                  'Positions',
+                  'Starting Date',
+                  'Workplace',
+                  'Username',
+                  'password',
+                  'reset password'
+              ]
         ];
 
         do {
             $array[] = [
-                fake()->lexify,
+                rand(0000, 9999),
                 fake()->name,
-                fake()->date,
+                fake()->userName,
                 fake()->jobTitle,
-                fake()->email
+                'dev-w',
+                fake()->date,
+                'bb',
+                fake()->userName,
+                fake()->password,
+                fake()->boolean
             ];
-        } while(count($array) <= 5);
+        } while(count($array) <= 10);
 
         return $array;
     }
