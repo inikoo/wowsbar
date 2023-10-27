@@ -213,6 +213,11 @@ class IndexEmployees extends InertiaAction
                         ] : false
                     ]
                 ],
+                'templates' => [
+                    'routes' => [
+                        'name' => 'org.downloads.templates.employees'
+                    ]
+                ],
                 'data'        => EmployeesResource::collection($employees),
             ]
         )->table($this->tableStructure($this->parent));

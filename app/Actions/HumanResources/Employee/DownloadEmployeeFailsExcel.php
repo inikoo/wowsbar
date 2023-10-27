@@ -7,7 +7,10 @@
 
 namespace App\Actions\HumanResources\Employee;
 
-use App\Exports\HumanResources\EmployeeTemplateExport;
+use App\Enums\Helpers\Import\UploadRecordStatusEnum;
+use App\Exports\ExcelFailsExport;
+use App\Models\Auth\OrganisationUser;
+use App\Models\HumanResources\Employee;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
 use Maatwebsite\Excel\Facades\Excel;
@@ -18,13 +21,19 @@ class DownloadEmployeeFailsExcel
     use AsAction;
     use WithAttributes;
 
-    public function handle(): BinaryFileResponse
+    public function handle(OrganisationUser $organisationUser): BinaryFileResponse
     {
-        return Excel::download(new EmployeeTemplateExport(), 'template.xlsx');
+        /** @var \App\Models\Helpers\Upload $uploads */
+        $uploads = $organisationUser->excelUploads()
+            ->where('type', class_basename(Employee::class))->first();
+
+        return Excel::download(new ExcelFailsExport($uploads), 'employees-fails-uploads-.xlsx');
     }
 
     public function asController(): BinaryFileResponse
     {
-        return $this->handle();
+        $organisationUser = request()->user();
+
+        return $this->handle($organisationUser);
     }
 }
