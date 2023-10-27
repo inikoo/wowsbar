@@ -4,15 +4,18 @@ import { Head } from '@inertiajs/vue3'
 import PageHeading from '@/Components/Headings/PageHeading.vue'
 import { capitalize } from "@/Composables/capitalize"
 import TableEmployees from "@/Components/Tables/TableEmployees.vue"
-import EmployeesUpload from '@/Components/Employee/EmployeesUpload.vue'
-import { Link } from '@inertiajs/vue3'
+import UploadExcel from '@/Components/Upload/UploadExcel.vue'
 import ButtonGroup from '@/Components/Elements/Buttons/ButtonGroup.vue'
-
+import { PageHeading as TSPageHeading } from '@/types/PageHeading'
+import { routeType } from '@/types/route'
 
 const props = defineProps <{
-    pageHead: any
+    pageHead: TSPageHeading
     title: string
     data: object
+    templates: {
+        routes: routeType
+    }
 }>()
 
 // To handle Modal on click 'upload' button
@@ -36,14 +39,10 @@ const dataModal = reactive({
     <TableEmployees :data="data" />
 
     <!-- Modal: after click 'upload' button -->
-    <EmployeesUpload
+    <UploadExcel
         :routesModalUpload="{
-            upload: {
-                name: props.pageHead.actions[0].buttons[0].route.name
-            },
-            download: {
-                name: 'org.hr.employee.uploads.template.download'
-            }
+            upload: props.pageHead.actions[0].buttons[0].route,
+            download: templates.routes
         }"
         :dataModal="dataModal"
     />
