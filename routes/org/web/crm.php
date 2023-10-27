@@ -19,6 +19,7 @@ use App\Actions\CRM\User\UI\CreateOrgCustomerUser;
 use App\Actions\CRM\User\UI\EditOrgCustomerUser;
 use App\Actions\CRM\User\UI\IndexOrgCustomerUsers;
 use App\Actions\CRM\User\UI\ShowOrgCustomerUser;
+use App\Actions\Leads\Prospect\Mailshots\UI\IndexProspectMailshots;
 use App\Actions\Leads\Prospect\UI\CreateProspect;
 use App\Actions\Subscriptions\CustomerSocialAccount\UI\ShowCustomerSocialAccount;
 use App\Actions\Subscriptions\CustomerWebsite\UI\CreateCustomerWebsite;
@@ -52,6 +53,8 @@ Route::prefix('customers/{customer}')->as('customers.')->group(function () {
 
 Route::prefix('prospects')->as('prospects.')->group(function () {
     Route::get('/', IndexProspects::class)->name('index');
+    Route::get('/mailshots', [IndexProspectMailshots::class, 'inShop'])->name('mailshots.index');
+
     Route::get('/{prospect}', IndexProspects::class)->name('show');
     Route::get('/{prospect}/delete', RemoveProspect::class)->name('remove');
 });
@@ -85,6 +88,7 @@ Route::prefix('shop/{shop}')->as('shop.')->group(function () {
     Route::prefix('prospects')->as('prospects.')->group(function () {
         Route::get('/', [IndexProspects::class, 'inShop'])->name('index');
         Route::get('/create', [CreateProspect::class, 'inShop'])->name('create');
+        Route::get('/mailshots', [IndexProspectMailshots::class, 'inShop'])->name('mailshots.index');
 
         Route::get('/{prospect}', [ShowProspect::class, 'inShop'])->name('show');
         Route::get('/{prospect}/edit', [EditProspect::class, 'inShop'])->name('edit');

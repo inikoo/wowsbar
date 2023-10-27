@@ -1,7 +1,7 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Thu, 26 Oct 2023 16:58:04 Malaysia Time, Kuala Lumpur, Malaysia
+ * Created: Fri, 27 Oct 2023 15:56:34 Malaysia Time, Kuala Lumpur, Malaysia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
@@ -10,12 +10,11 @@ namespace App\Enums\UI\Organisation;
 use App\Enums\EnumHelperTrait;
 use App\Enums\HasTabs;
 
-enum ProspectsTabsEnum: string
+enum ProspectsMailshotsTabsEnum: string
 {
     use EnumHelperTrait;
     use HasTabs;
 
-    case PROSPECTS = 'prospects';
     case MAILSHOTS = 'mailshots';
 
     case HISTORY   = 'history';
@@ -24,17 +23,14 @@ enum ProspectsTabsEnum: string
     public function blueprint(): array
     {
         return match ($this) {
-            ProspectsTabsEnum::PROSPECTS => [
-                'title' => __('prospects'),
-                'icon'  => 'fal fa-transporter',
-            ],
 
-            ProspectsTabsEnum::MAILSHOTS => [
+
+            ProspectsMailshotsTabsEnum::MAILSHOTS => [
                 'title' => __('mailshots'),
-                'icon'  => 'fal fa-paper-plane',
+                'icon'  => 'fal fa-bulk-mail',
             ],
 
-            ProspectsTabsEnum::HISTORY => [
+            ProspectsMailshotsTabsEnum::HISTORY => [
                 'title' => __('history'),
                 'icon'  => 'fal fa-clock',
                 'type'  => 'icon',

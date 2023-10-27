@@ -163,7 +163,22 @@ class IndexProspects extends InertiaAction
 
 
                         ] : false
-                    ]
+                    ],
+                    'meta'    => [
+
+                        [
+                            'href'     => [
+                                'name'       => 'org.crm.shop.prospects.mailshots.index',
+                                'parameters' => $request->route()->originalParameters()
+                            ],
+                            'number'   => 0,
+                            'label'    => __('Mailshots'),
+                            'leftIcon' => [
+                                'icon'    => 'fal fa-bulk-email',
+                                'tooltip' => __('mailshots')
+                            ]
+                        ],
+                    ],
                 ],
                 'uploadRoutes' => [
                     'upload' => [
@@ -179,11 +194,21 @@ class IndexProspects extends InertiaAction
                     //     'parameters' => $this->parent->id
                     // ]
                 ],
-                'data'         => ProspectResource::collection($prospects),
+
+                'tabs' => [
+                    'current'    => $this->tab,
+                    'navigation' => ProspectsTabsEnum::navigation(),
+                ],
+
+                ProspectsTabsEnum::PROSPECTS->value => $this->tab == ProspectsTabsEnum::PROSPECTS->value ?
+                    fn () => ProspectResource::collection($prospects)
+                    : Inertia::lazy(fn () => ProspectResource::collection($prospects)),
+
+
 
 
             ]
-        )->table($this->tableStructure());
+        )->table($this->tableStructure(prefix: ProspectsTabsEnum::PROSPECTS->value));
     }
 
     public function getBreadcrumbs(string $routeName, array $routeParameters): array
