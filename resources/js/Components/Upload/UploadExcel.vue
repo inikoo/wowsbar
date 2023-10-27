@@ -9,12 +9,16 @@ const props = defineProps<{
         upload: {
             name: string
         }
-        download: {
+        download?: {
             name: string
         }
     }
     dataModal: {
         isModalOpen: boolean
+    }
+    dataPusher: {
+        channel: string
+        event: string
     }
 }>()
 
@@ -37,8 +41,8 @@ const isShowProgress = ref(false)
 const pusher = new Pusher(import.meta.env.VITE_PUSHER_APP_KEY, {
     cluster: 'ap1'
 })
-const channel = pusher.subscribe('uploads.org')
-channel.bind('Employee', (data: any) => {
+const channel = pusher.subscribe(props.dataPusher.channel)
+channel.bind(props.dataPusher.event, (data: any) => {
     dataPusher.value = data
 })
 

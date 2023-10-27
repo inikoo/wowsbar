@@ -13,8 +13,12 @@ const props = defineProps <{
     pageHead: TSPageHeading
     title: string
     data: object
-    templates: {
-        routes: routeType
+    uploads: {
+        templates: {
+            routes: routeType
+        }
+        channel: string
+        event: string
     }
 }>()
 
@@ -42,8 +46,12 @@ const dataModal = reactive({
     <UploadExcel
         :routesModalUpload="{
             upload: props.pageHead.actions[0].buttons[0].route,
-            download: templates.routes
+            download: uploads.templates.routes
         }"
         :dataModal="dataModal"
+        :dataPusher="{
+            channel: uploads.channel,
+            event: uploads.event
+        }"
     />
 </template>

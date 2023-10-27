@@ -15,12 +15,16 @@ import UploadExcel from '@/Components/Upload/UploadExcel.vue'
 import { PageHeading as TSPageHeading } from '@/types/PageHeading'
 import { routeType } from '@/types/route'
 
-const props = defineProps<{
-    data: object
-    title: string
+const props = defineProps <{
     pageHead: TSPageHeading
-    templates: {
-        routes: routeType
+    title: string
+    data: object
+    uploads: {
+        templates: {
+            routes: routeType
+        }
+        channel: string
+        event: string
     }
 }>()
 
@@ -44,9 +48,13 @@ const dataModal = reactive({
     <UploadExcel
         :routesModalUpload="{
             upload: props.pageHead.actions[0].buttons[0].route,
-            download: templates.routes
+            download: uploads?.templates?.routes
         }"
         :dataModal="dataModal"
+        :dataPusher="{
+            channel: uploads.channel,
+            event: uploads.event
+        }"
     />
 </template>
 
