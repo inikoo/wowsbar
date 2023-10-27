@@ -8,6 +8,7 @@
 namespace App\Exports\HumanResources;
 
 use App\Models\HumanResources\JobPosition;
+use Carbon\Carbon;
 use Faker\Factory;
 use Maatwebsite\Excel\Concerns\FromArray;
 
@@ -37,11 +38,11 @@ class EmployeeTemplateExport extends Factory implements FromArray
                 fake()->userName,
                 fake()->jobTitle,
                 'dev-w',
-                fake()->date,
+                \PhpOffice\PhpSpreadsheet\Shared\Date::dateTimeToExcel(Carbon::make(fake()->date)),
                 'bb',
                 fake()->userName,
                 fake()->password,
-                fake()->boolean
+                TRUE
             ];
         } while(count($array) <= 10);
 
