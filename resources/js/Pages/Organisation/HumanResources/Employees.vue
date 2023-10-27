@@ -19,6 +19,7 @@ const props = defineProps <{
     data: object
 }>()
 
+// To handle Modal on click 'upload' button
 const dataModal = reactive({
     isModalOpen: false
 })
@@ -29,7 +30,7 @@ const dataModal = reactive({
 
     <PageHeading :data="pageHead">
         <template #button>
-            <div v-if="pageHead.actions[0].type === 'buttonGroup'" class="first:rounded-l last:rounded-r overflow-hidden ring-1 ring-gray-300 flex">
+            <div v-if="pageHead.actions[0].type === 'buttonGroup'" class="rounded overflow-hidden ring-1 ring-gray-400 flex">
                 <template v-for="(button, index) in pageHead.actions[0].buttons">
                     <Button v-if="index == 0" @click="dataModal.isModalOpen = true" :style="button.style" :label="button.label" :icon="button.icon"
                         class="relative capitalize items-center rounded-none text-sm border-none font-medium shadow-sm focus:ring-transparent focus:ring-offset-transparent focus:ring-0">
@@ -52,6 +53,7 @@ const dataModal = reactive({
     
     <TableEmployees :data="data" />
 
+    <!-- Modal: after click 'upload' button -->
     <EmployeesUpload
         :routesModalUpload="{
             upload: {
