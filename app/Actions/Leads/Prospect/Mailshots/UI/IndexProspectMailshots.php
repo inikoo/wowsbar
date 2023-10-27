@@ -12,7 +12,7 @@ use App\Actions\Leads\Prospect\UI\IndexProspects;
 use App\Enums\UI\Organisation\ProspectsMailshotsTabsEnum;
 use App\Http\Resources\CRM\ProspectMailshotsResource;
 use App\InertiaTable\InertiaTable;
-use App\Models\CRM\Mailshot;
+use App\Models\Mail\Mailshot;
 use App\Models\Market\Shop;
 use App\Models\Organisation\Organisation;
 use Closure;

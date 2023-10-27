@@ -85,7 +85,7 @@ class ShowMailroomDashboard extends InertiaAction
                     'type'   => 'simple',
                     'simple' => [
                         'route' => $routeParameters,
-                        'label' => __('Mailroom'),
+                        'label' => __('Mail'),
                         'icon'  => 'fal fa-inbox-out'
                     ],
                 ],

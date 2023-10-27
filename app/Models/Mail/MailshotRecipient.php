@@ -1,12 +1,17 @@
 <?php
+/*
+ * Author: Raul Perusquia <raul@inikoo.com>
+ * Created: Fri, 27 Oct 2023 19:32:09 Malaysia Time, Kuala Lumpur, Malaysia
+ * Copyright (c) 2023, Raul A Perusquia Flores
+ */
 
-namespace App\Models\CRM;
+namespace App\Models\Mail;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * App\Models\CRM\MailshotRecipient
+ * App\Models\Mail\MailshotRecipient
  *
  * @property int $id
  * @property int $mailshot_id

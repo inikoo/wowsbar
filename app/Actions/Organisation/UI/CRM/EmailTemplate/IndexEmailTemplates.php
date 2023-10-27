@@ -11,7 +11,7 @@ use App\Actions\InertiaAction;
 use App\Actions\Organisation\UI\CRM\ShowCRMDashboard;
 use App\Http\Resources\SysAdmin\GuestResource;
 use App\InertiaTable\InertiaTable;
-use App\Models\CRM\EmailTemplate;
+use App\Models\Mail\EmailTemplate;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;

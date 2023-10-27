@@ -12,7 +12,7 @@ use App\Actions\UI\Organisation\SysAdmin\ShowSysAdminDashboard;
 use App\Http\Resources\SysAdmin\GuestResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\Auth\Guest;
-use App\Models\CRM\Mailshot;
+use App\Models\Mail\Mailshot;
 use Closure;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
