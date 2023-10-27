@@ -213,16 +213,18 @@ class IndexEmployees extends InertiaAction
                         ] : false
                     ]
                 ],
-                'templates' => [
-                    'routes' => [
-                        'name' => 'org.downloads.templates.employees'
-                    ]
+                'uploads' => [
+                    'templates' => [
+                        'routes' => [
+                            'name' => 'org.downloads.templates.employees'
+                        ]
+                    ],
+                    'channel' => class_basename(Employee::class)
                 ],
                 'data'        => EmployeesResource::collection($employees),
             ]
         )->table($this->tableStructure($this->parent));
     }
-
 
     public function asController(ActionRequest $request): LengthAwarePaginator
     {
