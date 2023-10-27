@@ -16,7 +16,7 @@ class GuestsTemplateExport extends Factory implements FromArray
     public function array(): array
     {
         $array = [
-            ['Type', 'Username', 'Contact Name', 'Company Name', 'Phone', 'Email']
+            ['Type', 'Username', 'Name', 'Positions', 'Alias', 'Password', 'Reset Password']
         ];
 
         do {
@@ -24,11 +24,12 @@ class GuestsTemplateExport extends Factory implements FromArray
                 GuestTypeEnum::CONTRACTOR->value,
                 fake()->lexify,
                 fake()->name,
-                fake()->company,
-                fake()->phoneNumber,
-                fake()->email
+                'admin',
+                fake()->lexify,
+                fake()->password,
+                TRUE
             ];
-        } while(count($array) <= 5);
+        } while(count($array) <= 10);
 
         return $array;
     }

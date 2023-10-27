@@ -180,6 +180,15 @@ class IndexProspects extends InertiaAction
                         ],
                     ],
                 ],
+                'uploads' => [
+                    'templates' => [
+                        'routes' => [
+                            'name' => 'org.downloads.templates.prospects'
+                        ]
+                    ],
+                    'event' => class_basename(Prospect::class),
+                    'channel' => 'uploads.org.' . request()->user()->id
+                ],
                 'uploadRoutes' => [
                     'upload' => [
                         'name'       => 'org.models.shop.prospects.upload',

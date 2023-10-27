@@ -7,7 +7,18 @@
 
 
 use App\Actions\CRM\Customer\DownloadCustomersTemplate;
+use App\Actions\HumanResources\Employee\DownloadEmployeeFailsExcel;
+use App\Actions\HumanResources\Employee\DownloadEmployeesTemplate;
 use App\Actions\Leads\Prospect\DownloadProspectsTemplate;
+use App\Actions\Organisation\Guest\DownloadGuestsTemplate;
 
-Route::get('customers', DownloadCustomersTemplate::class)->name('customers');
-Route::get('prospects', DownloadProspectsTemplate::class)->name('prospects');
+Route::prefix('templates')->as('templates.')->group(function () {
+    Route::get('guests', DownloadGuestsTemplate::class)->name('guests');
+    Route::get('employees', DownloadEmployeesTemplate::class)->name('employees');
+    Route::get('customers', DownloadCustomersTemplate::class)->name('customers');
+    Route::get('prospects', DownloadProspectsTemplate::class)->name('prospects');
+});
+
+Route::prefix('fails')->as('fails.')->group(function () {
+    Route::get('employees', DownloadEmployeeFailsExcel::class)->name('employees.download');
+});

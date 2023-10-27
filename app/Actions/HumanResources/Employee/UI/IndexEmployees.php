@@ -192,12 +192,13 @@ class IndexEmployees extends InertiaAction
                             'type'    => 'buttonGroup',
                             'buttons' => [
                                 [
+                                    'name'  => 'uploadEmployees',
                                     'style' => 'secondary',
                                     'icon'  => ['fal', 'fa-upload'],
-                                    'label' => 'upload',
                                     'route' => [
                                         'name' => 'org.models.employees.upload'
                                     ],
+                                    'method'=> 'post'
                                 ],
                                 [
                                     'type'  => 'button',
@@ -212,11 +213,19 @@ class IndexEmployees extends InertiaAction
                         ] : false
                     ]
                 ],
+                'uploads' => [
+                    'templates' => [
+                        'routes' => [
+                            'name' => 'org.downloads.templates.employees'
+                        ]
+                    ],
+                    'event' => class_basename(Employee::class),
+                    'channel' => 'uploads.org.' . request()->user()->id
+                ],
                 'data'        => EmployeesResource::collection($employees),
             ]
         )->table($this->tableStructure($this->parent));
     }
-
 
     public function asController(ActionRequest $request): LengthAwarePaginator
     {

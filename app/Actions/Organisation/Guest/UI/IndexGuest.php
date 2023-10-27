@@ -182,6 +182,15 @@ class IndexGuest extends InertiaAction
                         ] : false
                     ]
                 ],
+                'uploads' => [
+                    'templates' => [
+                        'routes' => [
+                            'name' => 'org.downloads.templates.guests'
+                        ]
+                    ],
+                    'event' => class_basename(Guest::class),
+                    'channel' => 'uploads.org.' . request()->user()->id
+                ],
                 'data'        => GuestResource::collection($guests),
             ]
         )->table($this->tableStructure());

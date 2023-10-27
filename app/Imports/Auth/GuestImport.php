@@ -11,10 +11,11 @@ use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Concerns\SkipsOnFailure;
 use Maatwebsite\Excel\Concerns\ToCollection;
+use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
 
-class GuestImport implements ToCollection, WithHeadingRow, SkipsOnFailure, WithValidation
+class GuestImport implements ToCollection, WithHeadingRow, SkipsOnFailure, WithValidation, WithEvents
 {
     use WithImport;
 

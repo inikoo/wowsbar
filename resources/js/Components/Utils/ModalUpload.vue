@@ -21,12 +21,12 @@ const props = defineProps<{
         history?: routeType
         download?: routeType
     }
-    isUploaded: boolean
+    // isUploaded: boolean
 }>()
 
-const emit = defineEmits(['update:modelValue', 'isUploaded'])
+const emits = defineEmits(['update:modelValue', 'isShowProgress'])
 
-const { isUploaded } = toRefs(props)
+// const { isUploaded } = toRefs(props)
 
 const isLoadingUpload = ref(false)
 const dataHistory: any = ref([])
@@ -45,11 +45,11 @@ const onUploadFile = async (fileUploaded: any) => {
                 headers: { "Content-Type": "multipart/form-data" },
             }
         )
+        emits('isShowProgress', true)
     } catch (error: any) {
         console.error(error.message)
     }
     isLoadingUpload.value = false
-    emit('isUploaded', true)
 }
 
 const compVModel = computed(() => {
@@ -79,12 +79,15 @@ watch(compVModel, async () => {
 </script>
 
 <template>
-    <Modal :isOpen="modelValue" @onClose="() => $emit('update:modelValue', false)">
+    <Modal :isOpen="modelValue" @onClose="() => emits('update:modelValue', false)">
         <div class="flex justify-center py-2 text-gray-600 font-medium mb-3">Upload your new website</div>
         <div class="grid grid-cols-2 gap-x-3">
             <!-- Column upload -->
             <div class="space-y-2">
-                <div class="relative flex items-center justify-center rounded-lg border border-dashed border-gray-700/25 px-6 h-48 bg-gray-400/10 hover:bg-gray-400/20">
+                <div class="relative flex items-center justify-center rounded-lg border border-dashed border-gray-700/25 px-6 h-48 bg-gray-400/10"
+                    :class="{'hover:bg-gray-400/20': !isLoadingUpload}"
+                >
+                    <!-- Section: Upload area -->
                     <div v-if="!isLoadingUpload">
                         <label for="fileInput"
                             class="absolute cursor-pointer rounded-md inset-0 focus-within:outline-none focus-within:ring-0 focus-within:ring-gray-400 focus-within:ring-offset-0">
@@ -105,7 +108,7 @@ watch(compVModel, async () => {
                         </div>
                     </div>
 
-                    <!-- Loading state: if upload progress -->
+                    <!-- Section: Loading state (if upload progress) -->
                     <div v-else class="text-center">
                         <FontAwesomeIcon icon='fad fa-spinner-third' class='animate-spin h-8' aria-hidden='true' />
                         <p class="text-gray-500">Uploading..</p>

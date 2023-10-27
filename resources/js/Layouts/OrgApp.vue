@@ -72,7 +72,7 @@ const layoutState = useLayoutStore()
 
 <template>
     <div class="fixed top-0 left-0 w-screen h-screen dark:bg-gray-700 bg-gray-50" ></div>
-    <div class="relative h-screen transition-all duration-200 ease-in-out text-gray-700"
+    <div class="relative transition-all duration-200 ease-in-out text-gray-700"
         :class="[Object.values(layout.rightSidebar).some(value => value.show) ? 'mr-44' : 'mr-0']">
         <AppTopBar @sidebarOpen="(value: boolean) => sidebarOpen = value" :sidebarOpen="sidebarOpen" :logoRoute="`org.dashboard.show`" urlPrefix="org.">
             <img v-if="layout.organisation.logo_id" class="h-7 md:h-5 shadow" :src="`/media/${layout.organisation.logo_id}`" :alt="layout.organisation.code" />
@@ -95,7 +95,7 @@ const layoutState = useLayoutStore()
         </div>
 
         <!-- Main Content -->
-        <main class="h-full relative flex flex-col pt-20 md:pt-16 pb-5 bg-gray-50 text-gray-700 dark:bg-gray-700 dark:text-gray-400 transition-all duration-200 ease-in-out"
+        <main class="h-full relative flex flex-col pt-20 md:pt-16 pb-8 bg-gray-50 text-gray-700 dark:bg-gray-700 dark:text-gray-400 transition-all duration-200 ease-in-out"
             :class="[layoutState.leftSidebar.show ? 'ml-0 md:ml-56' : 'ml-0 md:ml-10']"
         >
             <slot />

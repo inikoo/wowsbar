@@ -20,6 +20,7 @@ const props = defineProps<{
             style: string
             label?: string
             icon?: string | string[]
+            method?: string
         }[]
     },
     dataToSubmit?: any
@@ -43,9 +44,11 @@ const props = defineProps<{
     <div v-if="action.type === 'buttonGroup'" class="first:rounded-l last:rounded-r overflow-hidden ring-1 ring-gray-300 flex">
         <slot v-for="(button, index) in action.buttons" :name="'button' + index">
             <Link
-                :href="`${route(button.route.name, button.route.parameters)}`" class="">
+                :href="`${route(button.route.name, button.route.parameters)}`" class=""
+                :method="button.method ?? 'get'"
+            >
                 <Button :style="button.style" :label="button.label" :icon="button.icon"
-                        class="capitalize inline-flex items-center rounded-none text-sm border-none font-medium shadow-sm focus:ring-transparent focus:ring-offset-transparent focus:ring-0">
+                        class="capitalize inline-flex items-center h-full rounded-none text-sm border-none font-medium shadow-sm focus:ring-transparent focus:ring-offset-transparent focus:ring-0">
                 </Button>
             </Link>
         </slot>

@@ -41,5 +41,3 @@ Route::prefix('guests')->name('guests.')->group(function () {
     Route::get('/{guest}/edit', EditGuest::class)->name('edit');
     Route::get('/guests/{guest}/delete', RemoveGuest::class)->name('remove');
 });
-
-//Route::get('/guests/uploads/template/download', DownloadGuestsTemplate::class)->name('guest.uploads.template.download');
