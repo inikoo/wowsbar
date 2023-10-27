@@ -16,10 +16,10 @@ enum ProspectsTabsEnum: string
     use HasTabs;
 
     case PROSPECTS = 'prospects';
-    case MAILSHOTS = 'mailshots';
 
     case HISTORY   = 'history';
 
+    case MAILSHOTS = 'mailshots';
 
     public function blueprint(): array
     {
@@ -31,7 +31,9 @@ enum ProspectsTabsEnum: string
 
             ProspectsTabsEnum::MAILSHOTS => [
                 'title' => __('mailshots'),
-                'icon'  => 'fal fa-paper-plane',
+                'icon'  => 'fal fa-mail-bulk',
+                'type'  => 'icon',
+                'align' => 'right'
             ],
 
             ProspectsTabsEnum::HISTORY => [

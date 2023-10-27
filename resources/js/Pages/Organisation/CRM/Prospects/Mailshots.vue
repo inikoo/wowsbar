@@ -12,8 +12,8 @@ import { useTabChange } from "@/Composables/tab-change";
 import { faRoad, faTerminal, faUserCircle } from '@fal/'
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { capitalize } from "@/Composables/capitalize"
-import TableOrganisationUsers from "@/Components/Tables/TableOrganisationUsers.vue";
 import PageHeading from "@/Components/Headings/PageHeading.vue";
+import TableProspectsMailshots from "@/Components/Tables/TableProspectsMailshots.vue";
 
 library.add(faRoad, faTerminal, faUserCircle)
 const props = defineProps<{
@@ -23,8 +23,7 @@ const props = defineProps<{
         navigation: object;
     },
     title: string
-    users?: object
-    users_requests?: object
+    mailshots?: object
 }>()
 
 
@@ -34,7 +33,7 @@ const handleTabUpdate = (tabSlug) => useTabChange(tabSlug, currentTab);
 const component = computed(() => {
 
     const components = {
-        mailshots: TableOrganisationUsers,
+        mailshots: TableProspectsMailshots,
     };
     return components[currentTab.value];
 

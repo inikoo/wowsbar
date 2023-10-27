@@ -8,7 +8,7 @@
 import { Link } from "@inertiajs/vue3"
 
 import { library } from "@fortawesome/fontawesome-svg-core"
-import { faSign,faEdit, faWindowMaximize, faDraftingCompass, faEmptySet, faMoneyCheckAlt, faPeopleArrows, faSlidersH, faSave, faSuitcase, faBroadcastTower, faUpload, faLevelUp, faUserPlus, faTimes, faClock, faSeedling} from '@fal/'
+import { faMailBulk,faSign,faEdit, faWindowMaximize, faDraftingCompass, faEmptySet, faMoneyCheckAlt, faPeopleArrows, faSlidersH, faSave, faSuitcase, faBroadcastTower, faUpload, faLevelUp, faUserPlus, faTimes, faClock, faSeedling} from '@fal/'
 import { faRocketLaunch, faPencil, faArrowLeft, faBorderAll, faTrashAlt, faDesktop} from '@far/'
 import { faPlus } from '@fas/'
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
@@ -23,7 +23,7 @@ interface Icon {
     icon: string[] | string
 }
 
-library.add(faEdit, faWindowMaximize, faRocketLaunch, faDraftingCompass, faEmptySet, faMoneyCheckAlt, faPeopleArrows, faSlidersH, faPlus,
+library.add(faMailBulk,faEdit, faWindowMaximize, faRocketLaunch, faDraftingCompass, faEmptySet, faMoneyCheckAlt, faPeopleArrows, faSlidersH, faPlus,
     faPencil, faArrowLeft, faBorderAll, faTrashAlt, faSave, faSuitcase,
     faBroadcastTower, faUpload, faDesktop,faLevelUp, faUserPlus, faTimes, faClock, faSeedling,faSign
 )

@@ -19,6 +19,7 @@ use App\Actions\CRM\User\UI\CreateOrgCustomerUser;
 use App\Actions\CRM\User\UI\EditOrgCustomerUser;
 use App\Actions\CRM\User\UI\IndexOrgCustomerUsers;
 use App\Actions\CRM\User\UI\ShowOrgCustomerUser;
+use App\Actions\Leads\Prospect\Mailshots\UI\CreateMailshot;
 use App\Actions\Leads\Prospect\Mailshots\UI\IndexProspectMailshots;
 use App\Actions\Leads\Prospect\UI\CreateProspect;
 use App\Actions\Subscriptions\CustomerSocialAccount\UI\ShowCustomerSocialAccount;
@@ -33,7 +34,9 @@ use App\Actions\Leads\Prospect\UI\ShowProspect;
 use App\Actions\Organisation\UI\CRM\ShowCRMDashboard;
 use App\Actions\Organisation\UI\CRM\ShowMailroomDashboard;
 
-Route::get('/', function () {return redirect('/crm/dashboard');});
+Route::get('/', function () {
+    return redirect('/crm/dashboard');
+});
 Route::get('/dashboard', [ShowCRMDashboard::class, 'inOrganisation'])->name('dashboard');
 
 Route::get('customers', IndexCustomers::class)->name('customers.index');
@@ -47,8 +50,6 @@ Route::prefix('customers/{customer}')->as('customers.')->group(function () {
     Route::get('customer-users/create', [CreateOrgCustomerUser::class, 'inCustomer'])->name('show.customer-users.create');
     Route::get('customer-users/{user}', [ShowOrgCustomerUser::class, 'inCustomer'])->name('show.customer-users.show');
     Route::get('customer-users/{user}/edit', [EditOrgCustomerUser::class, 'inCustomer'])->name('show.customer-users.edit');
-
-
 });
 
 Route::prefix('prospects')->as('prospects.')->group(function () {
@@ -60,7 +61,9 @@ Route::prefix('prospects')->as('prospects.')->group(function () {
 });
 
 Route::prefix('shop/{shop}')->as('shop.')->group(function () {
-    Route::get('/', function ($shop) {return redirect()->route('org.crm.shop.dashboard', [$shop]);});
+    Route::get('/', function ($shop) {
+        return redirect()->route('org.crm.shop.dashboard', [$shop]);
+    });
     Route::get('/dashboard', [ShowCRMDashboard::class, 'inShop'])->name('dashboard');
 
     Route::get('customers', [IndexCustomers::class, 'inShop'])->name('customers.index');
@@ -84,12 +87,15 @@ Route::prefix('shop/{shop}')->as('shop.')->group(function () {
     });
 
 
-
     Route::prefix('prospects')->as('prospects.')->group(function () {
         Route::get('/', [IndexProspects::class, 'inShop'])->name('index');
         Route::get('/create', [CreateProspect::class, 'inShop'])->name('create');
-        Route::get('/mailshots', [IndexProspectMailshots::class, 'inShop'])->name('mailshots.index');
 
+        Route::prefix('mailshots')->as('mailshots.')->group(function () {
+            Route::get('', [IndexProspectMailshots::class, 'inShop'])->name('index');
+            Route::get('create', [CreateMailshot::class, 'inShop'])->name('create');
+
+        });
         Route::get('/{prospect}', [ShowProspect::class, 'inShop'])->name('show');
         Route::get('/{prospect}/edit', [EditProspect::class, 'inShop'])->name('edit');
         Route::get('/{prospect}/delete', [RemoveProspect::class, 'inShop'])->name('remove');
@@ -97,16 +103,14 @@ Route::prefix('shop/{shop}')->as('shop.')->group(function () {
 
 
     Route::prefix('mailroom')->as('mailroom.')->group(function () {
-        Route::get('', ['icon'=>'fa-envelope','label'=>'mailroom'])->uses([ShowMailroomDashboard::class,'inShop'])->name('dashboard');
-
-
+        Route::get('', ['icon' => 'fa-envelope', 'label' => 'mailroom'])->uses([ShowMailroomDashboard::class, 'inShop'])->name('dashboard');
     });
 
 
     Route::prefix('appointments')->as('appointments.')->group(function () {
-        Route::get('/', ['icon'=>'fa-handshake','label'=>'appointment'])->uses([IndexAppointments::class,'inShop'])->name('index');
-        Route::get('/create', ['icon'=>'fa-handshake','label'=>'appointment'])->uses([CreateAppointment::class,'inShop'])->name('create');
-        Route::get('/{appointment}', ['icon'=>'fa-handshake','label'=>'appointment'])->uses(ShowAppointment::class)->name('show');
-        Route::get('/{appointment}/edit', ['icon'=>'fa-handshake','label'=>'appointment'])->uses(EditAppointment::class)->name('edit');
+        Route::get('/', ['icon' => 'fa-handshake', 'label' => 'appointment'])->uses([IndexAppointments::class, 'inShop'])->name('index');
+        Route::get('/create', ['icon' => 'fa-handshake', 'label' => 'appointment'])->uses([CreateAppointment::class, 'inShop'])->name('create');
+        Route::get('/{appointment}', ['icon' => 'fa-handshake', 'label' => 'appointment'])->uses(ShowAppointment::class)->name('show');
+        Route::get('/{appointment}/edit', ['icon' => 'fa-handshake', 'label' => 'appointment'])->uses(EditAppointment::class)->name('edit');
     });
 });

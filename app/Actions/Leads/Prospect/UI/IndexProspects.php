@@ -174,7 +174,7 @@ class IndexProspects extends InertiaAction
                             'number'   => 0,
                             'label'    => __('Mailshots'),
                             'leftIcon' => [
-                                'icon'    => 'fal fa-bulk-email',
+                                'icon'    => 'fal fa-mail-bulk',
                                 'tooltip' => __('mailshots')
                             ]
                         ],
@@ -186,7 +186,7 @@ class IndexProspects extends InertiaAction
                             'name' => 'org.downloads.templates.prospects'
                         ]
                     ],
-                    'event' => class_basename(Prospect::class),
+                    'event'   => class_basename(Prospect::class),
                     'channel' => 'uploads.org.' . request()->user()->id
                 ],
                 'uploadRoutes' => [

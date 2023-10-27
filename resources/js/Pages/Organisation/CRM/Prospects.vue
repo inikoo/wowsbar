@@ -9,17 +9,22 @@ import { Head } from "@inertiajs/vue3"
 import PageHeading from "@/Components/Headings/PageHeading.vue"
 import TableProspects from "@/Components/Tables/TableProspects.vue"
 import { capitalize } from "@/Composables/capitalize"
-import { reactive } from "vue"
+import {computed, reactive, ref} from "vue"
 import ButtonGroup from '@/Components/Elements/Buttons/ButtonGroup.vue'
 import UploadExcel from '@/Components/Upload/UploadExcel.vue'
 
 import { PageHeading as TSPageHeading } from '@/types/PageHeading'
 import { routeType } from "@/types/route"
+import Tabs from "@/Components/Navigation/Tabs.vue";
+import {useTabChange} from "@/Composables/tab-change";
 
 const props = defineProps <{
     pageHead: TSPageHeading
     title: string
-    data: object
+    tabs: {
+        current: string;
+        navigation: object;
+    },
     uploads: {
         templates: {
             routes: routeType
@@ -27,12 +32,22 @@ const props = defineProps <{
         channel: string
         event: string
     }
+    prospects?: object
 }>()
 
-// To handle Modal on click 'upload' button
-const dataModal = reactive({
-    isModalOpen: false
-})
+const dataModal = reactive({isModalOpen: false})
+
+let currentTab = ref(props.tabs.current);
+const handleTabUpdate = (tabSlug) => useTabChange(tabSlug, currentTab);
+
+const component = computed(() => {
+
+    const components = {
+        prospects: TableProspects,
+    };
+    return components[currentTab.value];
+
+});
 </script>
 
 <template layout="OrgApp">
@@ -43,7 +58,8 @@ const dataModal = reactive({
         </template>
     </PageHeading>
 
-    <TableProspects :data="data" />
+    <Tabs :current="currentTab" :navigation="tabs['navigation']" @update:tab="handleTabUpdate"/>
+    <component :is="component" :tab="currentTab"  :data="props[currentTab]"></component>
 
     <!-- Modal: after click 'upload' button -->
     <UploadExcel

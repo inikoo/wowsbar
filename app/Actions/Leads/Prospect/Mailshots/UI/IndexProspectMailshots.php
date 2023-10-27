@@ -105,7 +105,6 @@ class IndexProspectMailshots extends InertiaAction
             );
     }
 
-
     public function htmlResponse(LengthAwarePaginator $mailshots, ActionRequest $request): Response
     {
         return Inertia::render(
@@ -115,17 +114,18 @@ class IndexProspectMailshots extends InertiaAction
                     $request->route()->getName(),
                     $request->route()->originalParameters()
                 ),
-                'title'       => __('mailshots'),
+                'title'       => __('prospects mailshots'),
                 'pageHead'    => [
-                    'title'     => __('mailshots'),
+                    'title'     => __('prospects mailshots'),
                     'actions'   =>
                         [
                             [
                                 'type'  => 'button',
                                 'style' => 'create',
-                                'label' => __('new mailshot'),
+                                'label' => __('New mailshot'),
                                 'route' => [
-                                    'name' => 'org.crm.shop.prospects.mailshots.create',
+                                    'name'      => 'org.crm.shop.prospects.mailshots.create',
+                                    'parameters'=> $this->parent->slug
                                 ]
                             ]
                         ]
@@ -148,17 +148,16 @@ class IndexProspectMailshots extends InertiaAction
         )->table($this->tableStructure());
     }
 
-
     public function asController(ActionRequest $request): LengthAwarePaginator
     {
-        $this->initialisation($request);
+        $this->initialisation($request)->withTab(ProspectsMailshotsTabsEnum::values());
 
         return $this->handle(organisation());
     }
 
     public function inShop(Shop $shop, ActionRequest $request): LengthAwarePaginator
     {
-        $this->initialisation($request);
+        $this->initialisation($request)->withTab(ProspectsMailshotsTabsEnum::values());
 
         return $this->handle($shop);
     }

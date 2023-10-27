@@ -27,7 +27,7 @@ enum ProspectsMailshotsTabsEnum: string
 
             ProspectsMailshotsTabsEnum::MAILSHOTS => [
                 'title' => __('mailshots'),
-                'icon'  => 'fal fa-bulk-mail',
+                'icon'  => 'fal fa-bars',
             ],
 
             ProspectsMailshotsTabsEnum::HISTORY => [
