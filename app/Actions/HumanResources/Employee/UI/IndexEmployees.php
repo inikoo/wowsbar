@@ -192,12 +192,13 @@ class IndexEmployees extends InertiaAction
                             'type'    => 'buttonGroup',
                             'buttons' => [
                                 [
+                                    'name'  => 'uploadEmployees',
                                     'style' => 'secondary',
                                     'icon'  => ['fal', 'fa-upload'],
-                                    'label' => 'upload',
                                     'route' => [
                                         'name' => 'org.models.employees.upload'
                                     ],
+                                    'method'=> 'post'
                                 ],
                                 [
                                     'type'  => 'button',

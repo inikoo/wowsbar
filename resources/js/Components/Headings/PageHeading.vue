@@ -109,14 +109,10 @@ if (props.dataToSubmit && props.data.actionActualMethod) {
 
         <!-- Button -->
         <slot name="button" :dataPageHead="{...props }">
-
             <div class="flex items-center gap-2">
-
-
                 <div v-for="iconAction in data.iconActions"  >
                     <IconAction v-if="iconAction" :iconAction="iconAction"/>
                 </div>
-
                 <div v-for="action in data.actions">
                     <Action :action="action" :dataToSubmit="dataToSubmit"/>
                 </div>
