@@ -23,7 +23,19 @@ class OrganisationHydrateProspects
             'number_prospects' => Prospect::where('scope_type', 'Shop')->count()
         ];
 
-        array_merge($stats, $this->getEnumStats('prospects', 'state', ProspectStateEnum::class, Prospect::where('scope_type', 'Shop')));
+
+        array_merge(
+            $stats,
+            $this->getEnumStats(
+                model: 'prospects',
+                field: 'state',
+                enum: ProspectStateEnum::class,
+                models: Prospect::class,
+                where: function ($q) {
+                    $q->where('scope_type', 'Shop');
+                }
+            )
+        );
         organisation()->crmStats()->update($stats);
     }
 }

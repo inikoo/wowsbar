@@ -15,10 +15,25 @@ trait WithEnumStats
         string $model,
         string $field,
         $enum,
-        $models
+        $models,
+        $where=false
     ): array {
         $stats = [];
+
+        $applyWhere=false;
+        if($this->is_closure($where)) {
+            $applyWhere=true;
+        } else {
+            $where=function ($q) {};
+        }
+
+
+
         $count = $models::selectRaw("$field, count(*) as total")
+            ->when(
+                $applyWhere,
+                $where
+            )
             ->groupBy($field)
             ->pluck('total', $field)->all();
         foreach ($enum::cases() as $case) {
@@ -26,5 +41,10 @@ trait WithEnumStats
         }
 
         return $stats;
+    }
+
+    public function is_closure($t): bool
+    {
+        return $t instanceof \Closure;
     }
 }

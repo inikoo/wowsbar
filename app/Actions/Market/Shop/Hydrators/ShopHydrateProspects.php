@@ -25,11 +25,15 @@ class ShopHydrateProspects
         ];
 
         array_merge($stats, $this->getEnumStats(
-            'prospects',
-            'state',
-            ProspectStateEnum::class,
-            Prospect::where('shop_id', $shop->id)
+            model:'prospects',
+            field: 'state',
+            enum: ProspectStateEnum::class,
+            models: Prospect::class,
+            where: function ($q) use ($shop) {
+                $q->where('shop_id', $shop->id);
+            }
         ));
-        organisation()->crmStats()->update($stats);
+
+        $shop->crmStats()->update($stats);
     }
 }
