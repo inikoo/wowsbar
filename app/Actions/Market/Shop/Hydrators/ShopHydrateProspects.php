@@ -24,7 +24,7 @@ class ShopHydrateProspects
             'number_prospects' => Prospect::where('shop_id', $shop->id)->count()
         ];
 
-        array_merge($stats, $this->getEnumStats(
+        $stats=array_merge($stats, $this->getEnumStats(
             model:'prospects',
             field: 'state',
             enum: ProspectStateEnum::class,

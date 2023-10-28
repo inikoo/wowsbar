@@ -16,17 +16,29 @@ beforeAll(function () {
 
 beforeEach(function () {
     createShop();
-
 });
 
 
 test('create prospect', function () {
-    $shop      =Shop::first();
+    $shop      = Shop::first();
     $modelData = Prospect::factory()->definition();
     $prospect  = StoreProspect::make()->action($shop, $modelData);
     expect($prospect)->toBeInstanceOf(Prospect::class)
         ->and($shop->crmStats->number_prospects)->toBe(1)
-        ->and(organisation()->crmStats->number_prospects)->toBe(1);
+        ->and($shop->crmStats->number_prospects_state_no_contacted)->toBe(1)
+        ->and($shop->crmStats->number_prospects_state_contacted)->toBe(0)
+        ->and($shop->crmStats->number_prospects_state_not_interested)->toBe(0)
+        ->and($shop->crmStats->number_prospects_state_registered)->toBe(0)
+        ->and($shop->crmStats->number_prospects_state_invoiced)->toBe(0)
+        ->and($shop->crmStats->number_prospects_state_bounced)->toBe(0)
+
+        ->and(organisation()->crmStats->number_prospects)->toBe(1)
+        ->and(organisation()->crmStats->number_prospects_state_no_contacted)->toBe(1)
+        ->and(organisation()->crmStats->number_prospects_state_contacted)->toBe(0)
+        ->and(organisation()->crmStats->number_prospects_state_not_interested)->toBe(0)
+        ->and(organisation()->crmStats->number_prospects_state_registered)->toBe(0)
+        ->and(organisation()->crmStats->number_prospects_state_invoiced)->toBe(0)
+        ->and(organisation()->crmStats->number_prospects_state_bounced)->toBe(0);
 
     return $prospect;
 });

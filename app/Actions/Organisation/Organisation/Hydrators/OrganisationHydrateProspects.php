@@ -24,7 +24,7 @@ class OrganisationHydrateProspects
         ];
 
 
-        array_merge(
+        $stats=array_merge(
             $stats,
             $this->getEnumStats(
                 model: 'prospects',
