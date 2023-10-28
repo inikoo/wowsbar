@@ -7,7 +7,6 @@
 
 namespace App\Exports\HumanResources;
 
-use App\Models\HumanResources\JobPosition;
 use Carbon\Carbon;
 use Faker\Factory;
 use Maatwebsite\Excel\Concerns\FromArray;
@@ -42,7 +41,7 @@ class EmployeeTemplateExport extends Factory implements FromArray
                 'bb',
                 fake()->userName,
                 fake()->password,
-                TRUE
+                true
             ];
         } while(count($array) <= 10);
 

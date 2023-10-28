@@ -7,7 +7,6 @@
 
 
 use App\Actions\Auth\User\ExportUsers;
-use App\Actions\Organisation\Guest\DownloadGuestsTemplate;
 use App\Actions\Organisation\Guest\ExportGuest;
 use App\Actions\Organisation\Guest\UI\CreateGuest;
 use App\Actions\Organisation\Guest\UI\EditGuest;

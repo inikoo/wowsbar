@@ -219,7 +219,7 @@ class IndexEmployees extends InertiaAction
                             'name' => 'org.downloads.templates.employees'
                         ]
                     ],
-                    'event' => class_basename(Employee::class),
+                    'event'   => class_basename(Employee::class),
                     'channel' => 'uploads.org.' . request()->user()->id
                 ],
                 'data'        => EmployeesResource::collection($employees),

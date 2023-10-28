@@ -3,7 +3,6 @@
 namespace App\Events;
 
 use App\Models\Helpers\Upload;
-use App\Models\Portfolio\PortfolioWebsite;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;

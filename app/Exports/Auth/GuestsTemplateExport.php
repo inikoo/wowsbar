@@ -27,7 +27,7 @@ class GuestsTemplateExport extends Factory implements FromArray
                 'admin',
                 fake()->lexify,
                 fake()->password,
-                TRUE
+                true
             ];
         } while(count($array) <= 10);
 

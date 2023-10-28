@@ -7,7 +7,6 @@
 
 namespace App\Models\Helpers;
 
-use App\Events\UploadExcelProgressEvent;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
