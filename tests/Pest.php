@@ -42,6 +42,16 @@ function loadDB($dumpName): void
  */
 function createCustomer(): void
 {
+    $organisation=createShop();
+    $customer    = Customer::first();
+    if (!$customer) {
+        $customer = StoreCustomer::make()->action($organisation->shops->first(), Customer::factory()->definition());
+    }
+    config(['global.customer_id' => $customer->id]);
+}
+
+function createShop(): Organisation
+{
     try {
         $organisation = organisation();
     } catch (Exception) {
@@ -61,11 +71,6 @@ function createCustomer(): void
             ]
         );
         $shop->refresh();
-
     }
-    $customer = Customer::first();
-    if (!$customer) {
-        $customer = StoreCustomer::make()->action($organisation->shops->first(), Customer::factory()->definition());
-    }
-    config(['global.customer_id' => $customer->id]);
+    return $organisation;
 }

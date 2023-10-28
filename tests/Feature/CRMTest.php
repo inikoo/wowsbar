@@ -43,6 +43,7 @@ test('create shop', function () {
     return $shop;
 })->depends('create organisation');
 
+
 test('create website', function ($shop) {
     $website = StoreWebsite::make()->action(
         $shop,

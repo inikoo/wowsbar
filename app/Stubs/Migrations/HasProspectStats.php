@@ -28,4 +28,20 @@ trait HasProspectStats
 
         return $table;
     }
+
+    public function undoProspectsStats(Blueprint $table): Blueprint
+    {
+        $table->dropColumn('number_prospects');
+
+        foreach (ProspectStateEnum::cases() as $prospectState) {
+            $table->dropColumn("number_prospects_state_{$prospectState->snake()}");
+        }
+
+        foreach (GenderEnum::cases() as $case) {
+            $table->dropColumn('number_prospects_gender_'.$case->snake());
+        }
+
+
+        return $table;
+    }
 }
