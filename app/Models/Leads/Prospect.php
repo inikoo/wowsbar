@@ -99,7 +99,6 @@ class Prospect extends Model
     protected $attributes = [
         'data'     => '{}',
         'location' => '{}',
-        'state'    => 'registered'
     ];
 
 
