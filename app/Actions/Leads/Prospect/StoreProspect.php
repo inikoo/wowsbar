@@ -41,6 +41,7 @@ class StoreProspect
             data_set($modelData, 'shop_id', $scope->id);
         }
 
+
         /** @var Prospect $prospect */
         $prospect = $scope->scopedProspects()->create($modelData);
 

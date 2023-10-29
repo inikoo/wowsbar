@@ -7,8 +7,13 @@
 
 namespace App\Models\Mail;
 
+use App\Actions\Utils\Abbreviate;
+use App\Enums\Mail\MailshotType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 /**
  * App\Models\Mail\Mailshot
@@ -37,4 +42,32 @@ use Illuminate\Database\Eloquent\Model;
 class Mailshot extends Model
 {
     use HasFactory;
+    use SoftDeletes;
+    use HasSlug;
+
+    protected $casts = [
+
+        'type'       => MailshotType::class,
+
+    ];
+
+    protected $guarded = [];
+
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
+
+    public function getSlugOptions(): SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom(function () {
+                return Abbreviate::run(string: $this->subject).' '.Abbreviate::run($this->type->value);
+            })
+            ->doNotGenerateSlugsOnUpdate()
+            ->saveSlugsTo('slug')
+            ->slugsShouldBeNoLongerThan(16);
+    }
+
+
 }

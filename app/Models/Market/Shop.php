@@ -23,6 +23,7 @@ use App\Models\CRM\Appointment;
 use App\Models\CRM\Customer;
 use App\Models\Helpers\SerialReference;
 use App\Models\Leads\Prospect;
+use App\Models\Mail\Mailshot;
 use App\Models\OMS\Order;
 use App\Models\Portfolios\CustomerWebsite;
 use App\Models\Traits\HasHistory;
@@ -98,6 +99,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read \App\Models\Market\ShopCRMStats|null $portfoliosStats
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Market\ShopProduct> $products
  * @property-read int|null $products_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Mailshot> $prospectMailshots
+ * @property-read int|null $prospect_mailshots_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Prospect> $prospects
  * @property-read int|null $prospects_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, SerialReference> $serialReferences
@@ -174,7 +177,10 @@ class Shop extends Model implements Auditable
     }
 
     protected $auditExclude = [
-        'location','settings','organisation_id','data'
+        'location',
+        'settings',
+        'organisation_id',
+        'data'
     ];
 
     public function getRouteKeyName(): string
@@ -306,5 +312,10 @@ class Shop extends Model implements Auditable
     public function appointment(): HasMany
     {
         return $this->hasMany(Appointment::class);
+    }
+
+    public function mailshots(): MorphMany
+    {
+        return $this->morphMany(Mailshot::class, 'scope');
     }
 }

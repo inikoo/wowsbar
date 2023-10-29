@@ -39,16 +39,9 @@ class CreateMailshot extends InertiaAction
 
     public function handle(Organisation|Shop $parent, ActionRequest $request): Response
     {
-        $fields = [];
-
-
-
         $fields[] = [
             'title'  => '',
             'fields' => [
-
-
-
                 'subject' => [
                     'type'        => 'input',
                     'label'       => __('subject'),
@@ -64,7 +57,6 @@ class CreateMailshot extends InertiaAction
             'CreateModel',
             [
                 'breadcrumbs' => $this->getBreadcrumbs(
-                    $request->route()->getName(),
                     $request->route()->originalParameters()
                 ),
                 'title'       => __('new mailshot'),
@@ -84,7 +76,6 @@ class CreateMailshot extends InertiaAction
                 'formData'    => [
                     'blueprint' => $fields,
                     'route'     =>
-
                         match (class_basename($parent)) {
                             'Shop' => [
                                 'name'       => 'customer.models.shop.prospect-mailshot.store',
@@ -93,11 +84,9 @@ class CreateMailshot extends InertiaAction
                                 ]
                             ],
                             default => [
-                                'name'       => 'customer.models.prospect-mailshot.store',
+                                'name' => 'customer.models.prospect-mailshot.store',
                             ],
                         }
-
-
                 ],
 
             ]
@@ -105,11 +94,11 @@ class CreateMailshot extends InertiaAction
     }
 
 
-    public function getBreadcrumbs(string $routeName, array $routeParameters): array
+    public function getBreadcrumbs(array $routeParameters): array
     {
         return array_merge(
             IndexProspectMailshots::make()->getBreadcrumbs(
-                'org.crm.prospects.mailshots.index',
+                'org.crm.shop.prospects.mailshots.index',
                 $routeParameters
             ),
             [

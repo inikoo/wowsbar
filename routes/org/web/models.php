@@ -101,6 +101,7 @@ Route::prefix('shop')->as('shop.')->group(function () {
         Route::post('prospect', [StoreProspect::class, 'inShop'])->name('prospect.store');
         Route::patch('prospect/{prospect:id}', [UpdateProspect::class, 'inShop'])->name('prospect.update');
         Route::post('product', [StoreProduct::class, 'inShop'])->name('product.store');
+        Route::post('prospect-mailshots', [StoreProduct::class, 'inShop'])->name('prospect-mailshots.store');
 
         Route::post('/', [StoreAppointment::class, 'inShop'])->name('appointment.store');
     });
