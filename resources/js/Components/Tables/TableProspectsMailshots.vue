@@ -7,7 +7,6 @@
 <script setup lang="ts">
 import {Link} from '@inertiajs/vue3';
 import Table from '@/Components/Table/Table.vue';
-import {Prospect} from "@/types/prospect";
 import {trans} from "laravel-vue-i18n";
 
 const props = defineProps<{
@@ -16,17 +15,13 @@ const props = defineProps<{
 }>()
 
 
-function prospectRoute(prospect: Prospect) {
-    // console.log(route().current());
+function mailshotRoute(mailshot: Mailshot) {
     switch (route().current()) {
-        case 'org.crm.shop.prospects.index':
+        case 'org.crm.shop.prospects.mailshots.index':
             return route(
-                'org.crm.shop.prospects.show',
-                [prospect.shop.slug, prospect.slug]);
-        default:
-            return route(
-                'org.crm.prospects.show',
-                [prospect.slug]);
+                'org.crm.shop.prospects.mailshots.show',
+                [route().params.shop, mailshot.slug]);
+
     }
 }
 
@@ -34,9 +29,9 @@ function prospectRoute(prospect: Prospect) {
 
 <template>
     <Table :resource="data" :name="tab" class="mt-5">
-        <template #cell(name)="{ item: prospect }">
-            <Link :href="prospectRoute(prospect)">
-                <span v-if="prospect.name">{{ prospect['name'] }}</span><span v-else class="italic opacity-50">{{trans('Unknown')}}</span>
+        <template #cell(subject)="{ item: mailshot }">
+            <Link :href="mailshotRoute(mailshot)">
+                <span v-if="mailshot.subject">{{ mailshot['subject'] }}</span><span v-else class="italic opacity-50">{{trans('Unknown')}}</span>
             </Link>
         </template>
     </Table>

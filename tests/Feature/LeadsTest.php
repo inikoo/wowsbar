@@ -7,7 +7,7 @@
 
 use App\Actions\Leads\Prospect\StoreProspect;
 use App\Actions\Mail\Mailshot\StoreMailshot;
-use App\Enums\Mail\MailshotType;
+use App\Enums\Mail\MailshotTypeEnum;
 use App\Models\Leads\Prospect;
 use App\Models\Mail\Mailshot;
 use App\Models\Market\Shop;
@@ -75,7 +75,7 @@ test('create prospect mailshot', function () {
     $shop      = Shop::first();
     $dataModel =[
         'subject'=> 'hello',
-        'type'   => MailshotType::PROSPECT_MAILSHOT
+        'type'   => MailshotTypeEnum::PROSPECT_MAILSHOT
     ];
     $mailshot=StoreMailshot::make()->action($shop, $dataModel);
     expect($mailshot)->toBeInstanceOf(Mailshot::class)

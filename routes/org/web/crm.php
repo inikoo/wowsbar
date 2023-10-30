@@ -22,6 +22,9 @@ use App\Actions\CRM\User\UI\ShowOrgCustomerUser;
 use App\Actions\Leads\Prospect\Mailshots\UI\CreateMailshot;
 use App\Actions\Leads\Prospect\Mailshots\UI\IndexProspectMailshots;
 use App\Actions\Leads\Prospect\UI\CreateProspect;
+use App\Actions\Mail\Mailshot\UI\EditProspectMailshot;
+use App\Actions\Mail\Mailshot\UI\ShowProspectMailshot;
+use App\Actions\Mail\Mailshot\UI\ShowWorkshopProspectMailshot;
 use App\Actions\Subscriptions\CustomerSocialAccount\UI\ShowCustomerSocialAccount;
 use App\Actions\Subscriptions\CustomerWebsite\UI\CreateCustomerWebsite;
 use App\Actions\Subscriptions\CustomerWebsite\UI\EditCustomerWebsite;
@@ -95,6 +98,9 @@ Route::prefix('shop/{shop}')->as('shop.')->group(function () {
             Route::get('', [IndexProspectMailshots::class, 'inShop'])->name('index');
             Route::get('create', [CreateMailshot::class, 'inShop'])->name('create');
 
+            Route::get('{mailshot}/edit', EditProspectMailshot::class)->name('edit');
+            Route::get('{mailshot}/workshop', ShowWorkshopProspectMailshot::class)->name('workshop');
+            Route::get('{mailshot}', ShowProspectMailshot::class)->name('show');
         });
         Route::get('/{prospect}', [ShowProspect::class, 'inShop'])->name('show');
         Route::get('/{prospect}/edit', [EditProspect::class, 'inShop'])->name('edit');

@@ -41,10 +41,10 @@ export interface CentralStageData {
 
 // Slide Data
 export interface SlideWorkshopData {
-    id: number
+    id?: number
     ulid: string
-    image_id: number
-    image_source: string
+    // image_id: number
+    // image_source: string
     layout: {
         link?: string,
         centralStage?: CentralStageData
@@ -52,24 +52,24 @@ export interface SlideWorkshopData {
         corners?: CornersData
     }
     image: {
-        desktop: Images | string
-        tablet: Images | string
-        mobile: Images | string
+        desktop: Images | {}
+        tablet?: Images | {}
+        mobile?: Images | {}
     }
     background: {
         desktop: string
-        tablet: string
-        mobile: string
+        tablet?: string
+        mobile?: string
     }
     backgroundType: {
         desktop: string
-        tablet: string
-        mobile: string
+        tablet?: string
+        mobile?: string
     }
     visibility: boolean
-    corners: CornersData
-    imageAlt: string
-    link: string
+    corners?: CornersData
+    // imageAlt?: string
+    link?: string
     user?: string
 }
 

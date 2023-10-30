@@ -91,7 +91,6 @@ const plugin = props.useBasic ?  [Webpage, Basic, usePlugin(grapesjsIcons, optio
 
 onMounted(() => {
     editorInstance.value = grapesjs.init({
-        height: "100%",
         container: "#gjs",
         showOffsets: true,
         fromElement: true,
@@ -106,7 +105,7 @@ onMounted(() => {
             type: 'remote',
         },
         assetManager: {
-            // custom: true,
+         // custom: true,
             storeAfterUpload  : false,
             uploadFile: async function (e) {
                 var files = e.dataTransfer ? e.dataTransfer.files : e.target.files;
@@ -158,7 +157,6 @@ onMounted(() => {
 </template>
 
 <style lang="scss">
-
 .gjs-cv-canvas {
     box-sizing: border-box;
     width: 80%;
@@ -175,9 +173,6 @@ onMounted(() => {
 .editor{
     width: 100%;
     height: calc(100% - 4rem);
-}
-.gjs-mdl-container{
-    position: relative;
 }
 
 .gjs-pn-views{

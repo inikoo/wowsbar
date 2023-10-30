@@ -6,41 +6,17 @@ import CropImage from "./CropImage/CropImage.vue"
 import GalleryImages from "@/Components/Workshop/GalleryImages.vue"
 import SlideAddMode from '@/Components/Banner/SlideAddMode.vue'
 import { useBannerBackgroundColor, useHeadlineText } from '@/Composables/useCommonList'
+import { CommonData, SlideWorkshopData } from "@/types/BannerWorkshop"
+import { routeType } from '@/types/route';
+
 const props = defineProps<{
     data: {
-        common: {
-            centralStage: {
-                subtitle?: string
-                text?: string
-                title?: string
-            }
-            corners: Corners
-        }
-        components: Array<{
-            id: number
-            image_id: number
-            image_source: string
-            layout: {
-                link?: string
-                centralStage: {
-                    title?: string
-                    subtitle?: string
-                    // text?: string,
-                    // footer?: string
-                }
-            }
-            corners: Object
-            imageAlt: string
-            link: string
-            visibility: boolean
-        }>
+        common: CommonData
+        components: SlideWorkshopData[]
         delay: number
         type: string
     }
-    imagesUploadRoute: {
-        name: string
-        parameters: string[]
-    }
+    imagesUploadRoute: routeType
 }>()
 
 const isOpenModalCrop = ref(false)
@@ -98,7 +74,6 @@ const onClickQuickStart = () => {
     if(props.data.type === 'square'){
         // 'Quick Start' if square
         props.data.components.push({
-            id:  null,
             ulid: ulid(),
             layout: {
                 imageAlt: 'New slide',
@@ -127,7 +102,6 @@ const onClickQuickStart = () => {
     } else {
         // 'Quick Start' if landscape
         props.data.components.push({
-            id:  null,
             ulid: ulid(),
             layout: {
                 imageAlt: 'New slide',
@@ -171,7 +145,12 @@ const onClickQuickStart = () => {
     
     <Modal :isOpen="isOpenGalleryImages" @onClose="()=>isOpenGalleryImages = false">
         <div>
-            <GalleryImages :addImage="uploadImageRespone" :closeModal="()=>isOpenGalleryImages = false"/>
+            <GalleryImages
+                :imagesUploadRoute="imagesUploadRoute"
+                :addImage="uploadImageRespone"
+                :closeModal="()=>isOpenGalleryImages = false"
+                :ratio="data.type === 'square' ? {w : 1, h : 1} : undefined"
+            />
         </div>
     </Modal>
     

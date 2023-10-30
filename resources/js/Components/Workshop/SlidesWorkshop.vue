@@ -710,7 +710,7 @@ const backgroundColorList = useBannerBackgroundColor() // Fetch color list from 
             <div>
                 <GalleryImages
                     :addImage="uploadImageRespone" 
-                    :closeModal="()=>isOpenGalleryImages = false"  
+                    :closeModal="() => isOpenGalleryImages = false"
                     :imagesUploadRoute="props.imagesUploadRoute"  
                     :ratio="data.type == 'square' ? {w: 1, h: 1} : {w: 4, h: 1}" 
                 />

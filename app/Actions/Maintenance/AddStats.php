@@ -7,6 +7,7 @@
 
 namespace App\Actions\Maintenance;
 
+use App\Models\Market\Shop;
 use App\Models\Organisation\Division;
 use Lorisleiva\Actions\Concerns\AsCommand;
 
@@ -24,9 +25,19 @@ class AddStats
             $organisation->taskStats()->create();
         }
 
+        if (!$organisation->mailStats) {
+            $organisation->mailStats()->create();
+        }
+
         foreach (Division::all() as $division) {
             if (!$division->taskStats) {
                 $division->taskStats()->create();
+            }
+        }
+
+        foreach (Shop::all() as $shop) {
+            if (!$shop->mailStats) {
+                $shop->mailStats()->create();
             }
         }
 

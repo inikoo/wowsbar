@@ -50,7 +50,7 @@ const setData2 = () => {
 
 const setData = ref(setData2())
 
-const generateThumbnail = (file) => {
+const generateThumbnail = (file: {originalFile: File, imagePosition: any}) => {
     if (
         file.originalFile &&
         file.originalFile instanceof File &&
@@ -75,6 +75,7 @@ const loadingState = ref(false)
 const addComponent = async () => {
     loadingState.value = true
     const SendData = []
+
     const processItem = async (item) => {
         return new Promise((resolve, reject) => {
             if (item.imagePosition) {
@@ -83,13 +84,17 @@ const addComponent = async () => {
                     form.value.append("blob", blob, item.originalFile.name)
                     resolve()
                 })
+            } else if (item.originalFile.type == 'image/gif') {
+                form.value.append("gif", item.originalFile)
+                resolve()
             } else {
                 resolve()
             }
         });
     };
 
-    await Promise.all(setData.value.map(processItem));
+    await Promise.all(setData.value.map(processItem))
+    
     for (const [key, value] of form.value.entries()) {
         SendData.push(value)
         // console.log((value.size / (1024 * 1024)).toFixed(2))
@@ -121,13 +126,13 @@ const addComponent = async () => {
 
 const current = ref(0)
 
-const generateGif = (file) => {
-		let fileSrc = URL.createObjectURL(file)
-		setTimeout(() => {
-			URL.revokeObjectURL(fileSrc)
-		}, 1000)
-		return fileSrc
-	}
+const generateGif = (file: File) => {
+    let fileSrc = URL.createObjectURL(file)
+    setTimeout(() => {
+        URL.revokeObjectURL(fileSrc)
+    }, 1000)
+    return fileSrc
+}
 
 </script>
 

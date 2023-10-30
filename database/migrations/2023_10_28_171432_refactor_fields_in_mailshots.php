@@ -18,7 +18,12 @@ return new class () extends Migration {
         Schema::table('mailshots', function (Blueprint $table) {
             $table->string('type')->index();
             $table->dateTimeTz('date')->index();
+            $table->dateTimeTz('ready_at')->nullable();
             $table->dateTimeTz('start_sending_at')->nullable();
+            $table->dateTimeTz('sent_at')->nullable();
+            $table->dateTimeTz('cancelled_at')->nullable();
+            $table->dateTimeTz('stopped_at')->nullable();
+            $table->jsonb('recipients');
             if (Schema::hasColumn('mailshots', 'email_template_id')) {
                 $table->dropColumn('email_template_id');
             }
@@ -37,9 +42,16 @@ return new class () extends Migration {
             $table->dropColumn([
                 'type',
                 'date',
+                'ready_at',
                 'start_sending_at',
+                'sent_at',
+                'cancelled_at',
+                'stopped_at',
+                'recipients',
                 'scope_type',
-                'scope_type'
+                'scope_id',
+                'deleted_at',
+                'delete_comment'
             ]);
         });
     }

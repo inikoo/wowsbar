@@ -8,9 +8,11 @@
 namespace App\Models\Mail;
 
 use App\Actions\Utils\Abbreviate;
-use App\Enums\Mail\MailshotType;
+use App\Enums\Mail\MailshotStateEnum;
+use App\Enums\Mail\MailshotTypeEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
@@ -21,22 +23,47 @@ use Spatie\Sluggable\SlugOptions;
  * @property int $id
  * @property string $slug
  * @property string $subject
- * @property int $email_template_id
- * @property string $state
+ * @property MailshotStateEnum $state
  * @property string|null $schedule_at
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property MailshotTypeEnum $type
+ * @property string $date
+ * @property string|null $ready_at
+ * @property string|null $start_sending_at
+ * @property string|null $sent_at
+ * @property string|null $cancelled_at
+ * @property string|null $stopped_at
+ * @property array $recipients
+ * @property string $scope_type
+ * @property int $scope_id
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property string|null $delete_comment
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Mailshot onlyTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereCancelledAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereEmailTemplateId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereDeleteComment($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereDeletedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereReadyAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereRecipients($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereScheduleAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereScopeId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereScopeType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereSentAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereSlug($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereStartSendingAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereState($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereStoppedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereSubject($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Mailshot withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Mailshot withoutTrashed()
  * @mixin \Eloquent
  */
 class Mailshot extends Model
@@ -46,9 +73,14 @@ class Mailshot extends Model
     use HasSlug;
 
     protected $casts = [
+        'recipients' => 'array',
+        'type'       => MailshotTypeEnum::class,
+        'state'      => MailshotStateEnum::class
 
-        'type'       => MailshotType::class,
+    ];
 
+    protected $attributes = [
+        'recipients'     => '{}',
     ];
 
     protected $guarded = [];
@@ -67,6 +99,11 @@ class Mailshot extends Model
             ->doNotGenerateSlugsOnUpdate()
             ->saveSlugsTo('slug')
             ->slugsShouldBeNoLongerThan(16);
+    }
+
+    public function scope(): MorphTo
+    {
+        return $this->morphTo();
     }
 
 
