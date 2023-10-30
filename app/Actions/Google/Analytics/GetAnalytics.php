@@ -8,7 +8,9 @@
 namespace App\Actions\Google\Analytics;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\AsCommand;
 use Lorisleiva\Actions\Concerns\AsObject;
@@ -21,18 +23,26 @@ class GetAnalytics
     use AsAction;
     use AsCommand;
 
-    public string $commandSignature = 'analytics:fetch {property} {days}';
+    public string $commandSignature = 'analytics:fetch {property} {startAt}';
 
-    public function handle($propertyId, $periodDay): Collection
+    public function handle($propertyId, $startAt): Collection
     {
         Analytics::setPropertyId($propertyId);
 
-        return Analytics::fetchVisitorsAndPageViews(Period::days($periodDay));
+        $analytics = Analytics::get(Period::create($startAt, now()), ['totalUsers', 'screenPageViews'], ['pagePath']);
+
+        return $analytics->map(function ($analytic) {
+            return [
+                'bannerId'  => Str::replace('/banners/', '', $analytic['pagePath']),
+                'pageViews' => $analytic['screenPageViews'],
+                'users'     => $analytic['totalUsers']
+            ];
+        });
     }
 
     public function asCommand(Command $command): int
     {
-        $result =  $this->handle($command->argument('property'), $command->argument('days'));
+        $result =  $this->handle($command->argument('property'), Carbon::make($command->argument('startAt')));
 
         print_r($result);
 
