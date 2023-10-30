@@ -152,9 +152,10 @@ class StoreMailshot
     {
         return match ($mailshot->type) {
             MailshotTypeEnum::PROSPECT_MAILSHOT => redirect()->route(
-                'org.models.shop.prospect-mailshot.show',
+                'org.crm.shop.prospects.mailshots.workshop',
                 [
-                    $mailshot->scope->slug
+                    $mailshot->scope->slug,
+                    $mailshot->slug
                 ]
             ),
             default => null

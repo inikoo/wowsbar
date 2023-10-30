@@ -118,8 +118,7 @@ class ShowWorkshopProspectMailshot extends InertiaAction
 
 
         return match ($routeName) {
-            'customer.mailshots.mailshots.show',
-            'customer.mailshots.mailshots.edit' =>
+            'org.crm.shop.prospects.mailshots.workshop' =>
             array_merge(
                 IndexProspects::make()->getBreadcrumbs(
                     'org.crm.shop.prospects.index',
@@ -130,11 +129,11 @@ class ShowWorkshopProspectMailshot extends InertiaAction
                     Mailshot::firstWhere('slug', $routeParameters['mailshot']),
                     [
                         'index' => [
-                            'name'       => 'customer.mailshots.mailshots.index',
-                            'parameters' => []
+                            'name'       => 'org.crm.shop.prospects.mailshots.index',
+                            'parameters' => $routeParameters
                         ],
                         'model' => [
-                            'name'       => 'customer.mailshots.mailshots.show',
+                            'name'       => 'org.crm.shop.prospects.mailshots.show',
                             'parameters' => $routeParameters
                         ]
                     ],
@@ -145,27 +144,17 @@ class ShowWorkshopProspectMailshot extends InertiaAction
         };
     }
 
+
     public function getPrevious(Mailshot $mailshot, ActionRequest $request): ?array
     {
-        if (class_basename($this->parent) == 'PortfolioWebsite') {
-            // todo, need to use a join
-            $previous = null;
-        } else {
-            $previous = Mailshot::where('slug', '<', $mailshot->slug)->orderBy('slug')->first();
-        }
+        $previous = Mailshot::where('slug', '<', $mailshot->slug)->orderBy('slug')->first();
 
         return $this->getNavigation($previous, $request->route()->getName());
     }
 
     public function getNext(Mailshot $mailshot, ActionRequest $request): ?array
     {
-        if (class_basename($this->parent) == 'PortfolioWebsite') {
-            // todo, need to use a join
-            $next = null;
-        } else {
-            $next = Mailshot::where('slug', '>', $mailshot->slug)->orderBy('slug')->first();
-        }
-
+        $next = Mailshot::where('slug', '>', $mailshot->slug)->orderBy('slug')->first();
 
         return $this->getNavigation($next, $request->route()->getName());
     }
@@ -178,13 +167,13 @@ class ShowWorkshopProspectMailshot extends InertiaAction
 
 
         return match ($routeName) {
-            'customer.mailshots.mailshots.show',
-            'customer.mailshots.mailshots.edit' => [
+            'org.crm.shop.prospects.mailshots.workshop' => [
                 'label' => $mailshot->slug,
                 'route' => [
                     'name'       => $routeName,
                     'parameters' => [
-                        'mailshot' => $mailshot->slug
+                        $mailshot->scope->slug,
+                        $mailshot->slug
                     ]
                 ]
             ],

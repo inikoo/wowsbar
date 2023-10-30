@@ -169,8 +169,8 @@ class ShowProspectMailshot extends InertiaAction
 
 
         return match ($routeName) {
-            'customer.mailshots.mailshots.show',
-            'customer.mailshots.mailshots.edit' =>
+            'org.crm.shop.prospects.mailshots.show',
+            'org.crm.shop.prospects.mailshots.edit' =>
             array_merge(
                 IndexProspects::make()->getBreadcrumbs(
                     'org.crm.shop.prospects.index',
@@ -181,11 +181,11 @@ class ShowProspectMailshot extends InertiaAction
                     Mailshot::firstWhere('slug', $routeParameters['mailshot']),
                     [
                         'index' => [
-                            'name'       => 'customer.mailshots.mailshots.index',
-                            'parameters' => []
+                            'name'       => 'org.crm.shop.prospects.mailshots.index',
+                            'parameters' => $routeParameters
                         ],
                         'model' => [
-                            'name'       => 'customer.mailshots.mailshots.show',
+                            'name'       => 'org.crm.shop.prospects.mailshots.show',
                             'parameters' => $routeParameters
                         ]
                     ],
@@ -220,13 +220,14 @@ class ShowProspectMailshot extends InertiaAction
 
 
         return match ($routeName) {
-            'customer.mailshots.mailshots.show',
-            'customer.mailshots.mailshots.edit' => [
+            'org.crm.shop.prospects.mailshots.show',
+            'org.crm.shop.prospects.mailshots.edit' => [
                 'label' => $mailshot->slug,
                 'route' => [
                     'name'       => $routeName,
                     'parameters' => [
-                        'mailshot' => $mailshot->slug
+                        $mailshot->scope->slug,
+                        $mailshot->slug
                     ]
                 ]
             ],
