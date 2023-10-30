@@ -73,7 +73,7 @@ class IndexSnapshots extends InertiaAction
             }
 
 
-            $table->column(key: 'state', label: ['fal', 'fa-yin-yang'])
+            $table->column(key: 'state', label: ['fal', 'fa-yin-yang'], type: 'icon')
                 ->column(key: 'publisher', label: __('publisher'), sortable: true)
                 ->column(key: 'published_at', label: __('date published'), sortable: true)
                 ->column(key: 'published_until', label: __('published until'))

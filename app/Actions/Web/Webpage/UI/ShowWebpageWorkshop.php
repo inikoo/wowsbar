@@ -70,17 +70,6 @@ class ShowWebpageWorkshop extends InertiaAction
                                 'parameters' => array_values($request->route()->originalParameters()),
                             ]
                         ],
-                        /*
-                        [
-                            'type'  => 'button',
-                            'label' => __('save'),
-                            'method'=> 'patch',
-                            'route' => [
-                                'name'       => 'org.models.webpage.blocks.update',
-                                'parameters' => $webpage->id
-                            ]
-                        ],
-                        */
                     ],
                 ],
                 'webpageID'    => $webpage->id,

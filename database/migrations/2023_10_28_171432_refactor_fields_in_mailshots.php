@@ -23,7 +23,10 @@ return new class () extends Migration {
             $table->dateTimeTz('sent_at')->nullable();
             $table->dateTimeTz('cancelled_at')->nullable();
             $table->dateTimeTz('stopped_at')->nullable();
+            $table->jsonb('layout');
             $table->jsonb('recipients');
+            $table->unsignedSmallInteger('publisher_id')->nullable()->comment('org user');
+            $table->foreign('publisher_id')->references('id')->on('organisation_users');
             if (Schema::hasColumn('mailshots', 'email_template_id')) {
                 $table->dropColumn('email_template_id');
             }
@@ -47,7 +50,9 @@ return new class () extends Migration {
                 'sent_at',
                 'cancelled_at',
                 'stopped_at',
+                'layout',
                 'recipients',
+                'publisher_id',
                 'scope_type',
                 'scope_id',
                 'deleted_at',
