@@ -34,7 +34,7 @@ class ShowProspectMailshotWorkshop extends InertiaAction
 
         return
             (
-            $request->user()->hasPermissionTo('crm.prospects.view')
+                $request->user()->hasPermissionTo('crm.prospects.view')
             );
     }
 
