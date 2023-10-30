@@ -76,9 +76,9 @@ const logoutAuth = () => {
 </script>
 
 <template>
-    <Disclosure as="nav" class=" fixed top-0 z-[21] w-full bg-gray-50 text-gray-700 dark:bg-gray-800 dark:text-gray-200" v-slot="{ open }">
+    <Disclosure as="nav" class=" fixed top-0 z-[21] w-full bg-gray-50 text-gray-700" v-slot="{ open }">
         <div class="px-0">
-            <div class="flex h-11 lg:h-10 flex-shrink-0 border-b border-gray-200 dark:border-gray-500 ">
+            <div class="flex h-11 lg:h-10 flex-shrink-0 border-b border-[#745181]">
                 <div class="flex flex-1">
                     <div class="flex flex-1 lg:justify-between">
                         <!-- Hamburger -->
@@ -94,75 +94,72 @@ const logoutAuth = () => {
                         </button>
 
                         <!-- Menu -->
-                        <div class="flex flex-1 items-center justify-between lg:justify-start">
+                        <div class="bg-[#452650] flex items-center justify-between lg:justify-start soverflow-hidden transition-all duration-100 ease-in-out"
+                            :class="[layout.leftSidebar.show ? 'md:w-56' : 'md:w-10']"
+                        >
                             <Link :href="route(logoRoute)"
-                                class="md:pl-3 flex items-center h-full xl:overflow-hidden space-x-2 mr-6 xl:w-56 xl:pr-2 xl:border-r-2 xl:mr-0 xl:border-gray-200 dark:xl:border-gray-500"
+                                class="stext-white md:pl-3 flex items-center h-full xl:overflow-hidden space-x-2 mr-6xl:pr-2 xl:border-r-2 xl:mr-0 xl:border-gray-200"
                             >
                                 <slot />
                             </Link>
-                            <AppTopBarNavs />
                         </div>
                     </div>
 
                     <!-- Avatar Group -->
-                    <div class="flex items-center mr-6 space-x-3">
-                        <div class="flex">
-                            <!-- <div class="cursor-pointer text-white bg-indigo-500 px-2 py-0.5 rounded-md select-none" @click="changeColorMode(true)">Dark mode: True</div>
-                            <div class="cursor-pointer text-white bg-indigo-500 px-2 py-0.5 rounded-md select-none" @click="changeColorMode(false)">Dark mode: False</div>
-                            <div class="cursor-pointer text-white bg-indigo-500 px-2 py-0.5 rounded-md select-none" @click="changeColorMode('system')">Dark mode: OS System</div> -->
-
-                            <!-- Button: Search -->
-                            <button @click="showSearchDialog = !showSearchDialog" id="search"
-                                    class="h-8 w-8 grid items-center justify-center rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500">
-                                <span class="sr-only">{{ trans("Search") }}</span>
-                                <font-awesome-icon aria-hidden="true" icon="fa-regular fa-search" size="lg" />
-                                <SearchBar v-if="showSearchDialog" v-on:close="showSearchDialog = false" />
-                            </button>
-
-                            <!-- Button: Notifications -->
-                            <button type="button"
-                                    class="h-8 w-8 grid items-center justify-center rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500">
-                                <span class="sr-only">{{ trans("View notifications") }}</span>
-                                <font-awesome-icon aria-hidden="true" icon="fa-regular fa-bell" size="lg" />
-                            </button>
+                    <div class="flex items-center justify-between mr-6 space-x-3">
+                        <AppTopBarNavs />
+                        <div>
+                            <div xclass="flex">
+                                <!-- <div class="cursor-pointer text-white bg-indigo-500 px-2 py-0.5 rounded-md select-none" @click="changeColorMode(true)">Dark mode: True</div>
+                                <div class="cursor-pointer text-white bg-indigo-500 px-2 py-0.5 rounded-md select-none" @click="changeColorMode(false)">Dark mode: False</div>
+                                <div class="cursor-pointer text-white bg-indigo-500 px-2 py-0.5 rounded-md select-none" @click="changeColorMode('system')">Dark mode: OS System</div> -->
+                                <!-- Button: Search -->
+                                <button @click="showSearchDialog = !showSearchDialog" id="search"
+                                        class="h-8 w-8 grid items-center justify-center rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500">
+                                    <span class="sr-only">{{ trans("Search") }}</span>
+                                    <font-awesome-icon aria-hidden="true" icon="fa-regular fa-search" size="lg" />
+                                    <SearchBar v-if="showSearchDialog" v-on:close="showSearchDialog = false" />
+                                </button>
+                                <!-- Button: Notifications -->
+                                <button type="button"
+                                        class="h-8 w-8 grid items-center justify-center rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500">
+                                    <span class="sr-only">{{ trans("View notifications") }}</span>
+                                    <font-awesome-icon aria-hidden="true" icon="fa-regular fa-bell" size="lg" />
+                                </button>
+                            </div>
+                            <!-- Avatar Button -->
+                            <Menu as="div" class="relative">
+                                <MenuButton id="avatar-thumbnail"
+                                    class="flex max-w-xs overflow-hidden items-center rounded-full bg-gray-100 text-sm focus:outline-none focus:ring-2 focus:ring-gray-500">
+                                    <span class="sr-only">{{ trans("Open user menu") }}</span>
+                                    <Image  class="h-8 w-8 rounded-full"
+                                        :src="layout.avatar_thumbnail"
+                                        alt="" />
+                                </MenuButton>
+                                <transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100"
+                                            leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
+                                    <MenuItems class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-200 focus:outline-none">
+                                        <div class="py-1">
+                                            <MenuItem v-slot="{ active }">
+                                                <div as="ul" type="button" @click="router.visit(route(urlPrefix+'profile.show'))"
+                                                    :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm cursor-pointer']">
+                                                    {{ trans("View profile") }}
+                                                </div>
+                                            </MenuItem>
+                                        </div>
+                                        <div class="py-1">
+                                            <MenuItem v-slot="{ active }">
+                                                <div @click="logoutAuth()"
+                                                    :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm cursor-pointer']"
+                                                >
+                                                    {{ trans('Logout') }}
+                                                </div>
+                                            </MenuItem>
+                                        </div>
+                                    </MenuItems>
+                                </transition>
+                            </Menu>
                         </div>
-
-                        <!-- Avatar Button -->
-                        <Menu as="div" class="relative">
-                            <MenuButton id="avatar-thumbnail"
-                                class="flex max-w-xs overflow-hidden items-center rounded-full bg-gray-100 text-sm focus:outline-none focus:ring-2 focus:ring-gray-500">
-                                <span class="sr-only">{{ trans("Open user menu") }}</span>
-                                <Image  class="h-8 w-8 rounded-full"
-                                    :src="layout.avatar_thumbnail"
-                                    alt="" />
-
-                            </MenuButton>
-
-                            <transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100"
-                                        leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
-                                <MenuItems class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-200 focus:outline-none">
-                                    <div class="py-1">
-                                        <MenuItem v-slot="{ active }">
-                                            <div as="ul" type="button" @click="router.visit(route(urlPrefix+'profile.show'))"
-                                                :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm cursor-pointer']">
-                                                {{ trans("View profile") }}
-                                            </div>
-                                        </MenuItem>
-
-                                    </div>
-
-                                    <div class="py-1">
-                                        <MenuItem v-slot="{ active }">
-                                            <div @click="logoutAuth()"
-                                                :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm cursor-pointer']"
-                                            >
-                                                {{ trans('Logout') }}
-                                            </div>
-                                        </MenuItem>
-                                    </div>
-                                </MenuItems>
-                            </transition>
-                        </Menu>
                     </div>
                 </div>
             </div>

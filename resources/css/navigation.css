@@ -21,10 +21,10 @@
 
 /* Navigation: Organisation */
 .navigationActiveOrganisation {
-    @apply bg-lime-300 sm:border-l-4 sm:border-gray-600 text-gray-600 transition-all duration-100 ease-in-out
+    @apply bg-gray-50/40 sm:border-l-4 sm:border-white text-white transition-all duration-100 ease-in-out
 }
 .navigationOrganisation {
-    @apply hover:bg-gray-300/30 text-gray-600 transition-all duration-100 ease-in-out
+    @apply hover:bg-gray-300/30 text-fuchsia-200/60 transition-all duration-100 ease-in-out
 }
 .bottomNavigationActiveOrganisation {
     @apply bg-lime-500 w-5/6 absolute h-0.5 rounded-full bottom-0 left-[50%] translate-x-[-50%] mx-auto transition-all duration-200 ease-in-out
