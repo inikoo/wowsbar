@@ -48,29 +48,7 @@ class BannerResource extends JsonResource
             'name'               => $banner->name,
             'state'              => $banner->state,
             'state_label'        => $banner->state->labels()[$banner->state->value],
-            'state_icon'         => match ($banner->state) {
-                BannerStateEnum::LIVE => [
-
-                    'tooltip' => __('live'),
-                    'icon'    => 'fal fa-broadcast-tower',
-                    'class'   => 'text-green-600 animate-pulse'
-
-                ],
-                BannerStateEnum::UNPUBLISHED => [
-
-                    'tooltip' => __('unpublished'),
-                    'icon'    => 'fal fa-seedling',
-                    'class'   => 'text-indigo-500'
-
-
-                ],
-                BannerStateEnum::SWITCH_OFF => [
-
-                    'tooltip' => __('switch off'),
-                    'icon'    => 'fal fa-eye-slash'
-
-                ]
-            },
+            'state_icon'         => $banner->state->stateIcon()[$banner->state->value],
             'image_thumbnail'    => $imageThumbnail ? GetPictureSources::run($imageThumbnail) : null,
             'image'              => $image ? GetPictureSources::run($image) : null,
             'route'              => [
