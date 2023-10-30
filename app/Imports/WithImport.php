@@ -49,7 +49,7 @@ trait WithImport
                 $totalRows = $event->getReader()->getTotalRows();
                 $this->upload->update(
                     [
-                        'number_rows' => (int) $totalRows['Worksheet'] - 1
+                        'number_rows' => (int) Arr::get($totalRows, 'Worksheet') - 1
                     ]
                 );
             }
@@ -120,6 +120,7 @@ trait WithImport
                 'number_fails'   => $this->upload->records()->where('status', UploadRecordStatusEnum::FAILED)->count(),
             ]
         );
+        $this->upload->refresh();
 
         event(new UploadExcelProgressEvent($this->upload));
     }

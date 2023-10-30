@@ -77,7 +77,7 @@ class UploadImagesToBanner
     {
         return [
             'images'   => ['required'],
-            'images.*' => ["mimes:jpg,png,jpeg,gif", "max:602400"]
+            'images.*' => ["mimes:jpg,png,jpeg,gif", "max:102400"]
         ];
     }
 

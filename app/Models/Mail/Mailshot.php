@@ -39,6 +39,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property int $scope_id
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property string|null $delete_comment
+ * @property mixed $scope
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot onlyTrashed()
@@ -74,13 +75,15 @@ class Mailshot extends Model
 
     protected $casts = [
         'recipients' => 'array',
+        'layout'     => 'array',
         'type'       => MailshotTypeEnum::class,
         'state'      => MailshotStateEnum::class
 
     ];
 
     protected $attributes = [
-        'recipients'     => '{}',
+        'layout'     => '{}',
+        'recipients' => '{}',
     ];
 
     protected $guarded = [];

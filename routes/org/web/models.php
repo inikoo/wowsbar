@@ -31,7 +31,11 @@ use App\Actions\Leads\Prospect\RemoveProspect;
 use App\Actions\Leads\Prospect\ImportShopProspects;
 use App\Actions\Leads\Prospect\StoreProspect;
 use App\Actions\Leads\Prospect\UpdateProspect;
+use App\Actions\Mail\Mailshot\SetMailshotAsReady;
+use App\Actions\Mail\Mailshot\ShowMailshotContent;
 use App\Actions\Mail\Mailshot\StoreMailshot;
+use App\Actions\Mail\Mailshot\UpdateMailshotContent;
+use App\Actions\Mail\Mailshot\UploadImagesToMailshot;
 use App\Actions\Market\Shop\StoreShop;
 use App\Actions\Organisation\Guest\DeleteGuest;
 use App\Actions\Organisation\Guest\ImportGuests;
@@ -164,3 +168,10 @@ Route::patch('{portfolioWebsite}/interest', SyncDivisionPortfolioWebsite::class)
 
 Route::patch('/organisation-user/{organisationUser:id}', UpdateOrganisationUser::class)->name('organisation-user.update');
 Route::patch('/customer-user/{customerUser:id}', UpdateOrgCustomerUser::class)->name('customer-user.update');
+
+Route::prefix('mailshot')->as('mailshot.')->group(function () {
+    Route::post('{mailshot:id}/content', UpdateMailshotContent::class)->name('content.update');
+    Route::post('{mailshot:id}/publish', SetMailshotAsReady::class)->name('state.ready');
+    Route::get('{mailshot:id}/content', ShowMailshotContent::class)->name('content.show');
+    Route::post('{mailshot:id}/images', UploadImagesToMailshot::class)->name('images.store');
+});

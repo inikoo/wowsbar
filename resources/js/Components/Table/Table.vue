@@ -690,47 +690,17 @@ watch(name, () => {
             <slot name="tableWrapper" :meta="compResourceMeta">
                 <TableWrapper :result="compResourceMeta.total === 0" :class="{ 'mt-0': !hasOnlyData }">
                     <slot name="table">
-                        <table class="divide-y divide-gray-200 dark:divide-gray-500 bg-white dark:bg-gray-700 w-full">
-                            <thead class="bg-gray-50 dark:bg-gray-800">
-                                <tr class="border-t border-gray-200 dark:border-gray-500">
+                        <table class="divide-y divide-gray-200 bg-white w-full">
+                            <thead class="bg-gray-50">
+                                <tr class="border-t border-gray-200">
                                     <HeaderCell v-for="column in queryBuilderProps.columns"
                                         :key="`table-${name}-header-${column.key}`" :cell="header(column.key)"
                                         :type="columnsType[column.key]" :column="column" :resource="compResourceData">
-                                        <template #pagehead="{ data: data }">
-                                            <slot :name="`heading(${column.key})`" :item="column" >
-                                                <span class="flex flex-row items-center" :class="{ 'justify-center': column.key == 'avatar', 'justify-end': data.isCellNumber }">
-                                                    <slot :name="`headLabel(${column.key})`">
-                                                        <div v-if="typeof column.label === 'object'">
-                                                            <FontAwesomeIcon v-if="column.label.type === 'icon'" :title="capitalize(column.label.tooltip)"
-                                                                aria-hidden="true" :icon="column.label.data" size="lg" />
-                                                            <FontAwesomeIcon v-else :title="'icon'" aria-hidden="true" :icon="column.label" size="lg" />
-                                                        </div>
-                                                        <span v-else class="capitalize">{{ column.label ? trans(column.label) : '' }}</span>
-                                                    </slot>
-
-                                                    <!-- Icon: arrow sort -->
-                                                    <svg v-if="column.sortable" aria-hidden="true" class="w-3 h-3 ml-2" :class="{
-                                                        'text-gray-400': !column.sorted,
-                                                        'text-green-500': column.sorted,
-                                                    }" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" :sorted="column.sorted">
-                                                            <path v-if="!column.sorted" fill="currentColor"
-                                                                d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z" />
-
-                                                            <path v-if="column.sorted === 'asc'" fill="currentColor"
-                                                                d="M279 224H41c-21.4 0-32.1-25.9-17-41L143 64c9.4-9.4 24.6-9.4 33.9 0l119 119c15.2 15.1 4.5 41-16.9 41z" />
-
-                                                            <path v-if="column.sorted === 'desc'" fill="currentColor"
-                                                                d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41z" />
-                                                        </svg>
-                                                </span>
-                                            </slot>
-                                        </template>
-
                                     </HeaderCell>
                                 </tr>
                             </thead>
 
-                            <tbody class="bg-white dark:bg-gray-600 dark:text-gray-400 divide-y divide-gray-200 dark:divide-gray-500">
+                            <tbody class="bg-white divide-y divide-gray-200">
                                 <slot name="body" :show="show">
                                     <tr v-for="(item, key) in compResourceData" :key="`table-${name}-row-${key}`"
                                         class=""
@@ -742,10 +712,13 @@ watch(name, () => {
                                     >
                                         <td v-for="column in queryBuilderProps.columns" v-show="show(column.key)"
                                             :key="`table-${name}-row-${key}-column-${column.key}`"
-                                            class="text-sm py-2 text-gray-800 whitespace-normal h-full"
+                                            class="text-sm py-2 text-gray-700 whitespace-normal h-full"
                                             :class="[
-                                                typeof item[column.key] == 'number' ? 'text-right' : '',
-                                                column.type === 'avatar' || column.type === 'icon' ? 'text-center' : 'px-6 min-w-fit max-w-[450px]',
+                                                column.type === 'avatar' || column.type === 'icon'
+                                                    ? 'text-center min-w-fit'  // if type = icon
+                                                    : typeof item[column.key] == 'number'
+                                                        ? 'text-right'  // if the value is number
+                                                        : 'px-6',
                                                 { 'first:border-l-4 first:border-gray-700 bg-gray-200/75': selectedRow?.[name]?.includes(item.id) }
                                         ]">
                                             <slot :name="`cell(${column.key})`" :item="item" :tabName="name" class="">
