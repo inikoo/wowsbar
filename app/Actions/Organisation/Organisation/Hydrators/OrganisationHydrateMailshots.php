@@ -9,9 +9,7 @@ namespace App\Actions\Organisation\Organisation\Hydrators;
 
 use App\Enums\Mail\MailshotStateEnum;
 use App\Enums\Mail\MailshotTypeEnum;
-use App\Enums\Portfolio\Banner\BannerStateEnum;
 use App\Models\Mail\Mailshot;
-use App\Models\Portfolio\Banner;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class OrganisationHydrateMailshots
