@@ -111,7 +111,7 @@ class IndexWebpages extends InertiaAction
                         'count' => organisation()->stats->number_webpages,
                     ]
                 )
-                ->column(key: 'level', label: ['fal', 'fa-sort-amount-down-alt'], canBeHidden: false, sortable: true, type: 'avatar')
+                ->column(key: 'level', label: ['fal', 'fa-sort-amount-down-alt'], canBeHidden: false, sortable: true, type: 'icon')
                 ->column(key: 'type', label: ['fal', 'fa-shapes'], canBeHidden: false, type: 'icon')
                 ->column(key: 'code', label: __('code'), canBeHidden: false, sortable: true, searchable: true)
                 ->column(key: 'url', label: __('url'), canBeHidden: false, sortable: true, searchable: true)

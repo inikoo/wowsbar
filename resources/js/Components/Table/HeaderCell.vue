@@ -43,8 +43,7 @@ const isCellNumber = computed(() => {
 
 <template>
     <th v-show="!cell.hidden" class="font-normal">
-        <component :is="cell.sortable ? 'button' : 'div'" class="py-1 w-full" :class="[cell.type == 'avatar' || cell.type == 'icon' ? 'px-0 flex justify-center' : 'px-6']" :dusk="cell.sortable ? `sort-${cell.key}` : null" @click.prevent="onClick">
-            <div>
+        <component :is="cell.sortable ? 'button' : 'div'" class="py-1 w-full" :class="[cell.type == 'avatar' || cell.type == 'icon' ? 'px-2 flex justify-center' : 'px-6']" :dusk="cell.sortable ? `sort-${cell.key}` : null" @click.prevent="onClick">
             <slot name="pagehead" :data="{isCellNumber : isCellNumber, cell}">
                 <span class="flex flex-row items-center" :class="{'justify-center': cell.type == 'avatar' || cell.type == 'icon', 'justify-end': isCellNumber}">
                     <div v-if="typeof cell.label === 'object'">
@@ -70,7 +69,6 @@ const isCellNumber = computed(() => {
                     </svg>
                 </span>
             </slot>
-        </div>
         </component>
     </th>
 </template>
