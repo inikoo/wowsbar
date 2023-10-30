@@ -8,6 +8,7 @@ import { StatisticsBlock1, StatisticsBlock2, StatisticsBlock3 } from './Statisti
 import { PricingBlock1, PricingBlock2, PricingBlock3, PricingBlock4 } from './Pricing/Pricing'
 import { CtaBlock1, CtaBlock2, CtaBlock3 } from './CTA/CTA'
 import loadStyles from '@/Components/CMS/Workshops/GrapeEditor/CustomStyle/styles';
+import { EmailBlocks } from '@/Components/CMS/Workshops/GrapeEditor/CustomBlocks/EmailBlocks/index.ts'
 
 export const CustomBlock = (editor : Any) => {
     IconBlock(editor)
@@ -127,7 +128,13 @@ export  const GradientTypography  = (editor: any) => {
 
 export const IFrameBlocks  = (editor) => {
     editor.BlockManager.add('iframe', {
-      label: 'iframe',
+      label: 'I Frame',
+      category: "Basic",
       content: '<section data-id="hero-iFrame" data-type="html"class="wowsbar-block"><iframe style="width:100%;" src="<your iframe src here>"></iframe></section>',
     });
   };
+
+  export const Email = (editor : Any, opt : Object) => {
+    console.log('Email',editor)
+    EmailBlocks(editor,opt)
+}

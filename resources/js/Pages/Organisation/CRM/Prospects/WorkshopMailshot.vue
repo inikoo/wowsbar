@@ -27,6 +27,8 @@ const props = defineProps<{
     workshop?: object,
 }>()
 
+console.log(props)
+
 
 
 </script>
