@@ -47,6 +47,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property-read int|null $departments_count
  * @property-read \App\Models\Organisation\OrganisationHumanResourcesStats|null $humanResourcesStats
  * @property-read \App\Models\Media\Media|null $logo
+ * @property-read \App\Models\Organisation\OrganisationMailStats|null $mailStats
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \App\Models\Media\Media> $media
  * @property-read int|null $media_count
  * @property-read \App\Models\Organisation\OrganisationPortfoliosStats|null $portfoliosStats
@@ -125,6 +126,11 @@ class Organisation extends Model implements HasMedia
     public function taskStats(): HasOne
     {
         return $this->hasOne(OrganisationTaskStats::class);
+    }
+
+    public function mailStats(): HasOne
+    {
+        return $this->hasOne(OrganisationMailStats::class);
     }
 
     public function websites(): HasMany

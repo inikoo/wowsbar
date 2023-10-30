@@ -7,7 +7,7 @@
 
 namespace App\Actions\Mail\Mailshot;
 
-use App\Enums\Mail\MailshotType;
+use App\Enums\Mail\MailshotTypeEnum;
 use App\Models\CRM\Customer;
 use App\Models\Mail\Mailshot;
 use App\Models\Market\Shop;
@@ -84,7 +84,7 @@ class StoreMailshot
     {
         return [
             'subject' => ['required', 'string', 'max:255'],
-            'type'    => ['required', new Enum(MailshotType::class)]
+            'type'    => ['required', new Enum(MailshotTypeEnum::class)]
         ];
     }
 
@@ -114,6 +114,19 @@ class StoreMailshot
         return $this->handle($shop, $request->validated());
     }
 
+    public function shopProspects(Shop $shop, ActionRequest $request)
+    {
+        $request->merge(
+            [
+                'type' => MailshotTypeEnum::PROSPECT_MAILSHOT->value
+            ]
+        );
+        $request->validate();
+
+        return $this->handle($shop, $request->validated());
+    }
+
+
     public function action(Shop|Customer $parent, array $objectData): Mailshot
     {
         $this->asAction = true;
@@ -137,11 +150,16 @@ class StoreMailshot
 
     public function htmlResponse(Mailshot $mailshot): RedirectResponse
     {
-        return redirect()->route(
-            'customer.mailshots.mailshots.workshop',
-            [
-                $mailshot->slug
-            ]
-        );
+        return match ($mailshot->type) {
+            MailshotTypeEnum::PROSPECT_MAILSHOT => redirect()->route(
+                'org.crm.shop.prospects.mailshots.workshop',
+                [
+                    $mailshot->scope->slug,
+                    $mailshot->slug
+                ]
+            ),
+            default => null
+        };
+
     }
 }
