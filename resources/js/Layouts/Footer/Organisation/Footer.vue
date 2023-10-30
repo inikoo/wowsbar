@@ -23,7 +23,7 @@ const logoSrc=usePage().props.art.footer_logo;
 </script>
 
 <template>
-    <footer class="z-20 fixed w-screen bottom-0 right-0  text-white bg-black">
+    <footer class="z-[19] fixed w-screen bottom-0 right-0  text-gray-700 bg-fuchsia-50">
         <!-- Helper: Outer background (close popup purpose) -->
         <div class="fixed z-40 right-0 top-0 bg-transparent w-screen h-screen"
             @click="isTabActive = !isTabActive"
@@ -37,8 +37,8 @@ const logoSrc=usePage().props.art.footer_logo;
 
             <div class="pl-4 flex items-center gap-x-1.5 py-1">
                 <a href="https://discord.gg/C7bCmMaTxP" target="_blank">
-                    <span class="text-slate-400	 text-xs">
-                        <FontAwesomeIcon :icon="['fab', 'discord']" class="text-white mx-1" aria-hidden='true'/>
+                    <span class="text-slate-800	 text-xs">
+                        <FontAwesomeIcon :icon="['fab', 'discord']" class="text-gray-800 mx-1" aria-hidden='true'/>
                         {{trans("Customer's community channel")}}
                     </span>
                 </a>

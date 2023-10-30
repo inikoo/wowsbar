@@ -80,7 +80,7 @@ const logoutAuth = () => {
         <div class="px-0">
             <div class="flex h-11 lg:h-10 flex-shrink-0 border-b border-[#745181]">
                 <div class="flex flex-1">
-                    <div class="flex flex-1 lg:justify-between">
+                    <div class="flex">
                         <!-- Hamburger -->
                         <button class="block md:hidden w-10 h-10 relative focus:outline-none" @click="sidebarOpen = !sidebarOpen, $emit('sidebarOpen', sidebarOpen)">
                             <span class="sr-only">Open sidebar</span>
@@ -95,7 +95,7 @@ const logoutAuth = () => {
 
                         <!-- Menu -->
                         <div class="bg-[#452650] flex items-center justify-between lg:justify-start soverflow-hidden transition-all duration-100 ease-in-out"
-                            :class="[layout.leftSidebar.show ? 'md:w-56' : 'md:w-10']"
+                            :class="[layout.leftSidebar.show ? 'md:w-48' : 'md:w-10']"
                         >
                             <Link :href="route(logoRoute)"
                                 class="stext-white md:pl-3 flex items-center h-full xl:overflow-hidden space-x-2 mr-6xl:pr-2 xl:border-r-2 xl:mr-0 xl:border-gray-200"
@@ -106,10 +106,10 @@ const logoutAuth = () => {
                     </div>
 
                     <!-- Avatar Group -->
-                    <div class="flex items-center justify-between mr-6 space-x-3">
+                    <div class="flex items-center w-full justify-between mr-6 space-x-3">
                         <AppTopBarNavs />
-                        <div>
-                            <div xclass="flex">
+                        <div class="flex justify-between">
+                            <div class="flex">
                                 <!-- <div class="cursor-pointer text-white bg-indigo-500 px-2 py-0.5 rounded-md select-none" @click="changeColorMode(true)">Dark mode: True</div>
                                 <div class="cursor-pointer text-white bg-indigo-500 px-2 py-0.5 rounded-md select-none" @click="changeColorMode(false)">Dark mode: False</div>
                                 <div class="cursor-pointer text-white bg-indigo-500 px-2 py-0.5 rounded-md select-none" @click="changeColorMode('system')">Dark mode: OS System</div> -->

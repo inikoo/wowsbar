@@ -63,7 +63,7 @@ const handleToggleLeftbar = () => {
 
 <template>
     <div class="mt-11 fixed md:flex md:flex-col md:inset-y-0 lg:mt-10 bg-gradient-to-t from-[#2F1937] to-[#452650] h-full text-gray-400"
-        :class="[layout.leftSidebar.show ? 'w-8/12 md:w-56' : 'w-8/12 md:w-10']"
+        :class="[layout.leftSidebar.show ? 'w-8/12 md:w-48' : 'w-8/12 md:w-10']"
         @mouseenter="isHover = true" @mouseleave="isHover = false"
     >
         <!-- Toggle: collapse-expand LeftSideBar -->

@@ -82,7 +82,7 @@ const layoutState = useLayoutStore()
         </AppTopBar>
 
         <Breadcrumbs class="fixed top-11 lg:top-10 z-[19] w-full transition-all duration-200 ease-in-out"
-            :class="[layoutState.leftSidebar.show ? 'left-0 md:left-56' : 'left-0 md:left-10']"
+            :class="[layoutState.leftSidebar.show ? 'left-0 md:left-48' : 'left-0 md:left-10']"
             :breadcrumbs="usePage().props.breadcrumbs??[]"
             :navigation="usePage().props.navigation??[]"
         />
@@ -96,7 +96,7 @@ const layoutState = useLayoutStore()
 
         <!-- Main Content -->
         <main class="h-full relative flex flex-col pt-20 md:pt-16 pb-8 bg-gray-50 text-gray-700 dark:bg-gray-700 dark:text-gray-400 transition-all duration-200 ease-in-out"
-            :class="[layoutState.leftSidebar.show ? 'ml-0 md:ml-56' : 'ml-0 md:ml-10']"
+            :class="[layoutState.leftSidebar.show ? 'ml-0 md:ml-48' : 'ml-0 md:ml-10']"
         >
             <slot />
         </main>
