@@ -30,10 +30,4 @@ jobs:
       - name: Generate database dumps 📚
         run: ./generate_testing_db_dumps.sh ${{vars.TESTING_DB_PORT}}
       - name: Run test
-        run: vendor/bin/pest --coverage-clover clover.xml
-      - name: Generate test coverage badge
-        uses: timkrase/phpunit-coverage-badge@v1.2.0
-        with:
-          coverage_badge_path: 'badge-coverage.svg'
-          push_badge: true
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
+        run: vendor/bin/pest
