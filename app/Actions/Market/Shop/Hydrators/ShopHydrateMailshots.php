@@ -20,7 +20,7 @@ class ShopHydrateMailshots
     public function handle(Shop $shop): void
     {
         $stats = [
-            'number_mailshots'            => $shop->mailshots()->count(),
+            'number_mailshots' => $shop->mailshots()->count(),
         ];
 
         foreach (MailshotTypeEnum::cases() as $case) {
@@ -33,15 +33,15 @@ class ShopHydrateMailshots
 
         foreach (MailshotTypeEnum::cases() as $caseType) {
             foreach (MailshotStateEnum::cases() as $caseState) {
-                $stats["number_mailshots_type_{$caseType->snake()}_state_{$caseState->snake()}"] = $shop->mailshots()->where([['type', $caseState->value], ['state', $caseType->value]])->count();
+                $stats["number_mailshots_type_{$caseType->snake()}_state_{$caseState->snake()}"] =
+                    $shop->mailshots()
+                        ->where('type', $caseType->value)
+                        ->where('state', $caseState)
+                        ->count();
             }
         }
-
-        $shop->mailStats->update($stats);
+        $shop->mailStats()->update($stats);
     }
 
-    public function getJobUniqueId(Shop $shop): string
-    {
-        return $shop->id;
-    }
+
 }

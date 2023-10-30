@@ -7,6 +7,8 @@
 
 namespace App\Actions\Mail\Mailshot;
 
+use App\Actions\Market\Shop\Hydrators\ShopHydrateMailshots;
+use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateMailshots;
 use App\Enums\Mail\MailshotTypeEnum;
 use App\Models\CRM\Customer;
 use App\Models\Mail\Mailshot;
@@ -46,7 +48,10 @@ class StoreMailshot
         /** @var Mailshot $mailshot */
         $mailshot = $parent->mailshots()->create($modelData);
 
-
+        OrganisationHydrateMailshots::dispatch();
+        if($mailshot->type==MailshotTypeEnum::PROSPECT_MAILSHOT) {
+            ShopHydrateMailshots::dispatch($mailshot->scope);
+        }
 
 
         return $mailshot;

@@ -33,7 +33,7 @@ class OrganisationHydrateMailshots
 
         foreach (MailshotTypeEnum::cases() as $caseType) {
             foreach (MailshotStateEnum::cases() as $caseState) {
-                $stats["number_mailshots_type_{$caseType->snake()}_state_{$caseState->snake()}"] = Mailshot::where([['type', $caseState->value], ['state', $caseType->value]])->count();
+                $stats["number_mailshots_type_{$caseType->snake()}_state_{$caseState->snake()}"] = Mailshot::where([['state', $caseState->value], ['type', $caseType->value]])->count();
             }
         }
 
