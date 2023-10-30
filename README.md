@@ -3,6 +3,9 @@
 
 [![CodeFactor](https://www.codefactor.io/repository/github/inikoo/wowsbar/badge)](https://www.codefactor.io/repository/github/inikoo/wowsbar)
 
+[![Test Coverage](https://raw.githubusercontent.com/Hi-Folks/array/main/badge-coverage.svg)](https://packagist.org/packages/hi-folks/array)
+
+
 Open source Marketing Agency web application
 
 Copyright (C) Raul A Perusquia Flores - All Rights Reserved GNU AGPLv3
