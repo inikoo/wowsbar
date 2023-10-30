@@ -146,7 +146,7 @@ const backgroundColorList = useBannerBackgroundColor() // Fetch color list from 
                     :addImage="uploadImageRespone"
                     :closeModal="() => isOpen = false"
                     :multiple="false"
-                    :ratio="bannerType === 'square' ? {w : 1, h : 1} : undefined"    
+                    :ratio="bannerType === 'square' ? {w : 1, h : 1} : undefined"
                 />
             </div>
         </Modal>

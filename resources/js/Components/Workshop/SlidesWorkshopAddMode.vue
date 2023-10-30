@@ -145,7 +145,12 @@ const onClickQuickStart = () => {
     
     <Modal :isOpen="isOpenGalleryImages" @onClose="()=>isOpenGalleryImages = false">
         <div>
-            <GalleryImages :addImage="uploadImageRespone" :closeModal="()=>isOpenGalleryImages = false"/>
+            <GalleryImages
+                :imagesUploadRoute="imagesUploadRoute"
+                :addImage="uploadImageRespone"
+                :closeModal="()=>isOpenGalleryImages = false"
+                :ratio="data.type === 'square' ? {w : 1, h : 1} : undefined"
+            />
         </div>
     </Modal>
     

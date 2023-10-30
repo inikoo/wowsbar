@@ -9,10 +9,9 @@ import { faCloudUpload, faImagePolaroid, faTimes } from '@fal/'
 import { faSpinnerThird } from '@fad/'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { useGalleryStore } from '@/Stores/gallery.js'
-import { useTruncate } from '@/Composables/useTruncate.js'
 import { routeType } from '@/types/route'
 
-import Button from '../Elements/Buttons/Button.vue'
+import Button from '@/Components/Elements/Buttons/Button.vue'
 import EmptyState from '@/Components/Utils/EmptyState.vue'
 import { trans } from "laravel-vue-i18n"
 import CropImage from "@/Components/Workshop/CropImage/CropImage.vue"
@@ -24,13 +23,13 @@ const props = withDefaults(defineProps<{
     addImage: Function,
     closeModal: Function,
     imagesUploadRoute: routeType
-    ratio: {
+    ratio?: {
         w: number
         h: number
     },
     multiple: boolean
 }>(), {
-    multiple: true
+    multiple: true  // able to select multiple files
 })
 
 const galleryStore = ref(useGalleryStore())
@@ -50,7 +49,6 @@ const closeCropModal = () => {
 //     'stock_images': []
 // })
 
-const activeTab = ref(0)
 const activeSidebar = ref('uploaded_images')
 const loadingState = ref(false)
 
@@ -216,7 +214,7 @@ const addComponent =  (element) => {
         <Button @click="addImage(imagesSelected)" id="add-image"
             :key="imagesSelected.data.length"
             :style="imagesSelected.data.length > 0 ? 'primary' : 'disabled'">
-            Selected images ({{ imagesSelected.data.length }})
+            <div class="tabular-nums">Selected images ({{ imagesSelected.data.length }})</div>
         </Button>
     </div>
 
