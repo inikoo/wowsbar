@@ -40,15 +40,14 @@ function webpageRoute(webpage: Webpage) {
     <Table :resource="data" :name="tab" class="mt-5">
         <template #cell(code)="{ item: webpage }">
             <Link :href="webpageRoute(webpage)">
-            {{ webpage['code'] }}
+                {{ webpage['code'] }}
             </Link>
         </template>
+
         <template #cell(type)="{ item: webpage }">
-            <font-awesome-icon :icon="webpage.typeIcon" />
+            <FontAwesomeIcon :icon="webpage.typeIcon" class=""/>
         </template>
-        <template #cell(level)="{ item: webpage }">
-            <div class="flex justify-start"> {{ webpage['level'] }}</div>
-        </template>
+
         <template #heading(level)="{ item: column }">
             <div class="flex flex-row items-center justify-start">
                 <div v-if="typeof column.label === 'object'">
