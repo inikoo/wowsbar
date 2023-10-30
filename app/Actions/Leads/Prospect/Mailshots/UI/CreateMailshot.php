@@ -78,13 +78,13 @@ class CreateMailshot extends InertiaAction
                     'route'     =>
                         match (class_basename($parent)) {
                             'Shop' => [
-                                'name'       => 'customer.models.shop.prospect-mailshot.store',
+                                'name'       => 'org.models.shop.prospect-mailshot.store',
                                 'parameters' => [
                                     'shop' => $parent->id,
                                 ]
                             ],
                             default => [
-                                'name' => 'customer.models.prospect-mailshot.store',
+                                'name' => 'org.models.prospect-mailshot.store',
                             ],
                         }
                 ],

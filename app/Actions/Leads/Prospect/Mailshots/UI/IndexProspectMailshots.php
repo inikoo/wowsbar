@@ -9,6 +9,7 @@ namespace App\Actions\Leads\Prospect\Mailshots\UI;
 
 use App\Actions\InertiaAction;
 use App\Actions\Leads\Prospect\UI\IndexProspects;
+use App\Enums\Mail\MailshotTypeEnum;
 use App\Enums\UI\Organisation\ProspectsMailshotsTabsEnum;
 use App\Http\Resources\CRM\ProspectMailshotsResource;
 use App\InertiaTable\InertiaTable;
@@ -50,7 +51,12 @@ class IndexProspectMailshots extends InertiaAction
             InertiaTable::updateQueryBuilderParameters($prefix);
         }
 
-        $queryBuilder = QueryBuilder::for(Mailshot::class);
+        $queryBuilder = QueryBuilder::for(Mailshot::class)
+            ->where('type', MailshotTypeEnum::PROSPECT_MAILSHOT);
+
+        if (class_basename($parent) == 'Shop') {
+            $queryBuilder->where('scope_id', $parent->id);
+        }
 
         foreach ($this->getElementGroups() as $key => $elementGroup) {
             /** @noinspection PhpUndefinedMethodInspection */
@@ -90,7 +96,7 @@ class IndexProspectMailshots extends InertiaAction
 
             $table
                 ->withGlobalSearch()
-                ->column(key: 'slug', label: __('code'), canBeHidden: false, sortable: true, searchable: true)
+                ->column(key: 'subject', label: __('subject'), canBeHidden: false, sortable: true, searchable: true)
                 ->defaultSort('slug');
         };
     }
@@ -116,16 +122,16 @@ class IndexProspectMailshots extends InertiaAction
                 ),
                 'title'       => __('prospects mailshots'),
                 'pageHead'    => [
-                    'title'     => __('prospects mailshots'),
-                    'actions'   =>
+                    'title'   => __('prospects mailshots'),
+                    'actions' =>
                         [
                             [
                                 'type'  => 'button',
                                 'style' => 'create',
                                 'label' => __('New mailshot'),
                                 'route' => [
-                                    'name'      => 'org.crm.shop.prospects.mailshots.create',
-                                    'parameters'=> $this->parent->slug
+                                    'name'       => 'org.crm.shop.prospects.mailshots.create',
+                                    'parameters' => $this->parent->slug
                                 ]
                             ]
                         ]
@@ -143,9 +149,8 @@ class IndexProspectMailshots extends InertiaAction
                     : Inertia::lazy(fn () => ProspectMailshotsResource::collection($mailshots)),
 
 
-
             ]
-        )->table($this->tableStructure());
+        )->table($this->tableStructure(prefix: ProspectsMailshotsTabsEnum::MAILSHOTS->value));
     }
 
     public function asController(ActionRequest $request): LengthAwarePaginator
@@ -168,14 +173,17 @@ class IndexProspectMailshots extends InertiaAction
         return match ($routeName) {
             'org.crm.shop.prospects.mailshots.index' =>
             array_merge(
-                (new IndexProspects())->getBreadcrumbs('org.crm.shop.prospects.index', $routeParameters),
+                (new IndexProspects())->getBreadcrumbs(
+                    'org.crm.shop.prospects.index',
+                    $routeParameters
+                ),
                 [
                     [
                         'type'   => 'simple',
                         'simple' => [
                             'route' => [
-                                'name'      => 'org.crm.shop.prospects.mailshots.index',
-                                'parameters'=> $routeParameters
+                                'name'       => 'org.crm.shop.prospects.mailshots.index',
+                                'parameters' => $routeParameters
                             ],
                             'label' => __('mailshots'),
                             'icon'  => 'fal fa-bars',

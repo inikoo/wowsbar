@@ -88,6 +88,9 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read int|null $departments_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Invoice> $invoices
  * @property-read int|null $invoices_count
+ * @property-read \App\Models\Market\ShopMailStats|null $mailStats
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Mailshot> $mailshots
+ * @property-read int|null $mailshots_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Order> $orders
  * @property-read int|null $orders_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, PaymentAccount> $paymentAccounts
@@ -99,8 +102,6 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read \App\Models\Market\ShopCRMStats|null $portfoliosStats
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Market\ShopProduct> $products
  * @property-read int|null $products_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, Mailshot> $prospectMailshots
- * @property-read int|null $prospect_mailshots_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Prospect> $prospects
  * @property-read int|null $prospects_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, SerialReference> $serialReferences
@@ -210,6 +211,11 @@ class Shop extends Model implements Auditable
     public function portfoliosStats(): HasOne
     {
         return $this->hasOne(ShopCRMStats::class);
+    }
+
+    public function mailStats(): HasOne
+    {
+        return $this->hasOne(ShopMailStats::class);
     }
 
     public function stats(): HasOne

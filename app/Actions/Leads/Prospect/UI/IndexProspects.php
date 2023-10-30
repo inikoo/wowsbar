@@ -171,7 +171,7 @@ class IndexProspects extends InertiaAction
                                 'name'       => 'org.crm.shop.prospects.mailshots.index',
                                 'parameters' => $request->route()->originalParameters()
                             ],
-                            'number'   => 0,
+                            'number'   => $this->parent->mailStats->number_mailshots_type_prospect_mailshot,
                             'label'    => __('Mailshots'),
                             'leftIcon' => [
                                 'icon'    => 'fal fa-mail-bulk',
