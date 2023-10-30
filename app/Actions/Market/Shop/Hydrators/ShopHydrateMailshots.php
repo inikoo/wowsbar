@@ -9,11 +9,7 @@ namespace App\Actions\Market\Shop\Hydrators;
 
 use App\Enums\Mail\MailshotStateEnum;
 use App\Enums\Mail\MailshotTypeEnum;
-use App\Enums\OMS\Order\OrderStateEnum;
-use App\Models\Mail\Mailshot;
 use App\Models\Market\Shop;
-use App\Models\OMS\Order;
-use Illuminate\Support\Arr;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class ShopHydrateMailshots
