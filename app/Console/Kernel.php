@@ -18,6 +18,7 @@ class Kernel extends ConsoleKernel
             $schedule->command('telescope:prune')->daily();
         }
 
+        $schedule->command('banner:analytics')->daily();
     }
 
 
