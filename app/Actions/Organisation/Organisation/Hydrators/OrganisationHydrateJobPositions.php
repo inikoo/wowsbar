@@ -16,11 +16,9 @@ class OrganisationHydrateJobPositions
 
     public function handle(): void
     {
-
         $stats = [
             'number_job_positions' => JobPosition::count()
         ];
-
 
         organisation()->humanResourcesStats()->update($stats);
     }

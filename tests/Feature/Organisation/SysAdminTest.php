@@ -57,7 +57,7 @@ test('create guest', function () {
 });
 
 
-test('can show sysadmin dashbpard', function () {
+test('can show sysadmin dashboard', function () {
     $response = get(route('org.sysadmin.dashboard'));
 
     $response->assertInertia(function (AssertableInertia $page) {
