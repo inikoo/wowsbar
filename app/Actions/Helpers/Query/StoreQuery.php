@@ -36,11 +36,11 @@ class StoreQuery
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string'],
+            'name'       => ['required', 'string'],
             'model_type' => ['required', 'string'],
-            'base' => ['required', 'string'],
-            'filters' => ['required', 'string'],
-            'read_only' => ['required', 'string']
+            'base'       => ['required', 'string'],
+            'filters'    => ['required', 'string'],
+            'read_only'  => ['required', 'string']
         ];
     }
 

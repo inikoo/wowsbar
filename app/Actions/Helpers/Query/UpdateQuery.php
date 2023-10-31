@@ -38,11 +38,11 @@ class UpdateQuery
     public function rules(): array
     {
         return [
-            'name' => ['sometimes', 'string'],
+            'name'       => ['sometimes', 'string'],
             'model_type' => ['sometimes', 'string'],
-            'base' => ['sometimes', 'string'],
-            'filters' => ['sometimes', 'string'],
-            'read_only' => ['sometimes', 'string']
+            'base'       => ['sometimes', 'string'],
+            'filters'    => ['sometimes', 'string'],
+            'read_only'  => ['sometimes', 'string']
         ];
     }
 
