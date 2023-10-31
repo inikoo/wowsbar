@@ -21,7 +21,7 @@ class AttachTagsProspect
 
     public function handle(Prospect $prospect, array $modelData): Prospect
     {
-        $prospect->attachTag($modelData['tags']);
+        $prospect->attachTags($modelData['tags']);
 
         return $prospect;
     }
@@ -38,7 +38,7 @@ class AttachTagsProspect
     public function rules(ActionRequest $request): array
     {
         return [
-            'tags' => ['required', 'string']
+            'tags' => ['required', 'array']
         ];
     }
 
