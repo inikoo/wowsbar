@@ -1,7 +1,7 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Mon, 10 Jul 2023 10:49:40 Malaysia Time, Kuala Lumpur, Malaysia
+ * Created: Tue, 31 Oct 2023 15:11:51 Malaysia Time, Kuala Lumpur, Malaysia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
@@ -20,7 +20,13 @@ beforeEach(
      * @throws \Throwable
      */
     function () {
-        createCustomer();
+
+        list(
+            $this->organisation,
+            $this->organisationUser,
+            $this->shop,
+            $this->customer
+        ) = createCustomer();
     }
 );
 

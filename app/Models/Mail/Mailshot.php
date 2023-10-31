@@ -34,12 +34,13 @@ use Spatie\Sluggable\SlugOptions;
  * @property string|null $sent_at
  * @property string|null $cancelled_at
  * @property string|null $stopped_at
+ * @property array $layout
  * @property array $recipients
+ * @property int|null $publisher_id org user
  * @property string $scope_type
  * @property int $scope_id
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property string|null $delete_comment
- * @property mixed $scope
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot onlyTrashed()
@@ -50,6 +51,8 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereDeleteComment($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereDeletedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereLayout($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Mailshot wherePublisherId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereReadyAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereRecipients($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mailshot whereScheduleAt($value)
