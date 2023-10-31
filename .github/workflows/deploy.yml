@@ -42,7 +42,7 @@ jobs:
           token: ${{ github.token }}
           branch: production
           noVersionBumpBehavior: warning
-          patchList: fix, bugfix, perf, refactor, test, tests, clean, partial, review
+          patchList: fix, bugfix, perf, refactor, test, tests, clean, partial, review, update-deps
       - name: Create Release
         uses: ncipollo/release-action@v1.12.0
         with:
