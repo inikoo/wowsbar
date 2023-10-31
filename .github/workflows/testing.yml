@@ -29,5 +29,7 @@ jobs:
           ln -s ../../../../env.wowsbar.testing .env
       - name: Generate database dumps 📚
         run: ./generate_testing_db_dumps.sh ${{vars.TESTING_DB_PORT}}
+      - name: build app
+        run: npm build
       - name: Run test
         run: vendor/bin/pest
