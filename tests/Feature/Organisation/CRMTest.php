@@ -9,6 +9,7 @@ use App\Actions\CRM\Customer\StoreCustomer;
 use App\Actions\CRM\User\StoreOrgCustomerUser;
 use App\Models\Auth\CustomerUser;
 use App\Models\CRM\Customer;
+use App\Models\CRM\CustomerStats;
 use App\Models\Market\Shop;
 use App\Models\Organisation\Organisation;
 
@@ -47,6 +48,7 @@ test('create customer', function () {
 
     $customer = StoreCustomer::make()->action($shop, $modelData);
     expect($customer)->toBeInstanceOf(Customer::class)
+        ->and($customer->stats)->toBeInstanceOf(CustomerStats::class)
         ->and($shop->crmStats->number_customers)->toBe(1)
         ->and(organisation()->crmStats->number_customers)->toBe(1);
 
@@ -66,8 +68,8 @@ test('create customer user', function ($customer) {
         ]
     );
     $shop->refresh();
-    $organisation=$this->organisation->refresh();
-
+    $organisation = $this->organisation->refresh();
+    $customer->refresh();
     expect($customerUser)->toBeInstanceOf(CustomerUser::class)
         ->and($organisation->crmStats->number_customer_users)->toBe(1)
         ->and($organisation->crmStats->number_customer_users_status_active)->toBe(1)
