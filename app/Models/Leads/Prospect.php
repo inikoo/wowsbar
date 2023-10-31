@@ -53,6 +53,7 @@ use Spatie\Tags\HasTags;
  * @property Carbon|null $deleted_at
  * @property string|null $delete_comment
  * @property-read Customer|null $customer
+ * @property-read \Spatie\Tags\Tag $tags
  * @property-read Shop|null $shop
  * @property-read UniversalSearch|null $universalSearch
  * @method static \Database\Factories\Leads\ProspectFactory factory($count = null, $state = [])
