@@ -11,6 +11,7 @@ use App\Actions\InertiaAction;
 use App\Actions\Organisation\UI\CRM\ShowCRMDashboard;
 use App\Enums\UI\Organisation\ProspectsTabsEnum;
 use App\Http\Resources\CRM\ProspectResource;
+use App\Http\Resources\Tag\TagResource;
 use App\InertiaTable\InertiaTable;
 use App\Models\Leads\Prospect;
 use App\Models\Market\Shop;
@@ -210,7 +211,7 @@ class IndexProspects extends InertiaAction
                     'navigation' => ProspectsTabsEnum::navigation(),
                 ],
 
-                'tags' => Tag::all(),
+                'tags' => TagResource::collection(Tag::all()),
 
                 ProspectsTabsEnum::PROSPECTS->value => $this->tab == ProspectsTabsEnum::PROSPECTS->value ?
                     fn () => ProspectResource::collection($prospects)
