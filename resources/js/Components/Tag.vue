@@ -1,40 +1,46 @@
-<script setup>
+<script setup lang="ts">
 import { computed } from 'vue'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { faTimes } from '@fal/'
+import { library } from '@fortawesome/fontawesome-svg-core'
+library.add(faTimes)
 
-const props = defineProps({
+const props = withDefaults(defineProps<{
     // color: {
     //     type: String,
     //     default: 'gray'
     // },
-    size: {
-        type: String,
-        default: 'xs'
-    },
-    theme: {
-        type: Number,
-        default: 99
-    }
+    size: string
+    theme: number
+    label?: string
+    closeButton: boolean
+}>(), {
+    size: 'xs'
 })
 
+const emits = defineEmits<{
+    (e: 'onClose'): void
+}>()
+
 const listTheme = {
-    1: 'bg-blue-100 border border-blue-200 text-blue-500',
-    2: 'bg-orange-100 border border-orange-200 text-orange-500',
-    3: 'bg-green-100 border border-green-200 text-green-500',
-    4: 'bg-yellow-200 border border-yellow-300 text-yellow-600',
-    5: 'bg-indigo-100 border border-indigo-200 text-indigo-500',
-    6: 'bg-pink-100 border border-pink-200 text-pink-500',
-    7: 'bg-red-100 border border-red-200 text-red-500',
-    8: 'bg-amber-100 border border-amber-200 text-amber-500',
-    9: 'bg-lime-100 border border-lime-200 text-lime-500',
-    10: 'bg-teal-100 border border-teal-200 text-teal-500',
-    11: 'bg-purple-100 border border-purple-200 text-purple-500',
-    12: 'bg-rose-100 border border-rose-200 text-rose-500',
-    13: 'bg-violet-100 border border-violet-200 text-violet-500',
-    14: 'bg-emerald-100 border border-emerald-200 text-emerald-500',
-    15: 'bg-fuchsia-100 border border-fuchsia-200 text-fuchsia-500',
-    16: 'bg-cyan-100 border border-cyan-200 text-cyan-500',
-    17: 'bg-sky-100 border border-sky-200 text-sky-500',
-    99: 'bg-slate-100 border border-slate-200 text-slate-500',
+    1: 'bg-blue-100 hover:bg-blue-200 border border-blue-200 text-blue-500',
+    2: 'bg-orange-100 hover:bg-orange-200 border border-orange-200 text-orange-500',
+    3: 'bg-green-100 hover:bg-green-200 border border-green-200 text-green-500',
+    4: 'bg-yellow-200 hover:bg-yellow-3s00 border border-yellow-300 text-yellow-600',
+    5: 'bg-indigo-100 hover:bg-indigo-200 border border-indigo-200 text-indigo-500',
+    6: 'bg-pink-100 hover:bg-pink-200 border border-pink-200 text-pink-500',
+    7: 'bg-red-100 hover:bg-red-200 border border-red-200 text-red-500',
+    8: 'bg-amber-100 hover:bg-amber-200 border border-amber-200 text-amber-500',
+    9: 'bg-lime-100 hover:bg-lime-200 border border-lime-200 text-lime-500',
+    10: 'bg-teal-100 hover:bg-teal-200 border border-teal-200 text-teal-500',
+    11: 'bg-purple-100 hover:bg-purple-200 border border-purple-200 text-purple-500',
+    12: 'bg-rose-100 hover:bg-rose-200 border border-rose-200 text-rose-500',
+    13: 'bg-violet-100 hover:bg-violet-200 border border-violet-200 text-violet-500',
+    14: 'bg-emerald-100 hover:bg-emerald-200 border border-emerald-200 text-emerald-500',
+    15: 'bg-fuchsia-100 hover:bg-fuchsia-200 border border-fuchsia-200 text-fuchsia-500',
+    16: 'bg-cyan-100 hover:bg-cyan-200 border border-cyan-200 text-cyan-500',
+    17: 'bg-sky-100 hover:bg-sky-200 border border-sky-200 text-sky-500',
+    99: 'bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-500',
 }
 
 const compTheme = computed(() => {
@@ -43,7 +49,15 @@ const compTheme = computed(() => {
 </script>
 
 <template>
-    <div class="inline-block rounded px-2 py-1 w-fit font-medium border" :class="[`text-${size}`, compTheme]">
-        <slot />
+    <div class="flex items-center gap-x-1 rounded px-1.5 py-1 w-fit font-medium border" :class="[`text-${size}`, compTheme]">
+        <slot>
+            {{ label }}
+        </slot>
+
+        <div v-if="closeButton"
+            @click="emits('onClose')"
+            class="bg-white/60 hover:bg-black/10 px-1 rounded-sm">
+            <FontAwesomeIcon icon='fal fa-times' class='' aria-hidden='true' />
+        </div>
     </div>
 </template>
