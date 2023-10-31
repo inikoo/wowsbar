@@ -1,269 +1,175 @@
-import type { Editor } from 'grapesjs';
-import { mjmlConvert, debounce } from './Utils';
-import loadButton from './Button';
+import type { Plugin } from 'grapesjs';
+import loadBlocks from './blocks';
+import loadStyles from './styles';
 
-export const EmailBlocks = (editor: Editor, opt: Object ) => {
-  const { Components  } = editor;
-  // @ts-ignore
-  const ComponentsView = Components.ComponentsView;
-  const sandboxEl = document.createElement('div');
-
-
-  // MJML Core model
-  let coreMjmlModel = {
-    init() {
-      const attrs = { ...this.get('attributes') };
-      const style = { ...this.get('style-default'), ...this.get('style') };
-
-      for (let prop in style) {
-        if (!(prop in attrs)) {
-          attrs[prop] = style[prop];
-        }
-      }
-
-      this.set('attributes', attrs);
-      this.set('style', attrs);
-      this.listenTo(this, 'change:style', this.handleStyleChange);
-      this.listenTo(this, 'change:attributes', this.handleAttributeChange);
-    },
-
-    handleAttributeChange(m: any, v: any, opts: any) {
-      this.setStyle(this.get('attributes'), opts);
-    },
-
-    handleStyleChange(m: any, v: any, opts: any) {
-      const style = this.getStyle();
-      delete style.__p;
-      this.set('attributes', style, opts);
-    },
-
-
-    getMjmlAttributes() {
-      const attr = this.get('attributes') || {};
-      delete attr.style;
-      const src = this.get('src');
-      if (src) attr.src = src;
-      return attr;
-    },
-
-
-    /**
-     * This will avoid rendering default attributes
-     * @return {Object}
-     */
-    getAttrToHTML() {
-      const attr = { ...this.get('attributes') };
-      const style = { ...this.get('style-default') };
-      delete attr.style;
-      delete attr.id;
-
-      for (let prop in attr) {
-        const value = attr[prop];
-
-        if (value && value === style[prop]) {
-          delete attr[prop];
-        }
-      }
-
-      return attr;
-    },
-
-
-    /**
-     * Have to change a few things for the MJML's xml (no id, style, class)
-     */
-    toHTML() {
-      const model = this;
-      const tag = model.get('tagName');
-      const voidTag = model.get('void');
-      const attr = this.getAttrToHTML();
-      let code = '';
-      let strAttr = '';
-
-      for (let prop in attr) {
-        const val = attr[prop];
-        const hasValue = typeof val !== 'undefined' && val !== '';
-        strAttr += hasValue ? ` ${prop}="${val}"` : '';
-      }
-
-      code += `<${tag}${strAttr}${voidTag ? '/' : ''}>` + model.get('content');
-
-      model.components().forEach((model: any) => {
-        code += model.toHTML();
-      });
-
-      if (!voidTag) {
-        code += `</${tag}>`;
-      }
-
-      return code;
-    },
-
-    isHidden() {
-      return this.getStyle().display === 'none';
-    }
-  } as any;
-
+export interface PluginOptions {
+  /**
+   * Which blocks to add.
+   */
+  blocks?: string[];
 
   /**
-   * MJML Core View.
-   * MJML is designed to compile from a valid MJML document therefore any time we update some component
-   * we have to recompile its MJML to HTML.
-   *
-   * To get the proper HTML of our updated component we have to build a new MJML document and here we can
-   * find different helpers to accomplish that (eg. `getMjmlTemplate`, `getInnerMjmlTemplate`).
-   *
-   * Once the MJML is compiled (in `getTemplateFromMjml`) we have to extract its HTML from the
-   * element (`getTemplateFromEl`).
-   *
-   * We should also instruct the editor to understand where new inner components are placed in our compiled
-   * HTML once they are dropped inside, for that case you can rely on `getChildrenSelector` in your
-   * component definition.
-   *
-   * Each MJML element differs in its output HTML structure and might also change based on inner components
-   * (you might need to change `getMjmlTemplate` based on current inner Components).
-   *
-   * One easy way to test the HTML output is to use MJML live editor (https://mjml.io/try-it-live) with the
-   * "View HTML" enabled and check there how it changes in order to override properly provided helpers.
-   *
+   * Add custom block options, based on block id.
+   * @default (blockId) => ({})
+   * @example (blockId) => blockId === 'quote' ? { attributes: {...} } : {};
    */
-  let coreMjmlView = {
-    init() {
-      this.stopListening(this.model, 'change:style');
-      this.listenTo(this.model, 'change:attributes change:src', this.rerender);
-      this.debouncedRender = debounce(this.render.bind(this), 0);
-    },
+  block?: (blockId: string) => ({});
 
+  /**
+   * Custom style for table blocks.
+   */
+  tableStyle?: Record<string, string>;
 
-    rerender() {
-      this.render(null, null, {}, 1);
-    },
+  /**
+   * Custom style for table cell blocks.
+   */
+  cellStyle?: Record<string, string>;
 
-    /**
-     * Get the base MJML template wrapper tags
-     */
-    getMjmlTemplate() {
-      return {
-        start: `<mjml>`,
-        end: `</mjml>`,
-      };
-    },
+  /**
+   * Import command id.
+   * @default 'gjs-open-import-template'
+   */
+  cmdOpenImport?: string;
 
-    /**
-     * Build the MJML of the current component
-     */
-    getInnerMjmlTemplate() {
-      const { model } = this;
-      const tagName = model.get('tagName');
-      const attr = model.getMjmlAttributes();
-      let strAttr = '';
+  /**
+   * Toggle images command id.
+   * @default 'gjs-toggle-images'
+   */
+  cmdTglImages?: string;
 
-      for (let prop in attr) {
-        const val = attr[prop];
-        strAttr += typeof val !== 'undefined' && val !== '' ?
-          ' ' + prop + '="' + val + '"' : '';
-      }
+  /**
+   * Get inlined HTML command id.
+   * @default 'gjs-get-inlined-html'
+   */
+  cmdInlineHtml?: string,
 
-      return {
-        start: `<${tagName}${strAttr}>`,
-        end: `</${tagName}>`,
-      };
-    },
+  /**
+   * Title for the import modal.
+   * @default 'Import template'
+   */
+  modalTitleImport?: string;
 
-    /**
-     * Get the proper HTML string from the element containing compiled MJML template.
-     */
-    getTemplateFromEl(sandboxEl: any) {
-      return sandboxEl.firstChild.innerHTML;
-    },
+  /**
+   * Title for the export modal.
+   * @default 'Export template'
+   */
+  modalTitleExport?: string,
 
-    /**
-     * Get HTML from MJML template.
-     */
-    getTemplateFromMjml() {
-      const mjmlTmpl = this.getMjmlTemplate();
-      const innerMjml = this.getInnerMjmlTemplate();
-      const mjml = `${mjmlTmpl.start}${innerMjml.start}${innerMjml.end}${mjmlTmpl.end}`;
-      const htmlOutput = mjmlConvert(mjml);
-      let html = htmlOutput.html;
-      html = html.replace(/<body(.*)>/, '<body>');
-      let start = html.indexOf('<body>') + 6;
-      let end = html.indexOf('</body>');
-      html = html.substring(start, end).trim();
-      sandboxEl.innerHTML = html;
-      return this.getTemplateFromEl(sandboxEl);
-    },
+  /**
+   * Label for the export modal.
+   * @default ''
+   */
+  modalLabelExport?: string,
 
+  /**
+   * Label for the import modal.
+   * @default ''
+   */
+  modalLabelImport?: string,
 
-    /**
-     * Render children components
-     * @private
-     */
-    renderChildren(appendChildren: boolean) {
-      this.updateContent();
-      const container = this.getChildrenContainer();
+  /**
+   * Label for the import button.
+   * @default 'Import'
+   */
+  modalBtnImport?: string,
 
-      // This trick will help perfs by caching children
-      if (!appendChildren) {
-        this.childrenView = this.childrenView || new ComponentsView({
-          collection: this.model.get('components'),
-          // @ts-ignore
-          config: this.config,
-          componentTypes: this.opts.componentTypes,
-        });
-        this.childNodes = this.childrenView.render(container).el.childNodes;
-      } else {
-        this.childrenView.parentEl = container;
-      }
+  /**
+   * Template as a placeholder inside import modal.
+   * @default ''
+   */
+  importPlaceholder?: string;
 
-      const childNodes = Array.prototype.slice.call(this.childNodes);
+  /**
+   * If `true`, inlines CSS on export.
+   * @default true
+   */
+  inlineCss?: boolean;
 
-      for (let i = 0, len = childNodes.length; i < len; i++) {
-        container.appendChild(childNodes.shift());
-      }
-    },
+  /**
+   * Update Style Manager with more reliable style properties to use for newsletters.
+   * @default true
+   */
+  updateStyleManager?: boolean;
 
-    checkVisibility() {
-      if (this.model.isHidden?.()) {
-        this.el.style.display = 'none';
-      }
-    },
+  /**
+   * Show the Style Manager on component change.
+   * @default true
+   */
+  showStylesOnChange?: boolean;
 
-    renderStyle() {
-      this.el.style.cssText = this.attributes.style;
-      this.checkVisibility();
-    },
+  /**
+   * Show the Block Manager on load.
+   * @default true
+   */
+  showBlocksOnLoad?: boolean;
 
+  /**
+   * Code viewer theme.
+   * @default 'hopscotch'
+   */
+  codeViewerTheme?: string;
 
-    render(p: any, c: any, opts: any, appendChildren: boolean) {
-      this.renderAttributes();
-      this.el.innerHTML = this.getTemplateFromMjml();
-      this.renderChildren(appendChildren);
-      this.childNodes = this.getChildrenContainer().childNodes;
-      this.renderStyle();
+  /**
+   * Custom options for `juice` HTML inliner.
+   * @default {}
+   */
 
-      return this;
-    }
-  } as any;
+  /**
+   * Confirm text before clearing the canvas.
+   * @default 'Are you sure you want to clear the canvas?'
+   */
+  textCleanCanvas?: string;
 
-
-  // MJML Internal view (for elements inside mj-columns)
-  const compOpts = { coreMjmlModel, coreMjmlView, opt, sandboxEl };
-
-  // Avoid the <body> tag from the default wrapper
-  editor.Components.addType('wrapper', {
-    model: {
-      defaults: {
-        highlightable: false,
-      },
-      toHTML(opts: any) {
-        return this.getInnerHTML(opts)!;
-      }
-    }
-  });
-
-  [
-    loadButton,
-  ]
-  .forEach(module => module(editor, compOpts));
+  /**
+   * Load custom preset theme.
+   * @default true
+   */
+  useCustomTheme?: boolean;
 };
+
+export type RequiredPluginOptions = Required<PluginOptions>;
+
+const EmailBlocks: Plugin<PluginOptions> = (editor, opts: Partial<PluginOptions> = {}) => {
+  let config = editor.getConfig();
+
+  const options: RequiredPluginOptions = {
+    blocks: ['title','paragraph', 'image','list', 'spacer', 'button','divider','socials',"video",'menu'],
+    block: () => ({}),
+    cmdOpenImport: 'gjs-open-import-template',
+    cmdTglImages: 'gjs-toggle-images',
+    cmdInlineHtml: 'gjs-get-inlined-html',
+    modalTitleImport: 'Import template',
+    modalTitleExport: 'Export template',
+    modalLabelImport: '',
+    modalLabelExport: '',
+    modalBtnImport: 'Import',
+    codeViewerTheme: 'hopscotch',
+    importPlaceholder: '',
+    inlineCss: true,
+    cellStyle: {
+      padding: '0',
+      margin: '0',
+      'vertical-align': 'top',
+    },
+    tableStyle: {
+      height: '150px',
+      margin: '0 auto 10px auto',
+      padding: '5px 5px 5px 5px',
+      width: '100%'
+    },
+    updateStyleManager: true,
+    showStylesOnChange: true,
+    showBlocksOnLoad: true,
+    useCustomTheme: true,
+    textCleanCanvas: 'Are you sure you want to clear the canvas?',
+    ...opts,
+  };
+
+  // Change some config
+  config.devicePreviewMode = true;
+
+  loadBlocks(editor, options);
+  loadStyles(editor, options);
+};
+
+export default EmailBlocks;

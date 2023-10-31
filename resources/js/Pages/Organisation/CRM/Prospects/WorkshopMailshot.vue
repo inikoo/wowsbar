@@ -25,6 +25,11 @@ const props = defineProps<{
     }
     changelog?: object,
     workshop?: object,
+    imagesUploadRoute : Object,
+    setAsReadyRoute : Object,
+    updateRoute : Object,
+    loadRoute:Object
+
 }>()
 
 console.log(props)
@@ -37,6 +42,6 @@ console.log(props)
 <template layout="OrgApp">
     <Head :title="capitalize(title)"/>
     <PageHeading :data="pageHead"></PageHeading>
-    <MailshotWorkshopComponent/>
+    <MailshotWorkshopComponent :useBasic="false"  :imagesUploadRoute="imagesUploadRoute" :updateRoute="updateRoute" :loadRoute="loadRoute"/>
 </template>
 

@@ -8,7 +8,7 @@ import { StatisticsBlock1, StatisticsBlock2, StatisticsBlock3 } from './Statisti
 import { PricingBlock1, PricingBlock2, PricingBlock3, PricingBlock4 } from './Pricing/Pricing'
 import { CtaBlock1, CtaBlock2, CtaBlock3 } from './CTA/CTA'
 import loadStyles from '@/Components/CMS/Workshops/GrapeEditor/CustomStyle/styles';
-import { EmailBlocks } from '@/Components/CMS/Workshops/GrapeEditor/CustomBlocks/EmailBlocks/index.ts'
+import  EmailBlocks from '@/Components/CMS/Workshops/GrapeEditor/CustomBlocks/EmailBlocks/index.ts'
 
 export const CustomBlock = (editor : Any) => {
     IconBlock(editor)
@@ -135,6 +135,5 @@ export const IFrameBlocks  = (editor) => {
   };
 
   export const Email = (editor : Any, opt : Object) => {
-    console.log('Email',editor)
     EmailBlocks(editor,opt)
 }
