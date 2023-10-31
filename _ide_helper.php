@@ -5,7 +5,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 10.28.0.
+ * Generated for Laravel 10.29.0.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -437,6 +437,18 @@ namespace Illuminate\Support\Facades {
         {
             /** @var \Illuminate\Foundation\Application $instance */
             return $instance->runningInConsole();
+        }
+        /**
+         * Determine if the application is running any of the given console commands.
+         *
+         * @param string|array $commands
+         * @return bool
+         * @static
+         */
+        public static function runningConsoleCommand(...$commands)
+        {
+            /** @var \Illuminate\Foundation\Application $instance */
+            return $instance->runningConsoleCommand(...$commands);
         }
         /**
          * Determine if the application is running unit tests.
@@ -19795,7 +19807,6 @@ namespace Spatie\Analytics\Facades {
         /**
          *
          *
-         * @param \Spatie\Analytics\Period $period
          * @return \Illuminate\Support\Collection<int, array{ pageTitle: string,
          *   activeUsers: int,
          *   screenPageViews: int
@@ -19810,7 +19821,6 @@ namespace Spatie\Analytics\Facades {
         /**
          *
          *
-         * @param \Spatie\Analytics\Period $period
          * @return \Illuminate\Support\Collection<int, array{ pageTitle: string,
          *   date: \Carbon\Carbon,
          *   activeUsers: int,
@@ -19826,7 +19836,6 @@ namespace Spatie\Analytics\Facades {
         /**
          *
          *
-         * @param \Spatie\Analytics\Period $period
          * @return \Illuminate\Support\Collection<int, array{ date: \Carbon\Carbon,
          *   activeUsers: int,
          *   screenPageViews: int
@@ -19841,7 +19850,6 @@ namespace Spatie\Analytics\Facades {
         /**
          *
          *
-         * @param \Spatie\Analytics\Period $period
          * @return \Illuminate\Support\Collection<int, array{ pageTitle: string,
          *   fullPageUrl: string,
          *   screenPageViews: int
@@ -19856,7 +19864,6 @@ namespace Spatie\Analytics\Facades {
         /**
          *
          *
-         * @param \Spatie\Analytics\Period $period
          * @return \Illuminate\Support\Collection<int, array{ pageReferrer: string,
          *   screenPageViews: int
          * }>
@@ -19870,7 +19877,6 @@ namespace Spatie\Analytics\Facades {
         /**
          *
          *
-         * @param \Spatie\Analytics\Period $period
          * @return \Illuminate\Support\Collection<int, array{ newVsReturning: string,
          *   activeUsers: int
          * }>
@@ -19884,7 +19890,6 @@ namespace Spatie\Analytics\Facades {
         /**
          *
          *
-         * @param \Spatie\Analytics\Period $period
          * @return \Illuminate\Support\Collection<int, array{ browser: string,
          *   screenPageViews: int
          * }>
@@ -19894,6 +19899,34 @@ namespace Spatie\Analytics\Facades {
         {
             /** @var \Spatie\Analytics\Analytics $instance */
             return $instance->fetchTopBrowsers($period, $maxResults, $offset);
+        }
+        /**
+         *
+         *
+         * @param \Spatie\Analytics\Period $period
+         * @return \Illuminate\Support\Collection<int, array{ country: string,
+         *   screenPageViews: int
+         * }>
+         * @static
+         */
+        public static function fetchTopCountries($period, $maxResults = 10, $offset = 0)
+        {
+            /** @var \Spatie\Analytics\Analytics $instance */
+            return $instance->fetchTopCountries($period, $maxResults, $offset);
+        }
+        /**
+         *
+         *
+         * @param \Spatie\Analytics\Period $period
+         * @return \Illuminate\Support\Collection<int, array{ operatingSystem: string,
+         *   screenPageViews: int
+         * }>
+         * @static
+         */
+        public static function fetchTopOperatingSystems($period, $maxResults = 10, $offset = 0)
+        {
+            /** @var \Spatie\Analytics\Analytics $instance */
+            return $instance->fetchTopOperatingSystems($period, $maxResults, $offset);
         }
         /**
          *
@@ -20628,6 +20661,32 @@ namespace Illuminate\Validation {
         public static function phone()
         {
             return \Illuminate\Validation\Rule::phone();
+        }
+
+    }
+
+}
+
+namespace Illuminate\Database\Eloquent\Factories {
+    /**
+     *
+     *
+     * @template TModel of \Illuminate\Database\Eloquent\Model
+     * @method $this trashed()
+     */
+    class Factory
+    {
+        /**
+         *
+         *
+         * @see \Spatie\Translatable\TranslatableServiceProvider::packageRegistered()
+         * @param array|string $locales
+         * @param mixed|null $value
+         * @static
+         */
+        public static function translations($locales, $value)
+        {
+            return \Illuminate\Database\Eloquent\Factories\Factory::translations($locales, $value);
         }
 
     }
