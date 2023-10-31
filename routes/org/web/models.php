@@ -80,9 +80,9 @@ Route::patch('/organisation', UpdateOrganisation::class)->name('organisation.upd
 
 Route::post('/article/{webpage:id}', StoreArticle::class)->name('article.store');
 Route::post('/employees/imports/upload', ImportEmployees::class)->name('employees.upload');
-Route::delete('/prospect/{prospect:id}', RemoveProspect::class)->name('prospect.remove');
+Route::delete('/prospect/{prospect}', RemoveProspect::class)->name('prospect.remove');
 
-Route::post('/prospect/{prospect:id}/tags', SyncTagsProspect::class)->name('prospect.tag.attach');
+Route::post('/prospect/{prospect}/tags', SyncTagsProspect::class)->name('prospect.tag.attach');
 
 Route::post('/tags', StoreTag::class)->name('tag.store');
 

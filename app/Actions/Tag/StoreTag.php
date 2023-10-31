@@ -7,6 +7,7 @@
 
 namespace App\Actions\Tag;
 
+use App\Http\Resources\Tag\TagResource;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
@@ -38,6 +39,11 @@ class StoreTag
         return [
             'name' => ['required', 'string']
         ];
+    }
+
+    public function jsonResponse(Tag $tag): TagResource
+    {
+        return new TagResource($tag);
     }
 
     public function asController(ActionRequest $request): Tag

@@ -1,7 +1,7 @@
 <?php
 /*
  * Author: Raul Perusquia <raul@inikoo.com>
- * Created: Sat, 28 Oct 2023 11:56:42 Malaysia Time, Kuala Lumpur, Malaysia
+ * Created: Tue, 31 Oct 2023 15:52:13 Malaysia Time, Kuala Lumpur, Malaysia
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
@@ -31,6 +31,7 @@ beforeEach(function () {
         'inertia.testing.page_paths',
         [resource_path('js/Pages/Organisation')]
     );
+    actingAs($this->organisationUser, 'org');
 });
 
 
@@ -102,12 +103,9 @@ test('create prospect mailshot', function () {
 });
 
 test('can show list of prospects', function () {
-    Config::set(
-        'page_paths',
-        resource_path('js/Pages/Organisation')
-    );
+
     $shop     = $this->shop;
-    $response = actingAs($this->organisationUser, 'org')->get(route('org.crm.shop.prospects.index', [$shop->slug]));
+    $response = get(route('org.crm.shop.prospects.index', [$shop->slug]));
     $response->assertInertia(function (AssertableInertia $page) {
         $page
             ->component('CRM/Prospects')
