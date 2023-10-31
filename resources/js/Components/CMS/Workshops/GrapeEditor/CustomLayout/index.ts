@@ -70,7 +70,6 @@ export type PluginOptions = {
 export type RequiredPluginOptions = Required<PluginOptions>;
 
 const CustomLayout: Plugin<PluginOptions> = (editor, opts: Partial<PluginOptions> = {}) => {
-    console.log(editor,opts)
   const config: RequiredPluginOptions = {
     modalImportTitle: 'Import',
     modalImportButton: 'Import',
