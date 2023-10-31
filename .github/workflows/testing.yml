@@ -28,7 +28,8 @@ jobs:
           ln -s ../../../../env.wowsbar.testing .env.testing
           ln -s ../../../../env.wowsbar.testing .env
           mkdir private
-          ln -s ../../../../artifacts/fa private/
+          cd private
+          ln -s ../../../../../artifacts/fa .
       - name: Generate database dumps 📚
         run: ./generate_testing_db_dumps.sh ${{vars.TESTING_DB_PORT}}
       - name: Cache dependencies
