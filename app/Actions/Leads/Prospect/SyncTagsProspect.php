@@ -12,7 +12,7 @@ use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
 
-class AttachTagsProspect
+class SyncTagsProspect
 {
     use AsAction;
     use WithAttributes;
@@ -21,7 +21,7 @@ class AttachTagsProspect
 
     public function handle(Prospect $prospect, array $modelData): Prospect
     {
-        $prospect->attachTags($modelData['tags']);
+        $prospect->syncTags($modelData['tags']);
 
         return $prospect;
     }
@@ -38,7 +38,7 @@ class AttachTagsProspect
     public function rules(ActionRequest $request): array
     {
         return [
-            'tags' => ['required', 'array']
+            'tags' => ['nullable', 'array']
         ];
     }
 
