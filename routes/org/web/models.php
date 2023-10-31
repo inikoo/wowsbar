@@ -51,6 +51,7 @@ use App\Actions\Catalogue\Product\StoreProduct;
 use App\Actions\Catalogue\Product\UpdateProduct;
 use App\Actions\Catalogue\Product\ImportProducts;
 use App\Actions\Subscriptions\CustomerWebsite\UpdateCustomerWebsite;
+use App\Actions\Tag\StoreTag;
 use App\Actions\UI\Organisation\Profile\UpdateProfile;
 use App\Actions\Web\Webpage\PublishWebpage;
 use App\Actions\Web\Webpage\ShowWebpageContent;
@@ -82,6 +83,8 @@ Route::post('/employees/imports/upload', ImportEmployees::class)->name('employee
 Route::delete('/prospect/{prospect:id}', RemoveProspect::class)->name('prospect.remove');
 
 Route::post('/prospect/{prospect:id}/tags', AttachTagsProspect::class)->name('prospect.tag.attach');
+
+Route::post('/tags', StoreTag::class)->name('tag.store');
 
 Route::post('/products/imports/upload', ImportProducts::class)->name('products.upload');
 
