@@ -6,7 +6,7 @@
 
   <script setup lang="ts">
   import { ref } from "vue"
-  import GrapeEditor from '@/Components/CMS/Workshops/GrapeEditor/GrapeEditor.vue'
+  import GrapeEditor from '@/Components/CMS/Workshops/GrapeEditor/GrapeEditorV2.vue'
   import { HeroPlugins, AppointmentPlugins, BlogPlugins, StatisticsPlugins, PricingPlugins, CtaPlugins, Email  } from "@/Components/CMS/Workshops/GrapeEditor/CustomBlocks/CustomBlock";
   import { cloneDeep } from 'lodash'
 
