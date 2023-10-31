@@ -43,7 +43,7 @@ const addNewTag = async (option: {label: string, value: string}) => {
     console.log(option)
     try {
         const response = await axios.post(route('org.models.tag.store'),
-            { name: option.value },
+            { name: option.name },
             {
                 headers: { "Content-Type": "multipart/form-data" },
             }
@@ -57,7 +57,7 @@ const addNewTag = async (option: {label: string, value: string}) => {
             type: "error"
         })
         return false
-    }    
+    }
 }
 
 // On update data Tags
@@ -77,7 +77,7 @@ const updateTagItemTable = async (idTag: number, idData: number) => {
             type: "error"
         })
         return false
-    }    
+    }
 }
 </script>
 
