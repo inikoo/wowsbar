@@ -23,6 +23,7 @@ use Inertia\Response;
 use Lorisleiva\Actions\ActionRequest;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
+use Spatie\Tags\Tag;
 
 class IndexProspects extends InertiaAction
 {
@@ -208,6 +209,8 @@ class IndexProspects extends InertiaAction
                     'current'    => $this->tab,
                     'navigation' => ProspectsTabsEnum::navigation(),
                 ],
+
+                'tags' => Tag::all(),
 
                 ProspectsTabsEnum::PROSPECTS->value => $this->tab == ProspectsTabsEnum::PROSPECTS->value ?
                     fn () => ProspectResource::collection($prospects)

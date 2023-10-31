@@ -35,7 +35,6 @@ watch(() => props.progressData.progressPercentage, () => {
         : emits('updateShowProgress', false)  // If equal 0 (progress is not running yet)
 }, { immediate: true })
 
-
 </script>
 
 <template>
