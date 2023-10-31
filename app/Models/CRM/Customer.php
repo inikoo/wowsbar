@@ -43,6 +43,7 @@ use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
+use Spatie\Tags\HasTags;
 
 /**
  * App\Models\CRM\Customer
@@ -144,6 +145,7 @@ class Customer extends Model implements HasMedia, Auditable
     use HasPhoto;
     use HasFactory;
     use HasHistory;
+    use HasTags;
 
     protected $casts = [
         'data'        => 'array',

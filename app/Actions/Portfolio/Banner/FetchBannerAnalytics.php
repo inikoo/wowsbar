@@ -8,7 +8,6 @@
 namespace App\Actions\Portfolio\Banner;
 
 use App\Actions\Google\Analytics\GetAnalytics;
-use App\Models\CRM\Customer;
 use App\Models\Portfolio\Banner;
 use App\Models\Portfolio\PortfolioWebsite;
 use Lorisleiva\Actions\Concerns\AsAction;

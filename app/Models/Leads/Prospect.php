@@ -13,6 +13,7 @@ use App\Enums\CRM\Prospect\ProspectStateEnum;
 use App\Models\CRM\Customer;
 use App\Models\Market\Shop;
 use App\Models\Search\UniversalSearch;
+use App\Models\Traits\HasHistory;
 use App\Models\Traits\HasUniversalSearch;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
@@ -21,8 +22,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
+use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
+use Spatie\Tags\HasTags;
 
 /**
  * App\Models\Leads\Prospect
@@ -83,12 +86,14 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder|Prospect withoutTrashed()
  * @mixin Eloquent
  */
-class Prospect extends Model
+class Prospect extends Model implements Auditable
 {
     use SoftDeletes;
     use HasSlug;
     use HasUniversalSearch;
     use HasFactory;
+    use HasTags;
+    use HasHistory;
 
     protected $casts = [
         'data'     => 'array',
@@ -101,6 +106,12 @@ class Prospect extends Model
         'location' => '{}',
     ];
 
+    public function generateTags(): array
+    {
+        return [
+            'crm'
+        ];
+    }
 
     protected static function booted(): void
     {
