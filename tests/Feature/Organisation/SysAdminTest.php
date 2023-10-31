@@ -92,3 +92,14 @@ test('can show list of organisation users', function () {
             ->has(OrganisationUsersTabsEnum::USERS->value.'.data', 2);
     });
 });
+
+test('can show profile', function () {
+    $response = get(route('org.profile.show'));
+    $response->assertInertia(function (AssertableInertia $page) {
+        $page
+            ->component('EditModel')
+            ->where('title', 'profile')
+            ->has('breadcrumbs', 2)
+            ->has('formData.blueprint', 3);
+    });
+});

@@ -85,7 +85,7 @@ class ShowProfile
 
 
         return Inertia::render("EditModel", [
-            "title"       => __("Profile"),
+            "title"       => __("profile"),
             "breadcrumbs" => $this->getBreadcrumbs(),
             "pageHead"    => [
                 "title" => __("My Profile"),
