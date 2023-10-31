@@ -15,6 +15,7 @@ const props = withDefaults(defineProps<{
     label?: string
     closeButton: boolean
 }>(), {
+    theme: 99,
     size: 'xs'
 })
 
@@ -44,7 +45,7 @@ const listTheme = {
 }
 
 const compTheme = computed(() => {
-    return listTheme[props.theme]
+    return listTheme[props.theme] ?? listTheme[99]
 })
 </script>
 

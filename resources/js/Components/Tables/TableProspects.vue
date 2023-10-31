@@ -44,10 +44,11 @@ function prospectRoute(prospect: Prospect) {
 }
 
 const tagsListTemp: Ref<tag[]> = ref(props.tagsList)
+const maxId = ref(Math.max(...tagsListTemp.value.map(item => item.id)))
 
 // Add new Tag
-const addNewTag = async (option: {name: string, id: string}) => {
-    console.log(option)
+const addNewTag = async (option: tag) => {
+    // console.log(option)
     try {
         const response: any = await axios.post(route('org.models.tag.store'),
             { name: option.name },
@@ -55,8 +56,9 @@ const addNewTag = async (option: {name: string, id: string}) => {
                 headers: { "Content-Type": "multipart/form-data" },
             }
         )
-        console.log(response.data)
-        tagsListTemp.value.push(response.data)
+        // console.log(response.data)
+        maxId.value++
+        tagsListTemp.value.push(response.data.data)  // (manipulation) Add new data to reactive data
         return option
     } catch (error: any) {
         notify({
@@ -68,8 +70,8 @@ const addNewTag = async (option: {name: string, id: string}) => {
     }
 }
 
-// On update data Tags
-const updateTagItemTable = async (idTag: number, idData: number) => {
+// On update data Tags (add tag or delete tag)
+const updateTagItemTable = async (idTag: number[], idData: number) => {
     try {
         const response = await axios.post(route('org.models.prospect.tag.attach', idData),
             { tags: idTag },
@@ -77,7 +79,6 @@ const updateTagItemTable = async (idTag: number, idData: number) => {
                 headers: { "Content-Type": "multipart/form-data" },
             }
         )
-        // console.log("response", response)
     } catch (error: any) {
         notify({
             title: "Failed to update tag",
@@ -106,20 +107,21 @@ const updateTagItemTable = async (idTag: number, idData: number) => {
                     mode="tags"
                     placeholder="Select the tag"
                     noOptionsText="Type to add tags"
-                    valueProp="id"
+                    valueProp="name"
                     trackBy="name"
                     label="name"
-                    @change="(idTag) => updateTagItemTable(idTag, item.slug)"
+                    @change="(idTag) => (updateTagItemTable(idTag, item.slug))"
                     :close-on-select="false"
                     :searchable="true"
                     :create-option="true"
                     :on-create="addNewTag"
                     :options="tagsListTemp"
+                    appendNewTag
                 >
-                    <template #tag="{ option, handleTagRemove, disabled }">
-                        <!-- {{ option }} -->
+                    <template #tag="{ option, handleTagRemove, disabled }: {option: tag, handleTagRemove: Function, disabled: boolean}">
+                    <!-- {{ option }} -->
                         <div class="px-0.5 py-0.5">
-                            <Tag :theme="option.id" :label="option.name" closeButton @click.prevent="handleTagRemove(option, $event)" />
+                            <Tag :theme="option.id ?? maxId" :label="option.name" closeButton @click.prevent="handleTagRemove(option, $event)" />
                         </div>
                     </template>
                 </Multiselect>
@@ -143,6 +145,10 @@ const updateTagItemTable = async (idTag: number, idData: number) => {
 // .multiselect-tag {
 //     @apply bg-gradient-to-r from-lime-300 to-lime-200 hover:bg-lime-400 ring-1 ring-lime-500 text-lime-600
 // }
+
+.multiselect-tags {
+    @apply m-0.5
+}
 
 .multiselect-tag-remove-icon {
     @apply text-lime-800
