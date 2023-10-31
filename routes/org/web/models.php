@@ -27,7 +27,7 @@ use App\Actions\HumanResources\Employee\ImportEmployees;
 use App\Actions\HumanResources\Workplace\DeleteWorkplace;
 use App\Actions\HumanResources\Workplace\StoreWorkplace;
 use App\Actions\HumanResources\Workplace\UpdateWorkplace;
-use App\Actions\Leads\Prospect\AttachTagsProspect;
+use App\Actions\Leads\Prospect\SyncTagsProspect;
 use App\Actions\Leads\Prospect\RemoveProspect;
 use App\Actions\Leads\Prospect\ImportShopProspects;
 use App\Actions\Leads\Prospect\StoreProspect;
@@ -82,7 +82,7 @@ Route::post('/article/{webpage:id}', StoreArticle::class)->name('article.store')
 Route::post('/employees/imports/upload', ImportEmployees::class)->name('employees.upload');
 Route::delete('/prospect/{prospect:id}', RemoveProspect::class)->name('prospect.remove');
 
-Route::post('/prospect/{prospect:id}/tags', AttachTagsProspect::class)->name('prospect.tag.attach');
+Route::post('/prospect/{prospect:id}/tags', SyncTagsProspect::class)->name('prospect.tag.attach');
 
 Route::post('/tags', StoreTag::class)->name('tag.store');
 
