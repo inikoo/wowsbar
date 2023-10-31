@@ -47,7 +47,7 @@ class AttachTagsProspect
     public function rules(ActionRequest $request): array
     {
         return [
-            'tags' => ['required', 'array']
+            'tags' => ['nullable', 'array']
         ];
     }
 
