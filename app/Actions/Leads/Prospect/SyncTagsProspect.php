@@ -8,6 +8,7 @@
 namespace App\Actions\Leads\Prospect;
 
 use App\Models\Leads\Prospect;
+use Illuminate\Support\Arr;
 use Lorisleiva\Actions\ActionRequest;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\Concerns\WithAttributes;
@@ -21,7 +22,7 @@ class SyncTagsProspect
 
     public function handle(Prospect $prospect, array $modelData): Prospect
     {
-        $prospect->syncTags($modelData['tags']);
+        $prospect->syncTags(Arr::get($modelData, 'tags', []));
 
         return $prospect;
     }
