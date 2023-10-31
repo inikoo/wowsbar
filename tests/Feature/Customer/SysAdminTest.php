@@ -32,11 +32,21 @@ beforeEach(
 
 test('create user', function () {
     $customer         = customer();
-    $customerUser     = StoreUser::make()->action($customer->shop->website, $customer, User::factory()->definition());
+    $customerUser     = StoreUser::make()->action($customer, User::factory()->definition());
+    $organisation     =organisation();
     expect($customerUser)->toBeInstanceOf(CustomerUser::class)
-        ->and($customer->stats->number_users)->toBe(1)
-        ->and($customer->stats->number_users_status_active)->toBe(1)
-        ->and($customer->stats->number_users_status_inactive)->toBe(0);
+        ->and($organisation->crmStats->number_customer_users)->toBe(1)
+        ->and($organisation->crmStats->number_customer_users_status_active)->toBe(1)
+        ->and($organisation->crmStats->number_customer_users_status_inactive)->toBe(0)
+        ->and($customer->shop->crmStats->number_customer_users)->toBe(1)
+        ->and($customer->shop->crmStats->number_customer_users_status_active)->toBe(1)
+        ->and($customer->shop->crmStats->number_customer_users_status_inactive)->toBe(0)
+        ->and($customer->website->webStats->number_customer_users)->toBe(1)
+        ->and($customer->website->webStats->number_customer_users_status_active)->toBe(1)
+        ->and($customer->website->webStats->number_customer_users_status_inactive)->toBe(0)
+        ->and($customer->stats->number_customer_users)->toBe(1)
+        ->and($customer->stats->number_customer_users_status_active)->toBe(1)
+        ->and($customer->stats->number_customer_users_status_inactive)->toBe(0);
 
     return $customerUser->user;
 });
@@ -51,7 +61,7 @@ test('deactivate a user', function ($user) {
     $customer = customer();
     $user     = SuspendUser::make()->action($user);
     expect($user)->toBeInstanceOf(User::class)
-        ->and($customer->stats->number_users)->toBe(1)
-        ->and($customer->stats->number_users_status_active)->toBe(0)
-        ->and($customer->stats->number_users_status_inactive)->toBe(1);
+        ->and($customer->stats->number_customer_users)->toBe(1)
+        ->and($customer->stats->number_customer_users_status_active)->toBe(0)
+        ->and($customer->stats->number_customer_users_status_inactive)->toBe(1);
 })->depends('create user');

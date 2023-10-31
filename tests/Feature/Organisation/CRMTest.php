@@ -5,77 +5,58 @@
  * Copyright (c) 2023, Raul A Perusquia Flores
  */
 
-
-use App\Actions\Auth\User\StoreUser;
 use App\Actions\CRM\Customer\StoreCustomer;
-use App\Actions\Market\Shop\StoreShop;
-use App\Actions\Organisation\Organisation\StoreOrganisation;
-use App\Actions\Web\Website\StoreWebsite;
-use App\Enums\Market\Shop\ShopTypeEnum;
+use App\Actions\CRM\User\StoreOrgCustomerUser;
 use App\Models\Auth\CustomerUser;
 use App\Models\CRM\Customer;
 use App\Models\Market\Shop;
 use App\Models\Organisation\Organisation;
-use App\Models\Web\Website;
+
+use function Pest\Laravel\{actingAs};
 
 beforeAll(function () {
     loadDB('test_base_database.dump');
 });
 
-test('create organisation', function () {
-    $modelData    = Organisation::factory()->definition();
-    $organisation = StoreOrganisation::make()->action($modelData);
-    expect($organisation)->toBeInstanceOf(Organisation::class);
+beforeEach(function () {
+    list(
+        $this->organisation,
+        $this->organisationUser,
+        $this->shop
+    ) = createShop();
 
-    return $organisation;
+    Config::set(
+        'inertia.testing.page_paths',
+        [resource_path('js/Pages/Organisation')]
+    );
+    actingAs($this->organisationUser, 'org');
 });
 
-test('create shop', function () {
-    $shop = StoreShop::make()->action(
-        [
-            'code' => 'acme',
-            'name' => 'Acme inc',
-            'type' => ShopTypeEnum::DIGITAL_MARKETING->value
-        ]
-    );
-    expect($shop)->toBeInstanceOf(Shop::class);
-
-    return $shop;
-})->depends('create organisation');
+test('test hydrators', function () {
+    /** @var Organisation $organisation */
+    $organisation = $this->organisation;
+    expect($organisation->stats->number_shops)->toBe(1)
+        ->and($organisation->stats->number_shops)->toBe(1)
+        ->and($organisation->stats->number_websites)->toBe(1);
+});
 
 
-test('create website', function ($shop) {
-    $website = StoreWebsite::make()->action(
-        $shop,
-        [
-            'code'   => $shop->code,
-            'domain' => 'acme.test',
-        ]
-    );
-
-    $shop->refresh();
-
-    expect($website)->toBeInstanceOf(Website::class)
-        ->and($shop->website)->toBeInstanceOf(Website::class);
-})->depends('create shop');
-
-
-test('create customer', function ($shop) {
+test('create customer', function () {
+    $shop      = $this->shop;
     $modelData = Customer::factory()->definition();
-    $customer  = StoreCustomer::make()->action($shop, $modelData);
+
+    $customer = StoreCustomer::make()->action($shop, $modelData);
     expect($customer)->toBeInstanceOf(Customer::class)
         ->and($shop->crmStats->number_customers)->toBe(1)
         ->and(organisation()->crmStats->number_customers)->toBe(1);
 
     return $customer;
-})->depends('create shop');
+});
 
 test('create customer user', function ($customer) {
-    Config::set('global.customer_id', $customer->id);
-
-
-    $customerUser = StoreUser::make()->action(
-        $customer->shop->website,
+    /** @var Shop $shop */
+    $shop         = $this->shop;
+    $customerUser = StoreOrgCustomerUser::make()->action(
         $customer,
         [
             'username'     => 'aiku',
@@ -84,5 +65,20 @@ test('create customer user', function ($customer) {
             'password'     => fake()->password
         ]
     );
-    expect($customerUser)->toBeInstanceOf(CustomerUser::class);
+    $shop->refresh();
+    $organisation=$this->organisation->refresh();
+
+    expect($customerUser)->toBeInstanceOf(CustomerUser::class)
+        ->and($organisation->crmStats->number_customer_users)->toBe(1)
+        ->and($organisation->crmStats->number_customer_users_status_active)->toBe(1)
+        ->and($organisation->crmStats->number_customer_users_status_inactive)->toBe(0)
+        ->and($customer->shop->crmStats->number_customer_users)->toBe(1)
+        ->and($customer->shop->crmStats->number_customer_users_status_active)->toBe(1)
+        ->and($customer->shop->crmStats->number_customer_users_status_inactive)->toBe(0)
+        ->and($customer->website->webStats->number_customer_users)->toBe(1)
+        ->and($customer->website->webStats->number_customer_users_status_active)->toBe(1)
+        ->and($customer->website->webStats->number_customer_users_status_inactive)->toBe(0)
+        ->and($customer->stats->number_customer_users)->toBe(1)
+        ->and($customer->stats->number_customer_users_status_active)->toBe(1)
+        ->and($customer->stats->number_customer_users_status_inactive)->toBe(0);
 })->depends('create customer');

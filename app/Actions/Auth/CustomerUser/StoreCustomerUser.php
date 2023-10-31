@@ -8,6 +8,10 @@
 namespace App\Actions\Auth\CustomerUser;
 
 use App\Actions\Auth\CustomerUser\Hydrators\CustomerUserHydrateUniversalSearch;
+use App\Actions\CRM\Customer\Hydrators\CustomerHydrateCustomerUsers;
+use App\Actions\Market\Shop\Hydrators\ShopHydrateCustomerUsers;
+use App\Actions\Organisation\Organisation\Hydrators\OrganisationHydrateCustomerUsers;
+use App\Actions\Web\Website\Hydrators\WebsiteHydrateCustomerUsers;
 use App\Models\Auth\CustomerUser;
 use App\Models\Auth\Role;
 use App\Models\Auth\User;
@@ -22,24 +26,25 @@ class StoreCustomerUser
     public function handle(Customer $customer, User $user, $modelData): CustomerUser
     {
         /** @var CustomerUser $customerUser */
-        $customerUser=$customer->customerUsers()->createOrFirst(
+        $customerUser = $customer->customerUsers()->createOrFirst(
             [
-                'user_id'    => $user->id,
-                'customer_id'=> $customer->id
+                'user_id'     => $user->id,
+                'customer_id' => $customer->id
             ],
             $modelData
         );
 
-
-        if($customerUser->is_root) {
+        if ($customerUser->is_root) {
             $superAdminRole = Role::where('guard_name', 'customer')->where('name', 'super-admin')->firstOrFail();
             $customerUser->assignRole($superAdminRole);
         }
 
-
+        CustomerHydrateCustomerUsers::dispatch($customer);
         CustomerUserHydrateUniversalSearch::dispatch($customerUser);
+        OrganisationHydrateCustomerUsers::dispatch();
+        ShopHydrateCustomerUsers::dispatch($customer->shop);
+        WebsiteHydrateCustomerUsers::dispatch($customer->website);
         return $customerUser;
-
     }
 
     public function rules(): array
@@ -55,9 +60,6 @@ class StoreCustomerUser
             'email'        => 'required|iunique:users|email|max:255',
         ];
     }
-
-
-
 
 
 }

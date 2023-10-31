@@ -53,7 +53,6 @@ class CustomerImport implements ToCollection, WithHeadingRow, SkipsOnFailure, Wi
 
             if (Arr::get($row, 'password') and Arr::get($row, 'email')) {
                 StoreUser::make()->action(
-                    $shop->website,
                     $customer,
                     array_merge(
                         $row->only(['email', 'password', 'reset_password'])->all(),

@@ -47,12 +47,18 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $number_prospects_gender_male
  * @property int $number_prospects_gender_female
  * @property int $number_prospects_gender_other
+ * @property int $number_customer_users
+ * @property int $number_customer_users_status_active
+ * @property int $number_customer_users_status_inactive
  * @property-read \App\Models\Organisation\Organisation $organisation
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats query()
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberCustomerUsers($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberCustomerUsersStatusActive($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberCustomerUsersStatusInactive($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberCustomerWebsites($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberCustomerWebsitesBanners($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OrganisationCrmStats whereNumberCustomerWebsitesPpc($value)

@@ -80,7 +80,7 @@ class ShowCustomer extends InertiaAction
                                 'name'       => $request->route()->getName().'.customer-users.index',
                                 'parameters' => $request->route()->originalParameters()
                             ],
-                            'number'   => $customer->stats->number_users_status_active,
+                            'number'   => $customer->stats->number_customer_users_status_active,
                             'label'    => __('Users'),
                             'leftIcon' => [
                                 'icon'    => 'fal fa-terminal',
