@@ -5,7 +5,7 @@
   -->
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, Ref } from 'vue'
 import { Link } from '@inertiajs/vue3'
 import Table from '@/Components/Table/Table.vue'
 import { Prospect } from "@/types/prospect"
@@ -15,10 +15,17 @@ import axios from 'axios'
 import { notify } from '@kyvg/vue3-notification'
 import Tag from '@/Components/Tag.vue'
 
+interface tag {
+    id: number
+    slug: string
+    name: string
+    type: boolean
+}
+
 const props = defineProps<{
     data: object,
     tab?: string
-    tagsList: []
+    tagsList: tag[]
 }>()
 
 
@@ -36,19 +43,20 @@ function prospectRoute(prospect: Prospect) {
     }
 }
 
-const tagsListTemp = ref(props.tagsList)
+const tagsListTemp: Ref<tag[]> = ref(props.tagsList)
 
 // Add new Tag
-const addNewTag = async (option: {label: string, value: string}) => {
+const addNewTag = async (option: {name: string, id: string}) => {
     console.log(option)
     try {
-        const response = await axios.post(route('org.models.tag.store'),
+        const response: any = await axios.post(route('org.models.tag.store'),
             { name: option.name },
             {
                 headers: { "Content-Type": "multipart/form-data" },
             }
         )
-        tagsListTemp.value.push(option.label)
+        console.log(response.data)
+        tagsListTemp.value.push(response.data)
         return option
     } catch (error: any) {
         notify({
@@ -82,7 +90,7 @@ const updateTagItemTable = async (idTag: number, idData: number) => {
 </script>
 
 <template>
-    <!-- {{ tagsListTemp }} -->
+    <!-- <pre>{{ tagsListTemp }}</pre> -->
     <Table :resource="data" :name="tab" class="mt-5">
         <template #cell(name)="{ item: prospect }">
             <Link v-if="prospect.name" :href="prospectRoute(prospect)" class="special-underline">
@@ -106,7 +114,7 @@ const updateTagItemTable = async (idTag: number, idData: number) => {
                     :searchable="true"
                     :create-option="true"
                     :on-create="addNewTag"
-                    :options="tagsList"
+                    :options="tagsListTemp"
                 >
                     <template #tag="{ option, handleTagRemove, disabled }">
                         <!-- {{ option }} -->
