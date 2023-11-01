@@ -124,6 +124,7 @@ class CreateEmployee extends InertiaAction
                                 ],
                                 'positions' => [
                                     'type'        => 'jobPosition',
+                                    'required'    => true,
                                     'label'       => __('position'),
                                     'options'     => Options::forModels(JobPosition::class, label: 'name', value: 'name'),
                                     'placeholder' => __('Select a job position'),
